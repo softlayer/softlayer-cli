@@ -1,0 +1,24 @@
+[
+    {
+        "id": 160604100,
+        "resourceTableId": 446938,
+        "tag": {
+            "accountId": 307608,
+            "id": 3806050,
+            "internal": 0,
+            "name": "tag03022020",
+            "references": [
+                {
+                    "id": 160604100,
+                    "resourceTableId": 446938,
+                    "tagId": 3806050,
+                    "tagTypeId": 4,
+                    "usrRecordId": 7650493
+                }
+            ]
+        },
+        "tagId": 3806050,
+        "tagTypeId": 4,
+        "usrRecordId": 7650493
+    }
+]

@@ -1,0 +1,20 @@
+{
+    "domain": "softlayer.com",
+    "fullyQualifiedDomainName": "ys1-0-baremetal-uaadb.softlayer.com",
+    "hostname": "ys1-0-baremetal-uaadb",
+    "id": 218027,
+    "notes": "",
+    "provisionDate": "2016-02-02T10:04:19-06:00",
+    "primaryBackendIpAddress": "10.81.188.141",
+    "primaryIpAddress": "75.126.172.160",
+    "privateNetworkOnlyFlag": false,
+    "processorPhysicalCoreAmount": 16,
+    "remoteManagementAccounts": [
+        {
+            "password": "abcdfeghgrt",
+            "username": "root"
+        }
+    ],
+    "tagReferences": [],
+    "userData": []
+}

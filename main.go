@@ -6,5 +6,5 @@ import (
 )
 
 func main() {
-	plugin.Start(new(sl_plugin.SLPlugin))
+	plugin.Start(new(sl_plugin.SoftlayerPlugin))
 }

@@ -1,20 +1,23 @@
 package plugin
 
 import (
+	"fmt"
 	"os"
 	"reflect"
 	"strings"
 
-	"github.com/urfave/cli"
+	trace "github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/trace"
+
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/trace"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+	"github.com/urfave/cli"
 
-	"github.ibm.com/cgallo/softlayer-cli/version"
+	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
+	"github.ibm.com/cgallo/softlayer-cli/plugin/client"
+	slError "github.ibm.com/cgallo/softlayer-cli/plugin/errors"
+	"github.ibm.com/cgallo/softlayer-cli/plugin/metadata"
+	"github.ibm.com/cgallo/softlayer-cli/plugin/version"
 )
-
-// plugin name
-const PLUGIN_NAME = "slcli"
 
 var (
 	COMMAND_HELP_TEMPLATE = T("NAME:") + `
@@ -31,104 +34,174 @@ var (
 `
 )
 
-type SLPlugin struct {
+
+func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
+	return plugin.PluginMetadata{
+		Name:       version.PLUGIN_SOFTLAYER,
+		Namespaces: Namespaces(),
+		Commands:   GetPluginCommands(getCLITopCommands()),
+	}
+}
+
+type SoftlayerPlugin struct {
 	ui terminal.UI
 }
 
-func (p *SLPlugin) GetMetadata() plugin.PluginMetadata {
 
-	metadata := plugin.PluginMetadata{
-
-		Name: PLUGIN_NAME,
-
-		Version: plugin.VersionType{
-			Major: version.PLUGIN_MAJOR_VERSION,
-			Minor: version.PLUGIN_MINOR_VERSION,
-			Build: version.PLUGIN_BUILD_VERSION,
-		},
-
-		MinCliVersion: plugin.VersionType{
-			Major: 0,
-			Minor: 5,
-			Build: 0,
-		},
-
-		PrivateEndpointSupported: false,
-	}
-
-	metadata.Commands = []plugin.Command{
-		{
-			Name:        "hello",
-			Alias:       "hi",
-			Description: "This is just a SLCLI test",
-			Usage:       "ibmcloud slcli",
-		},
-	}
-
-	// ADD THIS BACK FOR REAL COMMANDS
-	// for _, cmd := range getCommands() {
-	// 	cmdMeta := cmd.GetMetadata()
-	// 	metadata.Commands = append(metadata.Commands, plugin.Command{
-	// 		Namespace:   cmdMeta.Namespace,
-	// 		Name:        cmdMeta.Name,
-	// 		Description: cmdMeta.Description,
-	// 		Usage:       commandUsage(cmdMeta, nil),
-	// 		Flags:       convertToPluginFlags(cmdMeta.Flags),
-	// 	})
-	// }
-	return metadata
-}
-
-func (p *SLPlugin) Run(context plugin.PluginContext, args []string) {
-
+func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	}()
 	trace.Logger = trace.NewLogger(context.Trace())
-
 	terminal.UserAskedForColors = context.ColorEnabled()
 	terminal.InitColorSupport()
-	p.ui = terminal.NewStdUI()
-
+	sl.ui = terminal.NewStdUI()
+	// initCustomizedHelp(context)
 	cli.CommandHelpTemplate = COMMAND_HELP_TEMPLATE
 
 	app := cli.NewApp()
-	app.Name = "SLCLI"
+	app.Name = context.CLIName() + " slcli"
+	app.Usage = T(version.PLUGIN_SOFTLAYER_USAGE)
 	app.Version = version.PLUGIN_VERSION
 
-	fmt.Println("Hi, this is my first plugin for IBM Cloud CLI.")
-}
-
-func commandUsage(meta command.CommandMetadata, context plugin.PluginContext) string {
-	if context == nil {
-		// TODO: tricky! sdk should provide a way to replace cli binary name
-		return strings.Replace(meta.Usage, "${BINARY_NAME}", "${COMMAND_NAME} "+meta.Namespace, -1)
+	for _, cmd := range getCLITopCommands() {
+		cliCommand := cli.Command{
+			Category:    cmd.Category,
+			Name:        cmd.Name,
+			Description: cmd.Description,
+			Usage:       strings.Replace(cmd.Usage, "${COMMAND_NAME}", context.CLIName(), -1),
+			Flags:       cmd.Flags,
+		}
+		if len(cmd.Subcommands) == 0 {
+			action := GetCommandAction(context, sl.ui)
+			if action != nil {
+				cliCommand.Action = action
+			}
+		} else {
+			for _, subCmd := range cmd.Subcommands {
+				cliCommand.Subcommands = append(cliCommand.Subcommands,
+					cli.Command{
+						Category:    subCmd.Category,
+						Name:        subCmd.Name,
+						Description: subCmd.Description,
+						Usage:       strings.Replace(subCmd.Usage, "${COMMAND_NAME}", context.CLIName(), -1),
+						Flags:       subCmd.Flags,
+						Action:      GetCommandAction(context, sl.ui),
+					})
+			}
+		}
+		app.Commands = append(app.Commands, cliCommand)
 	}
-	return strings.Replace(meta.Usage, "${BINARY_NAME}", context.CLIName()+" "+meta.Namespace, -1)
+	err := app.Run(append(strings.Split(context.CommandNamespace(), " "), args...))
+	if err != nil {
+		sl.ui.Failed(err.Error())
+		os.Exit(1)
+	}
 }
 
-// func getCommands() []command.Command {
-// 	return []command.Command{
-// 		// new(commands.Search),
-// 		new(commands.Entry),
-// 		new(commands.EntryCreate),
-// 		new(commands.EntryUpdate),
-// 		new(commands.EntryVisibility),
-// 		new(commands.EntryVisibilitySet),
-// 		new(commands.EntryDelete),
-// 		new(commands.Marketplace),
-// 		new(commands.Service),
-// 		new(commands.GetLocations),
-// 		new(commands.GetPricing),
-// 		new(commands.EntryCopy),
-// 		new(commands.Blacklist),
-// 	}
-// }
+func GetCommandAction(pluginContext plugin.PluginContext, ui terminal.UI) func(cliContext *cli.Context) error {
+	return func(cliContext *cli.Context) error {
+		command := cliContext.Command
+
+		session, err := client.NewSoftlayerClientSessionFromConfig(pluginContext)
+		if err != nil {
+			return slError.Error_Not_Login(pluginContext)
+		}
+		actionMaps := GetCommandAcionBindings(pluginContext, ui, session)
+		return actionMaps[command.Category+"-"+command.Name](cliContext)
+	}
+}
+
+func GetPluginCommands(cliCommands []cli.Command) []plugin.Command {
+	var pluginCommands []plugin.Command
+	for _, cliCmd := range cliCommands {
+		if len(cliCmd.Subcommands) > 0 {
+			for _, subCmd := range cliCmd.Subcommands {
+				subPluginCmd := plugin.Command{
+					Namespace:   metadata.SoftlayerNamespace().Name + " " + subCmd.Category,
+					Name:        subCmd.Name,
+					Description: subCmd.Description,
+					Usage:       subCmd.Usage,
+					Flags:       convertToPluginFlags(subCmd.Flags),
+				}
+				pluginCommands = append(pluginCommands, subPluginCmd)
+			}
+		} else {
+			pluginCommand := plugin.Command{
+				Namespace:   metadata.SoftlayerNamespace().Name,
+				Name:        cliCmd.Name,
+				Description: cliCmd.Description,
+				Usage:       cliCmd.Usage,
+				Flags:       convertToPluginFlags(cliCmd.Flags),
+			}
+			pluginCommands = append(pluginCommands, pluginCommand)
+		}
+	}
+	return pluginCommands
+}
 
 func convertToPluginFlags(flags []cli.Flag) []plugin.Flag {
 	var ret []plugin.Flag
 	for _, f := range flags {
 		ret = append(ret, plugin.Flag{
-			Name:        f.GetName(),
+			Name:        reflect.ValueOf(f).FieldByName("Name").String(),
 			Description: reflect.ValueOf(f).FieldByName("Usage").String(),
+			HasValue:    reflect.TypeOf(f).String() != "cli.BoolFlag",
+			Hidden:      reflect.ValueOf(f).FieldByName("Hidden").Bool(),
 		})
 	}
 	return ret
+}
+
+func Namespaces() []plugin.Namespace {
+	return []plugin.Namespace{
+		metadata.SoftlayerNamespace(),
+		metadata.BlockNamespace(),
+		metadata.DnsNamespace(),
+		metadata.FileNamespace(),
+		//metadata.NS_FIREWALL,
+		metadata.GlobalIpNamespace(),
+		metadata.HardwareNamespace(),
+		metadata.ImageNamespace(),
+		metadata.IpsecNamespace(),
+		metadata.LoadbalNamespace(),
+		metadata.SecurityNamespace(),
+		metadata.SecurityGroupNamespace(),
+		metadata.SubnetNamespace(),
+		metadata.TicketNamespace(),
+		metadata.VSNamespace(),
+		metadata.PlacementGroupNamespace(),
+		metadata.VlanNamespace(),
+		metadata.OrderNamespace(),
+		metadata.UserNamespace(),
+		metadata.TagsNamespace(),
+	}
+}
+
+func getCLITopCommands() []cli.Command {
+	return []cli.Command{
+		metadata.BlockMetaData(),
+		metadata.DnsMetaData(),
+		metadata.FileMetaData(),
+		// metadata.CMD_FW,
+		metadata.GlobalIpMetaData(),
+		metadata.HardwareMetaData(),
+		metadata.ImageMetaData(),
+		metadata.IpsecMetaData(),
+		metadata.LoadbalMetaData(),
+		metadata.SecurityMetaData(),
+		metadata.SecurityGroupMetaData(),
+		metadata.SubnetMetaData(),
+		metadata.TicketMetaData(),
+		metadata.VlanMetaData(),
+		metadata.VSMetaData(),
+		metadata.PlacementGroupMetaData(),
+		metadata.OrderMetaData(),
+		metadata.UserMetaData(),
+		metadata.CallAPIMetadata(),
+		metadata.TagsMetaData(),
+	}
 }

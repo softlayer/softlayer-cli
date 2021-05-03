@@ -1,0 +1,72 @@
+[
+	{
+		"accountId": 12345,
+		"assignedUserId": 99999,
+		"billableFlag": null,
+		"changeOwnerFlag": false,
+		"createDate": "2018-12-27T16:06:49-06:00",
+		"euSupportedLocationId": null,
+		"groupId": 1001,
+		"id": 76767688,
+		"lastEditDate": null,
+		"lastEditType": "AUTO",
+		"lastResponseDate": "2018-12-27T16:06:51-06:00",
+		"locationId": null,
+		"modifyDate": "2018-12-27T16:06:51-06:00",
+		"notifyUserOnUpdateFlag": true,
+		"priority": 0,
+		"responsibleBrandId": 1,
+		"serverAdministrationBillingAmount": null,
+		"serverAdministrationBillingInvoiceId": null,
+		"serverAdministrationFlag": 0,
+		"serverAdministrationRefundInvoiceId": null,
+		"serviceProviderId": 1,
+		"serviceProviderResourceId": "76767688",
+		"statusId": 1001,
+		"subjectId": null,
+		"title": "Important Changes regarding your active Subnets",
+		"totalUpdateCount": 1,
+		"userEditableFlag": false,
+		"status": {
+			"id": 1001,
+			"name": "Open"
+		}
+	},
+	{
+		"accountId": 12345,
+		"assignedUserId": 99999,
+    "assignedUser": {
+      "firstName":"FirstName",
+      "lastName":"LastName"
+    },
+		"billableFlag": null,
+		"changeOwnerFlag": false,
+		"createDate": "2019-01-09T00:10:49-06:00",
+		"euSupportedLocationId": null,
+		"groupId": 1013,
+		"id": 76767699,
+		"lastEditDate": "2019-01-13T12:11:01-06:00",
+		"lastEditType": "EMPLOYEE",
+		"lastResponseDate": "2019-01-13T12:11:01-06:00",
+		"locationId": null,
+		"modifyDate": "2019-01-13T12:11:01-06:00",
+		"notifyUserOnUpdateFlag": true,
+		"priority": 0,
+		"responsibleBrandId": 1,
+		"serverAdministrationBillingAmount": null,
+		"serverAdministrationBillingInvoiceId": null,
+		"serverAdministrationFlag": 0,
+		"serverAdministrationRefundInvoiceId": null,
+		"serviceProviderId": 1,
+		"serviceProviderResourceId": "76767688",
+		"statusId": 1001,
+		"subjectId": null,
+		"title": "VM Polling Failure - unable to login",
+		"totalUpdateCount": 28,
+		"userEditableFlag": true,
+		"status": {
+			"id": 1001,
+			"name": "Open"
+		}
+	}
+]

@@ -1,0 +1,110 @@
+{
+    "description": "B1.8x32x100",
+    "id": 645,
+    "isActive": "1",
+    "keyName": "B1_8X32X100",
+    "name": "B1.8x32x100",
+    "packageId": 1035,
+    "prices": [
+        {
+            "currentPriceFlag": null,
+            "hourlyRecurringFee": ".012",
+            "id": 23065,
+            "itemId": 865,
+            "laborFee": "0",
+            "locationGroupId": null,
+            "onSaleFlag": null,
+            "oneTimeFee": "0",
+            "quantity": null,
+            "recurringFee": "7.46",
+            "setupFee": "0",
+            "sort": 0,
+            "tierMinimumThreshold": null,
+            "item": {
+                "capacity": "100",
+                "description": "100 GB (SAN)",
+                "hardwareGenericComponentId": null,
+                "id": 865,
+                "itemTaxCategoryId": 166,
+                "keyName": "GUEST_DISK_100_GB_SAN",
+                "softwareDescriptionId": null,
+                "units": "GB",
+                "upgradeItemId": null,
+                "itemCategory": {
+                    "categoryCode": "guest_disk0",
+                    "id": 81,
+                    "name": "First Disk",
+                    "quantityLimit": 0,
+                    "sortOrder": null
+                }
+            }
+        },
+        {
+            "currentPriceFlag": null,
+            "hourlyRecurringFee": "0",
+            "id": 210183,
+            "itemId": 860,
+            "laborFee": "0",
+            "locationGroupId": null,
+            "onSaleFlag": null,
+            "oneTimeFee": "0",
+            "quantity": null,
+            "recurringFee": "0",
+            "setupFee": "0",
+            "sort": 0,
+            "tierMinimumThreshold": null,
+            "item": {
+                "capacity": "8",
+                "description": "8 x 2.0 GHz or higher Cores",
+                "hardwareGenericComponentId": null,
+                "id": 860,
+                "itemTaxCategoryId": 166,
+                "keyName": "GUEST_CORES_8",
+                "softwareDescriptionId": null,
+                "units": "CORE",
+                "upgradeItemId": null,
+                "itemCategory": {
+                    "categoryCode": "guest_core",
+                    "id": 80,
+                    "name": "Computing Instance",
+                    "quantityLimit": 20,
+                    "sortOrder": null
+                },
+                "totalPhysicalCoreCount": 8
+            }
+        },
+        {
+            "currentPriceFlag": null,
+            "hourlyRecurringFee": "0",
+            "id": 210271,
+            "itemId": 1155,
+            "laborFee": "0",
+            "locationGroupId": null,
+            "onSaleFlag": null,
+            "oneTimeFee": "0",
+            "quantity": null,
+            "recurringFee": "0",
+            "setupFee": "0",
+            "sort": 0,
+            "tierMinimumThreshold": null,
+            "item": {
+                "capacity": "32",
+                "description": "32 GB",
+                "hardwareGenericComponentId": 524,
+                "id": 1155,
+                "itemTaxCategoryId": 166,
+                "keyName": "RAM_32_GB",
+                "softwareDescriptionId": null,
+                "units": "GB",
+                "upgradeItemId": null,
+                "itemCategory": {
+                    "categoryCode": "ram",
+                    "id": 3,
+                    "name": "RAM",
+                    "quantityLimit": 0,
+                    "sortOrder": 3
+                }
+            }
+        }
+    ]
+}

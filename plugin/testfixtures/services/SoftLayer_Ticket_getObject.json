@@ -1,0 +1,39 @@
+{
+	"createDate": "2019-01-07T09:37:30-06:00",
+	"id": 76768,
+	"lastEditDate": "2019-01-07T09:42:41-06:00",
+	"priority": 4,
+	"title": "API Question - Test ticket",
+	"updateCount": 3,
+	"assignedUser": {
+		"firstName": "FirstName",
+		"lastName": "LastName"
+	},
+	"status": {
+		"id": 1004,
+		"name": "Assigned"
+	},
+	"updates": [
+		{
+			"entry": "Update From Customer\n\n\n***POSTED FROM IBMCLOUD SL***",
+			"editor": {
+				"firstName": "FirstName",
+				"lastName": "LastName"
+			}
+		},
+		{
+			"entry": "Update From Employee",
+			"editor": {
+				"displayName": "Employ E",
+				"username": "Employee"
+			}
+		},
+		{
+			"entry": "Second From Customer\n\n\n***POSTED FROM IBMCLOUD SL***",
+			"editor": {
+				"firstName": "FirstName",
+				"lastName": "LastName"
+			}
+		}
+	]
+}

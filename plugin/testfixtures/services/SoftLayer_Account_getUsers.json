@@ -1,0 +1,21 @@
+[{"username": "IBM2782", 
+    "hardwareCount": 177, 
+    "displayName": "a", 
+    "roles": 
+    [
+    { "description": "IBM2783_system_role", "createDate": "2014-02-27T06:52:48+08:00", "systemFlag": 1, "newUserDefaultFlag": 0, "accountId": 278444, "id": 641718, "name": "IBM27asd44_system_role"}], "userStatus": {"name": "Active"}, "email": "sdfasdfasd", "id": 146836, "virtualGuestCount": 3},
+    {"username": "IBM2783", 
+    "hardwareCount": 177, 
+    "displayName": "a", 
+    "roles": 
+    [
+    {"modifyDate": "2014-02-27T06:52:48+08:00", "description": "IBM2783_system_role", "createDate": "2014-02-27T06:52:48+08:00", "systemFlag": 1, "newUserDefaultFlag": 0, "accountId": 278444, "id": 641718, "name": "IBM27asd44_system_role"}], "userStatus": {"name": "Active"}, "email": "sdfasdfasd", "id": 146836, "virtualGuestCount": 3},
+    
+    {"username": "IBM2784", 
+    "hardwareCount": 177, 
+    "displayName": "a", 
+    "roles": 
+    [
+    {"description": "IBM2783_system_role", "createDate": "2014-02-27T06:52:48+08:00", "systemFlag": 1, "newUserDefaultFlag": 0, "accountId": 278444, "id": 641718, "name": "IBM27asd44_system_role"}], "userStatus": {"name": "Active"}, "email": "sdfasdfasd", "id": 146836, "virtualGuestCount": 3}
+    
+    ]

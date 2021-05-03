@@ -1,0 +1,12 @@
+[{
+  "createDate": "2019-01-15T11:12:57-06:00",
+  "editorId": 111111,
+  "editorType": "USER",
+  "entry": "This is not a real entry.",
+  "id": 222222,
+  "ticketId": 76768,
+  "type": {
+    "description": "User",
+    "keyName": "USER"
+  }
+ }]

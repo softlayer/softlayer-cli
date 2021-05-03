@@ -1,0 +1,10 @@
+[
+    {
+        "id":123,
+        "hostname":"ibmcloud-cli-dev"
+    },
+    {
+        "id":234,
+        "hostname":"ibmcloud-cli-dev"
+    }
+]

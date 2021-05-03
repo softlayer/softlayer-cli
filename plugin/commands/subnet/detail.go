@@ -1,0 +1,104 @@
+package subnet
+
+import (
+	"bytes"
+	"fmt"
+	"strconv"
+
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/urfave/cli"
+	"github.ibm.com/cgallo/softlayer-cli/plugin/metadata"
+	"github.ibm.com/cgallo/softlayer-cli/plugin/errors"
+	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
+	slErr "github.ibm.com/cgallo/softlayer-cli/plugin/errors"
+	"github.ibm.com/cgallo/softlayer-cli/plugin/managers"
+	"github.ibm.com/cgallo/softlayer-cli/plugin/utils"
+)
+
+type DetailCommand struct {
+	UI             terminal.UI
+	NetworkManager managers.NetworkManager
+}
+
+func NewDetailCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *DetailCommand) {
+	return &DetailCommand{
+		UI:             ui,
+		NetworkManager: networkManager,
+	}
+}
+
+func (cmd *DetailCommand) Run(c *cli.Context) error {
+	if c.NArg() != 1 {
+		return errors.NewInvalidUsageError(T("This command requires one argument."))
+	}
+
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+
+	subnetID, err := utils.ResolveSubnetId(c.Args()[0])
+	if err != nil {
+		return slErr.NewInvalidSoftlayerIdInputError("Subnet ID")
+	}
+	subnet, err := cmd.NetworkManager.GetSubnet(subnetID, "")
+	if err != nil {
+		return cli.NewExitError(T("Failed to get subnet: {{.ID}}.\n", map[string]interface{}{"ID": subnetID})+err.Error(), 2)
+	}
+
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, subnet)
+	}
+
+	table := cmd.UI.Table([]string{T("Name"), T("Value")})
+	table.Add(T("ID"), utils.FormatIntPointer(subnet.Id))
+	table.Add(T("identifier"), fmt.Sprintf("%s/%s", utils.FormatStringPointer(subnet.NetworkIdentifier), utils.FormatIntPointer(subnet.Cidr)))
+	if subnet.SubnetType != nil {
+		table.Add(T("subnet type"), utils.FormatStringPointer(subnet.SubnetType))
+	}
+	if subnet.NetworkVlan != nil {
+		table.Add(T("network space"), utils.FormatStringPointer(subnet.NetworkVlan.NetworkSpace))
+	}
+	table.Add(T("gateway"), utils.FormatStringPointer(subnet.Gateway))
+	table.Add(T("broadcast"), utils.FormatStringPointer(subnet.BroadcastAddress))
+
+	if subnet.Datacenter != nil {
+		table.Add(T("datacenter"), utils.FormatStringPointer(subnet.Datacenter.Name))
+	}
+	table.Add(T("usable ips"), strconv.Itoa(len(subnet.IpAddresses)))
+
+	if !c.IsSet("no-vs") {
+		if subnet.VirtualGuests == nil || len(subnet.VirtualGuests) == 0 {
+			table.Add(T("virtual guests"), T("none"))
+		} else {
+			buf := new(bytes.Buffer)
+			vsTable := terminal.NewTable(buf, []string{T("hostname"), T("domain"), T("public_ip"), T("private_ip")})
+			for _, vs := range subnet.VirtualGuests {
+				vsTable.Add(utils.FormatStringPointer(vs.Hostname),
+					utils.FormatStringPointer(vs.Domain),
+					utils.FormatStringPointer(vs.PrimaryIpAddress),
+					utils.FormatStringPointer(vs.PrimaryBackendIpAddress))
+			}
+			vsTable.Print()
+			table.Add(T("virtual guests"), buf.String())
+		}
+	}
+	if !c.IsSet("no-hardware") {
+		if subnet.Hardware == nil || len(subnet.Hardware) == 0 {
+			table.Add(T("hardware"), T("none"))
+		} else {
+			buf := new(bytes.Buffer)
+			hwTable := terminal.NewTable(buf, []string{T("hostname"), T("domain"), T("public_ip"), T("private_ip")})
+			for _, hw := range subnet.Hardware {
+				hwTable.Add(utils.FormatStringPointer(hw.Hostname),
+					utils.FormatStringPointer(hw.Domain),
+					utils.FormatStringPointer(hw.PrimaryIpAddress),
+					utils.FormatStringPointer(hw.PrimaryBackendIpAddress))
+			}
+			hwTable.Print()
+			table.Add(T("hardware"), buf.String())
+		}
+	}
+	table.Print()
+	return nil
+}
