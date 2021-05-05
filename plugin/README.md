@@ -102,8 +102,8 @@ Done.
 To actually run the tests, do `go test <PACKAGE>`. Use `-coverprofile=coverage.out` to produce a coverage.out file that you can then use to figure out what lines are missing coverage.
 
 ```
-$> go test -coverprofile=coverage.out github.ibm.com/cgallo/softlayer-cli/plugin/commands/file
-ok      github.ibm.com/cgallo/softlayer-cli/plugin/commands/file       1.225s
+$> go test -coverprofile=coverage.out github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file
+ok      github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file       1.225s
 ```
 
 Coverage report
@@ -122,7 +122,7 @@ go tool cover -html=coverage.out
 Specific Tests
 
 ```
-go test -v -coverprofile=coverage.out github.ibm.com/cgallo/softlayer-cli/plugin/managers -ginkgo.focus Issues3190
+go test -v -coverprofile=coverage.out github.ibm.com/SoftLayer/softlayer-cli/plugin/managers -ginkgo.focus Issues3190
 ```
 ### Fake Managers
 

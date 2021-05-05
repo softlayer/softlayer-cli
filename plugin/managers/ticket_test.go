@@ -10,8 +10,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.ibm.com/cgallo/softlayer-cli/plugin/managers"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Ticket", func() {

@@ -12,11 +12,11 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/urfave/cli"
 
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/client"
-	slError "github.ibm.com/cgallo/softlayer-cli/plugin/errors"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/metadata"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/version"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/client"
+	slError "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 )
 
 var (

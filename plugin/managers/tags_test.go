@@ -5,8 +5,8 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/managers"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("TagsManager", func() {

@@ -4,14 +4,14 @@ import (
 	"strconv"
 	"strings"
 
-	slErr "github.ibm.com/cgallo/softlayer-cli/plugin/errors"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/errors"
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
-	slErrors "github.ibm.com/cgallo/softlayer-cli/plugin/errors"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 type CancelCommand struct {

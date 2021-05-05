@@ -13,9 +13,9 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/metadata"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("hardware create", func() {

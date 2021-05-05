@@ -13,8 +13,8 @@ import (
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/utils"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 const (

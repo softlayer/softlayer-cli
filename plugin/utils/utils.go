@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	bmxErr "github.ibm.com/cgallo/softlayer-cli/plugin/errors"
+	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/trace"
@@ -18,7 +18,7 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
 //TODO support resolving guid to integer id

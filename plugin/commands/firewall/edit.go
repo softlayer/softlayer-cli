@@ -9,14 +9,14 @@ import (
 	"strconv"
 	"strings"
 
-	bxErr "github.ibm.com/cgallo/softlayer-cli/plugin/errors"
+	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/managers"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 const DELIMITER = "=========================================\n"

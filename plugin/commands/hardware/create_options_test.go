@@ -5,10 +5,10 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/managers"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/metadata"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("hardware create options", func() {

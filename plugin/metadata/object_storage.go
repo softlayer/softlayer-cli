@@ -2,7 +2,7 @@ package metadata
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
 var (

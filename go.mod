@@ -1,4 +1,4 @@
-module github.ibm.com/cgallo/softlayer-cli
+module github.ibm.com/SoftLayer/softlayer-cli
 
 go 1.16
 

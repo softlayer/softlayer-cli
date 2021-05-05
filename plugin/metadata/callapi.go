@@ -2,7 +2,7 @@ package metadata
 
 import (
 	"github.com/urfave/cli"
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
 const (

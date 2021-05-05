@@ -9,9 +9,9 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/metadata"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Replica failback", func() {

@@ -4,15 +4,15 @@ import (
 	"io/ioutil"
 	"strconv"
 
-	slErrors "github.ibm.com/cgallo/softlayer-cli/plugin/errors"
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
-	bmxErr "github.ibm.com/cgallo/softlayer-cli/plugin/errors"
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/managers"
+	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 type CertEditCommand struct {

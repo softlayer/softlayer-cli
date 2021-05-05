@@ -5,8 +5,8 @@ import (
 	"github.com/urfave/cli"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/managers"
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 

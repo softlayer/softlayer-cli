@@ -10,8 +10,8 @@ import (
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/i18n"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/metadata"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 const (

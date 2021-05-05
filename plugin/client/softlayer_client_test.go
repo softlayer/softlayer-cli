@@ -10,7 +10,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/client"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/client"
 )
 
 var _ = Describe("Classic infrastructure CLI Client", func() {

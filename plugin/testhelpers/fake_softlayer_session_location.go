@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.ibm.com/cgallo/softlayer-cli/plugin/utils"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"

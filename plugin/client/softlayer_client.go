@@ -7,7 +7,7 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/softlayer/softlayer-go/session"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/version"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 )
 
 const (

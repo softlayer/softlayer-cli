@@ -7,9 +7,9 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/commands/ticket"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/metadata"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("ticket subjects", func() {

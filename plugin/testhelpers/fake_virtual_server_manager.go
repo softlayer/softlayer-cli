@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.ibm.com/cgallo/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 type FakeVirtualServerManager struct {

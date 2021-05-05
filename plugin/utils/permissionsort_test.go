@@ -8,7 +8,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
 
-	. "github.ibm.com/cgallo/softlayer-cli/plugin/utils"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 var string1 = "a"
