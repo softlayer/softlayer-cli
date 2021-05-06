@@ -13,7 +13,7 @@ import (
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -172,9 +172,9 @@ func (u userManager) GetIdFromUsername(userName string) (int, error) {
 	if len(users) == 1 {
 		return *users[0].Id, nil
 	} else if len(users) > 1 {
-		return 0, errors.New(i18n.T("Multiple users found with the name: %s", userName))
+		return 0, errors.New(T("Multiple users found with the name: %s", userName))
 	} else {
-		return 0, errors.New(i18n.T("Unable to find user id for %s", userName))
+		return 0, errors.New(T("Unable to find user id for %s", userName))
 
 	}
 }
@@ -195,7 +195,7 @@ func (u userManager) FormatPermissionObject(permissionsKeyNames []string) ([]dat
 			tmp := permissionsKeyName
 			pretty_permissions = append(pretty_permissions, datatypes.User_Customer_CustomerPermission_Permission{KeyName: &tmp})
 		} else {
-			return nil, errors.New(fmt.Sprintf(i18n.T("%s is not a valid permission"), permissionsKeyName))
+			return nil, errors.New(fmt.Sprintf(T("%s is not a valid permission"), permissionsKeyName))
 		}
 	}
 	return pretty_permissions, nil

@@ -4,7 +4,6 @@ import (
 	"bytes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/i18n"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -76,9 +75,9 @@ func (cmd *PlacementGroupDetailCommand) Run(c *cli.Context) error {
 			)
 		}
 		guestTable.Print()
-		table.Add(i18n.T("Guests: "), buf.String())
+		table.Add(T("Guests: "), buf.String())
 	} else {
-		table.Add(i18n.T("Guests: "), T("No guest was found."))
+		table.Add(T("Guests: "), T("No guest was found."))
 	}
 	table.Print()
 	return nil
