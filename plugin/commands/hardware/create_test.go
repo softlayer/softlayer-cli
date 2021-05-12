@@ -3,6 +3,7 @@ package hardware_test
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"

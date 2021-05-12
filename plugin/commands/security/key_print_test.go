@@ -3,6 +3,7 @@ package security_test
 import (
 	"errors"
 	"strings"
+	"os"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
