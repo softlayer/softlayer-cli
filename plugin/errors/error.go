@@ -4,8 +4,6 @@ import (
 	"errors"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
@@ -30,6 +28,6 @@ func NewInvalidSoftlayerIdInputError(inputName string) *InvalidSoftlayerIdInputE
 }
 
 func (err *InvalidSoftlayerIdInputError) Error() string {
-	message := i18n.T("Invalid input for '{{.Name}}'. It must be a positive integer.", map[string]interface{}{"Name": err.InputName})
+	message := T("Invalid input for '{{.Name}}'. It must be a positive integer.", map[string]interface{}{"Name": err.InputName})
 	return message
 }

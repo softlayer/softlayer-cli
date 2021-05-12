@@ -3,7 +3,7 @@ package version
 
 // plugin version
 const PLUGIN_VERSION = "0.0.1"
-const PLUGIN_SOFTLAYER = "SLCLI2"
-const PLUGIN_SOFTLAYER_USAGE = "Manage Classic infrastructure services"
+const PLUGIN_SOFTLAYER = "sl"
+const PLUGIN_SOFTLAYER_USAGE = "Classic Infrastructure"
 
 var UsageAgentHeader = "IBM Cloud CLI softlayer plugin " + PLUGIN_VERSION

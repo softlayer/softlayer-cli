@@ -7,13 +7,12 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
 var (
 	LIMIT          = 50
-	NS_SL_NAME     = "slcli"
+	NS_SL_NAME     = "sl"
 	OutputFlagName = "output"
 )
 
@@ -52,7 +51,7 @@ func CheckOutputFormat(context *cli.Context, ui terminal.UI) (string, error) {
 				return r, nil
 			}
 		}
-		return "", errors.NewInvalidUsageError(i18n.T("Invalid output format, only JSON is supported now."))
+		return "", errors.NewInvalidUsageError(T("Invalid output format, only JSON is supported now."))
 	}
 	return "", nil
 }
@@ -61,6 +60,6 @@ func CheckOutputFormat(context *cli.Context, ui terminal.UI) (string, error) {
 func QuietFlag() cli.BoolFlag {
 	return cli.BoolFlag{
 		Name:  "q, quiet",
-		Usage: i18n.T("Suppress verbose output"),
+		Usage: T("Suppress verbose output"),
 	}
 }

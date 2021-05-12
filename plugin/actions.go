@@ -10,7 +10,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
@@ -33,6 +32,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -631,16 +631,16 @@ func PreChecktRequirement(context plugin.PluginContext, ui terminal.UI) error {
 	var errorMessage error
 	switch {
 	case !context.IsLoggedIn():
-		errorMessage = fmt.Errorf(i18n.T("Not logged in. Use '{{.Command}}' to log in.",
+		errorMessage = fmt.Errorf(T("Not logged in. Use '{{.Command}}' to log in.",
 			map[string]interface{}{"Command": terminal.CommandColor(context.CLIName() + " login")}))
 	case context.IAMToken() == "":
-		errorMessage = fmt.Errorf(i18n.T("IAM token is required. Use '{{.Command}}' to log in.",
+		errorMessage = fmt.Errorf(T("IAM token is required. Use '{{.Command}}' to log in.",
 			map[string]interface{}{"Command": terminal.CommandColor(context.CLIName() + " login")}))
 	case context.IMSAccountID() == "":
-		errorMessage = fmt.Errorf(i18n.T("Current account is not linked to a Softlayer account. Use '{{.Command}}' to switch account.",
+		errorMessage = fmt.Errorf(T("Current account is not linked to a Softlayer account. Use '{{.Command}}' to switch account.",
 			map[string]interface{}{"Command": terminal.CommandColor(context.CLIName() + " target -c")}))
 	case !core_config.NewIAMTokenInfo(context.IAMToken()).Accounts.Valid:
-		errorMessage = fmt.Errorf(i18n.T("The linked Softlayer account is not validated. Use '{{.Command}}' to re-login.",
+		errorMessage = fmt.Errorf(T("The linked Softlayer account is not validated. Use '{{.Command}}' to re-login.",
 			map[string]interface{}{"Command": terminal.CommandColor(context.CLIName() + " login")}))
 	}
 	if errorMessage != nil {

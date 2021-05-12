@@ -63,7 +63,7 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	cli.CommandHelpTemplate = COMMAND_HELP_TEMPLATE
 
 	app := cli.NewApp()
-	app.Name = context.CLIName() + " slcli"
+	app.Name = context.CLIName() + "sl "
 	app.Usage = T(version.PLUGIN_SOFTLAYER_USAGE)
 	app.Version = version.PLUGIN_VERSION
 
