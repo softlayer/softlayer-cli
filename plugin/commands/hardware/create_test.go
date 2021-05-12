@@ -131,6 +131,9 @@ var _ = Describe("hardware create", func() {
 		})
 		Context("hardware create with export succeed", func() {
 			It("return file", func() {
+				if os.Getenv("OS") == "Windows_NT"  {
+					Skip("Test doesn't work in windows.")
+				}
 				err := testhelpers.RunCommand(cliCommand, "-s", "S1270_32GB_2X960GBSSD_NORAID", "-H", "ibmcloud-cli", "-D", "ibm.com", "-o", "UBUNTU_16_64", "-d", "dal10", "-p", "1000", "-b", "hourly", "-x", "/tmp/template.json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))

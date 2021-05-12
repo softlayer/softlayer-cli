@@ -80,6 +80,9 @@ var _ = Describe("Key print", func() {
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"ssh-rsa djghtbtmfhgentongwfrdnglkhsdye"}))
 			})
 			It("return no error", func() {
+				if os.Getenv("OS") == "Windows_NT"  {
+					Skip("Test doesn't work in windows.")
+				}
 				err := testhelpers.RunCommand(cliCommand, "1234", "-f", "/tmp/key")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))

@@ -42,6 +42,7 @@ var _ = Describe("Access Authorize", func() {
 		Context("Access Authorize without volume id", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand)
+
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
 			})
@@ -50,7 +51,7 @@ var _ = Describe("Access Authorize", func() {
 			It("error resolving volume ID", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Volume ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 
@@ -82,11 +83,25 @@ var _ = Describe("Access Authorize", func() {
 			BeforeEach(func() {
 				FakeStorageManager.AuthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
 			})
-			It("return no error", func() {
+			It("Success with multipl IP Ids", func() {
+				err := testhelpers.RunCommand(cliCommand, "1234", "--ip-address-id", "5678", "--ip-address-id", "9999")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The IP address 5678 was authorized to access 1234."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The IP address 9999 was authorized to access 1234."}))
+				volId, _, _, ipArg, _ := FakeStorageManager.AuthorizeHostToVolumeArgsForCall(0)
+				Expect(ipArg).To(Equal([]int{5678, 9999}))
+				Expect(volId).To(Equal(1234))
+			})
+			It("Success with single IP Ids", func() {
+				// Testing this because when splitting out sl into its own module, intSlices seem to be duplicating first value
 				err := testhelpers.RunCommand(cliCommand, "1234", "--ip-address-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The IP address 5678 was authorized to access 1234."}))
+				volId, _, _, ipArg, _ := FakeStorageManager.AuthorizeHostToVolumeArgsForCall(0)
+				Expect(ipArg).To(Equal([]int{5678}))
+				Expect(volId).To(Equal(1234))
 			})
 		})
 

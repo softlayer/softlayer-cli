@@ -1,4 +1,4 @@
-#!python3
+
 
 """
 This program will take a json file (./plugin/i18n/resources/bad.json) and use it to remove those values
@@ -104,4 +104,5 @@ for i18n in files:
     # cleans up github.ibm.com/bluemix/bluemix-cli
     base_path = '/Users/allmi/go/src/github.ibm.com/Bluemix/bluemix-cli/bluemix/i18n/resources/'
     # cleanup_i18n_file(base_path + i18n, bad_file='./plugin/i18n/resources/en_US.all.json')
-    cleanup_i18n_file(base_path + i18n, bad_file='./old-i18n/bad2.json', bad=False)
+    # cleanup_i18n_file(base_path + i18n, bad_file='./old-i18n/bad2.json', bad=False)
+    cleanup_i18n_file(base_path + i18n, bad_file='./old-i18n/bad3.json')

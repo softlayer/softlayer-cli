@@ -1,90 +1,106 @@
 package i18n
 
 import (
-	"fmt"
-	"path"
-	"sort"
+	"path/filepath"
 	"strings"
 
-	"github.com/nicksnyder/go-i18n/i18n"
-	"github.com/nicksnyder/go-i18n/i18n/language"
-
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/resources"
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
+	goi18n "github.com/nicksnyder/go-i18n/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n/detection"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/resources"
 )
 
 const (
-	defaultLocale   = "en_US"
-	resourcesSuffix = ".all.json"
+	DEFAULT_LOCALE = "en_US"
 )
 
-var T i18n.TranslateFunc
-
-func init() {
-	loadAsset("i18n/resources/" + defaultLocale + resourcesSuffix)
-	T = Tfunc(defaultLocale)
+var SUPPORTED_LOCALES = []string{
+	"de_DE",
+	"en_US",
+	"es_ES",
+	"fr_FR",
+	"it_IT",
+	"ja_JP",
+	"ko_KR",
+	"pt_BR",
+	"zh_Hans",
+	"zh_Hant",
 }
 
-func Tfunc(sources ...string) i18n.TranslateFunc {
-	defaultTfunc := i18n.MustTfunc(defaultLocale)
-	supportedLocales := supportedLocales()
+var resourcePath = filepath.Join("plugin", "i18n", "resources")
 
-	for _, source := range sources {
-		if source == "" {
-			continue
-		}
+func GetResourcePath() string {
+	return resourcePath
+}
 
-		if source == defaultLocale {
-			return defaultTfunc
-		}
+func SetResourcePath(path string) {
+	resourcePath = path
+}
 
-		for _, lang := range language.Parse(source) {
-			switch lang.Tag {
-			case "zh-cn", "zh-sg":
-				lang.Tag = "zh-hans"
-			case "zh-hk", "zh-tw":
-				lang.Tag = "zh-hant"
-			}
+var T goi18n.TranslateFunc = Init(core_config.NewCoreConfig(func(error) {}), new(detection.JibberJabberDetector))
 
-			tags := lang.MatchingTags()
-			sort.Strings(tags)
-
-			for i := len(tags) - 1; i >= 0; i-- {
-				tag := tags[i]
-
-				for locale, assetName := range supportedLocales {
-					if strings.HasPrefix(locale, tag) {
-						loadAsset(assetName)
-						return i18n.MustTfunc(locale)
-					}
-				}
-			}
-		}
+func Init(coreConfig core_config.Repository, detector detection.Detector) goi18n.TranslateFunc {
+	userLocale := coreConfig.Locale()
+	if userLocale != "" {
+		return initWithLocale(userLocale)
 	}
-
-	return defaultTfunc
+	locale := supportedLocale(detector.DetectLocale())
+	if locale == "" {
+		locale = defaultLocaleForLang(detector.DetectLanguage())
+	}
+	if locale == "" {
+		locale = DEFAULT_LOCALE
+	}
+	return initWithLocale(locale)
 }
 
-func loadAsset(assetName string) {
-	bytes, err := resources.Asset(assetName)
+func initWithLocale(locale string) goi18n.TranslateFunc {
+	err := loadFromAsset(locale)
 	if err != nil {
-		panic(fmt.Sprintf("Could not load asset '%s': %s", assetName, err.Error()))
+		panic(err)
 	}
+	return goi18n.MustTfunc(locale)
+}
 
-	err = i18n.ParseTranslationFileBytes(assetName, bytes)
+func loadFromAsset(locale string) (err error) {
+	assetName := locale + ".all.json"
+	assetKey := filepath.Join(resourcePath, assetName)
+	bytes, err := resources.Asset(assetKey)
 	if err != nil {
-		panic(fmt.Sprintf("Could not load translations '%s': %s", assetName, err.Error()))
+		return
 	}
+	err = goi18n.ParseTranslationFileBytes(assetName, bytes)
+	return
 }
 
-func supportedLocales() map[string]string {
-	m := make(map[string]string)
-	for _, assetName := range resources.AssetNames() {
-		locale := normalizeLocale(strings.TrimSuffix(path.Base(assetName), ".all.json"))
-		m[locale] = assetName
+func supportedLocale(locale string) string {
+	locale = normailizeLocale(locale)
+	for _, l := range SUPPORTED_LOCALES {
+		if strings.EqualFold(locale, l) {
+			return l
+		}
 	}
-	return m
+	switch locale {
+	case "zh_cn", "zh_sg":
+		return "zh_Hans"
+	case "zh_hk", "zh_tw":
+		return "zh_Hant"
+	}
+	return ""
 }
 
-func normalizeLocale(locale string) string {
-	return strings.ToLower(strings.Replace(locale, "_", "-", -1))
+func normailizeLocale(locale string) string {
+	return strings.ToLower(strings.Replace(locale, "-", "_", 1))
+}
+
+func defaultLocaleForLang(lang string) string {
+	if lang != "" {
+		lang = strings.ToLower(lang)
+		for _, l := range SUPPORTED_LOCALES {
+			if lang == l[0:2] {
+				return l
+			}
+		}
+	}
+	return ""
 }
