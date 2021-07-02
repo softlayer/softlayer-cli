@@ -102,10 +102,9 @@ for i18n in files:
     # cleanup_i18n_file('./plugin/i18n/resources/' + i18n, bad_file='en_US.all.json', bad=False)
 
     # cleans up github.ibm.com/bluemix/bluemix-cli
-    base_path = '/Users/allmi/go/src/github.ibm.com/Bluemix/bluemix-cli/bluemix/i18n/resources/'
-    # Remove everything in this project
-    cleanup_i18n_file(base_path + i18n, bad_file='./plugin/i18n/resources/en_US.all.json')
-    # Add these back in
-    cleanup_i18n_file(base_path + i18n, bad_file='./old-i18n/bad2.json', bad=False)
-    # remove these again
-    cleanup_i18n_file(base_path + i18n, bad_file='./old-i18n/bad3.json')
+    # base_path = '/Users/allmi/go/src/github.ibm.com/Bluemix/bluemix-cli/bluemix/i18n/resources/'
+    base_path = './plugin/i18n/resources/'
+    # Remove these
+    cleanup_i18n_file(base_path + i18n, bad_file='./old-i18n/remove_these.json')
+    # Add these
+    cleanup_i18n_file(base_path + i18n, bad_file='./old-i18n/add_these.json', bad=False)

@@ -266,6 +266,17 @@ type FakeNetworkManager struct {
 	editVlanReturnsOnCall map[int]struct {
 		result1 error
 	}
+	GetCancelFailureReasonsStub        func(int) []string
+	getCancelFailureReasonsMutex       sync.RWMutex
+	getCancelFailureReasonsArgsForCall []struct {
+		arg1 int
+	}
+	getCancelFailureReasonsReturns struct {
+		result1 []string
+	}
+	getCancelFailureReasonsReturnsOnCall map[int]struct {
+		result1 []string
+	}
 	GetSecurityGroupStub        func(int, string) (datatypes.Network_SecurityGroup, error)
 	getSecurityGroupMutex       sync.RWMutex
 	getSecurityGroupArgsForCall []struct {
@@ -1678,6 +1689,66 @@ func (fake *FakeNetworkManager) EditVlanReturnsOnCall(i int, result1 error) {
 	}{result1}
 }
 
+func (fake *FakeNetworkManager) GetCancelFailureReasons(arg1 int) []string {
+	fake.getCancelFailureReasonsMutex.Lock()
+	ret, specificReturn := fake.getCancelFailureReasonsReturnsOnCall[len(fake.getCancelFailureReasonsArgsForCall)]
+	fake.getCancelFailureReasonsArgsForCall = append(fake.getCancelFailureReasonsArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("GetCancelFailureReasons", []interface{}{arg1})
+	fake.getCancelFailureReasonsMutex.Unlock()
+	if fake.GetCancelFailureReasonsStub != nil {
+		return fake.GetCancelFailureReasonsStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	fakeReturns := fake.getCancelFailureReasonsReturns
+	return fakeReturns.result1
+}
+
+func (fake *FakeNetworkManager) GetCancelFailureReasonsCallCount() int {
+	fake.getCancelFailureReasonsMutex.RLock()
+	defer fake.getCancelFailureReasonsMutex.RUnlock()
+	return len(fake.getCancelFailureReasonsArgsForCall)
+}
+
+func (fake *FakeNetworkManager) GetCancelFailureReasonsCalls(stub func(int) []string) {
+	fake.getCancelFailureReasonsMutex.Lock()
+	defer fake.getCancelFailureReasonsMutex.Unlock()
+	fake.GetCancelFailureReasonsStub = stub
+}
+
+func (fake *FakeNetworkManager) GetCancelFailureReasonsArgsForCall(i int) int {
+	fake.getCancelFailureReasonsMutex.RLock()
+	defer fake.getCancelFailureReasonsMutex.RUnlock()
+	argsForCall := fake.getCancelFailureReasonsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeNetworkManager) GetCancelFailureReasonsReturns(result1 []string) {
+	fake.getCancelFailureReasonsMutex.Lock()
+	defer fake.getCancelFailureReasonsMutex.Unlock()
+	fake.GetCancelFailureReasonsStub = nil
+	fake.getCancelFailureReasonsReturns = struct {
+		result1 []string
+	}{result1}
+}
+
+func (fake *FakeNetworkManager) GetCancelFailureReasonsReturnsOnCall(i int, result1 []string) {
+	fake.getCancelFailureReasonsMutex.Lock()
+	defer fake.getCancelFailureReasonsMutex.Unlock()
+	fake.GetCancelFailureReasonsStub = nil
+	if fake.getCancelFailureReasonsReturnsOnCall == nil {
+		fake.getCancelFailureReasonsReturnsOnCall = make(map[int]struct {
+			result1 []string
+		})
+	}
+	fake.getCancelFailureReasonsReturnsOnCall[i] = struct {
+		result1 []string
+	}{result1}
+}
+
 func (fake *FakeNetworkManager) GetSecurityGroup(arg1 int, arg2 string) (datatypes.Network_SecurityGroup, error) {
 	fake.getSecurityGroupMutex.Lock()
 	ret, specificReturn := fake.getSecurityGroupReturnsOnCall[len(fake.getSecurityGroupArgsForCall)]
@@ -2601,6 +2672,8 @@ func (fake *FakeNetworkManager) Invocations() map[string][][]interface{} {
 	defer fake.editSecurityGroupRulesMutex.RUnlock()
 	fake.editVlanMutex.RLock()
 	defer fake.editVlanMutex.RUnlock()
+	fake.getCancelFailureReasonsMutex.RLock()
+	defer fake.getCancelFailureReasonsMutex.RUnlock()
 	fake.getSecurityGroupMutex.RLock()
 	defer fake.getSecurityGroupMutex.RUnlock()
 	fake.getSubnetMutex.RLock()

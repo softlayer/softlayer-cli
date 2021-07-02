@@ -163,3 +163,7 @@ go: github.ibm.com/Bluemix/cf-admin-cli@v0.0.0-20200515160705-accb00409d86: veri
 
 ```
 
+
+
+## Detect Secrets
+Uses https://github.ibm.com/Whitewater/whitewater-detect-secrets NOT the normal yelp/detect-secrets

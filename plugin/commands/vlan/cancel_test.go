@@ -24,6 +24,7 @@ var _ = Describe("VLAN Cancel", func() {
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
+
 		cmd = vlan.NewCancelCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
 			Name:        metadata.VlanCancelMetaData().Name,
@@ -83,6 +84,19 @@ var _ = Describe("VLAN Cancel", func() {
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to cancel VLAN 1234.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+			})
+		})
+
+		Context("Unable to cancel due to reasons.", func() {
+			BeforeEach(func() {
+				fakeError := []string{"BAD"}
+				fakeNetworkManager.GetCancelFailureReasonsReturns(fakeError)
+			})
+			It("return error", func() {
+				err := testhelpers.RunCommand(cliCommand, "1234", "-f")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to cancel VLAN 1234."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("BAD"))
 			})
 		})
 	})
