@@ -26,8 +26,6 @@ script:
   - bin/replace-buildID
   - bin/build-all
   - cp -r autocomplete out/
-after_success: if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then source bin/travis_get_artifactory_api_key.sh ;
-  bin/travis_deploy.sh out; fi
 notifications:
   slack:
     rooms:
