@@ -1,0 +1,4 @@
+[
+    {"id": "VLAN {{.ID}} can not be cancelled."},
+    {"id": "Subnet {{.ID}} can not be cancelled."}
+]
