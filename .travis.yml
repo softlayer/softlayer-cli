@@ -19,7 +19,7 @@ install:
 before_script:
   - go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")
   - go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")
-  - bin/detect_secrets.sh
+  - python3 bin/detect_secrets.py
   - "(cd plugin && i18n4go -c checkup -q i18n -v) || exit 1"
   - gosec -exclude-dir=fixture -exclude-dir=plugin/resources -quiet ./...
 script:
@@ -28,7 +28,6 @@ script:
   - cp -r autocomplete out/
 notifications:
   slack:
-    rooms:
-      secure: TJBxGmsXBD993vLqrF5VxLDhxJAqEIr5fGh8WKM4/A91NuC9CC58PSdWGdBX+oQd4VITBlKJPurdjw8lpCY7r3etrpuIJjkE71eAWcUm2HEXuKdSE69MfPYE8tEsFZrv73UPgO/eCPw8rPS5wqR3sfQBsisVuWWllp6SNRXRmLk=
+    rooms: ibm-cloudplatform:RZfnTv0P664KhVAtEAjcEBPJ
     on_failure: always
     on_success: change
