@@ -23,10 +23,7 @@ before_script:
   - "(cd plugin && i18n4go -c checkup -q i18n -v) || exit 1"
   - gosec -exclude-dir=fixture -exclude-dir=plugin/resources -quiet ./...
 script:
-  - sh bin/replace-buildID
-  - sh bin/build-all
-  - mkdir out
-  - cp -r autocomplete out/
+  - go build
 notifications:
   slack:
     rooms: ibm-cloudplatform:RZfnTv0P664KhVAtEAjcEBPJ
