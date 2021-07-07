@@ -19,7 +19,7 @@ install:
 before_script:
   - go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")
   - go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")
-  - python bin/detect_secrets.py
+  - python3 bin/detect_secrets.py
   - "(cd plugin && i18n4go -c checkup -q i18n -v) || exit 1"
   - gosec -exclude-dir=fixture -exclude-dir=plugin/resources -quiet ./...
 script:
