@@ -28,7 +28,6 @@ script:
   - cp -r autocomplete out/
 notifications:
   slack:
-    rooms:
-      secure: TJBxGmsXBD993vLqrF5VxLDhxJAqEIr5fGh8WKM4/A91NuC9CC58PSdWGdBX+oQd4VITBlKJPurdjw8lpCY7r3etrpuIJjkE71eAWcUm2HEXuKdSE69MfPYE8tEsFZrv73UPgO/eCPw8rPS5wqR3sfQBsisVuWWllp6SNRXRmLk=
+    rooms: ibm-cloudplatform:RZfnTv0P664KhVAtEAjcEBPJ
     on_failure: always
     on_success: change
