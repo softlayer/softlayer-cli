@@ -1,6 +1,7 @@
 package testhelpers
 
 import (
+	"fmt"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
@@ -14,12 +15,13 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 )
 
-type FakeTransportHandler struct {
-	FileNames []string
-	ApiError  sl.Error
+type FakeTransportHandler_True struct {
 }
 
-type FakeTransportHandler_True struct {
+func NewFakeSoftlayerSession_True() *session.Session {
+	return &session.Session{
+		TransportHandler: FakeTransportHandler_True{},
+	}
 }
 
 func (h FakeTransportHandler_True) DoRequest(sess *session.Session, service string, method string, args []interface{}, options *sl.Options, pResult interface{}) error {
@@ -27,10 +29,9 @@ func (h FakeTransportHandler_True) DoRequest(sess *session.Session, service stri
 	return nil
 }
 
-func NewFakeSoftlayerSession_True() *session.Session {
-	return &session.Session{
-		TransportHandler: FakeTransportHandler_True{},
-	}
+type FakeTransportHandler struct {
+	FileNames []string
+	ApiError  sl.Error
 }
 
 func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, method string, args []interface{}, options *sl.Options, pResult interface{}) error {
@@ -54,7 +55,14 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	}
 	b, err := readJsonTestFixtures(service, method, h.FileNames)
 	if err != nil {
-		return err
+
+		slError := sl.Error{
+			StatusCode: 500,
+			Exception:  fmt.Sprintf("%v",err),
+			Message:    "Erroring doing Fake Handling",
+			Wrapped:    nil,
+		}
+		return slError
 	}
 	err = json.Unmarshal(b, pResult)
 	//fmt.Println(pResult)
@@ -80,13 +88,21 @@ func NewFakeSoftlayerSessionErrors(fileNames []string, slError sl.Error) *sessio
 	}
 }
 
+
+// This function tries to find an appropriate JSON file to use as a response object.
+// Fixtures are placed in the plugin/testfixtures directory in this patter:
+// testfixtures/SoftLayer_Service/method.json : For general use
+// testfixtures/SoftLayer_Service/method_id.json : Will be used if the ID in the request matches, otherwise fallback to general method
+// testfixtures/SoftLayer_Service/method_specialCase.json : Will be used if this is in the fileNames array
 func readJsonTestFixtures(service string, method string, fileNames []string) ([]byte, error) {
 	wd, _ := os.Getwd()
 	var fixture string
 	scope := ".."
 
+	baseFixture := filepath.Join(wd, scope, "testfixtures", service+"/"+method+".json")
+	// fmt.Printf("baseFixture: %v \n", baseFixture)
 	if len(fileNames) == 0 {
-		fixture = filepath.Join(wd, scope, "testfixtures", "services", service+"_"+method+".json")
+		fixture = baseFixture
 	} else {
 		if strings.Contains(wd, "plugin/commands") {
 			scope += "/.."
