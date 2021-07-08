@@ -43,6 +43,15 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 			return nil
 		}
 	}
+	// See if the API will just tell us if this VLAN can't be cancelled for a specific reason
+	reasons := cmd.NetworkManager.GetCancelFailureReasons(vlanID)
+	if len(reasons) > 0 {
+		for _, reason := range reasons {
+			cmd.UI.Print(reason)
+		}
+		return cli.NewExitError(T("Failed to cancel VLAN {{.ID}}.\n", map[string]interface{}{"ID": vlanID}), 2)
+
+	}
 	err = cmd.NetworkManager.CancelVLAN(vlanID)
 	if err != nil {
 		if strings.Contains(err.Error(), slErrors.SL_EXP_OBJ_NOT_FOUND) {

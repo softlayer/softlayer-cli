@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+ROOT_DIR=$(cd $(dirname $(dirname $0)) && pwd)
+
+CURRENT_SHA=$(git rev-parse --short HEAD)
+BUILD_ID=$CURRENT_SHA-$(date -u +"%Y-%m-%dT%H:%M:%S+00:00")
+
+if [ $(uname) == Darwin ]; then
+    sed -i "" -e "s/BUILD_FROM_SOURCE/$BUILD_ID/g" "$ROOT_DIR/plugin/version/version.go"
+else
+    sed -i -e "s/BUILD_FROM_SOURCE/$BUILD_ID/g" "$ROOT_DIR/plugin/version/version.go"
+fi

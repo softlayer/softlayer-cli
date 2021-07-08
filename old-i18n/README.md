@@ -1,0 +1,1 @@
+These files are for automatically adding in new translation files, and removing old ones. Dont commit changes to them, these are just here as an example to make it easier.

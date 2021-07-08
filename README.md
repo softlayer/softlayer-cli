@@ -65,6 +65,21 @@ Specific Tests
 
 ```
 go test -v -coverprofile=coverage.out github.ibm.com/SoftLayer/softlayer-cli/plugin/managers -ginkgo.focus Issues3190
+
+```
+
+Fake API Errors
+
+(From managers/network_tests.go)
+```
+slError := sl.Error{
+    StatusCode: 500,
+    Exception: "Testing Error",
+    Message: "Testing error message",
+    Wrapped: nil,
+}
+fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(nil, slError)
+networkManager = managers.NewNetworkManager(fakeSLSession)
 ```
 
 
@@ -76,8 +91,8 @@ CLI calls to manager functions need an entry in `bluemix-cli\bluemix\slplugin\te
 Managers have a fake/test interface that is autogenerate with a program called [couterfieter](https://github.com/maxbrunsfeld/counterfeiter)
 
 ```
-# From /github.ibm.com/Bluemix/bluemix-cli
-cd bluemix/slplugin/managers
+# From /github.ibm.com/SoftLayer/softlayer-cli
+cd plugin/managers
 counterfeiter.exe -o ../testhelpers/fake_storage_manager.go . StorageManager
 ```
 
@@ -176,6 +191,13 @@ $ ./bin/generate-i18n-resources
 Generating i18n resource file ...
 Done.
 ```
+
+
+Removing and Adding translations automatically.
+
+There are 2 files in `old-i18n` called `add_these.json` and `remove_these.json`. Dont commit changes to them, but do use them help automatically modify the translation files. 
+
+Run `./bin/split_i18n.py` (with python3.8 at least) to add everything in `add_these.json` and remove everything in `remove_these.json`.
 
 
 # Vendor

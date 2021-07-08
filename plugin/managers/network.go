@@ -67,6 +67,7 @@ type NetworkManager interface {
 	ListSecurityGroupRules(grouId int) ([]datatypes.Network_SecurityGroup_Rule, error)
 	RemoveSecurityGroupRule(groupId, ruleId int) error
 	RemoveSecurityGroupRules(groupId int, ruleIds []int) error
+	GetCancelFailureReasons(vlanId int) []string
 }
 
 type networkManager struct {
@@ -293,7 +294,9 @@ func (n networkManager) CancelVLAN(vlanID int) error {
 		return err
 	}
 	if vlan.BillingItem == nil || vlan.BillingItem.Id == nil {
-		return errors.New(T("VLAN {{.ID}} can not be cancelled.", map[string]interface{}{"ID": vlanID}))
+		message := T("{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty",
+					 map[string]interface{}{"TYPE": "Vlan", "ID": vlanID})
+		return errors.New(message)
 	}
 	billingID := *vlan.BillingItem.Id
 	_, err = n.BillingService.Id(billingID).CancelService()
@@ -323,7 +326,10 @@ func (n networkManager) CancelSubnet(subnetId int) error {
 		return err
 	}
 	if subnet.BillingItem == nil || subnet.BillingItem.Id == nil {
-		return errors.New(T("Subnet {{.ID}} can not be cancelled.", map[string]interface{}{"ID": subnetId}))
+		message := T("{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will " +
+					 "automatically be removed from your account when it is empty",
+					 map[string]interface{}{"TYPE": "Subnet", "ID": subnetId})
+		return errors.New(message)
 	}
 	billingID := *subnet.BillingItem.Id
 	_, err = n.BillingService.Id(billingID).CancelService()
@@ -712,4 +718,16 @@ func (n networkManager) RemoveSecurityGroupRule(groupId, ruleId int) error {
 func (n networkManager) RemoveSecurityGroupRules(groupId int, ruleIds []int) error {
 	_, err := n.SecurityGroupService.Id(groupId).RemoveRules(ruleIds)
 	return err
+}
+
+
+//Calls SoftLayer_Network_Vlan::getCancelFailureReasons()
+//vlanId Id for the vlan
+//returns a list of strings for why a vlan can not be cancelled.
+func (n networkManager) GetCancelFailureReasons(vlanId int) []string {
+	reasons, err := n.VlanService.Id(vlanId).GetCancelFailureReasons()
+	if err != nil {
+		reasons = []string{err.Error()}
+	}
+	return reasons
 }

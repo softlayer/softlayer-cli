@@ -94,6 +94,12 @@ func readJsonTestFixtures(service string, method string, fileNames []string) ([]
 		//find the file name that matches the service and method name
 		for _, filename := range fileNames {
 			//fmt.Println("check file:" + filename)
+			//If the file exists as is, just load and return it.
+			if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", "services", filename)); err == nil {
+				fixture = filepath.Join(wd, scope, "testfixtures", "services", filename)
+				return ioutil.ReadFile(fixture) // #nosec
+			}
+
 			nameSegments := strings.Split(filename, "_")
 			if nameSegments[0] == "SoftLayer" && (nameSegments[1] == "Account" || nameSegments[1] == "Ticket") {
 				if len(nameSegments) == 3 {
@@ -129,8 +135,6 @@ func readJsonTestFixtures(service string, method string, fileNames []string) ([]
 						break
 					}
 				}
-			} else if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", "services", filename)); err == nil {
-				fixture = filepath.Join(wd, scope, "testfixtures", "services", filename)
 			}
 		}
 	}
