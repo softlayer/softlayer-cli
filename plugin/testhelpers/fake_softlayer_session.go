@@ -35,15 +35,17 @@ type FakeTransportHandler struct {
 }
 
 func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, method string, args []interface{}, options *sl.Options, pResult interface{}) error {
-	// fmt.Println("service:\t", service)
+	// fmt.Println("\nservice:\t", service)
 	// fmt.Println("method:\t", method)
 	// fmt.Println("filenames:\t", h.FileNames)
-	// for _, arg := range args {
-	// 	fmt.Println("args:\t", arg)
+	// for x, arg := range args {
+	// 	fmt.Printf("args %v:\t %v", x, arg)
 	// }
-	// if options.Id != nil {
-	// 	fmt.Println("options-id:\t", *options.Id)
-	// }
+	identifier := 0
+	if options.Id != nil {
+		// fmt.Println("options-id:\t", *options.Id)
+		identifier = *options.Id
+	}
 	// if options.Mask != "" {
 	// 	fmt.Println("options-mask:\t", options.Mask)
 	// }
@@ -53,11 +55,11 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	if h.ApiError.StatusCode > 0 {
 		return h.ApiError
 	}
-	b, err := readJsonTestFixtures(service, method, h.FileNames)
+	b, err := readJsonTestFixtures(service, method, h.FileNames, identifier)
 	if err != nil {
 
 		slError := sl.Error{
-			StatusCode: 500,
+			StatusCode: 555,
 			Exception:  fmt.Sprintf("%v",err),
 			Message:    "Erroring doing Fake Handling",
 			Wrapped:    nil,
@@ -94,15 +96,24 @@ func NewFakeSoftlayerSessionErrors(fileNames []string, slError sl.Error) *sessio
 // testfixtures/SoftLayer_Service/method.json : For general use
 // testfixtures/SoftLayer_Service/method_id.json : Will be used if the ID in the request matches, otherwise fallback to general method
 // testfixtures/SoftLayer_Service/method_specialCase.json : Will be used if this is in the fileNames array
-func readJsonTestFixtures(service string, method string, fileNames []string) ([]byte, error) {
+func readJsonTestFixtures(service string, method string, fileNames []string, identifier int) ([]byte, error) {
 	wd, _ := os.Getwd()
-	var fixture string
+	var fixture, workingPath string
 	scope := ".."
 
 	baseFixture := filepath.Join(wd, scope, "testfixtures", service+"/"+method+".json")
 	// fmt.Printf("baseFixture: %v \n", baseFixture)
+	
+
+
 	if len(fileNames) == 0 {
-		fixture = baseFixture
+		// Check to see if we have a fixture that matches the ID
+		// actual path should be of the format testfixtures/SoftLayer_Service/method-123.json
+		workingPath =  fmt.Sprintf("%s/%s-%d.json", service, method, identifier)
+		if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", workingPath)); err == nil {
+			fixture = filepath.Join(wd, scope, "testfixtures", workingPath)
+			return ioutil.ReadFile(fixture) // #nosec
+		}
 	} else {
 		if strings.Contains(wd, "plugin/commands") {
 			scope += "/.."
@@ -110,54 +121,24 @@ func readJsonTestFixtures(service string, method string, fileNames []string) ([]
 		//find the file name that matches the service and method name
 		for _, filename := range fileNames {
 			//fmt.Println("check file:" + filename)
-			//If the file exists as is, just load and return it.
-			if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", "services", filename)); err == nil {
-				fixture = filepath.Join(wd, scope, "testfixtures", "services", filename)
+			// If the file exists as is, just load and return it.
+			// actual path should be of the format testfixtures/SoftLayer_Service/method-string.json
+			workingPath = service + "/" + filename + ".json"
+			if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", workingPath)); err == nil {
+				fixture = filepath.Join(wd, scope, "testfixtures", workingPath)
 				return ioutil.ReadFile(fixture) // #nosec
-			}
-
-			nameSegments := strings.Split(filename, "_")
-			if nameSegments[0] == "SoftLayer" && (nameSegments[1] == "Account" || nameSegments[1] == "Ticket") {
-				if len(nameSegments) == 3 {
-					if service == nameSegments[0]+"_"+nameSegments[1] && method == nameSegments[2] {
-						fixture = filepath.Join(wd, scope, "testfixtures", "services", service+"_"+method+".json")
-						break
-					}
-				} else if len(nameSegments) == 4 {
-					if service == nameSegments[0]+"_"+nameSegments[1] && method == nameSegments[2] {
-						fixture = filepath.Join(wd, scope, "testfixtures", "services", service+"_"+method+"_"+nameSegments[3]+".json")
-						break
-					} else if service == nameSegments[0]+"_"+nameSegments[1]+"_"+nameSegments[2] && method == nameSegments[3] {
-						fixture = filepath.Join(wd, scope, "testfixtures", "services", service+"_"+method+".json")
-					}
-				}
-			} else if nameSegments[0] == "SoftLayer" && nameSegments[1] != "Account" {
-				if len(nameSegments) == 4 {
-					if service == nameSegments[0]+"_"+nameSegments[1]+"_"+nameSegments[2] && method == nameSegments[3] {
-						fixture = filepath.Join(wd, scope, "testfixtures", "services", service+"_"+method+".json")
-						break
-					}
-				} else if len(nameSegments) == 5 {
-					if service == nameSegments[0]+"_"+nameSegments[1]+"_"+nameSegments[2] && method == nameSegments[3] {
-						fixture = filepath.Join(wd, scope, "testfixtures", "services", service+"_"+method+"_"+nameSegments[4]+".json")
-						break
-					} else if service == nameSegments[0]+"_"+nameSegments[1]+"_"+nameSegments[2]+"_"+nameSegments[3] && method == nameSegments[4] {
-						fixture = filepath.Join(wd, scope, "testfixtures", "services", service+"_"+method+".json")
-						break
-					}
-				} else if len(nameSegments) == 6 {
-					if service == nameSegments[0]+"_"+nameSegments[1]+"_"+nameSegments[2]+"_"+nameSegments[3]+"_"+nameSegments[4] && method == nameSegments[5] {
-						fixture = filepath.Join(wd, scope, "testfixtures", "services", service+"_"+method+".json")
-						break
-					}
-				}
 			}
 		}
 	}
-	if fixture != "" {
-		//fmt.Println("read file:" + fixture)
+
+	// Default to the base fixture `testfixtures/SoftLayer_Service/method.json`
+	if _, err := os.Stat(baseFixture); err == nil {
+		fixture = filepath.Join(baseFixture)
 		return ioutil.ReadFile(fixture) // #nosec
 	}
+
+	fileNames = append(fileNames, baseFixture)
+	apiCall := fmt.Sprintf("%s::%s(id=%d)", service, method, identifier)
 	files := utils.StringSliceToString(fileNames)
-	return nil, errors.New("failed to find test fixture file:serivce=" + service + ",method=" + method + ",files:" + files)
+	return nil, errors.New("Fixture for " + apiCall + " failed to load, looked in these files: " +  files)
 }

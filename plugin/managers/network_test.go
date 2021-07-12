@@ -246,7 +246,7 @@ var _ = Describe("NetworkManager", func() {
 			})
 			It("Handles missing billing items", func() {
 
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession([]string{"SoftLayer_Network_Vlan_getObject-noBilling.json"})
+				fakeSLSession = testhelpers.NewFakeSoftlayerSession([]string{"getObject-noBilling"})
 				networkManager = managers.NewNetworkManager(fakeSLSession)
 				err := networkManager.CancelVLAN(110)
 				Expect(err).To(HaveOccurred())

@@ -102,6 +102,42 @@ New commands needs a `command_test.go` file in the CLI directory.
 
 If you added `slplugin/commands/new/` then there needs to be a `slplugin/commands/new/new_test.go` file. Copy the content from one of the other command test files and just change the name and package.
 
+### Fake Transports
+
+In unit tests, you will want to establish a FakeSoftLayerSession object so that API requests faked from test fixtures.
+
+Something like this.
+```
+    BeforeEach(func() {
+        fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
+        networkManager = managers.NewNetworkManager(fakeSLSession)
+    })
+```
+
+By default, every API call made to the SoftLayer API will load in the appropraite JSON file from `testfixtures/SoftLayer_Service/method.json`
+
+To force errors:
+
+```
+slError := sl.Error{
+    StatusCode: 500,
+    Exception: "NO VLAN",
+    Message: "NO VLAN",
+    Wrapped: nil,
+}
+fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(nil, slError)
+networkManager = managers.NewNetworkManager(fakeSLSession)
+```
+
+To force a non-default JSON file to be loaded
+
+This will load `testfixtures/SoftLayer_Network_Vlan/getObject-noBilling.json` when SoftLayer_Network_Vlan::getObject is called next.
+
+```
+fakeSLSession = testhelpers.NewFakeSoftlayerSession([]string{"getObject-noBilling.json"})
+networkManager = managers.NewNetworkManager(fakeSLSession)
+```
+
 ## Adding new actions to slplugin
 
 > Terminology:
