@@ -41,11 +41,14 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	// for x, arg := range args {
 	// 	fmt.Printf("args %v:\t %v", x, arg)
 	// }
+
 	identifier := 0
 	if options.Id != nil {
 		// fmt.Println("options-id:\t", *options.Id)
 		identifier = *options.Id
 	}
+	// fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
+
 	// if options.Mask != "" {
 	// 	fmt.Println("options-mask:\t", options.Mask)
 	// }
@@ -54,6 +57,11 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	// }
 	if h.ApiError.StatusCode > 0 {
 		return h.ApiError
+	}
+	// This is required to prevent pagination requests from going off in an infinite loop
+	if options.Offset != nil  && *options.Offset > 0 {
+		pResult = []byte("[]")
+		return nil
 	}
 	b, err := readJsonTestFixtures(service, method, h.FileNames, identifier)
 	if err != nil {

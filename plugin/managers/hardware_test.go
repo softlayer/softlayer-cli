@@ -55,10 +55,6 @@ var _ = Describe("HardwareServerManager", func() {
 
 	Describe("List hardware", func() {
 		Context("List hardware", func() {
-			BeforeEach(func() {
-				fakeSLSession = testhelpers.NewFakeSoftlayerPagnationSession(nil)
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("it returns hardware", func() {
 				hws, err := hardwareManager.ListHardware(nil, 0, 0, "", "", "", 0, "", "", "", 0, "")
 				Expect(err).NotTo(HaveOccurred())

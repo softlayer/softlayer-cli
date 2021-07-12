@@ -37,10 +37,6 @@ var _ = Describe("NetworkManager", func() {
 	})
 
 	Describe("Get all vlans", func() {
-		BeforeEach(func() {
-			fakeSLSession = testhelpers.NewFakeSoftlayerPagnationSession(nil)
-			networkManager = managers.NewNetworkManager(fakeSLSession)
-		})
 		Context("Get all vlans under current account", func() {
 			It("It returns a list of vlans", func() {
 				vlans, err := networkManager.ListVlans("", 0, "", 0, "")
@@ -57,10 +53,6 @@ var _ = Describe("NetworkManager", func() {
 	})
 
 	Describe("Get all subnets", func() {
-		BeforeEach(func() {
-			fakeSLSession = testhelpers.NewFakeSoftlayerPagnationSession(nil)
-			networkManager = managers.NewNetworkManager(fakeSLSession)
-		})
 		Context("Get all subnets under current account", func() {
 			It("It returns a list of subnets", func() {
 				subnets, err := networkManager.ListSubnets("", "", 0, "", "", 0, "")
