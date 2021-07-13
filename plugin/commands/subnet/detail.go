@@ -68,16 +68,16 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	if !c.IsSet("no-ipAddress") {
 		if subnet.IpAddresses == nil || len(subnet.IpAddresses) == 0 {
-			table.Add(T("Ip Address"), T("none"))
+			table.Add(T("ip address"), T("none"))
 		} else {
 			buf := new(bytes.Buffer)
-			ipTable := terminal.NewTable(buf, []string{T("Ip"), T("IpAddress")})
+			ipTable := terminal.NewTable(buf, []string{T("ip"), T("ipAddress")})
 			for _, ip := range subnet.IpAddresses {
 				ipTable.Add(utils.FormatIntPointer(ip.Id),
 					utils.FormatStringPointer(ip.IpAddress))
 			}
 			ipTable.Print()
-			table.Add(T("Ip Address"), buf.String())
+			table.Add(T("ip address"), buf.String())
 		}
 	}
 
