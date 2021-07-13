@@ -25,9 +25,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("Cancel hardware", func() {
 		Context("Cancel hardware with billing id not found", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_getObject_missingBillingItem",
-				}
+				filenames := []string{"getObject_missingBillingItem",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
@@ -39,10 +37,7 @@ var _ = Describe("HardwareServerManager", func() {
 		})
 		Context("Cancel hardware succeed", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_getObject",
-					"SoftLayer_Billing_Item_cancelItem_hardware",
-				}
+				filenames := []string{"cancelItem_hardware",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
@@ -114,9 +109,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetPackage", func() {
 		Context("not found Package", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getAllObjects_hardwarenotfound",
-				}
+				filenames := []string{"getAllObjects_hardwarenotfound",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
@@ -130,9 +123,7 @@ var _ = Describe("HardwareServerManager", func() {
 
 		Context("get Package", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getAllObjects_hardware",
-				}
+				filenames := []string{"getAllObjects_hardware",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
@@ -146,17 +137,6 @@ var _ = Describe("HardwareServerManager", func() {
 
 	Describe("Edit", func() {
 		Context("Edit all succeed", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_setUserMetadata",
-					"SoftLayer_Hardware_Server_setTags",
-					"SoftLayer_Hardware_Server_editObject",
-					"SoftLayer_Hardware_Server_setPublicNetworkInterfaceSpeed",
-					"SoftLayer_Hardware_Server_setPrivateNetworkInterfaceSpeed",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("it returns nil", func() {
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{true, true, true, true, true, true, true}))
@@ -165,148 +145,103 @@ var _ = Describe("HardwareServerManager", func() {
 		})
 		Context("Edit set metadata fails", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_setUserMetadata_error",
-					"SoftLayer_Hardware_Server_setTags",
-					"SoftLayer_Hardware_Server_editObject",
-					"SoftLayer_Hardware_Server_setPublicNetworkInterfaceSpeed",
-					"SoftLayer_Hardware_Server_setPrivateNetworkInterfaceSpeed",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setUserMetadata", 500, "BAD")
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{false, true, true, true, true, true, true}))
 				Expect(msgs).NotTo(BeNil())
+				Expect(msgs[0]).To(ContainSubstring("BAD: BAD (HTTP 500)"))
 			})
 		})
 		Context("Edit set tag fails", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_setTags_error",
-					"SoftLayer_Hardware_Server_setUserMetadata",
-					"SoftLayer_Hardware_Server_editObject",
-					"SoftLayer_Hardware_Server_setPublicNetworkInterfaceSpeed",
-					"SoftLayer_Hardware_Server_setPrivateNetworkInterfaceSpeed",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setTags", 500, "BAD")
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{true, false, true, true, true, true, true}))
 				Expect(msgs).NotTo(BeNil())
+				Expect(msgs[1]).To(ContainSubstring("BAD: BAD (HTTP 500)"))
 			})
 		})
 		Context("Edit set hostname fails", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_setTags",
-					"SoftLayer_Hardware_Server_setUserMetadata",
-					"SoftLayer_Hardware_Server_editObject_error",
-					"SoftLayer_Hardware_Server_setPublicNetworkInterfaceSpeed",
-					"SoftLayer_Hardware_Server_setPrivateNetworkInterfaceSpeed",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "editObject", 500, "BAD")
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{true, true, false, true, true}))
 				Expect(msgs).NotTo(BeNil())
+				Expect(msgs[2]).To(ContainSubstring("BAD: BAD (HTTP 500)"))
 			})
 		})
 
 		Context("Edit set public port speed fails", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_setTags",
-					"SoftLayer_Hardware_Server_setUserMetadata",
-					"SoftLayer_Hardware_Server_editObject",
-					"SoftLayer_Hardware_Server_setPublicNetworkInterfaceSpeed_error",
-					"SoftLayer_Hardware_Server_setPrivateNetworkInterfaceSpeed",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setPublicNetworkInterfaceSpeed", 500, "BAD")
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{true, true, true, true, true, false, true}))
 				Expect(msgs).NotTo(BeNil())
+				Expect(msgs[5]).To(ContainSubstring("BAD: BAD (HTTP 500)"))
 			})
 		})
 
 		Context("Edit set private port speed fails", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_setTags",
-					"SoftLayer_Hardware_Server_setUserMetadata",
-					"SoftLayer_Hardware_Server_editObject",
-					"SoftLayer_Hardware_Server_setPublicNetworkInterfaceSpeed",
-					"SoftLayer_Hardware_Server_setPrivateNetworkInterfaceSpeed_error",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setPrivateNetworkInterfaceSpeed", 500, "BAD")
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{true, true, true, true, true, true, false}))
 				Expect(msgs).NotTo(BeNil())
+				Expect(msgs[6]).To(ContainSubstring("BAD: BAD (HTTP 500)"))
 			})
 		})
 	})
 
 	Describe("UpdateFirmware", func() {
 		Context("UpdateFirmware succeed", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_createFirmwareUpdateTransaction",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("it returns nil", func() {
 				err := hardwareManager.UpdateFirmware(123456, true, true, true, true)
-				Expect(err).NotTo(HaveOccurred())
-			})
-			It("it returns nil", func() {
-				err := hardwareManager.UpdateFirmware(123456, true, false, false, false)
-				Expect(err).NotTo(HaveOccurred())
-			})
-			It("it returns nil", func() {
-				err := hardwareManager.UpdateFirmware(123456, false, true, false, false)
-				Expect(err).NotTo(HaveOccurred())
-			})
-			It("it returns nil", func() {
-				err := hardwareManager.UpdateFirmware(123456, false, false, true, false)
-				Expect(err).NotTo(HaveOccurred())
-			})
-			It("it returns nil", func() {
-				err := hardwareManager.UpdateFirmware(123456, false, false, false, true)
 				Expect(err).NotTo(HaveOccurred())
 			})
 		})
 		Context("UpdateFirmware fails", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Hardware_Server_createFirmwareUpdateTransaction_error",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+                fakeHandler.AddApiError("SoftLayer_Hardware_Server", "createFirmwareUpdateTransaction", 500, "FAILED")
+                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns error", func() {
 				err := hardwareManager.UpdateFirmware(123456, true, true, true, true)
 				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(Equal("FAILED: FAILED (HTTP 500)"))
 			})
 		})
 	})
 
 	Describe("GetCreateOptions", func() {
 		BeforeEach(func() {
-			filenames := []string{
-				"SoftLayer_Product_Package_getAllObjects_hardware",
-			}
+			filenames := []string{"getAllObjects_hardware",}
 			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 		})
@@ -325,9 +260,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetDefaultPriceId", func() {
 		Context("GetDefaultPriceId", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getAllObjects_hardware",
-				}
+				filenames := []string{"getAllObjects_hardware",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -354,9 +287,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetOSPriceId", func() {
 		Context("GetOSPriceId", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getAllObjects_hardware",
-				}
+				filenames := []string{"getAllObjects_hardware",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -383,9 +314,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetBandwidthPriceId", func() {
 		Context("GetBandwidthPriceId", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getAllObjects_hardware",
-				}
+				filenames := []string{"getAllObjects_hardware",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -406,9 +335,7 @@ var _ = Describe("HardwareServerManager", func() {
 
 	Describe("GetPortSpeedPriceId", func() {
 		BeforeEach(func() {
-			filenames := []string{
-				"SoftLayer_Product_Package_getAllObjects_hardware",
-			}
+			filenames := []string{"getAllObjects_hardware",}
 			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			productPackage, _ = hardwareManager.GetPackage()
@@ -429,9 +356,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetExtraPriceId", func() {
 		Context("GetExtraPriceId", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getAllObjects_hardware",
-				}
+				filenames := []string{"getAllObjects_hardware",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -458,9 +383,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GenerateCreateTemplate", func() {
 		Context("GenerateCreateTemplate", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getAllObjects_hardware",
-				}
+				filenames := []string{"getAllObjects_hardware",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -534,53 +457,22 @@ var _ = Describe("HardwareServerManager", func() {
 	})
 
 	Describe("Toggle IPMI", func() {
-		Context("When enable IPMI", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"hardware/toggle_ipmi_enabled",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-
-			})
-
+		Context("Enable IPMI", func() {
 			It("should return success", func() {
 				err := hardwareManager.ToggleIPMI(123456, true)
-
-				Expect(err).NotTo(HaveOccurred())
-			})
-		})
-
-		Context("When disable IPMI", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"hardware/toggle_ipmi_disabled",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-
-			})
-
-			It("should return success", func() {
-				err := hardwareManager.ToggleIPMI(123456, false)
-
 				Expect(err).NotTo(HaveOccurred())
 			})
 		})
 
 		Context("When there is an error", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"hardware/toggle_ipmi_error",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
+				fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(500, "IPMI ERROR")
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-
 			})
 			It("should return error", func() {
 				err := hardwareManager.ToggleIPMI(123456, false)
-
 				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(Equal("IPMI ERROR: IPMI ERROR (HTTP 500)"))
 			})
 		})
 	})

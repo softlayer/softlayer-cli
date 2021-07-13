@@ -32,6 +32,8 @@ func (h FakeTransportHandler_True) DoRequest(sess *session.Session, service stri
 type FakeTransportHandler struct {
 	FileNames []string
 	ApiError  sl.Error
+	ErrorMap map[string]sl.Error
+
 }
 
 func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, method string, args []interface{}, options *sl.Options, pResult interface{}) error {
@@ -47,7 +49,8 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 		// fmt.Println("options-id:\t", *options.Id)
 		identifier = *options.Id
 	}
-	// fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
+	apiSig := fmt.Sprintf("%s::%s", service, method)
+	fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
 
 	// if options.Mask != "" {
 	// 	fmt.Println("options-mask:\t", options.Mask)
@@ -55,6 +58,11 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	// if options.Filter != "" {
 	// 	fmt.Println("options-filter:\t", options.Filter)
 	// }
+
+	if apiError, ok := h.ErrorMap[apiSig]; ok {
+		fmt.Printf("Found an error for %s -> %s\n", apiSig, apiError)
+		return h.ErrorMap[apiSig]
+	}
 	if h.ApiError.StatusCode > 0 {
 		return h.ApiError
 	}
@@ -75,8 +83,25 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 		return slError
 	}
 	err = json.Unmarshal(b, pResult)
-	//fmt.Println(pResult)
 	return err
+}
+
+func (h *FakeTransportHandler) AddApiError(service string,  method string, errorCode int, errorMessage string) {
+	if h.ErrorMap == nil {
+		h.ErrorMap = make(map[string]sl.Error)
+	}
+	apiSig := service + "::" + method
+	slError := sl.Error{
+		StatusCode: errorCode,
+		Exception:  errorMessage,
+		Message:    errorMessage,
+		Wrapped:    nil,
+	}
+	h.ErrorMap[apiSig] = slError
+}
+
+func (h FakeTransportHandler) ClearErrors() {
+	h.ErrorMap = make(map[string]sl.Error)
 }
 
 func NewFakeSoftlayerSession(fileNames []string) *session.Session {
@@ -86,15 +111,23 @@ func NewFakeSoftlayerSession(fileNames []string) *session.Session {
 		Message:    "",
 		Wrapped:    nil,
 	}
+	errorMap := make(map[string]sl.Error)
 	return &session.Session{
-		TransportHandler: FakeTransportHandler{fileNames, slError},
+		TransportHandler: FakeTransportHandler{fileNames, slError, errorMap},
 	}
 }
 
 // Use this constructor to force DoRequests to return a SL error
-func NewFakeSoftlayerSessionErrors(fileNames []string, slError sl.Error) *session.Session {
+func NewFakeSoftlayerSessionErrors(errorCode int, message string) *session.Session {
+	slError := sl.Error{
+		StatusCode: errorCode,
+		Exception:  message,
+		Message:    message,
+		Wrapped:    nil,
+	}
+	errorMap := make(map[string]sl.Error)
 	return &session.Session{
-		TransportHandler: FakeTransportHandler{fileNames, slError},
+		TransportHandler: FakeTransportHandler{nil, slError, errorMap},
 	}
 }
 
@@ -108,11 +141,7 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 	wd, _ := os.Getwd()
 	var fixture, workingPath string
 	scope := ".."
-
 	baseFixture := filepath.Join(wd, scope, "testfixtures", service+"/"+method+".json")
-	// fmt.Printf("baseFixture: %v \n", baseFixture)
-	
-
 
 	if len(fileNames) == 0 {
 		// Check to see if we have a fixture that matches the ID
@@ -126,6 +155,7 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 		if strings.Contains(wd, "plugin/commands") {
 			scope += "/.."
 		}
+
 		//find the file name that matches the service and method name
 		for _, filename := range fileNames {
 			//fmt.Println("check file:" + filename)
