@@ -3,15 +3,13 @@ package subnet
 import (
 	"bytes"
 	"fmt"
-	"strconv"
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -41,7 +39,8 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Subnet ID")
 	}
-	subnet, err := cmd.NetworkManager.GetSubnet(subnetID, "")
+
+	subnet, err := cmd.NetworkManager.GetSubnet(subnetID, "ipAddresses[id, ipAddress,note], datacenter, virtualGuests, hardware,networkVlan[networkSpace], tagReferences")
 	if err != nil {
 		return cli.NewExitError(T("Failed to get subnet: {{.ID}}.\n", map[string]interface{}{"ID": subnetID})+err.Error(), 2)
 	}
@@ -65,7 +64,22 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	if subnet.Datacenter != nil {
 		table.Add(T("datacenter"), utils.FormatStringPointer(subnet.Datacenter.Name))
 	}
-	table.Add(T("usable ips"), strconv.Itoa(len(subnet.IpAddresses)))
+	table.Add(T("usable ips"), utils.FormatSLFloatPointerToInt(subnet.UsableIpAddressCount))
+
+	if !c.IsSet("no-ipAddress") {
+		if subnet.IpAddresses == nil || len(subnet.IpAddresses) == 0 {
+			table.Add(T("Ip Address"), T("none"))
+		} else {
+			buf := new(bytes.Buffer)
+			ipTable := terminal.NewTable(buf, []string{T("Ip"), T("IpAddress")})
+			for _, ip := range subnet.IpAddresses {
+				ipTable.Add(utils.FormatIntPointer(ip.Id),
+					utils.FormatStringPointer(ip.IpAddress))
+			}
+			ipTable.Print()
+			table.Add(T("Ip Address"), buf.String())
+		}
+	}
 
 	if !c.IsSet("no-vs") {
 		if subnet.VirtualGuests == nil || len(subnet.VirtualGuests) == 0 {
@@ -97,6 +111,20 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 			}
 			hwTable.Print()
 			table.Add(T("hardware"), buf.String())
+		}
+	}
+
+	if !c.IsSet("tags") {
+		if subnet.TagReferences == nil || len(subnet.TagReferences) == 0 {
+			table.Add(T("tags"), T("none"))
+		} else {
+			buf := new(bytes.Buffer)
+			vsTable := terminal.NewTable(buf, []string{T("id")})
+			for _, tag := range subnet.TagReferences {
+				vsTable.Add(utils.FormatIntPointer(tag.TagId))
+			}
+			vsTable.Print()
+			table.Add(T("tags"), buf.String())
 		}
 	}
 	table.Print()
