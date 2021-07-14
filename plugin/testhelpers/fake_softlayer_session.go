@@ -37,43 +37,35 @@ type FakeTransportHandler struct {
 }
 
 func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, method string, args []interface{}, options *sl.Options, pResult interface{}) error {
-	// fmt.Println("\nservice:\t", service)
-	// fmt.Println("method:\t", method)
-	// fmt.Println("filenames:\t", h.FileNames)
 	// for x, arg := range args {
 	// 	fmt.Printf("args %v:\t %v", x, arg)
 	// }
 
 	identifier := 0
+	apiSig := fmt.Sprintf("%s::%s", service, method)
+
 	if options.Id != nil {
-		// fmt.Println("options-id:\t", *options.Id)
 		identifier = *options.Id
 	}
-	apiSig := fmt.Sprintf("%s::%s", service, method)
-	fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
+	
+	// fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
 
-	// if options.Mask != "" {
-	// 	fmt.Println("options-mask:\t", options.Mask)
-	// }
-	// if options.Filter != "" {
-	// 	fmt.Println("options-filter:\t", options.Filter)
-	// }
-
+	// If we have an error defined for this method, return that.
 	if apiError, ok := h.ErrorMap[apiSig]; ok {
-		fmt.Printf("Found an error for %s -> %s\n", apiSig, apiError)
-		return h.ErrorMap[apiSig]
+		return apiError
 	}
-	if h.ApiError.StatusCode > 0 {
-		return h.ApiError
-	}
+
 	// This is required to prevent pagination requests from going off in an infinite loop
 	if options.Offset != nil  && *options.Offset > 0 {
 		pResult = []byte("[]")
 		return nil
 	}
-	b, err := readJsonTestFixtures(service, method, h.FileNames, identifier)
-	if err != nil {
 
+	// This fakes getting data from the SL API.
+	b, err := readJsonTestFixtures(service, method, h.FileNames, identifier)
+
+	// Incase of file not found, or other JSON errors, this presents the error somewhat nicely to the cli
+	if err != nil {
 		slError := sl.Error{
 			StatusCode: 555,
 			Exception:  fmt.Sprintf("%v",err),
@@ -83,6 +75,15 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 		return slError
 	}
 	err = json.Unmarshal(b, pResult)
+	if err != nil {
+		slError := sl.Error{
+			StatusCode: 559,
+			Exception:  fmt.Sprintf("%v",err),
+			Message:    "Erroring doing json.Unmarshal",
+			Wrapped:    nil,
+		}
+		return slError
+	}
 	return err
 }
 
@@ -117,20 +118,6 @@ func NewFakeSoftlayerSession(fileNames []string) *session.Session {
 	}
 }
 
-// Use this constructor to force DoRequests to return a SL error
-func NewFakeSoftlayerSessionErrors(errorCode int, message string) *session.Session {
-	slError := sl.Error{
-		StatusCode: errorCode,
-		Exception:  message,
-		Message:    message,
-		Wrapped:    nil,
-	}
-	errorMap := make(map[string]sl.Error)
-	return &session.Session{
-		TransportHandler: FakeTransportHandler{nil, slError, errorMap},
-	}
-}
-
 
 // This function tries to find an appropriate JSON file to use as a response object.
 // Fixtures are placed in the plugin/testfixtures directory in this patter:
@@ -143,15 +130,8 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 	scope := ".."
 	baseFixture := filepath.Join(wd, scope, "testfixtures", service+"/"+method+".json")
 
-	if len(fileNames) == 0 {
-		// Check to see if we have a fixture that matches the ID
-		// actual path should be of the format testfixtures/SoftLayer_Service/method-123.json
-		workingPath =  fmt.Sprintf("%s/%s-%d.json", service, method, identifier)
-		if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", workingPath)); err == nil {
-			fixture = filepath.Join(wd, scope, "testfixtures", workingPath)
-			return ioutil.ReadFile(fixture) // #nosec
-		}
-	} else {
+	// If we specified a file name, check there first
+	if len(fileNames) > 0 {
 		if strings.Contains(wd, "plugin/commands") {
 			scope += "/.."
 		}
@@ -169,6 +149,12 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 		}
 	}
 
+	// Check for a matchin SoftLayer_Service/method-1234.json file
+	workingPath =  fmt.Sprintf("%s/%s-%d.json", service, method, identifier)
+	if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", workingPath)); err == nil {
+		fixture = filepath.Join(wd, scope, "testfixtures", workingPath)
+		return ioutil.ReadFile(fixture) // #nosec
+	}
 	// Default to the base fixture `testfixtures/SoftLayer_Service/method.json`
 	if _, err := os.Stat(baseFixture); err == nil {
 		fixture = filepath.Join(baseFixture)

@@ -466,7 +466,9 @@ var _ = Describe("HardwareServerManager", func() {
 
 		Context("When there is an error", func() {
 			BeforeEach(func() {
-				fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(500, "IPMI ERROR")
+				fakeHandler := testhelpers.FakeTransportHandler{}
+                fakeHandler.AddApiError("SoftLayer_Hardware_Server", "toggleManagementInterface", 500, "IPMI ERROR")
+                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("should return error", func() {

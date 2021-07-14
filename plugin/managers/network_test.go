@@ -226,7 +226,6 @@ var _ = Describe("NetworkManager", func() {
 				fakeHandler := testhelpers.FakeTransportHandler{}
                 fakeHandler.AddApiError("SoftLayer_Network_Vlan", "getObject", 500, "NO VLAN")
                 fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
-				// fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(500, "NO VLAN")
 				networkManager = managers.NewNetworkManager(fakeSLSession)
 				err := networkManager.CancelVLAN(0)
 				Expect(err).To(HaveOccurred())
