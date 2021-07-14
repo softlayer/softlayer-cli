@@ -48,7 +48,7 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 		identifier = *options.Id
 	}
 	
-	// fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
+	fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
 
 	// If we have an error defined for this method, return that.
 	if apiError, ok := h.ErrorMap[apiSig]; ok {
@@ -128,14 +128,16 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 	wd, _ := os.Getwd()
 	var fixture, workingPath string
 	scope := ".."
+
+	// The second check is for windows
+	if strings.Contains(wd, "plugin/commands") || strings.Contains(wd, "plugin\\commands") {
+		scope += "/.."
+	}
+	// fmt.Printf("WD: %v, Scope: %v", wd, scope)
 	baseFixture := filepath.Join(wd, scope, "testfixtures", service+"/"+method+".json")
 
 	// If we specified a file name, check there first
 	if len(fileNames) > 0 {
-		if strings.Contains(wd, "plugin/commands") {
-			scope += "/.."
-		}
-
 		//find the file name that matches the service and method name
 		for _, filename := range fileNames {
 			//fmt.Println("check file:" + filename)
