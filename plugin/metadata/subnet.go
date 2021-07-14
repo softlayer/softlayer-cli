@@ -109,6 +109,12 @@ EXAMPLE:
 			cli.BoolFlag{
 				Name:  "no-hardware",
 				Usage: T("Hide hardware listing"),
+			},cli.BoolFlag{
+				Name:  "no-Ipaddresses",
+				Usage: T("Hide ipaddresses listing"),
+			},cli.BoolFlag{
+				Name:  "no-tags",
+				Usage: T("Hide tags listing"),
 			},
 			OutputFlag(),
 		},

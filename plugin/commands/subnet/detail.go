@@ -114,7 +114,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if !c.IsSet("tags") {
+	if !c.IsSet("no-tags") {
 		if subnet.TagReferences == nil || len(subnet.TagReferences) == 0 {
 			table.Add(T("tags"), T("none"))
 		} else {
