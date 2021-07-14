@@ -96,6 +96,26 @@ cd plugin/managers
 counterfeiter.exe -o ../testhelpers/fake_storage_manager.go . StorageManager
 ```
 
+If you want to use the real manager but fixture API data, just initialize the manager like this in the CLI test
+
+(filenames here is optional of course)
+```go
+BeforeEach(func() {
+
+    filenames := []string{"getDatacenters_1",}
+    fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
+    OrderManager = managers.NewOrderManager(fakeSLSession)
+    fakeUI = terminal.NewFakeUI()
+    cmd = order.NewPlaceCommand(fakeUI, OrderManager, nil)
+    cliCommand = cli.Command{
+        Name:        metadata.OrderPlaceMetaData().Name,
+        Description: metadata.OrderPlaceMetaData().Description,
+        Usage:       metadata.OrderPlaceMetaData().Usage,
+        Flags:       metadata.OrderPlaceMetaData().Flags,
+        Action:      cmd.Run,
+    }
+})
+```
 
 ### `[no tests to run]`
 New commands needs a `command_test.go` file in the CLI directory.
@@ -107,36 +127,33 @@ If you added `slplugin/commands/new/` then there needs to be a `slplugin/command
 In unit tests, you will want to establish a FakeSoftLayerSession object so that API requests faked from test fixtures.
 
 Something like this.
-```
-    BeforeEach(func() {
-        fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
-        networkManager = managers.NewNetworkManager(fakeSLSession)
-    })
+```go
+BeforeEach(func() {
+    fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
+    networkManager = managers.NewNetworkManager(fakeSLSession)
+})
 ```
 
 By default, every API call made to the SoftLayer API will load in the appropraite JSON file from `testfixtures/SoftLayer_Service/method.json`
 
 To force errors:
 
-```
-slError := sl.Error{
-    StatusCode: 500,
-    Exception: "NO VLAN",
-    Message: "NO VLAN",
-    Wrapped: nil,
-}
-fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(nil, slError)
-networkManager = managers.NewNetworkManager(fakeSLSession)
+```go
+fakeHandler := testhelpers.FakeTransportHandler{}
+fakeHandler.AddApiError("SoftLayer_Tag", "getAttachedTagsForCurrentUser", 500, "BAD")
+fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 ```
 
 To force a non-default JSON file to be loaded
 
 This will load `testfixtures/SoftLayer_Network_Vlan/getObject-noBilling.json` when SoftLayer_Network_Vlan::getObject is called next.
 
-```
+```go
 fakeSLSession = testhelpers.NewFakeSoftlayerSession([]string{"getObject-noBilling.json"})
 networkManager = managers.NewNetworkManager(fakeSLSession)
 ```
+
+Fixutres can also be loaded by ID automatically with the format `testfixtures/SoftLayer_Service/getObject-1234.json` where 1234 is the ID you passed into the API call.
 
 ## Adding new actions to slplugin
 
