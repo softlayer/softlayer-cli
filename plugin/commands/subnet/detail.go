@@ -66,18 +66,18 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	}
 	table.Add(T("usable ips"), utils.FormatSLFloatPointerToInt(subnet.UsableIpAddressCount))
 
-	if !c.IsSet("no-ipAddress") {
+	if !c.IsSet("no-IP address") {
 		if subnet.IpAddresses == nil || len(subnet.IpAddresses) == 0 {
-			table.Add(T("ip address"), T("none"))
+			table.Add(T("IP address"), T("none"))
 		} else {
 			buf := new(bytes.Buffer)
-			ipTable := terminal.NewTable(buf, []string{T("ip"), T("ipAddress")})
+			ipTable := terminal.NewTable(buf, []string{T("ID"), T("IP address")})
 			for _, ip := range subnet.IpAddresses {
 				ipTable.Add(utils.FormatIntPointer(ip.Id),
 					utils.FormatStringPointer(ip.IpAddress))
 			}
 			ipTable.Print()
-			table.Add(T("ip address"), buf.String())
+			table.Add(T("IP address"), buf.String())
 		}
 	}
 
@@ -114,17 +114,17 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if !c.IsSet("no-tags") {
+	if !c.IsSet("no-Tag") {
 		if subnet.TagReferences == nil || len(subnet.TagReferences) == 0 {
-			table.Add(T("tags"), T("none"))
+			table.Add(T("Tag"), T("none"))
 		} else {
 			buf := new(bytes.Buffer)
-			vsTable := terminal.NewTable(buf, []string{T("id")})
+			vsTable := terminal.NewTable(buf, []string{T("ID")})
 			for _, tag := range subnet.TagReferences {
 				vsTable.Add(utils.FormatIntPointer(tag.TagId))
 			}
 			vsTable.Print()
-			table.Add(T("tags"), buf.String())
+			table.Add(T("Tag"), buf.String())
 		}
 	}
 	table.Print()
