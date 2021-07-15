@@ -9,6 +9,11 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
+const (
+	TWO_FACTO_AUTH   = "externalBindingCount"
+	CLASSIC_API_KEYS = "apiAuthenticationKeyCount"
+)
+
 type ListCommand struct {
 	UI          terminal.UI
 	UserManager managers.UserManager
@@ -29,6 +34,8 @@ var maskMap = map[string]string{
 	"status":            "userStatus.name",
 	"hardwareCount":     "hardwareCount",
 	"virtualGuestCount": "virtualGuestCount",
+	"2FA":               TWO_FACTO_AUTH,
+	"classicAPIKey":     CLASSIC_API_KEYS,
 }
 
 func (cmd *ListCommand) Run(c *cli.Context) error {
@@ -40,7 +47,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		columns = c.StringSlice("columns")
 	}
 
-	defaultColumns := []string{"id", "username", "email", "displayName"}
+	defaultColumns := []string{"id", "username", "email", "displayName", "2FA", "classicAPIKey"}
 	optionalColumns := []string{"status", "hardwareCount", "virtualGuestCount"}
 
 	showColumns, err := utils.ValidateColumns("", columns, defaultColumns, optionalColumns, []string{}, c)
@@ -72,6 +79,18 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		values["username"] = utils.FormatStringPointer(user.Username)
 		values["email"] = utils.FormatStringPointer(user.Email)
 		values["displayName"] = utils.FormatStringPointer(user.DisplayName)
+
+		if utils.UIntPointertoUInt(user.ExternalBindingCount) > 0 {
+			values["2FA"] = "yes"
+		} else {
+			values["2FA"] = "-"
+		}
+
+		if utils.UIntPointertoUInt(user.ApiAuthenticationKeyCount) > 0 {
+			values["classicAPIKey"] = "yes"
+		} else {
+			values["classicAPIKey"] = "-"
+		}
 
 		if user.UserStatus != nil {
 			values["status"] = utils.FormatStringPointer(user.UserStatus.Name)
