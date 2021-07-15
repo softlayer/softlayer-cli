@@ -332,7 +332,7 @@ var _ = Describe("VirtualServerManager", func() {
 		})
 		Context("List all virtual guest instance under current acount", func() {
 			It("It returns a list of virtual guest instances", func() {
-				vss, err := vsManager.ListInstances(false, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "")
+				vss, err := vsManager.ListInstances(false, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "", nil)
 				Expect(err).ToNot(HaveOccurred())
 				for _, vs := range vss {
 					Expect(*vs.Account.Id).To(Equal(278444))
@@ -342,7 +342,7 @@ var _ = Describe("VirtualServerManager", func() {
 		})
 		Context("List hourly-billed virtual guest instance under current acount", func() {
 			It("It returns a list of hourly-billed virtual guest instances", func() {
-				vss, err := vsManager.ListInstances(true, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "")
+				vss, err := vsManager.ListInstances(true, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "", nil)
 				Expect(err).ToNot(HaveOccurred())
 				for _, vs := range vss {
 					Expect(*vs.Account.Id).To(Equal(278444))
@@ -352,7 +352,7 @@ var _ = Describe("VirtualServerManager", func() {
 		})
 		Context("List monthly-billed virtual guest instance under current acount", func() {
 			It("It returns a list of monthly-billed virtual guest instances", func() {
-				vss, err := vsManager.ListInstances(false, true, "", "", "", "", "", "", 0, 0, 0, 0, nil, "")
+				vss, err := vsManager.ListInstances(false, true, "", "", "", "", "", "", 0, 0, 0, 0, nil, "", nil)
 				Expect(err).ToNot(HaveOccurred())
 				for _, vs := range vss {
 					Expect(*vs.Account.Id).To(Equal(278444))
