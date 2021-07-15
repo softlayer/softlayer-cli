@@ -9,7 +9,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
@@ -30,9 +29,10 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -53,7 +53,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	placeGroupManager := managers.NewPlaceGroupManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-
 
 		//dns - 9
 		NS_DNS_NAME + "-" + CMD_DNS_IMPORT_NAME: func(c *cli.Context) error {
@@ -422,6 +421,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_LIST_HOST_NAME: func(c *cli.Context) error {
 			return virtual.NewListHostCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_MIGRATE_NAME: func(c *cli.Context) error {
+			return virtual.NewMigrageCommand(ui, virtualServerManager).Run(c)
 		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_PAUSE_NAME: func(c *cli.Context) error {
 			return virtual.NewPauseCommand(ui, virtualServerManager).Run(c)

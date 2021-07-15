@@ -31,6 +31,27 @@ var _ = Describe("VirtualServerManager", func() {
 		})
 	})
 
+	Describe("Migrate instance", func() {
+		Context("Migrate instance given its ID", func() {
+			It("It returns Provisioning Version1 Transaction instance", func() {
+				vsMigrate, err := vsManager.MigrateInstance(1234567)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(err).ToNot(HaveOccurred())
+				Expect(*vsMigrate.Id).Should(Equal(1234567))
+			})
+		})
+	})
+
+	Describe("Migrate Dedicated Host", func() {
+		Context("Migrate Dedicated Host with its ID", func() {
+			It("It does not return any value", func() {
+				err := vsManager.MigrateDedicatedHost(1234567, 12345)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(err).ToNot(HaveOccurred())
+			})
+		})
+	})
+
 	Describe("Create instance", func() {
 		Context("Create instance give a template instance", func() {
 			It("It returns created virtual guest instance", func() {

@@ -58,6 +58,8 @@ var (
 //See product information here: http://www.softlayer.com/virtual-servers
 type VirtualServerManager interface {
 	CancelInstance(id int) error
+	MigrateInstance(id int) (datatypes.Provisioning_Version1_Transaction, error)
+	MigrateDedicatedHost(id int, hostId int) error
 	CreateDedicatedHost(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Receipt, error)
 	CreateInstance(template *datatypes.Virtual_Guest) (datatypes.Virtual_Guest, error)
 	CreateInstances(template []datatypes.Virtual_Guest) ([]datatypes.Virtual_Guest, error)
@@ -68,7 +70,7 @@ type VirtualServerManager interface {
 	GetDedicatedHost(hostId int) (datatypes.Virtual_DedicatedHost, error)
 	GetLikedInstance(virtualGuest *datatypes.Virtual_Guest, id int) (*datatypes.Virtual_Guest, error)
 	CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error)
-	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
+	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
 	ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error)
 	PauseInstance(id int) error
 	PowerOnInstance(id int) error
@@ -110,6 +112,18 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 func (vs virtualServerManager) CancelInstance(id int) error {
 	_, err := vs.VirtualGuestService.Id(id).DeleteObject()
 	return err
+}
+
+//Migrate an instance.
+//id: the instance ID to migrate.
+func (vs virtualServerManager) MigrateInstance(id int) (datatypes.Provisioning_Version1_Transaction, error) {
+	resourceList, err := vs.VirtualGuestService.Id(id).Migrate()
+	return resourceList, err
+}
+
+//Migrate a dedicated Host instance.
+func (vs virtualServerManager) MigrateDedicatedHost(id int, hostId int) (err error) {
+	return vs.VirtualGuestService.Id(id).MigrateDedicatedHost(&hostId)
 }
 
 func GetDedicatedHostPriceId(items []datatypes.Product_Item, size string, hourly bool, location datatypes.Location_Region) (int, error) {
@@ -584,7 +598,7 @@ func (vs virtualServerManager) ListDedicatedHost(name, datacenter, owner string,
 //network: filter based on network speed (in MBPS)
 //orderId: filter based on the ID of the order which purchased this instance
 //tags: filter based on list of tags
-func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderID int, tags []string, mask string) ([]datatypes.Virtual_Guest, error) {
+func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderID int, tags []string, mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
 	if domain != "" {
 		filters = append(filters, utils.QueryFilter(domain, "virtualGuests.domain"))
@@ -626,6 +640,10 @@ func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain s
 
 	if mask == "" {
 		mask = INSTANCE_DEFAULT_MASK
+	}
+
+	if len(objFilter) > 0 {
+		filters = objFilter
 	}
 
 	if hourly == false && monthly == true {

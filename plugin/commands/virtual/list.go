@@ -73,7 +73,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		return bmxErr.NewExclusiveFlagsError("[--hourly]", "[--monthly]")
 	}
 
-	vms, err := cmd.VirtualServerManager.ListInstances(c.IsSet("hourly"), c.IsSet("monthly"), c.String("D"), c.String("H"), c.String("d"), c.String("public-ip"), c.String("private-ip"), c.String("owner"), c.Int("c"), c.Int("m"), c.Int("n"), c.Int("o"), c.StringSlice("tag"), mask)
+	vms, err := cmd.VirtualServerManager.ListInstances(c.IsSet("hourly"), c.IsSet("monthly"), c.String("D"), c.String("H"), c.String("d"), c.String("public-ip"), c.String("private-ip"), c.String("owner"), c.Int("c"), c.Int("m"), c.Int("n"), c.Int("o"), c.StringSlice("tag"), mask, nil)
 	if err != nil {
 		return cli.NewExitError(T("Failed to list virtual server instances on your account.\n")+err.Error(), 2)
 	}
