@@ -65,8 +65,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		table.Add(T("datacenter"), utils.FormatStringPointer(subnet.Datacenter.Name))
 	}
 	table.Add(T("usable ips"), utils.FormatSLFloatPointerToInt(subnet.UsableIpAddressCount))
-
-	if !c.IsSet("no-IP address") {
+	if !c.IsSet("no-ip-address") {
 		if subnet.IpAddresses == nil || len(subnet.IpAddresses) == 0 {
 			table.Add(T("IP address"), T("none"))
 		} else {

@@ -110,7 +110,7 @@ EXAMPLE:
 				Name:  "no-hardware",
 				Usage: T("Hide hardware listing"),
 			},cli.BoolFlag{
-				Name:  "no-IP address",
+				Name:  "no-ip-address",
 				Usage: T("Hide IP address listing"),
 			},cli.BoolFlag{
 				Name:  "no-Tag",
