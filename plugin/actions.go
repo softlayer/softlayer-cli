@@ -44,7 +44,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	dnsManager := managers.NewDNSManager(session)
 	securityManager := managers.NewSecurityManager(session)
 	ipsecManager := managers.NewIPSECManager(session)
-	lbManager := managers.NewLoadBalancerManager(session)
+	
 	hardwareManager := managers.NewHardwareServerManager(session)
 	orderManager := managers.NewOrderManager(session)
 	userManager := managers.NewUserManager(session)
@@ -221,85 +221,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_IPSEC_NAME + "-" + CMD_IPSEC_UPDATE_NAME: func(c *cli.Context) error {
 			return ipsec.NewUpdateCommand(ui, ipsecManager).Run(c)
-		},
-
-		//load balancer 16
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_CANCLE_NAME: func(c *cli.Context) error {
-			return loadbal.NewCancelCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_ORDER_NAME: func(c *cli.Context) error {
-			return loadbal.NewCreateCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_ORDER_OPTIONS_NAME: func(c *cli.Context) error {
-			return loadbal.NewOptionsCommand(ui, lbManager, networkManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_DETAIL_NAME: func(c *cli.Context) error {
-			return loadbal.NewDetailCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_LIST_NAME: func(c *cli.Context) error {
-			return loadbal.NewListCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_HEALTH_NAME: func(c *cli.Context) error {
-			return loadbal.NewHealthChecksCommand(ui, lbManager).Run(c)
-		},
-		//NS_LOADBAL_NAME + "-" + CMD_LOADBAL_NS_LIST_NAME: func(c *cli.Context) error {
-		//	return loadbal.NewNetscalerListCommand(ui, lbManager).Run(c)
-		//},
-		//NS_LOADBAL_NAME + "-" + CMD_LOADBAL_NS_DETAIL_NAME: func(c *cli.Context) error {
-		//	return loadbal.NewNetscalerDetailCommand(ui, lbManager).Run(c)
-		//},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_PROTOCOL_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewProtocolAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_PROTOCOL_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewProtocolDeleteCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_MEMBER_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewMembersAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_MEMBER_DEL_NAME: func(c *cli.Context) error {
-			return loadbal.NewMembersDelCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POOL_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PoolAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POOL_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PoolDelCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POOL_DETAIL_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PoolDetailCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POOL_EDIT_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PoolEditCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7MEMBER_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7MembersAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7MEMBER_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7MembersDelCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POLICY_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PolicyAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POLICY_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PolicyDeleteCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POLICY_LIST_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PolicyListCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7RULE_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7RuleAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7RULE_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7RuleDelCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7RULE_LIST_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7RuleListCommand(ui, lbManager).Run(c)
 		},
 
 		//security 10
@@ -592,6 +513,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl tags
 	tagCommands := tags.GetCommandAcionBindings(ui, session)
 	for name, action := range tagCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl loadbal
+	loadbalCommands := loadbal.GetCommandAcionBindings(ui, session)
+	for name, action := range loadbalCommands {
 		CommandActionBindings[name] = action
 	}
 

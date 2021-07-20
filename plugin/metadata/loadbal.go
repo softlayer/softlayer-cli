@@ -69,6 +69,7 @@ func LoadbalMetaData() cli.Command {
 			LoadbalMemberDelMetadata(),
 			LoadbalProtocolAddMetadata(),
 			LoadbalProtocolDelMetadata(),
+			LoadbalProtocolEditMetadata(),
 			LoadbalL7PoolDelMetadata(),
 			LoadbalL7PoolAddMetadata(),
 			LoadbalL7PoolDetailMetadata(),
@@ -263,6 +264,7 @@ func LoadbalMemberAddMetadata() cli.Command {
 	}
 }
 
+
 func LoadbalMemberDelMetadata() cli.Command {
 	return cli.Command{
 		Category:    NS_LOADBAL_NAME,
@@ -320,6 +322,61 @@ func LoadbalProtocolAddMetadata() cli.Command {
 			cli.StringFlag{
 				Name:  "sticky",
 				Usage: T("Use 'cookie' or 'source-ip' to stick"),
+			},
+		},
+	}
+}
+
+func LoadbalProtocolEditMetadata() cli.Command {
+	return cli.Command{
+		Category:    NS_LOADBAL_NAME,
+		Name:        "protocol-edit",
+		Description: T("Edit load balancer protocol"),
+		Usage:       "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) (--protocol-id PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "id",
+				Usage: T("ID for the load balancer [required]"),
+			},
+			cli.StringFlag{
+				Name:  "protocol-id",
+				Usage: T("UUID of the protocol you want to edit."),
+			},
+			cli.StringFlag{
+				Name:  "front-protocol",
+				Usage: T("Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP"),
+			},
+			cli.StringFlag{
+				Name:  "back-protocol",
+				Usage: T("Protocol type to use when connecting to backend servers: [HTTP|HTTPS|TCP]. Defaults to whatever --front-protocol is"),
+			},
+			cli.IntFlag{
+				Name:  "front-port",
+				Usage: T("Internet side port. Default: 80"),
+			},
+			cli.IntFlag{
+				Name:  "back-port",
+				Usage: T("Private side port. Default: 80"),
+			},
+			cli.StringFlag{
+				Name:  "m, method",
+				Usage: T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Default: ROUNDROBIN"),
+			},
+			cli.IntFlag{
+				Name:  "c, connections",
+				Usage: T("Maximum number of connections to allow"),
+			},
+			cli.StringFlag{
+				Name:  "sticky",
+				Usage: T("Use 'cookie' or 'source-ip' to stick"),
+			},
+			cli.IntFlag{
+				Name:  "client-timeout",
+				Usage: T("Client side timeout setting, in seconds"),
+			},
+			cli.IntFlag{
+				Name:  "server-timeout",
+				Usage: T("Server side timeout setting, in seconds"),
 			},
 		},
 	}
