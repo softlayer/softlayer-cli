@@ -26,10 +26,10 @@ func NewMigrageCommand(ui terminal.UI, virtualServerManager managers.VirtualServ
 
 func (cmd *MigrateCommand) Run(c *cli.Context) error {
 	filters := filter.New()
-	//params := make(map[string]interface{})
 	vsList := []datatypes.Virtual_Guest{}
 	objMask := "mask[id, hostname, domain, datacenter, pendingMigrationFlag, powerState, primaryIpAddress,primaryBackendIpAddress, dedicatedHost]"
-	if !c.IsSet("g") && !c.IsSet("a") {
+
+	if !c.IsSet("g") && !c.IsSet("a") && !c.IsSet("host") {
 		vsPendignMigateList := getMigrationServerList(objMask, nil, cmd)
 		for _, pendingMigrationsVs := range vsPendignMigateList {
 			if *pendingMigrationsVs.PendingMigrationFlag {
@@ -54,9 +54,21 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 						return cli.NewExitError(T("Failed to migrate the virtual server instance.\n")+err.Error(), 2)
 					}
 
+					cmd.UI.Ok()
 					cmd.UI.Print(T("The virtual server is migrating: {{.VsId}}.", map[string]interface{}{"VsId": result.Id}))
 				}
 			}
+		}
+		if c.IsSet("host") {
+			if !c.IsSet("guest") {
+				return cli.NewExitError(T("Please add the '--guest' id too.\n"), 2)
+			}
+			err := cmd.VirtualServerManager.MigrateDedicatedHost(c.Int("guest"), c.Int("host"))
+			if err != nil {
+				return cli.NewExitError(T("Failed to migrate the dedicated host instance.\n")+err.Error(), 2)
+			}
+
+			cmd.UI.Print(T("The dedicated host is migrating: {{.HostId}}.", map[string]interface{}{"HostId": c.Int("host")}))
 		}
 		if c.IsSet("guest") {
 			result, err := cmd.VirtualServerManager.MigrateInstance(c.Int("guest"))
@@ -64,18 +76,11 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 				return cli.NewExitError(T("Failed to migrate the virtual server instance.\n")+err.Error(), 2)
 			}
 
-			cmd.UI.Print(T("The virtual server is migrating: {{.VsId}}.", map[string]interface{}{"VsId": c.Int("guest")}))
+			cmd.UI.Ok()
+			cmd.UI.Print(T("The virtual server is migrating."))
 			table := cmd.UI.Table([]string{T("id"), T("CreateDate")})
 			table.Add(utils.FormatIntPointer(result.Id), utils.FormatSLTimePointer(result.CreateDate))
 			table.Print()
-		}
-		if c.IsSet("host") {
-			err := cmd.VirtualServerManager.MigrateDedicatedHost(c.Int("guest"), c.Int("host"))
-			if err != nil {
-				return cli.NewExitError(T("Failed to migrate the virtual server instance.\n")+err.Error(), 2)
-			}
-
-			cmd.UI.Print(T("The dedicated host is migrating: {{.HostId}}.", map[string]interface{}{"HostId": c.Int("host")}))
 		}
 	}
 
@@ -83,7 +88,7 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 }
 
 func getMigrationServerList(mask string, filter filter.Filters, cmd *MigrateCommand) []datatypes.Virtual_Guest {
-	migrationServerList, err := cmd.VirtualServerManager.ListInstances(false, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, mask, filter)
+	migrationServerList, err := cmd.VirtualServerManager.ListMigrateInstances(mask, filter)
 	if err != nil {
 		cli.NewExitError(T("Failed to retrieve the virtual server instances.\n")+err.Error(), 2)
 	}

@@ -10,7 +10,7 @@ var (
 	NS_VIRTUAL_NAME  = "vs"
 	CMD_VIRTUAL_NAME = "vs"
 
-	CMD_VS_CANCEL_NAME         = "cancelvs"
+	CMD_VS_CANCEL_NAME         = "cancel"
 	CMD_VS_CAPTURE_NAME        = "capture"
 	CMD_VS_CREATE_NAME         = "create"
 	CMD_VS_CREATE_HOST_NAME    = "host-create"
@@ -98,8 +98,8 @@ func VSMigrateMataData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl vs migrate [OPTIONS]
 	
 EXAMPLE:
-   ${COMMAND_NAME} sl vs migrate
-   Manage VSIs that require migration. Can migrate Dedicated Host VSIs as well.`),
+   ${COMMAND_NAME} sl vs migrate --guest 1234567
+   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.`),
 		Flags: []cli.Flag{
 			cli.IntFlag{
 				Name:  "g, guest",

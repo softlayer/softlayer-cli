@@ -42,16 +42,6 @@ var _ = Describe("VirtualServerManager", func() {
 		})
 	})
 
-	Describe("Migrate Dedicated Host", func() {
-		Context("Migrate Dedicated Host with its ID", func() {
-			It("It does not return any value", func() {
-				err := vsManager.MigrateDedicatedHost(1234567, 12345)
-				Expect(err).ToNot(HaveOccurred())
-				Expect(err).ToNot(HaveOccurred())
-			})
-		})
-	})
-
 	Describe("Create instance", func() {
 		Context("Create instance give a template instance", func() {
 			It("It returns created virtual guest instance", func() {
@@ -332,7 +322,7 @@ var _ = Describe("VirtualServerManager", func() {
 		})
 		Context("List all virtual guest instance under current acount", func() {
 			It("It returns a list of virtual guest instances", func() {
-				vss, err := vsManager.ListInstances(false, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "", nil)
+				vss, err := vsManager.ListInstances(false, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "")
 				Expect(err).ToNot(HaveOccurred())
 				for _, vs := range vss {
 					Expect(*vs.Account.Id).To(Equal(278444))
@@ -342,7 +332,7 @@ var _ = Describe("VirtualServerManager", func() {
 		})
 		Context("List hourly-billed virtual guest instance under current acount", func() {
 			It("It returns a list of hourly-billed virtual guest instances", func() {
-				vss, err := vsManager.ListInstances(true, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "", nil)
+				vss, err := vsManager.ListInstances(true, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "")
 				Expect(err).ToNot(HaveOccurred())
 				for _, vs := range vss {
 					Expect(*vs.Account.Id).To(Equal(278444))
@@ -352,7 +342,7 @@ var _ = Describe("VirtualServerManager", func() {
 		})
 		Context("List monthly-billed virtual guest instance under current acount", func() {
 			It("It returns a list of monthly-billed virtual guest instances", func() {
-				vss, err := vsManager.ListInstances(false, true, "", "", "", "", "", "", 0, 0, 0, 0, nil, "", nil)
+				vss, err := vsManager.ListInstances(false, true, "", "", "", "", "", "", 0, 0, 0, 0, nil, "")
 				Expect(err).ToNot(HaveOccurred())
 				for _, vs := range vss {
 					Expect(*vs.Account.Id).To(Equal(278444))

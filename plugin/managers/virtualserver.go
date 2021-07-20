@@ -70,8 +70,9 @@ type VirtualServerManager interface {
 	GetDedicatedHost(hostId int) (datatypes.Virtual_DedicatedHost, error)
 	GetLikedInstance(virtualGuest *datatypes.Virtual_Guest, id int) (*datatypes.Virtual_Guest, error)
 	CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error)
-	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
+	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
 	ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error)
+	ListMigrateInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
 	PauseInstance(id int) error
 	PowerOnInstance(id int) error
 	PowerOffInstance(id int, soft bool, hard bool) error
@@ -598,7 +599,7 @@ func (vs virtualServerManager) ListDedicatedHost(name, datacenter, owner string,
 //network: filter based on network speed (in MBPS)
 //orderId: filter based on the ID of the order which purchased this instance
 //tags: filter based on list of tags
-func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderID int, tags []string, mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
+func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderID int, tags []string, mask string) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
 	if domain != "" {
 		filters = append(filters, utils.QueryFilter(domain, "virtualGuests.domain"))
@@ -640,10 +641,6 @@ func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain s
 
 	if mask == "" {
 		mask = INSTANCE_DEFAULT_MASK
-	}
-
-	if len(objFilter) > 0 {
-		filters = objFilter
 	}
 
 	if hourly == false && monthly == true {
@@ -694,6 +691,32 @@ func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain s
 	}
 	return resourceList, nil
 
+}
+
+//Retrieve a list of all virtual servers on the account.
+func (vs virtualServerManager) ListMigrateInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
+	filters := filter.New()
+	if mask == "" {
+		mask = INSTANCE_DEFAULT_MASK
+	}
+	if len(objFilter) > 0 {
+		filters = objFilter
+	}
+
+	i := 0
+	resourceList := []datatypes.Virtual_Guest{}
+	for {
+		resp, err := vs.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetVirtualGuests()
+		i++
+		if err != nil {
+			return []datatypes.Virtual_Guest{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
+	}
+	return resourceList, nil
 }
 
 //Pause an active virtual server.

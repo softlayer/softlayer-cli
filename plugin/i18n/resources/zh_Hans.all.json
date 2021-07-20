@@ -280,6 +280,8 @@
 "translation": "${COMMAND_NAME} sl vs edit IDENTIFIER [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs edit 12345678 -D ibm.com -H myapp --tag testcli --public-speed 1000\n   此命令更新标识为 12345678 的虚拟服务器实例，并将其域设置为“ibm.com”，主机名设置为“myapp”，标记设置为“testcli”，\n   公用网络端口速度设置为 1000 Mbps。"},
 {"id": "${COMMAND_NAME} sl vs list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs list --domain ibm.com --hourly --sortby memory\n   This command lists all hourly-billing virtual server instances on current account filtering domain equals to \"ibm.com\" and sort them by memory.",
 "translation": "${COMMAND_NAME} sl vs list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vs list --domain ibm.com --hourly --sortby memory\n   此命令列出当前帐户的所有每小时计费虚拟服务器实例，依据其过滤的域为“ibm.com”，并按内存对其排序。"},
+{"id": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.",
+"translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\t\t\n示例:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   管理需要遷移的 VSI。 也可以將專用實例從一台專用主機遷移到另一台專用主機."},
 {"id": "${COMMAND_NAME} sl vs options [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a virtual server instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
 "translation": "${COMMAND_NAME} sl vs options [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs options\n   此命令列出用于创建虚拟服务器实例的所有选项，例如数据中心、CPU、内存、操作系统、磁盘、网络速度等。"},
 {"id": "${COMMAND_NAME} sl vs pause IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs pause 12345678 -f\n   This command pauses virtual server instance with ID 12345678 without asking for confirmation.",
