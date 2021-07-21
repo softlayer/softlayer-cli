@@ -63,7 +63,7 @@ func (cmd *OptionsCommand) Run(c *cli.Context) error {
 			}
 		}
 
-		table := cmd.UI.Table([]string{T("prices"), T("Private Subnets")})
+		table := cmd.UI.Table([]string{T("Prices"), T("Private Subnets")})
 		bufPrice := new(bytes.Buffer)
 		tblPrice := terminal.NewTable(bufPrice, []string{T("Key Name"), T("Cost")})
 		var prices []Price
