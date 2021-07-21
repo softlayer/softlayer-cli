@@ -289,7 +289,7 @@ func LoadbalProtocolAddMetadata() cli.Command {
 		Category:    NS_LOADBAL_NAME,
 		Name:        CMD_LOADBAL_PROTOCOL_ADD_NAME,
 		Description: T("Add a new load balancer protocol"),
-		Usage:       "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip]",
+		Usage:       "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
 		Flags: []cli.Flag{
 			cli.IntFlag{
 				Name:  "id",
@@ -323,6 +323,14 @@ func LoadbalProtocolAddMetadata() cli.Command {
 				Name:  "sticky",
 				Usage: T("Use 'cookie' or 'source-ip' to stick"),
 			},
+			cli.IntFlag{
+				Name:  "client-timeout",
+				Usage: T("Client side timeout setting, in seconds"),
+			},
+			cli.IntFlag{
+				Name:  "server-timeout",
+				Usage: T("Server side timeout setting, in seconds"),
+			},
 		},
 	}
 }
@@ -332,14 +340,14 @@ func LoadbalProtocolEditMetadata() cli.Command {
 		Category:    NS_LOADBAL_NAME,
 		Name:        "protocol-edit",
 		Description: T("Edit load balancer protocol"),
-		Usage:       "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) (--protocol-id PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+		Usage:       "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
 		Flags: []cli.Flag{
 			cli.IntFlag{
 				Name:  "id",
 				Usage: T("ID for the load balancer [required]"),
 			},
 			cli.StringFlag{
-				Name:  "protocol-id",
+				Name:  "protocol-uuid",
 				Usage: T("UUID of the protocol you want to edit."),
 			},
 			cli.StringFlag{

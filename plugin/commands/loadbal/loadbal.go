@@ -15,7 +15,7 @@ func GetCommandAcionBindings(ui terminal.UI, session *session.Session) map[strin
 	networkManager := managers.NewNetworkManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-		//load balancer 16
+
 		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_CANCLE_NAME: func(c *cli.Context) error {
 			return NewCancelCommand(ui, lbManager).Run(c)
 		},
