@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/fatih/color"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 
@@ -64,7 +63,7 @@ func (cmd *OptionsCommand) Run(c *cli.Context) error {
 			}
 		}
 
-		table := cmd.UI.Table([]string{terminal.Colorize(fmt.Sprintf("%s: %s", utils.FormatStringPointer(region.Keyname), utils.FormatStringPointer(region.Description)), color.New(color.Bold)), ""})
+		table := cmd.UI.Table([]string{T("prices"), T("Private Subnets")})
 		bufPrice := new(bytes.Buffer)
 		tblPrice := terminal.NewTable(bufPrice, []string{T("Key Name"), T("Cost")})
 		var prices []Price
@@ -92,7 +91,6 @@ func (cmd *OptionsCommand) Run(c *cli.Context) error {
 			}
 		}
 		tblPrice.Print()
-		table.Add(T("Prices:"), bufPrice.String())
 
 		subnets, err := cmd.NetworkManager.ListSubnets("", dcName, 0, "", "PRIVATE", 0, "networkVlan,podName,addressSpace")
 		if err != nil {
@@ -114,11 +112,12 @@ func (cmd *OptionsCommand) Run(c *cli.Context) error {
 					tblSubnet.Add(utils.FormatIntPointer(subnet.Id), space, vlan)
 				}
 				tblSubnet.Print()
-				table.Add(T("Private Subnets"), bufSubnet.String())
+				table.Add(bufPrice.String(),bufSubnet.String())
 			} else {
 				table.Add(T("Private Subnets"), T("Not Found"))
 			}
 		}
+		table.Print()
 		table.Print()
 	}
 	return nil
