@@ -20,7 +20,7 @@ var _ = Describe("ticket subjects", func() {
 		cliCommand        cli.Command
 	)
 	fakeTicketManager = new(testhelpers.FakeTicketManager)
-	session := testhelpers.NewFakeSoftlayerSession(nil)
+
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		cmd = ticket.NewSubjectsTicketCommand(fakeUI, fakeTicketManager)
@@ -36,12 +36,18 @@ var _ = Describe("ticket subjects", func() {
 	Describe("Ticket subjects", func() {
 		Context("ticket subjects", func() {
 			It("Normal command call", func() {
-				var returnData []datatypes.Ticket_Subject
-				// This just loads data from the fixtures JSON file.
-				_ = session.DoRequest("SoftLayer_Ticket_Subjet", "getAllObjects", nil, nil, &returnData)
+				ticketId := 12345
+				ticketName := "TestSubject"
+				returnData := []datatypes.Ticket_Subject{
+					datatypes.Ticket_Subject{
+						Id: &ticketId,
+						Name: &ticketName,	
+					},
+				}
 				fakeTicketManager.GetSubjectsReturns(&returnData, nil)
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).ToNot(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("TestSubject"))
 			})
 
 			It("return fail 1", func() {

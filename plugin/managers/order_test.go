@@ -2,6 +2,7 @@ package managers_test
 
 import (
 	"reflect"
+	// "fmt"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -22,15 +23,6 @@ var _ = Describe("Order", func() {
 	})
 
 	Describe("ListCategories", func() {
-		BeforeEach(func() {
-			filenames := []string{
-				"SoftLayer_Product_Package_getConfiguration",
-				"SoftLayer_Product_Package_getAllObjects",
-			}
-			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-			OrderManager = managers.NewOrderManager(fakeSLSession)
-		})
-
 		Context("ListCategories given a packageKeyname", func() {
 			It("Return Categories", func() {
 				categories, err := OrderManager.ListCategories("packageKeyname")
@@ -67,15 +59,6 @@ var _ = Describe("Order", func() {
 
 	Describe("PackageLocation", func() {
 		Context("PackageLocation given packageKeyname", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getRegionss",
-					"SoftLayer_Product_Package_getAllObjects",
-					"SoftLayer_Product_Package_getRegions",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				OrderManager = managers.NewOrderManager(fakeSLSession)
-			})
 			It("Return no error", func() {
 				PackageLocation, err := OrderManager.PackageLocation("packageKeyname")
 				Expect(err).ToNot(HaveOccurred())
@@ -91,18 +74,10 @@ var _ = Describe("Order", func() {
 			})
 		})
 	})
-
 	Describe("GenerateOrder", func() {
 		BeforeEach(func() {
-			filenames := []string{
-				"SoftLayer_Location_Datacenter_getDatacenters",
-				"SoftLayer_Product_Package_getAllObjects",
-				"SoftLayer_Product_Package_getAccountRestrictedActivePresets",
-				"SoftLayer_Product_Package_getActivePresets",
-				"SoftLayer_Product_Package_getItems",
-				"SoftLayer_Product_Order_verifyOrder",
-			}
-			fakeSLSession = testhelpers.NewFakeSoftlayerLocationSession(filenames)
+			filenames := []string{"getDatacenters_1",}
+			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			OrderManager = managers.NewOrderManager(fakeSLSession)
 		})
 		Context("VerifyPlaceOrder given packageKeyname, location , itemKeynames , complexType , hourly , presetKeyname , extras", func() {
@@ -126,15 +101,8 @@ var _ = Describe("Order", func() {
 
 	Describe("VerifyPlaceOrder", func() {
 		BeforeEach(func() {
-			filenames := []string{
-				"SoftLayer_Location_Datacenter_getDatacenters",
-				"SoftLayer_Product_Package_getAllObjects",
-				"SoftLayer_Product_Package_getAccountRestrictedActivePresets",
-				"SoftLayer_Product_Package_getActivePresets",
-				"SoftLayer_Product_Package_getItems",
-				"SoftLayer_Product_Order_verifyOrder",
-			}
-			fakeSLSession = testhelpers.NewFakeSoftlayerLocationSession(filenames)
+			filenames := []string{"getDatacenters_1",}
+			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			OrderManager = managers.NewOrderManager(fakeSLSession)
 		})
 		Context("VerifyPlaceOrder given packageKeyname, location , itemKeynames , complexType , hourly , presetKeyname , extras", func() {
@@ -149,14 +117,9 @@ var _ = Describe("Order", func() {
 	Describe("PlaceOrder", func() {
 		BeforeEach(func() {
 			filenames := []string{
-				"SoftLayer_Location_Datacenter_getDatacenters",
-				"SoftLayer_Product_Package_getAllObjects",
-				"SoftLayer_Product_Package_getAccountRestrictedActivePresets",
-				"SoftLayer_Product_Package_getActivePresets",
-				"SoftLayer_Product_Package_getItems",
-				"SoftLayer_Product_Order_placeOrder",
+				"getDatacenters_1",
 			}
-			fakeSLSession = testhelpers.NewFakeSoftlayerLocationSession(filenames)
+			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			OrderManager = managers.NewOrderManager(fakeSLSession)
 		})
 		Context("PlaceOrder given volume id", func() {
@@ -173,14 +136,9 @@ var _ = Describe("Order", func() {
 	Describe("PlaceQuote", func() {
 		BeforeEach(func() {
 			filenames := []string{
-				"SoftLayer_Location_Datacenter_getDatacenters",
-				"SoftLayer_Product_Package_getAllObjects",
-				"SoftLayer_Product_Package_getAccountRestrictedActivePresets",
-				"SoftLayer_Product_Package_getActivePresets",
-				"SoftLayer_Product_Package_getItems",
-				"SoftLayer_Product_Order_placeQuote",
+				"getDatacenters_1",
 			}
-			fakeSLSession = testhelpers.NewFakeSoftlayerLocationSession(filenames)
+			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			OrderManager = managers.NewOrderManager(fakeSLSession)
 		})
 
@@ -225,13 +183,6 @@ var _ = Describe("Order", func() {
 	})
 
 	Describe("GetPresetPrices", func() {
-		BeforeEach(func() {
-			filenames := []string{
-				"SoftLayer_Product_Package_Preset_getObject",
-			}
-			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-			OrderManager = managers.NewOrderManager(fakeSLSession)
-		})
 		Context("GetPresetbyKey", func() {
 			It("Return the order receipt and no error", func() {
 				presetItems, err := OrderManager.GetPresetPrices(0)
