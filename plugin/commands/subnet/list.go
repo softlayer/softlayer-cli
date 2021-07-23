@@ -73,14 +73,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	headers := []string{T("ID"), T("identifier"), T("type"), T("network_space"), T("datacenter"), T("vlan_id"), T("IPs"), T("hardware"), T("virtual_servers")}
 	table := cmd.UI.Table(headers)
 	for _, subnet := range subnets {
-		var ipaddresses int = 0
-		if subnet.IpAddressCount != nil {
-			for _, ipaddress := range subnet.IpAddresses {
-				if nil != ipaddress.Id {
-					ipaddresses = ipaddresses + 1
-				}
-			}
-		}
+
 		var networktype, datacenter, vlanID string
 
 		if subnet.NetworkVlan != nil {
@@ -97,7 +90,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 			utils.FormatStringPointer(subnet.NetworkIdentifier),
 			utils.FormatStringPointer(subnet.SubnetType),
 			networktype, datacenter, vlanID,
-			strconv.Itoa(ipaddresses),
+			utils.FormatUIntPointer(subnet.IpAddressCount),
 			strconv.Itoa(len(subnet.Hardware)),
 			strconv.Itoa(len(subnet.VirtualGuests)))
 	}
