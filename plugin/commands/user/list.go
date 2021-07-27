@@ -10,8 +10,7 @@ import (
 )
 
 const (
-	TWO_FACTO_AUTH   = "externalBindingCount"
-	CLASSIC_API_KEYS = "apiAuthenticationKeyCount"
+	NO_ZERO_VALUE = "yes"
 )
 
 type ListCommand struct {
@@ -34,8 +33,8 @@ var maskMap = map[string]string{
 	"status":            "userStatus.name",
 	"hardwareCount":     "hardwareCount",
 	"virtualGuestCount": "virtualGuestCount",
-	"2FA":               TWO_FACTO_AUTH,
-	"classicAPIKey":     CLASSIC_API_KEYS,
+	"2FA":               "externalBindingCount",
+	"classicAPIKey":     "apiAuthenticationKeyCount",
 }
 
 func (cmd *ListCommand) Run(c *cli.Context) error {
@@ -80,22 +79,13 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		values["email"] = utils.FormatStringPointer(user.Email)
 		values["displayName"] = utils.FormatStringPointer(user.DisplayName)
 
-		if utils.UIntPointertoUInt(user.ExternalBindingCount) > 0 {
-			values["2FA"] = "yes"
-		} else {
-			values["2FA"] = "-"
-		}
-
-		if utils.UIntPointertoUInt(user.ApiAuthenticationKeyCount) > 0 {
-			values["classicAPIKey"] = "yes"
-		} else {
-			values["classicAPIKey"] = "-"
-		}
+		values["2FA"] = utils.ReplaceUIntPointerValue(user.ExternalBindingCount, NO_ZERO_VALUE)
+		values["classicAPIKey"] = utils.ReplaceUIntPointerValue(user.ApiAuthenticationKeyCount, NO_ZERO_VALUE)
 
 		if user.UserStatus != nil {
 			values["status"] = utils.FormatStringPointer(user.UserStatus.Name)
 		} else {
-			values["status"] = "-"
+			values["status"] = utils.EMPTY_VALUE
 		}
 
 		values["hardwareCount"] = utils.FormatUIntPointer(user.HardwareCount)
