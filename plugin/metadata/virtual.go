@@ -10,26 +10,27 @@ var (
 	NS_VIRTUAL_NAME  = "vs"
 	CMD_VIRTUAL_NAME = "vs"
 
-	CMD_VS_CANCEL_NAME         = "cancel"
-	CMD_VS_CAPTURE_NAME        = "capture"
-	CMD_VS_CREATE_NAME         = "create"
-	CMD_VS_CREATE_HOST_NAME    = "host-create"
-	CMD_VS_CREATE_OPTIONS_NAME = "options"
-	CMD_VS_CREDENTIALS_NAME    = "credentials"
-	CMD_VS_DETAIL_NAME         = "detail"
-	CMD_VS_DNS_SYNC_NAME       = "dns-sync"
-	CMD_VS_EDIT_NAME           = "edit"
-	CMD_VS_LIST_NAME           = "list"
-	CMD_VS_LIST_HOST_NAME      = "host-list"
-	CMD_VS_PAUSE_NAME          = "pause"
-	CMD_VS_POWER_OFF_NAME      = "power-off"
-	CMD_VS_POWER_ON_NAME       = "power-on"
-	CMD_VS_READY_NAME          = "ready"
-	CMD_VS_REBOOT_NAME         = "reboot"
-	CMD_VS_RELOAD_NAME         = "reload"
-	CMD_VS_RESCUE_NAME         = "rescue"
-	CMD_VS_RESUME_NAME         = "resume"
-	CMD_VS_UPGRADE_NAME        = "upgrade"
+	CMD_VS_AUTHORIZE_STORAGE_NAME = "authorize-storage"
+	CMD_VS_CANCEL_NAME            = "cancel"
+	CMD_VS_CAPTURE_NAME           = "capture"
+	CMD_VS_CREATE_NAME            = "create"
+	CMD_VS_CREATE_HOST_NAME       = "host-create"
+	CMD_VS_CREATE_OPTIONS_NAME    = "options"
+	CMD_VS_CREDENTIALS_NAME       = "credentials"
+	CMD_VS_DETAIL_NAME            = "detail"
+	CMD_VS_DNS_SYNC_NAME          = "dns-sync"
+	CMD_VS_EDIT_NAME              = "edit"
+	CMD_VS_LIST_NAME              = "list"
+	CMD_VS_LIST_HOST_NAME         = "host-list"
+	CMD_VS_PAUSE_NAME             = "pause"
+	CMD_VS_POWER_OFF_NAME         = "power-off"
+	CMD_VS_POWER_ON_NAME          = "power-on"
+	CMD_VS_READY_NAME             = "ready"
+	CMD_VS_REBOOT_NAME            = "reboot"
+	CMD_VS_RELOAD_NAME            = "reload"
+	CMD_VS_RESCUE_NAME            = "rescue"
+	CMD_VS_RESUME_NAME            = "resume"
+	CMD_VS_UPGRADE_NAME           = "upgrade"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -47,6 +48,7 @@ func VSMetaData() cli.Command {
 		Description: T("Classic infrastructure Virtual Servers"),
 		Usage:       "${COMMAND_NAME} sl vs",
 		Subcommands: []cli.Command{
+			VSAuthorizeStorageMataData(),
 			VSCancelMataData(),
 			VSCaptureMataData(),
 			VSCreateHostMataData(),
@@ -67,6 +69,30 @@ func VSMetaData() cli.Command {
 			VSRescueMataData(),
 			VSResumeMataData(),
 			VSUpgradeMataData(),
+		},
+	}
+}
+
+func VSAuthorizeStorageMataData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_AUTHORIZE_STORAGE_NAME,
+		Description: T("Authorize File, Block and Portable Storage to a Virtual Server"),
+		Usage: T(`${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567
+   Authorize File, Block and Portable Storage to a Virtual Server.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "u, username-storage",
+				Usage: T("The storage username to be added to the virtual server."),
+			},
+			cli.IntFlag{
+				Name:  "portable-id",
+				Usage: T("The portable storage id to be added to the virtual server"),
+			},
+			OutputFlag(),
 		},
 	}
 }
