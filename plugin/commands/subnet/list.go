@@ -38,7 +38,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	mask := "hardware,datacenter,ipAddressCount,virtualGuests,networkVlan[id,networkSpace],subnetType,id,networkIdentifier,ipAddresses[id, ipAddress,note]"
+	mask := "hardware,datacenter,ipAddressCount,virtualGuests,networkVlan[id,networkSpace],subnetType,id,networkIdentifier"
 	subnets, err := cmd.NetworkManager.ListSubnets(c.String("identifier"), c.String("d"), version, c.String("t"), c.String("network-space"), c.Int("order"), mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to list subnets on your account.\n")+err.Error(), 2)
