@@ -27,14 +27,10 @@ var _ = Describe("TagsManager", func() {
 				Expect(err).ToNot(HaveOccurred())
 			})
 			It("Handles Error", func() {
-				slError := sl.Error{
-					StatusCode: 500, 
-					Exception: "TEST ERROR",
-					Message: "TEST ERROR",
-					Wrapped: nil,
-				}
+				fakeHandler := testhelpers.FakeTransportHandler{}
+                fakeHandler.AddApiError("SoftLayer_Tag", "getAttachedTagsForCurrentUser", 500, "BAD")
+                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 
-				fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(nil, slError)
 				tagsManager = managers.NewTagsManager(fakeSLSession)
 				_, err := tagsManager.ListTags()
 				apiError := err.(sl.Error)
@@ -48,13 +44,10 @@ var _ = Describe("TagsManager", func() {
 				Expect(err).ToNot(HaveOccurred())
 			})
 			It("Handles Error", func() {
-				slError := sl.Error{
-					StatusCode: 500, 
-					Exception: "TEST ERROR",
-					Message: "TEST ERROR",
-					Wrapped: nil,
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(nil, slError)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+                fakeHandler.AddApiError("SoftLayer_Tag", "getUnattachedTagsForCurrentUser", 500, "Test Error")
+                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+
 				tagsManager = managers.NewTagsManager(fakeSLSession)
 				_, err := tagsManager.ListEmptyTags()
 				apiError := err.(sl.Error)
@@ -76,13 +69,9 @@ var _ = Describe("TagsManager", func() {
 				Expect(*tags[0].Tag.Name).To(Equal("tag03022020"))
 			})
 			It("Handles Error", func() {
-				slError := sl.Error{
-					StatusCode: 500, 
-					Exception: "TEST ERROR",
-					Message: "TEST ERROR",
-					Wrapped: nil,
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(nil, slError)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+                fakeHandler.AddApiError("SoftLayer_Tag", "getReferences", 500, "Test Error")
+                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 				tagsManager = managers.NewTagsManager(fakeSLSession)
 				_, err := tagsManager.GetTagReferences(1234)
 				apiError := err.(sl.Error)
