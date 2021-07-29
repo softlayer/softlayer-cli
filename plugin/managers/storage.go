@@ -157,7 +157,7 @@ func (s storageManager) GetVolumeAccessList(volumeId int) (datatypes.Network_Sto
 }
 
 //Returns a specific volume.
-//username: username of a volume.
+//string username: The volume username.
 func (s storageManager) GetVolumeByUsername(username string) ([]datatypes.Network_Storage, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("networkStorage.username").Eq(username))

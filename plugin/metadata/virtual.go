@@ -89,7 +89,7 @@ EXAMPLE:
 				Usage: T("The storage username to be added to the virtual server."),
 			},
 			cli.IntFlag{
-				Name:  "portable-id",
+				Name:  "p, portable-id",
 				Usage: T("The portable storage id to be added to the virtual server"),
 			},
 			OutputFlag(),

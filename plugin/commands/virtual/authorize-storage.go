@@ -31,15 +31,15 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+
 	if c.IsSet("u") {
 		storageResult, err := cmd.VirtualServerManager.AuthorizeStorage(vsID, c.String("username-storage"))
 		if err != nil {
 			return cli.NewExitError(T("Failed to authorize storage to the virtual server instance: {{.Storage}}.", map[string]interface{}{"Storage": c.String("username-storage")})+err.Error(), 2)
-		}
-
-		outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-		if err != nil {
-			return err
 		}
 
 		if outputFormat == "JSON" {
@@ -55,11 +55,6 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 		portableResult, err := cmd.VirtualServerManager.AttachPortableStorage(vsID, c.Int("portable-id"))
 		if err != nil {
 			return cli.NewExitError(T("Failed to authorize portal storage to the virtual server instance: {{.PortableID}}.", map[string]interface{}{"PortableID": c.Int("portable-id")})+err.Error(), 2)
-		}
-
-		outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-		if err != nil {
-			return err
 		}
 
 		if outputFormat == "JSON" {

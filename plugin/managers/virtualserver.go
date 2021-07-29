@@ -109,16 +109,16 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 	}
 }
 
-//Attach portal storage to a Virtual Server.
-//int vs_id: Virtual server id.
-//int portable_id: Portal storage id.
+//Attach portable storage to a Virtual Server.
+//int id: Virtual server id.
+//int portableStorageId: Portable storage id.
 func (vs virtualServerManager) AttachPortableStorage(id int, portableStorageId int) (datatypes.Provisioning_Version1_Transaction, error) {
 	return vs.VirtualGuestService.Id(id).AttachDiskImage(&portableStorageId)
 }
 
 //Authorize File or Block Storage to a Virtual Server.
-//int vs_id: Virtual server id.
-//int storageId: Storage id.
+//int id: Virtual server id.
+//string storageUsername: Storage username.
 func (vs virtualServerManager) AuthorizeStorage(id int, storageUsername string) (bool, error) {
 	storageResult, err := vs.StorageManager.GetVolumeByUsername(storageUsername)
 	if err != nil {
