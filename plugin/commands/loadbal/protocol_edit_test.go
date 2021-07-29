@@ -3,9 +3,7 @@ package loadbal_test
 import (
 	"strconv"
 	"errors"
-	// "strings"
 
-	// . "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

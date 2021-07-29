@@ -97,10 +97,10 @@ func (cmd *ProtocolEditCommand) Run(c *cli.Context) error {
 
     _, err = cmd.LoadBalancerManager.AddLoadBalancerListener(&loadbalancerUUID, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{protocolConfiguration})
     if err != nil {
-        return cli.NewExitError(T("Failed to add protocol: {{.Error}}.\n",
+        return cli.NewExitError(T("Failed to edit protocol: {{.Error}}.\n",
             map[string]interface{}{"Error": err.Error()}), 2)
     }
     cmd.UI.Ok()
-    cmd.UI.Say(T("Protocol added"))
+    cmd.UI.Say(T("Protocol edited"))
     return nil
 }
