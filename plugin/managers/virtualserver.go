@@ -72,7 +72,7 @@ type VirtualServerManager interface {
 	CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error)
 	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
 	ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error)
-	ListMigrateInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
+	GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
 	PauseInstance(id int) error
 	PowerOnInstance(id int) error
 	PowerOffInstance(id int, soft bool, hard bool) error
@@ -693,8 +693,8 @@ func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain s
 
 }
 
-//Retrieve a list of all virtual servers on the account.
-func (vs virtualServerManager) ListMigrateInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
+//This method support a mask and a filter as parameters to retrieve a list of all virtual servers on the account.
+func (vs virtualServerManager) GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
 	if mask == "" {
 		mask = INSTANCE_DEFAULT_MASK

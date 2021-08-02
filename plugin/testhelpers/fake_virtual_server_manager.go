@@ -226,17 +226,17 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Virtual_Guest
 		result2 error
 	}
-	ListMigrateInstancesStub        func(string, filter.Filters) ([]datatypes.Virtual_Guest, error)
-	listMigrateInstancesMutex       sync.RWMutex
-	listMigrateInstancesArgsForCall []struct {
+	GetInstancesStub        func(string, filter.Filters) ([]datatypes.Virtual_Guest, error)
+	getInstancesMutex       sync.RWMutex
+	getInstancesArgsForCall []struct {
 		arg1 string
 		arg2 filter.Filters
 	}
-	listMigrateInstancesReturns struct {
+	getInstancesReturns struct {
 		result1 []datatypes.Virtual_Guest
 		result2 error
 	}
-	listMigrateInstancesReturnsOnCall map[int]struct {
+	getInstancesReturnsOnCall map[int]struct {
 		result1 []datatypes.Virtual_Guest
 		result2 error
 	}
@@ -1339,65 +1339,65 @@ func (fake *FakeVirtualServerManager) ListInstancesReturnsOnCall(i int, result1 
 	}{result1, result2}
 }
 
-func (fake *FakeVirtualServerManager) ListMigrateInstances(arg1 string, arg2 filter.Filters) ([]datatypes.Virtual_Guest, error) {
-	fake.listMigrateInstancesMutex.Lock()
-	ret, specificReturn := fake.listMigrateInstancesReturnsOnCall[len(fake.listMigrateInstancesArgsForCall)]
-	fake.listMigrateInstancesArgsForCall = append(fake.listMigrateInstancesArgsForCall, struct {
+func (fake *FakeVirtualServerManager) GetInstances(arg1 string, arg2 filter.Filters) ([]datatypes.Virtual_Guest, error) {
+	fake.getInstancesMutex.Lock()
+	ret, specificReturn := fake.getInstancesReturnsOnCall[len(fake.getInstancesArgsForCall)]
+	fake.getInstancesArgsForCall = append(fake.getInstancesArgsForCall, struct {
 		arg1 string
 		arg2 filter.Filters
 	}{arg1, arg2})
-	fake.recordInvocation("ListMigrateInstances", []interface{}{arg1, arg2})
-	fake.listMigrateInstancesMutex.Unlock()
-	if fake.ListMigrateInstancesStub != nil {
-		return fake.ListMigrateInstancesStub(arg1, arg2)
+	fake.recordInvocation("GetInstances", []interface{}{arg1, arg2})
+	fake.getInstancesMutex.Unlock()
+	if fake.GetInstancesStub != nil {
+		return fake.GetInstancesStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listMigrateInstancesReturns
+	fakeReturns := fake.getInstancesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeVirtualServerManager) ListMigrateInstancesCallCount() int {
-	fake.listMigrateInstancesMutex.RLock()
-	defer fake.listMigrateInstancesMutex.RUnlock()
-	return len(fake.listMigrateInstancesArgsForCall)
+func (fake *FakeVirtualServerManager) GetInstancesCallCount() int {
+	fake.getInstancesMutex.RLock()
+	defer fake.getInstancesMutex.RUnlock()
+	return len(fake.getInstancesArgsForCall)
 }
 
-func (fake *FakeVirtualServerManager) ListMigrateInstancesCalls(stub func(string, filter.Filters) ([]datatypes.Virtual_Guest, error)) {
-	fake.listMigrateInstancesMutex.Lock()
-	defer fake.listMigrateInstancesMutex.Unlock()
-	fake.ListMigrateInstancesStub = stub
+func (fake *FakeVirtualServerManager) GetInstancesCalls(stub func(string, filter.Filters) ([]datatypes.Virtual_Guest, error)) {
+	fake.getInstancesMutex.Lock()
+	defer fake.getInstancesMutex.Unlock()
+	fake.GetInstancesStub = stub
 }
 
-func (fake *FakeVirtualServerManager) ListMigrateInstancesArgsForCall(i int) (string, filter.Filters) {
-	fake.listMigrateInstancesMutex.RLock()
-	defer fake.listMigrateInstancesMutex.RUnlock()
-	argsForCall := fake.listMigrateInstancesArgsForCall[i]
+func (fake *FakeVirtualServerManager) GetInstancesArgsForCall(i int) (string, filter.Filters) {
+	fake.getInstancesMutex.RLock()
+	defer fake.getInstancesMutex.RUnlock()
+	argsForCall := fake.getInstancesArgsForCall[i]
 	return argsForCall.arg1, argsForCall.arg2
 }
 
-func (fake *FakeVirtualServerManager) ListMigrateInstancesReturns(result1 []datatypes.Virtual_Guest, result2 error) {
-	fake.listMigrateInstancesMutex.Lock()
-	defer fake.listMigrateInstancesMutex.Unlock()
-	fake.ListMigrateInstancesStub = nil
-	fake.listMigrateInstancesReturns = struct {
+func (fake *FakeVirtualServerManager) GetInstancesReturns(result1 []datatypes.Virtual_Guest, result2 error) {
+	fake.getInstancesMutex.Lock()
+	defer fake.getInstancesMutex.Unlock()
+	fake.GetInstancesStub = nil
+	fake.getInstancesReturns = struct {
 		result1 []datatypes.Virtual_Guest
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeVirtualServerManager) ListMigrateInstancesReturnsOnCall(i int, result1 []datatypes.Virtual_Guest, result2 error) {
-	fake.listMigrateInstancesMutex.Lock()
-	defer fake.listMigrateInstancesMutex.Unlock()
-	fake.ListMigrateInstancesStub = nil
-	if fake.listMigrateInstancesReturnsOnCall == nil {
-		fake.listMigrateInstancesReturnsOnCall = make(map[int]struct {
+func (fake *FakeVirtualServerManager) GetInstancesReturnsOnCall(i int, result1 []datatypes.Virtual_Guest, result2 error) {
+	fake.getInstancesMutex.Lock()
+	defer fake.getInstancesMutex.Unlock()
+	fake.GetInstancesStub = nil
+	if fake.getInstancesReturnsOnCall == nil {
+		fake.getInstancesReturnsOnCall = make(map[int]struct {
 			result1 []datatypes.Virtual_Guest
 			result2 error
 		})
 	}
-	fake.listMigrateInstancesReturnsOnCall[i] = struct {
+	fake.getInstancesReturnsOnCall[i] = struct {
 		result1 []datatypes.Virtual_Guest
 		result2 error
 	}{result1, result2}

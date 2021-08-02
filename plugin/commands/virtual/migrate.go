@@ -9,6 +9,7 @@ import (
 	"github.com/urfave/cli"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -29,6 +30,11 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 	vsList := []datatypes.Virtual_Guest{}
 	objMask := "mask[id, hostname, domain, datacenter, pendingMigrationFlag, powerState, primaryIpAddress,primaryBackendIpAddress, dedicatedHost]"
 
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+
 	if !c.IsSet("g") && !c.IsSet("a") && !c.IsSet("host") {
 		vsPendignMigateList := getMigrationServerList(objMask, nil, cmd)
 		for _, pendingMigrationsVs := range vsPendignMigateList {
@@ -36,11 +42,19 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 				vsList = append(vsList, pendingMigrationsVs)
 			}
 		}
-		showsServerPendingMigration(vsList, cmd, "vs")
 
 		dedicatedFilter := append(filters, utils.QueryFilter("not null", "virtualGuests.dedicatedHost.id"))
-		dedicatedPendingMigrateList := getMigrationServerList(objMask, dedicatedFilter, cmd)
-		showsServerPendingMigration(dedicatedPendingMigrateList, cmd, "dedicated")
+		dedicatedMigrateList := getMigrationServerList(objMask, dedicatedFilter, cmd)
+
+		var migrationList []interface{}
+		migrationList = append(migrationList, vsList)
+		migrationList = append(migrationList, dedicatedMigrateList)
+		if outputFormat == "JSON" {
+			return utils.PrintPrettyJSONList(cmd.UI, migrationList)
+		}
+
+		showsServerPendingMigration(vsList, cmd, "vs")
+		showsServerPendingMigration(dedicatedMigrateList, cmd, "dedicated")
 	} else {
 		if c.IsSet("all") {
 			guestMigration := getMigrationServerList(objMask, nil, cmd)
@@ -75,7 +89,9 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 			if err != nil {
 				return cli.NewExitError(T("Failed to migrate the virtual server instance.\n")+err.Error(), 2)
 			}
-
+			if outputFormat == "JSON" {
+				return utils.PrintPrettyJSON(cmd.UI, result)
+			}
 			cmd.UI.Ok()
 			cmd.UI.Print(T("The virtual server is migrating."))
 			table := cmd.UI.Table([]string{T("id"), T("CreateDate")})
@@ -88,7 +104,7 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 }
 
 func getMigrationServerList(mask string, filter filter.Filters, cmd *MigrateCommand) []datatypes.Virtual_Guest {
-	migrationServerList, err := cmd.VirtualServerManager.ListMigrateInstances(mask, filter)
+	migrationServerList, err := cmd.VirtualServerManager.GetInstances(mask, filter)
 	if err != nil {
 		cli.NewExitError(T("Failed to retrieve the virtual server instances.\n")+err.Error(), 2)
 	}
@@ -98,7 +114,7 @@ func getMigrationServerList(mask string, filter filter.Filters, cmd *MigrateComm
 func showsServerPendingMigration(vsList []datatypes.Virtual_Guest, cmd *MigrateCommand, typeServer string) {
 	if typeServer == "vs" {
 		table := cmd.UI.Table([]string{T("id"), T("hostname"), T("domain"), T("datacenter"), T("pendingMigrationFlag")})
-		cmd.UI.Print("Virtual Server Pending Migration")
+		cmd.UI.Print("Virtual Server Pending Migration\n")
 		for _, vm := range vsList {
 			table.Add(utils.FormatIntPointer(vm.Id), utils.FormatStringPointer(vm.Hostname),
 				utils.FormatStringPointer(vm.Domain), utils.FormatStringPointer(vm.Datacenter.Name),
@@ -109,7 +125,7 @@ func showsServerPendingMigration(vsList []datatypes.Virtual_Guest, cmd *MigrateC
 	} else {
 		table := cmd.UI.Table([]string{T("id"), T("hostname"), T("domain"), T("datacenter"), T("PendingMigrationFlag"),
 			T("HostName"), T("HostId")})
-		cmd.UI.Print("Dedicated Hosts")
+		cmd.UI.Print("Dedicated Hosts\n")
 		for _, vm := range vsList {
 			table.Add(utils.FormatIntPointer(vm.Id), utils.FormatStringPointer(vm.Hostname),
 				utils.FormatStringPointer(vm.Domain), utils.FormatStringPointer(vm.Datacenter.Name),
