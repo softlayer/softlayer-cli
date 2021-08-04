@@ -38,9 +38,8 @@ func (cmd *OptionsCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return cli.NewExitError(T("Failed to get load balancer product packages.")+err.Error(), 2)
 	}
-	cmd.UI.Ok()
 	cmd.UI.Say("")
-	var iterNumber int
+	iterNumber := 0
 	if c.IsSet("d") {
 		for _, region := range pkgs[len(pkgs)-1].Regions {
 
@@ -115,10 +114,9 @@ func (cmd *OptionsCommand) Run(c *cli.Context) error {
 					tblSubnet.Print()
 					table.Add(bufPrice.String(), bufSubnet.String())
 				} else {
-					table.Add(T("Private Subnets"), T("Not Found"))
+					table.Add(bufPrice.String(), T("Not Found"))
 				}
 			}
-			table.Print()
 			table.Print()
 		}
 	} else {
