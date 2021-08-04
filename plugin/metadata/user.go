@@ -188,7 +188,7 @@ func UserListMetaData() cli.Command {
 		Flags: []cli.Flag{
 			cli.StringSliceFlag{
 				Name:  "column",
-				Usage: T("Column to display. options are: id,username,email,displayName,status,hardwareCount,virtualGuestCount. This option can be specified multiple times"),
+				Usage: T("Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times"),
 			},
 			cli.StringSliceFlag{
 				Name:   "columns",

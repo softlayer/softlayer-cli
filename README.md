@@ -96,11 +96,64 @@ cd plugin/managers
 counterfeiter.exe -o ../testhelpers/fake_storage_manager.go . StorageManager
 ```
 
+If you want to use the real manager but fixture API data, just initialize the manager like this in the CLI test
+
+(filenames here is optional of course)
+```go
+BeforeEach(func() {
+
+    filenames := []string{"getDatacenters_1",}
+    fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
+    OrderManager = managers.NewOrderManager(fakeSLSession)
+    fakeUI = terminal.NewFakeUI()
+    cmd = order.NewPlaceCommand(fakeUI, OrderManager, nil)
+    cliCommand = cli.Command{
+        Name:        metadata.OrderPlaceMetaData().Name,
+        Description: metadata.OrderPlaceMetaData().Description,
+        Usage:       metadata.OrderPlaceMetaData().Usage,
+        Flags:       metadata.OrderPlaceMetaData().Flags,
+        Action:      cmd.Run,
+    }
+})
+```
 
 ### `[no tests to run]`
 New commands needs a `command_test.go` file in the CLI directory.
 
 If you added `slplugin/commands/new/` then there needs to be a `slplugin/commands/new/new_test.go` file. Copy the content from one of the other command test files and just change the name and package.
+
+### Fake Transports
+
+In unit tests, you will want to establish a FakeSoftLayerSession object so that API requests faked from test fixtures.
+
+Something like this.
+```go
+BeforeEach(func() {
+    fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
+    networkManager = managers.NewNetworkManager(fakeSLSession)
+})
+```
+
+By default, every API call made to the SoftLayer API will load in the appropraite JSON file from `testfixtures/SoftLayer_Service/method.json`
+
+To force errors:
+
+```go
+fakeHandler := testhelpers.FakeTransportHandler{}
+fakeHandler.AddApiError("SoftLayer_Tag", "getAttachedTagsForCurrentUser", 500, "BAD")
+fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+```
+
+To force a non-default JSON file to be loaded
+
+This will load `testfixtures/SoftLayer_Network_Vlan/getObject-noBilling.json` when SoftLayer_Network_Vlan::getObject is called next.
+
+```go
+fakeSLSession = testhelpers.NewFakeSoftlayerSession([]string{"getObject-noBilling.json"})
+networkManager = managers.NewNetworkManager(fakeSLSession)
+```
+
+Fixutres can also be loaded by ID automatically with the format `testfixtures/SoftLayer_Service/getObject-1234.json` where 1234 is the ID you passed into the API call.
 
 ## Adding new actions to slplugin
 
@@ -165,28 +218,58 @@ anything with `T("some string here")` uses the internationalization system. Defi
 
 Your working directory should be in `go/src/github.ibm.com/SoftLayer/softlayer-cli/`
 
-```
+### Useful Scripts
 
-# This command will check if there were any mismatch between `en_US.all.json` and the string with `T("some string here")` in your code. It will output details about the mismatch, fix these mismatch manually.
+#### `./bin/catch-i18n-mismatch.sh`
+
+If you get the following output, everything is fine
+```
 $ ./bin/catch-i18n-mismatch.sh  
 OKTotal time: 372.753966ms
+```
 
-# This command will format en_US.all.json and other language json file. Dont run this in windows otherwise it will mess up the sort order and look like you rewrote the whole file
+If you get the following output, you need to edit the translation files
+```
+$> ./bin/catch-i18n-mismatch.sh
+>>> |"IP address {{.IP}} is not found on your account. Please confirm IP and try again.\n" exists in the code, but not in en_US| <<<
+>>> |" The server ID to remove from the security group" exists in the code, but not in en_US| <<<
+>>> |" The test ID to remove from the security group" exists in en_US, but not in the code| <<<
+====== ADD THESE =======
+[
+        {"id": "IP address {{.IP}} is not found on your account. Please confirm IP and try again.\n", "translation": "IP address {{.IP}} is not found on your account. Please confirm IP and try again.\n"},
+        {"id": " The server ID to remove from the security group", "translation": " The server ID to remove from the security group"}
+]
+====== DEL THESE =======
+[
+        {"id": " The test ID to remove from the security group", "translation": " The test ID to remove from the security group"}
+]
+```
 
-$ ./bin/format-translation-files 
-*** Process zh_Hans.all.json
-*** Process ko_KR.all.json
-*** Process es_ES.all.json
-*** Process en_US.all.json
-*** Process ja_JP.all.json
-*** Process zh_Hant.all.json
-*** Process it_IT.all.json
-*** Process fr_FR.all.json
-*** Process pt_BR.all.json
-*** Process de_DE.all.json
 
+#### `./bin/fixeverything_i18n.sh`
+
+You can either do so manually, or run the following command which will do almost all the work for you
+
+```
+$> sh bin/fixeverything_i18n.sh
+Running: ./bin/catch-i18n-mismatch.sh
+Running: python ./bin/split_i18n.py
+Running: ./bin/generate-i18n-resources.sh
+Running: git add ./plugin/i18n/resources/*.json
+Running: git add ./plugin/resources/i18n_resources.go
+Running: git commit --message="Translation fixes from ./bin/fixeverything_i18n.sh"
+[badBranch c12f1d7] Translation fixes from ./bin/fixeverything_i18n.sh
+ 11 files changed, 40 insertions(+), 20 deletions(-)
+Running: git checkout ./old-i18n/*.json
+Done
+```
+
+
+### Manually
+If you decided to edit the i18n files manually, make sure to run `bin/generate-i18n-resources` to build the required go source files. These sources files are what actually get built into the command, otherwise your translation additions wont show up.
+
+```
 # This command will generate/update i18n_resources.go file
-
 $ ./bin/generate-i18n-resources 
 Generating i18n resource file ...
 Done.
@@ -195,7 +278,7 @@ Done.
 
 Removing and Adding translations automatically.
 
-There are 2 files in `old-i18n` called `add_these.json` and `remove_these.json`. Dont commit changes to them, but do use them help automatically modify the translation files. 
+There are 2 files in `old-i18n` called `old-i18n/add_these.json` and `old-i18n/remove_these.json`. Dont commit changes to them, but do use them help automatically modify the translation files. 
 
 Run `./bin/split_i18n.py` (with python3.8 at least) to add everything in `add_these.json` and remove everything in `remove_these.json`.
 

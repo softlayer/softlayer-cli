@@ -21,6 +21,10 @@ import (
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
+const (
+	EMPTY_VALUE = "-"
+)
+
 //TODO support resolving guid to integer id
 func ResolveVirtualGuestId(identifier string) (int, error) {
 	id, err := strconv.Atoi(identifier)
@@ -173,14 +177,14 @@ func B2GB(bytes int) string {
 
 func FormatBoolPointer(value *bool) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return strconv.FormatBool(sl.Get(value).(bool))
 }
 
 func FormatStringPointer(value *string) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return sl.Get(value).(string)
 }
@@ -194,7 +198,7 @@ func FormatStringPointerName(value *string) string {
 
 func FormatIntPointer(value *int) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return strconv.Itoa(sl.Get(value).(int))
 }
@@ -208,28 +212,28 @@ func FormatIntPointerName(value *int) string {
 
 func FormatUIntPointer(value *uint) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return fmt.Sprintf("%d", sl.Get(value).(uint))
 }
 
 func FormatSLFloatPointerToInt(value *datatypes.Float64) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return fmt.Sprintf("%d", int(sl.Get(value).(datatypes.Float64)))
 }
 
 func FormatSLFloatPointerToFloat(value *datatypes.Float64) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return fmt.Sprintf("%f", float64(sl.Get(value).(datatypes.Float64)))
 }
 
 func FormatSLTimePointer(value *datatypes.Time) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return value.UTC().Format(time.RFC3339)
 }
@@ -239,6 +243,14 @@ func Bool2Int(value bool) int {
 		return 1
 	}
 	return 0
+}
+
+func ReplaceUIntPointerValue(value *uint, newValue string) string {
+
+	if UIntPointertoUInt(value) > 0 {
+		return newValue
+	}
+	return EMPTY_VALUE
 }
 
 func ValidateColumns(sortby string, columns []string, defaultColumns []string, optionalColumns, sortColumns []string, context *cli.Context) ([]string, error) {
