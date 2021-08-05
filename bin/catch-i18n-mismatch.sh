@@ -9,7 +9,7 @@ then
 fi
 
 # Switches to plugin directory or exits if it doesn't exist.
-pushd "./plugin" > /dev/null || exit 1
+cd "./plugin" 
 
 RESULTS=`i18n4go -c checkup -q i18n -v`
 # RESULTS="OKTotal time:"
@@ -90,5 +90,3 @@ while IFS= read -r line; do
     fi
     
 done <<< "$RESULTS"
-
-popd > /dev/null || exit 1
