@@ -53,7 +53,7 @@ func UserCreateMetaData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl user create USERNAME [OPTIONS] 
 
 EXAMPLE: 	
-    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --api-key --template '{"firstName": "Test", "lastName": "Testerson"}'
+    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{"firstName": "Test", "lastName": "Testerson"}'
     Remember to set the permissions and access for this new user.`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
@@ -71,10 +71,6 @@ EXAMPLE:
 			cli.StringFlag{
 				Name:  "template",
 				Usage: T("A json string describing https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/"),
-			},
-			cli.BoolFlag{
-				Name:  "api-key",
-				Usage: T("Create an API key for this user"),
 			},
 			cli.StringFlag{
 				Name:  "vpn-password",
