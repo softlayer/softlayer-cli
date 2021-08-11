@@ -2774,6 +2774,8 @@
 "translation": "Subnet {{.ID}} was cancelled."},
 {"id": "Successful Login?",
 "translation": "Successful Login?"},
+{"id": "Successfully authorized storage: {{.PortableID}} was added.",
+"translation": "Successfully authorized storage: {{.PortableID}} was added."},
 {"id": "Successfully authorized storage: {{.Storage}} was added.",
 "translation": "Successfully authorized storage: {{.Storage}} was added."},
 {"id": "Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}.",
