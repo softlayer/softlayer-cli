@@ -70,7 +70,7 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234", "--username-storage", "SL02SL111")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(strings.Contains(err.Error(), "Failed to authorize storage to the virtual server instance: {{.Storage}}.\n{{.Error}}")).To(BeTrue())
 			})
 		})
 
@@ -94,7 +94,7 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234", "--portable-id", "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(strings.Contains(err.Error(), "Failed to authorize portable storage to the virtual server instance: {{.PortableID}}.\n{{.Error}}")).To(BeTrue())
 			})
 		})
 	})

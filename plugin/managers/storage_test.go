@@ -65,10 +65,8 @@ var _ = Describe("StorageManager", func() {
 		Context("OrderReplicantVolume given volume id and parameters", func() {
 			BeforeEach(func() {
 				filenames := []string{
-					"SoftLayer_Location_Datacenter_getDatacenters",
-					"SoftLayer_Network_Storage_getObject",
-					"SoftLayer_Product_Package_getAllObjects_saas",
-					"SoftLayer_Product_Order_placeOrder_endurance",
+					"getAllObjects_saas",
+					"placeOrder_endurance",
 				}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				StorageManager = managers.NewStorageManager(fakeSLSession)
@@ -133,10 +131,8 @@ var _ = Describe("StorageManager", func() {
 		Context("OrderBlockVolume given type=endurance", func() {
 			BeforeEach(func() {
 				filenames := []string{
-					"SoftLayer_Location_Datacenter_getDatacenters",
-					"SoftLayer_Network_Storage_getObject",
-					"SoftLayer_Product_Package_getAllObjects_saas",
-					"SoftLayer_Product_Order_placeOrder_endurance",
+					"getAllObjects_saas",
+					"placeOrder_endurance",
 				}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				StorageManager = managers.NewStorageManager(fakeSLSession)
@@ -150,10 +146,8 @@ var _ = Describe("StorageManager", func() {
 		Context("OrderBlockVolume given type=performance", func() {
 			BeforeEach(func() {
 				filenames := []string{
-					"SoftLayer_Location_Datacenter_getDatacenters",
-					"SoftLayer_Network_Storage_getObject",
-					"SoftLayer_Product_Package_getAllObjects_saas",
-					"SoftLayer_Product_Order_placeOrder_performance",
+					"getAllObjects_saas",
+					"placeOrder_performance",
 				}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				StorageManager = managers.NewStorageManager(fakeSLSession)
@@ -256,10 +250,8 @@ var _ = Describe("StorageManager", func() {
 		Context("OrderSnapshotSpace given volume id and capacity and tier", func() {
 			BeforeEach(func() {
 				filenames := []string{
-					"SoftLayer_Location_Datacenter_getDatacenters",
-					"SoftLayer_Network_Storage_getObject",
-					"SoftLayer_Product_Package_getAllObjects_saas",
-					"SoftLayer_Product_Order_placeOrder_endurance",
+					"getAllObjects_saas",
+					"placeOrder_endurance",
 				}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				StorageManager = managers.NewStorageManager(fakeSLSession)

@@ -23,8 +23,8 @@ var _ = Describe("FirewallManager", func() {
 		Context("AddVlanFirewall given vlan id and with HA=false", func() {
 			BeforeEach(func() {
 				filenames := []string{
-					"SoftLayer_Product_Package_getItems_dedicatedFirewallNonHA",
-					"SoftLayer_Product_Order_placeOrder_firewallNonHA",
+					"getItems_dedicatedFirewallNonHA",
+					"placeOrder_firewallNonHA",
 				}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
@@ -40,8 +40,8 @@ var _ = Describe("FirewallManager", func() {
 		Context("AddVlanFirewall given vlan id and with HA=true", func() {
 			BeforeEach(func() {
 				filenames := []string{
-					"SoftLayer_Product_Package_getItems_dedicatedFirewallHA",
-					"SoftLayer_Product_Order_placeOrder_firewallHA",
+					"getItems_dedicatedFirewallHA",
+					"placeOrder_firewallHA",
 				}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
@@ -60,9 +60,8 @@ var _ = Describe("FirewallManager", func() {
 		Context("AddStandardFirewall given server id and isVirtual=true", func() {
 			BeforeEach(func() {
 				filenames := []string{
-					"SoftLayer_Product_Package_getItems_100MFirewall",
-					"SoftLayer_Product_Order_placeOrder_VSFirewall",
-					"SoftLayer_Virtual_Guest_getObject",
+					"getItems_100MFirewall",
+					"placeOrder_VSFirewall",
 				}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
@@ -79,7 +78,7 @@ var _ = Describe("FirewallManager", func() {
 		// Context("AddStandardFirewall given server id and isVirtual=false", func() {
 		// 	BeforeEach(func() {
 		// 		filenames := []string{
-		// 			"SoftLayer_Product_Package_getItems_1000MFirewall",
+		// 			"getItems_1000MFirewall",
 		// 			"SoftLayer_Product_Order_placeOrder_HWFirewall",
 		// 		}
 		// 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
@@ -98,9 +97,7 @@ var _ = Describe("FirewallManager", func() {
 	Describe("GetFirewalls", func() {
 		Context("GetFirewalls", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Account_getNetworkVlans_firewall",
-				}
+				filenames := []string{"getNetworkVlans_firewall",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})
@@ -163,10 +160,7 @@ var _ = Describe("FirewallManager", func() {
 	Describe("GetStandardPackage", func() {
 		Context("GetStandardPackage given server id and virtual=true", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getItems_100MFirewall",
-					"SoftLayer_Virtual_Guest_getObject",
-				}
+				filenames := []string{"getItems_100MFirewall",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})
@@ -179,10 +173,7 @@ var _ = Describe("FirewallManager", func() {
 		})
 		Context("GetStandardPackage given server id and virtual=false", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getItems_1000MFirewall",
-					"SoftLayer_Hardware_Server_getFrontendNetworkComponents",
-				}
+				filenames := []string{"getItems_1000MFirewall",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})
@@ -198,9 +189,7 @@ var _ = Describe("FirewallManager", func() {
 	Describe("GetDedicatedPackage", func() {
 		Context("GetDedicatedPackage with HA=false", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getItems_dedicatedFirewallNonHA",
-				}
+				filenames := []string{"getItems_dedicatedFirewallNonHA",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})
@@ -223,9 +212,7 @@ var _ = Describe("FirewallManager", func() {
 		})
 		Context("GetDedicatedPackage with HA=true", func() {
 			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Product_Package_getItems_dedicatedFirewallHA",
-				}
+				filenames := []string{"getItems_dedicatedFirewallHA",}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})

@@ -1,0 +1,71 @@
+{
+    "description": "This resource is managed by terraform",
+    "id": 1869708,
+    "name": "smsgwmongos-app-ingress-sg",
+    "networkComponentBindings": [
+        {
+            "id": 5484974,
+            "networkComponentId": 54778506,
+            "securityGroupId": 1869708,
+            "networkComponent": {
+                "id": 54778506,
+                "port": 0,
+                "guest": {
+                    "hostname": "smsgwmongos-app-02-dal13.smsgwmongo.prd",
+                    "id": 87274220,
+                    "primaryBackendIpAddress": "10.209.128.248"
+                }
+            }
+        },
+        {
+            "id": 5484830,
+            "networkComponentId": 54778518,
+            "securityGroupId": 1869708,
+            "networkComponent": {
+                "id": 54778518,
+                "port": 0,
+                "guest": {
+                    "hostname": "smsgwmongos-app-03-dal13.smsgwmongo.prd",
+                    "id": 87274224,
+                    "primaryBackendIpAddress": "10.209.128.85"
+                }
+            }
+        },
+        {
+            "id": 5484638,
+            "networkComponentId": 54778522,
+            "securityGroupId": 1869708,
+            "networkComponent": {
+                "id": 54778522,
+                "port": 0,
+                "guest": {
+                    "hostname": "smsgwmongos-app-01-dal13.smsgwmongo.prd",
+                    "id": 87274226,
+                    "primaryBackendIpAddress": "10.209.128.228"
+                }
+            }
+        }
+    ],
+    "rules": [
+        {
+            "direction": "ingress",
+            "ethertype": "IPv4",
+            "id": 5882930,
+            "portRangeMax": 27017,
+            "portRangeMin": 27017,
+            "protocol": "tcp",
+            "remoteGroupId": null,
+            "remoteIp": "10.209.89.64/26"
+        },
+        {
+            "direction": "ingress",
+            "ethertype": "IPv4",
+            "id": 5882926,
+            "portRangeMax": 27017,
+            "portRangeMin": 27017,
+            "protocol": "tcp",
+            "remoteGroupId": null,
+            "remoteIp": "10.209.128.0/24"
+        }
+    ]
+}
