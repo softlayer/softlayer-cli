@@ -39,7 +39,8 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 	if c.IsSet("u") {
 		storageResult, err := cmd.VirtualServerManager.AuthorizeStorage(vsID, c.String("username-storage"))
 		if err != nil {
-			return cli.NewExitError(T("Failed to authorize storage to the virtual server instance: {{.Storage}}.", map[string]interface{}{"Storage": c.String("username-storage")})+err.Error(), 2)
+			return cli.NewExitError(T("Failed to authorize storage to the virtual server instance: {{.Storage}}.\n{{.Error}}",
+				map[string]interface{}{"Storage": c.String("username-storage"), "Error": err.Error()}), 2)
 		}
 
 		if outputFormat == "JSON" {
@@ -47,14 +48,15 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 		}
 
 		cmd.UI.Ok()
-		cmd.UI.Print(T("Successfully authorize storage: {{.Storage}} was Added.",
+		cmd.UI.Print(T("Successfully authorized storage: {{.Storage}} was added.",
 			map[string]interface{}{"Storage": c.String("username-storage")}))
 	}
 
 	if c.IsSet("portable-id") {
 		portableResult, err := cmd.VirtualServerManager.AttachPortableStorage(vsID, c.Int("portable-id"))
 		if err != nil {
-			return cli.NewExitError(T("Failed to authorize portal storage to the virtual server instance: {{.PortableID}}.", map[string]interface{}{"PortableID": c.Int("portable-id")})+err.Error(), 2)
+			return cli.NewExitError(T("Failed to authorize portable storage to the virtual server instance: {{.PortableID}}.\n{{.Error}}",
+				map[string]interface{}{"PortableID": c.Int("portable-id"), "Error": err.Error()}), 2)
 		}
 
 		if outputFormat == "JSON" {
@@ -62,7 +64,7 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 		}
 
 		cmd.UI.Ok()
-		cmd.UI.Print(T("Successfully authorize portal storage: {{.PortableID}} was Added.",
+		cmd.UI.Print(T("Successfully authorized storage: {{.PortableID}} was added.",
 			map[string]interface{}{"PortableID": c.Int("portable-id")}))
 		table := cmd.UI.Table([]string{T("id"), T("CreateDate")})
 		table.Add(utils.FormatIntPointer(portableResult.Id), utils.FormatSLTimePointer(portableResult.CreateDate))

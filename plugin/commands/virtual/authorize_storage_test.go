@@ -16,7 +16,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("VS migrate", func() {
+var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 	var (
 		fakeUI        *terminal.FakeUI
 		fakeVSManager *testhelpers.FakeVirtualServerManager
