@@ -1098,6 +1098,8 @@
 "translation": "Failed to authorize host to volume {{.VolumeID}}.\n"},
 {"id": "Failed to authorize portable storage to the virtual server instance: {{.PortableID}}.\n{{.Error}}",
 "translation": "Failed to authorize portable storage to the virtual server instance: {{.PortableID}}.\n{{.Error}}"},
+{"id": "Successfully authorized storage: {{.PortableID}} was added.", 
+"translation": "Successfully authorized storage: {{.PortableID}} was added."},
 {"id": "Failed to authorize storage to the virtual server instance: {{.Storage}}.\n{{.Error}}",
 "translation": "Failed to authorize storage to the virtual server instance: {{.Storage}}.\n{{.Error}}"},
 {"id": "Failed to cancel IPSec {{.ContextID}}.\n",
