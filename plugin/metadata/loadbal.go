@@ -340,7 +340,7 @@ func LoadbalProtocolEditMetadata() cli.Command {
 		Category:    NS_LOADBAL_NAME,
 		Name:        "protocol-edit",
 		Description: T("Edit load balancer protocol"),
-		Usage:       "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+		Usage:       "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
 		Flags: []cli.Flag{
 			cli.IntFlag{
 				Name:  "id",
