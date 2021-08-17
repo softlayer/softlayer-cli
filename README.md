@@ -287,10 +287,19 @@ Run `./bin/split_i18n.py` (with python3.8 at least) to add everything in `add_th
 
 Vendor files are now managed by `go mod vendor`, I had to set these environment variables to download github.ibm.com vendor objects. To update the github.com/softlayer/softlayer-go dependancy, update `go.mod` file.
 
+
+https://golang.org/doc/faq#git_https
+
+
 ```bash
 export GOPROXY=direct
 export GOPRIVATE=github.ibm.com/*
+# Make sure you gitconfig has these lines
+cat ~/.gitconfig
+[url "ssh://git@github.ibm.com/"]
+        insteadOf = https://github.ibm.com/
 go mod vendor
+
 ```
 
 If you get this error, check your GOPROXY and GOPRIVATE settings.
@@ -303,4 +312,5 @@ go: github.ibm.com/Bluemix/cf-admin-cli@v0.0.0-20200515160705-accb00409d86: veri
 
 ```
 
+ALSO:
 
