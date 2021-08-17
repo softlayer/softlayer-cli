@@ -2,7 +2,6 @@ package hardware_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -39,14 +38,14 @@ var _ = Describe("Authorize Block, File Storage to a Hardware Server", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Authorize Storage with wrong VS ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Hardware server ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Hardware server ID'. It must be a positive integer."))
 			})
 		})
 
@@ -68,7 +67,7 @@ var _ = Describe("Authorize Block, File Storage to a Hardware Server", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234", "--username-storage", "SL02SL111")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to authorize storage to the hardware server instance: {{.Storage}}.\n{{.Error}}")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to authorize storage to the hardware server instance: SL02SL111.\nInternal Server Error"))
 			})
 		})
 	})
