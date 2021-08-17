@@ -11,21 +11,22 @@ var (
 	CMD_HARDWARE_NAME = "hardware"
 
 	//sl-hardware
-	CMD_HARDWARE_CANCEL_NAME          = "cancel"
-	CMD_HARDWARE_CANCEL_REASONS_NAME  = "cancel-reasons"
-	CMD_HARDWARE_CREATE_NAME          = "create"
-	CMD_HARDWARE_CREATE_OPTIONS_NAME  = "create-options"
-	CMD_HARDWARE_CREDENTIALS_NAME     = "credentials"
-	CMD_HARDWARE_DETAIL_NAME          = "detail"
-	CMD_HARDWARE_EDIT_NAME            = "edit"
-	CMD_HARDWARE_LIST_NAME            = "list"
-	CMD_HARDWARE_POWER_CYCLE_NAME     = "power-cycle"
-	CMD_HARDWARE_POWER_OFF_NAME       = "power-off"
-	CMD_HARDWARE_POWER_ON_NAME        = "power-on"
-	CMD_HARDWARE_REBOOT_NAME          = "reboot"
-	CMD_HARDWARE_RELOAD_NAME          = "reload"
-	CMD_HARDWARE_RESCUE_NAME          = "rescue"
-	CMD_HARDWARE_UPDATE_FIRMWARE_NAME = "update-firmware"
+	CMD_HARDWARE_AUTHORIZE_STORAGE_NAME = "authorize-storage"
+	CMD_HARDWARE_CANCEL_NAME            = "cancel"
+	CMD_HARDWARE_CANCEL_REASONS_NAME    = "cancel-reasons"
+	CMD_HARDWARE_CREATE_NAME            = "create"
+	CMD_HARDWARE_CREATE_OPTIONS_NAME    = "create-options"
+	CMD_HARDWARE_CREDENTIALS_NAME       = "credentials"
+	CMD_HARDWARE_DETAIL_NAME            = "detail"
+	CMD_HARDWARE_EDIT_NAME              = "edit"
+	CMD_HARDWARE_LIST_NAME              = "list"
+	CMD_HARDWARE_POWER_CYCLE_NAME       = "power-cycle"
+	CMD_HARDWARE_POWER_OFF_NAME         = "power-off"
+	CMD_HARDWARE_POWER_ON_NAME          = "power-on"
+	CMD_HARDWARE_REBOOT_NAME            = "reboot"
+	CMD_HARDWARE_RELOAD_NAME            = "reload"
+	CMD_HARDWARE_RESCUE_NAME            = "rescue"
+	CMD_HARDWARE_UPDATE_FIRMWARE_NAME   = "update-firmware"
 )
 
 func HardwareNamespace() plugin.Namespace {
@@ -43,6 +44,7 @@ func HardwareMetaData() cli.Command {
 		Description: T("Classic infrastructure hardware servers"),
 		Usage:       "${COMMAND_NAME} sl hardware",
 		Subcommands: []cli.Command{
+			HardwareAuthorizeStorageMataData(),
 			HardwareCancelMetaData(),
 			HardwareCancelReasonsMetaData(),
 			HardwareCreateMetaData(),
@@ -59,6 +61,26 @@ func HardwareMetaData() cli.Command {
 			HardwareRescueMetaData(),
 			HardwareUpdateFirmwareMetaData(),
 			HardwareToggleIPMIMetaData(),
+		},
+	}
+}
+
+func HardwareAuthorizeStorageMataData() cli.Command {
+	return cli.Command{
+		Category:    CMD_HARDWARE_NAME,
+		Name:        CMD_HARDWARE_AUTHORIZE_STORAGE_NAME,
+		Description: T("Authorize File and Block Storage to a Hardware Server"),
+		Usage: T(`${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567
+   Authorize File and Block Storage to a Hardware Server.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "u, username-storage",
+				Usage: T("The storage username to be added to the hardware server."),
+			},
+			OutputFlag(),
 		},
 	}
 }

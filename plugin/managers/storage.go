@@ -77,6 +77,7 @@ type StorageManager interface {
 
 	ListVolumes(volumeType string, datacenter string, username string, storageType string, orderId int, mask string) ([]datatypes.Network_Storage, error)
 	GetVolumeDetails(volumeType string, volumeId int, mask string) (datatypes.Network_Storage, error)
+	GetVolumeByUsername(username string) ([]datatypes.Network_Storage, error)
 	OrderVolume(volumeType string, location string, storageType string, osType string, size int, tier float64, iops int, snapshotSize int, billing bool) (datatypes.Container_Product_Order_Receipt, error)
 	CancelVolume(volumeType string, volumeId int, reason string, immediate bool) error
 	OrderDuplicateVolume(config DuplicateOrderConfig) (datatypes.Container_Product_Order_Receipt, error)
@@ -164,6 +165,14 @@ func (s storageManager) GetVolumeAccessList(volumeId int) (datatypes.Network_Sto
 func (s storageManager) AuthorizeHostToVolume(volumeId int, hardwareIds []int, vsIds []int, IPIds []int, subnetIds []int) ([]datatypes.Network_Storage_Allowed_Host, error) {
 	templates := PopulateHostTemplates(hardwareIds, vsIds, IPIds, subnetIds)
 	return s.StorageService.Id(volumeId).AllowAccessFromHostList(templates)
+}
+
+//Returns a specific volume.
+//string username: The volume username.
+func (s storageManager) GetVolumeByUsername(username string) ([]datatypes.Network_Storage, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("networkStorage.username").Eq(username))
+	return s.AccountService.Filter(filters.Build()).GetNetworkStorage()
 }
 
 //Revokes authorization of hosts to Block/File Storage Volumes
@@ -259,7 +268,7 @@ func (s storageManager) FailBackFromReplicant(volumeId int) error {
 //DISASTER Failover to a volume replicant.
 //If a volume (with replication) becomes inaccessible due to a disaster event,
 //this method can be used to immediately failover to an available replica in another location.
-//This method does not allow for fail back via the API. 
+//This method does not allow for fail back via the API.
 //To fail back to the original volume after using this method, open a support ticket.
 //To test failover, use FailOverToReplicant() instead.
 //volumeId: The id of the volume that is inaccessible.
@@ -268,7 +277,6 @@ func (s storageManager) DisasterRecoveryFailover(volumeId int, replicantId int) 
 	_, err := s.StorageService.Id(volumeId).DisasterRecoveryFailoverToReplicant(sl.Int(replicantId))
 	return err
 }
-
 
 //Acquires list of replicant volumes pertaining to the given volume.
 //volumeId: The id of the volume
@@ -506,7 +514,6 @@ func (s storageManager) OrderModifiedVolume(volumeType string, volumeID int, new
 
 	return s.OrderService.PlaceOrder(&modify_order, sl.Bool(false))
 }
-
 
 func (s storageManager) OrderVolume(volumeType string, location string, storageType string, osType string, size int, tier float64, iops int, snapshotSize int, billing bool) (datatypes.Container_Product_Order_Receipt, error) {
 	locationId, err := GetLocationId(s.LocationService, location)
@@ -779,7 +786,6 @@ func (s storageManager) GetVolumeCountLimits() ([]datatypes.Container_Network_St
 	volumeLimits, err := s.StorageService.GetVolumeCountLimits()
 	return volumeLimits, err
 }
-
 
 //Splits a clone from its parent allowing it to be an independent volume.
 //volumeId: The ID of the volume object to convert.
