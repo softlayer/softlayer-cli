@@ -86,6 +86,7 @@ type VirtualServerManager interface {
 	SetTags(id int, tags string) error
 	SetNetworkPortSpeed(id int, public bool, portSpeed int) error
 	EditInstance(id int, hostname string, domain string, userdata string, tags string, publicSpeed *int, privateSpeed *int) ([]bool, []string)
+	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
 }
 
 type virtualServerManager struct {
@@ -95,6 +96,7 @@ type virtualServerManager struct {
 	OrderService         services.Product_Order
 	DedicatedHostService services.Virtual_DedicatedHost
 	OrderManager         OrderManager
+	Session			    *session.Session
 }
 
 func NewVirtualServerManager(session *session.Session) *virtualServerManager {
@@ -105,6 +107,7 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 		services.GetProductOrderService(session),
 		services.GetVirtualDedicatedHostService(session),
 		NewOrderManager(session),
+		session,
 	}
 }
 
@@ -1088,4 +1091,21 @@ func (vs virtualServerManager) EditInstance(id int, hostname string, domain stri
 	}
 
 	return successes, messages
+}
+
+// Finds the MetricTrackingObjectId for a virtual server then calls
+// SoftLayer_Metric_Tracking_Object::getBandwidthData()
+func (vs virtualServerManager) GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error) {
+	trackingId, err := vs.VirtualGuestService.Id(id).GetMetricTrackingObjectId()
+	if err != nil {
+		return nil, err
+	}
+	trackingService := services.GetMetricTrackingObjectService(vs.Session)
+	bwType := "public"
+	startTime := datatypes.Time{startDate}
+	endTime := datatypes.Time{endDate}
+	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, &bwType, &period)
+	return bandwidthData, err
+
+
 }

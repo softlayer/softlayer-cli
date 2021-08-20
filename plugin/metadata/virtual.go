@@ -70,6 +70,7 @@ func VSMetaData() cli.Command {
 			VSResumeMataData(),
 			VSUpgradeMataData(),
 			VSMigrateMataData(),
+			VSBandwidthMetaData(),
 		},
 	}
 }
@@ -786,6 +787,45 @@ EXAMPLE:
 				Usage: T("Flavor key name"),
 			},
 			ForceFlag(),
+			OutputFlag(),
+		},
+	}
+}
+
+
+func VSBandwidthMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        "bandwidth",
+		Description: T("Bandwidth data over date range."),
+		Usage: T(`${COMMAND_NAME} sl bandwidth upgrade IDENTIFIER [OPTIONS]
+Using just a date might get your time off by 1 hour, use T00:01 to get just the specific days data.
+Timezones can also be included with the YYYY-MM-DDTHH:mm:ss.00000-HH:mm format.
+
+Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
+Bandwidth is listed in GB
+
+Example::
+
+   ${COMMAND_NAME} sl vs bandwidth 1234 -s 2019-05-01T00:01 -e
+   2019-05-02T00:00:01.00000-12:00`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,start",
+				Usage: T("Start date for bandwdith reporting"),
+			},
+			cli.StringFlag{
+				Name:  "e,end",
+				Usage: T("End date for bandwidth reporting"),
+			},
+			cli.IntFlag{
+				Name:  "p,period",
+				Usage: T("Number of seconds to report as one data point. 300, 600, 1800, 3600, 43200 or 86400 seconds"),
+			},
+			cli.BoolFlag{
+				Name:  "q,quite",
+				Usage: T("Only show the summary table."),
+			},
 			OutputFlag(),
 		},
 	}
