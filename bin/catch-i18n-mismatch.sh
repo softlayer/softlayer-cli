@@ -85,7 +85,6 @@ while IFS= read -r line; do
     # There is a newline in our string, so we need to add it back in
     else
         OUTPUT="${OUTPUT}\n"
-        echo "FUCKKKK"
         echo "|${OUTPUT}|  <- OUTPUT "
     fi
     
