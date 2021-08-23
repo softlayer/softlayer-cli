@@ -799,16 +799,14 @@ func VSBandwidthMetaData() cli.Command {
 		Name:        "bandwidth",
 		Description: T("Bandwidth data over date range."),
 		Usage: T(`${COMMAND_NAME} sl bandwidth upgrade IDENTIFIER [OPTIONS]
-Using just a date might get your time off by 1 hour, use T00:01 to get just the specific days data.
-Timezones can also be included with the YYYY-MM-DDTHH:mm:ss.00000-HH:mm format.
+Time formats that are like '2006-01-02', '2006-01-02T15:04' and '2006-01-02T15:04:05-07:00'
 
 Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
 Bandwidth is listed in GB
 
 Example::
 
-   ${COMMAND_NAME} sl vs bandwidth 1234 -s 2019-05-01T00:01 -e
-   2019-05-02T00:00:01.00000-12:00`),
+   ${COMMAND_NAME} sl vs bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04:05-07:00`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "s,start",
