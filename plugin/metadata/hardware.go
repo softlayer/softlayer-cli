@@ -44,7 +44,7 @@ func HardwareMetaData() cli.Command {
 		Description: T("Classic infrastructure hardware servers"),
 		Usage:       "${COMMAND_NAME} sl hardware",
 		Subcommands: []cli.Command{
-			HardwareAuthorizeStorageMataData(),
+			HardwareAuthorizeStorageMetaData(),
 			HardwareCancelMetaData(),
 			HardwareCancelReasonsMetaData(),
 			HardwareCreateMetaData(),
@@ -65,7 +65,7 @@ func HardwareMetaData() cli.Command {
 	}
 }
 
-func HardwareAuthorizeStorageMataData() cli.Command {
+func HardwareAuthorizeStorageMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_HARDWARE_NAME,
 		Name:        CMD_HARDWARE_AUTHORIZE_STORAGE_NAME,

@@ -25,10 +25,10 @@ var _ = Describe("Authorize Block, File Storage to a Hardware Server", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewAuthorizeStorageCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwareAuthorizeStorageMataData().Name,
-			Description: metadata.HardwareAuthorizeStorageMataData().Description,
-			Usage:       metadata.HardwareAuthorizeStorageMataData().Usage,
-			Flags:       metadata.HardwareAuthorizeStorageMataData().Flags,
+			Name:        metadata.HardwareAuthorizeStorageMetaData().Name,
+			Description: metadata.HardwareAuthorizeStorageMetaData().Description,
+			Usage:       metadata.HardwareAuthorizeStorageMetaData().Usage,
+			Flags:       metadata.HardwareAuthorizeStorageMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
