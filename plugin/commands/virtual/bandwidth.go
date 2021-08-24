@@ -3,7 +3,7 @@ package virtual
 import (
 	"time"
 	"fmt"
-	// "math"
+	"sort"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
@@ -66,8 +66,12 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 		endDate = startDate.AddDate(0, -1, 0)
 	}
 	
+	rollupSeconds := 3600
+	if c.IsSet("rollup") {
+		rollupSeconds = c.Int("rollup")
+	}
 	// cmd.UI.Say(fmt.Sprintf("FORMAT: %v, Start: %v (%v), End: %v (%v)\n", GetDateFormat(start), startDate, start, endDate, end))
-	bandwidthData, err := cmd.VirtualServerManager.GetBandwidthData(VsID, startDate, endDate, 3600)
+	bandwidthData, err := cmd.VirtualServerManager.GetBandwidthData(VsID, startDate, endDate, rollupSeconds)
 	if err != nil {
 		fmt.Printf("ERR: %v", err)
 		return err 
@@ -76,7 +80,10 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 	
 	summaryTable, bandwidthTable := BuildOutputTable(bandwidthData, cmd)
 	summaryTable.Print()
-	bandwidthTable.Print()
+	if !c.IsSet("quite") {
+		bandwidthTable.Print()	
+	}
+	
 
 	
 	return nil
@@ -130,10 +137,18 @@ func BuildOutputTable(trackingData []datatypes.Metric_Tracking_Object_Data, cmd 
 		// cmd.UI.Say(fmt.Sprintf("[%v][%v] = %v", theTime, theType, formattedData[theTime][theType]))
 	}
 
+	// This sorts the dates because even though the API returns them sorted, go seems to put them
+	// in non-sorted orders when building the formattedData map.
+	dateKeys := make([]string, 0, len(formattedData))
+	for date, _ := range formattedData {
+		dateKeys = append(dateKeys, date)
+	}
+	sort.Strings(dateKeys)
 
-	for time, values := range formattedData {
+	for _, date := range dateKeys {
+		values := formattedData[date]
 		bandwidthTable.Add(
-			time,
+			date,
 			fmt.Sprintf("%.4f", values["publicIn_net_octet"]   / 1024),
 			fmt.Sprintf("%.4f", values["publicOut_net_octet"]  / 1024),
 			fmt.Sprintf("%.4f", values["privateIn_net_octet"]  / 1024),
@@ -144,7 +159,7 @@ func BuildOutputTable(trackingData []datatypes.Metric_Tracking_Object_Data, cmd 
 			summary.Sum += values[keyName]
 			if summary.Maximum < values[keyName] {
 				summary.Maximum = values[keyName]
-				summary.MaxDate = time
+				summary.MaxDate = date
 			}
 			summaryData[keyName] = summary
 		}

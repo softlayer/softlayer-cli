@@ -38,5 +38,25 @@
         "counter": 15461882265600,
         "dateTime": "2021-07-31T23:00:00-06:00",
         "type": "memory"
+    },
+    {
+        "counter": 1691560,
+        "dateTime": "2021-08-31T23:00:00-06:00",
+        "type": "publicIn_net_octet"
+    },
+    {
+        "counter": 1820444,
+        "dateTime": "2021-08-31T23:00:00-06:00",
+        "type": "publicOut_net_octet"
+    },
+    {
+        "counter": 11220,
+        "dateTime": "2021-08-31T23:00:00-06:00",
+        "type": "privateIn_net_octet"
+    },
+    {
+        "counter": 55,
+        "dateTime": "2021-08-31T23:00:00-06:00",
+        "type": "privateOut_net_octet"
     }
 ]

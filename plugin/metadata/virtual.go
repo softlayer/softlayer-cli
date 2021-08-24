@@ -799,14 +799,14 @@ func VSBandwidthMetaData() cli.Command {
 		Name:        "bandwidth",
 		Description: T("Bandwidth data over date range."),
 		Usage: T(`${COMMAND_NAME} sl bandwidth upgrade IDENTIFIER [OPTIONS]
-Time formats that are like '2006-01-02', '2006-01-02T15:04' and '2006-01-02T15:04:05-07:00'
+Time formats that are like '2006-01-02', '2006-01-02T15:04' and '2006-01-02T15:04-07:00'
 
 Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
 Bandwidth is listed in GB
 
 Example::
 
-   ${COMMAND_NAME} sl vs bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04:05-07:00`),
+   ${COMMAND_NAME} sl vs bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "s,start",
@@ -817,8 +817,8 @@ Example::
 				Usage: T("End date for bandwidth reporting"),
 			},
 			cli.IntFlag{
-				Name:  "p,period",
-				Usage: T("Number of seconds to report as one data point. 300, 600, 1800, 3600, 43200 or 86400 seconds"),
+				Name:  "r,rollup",
+				Usage: T("Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds"),
 			},
 			cli.BoolFlag{
 				Name:  "q,quite",

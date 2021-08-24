@@ -46,6 +46,17 @@ var _ = Describe("VS bandwidth", func() {
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
+			It("Rollup specified", func() {
+				testTime := "2021-08-01"
+				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime, "-r", "300")
+				Expect(err).NotTo(HaveOccurred())
+				// Expect(fakeUI.Outputs()).To(ContainSubstring("2021-08-10"))
+				arg1, arg2, arg3, arg4 := fakeVSManager.GetBandwidthDataArgsForCall(0)
+				Expect(arg1).To(Equal(123456))
+				Expect(arg2.Format("2006-01-02")).To(Equal(testTime))
+				Expect(arg3.Format("2006-01-02")).To(Equal(testTime))
+				Expect(arg4).To(Equal(300))
+			})
 		})
 		Context("DateTime parsing checks", func() {
 			It("2006-01-02 Parsing works properly", func() {
@@ -114,7 +125,18 @@ var _ = Describe("VS bandwidth", func() {
 				fakeVSManager.GetBandwidthDataReturns(returnData, nil)
 				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime)
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Pub Out   0.0017   0.2170         0.0017   2021-07-31 23:00"))
+				outputs := fakeUI.Outputs()
+				Expect(outputs).To(ContainSubstring("Pub In    0.0032   0.2689         0.0016   2021-07-31 23:00"))
+				Expect(outputs).To(ContainSubstring("2021-07-31 23:00   0.0016   0.0017    0.0000   0.0000"))
+				
+			})
+			It("Quiet output", func() {
+				fakeVSManager.GetBandwidthDataReturns(returnData, nil)
+				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime, "-q")
+				Expect(err).NotTo(HaveOccurred())
+				outputs := fakeUI.Outputs()
+				Expect(outputs).To(ContainSubstring("Pub In    0.0032   0.2689         0.0016   2021-07-31 23:00"))
+				Expect(outputs).NotTo(ContainSubstring("2021-07-31 23:00   0.0016   0.0017    0.0000   0.0000"))
 				
 			})
 			It("Empty Response", func() {

@@ -2,6 +2,7 @@ package managers_test
 
 import (
 	"time"
+	"fmt"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -334,6 +335,32 @@ var _ = Describe("VirtualServerManager", func() {
 					Expect(*vs.HourlyBillingFlag).To(Equal(false))
 				}
 			})
+		})
+	})
+
+	Describe("GetBandwidthData Tests", func() {
+		var (
+			startTime time.Time
+			endTime time.Time
+			err error
+		)
+		BeforeEach(func() {
+			startTime, err = time.Parse("2006-01-02", "2021-01-01")
+			if err != nil {
+				fmt.Printf("FUCKED UP TIME: %v", err)
+			}
+			fmt.Printf("TIME FROM BEforeEach is %v\n", startTime)
+			endTime, err = time.Parse("2006-01-02", "2021-02-01")
+		})
+		Context("Test Happy Path", func() {
+			It("Tests API is called properly", func() {
+				fmt.Printf("Hello world from here: %v, %v\n", startTime, endTime)
+				data, err := vsManager.GetBandwidthData(12345, startTime, endTime, 300)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(len(data)).To(Equal(8))	
+				Expect(*data[0].Type).To(Equal("cpu0"))
+			})
+
 		})
 	})
 

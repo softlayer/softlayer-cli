@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"fmt"
 
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
@@ -1096,15 +1097,19 @@ func (vs virtualServerManager) EditInstance(id int, hostname string, domain stri
 // Finds the MetricTrackingObjectId for a virtual server then calls
 // SoftLayer_Metric_Tracking_Object::getBandwidthData()
 func (vs virtualServerManager) GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error) {
+	fmt.Printf("GetBandwidthData\n")
 	trackingId, err := vs.VirtualGuestService.Id(id).GetMetricTrackingObjectId()
+	
 	if err != nil {
+		fmt.Printf("TrackingID ERROR!!!")
 		return nil, err
 	}
+
 	trackingService := services.GetMetricTrackingObjectService(vs.Session)
-	bwType := "public"
+	// bwType := "public"
 	startTime := datatypes.Time{startDate}
 	endTime := datatypes.Time{endDate}
-	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, &bwType, &period)
+	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
 	return bandwidthData, err
 
 
