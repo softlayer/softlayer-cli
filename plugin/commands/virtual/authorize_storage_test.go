@@ -2,7 +2,6 @@ package virtual_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -28,10 +27,10 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewAuthorizeStorageCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSAuthorizeStorageMataData().Name,
-			Description: metadata.VSAuthorizeStorageMataData().Description,
-			Usage:       metadata.VSAuthorizeStorageMataData().Usage,
-			Flags:       metadata.VSAuthorizeStorageMataData().Flags,
+			Name:        metadata.VSAuthorizeStorageMetaData().Name,
+			Description: metadata.VSAuthorizeStorageMetaData().Description,
+			Usage:       metadata.VSAuthorizeStorageMetaData().Usage,
+			Flags:       metadata.VSAuthorizeStorageMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
@@ -41,14 +40,14 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Authorize Storage with wrong VS ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Virtual server ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Virtual server ID'. It must be a positive integer."))
 			})
 		})
 
@@ -70,7 +69,7 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234", "--username-storage", "SL02SL111")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to authorize storage to the virtual server instance: {{.Storage}}.\n{{.Error}}")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to authorize storage to the virtual server instance: SL02SL111.\nInternal Server Error"))
 			})
 		})
 
@@ -94,7 +93,7 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234", "--portable-id", "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to authorize portable storage to the virtual server instance: {{.PortableID}}.\n{{.Error}}")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to authorize portable storage to the virtual server instance: 1234567.\nInternal Server Error"))
 			})
 		})
 	})

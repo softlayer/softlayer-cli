@@ -49,7 +49,7 @@ func VSMetaData() cli.Command {
 		Description: T("Classic infrastructure Virtual Servers"),
 		Usage:       "${COMMAND_NAME} sl vs",
 		Subcommands: []cli.Command{
-			VSAuthorizeStorageMataData(),
+			VSAuthorizeStorageMetaData(),
 			VSCancelMataData(),
 			VSCaptureMataData(),
 			VSCreateHostMataData(),
@@ -76,7 +76,7 @@ func VSMetaData() cli.Command {
 	}
 }
 
-func VSAuthorizeStorageMataData() cli.Command {
+func VSAuthorizeStorageMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_AUTHORIZE_STORAGE_NAME,
