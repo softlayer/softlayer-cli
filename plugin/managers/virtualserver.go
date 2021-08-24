@@ -58,6 +58,8 @@ var (
 //See product information here: http://www.softlayer.com/virtual-servers
 type VirtualServerManager interface {
 	CancelInstance(id int) error
+	MigrateInstance(id int) (datatypes.Provisioning_Version1_Transaction, error)
+	MigrateDedicatedHost(id int, hostId int) error
 	CreateDedicatedHost(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Receipt, error)
 	CreateInstance(template *datatypes.Virtual_Guest) (datatypes.Virtual_Guest, error)
 	CreateInstances(template []datatypes.Virtual_Guest) ([]datatypes.Virtual_Guest, error)
@@ -70,6 +72,7 @@ type VirtualServerManager interface {
 	CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error)
 	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
 	ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error)
+	GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
 	PauseInstance(id int) error
 	PowerOnInstance(id int) error
 	PowerOffInstance(id int, soft bool, hard bool) error
@@ -110,6 +113,18 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 func (vs virtualServerManager) CancelInstance(id int) error {
 	_, err := vs.VirtualGuestService.Id(id).DeleteObject()
 	return err
+}
+
+//Migrate an instance.
+//id: the instance ID to migrate.
+func (vs virtualServerManager) MigrateInstance(id int) (datatypes.Provisioning_Version1_Transaction, error) {
+	resourceList, err := vs.VirtualGuestService.Id(id).Migrate()
+	return resourceList, err
+}
+
+//Migrate a dedicated Host instance.
+func (vs virtualServerManager) MigrateDedicatedHost(id int, hostId int) (err error) {
+	return vs.VirtualGuestService.Id(id).MigrateDedicatedHost(&hostId)
 }
 
 func GetDedicatedHostPriceId(items []datatypes.Product_Item, size string, hourly bool, location datatypes.Location_Region) (int, error) {
@@ -676,6 +691,32 @@ func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain s
 	}
 	return resourceList, nil
 
+}
+
+//This method support a mask and a filter as parameters to retrieve a list of all virtual servers on the account.
+func (vs virtualServerManager) GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
+	filters := filter.New()
+	if mask == "" {
+		mask = INSTANCE_DEFAULT_MASK
+	}
+	if len(objFilter) > 0 {
+		filters = objFilter
+	}
+
+	i := 0
+	resourceList := []datatypes.Virtual_Guest{}
+	for {
+		resp, err := vs.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetVirtualGuests()
+		i++
+		if err != nil {
+			return []datatypes.Virtual_Guest{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
+	}
+	return resourceList, nil
 }
 
 //Pause an active virtual server.

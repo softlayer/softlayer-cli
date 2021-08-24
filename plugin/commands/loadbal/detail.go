@@ -72,6 +72,7 @@ func PrintLoadbalancer(loadbal datatypes.Network_LBaaS_LoadBalancer, ui terminal
 			"Mapping",
 			"Method",
 			"Max Connection",
+			"Timeout",
 			"Modify",
 			"Active",
 		})
@@ -92,6 +93,7 @@ func PrintLoadbalancer(loadbal datatypes.Network_LBaaS_LoadBalancer, ui terminal
 				mapping,
 				utils.FormatStringPointer(pool.LoadBalancingAlgorithm),
 				utils.FormatIntPointer(listener.ConnectionLimit),
+				fmt.Sprintf("Client: %ss, Server: %ss" , utils.FormatIntPointer(listener.ClientTimeout), utils.FormatIntPointer(listener.ServerTimeout)),
 				utils.FormatSLTimePointer(listener.ModifyDate),
 				utils.FormatStringPointer(listener.ProvisioningStatus),
 			)

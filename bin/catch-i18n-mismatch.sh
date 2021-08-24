@@ -9,14 +9,14 @@ then
 fi
 
 # Switches to plugin directory or exits if it doesn't exist.
-pushd "./plugin" > /dev/null || exit 1
+cd "./plugin" 
 
 RESULTS=`i18n4go -c checkup -q i18n -v`
 # RESULTS="OKTotal time:"
 OUTPUT=""
 ADD_JSON_OUT=$'[\n'
 DEL_JSON_OUT=$'[\n'
-if [[ "$RESULTS" =~ "OKTotal time:" ]]
+if [[ "$RESULTS" =~ ^"OKTotal time: "[0-9\.]*ms$ ]]
 then
     echo $RESULTS
     exit 0
@@ -52,6 +52,16 @@ while IFS= read -r line; do
         # the newline '\n' characters in the actual translation strings themselves.
         DEL_JSON_OUT=`printf "%s\n\t%s" "${DEL_JSON_OUT}" "${JSON}"`
         JSON=""
+
+    # A translation exists in en_US but missing from some other file, this likely shouldn't happen.
+    elif [[ $line =~ "exists in en_US, but not in "[a-zA-Z_]{5} ]]
+    then
+        JSON=`echo "$OUTPUT" | sed -E "s/(.+) exists in the code, but not in en_US/{\"id\": \1, \"translation\": \1},/g"`
+        echo ">>> cd plugin; i18n4go -c checkup -q i18n -v <<<"
+        echo "The translation files are out of sync, and this script can't fix it."
+        echo $RESULTS
+        exit 4
+
     # Should be the last line
     elif [[ $line =~ "Could not checkup, err: Strings don't match" ]]
     then
@@ -75,9 +85,7 @@ while IFS= read -r line; do
     # There is a newline in our string, so we need to add it back in
     else
         OUTPUT="${OUTPUT}\n"
-        # echo "|${OUTPUT}|  <- OUTPUT "
+        echo "|${OUTPUT}|  <- OUTPUT "
     fi
     
 done <<< "$RESULTS"
-
-popd > /dev/null || exit 1

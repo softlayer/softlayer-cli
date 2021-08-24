@@ -30,6 +30,7 @@ var (
 	CMD_VS_RESCUE_NAME         = "rescue"
 	CMD_VS_RESUME_NAME         = "resume"
 	CMD_VS_UPGRADE_NAME        = "upgrade"
+	CMD_VS_MIGRATE_NAME        = "migrate"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -83,6 +84,34 @@ EXAMPLE:
    This command cancels virtual server instance with ID of 12345678.`),
 		Flags: []cli.Flag{
 			ForceFlag(),
+		},
+	}
+}
+
+func VSCaptureMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_MIGRATE_NAME,
+		Description: T("Manage VSIs that require migration"),
+		Usage: T(`${COMMAND_NAME} sl vs migrate [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs migrate --guest 1234567
+   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "g, guest",
+				Usage: T("Guest ID to immediately migrate."),
+			},
+			cli.BoolFlag{
+				Name:  "a, all",
+				Usage: T("Migrate ALL guests that require migration immediately."),
+			},
+			cli.IntFlag{
+				Name:  "H, host",
+				Usage: T("Dedicated Host ID to migrate to. Only works on guests that are already on a dedicated host."),
+			},
+			OutputFlag(),
 		},
 	}
 }
