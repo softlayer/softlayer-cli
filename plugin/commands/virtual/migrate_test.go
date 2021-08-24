@@ -28,10 +28,10 @@ var _ = Describe("VS migrate", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewMigrageCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSMigrateMataData().Name,
-			Description: metadata.VSMigrateMataData().Description,
-			Usage:       metadata.VSMigrateMataData().Usage,
-			Flags:       metadata.VSMigrateMataData().Flags,
+			Name:        metadata.VSMigrateMetaData().Name,
+			Description: metadata.VSMigrateMetaData().Description,
+			Usage:       metadata.VSMigrateMetaData().Usage,
+			Flags:       metadata.VSMigrateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
