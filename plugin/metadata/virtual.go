@@ -59,6 +59,7 @@ func VSMetaData() cli.Command {
 			VSEditMetaData(),
 			VSListHostMetaData(),
 			VSListMetaData(),
+			VSMigrateMetaData(),
 			VSPauseMetaData(),
 			VSPowerOffMetaData(),
 			VSPowerOnMetaData(),
@@ -88,7 +89,7 @@ EXAMPLE:
 	}
 }
 
-func VSCaptureMetaData() cli.Command {
+func VSMigrateMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_MIGRATE_NAME,
