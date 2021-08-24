@@ -26,10 +26,10 @@ var _ = Describe("VS pause", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewPauseCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSPauseMataData().Name,
-			Description: metadata.VSPauseMataData().Description,
-			Usage:       metadata.VSPauseMataData().Usage,
-			Flags:       metadata.VSPauseMataData().Flags,
+			Name:        metadata.VSPauseMetaData().Name,
+			Description: metadata.VSPauseMetaData().Description,
+			Usage:       metadata.VSPauseMetaData().Usage,
+			Flags:       metadata.VSPauseMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
