@@ -166,6 +166,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_HARDWARE_NAME + "-toggle-ipmi": func(c *cli.Context) error {
 			return hardware.NewToggleIPMICommand(ui, hardwareManager).Run(c)
 		},
+		NS_HARDWARE_NAME + "-bandwidth": func(c *cli.Context) error {
+			return hardware.NewBandwidthCommand(ui, hardwareManager).Run(c)
+		},
 
 		// image - 6
 		NS_IMAGE_NAME + "-" + CMD_IMG_DELETE_NAME: func(c *cli.Context) error {
@@ -376,7 +379,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-" + CMD_VS_UPGRADE_NAME: func(c *cli.Context) error {
 			return virtual.NewUpgradeCommand(ui, virtualServerManager).Run(c)
 		},
-		"vs-bandwidth": func(c *cli.Context) error {
+		NS_VIRTUAL_NAME + "-bandwidth": func(c *cli.Context) error {
 			return virtual.NewBandwidthCommand(ui, virtualServerManager).Run(c)
 		},
 

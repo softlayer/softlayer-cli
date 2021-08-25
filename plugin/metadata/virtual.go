@@ -824,15 +824,15 @@ func VSBandwidthMetaData() cli.Command {
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        "bandwidth",
 		Description: T("Bandwidth data over date range."),
-		Usage: T(`${COMMAND_NAME} sl bandwidth upgrade IDENTIFIER [OPTIONS]
-Time formats that are like '2006-01-02', '2006-01-02T15:04' and '2006-01-02T15:04-07:00'
+		Usage: T(`${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]
+Time formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'
 
 Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
 Bandwidth is listed in GB
 
 Example::
 
-   ${COMMAND_NAME} sl vs bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00`),
+   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00`, map[string]interface{}{"Command": "vs"}),
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "s,start",

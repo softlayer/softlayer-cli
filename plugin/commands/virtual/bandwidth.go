@@ -78,7 +78,7 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 	}
 	// cmd.UI.Say(fmt.Sprintf("%+v", bandwidthData))
 	
-	summaryTable, bandwidthTable := BuildOutputTable(bandwidthData, cmd)
+	summaryTable, bandwidthTable := BuildOutputTable(bandwidthData, cmd.UI)
 	summaryTable.Print()
 	if !c.IsSet("quite") {
 		bandwidthTable.Print()	
@@ -101,7 +101,7 @@ func GetDateFormat(inputDate string) string {
     return layout
 }
 
-func BuildOutputTable(trackingData []datatypes.Metric_Tracking_Object_Data, cmd *BandwidthCommand) (terminal.Table, terminal.Table) {
+func BuildOutputTable(trackingData []datatypes.Metric_Tracking_Object_Data, ui terminal.UI) (terminal.Table, terminal.Table) {
 
 	formattedData := make(map[string]map[string]float64)
 	summaryData := map[string]SummaryDataType{
@@ -111,11 +111,10 @@ func BuildOutputTable(trackingData []datatypes.Metric_Tracking_Object_Data, cmd 
 		"privateOut_net_octet": SummaryDataType{Name: "Pri Out", Maximum: 0.0, Sum: 0.0},
 	}
 	// var sumPubIn, sumPubOut, sumPriIn, sumPriOut float64
-	summaryTable := cmd.UI.Table([]string{"Type", "Sum GB", "Average MBps", "MAX GB", "Max Date"})
-	bandwidthTable := cmd.UI.Table([]string{"Date", "Pub In", "Pub Out", "Pri In", "Pri Out"})
+	summaryTable := ui.Table([]string{"Type", "Sum GB", "Average MBps", "MAX GB", "Max Date"})
+	bandwidthTable := ui.Table([]string{"Date", "Pub In", "Pub Out", "Pri In", "Pri Out"})
 
 	if trackingData == nil || len(trackingData) < 1 {
-		cmd.UI.Say(T("No data"))
 		summaryTable.Add(T("No data"), "-", "-", "-", "-")
 		bandwidthTable.Add(T("No data"), "-", "-", "-", "-")
 		return summaryTable, bandwidthTable
@@ -132,9 +131,7 @@ func BuildOutputTable(trackingData []datatypes.Metric_Tracking_Object_Data, cmd 
 		// value = round(float(point['counter']) / 2 ** 20, 4)
 		// Conversion from byte to MB
 		formattedData[theTime][theType] = float64(*point.Counter) / 1048576
-
-		// DEBUG
-		// cmd.UI.Say(fmt.Sprintf("[%v][%v] = %v", theTime, theType, formattedData[theTime][theType]))
+	
 	}
 
 	// This sorts the dates because even though the API returns them sorted, go seems to put them
