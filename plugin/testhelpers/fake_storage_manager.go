@@ -237,19 +237,6 @@ type FakeStorageManager struct {
 		result1 datatypes.Network_Storage
 		result2 error
 	}
-	GetVolumeByUsernameStub        func(string) ([]datatypes.Network_Storage, error)
-	getVolumeByUsernameMutex       sync.RWMutex
-	getVolumeByUsernameArgsForCall []struct {
-		arg1 string
-	}
-	getVolumeByUsernameReturns struct {
-		result1 []datatypes.Network_Storage
-		result2 error
-	}
-	getVolumeByUsernameReturnsOnCall map[int]struct {
-		result1 []datatypes.Network_Storage
-		result2 error
-	}
 	GetVolumeSnapshotListStub        func(int) ([]datatypes.Network_Storage, error)
 	getVolumeSnapshotListMutex       sync.RWMutex
 	getVolumeSnapshotListArgsForCall []struct {
@@ -1741,69 +1728,6 @@ func (fake *FakeStorageManager) GetVolumeSnapshotSchedulesReturnsOnCall(i int, r
 	}
 	fake.getVolumeSnapshotSchedulesReturnsOnCall[i] = struct {
 		result1 datatypes.Network_Storage
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeStorageManager) GetVolumeByUsername(arg1 string) ([]datatypes.Network_Storage, error) {
-	fake.getVolumeByUsernameMutex.Lock()
-	ret, specificReturn := fake.getVolumeByUsernameReturnsOnCall[len(fake.getVolumeByUsernameArgsForCall)]
-	fake.getVolumeByUsernameArgsForCall = append(fake.getVolumeByUsernameArgsForCall, struct {
-		arg1 string
-	}{arg1})
-	fake.recordInvocation("getVolumeByUsername", []interface{}{arg1})
-	fake.getVolumeByUsernameMutex.Unlock()
-	if fake.GetVolumeByUsernameStub != nil {
-		return fake.GetVolumeByUsernameStub(arg1)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	fakeReturns := fake.getVolumeByUsernameReturns
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeStorageManager) GetVolumeByUsernameCallCount() int {
-	fake.getVolumeByUsernameMutex.RLock()
-	defer fake.getVolumeByUsernameMutex.RUnlock()
-	return len(fake.getVolumeByUsernameArgsForCall)
-}
-
-func (fake *FakeStorageManager) GetVolumeByUsernameCalls(stub func(string) ([]datatypes.Network_Storage, error)) {
-	fake.getVolumeByUsernameMutex.Lock()
-	defer fake.getVolumeByUsernameMutex.Unlock()
-	fake.GetVolumeByUsernameStub = stub
-}
-
-func (fake *FakeStorageManager) GetVolumeByUsernameArgsForCall(i int) string {
-	fake.getVolumeByUsernameMutex.RLock()
-	defer fake.getVolumeByUsernameMutex.RUnlock()
-	argsForCall := fake.getVolumeByUsernameArgsForCall[i]
-	return argsForCall.arg1
-}
-
-func (fake *FakeStorageManager) GetVolumeByUsernameReturns(result1 []datatypes.Network_Storage, result2 error) {
-	fake.getVolumeByUsernameMutex.Lock()
-	defer fake.getVolumeByUsernameMutex.Unlock()
-	fake.GetVolumeByUsernameStub = nil
-	fake.getVolumeByUsernameReturns = struct {
-		result1 []datatypes.Network_Storage
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeStorageManager) GetVolumeByUsernameReturnsOnCall(i int, result1 []datatypes.Network_Storage, result2 error) {
-	fake.getVolumeByUsernameMutex.Lock()
-	defer fake.getVolumeByUsernameMutex.Unlock()
-	fake.GetVolumeByUsernameStub = nil
-	if fake.getVolumeByUsernameReturnsOnCall == nil {
-		fake.getVolumeByUsernameReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Network_Storage
-			result2 error
-		})
-	}
-	fake.getVolumeByUsernameReturnsOnCall[i] = struct {
-		result1 []datatypes.Network_Storage
 		result2 error
 	}{result1, result2}
 }
