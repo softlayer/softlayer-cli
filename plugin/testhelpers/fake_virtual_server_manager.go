@@ -11,6 +11,34 @@ import (
 )
 
 type FakeVirtualServerManager struct {
+	AttachPortableStorageStub        func(int, int) (datatypes.Provisioning_Version1_Transaction, error)
+	attachPortableStorageMutex       sync.RWMutex
+	attachPortableStorageArgsForCall []struct {
+		arg1 int
+		arg2 int
+	}
+	attachPortableStorageReturns struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}
+	attachPortableStorageReturnsOnCall map[int]struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}
+	AuthorizeStorageStub        func(int, string) (bool, error)
+	authorizeStorageMutex       sync.RWMutex
+	authorizeStorageArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	authorizeStorageReturns struct {
+		result1 bool
+		result2 error
+	}
+	authorizeStorageReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	CancelInstanceStub        func(int) error
 	cancelInstanceMutex       sync.RWMutex
 	cancelInstanceArgsForCall []struct {
@@ -419,6 +447,134 @@ type FakeVirtualServerManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorage(arg1 int, arg2 int) (datatypes.Provisioning_Version1_Transaction, error) {
+	fake.attachPortableStorageMutex.Lock()
+	ret, specificReturn := fake.attachPortableStorageReturnsOnCall[len(fake.attachPortableStorageArgsForCall)]
+	fake.attachPortableStorageArgsForCall = append(fake.attachPortableStorageArgsForCall, struct {
+		arg1 int
+		arg2 int
+	}{arg1, arg2})
+	fake.recordInvocation("attachPortableStorage", []interface{}{arg1, arg2})
+	fake.attachPortableStorageMutex.Unlock()
+	if fake.AttachPortableStorageStub != nil {
+		return fake.AttachPortableStorageStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.attachPortableStorageReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageCallCount() int {
+	fake.attachPortableStorageMutex.RLock()
+	defer fake.attachPortableStorageMutex.RUnlock()
+	return len(fake.attachPortableStorageArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageCalls(stub func(int, int) (datatypes.Provisioning_Version1_Transaction, error)) {
+	fake.attachPortableStorageMutex.Lock()
+	defer fake.attachPortableStorageMutex.Unlock()
+	fake.AttachPortableStorageStub = stub
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageArgsForCall(i int) (int, int) {
+	fake.attachPortableStorageMutex.RLock()
+	defer fake.attachPortableStorageMutex.RUnlock()
+	argsForCall := fake.attachPortableStorageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageReturns(result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+	fake.attachPortableStorageMutex.Lock()
+	defer fake.attachPortableStorageMutex.Unlock()
+	fake.AttachPortableStorageStub = nil
+	fake.attachPortableStorageReturns = struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageReturnsOnCall(i int, result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+	fake.attachPortableStorageMutex.Lock()
+	defer fake.attachPortableStorageMutex.Unlock()
+	fake.AttachPortableStorageStub = nil
+	if fake.attachPortableStorageReturnsOnCall == nil {
+		fake.attachPortableStorageReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Provisioning_Version1_Transaction
+			result2 error
+		})
+	}
+	fake.attachPortableStorageReturnsOnCall[i] = struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorage(arg1 int, arg2 string) (bool, error) {
+	fake.authorizeStorageMutex.Lock()
+	ret, specificReturn := fake.authorizeStorageReturnsOnCall[len(fake.authorizeStorageArgsForCall)]
+	fake.authorizeStorageArgsForCall = append(fake.authorizeStorageArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	fake.recordInvocation("AuthorizeStorage", []interface{}{arg1, arg2})
+	fake.authorizeStorageMutex.Unlock()
+	if fake.AuthorizeStorageStub != nil {
+		return fake.AuthorizeStorageStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.authorizeStorageReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageCallCount() int {
+	fake.authorizeStorageMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
+	return len(fake.authorizeStorageArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageCalls(stub func(int, string) (bool, error)) {
+	fake.authorizeStorageMutex.Lock()
+	defer fake.authorizeStorageMutex.Unlock()
+	fake.AuthorizeStorageStub = stub
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageArgsForCall(i int) (int, string) {
+	fake.authorizeStorageMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
+	argsForCall := fake.authorizeStorageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageReturns(result1 bool, result2 error) {
+	fake.authorizeStorageMutex.Lock()
+	defer fake.authorizeStorageMutex.Unlock()
+	fake.AuthorizeStorageStub = nil
+	fake.authorizeStorageReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.authorizeStorageMutex.Lock()
+	defer fake.authorizeStorageMutex.Unlock()
+	fake.AuthorizeStorageStub = nil
+	if fake.authorizeStorageReturnsOnCall == nil {
+		fake.authorizeStorageReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.authorizeStorageReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeVirtualServerManager) CancelInstance(arg1 int) error {
