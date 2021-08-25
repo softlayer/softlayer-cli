@@ -313,6 +313,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 
 		//virual server - 20
+		NS_VIRTUAL_NAME + "-" + CMD_VS_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
+			return virtual.NewAuthorizeStorageCommand(ui, virtualServerManager).Run(c)
+		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_CANCEL_NAME: func(c *cli.Context) error {
 			return virtual.NewCancelCommand(ui, virtualServerManager).Run(c)
 		},

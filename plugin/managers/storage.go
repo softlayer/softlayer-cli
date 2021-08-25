@@ -156,6 +156,14 @@ func (s storageManager) GetVolumeAccessList(volumeId int) (datatypes.Network_Sto
 	return s.StorageService.Id(volumeId).Mask(mask).GetObject()
 }
 
+//Returns a specific volume.
+//string username: The volume username.
+func (s storageManager) GetVolumeByUsername(username string) ([]datatypes.Network_Storage, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("networkStorage.username").Eq(username))
+	return s.AccountService.Filter(filters.Build()).GetNetworkStorage()
+}
+
 //Authorizes hosts to Block/File Storage Volumes
 //volumeId: The Block/File volume to authorize hosts to
 //hardwareIds: A List of SoftLayer_Hardware ids
@@ -165,14 +173,6 @@ func (s storageManager) GetVolumeAccessList(volumeId int) (datatypes.Network_Sto
 func (s storageManager) AuthorizeHostToVolume(volumeId int, hardwareIds []int, vsIds []int, IPIds []int, subnetIds []int) ([]datatypes.Network_Storage_Allowed_Host, error) {
 	templates := PopulateHostTemplates(hardwareIds, vsIds, IPIds, subnetIds)
 	return s.StorageService.Id(volumeId).AllowAccessFromHostList(templates)
-}
-
-//Returns a specific volume.
-//string username: The volume username.
-func (s storageManager) GetVolumeByUsername(username string) ([]datatypes.Network_Storage, error) {
-	filters := filter.New()
-	filters = append(filters, filter.Path("networkStorage.username").Eq(username))
-	return s.AccountService.Filter(filters.Build()).GetNetworkStorage()
 }
 
 //Revokes authorization of hosts to Block/File Storage Volumes
