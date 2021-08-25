@@ -1133,8 +1133,8 @@ func (vs virtualServerManager) GetBandwidthData(id int, startDate time.Time, end
 	}
 
 	trackingService := services.GetMetricTrackingObjectService(vs.Session)
-	startTime := datatypes.Time{startDate}
-	endTime := datatypes.Time{endDate}
+	startTime := datatypes.Time{Time: startDate}
+	endTime := datatypes.Time{Time: endDate}
 	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
 	return bandwidthData, err
 }

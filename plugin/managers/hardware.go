@@ -636,8 +636,8 @@ func (hw hardwareServerManager) GetBandwidthData(id int, startDate time.Time, en
 	}
 
 	trackingService := services.GetMetricTrackingObjectService(hw.Session)
-	startTime := datatypes.Time{startDate}
-	endTime := datatypes.Time{endDate}
+	startTime := datatypes.Time{Time: startDate}
+	endTime := datatypes.Time{Time: endDate}
 	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
 	return bandwidthData, err
 }
