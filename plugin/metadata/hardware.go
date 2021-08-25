@@ -448,7 +448,7 @@ func HardwareBandwidthMetaData() cli.Command {
 Time formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'
 
 Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
-Bandwidth is listed in GB
+Bandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.
 
 Example::
 
