@@ -74,7 +74,6 @@ func VSMetaData() cli.Command {
 	}
 }
 
-func VSCancelMetaData() cli.Command {
 func VSAuthorizeStorageMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
@@ -99,7 +98,7 @@ EXAMPLE:
 	}
 }
 
-func VSCancelMataData() cli.Command {
+func VSCancelMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CANCEL_NAME,
