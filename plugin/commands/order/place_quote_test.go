@@ -24,7 +24,8 @@ var _ = Describe("Place", func() {
 	)
 	BeforeEach(func() {
 
-		fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
+		filenames := []string{"getDatacenters_1",}
+		fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 		OrderManager = managers.NewOrderManager(fakeSLSession)
 		fakeUI = terminal.NewFakeUI()
 		cmd = order.NewPlaceQuoteCommand(fakeUI, OrderManager, nil)

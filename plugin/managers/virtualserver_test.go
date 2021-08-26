@@ -305,10 +305,6 @@ var _ = Describe("VirtualServerManager", func() {
 	})
 
 	Describe("List virtual guest instance under current acount", func() {
-		BeforeEach(func() {
-			fakeSLSession = testhelpers.NewFakeSoftlayerPagnationSession(nil)
-			vsManager = managers.NewVirtualServerManager(fakeSLSession)
-		})
 		Context("List all virtual guest instance under current acount", func() {
 			It("It returns a list of virtual guest instances", func() {
 				vss, err := vsManager.ListInstances(false, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "")

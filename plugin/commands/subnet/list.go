@@ -6,10 +6,10 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -38,12 +38,11 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	mask := "mask[hardware,datacenter,ipAddressCount,virtualGuests,networkVlan[id,networkSpace],subnetType,id,networkIdentifier]"
+	mask := "hardware,datacenter,ipAddressCount,virtualGuests,networkVlan[id,networkSpace],subnetType,id,networkIdentifier"
 	subnets, err := cmd.NetworkManager.ListSubnets(c.String("identifier"), c.String("d"), version, c.String("t"), c.String("network-space"), c.Int("order"), mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to list subnets on your account.\n")+err.Error(), 2)
 	}
-
 	sortby := c.String("sortby")
 	if sortby == "" || sortby == "id" || sortby == "ID" {
 		sort.Sort(utils.SubnetById(subnets))
@@ -74,6 +73,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	headers := []string{T("ID"), T("identifier"), T("type"), T("network_space"), T("datacenter"), T("vlan_id"), T("IPs"), T("hardware"), T("virtual_servers")}
 	table := cmd.UI.Table(headers)
 	for _, subnet := range subnets {
+
 		var networktype, datacenter, vlanID string
 
 		if subnet.NetworkVlan != nil {
@@ -90,7 +90,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 			utils.FormatStringPointer(subnet.NetworkIdentifier),
 			utils.FormatStringPointer(subnet.SubnetType),
 			networktype, datacenter, vlanID,
-			strconv.Itoa(len(subnet.IpAddresses)),
+			utils.FormatUIntPointer(subnet.IpAddressCount),
 			strconv.Itoa(len(subnet.Hardware)),
 			strconv.Itoa(len(subnet.VirtualGuests)))
 	}

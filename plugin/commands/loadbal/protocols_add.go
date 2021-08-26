@@ -84,6 +84,16 @@ func (cmd *ProtocolAddCommand) Run(c *cli.Context) error {
 		protocolConfigurations.MaxConn = &connections
 	}
 
+    if c.IsSet("client-timeout") {
+        cTimeout := c.Int("client-timeout")
+        protocolConfigurations.ClientTimeout = &cTimeout
+    }
+
+    if c.IsSet("server-timeout") {
+        sTimeout := c.Int("server-timeout")
+        protocolConfigurations.ServerTimeout = &sTimeout
+    }
+
 	_, err = cmd.LoadBalancerManager.AddLoadBalancerListener(&loadbalancerUUID, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{protocolConfigurations})
 	if err != nil {
 		return cli.NewExitError(T("Failed to add protocol: {{.Error}}.\n",
