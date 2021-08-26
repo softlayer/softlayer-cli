@@ -237,19 +237,6 @@ type FakeStorageManager struct {
 		result1 datatypes.Network_Storage
 		result2 error
 	}
-	GetVolumeByUsernameStub        func(string) ([]datatypes.Network_Storage, error)
-	getVolumeByUsernameMutex       sync.RWMutex
-	getVolumeByUsernameArgsForCall []struct {
-		arg1 string
-	}
-	getVolumeByUsernameReturns struct {
-		result1 []datatypes.Network_Storage
-		result2 error
-	}
-	getVolumeByUsernameReturnsOnCall map[int]struct {
-		result1 []datatypes.Network_Storage
-		result2 error
-	}
 	GetVolumeSnapshotListStub        func(int) ([]datatypes.Network_Storage, error)
 	getVolumeSnapshotListMutex       sync.RWMutex
 	getVolumeSnapshotListArgsForCall []struct {
@@ -274,6 +261,19 @@ type FakeStorageManager struct {
 	}
 	getVolumeSnapshotSchedulesReturnsOnCall map[int]struct {
 		result1 datatypes.Network_Storage
+		result2 error
+	}
+	GetVolumeByUsernameStub        func(string) ([]datatypes.Network_Storage, error)
+	getVolumeByUsernameMutex       sync.RWMutex
+	getVolumeByUsernameArgsForCall []struct {
+		arg1 string
+	}
+	getVolumeByUsernameReturns struct {
+		result1 []datatypes.Network_Storage
+		result2 error
+	}
+	getVolumeByUsernameReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Storage
 		result2 error
 	}
 	ListVolumesStub        func(string, string, string, string, int, string) ([]datatypes.Network_Storage, error)
