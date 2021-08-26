@@ -57,6 +57,8 @@ var (
 //Manages SoftLayer Virtual Servers.
 //See product information here: http://www.softlayer.com/virtual-servers
 type VirtualServerManager interface {
+	AttachPortableStorage(id int, portableStorageId int) (datatypes.Provisioning_Version1_Transaction, error)
+	AuthorizeStorage(id int, storageId string) (bool, error)
 	CancelInstance(id int) error
 	MigrateInstance(id int) (datatypes.Provisioning_Version1_Transaction, error)
 	MigrateDedicatedHost(id int, hostId int) error
@@ -95,6 +97,7 @@ type virtualServerManager struct {
 	OrderService         services.Product_Order
 	DedicatedHostService services.Virtual_DedicatedHost
 	OrderManager         OrderManager
+	StorageManager       StorageManager
 }
 
 func NewVirtualServerManager(session *session.Session) *virtualServerManager {
@@ -105,7 +108,34 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 		services.GetProductOrderService(session),
 		services.GetVirtualDedicatedHostService(session),
 		NewOrderManager(session),
+		NewStorageManager(session),
 	}
+}
+
+//Attach portable storage to a Virtual Server.
+//int id: Virtual server id.
+//int portableStorageId: Portable storage id.
+func (vs virtualServerManager) AttachPortableStorage(id int, portableStorageId int) (datatypes.Provisioning_Version1_Transaction, error) {
+	return vs.VirtualGuestService.Id(id).AttachDiskImage(&portableStorageId)
+}
+
+//Authorize File or Block Storage to a Virtual Server.
+//int id: Virtual server id.
+//string storageUsername: Storage username.
+func (vs virtualServerManager) AuthorizeStorage(id int, storageUsername string) (bool, error) {
+	storageResult, err := vs.StorageManager.GetVolumeByUsername(storageUsername)
+	if err != nil {
+		return false, err
+	}
+	if len(storageResult) == 0 {
+		return false, errors.New(T("The Storage {{.Storage}} was not found.", map[string]interface{}{"Storage": storageUsername}))
+	}
+	networkStorageTemplate := []datatypes.Network_Storage{
+		{
+			Id: storageResult[0].Id,
+		},
+	}
+	return vs.VirtualGuestService.Id(id).AllowAccessToNetworkStorageList(networkStorageTemplate)
 }
 
 //Cancel an instance immediately, deleting all its data.
