@@ -8,8 +8,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -101,12 +101,20 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	if c.IsSet("price") {
 		if hardware.BillingItem != nil && hardware.BillingItem.NextInvoiceTotalRecurringAmount != nil {
+			buf := new(bytes.Buffer)
+			priceTable := terminal.NewTable(buf, []string{T("Item"), T("CategoryCode"), T("Recurring Price")})
+
+			totalPrice := hardware.BillingItem.NextInvoiceTotalRecurringAmount
+			priceTable.Add("Total", "-", fmt.Sprintf("%.2f", *totalPrice))
 			sum := *hardware.BillingItem.NextInvoiceTotalRecurringAmount
-			for _, item := range hardware.BillingItem.Children {
+			for _, item := range hardware.BillingItem.NextInvoiceChildren {
 				if item.NextInvoiceTotalRecurringAmount != nil {
 					sum += *item.NextInvoiceTotalRecurringAmount
+					priceTable.Add(*item.Description, *item.CategoryCode, fmt.Sprintf("%.2f", *item.NextInvoiceTotalRecurringAmount))
 				}
 			}
+			priceTable.Print()
+			table.Add("Prices", buf.String())
 			table.Add(T("Price rate"), fmt.Sprintf("%.2f", sum))
 		}
 	}

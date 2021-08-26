@@ -21,7 +21,7 @@ const (
 		"networkComponents[id,status,speed,maxSpeed,name,ipmiMacAddress,ipmiIpAddress,macAddress,primaryIpAddress,port," +
 		"primarySubnet[id,netmask,broadcastAddress,networkIdentifier,gateway]],hardwareChassis[id,name],activeTransaction[id,transactionStatus[friendlyName,name]]," +
 		"operatingSystem[softwareLicense[softwareDescription[manufacturer,name,version,referenceCode]],passwords[username,password]]," +
-		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
+		"billingItem[id,nextInvoiceTotalRecurringAmount,nextInvoiceChildren[nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
 		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password]"
 
 	KEY_SIZES      = "sizes"
