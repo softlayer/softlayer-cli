@@ -25,10 +25,10 @@ var _ = Describe("VS edit", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewEditCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSEditMataData().Name,
-			Description: metadata.VSEditMataData().Description,
-			Usage:       metadata.VSEditMataData().Usage,
-			Flags:       metadata.VSEditMataData().Flags,
+			Name:        metadata.VSEditMetaData().Name,
+			Description: metadata.VSEditMetaData().Description,
+			Usage:       metadata.VSEditMetaData().Usage,
+			Flags:       metadata.VSEditMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

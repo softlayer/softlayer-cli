@@ -26,10 +26,10 @@ var _ = Describe("VS poweroff", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewPowerOffCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSPowerOffMataData().Name,
-			Description: metadata.VSPowerOffMataData().Description,
-			Usage:       metadata.VSPowerOffMataData().Usage,
-			Flags:       metadata.VSPowerOffMataData().Flags,
+			Name:        metadata.VSPowerOffMetaData().Name,
+			Description: metadata.VSPowerOffMetaData().Description,
+			Usage:       metadata.VSPowerOffMetaData().Usage,
+			Flags:       metadata.VSPowerOffMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

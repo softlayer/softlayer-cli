@@ -26,10 +26,10 @@ var _ = Describe("VS poweron", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewPowerOnCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSPowerOnMataData().Name,
-			Description: metadata.VSPowerOnMataData().Description,
-			Usage:       metadata.VSPowerOnMataData().Usage,
-			Flags:       metadata.VSPowerOnMataData().Flags,
+			Name:        metadata.VSPowerOnMetaData().Name,
+			Description: metadata.VSPowerOnMetaData().Description,
+			Usage:       metadata.VSPowerOnMetaData().Usage,
+			Flags:       metadata.VSPowerOnMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

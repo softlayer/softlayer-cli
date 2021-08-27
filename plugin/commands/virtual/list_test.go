@@ -27,10 +27,10 @@ var _ = Describe("VS list", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewListCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSListMataData().Name,
-			Description: metadata.VSListMataData().Description,
-			Usage:       metadata.VSListMataData().Usage,
-			Flags:       metadata.VSListMataData().Flags,
+			Name:        metadata.VSListMetaData().Name,
+			Description: metadata.VSListMetaData().Description,
+			Usage:       metadata.VSListMetaData().Usage,
+			Flags:       metadata.VSListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

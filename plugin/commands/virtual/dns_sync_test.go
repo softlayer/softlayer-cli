@@ -30,10 +30,10 @@ var _ = Describe("VS dns sync", func() {
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
 		cmd = virtual.NewDnsSyncCommand(fakeUI, fakeVSManager, fakeDNSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSDNSSyncMataData().Name,
-			Description: metadata.VSDNSSyncMataData().Description,
-			Usage:       metadata.VSDNSSyncMataData().Usage,
-			Flags:       metadata.VSDNSSyncMataData().Flags,
+			Name:        metadata.VSDNSSyncMetaData().Name,
+			Description: metadata.VSDNSSyncMetaData().Description,
+			Usage:       metadata.VSDNSSyncMetaData().Usage,
+			Flags:       metadata.VSDNSSyncMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
