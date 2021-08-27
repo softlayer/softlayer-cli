@@ -42,8 +42,8 @@ func (cmd *L7PolicyAddCommand) Run(c *cli.Context) error {
 	}
 	actionUpperCase := strings.ToUpper(action)
 
-	if actionUpperCase != "REJECT" && actionUpperCase != "REDIRECT_POOL" && actionUpperCase != "REDIRECT_URL" {
-		return bxErr.NewInvalidUsageError(T("-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL"))
+	if actionUpperCase != "REJECT" && actionUpperCase != "REDIRECT_POOL" && actionUpperCase != "REDIRECT_URL" && actionUpperCase != "REDIRECT_HTTPS" {
+		return bxErr.NewInvalidUsageError(T("-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"))
 	}
 
 	redirect := c.String("r")
@@ -51,22 +51,25 @@ func (cmd *L7PolicyAddCommand) Run(c *cli.Context) error {
 		return bxErr.NewInvalidUsageError(T("-r, --redirect is only available with action REDIRECT_POOL | REDIRECT_URL"))
 	}
 
-	if (actionUpperCase == "REDIRECT_POOL" || actionUpperCase == "REDIRECT_URL") && redirect == "" {
-		return bxErr.NewInvalidUsageError(T("-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL"))
+	if (actionUpperCase == "REDIRECT_POOL" || actionUpperCase == "REDIRECT_URL" || actionUpperCase == "REDIRECT_HTTPS") && redirect == "" {
+		return bxErr.NewInvalidUsageError(T("-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"))
 	}
 
 	priority := c.Int("p")
 
 	policy := datatypes.Network_LBaaS_L7Policy{
-		Name:     &name,
-		Action:   &actionUpperCase,
-		Priority: &priority,
+		Name:   &name,
+		Action: &actionUpperCase,
+	}
+
+	if strings.ToUpper(actionUpperCase) != "REDIRECT_HTTPS" {
+		policy.Priority = &priority
 	}
 
 	if strings.ToUpper(actionUpperCase) == "REDIRECT_POOL" {
 		policy.RedirectL7PoolUuid = &redirect
 	}
-	if strings.ToUpper(actionUpperCase) == "REDIRECT_URL" {
+	if strings.ToUpper(actionUpperCase) == "REDIRECT_URL" || strings.ToUpper(actionUpperCase) == "REDIRECT_HTTPS" {
 		policy.RedirectUrl = &redirect
 	}
 
