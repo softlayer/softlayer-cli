@@ -26,10 +26,10 @@ var _ = Describe("VS create options", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewCreateOptionsCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCreateOptionsMataData().Name,
-			Description: metadata.VSCreateOptionsMataData().Description,
-			Usage:       metadata.VSCreateOptionsMataData().Usage,
-			Flags:       metadata.VSCreateOptionsMataData().Flags,
+			Name:        metadata.VSCreateOptionsMetaData().Name,
+			Description: metadata.VSCreateOptionsMetaData().Description,
+			Usage:       metadata.VSCreateOptionsMetaData().Usage,
+			Flags:       metadata.VSCreateOptionsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

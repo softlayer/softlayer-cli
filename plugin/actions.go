@@ -118,6 +118,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 
 		//hardware -14
+		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
+			return hardware.NewAuthorizeStorageCommand(ui, hardwareManager).Run(c)
+		},
 		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_CANCEL_NAME: func(c *cli.Context) error {
 			return hardware.NewCancelCommand(ui, hardwareManager).Run(c)
 		},

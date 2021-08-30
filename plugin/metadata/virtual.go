@@ -49,29 +49,27 @@ func VSMetaData() cli.Command {
 		Description: T("Classic infrastructure Virtual Servers"),
 		Usage:       "${COMMAND_NAME} sl vs",
 		Subcommands: []cli.Command{
-			VSAuthorizeStorageMetaData(),
-			VSCancelMataData(),
-			VSCaptureMataData(),
-			VSCreateHostMataData(),
-			VSCreateMataData(),
-			VSCreateOptionsMataData(),
-			VSCredentialsMataData(),
-			VSDetailMataData(),
-			VSDNSSyncMataData(),
-			VSEditMataData(),
-			VSListHostMataData(),
-			VSListMataData(),
-			VSMigrateMataData(),
-			VSPauseMataData(),
-			VSPowerOffMataData(),
-			VSPowerOnMataData(),
-			VSReadyMataData(),
-			VSRebootMataData(),
-			VSReloadMataData(),
-			VSRescueMataData(),
-			VSResumeMataData(),
-			VSUpgradeMataData(),
-			VSMigrateMataData(),
+			VSCancelMetaData(),
+			VSCaptureMetaData(),
+			VSCreateHostMetaData(),
+			VSCreateMetaData(),
+			VSCreateOptionsMetaData(),
+			VSCredentialsMetaData(),
+			VSDetailMetaData(),
+			VSDNSSyncMetaData(),
+			VSEditMetaData(),
+			VSListHostMetaData(),
+			VSListMetaData(),
+			VSMigrateMetaData(),
+			VSPauseMetaData(),
+			VSPowerOffMetaData(),
+			VSPowerOnMetaData(),
+			VSReadyMetaData(),
+			VSRebootMetaData(),
+			VSReloadMetaData(),
+			VSRescueMetaData(),
+			VSResumeMetaData(),
+			VSUpgradeMetaData(),
 			VSBandwidthMetaData(),
 		},
 	}
@@ -83,7 +81,7 @@ func VSAuthorizeStorageMetaData() cli.Command {
 		Name:        CMD_VS_AUTHORIZE_STORAGE_NAME,
 		Description: T("Authorize File, Block and Portable Storage to a Virtual Server"),
 		Usage: T(`${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER
-	
+
 EXAMPLE:
    ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567
    Authorize File, Block and Portable Storage to a Virtual Server.`),
@@ -101,7 +99,7 @@ EXAMPLE:
 	}
 }
 
-func VSCancelMataData() cli.Command {
+func VSCancelMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CANCEL_NAME,
@@ -117,7 +115,7 @@ EXAMPLE:
 	}
 }
 
-func VSMigrateMataData() cli.Command {
+func VSMigrateMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_MIGRATE_NAME,
@@ -145,7 +143,7 @@ EXAMPLE:
 	}
 }
 
-func VSCaptureMataData() cli.Command {
+func VSCaptureMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CAPTURE_NAME,
@@ -173,7 +171,7 @@ EXAMPLE:
 	}
 }
 
-func VSCreateHostMataData() cli.Command {
+func VSCreateHostMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CREATE_HOST_NAME,
@@ -210,7 +208,7 @@ func VSCreateHostMataData() cli.Command {
 	}
 }
 
-func VSCreateMataData() cli.Command {
+func VSCreateMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CREATE_NAME,
@@ -372,7 +370,7 @@ EXAMPLE:
 	}
 }
 
-func VSCreateOptionsMataData() cli.Command {
+func VSCreateOptionsMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CREATE_OPTIONS_NAME,
@@ -388,7 +386,7 @@ EXAMPLE:
 	}
 }
 
-func VSCredentialsMataData() cli.Command {
+func VSCredentialsMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CREDENTIALS_NAME,
@@ -404,7 +402,7 @@ EXAMPLE:
 	}
 }
 
-func VSDetailMataData() cli.Command {
+func VSDetailMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_DETAIL_NAME,
@@ -428,7 +426,7 @@ EXAMPLE:
 	}
 }
 
-func VSDNSSyncMataData() cli.Command {
+func VSDNSSyncMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_DNS_SYNC_NAME,
@@ -465,7 +463,7 @@ EXAMPLE:
 	}
 }
 
-func VSEditMataData() cli.Command {
+func VSEditMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_EDIT_NAME,
@@ -509,7 +507,7 @@ EXAMPLE:
 	}
 }
 
-func VSListHostMataData() cli.Command {
+func VSListHostMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_LIST_HOST_NAME,
@@ -537,7 +535,7 @@ func VSListHostMataData() cli.Command {
 	}
 }
 
-func VSListMataData() cli.Command {
+func VSListMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_LIST_NAME,
@@ -617,7 +615,7 @@ EXAMPLE:
 	}
 }
 
-func VSPauseMataData() cli.Command {
+func VSPauseMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_PAUSE_NAME,
@@ -633,7 +631,7 @@ EXAMPLE:
 	}
 }
 
-func VSPowerOffMataData() cli.Command {
+func VSPowerOffMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_POWER_OFF_NAME,
@@ -657,7 +655,7 @@ EXAMPLE:
 	}
 }
 
-func VSPowerOnMataData() cli.Command {
+func VSPowerOnMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_POWER_ON_NAME,
@@ -673,7 +671,7 @@ EXAMPLE:
 	}
 }
 
-func VSReadyMataData() cli.Command {
+func VSReadyMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_READY_NAME,
@@ -692,7 +690,7 @@ EXAMPLE:
 	}
 }
 
-func VSRebootMataData() cli.Command {
+func VSRebootMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_REBOOT_NAME,
@@ -716,7 +714,7 @@ EXAMPLE:
 	}
 }
 
-func VSReloadMataData() cli.Command {
+func VSReloadMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_RELOAD_NAME,
@@ -746,7 +744,7 @@ EXAMPLE:
 	}
 }
 
-func VSRescueMataData() cli.Command {
+func VSRescueMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_RESCUE_NAME,
@@ -762,7 +760,7 @@ EXAMPLE:
 	}
 }
 
-func VSResumeMataData() cli.Command {
+func VSResumeMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_RESUME_NAME,
@@ -778,7 +776,7 @@ EXAMPLE:
 	}
 }
 
-func VSUpgradeMataData() cli.Command {
+func VSUpgradeMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_UPGRADE_NAME,
@@ -818,13 +816,12 @@ EXAMPLE:
 	}
 }
 
-
 func VSBandwidthMetaData() cli.Command {
-	return cli.Command{
-		Category:    CMD_VIRTUAL_NAME,
-		Name:        "bandwidth",
-		Description: T("Bandwidth data over date range."),
-		Usage: T(`${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]
+    return cli.Command{
+        Category:    CMD_VIRTUAL_NAME,
+        Name:        "bandwidth",
+        Description: T("Bandwidth data over date range."),
+        Usage: T(`${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]
 Time formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'
 
 Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
@@ -833,24 +830,24 @@ Bandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.
 Example::
 
    ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00`, map[string]interface{}{"Command": "vs"}),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "s,start",
-				Usage: T("Start date for bandwdith reporting"),
-			},
-			cli.StringFlag{
-				Name:  "e,end",
-				Usage: T("End date for bandwidth reporting"),
-			},
-			cli.IntFlag{
-				Name:  "r,rollup",
-				Usage: T("Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds"),
-			},
-			cli.BoolFlag{
-				Name:  "q,quite",
-				Usage: T("Only show the summary table."),
-			},
-			OutputFlag(),
-		},
-	}
+        Flags: []cli.Flag{
+            cli.StringFlag{
+                Name:  "s,start",
+                Usage: T("Start date for bandwdith reporting"),
+            },
+            cli.StringFlag{
+                Name:  "e,end",
+                Usage: T("End date for bandwidth reporting"),
+            },
+            cli.IntFlag{
+                Name:  "r,rollup",
+                Usage: T("Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds"),
+            },
+            cli.BoolFlag{
+                Name:  "q,quite",
+                Usage: T("Only show the summary table."),
+            },
+            OutputFlag(),
+        },
+    }
 }

@@ -10,6 +10,20 @@ import (
 )
 
 type FakeHardwareServerManager struct {
+	AuthorizeStorageStub        func(int, string) (bool, error)
+	authorizeStorageMutex       sync.RWMutex
+	authorizeStorageArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	authorizeStorageReturns struct {
+		result1 bool
+		result2 error
+	}
+	authorizeStorageReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	CancelHardwareStub        func(int, string, string, bool) error
 	cancelHardwareMutex       sync.RWMutex
 	cancelHardwareArgsForCall []struct {
@@ -351,6 +365,70 @@ type FakeHardwareServerManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeHardwareServerManager) AuthorizeStorage(arg1 int, arg2 string) (bool, error) {
+	fake.authorizeStorageMutex.Lock()
+	ret, specificReturn := fake.authorizeStorageReturnsOnCall[len(fake.authorizeStorageArgsForCall)]
+	fake.authorizeStorageArgsForCall = append(fake.authorizeStorageArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	fake.recordInvocation("AuthorizeStorage", []interface{}{arg1, arg2})
+	fake.authorizeStorageMutex.Unlock()
+	if fake.AuthorizeStorageStub != nil {
+		return fake.AuthorizeStorageStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.authorizeStorageReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) AuthorizeStorageCallCount() int {
+	fake.authorizeStorageMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
+	return len(fake.authorizeStorageArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) AuthorizeStorageCalls(stub func(int, string) (bool, error)) {
+	fake.authorizeStorageMutex.Lock()
+	defer fake.authorizeStorageMutex.Unlock()
+	fake.AuthorizeStorageStub = stub
+}
+
+func (fake *FakeHardwareServerManager) AuthorizeStorageArgsForCall(i int) (int, string) {
+	fake.authorizeStorageMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
+	argsForCall := fake.authorizeStorageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeHardwareServerManager) AuthorizeStorageReturns(result1 bool, result2 error) {
+	fake.authorizeStorageMutex.Lock()
+	defer fake.authorizeStorageMutex.Unlock()
+	fake.AuthorizeStorageStub = nil
+	fake.authorizeStorageReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) AuthorizeStorageReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.authorizeStorageMutex.Lock()
+	defer fake.authorizeStorageMutex.Unlock()
+	fake.AuthorizeStorageStub = nil
+	if fake.authorizeStorageReturnsOnCall == nil {
+		fake.authorizeStorageReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.authorizeStorageReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeHardwareServerManager) CancelHardware(arg1 int, arg2 string, arg3 string, arg4 bool) error {
@@ -1905,6 +1983,8 @@ func (fake *FakeHardwareServerManager) VerifyOrderReturnsOnCall(i int, result1 d
 func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.authorizeStorageMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
 	fake.cancelHardwareMutex.RLock()
 	defer fake.cancelHardwareMutex.RUnlock()
 	fake.editMutex.RLock()

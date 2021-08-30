@@ -36,6 +36,7 @@ var DEFAULT_CATEGORIES = []string{"pri_ip_addresses", "vpn_management", "remote_
 var EXTRA_CATEGORIES = []string{"pri_ipv6_addresses", "static_ipv6_addresses", "sec_ip_addresses"}
 
 type HardwareServerManager interface {
+	AuthorizeStorage(id int, storageId string) (bool, error)
 	CancelHardware(hardwareId int, reason string, comment string, immediate bool) error
 	ListHardware(tags []string, cpus int, memory int, hostname string, domain string, datacenter string, nicSpeed int, publicIP string, privateIP string, owner string, orderId int, mask string) ([]datatypes.Hardware_Server, error)
 	GetHardware(hardwareId int, mask string) (datatypes.Hardware_Server, error)
@@ -70,6 +71,7 @@ type hardwareServerManager struct {
 	LocationService services.Location_Datacenter
 	BillingService  services.Billing_Item
 	Session			    *session.Session
+	StorageManager  StorageManager
 }
 
 func NewHardwareServerManager(session *session.Session) *hardwareServerManager {
@@ -81,7 +83,27 @@ func NewHardwareServerManager(session *session.Session) *hardwareServerManager {
 		services.GetLocationDatacenterService(session),
 		services.GetBillingItemService(session),
 		session,
+		NewStorageManager(session),
 	}
+}
+
+//Authorize File or Block Storage to a Hardware Server.
+//int id: Hardware server id.
+//string storageUsername: Storage username.
+func (hw hardwareServerManager) AuthorizeStorage(id int, storageUsername string) (bool, error) {
+	storageResult, err := hw.StorageManager.GetVolumeByUsername(storageUsername)
+	if err != nil {
+		return false, err
+	}
+	if len(storageResult) == 0 {
+		return false, errors.New(T("The Storage {{.Storage}} was not found.", map[string]interface{}{"Storage": storageUsername}))
+	}
+	networkStorageTemplate := []datatypes.Network_Storage{
+		{
+			Id: storageResult[0].Id,
+		},
+	}
+	return hw.HardwareService.Id(id).AllowAccessToNetworkStorageList(networkStorageTemplate)
 }
 
 //Cancels the specified dedicated server.
