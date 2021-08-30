@@ -61,6 +61,7 @@ func HardwareMetaData() cli.Command {
 			HardwareRescueMetaData(),
 			HardwareUpdateFirmwareMetaData(),
 			HardwareToggleIPMIMetaData(),
+			HardwareBandwidthMetaData(),
 		},
 	}
 }
