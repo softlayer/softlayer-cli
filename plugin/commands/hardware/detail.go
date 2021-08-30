@@ -103,7 +103,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		if hardware.BillingItem != nil && hardware.BillingItem.NextInvoiceTotalRecurringAmount != nil {
 			buf := new(bytes.Buffer)
 			priceTable := terminal.NewTable(buf, []string{T("Item"), T("CategoryCode"), T("Recurring Price")})
-
+			
 			totalPrice := hardware.BillingItem.NextInvoiceTotalRecurringAmount
 			priceTable.Add("Total", "-", fmt.Sprintf("%.2f", *totalPrice))
 			sum := *hardware.BillingItem.NextInvoiceTotalRecurringAmount
