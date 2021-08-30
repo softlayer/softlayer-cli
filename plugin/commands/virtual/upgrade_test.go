@@ -28,10 +28,10 @@ var _ = Describe("VS upgrade", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewUpgradeCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSUpgradeMataData().Name,
-			Description: metadata.VSUpgradeMataData().Description,
-			Usage:       metadata.VSUpgradeMataData().Usage,
-			Flags:       metadata.VSUpgradeMataData().Flags,
+			Name:        metadata.VSUpgradeMetaData().Name,
+			Description: metadata.VSUpgradeMetaData().Description,
+			Usage:       metadata.VSUpgradeMetaData().Usage,
+			Flags:       metadata.VSUpgradeMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

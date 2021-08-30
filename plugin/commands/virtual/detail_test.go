@@ -29,10 +29,10 @@ var _ = Describe("VS detail", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewDetailCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSDetailMataData().Name,
-			Description: metadata.VSDetailMataData().Description,
-			Usage:       metadata.VSDetailMataData().Usage,
-			Flags:       metadata.VSDetailMataData().Flags,
+			Name:        metadata.VSDetailMetaData().Name,
+			Description: metadata.VSDetailMetaData().Description,
+			Usage:       metadata.VSDetailMetaData().Usage,
+			Flags:       metadata.VSDetailMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
