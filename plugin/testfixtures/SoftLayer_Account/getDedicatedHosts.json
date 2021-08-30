@@ -1,0 +1,13 @@
+[
+    {
+        "datacenter": {
+        "name": "dal05"
+    },
+    "memoryCapacity": 242,
+    "name": "test-dedicated",
+    "diskCapacity": 1200,
+    "guestCount": 1,
+    "cpuCount": 56,
+    "id": 12345
+    }
+]

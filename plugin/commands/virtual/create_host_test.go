@@ -34,10 +34,10 @@ var _ = Describe("VS create host", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = virtual.NewCreateHostCommand(fakeUI, fakeVSManager, fakeNetworkManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCreateHostMataData().Name,
-			Description: metadata.VSCreateHostMataData().Description,
-			Usage:       metadata.VSCreateHostMataData().Usage,
-			Flags:       metadata.VSCreateHostMataData().Flags,
+			Name:        metadata.VSCreateHostMetaData().Name,
+			Description: metadata.VSCreateHostMetaData().Description,
+			Usage:       metadata.VSCreateHostMetaData().Usage,
+			Flags:       metadata.VSCreateHostMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

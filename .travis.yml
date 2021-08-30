@@ -20,7 +20,7 @@ before_script:
   - go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")
   - go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")
   - python3 bin/detect_secrets.py
-  - "(cd plugin && i18n4go -c checkup -q i18n -v) || exit 1"
+  - bash bin/catch-i18n-mismatch.sh
   - gosec -exclude-dir=fixture -exclude-dir=plugin/resources -quiet ./...
 script:
   - go build

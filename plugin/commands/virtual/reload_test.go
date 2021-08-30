@@ -30,10 +30,10 @@ var _ = Describe("VS reload", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = virtual.NewReloadCommand(fakeUI, fakeVSManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.VSReloadMataData().Name,
-			Description: metadata.VSReloadMataData().Description,
-			Usage:       metadata.VSReloadMataData().Usage,
-			Flags:       metadata.VSReloadMataData().Flags,
+			Name:        metadata.VSReloadMetaData().Name,
+			Description: metadata.VSReloadMetaData().Description,
+			Usage:       metadata.VSReloadMetaData().Usage,
+			Flags:       metadata.VSReloadMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -6,10 +6,39 @@ import (
 	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/filter"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 type FakeVirtualServerManager struct {
+	AttachPortableStorageStub        func(int, int) (datatypes.Provisioning_Version1_Transaction, error)
+	attachPortableStorageMutex       sync.RWMutex
+	attachPortableStorageArgsForCall []struct {
+		arg1 int
+		arg2 int
+	}
+	attachPortableStorageReturns struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}
+	attachPortableStorageReturnsOnCall map[int]struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}
+	AuthorizeStorageStub        func(int, string) (bool, error)
+	authorizeStorageMutex       sync.RWMutex
+	authorizeStorageArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	authorizeStorageReturns struct {
+		result1 bool
+		result2 error
+	}
+	authorizeStorageReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	CancelInstanceStub        func(int) error
 	cancelInstanceMutex       sync.RWMutex
 	cancelInstanceArgsForCall []struct {
@@ -225,6 +254,45 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Virtual_Guest
 		result2 error
 	}
+	GetInstancesStub        func(string, filter.Filters) ([]datatypes.Virtual_Guest, error)
+	getInstancesMutex       sync.RWMutex
+	getInstancesArgsForCall []struct {
+		arg1 string
+		arg2 filter.Filters
+	}
+	getInstancesReturns struct {
+		result1 []datatypes.Virtual_Guest
+		result2 error
+	}
+	getInstancesReturnsOnCall map[int]struct {
+		result1 []datatypes.Virtual_Guest
+		result2 error
+	}
+	MigrateDedicatedHostStub         func(int, int) error
+	MigrateDedicatedHostMutex        sync.RWMutex
+	MigrateDedicatedHostArgsForCalls []struct {
+		arg1 int
+		arg2 int
+	}
+	MigrateDedicatedHostReturn struct {
+		result1 error
+	}
+	MigrateDedicatedHostReturnsOnCalls map[int]struct {
+		result1 error
+	}
+	MigrateInstanceStub        func(int) (datatypes.Provisioning_Version1_Transaction, error)
+	migrateInstanceMutex       sync.RWMutex
+	migrateInstanceArgsForCall []struct {
+		arg1 int
+	}
+	migrateInstanceReturns struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}
+	migrateInstanceReturnsOnCall map[int]struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}
 	PauseInstanceStub        func(int) error
 	pauseInstanceMutex       sync.RWMutex
 	pauseInstanceArgsForCall []struct {
@@ -379,6 +447,134 @@ type FakeVirtualServerManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorage(arg1 int, arg2 int) (datatypes.Provisioning_Version1_Transaction, error) {
+	fake.attachPortableStorageMutex.Lock()
+	ret, specificReturn := fake.attachPortableStorageReturnsOnCall[len(fake.attachPortableStorageArgsForCall)]
+	fake.attachPortableStorageArgsForCall = append(fake.attachPortableStorageArgsForCall, struct {
+		arg1 int
+		arg2 int
+	}{arg1, arg2})
+	fake.recordInvocation("attachPortableStorage", []interface{}{arg1, arg2})
+	fake.attachPortableStorageMutex.Unlock()
+	if fake.AttachPortableStorageStub != nil {
+		return fake.AttachPortableStorageStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.attachPortableStorageReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageCallCount() int {
+	fake.attachPortableStorageMutex.RLock()
+	defer fake.attachPortableStorageMutex.RUnlock()
+	return len(fake.attachPortableStorageArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageCalls(stub func(int, int) (datatypes.Provisioning_Version1_Transaction, error)) {
+	fake.attachPortableStorageMutex.Lock()
+	defer fake.attachPortableStorageMutex.Unlock()
+	fake.AttachPortableStorageStub = stub
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageArgsForCall(i int) (int, int) {
+	fake.attachPortableStorageMutex.RLock()
+	defer fake.attachPortableStorageMutex.RUnlock()
+	argsForCall := fake.attachPortableStorageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageReturns(result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+	fake.attachPortableStorageMutex.Lock()
+	defer fake.attachPortableStorageMutex.Unlock()
+	fake.AttachPortableStorageStub = nil
+	fake.attachPortableStorageReturns = struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) AttachPortableStorageReturnsOnCall(i int, result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+	fake.attachPortableStorageMutex.Lock()
+	defer fake.attachPortableStorageMutex.Unlock()
+	fake.AttachPortableStorageStub = nil
+	if fake.attachPortableStorageReturnsOnCall == nil {
+		fake.attachPortableStorageReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Provisioning_Version1_Transaction
+			result2 error
+		})
+	}
+	fake.attachPortableStorageReturnsOnCall[i] = struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorage(arg1 int, arg2 string) (bool, error) {
+	fake.authorizeStorageMutex.Lock()
+	ret, specificReturn := fake.authorizeStorageReturnsOnCall[len(fake.authorizeStorageArgsForCall)]
+	fake.authorizeStorageArgsForCall = append(fake.authorizeStorageArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	fake.recordInvocation("AuthorizeStorage", []interface{}{arg1, arg2})
+	fake.authorizeStorageMutex.Unlock()
+	if fake.AuthorizeStorageStub != nil {
+		return fake.AuthorizeStorageStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.authorizeStorageReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageCallCount() int {
+	fake.authorizeStorageMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
+	return len(fake.authorizeStorageArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageCalls(stub func(int, string) (bool, error)) {
+	fake.authorizeStorageMutex.Lock()
+	defer fake.authorizeStorageMutex.Unlock()
+	fake.AuthorizeStorageStub = stub
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageArgsForCall(i int) (int, string) {
+	fake.authorizeStorageMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
+	argsForCall := fake.authorizeStorageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageReturns(result1 bool, result2 error) {
+	fake.authorizeStorageMutex.Lock()
+	defer fake.authorizeStorageMutex.Unlock()
+	fake.AuthorizeStorageStub = nil
+	fake.authorizeStorageReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) AuthorizeStorageReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.authorizeStorageMutex.Lock()
+	defer fake.authorizeStorageMutex.Unlock()
+	fake.AuthorizeStorageStub = nil
+	if fake.authorizeStorageReturnsOnCall == nil {
+		fake.authorizeStorageReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.authorizeStorageReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeVirtualServerManager) CancelInstance(arg1 int) error {
@@ -1295,6 +1491,194 @@ func (fake *FakeVirtualServerManager) ListInstancesReturnsOnCall(i int, result1 
 	}
 	fake.listInstancesReturnsOnCall[i] = struct {
 		result1 []datatypes.Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetInstances(arg1 string, arg2 filter.Filters) ([]datatypes.Virtual_Guest, error) {
+	fake.getInstancesMutex.Lock()
+	ret, specificReturn := fake.getInstancesReturnsOnCall[len(fake.getInstancesArgsForCall)]
+	fake.getInstancesArgsForCall = append(fake.getInstancesArgsForCall, struct {
+		arg1 string
+		arg2 filter.Filters
+	}{arg1, arg2})
+	fake.recordInvocation("GetInstances", []interface{}{arg1, arg2})
+	fake.getInstancesMutex.Unlock()
+	if fake.GetInstancesStub != nil {
+		return fake.GetInstancesStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getInstancesReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetInstancesCallCount() int {
+	fake.getInstancesMutex.RLock()
+	defer fake.getInstancesMutex.RUnlock()
+	return len(fake.getInstancesArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetInstancesCalls(stub func(string, filter.Filters) ([]datatypes.Virtual_Guest, error)) {
+	fake.getInstancesMutex.Lock()
+	defer fake.getInstancesMutex.Unlock()
+	fake.GetInstancesStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetInstancesArgsForCall(i int) (string, filter.Filters) {
+	fake.getInstancesMutex.RLock()
+	defer fake.getInstancesMutex.RUnlock()
+	argsForCall := fake.getInstancesArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) GetInstancesReturns(result1 []datatypes.Virtual_Guest, result2 error) {
+	fake.getInstancesMutex.Lock()
+	defer fake.getInstancesMutex.Unlock()
+	fake.GetInstancesStub = nil
+	fake.getInstancesReturns = struct {
+		result1 []datatypes.Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetInstancesReturnsOnCall(i int, result1 []datatypes.Virtual_Guest, result2 error) {
+	fake.getInstancesMutex.Lock()
+	defer fake.getInstancesMutex.Unlock()
+	fake.GetInstancesStub = nil
+	if fake.getInstancesReturnsOnCall == nil {
+		fake.getInstancesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Virtual_Guest
+			result2 error
+		})
+	}
+	fake.getInstancesReturnsOnCall[i] = struct {
+		result1 []datatypes.Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) MigrateDedicatedHost(arg1 int, arg2 int) error {
+	fake.MigrateDedicatedHostMutex.Lock()
+	ret, specificReturn := fake.MigrateDedicatedHostReturnsOnCalls[len(fake.MigrateDedicatedHostArgsForCalls)]
+	fake.MigrateDedicatedHostArgsForCalls = append(fake.MigrateDedicatedHostArgsForCalls, struct {
+		arg1 int
+		arg2 int
+	}{arg1, arg2})
+	fake.recordInvocation("MigrateDedicatedHost", []interface{}{arg1, arg2})
+	fake.MigrateDedicatedHostMutex.Unlock()
+	if fake.MigrateDedicatedHostStub != nil {
+		return fake.MigrateDedicatedHostStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	fakeReturns := fake.MigrateDedicatedHostReturn
+	return fakeReturns.result1
+}
+
+func (fake *FakeVirtualServerManager) MigrateDedicatedHostCallCount() int {
+	fake.MigrateDedicatedHostMutex.RLock()
+	defer fake.MigrateDedicatedHostMutex.RUnlock()
+	return len(fake.MigrateDedicatedHostArgsForCalls)
+}
+
+func (fake *FakeVirtualServerManager) MigrateDedicatedHostCalls(stub func(int, int) error) {
+	fake.MigrateDedicatedHostMutex.Lock()
+	defer fake.MigrateDedicatedHostMutex.Unlock()
+	fake.MigrateDedicatedHostStub = stub
+}
+
+func (fake *FakeVirtualServerManager) MigrateDedicatedHostArgsForCall(i int) (int, int) {
+	fake.MigrateDedicatedHostMutex.RLock()
+	defer fake.MigrateDedicatedHostMutex.RUnlock()
+	argsForCall := fake.MigrateDedicatedHostArgsForCalls[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) MigrateDedicatedHostReturns(result1 error) {
+	fake.MigrateDedicatedHostMutex.Lock()
+	defer fake.MigrateDedicatedHostMutex.Unlock()
+	fake.MigrateDedicatedHostStub = nil
+	fake.MigrateDedicatedHostReturn = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeVirtualServerManager) MigrateDedicatedHostReturnsOnCall(i int, result1 error) {
+	fake.MigrateDedicatedHostMutex.Lock()
+	defer fake.MigrateDedicatedHostMutex.Unlock()
+	fake.MigrateDedicatedHostStub = nil
+	if fake.MigrateDedicatedHostReturnsOnCalls == nil {
+		fake.MigrateDedicatedHostReturnsOnCalls = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.MigrateDedicatedHostReturnsOnCalls[i] = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeVirtualServerManager) MigrateInstance(arg1 int) (datatypes.Provisioning_Version1_Transaction, error) {
+	fake.migrateInstanceMutex.Lock()
+	ret, specificReturn := fake.migrateInstanceReturnsOnCall[len(fake.migrateInstanceArgsForCall)]
+	fake.migrateInstanceArgsForCall = append(fake.migrateInstanceArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("MigrateInstance", []interface{}{arg1})
+	fake.migrateInstanceMutex.Unlock()
+	if fake.MigrateInstanceStub != nil {
+		return fake.MigrateInstanceStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.migrateInstanceReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) MigrateInstanceCallCount() int {
+	fake.migrateInstanceMutex.RLock()
+	defer fake.migrateInstanceMutex.RUnlock()
+	return len(fake.migrateInstanceArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) MigrateInstanceCalls(stub func(int) (datatypes.Provisioning_Version1_Transaction, error)) {
+	fake.migrateInstanceMutex.Lock()
+	defer fake.migrateInstanceMutex.Unlock()
+	fake.MigrateInstanceStub = stub
+}
+
+func (fake *FakeVirtualServerManager) MigrateInstanceArgsForCall(i int) int {
+	fake.migrateInstanceMutex.RLock()
+	defer fake.migrateInstanceMutex.RUnlock()
+	argsForCall := fake.migrateInstanceArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) MigrateInstanceReturns(result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+	fake.migrateInstanceMutex.Lock()
+	defer fake.migrateInstanceMutex.Unlock()
+	fake.MigrateInstanceStub = nil
+	fake.migrateInstanceReturns = struct {
+		result1 datatypes.Provisioning_Version1_Transaction
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) MigrateInstanceReturnsOnCall(i int, result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+	fake.migrateInstanceMutex.Lock()
+	defer fake.migrateInstanceMutex.Unlock()
+	fake.MigrateInstanceStub = nil
+	if fake.migrateInstanceReturnsOnCall == nil {
+		fake.migrateInstanceReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Provisioning_Version1_Transaction
+			result2 error
+		})
+	}
+	fake.migrateInstanceReturnsOnCall[i] = struct {
+		result1 datatypes.Provisioning_Version1_Transaction
 		result2 error
 	}{result1, result2}
 }

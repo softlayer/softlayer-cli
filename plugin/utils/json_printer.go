@@ -18,6 +18,18 @@ func PrintPrettyJSON(ui terminal.UI, data interface{}) error {
 
 }
 
+func PrintPrettyJSONList(ui terminal.UI, dataList interface{}) error {
+	for _, data := range dataList.([]interface{}) {
+		jsonBytes, err := prettyJSON(data)
+		if err != nil {
+			return err
+		}
+
+		fmt.Fprintf(ui.Writer(), "%s\n", jsonBytes)
+	}
+	return nil
+}
+
 func prettyJSON(data interface{}) (string, error) {
 	jsonBytes, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
