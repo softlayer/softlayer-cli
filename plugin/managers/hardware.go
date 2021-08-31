@@ -2,6 +2,7 @@ package managers
 
 import (
 	"errors"
+	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
@@ -59,6 +60,7 @@ type HardwareServerManager interface {
 	GetBandwidthPriceId(items []datatypes.Product_Item, hourly bool, noPublic bool, location datatypes.Location_Region) (int, error)
 	GetPortSpeedPriceId(items []datatypes.Product_Item, portSpeed int, noPublic bool, location datatypes.Location_Region) (int, error)
 	ToggleIPMI(hardwareID int, enabled bool) error
+	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
 }
 
 type hardwareServerManager struct {
@@ -68,10 +70,10 @@ type hardwareServerManager struct {
 	OrderService    services.Product_Order
 	LocationService services.Location_Datacenter
 	BillingService  services.Billing_Item
+	Session			    *session.Session
 	StorageManager  StorageManager
 }
 
-//See product information here: http://www.softlayer.com/bare-metal-servers
 func NewHardwareServerManager(session *session.Session) *hardwareServerManager {
 	return &hardwareServerManager{
 		services.GetHardwareServerService(session),
@@ -80,6 +82,7 @@ func NewHardwareServerManager(session *session.Session) *hardwareServerManager {
 		services.GetProductOrderService(session),
 		services.GetLocationDatacenterService(session),
 		services.GetBillingItemService(session),
+		session,
 		NewStorageManager(session),
 	}
 }
@@ -643,6 +646,22 @@ func (hw hardwareServerManager) GetPortSpeedPriceId(items []datatypes.Product_It
 func (hw hardwareServerManager) ToggleIPMI(hardwareID int, enabled bool) error {
 	_, err := hw.HardwareService.Id(hardwareID).ToggleManagementInterface(&enabled)
 	return err
+}
+
+
+// Finds the MetricTrackingObjectId for a hardware server then calls
+// SoftLayer_Metric_Tracking_Object::getBandwidthData()
+func (hw hardwareServerManager) GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error) {
+	trackingId, err := hw.HardwareService.Id(id).GetMetricTrackingObjectId()
+	if err != nil {
+		return nil, err
+	}
+
+	trackingService := services.GetMetricTrackingObjectService(hw.Session)
+	startTime := datatypes.Time{Time: startDate}
+	endTime := datatypes.Time{Time: endDate}
+	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
+	return bandwidthData, err
 }
 
 //Return True if the price object is hourly and/or monthly
