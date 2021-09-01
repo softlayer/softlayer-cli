@@ -41,6 +41,10 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	// 	fmt.Printf("args %v:\t %v", x, arg)
 	// }
 
+	if options == nil {
+		options = new(sl.Options)
+	}
+
 	identifier := 0
 	apiSig := fmt.Sprintf("%s::%s", service, method)
 
