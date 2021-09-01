@@ -42,7 +42,8 @@ func (cmd *BillingCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	hardware, err := cmd.HardwareManager.GetHardware(hardwareID, "")
+	mask := "mask[id,billingItem[id,recurringFee,nextInvoiceTotalRecurringAmount,provisionTransaction[createDate],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount]]]"
+	hardware, err := cmd.HardwareManager.GetHardware(hardwareID, mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID})+err.Error(), 2)
 	}
@@ -54,7 +55,7 @@ func (cmd *BillingCommand) Run(c *cli.Context) error {
 	table := cmd.UI.Table([]string{T("name"), T("value")})
 	table.Add("Id", utils.FormatIntPointer(&hardwareID))
 	table.Add("Billing Item Id", utils.FormatIntPointer(hardware.BillingItem.Id))
-	table.Add("Recurring Fee", utils.FormatSLFloatPointerToFloat(hardware.BillingItem.RecurringFee))
+	table.Add("Recurring Fee", fmt.Sprintf("%.2f", *hardware.BillingItem.RecurringFee))
 	table.Add("Total", fmt.Sprintf("%.2f", *hardware.BillingItem.NextInvoiceTotalRecurringAmount))
 	table.Add("Provision Date", utils.FormatSLTimePointer(hardware.BillingItem.ProvisionTransaction.CreateDate))
 
