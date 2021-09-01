@@ -108,6 +108,14 @@ type FakeImageManager struct {
 	invocationsMutex sync.RWMutex
 }
 
+func (fake *FakeImageManager) AddLocation(imageId int, locations []datatypes.Location) (bool, error) {
+	panic("implement me")
+}
+
+func (fake *FakeImageManager) DeleteLocation(imageId int, locations []datatypes.Location) (bool, error) {
+	panic("implement me")
+}
+
 func (fake *FakeImageManager) DeleteImage(arg1 int) error {
 	fake.deleteImageMutex.Lock()
 	ret, specificReturn := fake.deleteImageReturnsOnCall[len(fake.deleteImageArgsForCall)]
