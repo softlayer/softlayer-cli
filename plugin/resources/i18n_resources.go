@@ -90,7 +90,7 @@ func pluginI18nResourcesDe_deAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/de_DE.all.json", size: 320590, mode: os.FileMode(438), modTime: time.Unix(1630700719, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/de_DE.all.json", size: 320590, mode: os.FileMode(438), modTime: time.Unix(1630955507, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
