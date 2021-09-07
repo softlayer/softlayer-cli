@@ -64,7 +64,7 @@ func (cmd *L7PolicyAddCommand) Run(c *cli.Context) error {
 		)
 	}
 
-	if IsValidAction(actionUpperCase) && utils.IsEmptyString(redirect) {
+	if IsValidAction(actionUpperCase) && utils.IsEmptyString(redirect) && actionUpperCase != REJECT {
 		return bxErr.NewInvalidUsageError(
 			T("-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
