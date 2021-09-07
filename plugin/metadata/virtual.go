@@ -70,6 +70,7 @@ func VSMetaData() cli.Command {
 			VSRescueMetaData(),
 			VSResumeMetaData(),
 			VSUpgradeMetaData(),
+			VSAuthorizeStorageMetaData(),
 			VSBandwidthMetaData(),
 		},
 	}

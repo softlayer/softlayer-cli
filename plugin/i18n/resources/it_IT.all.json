@@ -1728,6 +1728,8 @@
 "translation": "Protocollo di frontend [valore predefinito: HTTP]"},
 {"id": "GUID",
 "translation": "GUID"},
+{"id": "Get billing for a hardware device.",
+"translation": "Get billing for a hardware device."},
 {"id": "Get details about a VLAN",
 "translation": "Ottieni i dettagli su una VLAN"},
 {"id": "Get details about a security group",
