@@ -39,7 +39,7 @@ func (cmd *L7PolicyListCommand) Run(c *cli.Context) error {
 	} else {
 		table := cmd.UI.Table([]string{T("ID"), T("UUID"), T("Name"), T("Action"), T("Redirect"), T("Priority")})
 		for _, l7Policy := range l7Policies {
-			if l7Policy.Action != nil && *l7Policy.Action == "REDIRECT_URL" {
+			if l7Policy.Action != nil && (*l7Policy.Action == "REDIRECT_URL" || *l7Policy.Action == "REDIRECT_HTTPS") {
 				table.Add(utils.FormatIntPointer(l7Policy.Id),
 					utils.FormatStringPointer(l7Policy.Uuid),
 					utils.FormatStringPointer(l7Policy.Name),
