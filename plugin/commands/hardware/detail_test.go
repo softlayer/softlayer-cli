@@ -111,6 +111,13 @@ var _ = Describe("hardware detail", func() {
 											},
 										},
 									},
+									NextInvoiceChildren: []datatypes.Billing_Item{
+										datatypes.Billing_Item{
+											Description:                     sl.String("CentOS 7.x (64 bit)"),
+											CategoryCode:                    sl.String("os"),
+											NextInvoiceTotalRecurringAmount: sl.Float(0.00),
+										},
+									},
 									RecurringFee:                    sl.Float(1000.00),
 									NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
 								},
@@ -193,6 +200,9 @@ var _ = Describe("hardware detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("root"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("password4root"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("CentOS 7.x (64 bit)"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("os"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0.00"))
 			})
 		})
 	})
