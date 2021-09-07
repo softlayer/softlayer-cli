@@ -26,6 +26,7 @@ var (
 	CMD_HARDWARE_REBOOT_NAME            = "reboot"
 	CMD_HARDWARE_RELOAD_NAME            = "reload"
 	CMD_HARDWARE_RESCUE_NAME            = "rescue"
+	CMD_HARDWARE_STORAGE_NAME           = "storage"
 	CMD_HARDWARE_UPDATE_FIRMWARE_NAME   = "update-firmware"
 )
 
@@ -62,6 +63,7 @@ func HardwareMetaData() cli.Command {
 			HardwareUpdateFirmwareMetaData(),
 			HardwareToggleIPMIMetaData(),
 			HardwareBandwidthMetaData(),
+			HardwareStorageMetaData(),
 		},
 	}
 }
@@ -493,6 +495,22 @@ Example::
 				Name:  "q,quite",
 				Usage: T("Only show the summary table."),
 			},
+			OutputFlag(),
+		},
+	}
+}
+
+func HardwareStorageMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_HARDWARE_NAME,
+		Name:        CMD_HARDWARE_STORAGE_NAME,
+		Description: T("Get storage details for a hardware server."),
+		Usage: T(`${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl hardware storage 1234567
+   Get storage details for a hardware server.`),
+		Flags: []cli.Flag{
 			OutputFlag(),
 		},
 	}

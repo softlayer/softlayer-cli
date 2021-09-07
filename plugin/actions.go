@@ -44,7 +44,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	dnsManager := managers.NewDNSManager(session)
 	securityManager := managers.NewSecurityManager(session)
 	ipsecManager := managers.NewIPSECManager(session)
-	
+
 	hardwareManager := managers.NewHardwareServerManager(session)
 	orderManager := managers.NewOrderManager(session)
 	userManager := managers.NewUserManager(session)
@@ -171,6 +171,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_HARDWARE_NAME + "-bandwidth": func(c *cli.Context) error {
 			return hardware.NewBandwidthCommand(ui, hardwareManager).Run(c)
+		},
+		NS_HARDWARE_NAME + "-storage": func(c *cli.Context) error {
+			return hardware.NewStorageCommand(ui, hardwareManager).Run(c)
 		},
 
 		// image - 6
