@@ -22,7 +22,7 @@ const (
 		"networkComponents[id,status,speed,maxSpeed,name,ipmiMacAddress,ipmiIpAddress,macAddress,primaryIpAddress,port," +
 		"primarySubnet[id,netmask,broadcastAddress,networkIdentifier,gateway]],hardwareChassis[id,name],activeTransaction[id,transactionStatus[friendlyName,name]]," +
 		"operatingSystem[softwareLicense[softwareDescription[manufacturer,name,version,referenceCode]],passwords[username,password]]," +
-		"billingItem[id,nextInvoiceTotalRecurringAmount,nextInvoiceChildren[nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
+		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
 		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password]"
 
 	KEY_SIZES      = "sizes"
@@ -70,7 +70,7 @@ type hardwareServerManager struct {
 	OrderService    services.Product_Order
 	LocationService services.Location_Datacenter
 	BillingService  services.Billing_Item
-	Session			    *session.Session
+	Session         *session.Session
 	StorageManager  StorageManager
 }
 
@@ -647,7 +647,6 @@ func (hw hardwareServerManager) ToggleIPMI(hardwareID int, enabled bool) error {
 	_, err := hw.HardwareService.Id(hardwareID).ToggleManagementInterface(&enabled)
 	return err
 }
-
 
 // Finds the MetricTrackingObjectId for a hardware server then calls
 // SoftLayer_Metric_Tracking_Object::getBandwidthData()

@@ -1714,6 +1714,8 @@
 "translation": "前端通訊協定 [預設：HTTP]"},
 {"id": "GUID",
 "translation": "GUID"},
+{"id": "Get billing for a hardware device.",
+"translation": "Get billing for a hardware device."},
 {"id": "Get details about a VLAN",
 "translation": "取得 VLAN 的詳細資料"},
 {"id": "Get details about a security group",

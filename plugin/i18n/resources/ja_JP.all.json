@@ -1714,6 +1714,8 @@
 "translation": "フロントエンド・プロトコル [デフォルト: HTTP]"},
 {"id": "GUID",
 "translation": "GUID"},
+{"id": "Get billing for a hardware device.",
+"translation": "Get billing for a hardware device."},
 {"id": "Get details about a VLAN",
 "translation": "VLAN についての詳細を取得します"},
 {"id": "Get details about a security group",

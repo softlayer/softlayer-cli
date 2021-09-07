@@ -1714,6 +1714,8 @@
 "translation": "백엔드 프로토콜[기본값: HTTP]"},
 {"id": "GUID",
 "translation": "GUID"},
+{"id": "Get billing for a hardware device.",
+"translation": "Get billing for a hardware device."},
 {"id": "Get details about a VLAN",
 "translation": "VLAN에 대한 세부사항 가져오기"},
 {"id": "Get details about a security group",

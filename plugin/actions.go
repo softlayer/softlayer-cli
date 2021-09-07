@@ -44,7 +44,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	dnsManager := managers.NewDNSManager(session)
 	securityManager := managers.NewSecurityManager(session)
 	ipsecManager := managers.NewIPSECManager(session)
-	
+
 	hardwareManager := managers.NewHardwareServerManager(session)
 	orderManager := managers.NewOrderManager(session)
 	userManager := managers.NewUserManager(session)
@@ -120,6 +120,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		//hardware -14
 		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
 			return hardware.NewAuthorizeStorageCommand(ui, hardwareManager).Run(c)
+		},
+		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_BILLING_NAME: func(c *cli.Context) error {
+			return hardware.NewBillingCommand(ui, hardwareManager).Run(c)
 		},
 		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_CANCEL_NAME: func(c *cli.Context) error {
 			return hardware.NewCancelCommand(ui, hardwareManager).Run(c)

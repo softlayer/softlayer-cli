@@ -12,6 +12,7 @@ var (
 
 	//sl-hardware
 	CMD_HARDWARE_AUTHORIZE_STORAGE_NAME = "authorize-storage"
+	CMD_HARDWARE_BILLING_NAME           = "billing"
 	CMD_HARDWARE_CANCEL_NAME            = "cancel"
 	CMD_HARDWARE_CANCEL_REASONS_NAME    = "cancel-reasons"
 	CMD_HARDWARE_CREATE_NAME            = "create"
@@ -45,6 +46,7 @@ func HardwareMetaData() cli.Command {
 		Usage:       "${COMMAND_NAME} sl hardware",
 		Subcommands: []cli.Command{
 			HardwareAuthorizeStorageMetaData(),
+			HardwareBillingMetaData(),
 			HardwareCancelMetaData(),
 			HardwareCancelReasonsMetaData(),
 			HardwareCreateMetaData(),
@@ -81,6 +83,18 @@ EXAMPLE:
 				Name:  "u, username-storage",
 				Usage: T("The storage username to be added to the hardware server."),
 			},
+			OutputFlag(),
+		},
+	}
+}
+
+func HardwareBillingMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_HARDWARE_NAME,
+		Name:        CMD_HARDWARE_BILLING_NAME,
+		Description: T("Get billing for a hardware device."),
+		Usage:       "${COMMAND_NAME} sl hardware billing [OPTIONS] IDENTIFIER",
+		Flags: []cli.Flag{
 			OutputFlag(),
 		},
 	}

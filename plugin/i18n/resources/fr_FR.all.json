@@ -1714,6 +1714,8 @@
 "translation": "Protocole de front end [par défaut : HTTP]"},
 {"id": "GUID",
 "translation": "Identificateur global unique"},
+{"id": "Get billing for a hardware device.",
+"translation": "Get billing for a hardware device."},
 {"id": "Get details about a VLAN",
 "translation": "Obtenir les détails sur un réseau local virtuel"},
 {"id": "Get details about a security group",
