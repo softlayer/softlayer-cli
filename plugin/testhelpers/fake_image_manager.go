@@ -106,14 +106,34 @@ type FakeImageManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+
+	datacenterImagesStub        func(int, []datatypes.Location) (bool, error)
+	datacenterImageMutex       sync.RWMutex
+	datacenterImageArgsForCall []struct {
+		arg1 int
+		arg2 []datatypes.Location
+	}
+	datacenterImageReturns struct {
+		result1 bool
+		result2 error
+	}
+	getStorageDetailsReturnsOnCall map[bool]struct {
+		result1 bool
+		result2 error
+	}
 }
 
 func (fake *FakeImageManager) AddLocation(imageId int, locations []datatypes.Location) (bool, error) {
-	panic("implement me")
+	fake.datacenterImageMutex.Lock()
+	defer fake.datacenterImageMutex.Unlock()
+	fake.datacenterImagesStub = nil
+	return fake.datacenterImageReturns.result1, fake.datacenterImageReturns.result2
 }
 
 func (fake *FakeImageManager) DeleteLocation(imageId int, locations []datatypes.Location) (bool, error) {
-	panic("implement me")
+	fake.datacenterImageMutex.RLock()
+	defer fake.datacenterImageMutex.RUnlock()
+	return fake.datacenterImageReturns.result1, fake.datacenterImageReturns.result2
 }
 
 func (fake *FakeImageManager) DeleteImage(arg1 int) error {

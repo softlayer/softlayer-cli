@@ -181,10 +181,10 @@ func ImageDatacenterMetaData() cli.Command {
 		Category:    CMD_IMAGE_NAME,
 		Name:        CMD_IMG_DATACENTER_NAME,
 		Description: T("Add/Remove datacenter of an image."),
-		Usage: T(`${COMMAND_NAME} sl image datacenter [OPTIONS] 
+		Usage: T(`${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] 
 
 EXAMPLE:
-	${COMMAND_NAME} sl image datacenter --add --remove
+	${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03
 	This command Add/Remove datacenter of an image.`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
@@ -193,7 +193,7 @@ EXAMPLE:
 			},
 			cli.StringFlag{
 				Name:  "remove",
-				Usage: T("To remove Datacenter"),
+				Usage: T("Datacenter to remove"),
 			},
 			OutputFlag(),
 		},

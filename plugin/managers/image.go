@@ -173,10 +173,16 @@ func (i imageManager) EditImage(imageId int, name string, note string, tag strin
 	return succeed, messages
 }
 
+//Add the location of the image
+//imageId: The ID of the image
+//location: location to remove of the image.
 func (i imageManager) AddLocation(imageId int, locations []datatypes.Location) (bool, error) {
 	return i.ImageService.Id(imageId).AddLocations(locations)
 }
 
-func (i imageManager) DeleteLocation(imageId int,locations []datatypes.Location) (bool, error) {
+//Remove the location of the image
+//imageId: The ID of the image
+//location: location to remove of the image.
+func (i imageManager) DeleteLocation(imageId int, locations []datatypes.Location) (bool, error) {
 	return i.ImageService.Id(imageId).RemoveLocations(locations)
 }
