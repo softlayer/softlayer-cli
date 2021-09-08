@@ -112,7 +112,7 @@ var _ = Describe("Load balancer add policies", func() {
 			Expect(err).NotTo(HaveOccurred())
 		})
 		It("REDIRECT_URL", func() {
-			command := "--protocol-uuid uuid-12345 --n test-url -a REDIRECT_URL -r www.test.com"
+			command := "--protocol-uuid uuid-12345 --n test-url -a REDIRECT_URL -r http://example.com"
 			command_args := strings.Fields(command)
 			fakeLBManager.AddL7PolicyReturns(datatypes.Network_LBaaS_LoadBalancer{}, nil)
 			err := testhelpers.RunCommand(cliCommand, command_args...)
