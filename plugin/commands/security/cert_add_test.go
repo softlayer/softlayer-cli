@@ -83,7 +83,7 @@ var _ = Describe("Certificate add", func() {
 			})
 			It("Success all options", func() {
 				err := testhelpers.RunCommand(cliCommand, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--icc",
-										      keyFile.Name(), "--csr", keyFile.Name(), "--notes", "testNotes")
+					keyFile.Name(), "--csr", keyFile.Name(), "--notes", "testNotes")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("SSL certificate for wilma.org was added."))
@@ -93,7 +93,7 @@ var _ = Describe("Certificate add", func() {
 			It("Success JSON output", func() {
 				err := testhelpers.RunCommand(cliCommand, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--output", "JSON")
 				Expect(err).NotTo(HaveOccurred())
-				
+
 				Expect(fakeUI.Outputs()).To(ContainSubstring("\"commonName\": \"wilma.org\""))
 			})
 			It("Handle Bad file CRT", func() {

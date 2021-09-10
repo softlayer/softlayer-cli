@@ -4,12 +4,12 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"testing"
 	"reflect"
+	"testing"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 func TestManagers(t *testing.T) {
@@ -52,7 +52,7 @@ var _ = Describe("Test security.GetCommandActionBindings()", func() {
 			cmdName := cmdName
 			It("ibmcloud sl "+cmdName, func() {
 				command, exists := commands[cmdName]
-				Expect(exists).To(BeTrue(), cmdName + " not found")
+				Expect(exists).To(BeTrue(), cmdName+" not found")
 				// Checks to make sure we actually have a function here.
 				// Test the actual function works in the specific commands test file.
 				Expect(reflect.ValueOf(command).Kind().String()).To(Equal("func"))
@@ -71,7 +71,7 @@ var _ = Describe("Test security.GetCommandActionBindings()", func() {
 		for cmdName, _ := range commands {
 			//necessary to ensure the correct value is passed to the closure
 			cmdName := cmdName
-			It("availableCommands[" +cmdName + "]", func() {
+			It("availableCommands["+cmdName+"]", func() {
 				found := false
 				for _, value := range availableCommands {
 					if value == cmdName {
@@ -79,7 +79,7 @@ var _ = Describe("Test security.GetCommandActionBindings()", func() {
 						break
 					}
 				}
-				Expect(found).To(BeTrue(), cmdName + " needs to be added to availableCommands[] in securty_test.go")			
+				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in securty_test.go")
 			})
 		}
 	})
