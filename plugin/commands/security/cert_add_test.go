@@ -66,8 +66,8 @@ var _ = Describe("Certificate add", func() {
 			})
 		})
 		Context("Certificate added ", func() {
-			crtFile, _ := os.Create("wilma.org.crt")
-			keyFile, _ := os.Create("wilma.org.key")
+			crtFile, _ := os.Create(os.TempDir() + "/wilma1.org.crt")
+			keyFile, _ := os.Create(os.TempDir() + "/wilma1.org.key")
 			BeforeEach(func() {
 				fakeSecurityManager.AddCertificateReturns(datatypes.Security_Certificate{
 					Id:         sl.Int(1234),
@@ -118,8 +118,8 @@ var _ = Describe("Certificate add", func() {
 			})
 		})
 		AfterEach(func() {
-			os.Remove("wilma.org.crt")
-			os.Remove("wilma.org.key")
+			os.Remove(os.TempDir() + "wilma.org.crt")
+			os.Remove(os.TempDir() + "wilma.org.key")
 		})
 		Context("Check bad output format", func() {
 			It("Error", func() {
