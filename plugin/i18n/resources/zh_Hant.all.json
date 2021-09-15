@@ -308,6 +308,8 @@
 "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t附註：一旦提出升級要求，標準基礎架構服務就會自動將實例重新開機。\n  \t實例會先停止，直到升級交易完成。\n  \t不過，若為網路，則不需要重新開機。\n\n範例：\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   這個指令會升級虛擬伺服器實例（其 ID 為12345678），並將 CPU 核心數目設為 8、將記憶體設為 8192M、將網路埠速度設為 1000 Mbps。"},
 {"id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
 "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"},
+{"id": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups.",
+"translation": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups."},
 {"id": "%s is not a valid permission",
 "translation": "%s 不是有效的許可權"},
 {"id": "'{{.Input}}' is required",
@@ -3731,4 +3733,10 @@
 {"id": "{{.ScheduleType}} snapshots have been enabled for volume {{.VolumeID}}.",
 "translation": "已為磁區 {{.VolumeID}} 啟用 {{.ScheduleType}} Snapshot。"},
 {"id": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty",
-"translation": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty"}]
+"translation": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty"},
+{"id": "List Reserved Capacity groups.\n",
+"translation": "List Reserved Capacity groups.\n"},
+{"id": "Capacity",
+"translation": "Capacity"},
+{"id": "Flavor",
+"translation": "Flavor"}]

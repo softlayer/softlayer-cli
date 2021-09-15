@@ -89,6 +89,7 @@ type VirtualServerManager interface {
 	SetNetworkPortSpeed(id int, public bool, portSpeed int) error
 	EditInstance(id int, hostname string, domain string, userdata string, tags string, publicSpeed *int, privateSpeed *int) ([]bool, []string)
 	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
+	CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error)
 }
 
 type virtualServerManager struct {
@@ -100,7 +101,6 @@ type virtualServerManager struct {
 	OrderManager         OrderManager
 	Session			    *session.Session
 	StorageManager       StorageManager
-
 }
 
 func NewVirtualServerManager(session *session.Session) *virtualServerManager {
@@ -1137,4 +1137,15 @@ func (vs virtualServerManager) GetBandwidthData(id int, startDate time.Time, end
 	endTime := datatypes.Time{Time: endDate}
 	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
 	return bandwidthData, err
+}
+
+// Finds the Reserved Capacity groups of Account
+// SoftLayer_Reserved_Capacity_Groups
+func (vs virtualServerManager) CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error) {
+	if mask == "" {
+		mask = "mask[availableInstanceCount, occupiedInstanceCount," +
+			"instances[id, billingItem[description, hourlyRecurringFee]]," +
+			" instanceCount, backendRouter[datacenter]]"
+	}
+	return vs.AccountService.Mask(mask).GetReservedCapacityGroups()
 }

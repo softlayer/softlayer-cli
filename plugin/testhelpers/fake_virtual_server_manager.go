@@ -461,8 +461,29 @@ type FakeVirtualServerManager struct {
 		result1 datatypes.Container_Product_Order
 		result2 error
 	}
+
+	capacityListStub        func(string) (datatypes.Virtual_ReservedCapacityGroup, error)
+	capacityListMutex       sync.RWMutex
+	capacitylistArgsForCall struct {
+		arg1 datatypes.Virtual_ReservedCapacityGroup
+		arg2 error
+	}
+	capacityListReturns struct {
+		result1 datatypes.Virtual_ReservedCapacityGroup
+		result2 error
+	}
+	capacityListReturnsOnCall struct {
+		result1 []datatypes.Virtual_ReservedCapacityGroup
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeVirtualServerManager) CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error) {
+	fake.capacityListMutex.RLock()
+	defer fake.capacityListMutex.RUnlock()
+	return fake.capacityListReturnsOnCall.result1, nil
 }
 
 func (fake *FakeVirtualServerManager) AttachPortableStorage(arg1 int, arg2 int) (datatypes.Provisioning_Version1_Transaction, error) {
