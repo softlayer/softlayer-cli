@@ -308,6 +308,8 @@
 "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONEN]\n\tHinweis: Der klassische Infrastrukturservice startet die Instanz automatisch neu, nach dem eine Upgrade-Anforderung\n  \tgestellt wurde. Die Instanz wird angehalten, bis die Upgrade-Transaktion abgeschlossen ist.\n  \tFür Network ist jedoch kein Warmstart erforderlich.\n\nBEISPIEL:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   Dieser Befehl führt ein Upgrade für die virtuelle Serverinstanz mit der ID 12345678 durch und legt die Anzahl der CPU-Cores auf 8, den Speicher auf 8192 MB und die Übertragungsgeschwindigkeit des Netzports auf 1000 Mbit/s fest."},
 {"id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
 "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"},
+{"id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
+"translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678."},
 {"id": "%s is not a valid permission",
 "translation": "%s ist keine gültige Berechtigung"},
 {"id": "'{{.Input}}' is required",
@@ -3731,4 +3733,8 @@
 {"id": "{{.ScheduleType}} snapshots have been enabled for volume {{.VolumeID}}.",
 "translation": "{{.ScheduleType}}-Snapshots wurden für den Datenträger {{.VolumeID}} aktiviert."},
 {"id": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty",
-"translation": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty"}]
+"translation": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty"},
+{"id": "Get Reserved Capacity Group details.",
+"translation": "Get Reserved Capacity Group details."},
+{"id": "Column to display. Options are: id,hostname,domain,primary_ip,backend_ip]. This option can be specified multiple times",
+"translation": "Column to display. Options are: id,hostname,domain,primary_ip,backend_ip]. This option can be specified multiple times"}]

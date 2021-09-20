@@ -89,6 +89,7 @@ type VirtualServerManager interface {
 	SetNetworkPortSpeed(id int, public bool, portSpeed int) error
 	EditInstance(id int, hostname string, domain string, userdata string, tags string, publicSpeed *int, privateSpeed *int) ([]bool, []string)
 	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
+	GetCapacityDetail(id int) (datatypes.Virtual_ReservedCapacityGroup, error)
 }
 
 type virtualServerManager struct {
@@ -97,6 +98,7 @@ type virtualServerManager struct {
 	PackageService       services.Product_Package
 	OrderService         services.Product_Order
 	DedicatedHostService services.Virtual_DedicatedHost
+	ReservedCapacityService services.Virtual_ReservedCapacityGroup
 	OrderManager         OrderManager
 	Session			    *session.Session
 	StorageManager       StorageManager
@@ -110,6 +112,7 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 		services.GetProductPackageService(session),
 		services.GetProductOrderService(session),
 		services.GetVirtualDedicatedHostService(session),
+		services.GetVirtualReservedCapacityGroupService(session),
 		NewOrderManager(session),
 		session,
 		NewStorageManager(session),
@@ -1137,4 +1140,9 @@ func (vs virtualServerManager) GetBandwidthData(id int, startDate time.Time, end
 	endTime := datatypes.Time{Time: endDate}
 	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
 	return bandwidthData, err
+}
+
+func (vs virtualServerManager) GetCapacityDetail(id int) (datatypes.Virtual_ReservedCapacityGroup, error){
+	mask := "mask[instances[billingItem[item[keyName],category], guest], backendRouter[datacenter]]"
+	return vs.ReservedCapacityService.Mask(mask).Id(id).GetObject()
 }

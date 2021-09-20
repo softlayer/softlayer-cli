@@ -32,6 +32,7 @@ var (
 	CMD_VS_RESUME_NAME            = "resume"
 	CMD_VS_UPGRADE_NAME           = "upgrade"
 	CMD_VS_MIGRATE_NAME           = "migrate"
+	CMD_VS_CAPACITY_DETAIL_NAME   = "capacity-detail"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -56,6 +57,7 @@ func VSMetaData() cli.Command {
 			VSCreateOptionsMetaData(),
 			VSCredentialsMetaData(),
 			VSDetailMetaData(),
+			VSCapacityDetailMetaData(),
 			VSDNSSyncMetaData(),
 			VSEditMetaData(),
 			VSListHostMetaData(),
@@ -851,4 +853,26 @@ Example::
             OutputFlag(),
         },
     }
+}
+
+func VSCapacityDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_CAPACITY_DETAIL_NAME,
+		Description: T("Get Reserved Capacity Group details."),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]
+EXAMPLE:
+   ${COMMAND_NAME} sl vs capacity-details 12345678
+    Get Reserved Capacity Group details with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display. Options are: id,hostname,domain,primary_ip,backend_ip]. This option can be specified multiple times"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+		},
+	}
 }

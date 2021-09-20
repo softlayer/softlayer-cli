@@ -308,6 +308,8 @@
 "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t注: クラシック・インフラストラクチャー・サービスは、アップグレード要求が行われると、インスタンスを自動的にリブートします。\n  \t インスタンスは、アップグレード・トランザクションが完了するまで停止されます。\n  \tただし、ネットワークにはリブートは不要です。\n\n例:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   このコマンドは、ID 12345678 の Virtual Server インスタンスをアップグレードし、CPU コアの数を 8 に、メモリーを 8192 M に、ネットワーク・ポート速度を 1000 Mbps に設定します。"},
 {"id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
 "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"},
+{"id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
+"translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678."},
 {"id": "%s is not a valid permission",
 "translation": "%s は有効な許可ではありません。"},
 {"id": "'{{.Input}}' is required",
@@ -3731,4 +3733,8 @@
 {"id": "{{.ScheduleType}} snapshots have been enabled for volume {{.VolumeID}}.",
 "translation": "{{.ScheduleType}} のスナップショットは、ボリューム {{.VolumeID}} に対して有効化されました。"},
 {"id": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty",
-"translation": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty"}]
+"translation": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty"},
+{"id": "Get Reserved Capacity Group details.",
+"translation": "Get Reserved Capacity Group details."},
+{"id": "Column to display. Options are: id,hostname,domain,primary_ip,backend_ip]. This option can be specified multiple times",
+"translation": "Column to display. Options are: id,hostname,domain,primary_ip,backend_ip]. This option can be specified multiple times"}]
