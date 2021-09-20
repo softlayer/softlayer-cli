@@ -264,7 +264,6 @@ func LoadbalMemberAddMetadata() cli.Command {
 	}
 }
 
-
 func LoadbalMemberDelMetadata() cli.Command {
 	return cli.Command{
 		Category:    NS_LOADBAL_NAME,
@@ -585,7 +584,7 @@ func LoadbalL7PolicyAddMetadata() cli.Command {
 		Category:    NS_LOADBAL_NAME,
 		Name:        CMD_LOADBAL_L7POLICY_ADD_NAME,
 		Description: T("Add a new L7 policy"),
-		Usage:       "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+		Usage:       "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "protocol-uuid",
@@ -597,11 +596,11 @@ func LoadbalL7PolicyAddMetadata() cli.Command {
 			},
 			cli.StringFlag{
 				Name:  "a,action",
-				Usage: T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL"),
+				Usage: T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 			},
 			cli.StringFlag{
 				Name:  "r,redirect",
-				Usage: T("URL or POOL_UUID. It's only available in REDIRECT_POOL | REDIRECT_URL action"),
+				Usage: T("POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action"),
 			},
 			cli.IntFlag{
 				Name:  "p,priority",
