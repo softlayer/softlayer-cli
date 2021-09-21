@@ -198,6 +198,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_IMAGE_NAME + "-" + CMD_IMG_LIST_NAME: func(c *cli.Context) error {
 			return image.NewListCommand(ui, imageManager).Run(c)
 		},
+		NS_IMAGE_NAME + "-" + CMD_IMG_DATACENTER_NAME: func(c *cli.Context) error {
+			return image.NewDatacenterCommand(ui, imageManager).Run(c)
+		},
 
 		//ipsec - 11
 		NS_IPSEC_NAME + "-" + CMD_IPSEC_CONFIG_NAME: func(c *cli.Context) error {

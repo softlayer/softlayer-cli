@@ -16,6 +16,7 @@ var (
 	CMD_IMG_EXPORT_NAME = "export"
 	CMD_IMG_IMPORT_NAME = "import"
 	CMD_IMG_LIST_NAME   = "list"
+	CMD_IMG_DATACENTER_NAME = "datacenter"
 )
 
 func ImageNamespace() plugin.Namespace {
@@ -39,6 +40,7 @@ func ImageMetaData() cli.Command {
 			ImageExportMetaData(),
 			ImageImportMetaData(),
 			ImageListMetaData(),
+			ImageDatacenterMetaData(),
 		},
 	}
 }
@@ -168,6 +170,30 @@ EXAMPLE:
 			cli.BoolFlag{
 				Name:  "private",
 				Usage: T("Display only private images"),
+			},
+			OutputFlag(),
+		},
+	}
+}
+
+func ImageDatacenterMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_IMAGE_NAME,
+		Name:        CMD_IMG_DATACENTER_NAME,
+		Description: T("Add/Remove datacenter of an image."),
+		Usage: T(`${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] 
+
+EXAMPLE:
+	${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03
+	This command Add/Remove datacenter of an image.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "add",
+				Usage: T("To add Datacenter"),
+			},
+			cli.StringFlag{
+				Name:  "remove",
+				Usage: T("Datacenter to remove"),
 			},
 			OutputFlag(),
 		},
