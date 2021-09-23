@@ -3,7 +3,6 @@ package managers
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"math"
 	"os"
@@ -1170,8 +1169,6 @@ func (vs virtualServerManager) GetLocalDisks(id int) ([]datatypes.Virtual_Guest_
 //int id: Id of the virtual server
 //nas_type: storage type.
 func (vs virtualServerManager) GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error) {
-	fmt.Println(id)
-	fmt.Println(nasType)
 	mask := "mask[id,username,capacityGb,notes,serviceResourceBackendIpAddress,allowedVirtualGuests[id,datacenter]]"
 	return vs.VirtualGuestService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
 }
