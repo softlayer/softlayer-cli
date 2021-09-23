@@ -107,8 +107,8 @@ var _ = Describe("virtual storage", func() {
 						Username:                        sl.String("SL02SEL1234567-20"),
 						CapacityGb:                      sl.Int(16000),
 						ServiceResourceBackendIpAddress: sl.String("10.10.10.10"),
-						AllowedHardware: []datatypes.Hardware{
-							datatypes.Hardware{
+						AllowedVirtualGuests: []datatypes.Virtual_Guest{
+							datatypes.Virtual_Guest{
 								Datacenter: &datatypes.Location{
 									LongName: sl.String("Dallas 10"),
 								},
@@ -180,8 +180,9 @@ var _ = Describe("virtual storage", func() {
 						MountType: sl.String("Disk"),
 						Device:    sl.String("1"),
 						DiskImage: &datatypes.Virtual_Disk_Image{
-							Capacity: sl.Int(100),
-							Units:    sl.String("GB"),
+							Capacity:    sl.Int(100),
+							Units:       sl.String("GB"),
+							Description: sl.String("Tes description SWAP"),
 						},
 					},
 				}, nil)

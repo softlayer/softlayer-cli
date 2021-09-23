@@ -104,7 +104,7 @@ func (cmd *StorageCommand) Run(c *cli.Context) error {
 	for _, portable := range portableStorage {
 		tablePortableStorage.Add(
 			*portable.Description,
-			fmt.Sprintf("%d", portable.Capacity),
+			utils.FormatIntPointer(portable.Capacity),
 			*portable.BillingItem.Location.LongName)
 	}
 	tablePortableStorage.Print()
