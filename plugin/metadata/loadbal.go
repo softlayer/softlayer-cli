@@ -35,6 +35,7 @@ var (
 
 	//policies list can be found in protocol details
 	CMD_LOADBAL_L7POLICY_ADD_NAME    = "l7policy-add" //add policy to a protocol
+	CMD_LOADBAL_L7POLICY_EDIT_NAME   = "l7policy-edit"
 	CMD_LOADBAL_L7POLICY_DELETE_NAME = "l7policy-delete"
 	CMD_LOADBAL_L7POLICY_LIST_NAME   = "l7policies"
 
@@ -77,6 +78,7 @@ func LoadbalMetaData() cli.Command {
 			LoadbalL7MemberAddMetadata(),
 			LoadbalL7MemberDeleteMetadata(),
 			LoadbalL7PolicyAddMetadata(),
+			LoadbalL7PolicyEditMetadata(),
 			LoadbalL7PolicyDeleteMetadata(),
 			LoadbalL7PolicyListMetadata(),
 			LoadbalL7RuleAddMetadata(),
@@ -589,6 +591,38 @@ func LoadbalL7PolicyAddMetadata() cli.Command {
 			cli.StringFlag{
 				Name:  "protocol-uuid",
 				Usage: T("UUID for the load balancer protocol [required]"),
+			},
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Policy name"),
+			},
+			cli.StringFlag{
+				Name:  "a,action",
+				Usage: T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
+			},
+			cli.StringFlag{
+				Name:  "r,redirect",
+				Usage: T("POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action"),
+			},
+			cli.IntFlag{
+				Name:  "p,priority",
+				Usage: T("Policy priority"),
+				Value: 1,
+			},
+		},
+	}
+}
+
+func LoadbalL7PolicyEditMetadata() cli.Command {
+	return cli.Command{
+		Category:    NS_LOADBAL_NAME,
+		Name:        CMD_LOADBAL_L7POLICY_EDIT_NAME,
+		Description: T("Edit a L7 policy"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "policy-id",
+				Usage: T("ID for the load balancer policy [required]"),
 			},
 			cli.StringFlag{
 				Name:  "n,name",
