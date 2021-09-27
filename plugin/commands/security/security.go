@@ -46,37 +46,6 @@ func GetCommandActionBindings(ui terminal.UI, session *session.Session) map[stri
 		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_LIST_NAME: func(c *cli.Context) error {
 			return NewCertListCommand(ui, securityManager).Run(c)
 		},
-		// Aliases to match slcli
-		"ssl-add": func(c *cli.Context) error {
-			return NewCertAddCommand(ui, securityManager).Run(c)
-		},
-		"ssl-edit": func(c *cli.Context) error {
-			return NewCertEditCommand(ui, securityManager).Run(c)
-		},
-		"ssl-download": func(c *cli.Context) error {
-			return NewCertDownloadCommand(ui, securityManager).Run(c)
-		},
-		"ssl-remove": func(c *cli.Context) error {
-			return NewCertRemoveCommand(ui, securityManager).Run(c)
-		},
-		"ssl-list": func(c *cli.Context) error {
-			return NewCertListCommand(ui, securityManager).Run(c)
-		},
-		"sshkey-add": func(c *cli.Context) error {
-			return NewKeyAddCommand(ui, securityManager).Run(c)
-		},
-		"sshkey-edit": func(c *cli.Context) error {
-			return NewKeyEditCommand(ui, securityManager).Run(c)
-		},
-		"sshkey-list": func(c *cli.Context) error {
-			return NewKeyListCommand(ui, securityManager).Run(c)
-		},
-		"sshkey-print": func(c *cli.Context) error {
-			return NewKeyPrintCommand(ui, securityManager).Run(c)
-		},
-		"sshkey-remove": func(c *cli.Context) error {
-			return NewKeyRemoveCommand(ui, securityManager).Run(c)
-		},
 	}
 
 	return CommandActionBindings

@@ -19,21 +19,11 @@ func TestManagers(t *testing.T) {
 
 // These are all the commands in security.go
 var availableCommands = []string{
-	"ssl-add",
-	"ssl-edit",
-	"ssl-list",
-	"ssl-remove",
 	"security-sshkey-list",
-	"sshkey-add",
-	"sshkey-print",
 	"security-cert-download",
 	"security-cert-remove",
-	"ssl-download",
 	"security-sshkey-add",
 	"security-sshkey-print",
-	"sshkey-edit",
-	"sshkey-remove",
-	"sshkey-list",
 	"security-cert-add",
 	"security-cert-edit",
 	"security-cert-list",
