@@ -27,7 +27,7 @@ func SecurityNamespace() plugin.Namespace {
 	return plugin.Namespace{
 		ParentName:  NS_SL_NAME,
 		Name:        NS_SECURITY_NAME,
-		Aliases:		 []string{"ssl", "sshkey"},
+		Aliases:     []string{"ssl", "sshkey"},
 		Description: T("Classic infrastructure SSH Keys and SSL Certificates"),
 	}
 }
@@ -36,7 +36,7 @@ func SecurityMetaData() cli.Command {
 	return cli.Command{
 		Category:    NS_SL_NAME,
 		Name:        CMD_SECURITY_NAME,
-		Aliases:		 []string{"ssl", "sshkey"},
+		Aliases:     []string{"ssl", "sshkey"},
 		Description: T("Classic infrastructure SSH Keys and SSL Certificates"),
 		Usage:       "${COMMAND_NAME} sl security",
 		Subcommands: []cli.Command{
