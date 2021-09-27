@@ -89,6 +89,9 @@ type VirtualServerManager interface {
 	SetNetworkPortSpeed(id int, public bool, portSpeed int) error
 	EditInstance(id int, hostname string, domain string, userdata string, tags string, publicSpeed *int, privateSpeed *int) ([]bool, []string)
 	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
+	GetRouters(packageName string) ([]datatypes.Location_Region, error)
+	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
+	GetPods() ([]datatypes.Network_Pod, error)
 }
 
 type virtualServerManager struct {
@@ -98,6 +101,7 @@ type virtualServerManager struct {
 	OrderService         services.Product_Order
 	DedicatedHostService services.Virtual_DedicatedHost
 	OrderManager         OrderManager
+	PodService services.Network_Pod
 	Session			    *session.Session
 	StorageManager       StorageManager
 
@@ -111,6 +115,7 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 		services.GetProductOrderService(session),
 		services.GetVirtualDedicatedHostService(session),
 		NewOrderManager(session),
+		services.GetNetworkPodService(session),
 		session,
 		NewStorageManager(session),
 	}
@@ -1137,4 +1142,31 @@ func (vs virtualServerManager) GetBandwidthData(id int, startDate time.Time, end
 	endTime := datatypes.Time{Time: endDate}
 	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
 	return bandwidthData, err
+}
+
+//Pulls down all backendRouterIds that are available
+//A list of locations where product_package
+func (vs virtualServerManager) GetRouters(packageName string) ([]datatypes.Location_Region, error) {
+	productPackage, err := vs.OrderManager.GetPackageByKey(packageName, "mask[id,locations]")
+	if err != nil {
+		return nil, err
+	}
+	regions, err := vs.PackageService.Id(*productPackage.Id).GetRegions()
+	return regions,err
+}
+
+//List available reserved capacity plans
+func (vs virtualServerManager) GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error) {
+	productPackage, err := vs.OrderManager.GetPackageByKey(packageName, "mask[id,locations]")
+	if err != nil {
+		return nil, err
+	}
+	items, err := vs.PackageService.Id(*productPackage.Id).GetItems()
+	return items,err
+}
+
+//Get the pod details, which contains the router id
+func (vs virtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
+	pods, err := vs.PodService.GetAllObjects()
+	return pods,err
 }

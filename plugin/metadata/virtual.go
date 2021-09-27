@@ -10,28 +10,29 @@ var (
 	NS_VIRTUAL_NAME  = "vs"
 	CMD_VIRTUAL_NAME = "vs"
 
-	CMD_VS_AUTHORIZE_STORAGE_NAME = "authorize-storage"
-	CMD_VS_CANCEL_NAME            = "cancel"
-	CMD_VS_CAPTURE_NAME           = "capture"
-	CMD_VS_CREATE_NAME            = "create"
-	CMD_VS_CREATE_HOST_NAME       = "host-create"
-	CMD_VS_CREATE_OPTIONS_NAME    = "options"
-	CMD_VS_CREDENTIALS_NAME       = "credentials"
-	CMD_VS_DETAIL_NAME            = "detail"
-	CMD_VS_DNS_SYNC_NAME          = "dns-sync"
-	CMD_VS_EDIT_NAME              = "edit"
-	CMD_VS_LIST_NAME              = "list"
-	CMD_VS_LIST_HOST_NAME         = "host-list"
-	CMD_VS_PAUSE_NAME             = "pause"
-	CMD_VS_POWER_OFF_NAME         = "power-off"
-	CMD_VS_POWER_ON_NAME          = "power-on"
-	CMD_VS_READY_NAME             = "ready"
-	CMD_VS_REBOOT_NAME            = "reboot"
-	CMD_VS_RELOAD_NAME            = "reload"
-	CMD_VS_RESCUE_NAME            = "rescue"
-	CMD_VS_RESUME_NAME            = "resume"
-	CMD_VS_UPGRADE_NAME           = "upgrade"
-	CMD_VS_MIGRATE_NAME           = "migrate"
+	CMD_VS_AUTHORIZE_STORAGE_NAME  = "authorize-storage"
+	CMD_VS_CANCEL_NAME             = "cancel"
+	CMD_VS_CAPTURE_NAME            = "capture"
+	CMD_VS_CREATE_NAME             = "create"
+	CMD_VS_CREATE_HOST_NAME        = "host-create"
+	CMD_VS_CREATE_OPTIONS_NAME     = "options"
+	CMD_VS_CREDENTIALS_NAME        = "credentials"
+	CMD_VS_DETAIL_NAME             = "detail"
+	CMD_VS_DNS_SYNC_NAME           = "dns-sync"
+	CMD_VS_EDIT_NAME               = "edit"
+	CMD_VS_LIST_NAME               = "list"
+	CMD_VS_LIST_HOST_NAME          = "host-list"
+	CMD_VS_PAUSE_NAME              = "pause"
+	CMD_VS_POWER_OFF_NAME          = "power-off"
+	CMD_VS_POWER_ON_NAME           = "power-on"
+	CMD_VS_READY_NAME              = "ready"
+	CMD_VS_REBOOT_NAME             = "reboot"
+	CMD_VS_RELOAD_NAME             = "reload"
+	CMD_VS_RESCUE_NAME             = "rescue"
+	CMD_VS_RESUME_NAME             = "resume"
+	CMD_VS_UPGRADE_NAME            = "upgrade"
+	CMD_VS_MIGRATE_NAME            = "migrate"
+	CMD_VS_CAPACITY_CREATE_OPTIONS = "capacity-create-options"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -72,6 +73,7 @@ func VSMetaData() cli.Command {
 			VSUpgradeMetaData(),
 			VSAuthorizeStorageMetaData(),
 			VSBandwidthMetaData(),
+			VSCapacityCreateOptionsMetadata(),
 		},
 	}
 }
@@ -851,4 +853,19 @@ Example::
             OutputFlag(),
         },
     }
+}
+func VSCapacityCreateOptionsMetadata() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_CAPACITY_CREATE_OPTIONS,
+		Description: T("List options for creating Reserved Capacity Group instance"),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-create-options
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs options
+   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
+	}
 }
