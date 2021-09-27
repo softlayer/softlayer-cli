@@ -53,6 +53,7 @@ type LoadBalancerManager interface {
 	//policies
 	AddL7Policy(listenerUuid *string, policiesRules datatypes.Network_LBaaS_PolicyRule) (datatypes.Network_LBaaS_LoadBalancer, error)
 	GetL7Policies(protocolId int) ([]datatypes.Network_LBaaS_L7Policy, error)
+	GetL7Policy(policyId int) (datatypes.Network_LBaaS_L7Policy, error)
 	DeleteL7Policy(policy int) (datatypes.Network_LBaaS_LoadBalancer, error)
 	EditL7Policy(policy int, templateObject *datatypes.Network_LBaaS_L7Policy) (datatypes.Network_LBaaS_LoadBalancer, error)
 
@@ -176,6 +177,10 @@ func (l loadBalancerManager) AddL7Policy(listenerUuid *string, policiesRules dat
 
 func (l loadBalancerManager) GetL7Policies(protocolId int) ([]datatypes.Network_LBaaS_L7Policy, error) {
 	return l.LoadBalancerListenerService.Id(protocolId).GetL7Policies()
+}
+
+func (l loadBalancerManager) GetL7Policy(policyId int) (datatypes.Network_LBaaS_L7Policy, error) {
+	return l.LoadBalancerL7PolicyService.Id(policyId).GetObject()
 }
 
 func (l loadBalancerManager) DeleteL7Policy(policy int) (datatypes.Network_LBaaS_LoadBalancer, error) {
