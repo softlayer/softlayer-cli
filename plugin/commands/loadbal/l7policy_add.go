@@ -11,6 +11,14 @@ import (
 	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
+)
+
+const (
+	REJECT         = "REJECT"
+	REDIRECT_POOL  = "REDIRECT_POOL"
+	REDIRECT_URL   = "REDIRECT_URL"
+	REDIRECT_HTTPS = "REDIRECT_HTTPS"
 )
 
 type L7PolicyAddCommand struct {
@@ -26,47 +34,57 @@ func NewL7PolicyAddCommand(ui terminal.UI, lbManager managers.LoadBalancerManage
 }
 
 func (cmd *L7PolicyAddCommand) Run(c *cli.Context) error {
+
 	policyUUID := c.String("protocol-uuid")
-	if policyUUID == "" {
+	if utils.IsEmptyString(policyUUID) {
 		return errors.NewMissingInputError("--protocol-uuid")
 	}
 
 	name := c.String("n")
-	if name == "" {
+	if utils.IsEmptyString(name) {
 		return bxErr.NewMissingInputError("-n, --name")
 	}
 
 	action := c.String("a")
-	if action == "" {
+	if utils.IsEmptyString(action) {
 		return bxErr.NewMissingInputError("-a, --action")
 	}
 	actionUpperCase := strings.ToUpper(action)
 
-	if actionUpperCase != "REJECT" && actionUpperCase != "REDIRECT_POOL" && actionUpperCase != "REDIRECT_URL" {
-		return bxErr.NewInvalidUsageError(T("-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL"))
+	if !IsValidAction(actionUpperCase) {
+		return bxErr.NewInvalidUsageError(
+			T("-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
+		)
 	}
 
 	redirect := c.String("r")
-	if redirect != "" && actionUpperCase == "REJECT" {
-		return bxErr.NewInvalidUsageError(T("-r, --redirect is only available with action REDIRECT_POOL | REDIRECT_URL"))
+	if !utils.IsEmptyString(redirect) && actionUpperCase == REJECT {
+		return bxErr.NewInvalidUsageError(
+			T("-r, --redirect is only available with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
+		)
 	}
 
-	if (actionUpperCase == "REDIRECT_POOL" || actionUpperCase == "REDIRECT_URL") && redirect == "" {
-		return bxErr.NewInvalidUsageError(T("-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL"))
+	if IsValidAction(actionUpperCase) && utils.IsEmptyString(redirect) && actionUpperCase != REJECT {
+		return bxErr.NewInvalidUsageError(
+			T("-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
+		)
 	}
 
 	priority := c.Int("p")
 
 	policy := datatypes.Network_LBaaS_L7Policy{
-		Name:     &name,
-		Action:   &actionUpperCase,
-		Priority: &priority,
+		Name:   &name,
+		Action: &actionUpperCase,
 	}
 
-	if strings.ToUpper(actionUpperCase) == "REDIRECT_POOL" {
+	if actionUpperCase != REDIRECT_HTTPS {
+		policy.Priority = &priority
+	}
+
+	if actionUpperCase == REDIRECT_POOL {
 		policy.RedirectL7PoolUuid = &redirect
 	}
-	if strings.ToUpper(actionUpperCase) == "REDIRECT_URL" {
+	if actionUpperCase == REDIRECT_URL || actionUpperCase == REDIRECT_HTTPS {
 		policy.RedirectUrl = &redirect
 	}
 
@@ -82,4 +100,12 @@ func (cmd *L7PolicyAddCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 policy added"))
 	return nil
+}
+
+func IsValidAction(action string) bool {
+	switch action {
+	case REJECT, REDIRECT_URL, REDIRECT_POOL, REDIRECT_HTTPS:
+		return true
+	}
+	return false
 }

@@ -22,7 +22,8 @@ import (
 )
 
 const (
-	EMPTY_VALUE = "-"
+	EMPTY_VALUE  = "-"
+	EMPTY_STRING = ""
 )
 
 //TODO support resolving guid to integer id
@@ -38,10 +39,10 @@ func ResolveImageId(session *session.Session, id int) (string, error) {
 	service := services.GetVirtualGuestBlockDeviceTemplateGroupService(session)
 	image, err := service.Id(id).GetObject()
 	if err != nil {
-		return "", err
+		return EMPTY_STRING, err
 	}
 	if image.GlobalIdentifier == nil {
-		return "", errors.New(T("Image global identifier not found"))
+		return EMPTY_STRING, errors.New(T("Image global identifier not found"))
 	}
 	return *image.GlobalIdentifier, nil
 }
@@ -72,14 +73,14 @@ func ResolveGloablIPId(identifier string) (int, error) {
 
 func StringSliceToString(slice []string) string {
 	if len(slice) == 0 {
-		return ""
+		return EMPTY_STRING
 	}
 	return strings.Trim(strings.Replace(fmt.Sprint(slice), " ", ",", -1), "[]")
 }
 
 func IntSliceToString(slice []int) string {
 	if len(slice) == 0 {
-		return ""
+		return EMPTY_STRING
 	}
 	return strings.Trim(strings.Replace(fmt.Sprint(slice), " ", ",", -1), "[]")
 }
@@ -191,7 +192,7 @@ func FormatStringPointer(value *string) string {
 
 func FormatStringPointerName(value *string) string {
 	if value == nil {
-		return ""
+		return EMPTY_STRING
 	}
 	return sl.Get(value).(string)
 }
@@ -205,7 +206,7 @@ func FormatIntPointer(value *int) string {
 
 func FormatIntPointerName(value *int) string {
 	if value == nil {
-		return ""
+		return EMPTY_STRING
 	}
 	return strconv.Itoa(sl.Get(value).(int))
 }
@@ -254,7 +255,7 @@ func ReplaceUIntPointerValue(value *uint, newValue string) string {
 }
 
 func ValidateColumns(sortby string, columns []string, defaultColumns []string, optionalColumns, sortColumns []string, context *cli.Context) ([]string, error) {
-	if sortby != "" && StringInSlice(sortby, sortColumns) == -1 {
+	if sortby != EMPTY_STRING && StringInSlice(sortby, sortColumns) == -1 {
 		return nil, bmxErr.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 	allColumns := append(defaultColumns, optionalColumns...)
@@ -273,7 +274,7 @@ func ValidateColumns(sortby string, columns []string, defaultColumns []string, o
 
 func GetMask(maskMap map[string]string, columns []string, sortBy string) string {
 
-	if sortBy != "" && StringInSlice(sortBy, columns) == -1 {
+	if sortBy != EMPTY_STRING && StringInSlice(sortBy, columns) == -1 {
 		columns = append(columns, sortBy)
 	}
 
@@ -298,7 +299,7 @@ func FailWithError(message string, ui terminal.UI) error {
 	ui.Print(terminal.FailureColor(T("FAILED")))
 	msg := fmt.Sprintf("%s\n", message)
 	ui.Print(msg)
-	return cli.NewExitError("", 1)
+	return cli.NewExitError(EMPTY_STRING, 1)
 }
 
 func StructToMap(struc Access) (map[string]string, error) {
@@ -323,7 +324,7 @@ func UIntPointertoUInt(value *uint) uint {
 }
 func StringPointertoString(value *string) string {
 	if value == nil {
-		return ""
+		return EMPTY_STRING
 	}
 	return *value
 }
@@ -338,4 +339,7 @@ func BoolPointertoBool(value *bool) bool {
 		return false
 	}
 	return *value
+}
+func IsEmptyString(value string) bool {
+	return value == EMPTY_STRING
 }

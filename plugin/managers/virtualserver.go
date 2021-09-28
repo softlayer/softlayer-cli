@@ -89,6 +89,10 @@ type VirtualServerManager interface {
 	SetNetworkPortSpeed(id int, public bool, portSpeed int) error
 	EditInstance(id int, hostname string, domain string, userdata string, tags string, publicSpeed *int, privateSpeed *int) ([]bool, []string)
 	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
+	GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error)
+	GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error)
+	GetPortableStorage(id int) ([]datatypes.Virtual_Disk_Image, error)
+	GetLocalDisks(id int) ([]datatypes.Virtual_Guest_Block_Device, error)
 	CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error)
 }
 
@@ -99,7 +103,7 @@ type virtualServerManager struct {
 	OrderService         services.Product_Order
 	DedicatedHostService services.Virtual_DedicatedHost
 	OrderManager         OrderManager
-	Session			    *session.Session
+	Session              *session.Session
 	StorageManager       StorageManager
 }
 
@@ -1138,6 +1142,38 @@ func (vs virtualServerManager) GetBandwidthData(id int, startDate time.Time, end
 	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
 	return bandwidthData, err
 }
+
+//Returns the virtual server storage credentials.
+//int id: Id of the virtual server
+func (vs virtualServerManager) GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error) {
+	mask := "mask[credential]"
+	return vs.VirtualGuestService.Id(id).Mask(mask).GetAllowedHost()
+}
+
+//Returns the virtual server portable storage.
+//int id: Id of the virtual server
+func (vs virtualServerManager) GetPortableStorage(id int) ([]datatypes.Virtual_Disk_Image, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("portableStorageVolumes.blockDevices.guest.id").Eq(id))
+	mask := "mask[billingItem[location]]"
+	return vs.AccountService.Mask(mask).Filter(filters.Build()).GetPortableStorageVolumes()
+}
+
+//Returns the virtual server local disks.
+//int id: Id of the virtual server
+func (vs virtualServerManager) GetLocalDisks(id int) ([]datatypes.Virtual_Guest_Block_Device, error) {
+	mask := "mask[diskImage]"
+	return vs.VirtualGuestService.Id(id).Mask(mask).GetBlockDevices()
+}
+
+//Returns the virtual server attached network storage.
+//int id: Id of the virtual server
+//nas_type: storage type.
+func (vs virtualServerManager) GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error) {
+	mask := "mask[id,username,capacityGb,notes,serviceResourceBackendIpAddress,allowedVirtualGuests[id,datacenter]]"
+	return vs.VirtualGuestService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
+}
+
 
 // Finds the Reserved Capacity groups of Account
 // SoftLayer_Reserved_Capacity_Groups

@@ -39,6 +39,59 @@ type FakeVirtualServerManager struct {
 		result1 bool
 		result2 error
 	}
+	GetStorageDetailsStub        func(int, string) ([]datatypes.Network_Storage, error)
+	getStorageDetailsMutex       sync.RWMutex
+	getStorageDetailsArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getStorageDetailsReturns struct {
+		result1 []datatypes.Network_Storage
+		result2 error
+	}
+	getStorageDetailsReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Storage
+		result2 error
+	}
+	GetStorageCredentialsStub        func(int) (datatypes.Network_Storage_Allowed_Host, error)
+	getStorageCredentialsMutex       sync.RWMutex
+	getStorageCredentialsArgsForCall []struct {
+		arg1 int
+	}
+	getStorageCredentialsReturns struct {
+		result1 datatypes.Network_Storage_Allowed_Host
+		result2 error
+	}
+	getStorageCredentialsReturnsOnCall map[int]struct {
+		result1 datatypes.Network_Storage_Allowed_Host
+		result2 error
+	}
+	GetPortableStorageStub        func(int) ([]datatypes.Virtual_Disk_Image, error)
+	getPortableStorageMutex       sync.RWMutex
+	getPortableStorageArgsForCall []struct {
+		arg1 int
+	}
+	getPortableStorageReturns struct {
+		result1 []datatypes.Virtual_Disk_Image
+		result2 error
+	}
+	getPortableStorageReturnsOnCall map[int]struct {
+		result1 []datatypes.Virtual_Disk_Image
+		result2 error
+	}
+	GetLocalDisksStub        func(int) ([]datatypes.Virtual_Guest_Block_Device, error)
+	getLocalDisksMutex       sync.RWMutex
+	getLocalDisksArgsForCall []struct {
+		arg1 int
+	}
+	getLocalDisksReturns struct {
+		result1 []datatypes.Virtual_Guest_Block_Device
+		result2 error
+	}
+	getLocalDisksReturnsOnCall map[int]struct {
+		result1 []datatypes.Virtual_Guest_Block_Device
+		result2 error
+	}
 	CancelInstanceStub        func(int) error
 	cancelInstanceMutex       sync.RWMutex
 	cancelInstanceArgsForCall []struct {
@@ -610,6 +663,259 @@ func (fake *FakeVirtualServerManager) AuthorizeStorageReturnsOnCall(i int, resul
 	}
 	fake.authorizeStorageReturnsOnCall[i] = struct {
 		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetStorageDetails(arg1 int, arg2 string) ([]datatypes.Network_Storage, error) {
+	fake.getStorageDetailsMutex.Lock()
+	ret, specificReturn := fake.getStorageDetailsReturnsOnCall[len(fake.getStorageDetailsArgsForCall)]
+	fake.getStorageDetailsArgsForCall = append(fake.getStorageDetailsArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	fake.recordInvocation("GetStorageDetails", []interface{}{arg1, arg2})
+	fake.getStorageDetailsMutex.Unlock()
+	if fake.GetStorageDetailsStub != nil {
+		return fake.GetStorageDetailsStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getStorageDetailsReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetStorageDetailsCallCount() int {
+	fake.getStorageDetailsMutex.RLock()
+	defer fake.getStorageDetailsMutex.RUnlock()
+	return len(fake.getStorageDetailsArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetStorageDetailsCalls(stub func(int, string) ([]datatypes.Network_Storage, error)) {
+	fake.getStorageDetailsMutex.Lock()
+	defer fake.getStorageDetailsMutex.Unlock()
+	fake.GetStorageDetailsStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetStorageDetailsArgsForCall(i int) (int, string) {
+	fake.getStorageDetailsMutex.RLock()
+	defer fake.getStorageDetailsMutex.RUnlock()
+	argsForCall := fake.getStorageDetailsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) GetStorageDetailsReturns(result1 []datatypes.Network_Storage, result2 error) {
+	fake.getStorageDetailsMutex.Lock()
+	defer fake.getStorageDetailsMutex.Unlock()
+	fake.GetStorageDetailsStub = nil
+	fake.getStorageDetailsReturns = struct {
+		result1 []datatypes.Network_Storage
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetStorageDetailsReturnsOnCall(i int, result1 []datatypes.Network_Storage, result2 error) {
+	fake.getStorageDetailsMutex.Lock()
+	defer fake.getStorageDetailsMutex.Unlock()
+	fake.GetStorageDetailsStub = nil
+	if fake.getStorageDetailsReturnsOnCall == nil {
+		fake.getStorageDetailsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Storage
+			result2 error
+		})
+	}
+	fake.getStorageDetailsReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Storage
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetStorageCredentials(arg1 int) (datatypes.Network_Storage_Allowed_Host, error) {
+	fake.getStorageCredentialsMutex.Lock()
+	ret, specificReturn := fake.getStorageCredentialsReturnsOnCall[len(fake.getStorageCredentialsArgsForCall)]
+	fake.getStorageCredentialsArgsForCall = append(fake.getStorageCredentialsArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("GetStorageCredentials", []interface{}{arg1})
+	fake.getStorageCredentialsMutex.Unlock()
+	if fake.AuthorizeStorageStub != nil {
+		return fake.GetStorageCredentialsStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getStorageCredentialsReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetStorageCredentialsCallCount() int {
+	fake.getStorageCredentialsMutex.RLock()
+	defer fake.getStorageCredentialsMutex.RUnlock()
+	return len(fake.getStorageCredentialsArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetStorageCredentialsCalls(stub func(int) (datatypes.Network_Storage_Allowed_Host, error)) {
+	fake.getStorageCredentialsMutex.Lock()
+	defer fake.getStorageCredentialsMutex.Unlock()
+	fake.GetStorageCredentialsStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetStorageCredentialsArgsForCall(i int) int {
+	fake.getStorageCredentialsMutex.RLock()
+	defer fake.getStorageCredentialsMutex.RUnlock()
+	argsForCall := fake.getStorageCredentialsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) GetStorageCredentialsReturns(result1 datatypes.Network_Storage_Allowed_Host, result2 error) {
+	fake.getStorageCredentialsMutex.Lock()
+	defer fake.getStorageCredentialsMutex.Unlock()
+	fake.GetStorageCredentialsStub = nil
+	fake.getStorageCredentialsReturns = struct {
+		result1 datatypes.Network_Storage_Allowed_Host
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetStorageCredentialsReturnsOnCall(i int, result1 datatypes.Network_Storage_Allowed_Host, result2 error) {
+	fake.getStorageCredentialsMutex.Lock()
+	defer fake.getStorageCredentialsMutex.Unlock()
+	fake.GetStorageCredentialsStub = nil
+	if fake.getStorageCredentialsReturnsOnCall == nil {
+		fake.getStorageCredentialsReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_Storage_Allowed_Host
+			result2 error
+		})
+	}
+	fake.getStorageCredentialsReturnsOnCall[i] = struct {
+		result1 datatypes.Network_Storage_Allowed_Host
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetPortableStorage(arg1 int) ([]datatypes.Virtual_Disk_Image, error) {
+	fake.getPortableStorageMutex.Lock()
+	ret, specificReturn := fake.getPortableStorageReturnsOnCall[len(fake.getPortableStorageArgsForCall)]
+	fake.getPortableStorageArgsForCall = append(fake.getPortableStorageArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("GetPortableStorage", []interface{}{arg1})
+	fake.getPortableStorageMutex.Unlock()
+	if fake.GetPortableStorageStub != nil {
+		return fake.GetPortableStorageStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getPortableStorageReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetPortableStorageCallCount() int {
+	fake.getPortableStorageMutex.RLock()
+	defer fake.getPortableStorageMutex.RUnlock()
+	return len(fake.getPortableStorageArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetPortableStorageCalls(stub func(int) ([]datatypes.Virtual_Disk_Image, error)) {
+	fake.getPortableStorageMutex.Lock()
+	defer fake.getPortableStorageMutex.Unlock()
+	fake.GetPortableStorageStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetPortableStorageArgsForCall(i int) int {
+	fake.getPortableStorageMutex.RLock()
+	defer fake.getPortableStorageMutex.RUnlock()
+	argsForCall := fake.getPortableStorageArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) GetPortableStorageReturns(result1 []datatypes.Virtual_Disk_Image, result2 error) {
+	fake.getPortableStorageMutex.Lock()
+	defer fake.getPortableStorageMutex.Unlock()
+	fake.GetPortableStorageStub = nil
+	fake.getPortableStorageReturns = struct {
+		result1 []datatypes.Virtual_Disk_Image
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetPortableStorageReturnsOnCall(i int, result1 []datatypes.Virtual_Disk_Image, result2 error) {
+	fake.getPortableStorageMutex.Lock()
+	defer fake.getPortableStorageMutex.Unlock()
+	fake.GetPortableStorageStub = nil
+	if fake.getPortableStorageReturnsOnCall == nil {
+		fake.getPortableStorageReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Virtual_Disk_Image
+			result2 error
+		})
+	}
+	fake.getPortableStorageReturnsOnCall[i] = struct {
+		result1 []datatypes.Virtual_Disk_Image
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetLocalDisks(arg1 int) ([]datatypes.Virtual_Guest_Block_Device, error) {
+	fake.getLocalDisksMutex.Lock()
+	ret, specificReturn := fake.getLocalDisksReturnsOnCall[len(fake.getLocalDisksArgsForCall)]
+	fake.getLocalDisksArgsForCall = append(fake.getLocalDisksArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("GetLocalDisks", []interface{}{arg1})
+	fake.getLocalDisksMutex.Unlock()
+	if fake.GetLocalDisksStub != nil {
+		return fake.GetLocalDisksStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getLocalDisksReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetLocalDisksCallCount() int {
+	fake.getLocalDisksMutex.RLock()
+	defer fake.getLocalDisksMutex.RUnlock()
+	return len(fake.getLocalDisksArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetLocalDisksCalls(stub func(int) ([]datatypes.Virtual_Guest_Block_Device, error)) {
+	fake.getLocalDisksMutex.Lock()
+	defer fake.getLocalDisksMutex.Unlock()
+	fake.GetLocalDisksStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetLocalDisksArgsForCall(i int) int {
+	fake.getLocalDisksMutex.RLock()
+	defer fake.getLocalDisksMutex.RUnlock()
+	argsForCall := fake.getLocalDisksArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) GetLocalDisksReturns(result1 []datatypes.Virtual_Guest_Block_Device, result2 error) {
+	fake.getLocalDisksMutex.Lock()
+	defer fake.getLocalDisksMutex.Unlock()
+	fake.GetLocalDisksStub = nil
+	fake.getLocalDisksReturns = struct {
+		result1 []datatypes.Virtual_Guest_Block_Device
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetLocalDisksReturnsOnCall(i int, result1 []datatypes.Virtual_Guest_Block_Device, result2 error) {
+	fake.getLocalDisksMutex.Lock()
+	defer fake.getLocalDisksMutex.Unlock()
+	fake.GetLocalDisksStub = nil
+	if fake.getLocalDisksReturnsOnCall == nil {
+		fake.getLocalDisksReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Virtual_Guest_Block_Device
+			result2 error
+		})
+	}
+	fake.getLocalDisksReturnsOnCall[i] = struct {
+		result1 []datatypes.Virtual_Guest_Block_Device
 		result2 error
 	}{result1, result2}
 }

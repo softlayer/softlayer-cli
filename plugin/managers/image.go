@@ -21,6 +21,8 @@ children[transaction, blockDevicesDiskSpaceTotal, datacenter.name]`
 //See product information here: https://knowledgelayer.softlayer.com/topic/image-templates
 type ImageManager interface {
 	GetImage(imageId int) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
+	AddLocation(imageId int, locations []datatypes.Location) (bool, error)
+	DeleteLocation(imageId int, locations []datatypes.Location) (bool, error)
 	DeleteImage(imageId int) error
 	ListPrivateImages(name string, mask string) ([]datatypes.Virtual_Guest_Block_Device_Template_Group, error)
 	ListPublicImages(name string, mask string) ([]datatypes.Virtual_Guest_Block_Device_Template_Group, error)
@@ -169,4 +171,18 @@ func (i imageManager) EditImage(imageId int, name string, note string, tag strin
 	}
 
 	return succeed, messages
+}
+
+//Add the location of the image
+//imageId: The ID of the image
+//location: location to remove of the image.
+func (i imageManager) AddLocation(imageId int, locations []datatypes.Location) (bool, error) {
+	return i.ImageService.Id(imageId).AddLocations(locations)
+}
+
+//Remove the location of the image
+//imageId: The ID of the image
+//location: location to remove of the image.
+func (i imageManager) DeleteLocation(imageId int, locations []datatypes.Location) (bool, error) {
+	return i.ImageService.Id(imageId).RemoveLocations(locations)
 }
