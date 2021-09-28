@@ -65,10 +65,14 @@ func (cmd *L7PolicyEditCommand) Run(c *cli.Context) error {
 
 	priority := c.Int("p")
 
-	policy := datatypes.Network_LBaaS_L7Policy{
-		Name:   &name,
-		Action: &actionUpperCase,
+	policy, err := cmd.LoadBalancerManager.GetL7Policy(policyID)
+	if err != nil {
+		return cli.NewExitError(T("Failed to get l7 policy: {{.Error}}.\n",
+			map[string]interface{}{"Error": err.Error()}), 2)
 	}
+
+	policy.Name = &name
+	policy.Action = &actionUpperCase
 
 	if actionUpperCase != REDIRECT_HTTPS {
 		policy.Priority = &priority
@@ -81,12 +85,20 @@ func (cmd *L7PolicyEditCommand) Run(c *cli.Context) error {
 		policy.RedirectUrl = &redirect
 	}
 
-	_, err := cmd.LoadBalancerManager.EditL7Policy(policyID, &policy)
+	_, err = cmd.LoadBalancerManager.EditL7Policy(policyID, &policy)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add l7 policy: {{.Error}}.\n",
+		return cli.NewExitError(T("Failed to edit l7 policy: {{.Error}}.\n",
 			map[string]interface{}{"Error": err.Error()}), 2)
 	}
+
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 policy edited"))
+
+	policyEdited, err := cmd.LoadBalancerManager.GetL7Policy(policyID)
+	if err != nil {
+		return cli.NewExitError(T("Failed to get l7 policy details: {{.Error}}.\n",
+			map[string]interface{}{"Error": err.Error()}), 2)
+	}
+	PrintPolicies([]datatypes.Network_LBaaS_L7Policy{policyEdited}, cmd.UI)
 	return nil
 }
