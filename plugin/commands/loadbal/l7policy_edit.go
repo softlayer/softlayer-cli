@@ -28,26 +28,33 @@ func NewL7PolicyEditCommand(ui terminal.UI, lbManager managers.LoadBalancerManag
 
 func (cmd *L7PolicyEditCommand) Run(c *cli.Context) error {
 
-	policyID := c.Int("policy-id")
-	if policyID == 0 {
+	policyId := c.Int("policy-id")
+	if policyId == 0 {
 		return errors.NewMissingInputError("--policy-id")
 	}
 
+	currentPolicy, err := cmd.LoadBalancerManager.GetL7Policy(policyId)
+	if err != nil {
+		return cli.NewExitError(T("Failed to get l7 policy: {{.Error}}.\n",
+			map[string]interface{}{"Error": err.Error()}), 2)
+	}
+
 	name := c.String("n")
-	if utils.IsEmptyString(name) {
-		return bxErr.NewMissingInputError("-n, --name")
+	if !utils.IsEmptyString(name) {
+		currentPolicy.Name = &name
 	}
 
 	action := c.String("a")
-	if utils.IsEmptyString(action) {
-		return bxErr.NewMissingInputError("-a, --action")
-	}
 	actionUpperCase := strings.ToUpper(action)
 
-	if !IsValidAction(actionUpperCase) {
+	if !utils.IsEmptyString(actionUpperCase) && !IsValidAction(actionUpperCase) {
 		return bxErr.NewInvalidUsageError(
 			T("-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
+	}
+
+	if !utils.IsEmptyString(actionUpperCase) && IsValidAction(actionUpperCase) {
+		currentPolicy.Action = &actionUpperCase
 	}
 
 	redirect := c.String("r")
@@ -64,28 +71,18 @@ func (cmd *L7PolicyEditCommand) Run(c *cli.Context) error {
 	}
 
 	priority := c.Int("p")
-
-	policy, err := cmd.LoadBalancerManager.GetL7Policy(policyID)
-	if err != nil {
-		return cli.NewExitError(T("Failed to get l7 policy: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+	if !utils.IsEmptyString(actionUpperCase) && actionUpperCase != REDIRECT_HTTPS {
+		currentPolicy.Priority = &priority
 	}
 
-	policy.Name = &name
-	policy.Action = &actionUpperCase
-
-	if actionUpperCase != REDIRECT_HTTPS {
-		policy.Priority = &priority
+	if !utils.IsEmptyString(actionUpperCase) && actionUpperCase == REDIRECT_POOL {
+		currentPolicy.RedirectL7PoolUuid = &redirect
+	}
+	if !utils.IsEmptyString(actionUpperCase) && (actionUpperCase == REDIRECT_URL || actionUpperCase == REDIRECT_HTTPS) {
+		currentPolicy.RedirectUrl = &redirect
 	}
 
-	if actionUpperCase == REDIRECT_POOL {
-		policy.RedirectL7PoolUuid = &redirect
-	}
-	if actionUpperCase == REDIRECT_URL || actionUpperCase == REDIRECT_HTTPS {
-		policy.RedirectUrl = &redirect
-	}
-
-	_, err = cmd.LoadBalancerManager.EditL7Policy(policyID, &policy)
+	_, err = cmd.LoadBalancerManager.EditL7Policy(policyId, &currentPolicy)
 	if err != nil {
 		return cli.NewExitError(T("Failed to edit l7 policy: {{.Error}}.\n",
 			map[string]interface{}{"Error": err.Error()}), 2)
@@ -94,9 +91,9 @@ func (cmd *L7PolicyEditCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 policy edited"))
 
-	policyEdited, err := cmd.LoadBalancerManager.GetL7Policy(policyID)
+	policyEdited, err := cmd.LoadBalancerManager.GetL7Policy(policyId)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get l7 policy details: {{.Error}}.\n",
+		return cli.NewExitError(T("Failed to get l7 policy detail: {{.Error}}.\n",
 			map[string]interface{}{"Error": err.Error()}), 2)
 	}
 	PrintPolicies([]datatypes.Network_LBaaS_L7Policy{policyEdited}, cmd.UI)

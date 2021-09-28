@@ -15,7 +15,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("Load balancer add policies", func() {
+var _ = Describe("Load balancer edit policies", func() {
 	var (
 		fakeUI        *terminal.FakeUI
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
@@ -41,21 +41,6 @@ var _ = Describe("Load balancer add policies", func() {
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("--policy-id"))
 		})
-		It("Error missing name", func() {
-			command := "--policy-id 12345 -a test-action"
-			command_args := strings.Fields(command)
-			err := testhelpers.RunCommand(cliCommand, command_args...)
-			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("-n, --name"))
-		})
-		It("Error missing action", func() {
-			command := "--policy-id 12345 -n test-name"
-			command_args := strings.Fields(command)
-			err := testhelpers.RunCommand(cliCommand, command_args...)
-			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("-a, --action"))
-		})
-
 		It("No valid action", func() {
 			command := "--policy-id 12345 -n test-name -a unknown-action"
 			command_args := strings.Fields(command)
@@ -87,12 +72,19 @@ var _ = Describe("Load balancer add policies", func() {
 		It("Handles API Error", func() {
 			command := "--policy-id 12345 -n test-name -a REJECT"
 			command_args := strings.Fields(command)
-			println(command_args)
 			fakeLBManager.EditL7PolicyReturns(datatypes.Network_LBaaS_LoadBalancer{}, errors.New("SL_API_ERROR"))
 			err := testhelpers.RunCommand(cliCommand, command_args...)
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("SL_API_ERROR"))
-
+			Expect(err.Error()).To(ContainSubstring("Failed to edit l7 policy"))
+		})
+		It("Handles API Error", func() {
+			command := "--policy-id 12345 -n test-name -a REJECT"
+			command_args := strings.Fields(command)
+			fakeLBManager.GetL7PolicyReturns(datatypes.Network_LBaaS_L7Policy{}, errors.New("SL_API_ERROR"))
+			err := testhelpers.RunCommand(cliCommand, command_args...)
+			println(err)
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(ContainSubstring("Failed to get l7 policy"))
 		})
 	})
 
@@ -118,7 +110,6 @@ var _ = Describe("Load balancer add policies", func() {
 			err := testhelpers.RunCommand(cliCommand, command_args...)
 			Expect(err).NotTo(HaveOccurred())
 		})
-
 		It("REDIRECT_HTTPS", func() {
 			command := "--policy-id 12345 --n test-https -a REDIRECT_HTTPS -r uuid-https-protocol"
 			command_args := strings.Fields(command)
