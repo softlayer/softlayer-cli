@@ -44,7 +44,7 @@ func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal
 	if len(l7Policies) == 0 {
 		cmdUI.Say(T("No l7 policies was found."))
 	} else {
-		table := cmdUI.Table([]string{T("ID"), T("UUID"), T("Name"), T("Action"), T("Redirect"), T("Priority")})
+		table := cmdUI.Table([]string{T("ID"), T("UUID"), T("Name"), T("Action"), T("Redirect"), T("Priority"), T("Create Date")})
 		for _, l7Policy := range l7Policies {
 			if l7Policy.Action != nil && (*l7Policy.Action == REDIRECT_URL || *l7Policy.Action == REDIRECT_HTTPS) {
 				table.Add(utils.FormatIntPointer(l7Policy.Id),
@@ -52,6 +52,7 @@ func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal
 					utils.FormatStringPointer(l7Policy.Name),
 					utils.FormatStringPointer(l7Policy.Action),
 					utils.FormatStringPointer(l7Policy.RedirectUrl),
+					utils.FormatIntPointer(l7Policy.Priority),
 					utils.FormatSLTimePointer(l7Policy.CreateDate),
 				)
 			}
@@ -61,6 +62,7 @@ func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal
 					utils.FormatStringPointer(l7Policy.Name),
 					utils.FormatStringPointer(l7Policy.Action),
 					utils.FormatIntPointer(l7Policy.RedirectL7PoolId),
+					utils.FormatIntPointer(l7Policy.Priority),
 					utils.FormatSLTimePointer(l7Policy.CreateDate),
 				)
 			}
@@ -70,6 +72,7 @@ func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal
 					utils.FormatStringPointer(l7Policy.Name),
 					utils.FormatStringPointer(l7Policy.Action),
 					"-",
+					utils.FormatIntPointer(l7Policy.Priority),
 					utils.FormatSLTimePointer(l7Policy.CreateDate),
 				)
 			}
