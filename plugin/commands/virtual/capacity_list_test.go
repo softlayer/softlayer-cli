@@ -9,7 +9,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-	"strings"
 )
 
 var _ = Describe("VS capacity-list", func() {
@@ -36,7 +35,7 @@ var _ = Describe("VS capacity-list", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "flag provided but not defined: -column")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring(  "flag provided but not defined: -column"))
 			})
 		})
 	})
@@ -48,7 +47,7 @@ var _ = Describe("VS capacity-list", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "flag provided but not defined: -column")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring( "flag provided but not defined: -column"))
 			})
 		})
 	})
