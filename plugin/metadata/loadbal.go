@@ -639,7 +639,6 @@ func LoadbalL7PolicyEditMetadata() cli.Command {
 			cli.IntFlag{
 				Name:  "p,priority",
 				Usage: T("Policy priority"),
-				Value: 1,
 			},
 		},
 	}

@@ -45,40 +45,41 @@ func (cmd *L7PolicyEditCommand) Run(c *cli.Context) error {
 	}
 
 	action := c.String("a")
-	actionUpperCase := strings.ToUpper(action)
+	actionToUpdate := strings.ToUpper(action)
 
-	if !utils.IsEmptyString(actionUpperCase) && !IsValidAction(actionUpperCase) {
+	if !utils.IsEmptyString(actionToUpdate) && !IsValidAction(actionToUpdate) {
 		return bxErr.NewInvalidUsageError(
 			T("-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
 
-	if !utils.IsEmptyString(actionUpperCase) && IsValidAction(actionUpperCase) {
-		currentPolicy.Action = &actionUpperCase
+	if !utils.IsEmptyString(actionToUpdate) && IsValidAction(actionToUpdate) {
+		currentPolicy.Action = &actionToUpdate
 	}
 
 	redirect := c.String("r")
-	if !utils.IsEmptyString(redirect) && actionUpperCase == REJECT {
+	if !utils.IsEmptyString(redirect) && utils.FormatStringPointer(currentPolicy.Action) == REJECT {
 		return bxErr.NewInvalidUsageError(
 			T("-r, --redirect is only available with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
 
-	if IsValidAction(actionUpperCase) && utils.IsEmptyString(redirect) && actionUpperCase != REJECT {
+	if IsValidAction(actionToUpdate) && utils.IsEmptyString(redirect) && actionToUpdate != REJECT {
 		return bxErr.NewInvalidUsageError(
 			T("-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
 
 	priority := c.Int("p")
-	if !utils.IsEmptyString(actionUpperCase) && actionUpperCase != REDIRECT_HTTPS {
+
+	if priority > 0 && utils.FormatStringPointer(currentPolicy.Action) != REDIRECT_HTTPS {
 		currentPolicy.Priority = &priority
 	}
 
-	if !utils.IsEmptyString(actionUpperCase) && actionUpperCase == REDIRECT_POOL {
+	if utils.FormatStringPointer(currentPolicy.Action) == REDIRECT_POOL {
 		currentPolicy.RedirectL7PoolUuid = &redirect
 	}
-	if !utils.IsEmptyString(actionUpperCase) && (actionUpperCase == REDIRECT_URL || actionUpperCase == REDIRECT_HTTPS) {
+	if utils.FormatStringPointer(currentPolicy.Action) == REDIRECT_URL || utils.FormatStringPointer(currentPolicy.Action) == REDIRECT_HTTPS {
 		currentPolicy.RedirectUrl = &redirect
 	}
 
