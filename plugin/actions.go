@@ -175,6 +175,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_HARDWARE_NAME + "-bandwidth": func(c *cli.Context) error {
 			return hardware.NewBandwidthCommand(ui, hardwareManager).Run(c)
 		},
+		NS_HARDWARE_NAME + "-storage": func(c *cli.Context) error {
+			return hardware.NewStorageCommand(ui, hardwareManager).Run(c)
+		},
 
 		// image - 6
 		NS_IMAGE_NAME + "-" + CMD_IMG_DELETE_NAME: func(c *cli.Context) error {
@@ -194,6 +197,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_IMAGE_NAME + "-" + CMD_IMG_LIST_NAME: func(c *cli.Context) error {
 			return image.NewListCommand(ui, imageManager).Run(c)
+		},
+		NS_IMAGE_NAME + "-" + CMD_IMG_DATACENTER_NAME: func(c *cli.Context) error {
+			return image.NewDatacenterCommand(ui, imageManager).Run(c)
 		},
 
 		//ipsec - 11
@@ -390,6 +396,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_VIRTUAL_NAME + "-bandwidth": func(c *cli.Context) error {
 			return virtual.NewBandwidthCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-storage": func(c *cli.Context) error {
+			return virtual.NewStorageCommand(ui, virtualServerManager).Run(c)
 		},
 
 		//Placement group
