@@ -1,6 +1,7 @@
 package virtual_test
 
 import (
+	"errors"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -32,6 +33,18 @@ var _ = Describe("VS capacity-list", func() {
 	})
 	Describe("VS capacity-list", func() {
 		Context("VS capacity-list with wrong parameters", func() {
+			It("return error", func() {
+				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
+				Expect(err).To(HaveOccurred())
+				Expect(strings.Contains(err.Error(), "flag provided but not defined: -column")).To(BeTrue())
+			})
+		})
+	})
+	Describe("VS capacity-list", func() {
+		Context("Failed to get virtual Reserved capacity groups on your account.", func() {
+			BeforeEach(func() {
+				fakeVSManager.CapacityListReturns(nil, errors.New("Internal Server Error"))
+			})
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
 				Expect(err).To(HaveOccurred())
