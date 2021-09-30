@@ -69,15 +69,14 @@ type HardwareServerManager interface {
 }
 
 type hardwareServerManager struct {
-	HardwareService    services.Hardware_Server
-	AccountService     services.Account
-	PackageService     services.Product_Package
-	OrderService       services.Product_Order
-	LocationService    services.Location_Datacenter
-	BillingService     services.Billing_Item
-	Session            *session.Session
-	StorageManager     StorageManager
-	VirtualHostService services.Virtual_Host
+	HardwareService services.Hardware_Server
+	AccountService  services.Account
+	PackageService  services.Product_Package
+	OrderService    services.Product_Order
+	LocationService services.Location_Datacenter
+	BillingService  services.Billing_Item
+	Session         *session.Session
+	StorageManager  StorageManager
 }
 
 func NewHardwareServerManager(session *session.Session) *hardwareServerManager {
@@ -90,7 +89,6 @@ func NewHardwareServerManager(session *session.Session) *hardwareServerManager {
 		services.GetBillingItemService(session),
 		session,
 		NewStorageManager(session),
-		services.GetVirtualHostService(session),
 	}
 }
 
@@ -768,7 +766,8 @@ func (hw hardwareServerManager) GetHardwareGuests(id int) ([]datatypes.Virtual_G
 		return []datatypes.Virtual_Guest{}, errors.New(T("No Virtual Guests found."))
 	}
 	virtualHostId := virtualHost.Id
-	return hw.VirtualHostService.Id(*virtualHostId).Mask(mask).GetGuests()
+	virtualHostService := services.GetVirtualHostService(hw.Session)
+	return virtualHostService.Id(*virtualHostId).Mask(mask).GetGuests()
 }
 
 //Returns the hardware server virtual host.
