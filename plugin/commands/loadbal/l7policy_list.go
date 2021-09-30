@@ -39,7 +39,7 @@ func (cmd *L7PolicyListCommand) Run(c *cli.Context) error {
 	return nil
 }
 
-func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal.UI) error {
+func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal.UI) {
 
 	if len(l7Policies) == 0 {
 		cmdUI.Say(T("No l7 policies was found."))
@@ -79,5 +79,4 @@ func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal
 		}
 		table.Print()
 	}
-	return nil
 }
