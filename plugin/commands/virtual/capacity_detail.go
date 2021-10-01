@@ -4,6 +4,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 	"strconv"
@@ -22,11 +23,17 @@ func NewCapacityDetailCommand(ui terminal.UI, virtualServerManager managers.Virt
 }
 
 func (cmd *CapacityDetailCommand) Run(c *cli.Context) error {
+	if c.NArg() != 1 {
+		return slErrors.NewInvalidUsageError(T("This command requires one argument."))
+	}
 	id, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Reserved Capacity Group Virtual server ID")
 	}
 	capacity, err := cmd.VirtualServerManager.GetCapacityDetail(id)
+	if err != nil {
+		return slErrors.NewInvalidSoftlayerIdInputError("Reserved Capacity Gruop Virtual server ID")
+	}
 
 	sortby := c.String("sortby")
 	if sortby == "" {
