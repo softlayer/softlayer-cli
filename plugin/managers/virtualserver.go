@@ -1191,7 +1191,6 @@ func (vs virtualServerManager) CapacityList(mask string) ([]datatypes.Virtual_Re
 	return vs.AccountService.Mask(mask).GetReservedCapacityGroups()
 }
 
-
 //Pulls down all backendRouterIds that are available
 //A list of locations where product_package
 func (vs virtualServerManager) GetRouters(packageName string) ([]datatypes.Location_Region, error) {
