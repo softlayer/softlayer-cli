@@ -34,6 +34,7 @@ var (
 	CMD_VS_UPGRADE_NAME           = "upgrade"
 	CMD_VS_MIGRATE_NAME           = "migrate"
 	CMD_VS_CAPACITY_DETAIL_NAME   = "capacity-detail"
+	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -76,6 +77,7 @@ func VSMetaData() cli.Command {
 			VSAuthorizeStorageMetaData(),
 			VSBandwidthMetaData(),
 			VSStorageMetaData(),
+			VSCapacityListMetaData(),
 		},
 	}
 }
@@ -873,6 +875,7 @@ EXAMPLE:
 	}
 }
 
+
 func VSCapacityDetailMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
@@ -892,5 +895,16 @@ EXAMPLE:
 				Hidden: true,
 			},
 		},
+
+func VSCapacityListMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_CAPACITY_LIST_NAME,
+		Description: T("List Reserved Capacity groups.\n"),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-list
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs capacity-list
+   List Reserved Capacity groups.`),
 	}
 }

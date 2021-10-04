@@ -332,6 +332,8 @@
 "translation": "Failed to get iscsi storage detail for the virtual server {{.ID}}.\n"},
 {"id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
 "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678."},
+{"id": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups.",
+"translation": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups."},
 {"id": "%s is not a valid permission",
 "translation": "%s은(는) 올바른 권한이 아닙니다."},
 {"id": "'{{.Input}}' is required",
@@ -3793,4 +3795,10 @@
 {"id": "Get Reserved Capacity Group details.",
 "translation": "Get Reserved Capacity Group details."},
 {"id": "Column to display. Options are: id,hostname,domain,primary_ip,backend_ip]. This option can be specified multiple times",
-"translation": "Column to display. Options are: id,hostname,domain,primary_ip,backend_ip]. This option can be specified multiple times"}]
+"translation": "Column to display. Options are: id,hostname,domain,primary_ip,backend_ip]. This option can be specified multiple times"},
+{"id": "List Reserved Capacity groups.\n",
+"translation": "List Reserved Capacity groups.\n"},
+{"id": "Capacity",
+"translation": "Capacity"},
+{"id": "Flavor",
+"translation": "Flavor"}]

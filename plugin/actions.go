@@ -42,7 +42,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	networkManager := managers.NewNetworkManager(session)
 	firewallManager := managers.NewFirewallManager(session)
 	dnsManager := managers.NewDNSManager(session)
-	securityManager := managers.NewSecurityManager(session)
 	ipsecManager := managers.NewIPSECManager(session)
 
 	hardwareManager := managers.NewHardwareServerManager(session)
@@ -237,38 +236,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return ipsec.NewUpdateCommand(ui, ipsecManager).Run(c)
 		},
 
-		//security 10
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_ADD_NAME: func(c *cli.Context) error {
-			return security.NewKeyAddCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_EDIT_NAME: func(c *cli.Context) error {
-			return security.NewKeyEditCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_LIST_NAME: func(c *cli.Context) error {
-			return security.NewKeyListCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_PRINT_NAME: func(c *cli.Context) error {
-			return security.NewKeyPrintCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_REMOVE_NAME: func(c *cli.Context) error {
-			return security.NewKeyRemoveCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_ADD_NAME: func(c *cli.Context) error {
-			return security.NewCertAddCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_EDIT_NAME: func(c *cli.Context) error {
-			return security.NewCertEditCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_DOWNLOAD_NAME: func(c *cli.Context) error {
-			return security.NewCertDownloadCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_LIST_NAME: func(c *cli.Context) error {
-			return security.NewCertListCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_REMOVE_NAME: func(c *cli.Context) error {
-			return security.NewCertRemoveCommand(ui, securityManager).Run(c)
-		},
-
 		//securitygroup 12
 		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_CREATE_NAME: func(c *cli.Context) error {
 			return securitygroup.NewCreateCommand(ui, networkManager).Run(c)
@@ -399,6 +366,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_VIRTUAL_NAME + "-storage": func(c *cli.Context) error {
 			return virtual.NewStorageCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" +CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
+			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
 		},
 
 		//Placement group
@@ -548,6 +518,14 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl loadbal
 	loadbalCommands := loadbal.GetCommandAcionBindings(ui, session)
 	for name, action := range loadbalCommands {
+		CommandActionBindings[name] = action
+	}
+
+
+	// ibmcloud sl security
+	// ibmcloud sl sshkey
+	// ibmcloud sl ssl 
+	for name, action := range security.GetCommandActionBindings(ui, session) {
 		CommandActionBindings[name] = action
 	}
 
