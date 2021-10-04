@@ -40,12 +40,15 @@ type HardwareServerManager interface {
 	CancelHardware(hardwareId int, reason string, comment string, immediate bool) error
 	ListHardware(tags []string, cpus int, memory int, hostname string, domain string, datacenter string, nicSpeed int, publicIP string, privateIP string, owner string, orderId int, mask string) ([]datatypes.Hardware_Server, error)
 	GetHardware(hardwareId int, mask string) (datatypes.Hardware_Server, error)
+	GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error)
 	Reload(hardwareId int, postInstallURL string, sshKeys []int, upgradeBIOS bool, upgradeFirmware bool) error
 	Rescure(hardwareId int) error
 	PowerCycle(hardwareId int) error
 	PowerOff(hardwareId int) error
 	PowerOn(hardwareId int) error
 	Reboot(hardwareId int, hard bool, soft bool) error
+	GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error)
+	GetHardDrives(id int) ([]datatypes.Hardware_Component, error)
 	GetCancellationReasons() map[string]string
 	GetCreateOptions(productPackage datatypes.Product_Package) map[string]map[string]string
 	GenerateCreateTemplate(productPackage datatypes.Product_Package, params map[string]interface{}) (datatypes.Container_Product_Order, error)
@@ -104,6 +107,27 @@ func (hw hardwareServerManager) AuthorizeStorage(id int, storageUsername string)
 		},
 	}
 	return hw.HardwareService.Id(id).AllowAccessToNetworkStorageList(networkStorageTemplate)
+}
+
+//Returns the hardware server storage credentials.
+//int id: Id of the hardware server
+func (hw hardwareServerManager) GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error) {
+	mask := "mask[credential]"
+	return hw.HardwareService.Id(id).Mask(mask).GetAllowedHost()
+}
+
+//Returns the hardware server hard drives.
+//int id: Id of the hardware server
+func (hw hardwareServerManager) GetHardDrives(id int) ([]datatypes.Hardware_Component, error) {
+	return hw.HardwareService.Id(id).GetHardDrives()
+}
+
+//Returns the hardware server attached network storage.
+//int id: Id of the hardware server
+//nas_type: storage type.
+func (hw hardwareServerManager) GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error) {
+	mask := "mask[id,username,capacityGb,notes,serviceResourceBackendIpAddress,allowedHardware[id,datacenter]]"
+	return hw.HardwareService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
 }
 
 //Cancels the specified dedicated server.
