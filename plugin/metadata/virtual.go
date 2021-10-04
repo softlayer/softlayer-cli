@@ -875,7 +875,6 @@ EXAMPLE:
 	}
 }
 
-
 func VSCapacityDetailMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
@@ -894,7 +893,8 @@ EXAMPLE:
 				Name:   "columns",
 				Hidden: true,
 			},
-		},
+		}}
+}
 
 func VSCapacityListMetaData() cli.Command {
 	return cli.Command{
