@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 	"strconv"
@@ -120,8 +121,11 @@ func OpenEditorForComponentRules(origRules []datatypes.Network_Component_Firewal
 		return nil, err
 	}
 	defer func() {
-		err = f.Close()
+		if fErr := f.Close(); fErr != nil {
+			log.Fatal(fErr)
+		}
 	}()
+
 	if len(origRules) == 0 {
 		_, writeErr := f.WriteString(DELIMITER)
 		if writeErr != nil {
@@ -160,9 +164,10 @@ func OpenEditorForVlanRules(origRules []datatypes.Network_Vlan_Firewall_Rule) (*
 		return nil, err
 	}
 	defer func() {
-		err = f.Close()
+		if fErr := f.Close(); fErr != nil {
+			log.Fatal(fErr)
+		}
 	}()
-
 	if len(origRules) == 0 {
 		_, writeErr := f.WriteString(DELIMITER)
 		if writeErr != nil {
