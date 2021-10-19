@@ -20,6 +20,7 @@ var (
 	CMD_HARDWARE_CREDENTIALS_NAME       = "credentials"
 	CMD_HARDWARE_DETAIL_NAME            = "detail"
 	CMD_HARDWARE_EDIT_NAME              = "edit"
+	CMD_HARDWARE_GUESTS_NAME            = "guests"
 	CMD_HARDWARE_LIST_NAME              = "list"
 	CMD_HARDWARE_POWER_CYCLE_NAME       = "power-cycle"
 	CMD_HARDWARE_POWER_OFF_NAME         = "power-off"
@@ -66,6 +67,7 @@ func HardwareMetaData() cli.Command {
 			HardwareToggleIPMIMetaData(),
 			HardwareBandwidthMetaData(),
 			HardwareStorageMetaData(),
+			HardwareGuestsMetaData(),
 		},
 	}
 }
@@ -524,6 +526,22 @@ func HardwareStorageMetaData() cli.Command {
 EXAMPLE:
    ${COMMAND_NAME} sl hardware storage 1234567
    Get storage details for a hardware server.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
+	}
+}
+
+func HardwareGuestsMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_HARDWARE_NAME,
+		Name:        CMD_HARDWARE_GUESTS_NAME,
+		Description: T("Lists the Virtual Guests running on this server."),
+		Usage: T(`${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl hardware guests 1234567
+   Lists the Virtual Guests running on this server.`),
 		Flags: []cli.Flag{
 			OutputFlag(),
 		},

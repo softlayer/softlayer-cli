@@ -2,6 +2,7 @@ package managers
 
 import (
 	"errors"
+	"reflect"
 	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -64,6 +65,7 @@ type HardwareServerManager interface {
 	GetPortSpeedPriceId(items []datatypes.Product_Item, portSpeed int, noPublic bool, location datatypes.Location_Region) (int, error)
 	ToggleIPMI(hardwareID int, enabled bool) error
 	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
+	GetHardwareGuests(id int) ([]datatypes.Virtual_Guest, error)
 }
 
 type hardwareServerManager struct {
@@ -749,4 +751,27 @@ func GetPresetId(productPackage datatypes.Product_Package, size string) (int, er
 		}
 	}
 	return 0, errors.New(T("Could not find valid size for: {{.Size}}", map[string]interface{}{"Size": size}))
+}
+
+//Returns the hardware server guests.
+//int id: The hardware server identifier.
+func (hw hardwareServerManager) GetHardwareGuests(id int) ([]datatypes.Virtual_Guest, error) {
+	mask := "mask[powerState]"
+	virtualHost, err := hw.GetHardwareVirtualHost(id)
+	if err != nil {
+		return []datatypes.Virtual_Guest{}, err
+	}
+
+	if reflect.ValueOf(virtualHost).IsZero() {
+		return []datatypes.Virtual_Guest{}, errors.New(T("No Virtual Guests found."))
+	}
+	virtualHostId := virtualHost.Id
+	virtualHostService := services.GetVirtualHostService(hw.Session)
+	return virtualHostService.Id(*virtualHostId).Mask(mask).GetGuests()
+}
+
+//Returns the hardware server virtual host.
+//int id: The hardware server identifier.
+func (hw hardwareServerManager) GetHardwareVirtualHost(id int) (datatypes.Virtual_Host, error) {
+	return hw.HardwareService.Id(id).GetVirtualHost()
 }
