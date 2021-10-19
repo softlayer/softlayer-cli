@@ -3,9 +3,7 @@ package security_test
 import (
 	"errors"
 	"os"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -42,14 +40,14 @@ var _ = Describe("Certificate download", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Certificate download with wrong cert ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'SSL certificate ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'SSL certificate ID'. It must be a positive integer."))
 			})
 		})
 		Context("Certificate download but server API call fails", func() {
@@ -59,9 +57,20 @@ var _ = Describe("Certificate download", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234")
 				Expect(err).To(HaveOccurred())
-
-				Expect(strings.Contains(err.Error(), "Failed to get SSL certificate: 1234")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get SSL certificate: 1234"))
+			})
+		})
+		Context("Certificate download is malformed", func() {
+			BeforeEach(func() {
+				fakeSecurityManager.GetCertificateReturns(datatypes.Security_Certificate{}, nil)
+			})
+			It("return error", func() {
+				err := testhelpers.RunCommand(cliCommand, "1234")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Certificate not found"))
+				Expect(err.Error()).To(ContainSubstring("Private key not found"))
+				Expect(err.Error()).To(ContainSubstring("intermediate certificate not found"))
+				Expect(err.Error()).To(ContainSubstring("Certificate signing request not found"))
 			})
 		})
 		Context("Certificate download", func() {
@@ -78,8 +87,38 @@ var _ = Describe("Certificate download", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"SSL certificate files are downloaded."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("SSL certificate files are downloaded."))
+			})
+			It("Output JSON", func() {
+				err := testhelpers.RunCommand(cliCommand, "1234", "--output", "JSON")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("\"commonName\": \"wilma.org\""))
+			})
+			It("Handle unable to write file", func() {
+				err := testhelpers.RunCommand(cliCommand, "1234", "--output", "JSON")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("\"commonName\": \"wilma.org\""))
+			})
+		})
+		Context("Certificate download unable to write file", func() {
+			BeforeEach(func() {
+				fakeSecurityManager.GetCertificateReturns(datatypes.Security_Certificate{
+					Id:                        sl.Int(1234),
+					CommonName:                sl.String("/path/to/nothing/wilma.org"),
+					Certificate:               sl.String("certificate"),
+					IntermediateCertificate:   sl.String("intermediatecertificate"),
+					PrivateKey:                sl.String("ssh-rsa djghtbtmfhgentongwfrdnglkhsdye"),
+					CertificateSigningRequest: sl.String("CertificateSigningRequest"),
+				}, nil)
+			})
+			It("Handle unable to write file", func() {
+				err := testhelpers.RunCommand(cliCommand, "1234")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to write certificate to file"))
+				Expect(err.Error()).To(ContainSubstring("Failed to write private key to file"))
+				Expect(err.Error()).To(ContainSubstring("Failed to write intermediate certificate to file"))
+				Expect(err.Error()).To(ContainSubstring("Failed to write certificate signing request to file"))
 			})
 		})
 		AfterEach(func() {
@@ -87,6 +126,13 @@ var _ = Describe("Certificate download", func() {
 			os.Remove("wilma.org.csr")
 			os.Remove("wilma.org.icc")
 			os.Remove("wilma.org.key")
+		})
+		Context("Check bad output format", func() {
+			It("Error", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456", "--output", "text")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format"))
+			})
 		})
 	})
 })
