@@ -254,6 +254,19 @@ type FakeHardwareServerManager struct {
 		result1 int
 		result2 error
 	}
+	GetHardwareGuestsStub        func(int) ([]datatypes.Virtual_Guest, error)
+	getHardwareGuestsMutex       sync.RWMutex
+	getHardwareGuestsArgsForCall []struct {
+		arg1 int
+	}
+	getHardwareGuestsReturns struct {
+		result1 []datatypes.Virtual_Guest
+		result2 error
+	}
+	getHardwareGuestsReturnsOnCall map[int]struct {
+		result1 []datatypes.Virtual_Guest
+		result2 error
+	}
 	ListHardwareStub        func([]string, int, int, string, string, string, int, string, string, string, int, string) ([]datatypes.Hardware_Server, error)
 	listHardwareMutex       sync.RWMutex
 	listHardwareArgsForCall []struct {
@@ -657,6 +670,69 @@ func (fake *FakeHardwareServerManager) GetStorageCredentialsReturnsOnCall(i int,
 	}
 	fake.getStorageCredentialsReturnsOnCall[i] = struct {
 		result1 datatypes.Network_Storage_Allowed_Host
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareGuests(arg1 int) ([]datatypes.Virtual_Guest, error) {
+	fake.getHardwareGuestsMutex.Lock()
+	ret, specificReturn := fake.getHardwareGuestsReturnsOnCall[len(fake.getHardwareGuestsArgsForCall)]
+	fake.getHardwareGuestsArgsForCall = append(fake.getHardwareGuestsArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("GetHardwareGuests", []interface{}{arg1})
+	fake.getHardwareGuestsMutex.Unlock()
+	if fake.GetHardwareGuestsStub != nil {
+		return fake.GetHardwareGuestsStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getHardwareGuestsReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareGuestsCallCount() int {
+	fake.getHardwareGuestsMutex.RLock()
+	defer fake.getHardwareGuestsMutex.RUnlock()
+	return len(fake.getHardwareGuestsArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareGuestsCalls(stub func(int) ([]datatypes.Virtual_Guest, error)) {
+	fake.getHardwareGuestsMutex.Lock()
+	defer fake.getHardwareGuestsMutex.Unlock()
+	fake.GetHardwareGuestsStub = stub
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareGuestsArgsForCall(i int) int {
+	fake.getHardwareGuestsMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
+	argsForCall := fake.getHardwareGuestsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareGuestsReturns(result1 []datatypes.Virtual_Guest, result2 error) {
+	fake.getHardwareGuestsMutex.Lock()
+	defer fake.getHardwareGuestsMutex.Unlock()
+	fake.GetHardwareGuestsStub = nil
+	fake.getHardwareGuestsReturns = struct {
+		result1 []datatypes.Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareGuestsReturnsOnCall(i int, result1 []datatypes.Virtual_Guest, result2 error) {
+	fake.getHardwareGuestsMutex.Lock()
+	defer fake.getHardwareGuestsMutex.Unlock()
+	fake.GetHardwareGuestsStub = nil
+	if fake.getHardwareGuestsReturnsOnCall == nil {
+		fake.getHardwareGuestsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Virtual_Guest
+			result2 error
+		})
+	}
+	fake.getHardwareGuestsReturnsOnCall[i] = struct {
+		result1 []datatypes.Virtual_Guest
 		result2 error
 	}{result1, result2}
 }
