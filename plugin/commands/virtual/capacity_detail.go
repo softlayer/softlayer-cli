@@ -55,20 +55,28 @@ func (cmd *CapacityDetailCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	table := cmd.UI.Table(utils.GetColumnHeader(showColumns))
-	values := make(map[string]string)
-	values["name"] = utils.FormatStringPointer(capacity.Name)
-	values["id"] = utils.FormatIntPointer(capacity.Id)
-	values["hostname"] = utils.FormatStringPointer(capacity.Instances[0].Guest.Hostname)
-	values["domain"] = utils.FormatStringPointer(capacity.Instances[0].Guest.Domain)
-	values["primary_id"] = utils.FormatStringPointer(capacity.Instances[0].Guest.PrimaryIpAddress)
-	values["backend_id"] = utils.FormatStringPointer(capacity.Instances[0].Guest.PrimaryBackendIpAddress)
-
-	row := make([]string, len(showColumns))
-	for i, col := range showColumns {
-		row[i] = values[col]
+	for _, instance := range capacity.Instances {
+		table := cmd.UI.Table(utils.GetColumnHeader(showColumns))
+		values := make(map[string]string)
+		values["name"] = utils.FormatStringPointer(capacity.Name)
+		values["id"] = utils.FormatIntPointer(instance.Id)
+		if instance.Guest != nil{
+			values["hostname"] = utils.FormatStringPointer(instance.Guest.Hostname)
+			values["domain"] = utils.FormatStringPointer(instance.Guest.Domain)
+			values["primary_id"] = utils.FormatStringPointer(instance.Guest.PrimaryIpAddress)
+			values["backend_id"] = utils.FormatStringPointer(instance.Guest.PrimaryBackendIpAddress)
+		}else{
+			values["hostname"] = utils.EMPTY_VALUE
+			values["domain"] = utils.EMPTY_VALUE
+			values["primary_id"] = utils.EMPTY_VALUE
+			values["backend_id"] = utils.EMPTY_VALUE
+		}
+		row := make([]string, len(showColumns))
+		for i, col := range showColumns {
+			row[i] = values[col]
+		}
+		table.Add(row...)
+		table.Print()
 	}
-	table.Add(row...)
-	table.Print()
 	return nil
 }
