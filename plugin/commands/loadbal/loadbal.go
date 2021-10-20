@@ -1,14 +1,12 @@
 package loadbal
 
-
 import (
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
-
 
 func GetCommandAcionBindings(ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	lbManager := managers.NewLoadBalancerManager(session)
@@ -69,6 +67,9 @@ func GetCommandAcionBindings(ui terminal.UI, session *session.Session) map[strin
 		},
 		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POLICY_ADD_NAME: func(c *cli.Context) error {
 			return NewL7PolicyAddCommand(ui, lbManager).Run(c)
+		},
+		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POLICY_EDIT_NAME: func(c *cli.Context) error {
+			return NewL7PolicyEditCommand(ui, lbManager).Run(c)
 		},
 		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POLICY_DELETE_NAME: func(c *cli.Context) error {
 			return NewL7PolicyDeleteCommand(ui, lbManager).Run(c)
