@@ -106,7 +106,6 @@ type virtualServerManager struct {
 	OrderService         services.Product_Order
 	DedicatedHostService services.Virtual_DedicatedHost
 	OrderManager         OrderManager
-	PodService services.Network_Pod
 	Session			    *session.Session
 	StorageManager       StorageManager
 }
@@ -119,7 +118,6 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 		services.GetProductOrderService(session),
 		services.GetVirtualDedicatedHostService(session),
 		NewOrderManager(session),
-		services.GetNetworkPodService(session),
 		session,
 		NewStorageManager(session),
 	}
@@ -1199,7 +1197,7 @@ func (vs virtualServerManager) GetRouters(packageName string) ([]datatypes.Locat
 		return nil, err
 	}
 	regions, err := vs.PackageService.Id(*productPackage.Id).GetRegions()
-	return regions,err
+	return regions, err
 }
 
 //List available reserved capacity plans
@@ -1209,11 +1207,11 @@ func (vs virtualServerManager) GetCapacityCreateOptions(packageName string) ([]d
 		return nil, err
 	}
 	items, err := vs.PackageService.Id(*productPackage.Id).GetItems()
-	return items,err
+	return items, err
 }
 
 //Get the pod details, which contains the router id
 func (vs virtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
-	pods, err := vs.PodService.GetAllObjects()
-	return pods,err
+	podService := services.GetNetworkPodService(vs.Session)
+	return podService.GetAllObjects()
 }
