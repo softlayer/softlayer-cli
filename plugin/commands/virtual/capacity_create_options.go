@@ -7,6 +7,7 @@ import (
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -25,6 +26,7 @@ func NewCapacityCreateOptiosCommand(ui terminal.UI, virtualServerManager manager
 func (cmd *CapacityCreateOptiosCommand) Run(c *cli.Context) error {
 	datacenters, _ := cmd.VirtualServerManager.GetRouters("RESERVED_CAPACITY")
 	pods, err := cmd.VirtualServerManager.GetPods()
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
 	tableRegion := cmd.UI.Table([]string{T("Location"), T("POD"), T("BackendRouterId")})
 	for _, datacenter := range datacenters{
 		for _, pod := range pods{
@@ -34,6 +36,12 @@ func (cmd *CapacityCreateOptiosCommand) Run(c *cli.Context) error {
 					utils.FormatIntPointer(pod.BackendRouterId))
 			}
 		}
+	}
+	var capacityCreateOptions []interface{}
+	capacityCreateOptions = append(capacityCreateOptions, pods)
+	capacityCreateOptions = append(capacityCreateOptions, datacenters)
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSONList(cmd.UI, capacityCreateOptions)
 	}
 	tableItems := cmd.UI.Table([]string{T("KeyName"), T("Description"),
 		T("term"),T("Default Hourly Price Per Instance")})
