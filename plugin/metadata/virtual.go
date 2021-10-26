@@ -887,12 +887,13 @@ EXAMPLE:
 		Flags: []cli.Flag{
 			cli.StringSliceFlag{
 				Name:  "column",
-				Usage: T("Column to display. Options are: id,hostname,domain,primary_ip,backend_ip]. This option can be specified multiple times"),
+				Usage: T("Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times"),
 			},
 			cli.StringSliceFlag{
 				Name:   "columns",
 				Hidden: true,
 			},
+			OutputFlag(),
 		}}
 }
 

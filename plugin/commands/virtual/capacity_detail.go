@@ -1,11 +1,13 @@
 package virtual
 
 import (
+	"bytes"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 	"strconv"
 )
@@ -35,6 +37,7 @@ func (cmd *CapacityDetailCommand) Run(c *cli.Context) error {
 		return slErrors.NewInvalidSoftlayerIdInputError("Reserved Capacity Gruop Virtual server ID")
 	}
 
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
 	sortby := c.String("sortby")
 	if sortby == "" {
 		sortby = "hostname"
@@ -46,26 +49,33 @@ func (cmd *CapacityDetailCommand) Run(c *cli.Context) error {
 		columns = c.StringSlice("columns")
 	}
 
-	defaultColumns := []string{"name","id", "hostname", "domain", "primary_id", "backend_id"}
-	optionalColumns := []string{"name","id", "hostname", "domain", "primary_id", "backend_id"}
-	sortColumns := []string{"name","id", "hostname", "domain", "primary_id", "backend_id"}
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, capacity)
+	}
+
+	defaultColumns := []string{"id", "hostname", "domain", "primary_id", "backend_id"}
+	optionalColumns := []string{"id", "hostname", "domain", "primary_id", "backend_id"}
+	sortColumns := []string{"id", "hostname", "domain", "primary_id", "backend_id"}
 
 	showColumns, err := utils.ValidateColumns(sortby, columns, defaultColumns, optionalColumns, sortColumns, c)
 	if err != nil {
 		return err
 	}
 
+	mainTable := cmd.UI.Table([]string{T("detail")})
+	mainTable.Add(utils.FormatStringPointer(capacity.Name))
+	buf := new(bytes.Buffer)
+	table := terminal.NewTable(buf,utils.GetColumnHeader(showColumns))
 	for _, instance := range capacity.Instances {
-		table := cmd.UI.Table(utils.GetColumnHeader(showColumns))
 		values := make(map[string]string)
-		values["name"] = utils.FormatStringPointer(capacity.Name)
-		values["id"] = utils.FormatIntPointer(instance.Id)
 		if instance.Guest != nil{
+			values["id"] = utils.FormatIntPointer(instance.Id)
 			values["hostname"] = utils.FormatStringPointer(instance.Guest.Hostname)
 			values["domain"] = utils.FormatStringPointer(instance.Guest.Domain)
 			values["primary_id"] = utils.FormatStringPointer(instance.Guest.PrimaryIpAddress)
 			values["backend_id"] = utils.FormatStringPointer(instance.Guest.PrimaryBackendIpAddress)
 		}else{
+			values["id"] = utils.EMPTY_VALUE
 			values["hostname"] = utils.EMPTY_VALUE
 			values["domain"] = utils.EMPTY_VALUE
 			values["primary_id"] = utils.EMPTY_VALUE
@@ -76,7 +86,9 @@ func (cmd *CapacityDetailCommand) Run(c *cli.Context) error {
 			row[i] = values[col]
 		}
 		table.Add(row...)
-		table.Print()
 	}
+	table.Print()
+	mainTable.Add(buf.String())
+	mainTable.Print()
 	return nil
 }
