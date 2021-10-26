@@ -94,6 +94,7 @@ type VirtualServerManager interface {
 	GetPortableStorage(id int) ([]datatypes.Virtual_Disk_Image, error)
 	GetLocalDisks(id int) ([]datatypes.Virtual_Guest_Block_Device, error)
 	CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error)
+	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
 }
 
 type virtualServerManager struct {
@@ -1174,7 +1175,6 @@ func (vs virtualServerManager) GetStorageDetails(id int, nasType string) ([]data
 	return vs.VirtualGuestService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
 }
 
-
 // Finds the Reserved Capacity groups of Account
 // SoftLayer_Reserved_Capacity_Groups
 func (vs virtualServerManager) CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error) {
@@ -1184,4 +1184,41 @@ func (vs virtualServerManager) CapacityList(mask string) ([]datatypes.Virtual_Re
 			" instanceCount, backendRouter[datacenter]]"
 	}
 	return vs.AccountService.Mask(mask).GetReservedCapacityGroups()
+}
+
+func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error) {
+	flavorId, _ := vs.OrderManager.GetPackageByKey("RESERVED_CAPACITY", "id")
+	reservedCapacity.PackageId = flavorId.Id
+	reservedCapacity.ComplexType = sl.String("SoftLayer_Container_Product_Order_Virtual_ReservedCapacity")
+	if params["name"] != nil {
+		reservedCapacity.Name = sl.String(params["name"].(string))
+	}
+	if params["backendRouterId"] != nil {
+		reservedCapacity.BackendRouterId = sl.Int(params["backendRouterId"].(int))
+	}
+	if params["flavor"] != nil {
+		items, _ := vs.PackageService.Id(*flavorId.Id).GetItemPrices()
+		for _, item := range items {
+			if *item.Item.KeyName == params["flavor"] {
+				if item.LocationGroupId == nil {
+					priceFlavor := datatypes.Product_Item_Price{
+						Id: item.Id,
+					}
+					reserverItem := datatypes.Product_Item_Price{
+						Id: sl.Int(217601),
+					}
+					reservedCapacity.Prices = append(reservedCapacity.Prices, priceFlavor)
+					reservedCapacity.Prices = append(reservedCapacity.Prices, reserverItem)
+
+				}
+			}
+
+		}
+
+	}
+	if params["test"] == true {
+		return vs.OrderService.VerifyOrder(reservedCapacity)
+	} else {
+		return vs.OrderService.PlaceOrder(reservedCapacity, sl.Bool(false))
+	}
 }

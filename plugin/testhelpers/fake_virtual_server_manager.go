@@ -196,6 +196,20 @@ type FakeVirtualServerManager struct {
 		result1 *datatypes.Virtual_Guest
 		result2 error
 	}
+	GenerateInstanceCapacityCreationTemplateStub func(*datatypes.Container_Product_Order_Virtual_ReservedCapacity, map[string]interface{}) (*interface{}, error)
+	generateInstanceCapacityCreationTemplateMutex      sync.RWMutex
+	generateInstanceCapacityCreationTemplateArgsForCall  []struct {
+		arg1 *datatypes.Container_Product_Order_Virtual_ReservedCapacity
+		arg2 map[string]interface{}
+	}
+	generateInstanceCapacityCreationTemplateReturns struct {
+		result1 *interface{}
+		result2 error
+	}
+	generateInstanceCapacityCreationTemplateReturnsOnCall map[int]struct {
+		result1 *interface{}
+		result2 error
+	}
 	GetBandwidthDataStub        func(int, time.Time, time.Time, int) ([]datatypes.Metric_Tracking_Object_Data, error)
 	getBandwidthDataMutex       sync.RWMutex
 	getBandwidthDataArgsForCall []struct {
@@ -548,7 +562,6 @@ func (fake *FakeVirtualServerManager) CapacityListReturns(result1 []datatypes.Vi
 		result2 error
 	}{result1, result2}
 }
-
 
 func (fake *FakeVirtualServerManager) AttachPortableStorage(arg1 int, arg2 int) (datatypes.Provisioning_Version1_Transaction, error) {
 	fake.attachPortableStorageMutex.Lock()
@@ -1385,6 +1398,70 @@ func (fake *FakeVirtualServerManager) GenerateInstanceCreationTemplateReturnsOnC
 	}
 	fake.generateInstanceCreationTemplateReturnsOnCall[i] = struct {
 		result1 *datatypes.Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GenerateInstanceCapacityCreationTemplate(arg1 *datatypes.Container_Product_Order_Virtual_ReservedCapacity, arg2 map[string]interface{}) (interface{}, error) {
+	fake.generateInstanceCapacityCreationTemplateMutex.Lock()
+	ret, specificReturn := fake.generateInstanceCapacityCreationTemplateReturnsOnCall[len(fake.generateInstanceCapacityCreationTemplateReturnsOnCall)]
+	fake.generateInstanceCapacityCreationTemplateArgsForCall = append(fake.generateInstanceCapacityCreationTemplateArgsForCall, struct {
+		arg1 *datatypes.Container_Product_Order_Virtual_ReservedCapacity
+		arg2 map[string]interface{}
+	}{arg1, arg2})
+	fake.recordInvocation("GenerateInstanceCapacityCreationTemplate", []interface{}{arg1, arg2})
+	fake.generateInstanceCapacityCreationTemplateMutex.Unlock()
+	if fake.GenerateInstanceCapacityCreationTemplateStub != nil {
+		return fake.GenerateInstanceCapacityCreationTemplateStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.generateInstanceCapacityCreationTemplateReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GenerateInstanceCapacityCreationTemplateCallCount() int {
+	fake.generateInstanceCapacityCreationTemplateMutex.RLock()
+	defer fake.generateInstanceCapacityCreationTemplateMutex.RUnlock()
+	return len(fake.generateInstanceCapacityCreationTemplateArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GenerateInstanceCapacityCreationTemplateCalls(stub func(*datatypes.Container_Product_Order_Virtual_ReservedCapacity, map[string]interface{}) (*interface{}, error)) {
+	fake.generateInstanceCapacityCreationTemplateMutex.Lock()
+	defer fake.generateInstanceCapacityCreationTemplateMutex.Unlock()
+	fake.GenerateInstanceCapacityCreationTemplateStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GenerateInstanceCapacityCreationTemplateArgsForCall(i int) (*datatypes.Container_Product_Order_Virtual_ReservedCapacity, map[string]interface{}) {
+	fake.generateInstanceCapacityCreationTemplateMutex.RLock()
+	defer fake.generateInstanceCapacityCreationTemplateMutex.RUnlock()
+	argsForCall := fake.generateInstanceCapacityCreationTemplateArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) GenerateInstanceCapacityCreationTemplateReturns(result1 *interface{}, result2 error) {
+	fake.generateInstanceCapacityCreationTemplateMutex.Lock()
+	defer fake.generateInstanceCapacityCreationTemplateMutex.Unlock()
+	fake.GenerateInstanceCapacityCreationTemplateStub = nil
+	fake.generateInstanceCapacityCreationTemplateReturns = struct {
+		result1 *interface{}
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GenerateInstanceCapacityCreationTemplateReturnsOnCall(i int, result1 *interface{}, result2 error) {
+	fake.generateInstanceCapacityCreationTemplateMutex.Lock()
+	defer fake.generateInstanceCapacityCreationTemplateMutex.Unlock()
+	fake.GenerateInstanceCapacityCreationTemplateStub = nil
+	if fake.generateInstanceCapacityCreationTemplateReturnsOnCall == nil {
+		fake.generateInstanceCapacityCreationTemplateReturnsOnCall = make(map[int]struct {
+			result1 *interface{}
+			result2 error
+		})
+	}
+	fake.generateInstanceCapacityCreationTemplateReturnsOnCall[i] = struct {
+		result1 *interface{}
 		result2 error
 	}{result1, result2}
 }
