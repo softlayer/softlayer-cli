@@ -3594,6 +3594,8 @@
 "translation": "dest"},
 {"id": "dest_mask",
 "translation": "dest_mask"},
+{"id": "detail",
+"translation": "detail"},
 {"id": "device",
 "translation": "dispositivo"},
 {"id": "disk (allocated/total)",
