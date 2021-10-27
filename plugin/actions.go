@@ -361,6 +361,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-" + CMD_VS_UPGRADE_NAME: func(c *cli.Context) error {
 			return virtual.NewUpgradeCommand(ui, virtualServerManager).Run(c)
 		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_DETAIL_NAME: func(c *cli.Context) error {
+			return virtual.NewCapacityDetailCommand(ui, virtualServerManager).Run(c)
+		},
 		NS_VIRTUAL_NAME + "-bandwidth": func(c *cli.Context) error {
 			return virtual.NewBandwidthCommand(ui, virtualServerManager).Run(c)
 		},
