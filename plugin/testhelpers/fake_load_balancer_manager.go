@@ -356,6 +356,19 @@ type FakeLoadBalancerManager struct {
 		result1 []datatypes.Network_LBaaS_L7Policy
 		result2 error
 	}
+	GetL7PolicyStub        func(policyId int) (datatypes.Network_LBaaS_L7Policy, error)
+	getL7PolicyMutex       sync.RWMutex
+	getL7PolicyArgsForCall []struct {
+		policyId int
+	}
+	getL7PolicyReturns struct {
+		result1 datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}
+	getL7PolicyReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}
 	DeleteL7PolicyStub        func(policy int) (datatypes.Network_LBaaS_LoadBalancer, error)
 	deleteL7PolicyMutex       sync.RWMutex
 	deleteL7PolicyArgsForCall []struct {
@@ -1752,6 +1765,57 @@ func (fake *FakeLoadBalancerManager) GetL7PoliciesReturnsOnCall(i int, result1 [
 	}{result1, result2}
 }
 
+func (fake *FakeLoadBalancerManager) GetL7Policy(policyId int) (datatypes.Network_LBaaS_L7Policy, error) {
+	fake.getL7PolicyMutex.Lock()
+	ret, specificReturn := fake.getL7PolicyReturnsOnCall[len(fake.getL7PolicyArgsForCall)]
+	fake.getL7PolicyArgsForCall = append(fake.getL7PolicyArgsForCall, struct {
+		policyId int
+	}{policyId})
+	fake.recordInvocation("GetL7Policy", []interface{}{policyId})
+	fake.getL7PolicyMutex.Unlock()
+	if fake.GetL7PolicyStub != nil {
+		return fake.GetL7PolicyStub(policyId)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fake.getL7PolicyReturns.result1, fake.getL7PolicyReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PolicyCallCount() int {
+	fake.getL7PolicyMutex.RLock()
+	defer fake.getL7PolicyMutex.RUnlock()
+	return len(fake.getL7PolicyArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PolicyArgsForCall(i int) int {
+	fake.getL7PolicyMutex.RLock()
+	defer fake.getL7PolicyMutex.RUnlock()
+	return fake.getL7PolicyArgsForCall[i].policyId
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PolicyReturns(result1 datatypes.Network_LBaaS_L7Policy, result2 error) {
+	fake.GetL7PolicyStub = nil
+	fake.getL7PolicyReturns = struct {
+		result1 datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PolicyReturnsOnCall(i int, result1 datatypes.Network_LBaaS_L7Policy, result2 error) {
+	fake.GetL7PolicyStub = nil
+	if fake.getL7PolicyReturnsOnCall == nil {
+		fake.getL7PolicyReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_L7Policy
+			result2 error
+		})
+	}
+	fake.getL7PolicyReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeLoadBalancerManager) DeleteL7Policy(policy int) (datatypes.Network_LBaaS_LoadBalancer, error) {
 	fake.deleteL7PolicyMutex.Lock()
 	ret, specificReturn := fake.deleteL7PolicyReturnsOnCall[len(fake.deleteL7PolicyArgsForCall)]
@@ -2027,8 +2091,6 @@ func (fake *FakeLoadBalancerManager) Invocations() map[string][][]interface{} {
 	defer fake.cancelLoadBalancerMutex.RUnlock()
 	fake.getLoadBalancersMutex.RLock()
 	defer fake.getLoadBalancersMutex.RUnlock()
-	fake.getLoadBalancerMutex.RLock()
-	defer fake.getLoadBalancerMutex.RUnlock()
 	fake.getLoadBalancerUUIDMutex.RLock()
 	defer fake.getLoadBalancerUUIDMutex.RUnlock()
 	fake.updateLBHealthMonitorsMutex.RLock()
