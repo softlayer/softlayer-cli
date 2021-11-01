@@ -10,31 +10,32 @@ var (
 	NS_VIRTUAL_NAME  = "vs"
 	CMD_VIRTUAL_NAME = "vs"
 
-	CMD_VS_AUTHORIZE_STORAGE_NAME  = "authorize-storage"
-	CMD_VS_CANCEL_NAME             = "cancel"
-	CMD_VS_CAPTURE_NAME            = "capture"
-	CMD_VS_CREATE_NAME             = "create"
-	CMD_VS_CREATE_HOST_NAME        = "host-create"
-	CMD_VS_CREATE_OPTIONS_NAME     = "options"
-	CMD_VS_CREDENTIALS_NAME        = "credentials"
-	CMD_VS_DETAIL_NAME             = "detail"
-	CMD_VS_DNS_SYNC_NAME           = "dns-sync"
-	CMD_VS_EDIT_NAME               = "edit"
-	CMD_VS_LIST_NAME               = "list"
-	CMD_VS_LIST_HOST_NAME          = "host-list"
-	CMD_VS_PAUSE_NAME              = "pause"
-	CMD_VS_POWER_OFF_NAME          = "power-off"
-	CMD_VS_POWER_ON_NAME           = "power-on"
-	CMD_VS_READY_NAME              = "ready"
-	CMD_VS_REBOOT_NAME             = "reboot"
-	CMD_VS_RELOAD_NAME             = "reload"
-	CMD_VS_RESCUE_NAME             = "rescue"
-	CMD_VS_RESUME_NAME             = "resume"
-	CMD_VS_UPGRADE_NAME            = "upgrade"
-	CMD_VS_MIGRATE_NAME            = "migrate"
+	CMD_VS_AUTHORIZE_STORAGE_NAME = "authorize-storage"
+	CMD_VS_CANCEL_NAME            = "cancel"
+	CMD_VS_CAPTURE_NAME           = "capture"
+	CMD_VS_CREATE_NAME            = "create"
+	CMD_VS_CREATE_HOST_NAME       = "host-create"
+	CMD_VS_CREATE_OPTIONS_NAME    = "options"
+	CMD_VS_CREDENTIALS_NAME       = "credentials"
+	CMD_VS_DETAIL_NAME            = "detail"
+	CMD_VS_DNS_SYNC_NAME          = "dns-sync"
+	CMD_VS_EDIT_NAME              = "edit"
+	CMD_VS_LIST_NAME              = "list"
+	CMD_VS_LIST_HOST_NAME         = "host-list"
+	CMD_VS_PAUSE_NAME             = "pause"
+	CMD_VS_POWER_OFF_NAME         = "power-off"
+	CMD_VS_POWER_ON_NAME          = "power-on"
+	CMD_VS_READY_NAME             = "ready"
+	CMD_VS_REBOOT_NAME            = "reboot"
+	CMD_VS_RELOAD_NAME            = "reload"
+	CMD_VS_RESCUE_NAME            = "rescue"
+	CMD_VS_RESUME_NAME            = "resume"
+	CMD_VS_STORAGE_NAME           = "storage"
+	CMD_VS_UPGRADE_NAME           = "upgrade"
+	CMD_VS_MIGRATE_NAME           = "migrate"
 	CMD_VS_CAPACITY_CREATE_OPTIONS = "capacity-create-options"
-	CMD_VS_STORAGE_NAME            = "storage"
-	CMD_VS_CAPACITY_LIST_NAME      = "capacity-list"
+	CMD_VS_CAPACITY_DETAIL_NAME   = "capacity-detail"
+	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -59,6 +60,7 @@ func VSMetaData() cli.Command {
 			VSCreateOptionsMetaData(),
 			VSCredentialsMetaData(),
 			VSDetailMetaData(),
+			VSCapacityDetailMetaData(),
 			VSDNSSyncMetaData(),
 			VSEditMetaData(),
 			VSListHostMetaData(),
@@ -873,6 +875,28 @@ EXAMPLE:
 			OutputFlag(),
 		},
 	}
+}
+
+func VSCapacityDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_CAPACITY_DETAIL_NAME,
+		Description: T("Get Reserved Capacity Group details."),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]
+EXAMPLE:
+   ${COMMAND_NAME} sl vs capacity-details 12345678
+    Get Reserved Capacity Group details with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+			OutputFlag(),
+		}}
 }
 
 func VSCapacityListMetaData() cli.Command {

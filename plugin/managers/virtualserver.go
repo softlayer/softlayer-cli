@@ -93,6 +93,7 @@ type VirtualServerManager interface {
 	GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error)
 	GetPortableStorage(id int) ([]datatypes.Virtual_Disk_Image, error)
 	GetLocalDisks(id int) ([]datatypes.Virtual_Guest_Block_Device, error)
+	GetCapacityDetail(id int) (datatypes.Virtual_ReservedCapacityGroup, error)
 	CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error)
 	GetRouters(packageName string) ([]datatypes.Location_Region, error)
 	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
@@ -1177,6 +1178,12 @@ func (vs virtualServerManager) GetStorageDetails(id int, nasType string) ([]data
 	return vs.VirtualGuestService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
 }
 
+
+func (vs virtualServerManager) GetCapacityDetail(id int) (datatypes.Virtual_ReservedCapacityGroup, error){
+	mask := "mask[instances[billingItem[item[keyName],category], guest], backendRouter[datacenter]]"
+	reservedService := services.GetVirtualReservedCapacityGroupService(vs.Session)
+	return reservedService.Mask(mask).Id(id).GetObject()
+}
 
 // Finds the Reserved Capacity groups of Account
 // SoftLayer_Reserved_Capacity_Groups
