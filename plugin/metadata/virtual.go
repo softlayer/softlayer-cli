@@ -31,6 +31,7 @@ var (
 	CMD_VS_RESCUE_NAME            = "rescue"
 	CMD_VS_RESUME_NAME            = "resume"
 	CMD_VS_STORAGE_NAME           = "storage"
+	CMD_VS_BILLING_NAME           = "billing"
 	CMD_VS_UPGRADE_NAME           = "upgrade"
 	CMD_VS_MIGRATE_NAME           = "migrate"
 	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
@@ -76,6 +77,7 @@ func VSMetaData() cli.Command {
 			VSBandwidthMetaData(),
 			VSStorageMetaData(),
 			VSCapacityListMetaData(),
+			VSBillingMetaData(),
 		},
 	}
 }
@@ -883,5 +885,22 @@ func VSCapacityListMetaData() cli.Command {
 EXAMPLE:
    ${COMMAND_NAME} sl vs capacity-list
    List Reserved Capacity groups.`),
+	}
+}
+
+
+func VSBillingMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_BILLING_NAME,
+		Description: T("Get billing details for a virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] 
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs billing 12345678
+   This command billing lists detailed information about virtual server instance with ID 12345678.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
 	}
 }

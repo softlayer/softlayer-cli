@@ -177,9 +177,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_HARDWARE_NAME + "-storage": func(c *cli.Context) error {
 			return hardware.NewStorageCommand(ui, hardwareManager).Run(c)
 		},
-		NS_HARDWARE_NAME + "-guests": func(c *cli.Context) error {
-			return hardware.NewGuestsCommand(ui, hardwareManager).Run(c)
-		},
 
 		// image - 6
 		NS_IMAGE_NAME + "-" + CMD_IMG_DELETE_NAME: func(c *cli.Context) error {
@@ -345,6 +342,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_READY_NAME: func(c *cli.Context) error {
 			return virtual.NewReadyCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_BILLING_NAME: func(c *cli.Context) error {
+			return virtual.NewBillingCommand(ui, virtualServerManager).Run(c)
 		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_REBOOT_NAME: func(c *cli.Context) error {
 			return virtual.NewRebootCommand(ui, virtualServerManager).Run(c)
