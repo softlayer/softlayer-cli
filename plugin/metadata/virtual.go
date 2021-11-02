@@ -951,15 +951,15 @@ WARNING: Reserved Capacity is on a yearly contract and not cancelable until the 
 			},
 			cli.IntFlag{
 				Name:  "b,backendRouterId",
-				Usage: T("backendRouterId, create-options has a list of valid ids to use.  [required]"),
+				Usage: T("BackendRouterId, create-options has a list of valid ids to use. [required]"),
 			},
 			cli.IntFlag{
 				Name:  "i,instances",
-				Usage: T("Number of VSI instances this capacity reservation can support.  [required]"),
+				Usage: T("Number of VSI instances this capacity reservation can support. [required]"),
 			},
 			cli.StringFlag{
 				Name:  "fl,flavor",
-				Usage: T(" Capacity keyname (C1_2X2_1_YEAR_TERM for example).  [required]"),
+				Usage: T(" Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]"),
 			},
 			cli.BoolFlag{
 				Name:  "test",
