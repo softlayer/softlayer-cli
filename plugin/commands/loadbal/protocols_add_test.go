@@ -40,13 +40,13 @@ var _ = Describe("LoadBal_protocol-add_Test", func() {
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--id' is required"))
 		})
-		It("Error unable to find Id", func(){
+		It("Error unable to find Id", func() {
 			fakeLBManager.GetLoadBalancerUUIDReturns("-", errors.New("SoftLayer_Exception_ApiError"))
 			err := testhelpers.RunCommand(cliCommand, "--id", "12345")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Failed to get load balancer: SoftLayer_Exception_ApiError"))
 		})
-		It("Error bad stick option", func(){
+		It("Error bad stick option", func() {
 			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--sticky", "bad_option")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Value of option '--sticky' should be cookie or source-ip"))
@@ -56,7 +56,7 @@ var _ = Describe("LoadBal_protocol-add_Test", func() {
 		BeforeEach(func() {
 			fakeLBManager.GetLoadBalancerUUIDReturns("aaa-bbb-111", nil)
 		})
-		It("All Options", func(){
+		It("All Options", func() {
 			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--front-protocol", "HTTP",
 				"--back-protocol", "HTTPS", "--front-port", "99", "--back-port", "81", "-m", "TEST", "--sticky", "source-ip",
 				"-c", "500", "--client-timeout", "100", "--server-timeout", "200",
@@ -76,7 +76,7 @@ var _ = Describe("LoadBal_protocol-add_Test", func() {
 			Expect(*argsForCall[0].ServerTimeout).To(Equal(200))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 		})
-		It("No Options", func(){
+		It("No Options", func() {
 			err := testhelpers.RunCommand(cliCommand, "--id", "12345")
 			Expect(err).NotTo(HaveOccurred())
 			lbUUID, argsForCall := fakeLBManager.AddLoadBalancerListenerArgsForCall(0)

@@ -1,21 +1,21 @@
 package hardware
 
 import (
-	"time"
 	"fmt"
+	"time"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 )
 
 type BandwidthCommand struct {
-	UI			terminal.UI
-	Manager		managers.HardwareServerManager
+	UI      terminal.UI
+	Manager managers.HardwareServerManager
 }
 
 func NewBandwidthCommand(ui terminal.UI, manager managers.HardwareServerManager) (cmd *BandwidthCommand) {
@@ -33,7 +33,7 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return errors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
-	
+
 	var start, end string
 	var startDate, endDate time.Time
 
@@ -55,7 +55,7 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 	} else {
 		endDate = startDate.AddDate(0, -1, 0)
 	}
-	
+
 	rollupSeconds := 3600
 	if c.IsSet("rollup") {
 		rollupSeconds = c.Int("rollup")
@@ -64,15 +64,15 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 	bandwidthData, err := cmd.Manager.GetBandwidthData(VsID, startDate, endDate, rollupSeconds)
 	if err != nil {
 		fmt.Printf("ERR: %v", err)
-		return err 
+		return err
 	}
 	// cmd.UI.Say(fmt.Sprintf("%+v", bandwidthData))
-	
+
 	summaryTable, bandwidthTable := virtual.BuildOutputTable(bandwidthData, cmd.UI)
 	summaryTable.Print()
 	if !c.IsSet("quite") {
-		bandwidthTable.Print()	
+		bandwidthTable.Print()
 	}
 
 	return nil
-}	
+}

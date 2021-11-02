@@ -1,6 +1,5 @@
 package version
 
-
 // plugin version
 const PLUGIN_VERSION = "0.0.1"
 const PLUGIN_SOFTLAYER = "sl"

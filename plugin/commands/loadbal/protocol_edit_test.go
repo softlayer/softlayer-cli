@@ -1,8 +1,8 @@
 package loadbal_test
 
 import (
-	"strconv"
 	"errors"
+	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
@@ -16,8 +16,8 @@ import (
 )
 
 type OptionMapping struct {
-	SLApiConfig 	datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-	CLIValue		string
+	SLApiConfig datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+	CLIValue    string
 }
 
 var stringValue = "HTTP"
@@ -26,32 +26,32 @@ var intValue = 80
 // This lets us not have to spell out every test to test every option.
 var optionMap = map[string]OptionMapping{
 	"front-protocol": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{FrontendProtocol: &stringValue,},
-		CLIValue: stringValue,
+		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{FrontendProtocol: &stringValue},
+		CLIValue:    stringValue,
 	},
 	"back-protocol": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{BackendProtocol: &stringValue,},
-		CLIValue: stringValue,
+		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{BackendProtocol: &stringValue},
+		CLIValue:    stringValue,
 	},
 	"front-port": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{FrontendPort: &intValue,},
-		CLIValue: strconv.Itoa(intValue),
+		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{FrontendPort: &intValue},
+		CLIValue:    strconv.Itoa(intValue),
 	},
 	"back-port": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{BackendPort: &intValue,},
-		CLIValue: strconv.Itoa(intValue),
+		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{BackendPort: &intValue},
+		CLIValue:    strconv.Itoa(intValue),
 	},
 	"m": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{LoadBalancingMethod: &stringValue,},
-		CLIValue: stringValue,
+		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{LoadBalancingMethod: &stringValue},
+		CLIValue:    stringValue,
 	},
 	"client-timeout": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{ClientTimeout: &intValue,},
-		CLIValue: strconv.Itoa(intValue),
+		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{ClientTimeout: &intValue},
+		CLIValue:    strconv.Itoa(intValue),
 	},
 	"server-timeout": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{ServerTimeout: &intValue,},
-		CLIValue: strconv.Itoa(intValue),
+		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{ServerTimeout: &intValue},
+		CLIValue:    strconv.Itoa(intValue),
 	},
 }
 
@@ -81,7 +81,7 @@ var _ = Describe("LoadBal_protocol-edit_Test", func() {
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--id' is required"))
 		})
-		It("Error unable to find Id", func(){
+		It("Error unable to find Id", func() {
 			fakeLBManager.GetLoadBalancerUUIDReturns("-", errors.New("SoftLayer_Exception_ApiError"))
 			err := testhelpers.RunCommand(cliCommand, "--id", "12345")
 			Expect(err).To(HaveOccurred())
@@ -92,17 +92,17 @@ var _ = Describe("LoadBal_protocol-edit_Test", func() {
 		It("Error no UUID", func() {
 			err := testhelpers.RunCommand(cliCommand, "--id", "12345")
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("'--protocol-uuid' is required"))			
+			Expect(err.Error()).To(ContainSubstring("'--protocol-uuid' is required"))
 		})
 	})
 	Context("Testing Options", func() {
 		var listenerUUID = "aaasssbbb-123"
-		BeforeEach(func(){
+		BeforeEach(func() {
 			fakeLBManager.GetLoadBalancerUUIDReturns("aaa-bbb-111", nil)
 		})
 		for opt, slOpt := range optionMap {
-			Context("Test " + opt, func() {
-				It("Matches API call", func(){
+			Context("Test "+opt, func() {
+				It("Matches API call", func() {
 					err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--protocol-uuid", listenerUUID, "--"+opt, slOpt.CLIValue)
 					slOpt.SLApiConfig.ListenerUuid = &listenerUUID
 					Expect(err).NotTo(HaveOccurred())
