@@ -95,6 +95,9 @@ type VirtualServerManager interface {
 	GetLocalDisks(id int) ([]datatypes.Virtual_Guest_Block_Device, error)
 	GetCapacityDetail(id int) (datatypes.Virtual_ReservedCapacityGroup, error)
 	CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error)
+	GetRouters(packageName string) ([]datatypes.Location_Region, error)
+	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
+	GetPods() ([]datatypes.Network_Pod, error)
 }
 
 type virtualServerManager struct {
@@ -104,7 +107,7 @@ type virtualServerManager struct {
 	OrderService         services.Product_Order
 	DedicatedHostService services.Virtual_DedicatedHost
 	OrderManager         OrderManager
-	Session              *session.Session
+	Session			    *session.Session
 	StorageManager       StorageManager
 }
 
@@ -1191,4 +1194,31 @@ func (vs virtualServerManager) CapacityList(mask string) ([]datatypes.Virtual_Re
 			" instanceCount, backendRouter[datacenter]]"
 	}
 	return vs.AccountService.Mask(mask).GetReservedCapacityGroups()
+}
+
+//Pulls down all backendRouterIds that are available
+//A list of locations where product_package
+func (vs virtualServerManager) GetRouters(packageName string) ([]datatypes.Location_Region, error) {
+	productPackage, err := vs.OrderManager.GetPackageByKey(packageName, "mask[id,locations]")
+	if err != nil {
+		return nil, err
+	}
+	regions, err := vs.PackageService.Id(*productPackage.Id).GetRegions()
+	return regions, err
+}
+
+//List available reserved capacity plans
+func (vs virtualServerManager) GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error) {
+	productPackage, err := vs.OrderManager.GetPackageByKey(packageName, "mask[id,locations]")
+	if err != nil {
+		return nil, err
+	}
+	items, err := vs.PackageService.Id(*productPackage.Id).GetItems()
+	return items, err
+}
+
+//Get the pod details, which contains the router id
+func (vs virtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
+	podService := services.GetNetworkPodService(vs.Session)
+	return podService.GetAllObjects()
 }

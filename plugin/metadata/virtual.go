@@ -33,6 +33,7 @@ var (
 	CMD_VS_STORAGE_NAME           = "storage"
 	CMD_VS_UPGRADE_NAME           = "upgrade"
 	CMD_VS_MIGRATE_NAME           = "migrate"
+	CMD_VS_CAPACITY_CREATE_OPTIONS = "capacity-create-options"
 	CMD_VS_CAPACITY_DETAIL_NAME   = "capacity-detail"
 	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
 )
@@ -78,6 +79,7 @@ func VSMetaData() cli.Command {
 			VSBandwidthMetaData(),
 			VSStorageMetaData(),
 			VSCapacityListMetaData(),
+			VSCapacityCreateOptionsMetadata(),
 		},
 	}
 }
@@ -907,5 +909,21 @@ func VSCapacityListMetaData() cli.Command {
 EXAMPLE:
    ${COMMAND_NAME} sl vs capacity-list
    List Reserved Capacity groups.`),
+	}
+}
+
+func VSCapacityCreateOptionsMetadata() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_CAPACITY_CREATE_OPTIONS,
+		Description: T("List options for creating Reserved Capacity Group instance"),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-create-options
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs options
+   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
 	}
 }
