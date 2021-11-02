@@ -1,14 +1,15 @@
 package tags
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-func GetCommandAcionBindings(ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
+
+func GetCommandAcionBindings( ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	tagsManager := managers.NewTagsManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{

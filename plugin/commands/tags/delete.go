@@ -1,25 +1,27 @@
 package tags
 
 import (
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
+
 type DeleteCommand struct {
-	UI          terminal.UI
+	UI 			terminal.UI
 	TagsManager managers.TagsManager
 }
 
+
 func NewDeleteCommand(ui terminal.UI, tagsManager managers.TagsManager) (cmd *DeleteCommand) {
 	return &DeleteCommand{
-		UI:          ui,
-		TagsManager: tagsManager,
-	}
+		UI:             ui,
+		TagsManager: 	tagsManager,
+	}	
 }
 
 func (cmd *DeleteCommand) Run(c *cli.Context) error {

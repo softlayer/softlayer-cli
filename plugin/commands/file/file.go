@@ -1,13 +1,14 @@
 package file
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
+
 
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	storageManager := managers.NewStorageManager(session)
