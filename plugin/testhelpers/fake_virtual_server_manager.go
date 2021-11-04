@@ -224,6 +224,34 @@ type FakeVirtualServerManager struct {
 		result1 datatypes.Container_Virtual_Guest_Configuration
 		result2 error
 	}
+
+	getCapacityCreateOptionsStub        func() ([]datatypes.Product_Item, error)
+	getCapacityCreateOptionsMutex       sync.RWMutex
+	getCapacityCreateOptionsArgsForCall []struct {
+	}
+	getCapacityCreateOptionsReturns struct {
+		result1 []datatypes.Product_Item
+		result2 error
+	}
+	getCapacityCreateOptionsReturnsOnCall map[int]struct {
+		result1 []datatypes.Product_Item
+		result2 error
+	}
+	GetRouterStub        func() ([]datatypes.Location_Region, error)
+	GetRouterMutex       sync.RWMutex
+	GetRouterArgsForCall []struct{}
+	GetRouterReturns     struct {
+		result1 []datatypes.Location_Region
+		result2 error
+	}
+	GetPodsStub        func() ([]datatypes.Network_Pod, error)
+	GetPodsMutex       sync.RWMutex
+	GetPodsArgsForCall []struct{}
+	getPodsReturns     struct {
+		result1 []datatypes.Network_Pod
+		result2 error
+	}
+
 	GetDedicatedHostStub        func(int) (datatypes.Virtual_DedicatedHost, error)
 	getDedicatedHostMutex       sync.RWMutex
 	getDedicatedHostArgsForCall []struct {
@@ -515,7 +543,24 @@ type FakeVirtualServerManager struct {
 		result2 error
 	}
 
-	capacityListStub        func(string) (datatypes.Virtual_ReservedCapacityGroup, error)
+
+	getCapacityDetailStub        func(int) (datatypes.Virtual_ReservedCapacityGroup, error)
+	getCapacityDetailMutex       sync.RWMutex
+	getCapacityDetailArgsForCall struct {
+		arg1 datatypes.Virtual_ReservedCapacityGroup
+		arg2 error
+	}
+	getCapacityDetailReturns struct {
+		result1 datatypes.Virtual_ReservedCapacityGroup
+		result2 error
+	}
+
+	getCapacityDetailReturnsOnCall struct {
+		result1 datatypes.Virtual_ReservedCapacityGroup
+		result2 error
+	}
+
+	capacityListStub        func (string)(datatypes.Virtual_ReservedCapacityGroup, error)
 	capacityListMutex       sync.RWMutex
 	capacitylistArgsForCall struct {
 		arg1 datatypes.Virtual_ReservedCapacityGroup
@@ -529,8 +574,51 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Virtual_ReservedCapacityGroup
 		result2 error
 	}
+
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeVirtualServerManager) GetRouters(packageName string) ([]datatypes.Location_Region, error) {
+fake.GetRouterMutex.Lock()
+fake.GetRouterArgsForCall = append(fake.GetRouterArgsForCall, struct{}{})
+fake.GetRouterMutex.Unlock()
+return fake.GetRouterReturns.result1, fake.GetRouterReturns.result2
+
+}
+func (fake *FakeVirtualServerManager) getRoutersCallCount() int {
+	fake.GetRouterMutex.RLock()
+	defer fake.GetRouterMutex.RUnlock()
+	return len(fake.GetRouterArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) getRoutersReturns(result1 []datatypes.Location_Region, result2 error) {
+	fake.GetRouterStub = nil
+	fake.GetRouterReturns = struct {
+		result1 []datatypes.Location_Region
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
+	fake.GetPodsMutex.Lock()
+	fake.GetPodsArgsForCall = append(fake.GetPodsArgsForCall, struct{}{})
+	fake.GetPodsMutex.Unlock()
+	return fake.getPodsReturns.result1, fake.getPodsReturns.result2
+
+}
+func (fake *FakeVirtualServerManager) GetPodsCallCount() int {
+	fake.GetPodsMutex.RLock()
+	defer fake.GetPodsMutex.RUnlock()
+	return len(fake.GetPodsArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetPodsReturns(result1 []datatypes.Network_Pod, result2 error) {
+	fake.GetPodsStub = nil
+	fake.getPodsReturns = struct {
+		result1 []datatypes.Network_Pod
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeVirtualServerManager) CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error) {
@@ -548,7 +636,6 @@ func (fake *FakeVirtualServerManager) CapacityListReturns(result1 []datatypes.Vi
 		result2 error
 	}{result1, result2}
 }
-
 
 func (fake *FakeVirtualServerManager) AttachPortableStorage(arg1 int, arg2 int) (datatypes.Provisioning_Version1_Transaction, error) {
 	fake.attachPortableStorageMutex.Lock()
@@ -1510,6 +1597,61 @@ func (fake *FakeVirtualServerManager) GetCreateOptionsReturnsOnCall(i int, resul
 	}{result1, result2}
 }
 
+func (fake *FakeVirtualServerManager) GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error) {
+	fake.getCapacityCreateOptionsMutex.Lock()
+	ret, specificReturn := fake.getCapacityCreateOptionsReturnsOnCall[len(fake.getCapacityCreateOptionsArgsForCall)]
+	fake.getCapacityCreateOptionsArgsForCall = append(fake.getCapacityCreateOptionsArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetCreateOptions", []interface{}{})
+	fake.getCapacityCreateOptionsMutex.Unlock()
+	if fake.getCapacityCreateOptionsStub != nil {
+		return fake.getCapacityCreateOptionsStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getCapacityCreateOptionsReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityCreateOptionsCallCount() int {
+	fake.getCapacityCreateOptionsMutex.RLock()
+	defer fake.getCapacityCreateOptionsMutex.RUnlock()
+	return len(fake.getCapacityCreateOptionsArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityCreateOptionsCalls(stub func() ([]datatypes.Product_Item, error)) {
+	fake.getCapacityCreateOptionsMutex.Lock()
+	defer fake.getCapacityCreateOptionsMutex.Unlock()
+	fake.getCapacityCreateOptionsStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityCreateOptionsReturns(result1 []datatypes.Product_Item, result2 error) {
+	fake.getCapacityCreateOptionsMutex.Lock()
+	defer fake.getCapacityCreateOptionsMutex.Unlock()
+	fake.getCapacityCreateOptionsStub = nil
+	fake.getCapacityCreateOptionsReturns = struct {
+		result1 []datatypes.Product_Item
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityCreateOptionsReturnsOnCall(i int, result1 []datatypes.Product_Item, result2 error) {
+	fake.getCapacityCreateOptionsMutex.Lock()
+	defer fake.getCapacityCreateOptionsMutex.Unlock()
+	fake.getCapacityCreateOptionsStub = nil
+	if fake.getCapacityCreateOptionsReturnsOnCall == nil {
+		fake.getCapacityCreateOptionsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Product_Item
+			result2 error
+		})
+	}
+	fake.getCapacityCreateOptionsReturnsOnCall[i] = struct {
+		result1 []datatypes.Product_Item
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeVirtualServerManager) GetDedicatedHost(arg1 int) (datatypes.Virtual_DedicatedHost, error) {
 	fake.getDedicatedHostMutex.Lock()
 	ret, specificReturn := fake.getDedicatedHostReturnsOnCall[len(fake.getDedicatedHostArgsForCall)]
@@ -1617,6 +1759,59 @@ func (fake *FakeVirtualServerManager) GetInstanceReturns(result1 datatypes.Virtu
 	fake.GetInstanceStub = nil
 	fake.getInstanceReturns = struct {
 		result1 datatypes.Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityDetail(arg1 int) (datatypes.Virtual_ReservedCapacityGroup, error) {
+	fake.getCapacityDetailMutex.Lock()
+	fake.getCapacityDetailMutex.Unlock()
+	if fake.getCapacityDetailStub != nil {
+		return fake.getCapacityDetailStub(arg1)
+	}
+
+	fakeReturns := fake.getCapacityDetailReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityDetailCallCount() struct {
+	result1 datatypes.Virtual_ReservedCapacityGroup
+	result2 error
+} {
+	fake.getCapacityDetailMutex.RLock()
+	defer fake.getCapacityDetailMutex.RUnlock()
+	return fake.getCapacityDetailReturnsOnCall
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityDetailCalls(stub func(int) (datatypes.Virtual_ReservedCapacityGroup, error)) {
+	fake.getCapacityDetailMutex.Lock()
+	defer fake.getCapacityDetailMutex.Unlock()
+	fake.getCapacityDetailStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityDetailArgsForCall(i int) (datatypes.Virtual_ReservedCapacityGroup, error) {
+	fake.getCapacityDetailMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
+	argsForCall := fake.getCapacityDetailArgsForCall
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityDetailReturns(result1 datatypes.Virtual_ReservedCapacityGroup, result2 error) {
+	fake.getCapacityDetailMutex.Lock()
+	defer fake.getCapacityDetailMutex.Unlock()
+	fake.getCapacityDetailStub = nil
+	fake.getCapacityDetailReturns = struct {
+		result1 datatypes.Virtual_ReservedCapacityGroup
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetCapacityDetailReturnsOnCall(i int, result1 datatypes.Virtual_ReservedCapacityGroup, result2 error) {
+	fake.getCapacityDetailMutex.Lock()
+	defer fake.getCapacityDetailMutex.Unlock()
+	fake.getCapacityDetailStub = nil
+		fake.getCapacityDetailReturnsOnCall = struct {
+		result1 datatypes.Virtual_ReservedCapacityGroup
 		result2 error
 	}{result1, result2}
 }
