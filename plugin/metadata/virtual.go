@@ -937,7 +937,6 @@ func VSBillingMetaData() cli.Command {
 		Name:        CMD_VS_BILLING_NAME,
 		Description: T("Get billing details for a virtual server instance"),
 		Usage: T(`${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] 
-	
 EXAMPLE:
    ${COMMAND_NAME} sl vs billing 12345678
    This command billing lists detailed information about virtual server instance with ID 12345678.`),
