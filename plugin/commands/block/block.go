@@ -1,14 +1,13 @@
 package block
 
 import (
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
-
 
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	storageManager := managers.NewStorageManager(session)
@@ -44,6 +43,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_BLOCK_NAME + "-" + CMD_BLK_SNAPSHOT_CANCEL_NAME: func(c *cli.Context) error {
 			return NewSnapshotCancelCommand(ui, storageManager).Run(c)
+		},
+		NS_BLOCK_NAME + "-" + CMD_BLK_SNAPSHOT_SET_NOTIFICATION_NAME: func(c *cli.Context) error {
+			return NewSnapshotSetNotificationCommand(ui, storageManager).Run(c)
+		},
+		NS_BLOCK_NAME + "-" + CMD_BLK_SNAPSHOT_GET_NOTIFIACTION_STATUS_NAME: func(c *cli.Context) error {
+			return NewSnapshotGetNotificationStatusCommand(ui, storageManager).Run(c)
 		},
 		NS_BLOCK_NAME + "-" + CMD_BLK_SNAPSHOT_CREATE_NAME: func(c *cli.Context) error {
 			return NewSnapshotCreateCommand(ui, storageManager).Run(c)

@@ -62,6 +62,8 @@ var (
 //Manages SoftLayer Block and File Storage volumes.
 //See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
 type StorageManager interface {
+	SetSnapshotNotification(volumeID int, enabled string) error
+	GetSnapshotNotificationStatus(volumeId int) (string, error)
 	GetVolumeAccessList(volumeId int) (datatypes.Network_Storage, error)
 	AuthorizeHostToVolume(volumeId int, hardwareIds []int, vsIds []int, IPIds []int, subnetIds []int) ([]datatypes.Network_Storage_Allowed_Host, error)
 	DeauthorizeHostToVolume(volumeId int, hardwareIds []int, vsIds []int, IPIds []int, subnetIds []int) ([]datatypes.Network_Storage_Allowed_Host, error)
@@ -259,7 +261,7 @@ func (s storageManager) FailBackFromReplicant(volumeId int) error {
 //DISASTER Failover to a volume replicant.
 //If a volume (with replication) becomes inaccessible due to a disaster event,
 //this method can be used to immediately failover to an available replica in another location.
-//This method does not allow for fail back via the API. 
+//This method does not allow for fail back via the API.
 //To fail back to the original volume after using this method, open a support ticket.
 //To test failover, use FailOverToReplicant() instead.
 //volumeId: The id of the volume that is inaccessible.
@@ -268,7 +270,6 @@ func (s storageManager) DisasterRecoveryFailover(volumeId int, replicantId int) 
 	_, err := s.StorageService.Id(volumeId).DisasterRecoveryFailoverToReplicant(sl.Int(replicantId))
 	return err
 }
-
 
 //Acquires list of replicant volumes pertaining to the given volume.
 //volumeId: The id of the volume
@@ -506,7 +507,6 @@ func (s storageManager) OrderModifiedVolume(volumeType string, volumeID int, new
 
 	return s.OrderService.PlaceOrder(&modify_order, sl.Bool(false))
 }
-
 
 func (s storageManager) OrderVolume(volumeType string, location string, storageType string, osType string, size int, tier float64, iops int, snapshotSize int, billing bool) (datatypes.Container_Product_Order_Receipt, error) {
 	locationId, err := GetLocationId(s.LocationService, location)
@@ -780,7 +780,6 @@ func (s storageManager) GetVolumeCountLimits() ([]datatypes.Container_Network_St
 	return volumeLimits, err
 }
 
-
 //Splits a clone from its parent allowing it to be an independent volume.
 //volumeId: The ID of the volume object to convert.
 func (s storageManager) VolumeConvert(volumeId int) error {
@@ -794,4 +793,14 @@ func (s storageManager) VolumeConvert(volumeId int) error {
 func (s storageManager) VolumeRefresh(volumeId int, snapshotId int) error {
 	_, err := s.StorageService.Id(volumeId).RefreshDuplicate(sl.Int(snapshotId))
 	return err
+}
+
+//Enables/Disables snapshot space usage threshold warning for a given volume.
+func (s storageManager) SetSnapshotNotification(volumeID int, enabled string) error {
+	return s.StorageService.Id(volumeID).SetSnapshotNotification(&enabled)
+}
+
+//returns Enabled/Disabled snapshot space usage threshold warning for a given volume
+func (s storageManager) GetSnapshotNotificationStatus(volumeId int) (string, error) {
+	return s.StorageService.Id(volumeId).GetSnapshotNotificationStatus()
 }

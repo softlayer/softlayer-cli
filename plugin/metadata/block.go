@@ -11,37 +11,39 @@ var (
 	CMD_BLOCK_NAME = "block"
 
 	//sl block
-	CMD_BLK_ACCESS_AUTHORIZE_NAME       = "access-authorize"
-	CMD_BLK_ACCESS_LIST_NAME            = "access-list"
-	CMD_BLK_ACCESS_PASSWORD_NAME        = "access-password"
-	CMD_BLK_ACCESS_REVOKE_NAME          = "access-revoke"
-	CMD_BLK_DISASTER_FAILOVER_NAME      = "disaster-recovery-failover"
-	CMD_BLK_REPLICA_FAILBACK_NAME       = "replica-failback"
-	CMD_BLK_REPLICA_FAILOVER_NAME       = "replica-failover"
-	CMD_BLK_REPLICA_LOCATIONS_NAME      = "replica-locations"
-	CMD_BLK_REPLICA_ORDER_NAME          = "replica-order"
-	CMD_BLK_REPLICA_PARTNERS_NAME       = "replica-partners"
-	CMD_BLK_SNAPSHOT_CANCEL_NAME        = "snapshot-cancel"
-	CMD_BLK_SNAPSHOT_CREATE_NAME        = "snapshot-create"
-	CMD_BLK_SNAPSHOT_DELETE_NAME        = "snapshot-delete"
-	CMD_BLK_SNAPSHOT_DISABLE_NAME       = "snapshot-disable"
-	CMD_BLK_SNAPSHOT_ENABLE_NAME        = "snapshot-enable"
-	CMD_BLK_SNAPSHOT_LIST_NAME          = "snapshot-list"
-	CMD_BLK_SNAPSHOT_ORDER_NAME         = "snapshot-order"
-	CMD_BLK_SNAPSHOT_RESTORE_NAME       = "snapshot-restore"
-	CMD_BLK_SNAPSHOT_SCHEDULE_LIST_NAME = "snapshot-schedule-list"
-	CMD_BLK_VOLUME_CANCEL_NAME          = "volume-cancel"
-	CMD_BLK_VOLUME_COUNT_NAME           = "volume-count"
-	CMD_BLK_VOLUME_DETAIL_NAME          = "volume-detail"
-	CMD_BLK_VOLUME_DUPLICATE_NAME       = "volume-duplicate"
-	CMD_BLK_VOLUME_LIST_NAME            = "volume-list"
-	CMD_BLK_VOLUME_LUN_NAME             = "volume-set-lun-id"
-	CMD_BLK_VOLUME_ORDER_NAME           = "volume-order"
-	CMD_BLK_VOLUME_MODIFY_NAME          = "volume-modify"
-	CMD_BLK_VOLUME_OPTIONS_NAME         = "volume-options"
-	CMD_BLK_VOLUME_LIMITS_NAME          = "volume-limits"
-	CMD_BLK_VOLUME_REFRESH_NAME         = "volume-refresh"
-	CMD_BLK_VOLUME_CONVERT_NAME         = "volume-convert"
+	CMD_BLK_ACCESS_AUTHORIZE_NAME                 = "access-authorize"
+	CMD_BLK_ACCESS_LIST_NAME                      = "access-list"
+	CMD_BLK_ACCESS_PASSWORD_NAME                  = "access-password"
+	CMD_BLK_ACCESS_REVOKE_NAME                    = "access-revoke"
+	CMD_BLK_DISASTER_FAILOVER_NAME                = "disaster-recovery-failover"
+	CMD_BLK_REPLICA_FAILBACK_NAME                 = "replica-failback"
+	CMD_BLK_REPLICA_FAILOVER_NAME                 = "replica-failover"
+	CMD_BLK_REPLICA_LOCATIONS_NAME                = "replica-locations"
+	CMD_BLK_REPLICA_ORDER_NAME                    = "replica-order"
+	CMD_BLK_REPLICA_PARTNERS_NAME                 = "replica-partners"
+	CMD_BLK_SNAPSHOT_CANCEL_NAME                  = "snapshot-cancel"
+	CMD_BLK_SNAPSHOT_CREATE_NAME                  = "snapshot-create"
+	CMD_BLK_SNAPSHOT_DELETE_NAME                  = "snapshot-delete"
+	CMD_BLK_SNAPSHOT_DISABLE_NAME                 = "snapshot-disable"
+	CMD_BLK_SNAPSHOT_ENABLE_NAME                  = "snapshot-enable"
+	CMD_BLK_SNAPSHOT_LIST_NAME                    = "snapshot-list"
+	CMD_BLK_SNAPSHOT_ORDER_NAME                   = "snapshot-order"
+	CMD_BLK_SNAPSHOT_RESTORE_NAME                 = "snapshot-restore"
+	CMD_BLK_SNAPSHOT_SCHEDULE_LIST_NAME           = "snapshot-schedule-list"
+	CMD_BLK_VOLUME_CANCEL_NAME                    = "volume-cancel"
+	CMD_BLK_VOLUME_COUNT_NAME                     = "volume-count"
+	CMD_BLK_VOLUME_DETAIL_NAME                    = "volume-detail"
+	CMD_BLK_VOLUME_DUPLICATE_NAME                 = "volume-duplicate"
+	CMD_BLK_VOLUME_LIST_NAME                      = "volume-list"
+	CMD_BLK_VOLUME_LUN_NAME                       = "volume-set-lun-id"
+	CMD_BLK_VOLUME_ORDER_NAME                     = "volume-order"
+	CMD_BLK_VOLUME_MODIFY_NAME                    = "volume-modify"
+	CMD_BLK_VOLUME_OPTIONS_NAME                   = "volume-options"
+	CMD_BLK_VOLUME_LIMITS_NAME                    = "volume-limits"
+	CMD_BLK_VOLUME_REFRESH_NAME                   = "volume-refresh"
+	CMD_BLK_VOLUME_CONVERT_NAME                   = "volume-convert"
+	CMD_BLK_SNAPSHOT_GET_NOTIFIACTION_STATUS_NAME = "snapshot-get-notification-status"
+	CMD_BLK_SNAPSHOT_SET_NOTIFICATION_NAME        = "snapshot-set-notification"
 )
 
 func BlockNamespace() plugin.Namespace {
@@ -90,6 +92,8 @@ func BlockMetaData() cli.Command {
 			BlockVolumeLimitsMetaData(),
 			BlockVolumeRefreshMetaData(),
 			BlockVolumeConvertMetaData(),
+			BlockVolumeSnapshotSetNotificationMetaData(),
+			BlockVolumeSnapshotGetNotificationStatusMetaData(),
 		},
 	}
 }
@@ -802,5 +806,46 @@ func BlockVolumeConvertMetaData() cli.Command {
 EXAMPLE:
 	${COMMAND_NAME} sl block volume-convert VOLUME_ID
 	Convert a dependent duplicate VOLUME_ID to an independent volume.`),
+	}
+}
+
+func BlockVolumeSnapshotSetNotificationMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_BLOCK_NAME,
+		Name:        CMD_BLK_SNAPSHOT_SET_NOTIFICATION_NAME,
+		Description: T("Enables/Disables snapshot space usage threshold warning for a given volume."),
+		Usage: T(`${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID
+
+EXAMPLE:
+	${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567
+	Enables/Disables snapshot space usage threshold warning for a given volume.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "enable",
+				Usage: T("Enable sending sending notifications for snapshots space usage threshold warning [True|False]"),
+			},
+			cli.BoolFlag{
+				Name:  "disable",
+				Usage: T("Disable sending sending notifications for snapshots space usage threshold warning"),
+			},
+			OutputFlag(),
+		},
+	}
+
+}
+
+func BlockVolumeSnapshotGetNotificationStatusMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_BLOCK_NAME,
+		Name:        CMD_BLK_SNAPSHOT_GET_NOTIFIACTION_STATUS_NAME,
+		Description: T("Get snapshots space usage threshold warning flag setting for a given volume."),
+		Usage: T(`${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID
+
+EXAMPLE:
+	${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID
+	Get snapshots space usage threshold warning flag setting for a given volume.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
 	}
 }

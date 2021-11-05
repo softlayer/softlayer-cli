@@ -11,34 +11,36 @@ var (
 	CMD_FILE_NAME = "file"
 
 	//sl file
-	CMD_FILE_ACCESS_AUTHORIZE_NAME       = "access-authorize"
-	CMD_FILE_ACCESS_LIST_NAME            = "access-list"
-	CMD_FILE_ACCESS_REVOKE_NAME          = "access-revoke"
-	CMD_FILE_REPLICA_FAILBACK_NAME       = "replica-failback"
-	CMD_FILE_REPLICA_FAILOVER_NAME       = "replica-failover"
-	CMD_FILE_REPLICA_LOCATIONS_NAME      = "replica-locations"
-	CMD_FILE_REPLICA_ORDER_NAME          = "replica-order"
-	CMD_FILE_REPLICA_PARTNERS_NAME       = "replica-partners"
-	CMD_FILE_SNAPSHOT_CANCEL_NAME        = "snapshot-cancel"
-	CMD_FILE_SNAPSHOT_CREATE_NAME        = "snapshot-create"
-	CMD_FILE_SNAPSHOT_DELETE_NAME        = "snapshot-delete"
-	CMD_FILE_SNAPSHOT_DISABLE_NAME       = "snapshot-disable"
-	CMD_FILE_SNAPSHOT_ENABLE_NAME        = "snapshot-enable"
-	CMD_FILE_SNAPSHOT_LIST_NAME          = "snapshot-list"
-	CMD_FILE_SNAPSHOT_ORDER_NAME         = "snapshot-order"
-	CMD_FILE_SNAPSHOT_RESTORE_NAME       = "snapshot-restore"
-	CMD_FILE_SNAPSHOT_SCHEDULE_LIST_NAME = "snapshot-schedule-list"
-	CMD_FILE_VOLUME_CANCEL_NAME          = "volume-cancel"
-	CMD_FILE_VOLUME_COUNT_NAME           = "volume-count"
-	CMD_FILE_VOLUME_DETAIL_NAME          = "volume-detail"
-	CMD_FILE_VOLUME_DUPLICATE_NAME       = "volume-duplicate"
-	CMD_FILE_VOLUME_LIST_NAME            = "volume-list"
-	CMD_FILE_VOLUME_ORDER_NAME           = "volume-order"
-	CMD_FILE_VOLUME_MODIFY_NAME          = "volume-modify"
-	CMD_FILE_VOLUME_OPTIONS_NAME         = "volume-options"
-	CMD_FILE_VOLUME_LIMITS_NAME          = "volume-limits"
-	CMD_FILE_VOLUME_REFRESH_NAME         = "volume-refresh"
-	CMD_FILE_VOLUME_CONVERT_NAME         = "volume-convert"
+	CMD_FILE_ACCESS_AUTHORIZE_NAME                 = "access-authorize"
+	CMD_FILE_ACCESS_LIST_NAME                      = "access-list"
+	CMD_FILE_ACCESS_REVOKE_NAME                    = "access-revoke"
+	CMD_FILE_REPLICA_FAILBACK_NAME                 = "replica-failback"
+	CMD_FILE_REPLICA_FAILOVER_NAME                 = "replica-failover"
+	CMD_FILE_REPLICA_LOCATIONS_NAME                = "replica-locations"
+	CMD_FILE_REPLICA_ORDER_NAME                    = "replica-order"
+	CMD_FILE_REPLICA_PARTNERS_NAME                 = "replica-partners"
+	CMD_FILE_SNAPSHOT_CANCEL_NAME                  = "snapshot-cancel"
+	CMD_FILE_SNAPSHOT_CREATE_NAME                  = "snapshot-create"
+	CMD_FILE_SNAPSHOT_DELETE_NAME                  = "snapshot-delete"
+	CMD_FILE_SNAPSHOT_DISABLE_NAME                 = "snapshot-disable"
+	CMD_FILE_SNAPSHOT_ENABLE_NAME                  = "snapshot-enable"
+	CMD_FILE_SNAPSHOT_LIST_NAME                    = "snapshot-list"
+	CMD_FILE_SNAPSHOT_ORDER_NAME                   = "snapshot-order"
+	CMD_FILE_SNAPSHOT_RESTORE_NAME                 = "snapshot-restore"
+	CMD_FILE_SNAPSHOT_SCHEDULE_LIST_NAME           = "snapshot-schedule-list"
+	CMD_FILE_VOLUME_CANCEL_NAME                    = "volume-cancel"
+	CMD_FILE_VOLUME_COUNT_NAME                     = "volume-count"
+	CMD_FILE_VOLUME_DETAIL_NAME                    = "volume-detail"
+	CMD_FILE_VOLUME_DUPLICATE_NAME                 = "volume-duplicate"
+	CMD_FILE_VOLUME_LIST_NAME                      = "volume-list"
+	CMD_FILE_VOLUME_ORDER_NAME                     = "volume-order"
+	CMD_FILE_VOLUME_MODIFY_NAME                    = "volume-modify"
+	CMD_FILE_VOLUME_OPTIONS_NAME                   = "volume-options"
+	CMD_FILE_VOLUME_LIMITS_NAME                    = "volume-limits"
+	CMD_FILE_VOLUME_REFRESH_NAME                   = "volume-refresh"
+	CMD_FILE_VOLUME_CONVERT_NAME                   = "volume-convert"
+	CMD_FILE_SNAPSHOT_GET_NOTIFIACTION_STATUS_NAME = "snapshot-get-notification-status"
+	CMD_FILE_SNAPSHOT_SET_NOTIFICATION_NAME        = "snapshot-set-notification"
 )
 
 func FileNamespace() plugin.Namespace {
@@ -85,6 +87,8 @@ func FileMetaData() cli.Command {
 			FileVolumeRefreshMetaData(),
 			FileVolumeConvertMetaData(),
 			FileDisasterRecoveryFailoverMetaData(),
+			FileVolumeSnapshotSetNotificationMetaData(),
+			FileVolumeSnapshotGetNotificationStatusMetaData(),
 		},
 	}
 }
@@ -751,7 +755,6 @@ EXAMPLE:
 	}
 }
 
-
 func FileDisasterRecoveryFailoverMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_FILE_NAME,
@@ -767,5 +770,46 @@ To test failover, use '${COMMAND_NAME} sl file replica-failover' instead.
 EXAMPLE:
 	${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321
 	This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.`),
+	}
+}
+
+func FileVolumeSnapshotGetNotificationStatusMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_FILE_NAME,
+		Name:        CMD_FILE_SNAPSHOT_SET_NOTIFICATION_NAME,
+		Description: T("Enables/Disables snapshot space usage threshold warning for a given volume."),
+		Usage: T(`${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID
+
+EXAMPLE:
+	${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567
+	Enables/Disables snapshot space usage threshold warning for a given volume.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "enable",
+				Usage: T("Enable sending sending notifications for snapshots space usage threshold warning [True|False]"),
+			},
+			cli.BoolFlag{
+				Name:  "disable",
+				Usage: T("Disable sending sending notifications for snapshots space usage threshold warning"),
+			},
+			OutputFlag(),
+		},
+	}
+
+}
+
+func FileVolumeSnapshotSetNotificationMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_FILE_NAME,
+		Name:        CMD_FILE_SNAPSHOT_GET_NOTIFIACTION_STATUS_NAME,
+		Description: T("Get snapshots space usage threshold warning flag setting for a given volume."),
+		Usage: T(`${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID
+
+EXAMPLE:
+	${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID
+	Get snapshots space usage threshold warning flag setting for a given volume.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
 	}
 }
