@@ -3,6 +3,7 @@ package managers
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"math"
 	"os"
@@ -67,7 +68,7 @@ type VirtualServerManager interface {
 	CreateInstances(template []datatypes.Virtual_Guest) ([]datatypes.Virtual_Guest, error)
 	GenerateInstanceCreationTemplate(virtualGuest *datatypes.Virtual_Guest, params map[string]interface{}) (*datatypes.Virtual_Guest, error)
 	VerifyInstanceCreation(template datatypes.Virtual_Guest) (datatypes.Container_Product_Order, error)
-	GetCreateOptions() (datatypes.Container_Virtual_Guest_Configuration, error)
+	GetCreateOptions(vsiType string, datacenter string) (virtualCreateOptions, error)
 	GetInstance(id int, mask string) (datatypes.Virtual_Guest, error)
 	GetDedicatedHost(hostId int) (datatypes.Virtual_DedicatedHost, error)
 	GetLikedInstance(virtualGuest *datatypes.Virtual_Guest, id int) (*datatypes.Virtual_Guest, error)
@@ -105,6 +106,24 @@ type virtualServerManager struct {
 	OrderManager         OrderManager
 	Session              *session.Session
 	StorageManager       StorageManager
+}
+
+type virtualCreateOptions struct {
+	Locations        []datatypes.Location
+	Sizes            []datatypes.Product_Item
+	Ram              []datatypes.Product_Item
+	Database         []datatypes.Product_Item
+	OperatingSystems []datatypes.Product_Item
+	GuestCore        []datatypes.Product_Item
+	PortSpeed        []datatypes.Product_Item
+	GuestDisk        []datatypes.Product_Item
+	extras           []datatypes.Product_Item
+}
+
+type extras struct {
+	Name   string
+	Key    string
+	Prices []datatypes.Product_Item_Price
 }
 
 func NewVirtualServerManager(session *session.Session) *virtualServerManager {
@@ -510,8 +529,134 @@ func (vs virtualServerManager) VerifyInstanceCreation(template datatypes.Virtual
 }
 
 //Retrieves the available options for creating a virtual server instance
-func (vs virtualServerManager) GetCreateOptions() (datatypes.Container_Virtual_Guest_Configuration, error) {
-	return vs.VirtualGuestService.GetCreateObjectOptions()
+func (vs virtualServerManager) GetCreateOptions(vsiType string, datacenter string) (virtualCreateOptions, error) {
+
+	virtualCreateOptionsResult := virtualCreateOptions{}
+	var locationGroupId int
+	packageData, err := vs.GetPackage(vsiType)
+	if err != nil {
+		return virtualCreateOptions{}, err
+	}
+
+	var dc_detail datatypes.Location
+	if datacenter != "" {
+		//filter :=`{"name": {"operation": datacenter}}`
+		filter := filter.Build(filter.Path("name").Eq(datacenter))
+		mask := "mask[priceGroups]"
+		locationService := services.GetLocationService(vs.Session)
+		dc_details, err := locationService.Mask(mask).Filter(filter).Limit(1).GetDatacenters()
+		if err != nil {
+			return virtualCreateOptions{}, err
+		}
+		dc_detail = dc_details[0]
+		// A DC will have several price groups, no good way to deal with this other than checking each.
+		// An item should only belong to one type of price group.
+
+		for _, group := range dc_detail.PriceGroups {
+			if strings.HasPrefix(*group.Description, "Location") {
+				locationGroupId = *group.Id
+			}
+		}
+	}
+	var locations []datatypes.Location
+	for _, region := range packageData.Regions {
+		if datacenter == "" || datacenter == utils.FormatStringPointerName(region.Location.Location.Name) {
+			location := datatypes.Location{
+				Name:     region.Location.Location.Name,
+				LongName: region.Location.Location.LongName,
+			}
+			locations = append(locations, location)
+		}
+
+	}
+	virtualCreateOptionsResult.Locations = locations
+	virtualCreateOptionsResult.Sizes = getOptionSizes(packageData, locationGroupId)
+
+	items := packageData.Items
+	for _, item := range items {
+		category := utils.FormatStringPointerName(item.ItemCategory.CategoryCode)
+		item.Prices = getItemPriceByLocationGroup(item.Prices, locationGroupId)
+
+		switch {
+		case category == "os":
+			virtualCreateOptionsResult.OperatingSystems = append(virtualCreateOptionsResult.OperatingSystems, item)
+		case category == "database":
+			virtualCreateOptionsResult.Database = append(virtualCreateOptionsResult.Database, item)
+		case category == "port_speed":
+			virtualCreateOptionsResult.PortSpeed = append(virtualCreateOptionsResult.PortSpeed, item)
+		case category == "guest_core":
+			virtualCreateOptionsResult.GuestCore = append(virtualCreateOptionsResult.GuestCore, item)
+		case category == "ram":
+			virtualCreateOptionsResult.Ram = append(virtualCreateOptionsResult.Ram, item)
+		case strings.Contains(category, "guest_disk"):
+			item.LongDescription = &category
+			virtualCreateOptionsResult.GuestDisk = append(virtualCreateOptionsResult.GuestDisk, item)
+		}
+	}
+
+	return virtualCreateOptionsResult, nil
+
+}
+
+func getItemPriceByLocationGroup(prices []datatypes.Product_Item_Price, locationGroupId int) []datatypes.Product_Item_Price {
+	return prices
+}
+
+func getOptionSizes(packageData datatypes.Product_Package, locationGroupId int) []datatypes.Product_Item {
+	var sizes []datatypes.Product_Item
+	presets := packageData.ActivePresets
+	presets = append(presets, packageData.AccountRestrictedActivePresets...)
+	for _, preset := range presets {
+		hourlyPrice := datatypes.Product_Item_Price{
+			HourlyRecurringFee: sl.Float(getPresetCost(preset, packageData.Items, "hourly", locationGroupId)),
+		}
+		monthlyPrice := datatypes.Product_Item_Price{
+			RecurringFee: sl.Float(getPresetCost(preset, packageData.Items, "monthly", locationGroupId)),
+		}
+		presetPrices := []datatypes.Product_Item_Price{hourlyPrice, monthlyPrice}
+		presetItem := datatypes.Product_Item{
+			Description: preset.Description,
+			KeyName:     preset.KeyName,
+			Prices:      presetPrices,
+		}
+		sizes = append(sizes, presetItem)
+	}
+	return sizes
+}
+func getPresetCost(preset datatypes.Product_Package_Preset, items []datatypes.Product_Item, typeFee string, locationId int) float64 {
+	result := 1.0
+	return result
+}
+
+func printAsJsonFormat(data interface{}) {
+	jsonData, jsonErr := json.MarshalIndent(data, "", "    ")
+	if jsonErr != nil {
+		fmt.Println(jsonErr)
+		return
+	}
+	println(string(jsonData))
+}
+
+func (vs virtualServerManager) GetPackage(packageName string) (datatypes.Product_Package, error) {
+	itemsMask := "items[id,keyName,capacity,description,attributes[id,attributeTypeKeyName]," +
+		"itemCategory[id,categoryCode],softwareDescription[id,referenceCode,longDescription]," +
+		"prices[categories]],"
+	// The preset prices list will only have default prices. The prices->item->prices will have location specific
+	presetsMask := "activePresets[prices],"
+	regionMask := "regions[location[location[priceGroups]]]"
+
+	packageMask := "mask[id," +
+		itemsMask +
+		presetsMask +
+		regionMask +
+		"]"
+
+	packageData, err := vs.OrderManager.GetPackageByKey(packageName, packageMask)
+	if err != nil {
+		return datatypes.Product_Package{}, err
+	}
+
+	return packageData, nil
 }
 
 //Get details about a virtual server instance.
@@ -1173,7 +1318,6 @@ func (vs virtualServerManager) GetStorageDetails(id int, nasType string) ([]data
 	mask := "mask[id,username,capacityGb,notes,serviceResourceBackendIpAddress,allowedVirtualGuests[id,datacenter]]"
 	return vs.VirtualGuestService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
 }
-
 
 // Finds the Reserved Capacity groups of Account
 // SoftLayer_Reserved_Capacity_Groups
