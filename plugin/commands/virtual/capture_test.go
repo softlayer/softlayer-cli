@@ -29,10 +29,10 @@ var _ = Describe("VS capture", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewCaptureCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCaptureMataData().Name,
-			Description: metadata.VSCaptureMataData().Description,
-			Usage:       metadata.VSCaptureMataData().Usage,
-			Flags:       metadata.VSCaptureMataData().Flags,
+			Name:        metadata.VSCaptureMetaData().Name,
+			Description: metadata.VSCaptureMetaData().Description,
+			Usage:       metadata.VSCaptureMetaData().Usage,
+			Flags:       metadata.VSCaptureMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

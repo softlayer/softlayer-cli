@@ -26,10 +26,10 @@ var _ = Describe("VS resume", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewResumeCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSResumeMataData().Name,
-			Description: metadata.VSResumeMataData().Description,
-			Usage:       metadata.VSResumeMataData().Usage,
-			Flags:       metadata.VSResumeMataData().Flags,
+			Name:        metadata.VSResumeMetaData().Name,
+			Description: metadata.VSResumeMetaData().Description,
+			Usage:       metadata.VSResumeMetaData().Usage,
+			Flags:       metadata.VSResumeMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -26,10 +26,10 @@ var _ = Describe("VS ready", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewReadyCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSReadyMataData().Name,
-			Description: metadata.VSReadyMataData().Description,
-			Usage:       metadata.VSReadyMataData().Usage,
-			Flags:       metadata.VSReadyMataData().Flags,
+			Name:        metadata.VSReadyMetaData().Name,
+			Description: metadata.VSReadyMetaData().Description,
+			Usage:       metadata.VSReadyMetaData().Usage,
+			Flags:       metadata.VSReadyMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -26,10 +26,10 @@ var _ = Describe("VS reboot", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewRebootCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSRebootMataData().Name,
-			Description: metadata.VSRebootMataData().Description,
-			Usage:       metadata.VSRebootMataData().Usage,
-			Flags:       metadata.VSRebootMataData().Flags,
+			Name:        metadata.VSRebootMetaData().Name,
+			Description: metadata.VSRebootMetaData().Description,
+			Usage:       metadata.VSRebootMetaData().Usage,
+			Flags:       metadata.VSRebootMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -27,6 +27,15 @@ func RunCommand(c cli.Command, args ...string) error {
 	return c.Run(ctx)
 }
 
+// For when you just want to get a fake context, not actually run the command yet
+func GetCliContext(name string) *cli.Context {
+	app := cli.NewApp()
+	set := flag.NewFlagSet("test "+name, 0)
+
+	ctx := cli.NewContext(app, set, nil)
+	return ctx
+}
+
 type CMD struct {
 	UI terminal.UI
 }

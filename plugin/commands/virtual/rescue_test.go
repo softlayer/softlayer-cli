@@ -26,10 +26,10 @@ var _ = Describe("VS rescue", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewRescueCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSRescueMataData().Name,
-			Description: metadata.VSRescueMataData().Description,
-			Usage:       metadata.VSRescueMataData().Usage,
-			Flags:       metadata.VSRescueMataData().Flags,
+			Name:        metadata.VSRescueMetaData().Name,
+			Description: metadata.VSRescueMetaData().Description,
+			Usage:       metadata.VSRescueMetaData().Usage,
+			Flags:       metadata.VSRescueMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -6,7 +6,6 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
@@ -37,10 +36,6 @@ var _ = Describe("NetworkManager", func() {
 	})
 
 	Describe("Get all vlans", func() {
-		BeforeEach(func() {
-			fakeSLSession = testhelpers.NewFakeSoftlayerPagnationSession(nil)
-			networkManager = managers.NewNetworkManager(fakeSLSession)
-		})
 		Context("Get all vlans under current account", func() {
 			It("It returns a list of vlans", func() {
 				vlans, err := networkManager.ListVlans("", 0, "", 0, "")
@@ -57,10 +52,6 @@ var _ = Describe("NetworkManager", func() {
 	})
 
 	Describe("Get all subnets", func() {
-		BeforeEach(func() {
-			fakeSLSession = testhelpers.NewFakeSoftlayerPagnationSession(nil)
-			networkManager = managers.NewNetworkManager(fakeSLSession)
-		})
 		Context("Get all subnets under current account", func() {
 			It("It returns a list of subnets", func() {
 				subnets, err := networkManager.ListSubnets("", "", 0, "", "", 0, "")
@@ -232,13 +223,9 @@ var _ = Describe("NetworkManager", func() {
 				Expect(err).ToNot(HaveOccurred())
 			})
 			It("Handles API errors", func() {
-				slError := sl.Error{
-					StatusCode: 500,
-					Exception: "NO VLAN",
-					Message: "NO VLAN",
-					Wrapped: nil,
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(nil, slError)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+                fakeHandler.AddApiError("SoftLayer_Network_Vlan", "getObject", 500, "NO VLAN")
+                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
 				networkManager = managers.NewNetworkManager(fakeSLSession)
 				err := networkManager.CancelVLAN(0)
 				Expect(err).To(HaveOccurred())
@@ -246,7 +233,7 @@ var _ = Describe("NetworkManager", func() {
 			})
 			It("Handles missing billing items", func() {
 
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession([]string{"SoftLayer_Network_Vlan_getObject-noBilling.json"})
+				fakeSLSession = testhelpers.NewFakeSoftlayerSession([]string{"getObject-noBilling"})
 				networkManager = managers.NewNetworkManager(fakeSLSession)
 				err := networkManager.CancelVLAN(110)
 				Expect(err).To(HaveOccurred())
@@ -293,17 +280,14 @@ var _ = Describe("NetworkManager", func() {
 				Expect(reasons[0]).Should(Equal("This is a fake reason for testing only ok."))
 			})
 			It("Handles API Errors", func() {
-				slError := sl.Error{
-					StatusCode: 500,
-					Exception: "Testing Error",
-					Message: "Testing error message",
-					Wrapped: nil,
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(nil, slError)
+				fakeHandler := testhelpers.FakeTransportHandler{}
+                fakeHandler.AddApiError("SoftLayer_Network_Vlan", "getCancelFailureReasons", 500, "Testing Error")
+                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+
 				networkManager = managers.NewNetworkManager(fakeSLSession)
 				reasons := networkManager.GetCancelFailureReasons(123)
 				Expect(len(reasons)).Should(BeNumerically(">", 0))
-				Expect(reasons[0]).Should(Equal("Testing Error: Testing error message (HTTP 500)"))
+				Expect(reasons[0]).Should(Equal("Testing Error: Testing Error (HTTP 500)"))
 			})
 		})
 	})

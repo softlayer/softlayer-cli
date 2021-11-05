@@ -2,6 +2,7 @@ package loadbal
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -33,41 +34,49 @@ func (cmd *L7PolicyListCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to get l7 policies: {{.Error}}.\n",
 			map[string]interface{}{"Error": err.Error()}), 2)
 	}
+	PrintPolicies(l7Policies, cmd.UI)
+
+	return nil
+}
+
+func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal.UI) {
 
 	if len(l7Policies) == 0 {
-		cmd.UI.Say(T("No l7 policies was found."))
+		cmdUI.Say(T("No l7 policies was found."))
 	} else {
-		table := cmd.UI.Table([]string{T("ID"), T("UUID"), T("Name"), T("Action"), T("Redirect"), T("Priority")})
+		table := cmdUI.Table([]string{T("ID"), T("UUID"), T("Name"), T("Action"), T("Redirect"), T("Priority"), T("Create Date")})
 		for _, l7Policy := range l7Policies {
-			if l7Policy.Action != nil && *l7Policy.Action == "REDIRECT_URL" {
+			if l7Policy.Action != nil && (*l7Policy.Action == REDIRECT_URL || *l7Policy.Action == REDIRECT_HTTPS) {
 				table.Add(utils.FormatIntPointer(l7Policy.Id),
 					utils.FormatStringPointer(l7Policy.Uuid),
 					utils.FormatStringPointer(l7Policy.Name),
 					utils.FormatStringPointer(l7Policy.Action),
 					utils.FormatStringPointer(l7Policy.RedirectUrl),
+					utils.FormatIntPointer(l7Policy.Priority),
 					utils.FormatSLTimePointer(l7Policy.CreateDate),
 				)
 			}
-			if l7Policy.Action != nil && *l7Policy.Action == "REDIRECT_POOL" {
+			if l7Policy.Action != nil && *l7Policy.Action == REDIRECT_POOL {
 				table.Add(utils.FormatIntPointer(l7Policy.Id),
 					utils.FormatStringPointer(l7Policy.Uuid),
 					utils.FormatStringPointer(l7Policy.Name),
 					utils.FormatStringPointer(l7Policy.Action),
 					utils.FormatIntPointer(l7Policy.RedirectL7PoolId),
+					utils.FormatIntPointer(l7Policy.Priority),
 					utils.FormatSLTimePointer(l7Policy.CreateDate),
 				)
 			}
-			if l7Policy.Action != nil && *l7Policy.Action == "REJECT" {
+			if l7Policy.Action != nil && *l7Policy.Action == REJECT {
 				table.Add(utils.FormatIntPointer(l7Policy.Id),
 					utils.FormatStringPointer(l7Policy.Uuid),
 					utils.FormatStringPointer(l7Policy.Name),
 					utils.FormatStringPointer(l7Policy.Action),
 					"-",
+					utils.FormatIntPointer(l7Policy.Priority),
 					utils.FormatSLTimePointer(l7Policy.CreateDate),
 				)
 			}
 		}
 		table.Print()
 	}
-	return nil
 }

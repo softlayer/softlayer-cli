@@ -2,6 +2,8 @@ package managers
 
 import (
 	"errors"
+	"reflect"
+	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
@@ -21,7 +23,7 @@ const (
 		"networkComponents[id,status,speed,maxSpeed,name,ipmiMacAddress,ipmiIpAddress,macAddress,primaryIpAddress,port," +
 		"primarySubnet[id,netmask,broadcastAddress,networkIdentifier,gateway]],hardwareChassis[id,name],activeTransaction[id,transactionStatus[friendlyName,name]]," +
 		"operatingSystem[softwareLicense[softwareDescription[manufacturer,name,version,referenceCode]],passwords[username,password]]," +
-		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
+		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
 		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password]"
 
 	KEY_SIZES      = "sizes"
@@ -35,15 +37,19 @@ var DEFAULT_CATEGORIES = []string{"pri_ip_addresses", "vpn_management", "remote_
 var EXTRA_CATEGORIES = []string{"pri_ipv6_addresses", "static_ipv6_addresses", "sec_ip_addresses"}
 
 type HardwareServerManager interface {
+	AuthorizeStorage(id int, storageId string) (bool, error)
 	CancelHardware(hardwareId int, reason string, comment string, immediate bool) error
 	ListHardware(tags []string, cpus int, memory int, hostname string, domain string, datacenter string, nicSpeed int, publicIP string, privateIP string, owner string, orderId int, mask string) ([]datatypes.Hardware_Server, error)
 	GetHardware(hardwareId int, mask string) (datatypes.Hardware_Server, error)
+	GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error)
 	Reload(hardwareId int, postInstallURL string, sshKeys []int, upgradeBIOS bool, upgradeFirmware bool) error
 	Rescure(hardwareId int) error
 	PowerCycle(hardwareId int) error
 	PowerOff(hardwareId int) error
 	PowerOn(hardwareId int) error
 	Reboot(hardwareId int, hard bool, soft bool) error
+	GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error)
+	GetHardDrives(id int) ([]datatypes.Hardware_Component, error)
 	GetCancellationReasons() map[string]string
 	GetCreateOptions(productPackage datatypes.Product_Package) map[string]map[string]string
 	GenerateCreateTemplate(productPackage datatypes.Product_Package, params map[string]interface{}) (datatypes.Container_Product_Order, error)
@@ -58,6 +64,8 @@ type HardwareServerManager interface {
 	GetBandwidthPriceId(items []datatypes.Product_Item, hourly bool, noPublic bool, location datatypes.Location_Region) (int, error)
 	GetPortSpeedPriceId(items []datatypes.Product_Item, portSpeed int, noPublic bool, location datatypes.Location_Region) (int, error)
 	ToggleIPMI(hardwareID int, enabled bool) error
+	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
+	GetHardwareGuests(id int) ([]datatypes.Virtual_Guest, error)
 }
 
 type hardwareServerManager struct {
@@ -67,9 +75,10 @@ type hardwareServerManager struct {
 	OrderService    services.Product_Order
 	LocationService services.Location_Datacenter
 	BillingService  services.Billing_Item
+	Session         *session.Session
+	StorageManager  StorageManager
 }
 
-//See product information here: http://www.softlayer.com/bare-metal-servers
 func NewHardwareServerManager(session *session.Session) *hardwareServerManager {
 	return &hardwareServerManager{
 		services.GetHardwareServerService(session),
@@ -78,7 +87,49 @@ func NewHardwareServerManager(session *session.Session) *hardwareServerManager {
 		services.GetProductOrderService(session),
 		services.GetLocationDatacenterService(session),
 		services.GetBillingItemService(session),
+		session,
+		NewStorageManager(session),
 	}
+}
+
+//Authorize File or Block Storage to a Hardware Server.
+//int id: Hardware server id.
+//string storageUsername: Storage username.
+func (hw hardwareServerManager) AuthorizeStorage(id int, storageUsername string) (bool, error) {
+	storageResult, err := hw.StorageManager.GetVolumeByUsername(storageUsername)
+	if err != nil {
+		return false, err
+	}
+	if len(storageResult) == 0 {
+		return false, errors.New(T("The Storage {{.Storage}} was not found.", map[string]interface{}{"Storage": storageUsername}))
+	}
+	networkStorageTemplate := []datatypes.Network_Storage{
+		{
+			Id: storageResult[0].Id,
+		},
+	}
+	return hw.HardwareService.Id(id).AllowAccessToNetworkStorageList(networkStorageTemplate)
+}
+
+//Returns the hardware server storage credentials.
+//int id: Id of the hardware server
+func (hw hardwareServerManager) GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error) {
+	mask := "mask[credential]"
+	return hw.HardwareService.Id(id).Mask(mask).GetAllowedHost()
+}
+
+//Returns the hardware server hard drives.
+//int id: Id of the hardware server
+func (hw hardwareServerManager) GetHardDrives(id int) ([]datatypes.Hardware_Component, error) {
+	return hw.HardwareService.Id(id).GetHardDrives()
+}
+
+//Returns the hardware server attached network storage.
+//int id: Id of the hardware server
+//nas_type: storage type.
+func (hw hardwareServerManager) GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error) {
+	mask := "mask[id,username,capacityGb,notes,serviceResourceBackendIpAddress,allowedHardware[id,datacenter]]"
+	return hw.HardwareService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
 }
 
 //Cancels the specified dedicated server.
@@ -623,6 +674,21 @@ func (hw hardwareServerManager) ToggleIPMI(hardwareID int, enabled bool) error {
 	return err
 }
 
+// Finds the MetricTrackingObjectId for a hardware server then calls
+// SoftLayer_Metric_Tracking_Object::getBandwidthData()
+func (hw hardwareServerManager) GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error) {
+	trackingId, err := hw.HardwareService.Id(id).GetMetricTrackingObjectId()
+	if err != nil {
+		return nil, err
+	}
+
+	trackingService := services.GetMetricTrackingObjectService(hw.Session)
+	startTime := datatypes.Time{Time: startDate}
+	endTime := datatypes.Time{Time: endDate}
+	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
+	return bandwidthData, err
+}
+
 //Return True if the price object is hourly and/or monthly
 func matchesBilling(price datatypes.Product_Item_Price, hourly bool) bool {
 	if hourly && price.HourlyRecurringFee != nil {
@@ -685,4 +751,27 @@ func GetPresetId(productPackage datatypes.Product_Package, size string) (int, er
 		}
 	}
 	return 0, errors.New(T("Could not find valid size for: {{.Size}}", map[string]interface{}{"Size": size}))
+}
+
+//Returns the hardware server guests.
+//int id: The hardware server identifier.
+func (hw hardwareServerManager) GetHardwareGuests(id int) ([]datatypes.Virtual_Guest, error) {
+	mask := "mask[powerState]"
+	virtualHost, err := hw.GetHardwareVirtualHost(id)
+	if err != nil {
+		return []datatypes.Virtual_Guest{}, err
+	}
+
+	if reflect.ValueOf(virtualHost).IsZero() {
+		return []datatypes.Virtual_Guest{}, errors.New(T("No Virtual Guests found."))
+	}
+	virtualHostId := virtualHost.Id
+	virtualHostService := services.GetVirtualHostService(hw.Session)
+	return virtualHostService.Id(*virtualHostId).Mask(mask).GetGuests()
+}
+
+//Returns the hardware server virtual host.
+//int id: The hardware server identifier.
+func (hw hardwareServerManager) GetHardwareVirtualHost(id int) (datatypes.Virtual_Host, error) {
+	return hw.HardwareService.Id(id).GetVirtualHost()
 }

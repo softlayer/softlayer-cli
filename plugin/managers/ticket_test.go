@@ -26,14 +26,6 @@ var _ = Describe("Ticket", func() {
 
 	Describe("ListTickets", func() {
 		Context("ListTicket succ", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Account_getTickets",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				TicketManager = managers.NewTicketManager(fakeSLSession)
-			})
-
 			It("Return tickets", func() {
 				tickets, err := TicketManager.ListTickets()
 				Expect(err).ToNot(HaveOccurred())
@@ -51,14 +43,6 @@ var _ = Describe("Ticket", func() {
 
 	Describe("GetTicket", func() {
 		Context("GetTicket succ", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Ticket_getObject",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				TicketManager = managers.NewTicketManager(fakeSLSession)
-			})
-
 			It("Return ticket", func() {
 				ticket, err := TicketManager.GetTicket(76768)
 				Expect(err).ToNot(HaveOccurred())
@@ -72,14 +56,6 @@ var _ = Describe("Ticket", func() {
 
 	Describe("GetSummary", func() {
 		Context("GetSummary succ", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Account_getObject",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				TicketManager = managers.NewTicketManager(fakeSLSession)
-			})
-
 			It("Return summary", func() {
 				summary, err := TicketManager.Summary()
 				Expect(err).ToNot(HaveOccurred())
@@ -94,14 +70,6 @@ var _ = Describe("Ticket", func() {
 
 	Describe("GetText", func() {
 		Context("GetText succ", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Account_getObject",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				TicketManager = managers.NewTicketManager(fakeSLSession)
-			})
-
 			It("Edit Text", func() {
 				if os.Getenv("OS") == "Windows_NT"  {
 					Skip("Test doesn't work in windows.")
@@ -124,14 +92,6 @@ var _ = Describe("Ticket", func() {
 		})
 
 		Context("GetText fail", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Account_getObject",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				TicketManager = managers.NewTicketManager(fakeSLSession)
-			})
-
 			It("Edit Text getpath notfound", func() {
 				if os.Getenv("OS") == "Windows_NT"  {
 					Skip("Test doesn't work in windows.")
@@ -160,14 +120,6 @@ var _ = Describe("Ticket", func() {
 
 	Describe("AddUpdate", func() {
 		Context("AddUpdate succ", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Ticket_addUpdate",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				TicketManager = managers.NewTicketManager(fakeSLSession)
-			})
-
 			It("Add update", func() {
 				err := TicketManager.AddUpdate(76768, "This is a test")
 
@@ -178,14 +130,6 @@ var _ = Describe("Ticket", func() {
 
 	Describe("CreateTicket", func() {
 		Context("CreateTicket succ", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Ticket_createStandardTicket",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				TicketManager = managers.NewTicketManager(fakeSLSession)
-			})
-
 			It("Add update", func() {
 				var args managers.TicketArguments
 				contents := "Example ticket contents"
@@ -203,15 +147,6 @@ var _ = Describe("Ticket", func() {
 
 	Describe("AttachDevices", func() {
 		Context("AttachDevices succ", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Ticket_addAttachedHardware",
-					"SoftLayer_Ticket_addAttachedVirtualGuest",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				TicketManager = managers.NewTicketManager(fakeSLSession)
-			})
-
 			It("Add hardware", func() {
 				err := TicketManager.AttachDeviceToTicket(76768, 222222, true)
 
@@ -228,14 +163,6 @@ var _ = Describe("Ticket", func() {
 
 	Describe("GetSubject", func() {
 		Context("AddUpdate succ", func() {
-			BeforeEach(func() {
-				filenames := []string{
-					"SoftLayer_Ticket_Subject_getAllObjects",
-				}
-				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-				TicketManager = managers.NewTicketManager(fakeSLSession)
-			})
-
 			It("Add update", func() {
 				_, err := TicketManager.GetSubjects()
 

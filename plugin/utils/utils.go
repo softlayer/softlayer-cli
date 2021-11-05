@@ -21,6 +21,11 @@ import (
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
+const (
+	EMPTY_VALUE  = "-"
+	EMPTY_STRING = ""
+)
+
 //TODO support resolving guid to integer id
 func ResolveVirtualGuestId(identifier string) (int, error) {
 	id, err := strconv.Atoi(identifier)
@@ -34,10 +39,10 @@ func ResolveImageId(session *session.Session, id int) (string, error) {
 	service := services.GetVirtualGuestBlockDeviceTemplateGroupService(session)
 	image, err := service.Id(id).GetObject()
 	if err != nil {
-		return "", err
+		return EMPTY_STRING, err
 	}
 	if image.GlobalIdentifier == nil {
-		return "", errors.New(T("Image global identifier not found"))
+		return EMPTY_STRING, errors.New(T("Image global identifier not found"))
 	}
 	return *image.GlobalIdentifier, nil
 }
@@ -68,14 +73,14 @@ func ResolveGloablIPId(identifier string) (int, error) {
 
 func StringSliceToString(slice []string) string {
 	if len(slice) == 0 {
-		return ""
+		return EMPTY_STRING
 	}
 	return strings.Trim(strings.Replace(fmt.Sprint(slice), " ", ",", -1), "[]")
 }
 
 func IntSliceToString(slice []int) string {
 	if len(slice) == 0 {
-		return ""
+		return EMPTY_STRING
 	}
 	return strings.Trim(strings.Replace(fmt.Sprint(slice), " ", ",", -1), "[]")
 }
@@ -173,63 +178,63 @@ func B2GB(bytes int) string {
 
 func FormatBoolPointer(value *bool) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return strconv.FormatBool(sl.Get(value).(bool))
 }
 
 func FormatStringPointer(value *string) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return sl.Get(value).(string)
 }
 
 func FormatStringPointerName(value *string) string {
 	if value == nil {
-		return ""
+		return EMPTY_STRING
 	}
 	return sl.Get(value).(string)
 }
 
 func FormatIntPointer(value *int) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return strconv.Itoa(sl.Get(value).(int))
 }
 
 func FormatIntPointerName(value *int) string {
 	if value == nil {
-		return ""
+		return EMPTY_STRING
 	}
 	return strconv.Itoa(sl.Get(value).(int))
 }
 
 func FormatUIntPointer(value *uint) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return fmt.Sprintf("%d", sl.Get(value).(uint))
 }
 
 func FormatSLFloatPointerToInt(value *datatypes.Float64) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return fmt.Sprintf("%d", int(sl.Get(value).(datatypes.Float64)))
 }
 
 func FormatSLFloatPointerToFloat(value *datatypes.Float64) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return fmt.Sprintf("%f", float64(sl.Get(value).(datatypes.Float64)))
 }
 
 func FormatSLTimePointer(value *datatypes.Time) string {
 	if value == nil {
-		return "-"
+		return EMPTY_VALUE
 	}
 	return value.UTC().Format(time.RFC3339)
 }
@@ -241,8 +246,16 @@ func Bool2Int(value bool) int {
 	return 0
 }
 
+func ReplaceUIntPointerValue(value *uint, newValue string) string {
+
+	if UIntPointertoUInt(value) > 0 {
+		return newValue
+	}
+	return EMPTY_VALUE
+}
+
 func ValidateColumns(sortby string, columns []string, defaultColumns []string, optionalColumns, sortColumns []string, context *cli.Context) ([]string, error) {
-	if sortby != "" && StringInSlice(sortby, sortColumns) == -1 {
+	if sortby != EMPTY_STRING && StringInSlice(sortby, sortColumns) == -1 {
 		return nil, bmxErr.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 	allColumns := append(defaultColumns, optionalColumns...)
@@ -261,7 +274,7 @@ func ValidateColumns(sortby string, columns []string, defaultColumns []string, o
 
 func GetMask(maskMap map[string]string, columns []string, sortBy string) string {
 
-	if sortBy != "" && StringInSlice(sortBy, columns) == -1 {
+	if sortBy != EMPTY_STRING && StringInSlice(sortBy, columns) == -1 {
 		columns = append(columns, sortBy)
 	}
 
@@ -286,7 +299,7 @@ func FailWithError(message string, ui terminal.UI) error {
 	ui.Print(terminal.FailureColor(T("FAILED")))
 	msg := fmt.Sprintf("%s\n", message)
 	ui.Print(msg)
-	return cli.NewExitError("", 1)
+	return cli.NewExitError(EMPTY_STRING, 1)
 }
 
 func StructToMap(struc Access) (map[string]string, error) {
@@ -311,7 +324,7 @@ func UIntPointertoUInt(value *uint) uint {
 }
 func StringPointertoString(value *string) string {
 	if value == nil {
-		return ""
+		return EMPTY_STRING
 	}
 	return *value
 }
@@ -326,4 +339,7 @@ func BoolPointertoBool(value *bool) bool {
 		return false
 	}
 	return *value
+}
+func IsEmptyString(value string) bool {
+	return value == EMPTY_STRING
 }

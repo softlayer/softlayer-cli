@@ -57,7 +57,11 @@ var (
 //Manages SoftLayer Virtual Servers.
 //See product information here: http://www.softlayer.com/virtual-servers
 type VirtualServerManager interface {
+	AttachPortableStorage(id int, portableStorageId int) (datatypes.Provisioning_Version1_Transaction, error)
+	AuthorizeStorage(id int, storageId string) (bool, error)
 	CancelInstance(id int) error
+	MigrateInstance(id int) (datatypes.Provisioning_Version1_Transaction, error)
+	MigrateDedicatedHost(id int, hostId int) error
 	CreateDedicatedHost(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Receipt, error)
 	CreateInstance(template *datatypes.Virtual_Guest) (datatypes.Virtual_Guest, error)
 	CreateInstances(template []datatypes.Virtual_Guest) ([]datatypes.Virtual_Guest, error)
@@ -70,6 +74,7 @@ type VirtualServerManager interface {
 	CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error)
 	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
 	ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error)
+	GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
 	PauseInstance(id int) error
 	PowerOnInstance(id int) error
 	PowerOffInstance(id int, soft bool, hard bool) error
@@ -83,6 +88,16 @@ type VirtualServerManager interface {
 	SetTags(id int, tags string) error
 	SetNetworkPortSpeed(id int, public bool, portSpeed int) error
 	EditInstance(id int, hostname string, domain string, userdata string, tags string, publicSpeed *int, privateSpeed *int) ([]bool, []string)
+	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
+	GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error)
+	GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error)
+	GetPortableStorage(id int) ([]datatypes.Virtual_Disk_Image, error)
+	GetLocalDisks(id int) ([]datatypes.Virtual_Guest_Block_Device, error)
+	GetCapacityDetail(id int) (datatypes.Virtual_ReservedCapacityGroup, error)
+	CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error)
+	GetRouters(packageName string) ([]datatypes.Location_Region, error)
+	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
+	GetPods() ([]datatypes.Network_Pod, error)
 }
 
 type virtualServerManager struct {
@@ -92,6 +107,8 @@ type virtualServerManager struct {
 	OrderService         services.Product_Order
 	DedicatedHostService services.Virtual_DedicatedHost
 	OrderManager         OrderManager
+	Session			    *session.Session
+	StorageManager       StorageManager
 }
 
 func NewVirtualServerManager(session *session.Session) *virtualServerManager {
@@ -102,7 +119,35 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 		services.GetProductOrderService(session),
 		services.GetVirtualDedicatedHostService(session),
 		NewOrderManager(session),
+		session,
+		NewStorageManager(session),
 	}
+}
+
+//Attach portable storage to a Virtual Server.
+//int id: Virtual server id.
+//int portableStorageId: Portable storage id.
+func (vs virtualServerManager) AttachPortableStorage(id int, portableStorageId int) (datatypes.Provisioning_Version1_Transaction, error) {
+	return vs.VirtualGuestService.Id(id).AttachDiskImage(&portableStorageId)
+}
+
+//Authorize File or Block Storage to a Virtual Server.
+//int id: Virtual server id.
+//string storageUsername: Storage username.
+func (vs virtualServerManager) AuthorizeStorage(id int, storageUsername string) (bool, error) {
+	storageResult, err := vs.StorageManager.GetVolumeByUsername(storageUsername)
+	if err != nil {
+		return false, err
+	}
+	if len(storageResult) == 0 {
+		return false, errors.New(T("The Storage {{.Storage}} was not found.", map[string]interface{}{"Storage": storageUsername}))
+	}
+	networkStorageTemplate := []datatypes.Network_Storage{
+		{
+			Id: storageResult[0].Id,
+		},
+	}
+	return vs.VirtualGuestService.Id(id).AllowAccessToNetworkStorageList(networkStorageTemplate)
 }
 
 //Cancel an instance immediately, deleting all its data.
@@ -110,6 +155,18 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 func (vs virtualServerManager) CancelInstance(id int) error {
 	_, err := vs.VirtualGuestService.Id(id).DeleteObject()
 	return err
+}
+
+//Migrate an instance.
+//id: the instance ID to migrate.
+func (vs virtualServerManager) MigrateInstance(id int) (datatypes.Provisioning_Version1_Transaction, error) {
+	resourceList, err := vs.VirtualGuestService.Id(id).Migrate()
+	return resourceList, err
+}
+
+//Migrate a dedicated Host instance.
+func (vs virtualServerManager) MigrateDedicatedHost(id int, hostId int) (err error) {
+	return vs.VirtualGuestService.Id(id).MigrateDedicatedHost(&hostId)
 }
 
 func GetDedicatedHostPriceId(items []datatypes.Product_Item, size string, hourly bool, location datatypes.Location_Region) (int, error) {
@@ -678,6 +735,32 @@ func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain s
 
 }
 
+//This method support a mask and a filter as parameters to retrieve a list of all virtual servers on the account.
+func (vs virtualServerManager) GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
+	filters := filter.New()
+	if mask == "" {
+		mask = INSTANCE_DEFAULT_MASK
+	}
+	if len(objFilter) > 0 {
+		filters = objFilter
+	}
+
+	i := 0
+	resourceList := []datatypes.Virtual_Guest{}
+	for {
+		resp, err := vs.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetVirtualGuests()
+		i++
+		if err != nil {
+			return []datatypes.Virtual_Guest{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
+	}
+	return resourceList, nil
+}
+
 //Pause an active virtual server.
 //id: ID of virtual server instance
 func (vs virtualServerManager) PauseInstance(id int) error {
@@ -1047,4 +1130,95 @@ func (vs virtualServerManager) EditInstance(id int, hostname string, domain stri
 	}
 
 	return successes, messages
+}
+
+// Finds the MetricTrackingObjectId for a virtual server then calls
+// SoftLayer_Metric_Tracking_Object::getBandwidthData()
+func (vs virtualServerManager) GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error) {
+	trackingId, err := vs.VirtualGuestService.Id(id).GetMetricTrackingObjectId()
+	if err != nil {
+		return nil, err
+	}
+
+	trackingService := services.GetMetricTrackingObjectService(vs.Session)
+	startTime := datatypes.Time{Time: startDate}
+	endTime := datatypes.Time{Time: endDate}
+	bandwidthData, err := trackingService.Id(trackingId).GetBandwidthData(&startTime, &endTime, nil, &period)
+	return bandwidthData, err
+}
+
+//Returns the virtual server storage credentials.
+//int id: Id of the virtual server
+func (vs virtualServerManager) GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error) {
+	mask := "mask[credential]"
+	return vs.VirtualGuestService.Id(id).Mask(mask).GetAllowedHost()
+}
+
+//Returns the virtual server portable storage.
+//int id: Id of the virtual server
+func (vs virtualServerManager) GetPortableStorage(id int) ([]datatypes.Virtual_Disk_Image, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("portableStorageVolumes.blockDevices.guest.id").Eq(id))
+	mask := "mask[billingItem[location]]"
+	return vs.AccountService.Mask(mask).Filter(filters.Build()).GetPortableStorageVolumes()
+}
+
+//Returns the virtual server local disks.
+//int id: Id of the virtual server
+func (vs virtualServerManager) GetLocalDisks(id int) ([]datatypes.Virtual_Guest_Block_Device, error) {
+	mask := "mask[diskImage]"
+	return vs.VirtualGuestService.Id(id).Mask(mask).GetBlockDevices()
+}
+
+//Returns the virtual server attached network storage.
+//int id: Id of the virtual server
+//nas_type: storage type.
+func (vs virtualServerManager) GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error) {
+	mask := "mask[id,username,capacityGb,notes,serviceResourceBackendIpAddress,allowedVirtualGuests[id,datacenter]]"
+	return vs.VirtualGuestService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
+}
+
+
+func (vs virtualServerManager) GetCapacityDetail(id int) (datatypes.Virtual_ReservedCapacityGroup, error){
+	mask := "mask[instances[billingItem[item[keyName],category], guest], backendRouter[datacenter]]"
+	reservedService := services.GetVirtualReservedCapacityGroupService(vs.Session)
+	return reservedService.Mask(mask).Id(id).GetObject()
+}
+
+// Finds the Reserved Capacity groups of Account
+// SoftLayer_Reserved_Capacity_Groups
+func (vs virtualServerManager) CapacityList(mask string) ([]datatypes.Virtual_ReservedCapacityGroup, error) {
+	if mask == "" {
+		mask = "mask[availableInstanceCount, occupiedInstanceCount," +
+			"instances[id, billingItem[description, hourlyRecurringFee]]," +
+			" instanceCount, backendRouter[datacenter]]"
+	}
+	return vs.AccountService.Mask(mask).GetReservedCapacityGroups()
+}
+
+//Pulls down all backendRouterIds that are available
+//A list of locations where product_package
+func (vs virtualServerManager) GetRouters(packageName string) ([]datatypes.Location_Region, error) {
+	productPackage, err := vs.OrderManager.GetPackageByKey(packageName, "mask[id,locations]")
+	if err != nil {
+		return nil, err
+	}
+	regions, err := vs.PackageService.Id(*productPackage.Id).GetRegions()
+	return regions, err
+}
+
+//List available reserved capacity plans
+func (vs virtualServerManager) GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error) {
+	productPackage, err := vs.OrderManager.GetPackageByKey(packageName, "mask[id,locations]")
+	if err != nil {
+		return nil, err
+	}
+	items, err := vs.PackageService.Id(*productPackage.Id).GetItems()
+	return items, err
+}
+
+//Get the pod details, which contains the router id
+func (vs virtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
+	podService := services.GetNetworkPodService(vs.Session)
+	return podService.GetAllObjects()
 }

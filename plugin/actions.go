@@ -9,7 +9,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
@@ -30,9 +29,10 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -42,9 +42,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	networkManager := managers.NewNetworkManager(session)
 	firewallManager := managers.NewFirewallManager(session)
 	dnsManager := managers.NewDNSManager(session)
-	securityManager := managers.NewSecurityManager(session)
 	ipsecManager := managers.NewIPSECManager(session)
-	lbManager := managers.NewLoadBalancerManager(session)
+
 	hardwareManager := managers.NewHardwareServerManager(session)
 	orderManager := managers.NewOrderManager(session)
 	userManager := managers.NewUserManager(session)
@@ -53,7 +52,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	placeGroupManager := managers.NewPlaceGroupManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-
 
 		//dns - 9
 		NS_DNS_NAME + "-" + CMD_DNS_IMPORT_NAME: func(c *cli.Context) error {
@@ -119,6 +117,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 
 		//hardware -14
+		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
+			return hardware.NewAuthorizeStorageCommand(ui, hardwareManager).Run(c)
+		},
+		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_BILLING_NAME: func(c *cli.Context) error {
+			return hardware.NewBillingCommand(ui, hardwareManager).Run(c)
+		},
 		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_CANCEL_NAME: func(c *cli.Context) error {
 			return hardware.NewCancelCommand(ui, hardwareManager).Run(c)
 		},
@@ -167,6 +171,15 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_HARDWARE_NAME + "-toggle-ipmi": func(c *cli.Context) error {
 			return hardware.NewToggleIPMICommand(ui, hardwareManager).Run(c)
 		},
+		NS_HARDWARE_NAME + "-bandwidth": func(c *cli.Context) error {
+			return hardware.NewBandwidthCommand(ui, hardwareManager).Run(c)
+		},
+		NS_HARDWARE_NAME + "-storage": func(c *cli.Context) error {
+			return hardware.NewStorageCommand(ui, hardwareManager).Run(c)
+		},
+		NS_HARDWARE_NAME + "-guests": func(c *cli.Context) error {
+			return hardware.NewGuestsCommand(ui, hardwareManager).Run(c)
+		},
 
 		// image - 6
 		NS_IMAGE_NAME + "-" + CMD_IMG_DELETE_NAME: func(c *cli.Context) error {
@@ -186,6 +199,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_IMAGE_NAME + "-" + CMD_IMG_LIST_NAME: func(c *cli.Context) error {
 			return image.NewListCommand(ui, imageManager).Run(c)
+		},
+		NS_IMAGE_NAME + "-" + CMD_IMG_DATACENTER_NAME: func(c *cli.Context) error {
+			return image.NewDatacenterCommand(ui, imageManager).Run(c)
 		},
 
 		//ipsec - 11
@@ -221,117 +237,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_IPSEC_NAME + "-" + CMD_IPSEC_UPDATE_NAME: func(c *cli.Context) error {
 			return ipsec.NewUpdateCommand(ui, ipsecManager).Run(c)
-		},
-
-		//load balancer 16
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_CANCLE_NAME: func(c *cli.Context) error {
-			return loadbal.NewCancelCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_ORDER_NAME: func(c *cli.Context) error {
-			return loadbal.NewCreateCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_ORDER_OPTIONS_NAME: func(c *cli.Context) error {
-			return loadbal.NewOptionsCommand(ui, lbManager, networkManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_DETAIL_NAME: func(c *cli.Context) error {
-			return loadbal.NewDetailCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_LIST_NAME: func(c *cli.Context) error {
-			return loadbal.NewListCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_HEALTH_NAME: func(c *cli.Context) error {
-			return loadbal.NewHealthChecksCommand(ui, lbManager).Run(c)
-		},
-		//NS_LOADBAL_NAME + "-" + CMD_LOADBAL_NS_LIST_NAME: func(c *cli.Context) error {
-		//	return loadbal.NewNetscalerListCommand(ui, lbManager).Run(c)
-		//},
-		//NS_LOADBAL_NAME + "-" + CMD_LOADBAL_NS_DETAIL_NAME: func(c *cli.Context) error {
-		//	return loadbal.NewNetscalerDetailCommand(ui, lbManager).Run(c)
-		//},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_PROTOCOL_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewProtocolAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_PROTOCOL_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewProtocolDeleteCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_MEMBER_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewMembersAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_MEMBER_DEL_NAME: func(c *cli.Context) error {
-			return loadbal.NewMembersDelCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POOL_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PoolAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POOL_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PoolDelCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POOL_DETAIL_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PoolDetailCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POOL_EDIT_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PoolEditCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7MEMBER_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7MembersAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7MEMBER_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7MembersDelCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POLICY_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PolicyAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POLICY_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PolicyDeleteCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7POLICY_LIST_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7PolicyListCommand(ui, lbManager).Run(c)
-		},
-
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7RULE_ADD_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7RuleAddCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7RULE_DELETE_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7RuleDelCommand(ui, lbManager).Run(c)
-		},
-		NS_LOADBAL_NAME + "-" + CMD_LOADBAL_L7RULE_LIST_NAME: func(c *cli.Context) error {
-			return loadbal.NewL7RuleListCommand(ui, lbManager).Run(c)
-		},
-
-		//security 10
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_ADD_NAME: func(c *cli.Context) error {
-			return security.NewKeyAddCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_EDIT_NAME: func(c *cli.Context) error {
-			return security.NewKeyEditCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_LIST_NAME: func(c *cli.Context) error {
-			return security.NewKeyListCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_PRINT_NAME: func(c *cli.Context) error {
-			return security.NewKeyPrintCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSHKEY_REMOVE_NAME: func(c *cli.Context) error {
-			return security.NewKeyRemoveCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_ADD_NAME: func(c *cli.Context) error {
-			return security.NewCertAddCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_EDIT_NAME: func(c *cli.Context) error {
-			return security.NewCertEditCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_DOWNLOAD_NAME: func(c *cli.Context) error {
-			return security.NewCertDownloadCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_LIST_NAME: func(c *cli.Context) error {
-			return security.NewCertListCommand(ui, securityManager).Run(c)
-		},
-		NS_SECURITY_NAME + "-" + CMD_SECURITY_SSLCERT_REMOVE_NAME: func(c *cli.Context) error {
-			return security.NewCertRemoveCommand(ui, securityManager).Run(c)
 		},
 
 		//securitygroup 12
@@ -390,6 +295,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 
 		//virual server - 20
+		NS_VIRTUAL_NAME + "-" + CMD_VS_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
+			return virtual.NewAuthorizeStorageCommand(ui, virtualServerManager).Run(c)
+		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_CANCEL_NAME: func(c *cli.Context) error {
 			return virtual.NewCancelCommand(ui, virtualServerManager).Run(c)
 		},
@@ -423,6 +331,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-" + CMD_VS_LIST_HOST_NAME: func(c *cli.Context) error {
 			return virtual.NewListHostCommand(ui, virtualServerManager).Run(c)
 		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_MIGRATE_NAME: func(c *cli.Context) error {
+			return virtual.NewMigrageCommand(ui, virtualServerManager).Run(c)
+		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_PAUSE_NAME: func(c *cli.Context) error {
 			return virtual.NewPauseCommand(ui, virtualServerManager).Run(c)
 		},
@@ -449,6 +360,21 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_UPGRADE_NAME: func(c *cli.Context) error {
 			return virtual.NewUpgradeCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_CREATE_OPTIONS: func(c *cli.Context) error {
+			return virtual.NewCapacityCreateOptiosCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_DETAIL_NAME: func(c *cli.Context) error {
+			return virtual.NewCapacityDetailCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-bandwidth": func(c *cli.Context) error {
+			return virtual.NewBandwidthCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-storage": func(c *cli.Context) error {
+			return virtual.NewStorageCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" +CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
+			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
 		},
 
 		//Placement group
@@ -592,6 +518,20 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl tags
 	tagCommands := tags.GetCommandAcionBindings(ui, session)
 	for name, action := range tagCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl loadbal
+	loadbalCommands := loadbal.GetCommandAcionBindings(ui, session)
+	for name, action := range loadbalCommands {
+		CommandActionBindings[name] = action
+	}
+
+
+	// ibmcloud sl security
+	// ibmcloud sl sshkey
+	// ibmcloud sl ssl 
+	for name, action := range security.GetCommandActionBindings(ui, session) {
 		CommandActionBindings[name] = action
 	}
 

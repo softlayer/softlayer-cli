@@ -305,10 +305,6 @@ var _ = Describe("VirtualServerManager", func() {
 	})
 
 	Describe("List virtual guest instance under current acount", func() {
-		BeforeEach(func() {
-			fakeSLSession = testhelpers.NewFakeSoftlayerPagnationSession(nil)
-			vsManager = managers.NewVirtualServerManager(fakeSLSession)
-		})
 		Context("List all virtual guest instance under current acount", func() {
 			It("It returns a list of virtual guest instances", func() {
 				vss, err := vsManager.ListInstances(false, false, "", "", "", "", "", "", 0, 0, 0, 0, nil, "")
@@ -338,6 +334,26 @@ var _ = Describe("VirtualServerManager", func() {
 					Expect(*vs.HourlyBillingFlag).To(Equal(false))
 				}
 			})
+		})
+	})
+
+	Describe("GetBandwidthData Tests", func() {
+		var (
+			startTime time.Time
+			endTime time.Time
+		)
+		BeforeEach(func() {
+			startTime, _ = time.Parse("2006-01-02", "2021-01-01")
+			endTime, _ = time.Parse("2006-01-02", "2021-02-01")
+		})
+		Context("Test Happy Path", func() {
+			It("Tests API is called properly", func() {
+				data, err := vsManager.GetBandwidthData(12345, startTime, endTime, 300)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(len(data)).To(Equal(12))	
+				Expect(*data[0].Type).To(Equal("cpu0"))
+			})
+
 		})
 	})
 

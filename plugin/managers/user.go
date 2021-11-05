@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	LIST_USER_MASK = "mask[id, username, displayName, userStatus[name], hardwareCount, virtualGuestCount, email, roles]"
+	LIST_USER_MASK = "mask[id, username, displayName, userStatus[name], hardwareCount, virtualGuestCount, email, roles, externalBindingCount, apiAuthenticationKeyCount]"
 	GET_USER_MASK  = "mask[id, firstName, lastName, email, companyName, address1, city, country, postalCode, state, userStatusId, timezoneId]"
 )
 

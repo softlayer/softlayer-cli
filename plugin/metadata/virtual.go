@@ -10,26 +10,32 @@ var (
 	NS_VIRTUAL_NAME  = "vs"
 	CMD_VIRTUAL_NAME = "vs"
 
-	CMD_VS_CANCEL_NAME         = "cancel"
-	CMD_VS_CAPTURE_NAME        = "capture"
-	CMD_VS_CREATE_NAME         = "create"
-	CMD_VS_CREATE_HOST_NAME    = "host-create"
-	CMD_VS_CREATE_OPTIONS_NAME = "options"
-	CMD_VS_CREDENTIALS_NAME    = "credentials"
-	CMD_VS_DETAIL_NAME         = "detail"
-	CMD_VS_DNS_SYNC_NAME       = "dns-sync"
-	CMD_VS_EDIT_NAME           = "edit"
-	CMD_VS_LIST_NAME           = "list"
-	CMD_VS_LIST_HOST_NAME      = "host-list"
-	CMD_VS_PAUSE_NAME          = "pause"
-	CMD_VS_POWER_OFF_NAME      = "power-off"
-	CMD_VS_POWER_ON_NAME       = "power-on"
-	CMD_VS_READY_NAME          = "ready"
-	CMD_VS_REBOOT_NAME         = "reboot"
-	CMD_VS_RELOAD_NAME         = "reload"
-	CMD_VS_RESCUE_NAME         = "rescue"
-	CMD_VS_RESUME_NAME         = "resume"
-	CMD_VS_UPGRADE_NAME        = "upgrade"
+	CMD_VS_AUTHORIZE_STORAGE_NAME = "authorize-storage"
+	CMD_VS_CANCEL_NAME            = "cancel"
+	CMD_VS_CAPTURE_NAME           = "capture"
+	CMD_VS_CREATE_NAME            = "create"
+	CMD_VS_CREATE_HOST_NAME       = "host-create"
+	CMD_VS_CREATE_OPTIONS_NAME    = "options"
+	CMD_VS_CREDENTIALS_NAME       = "credentials"
+	CMD_VS_DETAIL_NAME            = "detail"
+	CMD_VS_DNS_SYNC_NAME          = "dns-sync"
+	CMD_VS_EDIT_NAME              = "edit"
+	CMD_VS_LIST_NAME              = "list"
+	CMD_VS_LIST_HOST_NAME         = "host-list"
+	CMD_VS_PAUSE_NAME             = "pause"
+	CMD_VS_POWER_OFF_NAME         = "power-off"
+	CMD_VS_POWER_ON_NAME          = "power-on"
+	CMD_VS_READY_NAME             = "ready"
+	CMD_VS_REBOOT_NAME            = "reboot"
+	CMD_VS_RELOAD_NAME            = "reload"
+	CMD_VS_RESCUE_NAME            = "rescue"
+	CMD_VS_RESUME_NAME            = "resume"
+	CMD_VS_STORAGE_NAME           = "storage"
+	CMD_VS_UPGRADE_NAME           = "upgrade"
+	CMD_VS_MIGRATE_NAME           = "migrate"
+	CMD_VS_CAPACITY_CREATE_OPTIONS = "capacity-create-options"
+	CMD_VS_CAPACITY_DETAIL_NAME   = "capacity-detail"
+	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -47,31 +53,62 @@ func VSMetaData() cli.Command {
 		Description: T("Classic infrastructure Virtual Servers"),
 		Usage:       "${COMMAND_NAME} sl vs",
 		Subcommands: []cli.Command{
-			VSCancelMataData(),
-			VSCaptureMataData(),
-			VSCreateHostMataData(),
-			VSCreateMataData(),
-			VSCreateOptionsMataData(),
-			VSCredentialsMataData(),
-			VSDetailMataData(),
-			VSDNSSyncMataData(),
-			VSEditMataData(),
-			VSListHostMataData(),
-			VSListMataData(),
-			VSPauseMataData(),
-			VSPowerOffMataData(),
-			VSPowerOnMataData(),
-			VSReadyMataData(),
-			VSRebootMataData(),
-			VSReloadMataData(),
-			VSRescueMataData(),
-			VSResumeMataData(),
-			VSUpgradeMataData(),
+			VSCancelMetaData(),
+			VSCaptureMetaData(),
+			VSCreateHostMetaData(),
+			VSCreateMetaData(),
+			VSCreateOptionsMetaData(),
+			VSCredentialsMetaData(),
+			VSDetailMetaData(),
+			VSCapacityDetailMetaData(),
+			VSDNSSyncMetaData(),
+			VSEditMetaData(),
+			VSListHostMetaData(),
+			VSListMetaData(),
+			VSMigrateMetaData(),
+			VSPauseMetaData(),
+			VSPowerOffMetaData(),
+			VSPowerOnMetaData(),
+			VSReadyMetaData(),
+			VSRebootMetaData(),
+			VSReloadMetaData(),
+			VSRescueMetaData(),
+			VSResumeMetaData(),
+			VSUpgradeMetaData(),
+			VSAuthorizeStorageMetaData(),
+			VSBandwidthMetaData(),
+			VSStorageMetaData(),
+			VSCapacityListMetaData(),
+			VSCapacityCreateOptionsMetadata(),
 		},
 	}
 }
 
-func VSCancelMataData() cli.Command {
+func VSAuthorizeStorageMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_AUTHORIZE_STORAGE_NAME,
+		Description: T("Authorize File, Block and Portable Storage to a Virtual Server"),
+		Usage: T(`${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567
+   Authorize File, Block and Portable Storage to a Virtual Server.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "u, username-storage",
+				Usage: T("The storage username to be added to the virtual server."),
+			},
+			cli.IntFlag{
+				Name:  "p, portable-id",
+				Usage: T("The portable storage id to be added to the virtual server"),
+			},
+			OutputFlag(),
+		},
+	}
+}
+
+func VSCancelMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CANCEL_NAME,
@@ -87,7 +124,35 @@ EXAMPLE:
 	}
 }
 
-func VSCaptureMataData() cli.Command {
+func VSMigrateMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_MIGRATE_NAME,
+		Description: T("Manage VSIs that require migration"),
+		Usage: T(`${COMMAND_NAME} sl vs migrate [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs migrate --guest 1234567
+   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "g, guest",
+				Usage: T("Guest ID to immediately migrate."),
+			},
+			cli.BoolFlag{
+				Name:  "a, all",
+				Usage: T("Migrate ALL guests that require migration immediately."),
+			},
+			cli.IntFlag{
+				Name:  "H, host",
+				Usage: T("Dedicated Host ID to migrate to. Only works on guests that are already on a dedicated host."),
+			},
+			OutputFlag(),
+		},
+	}
+}
+
+func VSCaptureMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CAPTURE_NAME,
@@ -115,7 +180,7 @@ EXAMPLE:
 	}
 }
 
-func VSCreateHostMataData() cli.Command {
+func VSCreateHostMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CREATE_HOST_NAME,
@@ -152,7 +217,7 @@ func VSCreateHostMataData() cli.Command {
 	}
 }
 
-func VSCreateMataData() cli.Command {
+func VSCreateMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CREATE_NAME,
@@ -314,7 +379,7 @@ EXAMPLE:
 	}
 }
 
-func VSCreateOptionsMataData() cli.Command {
+func VSCreateOptionsMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CREATE_OPTIONS_NAME,
@@ -330,7 +395,7 @@ EXAMPLE:
 	}
 }
 
-func VSCredentialsMataData() cli.Command {
+func VSCredentialsMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_CREDENTIALS_NAME,
@@ -346,7 +411,7 @@ EXAMPLE:
 	}
 }
 
-func VSDetailMataData() cli.Command {
+func VSDetailMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_DETAIL_NAME,
@@ -370,7 +435,7 @@ EXAMPLE:
 	}
 }
 
-func VSDNSSyncMataData() cli.Command {
+func VSDNSSyncMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_DNS_SYNC_NAME,
@@ -407,7 +472,7 @@ EXAMPLE:
 	}
 }
 
-func VSEditMataData() cli.Command {
+func VSEditMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_EDIT_NAME,
@@ -451,7 +516,7 @@ EXAMPLE:
 	}
 }
 
-func VSListHostMataData() cli.Command {
+func VSListHostMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_LIST_HOST_NAME,
@@ -479,7 +544,7 @@ func VSListHostMataData() cli.Command {
 	}
 }
 
-func VSListMataData() cli.Command {
+func VSListMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_LIST_NAME,
@@ -559,7 +624,7 @@ EXAMPLE:
 	}
 }
 
-func VSPauseMataData() cli.Command {
+func VSPauseMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_PAUSE_NAME,
@@ -575,7 +640,7 @@ EXAMPLE:
 	}
 }
 
-func VSPowerOffMataData() cli.Command {
+func VSPowerOffMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_POWER_OFF_NAME,
@@ -599,7 +664,7 @@ EXAMPLE:
 	}
 }
 
-func VSPowerOnMataData() cli.Command {
+func VSPowerOnMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_POWER_ON_NAME,
@@ -615,7 +680,7 @@ EXAMPLE:
 	}
 }
 
-func VSReadyMataData() cli.Command {
+func VSReadyMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_READY_NAME,
@@ -634,7 +699,7 @@ EXAMPLE:
 	}
 }
 
-func VSRebootMataData() cli.Command {
+func VSRebootMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_REBOOT_NAME,
@@ -658,7 +723,7 @@ EXAMPLE:
 	}
 }
 
-func VSReloadMataData() cli.Command {
+func VSReloadMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_RELOAD_NAME,
@@ -688,7 +753,7 @@ EXAMPLE:
 	}
 }
 
-func VSRescueMataData() cli.Command {
+func VSRescueMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_RESCUE_NAME,
@@ -704,7 +769,7 @@ EXAMPLE:
 	}
 }
 
-func VSResumeMataData() cli.Command {
+func VSResumeMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_RESUME_NAME,
@@ -720,7 +785,7 @@ EXAMPLE:
 	}
 }
 
-func VSUpgradeMataData() cli.Command {
+func VSUpgradeMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
 		Name:        CMD_VS_UPGRADE_NAME,
@@ -755,6 +820,109 @@ EXAMPLE:
 				Usage: T("Flavor key name"),
 			},
 			ForceFlag(),
+			OutputFlag(),
+		},
+	}
+}
+
+func VSBandwidthMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        "bandwidth",
+		Description: T("Bandwidth data over date range."),
+		Usage: T(`${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]
+Time formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'
+
+Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
+Bandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.
+
+Example::
+
+   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00`, map[string]interface{}{"Command": "vs"}),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,start",
+				Usage: T("Start date for bandwdith reporting"),
+			},
+			cli.StringFlag{
+				Name:  "e,end",
+				Usage: T("End date for bandwidth reporting"),
+			},
+			cli.IntFlag{
+				Name:  "r,rollup",
+				Usage: T("Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds"),
+			},
+			cli.BoolFlag{
+				Name:  "q,quite",
+				Usage: T("Only show the summary table."),
+			},
+			OutputFlag(),
+		},
+	}
+}
+
+func VSStorageMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_STORAGE_NAME,
+		Description: T("Get storage details for a virtual server."),
+		Usage: T(`${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs storage 1234567
+   Get storage details for a virtual server.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
+	}
+}
+
+func VSCapacityDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_CAPACITY_DETAIL_NAME,
+		Description: T("Get Reserved Capacity Group details."),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]
+EXAMPLE:
+   ${COMMAND_NAME} sl vs capacity-details 12345678
+    Get Reserved Capacity Group details with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+			OutputFlag(),
+		}}
+}
+
+func VSCapacityListMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_CAPACITY_LIST_NAME,
+		Description: T("List Reserved Capacity groups.\n"),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-list
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs capacity-list
+   List Reserved Capacity groups.`),
+	}
+}
+
+func VSCapacityCreateOptionsMetadata() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_CAPACITY_CREATE_OPTIONS,
+		Description: T("List options for creating Reserved Capacity Group instance"),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-create-options
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs options
+   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.`),
+		Flags: []cli.Flag{
 			OutputFlag(),
 		},
 	}

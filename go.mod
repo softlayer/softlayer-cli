@@ -8,6 +8,7 @@ require (
 	github.com/fatih/color v1.10.0
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/mattn/go-runewidth v0.0.12 // indirect
+	github.com/maximilien/i18n4go v0.2.6 // indirect
 	github.com/miekg/dns v1.1.25
 	github.com/nicksnyder/go-i18n v1.10.1
 	github.com/nicksnyder/go-i18n/v2 v2.1.2 // indirect
@@ -15,7 +16,7 @@ require (
 	github.com/onsi/gomega v1.11.0
 	github.com/softlayer/softlayer-go v1.0.3
 	github.com/stretchr/testify v1.7.0
-    github.com/urfave/cli v1.22.2
+	github.com/urfave/cli v1.22.2
 	golang.org/x/crypto v0.0.0-20210421170649-83a5a9bb288b // indirect
 	golang.org/x/text v0.3.6 // indirect
 )

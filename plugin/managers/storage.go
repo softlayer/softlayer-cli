@@ -79,6 +79,7 @@ type StorageManager interface {
 
 	ListVolumes(volumeType string, datacenter string, username string, storageType string, orderId int, mask string) ([]datatypes.Network_Storage, error)
 	GetVolumeDetails(volumeType string, volumeId int, mask string) (datatypes.Network_Storage, error)
+	GetVolumeByUsername(username string) ([]datatypes.Network_Storage, error)
 	OrderVolume(volumeType string, location string, storageType string, osType string, size int, tier float64, iops int, snapshotSize int, billing bool) (datatypes.Container_Product_Order_Receipt, error)
 	CancelVolume(volumeType string, volumeId int, reason string, immediate bool) error
 	OrderDuplicateVolume(config DuplicateOrderConfig) (datatypes.Container_Product_Order_Receipt, error)
@@ -155,6 +156,14 @@ func (s storageManager) GetVolumeAccessList(volumeId int) (datatypes.Network_Sto
 		"allowedSubnets.allowedHost.credential," +
 		"allowedIpAddresses.allowedHost.credential"
 	return s.StorageService.Id(volumeId).Mask(mask).GetObject()
+}
+
+//Returns a specific volume.
+//string username: The volume username.
+func (s storageManager) GetVolumeByUsername(username string) ([]datatypes.Network_Storage, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("networkStorage.username").Eq(username))
+	return s.AccountService.Filter(filters.Build()).GetNetworkStorage()
 }
 
 //Authorizes hosts to Block/File Storage Volumes
