@@ -293,6 +293,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_SUBNET_NAME + "-" + CMD_SUBNET_LOOKUP_NAME: func(c *cli.Context) error {
 			return subnet.NewLookupCommand(ui, networkManager).Run(c)
 		},
+		NS_SUBNET_NAME + "-" + CMD_SUBNET_ROUTE_NAME: func(c *cli.Context) error {
+			return subnet.NewRouteCommand(ui, networkManager).Run(c)
+		},
+		NS_SUBNET_NAME + "-" + CMD_SUBNET_CLEAR_ROUTE_NAME: func(c *cli.Context) error {
+			return subnet.NewClearRouteCommand(ui, networkManager).Run(c)
+		},
 
 		//virual server - 20
 		NS_VIRTUAL_NAME + "-" + CMD_VS_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
@@ -373,7 +379,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-storage": func(c *cli.Context) error {
 			return virtual.NewStorageCommand(ui, virtualServerManager).Run(c)
 		},
-		NS_VIRTUAL_NAME + "-" +CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
+		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
 		},
 
@@ -527,10 +533,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-
 	// ibmcloud sl security
 	// ibmcloud sl sshkey
-	// ibmcloud sl ssl 
+	// ibmcloud sl ssl
 	for name, action := range security.GetCommandActionBindings(ui, session) {
 		CommandActionBindings[name] = action
 	}
