@@ -3204,8 +3204,6 @@
 "translation": "이 명령에는 4개의 인수가 필요합니다."},
 {"id": "This command requires one argument.",
 "translation": "이 명령에는 1개의 인수가 필요합니다."},
-{"id": "This command requires one arguments.",
-"translation": "This command requires one arguments."},
 {"id": "This command requires the --subject-id option.",
 "translation": "이 명령에는 --subject-id 옵션이 필요합니다."},
 {"id": "This command requires the --title option.",

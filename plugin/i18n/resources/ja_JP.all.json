@@ -3204,8 +3204,6 @@
 "translation": "このコマンドには 4 個の引数が必要です。"},
 {"id": "This command requires one argument.",
 "translation": "このコマンドには 1 つの引数が必要です。"},
-{"id": "This command requires one arguments.",
-"translation": "This command requires one arguments."},
 {"id": "This command requires the --subject-id option.",
 "translation": "このコマンドには --subject-id オプションが必要です。"},
 {"id": "This command requires the --title option.",

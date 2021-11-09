@@ -3204,8 +3204,6 @@
 "translation": "Esse comando requer quatro argumentos."},
 {"id": "This command requires one argument.",
 "translation": "Este comando requer um argumento."},
-{"id": "This command requires one arguments.",
-"translation": "This command requires one arguments."},
 {"id": "This command requires the --subject-id option.",
 "translation": "Esse comando requer a opção --subject-id."},
 {"id": "This command requires the --title option.",

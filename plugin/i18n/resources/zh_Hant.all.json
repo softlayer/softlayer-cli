@@ -3204,8 +3204,6 @@
 "translation": "這個指令需要四個引數。"},
 {"id": "This command requires one argument.",
 "translation": "這個指令需要一個引數。"},
-{"id": "This command requires one arguments.",
-"translation": "This command requires one arguments."},
 {"id": "This command requires the --subject-id option.",
 "translation": "這個指令需要 --subject-id 選項。"},
 {"id": "This command requires the --title option.",

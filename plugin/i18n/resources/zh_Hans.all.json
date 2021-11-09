@@ -3204,8 +3204,6 @@
 "translation": "此命令需要 4 个自变量。"},
 {"id": "This command requires one argument.",
 "translation": "此命令需要 1 个自变量。"},
-{"id": "This command requires one arguments.",
-"translation": "This command requires one arguments."},
 {"id": "This command requires the --subject-id option.",
 "translation": "此命令需要 --subject-id 选项。"},
 {"id": "This command requires the --title option.",
