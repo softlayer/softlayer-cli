@@ -27,7 +27,7 @@ func NewRouteCommand(ui terminal.UI, networkManager managers.NetworkManager) (cm
 
 func (cmd *RouteCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one arguments."))
+		return errors.NewInvalidUsageError(T("This command requires one argument."))
 	}
 	subnetID, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
