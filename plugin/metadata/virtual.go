@@ -36,6 +36,7 @@ var (
 	CMD_VS_CAPACITY_CREATE_OPTIONS = "capacity-create-options"
 	CMD_VS_CAPACITY_DETAIL_NAME   = "capacity-detail"
 	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
+	CMD_VS_CAPACITY_CREATE_NAME     = "capacity-create"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -80,6 +81,7 @@ func VSMetaData() cli.Command {
 			VSStorageMetaData(),
 			VSCapacityListMetaData(),
 			VSCapacityCreateOptionsMetadata(),
+			VSCapacityCreateMetaData(),
 		},
 	}
 }
@@ -924,6 +926,46 @@ EXAMPLE:
    This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.`),
 		Flags: []cli.Flag{
 			OutputFlag(),
+		},
+	}
+}
+
+
+func VSCapacityCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_CAPACITY_CREATE_NAME,
+		Description: T("Create a Reserved Capacity instance."),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-create [OPTIONS]
+EXAMPLE:
+${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2
+This command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,
+${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test
+This command tests whether the order is valid with above options before the order is actually placed.
+
+WARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Name for your new reserved capacity  [required]"),
+			},
+			cli.IntFlag{
+				Name:  "b,backendRouterId",
+				Usage: T("BackendRouterId, create-options has a list of valid ids to use. [required]"),
+			},
+			cli.IntFlag{
+				Name:  "i,instances",
+				Usage: T("Number of VSI instances this capacity reservation can support. [required]"),
+			},
+			cli.StringFlag{
+				Name:  "fl,flavor",
+				Usage: T(" Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]"),
+			},
+			cli.BoolFlag{
+				Name:  "test",
+				Usage: T(" Do not actually create the reserved capacity"),
+			},
+			ForceFlag(),
 		},
 	}
 }
