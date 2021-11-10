@@ -264,6 +264,14 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Product_Item
 		result2 error
 	}
+	GetSummaryUsageStub        func() ([]datatypes.Metric_Tracking_Object_Data, error)
+	GetSummaryUsageMutex       sync.RWMutex
+	GetSummaryUsageArgsForCall []struct{}
+	getSummaryUsageReturns     struct {
+		result1 []datatypes.Metric_Tracking_Object_Data
+		result2 error
+	}
+
 	GetRouterStub        func() ([]datatypes.Location_Region, error)
 	GetRouterMutex       sync.RWMutex
 	GetRouterArgsForCall []struct{}
@@ -603,6 +611,27 @@ type FakeVirtualServerManager struct {
 
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeVirtualServerManager) GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error) {
+	fake.GetSummaryUsageMutex.Lock()
+	fake.GetSummaryUsageArgsForCall = append(fake.GetSummaryUsageArgsForCall, struct{}{})
+	fake.GetSummaryUsageMutex.Unlock()
+	return fake.getSummaryUsageReturns.result1, fake.getSummaryUsageReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetSummaryUsageCallCount() int {
+	fake.GetSummaryUsageMutex.RLock()
+	defer fake.GetSummaryUsageMutex.RUnlock()
+	return len(fake.GetSummaryUsageArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetSummaryUsageReturns(result1 []datatypes.Metric_Tracking_Object_Data, result2 error) {
+	fake.GetSummaryUsageStub = nil
+	fake.getSummaryUsageReturns = struct {
+		result1 []datatypes.Metric_Tracking_Object_Data
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeVirtualServerManager) GetRouters(packageName string) ([]datatypes.Location_Region, error) {
