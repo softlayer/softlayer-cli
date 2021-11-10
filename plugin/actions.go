@@ -379,6 +379,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-" +CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
 		},
+		NS_VIRTUAL_NAME + "-" +CMD_VS_CAPACITY_CREATE_NAME: func(c *cli.Context) error {
+			return virtual.NewCapacityCreateCommand(ui, virtualServerManager, context).Run(c)
+		},
 
 		//Placement group
 		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_NAME: func(c *cli.Context) error {

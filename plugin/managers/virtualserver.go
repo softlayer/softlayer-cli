@@ -98,6 +98,7 @@ type VirtualServerManager interface {
 	GetRouters(packageName string) ([]datatypes.Location_Region, error)
 	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
 	GetPods() ([]datatypes.Network_Pod, error)
+	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
 }
 
 type virtualServerManager struct {
@@ -107,7 +108,7 @@ type virtualServerManager struct {
 	OrderService         services.Product_Order
 	DedicatedHostService services.Virtual_DedicatedHost
 	OrderManager         OrderManager
-	Session			    *session.Session
+	Session              *session.Session
 	StorageManager       StorageManager
 }
 
@@ -1221,4 +1222,40 @@ func (vs virtualServerManager) GetCapacityCreateOptions(packageName string) ([]d
 func (vs virtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
 	podService := services.GetNetworkPodService(vs.Session)
 	return podService.GetAllObjects()
+}
+func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error) {
+	flavorId, _ := vs.OrderManager.GetPackageByKey("RESERVED_CAPACITY", "id")
+	reservedCapacity.PackageId = flavorId.Id
+	reservedCapacity.ComplexType = sl.String("SoftLayer_Container_Product_Order_Virtual_ReservedCapacity")
+	if params["name"] != nil {
+		reservedCapacity.Name = sl.String(params["name"].(string))
+	}
+	if params["backendRouterId"] != nil {
+		reservedCapacity.BackendRouterId = sl.Int(params["backendRouterId"].(int))
+	}
+	if params["flavor"] != nil {
+		items, _ := vs.PackageService.Id(*flavorId.Id).GetItemPrices()
+		for _, item := range items {
+			if *item.Item.KeyName == params["flavor"] {
+				if item.LocationGroupId == nil {
+					priceFlavor := datatypes.Product_Item_Price{
+						Id: item.Id,
+					}
+					reserverItem := datatypes.Product_Item_Price{
+						Id: sl.Int(217601),
+					}
+					reservedCapacity.Prices = append(reservedCapacity.Prices, priceFlavor)
+					reservedCapacity.Prices = append(reservedCapacity.Prices, reserverItem)
+
+				}
+			}
+
+		}
+
+	}
+	if params["test"] == true {
+		return vs.OrderService.VerifyOrder(reservedCapacity)
+	} else {
+		return vs.OrderService.PlaceOrder(reservedCapacity, sl.Bool(false))
+	}
 }
