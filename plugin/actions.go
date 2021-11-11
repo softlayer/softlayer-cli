@@ -346,6 +346,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-" + CMD_VS_READY_NAME: func(c *cli.Context) error {
 			return virtual.NewReadyCommand(ui, virtualServerManager).Run(c)
 		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_BILLING_NAME: func(c *cli.Context) error {
+			return virtual.NewBillingCommand(ui, virtualServerManager).Run(c)
+		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_REBOOT_NAME: func(c *cli.Context) error {
 			return virtual.NewRebootCommand(ui, virtualServerManager).Run(c)
 		},
