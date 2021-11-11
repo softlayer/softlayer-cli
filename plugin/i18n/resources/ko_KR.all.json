@@ -2654,6 +2654,8 @@
 "translation": "{{.ProtocolID}} 프로토콜이 제거됨"},
 {"id": "Provisioned",
 "translation": "프로비저닝됨"},
+{"id": "Provisioning Date",
+"translation": "Provisioning Date"},
 {"id": "Public",
 "translation": "공용"},
 {"id": "Public IP",
