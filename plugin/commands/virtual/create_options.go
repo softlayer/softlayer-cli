@@ -1,14 +1,13 @@
 package virtual
 
 import (
-	"sort"
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
+	"sort"
 )
 
 type CreateOptionsCommand struct {
@@ -40,78 +39,86 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 	}
 
 	table := cmd.UI.Table([]string{T("datacenter"), T("value")})
-	datacenters := createOptions.Locations
-	for _, location := range datacenters {
-		table.Add(
-			utils.FormatStringPointer(location.LongName),
-			utils.FormatStringPointer(location.Name),
-		)
+	locations := createOptions[managers.KEY_LOCATIONS]
+	var sortedLocations []string
+	for key, _ := range locations {
+		sortedLocations = append(sortedLocations, key)
+	}
+	sort.Strings(sortedLocations)
+	for _, key := range sortedLocations {
+		table.Add(locations[key], key)
 	}
 	table.Print()
 
-	table = cmd.UI.Table([]string{T("Size"), T("value")})
-	sizes := createOptions.Sizes
-	for _, size := range sizes {
-		table.Add(
-			utils.FormatStringPointer(size.Description),
-			utils.FormatStringPointer(size.KeyName),
-		)
+	//preset
+	presetTable := cmd.UI.Table([]string{T("Size"), T("Value")})
+	presets := createOptions[managers.KEY_SIZES]
+	var sortedPresets []string
+	for key, _ := range presets {
+		sortedPresets = append(sortedPresets, key)
 	}
-	table.Print()
-
-	table = cmd.UI.Table([]string{T("OS"), T("key"), T("Reference Code")})
-	osList := createOptions.OperatingSystems
-	sort.SliceStable(osList, func(i, j int) bool {
-		return utils.FormatStringPointer(osList[i].Description) < utils.FormatStringPointer(osList[j].Description)
-	})
-
-	for _, os := range osList {
-		table.Add(
-			utils.FormatStringPointer(os.Description),
-			utils.FormatStringPointer(os.KeyName),
-			utils.FormatStringPointer(os.SoftwareDescription.ReferenceCode),
-		)
+	sort.Strings(sortedPresets)
+	for _, key := range sortedPresets {
+		presetTable.Add(presets[key], key)
 	}
-	table.Print()
+	presetTable.Print()
+	cmd.UI.Print("")
 
-	table = cmd.UI.Table([]string{T("network"), T("key")})
-	networkList := createOptions.PortSpeed
-
-	for _, network := range networkList {
-		table.Add(
-			utils.FormatStringPointer(network.Description),
-			utils.FormatStringPointer(network.KeyName),
-		)
+	//operating system
+	osTable := cmd.UI.Table([]string{T("Operating system"), T("Value")})
+	oses := createOptions[managers.KEY_OS]
+	var sortedoses []string
+	for key, _ := range oses {
+		sortedoses = append(sortedoses, key)
 	}
-	table.Print()
-
-	table = cmd.UI.Table([]string{T("database"), T("key")})
-	databaseList := createOptions.PortSpeed
-	sort.SliceStable(databaseList, func(i, j int) bool {
-		return utils.FormatStringPointer(databaseList[i].Description) < utils.FormatStringPointer(databaseList[j].Description)
-	})
-
-	for _, database := range databaseList {
-		table.Add(
-			utils.FormatStringPointer(database.Description),
-			utils.FormatStringPointer(database.KeyName),
-		)
+	sort.Strings(sortedoses)
+	for _, key := range sortedoses {
+		osTable.Add(oses[key], key)
 	}
-	table.Print()
+	osTable.Print()
+	cmd.UI.Print("")
 
-	table = cmd.UI.Table([]string{T("guest disk"), T("key"), T("capacity"), T("disk")})
-	guestDisks := createOptions.GuestDisk
-
-	for _, disk := range guestDisks {
-		table.Add(
-			utils.FormatStringPointer(disk.Description),
-			utils.FormatStringPointer(disk.KeyName),
-			utils.FormatSLFloatPointerToInt(disk.Capacity),
-			utils.FormatStringPointer(disk.LongDescription),
-		)
+	//port speed
+	portTable := cmd.UI.Table([]string{T("Port speed"), T("Value")})
+	ports := createOptions[managers.KEY_PORT_SPEED]
+	var sortedPorts []string
+	for key, _ := range ports {
+		sortedPorts = append(sortedPorts, key)
 	}
+	sort.Strings(sortedPorts)
+	for _, key := range sortedPorts {
+		portTable.Add(ports[key], key)
+	}
+	portTable.Print()
+	cmd.UI.Print("")
 
-	table.Print()
+	//Disk
+	diskTable := cmd.UI.Table([]string{T("disk_guest"), T("Value")})
+	disks := createOptions[managers.KEY_GUEST]
+	var sortedDisks []string
+	for key, _ := range disks {
+		sortedDisks = append(sortedDisks, key)
+	}
+	sort.Strings(sortedDisks)
+	for _, key := range sortedDisks {
+		diskTable.Add(disks[key],key)
+	}
+	diskTable.Print()
+	cmd.UI.Print("")
+
+	//extras
+	extraTable := cmd.UI.Table([]string{T("Extras"), T("Value")})
+	extras := createOptions[managers.KEY_EXTRAS]
+	var sortedExtras []string
+	for key, _ := range extras {
+		sortedExtras = append(sortedExtras, key)
+	}
+	sort.Strings(sortedExtras)
+	for _, key := range sortedExtras {
+		extraTable.Add(extras[key], key)
+	}
+	extraTable.Print()
+	cmd.UI.Print("")
 
 	return nil
 }
