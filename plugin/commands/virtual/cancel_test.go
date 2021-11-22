@@ -26,10 +26,10 @@ var _ = Describe("VS cancel", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewCancelCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCancelMataData().Name,
-			Description: metadata.VSCancelMataData().Description,
-			Usage:       metadata.VSCancelMataData().Usage,
-			Flags:       metadata.VSCancelMataData().Flags,
+			Name:        metadata.VSCancelMetaData().Name,
+			Description: metadata.VSCancelMetaData().Description,
+			Usage:       metadata.VSCancelMetaData().Usage,
+			Flags:       metadata.VSCancelMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

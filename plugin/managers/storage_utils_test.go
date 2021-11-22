@@ -34,10 +34,7 @@ var _ = Describe("Storage Utils", func() {
 		12000: []int{1000, 6000}}
 
 	BeforeEach(func() {
-		filenames := []string{
-			"SoftLayer_Product_Package_getAllObjects_saas",
-			"SoftLayer_Network_Storage_getObject",
-		}
+		filenames := []string{"getAllObjects_saas", }
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 		storageManager = managers.NewStorageManager(fakeSLSession)
 		_ = storageManager

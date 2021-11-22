@@ -35,6 +35,7 @@ var (
 
 	//policies list can be found in protocol details
 	CMD_LOADBAL_L7POLICY_ADD_NAME    = "l7policy-add" //add policy to a protocol
+	CMD_LOADBAL_L7POLICY_EDIT_NAME   = "l7policy-edit"
 	CMD_LOADBAL_L7POLICY_DELETE_NAME = "l7policy-delete"
 	CMD_LOADBAL_L7POLICY_LIST_NAME   = "l7policies"
 
@@ -69,6 +70,7 @@ func LoadbalMetaData() cli.Command {
 			LoadbalMemberDelMetadata(),
 			LoadbalProtocolAddMetadata(),
 			LoadbalProtocolDelMetadata(),
+			LoadbalProtocolEditMetadata(),
 			LoadbalL7PoolDelMetadata(),
 			LoadbalL7PoolAddMetadata(),
 			LoadbalL7PoolDetailMetadata(),
@@ -76,6 +78,7 @@ func LoadbalMetaData() cli.Command {
 			LoadbalL7MemberAddMetadata(),
 			LoadbalL7MemberDeleteMetadata(),
 			LoadbalL7PolicyAddMetadata(),
+			LoadbalL7PolicyEditMetadata(),
 			LoadbalL7PolicyDeleteMetadata(),
 			LoadbalL7PolicyListMetadata(),
 			LoadbalL7RuleAddMetadata(),
@@ -287,7 +290,7 @@ func LoadbalProtocolAddMetadata() cli.Command {
 		Category:    NS_LOADBAL_NAME,
 		Name:        CMD_LOADBAL_PROTOCOL_ADD_NAME,
 		Description: T("Add a new load balancer protocol"),
-		Usage:       "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip]",
+		Usage:       "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
 		Flags: []cli.Flag{
 			cli.IntFlag{
 				Name:  "id",
@@ -320,6 +323,69 @@ func LoadbalProtocolAddMetadata() cli.Command {
 			cli.StringFlag{
 				Name:  "sticky",
 				Usage: T("Use 'cookie' or 'source-ip' to stick"),
+			},
+			cli.IntFlag{
+				Name:  "client-timeout",
+				Usage: T("Client side timeout setting, in seconds"),
+			},
+			cli.IntFlag{
+				Name:  "server-timeout",
+				Usage: T("Server side timeout setting, in seconds"),
+			},
+		},
+	}
+}
+
+func LoadbalProtocolEditMetadata() cli.Command {
+	return cli.Command{
+		Category:    NS_LOADBAL_NAME,
+		Name:        "protocol-edit",
+		Description: T("Edit load balancer protocol"),
+		Usage:       "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "id",
+				Usage: T("ID for the load balancer [required]"),
+			},
+			cli.StringFlag{
+				Name:  "protocol-uuid",
+				Usage: T("UUID of the protocol you want to edit."),
+			},
+			cli.StringFlag{
+				Name:  "front-protocol",
+				Usage: T("Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP"),
+			},
+			cli.StringFlag{
+				Name:  "back-protocol",
+				Usage: T("Protocol type to use when connecting to backend servers: [HTTP|HTTPS|TCP]. Defaults to whatever --front-protocol is"),
+			},
+			cli.IntFlag{
+				Name:  "front-port",
+				Usage: T("Internet side port. Default: 80"),
+			},
+			cli.IntFlag{
+				Name:  "back-port",
+				Usage: T("Private side port. Default: 80"),
+			},
+			cli.StringFlag{
+				Name:  "m, method",
+				Usage: T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Default: ROUNDROBIN"),
+			},
+			cli.IntFlag{
+				Name:  "c, connections",
+				Usage: T("Maximum number of connections to allow"),
+			},
+			cli.StringFlag{
+				Name:  "sticky",
+				Usage: T("Use 'cookie' or 'source-ip' to stick"),
+			},
+			cli.IntFlag{
+				Name:  "client-timeout",
+				Usage: T("Client side timeout setting, in seconds"),
+			},
+			cli.IntFlag{
+				Name:  "server-timeout",
+				Usage: T("Server side timeout setting, in seconds"),
 			},
 		},
 	}
@@ -520,7 +586,7 @@ func LoadbalL7PolicyAddMetadata() cli.Command {
 		Category:    NS_LOADBAL_NAME,
 		Name:        CMD_LOADBAL_L7POLICY_ADD_NAME,
 		Description: T("Add a new L7 policy"),
-		Usage:       "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+		Usage:       "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "protocol-uuid",
@@ -532,16 +598,47 @@ func LoadbalL7PolicyAddMetadata() cli.Command {
 			},
 			cli.StringFlag{
 				Name:  "a,action",
-				Usage: T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL"),
+				Usage: T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 			},
 			cli.StringFlag{
 				Name:  "r,redirect",
-				Usage: T("URL or POOL_UUID. It's only available in REDIRECT_POOL | REDIRECT_URL action"),
+				Usage: T("POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action"),
 			},
 			cli.IntFlag{
 				Name:  "p,priority",
 				Usage: T("Policy priority"),
 				Value: 1,
+			},
+		},
+	}
+}
+
+func LoadbalL7PolicyEditMetadata() cli.Command {
+	return cli.Command{
+		Category:    NS_LOADBAL_NAME,
+		Name:        CMD_LOADBAL_L7POLICY_EDIT_NAME,
+		Description: T("Edit a L7 policy"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "policy-id",
+				Usage: T("ID for the load balancer policy [required]"),
+			},
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Policy name"),
+			},
+			cli.StringFlag{
+				Name:  "a,action",
+				Usage: T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
+			},
+			cli.StringFlag{
+				Name:  "r,redirect",
+				Usage: T("POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action"),
+			},
+			cli.IntFlag{
+				Name:  "p,priority",
+				Usage: T("Policy priority"),
 			},
 		},
 	}

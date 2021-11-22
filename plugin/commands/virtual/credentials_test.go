@@ -28,10 +28,10 @@ var _ = Describe("VS credentials", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewCredentialsCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCredentialsMataData().Name,
-			Description: metadata.VSCredentialsMataData().Description,
-			Usage:       metadata.VSCredentialsMataData().Usage,
-			Flags:       metadata.VSCredentialsMataData().Flags,
+			Name:        metadata.VSCredentialsMetaData().Name,
+			Description: metadata.VSCredentialsMetaData().Description,
+			Usage:       metadata.VSCredentialsMetaData().Usage,
+			Flags:       metadata.VSCredentialsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

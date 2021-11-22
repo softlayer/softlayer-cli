@@ -11,21 +11,25 @@ var (
 	CMD_HARDWARE_NAME = "hardware"
 
 	//sl-hardware
-	CMD_HARDWARE_CANCEL_NAME          = "cancel"
-	CMD_HARDWARE_CANCEL_REASONS_NAME  = "cancel-reasons"
-	CMD_HARDWARE_CREATE_NAME          = "create"
-	CMD_HARDWARE_CREATE_OPTIONS_NAME  = "create-options"
-	CMD_HARDWARE_CREDENTIALS_NAME     = "credentials"
-	CMD_HARDWARE_DETAIL_NAME          = "detail"
-	CMD_HARDWARE_EDIT_NAME            = "edit"
-	CMD_HARDWARE_LIST_NAME            = "list"
-	CMD_HARDWARE_POWER_CYCLE_NAME     = "power-cycle"
-	CMD_HARDWARE_POWER_OFF_NAME       = "power-off"
-	CMD_HARDWARE_POWER_ON_NAME        = "power-on"
-	CMD_HARDWARE_REBOOT_NAME          = "reboot"
-	CMD_HARDWARE_RELOAD_NAME          = "reload"
-	CMD_HARDWARE_RESCUE_NAME          = "rescue"
-	CMD_HARDWARE_UPDATE_FIRMWARE_NAME = "update-firmware"
+	CMD_HARDWARE_AUTHORIZE_STORAGE_NAME = "authorize-storage"
+	CMD_HARDWARE_BILLING_NAME           = "billing"
+	CMD_HARDWARE_CANCEL_NAME            = "cancel"
+	CMD_HARDWARE_CANCEL_REASONS_NAME    = "cancel-reasons"
+	CMD_HARDWARE_CREATE_NAME            = "create"
+	CMD_HARDWARE_CREATE_OPTIONS_NAME    = "create-options"
+	CMD_HARDWARE_CREDENTIALS_NAME       = "credentials"
+	CMD_HARDWARE_DETAIL_NAME            = "detail"
+	CMD_HARDWARE_EDIT_NAME              = "edit"
+	CMD_HARDWARE_GUESTS_NAME            = "guests"
+	CMD_HARDWARE_LIST_NAME              = "list"
+	CMD_HARDWARE_POWER_CYCLE_NAME       = "power-cycle"
+	CMD_HARDWARE_POWER_OFF_NAME         = "power-off"
+	CMD_HARDWARE_POWER_ON_NAME          = "power-on"
+	CMD_HARDWARE_REBOOT_NAME            = "reboot"
+	CMD_HARDWARE_RELOAD_NAME            = "reload"
+	CMD_HARDWARE_RESCUE_NAME            = "rescue"
+	CMD_HARDWARE_STORAGE_NAME           = "storage"
+	CMD_HARDWARE_UPDATE_FIRMWARE_NAME   = "update-firmware"
 )
 
 func HardwareNamespace() plugin.Namespace {
@@ -43,6 +47,8 @@ func HardwareMetaData() cli.Command {
 		Description: T("Classic infrastructure hardware servers"),
 		Usage:       "${COMMAND_NAME} sl hardware",
 		Subcommands: []cli.Command{
+			HardwareAuthorizeStorageMetaData(),
+			HardwareBillingMetaData(),
 			HardwareCancelMetaData(),
 			HardwareCancelReasonsMetaData(),
 			HardwareCreateMetaData(),
@@ -59,6 +65,41 @@ func HardwareMetaData() cli.Command {
 			HardwareRescueMetaData(),
 			HardwareUpdateFirmwareMetaData(),
 			HardwareToggleIPMIMetaData(),
+			HardwareBandwidthMetaData(),
+			HardwareStorageMetaData(),
+			HardwareGuestsMetaData(),
+		},
+	}
+}
+
+func HardwareAuthorizeStorageMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_HARDWARE_NAME,
+		Name:        CMD_HARDWARE_AUTHORIZE_STORAGE_NAME,
+		Description: T("Authorize File and Block Storage to a Hardware Server"),
+		Usage: T(`${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567
+   Authorize File and Block Storage to a Hardware Server.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "u, username-storage",
+				Usage: T("The storage username to be added to the hardware server."),
+			},
+			OutputFlag(),
+		},
+	}
+}
+
+func HardwareBillingMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_HARDWARE_NAME,
+		Name:        CMD_HARDWARE_BILLING_NAME,
+		Description: T("Get billing for a hardware device."),
+		Usage:       "${COMMAND_NAME} sl hardware billing [OPTIONS] IDENTIFIER",
+		Flags: []cli.Flag{
+			OutputFlag(),
 		},
 	}
 }
@@ -435,6 +476,74 @@ func HardwareToggleIPMIMetaData() cli.Command {
 				Usage: T("Disable the IPMI interface."),
 			},
 			QuietFlag(),
+		},
+	}
+}
+
+func HardwareBandwidthMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_HARDWARE_NAME,
+		Name:        "bandwidth",
+		Description: T("Bandwidth data over date range."),
+		Usage: T(`${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]
+Time formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'
+
+Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
+Bandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.
+
+Example::
+
+   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00`, map[string]interface{}{"Command": "hardware"}),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,start",
+				Usage: T("Start date for bandwdith reporting"),
+			},
+			cli.StringFlag{
+				Name:  "e,end",
+				Usage: T("End date for bandwidth reporting"),
+			},
+			cli.IntFlag{
+				Name:  "r,rollup",
+				Usage: T("Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds"),
+			},
+			cli.BoolFlag{
+				Name:  "q,quite",
+				Usage: T("Only show the summary table."),
+			},
+			OutputFlag(),
+		},
+	}
+}
+
+func HardwareStorageMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_HARDWARE_NAME,
+		Name:        CMD_HARDWARE_STORAGE_NAME,
+		Description: T("Get storage details for a hardware server."),
+		Usage: T(`${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl hardware storage 1234567
+   Get storage details for a hardware server.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
+	}
+}
+
+func HardwareGuestsMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_HARDWARE_NAME,
+		Name:        CMD_HARDWARE_GUESTS_NAME,
+		Description: T("Lists the Virtual Guests running on this server."),
+		Usage: T(`${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl hardware guests 1234567
+   Lists the Virtual Guests running on this server.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
 		},
 	}
 }

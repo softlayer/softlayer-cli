@@ -36,10 +36,10 @@ var _ = Describe("VS create", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = virtual.NewCreateCommand(fakeUI, fakeVSManager, fakeImageManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCreateMataData().Name,
-			Description: metadata.VSCreateMataData().Description,
-			Usage:       metadata.VSCreateMataData().Usage,
-			Flags:       metadata.VSCreateMataData().Flags,
+			Name:        metadata.VSCreateMetaData().Name,
+			Description: metadata.VSCreateMetaData().Description,
+			Usage:       metadata.VSCreateMetaData().Usage,
+			Flags:       metadata.VSCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
