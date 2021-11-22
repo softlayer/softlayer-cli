@@ -1,0 +1,22 @@
+[
+    {
+        "accountId": 1111111,
+        "createDate": "2021-11-18T15:20:41-06:00",
+        "domain": "domain.com",
+        "fullyQualifiedDomainName": "virtualserver01.domain.com",
+        "hostname": "virtualserver01",
+        "id": 1234567,
+        "maxCpu": 1,
+        "maxCpuUnits": "CORE",
+        "maxMemory": 1024,
+        "modifyDate": "2021-11-18T15:23:11-06:00",
+        "provisionDate": "2021-11-18T15:23:11-06:00",
+        "startCpus": 1,
+        "statusId": 1001,
+        "globalIdentifier": "b0487cbb-7fdfd-adff-asfsda-sadfsadfsad",
+        "status": {
+            "keyName": "ACTIVE",
+            "name": "Active"
+        }
+    }
+]

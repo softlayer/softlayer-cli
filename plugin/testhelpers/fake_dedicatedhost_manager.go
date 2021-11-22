@@ -118,4 +118,4 @@ func (fake *FakeDedicatedhostManager) recordInvocation(key string, args []interf
 	fake.invocations[key] = append(fake.invocations[key], args)
 }
 
-var _ managers.OrderManager = new(FakeOrderManager)
+var _ managers.DedicatedHostManager = new(FakeDedicatedhostManager)
