@@ -1,7 +1,6 @@
 package virtual_test
 
 import (
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -11,7 +10,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-	"strings"
 	"time"
 )
 
@@ -39,14 +37,14 @@ var _ = Describe("VS usage", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Required flags \"start, end, valid-data\" not set"))
 			})
 		})
 		Context("VS usage with wrong VS ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Virtual server ID")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Required flags \"start, end, valid-data\" not set"))
 			})
 		})
 		Context("VS usage successfull", func() {

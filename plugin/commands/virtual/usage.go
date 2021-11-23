@@ -37,20 +37,6 @@ func (cmd *UsageCommand) Run(c *cli.Context) error {
 		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
 
-	if !c.IsSet("start") {
-		return bmxErr.NewInvalidUsageError(T(" Missing option '--start' / '-s'."))
-	}
-	if err != nil {
-		return errors.NewInvalidUsageError("Invalid end date: " + err.Error())
-	}
-	if !c.IsSet("end") {
-		return bmxErr.NewInvalidUsageError(T(" Missing option '--end' / '-s'."))
-	}
-
-	if !c.IsSet("valid-data") {
-		return bmxErr.NewInvalidUsageError(T("Missing option '--valid-type' / '-t'."))
-	}
-
 	if !c.IsSet("summary-period") {
 		periodic = 3600
 	} else {
@@ -72,6 +58,9 @@ func (cmd *UsageCommand) Run(c *cli.Context) error {
 	if c.IsSet("end") {
 		end = c.String("end")
 		endDate, err = time.Parse(GetDateFormat(end), end)
+		if err != nil {
+			return errors.NewInvalidUsageError("Invalid end date: " + err.Error())
+		}
 
 	} else {
 		endDate = startDate.AddDate(0, -1, 0)
@@ -91,7 +80,7 @@ func (cmd *UsageCommand) Run(c *cli.Context) error {
 	}
 
 	tableAverage := cmd.UI.Table([]string{ T("Average")})
-	tableUsage := cmd.UI.Table([]string{ T("Counter"),T("dataTime"),T("type")})
+	tableUsage := cmd.UI.Table([]string{ T("Counter"),T("Date"),T("Type")})
 	count := 0
 	counter := 0.0
 	for _, data := range vsUsage {

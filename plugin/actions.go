@@ -387,8 +387,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_VIRTUAL_NAME + "-" +CMD_VS_CAPACITY_CREATE_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityCreateCommand(ui, virtualServerManager, context).Run(c)
-
-		NS_VIRTUAL_NAME + "-" +"usage": func(c *cli.Context) error {
+		},
+		NS_VIRTUAL_NAME + "-usage": func(c *cli.Context) error {
 			return virtual.NewUsageCommand(ui, virtualServerManager).Run(c)
 		},
 
