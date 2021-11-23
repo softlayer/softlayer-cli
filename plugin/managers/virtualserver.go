@@ -605,7 +605,7 @@ func (vs virtualServerManager) GetCreateOptions(vsiType string, datacenter strin
 
 		case strings.Contains(category, "guest_disk"):
 				guests[string(*item.KeyName)]= *item.Description
-		case utils.Contains(extraList, category):
+		case utils.WordInList(extraList, category):
 			extras[*item.KeyName] = *item.Description
 		}
 	}
