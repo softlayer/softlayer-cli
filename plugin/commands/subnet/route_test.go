@@ -2,7 +2,6 @@ package subnet_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -39,14 +38,14 @@ var _ = Describe("Subnet Route", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Subnet route with wrong subnet ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Subnet ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Subnet ID'. It must be a positive integer."))
 			})
 		})
 
@@ -54,7 +53,7 @@ var _ = Describe("Subnet Route", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "-i", "1234", "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-t/--type] is required.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-t/--type] is required."))
 			})
 		})
 
@@ -62,7 +61,7 @@ var _ = Describe("Subnet Route", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "-t", "SoftLayer_Network_Subnet_IpAddress", "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-i/--type-id] is required.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-i/--type-id] is required."))
 			})
 		})
 
@@ -73,8 +72,8 @@ var _ = Describe("Subnet Route", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "-i", "1234", "-t", "SoftLayer_Network_Subnet_IpAddress", "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to route using the type: SoftLayer_Network_Subnet_IpAddress and identifier: 1234.\n")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to route using the type: SoftLayer_Network_Subnet_IpAddress and identifier: 1234.\n"))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
