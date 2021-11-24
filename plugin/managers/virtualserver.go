@@ -36,7 +36,7 @@ const (
 		"operatingSystem[passwords[username,password],softwareLicense.softwareDescription[manufacturer,name,version,referenceCode]]," +
 		"softwareComponents[passwords[username,password,notes],softwareLicense[softwareDescription[manufacturer,name,version,referenceCode]]]," +
 		"hourlyBillingFlag,userData," +
-		"billingItem[id,package,nextInvoiceTotalRecurringAmount,children[categoryCode,nextInvoiceTotalRecurringAmount],orderItem[id,order.userRecord[username],preset.keyName]]," +
+		"billingItem[id,package,nextInvoiceTotalRecurringAmount,children[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem[id,order.userRecord[username],preset.keyName]]," +
 		"tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],dedicatedHost.id"
 	HOST_DEFAULT_MASK = "id,name,createDate,cpuCount,diskCapacity,memoryCapacity,guestCount,datacenter,backendRouter,allocationStatus"
 
