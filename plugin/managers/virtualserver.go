@@ -1426,10 +1426,9 @@ func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reserved
 	}
 }
 
-
-func (vs virtualServerManager) GetSummaryUsage(id int, startDate time.Time,	endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error) {
+func (vs virtualServerManager) GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error) {
 	trackingInstance, err := vs.VirtualGuestService.Id(id).GetMetricTrackingObject()
-	trackingService:= services.GetMetricTrackingObjectService(vs.Session)
+	trackingService := services.GetMetricTrackingObjectService(vs.Session)
 	if err != nil {
 		return nil, err
 	}
