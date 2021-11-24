@@ -1012,6 +1012,10 @@ Example:
 				Usage: T("Metric_Data_Type keyName e.g. CPU0, CPU1, MEMORY_USAGE, etc.  [required]"),
 				Required: true,
 			},
+			cli.IntFlag{
+				Name:  "p,summary-period",
+				Usage: T("300, 600, 1800, 3600, 43200 or 86400 seconds."),
+			},
 			OutputFlag(),
 		},
 	}
