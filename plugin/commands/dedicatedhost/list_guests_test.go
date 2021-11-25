@@ -40,7 +40,7 @@ var _ = Describe("Dedicated host guests list", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 
@@ -48,45 +48,38 @@ var _ = Describe("Dedicated host guests list", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Host ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Host ID'. It must be a positive integer."))
 			})
 		})
 
 		Context("Guests list with wrong column", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
+				err := testhelpers.RunCommand(cliCommand, "--column", "abc", "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --column abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --column abc is not supported."))
 			})
 		})
 
-		Context("Guests list with wrong columns", func() {
-			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--column", "id", "--column", "username", "--column", "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --column abc is not supported.")).To(BeTrue())
-			})
-		})
 		Context("Guests list with wrong column", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--columns", "abc")
+				err := testhelpers.RunCommand(cliCommand, "--columns", "abc", "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --columns abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --columns abc is not supported."))
 			})
 		})
 
 		Context("Guests list with wrong columns", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--columns", "id", "--columns", "username", "--columns", "abc")
+				err := testhelpers.RunCommand(cliCommand, "--columns", "id", "--columns", "hostname", "--columns", "abc", "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --columns abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --columns abc is not supported."))
 			})
 		})
 		Context("Guests list with wrong sortby", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "abc")
+				err := testhelpers.RunCommand(cliCommand, "--sortby", "abc", "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --sortby abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --sortby abc is not supported."))
 			})
 		})
 
@@ -95,10 +88,10 @@ var _ = Describe("Dedicated host guests list", func() {
 				FakeDedicatedhostManager.ListGuestsReturns(nil, errors.New("Server Internal Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCommand(cliCommand, "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to list the host guest on your account.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Server Internal Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to list the host guest on your account."))
+				Expect(err.Error()).To(ContainSubstring("Server Internal Error"))
 			})
 		})
 
@@ -111,7 +104,7 @@ var _ = Describe("Dedicated host guests list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "id")
+				err := testhelpers.RunCommand(cliCommand, "--sortby", "id", "1234567")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "1234567")).To(BeTrue())
@@ -128,7 +121,7 @@ var _ = Describe("Dedicated host guests list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "hostname")
+				err := testhelpers.RunCommand(cliCommand, "--sortby", "hostname", "1234567")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "test")).To(BeTrue())
@@ -148,14 +141,14 @@ var _ = Describe("Dedicated host guests list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "datacenter")
+				err := testhelpers.RunCommand(cliCommand, "--sortby", "datacenter", "1234567")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "dal10")).To(BeTrue())
 			})
 		})
 
-		Context("Guests list with sortby=created_by", func() {
+		Context("Guests list with colum=created_by", func() {
 			BeforeEach(func() {
 				FakeDedicatedhostManager.ListGuestsReturns([]datatypes.Virtual_Guest{
 					datatypes.Virtual_Guest{
@@ -174,7 +167,7 @@ var _ = Describe("Dedicated host guests list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "created_by", "--column", "created_by")
+				err := testhelpers.RunCommand(cliCommand, "--column", "created_by", "1234567")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "Anne Clark")).To(BeTrue())

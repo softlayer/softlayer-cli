@@ -92,15 +92,15 @@ func (cmd *ListGuestsCommand) Run(c *cli.Context) error {
 		sort.Sort(utils.VirtualGuestById(guests))
 	} else if sortby == "domain" {
 		sort.Sort(utils.VirtualGuestByDomain(guests))
-	} else if sortby == "maxCpu" {
+	} else if sortby == "datacenter" {
 		sort.Sort(utils.VirtualGuestByDatacenter(guests))
-	} else if sortby == "maxMemory" {
+	} else if sortby == "cpu" {
 		sort.Sort(utils.VirtualGuestByCPU(guests))
-	} else if sortby == "globalIdentifier" {
+	} else if sortby == "memory" {
 		sort.Sort(utils.VirtualGuestByMemory(guests))
-	} else if sortby == "fullyQualifiedDomainName" {
+	} else if sortby == "public_ip" {
 		sort.Sort(utils.VirtualGuestByPrimaryIp(guests))
-	} else if sortby == "primaryIpAddress" {
+	} else if sortby == "private_ip" {
 		sort.Sort(utils.VirtualGuestByBackendIp(guests))
 	} else {
 		return bmxErr.NewInvalidUsageError(T("--sortby '{{.Column}}' is not supported.", map[string]interface{}{"Column": sortby}))
