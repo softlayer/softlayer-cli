@@ -588,9 +588,39 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Virtual_ReservedCapacityGroup
 		result2 error
 	}
+	placementsGroupListStub        func (string)(datatypes.Virtual_PlacementGroup, error)
+	placementsGroupListMutex       sync.RWMutex
+	placementsGroupListArgsForCall struct {
+		arg1 datatypes.Virtual_PlacementGroup
+		arg2 error
+	}
+	placementsGroupListReturns struct {
+		result1 []datatypes.Virtual_PlacementGroup
+		result2 error
+	}
+	placementsGroupListReturnsOnCall struct {
+		result1 []datatypes.Virtual_PlacementGroup
+		result2 error
+	}
 
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeVirtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup, error) {
+	fake.placementsGroupListMutex.RLock()
+	defer fake.placementsGroupListMutex.RUnlock()
+	return fake.placementsGroupListReturnsOnCall.result1, nil
+}
+
+func (fake *FakeVirtualServerManager) PlacementsGroupListReturns(result1 []datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.placementsGroupListMutex.Lock()
+	defer fake.placementsGroupListMutex.Unlock()
+	fake.placementsGroupListStub = nil
+	fake.placementsGroupListReturns = struct {
+		result1 []datatypes.Virtual_PlacementGroup
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeVirtualServerManager) GetRouters(packageName string) ([]datatypes.Location_Region, error) {
