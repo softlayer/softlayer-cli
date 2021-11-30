@@ -102,7 +102,7 @@ type VirtualServerManager interface {
 	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
 	GetPods() ([]datatypes.Network_Pod, error)
 	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
-	GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error)}
+	GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error)
 }
 
 
