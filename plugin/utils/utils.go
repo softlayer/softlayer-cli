@@ -343,3 +343,11 @@ func BoolPointertoBool(value *bool) bool {
 func IsEmptyString(value string) bool {
 	return value == EMPTY_STRING
 }
+func WordInList(wordList []string, key string) bool {
+	for _, word := range wordList {
+		if word == key {
+			return true
+		}
+	}
+	return false
+}

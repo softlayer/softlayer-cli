@@ -68,6 +68,8 @@ type NetworkManager interface {
 	RemoveSecurityGroupRule(groupId, ruleId int) error
 	RemoveSecurityGroupRules(groupId int, ruleIds []int) error
 	GetCancelFailureReasons(vlanId int) []string
+	Route(subnetId int, typeRoute string, typeId string) (bool, error)
+	ClearRoute(subnetId int) (bool, error)
 }
 
 type networkManager struct {
@@ -295,7 +297,7 @@ func (n networkManager) CancelVLAN(vlanID int) error {
 	}
 	if vlan.BillingItem == nil || vlan.BillingItem.Id == nil {
 		message := T("{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty",
-					 map[string]interface{}{"TYPE": "Vlan", "ID": vlanID})
+			map[string]interface{}{"TYPE": "Vlan", "ID": vlanID})
 		return errors.New(message)
 	}
 	billingID := *vlan.BillingItem.Id
@@ -326,9 +328,9 @@ func (n networkManager) CancelSubnet(subnetId int) error {
 		return err
 	}
 	if subnet.BillingItem == nil || subnet.BillingItem.Id == nil {
-		message := T("{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will " +
-					 "automatically be removed from your account when it is empty",
-					 map[string]interface{}{"TYPE": "Subnet", "ID": subnetId})
+		message := T("{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will "+
+			"automatically be removed from your account when it is empty",
+			map[string]interface{}{"TYPE": "Subnet", "ID": subnetId})
 		return errors.New(message)
 	}
 	billingID := *subnet.BillingItem.Id
@@ -720,7 +722,6 @@ func (n networkManager) RemoveSecurityGroupRules(groupId int, ruleIds []int) err
 	return err
 }
 
-
 //Calls SoftLayer_Network_Vlan::getCancelFailureReasons()
 //vlanId Id for the vlan
 //returns a list of strings for why a vlan can not be cancelled.
@@ -730,4 +731,18 @@ func (n networkManager) GetCancelFailureReasons(vlanId int) []string {
 		reasons = []string{err.Error()}
 	}
 	return reasons
+}
+
+//This interface allows you to change the route of your Account Owned subnets.
+//subnetId int: The subnet identifier.
+//typeRoute string: type value in static routing: e.g. SoftLayer_Network_Subnet_IpAddress.
+//typeId string: The type identifier.
+func (n networkManager) Route(subnetId int, typeRoute string, typeId string) (bool, error) {
+	return n.SubnetService.Id(subnetId).Route(&typeRoute, &typeId)
+}
+
+//This interface allows you to remove the route of your Account Owned subnets.
+//subnetId int: The subnet identifier.
+func (n networkManager) ClearRoute(subnetId int) (bool, error) {
+	return n.SubnetService.Id(subnetId).ClearRoute()
 }

@@ -10,6 +10,18 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
+type virtualCreateOptions struct {
+	Locations        []datatypes.Location
+	Sizes            []datatypes.Product_Item
+	Ram              []datatypes.Product_Item
+	Database         []datatypes.Product_Item
+	OperatingSystems []datatypes.Product_Item
+	GuestCore        []datatypes.Product_Item
+	PortSpeed        []datatypes.Product_Item
+	GuestDisk        []datatypes.Product_Item
+	Extras           []datatypes.Product_Item
+}
+
 type FakeVirtualServerManager struct {
 	AttachPortableStorageStub        func(int, int) (datatypes.Provisioning_Version1_Transaction, error)
 	attachPortableStorageMutex       sync.RWMutex
@@ -226,16 +238,17 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Metric_Tracking_Object_Data
 		result2 error
 	}
-	GetCreateOptionsStub        func() (datatypes.Container_Virtual_Guest_Configuration, error)
+
+	GetCreateOptionsStub        func(string, string) (map[string]map[string]string, error)
 	getCreateOptionsMutex       sync.RWMutex
 	getCreateOptionsArgsForCall []struct {
 	}
 	getCreateOptionsReturns struct {
-		result1 datatypes.Container_Virtual_Guest_Configuration
+		result1 map[string]map[string]string
 		result2 error
 	}
 	getCreateOptionsReturnsOnCall map[int]struct {
-		result1 datatypes.Container_Virtual_Guest_Configuration
+		result1 map[string]map[string]string
 		result2 error
 	}
 
@@ -557,7 +570,6 @@ type FakeVirtualServerManager struct {
 		result2 error
 	}
 
-
 	getCapacityDetailStub        func(int) (datatypes.Virtual_ReservedCapacityGroup, error)
 	getCapacityDetailMutex       sync.RWMutex
 	getCapacityDetailArgsForCall struct {
@@ -574,7 +586,7 @@ type FakeVirtualServerManager struct {
 		result2 error
 	}
 
-	capacityListStub        func (string)(datatypes.Virtual_ReservedCapacityGroup, error)
+	capacityListStub        func(string) (datatypes.Virtual_ReservedCapacityGroup, error)
 	capacityListMutex       sync.RWMutex
 	capacitylistArgsForCall struct {
 		arg1 datatypes.Virtual_ReservedCapacityGroup
@@ -1689,7 +1701,7 @@ func (fake *FakeVirtualServerManager) GetBandwidthDataReturnsOnCall(i int, resul
 	}{result1, result2}
 }
 
-func (fake *FakeVirtualServerManager) GetCreateOptions() (datatypes.Container_Virtual_Guest_Configuration, error) {
+func (fake *FakeVirtualServerManager) GetCreateOptions(vsiType string, datacenter string) (map[string]map[string]string, error) {
 	fake.getCreateOptionsMutex.Lock()
 	ret, specificReturn := fake.getCreateOptionsReturnsOnCall[len(fake.getCreateOptionsArgsForCall)]
 	fake.getCreateOptionsArgsForCall = append(fake.getCreateOptionsArgsForCall, struct {
@@ -1697,7 +1709,7 @@ func (fake *FakeVirtualServerManager) GetCreateOptions() (datatypes.Container_Vi
 	fake.recordInvocation("GetCreateOptions", []interface{}{})
 	fake.getCreateOptionsMutex.Unlock()
 	if fake.GetCreateOptionsStub != nil {
-		return fake.GetCreateOptionsStub()
+		return fake.GetCreateOptionsStub(vsiType, datacenter)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -1712,34 +1724,29 @@ func (fake *FakeVirtualServerManager) GetCreateOptionsCallCount() int {
 	return len(fake.getCreateOptionsArgsForCall)
 }
 
-func (fake *FakeVirtualServerManager) GetCreateOptionsCalls(stub func() (datatypes.Container_Virtual_Guest_Configuration, error)) {
+func (fake *FakeVirtualServerManager) GetCreateOptionsCalls(stub func(string, string) (map[string]map[string]string, error)) {
 	fake.getCreateOptionsMutex.Lock()
 	defer fake.getCreateOptionsMutex.Unlock()
 	fake.GetCreateOptionsStub = stub
 }
 
-func (fake *FakeVirtualServerManager) GetCreateOptionsReturns(result1 datatypes.Container_Virtual_Guest_Configuration, result2 error) {
+func (fake *FakeVirtualServerManager) GetCreateOptionsReturns(result1 map[string]map[string]string, result2 error) {
 	fake.getCreateOptionsMutex.Lock()
 	defer fake.getCreateOptionsMutex.Unlock()
 	fake.GetCreateOptionsStub = nil
 	fake.getCreateOptionsReturns = struct {
-		result1 datatypes.Container_Virtual_Guest_Configuration
+		result1 map[string]map[string]string
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeVirtualServerManager) GetCreateOptionsReturnsOnCall(i int, result1 datatypes.Container_Virtual_Guest_Configuration, result2 error) {
+func (fake *FakeVirtualServerManager) GetCreateOptionsReturnsOnCall(i int, result1 map[string]map[string]string, result2 error) {
 	fake.getCreateOptionsMutex.Lock()
 	defer fake.getCreateOptionsMutex.Unlock()
 	fake.GetCreateOptionsStub = nil
-	if fake.getCreateOptionsReturnsOnCall == nil {
-		fake.getCreateOptionsReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Container_Virtual_Guest_Configuration
-			result2 error
-		})
-	}
+
 	fake.getCreateOptionsReturnsOnCall[i] = struct {
-		result1 datatypes.Container_Virtual_Guest_Configuration
+		result1 map[string]map[string]string
 		result2 error
 	}{result1, result2}
 }
