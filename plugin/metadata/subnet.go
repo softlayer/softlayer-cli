@@ -10,11 +10,13 @@ var (
 	NS_SUBNET_NAME  = "subnet"
 	CMD_SUBNET_NAME = "subnet"
 
-	CMD_SUBNET_CANCEL_NAME = "cancel"
-	CMD_SUBNET_CREATE_NAME = "create"
-	CMD_SUBNET_DETAIL_NAME = "detail"
-	CMD_SUBNET_LIST_NAME   = "list"
-	CMD_SUBNET_LOOKUP_NAME = "lookup"
+	CMD_SUBNET_CANCEL_NAME      = "cancel"
+	CMD_SUBNET_CREATE_NAME      = "create"
+	CMD_SUBNET_DETAIL_NAME      = "detail"
+	CMD_SUBNET_LIST_NAME        = "list"
+	CMD_SUBNET_LOOKUP_NAME      = "lookup"
+	CMD_SUBNET_ROUTE_NAME       = "route"
+	CMD_SUBNET_CLEAR_ROUTE_NAME = "clear-route"
 )
 
 func SubnetNamespace() plugin.Namespace {
@@ -37,6 +39,8 @@ func SubnetMetaData() cli.Command {
 			SubnetDetailMetaData(),
 			SubnetListMetaData(),
 			SubnetLookupMetaData(),
+			SubnetRouteMetaData(),
+			SubnetClearRouteMetaData(),
 		},
 	}
 }
@@ -109,10 +113,10 @@ EXAMPLE:
 			cli.BoolFlag{
 				Name:  "no-hardware",
 				Usage: T("Hide hardware listing"),
-			},cli.BoolFlag{
+			}, cli.BoolFlag{
 				Name:  "no-ip",
 				Usage: T("Hide IP address listing"),
-			},cli.BoolFlag{
+			}, cli.BoolFlag{
 				Name:  "no-Tag",
 				Usage: T("Hide Tag listing"),
 			},
@@ -179,6 +183,46 @@ func SubnetLookupMetaData() cli.Command {
 EXAMPLE:
    ${COMMAND_NAME} sl subnet lookup 9.125.235.255
    This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
+	}
+}
+
+func SubnetRouteMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_SUBNET_NAME,
+		Name:        CMD_SUBNET_ROUTE_NAME,
+		Description: T("This interface allows you to change the route of your Account Owned subnets."),
+		Usage: T(`${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678
+   This command allows you to change the route of your Account Owned subnets.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "i, type-id",
+				Usage: T("An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required]."),
+			},
+			cli.StringFlag{
+				Name:  "t, type",
+				Usage: T("Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required]."),
+			},
+			OutputFlag(),
+		},
+	}
+}
+
+func SubnetClearRouteMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_SUBNET_NAME,
+		Name:        CMD_SUBNET_CLEAR_ROUTE_NAME,
+		Description: T("This interface allows you to remove the route of your Account Owned subnets."),
+		Usage: T(`${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet clear-route 12345678
+   This command allows you to remove the route of your Account Owned subnets.`),
 		Flags: []cli.Flag{
 			OutputFlag(),
 		},
