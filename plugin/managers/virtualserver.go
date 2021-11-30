@@ -99,6 +99,7 @@ type VirtualServerManager interface {
 	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
 	GetPods() ([]datatypes.Network_Pod, error)
 	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
+	GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error)
 }
 
 type virtualServerManager struct {
@@ -1258,4 +1259,10 @@ func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reserved
 	} else {
 		return vs.OrderService.PlaceOrder(reservedCapacity, sl.Bool(false))
 	}
+}
+
+func (vs virtualServerManager) GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error){
+	mask := "mask[id, name, createDate, rule, backendRouter[id, hostname],guests[activeTransaction[id,transactionStatus[name,friendlyName]]]]"
+	reservedService := services.GetVirtualPlacementGroupService(vs.Session)
+	return reservedService.Mask(mask).Id(id).GetObject()
 }

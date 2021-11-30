@@ -589,8 +589,77 @@ type FakeVirtualServerManager struct {
 		result2 error
 	}
 
+	GetPlacementGroupDetailStub        func(int) (datatypes.Virtual_PlacementGroup, error)
+	getPlacementGroupDetailMutex       sync.RWMutex
+	getPlacementGroupDetailArgsForCall struct {
+		arg1 datatypes.Virtual_PlacementGroup
+		arg2 error
+	}
+	getPlacementGroupDetailReturns struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}
+
+	getPlacementGroupDetailReturnsOnCall struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}
+
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error) {
+	fake.getPlacementGroupDetailMutex.Lock()
+	fake.getPlacementGroupDetailMutex.Unlock()
+	if fake.GetPlacementGroupDetailStub != nil {
+		return fake.GetPlacementGroupDetailStub(id)
+	}
+
+	fakeReturns := fake.getPlacementGroupDetailReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailCount() struct {
+	result1 datatypes.Virtual_PlacementGroup
+	result2 error
+} {
+	fake.getPlacementGroupDetailMutex.RLock()
+	defer fake.getPlacementGroupDetailMutex.RUnlock()
+	return fake.getPlacementGroupDetailReturnsOnCall
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailCalls(stub func(int) (datatypes.Virtual_PlacementGroup, error)) {
+	fake.getPlacementGroupDetailMutex.Lock()
+	defer fake.getPlacementGroupDetailMutex.Unlock()
+	fake.GetPlacementGroupDetailStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailArgsForCall(i int) (datatypes.Virtual_PlacementGroup, error) {
+	fake.getPlacementGroupDetailMutex.RLock()
+	defer fake.authorizeStorageMutex.RUnlock()
+	argsForCall := fake.getPlacementGroupDetailArgsForCall
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailReturns(result1 datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.getPlacementGroupDetailMutex.Lock()
+	defer fake.getPlacementGroupDetailMutex.Unlock()
+	fake.GetPlacementGroupDetailStub = nil
+	fake.getPlacementGroupDetailReturns = struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailReturnsOnCall(i int, result1 datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.getPlacementGroupDetailMutex.Lock()
+	defer fake.getPlacementGroupDetailMutex.Unlock()
+	fake.GetPlacementGroupDetailStub = nil
+	fake.getPlacementGroupDetailReturnsOnCall = struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeVirtualServerManager) GetRouters(packageName string) ([]datatypes.Location_Region, error) {
