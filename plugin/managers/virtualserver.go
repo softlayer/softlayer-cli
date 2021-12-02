@@ -102,6 +102,7 @@ type VirtualServerManager interface {
 	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
 	GetPods() ([]datatypes.Network_Pod, error)
 	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
+	PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup,error)
 }
 
 type virtualServerManager struct {
@@ -1421,4 +1422,13 @@ func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reserved
 	} else {
 		return vs.OrderService.PlaceOrder(reservedCapacity, sl.Bool(false))
 	}
+}
+
+// Finds the placement groups of Account
+// SoftLayer_Virtual_PlacementGroup
+func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup, error) {
+	if mask == "" {
+		mask = "mask[id, name, createDate, rule, guestCount, backendRouter[id, hostname]]"
+	}
+	return vs.AccountService.Mask(mask).GetPlacementGroups()
 }

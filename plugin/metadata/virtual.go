@@ -38,6 +38,7 @@ var (
 	CMD_VS_CAPACITY_DETAIL_NAME   = "capacity-detail"
 	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
 	CMD_VS_CAPACITY_CREATE_NAME     = "capacity-create"
+	CMD_VS_PLACEMENT_GROUP_LIST_NAME     = "placementgroup-list"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -84,6 +85,7 @@ func VSMetaData() cli.Command {
 			VSCapacityCreateOptionsMetadata(),
 			VSCapacityCreateMetaData(),
 			VSBillingMetaData(),
+			VSPlacementGroupListMetadata(),
 		},
 	}
 }
@@ -926,6 +928,21 @@ func VSCapacityCreateOptionsMetadata() cli.Command {
 EXAMPLE:
    ${COMMAND_NAME} sl vs options
    This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		},
+	}
+}
+func VSPlacementGroupListMetadata() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_PLACEMENT_GROUP_LIST_NAME,
+		Description: T(" List placement groups."),
+		Usage: T(`${COMMAND_NAME} sl vs placementgroup-list
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs placementgroup-list
+   This command lists all placement groups.`),
 		Flags: []cli.Flag{
 			OutputFlag(),
 		},

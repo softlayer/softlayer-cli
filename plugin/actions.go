@@ -389,6 +389,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-storage": func(c *cli.Context) error {
 			return virtual.NewStorageCommand(ui, virtualServerManager).Run(c)
 		},
+		NS_VIRTUAL_NAME + "-placementgroup-list": func(c *cli.Context) error {
+			return virtual.NewPlacementGroupListCommand(ui, virtualServerManager).Run(c)
+		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
 		},
