@@ -34,17 +34,20 @@ python ./bin/split_i18n.py
 echo "Running: ./bin/generate-i18n-resources.sh"
 ./bin/generate-i18n-resources.sh
 
-echo "Running: git add ./plugin/i18n/resources/*.json"
-git add ./plugin/i18n/resources/*.json
-
-echo "Running: git add ./plugin/resources/i18n_resources.go"
-git add ./plugin/resources/i18n_resources.go
-
-echo "Running: git commit --message=\"Translation fixes from ./bin/fixeverything_i18n.sh\""
-git commit --message='Translation fixes from ./bin/fixeverything_i18n.sh'
 
 echo "Running: git checkout ./old-i18n/*.json"
 git checkout ./old-i18n/*.json
+
+
+echo "Running: ./bin/catch-i18n-mismatch.sh a second time."
+./bin/catch-i18n-mismatch.sh
+STATUS=$?
+
+if [ $STATUS -ne 0 ]
+then
+    echo "I18N files are still broken, please fix manually."
+    exit $STATUS
+fi
 
 echo "Done"
 
