@@ -1,16 +1,13 @@
 package virtual
 
 import (
-	"fmt"
-	"sort"
-	"strings"
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
+	"sort"
 )
 
 type CreateOptionsCommand struct {
@@ -31,7 +28,8 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	createOptions, err := cmd.VirtualServerManager.GetCreateOptions()
+	//createOptions, err := cmd.VirtualServerManager.GetCreateOptions("PUBLIC_CLOUD_SERVER", "dal13")
+	createOptions, err := cmd.VirtualServerManager.GetCreateOptions("PUBLIC_CLOUD_SERVER", "")
 	if err != nil {
 		return cli.NewExitError(T("Failed to get virtual server creation options.\n")+err.Error(), 2)
 	}
@@ -40,156 +38,87 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 		return utils.PrintPrettyJSON(cmd.UI, createOptions)
 	}
 
-	table := cmd.UI.Table([]string{T("Name"), T("Value")})
-	//datacenter
-	var datacenters []string
-	for _, datacenter := range createOptions.Datacenters {
-		if datacenter.Template != nil && datacenter.Template.Datacenter != nil {
-			datacenters = append(datacenters, utils.FormatStringPointer(datacenter.Template.Datacenter.Name))
-		}
+	table := cmd.UI.Table([]string{T("datacenter"), T("value")})
+	locations := createOptions[managers.KEY_LOCATIONS]
+	var sortedLocations []string
+	for key, _ := range locations {
+		sortedLocations = append(sortedLocations, key)
 	}
-	table.Add(T("datacenter"), utils.StringSliceToString(datacenters))
+	sort.Strings(sortedLocations)
+	for _, key := range sortedLocations {
+		table.Add(locations[key], key)
+	}
+	table.Print()
 
-	//flavor
-	for _, flavorKey := range managers.FlavorKeys {
-		var flavors []string
-		for _, f := range createOptions.Flavors {
-			if f.Flavor != nil && f.Flavor.KeyName != nil {
-				keyName := *f.Flavor.KeyName
-				if strings.Index(keyName, flavorKey) == -1 {
-					continue
-				}
-				flavors = append(flavors, keyName)
-			}
-		}
-		table.Add(T("flavors ({{.Flavor}})", map[string]interface{}{"Flavor": managers.FlavorLabels[flavorKey]}), utils.StringSliceToString(flavors))
+	//preset
+	presetTable := cmd.UI.Table([]string{T("Size"), T("Value")})
+	presets := createOptions[managers.KEY_SIZES]
+	var sortedPresets []string
+	for key, _ := range presets {
+		sortedPresets = append(sortedPresets, key)
 	}
-
-	//cpus
-	var standardCpus, dedicatedCpus, dedicatedHostCpus []int
-	for _, processor := range createOptions.Processors {
-		cpu := processor.Template.StartCpus
-		if processor.Template.DedicatedAccountHostOnlyFlag == nil && processor.Template.DedicatedHost == nil {
-			standardCpus = append(standardCpus, *cpu)
-		} else if processor.Template != nil && processor.Template.DedicatedAccountHostOnlyFlag != nil && *processor.Template.DedicatedAccountHostOnlyFlag == true {
-			dedicatedCpus = append(dedicatedCpus, *cpu)
-		} else if processor.Template.DedicatedHost != nil {
-			dedicatedHostCpus = append(dedicatedHostCpus, *cpu)
-		}
+	sort.Strings(sortedPresets)
+	for _, key := range sortedPresets {
+		presetTable.Add(presets[key], key)
 	}
-	sort.Ints(standardCpus)
-	sort.Ints(dedicatedCpus)
-	sort.Ints(dedicatedHostCpus)
-	table.Add(T("cpu (standard)"), utils.IntSliceToString(standardCpus))
-	table.Add(T("cpu (dedicated)"), utils.IntSliceToString(dedicatedCpus))
-	table.Add(T("cpu (dedicated host)"), utils.IntSliceToString(dedicatedHostCpus))
-
-	//memory
-	var mems, dedicatedHostMems []int
-	for _, mem := range createOptions.Memory {
-		if mem.ItemPrice != nil && mem.ItemPrice.DedicatedHostInstanceFlag != nil && *mem.ItemPrice.DedicatedHostInstanceFlag == false {
-			dedicatedHostMems = append(dedicatedHostMems, *mem.Template.MaxMemory)
-		} else if mem.Template != nil && mem.Template.MaxMemory != nil {
-			mems = append(mems, *mem.Template.MaxMemory)
-		}
-	}
-	sort.Ints(mems)
-	sort.Ints(dedicatedHostMems)
-	table.Add(T("memory"), utils.IntSliceToString(mems))
-	table.Add(T("memory (dedicated host)"), utils.IntSliceToString(dedicatedHostMems))
+	presetTable.Print()
+	cmd.UI.Print("")
 
 	//operating system
-	osCodes := make(map[string][]string)
-	for _, ops := range createOptions.OperatingSystems {
-		if ops.Template != nil && ops.Template.OperatingSystemReferenceCode != nil {
-			osCode := *ops.Template.OperatingSystemReferenceCode
-			category := strings.Split(osCode, "_")[0]
-			osCodes[category] = append(osCodes[category], osCode)
-		}
+	osTable := cmd.UI.Table([]string{T("Operating system"), T("Value")})
+	oses := createOptions[managers.KEY_OS]
+	var sortedoses []string
+	for key, _ := range oses {
+		sortedoses = append(sortedoses, key)
 	}
-	var osKeys []string
-	for key := range osCodes {
-		osKeys = append(osKeys, key)
+	sort.Strings(sortedoses)
+	for _, key := range sortedoses {
+		osTable.Add(oses[key], key)
 	}
-	sort.Strings(osKeys)
-	for _, key := range osKeys {
-		var oss []string
-		for _, value := range osCodes[key] {
-			oss = append(oss, value)
-		}
-		sort.Strings(oss)
-		table.Add(T("os ({{.OS}})", map[string]interface{}{"OS": key}), utils.StringSliceToString(oss))
-	}
+	osTable.Print()
+	cmd.UI.Print("")
 
-	//local disk/sandisk
-	localDisks := make(map[string][]int)
-	dedicatedDisks := make(map[string][]int)
-	sanDisks := make(map[string][]int)
-	for _, disk := range createOptions.BlockDevices {
-		deviceNumber := disk.Template.BlockDevices[0].Device
-		capacity := disk.Template.BlockDevices[0].DiskImage.Capacity
-		if disk.Template != nil && disk.Template.LocalDiskFlag != nil && disk.ItemPrice != nil && disk.ItemPrice.DedicatedHostInstanceFlag != nil {
-			if *disk.Template.LocalDiskFlag == false {
-				key := fmt.Sprintf("san disk (%s)", *deviceNumber)
-				sanDisks[key] = append(sanDisks[key], *capacity)
-			} else {
-				if *disk.ItemPrice.DedicatedHostInstanceFlag == true {
-					key := fmt.Sprintf("local (dedicated host) disk (%s)", *deviceNumber)
-					dedicatedDisks[key] = append(dedicatedDisks[key], *capacity)
-				} else {
-					key := fmt.Sprintf("local disk (%s)", *deviceNumber)
-					localDisks[key] = append(localDisks[key], *capacity)
-				}
-			}
-		}
+	//port speed
+	portTable := cmd.UI.Table([]string{T("Port speed"), T("Value")})
+	ports := createOptions[managers.KEY_PORT_SPEED]
+	var sortedPorts []string
+	for key, _ := range ports {
+		sortedPorts = append(sortedPorts, key)
 	}
-	keys := make([]string, 0, len(sanDisks))
-	for key := range sanDisks {
-		keys = append(keys, key)
+	sort.Strings(sortedPorts)
+	for _, key := range sortedPorts {
+		portTable.Add(ports[key], key)
 	}
-	sort.Strings(keys)
-	for _, key := range keys {
-		table.Add(key, utils.IntSliceToString(sanDisks[key]))
-	}
-	keys = make([]string, 0, len(localDisks))
-	for key := range localDisks {
-		keys = append(keys, key)
-	}
-	sort.Strings(keys)
-	for _, key := range keys {
-		table.Add(key, utils.IntSliceToString(localDisks[key]))
-	}
-	keys = make([]string, 0, len(dedicatedDisks))
-	for key := range dedicatedDisks {
-		keys = append(keys, key)
-	}
-	sort.Strings(keys)
-	for _, key := range keys {
-		table.Add(key, utils.IntSliceToString(dedicatedDisks[key]))
-	}
+	portTable.Print()
+	cmd.UI.Print("")
 
-	//nic
-	var nics, dedicatedNics []int
-	for _, nic := range createOptions.NetworkComponents {
-		if nic.Template != nil && nic.ItemPrice != nil && nic.Template.NetworkComponents != nil && len(nic.Template.NetworkComponents) > 0 {
-			if nic.Template.NetworkComponents[0].MaxSpeed != nil {
-				maxSpeed := *nic.Template.NetworkComponents[0].MaxSpeed
-				if nic.ItemPrice.DedicatedHostInstanceFlag != nil && *nic.ItemPrice.DedicatedHostInstanceFlag {
-					if utils.IntInSlice(maxSpeed, dedicatedNics) == -1 {
-						dedicatedNics = append(dedicatedNics, maxSpeed)
-					}
-				} else {
-					if utils.IntInSlice(maxSpeed, nics) == -1 {
-						nics = append(nics, maxSpeed)
-					}
-				}
-			}
-		}
+	//Disk
+	diskTable := cmd.UI.Table([]string{T("disk_guest"), T("Value")})
+	disks := createOptions[managers.KEY_GUEST]
+	var sortedDisks []string
+	for key, _ := range disks {
+		sortedDisks = append(sortedDisks, key)
 	}
-	sort.Ints(nics)
-	sort.Ints(dedicatedNics)
-	table.Add(T("nic"), utils.IntSliceToString(nics))
-	table.Add(T("nic (dedicated host)"), utils.IntSliceToString(dedicatedNics))
-	table.Print()
+	sort.Strings(sortedDisks)
+	for _, key := range sortedDisks {
+		diskTable.Add(disks[key],key)
+	}
+	diskTable.Print()
+	cmd.UI.Print("")
+
+	//extras
+	extraTable := cmd.UI.Table([]string{T("Extras"), T("Value")})
+	extras := createOptions[managers.KEY_EXTRAS]
+	var sortedExtras []string
+	for key, _ := range extras {
+		sortedExtras = append(sortedExtras, key)
+	}
+	sort.Strings(sortedExtras)
+	for _, key := range sortedExtras {
+		extraTable.Add(extras[key], key)
+	}
+	extraTable.Print()
+	cmd.UI.Print("")
+
 	return nil
 }

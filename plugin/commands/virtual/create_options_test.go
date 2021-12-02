@@ -7,7 +7,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -37,26 +36,13 @@ var _ = Describe("VS create options", func() {
 	Describe("VS create options", func() {
 		Context("VS create options with server fails", func() {
 			BeforeEach(func() {
-				fakeVSManager.GetCreateOptionsReturns(datatypes.Container_Virtual_Guest_Configuration{}, errors.New("Internal Server Error"))
+				fakeVSManager.GetCreateOptionsReturns(map[string]map[string]string{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to get virtual server creation options.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
-			})
-		})
-
-		Context("VS create options", func() {
-			BeforeEach(func() {
-				fakeVSManager.GetCreateOptionsReturns(datatypes.Container_Virtual_Guest_Configuration{}, nil)
-			})
-			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
-				Expect(err).NotTo(HaveOccurred())
-				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[0], "Name")).To(BeTrue())
-				Expect(strings.Contains(results[0], "Value")).To(BeTrue())
 			})
 		})
 	})
