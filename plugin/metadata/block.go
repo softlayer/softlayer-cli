@@ -822,13 +822,12 @@ EXAMPLE:
 		Flags: []cli.Flag{
 			cli.BoolFlag{
 				Name:  "enable",
-				Usage: T("Enable sending sending notifications for snapshots space usage threshold warning [True|False]"),
+				Usage: T("Enable snapshot notification. Use `slcli block snapshot-set-notification volumeId --enable` to enable"),
 			},
 			cli.BoolFlag{
 				Name:  "disable",
-				Usage: T("Disable sending sending notifications for snapshots space usage threshold warning"),
+				Usage: T("Disable snapshot notification. Use `slcli block snapshot-set-notification volumeId --enable` to disable"),
 			},
-			OutputFlag(),
 		},
 	}
 

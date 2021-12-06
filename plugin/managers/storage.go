@@ -62,8 +62,8 @@ var (
 //Manages SoftLayer Block and File Storage volumes.
 //See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
 type StorageManager interface {
-	SetSnapshotNotification(volumeID int, enabled string) error
-	GetSnapshotNotificationStatus(volumeId int) (string, error)
+	SetSnapshotNotification(volumeID int, enabled bool) error
+	GetSnapshotNotificationStatus(volumeId int) (int, error)
 	GetVolumeAccessList(volumeId int) (datatypes.Network_Storage, error)
 	AuthorizeHostToVolume(volumeId int, hardwareIds []int, vsIds []int, IPIds []int, subnetIds []int) ([]datatypes.Network_Storage_Allowed_Host, error)
 	DeauthorizeHostToVolume(volumeId int, hardwareIds []int, vsIds []int, IPIds []int, subnetIds []int) ([]datatypes.Network_Storage_Allowed_Host, error)
@@ -805,11 +805,19 @@ func (s storageManager) VolumeRefresh(volumeId int, snapshotId int) error {
 }
 
 //Enables/Disables snapshot space usage threshold warning for a given volume.
-func (s storageManager) SetSnapshotNotification(volumeID int, enabled string) error {
-	return s.StorageService.Id(volumeID).SetSnapshotNotification(&enabled)
+func (s storageManager) SetSnapshotNotification(volumeID int, enabled bool) error {
+	enableData := strconv.FormatBool(enabled)
+	return s.StorageService.Id(volumeID).SetSnapshotNotification(&enableData)
 }
 
 //returns Enabled/Disabled snapshot space usage threshold warning for a given volume
-func (s storageManager) GetSnapshotNotificationStatus(volumeId int) (string, error) {
-	return s.StorageService.Id(volumeId).GetSnapshotNotificationStatus()
+func (s storageManager) GetSnapshotNotificationStatus(volumeId int) (int, error) {
+	status, err := s.StorageService.Id(volumeId).GetSnapshotNotificationStatus()
+
+	if status == "" {
+		status = "1"
+	}
+
+	result, err := strconv.Atoi(status)
+	return result, err
 }

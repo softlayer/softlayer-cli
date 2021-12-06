@@ -773,7 +773,7 @@ EXAMPLE:
 	}
 }
 
-func FileVolumeSnapshotGetNotificationStatusMetaData() cli.Command {
+func FileVolumeSnapshotSetNotificationMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_FILE_NAME,
 		Name:        CMD_FILE_SNAPSHOT_SET_NOTIFICATION_NAME,
@@ -786,19 +786,18 @@ EXAMPLE:
 		Flags: []cli.Flag{
 			cli.BoolFlag{
 				Name:  "enable",
-				Usage: T("Enable sending sending notifications for snapshots space usage threshold warning [True|False]"),
+				Usage: T("Enable snapshot notification. Use `slcli block snapshot-set-notification volumeId --enable` to enable"),
 			},
 			cli.BoolFlag{
 				Name:  "disable",
-				Usage: T("Disable sending sending notifications for snapshots space usage threshold warning"),
+				Usage: T("Disable snapshot notification. Use `slcli block snapshot-set-notification volumeId --enable` to disable"),
 			},
-			OutputFlag(),
 		},
 	}
 
 }
 
-func FileVolumeSnapshotSetNotificationMetaData() cli.Command {
+func FileVolumeSnapshotGetNotificationStatusMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_FILE_NAME,
 		Name:        CMD_FILE_SNAPSHOT_GET_NOTIFIACTION_STATUS_NAME,

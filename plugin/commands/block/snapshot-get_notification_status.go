@@ -9,6 +9,8 @@ import (
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type SnapshotGetNotificationStatusCommand struct {
@@ -32,17 +34,25 @@ func (cmd *SnapshotGetNotificationStatusCommand) Run(c *cli.Context) error {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	var snapshot string
-	snapshot, err = cmd.StorageManager.GetSnapshotNotificationStatus(volumeID)
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the snapshot notification status for the volume '{{.ID}}'.\n", map[string]interface{}{"ID": volumeID})+err.Error(), 2)
+		return err
 	}
 
-	if snapshot == "" {
-		cmd.UI.Print(T("Snapshots space usage threshold warning flag setting is null. Set to default value enable. For volume '{{.ID}}'.", map[string]interface{}{"ID": volumeID}))
+	var enabled int
+	enabled, err = cmd.StorageManager.GetSnapshotNotificationStatus(volumeID)
+	if err != nil {
+		return cli.NewExitError(T("Failed to get the snapshot notification status for volume '{{.ID}}'.\n", map[string]interface{}{"ID": volumeID})+err.Error(), 2)
+	}
+
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, enabled)
+	}
+
+	if enabled == 0 {
+		cmd.UI.Print(T("Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.", map[string]interface{}{"ID": volumeID}))
 	} else {
-		cmd.UI.Print(T("Snapshots space usage threshold warning flag setting is enabled for volume '{{.ID}}'.", map[string]interface{}{"ID": volumeID}))
-		cmd.UI.Print(T("Snapshots Notification Status: '{{.STATUS}}'.", map[string]interface{}{"STATUS": snapshot}))
+		cmd.UI.Print(T("Enabled: Snapshots space usage threshold is enabled for volume '{{.ID}}'.", map[string]interface{}{"ID": volumeID}))
 	}
 
 	return nil

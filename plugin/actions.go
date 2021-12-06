@@ -11,6 +11,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
@@ -50,6 +51,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	callAPIManager := managers.NewCallAPIManager(session)
 	ticketManager := managers.NewTicketManager(session)
 	placeGroupManager := managers.NewPlaceGroupManager(session)
+	dedicatedhostManager := managers.NewDedicatedhostManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 
@@ -80,6 +82,11 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_DNS_NAME + "-" + CMD_DNS_ZONE_PRINT_NAME: func(c *cli.Context) error {
 			return dns.NewZonePrintCommand(ui, dnsManager).Run(c)
+		},
+
+		//dedicatedhost - 1
+		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_LIST_GUESTS_NAME: func(c *cli.Context) error {
+			return dedicatedhost.NewListGuestsCommand(ui, dedicatedhostManager).Run(c)
 		},
 
 		// firewall - 5
@@ -293,6 +300,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_SUBNET_NAME + "-" + CMD_SUBNET_LOOKUP_NAME: func(c *cli.Context) error {
 			return subnet.NewLookupCommand(ui, networkManager).Run(c)
 		},
+		NS_SUBNET_NAME + "-" + CMD_SUBNET_ROUTE_NAME: func(c *cli.Context) error {
+			return subnet.NewRouteCommand(ui, networkManager).Run(c)
+		},
+		NS_SUBNET_NAME + "-" + CMD_SUBNET_CLEAR_ROUTE_NAME: func(c *cli.Context) error {
+			return subnet.NewClearRouteCommand(ui, networkManager).Run(c)
+		},
 
 		//virual server - 20
 		NS_VIRTUAL_NAME + "-" + CMD_VS_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
@@ -346,6 +359,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-" + CMD_VS_READY_NAME: func(c *cli.Context) error {
 			return virtual.NewReadyCommand(ui, virtualServerManager).Run(c)
 		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_BILLING_NAME: func(c *cli.Context) error {
+			return virtual.NewBillingCommand(ui, virtualServerManager).Run(c)
+		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_REBOOT_NAME: func(c *cli.Context) error {
 			return virtual.NewRebootCommand(ui, virtualServerManager).Run(c)
 		},
@@ -373,8 +389,14 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-storage": func(c *cli.Context) error {
 			return virtual.NewStorageCommand(ui, virtualServerManager).Run(c)
 		},
-		NS_VIRTUAL_NAME + "-" +CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
+		NS_VIRTUAL_NAME + "-placementgroup-list": func(c *cli.Context) error {
+			return virtual.NewPlacementGroupListCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" +CMD_VS_CAPACITY_CREATE_NAME: func(c *cli.Context) error {
+			return virtual.NewCapacityCreateCommand(ui, virtualServerManager, context).Run(c)
 		},
 
 		//Placement group
@@ -527,10 +549,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-
 	// ibmcloud sl security
 	// ibmcloud sl sshkey
-	// ibmcloud sl ssl 
+	// ibmcloud sl ssl
 	for name, action := range security.GetCommandActionBindings(ui, session) {
 		CommandActionBindings[name] = action
 	}

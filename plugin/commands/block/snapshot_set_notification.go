@@ -41,12 +41,11 @@ func (cmd *SnapshotSetNotificationCommand) Run(c *cli.Context) error {
 	}
 
 	enabled := !c.IsSet("disable")
-	enabledTrue := enabled
-	if err = cmd.StorageManager.SetSnapshotNotification(volumeID, strconv.FormatBool(enabledTrue)); err != nil {
-		return cli.NewExitError(T("Failed to set the snapshort notification  for the volume '{{.ID}}'.\n", map[string]interface{}{"ID": volumeID})+err.Error(), 2)
+	if err = cmd.StorageManager.SetSnapshotNotification(volumeID, enabled); err != nil {
+		return cli.NewExitError(T("Failed to set the snapshort notification  for volume '{{.ID}}'.\n", map[string]interface{}{"ID": volumeID})+err.Error(), 2)
 	}
 
 	cmd.UI.Ok()
-	cmd.UI.Print(T("Successfully set the snapshort notification  for the volume '{{.ID}}'.", map[string]interface{}{"ID": volumeID}))
+	cmd.UI.Print(T("Snapshots space usage threshold warning notification has been set to '{{.ENABLE}}' for volume '{{.ID}}'.", map[string]interface{}{"ID": volumeID, "ENABLE": enabled}))
 	return nil
 }

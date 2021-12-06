@@ -68,6 +68,8 @@ type NetworkManager interface {
 	RemoveSecurityGroupRule(groupId, ruleId int) error
 	RemoveSecurityGroupRules(groupId int, ruleIds []int) error
 	GetCancelFailureReasons(vlanId int) []string
+	Route(subnetId int, typeRoute string, typeId string) (bool, error)
+	ClearRoute(subnetId int) (bool, error)
 }
 
 type networkManager struct {
@@ -729,4 +731,18 @@ func (n networkManager) GetCancelFailureReasons(vlanId int) []string {
 		reasons = []string{err.Error()}
 	}
 	return reasons
+}
+
+//This interface allows you to change the route of your Account Owned subnets.
+//subnetId int: The subnet identifier.
+//typeRoute string: type value in static routing: e.g. SoftLayer_Network_Subnet_IpAddress.
+//typeId string: The type identifier.
+func (n networkManager) Route(subnetId int, typeRoute string, typeId string) (bool, error) {
+	return n.SubnetService.Id(subnetId).Route(&typeRoute, &typeId)
+}
+
+//This interface allows you to remove the route of your Account Owned subnets.
+//subnetId int: The subnet identifier.
+func (n networkManager) ClearRoute(subnetId int) (bool, error) {
+	return n.SubnetService.Id(subnetId).ClearRoute()
 }
