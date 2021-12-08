@@ -26,6 +26,31 @@ type FakeStorageManager struct {
 		result1 []datatypes.Network_Storage_Allowed_Host
 		result2 error
 	}
+	GetSnapshotNotificationStatusStub        func(int) (int, error)
+	getSnapshotNotificationStatusMutex       sync.RWMutex
+	getSnapshotNotificationStatusArgsForCall []struct {
+		arg1 int
+	}
+	getSnapshotNotificationStatusReturns struct {
+		result1 int
+		result2 error
+	}
+	getSnapshotNotificationStatusReturnsOnCall map[int]struct {
+		result1 int
+		result2 error
+	}
+	SetSnapshotNotificationStub        func(int, bool) error
+	setSnapshotNotificationMutex       sync.RWMutex
+	setSnapshotNotificationArgsForCall []struct {
+		arg1 int
+		arg2 bool
+	}
+	setSnapshotNotificationReturns struct {
+		result1 error
+	}
+	setSnapshotNotificationReturnsOnCall map[int]struct {
+		result1 error
+	}
 	CancelSnapshotSpaceStub        func(string, int, string, bool) error
 	cancelSnapshotSpaceMutex       sync.RWMutex
 	cancelSnapshotSpaceArgsForCall []struct {
@@ -532,6 +557,130 @@ func (fake *FakeStorageManager) AuthorizeHostToVolumeReturnsOnCall(i int, result
 		result1 []datatypes.Network_Storage_Allowed_Host
 		result2 error
 	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetSnapshotNotificationStatus(arg1 int) (int, error) {
+	fake.getSnapshotNotificationStatusMutex.Lock()
+	ret, specificReturn := fake.getSnapshotNotificationStatusReturnsOnCall[len(fake.getSnapshotNotificationStatusArgsForCall)]
+	fake.getSnapshotNotificationStatusArgsForCall = append(fake.getSnapshotNotificationStatusArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("GetSnapshotNotificationStatus", []interface{}{arg1})
+	fake.getSnapshotNotificationStatusMutex.Unlock()
+	if fake.GetSnapshotNotificationStatusStub != nil {
+		return fake.GetSnapshotNotificationStatusStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getSnapshotNotificationStatusReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) GetSnapshotNotificationStatusCallCount() int {
+	fake.getSnapshotNotificationStatusMutex.RLock()
+	defer fake.getSnapshotNotificationStatusMutex.RUnlock()
+	return len(fake.getSnapshotNotificationStatusArgsForCall)
+}
+
+func (fake *FakeStorageManager) GetSnapshotNotificationStatusCalls(stub func(int) (int, error)) {
+	fake.getSnapshotNotificationStatusMutex.Lock()
+	defer fake.getSnapshotNotificationStatusMutex.Unlock()
+	fake.GetSnapshotNotificationStatusStub = stub
+}
+
+func (fake *FakeStorageManager) GetSnapshotNotificationStatusArgsForCall(i int) int {
+	fake.getSnapshotNotificationStatusMutex.RLock()
+	defer fake.getSnapshotNotificationStatusMutex.RUnlock()
+	argsForCall := fake.getSnapshotNotificationStatusArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeStorageManager) GetSnapshotNotificationStatusReturns(result1 int, result2 error) {
+	fake.getSnapshotNotificationStatusMutex.Lock()
+	defer fake.getSnapshotNotificationStatusMutex.Unlock()
+	fake.GetSnapshotNotificationStatusStub = nil
+	fake.getSnapshotNotificationStatusReturns = struct {
+		result1 int
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetSnapshotNotificationStatusReturnsOnCall(i int, result1 int, result2 error) {
+	fake.getSnapshotNotificationStatusMutex.Lock()
+	defer fake.getSnapshotNotificationStatusMutex.Unlock()
+	fake.GetSnapshotNotificationStatusStub = nil
+	if fake.getSnapshotNotificationStatusReturnsOnCall == nil {
+		fake.getSnapshotNotificationStatusReturnsOnCall = make(map[int]struct {
+			result1 int
+			result2 error
+		})
+	}
+	fake.getSnapshotNotificationStatusReturnsOnCall[i] = struct {
+		result1 int
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) SetSnapshotNotification(arg1 int, arg2 bool) error {
+	fake.setSnapshotNotificationMutex.Lock()
+	ret, specificReturn := fake.setSnapshotNotificationReturnsOnCall[len(fake.setSnapshotNotificationArgsForCall)]
+	fake.setSnapshotNotificationArgsForCall = append(fake.setSnapshotNotificationArgsForCall, struct {
+		arg1 int
+		arg2 bool
+	}{arg1, arg2})
+	fake.recordInvocation("SetSnapshotNotification", []interface{}{arg1, arg2})
+	fake.setSnapshotNotificationMutex.Unlock()
+	if fake.SetSnapshotNotificationStub != nil {
+		return fake.SetSnapshotNotificationStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	fakeReturns := fake.setSnapshotNotificationReturns
+	return fakeReturns.result1
+}
+
+func (fake *FakeStorageManager) SetSnapshotNotificationCallCount() int {
+	fake.setSnapshotNotificationMutex.RLock()
+	defer fake.setSnapshotNotificationMutex.RUnlock()
+	return len(fake.setSnapshotNotificationArgsForCall)
+}
+
+func (fake *FakeStorageManager) SetSnapshotNotificationCalls(stub func(int, bool) error) {
+	fake.setSnapshotNotificationMutex.Lock()
+	defer fake.setSnapshotNotificationMutex.Unlock()
+	fake.SetSnapshotNotificationStub = stub
+}
+
+func (fake *FakeStorageManager) SetSnapshotNotificationArgsForCall(i int) (int, bool) {
+	fake.setSnapshotNotificationMutex.RLock()
+	defer fake.setSnapshotNotificationMutex.RUnlock()
+	argsForCall := fake.setSnapshotNotificationArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeStorageManager) SetSnapshotNotificationReturns(result1 error) {
+	fake.setSnapshotNotificationMutex.Lock()
+	defer fake.setSnapshotNotificationMutex.Unlock()
+	fake.SetSnapshotNotificationStub = nil
+	fake.setSnapshotNotificationReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeStorageManager) SetSnapshotNotificationReturnsOnCall(i int, result1 error) {
+	fake.setSnapshotNotificationMutex.Lock()
+	defer fake.setSnapshotNotificationMutex.Unlock()
+	fake.SetSnapshotNotificationStub = nil
+	if fake.setSnapshotNotificationReturnsOnCall == nil {
+		fake.setSnapshotNotificationReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.setSnapshotNotificationReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeStorageManager) CancelSnapshotSpace(arg1 string, arg2 int, arg3 string, arg4 bool) error {

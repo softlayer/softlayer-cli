@@ -786,11 +786,11 @@ EXAMPLE:
 		Flags: []cli.Flag{
 			cli.BoolFlag{
 				Name:  "enable",
-				Usage: T("Enable snapshot notification. Use `slcli block snapshot-set-notification volumeId --enable` to enable"),
+				Usage: T("Enable snapshot notification."),
 			},
 			cli.BoolFlag{
 				Name:  "disable",
-				Usage: T("Disable snapshot notification. Use `slcli block snapshot-set-notification volumeId --enable` to disable"),
+				Usage: T("Disable snapshot notification."),
 			},
 		},
 	}

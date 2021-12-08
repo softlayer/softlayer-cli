@@ -5,10 +5,12 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -39,8 +41,7 @@ func (cmd *SnapshotGetNotificationStatusCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	var enabled int
-	enabled, err = cmd.StorageManager.GetSnapshotNotificationStatus(volumeID)
+	enabled, err := cmd.StorageManager.GetSnapshotNotificationStatus(volumeID)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get the snapshot notification status for volume '{{.ID}}'.\n", map[string]interface{}{"ID": volumeID})+err.Error(), 2)
 	}

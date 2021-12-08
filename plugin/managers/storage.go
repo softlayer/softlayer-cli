@@ -806,13 +806,21 @@ func (s storageManager) VolumeRefresh(volumeId int, snapshotId int) error {
 
 //Enables/Disables snapshot space usage threshold warning for a given volume.
 func (s storageManager) SetSnapshotNotification(volumeID int, enabled bool) error {
-	enableData := strconv.FormatBool(enabled)
-	return s.StorageService.Id(volumeID).SetSnapshotNotification(&enableData)
+	setEnabled := "0"
+
+	if enabled {
+		setEnabled = "1"
+	}
+
+	return s.StorageService.Id(volumeID).SetSnapshotNotification(&setEnabled)
 }
 
 //returns Enabled/Disabled snapshot space usage threshold warning for a given volume
 func (s storageManager) GetSnapshotNotificationStatus(volumeId int) (int, error) {
 	status, err := s.StorageService.Id(volumeId).GetSnapshotNotificationStatus()
+	if err != nil {
+		return -1, err
+	}
 
 	if status == "" {
 		status = "1"
