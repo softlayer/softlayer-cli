@@ -34,8 +34,8 @@ type NetworkManager interface {
 	AddVlan(vlanType string, datacenter string, router string, name string) (datatypes.Container_Product_Order_Receipt, error)
 	AddGlobalIP(version int, test bool) (datatypes.Container_Product_Order_Receipt, error)
 	AddSubnet(subnetType string, quantity int, vlanID int, version int, test bool) (datatypes.Container_Product_Order_Receipt, error)
-	AssignGlobalIP(subnetId int, typeData string, identifier string) (bool, error)
-	UnassignGlobalIP(subnetId int) (bool, error)
+	AssignGlobalIP(globalIPID int, targetIPAddress string) (datatypes.Provisioning_Version1_Transaction, error)
+	UnassignGlobalIP(globalIPID int) (datatypes.Provisioning_Version1_Transaction, error)
 	CancelVLAN(vlanID int) error
 	CancelGlobalIP(globalIPID int) error
 	CancelSubnet(subnetId int) error
@@ -278,14 +278,14 @@ func (n networkManager) AddSubnet(subnetType string, quantity int, vlanID int, v
 //Assign a global IP address to a specified target
 //globalIPID: The ID of the global IP being assigned
 //targetIPAddress: The IP address to assign
-func (n networkManager) AssignGlobalIP(subnetId int, typeData string, identifier string) (bool, error) {
-	return n.SubnetService.Id(subnetId).Route(&typeData, &identifier)
+func (n networkManager) AssignGlobalIP(globalIPID int, targetIPAddress string) (datatypes.Provisioning_Version1_Transaction, error) {
+	return n.GlobalIPService.Id(globalIPID).Route(&targetIPAddress)
 }
 
 //Unassign a global IP address from a target
 //globalIPID: The ID of the global IP to be cancelled.
-func (n networkManager) UnassignGlobalIP(subnetId int) (bool, error) {
-	return n.SubnetService.Id(subnetId).ClearRoute()
+func (n networkManager) UnassignGlobalIP(globalIPID int) (datatypes.Provisioning_Version1_Transaction, error) {
+	return n.GlobalIPService.Id(globalIPID).Unroute()
 }
 
 //Cancel the specifeid vlan.
