@@ -68,7 +68,7 @@ var _ = Describe("Volume snapshot notification status", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234567")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Enabled: Snapshots space usage threshold is enabled for volume '1234567'."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Enabled: Snapshots space usage threshold is enabled for volume '1234567'."))
 			})
 		})
 
@@ -79,7 +79,7 @@ var _ = Describe("Volume snapshot notification status", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234567")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Disabled: Snapshots space usage threshold is disabled for volume '1234567'."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Disabled: Snapshots space usage threshold is disabled for volume '1234567'."))
 			})
 		})
 	})
