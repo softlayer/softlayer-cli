@@ -8,7 +8,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -53,7 +52,7 @@ var _ = Describe("GlobalIP unassign", func() {
 
 		Context("GlobalIP unassign with correct parameters but server API call fails", func() {
 			BeforeEach(func() {
-				fakeNetworkManager.UnassignGlobalIPReturns(datatypes.Provisioning_Version1_Transaction{}, errors.New("Internal Server Error"))
+				fakeNetworkManager.UnassignGlobalIPReturns(false, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234")
@@ -65,7 +64,7 @@ var _ = Describe("GlobalIP unassign", func() {
 
 		Context("GlobalIP assign with correct parameters", func() {
 			BeforeEach(func() {
-				fakeNetworkManager.UnassignGlobalIPReturns(datatypes.Provisioning_Version1_Transaction{}, nil)
+				fakeNetworkManager.UnassignGlobalIPReturns(true, nil)
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234")
