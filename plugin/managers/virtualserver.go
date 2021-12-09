@@ -1427,7 +1427,6 @@ func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reserved
 	}
 }
 
-<<<<<<< HEAD
 func (vs virtualServerManager) GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error) {
 	trackingInstance, err := vs.VirtualGuestService.Id(id).GetMetricTrackingObject()
 	trackingService := services.GetMetricTrackingObjectService(vs.Session)
@@ -1442,7 +1441,7 @@ func (vs virtualServerManager) GetSummaryUsage(id int, startDate time.Time, endD
 	return trackingService.Id(*(trackingInstance.Id)).GetSummaryData(&startTime, &endTime, data_types, &periodic)
 
 }
-=======
+
 // Finds the placement groups of Account
 // SoftLayer_Virtual_PlacementGroup
 func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup, error) {
@@ -1451,4 +1450,4 @@ func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Vir
 	}
 	return vs.AccountService.Mask(mask).GetPlacementGroups()
 }
->>>>>>> 6098d7c8b1e88fe28329511241902bb184508d05
+
