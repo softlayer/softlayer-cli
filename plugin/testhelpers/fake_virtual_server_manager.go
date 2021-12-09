@@ -264,14 +264,6 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Product_Item
 		result2 error
 	}
-	GetSummaryUsageStub        func() ([]datatypes.Metric_Tracking_Object_Data, error)
-	GetSummaryUsageMutex       sync.RWMutex
-	GetSummaryUsageArgsForCall []struct{}
-	getSummaryUsageReturns     struct {
-		result1 []datatypes.Metric_Tracking_Object_Data
-		result2 error
-	}
-
 	GetRouterStub        func() ([]datatypes.Location_Region, error)
 	GetRouterMutex       sync.RWMutex
 	GetRouterArgsForCall []struct{}
@@ -608,28 +600,37 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Virtual_ReservedCapacityGroup
 		result2 error
 	}
+	placementsGroupListStub        func (string)(datatypes.Virtual_PlacementGroup, error)
+	placementsGroupListMutex       sync.RWMutex
+	placementsGroupListArgsForCall struct {
+		arg1 datatypes.Virtual_PlacementGroup
+		arg2 error
+	}
+	placementsGroupListReturns struct {
+		result1 []datatypes.Virtual_PlacementGroup
+		result2 error
+	}
+	placementsGroupListReturnsOnCall struct {
+		result1 []datatypes.Virtual_PlacementGroup
+		result2 error
+	}
 
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeVirtualServerManager) GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error) {
-	fake.GetSummaryUsageMutex.Lock()
-	fake.GetSummaryUsageArgsForCall = append(fake.GetSummaryUsageArgsForCall, struct{}{})
-	fake.GetSummaryUsageMutex.Unlock()
-	return fake.getSummaryUsageReturns.result1, fake.getSummaryUsageReturns.result2
+func (fake *FakeVirtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup, error) {
+	fake.placementsGroupListMutex.RLock()
+	defer fake.placementsGroupListMutex.RUnlock()
+	return fake.placementsGroupListReturnsOnCall.result1, nil
 }
 
-func (fake *FakeVirtualServerManager) GetSummaryUsageCallCount() int {
-	fake.GetSummaryUsageMutex.RLock()
-	defer fake.GetSummaryUsageMutex.RUnlock()
-	return len(fake.GetSummaryUsageArgsForCall)
-}
-
-func (fake *FakeVirtualServerManager) GetSummaryUsageReturns(result1 []datatypes.Metric_Tracking_Object_Data, result2 error) {
-	fake.GetSummaryUsageStub = nil
-	fake.getSummaryUsageReturns = struct {
-		result1 []datatypes.Metric_Tracking_Object_Data
+func (fake *FakeVirtualServerManager) PlacementsGroupListReturns(result1 []datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.placementsGroupListMutex.Lock()
+	defer fake.placementsGroupListMutex.Unlock()
+	fake.placementsGroupListStub = nil
+	fake.placementsGroupListReturns = struct {
+		result1 []datatypes.Virtual_PlacementGroup
 		result2 error
 	}{result1, result2}
 }

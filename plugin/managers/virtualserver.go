@@ -103,6 +103,7 @@ type VirtualServerManager interface {
 	GetPods() ([]datatypes.Network_Pod, error)
 	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
 	GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error)
+	PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup,error)
 }
 
 
@@ -1426,6 +1427,7 @@ func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reserved
 	}
 }
 
+<<<<<<< HEAD
 func (vs virtualServerManager) GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error) {
 	trackingInstance, err := vs.VirtualGuestService.Id(id).GetMetricTrackingObject()
 	trackingService := services.GetMetricTrackingObjectService(vs.Session)
@@ -1440,3 +1442,13 @@ func (vs virtualServerManager) GetSummaryUsage(id int, startDate time.Time, endD
 	return trackingService.Id(*(trackingInstance.Id)).GetSummaryData(&startTime, &endTime, data_types, &periodic)
 
 }
+=======
+// Finds the placement groups of Account
+// SoftLayer_Virtual_PlacementGroup
+func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup, error) {
+	if mask == "" {
+		mask = "mask[id, name, createDate, rule, guestCount, backendRouter[id, hostname]]"
+	}
+	return vs.AccountService.Mask(mask).GetPlacementGroups()
+}
+>>>>>>> 6098d7c8b1e88fe28329511241902bb184508d05
