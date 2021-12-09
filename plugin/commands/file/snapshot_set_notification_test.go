@@ -3,7 +3,6 @@ package file_test
 import (
 	"errors"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -77,15 +76,15 @@ var _ = Describe("Volume set snapshot notification status", func() {
 			})
 		})
 
-		Context("Volume set notification status with correct volume id and status enabled", func() {
+		Context("SetNotify Enable", func() {
 			BeforeEach(func() {
 				FakeStorageManager.SetSnapshotNotificationReturns(nil)
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "--enable", "1234567")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(err.Error()).To(ContainSubstring("Snapshots space usage threshold warning notification has been set to 'true' for volume '1234567'."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Snapshots space usage threshold warning notification has been set to 'true' for volume '1234567'."))
 			})
 		})
 
@@ -96,8 +95,8 @@ var _ = Describe("Volume set snapshot notification status", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "--disable", "1234567")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(err.Error()).To(ContainSubstring("Snapshots space usage threshold warning notification has been set to 'false' for volume '1234567'."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Snapshots space usage threshold warning notification has been set to 'false' for volume '1234567'."))
 			})
 		})
 	})

@@ -37,14 +37,14 @@ func (cmd *AssignCommand) Run(c *cli.Context) error {
 	}
 
 	targetIPAddress := c.Args()[1]
-	//resp, err := cmd.NetworkManager.AssignGlobalIP(globalIPID, targetIPAddress)
+	resp, err := cmd.NetworkManager.AssignGlobalIP(globalIPID, targetIPAddress)
 	if err != nil {
 		return cli.NewExitError(T("Failed to assign global IP {{.IpID}} to target {{.Target}}.\n",
 			map[string]interface{}{"IpID": globalIPID, "Target": targetIPAddress})+err.Error(), 2)
 
 	}
 	if outputFormat == "JSON" {
-		//return utils.PrintPrettyJSON(cmd.UI, resp)
+		return utils.PrintPrettyJSON(cmd.UI, resp)
 	}
 
 	cmd.UI.Ok()
