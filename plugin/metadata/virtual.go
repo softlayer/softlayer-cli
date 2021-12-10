@@ -39,6 +39,7 @@ var (
 	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
 	CMD_VS_CAPACITY_CREATE_NAME     = "capacity-create"
 	CMD_VS_PLACEMENT_GROUP_LIST_NAME     = "placementgroup-list"
+	CMD_VS_PLACEMENT_DETAIL_NAME   = "placementgroup-detail"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -87,6 +88,7 @@ func VSMetaData() cli.Command {
 			VSBillingMetaData(),
 			VSUsageMetaData(),
 			VSPlacementGroupListMetadata(),
+			VSPlacementGroupDetailMetaData(),
 		},
 	}
 }
@@ -1036,4 +1038,18 @@ Example:
 			OutputFlag(),
 		},
 	}
+}
+
+func VSPlacementGroupDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_PLACEMENT_DETAIL_NAME,
+		Description: T("Get placement Group details."),
+		Usage: T(`${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER
+EXAMPLE:
+   ${COMMAND_NAME} sl vs placementgroup-details 12345678
+    Get placement Group details with ID 12345678.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		}}
 }
