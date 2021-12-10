@@ -102,8 +102,10 @@ type VirtualServerManager interface {
 	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
 	GetPods() ([]datatypes.Network_Pod, error)
 	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
+	GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error)
 	PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup,error)
 }
+
 
 type virtualServerManager struct {
 	VirtualGuestService  services.Virtual_Guest
@@ -1387,6 +1389,7 @@ func (vs virtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
 	podService := services.GetNetworkPodService(vs.Session)
 	return podService.GetAllObjects()
 }
+
 func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error) {
 	flavorId, _ := vs.OrderManager.GetPackageByKey("RESERVED_CAPACITY", "id")
 	reservedCapacity.PackageId = flavorId.Id
@@ -1424,6 +1427,21 @@ func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reserved
 	}
 }
 
+func (vs virtualServerManager) GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error) {
+	trackingInstance, err := vs.VirtualGuestService.Id(id).GetMetricTrackingObject()
+	trackingService := services.GetMetricTrackingObjectService(vs.Session)
+	if err != nil {
+		return nil, err
+	}
+	startTime := datatypes.Time{Time: startDate}
+	endTime := datatypes.Time{Time: endDate}
+	data_types := []datatypes.Container_Metric_Data_Type{
+		{KeyName: sl.String(validType), SummaryType: sl.String("max")},
+	}
+	return trackingService.Id(*(trackingInstance.Id)).GetSummaryData(&startTime, &endTime, data_types, &periodic)
+
+}
+
 // Finds the placement groups of Account
 // SoftLayer_Virtual_PlacementGroup
 func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup, error) {
@@ -1432,3 +1450,4 @@ func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Vir
 	}
 	return vs.AccountService.Mask(mask).GetPlacementGroups()
 }
+
