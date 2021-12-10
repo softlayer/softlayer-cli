@@ -294,6 +294,19 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Virtual_Guest_Block_Device
 		result2 error
 	}
+	GetPlacementGroupDetailStub        func(int) (datatypes.Virtual_PlacementGroup, error)
+	getPlacementGroupDetailMutex       sync.RWMutex
+	getPlacementGroupDetailArgsForCall []struct {
+		arg1 int
+	}
+	getPlacementGroupDetailReturns struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}
+	getPlacementGroupDetailReturnsOnCall map[int]struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}
 	GetPodsStub        func() ([]datatypes.Network_Pod, error)
 	getPodsMutex       sync.RWMutex
 	getPodsArgsForCall []struct {
@@ -1915,6 +1928,69 @@ func (fake *FakeVirtualServerManager) GetLocalDisksReturnsOnCall(i int, result1 
 	}{result1, result2}
 }
 
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetail(arg1 int) (datatypes.Virtual_PlacementGroup, error) {
+	fake.getPlacementGroupDetailMutex.Lock()
+	ret, specificReturn := fake.getPlacementGroupDetailReturnsOnCall[len(fake.getPlacementGroupDetailArgsForCall)]
+	fake.getPlacementGroupDetailArgsForCall = append(fake.getPlacementGroupDetailArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("GetPlacementGroupDetail", []interface{}{arg1})
+	fake.getPlacementGroupDetailMutex.Unlock()
+	if fake.GetPlacementGroupDetailStub != nil {
+		return fake.GetPlacementGroupDetailStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getPlacementGroupDetailReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailCallCount() int {
+	fake.getPlacementGroupDetailMutex.RLock()
+	defer fake.getPlacementGroupDetailMutex.RUnlock()
+	return len(fake.getPlacementGroupDetailArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailCalls(stub func(int) (datatypes.Virtual_PlacementGroup, error)) {
+	fake.getPlacementGroupDetailMutex.Lock()
+	defer fake.getPlacementGroupDetailMutex.Unlock()
+	fake.GetPlacementGroupDetailStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailArgsForCall(i int) int {
+	fake.getPlacementGroupDetailMutex.RLock()
+	defer fake.getPlacementGroupDetailMutex.RUnlock()
+	argsForCall := fake.getPlacementGroupDetailArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailReturns(result1 datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.getPlacementGroupDetailMutex.Lock()
+	defer fake.getPlacementGroupDetailMutex.Unlock()
+	fake.GetPlacementGroupDetailStub = nil
+	fake.getPlacementGroupDetailReturns = struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetPlacementGroupDetailReturnsOnCall(i int, result1 datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.getPlacementGroupDetailMutex.Lock()
+	defer fake.getPlacementGroupDetailMutex.Unlock()
+	fake.GetPlacementGroupDetailStub = nil
+	if fake.getPlacementGroupDetailReturnsOnCall == nil {
+		fake.getPlacementGroupDetailReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Virtual_PlacementGroup
+			result2 error
+		})
+	}
+	fake.getPlacementGroupDetailReturnsOnCall[i] = struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeVirtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
 	fake.getPodsMutex.Lock()
 	ret, specificReturn := fake.getPodsReturnsOnCall[len(fake.getPodsArgsForCall)]
@@ -3486,6 +3562,8 @@ func (fake *FakeVirtualServerManager) Invocations() map[string][][]interface{} {
 	defer fake.getLikedInstanceMutex.RUnlock()
 	fake.getLocalDisksMutex.RLock()
 	defer fake.getLocalDisksMutex.RUnlock()
+	fake.getPlacementGroupDetailMutex.RLock()
+	defer fake.getPlacementGroupDetailMutex.RUnlock()
 	fake.getPodsMutex.RLock()
 	defer fake.getPodsMutex.RUnlock()
 	fake.getPortableStorageMutex.RLock()

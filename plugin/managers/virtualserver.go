@@ -104,6 +104,7 @@ type VirtualServerManager interface {
 	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
 	GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error)
 	PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup,error)
+	GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error)
 }
 
 
@@ -1451,3 +1452,9 @@ func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Vir
 	return vs.AccountService.Mask(mask).GetPlacementGroups()
 }
 
+
+func (vs virtualServerManager) GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error){
+	mask := "mask[id, name, createDate, rule, backendRouter[id, hostname],guests[activeTransaction[id,transactionStatus[name,friendlyName]]]]"
+	reservedService := services.GetVirtualPlacementGroupService(vs.Session)
+	return reservedService.Mask(mask).Id(id).GetObject()
+}
