@@ -346,7 +346,7 @@ type FakeVirtualServerManager struct {
 		result2 error
 	}
 
-	GetAvailablePlacementRoutersStub        func(string) ([]datatypes.Hardware, error)
+	GetAvailablePlacementRoutersStub        func(int) ([]datatypes.Hardware, error)
 	getAvailablePlacementRoutersMutex       sync.RWMutex
 	getAvailablePlacementRoutersArgsForCall []struct {
 		arg1 int
@@ -748,7 +748,7 @@ func (fake *FakeVirtualServerManager) GetAvailablePlacementRouters(arg1 int) ([]
 	fake.recordInvocation("GetDatacenters", []interface{}{arg1})
 	fake.getAvailablePlacementRoutersMutex.Unlock()
 	if fake.GetAvailablePlacementRoutersStub != nil {
-		return fake.GetAvailablePlacementRoutersStub(string(arg1))
+		return fake.GetAvailablePlacementRoutersStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -763,7 +763,7 @@ func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersCallCount() in
 	return len(fake.getAvailablePlacementRoutersArgsForCall)
 }
 
-func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersCalls(stub func(string) ([]datatypes.Hardware, error)) {
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersCalls(stub func(int) ([]datatypes.Hardware, error)) {
 	fake.getAvailablePlacementRoutersMutex.Lock()
 	defer fake.getAvailablePlacementRoutersMutex.Unlock()
 	fake.GetAvailablePlacementRoutersStub = stub
