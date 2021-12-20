@@ -105,6 +105,9 @@ type VirtualServerManager interface {
 	GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error)
 	PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup,error)
 	GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error)
+	GetDatacenters() ([]datatypes.Location, error)
+	GetAvailablePlacementRouters(id int) ([]datatypes.Hardware, error)
+	GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error)
 }
 
 
@@ -1457,4 +1460,30 @@ func (vs virtualServerManager) GetPlacementGroupDetail(id int) (datatypes.Virtua
 	mask := "mask[id, name, createDate, rule, backendRouter[id, hostname],guests[activeTransaction[id,transactionStatus[name,friendlyName]]]]"
 	reservedService := services.GetVirtualPlacementGroupService(vs.Session)
 	return reservedService.Mask(mask).Id(id).GetObject()
+}
+
+func (vs virtualServerManager) GetAvailablePlacementRouters(id int) ([]datatypes.Hardware, error) {
+	placementServices := services.GetVirtualPlacementGroupService(vs.Session)
+	routers, err := placementServices.GetAvailableRouters(sl.Int(id))
+	if err != nil {
+		return nil, err
+	}
+	return routers, err
+}
+
+func (vs virtualServerManager) GetDatacenters() ([]datatypes.Location, error) {
+	locations := services.GetLocationDatacenterService(vs.Session)
+	datacenters, err := locations.GetDatacenters()
+	if err != nil {
+		return nil, err
+	}
+	return datacenters, err
+}
+func (vs virtualServerManager) GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error) {
+	placementServices := services.GetVirtualPlacementGroupRuleService(vs.Session)
+	rules, err := placementServices.GetAllObjects()
+	if err != nil {
+		return nil, err
+	}
+	return rules, err
 }
