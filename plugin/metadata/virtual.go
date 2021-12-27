@@ -38,6 +38,7 @@ var (
 	CMD_VS_CAPACITY_DETAIL_NAME   = "capacity-detail"
 	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
 	CMD_VS_CAPACITY_CREATE_NAME     = "capacity-create"
+	CMD_VS_PLACEMENT_GROUO_CREATE_NAME     = "placementgroup-create"
 	CMD_VS_PLACEMENT_GROUP_LIST_NAME     = "placementgroup-list"
 	CMD_VS_PLACEMENT_DETAIL_NAME   = "placementgroup-detail"
 )
@@ -85,6 +86,7 @@ func VSMetaData() cli.Command {
 			VSCapacityListMetaData(),
 			VSCapacityCreateOptionsMetadata(),
 			VSCapacityCreateMetaData(),
+			VSPlacementGroupCreateMetaData(),
 			VSBillingMetaData(),
 			VSUsageMetaData(),
 			VSPlacementGroupListMetadata(),
@@ -1052,4 +1054,31 @@ EXAMPLE:
 		Flags: []cli.Flag{
 			OutputFlag(),
 		}}
+}
+
+func VSPlacementGroupCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        "placementgroup-create",
+		Description: T("Create a placement group."),
+		Usage: T(`${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]
+EXAMPLE:
+${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 
+This command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Name for this new placement group. [required]"),
+			},
+			cli.IntFlag{
+				Name:  "b,backend-router-id",
+				Usage: T("Backend router ID. [required]"),
+			},
+			cli.IntFlag{
+				Name:  "r,rule-id",
+				Usage: T("The ID of the rule to govern this placement group. [required]"),
+			},
+			OutputFlag(),
+		},
+	}
 }
