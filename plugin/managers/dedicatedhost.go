@@ -1,27 +1,38 @@
 package managers
 
 import (
+	"errors"
+
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 //Manages SoftLayer Dedicated host.
 type DedicatedHostManager interface {
 	ListGuests(identifier int, cpu int, domain string, hostname string, memory int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
+	GenerateOrderTemplate(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error)
+	VerifyInstanceCreation(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order, error)
+	OrderInstance(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order_Receipt, error)
 }
 
 type dedicatedhostManager struct {
 	AccountService       services.Account
 	VirtualDedicatedHost services.Virtual_DedicatedHost
+	PackageService       services.Product_Package
+	OrderService         services.Product_Order
 }
 
 func NewDedicatedhostManager(session *session.Session) *dedicatedhostManager {
 	return &dedicatedhostManager{
 		services.GetAccountService(session),
 		services.GetVirtualDedicatedHostService(session),
+		services.GetProductPackageService(session),
+		services.GetProductOrderService(session),
 	}
 }
 
@@ -59,4 +70,57 @@ func (d dedicatedhostManager) ListGuests(identifier int, cpu int, domain string,
 		return []datatypes.Virtual_Guest{}, err
 	}
 	return guestList, nil
+}
+
+//Generate dedicated host payload.
+func (d dedicatedhostManager) GenerateOrderTemplate(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error) {
+	mask := "items[keyName,capacity,description,attributes[id,attributeTypeKeyName],itemCategory[id,categoryCode],softwareDescription[id,referenceCode,longDescription],prices],activePresets,regions[location[location[priceGroups]]]"
+	packages, err := d.PackageService.Mask(mask).Filter(filter.Path("keyName").Eq("DEDICATED_HOST").Build()).GetAllObjects()
+	if err != nil {
+		return datatypes.Container_Product_Order_Virtual_DedicatedHost{}, err
+	}
+	if len(packages) != 1 {
+		return datatypes.Container_Product_Order_Virtual_DedicatedHost{}, errors.New(T("Ordering package is not found"))
+	}
+	hourly := billing == "hourly"
+	location, err := GetLocation(packages[0], datacenter)
+	if err != nil {
+		return datatypes.Container_Product_Order_Virtual_DedicatedHost{}, err
+	}
+	priceId, err := GetDedicatedHostPriceId(packages[0].Items, size, hourly, location)
+	if err != nil {
+		return datatypes.Container_Product_Order_Virtual_DedicatedHost{}, err
+	}
+	order := datatypes.Container_Product_Order_Virtual_DedicatedHost{
+		Container_Product_Order: datatypes.Container_Product_Order{
+			Location: location.Keyname,
+			Prices: []datatypes.Product_Item_Price{
+				datatypes.Product_Item_Price{Id: sl.Int(priceId)},
+			},
+			PackageId:        packages[0].Id,
+			UseHourlyPricing: sl.Bool(hourly),
+			Hardware: []datatypes.Hardware{
+				datatypes.Hardware{
+					Hostname: sl.String(hostname),
+					Domain:   sl.String(domain),
+					PrimaryBackendNetworkComponent: &datatypes.Network_Component{
+						Router: &datatypes.Hardware{
+							Id: sl.Int(routerId),
+						},
+					},
+				},
+			},
+		},
+	}
+	return order, nil
+}
+
+//Verify the dedicated host order.
+func (d dedicatedhostManager) VerifyInstanceCreation(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order, error) {
+	return d.OrderService.VerifyOrder(&orderTemplate)
+}
+
+//Order a dedicated host.
+func (d dedicatedhostManager) OrderInstance(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order_Receipt, error) {
+	return d.OrderService.PlaceOrder(&orderTemplate, sl.Bool(false))
 }
