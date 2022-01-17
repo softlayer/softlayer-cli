@@ -102,8 +102,14 @@ type VirtualServerManager interface {
 	GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error)
 	GetPods() ([]datatypes.Network_Pod, error)
 	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
+	GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error)
 	PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup,error)
+	GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error)
+	GetDatacenters() ([]datatypes.Location, error)
+	GetAvailablePlacementRouters(id int) ([]datatypes.Hardware, error)
+	GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error)
 }
+
 
 type virtualServerManager struct {
 	VirtualGuestService  services.Virtual_Guest
@@ -1387,6 +1393,7 @@ func (vs virtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
 	podService := services.GetNetworkPodService(vs.Session)
 	return podService.GetAllObjects()
 }
+
 func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error) {
 	flavorId, _ := vs.OrderManager.GetPackageByKey("RESERVED_CAPACITY", "id")
 	reservedCapacity.PackageId = flavorId.Id
@@ -1424,6 +1431,21 @@ func (vs virtualServerManager) GenerateInstanceCapacityCreationTemplate(reserved
 	}
 }
 
+func (vs virtualServerManager) GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error) {
+	trackingInstance, err := vs.VirtualGuestService.Id(id).GetMetricTrackingObject()
+	trackingService := services.GetMetricTrackingObjectService(vs.Session)
+	if err != nil {
+		return nil, err
+	}
+	startTime := datatypes.Time{Time: startDate}
+	endTime := datatypes.Time{Time: endDate}
+	data_types := []datatypes.Container_Metric_Data_Type{
+		{KeyName: sl.String(validType), SummaryType: sl.String("max")},
+	}
+	return trackingService.Id(*(trackingInstance.Id)).GetSummaryData(&startTime, &endTime, data_types, &periodic)
+
+}
+
 // Finds the placement groups of Account
 // SoftLayer_Virtual_PlacementGroup
 func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup, error) {
@@ -1431,4 +1453,37 @@ func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Vir
 		mask = "mask[id, name, createDate, rule, guestCount, backendRouter[id, hostname]]"
 	}
 	return vs.AccountService.Mask(mask).GetPlacementGroups()
+}
+
+
+func (vs virtualServerManager) GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error){
+	mask := "mask[id, name, createDate, rule, backendRouter[id, hostname],guests[activeTransaction[id,transactionStatus[name,friendlyName]]]]"
+	reservedService := services.GetVirtualPlacementGroupService(vs.Session)
+	return reservedService.Mask(mask).Id(id).GetObject()
+}
+
+func (vs virtualServerManager) GetAvailablePlacementRouters(id int) ([]datatypes.Hardware, error) {
+	placementServices := services.GetVirtualPlacementGroupService(vs.Session)
+	routers, err := placementServices.GetAvailableRouters(sl.Int(id))
+	if err != nil {
+		return nil, err
+	}
+	return routers, err
+}
+
+func (vs virtualServerManager) GetDatacenters() ([]datatypes.Location, error) {
+	locations := services.GetLocationDatacenterService(vs.Session)
+	datacenters, err := locations.GetDatacenters()
+	if err != nil {
+		return nil, err
+	}
+	return datacenters, err
+}
+func (vs virtualServerManager) GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error) {
+	placementServices := services.GetVirtualPlacementGroupRuleService(vs.Session)
+	rules, err := placementServices.GetAllObjects()
+	if err != nil {
+		return nil, err
+	}
+	return rules, err
 }

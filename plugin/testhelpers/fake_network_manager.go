@@ -23,34 +23,6 @@ type FakeNetworkManager struct {
 		result1 datatypes.Container_Product_Order_Receipt
 		result2 error
 	}
-	RouteStub        func(int, string, string) (bool, error)
-	routeMutex       sync.RWMutex
-	routeArgsForCall []struct {
-		arg1 int
-		arg2 string
-		arg3 string
-	}
-	routeReturns struct {
-		result1 bool
-		result2 error
-	}
-	routeReturnsOnCall map[int]struct {
-		result1 bool
-		result2 error
-	}
-	ClearRouteStub        func(int) (bool, error)
-	clearRouteMutex       sync.RWMutex
-	clearRouteArgsForCall []struct {
-		arg1 int
-	}
-	clearRouteReturns struct {
-		result1 bool
-		result2 error
-	}
-	clearRouteReturnsOnCall map[int]struct {
-		result1 bool
-		result2 error
-	}
 	AddSecurityGroupRuleStub        func(int, string, int, string, string, int, int, string) (datatypes.Network_SecurityGroup_Rule, error)
 	addSecurityGroupRuleMutex       sync.RWMutex
 	addSecurityGroupRuleArgsForCall []struct {
@@ -118,18 +90,18 @@ type FakeNetworkManager struct {
 		result1 datatypes.Container_Product_Order_Receipt
 		result2 error
 	}
-	AssignGlobalIPStub        func(int, string) (datatypes.Provisioning_Version1_Transaction, error)
+	AssignGlobalIPStub        func(int, string) (bool, error)
 	assignGlobalIPMutex       sync.RWMutex
 	assignGlobalIPArgsForCall []struct {
 		arg1 int
 		arg2 string
 	}
 	assignGlobalIPReturns struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 bool
 		result2 error
 	}
 	assignGlobalIPReturnsOnCall map[int]struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 bool
 		result2 error
 	}
 	AttachSecurityGroupComponentStub        func(int, int) error
@@ -188,6 +160,19 @@ type FakeNetworkManager struct {
 	}
 	cancelVLANReturnsOnCall map[int]struct {
 		result1 error
+	}
+	ClearRouteStub        func(int) (bool, error)
+	clearRouteMutex       sync.RWMutex
+	clearRouteArgsForCall []struct {
+		arg1 int
+	}
+	clearRouteReturns struct {
+		result1 bool
+		result2 error
+	}
+	clearRouteReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
 	}
 	CreateSecurityGroupStub        func(string, string) (datatypes.Network_SecurityGroup, error)
 	createSecurityGroupMutex       sync.RWMutex
@@ -485,17 +470,32 @@ type FakeNetworkManager struct {
 	removeSecurityGroupRulesReturnsOnCall map[int]struct {
 		result1 error
 	}
-	UnassignGlobalIPStub        func(int) (datatypes.Provisioning_Version1_Transaction, error)
+	RouteStub        func(int, string, string) (bool, error)
+	routeMutex       sync.RWMutex
+	routeArgsForCall []struct {
+		arg1 int
+		arg2 string
+		arg3 string
+	}
+	routeReturns struct {
+		result1 bool
+		result2 error
+	}
+	routeReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
+	UnassignGlobalIPStub        func(int) (bool, error)
 	unassignGlobalIPMutex       sync.RWMutex
 	unassignGlobalIPArgsForCall []struct {
 		arg1 int
 	}
 	unassignGlobalIPReturns struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 bool
 		result2 error
 	}
 	unassignGlobalIPReturnsOnCall map[int]struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 bool
 		result2 error
 	}
 	invocations      map[string][][]interface{}
@@ -562,134 +562,6 @@ func (fake *FakeNetworkManager) AddGlobalIPReturnsOnCall(i int, result1 datatype
 	}
 	fake.addGlobalIPReturnsOnCall[i] = struct {
 		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNetworkManager) Route(arg1 int, arg2 string, arg3 string) (bool, error) {
-	fake.routeMutex.Lock()
-	ret, specificReturn := fake.routeReturnsOnCall[len(fake.routeArgsForCall)]
-	fake.routeArgsForCall = append(fake.routeArgsForCall, struct {
-		arg1 int
-		arg2 string
-		arg3 string
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("Route", []interface{}{arg1, arg2, arg3})
-	fake.routeMutex.Unlock()
-	if fake.RouteStub != nil {
-		return fake.RouteStub(arg1, arg2, arg3)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	fakeReturns := fake.routeReturns
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeNetworkManager) RouteCallCount() int {
-	fake.routeMutex.RLock()
-	defer fake.routeMutex.RUnlock()
-	return len(fake.routeArgsForCall)
-}
-
-func (fake *FakeNetworkManager) RouteCalls(stub func(int, string, string) (bool, error)) {
-	fake.routeMutex.Lock()
-	defer fake.routeMutex.Unlock()
-	fake.RouteStub = stub
-}
-
-func (fake *FakeNetworkManager) RouteArgsForCall(i int) (int, string, string) {
-	fake.routeMutex.RLock()
-	defer fake.routeMutex.RUnlock()
-	argsForCall := fake.routeArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
-}
-
-func (fake *FakeNetworkManager) RouteReturns(result1 bool, result2 error) {
-	fake.routeMutex.Lock()
-	defer fake.routeMutex.Unlock()
-	fake.RouteStub = nil
-	fake.routeReturns = struct {
-		result1 bool
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNetworkManager) RouteReturnsOnCall(i int, result1 bool, result2 error) {
-	fake.routeMutex.Lock()
-	defer fake.routeMutex.Unlock()
-	fake.RouteStub = nil
-	if fake.routeReturnsOnCall == nil {
-		fake.routeReturnsOnCall = make(map[int]struct {
-			result1 bool
-			result2 error
-		})
-	}
-	fake.routeReturnsOnCall[i] = struct {
-		result1 bool
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNetworkManager) ClearRoute(arg1 int) (bool, error) {
-	fake.clearRouteMutex.Lock()
-	ret, specificReturn := fake.clearRouteReturnsOnCall[len(fake.clearRouteArgsForCall)]
-	fake.clearRouteArgsForCall = append(fake.clearRouteArgsForCall, struct {
-		arg1 int
-	}{arg1})
-	fake.recordInvocation("ClearRoute", []interface{}{arg1})
-	fake.clearRouteMutex.Unlock()
-	if fake.ClearRouteStub != nil {
-		return fake.ClearRouteStub(arg1)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	fakeReturns := fake.clearRouteReturns
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeNetworkManager) ClearRouteCallCount() int {
-	fake.clearRouteMutex.RLock()
-	defer fake.clearRouteMutex.RUnlock()
-	return len(fake.clearRouteArgsForCall)
-}
-
-func (fake *FakeNetworkManager) ClearRouteCalls(stub func(int) (bool, error)) {
-	fake.clearRouteMutex.Lock()
-	defer fake.clearRouteMutex.Unlock()
-	fake.ClearRouteStub = stub
-}
-
-func (fake *FakeNetworkManager) ClearRouteArgsForCall(i int) int {
-	fake.clearRouteMutex.RLock()
-	defer fake.clearRouteMutex.RUnlock()
-	argsForCall := fake.clearRouteArgsForCall[i]
-	return argsForCall.arg1
-}
-
-func (fake *FakeNetworkManager) ClearRouteReturns(result1 bool, result2 error) {
-	fake.clearRouteMutex.Lock()
-	defer fake.clearRouteMutex.Unlock()
-	fake.ClearRouteStub = nil
-	fake.clearRouteReturns = struct {
-		result1 bool
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNetworkManager) ClearRouteReturnsOnCall(i int, result1 bool, result2 error) {
-	fake.clearRouteMutex.Lock()
-	defer fake.clearRouteMutex.Unlock()
-	fake.ClearRouteStub = nil
-	if fake.clearRouteReturnsOnCall == nil {
-		fake.clearRouteReturnsOnCall = make(map[int]struct {
-			result1 bool
-			result2 error
-		})
-	}
-	fake.clearRouteReturnsOnCall[i] = struct {
-		result1 bool
 		result2 error
 	}{result1, result2}
 }
@@ -966,7 +838,7 @@ func (fake *FakeNetworkManager) AddVlanReturnsOnCall(i int, result1 datatypes.Co
 	}{result1, result2}
 }
 
-func (fake *FakeNetworkManager) AssignGlobalIP(arg1 int, arg2 string) (datatypes.Provisioning_Version1_Transaction, error) {
+func (fake *FakeNetworkManager) AssignGlobalIP(arg1 int, arg2 string) (bool, error) {
 	fake.assignGlobalIPMutex.Lock()
 	ret, specificReturn := fake.assignGlobalIPReturnsOnCall[len(fake.assignGlobalIPArgsForCall)]
 	fake.assignGlobalIPArgsForCall = append(fake.assignGlobalIPArgsForCall, struct {
@@ -991,7 +863,7 @@ func (fake *FakeNetworkManager) AssignGlobalIPCallCount() int {
 	return len(fake.assignGlobalIPArgsForCall)
 }
 
-func (fake *FakeNetworkManager) AssignGlobalIPCalls(stub func(int, string) (datatypes.Provisioning_Version1_Transaction, error)) {
+func (fake *FakeNetworkManager) AssignGlobalIPCalls(stub func(int, string) (bool, error)) {
 	fake.assignGlobalIPMutex.Lock()
 	defer fake.assignGlobalIPMutex.Unlock()
 	fake.AssignGlobalIPStub = stub
@@ -1004,28 +876,28 @@ func (fake *FakeNetworkManager) AssignGlobalIPArgsForCall(i int) (int, string) {
 	return argsForCall.arg1, argsForCall.arg2
 }
 
-func (fake *FakeNetworkManager) AssignGlobalIPReturns(result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+func (fake *FakeNetworkManager) AssignGlobalIPReturns(result1 bool, result2 error) {
 	fake.assignGlobalIPMutex.Lock()
 	defer fake.assignGlobalIPMutex.Unlock()
 	fake.AssignGlobalIPStub = nil
 	fake.assignGlobalIPReturns = struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 bool
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeNetworkManager) AssignGlobalIPReturnsOnCall(i int, result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+func (fake *FakeNetworkManager) AssignGlobalIPReturnsOnCall(i int, result1 bool, result2 error) {
 	fake.assignGlobalIPMutex.Lock()
 	defer fake.assignGlobalIPMutex.Unlock()
 	fake.AssignGlobalIPStub = nil
 	if fake.assignGlobalIPReturnsOnCall == nil {
 		fake.assignGlobalIPReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Provisioning_Version1_Transaction
+			result1 bool
 			result2 error
 		})
 	}
 	fake.assignGlobalIPReturnsOnCall[i] = struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 bool
 		result2 error
 	}{result1, result2}
 }
@@ -1335,6 +1207,69 @@ func (fake *FakeNetworkManager) CancelVLANReturnsOnCall(i int, result1 error) {
 	fake.cancelVLANReturnsOnCall[i] = struct {
 		result1 error
 	}{result1}
+}
+
+func (fake *FakeNetworkManager) ClearRoute(arg1 int) (bool, error) {
+	fake.clearRouteMutex.Lock()
+	ret, specificReturn := fake.clearRouteReturnsOnCall[len(fake.clearRouteArgsForCall)]
+	fake.clearRouteArgsForCall = append(fake.clearRouteArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("ClearRoute", []interface{}{arg1})
+	fake.clearRouteMutex.Unlock()
+	if fake.ClearRouteStub != nil {
+		return fake.ClearRouteStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.clearRouteReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNetworkManager) ClearRouteCallCount() int {
+	fake.clearRouteMutex.RLock()
+	defer fake.clearRouteMutex.RUnlock()
+	return len(fake.clearRouteArgsForCall)
+}
+
+func (fake *FakeNetworkManager) ClearRouteCalls(stub func(int) (bool, error)) {
+	fake.clearRouteMutex.Lock()
+	defer fake.clearRouteMutex.Unlock()
+	fake.ClearRouteStub = stub
+}
+
+func (fake *FakeNetworkManager) ClearRouteArgsForCall(i int) int {
+	fake.clearRouteMutex.RLock()
+	defer fake.clearRouteMutex.RUnlock()
+	argsForCall := fake.clearRouteArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeNetworkManager) ClearRouteReturns(result1 bool, result2 error) {
+	fake.clearRouteMutex.Lock()
+	defer fake.clearRouteMutex.Unlock()
+	fake.ClearRouteStub = nil
+	fake.clearRouteReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNetworkManager) ClearRouteReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.clearRouteMutex.Lock()
+	defer fake.clearRouteMutex.Unlock()
+	fake.ClearRouteStub = nil
+	if fake.clearRouteReturnsOnCall == nil {
+		fake.clearRouteReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.clearRouteReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeNetworkManager) CreateSecurityGroup(arg1 string, arg2 string) (datatypes.Network_SecurityGroup, error) {
@@ -2724,7 +2659,72 @@ func (fake *FakeNetworkManager) RemoveSecurityGroupRulesReturnsOnCall(i int, res
 	}{result1}
 }
 
-func (fake *FakeNetworkManager) UnassignGlobalIP(arg1 int) (datatypes.Provisioning_Version1_Transaction, error) {
+func (fake *FakeNetworkManager) Route(arg1 int, arg2 string, arg3 string) (bool, error) {
+	fake.routeMutex.Lock()
+	ret, specificReturn := fake.routeReturnsOnCall[len(fake.routeArgsForCall)]
+	fake.routeArgsForCall = append(fake.routeArgsForCall, struct {
+		arg1 int
+		arg2 string
+		arg3 string
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("Route", []interface{}{arg1, arg2, arg3})
+	fake.routeMutex.Unlock()
+	if fake.RouteStub != nil {
+		return fake.RouteStub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.routeReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNetworkManager) RouteCallCount() int {
+	fake.routeMutex.RLock()
+	defer fake.routeMutex.RUnlock()
+	return len(fake.routeArgsForCall)
+}
+
+func (fake *FakeNetworkManager) RouteCalls(stub func(int, string, string) (bool, error)) {
+	fake.routeMutex.Lock()
+	defer fake.routeMutex.Unlock()
+	fake.RouteStub = stub
+}
+
+func (fake *FakeNetworkManager) RouteArgsForCall(i int) (int, string, string) {
+	fake.routeMutex.RLock()
+	defer fake.routeMutex.RUnlock()
+	argsForCall := fake.routeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeNetworkManager) RouteReturns(result1 bool, result2 error) {
+	fake.routeMutex.Lock()
+	defer fake.routeMutex.Unlock()
+	fake.RouteStub = nil
+	fake.routeReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNetworkManager) RouteReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.routeMutex.Lock()
+	defer fake.routeMutex.Unlock()
+	fake.RouteStub = nil
+	if fake.routeReturnsOnCall == nil {
+		fake.routeReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.routeReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNetworkManager) UnassignGlobalIP(arg1 int) (bool, error) {
 	fake.unassignGlobalIPMutex.Lock()
 	ret, specificReturn := fake.unassignGlobalIPReturnsOnCall[len(fake.unassignGlobalIPArgsForCall)]
 	fake.unassignGlobalIPArgsForCall = append(fake.unassignGlobalIPArgsForCall, struct {
@@ -2748,7 +2748,7 @@ func (fake *FakeNetworkManager) UnassignGlobalIPCallCount() int {
 	return len(fake.unassignGlobalIPArgsForCall)
 }
 
-func (fake *FakeNetworkManager) UnassignGlobalIPCalls(stub func(int) (datatypes.Provisioning_Version1_Transaction, error)) {
+func (fake *FakeNetworkManager) UnassignGlobalIPCalls(stub func(int) (bool, error)) {
 	fake.unassignGlobalIPMutex.Lock()
 	defer fake.unassignGlobalIPMutex.Unlock()
 	fake.UnassignGlobalIPStub = stub
@@ -2761,28 +2761,28 @@ func (fake *FakeNetworkManager) UnassignGlobalIPArgsForCall(i int) int {
 	return argsForCall.arg1
 }
 
-func (fake *FakeNetworkManager) UnassignGlobalIPReturns(result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+func (fake *FakeNetworkManager) UnassignGlobalIPReturns(result1 bool, result2 error) {
 	fake.unassignGlobalIPMutex.Lock()
 	defer fake.unassignGlobalIPMutex.Unlock()
 	fake.UnassignGlobalIPStub = nil
 	fake.unassignGlobalIPReturns = struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 bool
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeNetworkManager) UnassignGlobalIPReturnsOnCall(i int, result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+func (fake *FakeNetworkManager) UnassignGlobalIPReturnsOnCall(i int, result1 bool, result2 error) {
 	fake.unassignGlobalIPMutex.Lock()
 	defer fake.unassignGlobalIPMutex.Unlock()
 	fake.UnassignGlobalIPStub = nil
 	if fake.unassignGlobalIPReturnsOnCall == nil {
 		fake.unassignGlobalIPReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Provisioning_Version1_Transaction
+			result1 bool
 			result2 error
 		})
 	}
 	fake.unassignGlobalIPReturnsOnCall[i] = struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 bool
 		result2 error
 	}{result1, result2}
 }
@@ -2812,6 +2812,8 @@ func (fake *FakeNetworkManager) Invocations() map[string][][]interface{} {
 	defer fake.cancelSubnetMutex.RUnlock()
 	fake.cancelVLANMutex.RLock()
 	defer fake.cancelVLANMutex.RUnlock()
+	fake.clearRouteMutex.RLock()
+	defer fake.clearRouteMutex.RUnlock()
 	fake.createSecurityGroupMutex.RLock()
 	defer fake.createSecurityGroupMutex.RUnlock()
 	fake.deleteSecurityGroupMutex.RLock()
@@ -2856,6 +2858,8 @@ func (fake *FakeNetworkManager) Invocations() map[string][][]interface{} {
 	defer fake.removeSecurityGroupRuleMutex.RUnlock()
 	fake.removeSecurityGroupRulesMutex.RLock()
 	defer fake.removeSecurityGroupRulesMutex.RUnlock()
+	fake.routeMutex.RLock()
+	defer fake.routeMutex.RUnlock()
 	fake.unassignGlobalIPMutex.RLock()
 	defer fake.unassignGlobalIPMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}

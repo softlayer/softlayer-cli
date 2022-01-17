@@ -39,6 +39,8 @@ var (
 	CMD_VS_CAPACITY_LIST_NAME     = "capacity-list"
 	CMD_VS_CAPACITY_CREATE_NAME     = "capacity-create"
 	CMD_VS_PLACEMENT_GROUP_LIST_NAME     = "placementgroup-list"
+	CMD_VS_PLACEMENT_DETAIL_NAME   = "placementgroup-detail"
+	CMD_VS_PLACEMENT_CREATE_OPTIONS_NAME   = "placementgroup-create-options"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -85,7 +87,10 @@ func VSMetaData() cli.Command {
 			VSCapacityCreateOptionsMetadata(),
 			VSCapacityCreateMetaData(),
 			VSBillingMetaData(),
+			VSUsageMetaData(),
 			VSPlacementGroupListMetadata(),
+			VSPlacementGroupDetailMetaData(),
+			VSPlacementGroupCreateOptionsMetaData(),
 		},
 	}
 }
@@ -949,7 +954,6 @@ EXAMPLE:
 	}
 }
 
-
 func VSCapacityCreateMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_VIRTUAL_NAME,
@@ -1002,4 +1006,66 @@ EXAMPLE:
 			OutputFlag(),
 		},
 	}
+}
+
+func VSUsageMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        "usage",
+		Description: T("usage data over date range."),
+		Usage: T(`${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]
+Usage information of a virtual server.
+Example:
+   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0`, map[string]interface{}{"Command": "vs"}),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,start",
+				Usage: T("Start Date e.g. 2019-3-4 (yyyy-MM-dd)  [required]"),
+				Required: true,
+			},
+			cli.StringFlag{
+				Name:  "e,end",
+				Usage: T("End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]"),
+				Required: true,
+			},
+			cli.StringFlag{
+				Name:  "t,valid-data",
+				Usage: T("Metric_Data_Type keyName e.g. CPU0, CPU1, MEMORY_USAGE, etc.  [required]"),
+				Required: true,
+			},
+			cli.IntFlag{
+				Name:  "p,summary-period",
+				Usage: T("300, 600, 1800, 3600, 43200 or 86400 seconds."),
+			},
+			OutputFlag(),
+		},
+	}
+}
+
+func VSPlacementGroupDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_PLACEMENT_DETAIL_NAME,
+		Description: T("Get placement Group details."),
+		Usage: T(`${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER
+EXAMPLE:
+   ${COMMAND_NAME} sl vs placementgroup-details 12345678
+    Get placement Group details with ID 12345678.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		}}
+}
+
+func VSPlacementGroupCreateOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_VIRTUAL_NAME,
+		Name:        CMD_VS_PLACEMENT_CREATE_OPTIONS_NAME,
+		Description: T("Get List options for creating a placement group.."),
+		Usage: T(`${COMMAND_NAME} sl vs placementgroup-create-options
+EXAMPLE:
+   ${COMMAND_NAME} sl vs placementgroup-create-options
+    Get List options for creating a placement group.`),
+		Flags: []cli.Flag{
+			OutputFlag(),
+		}}
 }

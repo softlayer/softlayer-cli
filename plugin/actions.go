@@ -395,11 +395,20 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-placementgroup-list": func(c *cli.Context) error {
 			return virtual.NewPlacementGroupListCommand(ui, virtualServerManager).Run(c)
 		},
+		NS_VIRTUAL_NAME + "-placementgroup-create-options": func(c *cli.Context) error {
+			return virtual.NewPlacementGruopCreateOptionsCommand(ui, virtualServerManager).Run(c)
+		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
 		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_CREATE_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityCreateCommand(ui, virtualServerManager, context).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-usage": func(c *cli.Context) error {
+			return virtual.NewUsageCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" +CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
+			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
 
 		//Placement group
