@@ -100,7 +100,7 @@ var _ = Describe("Dedicated host create", func() {
 			})
 		})
 
-		Context("Generate host with verify host fails", func() {
+		Context("Verify the vlan order with fail because the vlan is in a different location", func() {
 			BeforeEach(func() {
 				fakeNetworkManager.GetVlanReturns(datatypes.Network_Vlan{
 					Id: sl.Int(123),
@@ -109,6 +109,58 @@ var _ = Describe("Dedicated host create", func() {
 							Hardware: datatypes.Hardware{
 								Id:       sl.Int(1115295),
 								Hostname: sl.String("bcr01a.wdc07"),
+								Datacenter: &datatypes.Location{
+									Name: sl.String("wdc07"),
+								},
+							},
+						},
+					},
+				}, nil)
+				FakeDedicatedhostManager.GenerateOrderTemplateReturns(datatypes.Container_Product_Order_Virtual_DedicatedHost{
+					Container_Product_Order: datatypes.Container_Product_Order{
+						Hardware: []datatypes.Hardware{
+							datatypes.Hardware{
+								Domain:   sl.String("test.com"),
+								Hostname: sl.String("test"),
+								PrimaryBackendNetworkComponent: &datatypes.Network_Component{
+									Router: &datatypes.Hardware{
+										Id: sl.Int(1234567),
+									},
+								},
+							},
+						},
+						Location:  sl.String("AMSTERDAM"),
+						PackageId: sl.Int(813),
+						Prices: []datatypes.Product_Item_Price{
+							datatypes.Product_Item_Price{
+								Id: sl.Int(200269),
+							},
+						},
+						UseHourlyPricing: sl.Bool(true),
+					},
+				}, nil)
+				FakeDedicatedhostManager.VerifyInstanceCreationReturns(datatypes.Container_Product_Order{}, errors.New("Internal server error"))
+			})
+			It("return error", func() {
+				fakeUI.Inputs("Yes")
+				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123", "--test")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("The vlan is located at: wdc07, Please add a valid private vlan according the datacenter selected."))
+			})
+		})
+
+		Context("Generate host with verify host fails", func() {
+			BeforeEach(func() {
+				fakeNetworkManager.GetVlanReturns(datatypes.Network_Vlan{
+					Id: sl.Int(123),
+					PrimaryRouter: &datatypes.Hardware_Router{
+						Hardware_Switch: datatypes.Hardware_Switch{
+							Hardware: datatypes.Hardware{
+								Id:       sl.Int(1115295),
+								Hostname: sl.String("bcr01a.dal09"),
+								Datacenter: &datatypes.Location{
+									Name: sl.String("dal09"),
+								},
 							},
 						},
 					},
@@ -154,7 +206,10 @@ var _ = Describe("Dedicated host create", func() {
 						Hardware_Switch: datatypes.Hardware_Switch{
 							Hardware: datatypes.Hardware{
 								Id:       sl.Int(1115295),
-								Hostname: sl.String("bcr01a.wdc07"),
+								Hostname: sl.String("bcr01a.dal09"),
+								Datacenter: &datatypes.Location{
+									Name: sl.String("dal09"),
+								},
 							},
 						},
 					},
@@ -200,7 +255,10 @@ var _ = Describe("Dedicated host create", func() {
 						Hardware_Switch: datatypes.Hardware_Switch{
 							Hardware: datatypes.Hardware{
 								Id:       sl.Int(1115295),
-								Hostname: sl.String("bcr01a.wdc07")},
+								Hostname: sl.String("bcr01a.dal09"),
+								Datacenter: &datatypes.Location{
+									Name: sl.String("dal09"),
+								}},
 						},
 					},
 				}, nil)
@@ -266,7 +324,10 @@ var _ = Describe("Dedicated host create", func() {
 						Hardware_Switch: datatypes.Hardware_Switch{
 							Hardware: datatypes.Hardware{
 								Id:       sl.Int(1115295),
-								Hostname: sl.String("bcr01a.wdc07")},
+								Hostname: sl.String("bcr01a.dal09"),
+								Datacenter: &datatypes.Location{
+									Name: sl.String("dal09"),
+								}},
 						},
 					},
 				}, nil)
