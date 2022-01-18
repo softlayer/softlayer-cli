@@ -3306,6 +3306,8 @@
 "translation": "가상 서버가 마이그레이션 중입니다: {{.VsId}}."},
 {"id": "The virtual server {{.VsID}} was authorized to access {{.VolumeId}}.",
 "translation": "{{.VsID}} 가상 서버에 {{.VolumeId}}에 액세스할 권한이 부여되었습니다."},
+{"id": "The vlan is located at: {{.VLAN}}, Please add a valid private vlan according the datacenter selected.",
+"translation": "The vlan is located at: {{.VLAN}}, Please add a valid private vlan according the datacenter selected."},
 {"id": "The volume has been cancelled; unable to modify volume.",
 "translation": "볼륨이 취소되었습니다. 볼륨을 수정할 수 없습니다."},
 {"id": "There are no replication partners for volume {{.VolumeID}}.\n",

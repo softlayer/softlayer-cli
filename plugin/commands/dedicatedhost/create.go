@@ -63,7 +63,7 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	vlan, err := cmd.NetworkManager.GetVlan(vlanId, "mask[id,primaryRouter[id]]")
+	vlan, err := cmd.NetworkManager.GetVlan(vlanId, "mask[id,primaryRouter[id,datacenter]]")
 	if err != nil {
 		return cli.NewExitError(T("Failed to get vlan {{.VlanId}}.\n", map[string]interface{}{"VlanId": vlanId})+err.Error(), 2)
 	}
@@ -79,6 +79,11 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	}
 	if vlan.PrimaryRouter == nil || vlan.PrimaryRouter.Id == nil {
 		return cli.NewExitError(T("Failed to get vlan primary router ID."), 2)
+	}
+
+	vlanDatacenter := vlan.PrimaryRouter.Datacenter.Name
+	if *vlanDatacenter != datacenter {
+		return cli.NewExitError(T("The vlan is located at: {{.VLAN}}, Please add a valid private vlan according the datacenter selected.", map[string]interface{}{"VLAN": *vlanDatacenter}), 2)
 	}
 
 	orderTemplate, err := cmd.DedicatedHostManager.GenerateOrderTemplate(size, hostname, domain, datacenter, billing, *vlan.PrimaryRouter.Id)

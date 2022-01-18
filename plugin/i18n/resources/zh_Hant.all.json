@@ -3306,6 +3306,8 @@
 "translation": "虛擬服務器正在遷移：{{.VsId}}."},
 {"id": "The virtual server {{.VsID}} was authorized to access {{.VolumeId}}.",
 "translation": "已授權虛擬伺服器 {{.VsID}} 存取 {{.VolumeId}}。"},
+{"id": "The vlan is located at: {{.VLAN}}, Please add a valid private vlan according the datacenter selected.",
+"translation": "The vlan is located at: {{.VLAN}}, Please add a valid private vlan according the datacenter selected."},
 {"id": "The volume has been cancelled; unable to modify volume.",
 "translation": "磁區已取消，無法修改磁區。"},
 {"id": "There are no replication partners for volume {{.VolumeID}}.\n",

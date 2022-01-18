@@ -3306,6 +3306,8 @@
 "translation": "Le serveur virtuel migre : {{.VsId}}."},
 {"id": "The virtual server {{.VsID}} was authorized to access {{.VolumeId}}.",
 "translation": "Le serveur virtuel {{.VsID}} a été autorisé à accéder à {{.VolumeId}}."},
+{"id": "The vlan is located at: {{.VLAN}}, Please add a valid private vlan according the datacenter selected.",
+"translation": "The vlan is located at: {{.VLAN}}, Please add a valid private vlan according the datacenter selected."},
 {"id": "The volume has been cancelled; unable to modify volume.",
 "translation": "Le volume a été annulé ; impossible de le modifier."},
 {"id": "There are no replication partners for volume {{.VolumeID}}.\n",
