@@ -2,6 +2,7 @@ package managers_test
 
 import (
 	"time"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -26,7 +27,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("Cancel hardware", func() {
 		Context("Cancel hardware with billing id not found", func() {
 			BeforeEach(func() {
-				filenames := []string{"getObject_missingBillingItem",}
+				filenames := []string{"getObject_missingBillingItem"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
@@ -38,7 +39,7 @@ var _ = Describe("HardwareServerManager", func() {
 		})
 		Context("Cancel hardware succeed", func() {
 			BeforeEach(func() {
-				filenames := []string{"cancelItem_hardware",}
+				filenames := []string{"cancelItem_hardware"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
@@ -110,7 +111,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetPackage", func() {
 		Context("not found Package", func() {
 			BeforeEach(func() {
-				filenames := []string{"getAllObjects_hardwarenotfound",}
+				filenames := []string{"getAllObjects_hardwarenotfound"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
@@ -124,7 +125,7 @@ var _ = Describe("HardwareServerManager", func() {
 
 		Context("get Package", func() {
 			BeforeEach(func() {
-				filenames := []string{"getAllObjects_hardware",}
+				filenames := []string{"getAllObjects_hardware"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
@@ -148,7 +149,7 @@ var _ = Describe("HardwareServerManager", func() {
 			BeforeEach(func() {
 				fakeHandler := testhelpers.FakeTransportHandler{}
 				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setUserMetadata", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
@@ -162,7 +163,7 @@ var _ = Describe("HardwareServerManager", func() {
 			BeforeEach(func() {
 				fakeHandler := testhelpers.FakeTransportHandler{}
 				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setTags", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
@@ -176,7 +177,7 @@ var _ = Describe("HardwareServerManager", func() {
 			BeforeEach(func() {
 				fakeHandler := testhelpers.FakeTransportHandler{}
 				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "editObject", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
@@ -191,7 +192,7 @@ var _ = Describe("HardwareServerManager", func() {
 			BeforeEach(func() {
 				fakeHandler := testhelpers.FakeTransportHandler{}
 				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setPublicNetworkInterfaceSpeed", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
@@ -206,7 +207,7 @@ var _ = Describe("HardwareServerManager", func() {
 			BeforeEach(func() {
 				fakeHandler := testhelpers.FakeTransportHandler{}
 				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setPrivateNetworkInterfaceSpeed", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns 1 error", func() {
@@ -228,8 +229,8 @@ var _ = Describe("HardwareServerManager", func() {
 		Context("UpdateFirmware fails", func() {
 			BeforeEach(func() {
 				fakeHandler := testhelpers.FakeTransportHandler{}
-                fakeHandler.AddApiError("SoftLayer_Hardware_Server", "createFirmwareUpdateTransaction", 500, "FAILED")
-                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "createFirmwareUpdateTransaction", 500, "FAILED")
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("it returns error", func() {
@@ -242,7 +243,7 @@ var _ = Describe("HardwareServerManager", func() {
 
 	Describe("GetCreateOptions", func() {
 		BeforeEach(func() {
-			filenames := []string{"getAllObjects_hardware",}
+			filenames := []string{"getAllObjects_hardware"}
 			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 		})
@@ -261,7 +262,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetDefaultPriceId", func() {
 		Context("GetDefaultPriceId", func() {
 			BeforeEach(func() {
-				filenames := []string{"getAllObjects_hardware",}
+				filenames := []string{"getAllObjects_hardware"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -288,7 +289,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetOSPriceId", func() {
 		Context("GetOSPriceId", func() {
 			BeforeEach(func() {
-				filenames := []string{"getAllObjects_hardware",}
+				filenames := []string{"getAllObjects_hardware"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -315,7 +316,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetBandwidthPriceId", func() {
 		Context("GetBandwidthPriceId", func() {
 			BeforeEach(func() {
-				filenames := []string{"getAllObjects_hardware",}
+				filenames := []string{"getAllObjects_hardware"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -336,7 +337,7 @@ var _ = Describe("HardwareServerManager", func() {
 
 	Describe("GetPortSpeedPriceId", func() {
 		BeforeEach(func() {
-			filenames := []string{"getAllObjects_hardware",}
+			filenames := []string{"getAllObjects_hardware"}
 			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			productPackage, _ = hardwareManager.GetPackage()
@@ -357,7 +358,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetExtraPriceId", func() {
 		Context("GetExtraPriceId", func() {
 			BeforeEach(func() {
-				filenames := []string{"getAllObjects_hardware",}
+				filenames := []string{"getAllObjects_hardware"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -384,7 +385,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GenerateCreateTemplate", func() {
 		Context("GenerateCreateTemplate", func() {
 			BeforeEach(func() {
-				filenames := []string{"getAllObjects_hardware",}
+				filenames := []string{"getAllObjects_hardware"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 				productPackage, _ = hardwareManager.GetPackage()
@@ -468,8 +469,8 @@ var _ = Describe("HardwareServerManager", func() {
 		Context("When there is an error", func() {
 			BeforeEach(func() {
 				fakeHandler := testhelpers.FakeTransportHandler{}
-                fakeHandler.AddApiError("SoftLayer_Hardware_Server", "toggleManagementInterface", 500, "IPMI ERROR")
-                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "toggleManagementInterface", 500, "IPMI ERROR")
+				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
 				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 			})
 			It("should return error", func() {
@@ -482,7 +483,7 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("GetBandwidthData Tests", func() {
 		var (
 			startTime time.Time
-			endTime time.Time
+			endTime   time.Time
 		)
 		BeforeEach(func() {
 			startTime, _ = time.Parse("2006-01-02", "2021-01-01")
@@ -492,7 +493,7 @@ var _ = Describe("HardwareServerManager", func() {
 			It("Tests API is called properly", func() {
 				data, err := hardwareManager.GetBandwidthData(12345, startTime, endTime, 300)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(len(data)).To(Equal(12))	
+				Expect(len(data)).To(Equal(12))
 				Expect(*data[0].Type).To(Equal("cpu0"))
 			})
 		})

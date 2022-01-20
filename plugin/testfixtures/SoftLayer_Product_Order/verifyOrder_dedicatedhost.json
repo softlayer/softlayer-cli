@@ -1,0 +1,21 @@
+{
+    "hardware": [
+     {
+      "domain": "test.com",
+      "hostname": "test",
+      "primaryBackendNetworkComponent": {
+       "router": {
+        "id": 1234567
+       }
+      }
+     }
+    ],
+    "location": "AMSTERDAM",
+    "packageId": 813,
+    "prices": [
+     {
+      "id": 200269
+     }
+    ],
+    "useHourlyPricing": true
+}

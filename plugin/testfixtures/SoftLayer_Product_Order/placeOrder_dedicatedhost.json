@@ -1,0 +1,193 @@
+{
+    "orderDate": "2022-01-20T13:06:01-06:00",
+    "orderDetails": {
+        "currencyShortName": "USD",
+        "hardware": [
+            {
+                "domain": "test.com",
+                "hostname": "test",
+                "primaryBackendNetworkComponent": {
+                    "router": {
+                        "hostname": "bcr01a.ams01",
+                        "id": 1234567
+                    }
+                }
+            }
+        ],
+        "location": "265592",
+        "locationObject": {
+            "id": 265592,
+            "longName": "Amsterdam 1",
+            "name": "ams01"
+        },
+        "packageId": 813,
+        "paymentType": "ADD_TO_BALANCE",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "dedicated_virtual_hosts",
+                        "id": 848,
+                        "name": "Dedicated Host"
+                    }
+                ],
+                "hourlyRecurringFee": 0,
+                "id": 200271,
+                "item": {
+                    "bundle": [
+                        {
+                            "bundleItem": {
+                                "capacity": 56,
+                                "description": "56 Cores X 242 RAM X 1.2 TB",
+                                "id": 10195,
+                                "keyName": "56_CORES_X_242_RAM_X_1_4_TB",
+                                "units": "CORE"
+                            },
+                            "bundleItemId": 10195,
+                            "category": {
+                                "categoryCode": "dedicated_host_disk",
+                                "id": 851,
+                                "name": "Dedicated Host Disk"
+                            },
+                            "id": 41761,
+                            "itemPrice": {
+                                "hourlyRecurringFee": 0,
+                                "id": 200299,
+                                "itemId": 10197,
+                                "laborFee": 0,
+                                "oneTimeFee": 0,
+                                "recurringFee": 0,
+                                "setupFee": 0
+                            },
+                            "itemPriceId": 200299
+                        },
+                        {
+                            "bundleItem": {
+                                "capacity": 56,
+                                "description": "56 Cores X 242 RAM X 1.2 TB",
+                                "id": 10195,
+                                "keyName": "56_CORES_X_242_RAM_X_1_4_TB",
+                                "units": "CORE"
+                            },
+                            "bundleItemId": 10195,
+                            "category": {
+                                "categoryCode": "dedicated_host_ram",
+                                "id": 850,
+                                "name": "Dedicated Host RAM"
+                            },
+                            "id": 41763,
+                            "itemPrice": {
+                                "hourlyRecurringFee": 0,
+                                "id": 200301,
+                                "itemId": 10199,
+                                "laborFee": 0,
+                                "oneTimeFee": 0,
+                                "recurringFee": 0,
+                                "setupFee": 0
+                            },
+                            "itemPriceId": 200301
+                        }
+                    ],
+                    "capacity": 56,
+                    "description": "56 Cores X 242 RAM X 1.2 TB",
+                    "id": 10195,
+                    "keyName": "56_CORES_X_242_RAM_X_1_4_TB",
+                    "units": "CORE"
+                },
+                "itemId": 10195,
+                "laborFee": 0,
+                "oneTimeFee": 0,
+                "recurringFee": 0,
+                "setupFee": 0
+            }
+        ],
+        "privateCloudOrderFlag": false,
+        "proratedInitialCharge": 0,
+        "proratedOrderTotal": 0,
+        "quantity": 1,
+        "taxCacheHash": "8b014c31e1ae8127b7060aa90e8e59962f8f4d7e",
+        "taxCompletedFlag": false,
+        "totalRecurringTax": 0,
+        "totalSetupTax": 0,
+        "useHourlyPricing": true
+    },
+    "orderId": 1111111,
+    "placedOrder": {
+        "account": {
+            "companyName": "SoftLayer Internal - Development Community",
+            "id": 2222222
+        },
+        "accountId": 4444444,
+        "id": 5555555,
+        "items": [
+            {
+                "categoryCode": "dedicated_virtual_hosts",
+                "children": [
+                    {
+                        "categoryCode": "dedicated_host_disk",
+                        "description": "1.2 TB Local Storage (Dedicated Host Capacity)",
+                        "hourlyRecurringFee": 0,
+                        "id": 886958422,
+                        "itemId": 10197,
+                        "itemPriceId": 200299,
+                        "laborFee": 0,
+                        "oneTimeFee": 0,
+                        "parentId": 886958420,
+                        "recurringFee": 0,
+                        "setupFee": 0
+                    },
+                    {
+                        "categoryCode": "dedicated_host_ram",
+                        "description": "242 GB RAM",
+                        "hourlyRecurringFee": 0,
+                        "id": 886958424,
+                        "itemId": 10199,
+                        "itemPriceId": 200301,
+                        "laborFee": 0,
+                        "oneTimeFee": 0,
+                        "parentId": 886958420,
+                        "recurringFee": 0,
+                        "setupFee": 0
+                    }
+                ],
+                "description": "56 Cores X 242 RAM X 1.2 TB",
+                "hourlyRecurringFee": 0,
+                "id": 886958420,
+                "itemId": 10195,
+                "itemPriceId": 200271,
+                "laborFee": 0,
+                "oneTimeFee": 0,
+                "recurringFee": 0,
+                "setupFee": 0
+            },
+            {
+                "categoryCode": "dedicated_host_disk",
+                "description": "1.2 TB Local Storage (Dedicated Host Capacity)",
+                "hourlyRecurringFee": 0,
+                "id": 886958422,
+                "itemId": 10197,
+                "itemPriceId": 200299,
+                "laborFee": 0,
+                "oneTimeFee": 0,
+                "parentId": 886958420,
+                "recurringFee": 0,
+                "setupFee": 0
+            },
+            {
+                "categoryCode": "dedicated_host_ram",
+                "description": "242 GB RAM",
+                "hourlyRecurringFee": 0,
+                "id": 886958424,
+                "itemId": 10199,
+                "itemPriceId": 200301,
+                "laborFee": 0,
+                "oneTimeFee": 0,
+                "parentId": 886958420,
+                "recurringFee": 0,
+                "setupFee": 0
+            }
+        ],
+        "orderTypeId": 4,
+        "status": "PENDING_AUTO_APPROVAL"
+    }
+}

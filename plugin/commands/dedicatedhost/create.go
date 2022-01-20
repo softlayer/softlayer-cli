@@ -3,7 +3,6 @@ package dedicatedhost
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -91,11 +90,13 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to generate the order template.\n")+err.Error(), 2)
 	}
 
-	var orderReceipt = datatypes.Container_Product_Order_Receipt{}
 	if c.IsSet("test") {
-		_, err := cmd.DedicatedHostManager.VerifyInstanceCreation(orderTemplate)
+		orderReceipt, err := cmd.DedicatedHostManager.VerifyInstanceCreation(orderTemplate)
 		if err != nil {
 			return cli.NewExitError(T("Failed to verify virtual server creation.\n")+err.Error(), 2)
+		}
+		if outputFormat == "JSON" {
+			return utils.PrintPrettyJSON(cmd.UI, orderReceipt)
 		}
 		cmd.UI.Ok()
 		cmd.UI.Print(T("The order is correct."))
@@ -104,12 +105,11 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 		if err != nil {
 			return cli.NewExitError(T("Failed to Order the dedicatedhost.\n")+err.Error(), 2)
 		}
+		if outputFormat == "JSON" {
+			return utils.PrintPrettyJSON(cmd.UI, orderReceipt)
+		}
 		cmd.UI.Ok()
 		cmd.UI.Print(T("The order {{.OrderID}} was placed.", map[string]interface{}{"OrderID": *orderReceipt.OrderId}))
-	}
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, orderReceipt)
 	}
 
 	return nil
