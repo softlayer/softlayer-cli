@@ -1,6 +1,7 @@
 package image_test
 
 import (
+	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -33,7 +34,7 @@ var _ = Describe("image datacenter", func() {
 	Describe("image datacenter", func() {
 		Context("without id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand,"--add")
+				err := testhelpers.RunCommand(cliCommand, "--add")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("flag needs an argument: -add"))
 			})
@@ -48,10 +49,29 @@ var _ = Describe("image datacenter", func() {
 		})
 
 		Context("add successfully", func() {
-			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456","--add dal05")
+			It("return no error using location id", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456", "--add", "265592")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs())
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The location was added successfully!"}))
+			})
+		})
+
+		Context("add successfully", func() {
+			It("return no error", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456", "--add", "dal05")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The location was added successfully!"}))
+			})
+		})
+
+		Context("remove successfully", func() {
+			It("return no error", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456", "--remove", "dal05")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The location was removed successfully!"}))
 			})
 		})
 
