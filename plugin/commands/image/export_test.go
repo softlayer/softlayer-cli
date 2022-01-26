@@ -84,5 +84,6 @@ var _ = Describe("Image export", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The image 123456 was exported successfully!"}))
 			})
 		})
+
 	})
 })

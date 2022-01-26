@@ -108,5 +108,6 @@ var _ = Describe("Image import", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"abcdefghijk"}))
 			})
 		})
+
 	})
 })
