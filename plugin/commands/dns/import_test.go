@@ -45,13 +45,12 @@ var _ = Describe("DNS Import", func() {
 				err := testhelpers.RunCommand(cliCommand, "not-exist.txt")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to read file: not-exist.txt."))
-				Expect(err.Error()).To(ContainSubstring("open not-exist.txt: The system cannot find the file specified."))
 			})
 		})
 
 		Context("DNS send a file import", func() {
 
-			dirFile := os.TempDir() + "file.txt"
+			dirFile := os.TempDir() + "/file.txt"
 
 			It("send a empty file", func() {
 				file, _ := os.Create(dirFile)
