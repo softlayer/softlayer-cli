@@ -9,6 +9,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
@@ -535,6 +536,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_TICKET_NAME + "-" + CMD_TICKET_SUMMARY_NAME: func(c *cli.Context) error {
 			return ticket.NewSummaryTicketCommand(ui, ticketManager).Run(c)
 		},
+	}
+
+	// ibmcloud sl account
+	accountCommands := account.GetCommandAcionBindings(context, ui, session)
+	for name, action := range accountCommands {
+		CommandActionBindings[name] = action
 	}
 
 	// ibmcloud sl block
