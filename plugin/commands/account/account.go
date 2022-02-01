@@ -9,10 +9,13 @@ import (
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
-func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	// storageManager := managers.NewStorageManager(session)
-	// networkManager := managers.NewNetworkManager(session)
+/*
+This account package follows a slightly different pattern than the other CLI commands
+because I'd like to eventually adpot this pattern throughout to get away from having metadata files
+for every command.
+*/
 
+func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 		"account-bandwidth-pools": func(c *cli.Context) error {
 			return NewBandwidthPoolsCommand(ui, session).Run(c)
