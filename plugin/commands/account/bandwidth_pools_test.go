@@ -45,6 +45,13 @@ var _ = Describe("Account Bandwidth-Pools", func() {
 				outputs := fakeUI.Outputs()
 				Expect(outputs).To(ContainSubstring("3361 GB      7.13 GB         7.70 GB"))
 			})
+			It("Outputs JSON", func() {
+				err := testhelpers.RunCommand(cliCommand, "--output=JSON")
+				Expect(err).NotTo(HaveOccurred())
+				outputs := fakeUI.Outputs()
+				Expect(outputs).To(ContainSubstring("\"amountIn\": 7.54252,"))
+	
+			})
 		})
 	})
 })
