@@ -345,6 +345,48 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Location_Region
 		result2 error
 	}
+
+	GetAvailablePlacementRoutersStub        func(int) ([]datatypes.Hardware, error)
+	getAvailablePlacementRoutersMutex       sync.RWMutex
+	getAvailablePlacementRoutersArgsForCall []struct {
+		arg1 int
+	}
+	getAvailablePlacementRoutersReturns struct {
+		result1 []datatypes.Hardware
+		result2 error
+	}
+	getAvailablePlacementRoutersReturnsOnCall map[int]struct {
+		result1 []datatypes.Hardware
+		result2 error
+	}
+
+	GetDatacentersStub        func(string) ([]datatypes.Location, error)
+	getDatacentersMutex       sync.RWMutex
+	getDatacentersArgsForCall []struct {
+		arg1 string
+	}
+	getDatacentersReturns struct {
+		result1 []datatypes.Location
+		result2 error
+	}
+	getDatacentersReturnsOnCall map[int]struct {
+		result1 []datatypes.Location
+		result2 error
+	}
+
+	GetRulesStub        func() ([]datatypes.Virtual_PlacementGroup_Rule, error)
+	getRulesMutex       sync.RWMutex
+	getRulesArgsForCall []struct {
+		arg1 string
+	}
+	getRulesReturns struct {
+		result1 []datatypes.Virtual_PlacementGroup_Rule
+		result2 error
+	}
+	getRulesReturnsOnCall map[int]struct {
+		result1 []datatypes.Virtual_PlacementGroup_Rule
+		result2 error
+	}
 	GetStorageCredentialsStub        func(int) (datatypes.Network_Storage_Allowed_Host, error)
 	getStorageCredentialsMutex       sync.RWMutex
 	getStorageCredentialsArgsForCall []struct {
@@ -639,6 +681,184 @@ type FakeVirtualServerManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeVirtualServerManager) GetDatacenters() ([]datatypes.Location, error) {
+	fake.getDatacentersMutex.Lock()
+	ret, specificReturn := fake.getDatacentersReturnsOnCall[len(fake.getDatacentersArgsForCall)]
+	fake.getDatacentersMutex.Unlock()
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getDatacentersReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetDatacentersCallCount() int {
+	fake.getDatacentersMutex.RLock()
+	defer fake.getDatacentersMutex.RUnlock()
+	return len(fake.getDatacentersArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetDatacentersCalls(stub func(string) ([]datatypes.Location, error)) {
+	fake.getDatacentersMutex.Lock()
+	defer fake.getDatacentersMutex.Unlock()
+	fake.GetDatacentersStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetDatacentersArgsForCall(i int) string {
+	fake.getDatacentersMutex.RLock()
+	defer fake.getDatacentersMutex.RUnlock()
+	argsForCall := fake.getDatacentersArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) GetDatacentersReturns(result1 []datatypes.Location, result2 error) {
+	fake.getDatacentersMutex.Lock()
+	defer fake.getDatacentersMutex.Unlock()
+	fake.GetDatacentersStub = nil
+	fake.getDatacentersReturns = struct {
+		result1 []datatypes.Location
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetDatacentersReturnsOnCall(i int, result1 []datatypes.Location, result2 error) {
+	fake.getDatacentersMutex.Lock()
+	defer fake.getDatacentersMutex.Unlock()
+	fake.GetDatacentersStub = nil
+	if fake.getDatacentersReturnsOnCall == nil {
+		fake.getDatacentersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Location
+			result2 error
+		})
+	}
+	fake.getDatacentersReturnsOnCall[i] = struct {
+		result1 []datatypes.Location
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRouters(arg1 int) ([]datatypes.Hardware, error) {
+	fake.getAvailablePlacementRoutersMutex.Lock()
+	ret, specificReturn := fake.getAvailablePlacementRoutersReturnsOnCall[len(fake.getAvailablePlacementRoutersArgsForCall)]
+	fake.getAvailablePlacementRoutersArgsForCall = append(fake.getAvailablePlacementRoutersArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("GetDatacenters", []interface{}{arg1})
+	fake.getAvailablePlacementRoutersMutex.Unlock()
+	if fake.GetAvailablePlacementRoutersStub != nil {
+		return fake.GetAvailablePlacementRoutersStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getAvailablePlacementRoutersReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersCallCount() int {
+	fake.getAvailablePlacementRoutersMutex.RLock()
+	defer fake.getAvailablePlacementRoutersMutex.RUnlock()
+	return len(fake.getAvailablePlacementRoutersArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersCalls(stub func(int) ([]datatypes.Hardware, error)) {
+	fake.getAvailablePlacementRoutersMutex.Lock()
+	defer fake.getAvailablePlacementRoutersMutex.Unlock()
+	fake.GetAvailablePlacementRoutersStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersArgsForCall(i int) int {
+	fake.getAvailablePlacementRoutersMutex.RLock()
+	defer fake.getAvailablePlacementRoutersMutex.RUnlock()
+	argsForCall := fake.getAvailablePlacementRoutersArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersReturns(result1 []datatypes.Hardware, result2 error) {
+	fake.getAvailablePlacementRoutersMutex.Lock()
+	defer fake.getAvailablePlacementRoutersMutex.Unlock()
+	fake.GetAvailablePlacementRoutersStub = nil
+	fake.getAvailablePlacementRoutersReturns = struct {
+		result1 []datatypes.Hardware
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersReturnsOnCall(i int, result1 []datatypes.Hardware, result2 error) {
+	fake.getAvailablePlacementRoutersMutex.Lock()
+	defer fake.getAvailablePlacementRoutersMutex.Unlock()
+	fake.GetAvailablePlacementRoutersStub = nil
+	if fake.getAvailablePlacementRoutersReturnsOnCall == nil {
+		fake.getAvailablePlacementRoutersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Hardware
+			result2 error
+		})
+	}
+	fake.getAvailablePlacementRoutersReturnsOnCall[i] = struct {
+		result1 []datatypes.Hardware
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error) {
+	fake.getRulesMutex.Lock()
+	ret, specificReturn := fake.getRulesReturnsOnCall[len(fake.getRulesArgsForCall)]
+	fake.getRulesMutex.Unlock()
+	if fake.GetRulesStub != nil {
+		return fake.GetRulesStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getRulesReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetRulesCallCount() int {
+	fake.getRulesMutex.RLock()
+	defer fake.getRulesMutex.RUnlock()
+	return len(fake.getRulesArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetRulesCalls(stub func() ([]datatypes.Virtual_PlacementGroup_Rule, error)) {
+	fake.getRulesMutex.Lock()
+	defer fake.getRulesMutex.Unlock()
+	fake.GetRulesStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetRulesArgsForCall(i int) string {
+	fake.getRulesMutex.RLock()
+	defer fake.getRulesMutex.RUnlock()
+	argsForCall := fake.getRulesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) GetRulesReturns(result1 []datatypes.Virtual_PlacementGroup_Rule, result2 error) {
+	fake.getRulesMutex.Lock()
+	defer fake.getRulesMutex.Unlock()
+	fake.GetRulesStub = nil
+	fake.getRulesReturns = struct {
+		result1 []datatypes.Virtual_PlacementGroup_Rule
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetRulesReturnsOnCall(i int, result1 []datatypes.Virtual_PlacementGroup_Rule, result2 error) {
+	fake.getRulesMutex.Lock()
+	defer fake.getRulesMutex.Unlock()
+	fake.GetRulesStub = nil
+	if fake.getRulesReturnsOnCall == nil {
+		fake.getRulesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Virtual_PlacementGroup_Rule
+			result2 error
+		})
+	}
+	fake.getRulesReturnsOnCall[i] = struct {
+		result1 []datatypes.Virtual_PlacementGroup_Rule
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeVirtualServerManager) AttachPortableStorage(arg1 int, arg2 int) (datatypes.Provisioning_Version1_Transaction, error) {
