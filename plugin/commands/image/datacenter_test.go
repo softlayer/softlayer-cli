@@ -1,7 +1,6 @@
 package image_test
 
 import (
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -52,8 +51,8 @@ var _ = Describe("image datacenter", func() {
 			It("return no error using location id", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--add", "265592")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The location was added successfully!"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was added successfully!"))
 			})
 		})
 
@@ -61,8 +60,8 @@ var _ = Describe("image datacenter", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--add", "dal05")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The location was added successfully!"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was added successfully!"))
 			})
 		})
 
@@ -70,8 +69,17 @@ var _ = Describe("image datacenter", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--remove", "dal05")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The location was removed successfully!"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was removed successfully!"))
+			})
+		})
+
+		Context("remove successfully", func() {
+			It("return no error", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456", "--remove", "265592")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was removed successfully!"))
 			})
 		})
 

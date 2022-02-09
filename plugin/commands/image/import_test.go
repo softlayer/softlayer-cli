@@ -2,10 +2,8 @@ package image_test
 
 import (
 	"errors"
-	"strings"
 	"time"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -29,10 +27,10 @@ var _ = Describe("Image import", func() {
 		fakeImageManager = new(testhelpers.FakeImageManager)
 		cmd = image.NewImportCommand(fakeUI, fakeImageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.ImageDelMetaData().Name,
-			Description: metadata.ImageDelMetaData().Description,
-			Usage:       metadata.ImageDelMetaData().Usage,
-			Flags:       metadata.ImageDelMetaData().Flags,
+			Name:        metadata.ImageImportMetaData().Name,
+			Description: metadata.ImageImportMetaData().Description,
+			Usage:       metadata.ImageImportMetaData().Usage,
+			Flags:       metadata.ImageImportMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
@@ -42,7 +40,7 @@ var _ = Describe("Image import", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "myimage")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires three arguments.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires three arguments."))
 			})
 		})
 
@@ -53,7 +51,7 @@ var _ = Describe("Image import", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "myimage", "swift://SLOS123456-10@dal05/OS/testImage4f.iso", "PI-ABCDE-abcde1234567890abcdefgrty1234567890")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "SoftLayer_Exception_Public: Template configuration uri specified an invalid network storage service resource protocol. (HTTP 500)")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_Public: Template configuration uri specified an invalid network storage service resource protocol. (HTTP 500)"))
 			})
 		})
 
@@ -96,16 +94,16 @@ var _ = Describe("Image import", func() {
 						},
 					},
 				}
+				fakeImageManager.ImportImageReturns(fakeImage, nil)
 			})
 			It("return no error", func() {
-				fakeImageManager.ImportImageReturns(fakeImage, nil)
 				err := testhelpers.RunCommand(cliCommand, "myimage", "swift://SLOS123456-10@dal05/OS/testImage4f.iso", "PI-ABCDE-abcde1234567890abcdefgrty1234567890")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"myimage"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"123456"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-29T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"abcdefghijk"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("myimage"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("123456"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-29T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("abcdefghijk"))
 			})
 		})
 
