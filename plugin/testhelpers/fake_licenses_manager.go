@@ -7,15 +7,15 @@ import (
 )
 
 type FakeLicensesManager struct {
-	CreateLicensesOptionsStub        func() ([]datatypes.Product_Item, error)
+	CreateLicensesOptionsStub        func() ([]datatypes.Product_Package, error)
 	createLicensesOptionsMutex       sync.RWMutex
 	createLicensesOptionsArgsForCall []struct{}
 	createLicensesOptionsReturns     struct {
-		result1 []datatypes.Product_Item
+		result1 []datatypes.Product_Package
 		result2 error
 	}
 	createLicensesOptionsReturnsOnCall map[int]struct {
-		result1 []datatypes.Product_Item
+		result1 []datatypes.Product_Package
 		result2 error
 	}
 	invocations      map[string][][]interface{}
@@ -23,7 +23,7 @@ type FakeLicensesManager struct {
 	
 }
 
-func (fake *FakeLicensesManager) CreateLicensesOptions() ([]datatypes.Product_Item, error) {
+func (fake *FakeLicensesManager) CreateLicensesOptions() ([]datatypes.Product_Package, error) {
 	fake.createLicensesOptionsMutex.Lock()
 	ret, specificReturn := fake.createLicensesOptionsReturnsOnCall[len(fake.createLicensesOptionsArgsForCall)]
 	fake.createLicensesOptionsArgsForCall = append(fake.createLicensesOptionsArgsForCall, struct{}{})
@@ -44,24 +44,24 @@ func (fake *FakeLicensesManager) CreateLicensesOptionsCallCount() int {
 	return len(fake.createLicensesOptionsArgsForCall)
 }
 
-func (fake *FakeLicensesManager) CreateLicensesOptionsReturns(result1 []datatypes.Product_Item, result2 error) {
+func (fake *FakeLicensesManager) CreateLicensesOptionsReturns(result1 []datatypes.Product_Package, result2 error) {
 	fake.CreateLicensesOptionsStub = nil
 	fake.createLicensesOptionsReturns = struct {
-		result1 []datatypes.Product_Item
+		result1 []datatypes.Product_Package
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeLicensesManager) CreateLicensesOptionsReturnsOnCall(i int, result1 []datatypes.Product_Item, result2 error) {
+func (fake *FakeLicensesManager) CreateLicensesOptionsReturnsOnCall(i int, result1 []datatypes.Product_Package, result2 error) {
 	fake.CreateLicensesOptionsStub = nil
 	if fake.createLicensesOptionsReturnsOnCall == nil {
 		fake.createLicensesOptionsReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Product_Item
+			result1 []datatypes.Product_Package
 			result2 error
 		})
 	}
 	fake.createLicensesOptionsReturnsOnCall[i] = struct {
-		result1 []datatypes.Product_Item
+		result1 []datatypes.Product_Package
 		result2 error
 	}{result1, result2}
 }

@@ -9,13 +9,13 @@ import (
 )
 
 type LicensesOptionsCommand struct {
-	UI             terminal.UI
+	UI              terminal.UI
 	LicensesManager managers.LicensesManager
 }
 
 func NewLicensesOptionsCommand(ui terminal.UI, LicensesManager managers.LicensesManager) (cmd *LicensesOptionsCommand) {
 	return &LicensesOptionsCommand{
-		UI:             ui,
+		UI:              ui,
 		LicensesManager: LicensesManager,
 	}
 }
@@ -28,12 +28,13 @@ func (cmd *LicensesOptionsCommand) Run(c *cli.Context) error {
 	}
 
 	for _, license := range licenses {
-		table.Add(utils.FormatIntPointerName(license.Id),
-			utils.FormatStringPointer(license.Description),
-			utils.FormatStringPointer(license.KeyName),
-			utils.FormatSLFloatPointerToFloat(license.Capacity),
-			utils.FormatSLFloatPointerToFloat(license.Prices[0].RecurringFee))
-
+		for _, item := range license.Items {
+			table.Add(utils.FormatIntPointerName(item.Id),
+				utils.FormatStringPointer(item.Description),
+				utils.FormatStringPointer(item.KeyName),
+				utils.FormatSLFloatPointerToFloat(item.Capacity),
+				utils.FormatSLFloatPointerToFloat(item.Prices[0].RecurringFee))
+		}
 	}
 	table.Print()
 	return nil
