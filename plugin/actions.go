@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
@@ -50,6 +51,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	userManager := managers.NewUserManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
 	ticketManager := managers.NewTicketManager(session)
+	licensesManager := managers.NewLicensesManager(session)
 	placeGroupManager := managers.NewPlaceGroupManager(session)
 	dedicatedhostManager := managers.NewDedicatedhostManager(session)
 
@@ -534,6 +536,10 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 		NS_TICKET_NAME + "-" + CMD_TICKET_SUMMARY_NAME: func(c *cli.Context) error {
 			return ticket.NewSummaryTicketCommand(ui, ticketManager).Run(c)
+		},
+
+		NS_LICENSES_NAME + "-" + CMD_LICENSES_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
+			return licenses.NewLicensesOptionsCommand(ui, licensesManager).Run(c)
 		},
 	}
 
