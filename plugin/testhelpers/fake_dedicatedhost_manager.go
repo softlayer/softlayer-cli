@@ -72,8 +72,86 @@ type FakeDedicatedhostManager struct {
 		result1 datatypes.Container_Product_Order_Receipt
 		result2 error
 	}
+	GetInstanceStub        func(int, string) (datatypes.Virtual_DedicatedHost, error)
+	getInstanceMutex       sync.RWMutex
+	getInstanceArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getInstanceReturns struct {
+		result1 datatypes.Virtual_DedicatedHost
+		result2 error
+	}
+	getInstanceReturnsOnCall map[int]struct {
+		result1 datatypes.Virtual_DedicatedHost
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeDedicatedhostManager) GetInstance(arg1 int, arg2 string) (datatypes.Virtual_DedicatedHost, error) {
+	fake.getInstanceMutex.Lock()
+	ret, specificReturn := fake.getInstanceReturnsOnCall[len(fake.getInstanceArgsForCall)]
+	fake.getInstanceArgsForCall = append(fake.getInstanceArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	fake.recordInvocation("GetInstance", []interface{}{arg1, arg2})
+	fake.getInstanceMutex.Unlock()
+	if fake.GetInstanceStub != nil {
+		return fake.GetInstanceStub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getInstanceReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeDedicatedhostManager) GetInstanceCallCount() int {
+	fake.getInstanceMutex.RLock()
+	defer fake.getInstanceMutex.RUnlock()
+	return len(fake.getInstanceArgsForCall)
+}
+
+func (fake *FakeDedicatedhostManager) GetInstanceCalls(stub func(int, string) (datatypes.Virtual_DedicatedHost, error)) {
+	fake.getInstanceMutex.Lock()
+	defer fake.getInstanceMutex.Unlock()
+	fake.GetInstanceStub = stub
+}
+
+func (fake *FakeDedicatedhostManager) GetInstanceArgsForCall(i int) (int, string) {
+	fake.getInstanceMutex.RLock()
+	defer fake.getInstanceMutex.RUnlock()
+	argsForCall := fake.getInstanceArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeDedicatedhostManager) GetInstanceReturns(result1 datatypes.Virtual_DedicatedHost, result2 error) {
+	fake.getInstanceMutex.Lock()
+	defer fake.getInstanceMutex.Unlock()
+	fake.GetInstanceStub = nil
+	fake.getInstanceReturns = struct {
+		result1 datatypes.Virtual_DedicatedHost
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeDedicatedhostManager) GetInstanceReturnsOnCall(i int, result1 datatypes.Virtual_DedicatedHost, result2 error) {
+	fake.getInstanceMutex.Lock()
+	defer fake.getInstanceMutex.Unlock()
+	fake.GetInstanceStub = nil
+	if fake.getInstanceReturnsOnCall == nil {
+		fake.getInstanceReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Virtual_DedicatedHost
+			result2 error
+		})
+	}
+	fake.getInstanceReturnsOnCall[i] = struct {
+		result1 datatypes.Virtual_DedicatedHost
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeDedicatedhostManager) GenerateOrderTemplate(arg1 string, arg2 string, arg3 string, arg4 string, arg5 string, arg6 int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error) {

@@ -14,6 +14,7 @@ var (
 	CMD_DEDICATEDHOST_LIST_NAME        = "list"
 	CMD_DEDICATEDHOST_LIST_GUESTS_NAME = "list-guests"
 	CMD_DEDICATEDHOST_CREATE_NAME      = "create"
+	CMD_DEDICATEDHOST_DETAIL_NAME      = "detail"
 )
 
 func DedicatedhostNamespace() plugin.Namespace {
@@ -34,6 +35,31 @@ func DedicatedhostMetaData() cli.Command {
 			DedicatedhostListMetaData(),
 			DedicatedhostListGuestsMetaData(),
 			DedicatedhostCreateMetaData(),
+			DedicatedhostDetailMetaData(),
+		},
+	}
+}
+
+func DedicatedhostDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_DEDICATEDHOST_NAME,
+		Name:        CMD_DEDICATEDHOST_DETAIL_NAME,
+		Description: T("Get details for a dedicated host."),
+		Usage: T(`${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dedicatedhost detail 1234567
+   This command gets the details for a dedicated host.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "price",
+				Usage: T("Show associated prices"),
+			},
+			cli.BoolFlag{
+				Name:  "guests",
+				Usage: T("Show guests on dedicated host"),
+			},
+			OutputFlag(),
 		},
 	}
 }

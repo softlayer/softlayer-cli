@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 
 	"github.com/softlayer/softlayer-go/session"
@@ -92,6 +93,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_CREATE_NAME: func(c *cli.Context) error {
 			return dedicatedhost.NewCreateCommand(ui, dedicatedhostManager, networkManager, context).Run(c)
+		},
+		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_DETAIL_NAME: func(c *cli.Context) error {
+			return dedicatedhost.NewDetailCommand(ui, dedicatedhostManager).Run(c)
 		},
 
 		// firewall - 5
@@ -409,7 +413,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-usage": func(c *cli.Context) error {
 			return virtual.NewUsageCommand(ui, virtualServerManager).Run(c)
 		},
-		NS_VIRTUAL_NAME + "-" +CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
+		NS_VIRTUAL_NAME + "-" + CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
 
