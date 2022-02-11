@@ -449,6 +449,15 @@ for name, action := range dedicatedhostCommands {
     +   `metadata.DedicatedhostNamespace(),` -> `dedicatedhost.DedicatedhostNamespace(),`
 4. Clean up any `plugin\actions.go:57:2: dedicatedhostManager declared but not used` type of errors
 5. Make sure you can build the plugin
-6. Commit your changes, and make a pull request against the `cliRefactor` branch
+6. update the Unit tests, as they also reference the metadata.
+    + `softlayer-cli/plugin/commands/dedicatedhost/list_guest_test.go` 
+        * `metadata.DedicatedhostListGuestsMetaData()` -> `dedicatedhost.DedicatedhostListGuestsMetaData()`
+        * Remove the `"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"` import as its not needed here
+    * `softlayer-cli/plugin/commands/dedicatedhost/create_test.go` 
+        * `metadata.DedicatedhostListGuestsMetaData()` -> `dedicatedhost.DedicatedhostListGuestsMetaData()`
+        * Remove the `"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"` import as its not needed here
+7. Run the CLI unit tests
+    *   `go test -coverprofile=coverage.out github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost`
+8. Commit your changes and make a pull request against the `cliRefactor` branch.
 
 ## Checklist
