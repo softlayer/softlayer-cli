@@ -110,6 +110,19 @@ type FakeVirtualServerManager struct {
 		result1 datatypes.Virtual_Guest
 		result2 error
 	}
+	PlacementCreateStub        func(group *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error)
+	placementCreateMutex       sync.RWMutex
+	placementCreateArgsForCall []struct {
+		arg1 *datatypes.Virtual_PlacementGroup
+	}
+	placementCreateReturns struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}
+	placementCreateReturnsOnCall map[int]struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}
 	CreateInstancesStub        func([]datatypes.Virtual_Guest) ([]datatypes.Virtual_Guest, error)
 	createInstancesMutex       sync.RWMutex
 	createInstancesArgsForCall []struct {
@@ -857,6 +870,66 @@ func (fake *FakeVirtualServerManager) GetRulesReturnsOnCall(i int, result1 []dat
 	}
 	fake.getRulesReturnsOnCall[i] = struct {
 		result1 []datatypes.Virtual_PlacementGroup_Rule
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreate(arg1 *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error) {
+	var arg1Copy []datatypes.Virtual_PlacementGroup
+	fake.placementCreateMutex.Lock()
+	ret, specificReturn := fake.placementCreateReturnsOnCall[len(fake.placementCreateArgsForCall)]
+	fake.recordInvocation("PlacementCreate", []interface{}{arg1Copy})
+	fake.placementCreateMutex.Unlock()
+	if fake.PlacementCreateStub != nil {
+		return fake.PlacementCreateStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.placementCreateReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateCallCount() int {
+	fake.placementCreateMutex.RLock()
+	defer fake.placementCreateMutex.RUnlock()
+	return len(fake.placementCreateArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateCalls(stub func(datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error)) {
+	fake.placementCreateMutex.Lock()
+	defer fake.placementCreateMutex.Unlock()
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateArgsForCall(i int) datatypes.Virtual_PlacementGroup {
+	fake.placementCreateMutex.RLock()
+	defer fake.placementCreateMutex.RUnlock()
+	argsForCall := fake.placementCreateArgsForCall[i]
+	return *argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateReturns(result1 datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.placementCreateMutex.Lock()
+	defer fake.placementCreateMutex.Unlock()
+	fake.PlacementCreateStub = nil
+	fake.placementCreateReturns = struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateReturnsOnCall(i int, result1 datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.placementCreateMutex.Lock()
+	defer fake.placementCreateMutex.Unlock()
+	fake.PlacementCreateStub = nil
+	if fake.placementCreateReturnsOnCall == nil {
+		fake.placementCreateReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Virtual_PlacementGroup
+			result2 error
+		})
+	}
+	fake.placementCreateReturnsOnCall[i] = struct {
+		result1 datatypes.Virtual_PlacementGroup
 		result2 error
 	}{result1, result2}
 }
