@@ -18,14 +18,12 @@ import (
 var _ = Describe("Account Bandwidth-Pools", func() {
 	var (
 		fakeUI			*terminal.FakeUI
-		// fakeManager		*testhelpers.FakeAccountManager
 		cmd				*account.BandwidthPoolsCommand
 		cliCommand		cli.Command
 		fakeSession   	*session.Session
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		// fakeManager = new(testhelpers.FakeAccountManager)
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		cmd = account.NewBandwidthPoolsCommand(fakeUI, fakeSession)
 		cliCommand = cli.Command{
