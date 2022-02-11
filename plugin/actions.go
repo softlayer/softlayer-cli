@@ -58,35 +58,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 
-		//dns - 9
-		NS_DNS_NAME + "-" + CMD_DNS_IMPORT_NAME: func(c *cli.Context) error {
-			return dns.NewImportCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_ADD_NAME: func(c *cli.Context) error {
-			return dns.NewRecordAddCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_EDIT_NAME: func(c *cli.Context) error {
-			return dns.NewRecordEditCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_LIST_NAME: func(c *cli.Context) error {
-			return dns.NewRecordListCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_REMOVE_NAME: func(c *cli.Context) error {
-			return dns.NewRecordRemoveCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_CREATE_NAME: func(c *cli.Context) error {
-			return dns.NewZoneCreateCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_DELETE_NAME: func(c *cli.Context) error {
-			return dns.NewZoneDeleteCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_LIST_NAME: func(c *cli.Context) error {
-			return dns.NewZoneListCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_PRINT_NAME: func(c *cli.Context) error {
-			return dns.NewZonePrintCommand(ui, dnsManager).Run(c)
-		},
-
 		//dedicatedhost - 1
 		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_LIST_GUESTS_NAME: func(c *cli.Context) error {
 			return dedicatedhost.NewListGuestsCommand(ui, dedicatedhostManager).Run(c)
@@ -547,6 +518,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl account
 	accountCommands := account.GetCommandAcionBindings(context, ui, session)
 	for name, action := range accountCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl dns
+	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
+	for name, action := range dnsCommands {
 		CommandActionBindings[name] = action
 	}
 
