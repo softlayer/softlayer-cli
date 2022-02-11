@@ -1,21 +1,26 @@
 package managers
 
 import (
+	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 )
 
 type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
+	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
+	GetBandwidthPoolServers(identifier int) (int, error)
 }
 
 type accountManager struct {
-	AccountService services.Account
+	AccountService 	services.Account
+	Session			*session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
-		services.GetAccountService(session),
+		AccountService: services.GetAccountService(session),
+		Session: session,
 	}
 }
 
@@ -51,4 +56,34 @@ func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error)
 		}
 	}
 	return datacenters, nil
+}
+
+// https://sldn.softlayer.com/reference/services/SoftLayer_Account/getBandwidthAllotments/
+func (a accountManager) GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error) {
+	mask := "mask[totalBandwidthAllocated,locationGroup, id, name, projectedPublicBandwidthUsage, " +
+		    "billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
+	pools, err := a.AccountService.Mask(mask).GetBandwidthAllotments()
+	return pools, err
+}
+
+/*
+Gets a count of all servers in a bandwidth pool
+Getting the server counts individually is significantly faster than pulling them in
+with the GetBandwidthPools api call.
+*/
+func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
+	mask := "mask[id, bareMetalInstanceCount, hardwareCount, virtualGuestCount]"
+	allotmentService := services.GetNetworkBandwidthVersion1AllotmentService(a.Session)
+	counts, err := allotmentService.Mask(mask).Id(identifier).GetObject()
+	total := 0
+	if counts.BareMetalInstanceCount != nil {
+		total += int(*counts.BareMetalInstanceCount)
+	}
+	if counts.HardwareCount != nil {
+		total += int(*counts.HardwareCount)
+	}
+	if counts.VirtualGuestCount != nil {
+		total += int(*counts.VirtualGuestCount)
+	}
+	return total, err
 }

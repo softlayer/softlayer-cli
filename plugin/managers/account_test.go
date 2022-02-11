@@ -28,4 +28,22 @@ var _ = Describe("AccountManager", func() {
 			})
 		})
 	})
+	Describe("GetBandwidthPools()", func() {
+		Context("API call is made", func() {
+			It("Returns no errors", func() {
+				summary, err := accountManager.GetBandwidthPools()
+				Expect(err).ToNot(HaveOccurred())
+				Expect(*summary[0].Id).To(Equal(309961))
+			})
+		})
+	})
+	Describe("GetBandwidthPoolServers()", func() {
+		Context("API call is made", func() {
+			It("Returns no errors", func() {
+				totals, err := accountManager.GetBandwidthPoolServers(12345)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(totals).To(Equal(3))
+			})
+		})
+	})
 })
