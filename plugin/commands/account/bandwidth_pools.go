@@ -11,31 +11,29 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
-
 )
 
 type BandwidthPoolsCommand struct {
-	UI             terminal.UI
-	Session  	   *session.Session
+	UI      terminal.UI
+	Session *session.Session
 }
 
 func NewBandwidthPoolsCommand(ui terminal.UI, session *session.Session) (cmd *BandwidthPoolsCommand) {
 	return &BandwidthPoolsCommand{
-		UI:             ui,
-		Session: 		session,
+		UI:      ui,
+		Session: session,
 	}
 }
 
 func BandwidthPoolsMetaData() cli.Command {
 	return cli.Command{
-		Category: "account",
-		Name:	  "bandwidth-pools",
+		Category:    "account",
+		Name:        "bandwidth-pools",
 		Description: T("lists bandwidth pools"),
-		Usage: T(`${COMMAND_NAME} sl account bandwidth-pools`),
+		Usage:       T(`${COMMAND_NAME} sl account bandwidth-pools`),
 		Flags: []cli.Flag{
 			metadata.OutputFlag(),
 		},
-
 	}
 }
 
@@ -55,12 +53,13 @@ func (cmd *BandwidthPoolsCommand) Run(c *cli.Context) error {
 	}
 
 	table := cmd.UI.Table([]string{
-			T("Pool Name"),
-			T("Region"),
-			T("Servers"),
-			T("Allocation"),
-			T("Current Usage"),
-			T("Projected Usage"),
+		T("ID"),
+		T("Pool Name"),
+		T("Region"),
+		T("Servers"),
+		T("Allocation"),
+		T("Current Usage"),
+		T("Projected Usage"),
 	})
 	for _, pool := range pools {
 		curr_usage, proj_usage, allocation := "-", "-", "-"
@@ -75,6 +74,7 @@ func (cmd *BandwidthPoolsCommand) Run(c *cli.Context) error {
 		}
 		serverCount, _ := accountManager.GetBandwidthPoolServers(*pool.Id)
 		table.Add(
+			utils.FormatIntPointer(pool.Id),
 			utils.FormatStringPointer(pool.Name),
 			utils.FormatStringPointer(pool.LocationGroup.Name),
 			fmt.Sprintf("%d", serverCount),
@@ -84,7 +84,7 @@ func (cmd *BandwidthPoolsCommand) Run(c *cli.Context) error {
 		)
 	}
 
-	table.Print()	
+	table.Print()
 
 	return nil
 }
