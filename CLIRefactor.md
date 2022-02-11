@@ -413,13 +413,42 @@ To begin the refactor, I am going to switch the `actions.go` file to the new pat
 
 From there however there is still a lot of work to do. I will refactor the `dedicatedhost` group of commands as an example here on what needs to be moved where.
 
+**All work done should be starting from the `cliRefactor` branch!**
 
 1. Check that there is a file in your actions' group that matches the group name. For example with `dedicatedhost` group of actions, there should be a `softlayer-cli/plugin/commands/dedicatedhost/dedicatedhost.go` file. That file should contain 
-    + `func GetCommandActionBindings()` that lists all the CommandActionBindings (and should NOT use any Constants to define those), 
-    + A Namespace (`func DedicatedHostNamespace() plugin.Namespace {`) in this case.
-    + Metadata (`DedicatedHostMetaData()`) in this case
+    + `func GetCommandActionBindings()` that lists all the CommandActionBindings (and should NOT use any Constants to define those). These should be cut from the `actions.go` file and moved here.
+        * In the return of each CommandActionBinding, it will be just `NewListGuestsCommand(ui, dedicatedhostManager).Run(c)` instead of `dedicatedhost.NewListGuestsCommand(ui, dedicatedhostManager).Run(c)`, since the code is now in the same namespace is the Command definition.
+    + A Namespace (`func DedicatedHostNamespace() plugin.Namespace {`) in this case. Taken from metadata
+    + Metadata (`DedicatedHostMetaData()`) in this case. Taken from metadata
     + A manager definition in the `GetCommandActionBindings` function if needed.
     + Make sure `GetCommandActionBindings` is spelled properly. Its missing the `T` in action in most cases.
-2. 
+2. Check the action you are working on is following the new pattern
+    + `softlayer-cli/plugin/commands/dedicatedhost/list_guest.go`
+        * Copy over the DedicatedhostListGuestsMetaData() from metadata
+        * If command is using `OutputFlag()` that needs to be changed to `metadata.OutputFlag()` and make sure `"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"` is in the import.
+        * Replace any Constants with proper strings
+            - `Category:    CMD_DEDICATEDHOST_NAME` -> `Category:    "dedicatedhost",`
+            - `Name:        CMD_DEDICATEDHOST_LIST_GUESTS_NAME,` -> `Name:        "list-guests",`
+    + `softlayer-cli/plugin/commands/dedicatedhost/create.go`
+        * Copy over the DedicatedhostListGuestsMetaData() from metadata
+        * Make sure the `ForceFlag()` is changed to `metadata.ForceFlag()`
+        * Replace any Constants with proper strings
+    + Delete `softlayer-cli/plugin/metadata/dedicatedhost.go` after everything important is copied over.
+    + Make sure `softlayer-cli/plugin/actions.go` is importing your CommandActionBindings. Should look like this.
+
+```go
+// ibmcloud sl dedicatedhost
+dedicatedhostCommands := dedicatedhost.GetCommandActionBindings(context, ui, session)
+for name, action := range dedicatedhostCommands {
+    CommandActionBindings[name] = action
+}
+```
+
+3. Update `softlayer-cli/plugin/plugin.go` to use the new NameSpace and MetaData locations
+    +   `metadata.DedicatedhostMetaData(),` -> `dedicatedhost.DedicatedhostMetaData(),`
+    +   `metadata.DedicatedhostNamespace(),` -> `dedicatedhost.DedicatedhostNamespace(),`
+4. Clean up any `plugin\actions.go:57:2: dedicatedhostManager declared but not used` type of errors
+5. Make sure you can build the plugin
+6. Commit your changes, and make a pull request against the `cliRefactor` branch
 
 ## Checklist

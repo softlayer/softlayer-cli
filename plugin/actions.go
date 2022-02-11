@@ -54,17 +54,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	ticketManager := managers.NewTicketManager(session)
 	licensesManager := managers.NewLicensesManager(session)
 	placeGroupManager := managers.NewPlaceGroupManager(session)
-	dedicatedhostManager := managers.NewDedicatedhostManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-
-		//dedicatedhost - 1
-		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_LIST_GUESTS_NAME: func(c *cli.Context) error {
-			return dedicatedhost.NewListGuestsCommand(ui, dedicatedhostManager).Run(c)
-		},
-		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_CREATE_NAME: func(c *cli.Context) error {
-			return dedicatedhost.NewCreateCommand(ui, dedicatedhostManager, networkManager, context).Run(c)
-		},
 
 		// firewall - 5
 		NS_FIREWALL_NAME + "-" + CMD_FW_ADD_NAME: func(c *cli.Context) error {
@@ -518,6 +509,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl account
 	accountCommands := account.GetCommandAcionBindings(context, ui, session)
 	for name, action := range accountCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl dedicatedhost
+	dedicatedhostCommands := dedicatedhost.GetCommandActionBindings(context, ui, session)
+	for name, action := range dedicatedhostCommands {
 		CommandActionBindings[name] = action
 	}
 
