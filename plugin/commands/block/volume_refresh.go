@@ -31,8 +31,8 @@ func BlockVolumeRefreshMetaData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
 
 EXAMPLE:
-    ${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
-    Refresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.`),
+	${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
+	Refresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.`),
 	}
 }
 
