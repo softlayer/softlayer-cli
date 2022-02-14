@@ -88,6 +88,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_LIST_GUESTS_NAME: func(c *cli.Context) error {
 			return dedicatedhost.NewListGuestsCommand(ui, dedicatedhostManager).Run(c)
 		},
+		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
+			return dedicatedhost.NewCreateOptionsCommand(ui, dedicatedhostManager).Run(c)
+		},
 
 		// firewall - 5
 		NS_FIREWALL_NAME + "-" + CMD_FW_ADD_NAME: func(c *cli.Context) error {
@@ -398,13 +401,13 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
 		},
-		NS_VIRTUAL_NAME + "-" +CMD_VS_CAPACITY_CREATE_NAME: func(c *cli.Context) error {
+		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_CREATE_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityCreateCommand(ui, virtualServerManager, context).Run(c)
 		},
 		NS_VIRTUAL_NAME + "-usage": func(c *cli.Context) error {
 			return virtual.NewUsageCommand(ui, virtualServerManager).Run(c)
 		},
-		NS_VIRTUAL_NAME + "-" +CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
+		NS_VIRTUAL_NAME + "-" + CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
 

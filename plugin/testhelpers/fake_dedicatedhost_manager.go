@@ -28,8 +28,197 @@ type FakeDedicatedhostManager struct {
 		result1 []datatypes.Virtual_Guest
 		result2 error
 	}
+	GetPackageStub        func() (datatypes.Product_Package, error)
+	getPackageMutex       sync.RWMutex
+	getPackageArgsForCall []struct {
+	}
+	getPackageReturns struct {
+		result1 datatypes.Product_Package
+		result2 error
+	}
+	getPackageReturnsOnCall map[int]struct {
+		result1 datatypes.Product_Package
+		result2 error
+	}
+	GetCreateOptionsStub        func(productPackage datatypes.Product_Package) map[string]map[string]string
+	getCreateOptionsMutex       sync.RWMutex
+	getCreateOptionsArgsForCall []struct {
+		productPackage datatypes.Product_Package
+	}
+	getCreateOptionsReturns struct {
+		result1 map[string]map[string]string
+	}
+	getCreateOptionsReturnsOnCall map[int]struct {
+		result1 map[string]map[string]string
+	}
+	GetVlansOptionsStub        func(datacenter string, flavor string, productPackage datatypes.Product_Package) ([]datatypes.Network_Vlan, error)
+	getVlansOptionsMutex       sync.RWMutex
+	getVlansOptionsArgsForCall []struct {
+		datacenter     string
+		flavor         string
+		productPackage datatypes.Product_Package
+	}
+	getVlansOptionsReturns struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}
+	getVlansOptionsReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeDedicatedhostManager) GetPackage() (datatypes.Product_Package, error) {
+	fake.getPackageMutex.Lock()
+	ret, specificReturn := fake.getPackageReturnsOnCall[len(fake.getPackageArgsForCall)]
+	fake.getPackageArgsForCall = append(fake.getPackageArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetPackage", []interface{}{})
+	fake.getPackageMutex.Unlock()
+	if fake.GetPackageStub != nil {
+		return fake.GetPackageStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fake.getPackageReturns.result1, fake.getPackageReturns.result2
+}
+
+func (fake *FakeDedicatedhostManager) GetPackageCallCount() int {
+	fake.getPackageMutex.RLock()
+	defer fake.getPackageMutex.RUnlock()
+	return len(fake.getPackageArgsForCall)
+}
+
+func (fake *FakeDedicatedhostManager) GetPackageArgsForCall(i int) {
+	fake.getPackageMutex.RLock()
+	defer fake.getPackageMutex.RUnlock()
+	return
+}
+
+func (fake *FakeDedicatedhostManager) GetPackageReturns(result1 datatypes.Product_Package, result2 error) {
+	fake.GetPackageStub = nil
+	fake.getPackageReturns = struct {
+		result1 datatypes.Product_Package
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeDedicatedhostManager) GetPackageReturnsOnCall(i int, result1 datatypes.Product_Package, result2 error) {
+	fake.GetPackageStub = nil
+	if fake.getPackageReturnsOnCall == nil {
+		fake.getPackageReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Product_Package
+			result2 error
+		})
+	}
+	fake.getPackageReturnsOnCall[i] = struct {
+		result1 datatypes.Product_Package
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeDedicatedhostManager) GetCreateOptions(productPackage datatypes.Product_Package) map[string]map[string]string {
+	fake.getCreateOptionsMutex.Lock()
+	ret, specificReturn := fake.getCreateOptionsReturnsOnCall[len(fake.getCreateOptionsArgsForCall)]
+	fake.getCreateOptionsArgsForCall = append(fake.getCreateOptionsArgsForCall, struct {
+		productPackage datatypes.Product_Package
+	}{productPackage})
+	fake.recordInvocation("GetCreateOptions", []interface{}{productPackage})
+	fake.getCreateOptionsMutex.Unlock()
+	if fake.GetCreateOptionsStub != nil {
+		return fake.GetCreateOptionsStub(productPackage)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fake.getCreateOptionsReturns.result1
+}
+
+func (fake *FakeDedicatedhostManager) GetCreateOptionsCallCount() int {
+	fake.getCreateOptionsMutex.RLock()
+	defer fake.getCreateOptionsMutex.RUnlock()
+	return len(fake.getCreateOptionsArgsForCall)
+}
+
+func (fake *FakeDedicatedhostManager) GetCreateOptionsArgsForCall(i int) datatypes.Product_Package {
+	fake.getCreateOptionsMutex.RLock()
+	defer fake.getCreateOptionsMutex.RUnlock()
+	return fake.getCreateOptionsArgsForCall[i].productPackage
+}
+
+func (fake *FakeDedicatedhostManager) GetCreateOptionsReturns(result1 map[string]map[string]string) {
+	fake.GetCreateOptionsStub = nil
+	fake.getCreateOptionsReturns = struct {
+		result1 map[string]map[string]string
+	}{result1}
+}
+
+func (fake *FakeDedicatedhostManager) GetCreateOptionsReturnsOnCall(i int, result1 map[string]map[string]string) {
+	fake.GetCreateOptionsStub = nil
+	if fake.getCreateOptionsReturnsOnCall == nil {
+		fake.getCreateOptionsReturnsOnCall = make(map[int]struct {
+			result1 map[string]map[string]string
+		})
+	}
+	fake.getCreateOptionsReturnsOnCall[i] = struct {
+		result1 map[string]map[string]string
+	}{result1}
+}
+
+func (fake *FakeDedicatedhostManager) GetVlansOptions(datacenter string, flavor string, productPackage datatypes.Product_Package) ([]datatypes.Network_Vlan, error) {
+	fake.getVlansOptionsMutex.Lock()
+	ret, specificReturn := fake.getVlansOptionsReturnsOnCall[len(fake.getVlansOptionsArgsForCall)]
+	fake.getVlansOptionsArgsForCall = append(fake.getVlansOptionsArgsForCall, struct {
+		datacenter     string
+		flavor         string
+		productPackage datatypes.Product_Package
+	}{datacenter, flavor, productPackage})
+	fake.recordInvocation("GetVlansOptions", []interface{}{datacenter, flavor, productPackage})
+	fake.getVlansOptionsMutex.Unlock()
+	if fake.GetVlansOptionsStub != nil {
+		return fake.GetVlansOptionsStub(datacenter, flavor, productPackage)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fake.getVlansOptionsReturns.result1, fake.getVlansOptionsReturns.result2
+}
+
+func (fake *FakeDedicatedhostManager) GetVlansOptionsCallCount() int {
+	fake.getVlansOptionsMutex.RLock()
+	defer fake.getVlansOptionsMutex.RUnlock()
+	return len(fake.getVlansOptionsArgsForCall)
+}
+
+func (fake *FakeDedicatedhostManager) GetVlansOptionsArgsForCall(i int) (string, string, datatypes.Product_Package) {
+	fake.getVlansOptionsMutex.RLock()
+	defer fake.getVlansOptionsMutex.RUnlock()
+	return fake.getVlansOptionsArgsForCall[i].datacenter, fake.getVlansOptionsArgsForCall[i].flavor, fake.getVlansOptionsArgsForCall[i].productPackage
+}
+
+func (fake *FakeDedicatedhostManager) GetVlansOptionsReturns(result1 []datatypes.Network_Vlan, result2 error) {
+	fake.GetVlansOptionsStub = nil
+	fake.getVlansOptionsReturns = struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeDedicatedhostManager) GetVlansOptionsReturnsOnCall(i int, result1 []datatypes.Network_Vlan, result2 error) {
+	fake.GetVlansOptionsStub = nil
+	if fake.getVlansOptionsReturnsOnCall == nil {
+		fake.getVlansOptionsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Vlan
+			result2 error
+		})
+	}
+	fake.getVlansOptionsReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeDedicatedhostManager) ListGuests(identifier int, cpu int, domain string, hostname string, memory int, tags []string, mask string) ([]datatypes.Virtual_Guest, error) {

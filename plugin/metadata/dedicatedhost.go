@@ -11,8 +11,9 @@ var (
 	CMD_DEDICATEDHOST_NAME = "dedicatedhost"
 
 	//sl dedicatedhost
-	CMD_DEDICATEDHOST_LIST_NAME        = "list"
-	CMD_DEDICATEDHOST_LIST_GUESTS_NAME = "list-guests"
+	CMD_DEDICATEDHOST_LIST_NAME           = "list"
+	CMD_DEDICATEDHOST_LIST_GUESTS_NAME    = "list-guests"
+	CMD_DEDICATEDHOST_CREATE_OPTIONS_NAME = "create-options"
 )
 
 func DedicatedhostNamespace() plugin.Namespace {
@@ -32,6 +33,7 @@ func DedicatedhostMetaData() cli.Command {
 		Subcommands: []cli.Command{
 			DedicatedhostListMetaData(),
 			DedicatedhostListGuestsMetaData(),
+			DedicatedhostCreateOptionsMetaData(),
 		},
 	}
 }
@@ -82,6 +84,31 @@ EXAMPLE:
 			cli.StringSliceFlag{
 				Name:   "columns",
 				Hidden: true,
+			},
+			OutputFlag(),
+		},
+	}
+}
+
+func DedicatedhostCreateOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_DEDICATEDHOST_NAME,
+		Name:        CMD_DEDICATEDHOST_CREATE_OPTIONS_NAME,
+		Description: T("Host order options for a given dedicated host."),
+		Usage: T(`${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dedicatedhost create-options
+
+   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Filter private vlans by Datacenter shortname e.g. ams01, (requires --flavor)"),
+			},
+			cli.StringFlag{
+				Name:  "f,flavor",
+				Usage: T("Dedicated Virtual Host flavor (requires --datacenter) e.g. 56_CORES_X_242_RAM_X_1_4_TB"),
 			},
 			OutputFlag(),
 		},
