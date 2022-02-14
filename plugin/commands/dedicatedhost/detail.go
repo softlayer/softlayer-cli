@@ -33,7 +33,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	}
 	hostID, err := utils.ResolveVirtualGuestId(c.Args()[0])
 	if err != nil {
-		return slErrors.NewInvalidSoftlayerIdInputError("Dedicatedhost ID")
+		return slErrors.NewInvalidSoftlayerIdInputError("Host ID")
 	}
 
 	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)

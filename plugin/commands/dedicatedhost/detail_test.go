@@ -2,7 +2,6 @@ package dedicatedhost_test
 
 import (
 	"errors"
-	"strings"
 	"time"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
@@ -42,14 +41,14 @@ var _ = Describe("Dedicated host detail", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Dedicatedhost detail with wrong VS ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Host ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Host ID'. It must be a positive integer."))
 			})
 		})
 
@@ -60,8 +59,8 @@ var _ = Describe("Dedicated host detail", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get dedicatedhost instance: 1234.\n")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get dedicatedhost instance: 1234.\n"))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -83,12 +82,7 @@ var _ = Describe("Dedicated host detail", func() {
 							Id: sl.Int(1234567),
 							Children: []datatypes.Billing_Item{
 								datatypes.Billing_Item{
-									CategoryCode:                    sl.String("dedicated_host_disk"),
 									NextInvoiceTotalRecurringAmount: sl.Float(10),
-								},
-								datatypes.Billing_Item{
-									CategoryCode:                    sl.String("dedicated_host_ram"),
-									NextInvoiceTotalRecurringAmount: sl.Float(20),
 								},
 							},
 							OrderItem: &datatypes.Billing_Order_Item{
@@ -98,7 +92,6 @@ var _ = Describe("Dedicated host detail", func() {
 									},
 								},
 							},
-							RecurringFee:                    sl.Float(1000.00),
 							NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
 						},
 					},
@@ -128,8 +121,6 @@ var _ = Describe("Dedicated host detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2022-02-01T00:00:00Z"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2022-02-01T00:00:00Z"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"3"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1854895"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Dallas 13"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dal13"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilmawang"}))
 			})
@@ -144,15 +135,9 @@ var _ = Describe("Dedicated host detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2022-02-01T00:00:00Z"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2022-02-01T00:00:00Z"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"3"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1854895"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Dallas 13"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dal13"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dedicated_host_disk"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"10"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dedicated_host_ram"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"20"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilmawang"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1000.00"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"test.com"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"test"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9131111-2222-6a10-3333-992c544444"}))
