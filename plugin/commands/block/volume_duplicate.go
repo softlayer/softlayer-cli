@@ -29,6 +29,48 @@ func NewVolumeDuplicateCommand(ui terminal.UI, storageManager managers.StorageMa
 	}
 }
 
+func BlockVolumeDuplicateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "volume-duplicate",
+		Description: T("Order a block volume by duplicating an existing volume"),
+		Usage: T(`${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl block volume-duplicate 12345678 
+   This command shows order a new volume by duplicating the volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "o,origin-snapshot-id",
+				Usage: T("ID of an origin volume snapshot to use for duplication"),
+			},
+			cli.IntFlag{
+				Name:  "s,duplicate-size",
+				Usage: T("Size of duplicate block volume in GB, if no size is specified, the size of the original volume will be used"),
+			},
+			cli.IntFlag{
+				Name:  "i,duplicate-iops",
+				Usage: T("Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used"),
+			},
+			cli.Float64Flag{
+				Name:  "t,duplicate-tier",
+				Usage: T("Endurance Storage Tier, if no tier is specified, the tier of the original volume will be used"),
+			},
+			cli.IntFlag{
+				Name:  "n,duplicate-snapshot-size",
+				Usage: T("The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the origin volume will be used"),
+				Value: -1,
+			},
+			cli.BoolFlag{
+				Name:  "d,dependent-duplicate",
+				Usage: T("Whether or not this duplicate will be a dependent duplicate of the origin volume."),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *VolumeDuplicateCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

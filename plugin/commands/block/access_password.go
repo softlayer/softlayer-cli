@@ -23,6 +23,19 @@ func NewAccessPasswordCommand(ui terminal.UI, storageManager managers.StorageMan
 	}
 }
 
+func BlockAccessPasswordMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "access-password",
+		Description: T("Changes a password for a volume's access"),
+		Usage: T(`${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD
+	
+	ACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'
+	`),
+		Flags: []cli.Flag{},
+	}
+}
+
 func (cmd *AccessPasswordCommand) Run(c *cli.Context) error {
 	if c.NArg() != 2 {
 		return errors.NewInvalidUsageError(T("This command requires two arguments."))

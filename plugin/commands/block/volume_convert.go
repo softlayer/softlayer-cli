@@ -23,6 +23,19 @@ func NewVolumeConvertCommand(ui terminal.UI, storageManager managers.StorageMana
 	}
 }
 
+func BlockVolumeConvertMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "volume-convert",
+		Description: T("Convert a dependent duplicate volume to an independent volume."),
+		Usage: T(`${COMMAND_NAME} sl block volume-convert VOLUME_ID
+
+EXAMPLE:
+	${COMMAND_NAME} sl block volume-convert VOLUME_ID
+	Convert a dependent duplicate VOLUME_ID to an independent volume.`),
+	}
+}
+
 func (cmd *VolumeConvertCommand) Run(c *cli.Context) error {
 
 	if c.NArg() != 1 {

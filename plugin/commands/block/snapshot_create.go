@@ -25,6 +25,26 @@ func NewSnapshotCreateCommand(ui terminal.UI, storageManager managers.StorageMan
 	}
 }
 
+func BlockSnapshotCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "snapshot-create",
+		Description: T("Create a snapshot on a given volume"),
+		Usage: T(`${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud
+   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,note",
+				Usage: T("Notes to set on the new snapshot"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *SnapshotCreateCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

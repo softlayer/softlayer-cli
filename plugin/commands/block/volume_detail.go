@@ -28,6 +28,22 @@ func NewVolumeDetailCommand(ui terminal.UI, storageManager managers.StorageManag
 	}
 }
 
+func BlockVolumeDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "volume-detail",
+		Description: T("Display details for a specified volume"),
+		Usage: T(`${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl block volume-detail 12345678 
+   This command shows details of volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *VolumeDetailCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

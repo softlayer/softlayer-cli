@@ -30,6 +30,43 @@ func NewReplicaOrderCommand(ui terminal.UI, storageManager managers.StorageManag
 	}
 }
 
+func BlockReplicaOrderMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "replica-order",
+		Description: T("Order a block storage replica volume"),
+		Usage: T(`${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX
+   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,snapshot-schedule",
+				Usage: T("Snapshot schedule to use for replication. Options are: HOURLY,DAILY,WEEKLY [required]"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Short name of the datacenter for the replica. For example, dal09 [required]"),
+			},
+			cli.Float64Flag{
+				Name:  "t,tier",
+				Usage: T("Endurance Storage Tier (IOPS per GB) of the primary volume for which a replica is ordered [optional], options are: 0.25,2,4,10,if no tier is specified, the tier of the original volume will be used"),
+			},
+			cli.IntFlag{
+				Name:  "i,iops",
+				Usage: T("Performance Storage IOPs, between 100 and 6000 in multiples of 100,if no IOPS value is specified, the IOPS value of the original volume will be used"),
+			},
+			cli.StringFlag{
+				Name:  "o,os-type",
+				Usage: T("Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN"),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *ReplicaOrderCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

@@ -27,6 +27,38 @@ func NewAccessAuthorizeCommand(ui terminal.UI, storageManager managers.StorageMa
 	}
 }
 
+func BlockAccessAuthorizeMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "access-authorize",
+		Description: T("Authorize hosts to access a given volume"),
+		Usage: T(`${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321
+   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.IntSliceFlag{
+				Name:  "d,hardware-id",
+				Usage: T("The ID of one hardware server to authorize"),
+			},
+			cli.IntSliceFlag{
+				Name:  "v,virtual-id",
+				Usage: T("The ID of one virtual server to authorize"),
+			},
+			cli.IntSliceFlag{
+				Name:  "i,ip-address-id",
+				Usage: T("The ID of one IP address to authorize"),
+			},
+			cli.StringSliceFlag{
+				Name:  "p,ip-address",
+				Usage: T("An IP address to authorize"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *AccessAuthorizeCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

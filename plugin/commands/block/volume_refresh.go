@@ -23,6 +23,19 @@ func NewVolumeRefreshCommand(ui terminal.UI, storageManager managers.StorageMana
     }
 }
 
+func BlockVolumeRefreshMetaData() cli.Command {
+    return cli.Command{
+        Category:    "block",
+        Name:        "volume-refresh",
+        Description: T("Refresh a duplicate volume with a snapshot from its parent."),
+        Usage: T(`${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
+
+EXAMPLE:
+    ${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
+    Refresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.`),
+    }
+}
+
 func (cmd *VolumeRefreshCommand) Run(c *cli.Context) error {
     if c.NArg() != 2 {
         return errors.NewInvalidUsageError(T("This command requires two arguments."))

@@ -23,6 +23,25 @@ func NewSnapshotDisableCommand(ui terminal.UI, storageManager managers.StorageMa
 	}
 }
 
+func BlockSnapshotDisableMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "snapshot-disable",
+		Description: T("Disable snapshots on the specified schedule for a given volume"),
+		Usage: T(`${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY
+   This command disables daily snapshot for volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,schedule-type",
+				Usage: T("Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY"),
+			},
+		},
+	}
+}
+
 func (cmd *SnapshotDisableCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

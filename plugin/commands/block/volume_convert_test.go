@@ -10,7 +10,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,9 +26,9 @@ var _ = Describe("block Volume Convert", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = block.NewVolumeConvertCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.BlockVolumeConvertMetaData().Name,
-			Description: metadata.BlockVolumeConvertMetaData().Description,
-			Usage:       metadata.BlockVolumeConvertMetaData().Usage,
+			Name:        block.BlockVolumeConvertMetaData().Name,
+			Description: block.BlockVolumeConvertMetaData().Description,
+			Usage:       block.BlockVolumeConvertMetaData().Usage,
 			Action:      cmd.Run,
 		}
 	})

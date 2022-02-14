@@ -25,6 +25,22 @@ func NewReplicaLocationsCommand(ui terminal.UI, storageManager managers.StorageM
 	}
 }
 
+func BlockReplicaLocationsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "replica-locations",
+		Description: T("List suitable replication datacenters for the given volume"),
+		Usage: T(`${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl block replica-locations 12345678
+   This command lists suitable replication data centers for block volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *ReplicaLocationsCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

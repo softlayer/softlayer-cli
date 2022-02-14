@@ -25,6 +25,22 @@ func NewReplicaPartnersCommand(ui terminal.UI, storageManager managers.StorageMa
 	}
 }
 
+func BlockReplicaPartnersMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "replica-partners",
+		Description: T("List existing replicant volumes for a block volume"),
+		Usage: T(`${COMMAND_NAME} sl block replica-partners VOLUME_ID [OPTIONS]
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl block replica-partners 12345678
+   This command lists existing replicant volumes for block volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *ReplicaPartnersCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

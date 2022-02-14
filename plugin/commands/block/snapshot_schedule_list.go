@@ -26,6 +26,22 @@ func NewSnapshotScheduleListCommand(ui terminal.UI, storageManager managers.Stor
 	}
 }
 
+func BlockSnapshotScheduleListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "snapshot-schedule-list",
+		Description: T("List snapshot schedules for a given volume"),
+		Usage: T(`${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]
+
+   EXAMPLE:
+	  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678
+	  This command list snapshot schedules for volume with ID 12345678`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *SnapshotScheduleListCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

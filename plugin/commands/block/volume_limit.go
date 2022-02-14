@@ -6,6 +6,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
 type VolumeLimitCommand struct {
@@ -19,6 +20,23 @@ func NewVolumeLimitCommand(ui terminal.UI, storageManager managers.StorageManage
 		StorageManager: storageManager,
 	}
 }
+
+func BlockVolumeLimitsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "volume-limits",
+		Description: T("Lists the storage limits per datacenter for this account."),
+		Usage: T(`${COMMAND_NAME} sl block volume-limits [OPTIONS]
+
+EXAMPLE:
+	${COMMAND_NAME} sl block volume-limits
+	This command lists the storage limits per datacenter for this account.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 
 func (cmd *VolumeLimitCommand) Run(c *cli.Context) error {
 
