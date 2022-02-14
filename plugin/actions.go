@@ -3,12 +3,15 @@ package plugin
 import (
 	"fmt"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
+
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
@@ -50,6 +53,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	userManager := managers.NewUserManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
 	ticketManager := managers.NewTicketManager(session)
+	licensesManager := managers.NewLicensesManager(session)
 	placeGroupManager := managers.NewPlaceGroupManager(session)
 	dedicatedhostManager := managers.NewDedicatedhostManager(session)
 
@@ -87,6 +91,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		//dedicatedhost - 1
 		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_LIST_GUESTS_NAME: func(c *cli.Context) error {
 			return dedicatedhost.NewListGuestsCommand(ui, dedicatedhostManager).Run(c)
+		},
+		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_CREATE_NAME: func(c *cli.Context) error {
+			return dedicatedhost.NewCreateCommand(ui, dedicatedhostManager, networkManager, context).Run(c)
 		},
 		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
 			return dedicatedhost.NewCreateOptionsCommand(ui, dedicatedhostManager).Run(c)
@@ -398,6 +405,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-placementgroup-create-options": func(c *cli.Context) error {
 			return virtual.NewPlacementGruopCreateOptionsCommand(ui, virtualServerManager).Run(c)
 		},
+		NS_VIRTUAL_NAME + "-placementgroup-create": func(c *cli.Context) error {
+			return virtual.NewVSPlacementGroupCreateCommand(ui, virtualServerManager, context).Run(c)
+		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
 			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
 		},
@@ -535,6 +545,16 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_TICKET_NAME + "-" + CMD_TICKET_SUMMARY_NAME: func(c *cli.Context) error {
 			return ticket.NewSummaryTicketCommand(ui, ticketManager).Run(c)
 		},
+
+		NS_LICENSES_NAME + "-" + CMD_LICENSES_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
+			return licenses.NewLicensesOptionsCommand(ui, licensesManager).Run(c)
+		},
+	}
+
+	// ibmcloud sl account
+	accountCommands := account.GetCommandAcionBindings(context, ui, session)
+	for name, action := range accountCommands {
+		CommandActionBindings[name] = action
 	}
 
 	// ibmcloud sl block

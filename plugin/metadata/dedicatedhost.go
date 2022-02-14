@@ -13,6 +13,7 @@ var (
 	//sl dedicatedhost
 	CMD_DEDICATEDHOST_LIST_NAME           = "list"
 	CMD_DEDICATEDHOST_LIST_GUESTS_NAME    = "list-guests"
+	CMD_DEDICATEDHOST_CREATE_NAME         = "create"
 	CMD_DEDICATEDHOST_CREATE_OPTIONS_NAME = "create-options"
 )
 
@@ -33,6 +34,7 @@ func DedicatedhostMetaData() cli.Command {
 		Subcommands: []cli.Command{
 			DedicatedhostListMetaData(),
 			DedicatedhostListGuestsMetaData(),
+			DedicatedhostCreateMetaData(),
 			DedicatedhostCreateOptionsMetaData(),
 		},
 	}
@@ -158,6 +160,47 @@ EXAMPLE:
 				Name:   "columns",
 				Hidden: true,
 			},
+			OutputFlag(),
+		},
+	}
+}
+
+func DedicatedhostCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_DEDICATEDHOST_NAME,
+		Name:        CMD_DEDICATEDHOST_CREATE_NAME,
+		Description: T("Create a dedicatedhost"),
+		Usage:       "${COMMAND_NAME} sl dedicatedhost create [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Host portion of the FQDN [required]"),
+			},
+			cli.StringFlag{
+				Name:  "D,domain",
+				Usage: T("Domain portion of the FQDN [required]"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Datacenter shortname [required]"),
+			},
+			cli.StringFlag{
+				Name:  "s,size",
+				Usage: T("Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB"),
+			},
+			cli.StringFlag{
+				Name:  "b,billing",
+				Usage: T("Billing rate. Default is: hourly. Options are: hourly, monthly"),
+			},
+			cli.StringFlag{
+				Name:  "v,vlan-private",
+				Usage: T("The ID of the private VLAN on which you want the dedicated host placed. See: '${COMMAND_NAME} sl vlan list' for reference"),
+			},
+			cli.BoolFlag{
+				Name:  "test",
+				Usage: T("Do not actually create the dedicatedhost"),
+			},
+			ForceFlag(),
 			OutputFlag(),
 		},
 	}

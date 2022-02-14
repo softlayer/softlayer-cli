@@ -1,0 +1,2401 @@
+[
+    {
+        "description": "Dedicated Host",
+        "firstOrderStepId": null,
+        "id": 813,
+        "isActive": 1,
+        "keyName": "DEDICATED_HOST",
+        "name": "Dedicated Host",
+        "subDescription": "Dedicated Host",
+        "unitSize": null,
+        "activePresets": [],
+        "items": [
+            {
+                "capacity": "56",
+                "description": "56 Cores X 484 RAM X 1.2 TB",
+                "keyName": "56_CORES_X_484_RAM_X_1_2_TB",
+                "attributes": [],
+                "itemCategory": {
+                    "categoryCode": "dedicated_virtual_hosts",
+                    "id": 848
+                },
+                "prices": [
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "4.11",
+                        "id": 228995,
+                        "itemId": 13383,
+                        "laborFee": "0",
+                        "locationGroupId": null,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2729.6",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "4.23",
+                        "id": 229163,
+                        "itemId": 13383,
+                        "laborFee": "0",
+                        "locationGroupId": 503,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2811.49",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "4.4",
+                        "id": 229165,
+                        "itemId": 13383,
+                        "laborFee": "0",
+                        "locationGroupId": 505,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2920.67",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "4.52",
+                        "id": 229167,
+                        "itemId": 13383,
+                        "laborFee": "0",
+                        "locationGroupId": 507,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "3002.56",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "4.64",
+                        "id": 229169,
+                        "itemId": 13383,
+                        "laborFee": "0",
+                        "locationGroupId": 509,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "3084.45",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "4.93",
+                        "id": 229171,
+                        "itemId": 13383,
+                        "laborFee": "0",
+                        "locationGroupId": 545,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "3275.52",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    }
+                ]
+            },
+            {
+                "capacity": "56",
+                "description": "56 Cores X 242 RAM X 1.2 TB",
+                "keyName": "56_CORES_X_242_RAM_X_1_4_TB",
+                "attributes": [],
+                "itemCategory": {
+                    "categoryCode": "dedicated_virtual_hosts",
+                    "id": 848
+                },
+                "prices": [
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "3.164",
+                        "id": 200269,
+                        "itemId": 10195,
+                        "laborFee": "0",
+                        "locationGroupId": null,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2099",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "3.258",
+                        "id": 200271,
+                        "itemId": 10195,
+                        "laborFee": "0",
+                        "locationGroupId": 503,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2161.97",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "3.384",
+                        "id": 200273,
+                        "itemId": 10195,
+                        "laborFee": "0",
+                        "locationGroupId": 505,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2245.93",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "3.479",
+                        "id": 200275,
+                        "itemId": 10195,
+                        "laborFee": "0",
+                        "locationGroupId": 507,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2308.9",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "3.574",
+                        "id": 200277,
+                        "itemId": 10195,
+                        "laborFee": "0",
+                        "locationGroupId": 509,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2371.87",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "3.795",
+                        "id": 200279,
+                        "itemId": 10195,
+                        "laborFee": "0",
+                        "locationGroupId": 545,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2518.8",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    },
+                    {
+                        "currentPriceFlag": null,
+                        "hourlyRecurringFee": "4.365",
+                        "id": 200281,
+                        "itemId": 10195,
+                        "laborFee": "0",
+                        "locationGroupId": 583,
+                        "onSaleFlag": null,
+                        "oneTimeFee": "0",
+                        "quantity": null,
+                        "recurringFee": "2896.62",
+                        "setupFee": "0",
+                        "sort": 0,
+                        "termLength": null,
+                        "tierMinimumThreshold": null
+                    }
+                ]
+            }
+        ],
+        "regions": [
+            {
+                "description": "AMS01 - Amsterdam",
+                "keyname": "AMSTERDAM",
+                "sortOrder": 0,
+                "location": {
+                    "locationId": 265592,
+                    "location": {
+                        "id": 265592,
+                        "longName": "Amsterdam 1",
+                        "name": "ams01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 2",
+                                "id": 503,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 265592,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "AMS03 - Amsterdam",
+                "keyname": "AMSTERDAM03",
+                "sortOrder": 26,
+                "location": {
+                    "locationId": 814994,
+                    "location": {
+                        "id": 814994,
+                        "longName": "Amsterdam 3",
+                        "name": "ams03",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 2",
+                                "id": 503,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Single Amsterdam",
+                                "id": 1943,
+                                "locationGroupTypeId": 82,
+                                "name": "ams",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Cross Region - EU",
+                                "id": 1303,
+                                "locationGroupTypeId": 82,
+                                "name": "eu",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 814994,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "CHE01 - Chennai ",
+                "keyname": "CHENNAI",
+                "sortOrder": 30,
+                "location": {
+                    "locationId": 1004997,
+                    "location": {
+                        "id": 1004997,
+                        "longName": "Chennai 1",
+                        "name": "che01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Single Chennai",
+                                "id": 1903,
+                                "locationGroupTypeId": 82,
+                                "name": "che",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "CDN - India - Akamai",
+                                "id": 1465,
+                                "locationGroupTypeId": 82,
+                                "name": "INDIA-AKAMAI",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 6",
+                                "id": 545,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 6",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 1004997,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "DAL05 - Dallas",
+                "keyname": "DALLAS05",
+                "sortOrder": 44,
+                "location": {
+                    "locationId": 138124,
+                    "location": {
+                        "id": 138124,
+                        "longName": "Dallas 5",
+                        "name": "dal05",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "CDN - North America - Akamai",
+                                "id": 1463,
+                                "locationGroupTypeId": 82,
+                                "name": "NORTH-AMERICA-AKAMAI",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 138124,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "DAL06 - Dallas",
+                "keyname": "DALLAS06",
+                "sortOrder": 46,
+                "location": {
+                    "locationId": 154820,
+                    "location": {
+                        "id": 154820,
+                        "longName": "Dallas 6",
+                        "name": "dal06",
+                        "statusId": 2,
+                        "priceGroups": []
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 154820,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "DAL09 - Dallas",
+                "keyname": "DALLAS09",
+                "sortOrder": 50,
+                "location": {
+                    "locationId": 449494,
+                    "location": {
+                        "id": 449494,
+                        "longName": "Dallas 9",
+                        "name": "dal09",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Cross Region - US",
+                                "id": 1307,
+                                "locationGroupTypeId": 82,
+                                "name": "us",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 449494,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "DAL10 - Dallas ",
+                "keyname": "DALLAS10",
+                "sortOrder": 52,
+                "location": {
+                    "locationId": 1441195,
+                    "location": {
+                        "id": 1441195,
+                        "longName": "Dallas 10",
+                        "name": "dal10",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Regional - US South",
+                                "id": 1309,
+                                "locationGroupTypeId": 82,
+                                "name": "us-south",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 1441195,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "DAL12 - Dallas ",
+                "keyname": "DALLAS12",
+                "sortOrder": 54,
+                "location": {
+                    "locationId": 1854795,
+                    "location": {
+                        "id": 1854795,
+                        "longName": "Dallas 12",
+                        "name": "dal12",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Regional - US South",
+                                "id": 1309,
+                                "locationGroupTypeId": 82,
+                                "name": "us-south",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 1854795,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "DAL13 - Dallas ",
+                "keyname": "DALLAS13",
+                "sortOrder": 56,
+                "location": {
+                    "locationId": 1854895,
+                    "location": {
+                        "id": 1854895,
+                        "longName": "Dallas 13",
+                        "name": "dal13",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Regional - US South",
+                                "id": 1309,
+                                "locationGroupTypeId": 82,
+                                "name": "us-south",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 1854895,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "FRA02 - Frankfurt",
+                "keyname": "FRANKFURT",
+                "sortOrder": 62,
+                "location": {
+                    "locationId": 449506,
+                    "location": {
+                        "id": 449506,
+                        "longName": "Frankfurt 2",
+                        "name": "fra02",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 4",
+                                "id": 507,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Cross Region - EU",
+                                "id": 1303,
+                                "locationGroupTypeId": 82,
+                                "name": "eu",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Frankfurt",
+                                "id": 1783,
+                                "locationGroupTypeId": 82,
+                                "name": "eu-de",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Transient Group 4",
+                                "id": 1983,
+                                "locationGroupTypeId": 82,
+                                "name": "Transient Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 449506,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "FRA04 - Frankfurt ",
+                "keyname": "FRANKFURT04",
+                "sortOrder": 64,
+                "location": {
+                    "locationId": 2434695,
+                    "location": {
+                        "id": 2434695,
+                        "longName": "Frankfurt 4",
+                        "name": "fra04",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Transient Group 4",
+                                "id": 1983,
+                                "locationGroupTypeId": 82,
+                                "name": "Transient Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Frankfurt",
+                                "id": 1783,
+                                "locationGroupTypeId": 82,
+                                "name": "eu-de",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 4",
+                                "id": 507,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2434695,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "FRA05 - Frankfurt ",
+                "keyname": "FRANKFURT05",
+                "sortOrder": 66,
+                "location": {
+                    "locationId": 2417495,
+                    "location": {
+                        "id": 2417495,
+                        "longName": "Frankfurt 5",
+                        "name": "fra05",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Transient Group 4",
+                                "id": 1983,
+                                "locationGroupTypeId": 82,
+                                "name": "Transient Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 4",
+                                "id": 507,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Frankfurt",
+                                "id": 1783,
+                                "locationGroupTypeId": 82,
+                                "name": "eu-de",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2417495,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "HKG02 - Hong Kong",
+                "keyname": "HONGKONG02",
+                "sortOrder": 70,
+                "location": {
+                    "locationId": 352494,
+                    "location": {
+                        "id": 352494,
+                        "longName": "Hong Kong 2",
+                        "name": "hkg02",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Single Hong Kong",
+                                "id": 2383,
+                                "locationGroupTypeId": 82,
+                                "name": "hkg",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Cross Region - AP",
+                                "id": 1863,
+                                "locationGroupTypeId": 82,
+                                "name": "ap",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "CDN - Rest of APAC - Akamai",
+                                "id": 1503,
+                                "locationGroupTypeId": 82,
+                                "name": "REST-OF-APAC-AKAMAI",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 5",
+                                "id": 509,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 5",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 352494,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "LON02 - London",
+                "keyname": "LONDON02",
+                "sortOrder": 78,
+                "location": {
+                    "locationId": 358694,
+                    "location": {
+                        "id": 358694,
+                        "longName": "London 2",
+                        "name": "lon02",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 3",
+                                "id": 505,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 3",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "data-center-mex01",
+                                "id": 1823,
+                                "locationGroupTypeId": 82,
+                                "name": "data-center-mex01",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "CDN - EMEA - Akamai",
+                                "id": 1543,
+                                "locationGroupTypeId": 82,
+                                "name": "EMEA-AKAMAI",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional - EU West",
+                                "id": 1663,
+                                "locationGroupTypeId": 82,
+                                "name": "eu-gb",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 358694,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "LON04 - London ",
+                "keyname": "LONDON04",
+                "sortOrder": 80,
+                "location": {
+                    "locationId": 2017395,
+                    "location": {
+                        "id": 2017395,
+                        "longName": "London 4",
+                        "name": "lon04",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 3",
+                                "id": 505,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 3",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional - EU West",
+                                "id": 1663,
+                                "locationGroupTypeId": 82,
+                                "name": "eu-gb",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "data-center-mex01",
+                                "id": 1823,
+                                "locationGroupTypeId": 82,
+                                "name": "data-center-mex01",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2017395,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "LON05 - London ",
+                "keyname": "LONDON05",
+                "sortOrder": 82,
+                "location": {
+                    "locationId": 2123995,
+                    "location": {
+                        "id": 2123995,
+                        "longName": "London 5",
+                        "name": "lon05",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 3",
+                                "id": 505,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 3",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2123995,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "LON06 - London ",
+                "keyname": "LONDON06",
+                "sortOrder": 84,
+                "location": {
+                    "locationId": 2124095,
+                    "location": {
+                        "id": 2124095,
+                        "longName": "London 6",
+                        "name": "lon06",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 3",
+                                "id": 505,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 3",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "data-center-mex01",
+                                "id": 1823,
+                                "locationGroupTypeId": 82,
+                                "name": "data-center-mex01",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional - EU West",
+                                "id": 1663,
+                                "locationGroupTypeId": 82,
+                                "name": "eu-gb",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2124095,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "MEX01 - Queretaro",
+                "keyname": "MEXICO",
+                "sortOrder": 88,
+                "location": {
+                    "locationId": 449600,
+                    "location": {
+                        "id": 449600,
+                        "longName": "Mexico 1",
+                        "name": "mex01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Bandwidth Zone 4",
+                                "id": 511,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "data-center-mex01",
+                                "id": 1823,
+                                "locationGroupTypeId": 82,
+                                "name": "data-center-mex01",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 3",
+                                "id": 505,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 3",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Single Mexico",
+                                "id": 2303,
+                                "locationGroupTypeId": 82,
+                                "name": "mex",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 449600,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "MIL01 - Milan",
+                "keyname": "MILAN",
+                "sortOrder": 92,
+                "location": {
+                    "locationId": 815394,
+                    "location": {
+                        "id": 815394,
+                        "longName": "Milan 1",
+                        "name": "mil01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Transient Group 4",
+                                "id": 1983,
+                                "locationGroupTypeId": 82,
+                                "name": "Transient Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 4",
+                                "id": 507,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Cross Region - EU",
+                                "id": 1303,
+                                "locationGroupTypeId": 82,
+                                "name": "eu",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Single Milan",
+                                "id": 2543,
+                                "locationGroupTypeId": 82,
+                                "name": "mil",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 815394,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "MON01 - Montreal",
+                "keyname": "MONTREAL",
+                "sortOrder": 94,
+                "location": {
+                    "locationId": 449610,
+                    "location": {
+                        "id": 449610,
+                        "longName": "Montreal 1",
+                        "name": "mon01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 2",
+                                "id": 503,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Single Montreal",
+                                "id": 2063,
+                                "locationGroupTypeId": 82,
+                                "name": "mon",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 449610,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "PAR01 - Paris",
+                "keyname": "PARIS",
+                "sortOrder": 110,
+                "location": {
+                    "locationId": 449500,
+                    "location": {
+                        "id": 449500,
+                        "longName": "Paris 1",
+                        "name": "par01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Single Paris",
+                                "id": 3968,
+                                "locationGroupTypeId": 82,
+                                "name": "par",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 4",
+                                "id": 507,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Transient Group 4",
+                                "id": 1983,
+                                "locationGroupTypeId": 82,
+                                "name": "Transient Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 449500,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SAO04 - Sao Paulo ",
+                "keyname": "SAOPAULO04",
+                "sortOrder": 112,
+                "location": {
+                    "locationId": 3083112,
+                    "location": {
+                        "id": 3083112,
+                        "longName": "Sao Paulo 4",
+                        "name": "sao04",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 6",
+                                "id": 545,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 6",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Sao Paulo",
+                                "id": 5342,
+                                "locationGroupTypeId": 82,
+                                "name": "br-sao",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 3083112,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SAO01 - Sao Paulo ",
+                "keyname": "SAOPAULO",
+                "sortOrder": 112,
+                "location": {
+                    "locationId": 983497,
+                    "location": {
+                        "id": 983497,
+                        "longName": "Sao Paulo 1",
+                        "name": "sao01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Bandwidth Zone 4",
+                                "id": 511,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Sao Paulo",
+                                "id": 5342,
+                                "locationGroupTypeId": 82,
+                                "name": "br-sao",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "CDN - South America - Akamai",
+                                "id": 1545,
+                                "locationGroupTypeId": 82,
+                                "name": "SOUTH-AMERICA-AKAMAI",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Single Sao Paulo",
+                                "id": 2103,
+                                "locationGroupTypeId": 82,
+                                "name": "sao",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 6",
+                                "id": 545,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 6",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 983497,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SAO05 - Sao Paulo ",
+                "keyname": "SAOPAULO05",
+                "sortOrder": 112,
+                "location": {
+                    "locationId": 3083212,
+                    "location": {
+                        "id": 3083212,
+                        "longName": "Sao Paulo 5",
+                        "name": "sao05",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 6",
+                                "id": 545,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 6",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Sao Paulo",
+                                "id": 5342,
+                                "locationGroupTypeId": 82,
+                                "name": "br-sao",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 3083212,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SEO01 - Seoul",
+                "keyname": "SEOUL",
+                "sortOrder": 118,
+                "location": {
+                    "locationId": 1555995,
+                    "location": {
+                        "id": 1555995,
+                        "longName": "Seoul 1",
+                        "name": "seo01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 4",
+                                "id": 507,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Transient Group 4",
+                                "id": 1983,
+                                "locationGroupTypeId": 82,
+                                "name": "Transient Group 4",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Single Seoul",
+                                "id": 2143,
+                                "locationGroupTypeId": 82,
+                                "name": "seo",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Cross Region - AP",
+                                "id": 1863,
+                                "locationGroupTypeId": 82,
+                                "name": "ap",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 1555995,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SJC01 - San Jose",
+                "keyname": "SANJOSE",
+                "sortOrder": 120,
+                "location": {
+                    "locationId": 168642,
+                    "location": {
+                        "id": 168642,
+                        "longName": "San Jose 1",
+                        "name": "sjc01",
+                        "statusId": 2,
+                        "priceGroups": []
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 168642,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SJC03 - San Jose ",
+                "keyname": "SANJOSE03",
+                "sortOrder": 124,
+                "location": {
+                    "locationId": 1004995,
+                    "location": {
+                        "id": 1004995,
+                        "longName": "San Jose 3",
+                        "name": "sjc03",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Cross Region - US",
+                                "id": 1307,
+                                "locationGroupTypeId": 82,
+                                "name": "us",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 1004995,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SJC04 - San Jose ",
+                "keyname": "SANJOSE04",
+                "sortOrder": 126,
+                "location": {
+                    "locationId": 2178495,
+                    "location": {
+                        "id": 2178495,
+                        "longName": "San Jose 4",
+                        "name": "sjc04",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Single San jose",
+                                "id": 2503,
+                                "locationGroupTypeId": 82,
+                                "name": "sjc",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2178495,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SNG01 - Singapore",
+                "keyname": "SINGAPORE",
+                "sortOrder": 128,
+                "location": {
+                    "locationId": 224092,
+                    "location": {
+                        "id": 224092,
+                        "longName": "Singapore 1",
+                        "name": "sng01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 5",
+                                "id": 509,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 5",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Single Singapore",
+                                "id": 2423,
+                                "locationGroupTypeId": 82,
+                                "name": "sng",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 224092,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SYD01 - Sydney",
+                "keyname": "SYDNEY01",
+                "sortOrder": 132,
+                "location": {
+                    "locationId": 449612,
+                    "location": {
+                        "id": 449612,
+                        "longName": "Sydney 1",
+                        "name": "syd01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Regional Sydney",
+                                "id": 2263,
+                                "locationGroupTypeId": 82,
+                                "name": "au-syd",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 6",
+                                "id": 545,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 6",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "CDN - Australasia - Akamai",
+                                "id": 1547,
+                                "locationGroupTypeId": 82,
+                                "name": "AUSTRALASIA-AKAMAI",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 449612,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SYD04 - Sydney ",
+                "keyname": "SYDNEY04",
+                "sortOrder": 134,
+                "location": {
+                    "locationId": 2013295,
+                    "location": {
+                        "id": 2013295,
+                        "longName": "Sydney 4",
+                        "name": "syd04",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 6",
+                                "id": 545,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 6",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Sydney",
+                                "id": 2263,
+                                "locationGroupTypeId": 82,
+                                "name": "au-syd",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2013295,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "SYD05 - Sydney ",
+                "keyname": "SYDNEY05",
+                "sortOrder": 135,
+                "location": {
+                    "locationId": 2408595,
+                    "location": {
+                        "id": 2408595,
+                        "longName": "Sydney 5",
+                        "name": "syd05",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 6",
+                                "id": 545,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 6",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Sydney",
+                                "id": 2263,
+                                "locationGroupTypeId": 82,
+                                "name": "au-syd",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2408595,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "TOK02 - Tokyo",
+                "keyname": "TOKYO",
+                "sortOrder": 138,
+                "location": {
+                    "locationId": 449604,
+                    "location": {
+                        "id": 449604,
+                        "longName": "Tokyo 2",
+                        "name": "tok02",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "CDN - Japan - Akamai",
+                                "id": 1505,
+                                "locationGroupTypeId": 82,
+                                "name": "JAPAN-AKAMAI",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 5",
+                                "id": 509,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 5",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Cross Region - AP",
+                                "id": 1863,
+                                "locationGroupTypeId": 82,
+                                "name": "ap",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Tokyo",
+                                "id": 2223,
+                                "locationGroupTypeId": 82,
+                                "name": "jp-tok",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 449604,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "TOK04 - Tokyo ",
+                "keyname": "TOKYO04",
+                "sortOrder": 140,
+                "location": {
+                    "locationId": 2344395,
+                    "location": {
+                        "id": 2344395,
+                        "longName": "Tokyo 4",
+                        "name": "tok04",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 5",
+                                "id": 509,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 5",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Tokyo",
+                                "id": 2223,
+                                "locationGroupTypeId": 82,
+                                "name": "jp-tok",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2344395,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "TOK05 - Tokyo ",
+                "keyname": "TOKYO05",
+                "sortOrder": 142,
+                "location": {
+                    "locationId": 2344397,
+                    "location": {
+                        "id": 2344397,
+                        "longName": "Tokyo 5",
+                        "name": "tok05",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 5",
+                                "id": 509,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 5",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Tokyo",
+                                "id": 2223,
+                                "locationGroupTypeId": 82,
+                                "name": "jp-tok",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2344397,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "TOR04 - Toronto ",
+                "keyname": "TORONTO04",
+                "sortOrder": 144,
+                "location": {
+                    "locationId": 3079212,
+                    "location": {
+                        "id": 3079212,
+                        "longName": "Toronto 4",
+                        "name": "tor04",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Regional Toronto",
+                                "id": 5302,
+                                "locationGroupTypeId": 82,
+                                "name": "ca-tor",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 2",
+                                "id": 503,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 3079212,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "TOR01 - Toronto",
+                "keyname": "TORONTO",
+                "sortOrder": 144,
+                "location": {
+                    "locationId": 448994,
+                    "location": {
+                        "id": 448994,
+                        "longName": "Toronto 1",
+                        "name": "tor01",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Location Group 2",
+                                "id": 503,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Toronto",
+                                "id": 5302,
+                                "locationGroupTypeId": 82,
+                                "name": "ca-tor",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Single Toronto",
+                                "id": 1743,
+                                "locationGroupTypeId": 82,
+                                "name": "tor",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 448994,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "TOR05 - Toronto ",
+                "keyname": "TORONTO05",
+                "sortOrder": 144,
+                "location": {
+                    "locationId": 3079312,
+                    "location": {
+                        "id": 3079312,
+                        "longName": "Toronto 5",
+                        "name": "tor05",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Regional Toronto",
+                                "id": 5302,
+                                "locationGroupTypeId": 82,
+                                "name": "ca-tor",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 2",
+                                "id": 503,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 3079312,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "WDC01 - Washington, DC",
+                "keyname": "WASHINGTON_DC",
+                "sortOrder": 148,
+                "location": {
+                    "locationId": 37473,
+                    "location": {
+                        "id": 37473,
+                        "longName": "Washington 1",
+                        "name": "wdc01",
+                        "statusId": 2,
+                        "priceGroups": []
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 37473,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "OSA21 - Osaka ",
+                "keyname": "OSAKA21",
+                "sortOrder": 150,
+                "location": {
+                    "locationId": 3023812,
+                    "location": {
+                        "id": 3023812,
+                        "longName": "Osaka 21",
+                        "name": "osa21",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 5",
+                                "id": 509,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 5",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Osaka ",
+                                "id": 4742,
+                                "locationGroupTypeId": 82,
+                                "name": "jp-osa",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 3023812,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "OSA22 - Osaka",
+                "keyname": "OSAKA22",
+                "sortOrder": 150,
+                "location": {
+                    "locationId": 3023712,
+                    "location": {
+                        "id": 3023712,
+                        "longName": "Osaka 22",
+                        "name": "osa22",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Osaka ",
+                                "id": 4742,
+                                "locationGroupTypeId": 82,
+                                "name": "jp-osa",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 5",
+                                "id": 509,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 5",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 3023712,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "OSA23 - Osaka ",
+                "keyname": "OSAKA23",
+                "sortOrder": 150,
+                "location": {
+                    "locationId": 3023912,
+                    "location": {
+                        "id": 3023912,
+                        "longName": "Osaka 23",
+                        "name": "osa23",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "Bandwidth Zone 2",
+                                "id": 543,
+                                "locationGroupTypeId": 82,
+                                "name": "Bandwidth Zone 2",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "Location Group 5",
+                                "id": 509,
+                                "locationGroupTypeId": 82,
+                                "name": "Location Group 5",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Regional Osaka ",
+                                "id": 4742,
+                                "locationGroupTypeId": 82,
+                                "name": "jp-osa",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 3023912,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "WDC04 - Washington, DC",
+                "keyname": "ASHBURN04",
+                "sortOrder": 152,
+                "location": {
+                    "locationId": 957095,
+                    "location": {
+                        "id": 957095,
+                        "longName": "Washington 4",
+                        "name": "wdc04",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Regional - US East",
+                                "id": 1305,
+                                "locationGroupTypeId": 82,
+                                "name": "us-east",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            },
+                            {
+                                "description": "COS Cross Region - US",
+                                "id": 1307,
+                                "locationGroupTypeId": 82,
+                                "name": "us",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 957095,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "WDC06 - Washington, DC",
+                "keyname": "WASHINGTON06",
+                "sortOrder": 154,
+                "location": {
+                    "locationId": 2017695,
+                    "location": {
+                        "id": 2017695,
+                        "longName": "Washington 6",
+                        "name": "wdc06",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Regional - US East",
+                                "id": 1305,
+                                "locationGroupTypeId": 82,
+                                "name": "us-east",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2017695,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "WDC07 - Washington, DC",
+                "keyname": "WASHINGTON07",
+                "sortOrder": 156,
+                "location": {
+                    "locationId": 2017603,
+                    "location": {
+                        "id": 2017603,
+                        "longName": "Washington 7",
+                        "name": "wdc07",
+                        "statusId": 2,
+                        "priceGroups": [
+                            {
+                                "description": "COS Regional - US East",
+                                "id": 1305,
+                                "locationGroupTypeId": 82,
+                                "name": "us-east",
+                                "securityLevelId": null,
+                                "locationGroupType": {
+                                    "name": "PRICING"
+                                }
+                            }
+                        ]
+                    },
+                    "locationPackageDetails": [
+                        {
+                            "isAvailable": 1,
+                            "locationId": 2017603,
+                            "packageId": 813
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+]

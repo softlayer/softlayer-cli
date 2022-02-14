@@ -17,6 +17,8 @@ import (
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 )
 
 var (
@@ -165,6 +167,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.HardwareNamespace(),
 		metadata.ImageNamespace(),
 		metadata.IpsecNamespace(),
+		metadata.LicensesNamespace(),
 		metadata.LoadbalNamespace(),
 		metadata.SecurityNamespace(),
 		metadata.SecurityGroupNamespace(),
@@ -177,6 +180,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.UserNamespace(),
 		metadata.TagsNamespace(),
 		metadata.DedicatedhostNamespace(),
+		account.AccountNamespace(),
 	}
 }
 
@@ -190,6 +194,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.HardwareMetaData(),
 		metadata.ImageMetaData(),
 		metadata.IpsecMetaData(),
+		metadata.LicensesMetaData(),
 		metadata.LoadbalMetaData(),
 		metadata.SecurityMetaData(),
 		metadata.SecurityGroupMetaData(),
@@ -203,5 +208,6 @@ func getCLITopCommands() []cli.Command {
 		metadata.CallAPIMetadata(),
 		metadata.TagsMetaData(),
 		metadata.DedicatedhostMetaData(),
+		account.AccountMetaData(),
 	}
 }
