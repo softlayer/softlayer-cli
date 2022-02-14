@@ -8,8 +8,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -96,14 +96,14 @@ func (cmd *VolumeDuplicateCommand) Run(c *cli.Context) error {
 		}
 	}
 	config := managers.DuplicateOrderConfig{
-			VolumeType: 			"block",
-			OriginalVolumeId: 		volumeID,
-			OriginalSnapshotId: 	c.Int("o"),
-			DuplicateSize: 			c.Int("s"),
-			DuplicateIops: 			c.Int("i"),
-			DuplicateTier: 			c.Float64("t"),
-			DuplicateSnapshotSize: 	c.Int("n"),
-			DependentDuplicate:		c.Bool("d"),
+		VolumeType:            "block",
+		OriginalVolumeId:      volumeID,
+		OriginalSnapshotId:    c.Int("o"),
+		DuplicateSize:         c.Int("s"),
+		DuplicateIops:         c.Int("i"),
+		DuplicateTier:         c.Float64("t"),
+		DuplicateSnapshotSize: c.Int("n"),
+		DependentDuplicate:    c.Bool("d"),
 	}
 	orderReceipt, err := cmd.StorageManager.OrderDuplicateVolume(config)
 	if err != nil {

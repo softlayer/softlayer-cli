@@ -19,6 +19,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 )
 
@@ -160,7 +161,7 @@ func convertToPluginFlags(flags []cli.Flag) []plugin.Flag {
 func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
 		metadata.SoftlayerNamespace(),
-		metadata.BlockNamespace(),
+		block.BlockNamespace(),
 		metadata.DnsNamespace(),
 		metadata.FileNamespace(),
 		//metadata.NS_FIREWALL,
@@ -187,7 +188,7 @@ func Namespaces() []plugin.Namespace {
 
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
-		metadata.BlockMetaData(),
+		block.BlockMetaData(),
 		metadata.DnsMetaData(),
 		metadata.FileMetaData(),
 		// metadata.CMD_FW,
