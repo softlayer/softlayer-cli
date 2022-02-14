@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 
 	"github.com/softlayer/softlayer-go/session"
@@ -53,7 +54,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	callAPIManager := managers.NewCallAPIManager(session)
 	ticketManager := managers.NewTicketManager(session)
 	licensesManager := managers.NewLicensesManager(session)
-	placeGroupManager := managers.NewPlaceGroupManager(session)
 	dedicatedhostManager := managers.NewDedicatedhostManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
@@ -413,25 +413,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-usage": func(c *cli.Context) error {
 			return virtual.NewUsageCommand(ui, virtualServerManager).Run(c)
 		},
-		NS_VIRTUAL_NAME + "-" +CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
+		NS_VIRTUAL_NAME + "-" + CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
-		},
-
-		//Placement group
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupCreateCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_LIST_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupListCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_DELETE_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupDeleteCommand(ui, placeGroupManager, virtualServerManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupCreateOptionsCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_DETAIL_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupDetailCommand(ui, placeGroupManager).Run(c)
 		},
 
 		//vlan 6
@@ -574,6 +557,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl loadbal
 	loadbalCommands := loadbal.GetCommandAcionBindings(ui, session)
 	for name, action := range loadbalCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl placement-group
+	placementgroupCommands := placementgroup.GetCommandActionBindings(context, ui, session)
+	for name, action := range placementgroupCommands {
 		CommandActionBindings[name] = action
 	}
 
