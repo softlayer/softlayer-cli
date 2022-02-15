@@ -23,6 +23,26 @@ func NewDisasterRecoveryFailoverCommand(ui terminal.UI, storageManager managers.
 	}
 }
 
+
+func FileDisasterRecoveryFailoverMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "disaster-recovery-failover",
+		Description: T("Failover an inaccessible volume to its available replicant volume."),
+		Usage: T(`${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID
+
+If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately
+failover to an available replica in another location. This method does not allow for fail back via the API.
+To fail back to the original volume after using this method, open a support ticket.
+To test failover, use '${COMMAND_NAME} sl file replica-failover' instead.
+
+EXAMPLE:
+	${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321
+	This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.`),
+	}
+}
+
+
 func (cmd *DisasterRecoveryFailoverCommand) Run(c *cli.Context) error {
 	if c.NArg() != 2 {
 		return errors.NewInvalidUsageError(T("This command requires two arguments."))

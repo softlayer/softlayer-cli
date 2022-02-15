@@ -10,7 +10,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,9 +26,9 @@ var _ = Describe("File Volume Refresh", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewVolumeRefreshCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileVolumeRefreshMetaData().Name,
-			Description: metadata.FileVolumeRefreshMetaData().Description,
-			Usage:       metadata.FileVolumeRefreshMetaData().Usage,
+			Name:        file.FileVolumeRefreshMetaData().Name,
+			Description: file.FileVolumeRefreshMetaData().Description,
+			Usage:       file.FileVolumeRefreshMetaData().Usage,
 			Action:      cmd.Run,
 		}
 	})

@@ -10,7 +10,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +26,10 @@ var _ = Describe("Volume options", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewVolumeOptionsCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileVolumeOptionsMetaData().Name,
-			Description: metadata.FileVolumeOptionsMetaData().Description,
-			Usage:       metadata.FileVolumeOptionsMetaData().Usage,
-			Flags:       metadata.FileVolumeOptionsMetaData().Flags,
+			Name:        file.FileVolumeOptionsMetaData().Name,
+			Description: file.FileVolumeOptionsMetaData().Description,
+			Usage:       file.FileVolumeOptionsMetaData().Usage,
+			Flags:       file.FileVolumeOptionsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

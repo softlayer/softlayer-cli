@@ -12,7 +12,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +28,10 @@ var _ = Describe("Access Authorize", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewAccessListCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileAccessListMetaData().Name,
-			Description: metadata.FileAccessListMetaData().Description,
-			Usage:       metadata.FileAccessListMetaData().Usage,
-			Flags:       metadata.FileAccessListMetaData().Flags,
+			Name:        file.FileAccessListMetaData().Name,
+			Description: file.FileAccessListMetaData().Description,
+			Usage:       file.FileAccessListMetaData().Usage,
+			Flags:       file.FileAccessListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

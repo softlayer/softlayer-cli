@@ -14,7 +14,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -32,10 +32,10 @@ var _ = Describe("Snapshot order", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = file.NewSnapshotOrderCommand(fakeUI, FakeStorageManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.FileSnapshotOrderMetaData().Name,
-			Description: metadata.FileSnapshotOrderMetaData().Description,
-			Usage:       metadata.FileSnapshotOrderMetaData().Usage,
-			Flags:       metadata.FileSnapshotOrderMetaData().Flags,
+			Name:        file.FileSnapshotOrderMetaData().Name,
+			Description: file.FileSnapshotOrderMetaData().Description,
+			Usage:       file.FileSnapshotOrderMetaData().Usage,
+			Flags:       file.FileSnapshotOrderMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

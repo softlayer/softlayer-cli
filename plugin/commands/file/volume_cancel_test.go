@@ -10,7 +10,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +26,10 @@ var _ = Describe("Volume cancel", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewVolumeCancelCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileVolumeCancelMetaData().Name,
-			Description: metadata.FileVolumeCancelMetaData().Description,
-			Usage:       metadata.FileVolumeCancelMetaData().Usage,
-			Flags:       metadata.FileVolumeCancelMetaData().Flags,
+			Name:        file.FileVolumeCancelMetaData().Name,
+			Description: file.FileVolumeCancelMetaData().Description,
+			Usage:       file.FileVolumeCancelMetaData().Usage,
+			Flags:       file.FileVolumeCancelMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

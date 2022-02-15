@@ -10,7 +10,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +26,10 @@ var _ = Describe("Disaster Recovery Failover", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewDisasterRecoveryFailoverCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileDisasterRecoveryFailoverMetaData().Name,
-			Description: metadata.FileDisasterRecoveryFailoverMetaData().Description,
-			Usage:       metadata.FileDisasterRecoveryFailoverMetaData().Usage,
-			Flags:       metadata.FileDisasterRecoveryFailoverMetaData().Flags,
+			Name:        file.FileDisasterRecoveryFailoverMetaData().Name,
+			Description: file.FileDisasterRecoveryFailoverMetaData().Description,
+			Usage:       file.FileDisasterRecoveryFailoverMetaData().Usage,
+			Flags:       file.FileDisasterRecoveryFailoverMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

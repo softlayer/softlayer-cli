@@ -23,6 +23,19 @@ func NewReplicaFailbackCommand(ui terminal.UI, storageManager managers.StorageMa
 	}
 }
 
+func FileReplicaFailbackMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "replica-failback",
+		Description: T("Failback a file volume from replica"),
+		Usage: T(`${COMMAND_NAME} sl file replica-failback VOLUME_ID
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl file replica-failback 12345678
+   This command performs failback operation for volume with ID 12345678.`),
+	}
+}
+
 func (cmd *ReplicaFailbackCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

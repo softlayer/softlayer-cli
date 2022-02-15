@@ -25,6 +25,20 @@ func NewSnapshotDeleteCommand(ui terminal.UI, storageManager managers.StorageMan
 	}
 }
 
+
+func FileSnapshotDeleteMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "snapshot-delete",
+		Description: T("Delete a snapshot on a given volume"),
+		Usage: T(`${COMMAND_NAME} sl file snapshot-delete SNAPSHOT_ID
+
+EXAMPLE:
+   ${COMMAND_NAME} sl file snapshot-delete 12345678 
+   This command deletes snapshot with ID 12345678.`),
+	}
+}
+
 func (cmd *SnapshotDeleteCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

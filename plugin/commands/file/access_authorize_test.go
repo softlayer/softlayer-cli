@@ -12,7 +12,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -30,10 +30,10 @@ var _ = Describe("Access Authorize", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = file.NewAccessAuthorizeCommand(fakeUI, FakeStorageManager, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileAccessAuthorizeMetaData().Name,
-			Description: metadata.FileAccessAuthorizeMetaData().Description,
-			Usage:       metadata.FileAccessAuthorizeMetaData().Usage,
-			Flags:       metadata.FileAccessAuthorizeMetaData().Flags,
+			Name:        file.FileAccessAuthorizeMetaData().Name,
+			Description: file.FileAccessAuthorizeMetaData().Description,
+			Usage:       file.FileAccessAuthorizeMetaData().Usage,
+			Flags:       file.FileAccessAuthorizeMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

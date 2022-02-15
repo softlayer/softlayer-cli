@@ -26,6 +26,19 @@ func NewVolumeOptionsCommand(ui terminal.UI, storageManager managers.StorageMana
 	}
 }
 
+func FileVolumeOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "volume-options",
+		Description: T("List all options for ordering a file storage"),
+		Usage: T(`${COMMAND_NAME} sl file volume-options
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl file volume-options
+   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.`),
+	}
+}
+
 //refer to here about volume size and iops ranges: http://knowledgelayer.softlayer.com/learning/file-storage
 func (cmd *VolumeOptionsCommand) Run(c *cli.Context) error {
 	table := cmd.UI.Table([]string{"name", "value"})

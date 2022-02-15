@@ -26,6 +26,34 @@ func NewAccessListCommand(ui terminal.UI, storageManager managers.StorageManager
 	}
 }
 
+func FileAccessListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "access-list",
+		Description: T("List hosts that are authorized to access the volume"),
+		Usage: T(`${COMMAND_NAME} sl file access-list VOLUME_ID [OPTIONS]
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl file access-list 12345678 --sortby id 
+   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id"),
+			},
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *AccessListCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

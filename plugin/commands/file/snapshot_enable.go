@@ -33,6 +33,41 @@ var DAY_OF_WEEK = map[int]string{
 	6: "SATURDAY",
 }
 
+func FileSnapshotEnableMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "snapshot-enable",
+		Description: T("Enable snapshots for a given volume on the specified schedule"),
+		Usage: T(`${COMMAND_NAME} sl file snapshot-enable VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl file snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0
+   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,schedule-type",
+				Usage: T("Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY"),
+			},
+			cli.IntFlag{
+				Name:  "c,retention-count",
+				Usage: T("Number of snapshots to retain [required]"),
+			},
+			cli.IntFlag{
+				Name:  "m,minute",
+				Usage: T("Minute of the hour when snapshots should be taken, integer between 0 to 59"),
+			},
+			cli.IntFlag{
+				Name:  "r,hour",
+				Usage: T("Hour of the day when snapshots should be taken, integer between 0 to 23"),
+			},
+			cli.IntFlag{
+				Name:  "d,day-of-week",
+				Usage: T("Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday"),
+			},
+		},
+	}
+}
+
 func (cmd *SnapshotEnableCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

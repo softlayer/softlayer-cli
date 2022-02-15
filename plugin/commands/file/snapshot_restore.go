@@ -23,6 +23,20 @@ func NewSnapshotRestoreCommand(ui terminal.UI, storageManager managers.StorageMa
 	}
 }
 
+func FileSnapshotRestoreMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "snapshot-restore",
+		Description: T("Restore file volume using a given snapshot"),
+		Usage: T(`${COMMAND_NAME} sl file snapshot-restore VOLUME_ID SNAPSHOT_ID
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl file snapshot-restore 12345678 87654321
+   This command restores volume with ID 12345678 from snapshot with ID 87654321.`),
+	}
+}
+
+
 func (cmd *SnapshotRestoreCommand) Run(c *cli.Context) error {
 	if c.NArg() != 2 {
 		return errors.NewInvalidUsageError(T("This command requires two arguments."))

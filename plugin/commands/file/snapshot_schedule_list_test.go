@@ -12,7 +12,7 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,9 +28,9 @@ var _ = Describe("File Snapshot Schedule List", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewSnapshotScheduleListCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileSnapshotScheduleListMetaData().Name,
-			Description: metadata.FileSnapshotScheduleListMetaData().Description,
-			Usage:       metadata.FileSnapshotScheduleListMetaData().Usage,
+			Name:        file.FileSnapshotScheduleListMetaData().Name,
+			Description: file.FileSnapshotScheduleListMetaData().Description,
+			Usage:       file.FileSnapshotScheduleListMetaData().Usage,
 			Action:      cmd.Run,
 		}
 	})

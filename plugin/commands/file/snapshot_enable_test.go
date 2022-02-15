@@ -10,7 +10,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +26,10 @@ var _ = Describe("Snapshot enable", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewSnapshotEnableCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileSnapshotEnableMetaData().Name,
-			Description: metadata.FileSnapshotEnableMetaData().Description,
-			Usage:       metadata.FileSnapshotEnableMetaData().Usage,
-			Flags:       metadata.FileSnapshotEnableMetaData().Flags,
+			Name:        file.FileSnapshotEnableMetaData().Name,
+			Description: file.FileSnapshotEnableMetaData().Description,
+			Usage:       file.FileSnapshotEnableMetaData().Usage,
+			Flags:       file.FileSnapshotEnableMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

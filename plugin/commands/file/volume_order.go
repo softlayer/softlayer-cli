@@ -30,6 +30,53 @@ func NewVolumeOrderCommand(ui terminal.UI, storageManager managers.StorageManage
 	}
 }
 
+func FileVolumeOrderMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "volume-order",
+		Description: T("Order a file storage volume"),
+		Usage: T(`${COMMAND_NAME} sl file volume-order [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl file volume-order --storage-type performance --size 1000 --iops 4000  -d dal09
+   This command orders a performance volume with size is 1000GB, IOPS is 4000, located at dal09.
+   ${COMMAND_NAME} sl file volume-order --storage-type endurance --size 500 --tier 4 -d dal09 --snapshot-size 500
+   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB,located at dal09, and additional snapshot space size is 500GB.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "t,storage-type",
+				Usage: T("Type of storage volume [required], options are: performance,endurance"),
+			},
+			cli.IntFlag{
+				Name:  "s,size",
+				Usage: T("Size of storage volume in GB [required]"),
+			},
+			cli.IntFlag{
+				Name:  "i,iops",
+				Usage: T("Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]"),
+			},
+			cli.Float64Flag{
+				Name:  "e,tier",
+				Usage: T("Endurance Storage Tier (IOP per GB) [required for storage-type endurance], options are: 0.25,2,4,10"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Datacenter short name [required]"),
+			},
+			cli.IntFlag{
+				Name:  "n,snapshot-size",
+				Usage: T("Optional parameter for ordering snapshot space along with the volume"),
+			},
+			cli.StringFlag{
+				Name:  "b,billing",
+				Usage: T("Optional parameter for Billing rate (default to monthly), options are: hourly, monthly"),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *VolumeOrderCommand) Run(c *cli.Context) error {
 	if !c.IsSet("t") {
 		return errors.NewInvalidUsageError(T("-t|--storage-type is required, must be either performance or endurance.\nRun '{{.CommandName}} sl file volume-options' to check available options.",

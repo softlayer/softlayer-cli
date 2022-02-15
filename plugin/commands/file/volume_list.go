@@ -25,6 +25,51 @@ func NewVolumeListCommand(ui terminal.UI, storageManager managers.StorageManager
 	}
 }
 
+
+func FileVolumeListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "volume-list",
+		Description: T("List file storage"),
+		Usage: T(`${COMMAND_NAME} sl file volume-list [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl file volume-list -d dal09 -t endurance --sortby capacity_gb
+   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "u,username",
+				Usage: T("Filter by volume username"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Filter by datacenter shortname"),
+			},
+			cli.StringFlag{
+				Name:  "t,storage-type",
+				Usage: T("Filter by type of storage volume, options are: performance,endurance"),
+			},
+			cli.IntFlag{
+				Name:  "o,order",
+				Usage: T("Filter by ID of the order that purchased the file storage"),
+			},
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,active_transactions,created_by,mount_addr"),
+			},
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,active_transactions,mount_addr,created_by,notes. This option can be specified multiple times"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 var maskMap = map[string]string{
 	"id":                  "id",
 	"username":            "username",

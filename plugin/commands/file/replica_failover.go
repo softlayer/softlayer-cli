@@ -23,6 +23,19 @@ func NewReplicaFailoverCommand(ui terminal.UI, storageManager managers.StorageMa
 	}
 }
 
+func FileReplicaFailoverMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "replica-failover",
+		Description: T("Failover a file volume to the given replica volume"),
+		Usage: T(`${COMMAND_NAME} sl file replica-failover VOLUME_ID REPLICA_ID
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl file replica-failover 12345678 87654321
+   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.`),
+	}
+}
+
 func (cmd *ReplicaFailoverCommand) Run(c *cli.Context) error {
 	if c.NArg() != 2 {
 		return errors.NewInvalidUsageError(T("This command requires two arguments."))

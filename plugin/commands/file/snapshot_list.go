@@ -26,6 +26,26 @@ func NewSnapshotListCommand(ui terminal.UI, storageManager managers.StorageManag
 	}
 }
 
+func FileSnapshotListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "snapshot-list",
+		Description: T("List file storage snapshots"),
+		Usage: T(`${COMMAND_NAME} sl file snapshot-list VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl file snapshot-list 12345678 --sortby id 
+   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by. Options are: id,name,created,size_bytes"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *SnapshotListCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))
