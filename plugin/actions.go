@@ -45,6 +45,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	imageManager := managers.NewImageManager(session)
 	networkManager := managers.NewNetworkManager(session)
 	firewallManager := managers.NewFirewallManager(session)
+	dnsManager := managers.NewDNSManager(session)
 	ipsecManager := managers.NewIPSECManager(session)
 
 	hardwareManager := managers.NewHardwareServerManager(session)
@@ -298,6 +299,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_DETAIL_NAME: func(c *cli.Context) error {
 			return virtual.NewDetailCommand(ui, virtualServerManager).Run(c)
+		},
+		NS_VIRTUAL_NAME + "-" + CMD_VS_DNS_SYNC_NAME: func(c *cli.Context) error {
+			return virtual.NewDnsSyncCommand(ui, virtualServerManager, dnsManager).Run(c)
 		},
 		NS_VIRTUAL_NAME + "-" + CMD_VS_EDIT_NAME: func(c *cli.Context) error {
 			return virtual.NewEditCommand(ui, virtualServerManager).Run(c)
