@@ -6,6 +6,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type PlacementGroupDeleteCommand struct {
@@ -85,4 +86,24 @@ func (cmd *PlacementGroupDeleteCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Placement group {{.ID}} was removed.", map[string]interface{}{"ID": placementGroupID}))
 	return nil
+}
+
+func PlacementGroupDeleteMetaData() cli.Command {
+	return cli.Command{
+		Category:    "placement-group",
+		Name:        "delete",
+		Description: T("Delete a placement group"),
+		Usage:       "${COMMAND_NAME} sl placement-group delete (--id PLACEMENTGROUP_ID) [-f, --force]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "id",
+				Usage: T("ID for the placement group. [required]"),
+			},
+			//cli.BoolFlag{   # tmp disable this option. because the placement can't be deleted if the VSI status is delete pending.
+			//	Name:  "purge",
+			//	Usage: T("Delete all guests in this placement group. The group itself can be deleted once all VMs are fully reclaimed"),
+			//},
+			metadata.ForceFlag(),
+		},
+	}
 }
