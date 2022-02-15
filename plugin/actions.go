@@ -379,26 +379,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
 
-		//vlan 6
-		NS_VLAN_NAME + "-" + CMD_VLAN_CREATE_NAME: func(c *cli.Context) error {
-			return vlan.NewCreateCommand(ui, networkManager, context).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_CANCEL_NAME: func(c *cli.Context) error {
-			return vlan.NewCancelCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_DETAIL_NAME: func(c *cli.Context) error {
-			return vlan.NewDetailCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_EDIT_NAME: func(c *cli.Context) error {
-			return vlan.NewEditCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_LIST_NAME: func(c *cli.Context) error {
-			return vlan.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_OPTIONS_NAME: func(c *cli.Context) error {
-			return vlan.NewOptionsCommand(ui, networkManager).Run(c)
-		},
-
 		//order
 		NS_ORDER_NAME + "-" + CMD_ORDER_CATEGORY_LIST_NAME: func(c *cli.Context) error {
 			return order.NewCategoryListCommand(ui, orderManager).Run(c)
@@ -507,6 +487,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl dns
 	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
 	for name, action := range dnsCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl vlan
+	vlanCommands := vlan.GetCommandActionBindings(context, ui, session)
+	for name, action := range vlanCommands {
 		CommandActionBindings[name] = action
 	}
 

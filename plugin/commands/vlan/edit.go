@@ -45,3 +45,22 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("VLAN {{.VlanID}} was updated.", map[string]interface{}{"VlanID": vlanID}))
 	return nil
 }
+
+func VlanEditMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vlan",
+		Name:        "edit",
+		Description: T("Edit the details about a VLAN"),
+		Usage: T(`${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename
+   This command updates vlan with ID 12345678 and gives it a new name "myvlan-rename".`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("The name of the VLAN"),
+			},
+		},
+	}
+}

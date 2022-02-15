@@ -91,3 +91,39 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func VlanListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vlan",
+		Name:        "list",
+		Description: T("List all the VLANs on your account"),
+		Usage: T(`${COMMAND_NAME} sl vlan list [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number
+   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Filter by datacenter shortname"),
+			},
+			cli.IntFlag{
+				Name:  "n,number",
+				Usage: T("Filter by VLAN number"),
+			},
+			cli.StringFlag{
+				Name:  "name",
+				Usage: T("Filter by VLAN name"),
+			},
+			cli.IntFlag{
+				Name:  "order",
+				Usage: T("Filter by ID of the order that purchased the VLAN"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
