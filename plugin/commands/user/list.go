@@ -100,3 +100,23 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func UserListMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_USER_NAME,
+		Name:        CMD_USER_LIST_NAME,
+		Description: T("List Users"),
+		Usage:       "${COMMAND_NAME} sl user list [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

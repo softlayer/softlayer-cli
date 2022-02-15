@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"os"
 	"reflect"
 	"strings"
@@ -177,7 +178,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.PlacementGroupNamespace(),
 		metadata.VlanNamespace(),
 		metadata.OrderNamespace(),
-		metadata.UserNamespace(),
+		user.UserNamespace(),
 		metadata.TagsNamespace(),
 		metadata.DedicatedhostNamespace(),
 		account.AccountNamespace(),
@@ -204,7 +205,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.VSMetaData(),
 		metadata.PlacementGroupMetaData(),
 		metadata.OrderMetaData(),
-		metadata.UserMetaData(),
+		user.UserMetaData(),
 		metadata.CallAPIMetadata(),
 		metadata.TagsMetaData(),
 		metadata.DedicatedhostMetaData(),

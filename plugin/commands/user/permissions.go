@@ -74,3 +74,13 @@ func (cmd *PermissionsCommand) Run(c *cli.Context) error {
 	tablePermission.Print()
 	return nil
 }
+
+func UserPermissionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_USER_NAME,
+		Name:        CMD_USER_PERMISSIONS_NAME,
+		Description: T("View user permissions"),
+		Usage:       "${COMMAND_NAME} sl user permissions IDENTIFIER",
+		Flags:       []cli.Flag{},
+	}
+}
