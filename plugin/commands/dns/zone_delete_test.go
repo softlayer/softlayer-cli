@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Zone delete", func() {
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
 		cmd = dns.NewZoneDeleteCommand(fakeUI, fakeDNSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.DnsZoneDeleteMetaData().Name,
-			Description: metadata.DnsZoneDeleteMetaData().Description,
-			Usage:       metadata.DnsZoneDeleteMetaData().Usage,
-			Flags:       metadata.DnsZoneDeleteMetaData().Flags,
+			Name:        dns.DnsZoneDeleteMetaData().Name,
+			Description: dns.DnsZoneDeleteMetaData().Description,
+			Usage:       dns.DnsZoneDeleteMetaData().Usage,
+			Flags:       dns.DnsZoneDeleteMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

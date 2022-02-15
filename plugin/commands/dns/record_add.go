@@ -58,3 +58,23 @@ func (cmd *RecordAddCommand) Run(c *cli.Context) error {
 		map[string]interface{}{"Zone": zone, "ID": utils.IntPointertoInt(record.Id), "RecordType": utils.StringPointertoString(record.Type), "Host": utils.StringPointertoString(record.Host), "Data": utils.StringPointertoString(record.Data), "Ttl": utils.IntPointertoInt(record.Ttl)}))
 	return nil
 }
+
+func DnsRecordAddMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dns",
+		Name:        "record-add",
+		Description: T("Add resource record in a zone"),
+		Usage: T(`${COMMAND_NAME} sl dns record-add ZONE RECORD TYPE DATA [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dns record-add ibm.com ftp A 127.0.0.1 --ttl 86400
+   This command adds an A record to zone: ibm.com, its host is "ftp", data is "127.0.0.1" and ttl is 86400 seconds.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "ttl",
+				Usage: T("TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
