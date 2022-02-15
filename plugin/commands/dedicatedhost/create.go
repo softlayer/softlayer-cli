@@ -28,6 +28,47 @@ func NewCreateCommand(ui terminal.UI, dedicatedHostManager managers.DedicatedHos
 	}
 }
 
+func DedicatedhostCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dedicatedhost",
+		Name:        "create",
+		Description: T("Create a dedicatedhost"),
+		Usage:       "${COMMAND_NAME} sl dedicatedhost create [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Host portion of the FQDN [required]"),
+			},
+			cli.StringFlag{
+				Name:  "D,domain",
+				Usage: T("Domain portion of the FQDN [required]"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Datacenter shortname [required]"),
+			},
+			cli.StringFlag{
+				Name:  "s,size",
+				Usage: T("Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB"),
+			},
+			cli.StringFlag{
+				Name:  "b,billing",
+				Usage: T("Billing rate. Default is: hourly. Options are: hourly, monthly"),
+			},
+			cli.StringFlag{
+				Name:  "v,vlan-private",
+				Usage: T("The ID of the private VLAN on which you want the dedicated host placed. See: '${COMMAND_NAME} sl vlan list' for reference"),
+			},
+			cli.BoolFlag{
+				Name:  "test",
+				Usage: T("Do not actually create the dedicatedhost"),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *CreateCommand) Run(c *cli.Context) error {
 	size := managers.HOST_DEFAULT_SIZE
 	if c.IsSet("size") {
