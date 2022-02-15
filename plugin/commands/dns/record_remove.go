@@ -45,3 +45,17 @@ func (cmd *RecordRemoveCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("Resource record {{.ID}} was removed.", map[string]interface{}{"ID": recordID}))
 	return nil
 }
+
+func DnsRecordRemoveMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dns",
+		Name:        "record-remove",
+		Description: T("Remove resource record from a zone"),
+		Usage: T(`${COMMAND_NAME} sl dns record-remove RECORD_ID
+
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl dns record-remove 12345678
+   This command removes resource record with ID 12345678.`),
+	}
+}
