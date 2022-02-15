@@ -45,3 +45,19 @@ func (cmd *ZoneListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func DnsZoneListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dns",
+		Name:        "zone-list",
+		Description: T("List all zones on your account"),
+		Usage: T(`${COMMAND_NAME} sl dns zone-list [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dns zone-list
+   This command lists all zones under current account.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}
