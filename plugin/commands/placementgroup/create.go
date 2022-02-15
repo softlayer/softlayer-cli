@@ -61,3 +61,27 @@ func (cmd *PlacementGroupCreateCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}.", map[string]interface{}{"ID": result.Id, "Name": result.Name}))
 	return nil
 }
+
+func PlacementGroupCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "placement-group",
+		Name:        "create",
+		Description: T("Create a placement group"),
+		Usage:       "${COMMAND_NAME} sl placement-group create (--name NAME) (-b, --backend-router-id BACKENDROUTER) (-r, --rule-id RULE) [--output FORMAT]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Name for this new placement group. [required]"),
+			},
+			cli.IntFlag{
+				Name:  "b,backend-router-id",
+				Usage: T("Backend router ID. [required]"),
+			},
+			cli.IntFlag{
+				Name:  "r,rule-id",
+				Usage: T("The ID of the rule to govern this placement group. [required]"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
