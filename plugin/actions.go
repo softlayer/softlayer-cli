@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 
 	"github.com/softlayer/softlayer-go/session"
@@ -192,29 +193,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_HARDWARE_NAME + "-guests": func(c *cli.Context) error {
 			return hardware.NewGuestsCommand(ui, hardwareManager).Run(c)
-		},
-
-		// image - 6
-		NS_IMAGE_NAME + "-" + CMD_IMG_DELETE_NAME: func(c *cli.Context) error {
-			return image.NewDeleteCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DETAIL_NAME: func(c *cli.Context) error {
-			return image.NewDetailCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EDIT_NAME: func(c *cli.Context) error {
-			return image.NewEditCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EXPORT_NAME: func(c *cli.Context) error {
-			return image.NewExportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_IMPORT_NAME: func(c *cli.Context) error {
-			return image.NewImportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_LIST_NAME: func(c *cli.Context) error {
-			return image.NewListCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DATACENTER_NAME: func(c *cli.Context) error {
-			return image.NewDatacenterCommand(ui, imageManager).Run(c)
 		},
 
 		//ipsec - 11
@@ -413,7 +391,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-usage": func(c *cli.Context) error {
 			return virtual.NewUsageCommand(ui, virtualServerManager).Run(c)
 		},
-		NS_VIRTUAL_NAME + "-" +CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
+		NS_VIRTUAL_NAME + "-" + CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
 
@@ -562,6 +540,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl file
 	fileCommands := file.GetCommandAcionBindings(context, ui, session)
 	for name, action := range fileCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl image
+	imageCommands := image.GetCommandActionBindings(context, ui, session)
+	for name, action := range imageCommands {
 		CommandActionBindings[name] = action
 	}
 

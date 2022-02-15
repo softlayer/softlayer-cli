@@ -19,6 +19,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 )
 
 var (
@@ -165,7 +166,7 @@ func Namespaces() []plugin.Namespace {
 		//metadata.NS_FIREWALL,
 		metadata.GlobalIpNamespace(),
 		metadata.HardwareNamespace(),
-		metadata.ImageNamespace(),
+		image.ImageNamespace(),
 		metadata.IpsecNamespace(),
 		metadata.LicensesNamespace(),
 		metadata.LoadbalNamespace(),
@@ -192,7 +193,7 @@ func getCLITopCommands() []cli.Command {
 		// metadata.CMD_FW,
 		metadata.GlobalIpMetaData(),
 		metadata.HardwareMetaData(),
-		metadata.ImageMetaData(),
+		image.ImageMetaData(),
 		metadata.IpsecMetaData(),
 		metadata.LicensesMetaData(),
 		metadata.LoadbalMetaData(),
