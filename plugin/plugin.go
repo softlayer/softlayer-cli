@@ -19,6 +19,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 )
 
 var (
@@ -179,7 +180,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.OrderNamespace(),
 		metadata.UserNamespace(),
 		metadata.TagsNamespace(),
-		metadata.DedicatedhostNamespace(),
+		dedicatedhost.DedicatedhostNamespace(),
 		account.AccountNamespace(),
 	}
 }
@@ -207,7 +208,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.UserMetaData(),
 		metadata.CallAPIMetadata(),
 		metadata.TagsMetaData(),
-		metadata.DedicatedhostMetaData(),
+		dedicatedhost.DedicatedhostMetaData(),
 		account.AccountMetaData(),
 	}
 }
