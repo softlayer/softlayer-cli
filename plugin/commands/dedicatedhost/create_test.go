@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -32,10 +31,10 @@ var _ = Describe("Dedicated host create", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = dedicatedhost.NewCreateCommand(fakeUI, FakeDedicatedhostManager, fakeNetworkManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.DedicatedhostCreateMetaData().Name,
-			Description: metadata.DedicatedhostCreateMetaData().Description,
-			Usage:       metadata.DedicatedhostCreateMetaData().Usage,
-			Flags:       metadata.DedicatedhostCreateMetaData().Flags,
+			Name:        dedicatedhost.DedicatedhostCreateMetaData().Name,
+			Description: dedicatedhost.DedicatedhostCreateMetaData().Description,
+			Usage:       dedicatedhost.DedicatedhostCreateMetaData().Usage,
+			Flags:       dedicatedhost.DedicatedhostCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

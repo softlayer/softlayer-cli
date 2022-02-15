@@ -53,18 +53,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	callAPIManager := managers.NewCallAPIManager(session)
 	ticketManager := managers.NewTicketManager(session)
 	licensesManager := managers.NewLicensesManager(session)
-	placeGroupManager := managers.NewPlaceGroupManager(session)
-	dedicatedhostManager := managers.NewDedicatedhostManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-
-		//dedicatedhost - 1
-		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_LIST_GUESTS_NAME: func(c *cli.Context) error {
-			return dedicatedhost.NewListGuestsCommand(ui, dedicatedhostManager).Run(c)
-		},
-		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_CREATE_NAME: func(c *cli.Context) error {
-			return dedicatedhost.NewCreateCommand(ui, dedicatedhostManager, networkManager, context).Run(c)
-		},
 
 		// firewall - 5
 		NS_FIREWALL_NAME + "-" + CMD_FW_ADD_NAME: func(c *cli.Context) error {
@@ -385,23 +375,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
 
-		//Placement group
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupCreateCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_LIST_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupListCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_DELETE_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupDeleteCommand(ui, placeGroupManager, virtualServerManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupCreateOptionsCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_DETAIL_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupDetailCommand(ui, placeGroupManager).Run(c)
-		},
-
 		//vlan 6
 		NS_VLAN_NAME + "-" + CMD_VLAN_CREATE_NAME: func(c *cli.Context) error {
 			return vlan.NewCreateCommand(ui, networkManager, context).Run(c)
@@ -521,6 +494,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
+	// ibmcloud sl dedicatedhost
+	dedicatedhostCommands := dedicatedhost.GetCommandActionBindings(context, ui, session)
+	for name, action := range dedicatedhostCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl dns
 	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
 	for name, action := range dnsCommands {
@@ -548,6 +527,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl loadbal
 	loadbalCommands := loadbal.GetCommandAcionBindings(ui, session)
 	for name, action := range loadbalCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl placement-group
+	placementgroupCommands := placementgroup.GetCommandActionBindings(context, ui, session)
+	for name, action := range placementgroupCommands {
 		CommandActionBindings[name] = action
 	}
 

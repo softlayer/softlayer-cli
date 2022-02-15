@@ -27,6 +27,54 @@ func NewListGuestsCommand(ui terminal.UI, dedicatedHostManager managers.Dedicate
 	}
 }
 
+func DedicatedhostListGuestsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dedicatedhost",
+		Name:        "list-guests",
+		Description: T("List Dedicated Host Guests."),
+		Usage: T(`${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567
+   This command list all Dedicated Host guests in the Account.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "c,cpu",
+				Usage: T("Filter by the number of CPU cores"),
+			},
+			cli.StringSliceFlag{
+				Name:  "t,tag",
+				Usage: T("Filter by tags"),
+			},
+			cli.StringFlag{
+				Name:  "d,domain",
+				Usage: T("Filter by domain portion of the FQDN"),
+			},
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Filter by host portion of the FQDN"),
+			},
+			cli.IntFlag{
+				Name:  "m,memory",
+				Usage: T("Filter by Memory capacity in megabytes"),
+			},
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by, default:hostname"),
+			},
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 var maskListMap = map[string]string{
 	"id":                "id",
 	"hostname":          "hostname",
