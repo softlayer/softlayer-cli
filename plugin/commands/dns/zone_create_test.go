@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("Zone create", func() {
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
 		cmd = dns.NewZoneCreateCommand(fakeUI, fakeDNSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.DnsZoneCreateMetaData().Name,
-			Description: metadata.DnsZoneCreateMetaData().Description,
-			Usage:       metadata.DnsZoneCreateMetaData().Usage,
-			Flags:       metadata.DnsZoneCreateMetaData().Flags,
+			Name:        dns.DnsZoneCreateMetaData().Name,
+			Description: dns.DnsZoneCreateMetaData().Description,
+			Usage:       dns.DnsZoneCreateMetaData().Usage,
+			Flags:       dns.DnsZoneCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

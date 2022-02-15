@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Record remove", func() {
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
 		cmd = dns.NewRecordRemoveCommand(fakeUI, fakeDNSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.DnsRecordRemoveMetaData().Name,
-			Description: metadata.DnsRecordRemoveMetaData().Description,
-			Usage:       metadata.DnsRecordRemoveMetaData().Usage,
-			Flags:       metadata.DnsRecordRemoveMetaData().Flags,
+			Name:        dns.DnsRecordRemoveMetaData().Name,
+			Description: dns.DnsRecordRemoveMetaData().Description,
+			Usage:       dns.DnsRecordRemoveMetaData().Usage,
+			Flags:       dns.DnsRecordRemoveMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -8,7 +8,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("DNS Import", func() {
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
 		cmd = dns.NewImportCommand(fakeUI, fakeDNSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.DnsImportMetaData().Name,
-			Description: metadata.DnsImportMetaData().Description,
-			Usage:       metadata.DnsImportMetaData().Usage,
-			Flags:       metadata.DnsImportMetaData().Flags,
+			Name:        dns.DnsImportMetaData().Name,
+			Description: dns.DnsImportMetaData().Description,
+			Usage:       dns.DnsImportMetaData().Usage,
+			Flags:       dns.DnsImportMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

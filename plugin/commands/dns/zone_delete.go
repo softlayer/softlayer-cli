@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -42,4 +42,17 @@ func (cmd *ZoneDeleteCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Zone {{.Zone}} was deleted.", map[string]interface{}{"Zone": zoneName}))
 	return nil
+}
+
+func DnsZoneDeleteMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dns",
+		Name:        "zone-delete",
+		Description: T("Delete a zone"),
+		Usage: T(`${COMMAND_NAME} sl dns zone-delete ZONE
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dns zone-delete ibm.com 
+   This command deletes a zone that is named ibm.com.`),
+	}
 }

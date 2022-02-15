@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Zone print", func() {
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
 		cmd = dns.NewZonePrintCommand(fakeUI, fakeDNSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.DnsZonePrintMetaData().Name,
-			Description: metadata.DnsZonePrintMetaData().Description,
-			Usage:       metadata.DnsZonePrintMetaData().Usage,
-			Flags:       metadata.DnsZonePrintMetaData().Flags,
+			Name:        dns.DnsZonePrintMetaData().Name,
+			Description: dns.DnsZonePrintMetaData().Description,
+			Usage:       dns.DnsZonePrintMetaData().Usage,
+			Flags:       dns.DnsZonePrintMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
