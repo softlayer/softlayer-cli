@@ -156,29 +156,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return hardware.NewGuestsCommand(ui, hardwareManager).Run(c)
 		},
 
-		// image - 6
-		NS_IMAGE_NAME + "-" + CMD_IMG_DELETE_NAME: func(c *cli.Context) error {
-			return image.NewDeleteCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DETAIL_NAME: func(c *cli.Context) error {
-			return image.NewDetailCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EDIT_NAME: func(c *cli.Context) error {
-			return image.NewEditCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EXPORT_NAME: func(c *cli.Context) error {
-			return image.NewExportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_IMPORT_NAME: func(c *cli.Context) error {
-			return image.NewImportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_LIST_NAME: func(c *cli.Context) error {
-			return image.NewListCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DATACENTER_NAME: func(c *cli.Context) error {
-			return image.NewDatacenterCommand(ui, imageManager).Run(c)
-		},
-
 		//ipsec - 11
 		NS_IPSEC_NAME + "-" + CMD_IPSEC_CONFIG_NAME: func(c *cli.Context) error {
 			return ipsec.NewConfigCommand(ui, ipsecManager).Run(c)
@@ -402,28 +379,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return order.NewPresetListCommand(ui, orderManager).Run(c)
 		},
 
-		//user
-		NS_USER_NAME + "-" + CMD_USER_CREATE_NAME: func(c *cli.Context) error {
-			return user.NewCreateCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_LIST_NAME: func(c *cli.Context) error {
-			return user.NewListCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_DELETE_NAME: func(c *cli.Context) error {
-			return user.NewDeleteCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_DETAIL_NAME: func(c *cli.Context) error {
-			return user.NewDetailsCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_PERMISSIONS_NAME: func(c *cli.Context) error {
-			return user.NewPermissionsCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_EDIT_DETAILS_NAME: func(c *cli.Context) error {
-			return user.NewEditCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_EDIT_PERMISSIONS_NAME: func(c *cli.Context) error {
-			return user.NewEditPermissionCommand(ui, userManager).Run(c)
-		},
 
 		//callapi
 		NS_SL_NAME + "-" + CMD_CALLAPI_NAME: func(c *cli.Context) error {
@@ -508,6 +463,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
+	// ibmcloud sl image
+	imageCommands := image.GetCommandActionBindings(context, ui, session)
+	for name, action := range imageCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl tags
 	tagCommands := tags.GetCommandAcionBindings(ui, session)
 	for name, action := range tagCommands {
@@ -529,6 +490,11 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl security
 	// ibmcloud sl sshkey
 	// ibmcloud sl ssl
+	userCommands := user.GetCommandActionBindings(ui, session)
+	for name, action := range userCommands {
+		CommandActionBindings[name] = action
+	}
+
 	for name, action := range security.GetCommandActionBindings(ui, session) {
 		CommandActionBindings[name] = action
 	}

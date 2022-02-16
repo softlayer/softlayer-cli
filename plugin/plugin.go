@@ -19,8 +19,11 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
@@ -163,12 +166,12 @@ func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
 		metadata.SoftlayerNamespace(),
 		metadata.BlockNamespace(),
-		metadata.DnsNamespace(),
+		dns.DnsNamespace(),
 		metadata.FileNamespace(),
 		//metadata.NS_FIREWALL,
 		metadata.GlobalIpNamespace(),
 		metadata.HardwareNamespace(),
-		metadata.ImageNamespace(),
+		image.ImageNamespace(),
 		metadata.IpsecNamespace(),
 		metadata.LicensesNamespace(),
 		metadata.LoadbalNamespace(),
@@ -180,7 +183,7 @@ func Namespaces() []plugin.Namespace {
 		placementgroup.PlacementGroupNamespace(),
 		vlan.VlanNamespace(),
 		metadata.OrderNamespace(),
-		metadata.UserNamespace(),
+		user.UserNamespace(),
 		metadata.TagsNamespace(),
 		dedicatedhost.DedicatedhostNamespace(),
 		account.AccountNamespace(),
@@ -190,12 +193,12 @@ func Namespaces() []plugin.Namespace {
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
 		metadata.BlockMetaData(),
-		metadata.DnsMetaData(),
+		dns.DnsMetaData(),
 		metadata.FileMetaData(),
 		// metadata.CMD_FW,
 		metadata.GlobalIpMetaData(),
 		metadata.HardwareMetaData(),
-		metadata.ImageMetaData(),
+		image.ImageMetaData(),
 		metadata.IpsecMetaData(),
 		metadata.LicensesMetaData(),
 		metadata.LoadbalMetaData(),
@@ -207,7 +210,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.VSMetaData(),
 		placementgroup.PlacementGroupMetaData(),
 		metadata.OrderMetaData(),
-		metadata.UserMetaData(),
+		user.UserMetaData(),
 		metadata.CallAPIMetadata(),
 		metadata.TagsMetaData(),
 		dedicatedhost.DedicatedhostMetaData(),
