@@ -11,7 +11,6 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
@@ -29,10 +28,10 @@ var _ = Describe("Create", func() {
 		fakeUserManager = new(testhelpers.FakeUserManager)
 		cmd = user.NewCreateCommand(fakeUI, fakeUserManager)
 		cliCommand = cli.Command{
-			Name:        metadata.UserCreateMetaData().Name,
-			Description: metadata.UserCreateMetaData().Description,
-			Usage:       metadata.UserCreateMetaData().Usage,
-			Flags:       metadata.UserCreateMetaData().Flags,
+			Name:        user.UserCreateMetaData().Name,
+			Description: user.UserCreateMetaData().Description,
+			Usage:       user.UserCreateMetaData().Usage,
+			Flags:       user.UserCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 		testUser := datatypes.User_Customer{
