@@ -19,12 +19,14 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
 var (
@@ -165,7 +167,7 @@ func convertToPluginFlags(flags []cli.Flag) []plugin.Flag {
 func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
 		metadata.SoftlayerNamespace(),
-		metadata.BlockNamespace(),
+		block.BlockNamespace(),
 		dns.DnsNamespace(),
 		metadata.FileNamespace(),
 		//metadata.NS_FIREWALL,
@@ -181,8 +183,8 @@ func Namespaces() []plugin.Namespace {
 		metadata.TicketNamespace(),
 		metadata.VSNamespace(),
 		placementgroup.PlacementGroupNamespace(),
-		metadata.VlanNamespace(),
 		order.OrderNamespace(),
+		vlan.VlanNamespace(),
 		user.UserNamespace(),
 		metadata.TagsNamespace(),
 		dedicatedhost.DedicatedhostNamespace(),
@@ -192,7 +194,7 @@ func Namespaces() []plugin.Namespace {
 
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
-		metadata.BlockMetaData(),
+		block.BlockMetaData(),
 		dns.DnsMetaData(),
 		metadata.FileMetaData(),
 		// metadata.CMD_FW,
@@ -206,7 +208,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.SecurityGroupMetaData(),
 		metadata.SubnetMetaData(),
 		metadata.TicketMetaData(),
-		metadata.VlanMetaData(),
+		vlan.VlanMetaData(),
 		metadata.VSMetaData(),
 		placementgroup.PlacementGroupMetaData(),
 		order.OrderMetaData(),

@@ -12,7 +12,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -30,10 +30,10 @@ var _ = Describe("Access Revoke", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = block.NewAccessRevokeCommand(fakeUI, FakeStorageManager, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.BlockAccessRevokeMetaData().Name,
-			Description: metadata.BlockAccessRevokeMetaData().Description,
-			Usage:       metadata.BlockAccessRevokeMetaData().Usage,
-			Flags:       metadata.BlockAccessRevokeMetaData().Flags,
+			Name:        block.BlockAccessRevokeMetaData().Name,
+			Description: block.BlockAccessRevokeMetaData().Description,
+			Usage:       block.BlockAccessRevokeMetaData().Usage,
+			Flags:       block.BlockAccessRevokeMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

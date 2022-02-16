@@ -14,7 +14,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -32,10 +31,10 @@ var _ = Describe("VLAN create", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = vlan.NewCreateCommand(fakeUI, fakeNetworkManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.VlanCreateMetaData().Name,
-			Description: metadata.VlanCreateMetaData().Description,
-			Usage:       metadata.VlanCreateMetaData().Usage,
-			Flags:       metadata.VlanCreateMetaData().Flags,
+			Name:        vlan.VlanCreateMetaData().Name,
+			Description: vlan.VlanCreateMetaData().Description,
+			Usage:       vlan.VlanCreateMetaData().Usage,
+			Flags:       vlan.VlanCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
