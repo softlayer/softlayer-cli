@@ -60,3 +60,26 @@ func (cmd *AttachDeviceTicketCommand) Run(c *cli.Context) error {
 	}
 
 }
+
+func TicketAttachMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ticket",
+		Name:        "attach",
+		Description: T("Attach devices to ticket"),
+		Usage: T(`${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]
+  
+EXAMPLE:
+  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 
+  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 `),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "hardware",
+				Usage: T("The identifier for hardware to attach"),
+			},
+			cli.IntFlag{
+				Name:  "virtual",
+				Usage: T("The identifier for a virtual server to attach"),
+			},
+		},
+	}
+}

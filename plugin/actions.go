@@ -49,9 +49,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	ipsecManager := managers.NewIPSECManager(session)
 
 	hardwareManager := managers.NewHardwareServerManager(session)
-	userManager := managers.NewUserManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
-	ticketManager := managers.NewTicketManager(session)
 	licensesManager := managers.NewLicensesManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
@@ -360,43 +358,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return callapi.NewCallAPICommand(ui, callAPIManager).Run(c)
 		},
 
-		//ticket
-		NS_TICKET_NAME + "-" + CMD_TICKET_CREATE_NAME: func(c *cli.Context) error {
-			return ticket.NewCreateStandardTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_ATTACH_NAME: func(c *cli.Context) error {
-			return ticket.NewAttachDeviceTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_DETACH_NAME: func(c *cli.Context) error {
-			return ticket.NewDetachDeviceTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_DETAIL_NAME: func(c *cli.Context) error {
-			return ticket.NewDetailTicketCommand(ui, ticketManager, userManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_UPDATE_NAME: func(c *cli.Context) error {
-			return ticket.NewUpdateTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_SUBJECTS_NAME: func(c *cli.Context) error {
-			return ticket.NewSubjectsTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_LIST_NAME: func(c *cli.Context) error {
-			return ticket.NewListTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_UPLOAD_NAME: func(c *cli.Context) error {
-			return ticket.NewUploadFileTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_SUMMARY_NAME: func(c *cli.Context) error {
-			return ticket.NewSummaryTicketCommand(ui, ticketManager).Run(c)
-		},
-
+		//license
 		NS_LICENSES_NAME + "-" + CMD_LICENSES_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
 			return licenses.NewLicensesOptionsCommand(ui, licensesManager).Run(c)
 		},
@@ -465,6 +427,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl placement-group
 	placementgroupCommands := placementgroup.GetCommandActionBindings(context, ui, session)
 	for name, action := range placementgroupCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl ticket
+	ticketCommands := ticket.GetCommandActionBindings(context, ui, session)
+	for name, action := range ticketCommands {
 		CommandActionBindings[name] = action
 	}
 
