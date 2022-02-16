@@ -22,6 +22,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 )
 
 var (
@@ -166,7 +167,7 @@ func Namespaces() []plugin.Namespace {
 		dns.DnsNamespace(),
 		metadata.FileNamespace(),
 		//metadata.NS_FIREWALL,
-		metadata.GlobalIpNamespace(),
+		globalip.GlobalIpNamespace(),
 		metadata.HardwareNamespace(),
 		metadata.ImageNamespace(),
 		metadata.IpsecNamespace(),
@@ -193,7 +194,7 @@ func getCLITopCommands() []cli.Command {
 		dns.DnsMetaData(),
 		metadata.FileMetaData(),
 		// metadata.CMD_FW,
-		metadata.GlobalIpMetaData(),
+		globalip.GlobalIpMetaData(),
 		metadata.HardwareMetaData(),
 		metadata.ImageMetaData(),
 		metadata.IpsecMetaData(),
