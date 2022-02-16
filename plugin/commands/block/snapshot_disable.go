@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -20,6 +20,25 @@ func NewSnapshotDisableCommand(ui terminal.UI, storageManager managers.StorageMa
 	return &SnapshotDisableCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func BlockSnapshotDisableMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "snapshot-disable",
+		Description: T("Disable snapshots on the specified schedule for a given volume"),
+		Usage: T(`${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY
+   This command disables daily snapshot for volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,schedule-type",
+				Usage: T("Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY"),
+			},
+		},
 	}
 }
 

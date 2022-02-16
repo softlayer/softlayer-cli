@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -20,6 +20,19 @@ func NewAccessPasswordCommand(ui terminal.UI, storageManager managers.StorageMan
 	return &AccessPasswordCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func BlockAccessPasswordMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "access-password",
+		Description: T("Changes a password for a volume's access"),
+		Usage: T(`${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD
+	
+	ACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'
+	`),
+		Flags: []cli.Flag{},
 	}
 }
 

@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -22,6 +22,22 @@ func NewReplicaLocationsCommand(ui terminal.UI, storageManager managers.StorageM
 	return &ReplicaLocationsCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func BlockReplicaLocationsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "replica-locations",
+		Description: T("List suitable replication datacenters for the given volume"),
+		Usage: T(`${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl block replica-locations 12345678
+   This command lists suitable replication data centers for block volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
 	}
 }
 

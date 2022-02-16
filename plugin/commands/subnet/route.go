@@ -60,3 +60,27 @@ func (cmd *RouteCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("The transaction to route is created, routes will be updated in one or two minutes."))
 	return nil
 }
+
+func SubnetRouteMetaData() cli.Command {
+	return cli.Command{
+		Category:    "subnet",
+		Name:        "route",
+		Description: T("This interface allows you to change the route of your Account Owned subnets."),
+		Usage: T(`${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678
+   This command allows you to change the route of your Account Owned subnets.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "i, type-id",
+				Usage: T("An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required]."),
+			},
+			cli.StringFlag{
+				Name:  "t, type",
+				Usage: T("Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required]."),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

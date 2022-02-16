@@ -22,6 +22,21 @@ func NewVolumeCountCommand(ui terminal.UI, storageManager managers.StorageManage
 	}
 }
 
+func BlockVolumeCountMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "volume-count",
+		Description: T("List number of block storage volumes per datacenter"),
+		Usage:       "${COMMAND_NAME} sl block volume-count [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Filter by datacenter shortname"),
+			},
+		},
+	}
+}
+
 func (cmd *VolumeCountCommand) Run(c *cli.Context) error {
 	mask := "mask[id,serviceResource.datacenter.name]"
 	volumes, err := cmd.StorageManager.ListVolumes(managers.VOLUME_TYPE_BLOCK, c.String("d"), "", "", 0, mask)

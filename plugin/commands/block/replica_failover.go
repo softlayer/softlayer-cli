@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -20,6 +20,19 @@ func NewReplicaFailoverCommand(ui terminal.UI, storageManager managers.StorageMa
 	return &ReplicaFailoverCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func BlockReplicaFailOverMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "replica-failover",
+		Description: T("Failover a block volume to the given replica volume"),
+		Usage: T(`${COMMAND_NAME} sl block replica-failover VOLUME_ID REPLICA_ID
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl block replica-failover 12345678 87654321
+   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.`),
 	}
 }
 

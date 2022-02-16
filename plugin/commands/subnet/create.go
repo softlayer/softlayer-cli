@@ -5,11 +5,11 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -101,4 +101,38 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
+}
+
+func SubnetCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "subnet",
+		Name:        "create",
+		Description: T("Add a new subnet to your account"),
+		Usage: T(`${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]
+	
+	Add a new subnet to your account. Valid quantities vary by type.
+	
+	Type    - Valid Quantities (IPv4)
+  	public  - 4, 8, 16, 32
+  	private - 4, 8, 16, 32, 64
+
+  	Type    - Valid Quantities (IPv6)
+	public  - 64
+
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet create public 16 567 
+   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "v6,ipv6",
+				Usage: T("Order IPv6 Addresses"),
+			},
+			cli.BoolFlag{
+				Name:  "test",
+				Usage: T("Do not order the subnet; just get a quote"),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
+	}
 }

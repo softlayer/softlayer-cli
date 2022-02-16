@@ -90,3 +90,49 @@ func (cmd *CreateStandardTicketCommand) Run(c *cli.Context) error {
 
 	return err
 }
+
+func TicketCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ticket",
+		Name:        "create",
+		Description: T("Create a support ticket"),
+		Usage: T(`${COMMAND_NAME} sl ticket create [OPTIONS]
+
+EXAMPLE: 	
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --body "This is an example ticket. Please disregard."
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --body "This is an example ticket. Please disregard." --attachment 8675654 --attachment-type hardware --rootpwd passw0rd
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --body "This is an example ticket. Please disregard." --attachment 1234567 --attachment-type virtual --rootpwd passw0rd
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --attachment 8675654 --rootpwd passw0rd
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "attachment",
+				Usage: T("Initial object ID number to attach to ticket"),
+			},
+			cli.StringFlag{
+				Name:  "rootpwd",
+				Usage: T("Root password associated with attached device id"),
+			},
+			cli.IntFlag{
+				Name:  "subject-id",
+				Usage: T("The subject id to use for the ticket, issue '${COMMAND_NAME} sl ticket subjects' to get the list. [required]"),
+			},
+			cli.StringFlag{
+				Name:  "title",
+				Usage: T("The title of the ticket. [required]"),
+			},
+			cli.StringFlag{
+				Name:  "body",
+				Usage: T("The ticket body"),
+			},
+			cli.StringFlag{
+				Name:  "priority",
+				Usage: T("Ticket priority [1|2|3|4], from 1 (Critical) to 4 (Minimal Impact). Only settable with Advanced and Premium support. See https://www.ibm.com/cloud/support"),
+			},
+			cli.StringFlag{
+				Name:  "attachment-type",
+				Usage: T("Specify the type of attachment, hardware or virtual. default is hardware"),
+			},
+		},
+	}
+}
