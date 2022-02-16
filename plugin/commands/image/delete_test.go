@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Image delete", func() {
 		fakeImageManager = new(testhelpers.FakeImageManager)
 		cmd = image.NewDeleteCommand(fakeUI, fakeImageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.ImageDelMetaData().Name,
-			Description: metadata.ImageDelMetaData().Description,
-			Usage:       metadata.ImageDelMetaData().Usage,
-			Flags:       metadata.ImageDelMetaData().Flags,
+			Name:        image.ImageDelMetaData().Name,
+			Description: image.ImageDelMetaData().Description,
+			Usage:       image.ImageDelMetaData().Usage,
+			Flags:       image.ImageDelMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

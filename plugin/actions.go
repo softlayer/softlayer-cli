@@ -156,29 +156,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return hardware.NewGuestsCommand(ui, hardwareManager).Run(c)
 		},
 
-		// image - 6
-		NS_IMAGE_NAME + "-" + CMD_IMG_DELETE_NAME: func(c *cli.Context) error {
-			return image.NewDeleteCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DETAIL_NAME: func(c *cli.Context) error {
-			return image.NewDetailCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EDIT_NAME: func(c *cli.Context) error {
-			return image.NewEditCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EXPORT_NAME: func(c *cli.Context) error {
-			return image.NewExportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_IMPORT_NAME: func(c *cli.Context) error {
-			return image.NewImportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_LIST_NAME: func(c *cli.Context) error {
-			return image.NewListCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DATACENTER_NAME: func(c *cli.Context) error {
-			return image.NewDatacenterCommand(ui, imageManager).Run(c)
-		},
-
 		//ipsec - 11
 		NS_IPSEC_NAME + "-" + CMD_IPSEC_CONFIG_NAME: func(c *cli.Context) error {
 			return ipsec.NewConfigCommand(ui, ipsecManager).Run(c)
@@ -497,6 +474,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl file
 	fileCommands := file.GetCommandAcionBindings(context, ui, session)
 	for name, action := range fileCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl image
+	imageCommands := image.GetCommandActionBindings(context, ui, session)
+	for name, action := range imageCommands {
 		CommandActionBindings[name] = action
 	}
 
