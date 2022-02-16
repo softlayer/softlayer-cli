@@ -252,29 +252,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return securitygroup.NewRuleRemoveCommand(ui, networkManager).Run(c)
 		},
 
-		//subnet 5
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_CANCEL_NAME: func(c *cli.Context) error {
-			return subnet.NewCancelCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_CREATE_NAME: func(c *cli.Context) error {
-			return subnet.NewCreateCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_DETAIL_NAME: func(c *cli.Context) error {
-			return subnet.NewDetailCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_LIST_NAME: func(c *cli.Context) error {
-			return subnet.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_LOOKUP_NAME: func(c *cli.Context) error {
-			return subnet.NewLookupCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_ROUTE_NAME: func(c *cli.Context) error {
-			return subnet.NewRouteCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_CLEAR_ROUTE_NAME: func(c *cli.Context) error {
-			return subnet.NewClearRouteCommand(ui, networkManager).Run(c)
-		},
-
 		//virual server - 20
 		NS_VIRTUAL_NAME + "-" + CMD_VS_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
 			return virtual.NewAuthorizeStorageCommand(ui, virtualServerManager).Run(c)
@@ -537,6 +514,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl placement-group
 	placementgroupCommands := placementgroup.GetCommandActionBindings(context, ui, session)
 	for name, action := range placementgroupCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl subnet
+	subnetCommands := subnet.GetCommandActionBindings(context, ui, session)
+	for name, action := range subnetCommands {
 		CommandActionBindings[name] = action
 	}
 

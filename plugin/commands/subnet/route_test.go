@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("Subnet Route", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = subnet.NewRouteCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SubnetRouteMetaData().Name,
-			Description: metadata.SubnetRouteMetaData().Description,
-			Usage:       metadata.SubnetRouteMetaData().Usage,
-			Flags:       metadata.SubnetRouteMetaData().Flags,
+			Name:        subnet.SubnetRouteMetaData().Name,
+			Description: subnet.SubnetRouteMetaData().Description,
+			Usage:       subnet.SubnetRouteMetaData().Usage,
+			Flags:       subnet.SubnetRouteMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
