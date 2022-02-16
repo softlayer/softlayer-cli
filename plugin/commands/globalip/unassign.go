@@ -51,3 +51,19 @@ func (cmd *UnassignCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("The transaction to unroute a global IP address is created, routes will be updated in one or two minutes."))
 	return nil
 }
+
+func GlobalIpUnassignMetaData() cli.Command {
+	return cli.Command{
+		Category:    "globalip",
+		Name:        "unassign",
+		Description: T("Unassign a global IP from a target router or device"),
+		Usage: T(`${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+    ${COMMAND_NAME} sl globalip unassign 12345678
+	This command unassigns IP address with ID 12345678 from the target device.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

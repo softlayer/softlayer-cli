@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("GlobalIP create", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = globalip.NewCreateCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.GlobalIpCreateMetaData().Name,
-			Description: metadata.GlobalIpCreateMetaData().Description,
-			Usage:       metadata.GlobalIpCreateMetaData().Usage,
-			Flags:       metadata.GlobalIpCreateMetaData().Flags,
+			Name:        globalip.GlobalIpCreateMetaData().Name,
+			Description: globalip.GlobalIpCreateMetaData().Description,
+			Usage:       globalip.GlobalIpCreateMetaData().Usage,
+			Flags:       globalip.GlobalIpCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

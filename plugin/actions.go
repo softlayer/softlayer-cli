@@ -72,23 +72,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return firewall.NewListCommand(ui, firewallManager).Run(c)
 		},
 
-		// globalip - 5
-		NS_GLOBALIP_NAME + "-" + CMD_GP_ASSIGN_NAME: func(c *cli.Context) error {
-			return globalip.NewAssignCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_CREATE_NAME: func(c *cli.Context) error {
-			return globalip.NewCreateCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_CANCEL_NAME: func(c *cli.Context) error {
-			return globalip.NewCancelCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_LIST_NAME: func(c *cli.Context) error {
-			return globalip.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_UNASSIGN_NAME: func(c *cli.Context) error {
-			return globalip.NewUnassignCommand(ui, networkManager).Run(c)
-		},
-
 		//hardware -14
 		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
 			return hardware.NewAuthorizeStorageCommand(ui, hardwareManager).Run(c)
@@ -426,6 +409,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
+
+	// ibmcloud sl globalip
+	globalipCommands := globalip.GetCommandActionBindings(context, ui, session)
+	for name, action := range globalipCommands {
+    CommandActionBindings[name] = action
+  }
 
 	// ibmcloud sl subnet
 	subnetCommands := subnet.GetCommandActionBindings(context, ui, session)
