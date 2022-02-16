@@ -22,6 +22,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
 )
 
 var (
@@ -181,7 +182,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.VlanNamespace(),
 		metadata.OrderNamespace(),
 		metadata.UserNamespace(),
-		metadata.TagsNamespace(),
+		tags.TagsNamespace(),
 		dedicatedhost.DedicatedhostNamespace(),
 		account.AccountNamespace(),
 	}
@@ -209,7 +210,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.OrderMetaData(),
 		metadata.UserMetaData(),
 		metadata.CallAPIMetadata(),
-		metadata.TagsMetaData(),
+		tags.TagsMetaData(),
 		dedicatedhost.DedicatedhostMetaData(),
 		account.AccountMetaData(),
 	}

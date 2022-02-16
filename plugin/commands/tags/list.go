@@ -135,3 +135,27 @@ func BuildDetailedTagTable(tags []datatypes.Tag, tagsManager managers.TagsManage
 	}
 	return detailedTags
 }
+
+func TagsListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "tags",
+		Name:        "list",
+		Description: T("List all tags currently on your account"),
+		Usage: T(`${COMMAND_NAME} sl tags list [OPTIONS]
+
+EXAMPLE:
+	${COMMAND_NAME} sl tags list
+	Shows all tags and a count of devices associated with that tag.
+
+	${COMMAND_NAME} sl tags list -d
+	Shows all tags with devices, and some basic information about devices using this tag.
+`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "d,detail",
+				Usage: T("List information about devices using the tag."),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
