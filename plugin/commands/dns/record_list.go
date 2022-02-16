@@ -59,3 +59,35 @@ func (cmd *RecordListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func DnsRecordListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dns",
+		Name:        "record-list",
+		Description: T("List all the resource records in a zone"),
+		Usage: T(`${COMMAND_NAME} sl dns record-list ZONE [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl dns record-list ibm.com --record elasticsearch --type A --ttl 900
+   This command lists all A records under the zone: ibm.com, and filters by host is elasticsearch and ttl is 900 seconds.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "data",
+				Usage: T("Filter by record data, such as an IP address"),
+			},
+			cli.StringFlag{
+				Name:  "record",
+				Usage: T("Filter by host record, such as www"),
+			},
+			cli.IntFlag{
+				Name:  "ttl",
+				Usage: T("Filter by TTL(Time-To-Live) in seconds, such as 86400"),
+			},
+			cli.StringFlag{
+				Name:  "type",
+				Usage: T("Filter by record type, such as A or CNAME"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

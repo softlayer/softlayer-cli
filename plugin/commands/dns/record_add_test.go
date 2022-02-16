@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("Record add", func() {
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
 		cmd = dns.NewRecordAddCommand(fakeUI, fakeDNSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.DnsRecordAddMetaData().Name,
-			Description: metadata.DnsRecordAddMetaData().Description,
-			Usage:       metadata.DnsRecordAddMetaData().Usage,
-			Flags:       metadata.DnsRecordAddMetaData().Flags,
+			Name:        dns.DnsRecordAddMetaData().Name,
+			Description: dns.DnsRecordAddMetaData().Description,
+			Usage:       dns.DnsRecordAddMetaData().Usage,
+			Flags:       dns.DnsRecordAddMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

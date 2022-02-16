@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 
 	"github.com/softlayer/softlayer-go/session"
@@ -53,47 +54,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	callAPIManager := managers.NewCallAPIManager(session)
 	ticketManager := managers.NewTicketManager(session)
 	licensesManager := managers.NewLicensesManager(session)
-	placeGroupManager := managers.NewPlaceGroupManager(session)
-	dedicatedhostManager := managers.NewDedicatedhostManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-
-		//dns - 9
-		NS_DNS_NAME + "-" + CMD_DNS_IMPORT_NAME: func(c *cli.Context) error {
-			return dns.NewImportCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_ADD_NAME: func(c *cli.Context) error {
-			return dns.NewRecordAddCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_EDIT_NAME: func(c *cli.Context) error {
-			return dns.NewRecordEditCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_LIST_NAME: func(c *cli.Context) error {
-			return dns.NewRecordListCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_REMOVE_NAME: func(c *cli.Context) error {
-			return dns.NewRecordRemoveCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_CREATE_NAME: func(c *cli.Context) error {
-			return dns.NewZoneCreateCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_DELETE_NAME: func(c *cli.Context) error {
-			return dns.NewZoneDeleteCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_LIST_NAME: func(c *cli.Context) error {
-			return dns.NewZoneListCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_PRINT_NAME: func(c *cli.Context) error {
-			return dns.NewZonePrintCommand(ui, dnsManager).Run(c)
-		},
-
-		//dedicatedhost - 1
-		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_LIST_GUESTS_NAME: func(c *cli.Context) error {
-			return dedicatedhost.NewListGuestsCommand(ui, dedicatedhostManager).Run(c)
-		},
-		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_CREATE_NAME: func(c *cli.Context) error {
-			return dedicatedhost.NewCreateCommand(ui, dedicatedhostManager, networkManager, context).Run(c)
-		},
 
 		// firewall - 5
 		NS_FIREWALL_NAME + "-" + CMD_FW_ADD_NAME: func(c *cli.Context) error {
@@ -413,25 +375,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		NS_VIRTUAL_NAME + "-usage": func(c *cli.Context) error {
 			return virtual.NewUsageCommand(ui, virtualServerManager).Run(c)
 		},
-		NS_VIRTUAL_NAME + "-" +CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
+		NS_VIRTUAL_NAME + "-" + CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
-		},
-
-		//Placement group
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupCreateCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_LIST_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupListCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_DELETE_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupDeleteCommand(ui, placeGroupManager, virtualServerManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupCreateOptionsCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_DETAIL_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupDetailCommand(ui, placeGroupManager).Run(c)
 		},
 
 		//vlan 6
@@ -531,6 +476,18 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
+	// ibmcloud sl dedicatedhost
+	dedicatedhostCommands := dedicatedhost.GetCommandActionBindings(context, ui, session)
+	for name, action := range dedicatedhostCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl dns
+	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
+	for name, action := range dnsCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl block
 	blockCommands := block.GetCommandAcionBindings(context, ui, session)
 	for name, action := range blockCommands {
@@ -554,6 +511,13 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	for name, action := range loadbalCommands {
 		CommandActionBindings[name] = action
 	}
+
+	// ibmcloud sl placement-group
+	placementgroupCommands := placementgroup.GetCommandActionBindings(context, ui, session)
+	for name, action := range placementgroupCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl security
 	// ibmcloud sl sshkey
 	// ibmcloud sl ssl
