@@ -11,30 +11,29 @@ import (
 )
 
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	
-    networkManager := managers.NewNetworkManager(session)
+
+	networkManager := managers.NewNetworkManager(session)
 	context = plugin.InitPluginContext("softlayer")
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-        "vlan-cancel": func(c *cli.Context) error {
-            return NewCancelCommand(ui, networkManager).Run(c)
-        },
-        "vlan-create": func(c *cli.Context) error {
-            return NewCreateCommand(ui, networkManager, context).Run(c)
-        },
+		"vlan-cancel": func(c *cli.Context) error {
+			return NewCancelCommand(ui, networkManager).Run(c)
+		},
+		"vlan-create": func(c *cli.Context) error {
+			return NewCreateCommand(ui, networkManager, context).Run(c)
+		},
 		"vlan-detail": func(c *cli.Context) error {
-            return NewDetailCommand(ui, networkManager).Run(c)
-        },
+			return NewDetailCommand(ui, networkManager).Run(c)
+		},
 		"vlan-edit": func(c *cli.Context) error {
-            return NewEditCommand(ui, networkManager).Run(c)
-        },
+			return NewEditCommand(ui, networkManager).Run(c)
+		},
 		"vlan-list": func(c *cli.Context) error {
-            return NewListCommand(ui, networkManager).Run(c)
-        },
+			return NewListCommand(ui, networkManager).Run(c)
+		},
 		"vlan-options": func(c *cli.Context) error {
-            return NewOptionsCommand(ui, networkManager).Run(c)
-        },
-
+			return NewOptionsCommand(ui, networkManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
