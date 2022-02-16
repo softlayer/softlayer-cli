@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VLAN options", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = vlan.NewOptionsCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VlanOptionsMetaData().Name,
-			Description: metadata.VlanOptionsMetaData().Description,
-			Usage:       metadata.VlanOptionsMetaData().Usage,
-			Flags:       metadata.VlanOptionsMetaData().Flags,
+			Name:        vlan.VlanOptionsMetaData().Name,
+			Description: vlan.VlanOptionsMetaData().Description,
+			Usage:       vlan.VlanOptionsMetaData().Usage,
+			Flags:       vlan.VlanOptionsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

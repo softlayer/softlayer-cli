@@ -86,3 +86,42 @@ func (cmd *ImportCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func ImageImportMetaData() cli.Command {
+	return cli.Command{
+		Category:    "image",
+		Name:        "import",
+		Description: T("Import an image from an object storage"),
+		Usage:       T("${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "note",
+				Usage: T("The note to be applied to the imported template"),
+			},
+			cli.StringFlag{
+				Name:  "os-code",
+				Usage: T("The referenceCode of the operating system software description for the imported VHD, ISO, or RAW image"),
+			},
+			cli.StringFlag{
+				Name:  "root-key-crn",
+				Usage: T("CRN of the root key in your KMS instance"),
+			},
+			cli.StringFlag{
+				Name:  "wrapped-dek",
+				Usage: T("Wrapped Data Encryption Key provided by IBM KeyProtect. For more info see: https://console.bluemix.net/docs/services/key-protect/wrap-keys.html#wrap-keys"),
+			},
+			cli.BoolFlag{
+				Name:  "cloud-init",
+				Usage: T("Specifies if image is cloud-init"),
+			},
+			cli.BoolFlag{
+				Name:  "byol",
+				Usage: T("Specifies if image is bring your own license"),
+			},
+			cli.BoolFlag{
+				Name:  "is-encrypted",
+				Usage: T("Specifies if image is encrypted"),
+			},
+		},
+	}
+}
