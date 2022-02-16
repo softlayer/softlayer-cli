@@ -120,3 +120,22 @@ func Min(x, y int) int {
 	}
 	return y
 }
+
+func TicketDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ticket",
+		Name:        "detail",
+		Description: T("Get details for a ticket"),
+		Usage: T(`${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]
+  
+EXAMPLE:
+  ${COMMAND_NAME} sl ticket detail 767676
+  ${COMMAND_NAME} sl ticket detail 767676 --count 10`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "count",
+				Usage: T("Number of updates"),
+			},
+		},
+	}
+}

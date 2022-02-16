@@ -9,8 +9,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -25,6 +25,22 @@ func NewVolumeDetailCommand(ui terminal.UI, storageManager managers.StorageManag
 	return &VolumeDetailCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func BlockVolumeDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "volume-detail",
+		Description: T("Display details for a specified volume"),
+		Usage: T(`${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl block volume-detail 12345678 
+   This command shows details of volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
 	}
 }
 

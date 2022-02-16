@@ -758,7 +758,7 @@ EXAMPLE:
 func FileDisasterRecoveryFailoverMetaData() cli.Command {
 	return cli.Command{
 		Category:    CMD_FILE_NAME,
-		Name:        CMD_BLK_DISASTER_FAILOVER_NAME,
+		Name:        "disaster-recovery-failover",
 		Description: T("Failover an inaccessible volume to its available replicant volume."),
 		Usage: T(`${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID
 

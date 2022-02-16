@@ -78,3 +78,22 @@ func (cmd *ListTicketCommand) Run(c *cli.Context) error {
 	return nil
 
 }
+
+func TicketListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ticket",
+		Name:        "list",
+		Description: T("List tickets"),
+		Usage:       T("${COMMAND_NAME} sl ticket list [OPTIONS]"),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "open",
+				Usage: T("Display only open tickets"),
+			},
+			cli.BoolFlag{
+				Name:  "closed",
+				Usage: T("Display only closed tickets"),
+			},
+		},
+	}
+}

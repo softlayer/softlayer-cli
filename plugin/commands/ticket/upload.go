@@ -47,3 +47,21 @@ func (cmd *UploadFileTicketCommand) Run(c *cli.Context) error {
 	}
 
 }
+
+func TicketUploadMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ticket",
+		Name:        "upload",
+		Description: T("Adds an attachment to an existing ticket"),
+		Usage: T(`${COMMAND_NAME} sl ticket upload TICKETID FILEPATH
+  
+EXAMPLE:
+	${COMMAND_NAME} sl ticket upload 767676 "/home/user/screenshot.png"`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "name",
+				Usage: T("The name of the attachment shown in the ticket"),
+			},
+		},
+	}
+}
