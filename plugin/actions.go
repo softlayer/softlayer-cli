@@ -3,7 +3,6 @@ package plugin
 import (
 	"fmt"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
@@ -30,6 +29,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"

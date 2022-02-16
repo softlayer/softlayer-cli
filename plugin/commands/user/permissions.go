@@ -77,8 +77,8 @@ func (cmd *PermissionsCommand) Run(c *cli.Context) error {
 
 func UserPermissionsMetaData() cli.Command {
 	return cli.Command{
-		Category:    CMD_USER_NAME,
-		Name:        CMD_USER_PERMISSIONS_NAME,
+		Category:    "user",
+		Name:        "permissions",
 		Description: T("View user permissions"),
 		Usage:       "${COMMAND_NAME} sl user permissions IDENTIFIER",
 		Flags:       []cli.Flag{},

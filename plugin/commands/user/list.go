@@ -103,8 +103,8 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 
 func UserListMetaData() cli.Command {
 	return cli.Command{
-		Category:    CMD_USER_NAME,
-		Name:        CMD_USER_LIST_NAME,
+		Category:    "user",
+		Name:        "list",
 		Description: T("List Users"),
 		Usage:       "${COMMAND_NAME} sl user list [OPTIONS]",
 		Flags: []cli.Flag{

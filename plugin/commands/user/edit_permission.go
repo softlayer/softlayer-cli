@@ -72,8 +72,8 @@ func (cmd *EditPermissionCommand) Run(c *cli.Context) error {
 
 func UserEditPermissionMetaData() cli.Command {
 	return cli.Command{
-		Category:    CMD_USER_NAME,
-		Name:        CMD_USER_EDIT_PERMISSIONS_NAME,
+		Category:    "user",
+		Name:        "permission-edit",
 		Description: T("Enable or Disable specific permissions"),
 		Usage:       "${COMMAND_NAME} sl user permission-edit IDENTIFIER [OPTIONS]",
 		Flags: []cli.Flag{

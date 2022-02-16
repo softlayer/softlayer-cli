@@ -68,8 +68,8 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 
 func UserEditMetaData() cli.Command {
 	return cli.Command{
-		Category:    CMD_USER_NAME,
-		Name:        CMD_USER_EDIT_DETAILS_NAME,
+		Category:    "user",
+		Name:        "detail-edit",
 		Description: T("Edit a user's details"),
 		Usage: T(`${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]
 

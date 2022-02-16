@@ -64,8 +64,8 @@ func (cmd *DeleteCommand) Run(c *cli.Context) error {
 
 func UserDeleteMataData() cli.Command {
 	return cli.Command{
-		Category:    CMD_USER_NAME,
-		Name:        CMD_USER_DELETE_NAME,
+		Category:    "user",
+		Name:        "delete",
 		Description: T("Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process"),
 		Usage: T(`${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONS]
 	

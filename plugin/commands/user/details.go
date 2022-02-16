@@ -205,8 +205,8 @@ func baseUserPrint(user datatypes.User_Customer, keys bool, ui terminal.UI) {
 
 func UserDetailMetaData() cli.Command {
 	return cli.Command{
-		Category:    CMD_USER_NAME,
-		Name:        CMD_USER_DETAIL_NAME,
+		Category:    "user",
+		Name:        "detail",
 		Description: T("User details"),
 		Usage:       "${COMMAND_NAME} sl user detail IDENTIFIER [OPTIONS]",
 		Flags: []cli.Flag{
