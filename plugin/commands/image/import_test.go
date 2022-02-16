@@ -11,7 +11,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -27,10 +26,10 @@ var _ = Describe("Image import", func() {
 		fakeImageManager = new(testhelpers.FakeImageManager)
 		cmd = image.NewImportCommand(fakeUI, fakeImageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.ImageImportMetaData().Name,
-			Description: metadata.ImageImportMetaData().Description,
-			Usage:       metadata.ImageImportMetaData().Usage,
-			Flags:       metadata.ImageImportMetaData().Flags,
+			Name:        image.ImageImportMetaData().Name,
+			Description: image.ImageImportMetaData().Description,
+			Usage:       image.ImageImportMetaData().Usage,
+			Flags:       image.ImageImportMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

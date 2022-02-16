@@ -1,15 +1,17 @@
 package image
 
 import (
+	"regexp"
+	"strconv"
+	"strings"
+
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
-	"regexp"
-	"strconv"
-	"strings"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type DatacenterCommand struct {
@@ -64,4 +66,28 @@ func buildLocation(location string) []datatypes.Location {
 	datacenter = append(datacenter, locations)
 	return datacenter
 
+}
+
+func ImageDatacenterMetaData() cli.Command {
+	return cli.Command{
+		Category:    "image",
+		Name:        "datacenter",
+		Description: T("Add/Remove datacenter of an image."),
+		Usage: T(`${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] 
+
+EXAMPLE:
+	${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03
+	This command Add/Remove datacenter of an image.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "add",
+				Usage: T("To add Datacenter"),
+			},
+			cli.StringFlag{
+				Name:  "remove",
+				Usage: T("Datacenter to remove"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

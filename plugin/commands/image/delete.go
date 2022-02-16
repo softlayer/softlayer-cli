@@ -8,8 +8,8 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -45,4 +45,17 @@ func (cmd *DeleteCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Image {{.ImageID}} was deleted.", map[string]interface{}{"ImageID": imageID}))
 	return nil
+}
+
+func ImageDelMetaData() cli.Command {
+	return cli.Command{
+		Category:    "image",
+		Name:        "delete",
+		Description: T("Delete an image "),
+		Usage: T(`${COMMAND_NAME} sl image delete IDENTIFIER
+
+EXAMPLE: 
+   ${COMMAND_NAME} sl image delete 12345678
+   This command deletes image with ID 12345678.`),
+	}
 }

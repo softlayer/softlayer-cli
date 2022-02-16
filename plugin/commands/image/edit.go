@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -47,4 +47,31 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		}
 	}
 	return nil
+}
+
+func ImageEditMetaData() cli.Command {
+	return cli.Command{
+		Category:    "image",
+		Name:        "edit",
+		Description: T("Edit details of an image"),
+		Usage: T(`${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]
+
+EXAMPLE: 
+   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging
+   This command edits an image with ID 12345678 and set its name to "ubuntu16", note to "testing", and tag to "staging".`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "name",
+				Usage: T("Name of the image"),
+			},
+			cli.StringFlag{
+				Name:  "note",
+				Usage: T("Add notes for the image"),
+			},
+			cli.StringFlag{
+				Name:  "tag",
+				Usage: T("Tags for the image"),
+			},
+		},
+	}
 }

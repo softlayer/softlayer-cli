@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"log"
 	"math/rand"
 	"reflect"
@@ -166,5 +167,41 @@ func StructAssignment(A, B interface{}) { //a =b
 				av.Field(k).Set(tmp.Addr())
 			}
 		}
+	}
+}
+
+func UserCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "user",
+		Name:        "create",
+		Description: T("Creates a user"),
+		Usage: T(`${COMMAND_NAME} sl user create USERNAME [OPTIONS] 
+
+EXAMPLE: 	
+    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{"firstName": "Test", "lastName": "Testerson"}'
+    Remember to set the permissions and access for this new user.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "email",
+				Usage: T("Email address for this user. Required for creation"),
+			},
+			cli.StringFlag{
+				Name:  "password",
+				Usage: T("Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol"),
+			},
+			cli.IntFlag{
+				Name:  "from-user",
+				Usage: T("Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template"),
+			},
+			cli.StringFlag{
+				Name:  "template",
+				Usage: T("A json string describing https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/"),
+			},
+			cli.StringFlag{
+				Name:  "vpn-password",
+				Usage: T("VPN password to set for this user."),
+			},
+			metadata.ForceFlag(),
+		},
 	}
 }
