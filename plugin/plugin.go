@@ -24,7 +24,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
