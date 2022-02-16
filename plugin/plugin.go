@@ -21,8 +21,10 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 )
 
 var (
@@ -169,7 +171,7 @@ func Namespaces() []plugin.Namespace {
 		//metadata.NS_FIREWALL,
 		metadata.GlobalIpNamespace(),
 		metadata.HardwareNamespace(),
-		metadata.ImageNamespace(),
+		image.ImageNamespace(),
 		metadata.IpsecNamespace(),
 		metadata.LicensesNamespace(),
 		metadata.LoadbalNamespace(),
@@ -181,7 +183,7 @@ func Namespaces() []plugin.Namespace {
 		placementgroup.PlacementGroupNamespace(),
 		metadata.VlanNamespace(),
 		metadata.OrderNamespace(),
-		metadata.UserNamespace(),
+		user.UserNamespace(),
 		metadata.TagsNamespace(),
 		dedicatedhost.DedicatedhostNamespace(),
 		account.AccountNamespace(),
@@ -196,7 +198,7 @@ func getCLITopCommands() []cli.Command {
 		// metadata.CMD_FW,
 		metadata.GlobalIpMetaData(),
 		metadata.HardwareMetaData(),
-		metadata.ImageMetaData(),
+		image.ImageMetaData(),
 		metadata.IpsecMetaData(),
 		metadata.LicensesMetaData(),
 		metadata.LoadbalMetaData(),
@@ -208,7 +210,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.VSMetaData(),
 		placementgroup.PlacementGroupMetaData(),
 		metadata.OrderMetaData(),
-		metadata.UserMetaData(),
+		user.UserMetaData(),
 		metadata.CallAPIMetadata(),
 		metadata.TagsMetaData(),
 		dedicatedhost.DedicatedhostMetaData(),
