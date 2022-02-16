@@ -399,28 +399,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return order.NewPresetListCommand(ui, orderManager).Run(c)
 		},
 
-		//user
-		NS_USER_NAME + "-" + CMD_USER_CREATE_NAME: func(c *cli.Context) error {
-			return user.NewCreateCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_LIST_NAME: func(c *cli.Context) error {
-			return user.NewListCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_DELETE_NAME: func(c *cli.Context) error {
-			return user.NewDeleteCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_DETAIL_NAME: func(c *cli.Context) error {
-			return user.NewDetailsCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_PERMISSIONS_NAME: func(c *cli.Context) error {
-			return user.NewPermissionsCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_EDIT_DETAILS_NAME: func(c *cli.Context) error {
-			return user.NewEditCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_EDIT_PERMISSIONS_NAME: func(c *cli.Context) error {
-			return user.NewEditPermissionCommand(ui, userManager).Run(c)
-		},
 
 		//callapi
 		NS_SL_NAME + "-" + CMD_CALLAPI_NAME: func(c *cli.Context) error {
@@ -526,6 +504,11 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl security
 	// ibmcloud sl sshkey
 	// ibmcloud sl ssl
+	userCommands := user.GetCommandActionBindings(ui, session)
+	for name, action := range userCommands {
+		CommandActionBindings[name] = action
+	}
+
 	for name, action := range security.GetCommandActionBindings(ui, session) {
 		CommandActionBindings[name] = action
 	}
