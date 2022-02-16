@@ -24,6 +24,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
 var (
@@ -180,7 +181,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.TicketNamespace(),
 		metadata.VSNamespace(),
 		placementgroup.PlacementGroupNamespace(),
-		metadata.VlanNamespace(),
+		vlan.VlanNamespace(),
 		metadata.OrderNamespace(),
 		user.UserNamespace(),
 		metadata.TagsNamespace(),
@@ -205,7 +206,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.SecurityGroupMetaData(),
 		metadata.SubnetMetaData(),
 		metadata.TicketMetaData(),
-		metadata.VlanMetaData(),
+		vlan.VlanMetaData(),
 		metadata.VSMetaData(),
 		placementgroup.PlacementGroupMetaData(),
 		metadata.OrderMetaData(),
