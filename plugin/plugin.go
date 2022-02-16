@@ -20,10 +20,11 @@ import (
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 )
 
 var (
@@ -181,7 +182,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.VSNamespace(),
 		placementgroup.PlacementGroupNamespace(),
 		metadata.VlanNamespace(),
-		metadata.OrderNamespace(),
+		order.OrderNamespace(),
 		user.UserNamespace(),
 		metadata.TagsNamespace(),
 		dedicatedhost.DedicatedhostNamespace(),
@@ -208,7 +209,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.VlanMetaData(),
 		metadata.VSMetaData(),
 		placementgroup.PlacementGroupMetaData(),
-		metadata.OrderMetaData(),
+		order.OrderMetaData(),
 		user.UserMetaData(),
 		metadata.CallAPIMetadata(),
 		metadata.TagsMetaData(),

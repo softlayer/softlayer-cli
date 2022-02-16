@@ -61,3 +61,23 @@ func (cmd *PresetListCommand) Print(presets []datatypes.Product_Package_Preset) 
 	}
 	table.Print()
 }
+
+func OrderPresetListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "order",
+		Name:        "preset-list",
+		Description: T("List package presets"),
+		Usage: T(`${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME
+
+   EXAMPLE: 
+	  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER
+	  This command lists the presets for Bare Metal servers.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "keyword",
+				Usage: T("A word (or string) used to filter presets"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
