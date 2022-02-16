@@ -50,7 +50,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	hardwareManager := managers.NewHardwareServerManager(session)
 	orderManager := managers.NewOrderManager(session)
-	userManager := managers.NewUserManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
 	licensesManager := managers.NewLicensesManager(session)
 
