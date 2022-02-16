@@ -12,7 +12,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +28,10 @@ var _ = Describe("Snapshot list", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = block.NewSnapshotListCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.BlockSnapshotListMetaData().Name,
-			Description: metadata.BlockSnapshotListMetaData().Description,
-			Usage:       metadata.BlockSnapshotListMetaData().Usage,
-			Flags:       metadata.BlockSnapshotListMetaData().Flags,
+			Name:        block.BlockSnapshotListMetaData().Name,
+			Description: block.BlockSnapshotListMetaData().Description,
+			Usage:       block.BlockSnapshotListMetaData().Usage,
+			Flags:       block.BlockSnapshotListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -20,6 +20,22 @@ func NewVolumeLunCommand(ui terminal.UI, storageManager managers.StorageManager)
 	return &VolumeLunCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func BlockVolumeLunMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "volume-set-lun-id",
+		Description: T("Set the LUN ID on an existing block storage volume"),
+		Usage: T(`${COMMAND_NAME} sl block volume-set-lun-id VOLUME_ID LUN_ID
+
+	The LUN ID only takes effect during the Host Authorization process. It is
+	recommended (but not necessary) to de-authorize all hosts before using
+	this method.
+	VOLUME_ID - the volume ID on which to set the LUN ID
+	LUN_ID - recommended range is an integer between 0 and 255. Advanced users
+	can use an integer between 0 and 4095`),
 	}
 }
 

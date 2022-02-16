@@ -10,7 +10,6 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Tags list", func() {
 		fakeTagsManager = new(testhelpers.FakeTagsManager)
 		cmd = tags.NewListCommand(fakeUI, fakeTagsManager)
 		cliCommand = cli.Command{
-			Name:        metadata.TagsListMetaData().Name,
-			Description: metadata.TagsListMetaData().Description,
-			Usage:       metadata.TagsListMetaData().Usage,
-			Flags:       metadata.TagsListMetaData().Flags,
+			Name:        tags.TagsListMetaData().Name,
+			Description: tags.TagsListMetaData().Description,
+			Usage:       tags.TagsListMetaData().Usage,
+			Flags:       tags.TagsListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -59,3 +59,16 @@ func (cmd *OptionsCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func VlanOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vlan",
+		Name:        "options",
+		Description: T("List all the options for creating VLAN"),
+		Usage: T(`${COMMAND_NAME} sl vlan options
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vlan options
+   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.`),
+	}
+}
