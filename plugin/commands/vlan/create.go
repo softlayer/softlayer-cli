@@ -74,3 +74,38 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("The order {{.OrderID}} was placed.", map[string]interface{}{"OrderID": *orderReceipt.OrderId}))
 	return nil
 }
+
+func VlanCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vlan",
+		Name:        "create",
+		Description: T("Create a new VLAN"),
+		Usage: T(`${COMMAND_NAME} sl vlan create [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan
+   This command creates a public vlan located in datacenter dal09 named "myvlan".
+   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan
+   This command creates a vlan on router bcr01a.dal09 named "myvlan".`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "t,vlan-type",
+				Usage: T("The type of the VLAN, either public or private"),
+			},
+			cli.StringFlag{
+				Name:  "r,router",
+				Usage: T("The hostname of the router"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("The short name of the datacenter"),
+			},
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("The name of the VLAN"),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
+	}
+}

@@ -119,3 +119,27 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func VlanDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vlan",
+		Name:        "detail",
+		Description: T("Get details about a VLAN"),
+		Usage: T(`${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vlan detail 12345678	--no-vs --no-hardware
+   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "no-vs",
+				Usage: T("Hide virtual server listing"),
+			},
+			cli.BoolFlag{
+				Name:  "no-hardware",
+				Usage: T("Hide hardware listing"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
