@@ -47,3 +47,12 @@ func (cmd *SummaryTicketCommand) Run(c *cli.Context) error {
 	}
 
 }
+
+func TicketSummaryMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ticket",
+		Name:        "summary",
+		Description: T("Summary info about tickets"),
+		Usage:       "${COMMAND_NAME} sl ticket summary",
+	}
+}

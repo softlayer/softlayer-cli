@@ -20,9 +20,14 @@ import (
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
 var (
@@ -164,24 +169,24 @@ func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
 		metadata.SoftlayerNamespace(),
 		block.BlockNamespace(),
-		metadata.DnsNamespace(),
 		file.FileNamespace(),
+		dns.DnsNamespace(),
 		//metadata.NS_FIREWALL,
 		metadata.GlobalIpNamespace(),
 		metadata.HardwareNamespace(),
-		metadata.ImageNamespace(),
+		image.ImageNamespace(),
 		metadata.IpsecNamespace(),
 		metadata.LicensesNamespace(),
 		metadata.LoadbalNamespace(),
 		metadata.SecurityNamespace(),
 		metadata.SecurityGroupNamespace(),
 		metadata.SubnetNamespace(),
-		metadata.TicketNamespace(),
+		ticket.TicketNamespace(),
 		metadata.VSNamespace(),
 		placementgroup.PlacementGroupNamespace(),
-		metadata.VlanNamespace(),
+		vlan.VlanNamespace(),
 		metadata.OrderNamespace(),
-		metadata.UserNamespace(),
+		user.UserNamespace(),
 		metadata.TagsNamespace(),
 		dedicatedhost.DedicatedhostNamespace(),
 		account.AccountNamespace(),
@@ -191,24 +196,24 @@ func Namespaces() []plugin.Namespace {
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
 		block.BlockMetaData(),
-		metadata.DnsMetaData(),
 		file.FileMetaData(),
+		dns.DnsMetaData(),
 		// metadata.CMD_FW,
 		metadata.GlobalIpMetaData(),
 		metadata.HardwareMetaData(),
-		metadata.ImageMetaData(),
+		image.ImageMetaData(),
 		metadata.IpsecMetaData(),
 		metadata.LicensesMetaData(),
 		metadata.LoadbalMetaData(),
 		metadata.SecurityMetaData(),
 		metadata.SecurityGroupMetaData(),
 		metadata.SubnetMetaData(),
-		metadata.TicketMetaData(),
-		metadata.VlanMetaData(),
+		ticket.TicketMetaData(),
+		vlan.VlanMetaData(),
 		metadata.VSMetaData(),
 		placementgroup.PlacementGroupMetaData(),
 		metadata.OrderMetaData(),
-		metadata.UserMetaData(),
+		user.UserMetaData(),
 		metadata.CallAPIMetadata(),
 		metadata.TagsMetaData(),
 		dedicatedhost.DedicatedhostMetaData(),

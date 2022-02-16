@@ -50,9 +50,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	hardwareManager := managers.NewHardwareServerManager(session)
 	orderManager := managers.NewOrderManager(session)
-	userManager := managers.NewUserManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
-	ticketManager := managers.NewTicketManager(session)
 	licensesManager := managers.NewLicensesManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
@@ -154,29 +152,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_HARDWARE_NAME + "-guests": func(c *cli.Context) error {
 			return hardware.NewGuestsCommand(ui, hardwareManager).Run(c)
-		},
-
-		// image - 6
-		NS_IMAGE_NAME + "-" + CMD_IMG_DELETE_NAME: func(c *cli.Context) error {
-			return image.NewDeleteCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DETAIL_NAME: func(c *cli.Context) error {
-			return image.NewDetailCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EDIT_NAME: func(c *cli.Context) error {
-			return image.NewEditCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EXPORT_NAME: func(c *cli.Context) error {
-			return image.NewExportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_IMPORT_NAME: func(c *cli.Context) error {
-			return image.NewImportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_LIST_NAME: func(c *cli.Context) error {
-			return image.NewListCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DATACENTER_NAME: func(c *cli.Context) error {
-			return image.NewDatacenterCommand(ui, imageManager).Run(c)
 		},
 
 		//ipsec - 11
@@ -379,26 +354,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
 
-		//vlan 6
-		NS_VLAN_NAME + "-" + CMD_VLAN_CREATE_NAME: func(c *cli.Context) error {
-			return vlan.NewCreateCommand(ui, networkManager, context).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_CANCEL_NAME: func(c *cli.Context) error {
-			return vlan.NewCancelCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_DETAIL_NAME: func(c *cli.Context) error {
-			return vlan.NewDetailCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_EDIT_NAME: func(c *cli.Context) error {
-			return vlan.NewEditCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_LIST_NAME: func(c *cli.Context) error {
-			return vlan.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_OPTIONS_NAME: func(c *cli.Context) error {
-			return vlan.NewOptionsCommand(ui, networkManager).Run(c)
-		},
-
 		//order
 		NS_ORDER_NAME + "-" + CMD_ORDER_CATEGORY_LIST_NAME: func(c *cli.Context) error {
 			return order.NewCategoryListCommand(ui, orderManager).Run(c)
@@ -422,71 +377,13 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return order.NewPresetListCommand(ui, orderManager).Run(c)
 		},
 
-		//user
-		NS_USER_NAME + "-" + CMD_USER_CREATE_NAME: func(c *cli.Context) error {
-			return user.NewCreateCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_LIST_NAME: func(c *cli.Context) error {
-			return user.NewListCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_DELETE_NAME: func(c *cli.Context) error {
-			return user.NewDeleteCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_DETAIL_NAME: func(c *cli.Context) error {
-			return user.NewDetailsCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_PERMISSIONS_NAME: func(c *cli.Context) error {
-			return user.NewPermissionsCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_EDIT_DETAILS_NAME: func(c *cli.Context) error {
-			return user.NewEditCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_EDIT_PERMISSIONS_NAME: func(c *cli.Context) error {
-			return user.NewEditPermissionCommand(ui, userManager).Run(c)
-		},
 
 		//callapi
 		NS_SL_NAME + "-" + CMD_CALLAPI_NAME: func(c *cli.Context) error {
 			return callapi.NewCallAPICommand(ui, callAPIManager).Run(c)
 		},
-
-		//ticket
-		NS_TICKET_NAME + "-" + CMD_TICKET_CREATE_NAME: func(c *cli.Context) error {
-			return ticket.NewCreateStandardTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_ATTACH_NAME: func(c *cli.Context) error {
-			return ticket.NewAttachDeviceTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_DETACH_NAME: func(c *cli.Context) error {
-			return ticket.NewDetachDeviceTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_DETAIL_NAME: func(c *cli.Context) error {
-			return ticket.NewDetailTicketCommand(ui, ticketManager, userManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_UPDATE_NAME: func(c *cli.Context) error {
-			return ticket.NewUpdateTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_SUBJECTS_NAME: func(c *cli.Context) error {
-			return ticket.NewSubjectsTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_LIST_NAME: func(c *cli.Context) error {
-			return ticket.NewListTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_UPLOAD_NAME: func(c *cli.Context) error {
-			return ticket.NewUploadFileTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_SUMMARY_NAME: func(c *cli.Context) error {
-			return ticket.NewSummaryTicketCommand(ui, ticketManager).Run(c)
-		},
-
+		
+		//license
 		NS_LICENSES_NAME + "-" + CMD_LICENSES_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
 			return licenses.NewLicensesOptionsCommand(ui, licensesManager).Run(c)
 		},
@@ -510,6 +407,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
+	// ibmcloud sl vlan
+	vlanCommands := vlan.GetCommandActionBindings(context, ui, session)
+	for name, action := range vlanCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl block
 	blockCommands := block.GetCommandAcionBindings(context, ui, session)
 	for name, action := range blockCommands {
@@ -519,6 +422,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl file
 	fileCommands := file.GetCommandAcionBindings(context, ui, session)
 	for name, action := range fileCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl image
+	imageCommands := image.GetCommandActionBindings(context, ui, session)
+	for name, action := range imageCommands {
 		CommandActionBindings[name] = action
 	}
 
@@ -540,9 +449,20 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
+	// ibmcloud sl ticket
+	ticketCommands := ticket.GetCommandActionBindings(context, ui, session)
+	for name, action := range ticketCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl security
 	// ibmcloud sl sshkey
 	// ibmcloud sl ssl
+	userCommands := user.GetCommandActionBindings(ui, session)
+	for name, action := range userCommands {
+		CommandActionBindings[name] = action
+	}
+
 	for name, action := range security.GetCommandActionBindings(ui, session) {
 		CommandActionBindings[name] = action
 	}
