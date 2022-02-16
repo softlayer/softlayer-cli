@@ -407,8 +407,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	}
 
 	// ibmcloud sl tags
-	tagCommands := tags.GetCommandAcionBindings(ui, session)
-	for name, action := range tagCommands {
+	tagsCommands := tags.GetCommandActionBindings(context, ui, session)
+	for name, action := range tagsCommands {
 		CommandActionBindings[name] = action
 	}
 
