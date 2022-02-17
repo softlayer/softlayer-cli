@@ -7,8 +7,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -98,4 +98,16 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	table.Add(T("Servers"), buf.String())
 	table.Print()
 	return nil
+}
+
+func SecurityGroupDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "securitygroup",
+		Name:        "detail",
+		Description: T("Get details about a security group"),
+		Usage:       "${COMMAND_NAME} sl securitygroup detail SECURITYGROUP_ID [OPTIONS]",
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
 }

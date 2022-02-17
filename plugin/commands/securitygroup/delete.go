@@ -10,6 +10,7 @@ import (
 	"github.com/urfave/cli"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type DeleteCommand struct {
@@ -49,4 +50,16 @@ func (cmd *DeleteCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Security group {{.ID}} is deleted.", map[string]interface{}{"ID": groupID}))
 	return nil
+}
+
+func SecurityGroupDeleteMetaData() cli.Command {
+	return cli.Command{
+		Category:    "securitygroup",
+		Name:        "delete",
+		Description: T("Delete the given security group"),
+		Usage:       "${COMMAND_NAME} sl securitygroup delete SECURITYGROUP_ID [OPTIONS]",
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

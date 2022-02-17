@@ -171,44 +171,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return ipsec.NewUpdateCommand(ui, ipsecManager).Run(c)
 		},
 
-		//securitygroup 12
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_CREATE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewCreateCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_DELETE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewDeleteCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_DETAIL_NAME: func(c *cli.Context) error {
-			return securitygroup.NewDetailCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_EDIT_NAME: func(c *cli.Context) error {
-			return securitygroup.NewEditCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_INTERFACE_ADD_NAME: func(c *cli.Context) error {
-			return securitygroup.NewInterfaceAddCommand(ui, networkManager, virtualServerManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_INTERFACE_LIST_NAME: func(c *cli.Context) error {
-			return securitygroup.NewInterfaceListCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_INTERFACE_REMOVE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewInterfaceRemoveCommand(ui, networkManager, virtualServerManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_LIST_NAME: func(c *cli.Context) error {
-			return securitygroup.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_ADD_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleAddCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_EDIT_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleEditCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_LIST_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleListCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_REMOVE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleRemoveCommand(ui, networkManager).Run(c)
-		},
-
 		//virual server - 20
 		NS_VIRTUAL_NAME + "-" + CMD_VS_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
 			return virtual.NewAuthorizeStorageCommand(ui, virtualServerManager).Run(c)
@@ -390,7 +352,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-
 	// ibmcloud sl globalip
 	globalipCommands := globalip.GetCommandActionBindings(context, ui, session)
 	for name, action := range globalipCommands {
@@ -409,7 +370,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl security
+	// ibmcloud sl securitygroup
+	securitygroupCommands := securitygroup.GetCommandActionBindings(context, ui, session)
+	for name, action := range securitygroupCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl sshkey
 	// ibmcloud sl ssl
 	userCommands := user.GetCommandActionBindings(ui, session)
