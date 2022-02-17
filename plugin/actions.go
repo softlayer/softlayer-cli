@@ -41,13 +41,9 @@ import (
 )
 
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	virtualServerManager := managers.NewVirtualServerManager(session)
-	imageManager := managers.NewImageManager(session)
-	networkManager := managers.NewNetworkManager(session)
-	firewallManager := managers.NewFirewallManager(session)
-	dnsManager := managers.NewDNSManager(session)
-	ipsecManager := managers.NewIPSECManager(session)
 
+	firewallManager := managers.NewFirewallManager(session)
+	ipsecManager := managers.NewIPSECManager(session)
 	hardwareManager := managers.NewHardwareServerManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
 	licensesManager := managers.NewLicensesManager(session)
@@ -257,13 +253,13 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl globalip
 	globalipCommands := globalip.GetCommandActionBindings(context, ui, session)
 	for name, action := range globalipCommands {
-    	CommandActionBindings[name] = action
+		CommandActionBindings[name] = action
 	}
 
 	// ibmcloud sl subnet
 	subnetCommands := subnet.GetCommandActionBindings(context, ui, session)
 	for name, action := range subnetCommands {
-    	CommandActionBindings[name] = action
+		CommandActionBindings[name] = action
 	}
 
 	// ibmcloud sl ticket
@@ -278,17 +274,14 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-
-	
 	userCommands := user.GetCommandActionBindings(ui, session)
 	for name, action := range userCommands {
 		CommandActionBindings[name] = action
 	}
 
 	// ibmcloud sl security
-	// ibmcloud sl sshkey
-	// ibmcloud sl ssl
-	for name, action := range security.GetCommandActionBindings(ui, session) {
+	securityCommands := security.GetCommandActionBindings(context, ui, session)
+	for name, action := range securityCommands {
 		CommandActionBindings[name] = action
 	}
 

@@ -66,3 +66,23 @@ func (cmd *KeyListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func SecuritySSHKeyListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "sshkey-list",
+		Description: T("List SSH keys on your account"),
+		Usage: T(`${COMMAND_NAME} sl security sshkey-list [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl security sshkey-list --sortby label
+   This command lists all SSH keys on current account and sorts them by label.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by. Options are: id,label,fingerprint,note"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

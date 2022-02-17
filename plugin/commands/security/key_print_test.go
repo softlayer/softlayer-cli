@@ -13,7 +13,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -29,10 +28,10 @@ var _ = Describe("Key print", func() {
 		fakeSecurityManager = new(testhelpers.FakeSecurityManager)
 		cmd = security.NewKeyPrintCommand(fakeUI, fakeSecurityManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecuritySSHKeyPrintMetaData().Name,
-			Description: metadata.SecuritySSHKeyPrintMetaData().Description,
-			Usage:       metadata.SecuritySSHKeyPrintMetaData().Usage,
-			Flags:       metadata.SecuritySSHKeyPrintMetaData().Flags,
+			Name:        security.SecuritySSHKeyPrintMetaData().Name,
+			Description: security.SecuritySSHKeyPrintMetaData().Description,
+			Usage:       security.SecuritySSHKeyPrintMetaData().Usage,
+			Flags:       security.SecuritySSHKeyPrintMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

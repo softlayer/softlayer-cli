@@ -112,3 +112,19 @@ func (cmd *CertDownloadCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("SSL certificate files are downloaded."))
 	return nil
 }
+
+func SecuritySSLCertDownloadMetaData() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "cert-download",
+		Description: T("Download SSL certificate and key files"),
+		Usage: T(`${COMMAND_NAME} sl security cert-download IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl security cert-download 12345678
+   This command downloads four files to current directory for certificate with ID 12345678. The four files are: certificate file, certificate signing request file, intermediate certificate file and private key file.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}
