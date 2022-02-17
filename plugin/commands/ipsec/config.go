@@ -41,3 +41,19 @@ func (cmd *ConfigCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("Configuration request received for IPSec {{.ContextID}}.", map[string]interface{}{"ContextID": contextId}))
 	return nil
 }
+
+func IpsecConfigMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "config",
+		Description: T("Request configuration of a tunnel context"),
+		Usage: T(`${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]
+
+  Request configuration of a tunnel context.
+
+  This action will update the advancedConfigurationFlag on the context
+  instance and further modifications against the context will be prevented
+  until all changes can be propagated to network devices.`),
+		Flags: []cli.Flag{},
+	}
+}

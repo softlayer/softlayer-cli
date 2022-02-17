@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -65,4 +65,33 @@ func (cmd *AddTranslationCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}.",
 		map[string]interface{}{"StaticIP": staticIp, "RemoteIP": remoteIp, "ID": *translation.Id}))
 	return nil
+}
+
+func IpsecTransAddMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "translation-add",
+		Description: T("Add an address translation to an IPSec tunnel"),
+		Usage: T(`${COMMAND_NAME} sl ipsec translation-add CONTEXT_ID [OPTIONS]
+
+  Add an address translation to an IPSEC tunnel context.
+
+  A separate configuration request should be made to realize changes on
+  network devices.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,static-ip",
+				Usage: T("Static IP address[required]"),
+			},
+			cli.StringFlag{
+				Name:  "r,remote-ip",
+				Usage: T("Remote IP address[required]"),
+			},
+			cli.StringFlag{
+				Name:  "n,note",
+				Usage: T("Note value"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

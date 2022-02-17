@@ -52,3 +52,19 @@ func (cmd *OrderCommand) Run(c *cli.Context) error {
 		map[string]interface{}{"OrderID": *orderReceipt.OrderId, "CommandName": cmd.Context.CLIName()}))
 	return nil
 }
+
+func IpsecOrderMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "order",
+		Description: T("Order a IPSec VPN tunnel"),
+		Usage:       T(`${COMMAND_NAME} sl ipsec order [OPTIONS]`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Short name of the datacenter for the IPSec. For example, dal09[required]"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
