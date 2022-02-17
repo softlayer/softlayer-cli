@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("IPSec remove subnet", func() {
 		fakeIPSecManager = new(testhelpers.FakeIPSECManager)
 		cmd = ipsec.NewRemoveSubnetCommand(fakeUI, fakeIPSecManager)
 		cliCommand = cli.Command{
-			Name:        metadata.IpsecSubnetRemoveMetaData().Name,
-			Description: metadata.IpsecSubnetRemoveMetaData().Description,
-			Usage:       metadata.IpsecSubnetRemoveMetaData().Usage,
-			Flags:       metadata.IpsecSubnetRemoveMetaData().Flags,
+			Name:        ipsec.IpsecSubnetRemoveMetaData().Name,
+			Description: ipsec.IpsecSubnetRemoveMetaData().Description,
+			Usage:       ipsec.IpsecSubnetRemoveMetaData().Usage,
+			Flags:       ipsec.IpsecSubnetRemoveMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
