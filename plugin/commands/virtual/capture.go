@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -64,4 +64,32 @@ func (cmd *CaptureCommand) Run(c *cli.Context) error {
 	table.Add(T("all_disks"), strconv.FormatBool(c.Bool("all")))
 	table.Print()
 	return nil
+}
+
+func VSCaptureMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "capture",
+		Description: T("Capture virtual server instance into an image"),
+		Usage: T(`${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing
+   This command captures virtual server instance with ID of 12345678 with all disks into an image named "mycloud" with note "testing".`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Name of the image [required]"),
+			},
+			cli.BoolFlag{
+				Name:  "all",
+				Usage: T("Capture all disks that belong to the virtual server"),
+			},
+			cli.StringFlag{
+				Name:  "note",
+				Usage: T("Add a note to be associated with the image"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

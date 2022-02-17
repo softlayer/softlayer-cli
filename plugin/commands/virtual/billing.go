@@ -65,3 +65,18 @@ func (cmd *BillingCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func VSBillingMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "billing",
+		Description: T("Get billing details for a virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] 
+EXAMPLE:
+   ${COMMAND_NAME} sl vs billing 12345678
+   This command billing lists detailed information about virtual server instance with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

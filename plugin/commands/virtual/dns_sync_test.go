@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -30,10 +29,10 @@ var _ = Describe("VS dns sync", func() {
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
 		cmd = virtual.NewDnsSyncCommand(fakeUI, fakeVSManager, fakeDNSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSDNSSyncMetaData().Name,
-			Description: metadata.VSDNSSyncMetaData().Description,
-			Usage:       metadata.VSDNSSyncMetaData().Usage,
-			Flags:       metadata.VSDNSSyncMetaData().Flags,
+			Name:        virtual.VSDNSSyncMetaData().Name,
+			Description: virtual.VSDNSSyncMetaData().Description,
+			Usage:       virtual.VSDNSSyncMetaData().Usage,
+			Flags:       virtual.VSDNSSyncMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

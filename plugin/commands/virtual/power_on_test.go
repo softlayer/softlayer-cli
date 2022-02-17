@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VS poweron", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewPowerOnCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSPowerOnMetaData().Name,
-			Description: metadata.VSPowerOnMetaData().Description,
-			Usage:       metadata.VSPowerOnMetaData().Usage,
-			Flags:       metadata.VSPowerOnMetaData().Flags,
+			Name:        virtual.VSPowerOnMetaData().Name,
+			Description: virtual.VSPowerOnMetaData().Description,
+			Usage:       virtual.VSPowerOnMetaData().Usage,
+			Flags:       virtual.VSPowerOnMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

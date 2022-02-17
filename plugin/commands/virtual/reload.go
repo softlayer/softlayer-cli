@@ -5,9 +5,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/urfave/cli"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -56,4 +57,34 @@ func (cmd *ReloadCommand) Run(c *cli.Context) error {
 			"VsId":        vsID,
 			"CommandName": cmd.Context.CLIName()}))
 	return nil
+}
+
+func VSReloadMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "reload",
+		Description: T("Reload operating system on a virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs reload 12345678
+   This command reloads current operating system for virtual server instance with ID 12345678.
+   ${COMMAND_NAME} sl vs reload 12345678 --image 1234
+   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "i,postinstall",
+				Usage: T("Post-install script to download"),
+			},
+			cli.IntFlag{
+				Name:  "image",
+				Usage: T("Image ID. The default is to use the current operating system.\nSee: '${COMMAND_NAME} sl image list' for reference"),
+			},
+			cli.IntSliceFlag{
+				Name:  "k,key",
+				Usage: T("The IDs of the SSH keys to add to the root user (multiple occurrence permitted)"),
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }

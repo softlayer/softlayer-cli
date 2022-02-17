@@ -70,3 +70,19 @@ func getPrices(prices []datatypes.Product_Item_Price) string {
 	}
 	return itemPrices
 }
+
+func VSCapacityCreateOptionsMetadata() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "capacity-create-options",
+		Description: T("List options for creating Reserved Capacity Group instance"),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-create-options
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs options
+   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

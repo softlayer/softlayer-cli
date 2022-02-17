@@ -8,8 +8,8 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -183,4 +183,28 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	table.Print()
 	return nil
+}
+
+func VSDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "detail",
+		Description: T("Get details for a virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs detail IDENTIFIER [OPTIONS] 
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs details 12345678
+   This command lists detailed information about virtual server instance with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "passwords",
+				Usage: T("Show passwords (check over your shoulder!)"),
+			},
+			cli.BoolFlag{
+				Name:  "price",
+				Usage: T("Show associated prices"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

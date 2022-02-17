@@ -65,3 +65,29 @@ func (cmd *PlacementgroupCreateCommand) Run(c *cli.Context) error {
 	return nil
 }
 
+func VSPlacementGroupCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "placementgroup-create",
+		Description: T("Create a placement group."),
+		Usage: T(`${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]
+EXAMPLE:
+${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 
+This command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Name for this new placement group. [required]"),
+			},
+			cli.IntFlag{
+				Name:  "b,backend-router-id",
+				Usage: T("Backend router ID. [required]"),
+			},
+			cli.IntFlag{
+				Name:  "r,rule-id",
+				Usage: T("The ID of the rule to govern this placement group. [required]"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
