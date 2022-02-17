@@ -14,7 +14,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -32,10 +32,10 @@ var _ = Describe("Replica order", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = block.NewReplicaOrderCommand(fakeUI, FakeStorageManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.BlockReplicaOrderMetaData().Name,
-			Description: metadata.BlockReplicaOrderMetaData().Description,
-			Usage:       metadata.BlockReplicaOrderMetaData().Usage,
-			Flags:       metadata.BlockReplicaOrderMetaData().Flags,
+			Name:        block.BlockReplicaOrderMetaData().Name,
+			Description: block.BlockReplicaOrderMetaData().Description,
+			Usage:       block.BlockReplicaOrderMetaData().Usage,
+			Flags:       block.BlockReplicaOrderMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

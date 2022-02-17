@@ -51,3 +51,19 @@ func (cmd *AssignCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("The transaction to modify a global IP route is created, routes will be updated in one or two minutes."))
 	return nil
 }
+
+func GlobalIpAssignMetaData() cli.Command {
+	return cli.Command{
+		Category:    "globalip",
+		Name:        "assign",
+		Description: T("Assign a global IP to a target router or device"),
+		Usage: T(`${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]
+
+EXAMPLE:
+    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456
+	This command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

@@ -7,8 +7,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -23,6 +23,26 @@ func NewSnapshotListCommand(ui terminal.UI, storageManager managers.StorageManag
 	return &SnapshotListCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func FileSnapshotListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "snapshot-list",
+		Description: T("List file storage snapshots"),
+		Usage: T(`${COMMAND_NAME} sl file snapshot-list VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl file snapshot-list 12345678 --sortby id 
+   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by. Options are: id,name,created,size_bytes"),
+			},
+			metadata.OutputFlag(),
+		},
 	}
 }
 

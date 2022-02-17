@@ -52,3 +52,19 @@ func (cmd *ClearRouteCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("The transaction to clear the route is created, routes will be updated in one or two minutes."))
 	return nil
 }
+
+func SubnetClearRouteMetaData() cli.Command {
+	return cli.Command{
+		Category:    "subnet",
+		Name:        "clear-route",
+		Description: T("This interface allows you to remove the route of your Account Owned subnets."),
+		Usage: T(`${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet clear-route 12345678
+   This command allows you to remove the route of your Account Owned subnets.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

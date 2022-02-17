@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("VLAN List", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = vlan.NewListCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VlanListMetaData().Name,
-			Description: metadata.VlanListMetaData().Description,
-			Usage:       metadata.VlanListMetaData().Usage,
-			Flags:       metadata.VlanListMetaData().Flags,
+			Name:        vlan.VlanListMetaData().Name,
+			Description: vlan.VlanListMetaData().Description,
+			Usage:       vlan.VlanListMetaData().Usage,
+			Flags:       vlan.VlanListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

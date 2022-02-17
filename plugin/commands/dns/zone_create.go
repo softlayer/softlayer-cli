@@ -46,3 +46,19 @@ func (cmd *ZoneCreateCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("Zone {{.Zone}} was created.", map[string]interface{}{"Zone": zoneName}))
 	return nil
 }
+
+func DnsZoneCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dns",
+		Name:        "zone-create",
+		Description: T("Create a zone"),
+		Usage: T(`${COMMAND_NAME} sl dns zone-create ZONE [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dns zone-create ibm.com 
+   This command creates a zone that is named ibm.com.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

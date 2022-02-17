@@ -20,7 +20,21 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 )
 
 var (
@@ -161,55 +175,57 @@ func convertToPluginFlags(flags []cli.Flag) []plugin.Flag {
 func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
 		metadata.SoftlayerNamespace(),
-		metadata.BlockNamespace(),
-		metadata.DnsNamespace(),
-		metadata.FileNamespace(),
+		block.BlockNamespace(),
+		file.FileNamespace(),
+		dns.DnsNamespace(),
 		//metadata.NS_FIREWALL,
-		metadata.GlobalIpNamespace(),
+		globalip.GlobalIpNamespace(),
 		metadata.HardwareNamespace(),
-		metadata.ImageNamespace(),
+		image.ImageNamespace(),
 		metadata.IpsecNamespace(),
 		metadata.LicensesNamespace(),
 		metadata.LoadbalNamespace(),
 		metadata.SecurityNamespace(),
-		metadata.SecurityGroupNamespace(),
-		metadata.SubnetNamespace(),
-		metadata.TicketNamespace(),
+		securitygroup.SecurityGroupNamespace(),
+		subnet.SubnetNamespace(),
+		ticket.TicketNamespace(),
+		metadata.VSNamespace(),
+		placementgroup.PlacementGroupNamespace(),
+		order.OrderNamespace(),
+		vlan.VlanNamespace(),
+		tags.TagsNamespace(),
+		user.UserNamespace(),
+		dedicatedhost.DedicatedhostNamespace(),
 		virtual.VSNamespace(),
-		metadata.PlacementGroupNamespace(),
-		metadata.VlanNamespace(),
-		metadata.OrderNamespace(),
-		metadata.UserNamespace(),
-		metadata.TagsNamespace(),
-		metadata.DedicatedhostNamespace(),
 		account.AccountNamespace(),
 	}
 }
 
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
-		metadata.BlockMetaData(),
-		metadata.DnsMetaData(),
-		metadata.FileMetaData(),
+		block.BlockMetaData(),
+		file.FileMetaData(),
+		dns.DnsMetaData(),
 		// metadata.CMD_FW,
-		metadata.GlobalIpMetaData(),
+		globalip.GlobalIpMetaData(),
 		metadata.HardwareMetaData(),
-		metadata.ImageMetaData(),
+		image.ImageMetaData(),
 		metadata.IpsecMetaData(),
 		metadata.LicensesMetaData(),
 		metadata.LoadbalMetaData(),
 		metadata.SecurityMetaData(),
-		metadata.SecurityGroupMetaData(),
-		metadata.SubnetMetaData(),
-		metadata.TicketMetaData(),
-		metadata.VlanMetaData(),
-		virtual.VSMetaData(),
-		metadata.PlacementGroupMetaData(),
-		metadata.OrderMetaData(),
-		metadata.UserMetaData(),
+		securitygroup.SecurityGroupMetaData(),
+		subnet.SubnetMetaData(),
+		ticket.TicketMetaData(),
+		vlan.VlanMetaData(),
+		metadata.VSMetaData(),
+		placementgroup.PlacementGroupMetaData(),
+		order.OrderMetaData(),
+		user.UserMetaData(),
 		metadata.CallAPIMetadata(),
-		metadata.TagsMetaData(),
-		metadata.DedicatedhostMetaData(),
+		tags.TagsMetaData(),
+		dedicatedhost.DedicatedhostMetaData(),
+		virtual.VSMetaData(),
 		account.AccountMetaData(),
 	}
 }

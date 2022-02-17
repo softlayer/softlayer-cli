@@ -4,10 +4,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -95,4 +95,32 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
+}
+
+func ImageListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "image",
+		Name:        "list",
+		Description: T("List all images on your account"),
+		Usage: T(`${COMMAND_NAME} sl image list [OPTIONS]
+
+EXAMPLE: 
+   ${COMMAND_NAME} sl image list --public
+   This command list all public images on current account.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "name",
+				Usage: T("Filter on image name"),
+			},
+			cli.BoolFlag{
+				Name:  "public",
+				Usage: T("Display only public images"),
+			},
+			cli.BoolFlag{
+				Name:  "private",
+				Usage: T("Display only private images"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

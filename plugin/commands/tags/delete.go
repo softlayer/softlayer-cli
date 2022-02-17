@@ -44,3 +44,20 @@ func (cmd *DeleteCommand) Run(c *cli.Context) error {
 	return nil
 
 }
+
+func TagsDeleteMetaData() cli.Command {
+	return cli.Command{
+		Category:    "tags",
+		Name:        "delete",
+		Description: T("Removes an empty tag from your account."),
+		Usage: T(`${COMMAND_NAME} sl tags delete [TAG NAME]
+
+EXAMPLE:
+	${COMMAND_NAME} sl tags delete tag1
+	Removes "tag" from your account.
+`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

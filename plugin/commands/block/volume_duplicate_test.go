@@ -12,7 +12,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -42,10 +42,10 @@ var _ = Describe("Volume duplicate", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = block.NewVolumeDuplicateCommand(fakeUI, FakeStorageManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.BlockVolumeDuplicateMetaData().Name,
-			Description: metadata.BlockVolumeDuplicateMetaData().Description,
-			Usage:       metadata.BlockVolumeDuplicateMetaData().Usage,
-			Flags:       metadata.BlockVolumeDuplicateMetaData().Flags,
+			Name:        block.BlockVolumeDuplicateMetaData().Name,
+			Description: block.BlockVolumeDuplicateMetaData().Description,
+			Usage:       block.BlockVolumeDuplicateMetaData().Usage,
+			Flags:       block.BlockVolumeDuplicateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

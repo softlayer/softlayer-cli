@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("Image edit", func() {
 		fakeImageManager = new(testhelpers.FakeImageManager)
 		cmd = image.NewEditCommand(fakeUI, fakeImageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.ImageEditMetaData().Name,
-			Description: metadata.ImageEditMetaData().Description,
-			Usage:       metadata.ImageEditMetaData().Usage,
-			Flags:       metadata.ImageEditMetaData().Flags,
+			Name:        image.ImageEditMetaData().Name,
+			Description: image.ImageEditMetaData().Description,
+			Usage:       image.ImageEditMetaData().Usage,
+			Flags:       image.ImageEditMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

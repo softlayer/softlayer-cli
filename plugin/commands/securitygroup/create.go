@@ -44,3 +44,23 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func SecurityGroupCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "securitygroup",
+		Name:        "create",
+		Description: T("Create a security group"),
+		Usage:       "${COMMAND_NAME} sl securitygroup create [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("The name of the security group"),
+			},
+			cli.StringFlag{
+				Name:  "d,description",
+				Usage: T("The description of the security group"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

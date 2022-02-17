@@ -8,8 +8,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -26,6 +26,48 @@ func NewVolumeDuplicateCommand(ui terminal.UI, storageManager managers.StorageMa
 		UI:             ui,
 		StorageManager: storageManager,
 		Context:        context,
+	}
+}
+
+func FileVolumeDuplicateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "volume-duplicate",
+		Description: T("Order a file volume by duplicating an existing volume"),
+		Usage: T(`${COMMAND_NAME} sl file volume-duplicate VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl file volume-duplicate 12345678 
+   This command shows order a new volume by duplicating the volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "o,origin-snapshot-id",
+				Usage: T("ID of an original volume snapshot to use for duplication"),
+			},
+			cli.IntFlag{
+				Name:  "s,duplicate-size",
+				Usage: T("Size of duplicate file volume in GB, if no size is specified, the size of the original volume will be used"),
+			},
+			cli.IntFlag{
+				Name:  "i,duplicate-iops",
+				Usage: T("Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used"),
+			},
+			cli.Float64Flag{
+				Name:  "t,duplicate-tier",
+				Usage: T("Endurance Storage Tier, if no tier is specified, the tier of the original volume will be used"),
+			},
+			cli.IntFlag{
+				Name:  "n,duplicate-snapshot-size",
+				Usage: T("The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the original volume will be used"),
+				Value: -1,
+			},
+			cli.BoolFlag{
+				Name:  "d,dependent-duplicate",
+				Usage: T("Whether or not this duplicate will be a dependent duplicate of the origin volume."),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
 	}
 }
 
@@ -54,14 +96,14 @@ func (cmd *VolumeDuplicateCommand) Run(c *cli.Context) error {
 		}
 	}
 	config := managers.DuplicateOrderConfig{
-			VolumeType: 			"file",
-			OriginalVolumeId: 		volumeID,
-			OriginalSnapshotId: 	c.Int("o"),
-			DuplicateSize: 			c.Int("s"),
-			DuplicateIops: 			c.Int("i"),
-			DuplicateTier: 			c.Float64("t"),
-			DuplicateSnapshotSize: 	c.Int("n"),
-			DependentDuplicate:		c.Bool("d"),
+		VolumeType:            "file",
+		OriginalVolumeId:      volumeID,
+		OriginalSnapshotId:    c.Int("o"),
+		DuplicateSize:         c.Int("s"),
+		DuplicateIops:         c.Int("i"),
+		DuplicateTier:         c.Float64("t"),
+		DuplicateSnapshotSize: c.Int("n"),
+		DependentDuplicate:    c.Bool("d"),
 	}
 	orderReceipt, err := cmd.StorageManager.OrderDuplicateVolume(config)
 	if err != nil {

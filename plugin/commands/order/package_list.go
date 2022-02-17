@@ -57,3 +57,27 @@ func (cmd *PackageListCommand) Print(packages []datatypes.Product_Package) {
 	}
 	table.Print()
 }
+
+func OrderPackageListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "order",
+		Name:        "package-list",
+		Description: T("List packages that can be ordered with the placeOrder API"),
+		Usage: T(`${COMMAND_NAME} sl order package-list [OPTIONS]
+		
+EXAMPLE: 
+   ${COMMAND_NAME} sl order package-list
+   This command list out all packages for ordering.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "keyword",
+				Usage: T("A word (or string) that is used to filter package names"),
+			},
+			cli.StringFlag{
+				Name:  "package-type ",
+				Usage: T("The keyname for the type of package. For example, BARE_METAL_CPU"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

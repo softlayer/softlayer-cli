@@ -58,3 +58,26 @@ func (cmd *DetachDeviceTicketCommand) Run(c *cli.Context) error {
 	}
 
 }
+
+func TicketDetachMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ticket",
+		Name:        "detach",
+		Description: T("Detach devices from a ticket"),
+		Usage: T(`${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]
+  
+EXAMPLE:
+  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654
+  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "hardware",
+				Usage: T("The identifier for hardware to detach"),
+			},
+			cli.IntFlag{
+				Name:  "virtual",
+				Usage: T("The identifier for a virtual server to detach"),
+			},
+		},
+	}
+}

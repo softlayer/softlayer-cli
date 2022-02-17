@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 
 	"github.com/softlayer/softlayer-go/session"
@@ -48,52 +49,10 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	ipsecManager := managers.NewIPSECManager(session)
 
 	hardwareManager := managers.NewHardwareServerManager(session)
-	orderManager := managers.NewOrderManager(session)
-	userManager := managers.NewUserManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
-	ticketManager := managers.NewTicketManager(session)
 	licensesManager := managers.NewLicensesManager(session)
-	placeGroupManager := managers.NewPlaceGroupManager(session)
-	dedicatedhostManager := managers.NewDedicatedhostManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-
-		//dns - 9
-		NS_DNS_NAME + "-" + CMD_DNS_IMPORT_NAME: func(c *cli.Context) error {
-			return dns.NewImportCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_ADD_NAME: func(c *cli.Context) error {
-			return dns.NewRecordAddCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_EDIT_NAME: func(c *cli.Context) error {
-			return dns.NewRecordEditCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_LIST_NAME: func(c *cli.Context) error {
-			return dns.NewRecordListCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_RECORD_REMOVE_NAME: func(c *cli.Context) error {
-			return dns.NewRecordRemoveCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_CREATE_NAME: func(c *cli.Context) error {
-			return dns.NewZoneCreateCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_DELETE_NAME: func(c *cli.Context) error {
-			return dns.NewZoneDeleteCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_LIST_NAME: func(c *cli.Context) error {
-			return dns.NewZoneListCommand(ui, dnsManager).Run(c)
-		},
-		NS_DNS_NAME + "-" + CMD_DNS_ZONE_PRINT_NAME: func(c *cli.Context) error {
-			return dns.NewZonePrintCommand(ui, dnsManager).Run(c)
-		},
-
-		//dedicatedhost - 1
-		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_LIST_GUESTS_NAME: func(c *cli.Context) error {
-			return dedicatedhost.NewListGuestsCommand(ui, dedicatedhostManager).Run(c)
-		},
-		NS_DEDICATEDHOST_NAME + "-" + CMD_DEDICATEDHOST_CREATE_NAME: func(c *cli.Context) error {
-			return dedicatedhost.NewCreateCommand(ui, dedicatedhostManager, networkManager, context).Run(c)
-		},
 
 		// firewall - 5
 		NS_FIREWALL_NAME + "-" + CMD_FW_ADD_NAME: func(c *cli.Context) error {
@@ -110,23 +69,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_FIREWALL_NAME + "-" + CMD_FW_LIST_NAME: func(c *cli.Context) error {
 			return firewall.NewListCommand(ui, firewallManager).Run(c)
-		},
-
-		// globalip - 5
-		NS_GLOBALIP_NAME + "-" + CMD_GP_ASSIGN_NAME: func(c *cli.Context) error {
-			return globalip.NewAssignCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_CREATE_NAME: func(c *cli.Context) error {
-			return globalip.NewCreateCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_CANCEL_NAME: func(c *cli.Context) error {
-			return globalip.NewCancelCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_LIST_NAME: func(c *cli.Context) error {
-			return globalip.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_UNASSIGN_NAME: func(c *cli.Context) error {
-			return globalip.NewUnassignCommand(ui, networkManager).Run(c)
 		},
 
 		//hardware -14
@@ -194,29 +136,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return hardware.NewGuestsCommand(ui, hardwareManager).Run(c)
 		},
 
-		// image - 6
-		NS_IMAGE_NAME + "-" + CMD_IMG_DELETE_NAME: func(c *cli.Context) error {
-			return image.NewDeleteCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DETAIL_NAME: func(c *cli.Context) error {
-			return image.NewDetailCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EDIT_NAME: func(c *cli.Context) error {
-			return image.NewEditCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_EXPORT_NAME: func(c *cli.Context) error {
-			return image.NewExportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_IMPORT_NAME: func(c *cli.Context) error {
-			return image.NewImportCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_LIST_NAME: func(c *cli.Context) error {
-			return image.NewListCommand(ui, imageManager).Run(c)
-		},
-		NS_IMAGE_NAME + "-" + CMD_IMG_DATACENTER_NAME: func(c *cli.Context) error {
-			return image.NewDatacenterCommand(ui, imageManager).Run(c)
-		},
-
 		//ipsec - 11
 		NS_IPSEC_NAME + "-" + CMD_IPSEC_CONFIG_NAME: func(c *cli.Context) error {
 			return ipsec.NewConfigCommand(ui, ipsecManager).Run(c)
@@ -252,195 +171,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return ipsec.NewUpdateCommand(ui, ipsecManager).Run(c)
 		},
 
-		//securitygroup 12
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_CREATE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewCreateCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_DELETE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewDeleteCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_DETAIL_NAME: func(c *cli.Context) error {
-			return securitygroup.NewDetailCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_EDIT_NAME: func(c *cli.Context) error {
-			return securitygroup.NewEditCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_INTERFACE_ADD_NAME: func(c *cli.Context) error {
-			return securitygroup.NewInterfaceAddCommand(ui, networkManager, virtualServerManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_INTERFACE_LIST_NAME: func(c *cli.Context) error {
-			return securitygroup.NewInterfaceListCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_INTERFACE_REMOVE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewInterfaceRemoveCommand(ui, networkManager, virtualServerManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_LIST_NAME: func(c *cli.Context) error {
-			return securitygroup.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_ADD_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleAddCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_EDIT_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleEditCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_LIST_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleListCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_REMOVE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleRemoveCommand(ui, networkManager).Run(c)
-		},
-
-		//subnet 5
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_CANCEL_NAME: func(c *cli.Context) error {
-			return subnet.NewCancelCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_CREATE_NAME: func(c *cli.Context) error {
-			return subnet.NewCreateCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_DETAIL_NAME: func(c *cli.Context) error {
-			return subnet.NewDetailCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_LIST_NAME: func(c *cli.Context) error {
-			return subnet.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_LOOKUP_NAME: func(c *cli.Context) error {
-			return subnet.NewLookupCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_ROUTE_NAME: func(c *cli.Context) error {
-			return subnet.NewRouteCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_CLEAR_ROUTE_NAME: func(c *cli.Context) error {
-			return subnet.NewClearRouteCommand(ui, networkManager).Run(c)
-		},
-
-		//virual server - 20
-
-
-		//Placement group
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupCreateCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_LIST_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupListCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_DELETE_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupDeleteCommand(ui, placeGroupManager, virtualServerManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupCreateOptionsCommand(ui, placeGroupManager).Run(c)
-		},
-		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_DETAIL_NAME: func(c *cli.Context) error {
-			return placementgroup.NewPlacementGroupDetailCommand(ui, placeGroupManager).Run(c)
-		},
-
-		//vlan 6
-		NS_VLAN_NAME + "-" + CMD_VLAN_CREATE_NAME: func(c *cli.Context) error {
-			return vlan.NewCreateCommand(ui, networkManager, context).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_CANCEL_NAME: func(c *cli.Context) error {
-			return vlan.NewCancelCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_DETAIL_NAME: func(c *cli.Context) error {
-			return vlan.NewDetailCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_EDIT_NAME: func(c *cli.Context) error {
-			return vlan.NewEditCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_LIST_NAME: func(c *cli.Context) error {
-			return vlan.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_VLAN_NAME + "-" + CMD_VLAN_OPTIONS_NAME: func(c *cli.Context) error {
-			return vlan.NewOptionsCommand(ui, networkManager).Run(c)
-		},
-
-		//order
-		NS_ORDER_NAME + "-" + CMD_ORDER_CATEGORY_LIST_NAME: func(c *cli.Context) error {
-			return order.NewCategoryListCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_ITEM_LIST_NAME: func(c *cli.Context) error {
-			return order.NewItemListCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PACKAGE_LIST_NAME: func(c *cli.Context) error {
-			return order.NewPackageListCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PACKAGE_LOCATION_NAME: func(c *cli.Context) error {
-			return order.NewPackageLocationCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PLACE_NAME: func(c *cli.Context) error {
-			return order.NewPlaceCommand(ui, orderManager, context).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PLACE_QUOTE_NAME: func(c *cli.Context) error {
-			return order.NewPlaceQuoteCommand(ui, orderManager, context).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PRESET_LIST_NAME: func(c *cli.Context) error {
-			return order.NewPresetListCommand(ui, orderManager).Run(c)
-		},
-
-		//user
-		NS_USER_NAME + "-" + CMD_USER_CREATE_NAME: func(c *cli.Context) error {
-			return user.NewCreateCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_LIST_NAME: func(c *cli.Context) error {
-			return user.NewListCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_DELETE_NAME: func(c *cli.Context) error {
-			return user.NewDeleteCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_DETAIL_NAME: func(c *cli.Context) error {
-			return user.NewDetailsCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_PERMISSIONS_NAME: func(c *cli.Context) error {
-			return user.NewPermissionsCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_EDIT_DETAILS_NAME: func(c *cli.Context) error {
-			return user.NewEditCommand(ui, userManager).Run(c)
-		},
-		NS_USER_NAME + "-" + CMD_USER_EDIT_PERMISSIONS_NAME: func(c *cli.Context) error {
-			return user.NewEditPermissionCommand(ui, userManager).Run(c)
-		},
-
 		//callapi
 		NS_SL_NAME + "-" + CMD_CALLAPI_NAME: func(c *cli.Context) error {
 			return callapi.NewCallAPICommand(ui, callAPIManager).Run(c)
 		},
 
-		//ticket
-		NS_TICKET_NAME + "-" + CMD_TICKET_CREATE_NAME: func(c *cli.Context) error {
-			return ticket.NewCreateStandardTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_ATTACH_NAME: func(c *cli.Context) error {
-			return ticket.NewAttachDeviceTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_DETACH_NAME: func(c *cli.Context) error {
-			return ticket.NewDetachDeviceTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_DETAIL_NAME: func(c *cli.Context) error {
-			return ticket.NewDetailTicketCommand(ui, ticketManager, userManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_UPDATE_NAME: func(c *cli.Context) error {
-			return ticket.NewUpdateTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_SUBJECTS_NAME: func(c *cli.Context) error {
-			return ticket.NewSubjectsTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_LIST_NAME: func(c *cli.Context) error {
-			return ticket.NewListTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_UPLOAD_NAME: func(c *cli.Context) error {
-			return ticket.NewUploadFileTicketCommand(ui, ticketManager).Run(c)
-		},
-
-		NS_TICKET_NAME + "-" + CMD_TICKET_SUMMARY_NAME: func(c *cli.Context) error {
-			return ticket.NewSummaryTicketCommand(ui, ticketManager).Run(c)
-		},
-
+		//license
 		NS_LICENSES_NAME + "-" + CMD_LICENSES_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
 			return licenses.NewLicensesOptionsCommand(ui, licensesManager).Run(c)
 		},
@@ -449,6 +185,24 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl account
 	accountCommands := account.GetCommandAcionBindings(context, ui, session)
 	for name, action := range accountCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl dedicatedhost
+	dedicatedhostCommands := dedicatedhost.GetCommandActionBindings(context, ui, session)
+	for name, action := range dedicatedhostCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl dns
+	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
+	for name, action := range dnsCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl vlan
+	vlanCommands := vlan.GetCommandActionBindings(context, ui, session)
+	for name, action := range vlanCommands {
 		CommandActionBindings[name] = action
 	}
 
@@ -464,9 +218,15 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
+	// ibmcloud sl image
+	imageCommands := image.GetCommandActionBindings(context, ui, session)
+	for name, action := range imageCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl tags
-	tagCommands := tags.GetCommandAcionBindings(ui, session)
-	for name, action := range tagCommands {
+	tagsCommands := tags.GetCommandActionBindings(context, ui, session)
+	for name, action := range tagsCommands {
 		CommandActionBindings[name] = action
 	}
 
@@ -479,6 +239,49 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl vs
 	vsCommands := virtual.GetCommandActionBindings(context, ui, session)
 	for name, action := range vsCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl order
+	orderCommands := order.GetCommandActionBindings(context, ui, session)
+	for name, action := range orderCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl placement-group
+	placementgroupCommands := placementgroup.GetCommandActionBindings(context, ui, session)
+	for name, action := range placementgroupCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl globalip
+	globalipCommands := globalip.GetCommandActionBindings(context, ui, session)
+	for name, action := range globalipCommands {
+    	CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl subnet
+	subnetCommands := subnet.GetCommandActionBindings(context, ui, session)
+	for name, action := range subnetCommands {
+    	CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl ticket
+	ticketCommands := ticket.GetCommandActionBindings(context, ui, session)
+	for name, action := range ticketCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl securitygroup
+	securitygroupCommands := securitygroup.GetCommandActionBindings(context, ui, session)
+	for name, action := range securitygroupCommands {
+		CommandActionBindings[name] = action
+	}
+
+
+	
+	userCommands := user.GetCommandActionBindings(ui, session)
+	for name, action := range userCommands {
 		CommandActionBindings[name] = action
 	}
 

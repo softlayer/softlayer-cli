@@ -9,7 +9,6 @@ import (
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("Delete", func() {
 		fakeUserManager = new(testhelpers.FakeUserManager)
 		cmd = user.NewDeleteCommand(fakeUI, fakeUserManager)
 		cliCommand = cli.Command{
-			Name:        metadata.UserDeleteMataData().Name,
-			Description: metadata.UserDeleteMataData().Description,
-			Usage:       metadata.UserDeleteMataData().Usage,
-			Flags:       metadata.UserDeleteMataData().Flags,
+			Name:        user.UserDeleteMataData().Name,
+			Description: user.UserDeleteMataData().Description,
+			Usage:       user.UserDeleteMataData().Usage,
+			Flags:       user.UserDeleteMataData().Flags,
 			Action:      cmd.Run,
 		}
 	})

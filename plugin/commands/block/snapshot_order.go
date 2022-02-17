@@ -9,8 +9,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -27,6 +27,39 @@ func NewSnapshotOrderCommand(ui terminal.UI, storageManager managers.StorageMana
 		UI:             ui,
 		StorageManager: storageManager,
 		Context:        context,
+	}
+}
+
+func BlockSnapshotOrderMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "snapshot-order",
+		Description: T("Order snapshot space for a block storage volume"),
+		Usage: T(`${COMMAND_NAME} sl block snapshot-order VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl block snapshot-order 12345678 -s 1000 -t 4 
+   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "s,size",
+				Usage: T("Size of snapshot space to create in GB  [required]"),
+			},
+			cli.Float64Flag{
+				Name:  "t,tier",
+				Usage: T("Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10"),
+			},
+			cli.IntFlag{
+				Name:  "i,iops",
+				Usage: T("Performance Storage IOPs, between 100 and 6000 in multiples of 100"),
+			},
+			cli.BoolFlag{
+				Name:  "u,upgrade",
+				Usage: T("Flag to indicate that the order is an upgrade"),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
 	}
 }
 

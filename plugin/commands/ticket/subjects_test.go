@@ -8,7 +8,6 @@ import (
 	"github.com/urfave/cli"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("ticket subjects", func() {
 		fakeUI = terminal.NewFakeUI()
 		cmd = ticket.NewSubjectsTicketCommand(fakeUI, fakeTicketManager)
 		cliCommand = cli.Command{
-			Name:        metadata.TicketSubjectsMetaData().Name,
-			Description: metadata.TicketSubjectsMetaData().Description,
-			Usage:       metadata.TicketSubjectsMetaData().Usage,
-			Flags:       metadata.TicketSubjectsMetaData().Flags,
+			Name:        ticket.TicketSubjectsMetaData().Name,
+			Description: ticket.TicketSubjectsMetaData().Description,
+			Usage:       ticket.TicketSubjectsMetaData().Usage,
+			Flags:       ticket.TicketSubjectsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

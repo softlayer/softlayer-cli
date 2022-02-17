@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -20,6 +20,19 @@ func NewReplicaFailbackCommand(ui terminal.UI, storageManager managers.StorageMa
 	return &ReplicaFailbackCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func FileReplicaFailbackMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "replica-failback",
+		Description: T("Failback a file volume from replica"),
+		Usage: T(`${COMMAND_NAME} sl file replica-failback VOLUME_ID
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl file replica-failback 12345678
+   This command performs failback operation for volume with ID 12345678.`),
 	}
 }
 

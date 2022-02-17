@@ -23,6 +23,29 @@ func NewSnapshotSetNotificationCommand(ui terminal.UI, storageManager managers.S
 	}
 }
 
+func BlockVolumeSnapshotSetNotificationMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "snapshot-set-notification",
+		Description: T("Enables/Disables snapshot space usage threshold warning for a given volume."),
+		Usage: T(`${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID
+
+EXAMPLE:
+	${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567
+	Enables/Disables snapshot space usage threshold warning for a given volume.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "enable",
+				Usage: T("Enable snapshot notification."),
+			},
+			cli.BoolFlag{
+				Name:  "disable",
+				Usage: T("Disable snapshot notification."),
+			},
+		},
+	}
+}
+
 func (cmd *SnapshotSetNotificationCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

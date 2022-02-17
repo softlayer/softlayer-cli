@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("GlobalIP unassign", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = globalip.NewUnassignCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.GlobalIpUnassignMetaData().Name,
-			Description: metadata.GlobalIpUnassignMetaData().Description,
-			Usage:       metadata.GlobalIpUnassignMetaData().Usage,
-			Flags:       metadata.GlobalIpUnassignMetaData().Flags,
+			Name:        globalip.GlobalIpUnassignMetaData().Name,
+			Description: globalip.GlobalIpUnassignMetaData().Description,
+			Usage:       globalip.GlobalIpUnassignMetaData().Usage,
+			Flags:       globalip.GlobalIpUnassignMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

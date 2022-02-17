@@ -69,3 +69,26 @@ func (cmd *EditPermissionCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(fmt.Sprintf(T("Permissions updated successfully: %s"), strings.Join(permissionKeynames, ",")))
 	return nil
 }
+
+func UserEditPermissionMetaData() cli.Command {
+	return cli.Command{
+		Category:    "user",
+		Name:        "permission-edit",
+		Description: T("Enable or Disable specific permissions"),
+		Usage:       "${COMMAND_NAME} sl user permission-edit IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "enable",
+				Usage: T("Enable or Disable selected permissions. Accepted inputs are 'true' and 'false'. default is 'true'"),
+			},
+			cli.StringSliceFlag{
+				Name:  "permission",
+				Usage: T("Permission keyName to set. Use keyword ALL to select ALL permissions"),
+			},
+			cli.IntFlag{
+				Name:  "from-user",
+				Usage: T("Set permissions to match this user's permissions. Adds and removes the appropriate permissions"),
+			},
+		},
+	}
+}

@@ -74,3 +74,31 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func GlobalIpListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "globalip",
+		Name:        "list",
+		Description: T("List all global IPs on your account"),
+		Usage: T(`${COMMAND_NAME} sl globalip list [OPTIONS]
+
+EXAMPLE:
+    ${COMMAND_NAME} sl globalip list --v4 
+	This command lists all IPv4 addresses on the current account.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "v4",
+				Usage: T("Display IPv4 IPs only"),
+			},
+			cli.BoolFlag{
+				Name:  "v6",
+				Usage: T("Display IPv6 IPs only"),
+			},
+			cli.IntFlag{
+				Name:  "order",
+				Usage: T("Filter by the ID of order that purchased this IP address"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
