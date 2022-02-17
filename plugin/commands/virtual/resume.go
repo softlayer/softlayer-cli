@@ -4,9 +4,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -49,4 +50,20 @@ func (cmd *ResumeCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was resumed.", map[string]interface{}{"VsId": vsID}))
 	return nil
+}
+
+func VSResumeMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "resume",
+		Description: T("Resume a paused virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs resume IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs resume 12345678
+   This command resumes virtual server instance with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

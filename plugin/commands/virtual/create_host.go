@@ -93,3 +93,40 @@ func (cmd *CreateHostCommand) Run(c *cli.Context) error {
 		map[string]interface{}{"OrderID": *orderReceipt.OrderId, "CommandName": cmd.Context.CLIName()}))
 	return nil
 }
+
+func VSCreateHostMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "host-create",
+		Description: T("Create a host for dedicated virtual servers"),
+		Usage:       "${COMMAND_NAME} sl vs host-create [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Host portion of the FQDN [required]"),
+			},
+			cli.StringFlag{
+				Name:  "D,domain",
+				Usage: T("Domain portion of the FQDN [required]"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Datacenter shortname [required]"),
+			},
+			cli.StringFlag{
+				Name:  "s,size",
+				Usage: T("Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB"),
+			},
+			cli.StringFlag{
+				Name:  "b,billing",
+				Usage: T("Billing rate. Default is: hourly. Options are: hourly, monthly"),
+			},
+			cli.StringFlag{
+				Name:  "v,vlan-private",
+				Usage: T("The ID of the private VLAN on which you want the dedicated host placed. See: '${COMMAND_NAME} sl vlan list' for reference"),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
+	}
+}
