@@ -65,3 +65,19 @@ func (cmd *GuestsCommand) Run(c *cli.Context) error {
 
 	return nil
 }
+
+func HardwareGuestsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "guests",
+		Description: T("Lists the Virtual Guests running on this server."),
+		Usage: T(`${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl hardware guests 1234567
+   Lists the Virtual Guests running on this server.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

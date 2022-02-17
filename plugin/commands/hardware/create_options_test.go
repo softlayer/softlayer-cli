@@ -7,7 +7,6 @@ import (
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -23,10 +22,10 @@ var _ = Describe("hardware create options", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewCreateOptionsCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwareCreateOptionsMetaData().Name,
-			Description: metadata.HardwareCreateOptionsMetaData().Description,
-			Usage:       metadata.HardwareCreateOptionsMetaData().Usage,
-			Flags:       metadata.HardwareCreateOptionsMetaData().Flags,
+			Name:        hardware.HardwareCreateOptionsMetaData().Name,
+			Description: hardware.HardwareCreateOptionsMetaData().Description,
+			Usage:       hardware.HardwareCreateOptionsMetaData().Usage,
+			Flags:       hardware.HardwareCreateOptionsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

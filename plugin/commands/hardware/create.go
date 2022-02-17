@@ -12,6 +12,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CreateCommand struct {
@@ -161,5 +162,74 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 		cmd.UI.Print(T("Run '{{.CommandName}} sl hardware list --order {{.OrderID}}' to find this hardware server after it is ready.",
 			map[string]interface{}{"OrderID": *orderReceipt.OrderId, "CommandName": cmd.Context.CLIName()}))
 		return nil
+	}
+}
+
+func HardwareCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "create",
+		Description: T("Order/create a hardware server"),
+		Usage: `${COMMAND_NAME} sl hardware create [OPTIONS] 
+	See '${COMMAND_NAME} sl hardware create-options' for valid options.`,
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Host portion of the FQDN[required]"),
+			},
+			cli.StringFlag{
+				Name:  "D,domain",
+				Usage: T("Domain portion of the FQDN[required]"),
+			},
+			cli.StringFlag{
+				Name:  "s,size",
+				Usage: T("Hardware size[required]"),
+			},
+			cli.StringFlag{
+				Name:  "o,os",
+				Usage: T("OS install code[required]"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Datacenter shortname[required]"),
+			},
+			cli.IntFlag{
+				Name:  "p,port-speed",
+				Usage: T("Port speed[required]"),
+			},
+			cli.StringFlag{
+				Name:  "b,billing",
+				Usage: T("Billing rate, either hourly or monthly, default is hourly if not specified"),
+			},
+			cli.StringFlag{
+				Name:  "i,post-install",
+				Usage: T("Post-install script to download"),
+			},
+			cli.IntSliceFlag{
+				Name:  "k,key",
+				Usage: T("SSH keys to add to the root user, multiple occurrence allowed"),
+			},
+			cli.BoolFlag{
+				Name:  "n,no-public",
+				Usage: T("Private network only"),
+			},
+			cli.StringSliceFlag{
+				Name:  "e,extra",
+				Usage: T("Extra options, multiple occurrence allowed"),
+			},
+			cli.BoolFlag{
+				Name:  "t,test",
+				Usage: T("Do not actually create the virtual server"),
+			},
+			cli.StringFlag{
+				Name:  "m,template",
+				Usage: T("A template file that defaults the command-line options"),
+			},
+			cli.StringFlag{
+				Name:  "x,export",
+				Usage: T("Exports options to a template file"),
+			},
+			metadata.ForceFlag(),
+		},
 	}
 }

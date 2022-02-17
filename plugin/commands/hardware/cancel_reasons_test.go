@@ -6,7 +6,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -22,10 +21,10 @@ var _ = Describe("hardware cancelreason", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewCancelReasonsCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwareCancelReasonsMetaData().Name,
-			Description: metadata.HardwareCancelReasonsMetaData().Description,
-			Usage:       metadata.HardwareCancelReasonsMetaData().Usage,
-			Flags:       metadata.HardwareCancelReasonsMetaData().Flags,
+			Name:        hardware.HardwareCancelReasonsMetaData().Name,
+			Description: hardware.HardwareCancelReasonsMetaData().Description,
+			Usage:       hardware.HardwareCancelReasonsMetaData().Usage,
+			Flags:       hardware.HardwareCancelReasonsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -6,9 +6,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type RescueCommand struct {
@@ -50,4 +51,16 @@ func (cmd *RescueCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Hardware server: {{.ID}} was rebooted to a rescue image.", map[string]interface{}{"ID": hardwareId}))
 	return nil
+}
+
+func HardwareRescueMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "rescue",
+		Description: T("Reboot server into a rescue image"),
+		Usage:       "${COMMAND_NAME} sl hardware rescue IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

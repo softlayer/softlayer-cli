@@ -103,7 +103,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		if hardware.BillingItem != nil && hardware.BillingItem.NextInvoiceTotalRecurringAmount != nil {
 			buf := new(bytes.Buffer)
 			priceTable := terminal.NewTable(buf, []string{T("Item"), T("CategoryCode"), T("Recurring Price")})
-			
+
 			totalPrice := hardware.BillingItem.NextInvoiceTotalRecurringAmount
 			priceTable.Add("Total", "-", fmt.Sprintf("%.2f", *totalPrice))
 			sum := *hardware.BillingItem.NextInvoiceTotalRecurringAmount
@@ -142,4 +142,24 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
+}
+
+func HardwareDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "detail",
+		Description: T("Get details for a hardware server"),
+		Usage:       "${COMMAND_NAME} sl hardware detail IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "p,passwords",
+				Usage: T("Show passwords (check over your shoulder!)"),
+			},
+			cli.BoolFlag{
+				Name:  "c,price",
+				Usage: T("Show associated prices"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

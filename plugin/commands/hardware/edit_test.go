@@ -6,7 +6,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -22,10 +21,10 @@ var _ = Describe("hardware edit", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewEditCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwareEditMetaData().Name,
-			Description: metadata.HardwareEditMetaData().Description,
-			Usage:       metadata.HardwareEditMetaData().Usage,
-			Flags:       metadata.HardwareEditMetaData().Flags,
+			Name:        hardware.HardwareEditMetaData().Name,
+			Description: hardware.HardwareEditMetaData().Description,
+			Usage:       hardware.HardwareEditMetaData().Usage,
+			Flags:       hardware.HardwareEditMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

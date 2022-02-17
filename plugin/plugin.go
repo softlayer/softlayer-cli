@@ -22,13 +22,14 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
@@ -175,7 +176,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.FileNamespace(),
 		//metadata.NS_FIREWALL,
 		globalip.GlobalIpNamespace(),
-		metadata.HardwareNamespace(),
+		hardware.HardwareNamespace(),
 		image.ImageNamespace(),
 		metadata.IpsecNamespace(),
 		metadata.LicensesNamespace(),
@@ -202,7 +203,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.FileMetaData(),
 		// metadata.CMD_FW,
 		globalip.GlobalIpMetaData(),
-		metadata.HardwareMetaData(),
+		hardware.HardwareMetaData(),
 		image.ImageMetaData(),
 		metadata.IpsecMetaData(),
 		metadata.LicensesMetaData(),
