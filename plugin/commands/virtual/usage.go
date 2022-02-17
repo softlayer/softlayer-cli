@@ -102,3 +102,37 @@ func (cmd *UsageCommand) Run(c *cli.Context) error {
 	tableUsage.Print()
 	return nil
 }
+
+func VSUsageMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "usage",
+		Description: T("usage data over date range."),
+		Usage: T(`${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]
+Usage information of a virtual server.
+Example:
+   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0`, map[string]interface{}{"Command": "vs"}),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,start",
+				Usage: T("Start Date e.g. 2019-3-4 (yyyy-MM-dd)  [required]"),
+				Required: true,
+			},
+			cli.StringFlag{
+				Name:  "e,end",
+				Usage: T("End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]"),
+				Required: true,
+			},
+			cli.StringFlag{
+				Name:  "t,valid-data",
+				Usage: T("Metric_Data_Type keyName e.g. CPU0, CPU1, MEMORY_USAGE, etc.  [required]"),
+				Required: true,
+			},
+			cli.IntFlag{
+				Name:  "p,summary-period",
+				Usage: T("300, 600, 1800, 3600, 43200 or 86400 seconds."),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

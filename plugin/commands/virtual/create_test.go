@@ -16,7 +16,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -36,10 +35,10 @@ var _ = Describe("VS create", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = virtual.NewCreateCommand(fakeUI, fakeVSManager, fakeImageManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCreateMetaData().Name,
-			Description: metadata.VSCreateMetaData().Description,
-			Usage:       metadata.VSCreateMetaData().Usage,
-			Flags:       metadata.VSCreateMetaData().Flags,
+			Name:        virtual.VSCreateMetaData().Name,
+			Description: virtual.VSCreateMetaData().Description,
+			Usage:       virtual.VSCreateMetaData().Usage,
+			Flags:       virtual.VSCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

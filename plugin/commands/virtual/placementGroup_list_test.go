@@ -7,7 +7,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -23,10 +22,10 @@ var _ = Describe("VS capacity-list", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewPlacementGroupListCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSPlacementGroupListMetadata().Name,
-			Description: metadata.VSPlacementGroupListMetadata().Description,
-			Usage:       metadata.VSPlacementGroupListMetadata().Usage,
-			Flags:       metadata.VSPlacementGroupListMetadata().Flags,
+			Name:        virtual.VSPlacementGroupListMetadata().Name,
+			Description: virtual.VSPlacementGroupListMetadata().Description,
+			Usage:       virtual.VSPlacementGroupListMetadata().Usage,
+			Flags:       virtual.VSPlacementGroupListMetadata().Flags,
 			Action:      cmd.Run,
 		}
 	})

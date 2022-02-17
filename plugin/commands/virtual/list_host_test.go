@@ -10,7 +10,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VS list", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewListHostCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSListHostMetaData().Name,
-			Description: metadata.VSListHostMetaData().Description,
-			Usage:       metadata.VSListHostMetaData().Usage,
-			Flags:       metadata.VSListHostMetaData().Flags,
+			Name:        virtual.VSListHostMetaData().Name,
+			Description: virtual.VSListHostMetaData().Description,
+			Usage:       virtual.VSListHostMetaData().Usage,
+			Flags:       virtual.VSListHostMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

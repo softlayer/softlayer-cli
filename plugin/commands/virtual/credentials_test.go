@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("VS credentials", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewCredentialsCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCredentialsMetaData().Name,
-			Description: metadata.VSCredentialsMetaData().Description,
-			Usage:       metadata.VSCredentialsMetaData().Usage,
-			Flags:       metadata.VSCredentialsMetaData().Flags,
+			Name:        virtual.VSCredentialsMetaData().Name,
+			Description: virtual.VSCredentialsMetaData().Description,
+			Usage:       virtual.VSCredentialsMetaData().Usage,
+			Flags:       virtual.VSCredentialsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

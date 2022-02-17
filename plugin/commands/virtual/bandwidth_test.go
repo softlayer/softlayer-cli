@@ -1,17 +1,15 @@
 package virtual_test
 
 import (
-
-	"time"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/softlayer/softlayer-go/datatypes"
+	"time"
 )
 
 var _ = Describe("VS bandwidth", func() {
@@ -31,10 +29,10 @@ var _ = Describe("VS bandwidth", func() {
 		fakeTransport = new(testhelpers.FakeTransportHandler)
 		cmd = virtual.NewBandwidthCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSBandwidthMetaData().Name,
-			Description: metadata.VSBandwidthMetaData().Description,
-			Usage:       metadata.VSBandwidthMetaData().Usage,
-			Flags:       metadata.VSBandwidthMetaData().Flags,
+			Name:        virtual.VSBandwidthMetaData().Name,
+			Description: virtual.VSBandwidthMetaData().Description,
+			Usage:       virtual.VSBandwidthMetaData().Usage,
+			Flags:       virtual.VSBandwidthMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

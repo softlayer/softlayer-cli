@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+
 	"os"
 	"reflect"
 	"strings"
@@ -19,6 +20,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 )
 
 var (
@@ -173,7 +175,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.SecurityGroupNamespace(),
 		metadata.SubnetNamespace(),
 		metadata.TicketNamespace(),
-		metadata.VSNamespace(),
+		virtual.VSNamespace(),
 		metadata.PlacementGroupNamespace(),
 		metadata.VlanNamespace(),
 		metadata.OrderNamespace(),
@@ -201,7 +203,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.SubnetMetaData(),
 		metadata.TicketMetaData(),
 		metadata.VlanMetaData(),
-		metadata.VSMetaData(),
+		virtual.VSMetaData(),
 		metadata.PlacementGroupMetaData(),
 		metadata.OrderMetaData(),
 		metadata.UserMetaData(),

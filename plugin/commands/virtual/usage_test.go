@@ -8,7 +8,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"time"
 )
@@ -25,10 +24,10 @@ var _ = Describe("VS usage", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewUsageCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSUsageMetaData().Name,
-			Description: metadata.VSUsageMetaData().Description,
-			Usage:       metadata.VSUsageMetaData().Usage,
-			Flags:       metadata.VSUsageMetaData().Flags,
+			Name:        virtual.VSUsageMetaData().Name,
+			Description: virtual.VSUsageMetaData().Description,
+			Usage:       virtual.VSUsageMetaData().Usage,
+			Flags:       virtual.VSUsageMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -4,9 +4,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -50,4 +51,20 @@ func (cmd *PauseCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was paused.", map[string]interface{}{"VsId": vsID}))
 
 	return nil
+}
+
+func VSPauseMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "pause",
+		Description: T("Pause an active virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs pause IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs pause 12345678 -f
+   This command pauses virtual server instance with ID 12345678 without asking for confirmation.`),
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }
