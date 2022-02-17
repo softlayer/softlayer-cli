@@ -9,8 +9,8 @@ import (
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -198,4 +198,31 @@ func printAddressTransaltion(table terminal.Table, header string, translations [
 	}
 
 	return table
+}
+
+func IpsecDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "detail",
+		Description: T("List IPSec VPN tunnel context details"),
+		Usage: T(`${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]
+
+  List IPSEC VPN tunnel context details.
+
+  Additional resources can be joined using multiple instances of the include
+  option, for which the following choices are available.
+
+  at: address translations
+  is: internal subnets
+  rs: remote subnets
+  sr: statically routed subnets
+  ss: service subnets`),
+		Flags: []cli.Flag{
+			cli.StringSliceFlag{
+				Name:  "i,include",
+				Usage: T("Include extra resources. Options are: at,is,rs,sr,ss"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

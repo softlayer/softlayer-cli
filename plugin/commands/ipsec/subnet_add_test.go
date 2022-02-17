@@ -11,7 +11,6 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -27,10 +26,10 @@ var _ = Describe("IPSec add subnet", func() {
 		fakeIPSecManager = new(testhelpers.FakeIPSECManager)
 		cmd = ipsec.NewAddSubnetCommand(fakeUI, fakeIPSecManager)
 		cliCommand = cli.Command{
-			Name:        metadata.IpsecSubnetAddMetaData().Name,
-			Description: metadata.IpsecSubnetAddMetaData().Description,
-			Usage:       metadata.IpsecSubnetAddMetaData().Usage,
-			Flags:       metadata.IpsecSubnetAddMetaData().Flags,
+			Name:        ipsec.IpsecSubnetAddMetaData().Name,
+			Description: ipsec.IpsecSubnetAddMetaData().Description,
+			Usage:       ipsec.IpsecSubnetAddMetaData().Usage,
+			Flags:       ipsec.IpsecSubnetAddMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

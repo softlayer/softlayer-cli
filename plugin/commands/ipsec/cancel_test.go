@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("IPSec cancel", func() {
 		fakeIPSecManager = new(testhelpers.FakeIPSECManager)
 		cmd = ipsec.NewCancelCommand(fakeUI, fakeIPSecManager)
 		cliCommand = cli.Command{
-			Name:        metadata.IpsecCancelMetaData().Name,
-			Description: metadata.IpsecCancelMetaData().Description,
-			Usage:       metadata.IpsecCancelMetaData().Usage,
-			Flags:       metadata.IpsecCancelMetaData().Flags,
+			Name:        ipsec.IpsecCancelMetaData().Name,
+			Description: ipsec.IpsecCancelMetaData().Description,
+			Usage:       ipsec.IpsecCancelMetaData().Usage,
+			Flags:       ipsec.IpsecCancelMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
