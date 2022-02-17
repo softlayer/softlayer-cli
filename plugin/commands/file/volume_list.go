@@ -25,7 +25,6 @@ func NewVolumeListCommand(ui terminal.UI, storageManager managers.StorageManager
 	}
 }
 
-
 func FileVolumeListMetaData() cli.Command {
 	return cli.Command{
 		Category:    "file",

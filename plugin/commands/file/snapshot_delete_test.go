@@ -10,7 +10,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 

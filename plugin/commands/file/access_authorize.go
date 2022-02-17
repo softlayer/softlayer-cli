@@ -5,7 +5,7 @@ import (
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
