@@ -122,3 +122,19 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 
 	return nil
 }
+
+func VSCreateOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "options",
+		Description: T("List options for creating virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs options [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs options
+   This command lists all the options for creating a virtual server instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

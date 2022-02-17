@@ -4,9 +4,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -48,4 +49,20 @@ func (cmd *RescueCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was rebooted.", map[string]interface{}{"VsId": vsID}))
 	return nil
+}
+
+func VSRescueMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "rescue",
+		Description: T("Reboot a virtual server instance into a rescue image"),
+		Usage: T(`${COMMAND_NAME} sl vs rescue IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs rescue 12345678
+   This command reboots virtual server instance with ID 12345678 into a rescue image.`),
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

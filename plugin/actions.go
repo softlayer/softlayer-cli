@@ -314,108 +314,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 
 		//virual server - 20
-		NS_VIRTUAL_NAME + "-" + CMD_VS_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
-			return virtual.NewAuthorizeStorageCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CANCEL_NAME: func(c *cli.Context) error {
-			return virtual.NewCancelCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPTURE_NAME: func(c *cli.Context) error {
-			return virtual.NewCaptureCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CREATE_NAME: func(c *cli.Context) error {
-			return virtual.NewCreateCommand(ui, virtualServerManager, imageManager, context).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CREATE_HOST_NAME: func(c *cli.Context) error {
-			return virtual.NewCreateHostCommand(ui, virtualServerManager, networkManager, context).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
-			return virtual.NewCreateOptionsCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CREDENTIALS_NAME: func(c *cli.Context) error {
-			return virtual.NewCredentialsCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_DETAIL_NAME: func(c *cli.Context) error {
-			return virtual.NewDetailCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_DNS_SYNC_NAME: func(c *cli.Context) error {
-			return virtual.NewDnsSyncCommand(ui, virtualServerManager, dnsManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_EDIT_NAME: func(c *cli.Context) error {
-			return virtual.NewEditCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_LIST_NAME: func(c *cli.Context) error {
-			return virtual.NewListCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_LIST_HOST_NAME: func(c *cli.Context) error {
-			return virtual.NewListHostCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_MIGRATE_NAME: func(c *cli.Context) error {
-			return virtual.NewMigrageCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_PAUSE_NAME: func(c *cli.Context) error {
-			return virtual.NewPauseCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_POWER_OFF_NAME: func(c *cli.Context) error {
-			return virtual.NewPowerOffCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_POWER_ON_NAME: func(c *cli.Context) error {
-			return virtual.NewPowerOnCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_READY_NAME: func(c *cli.Context) error {
-			return virtual.NewReadyCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_BILLING_NAME: func(c *cli.Context) error {
-			return virtual.NewBillingCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_REBOOT_NAME: func(c *cli.Context) error {
-			return virtual.NewRebootCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_RELOAD_NAME: func(c *cli.Context) error {
-			return virtual.NewReloadCommand(ui, virtualServerManager, context).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_RESCUE_NAME: func(c *cli.Context) error {
-			return virtual.NewRescueCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_RESUME_NAME: func(c *cli.Context) error {
-			return virtual.NewResumeCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_UPGRADE_NAME: func(c *cli.Context) error {
-			return virtual.NewUpgradeCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_CREATE_OPTIONS: func(c *cli.Context) error {
-			return virtual.NewCapacityCreateOptiosCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_DETAIL_NAME: func(c *cli.Context) error {
-			return virtual.NewCapacityDetailCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-bandwidth": func(c *cli.Context) error {
-			return virtual.NewBandwidthCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-storage": func(c *cli.Context) error {
-			return virtual.NewStorageCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-placementgroup-list": func(c *cli.Context) error {
-			return virtual.NewPlacementGroupListCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-placementgroup-create-options": func(c *cli.Context) error {
-			return virtual.NewPlacementGruopCreateOptionsCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-placementgroup-create": func(c *cli.Context) error {
-			return virtual.NewVSPlacementGroupCreateCommand(ui, virtualServerManager, context).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_LIST_NAME: func(c *cli.Context) error {
-			return virtual.NewCapacityListCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" + CMD_VS_CAPACITY_CREATE_NAME: func(c *cli.Context) error {
-			return virtual.NewCapacityCreateCommand(ui, virtualServerManager, context).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-usage": func(c *cli.Context) error {
-			return virtual.NewUsageCommand(ui, virtualServerManager).Run(c)
-		},
-		NS_VIRTUAL_NAME + "-" +CMD_VS_PLACEMENT_DETAIL_NAME: func(c *cli.Context) error {
-			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
-		},
+
 
 		//Placement group
 		NS_PLACEMENT_GROUP_NAME + "-" + CMD_PLACEMENT_GROUP_CREATE_NAME: func(c *cli.Context) error {
@@ -574,6 +473,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl loadbal
 	loadbalCommands := loadbal.GetCommandAcionBindings(ui, session)
 	for name, action := range loadbalCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl vs
+	vsCommands := virtual.GetCommandActionBindings(context, ui, session)
+	for name, action := range vsCommands {
 		CommandActionBindings[name] = action
 	}
 

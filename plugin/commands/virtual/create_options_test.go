@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("VS create options", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewCreateOptionsCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCreateOptionsMetaData().Name,
-			Description: metadata.VSCreateOptionsMetaData().Description,
-			Usage:       metadata.VSCreateOptionsMetaData().Usage,
-			Flags:       metadata.VSCreateOptionsMetaData().Flags,
+			Name:        virtual.VSCreateOptionsMetaData().Name,
+			Description: virtual.VSCreateOptionsMetaData().Description,
+			Usage:       virtual.VSCreateOptionsMetaData().Usage,
+			Flags:       virtual.VSCreateOptionsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

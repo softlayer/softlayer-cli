@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VS resume", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewResumeCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSResumeMetaData().Name,
-			Description: metadata.VSResumeMetaData().Description,
-			Usage:       metadata.VSResumeMetaData().Usage,
-			Flags:       metadata.VSResumeMetaData().Flags,
+			Name:        virtual.VSResumeMetaData().Name,
+			Description: virtual.VSResumeMetaData().Description,
+			Usage:       virtual.VSResumeMetaData().Usage,
+			Flags:       virtual.VSResumeMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

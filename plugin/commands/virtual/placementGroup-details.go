@@ -79,3 +79,17 @@ func (cmd *PlacementGroupDetailsCommand) Run(c *cli.Context) error {
 	tableGuest.Print()
 	return nil
 }
+
+func VSPlacementGroupDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "placementgroup-detail",
+		Description: T("Get placement Group details."),
+		Usage: T(`${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER
+EXAMPLE:
+   ${COMMAND_NAME} sl vs placementgroup-details 12345678
+    Get placement Group details with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		}}
+}

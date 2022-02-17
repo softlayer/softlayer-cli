@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("VS upgrade", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewUpgradeCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSUpgradeMetaData().Name,
-			Description: metadata.VSUpgradeMetaData().Description,
-			Usage:       metadata.VSUpgradeMetaData().Usage,
-			Flags:       metadata.VSUpgradeMetaData().Flags,
+			Name:        virtual.VSUpgradeMetaData().Name,
+			Description: virtual.VSUpgradeMetaData().Description,
+			Usage:       virtual.VSUpgradeMetaData().Usage,
+			Flags:       virtual.VSUpgradeMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
