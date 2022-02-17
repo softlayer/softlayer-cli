@@ -72,23 +72,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return firewall.NewListCommand(ui, firewallManager).Run(c)
 		},
 
-		// globalip - 5
-		NS_GLOBALIP_NAME + "-" + CMD_GP_ASSIGN_NAME: func(c *cli.Context) error {
-			return globalip.NewAssignCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_CREATE_NAME: func(c *cli.Context) error {
-			return globalip.NewCreateCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_CANCEL_NAME: func(c *cli.Context) error {
-			return globalip.NewCancelCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_LIST_NAME: func(c *cli.Context) error {
-			return globalip.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_GLOBALIP_NAME + "-" + CMD_GP_UNASSIGN_NAME: func(c *cli.Context) error {
-			return globalip.NewUnassignCommand(ui, networkManager).Run(c)
-		},
-
 		//hardware -14
 		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
 			return hardware.NewAuthorizeStorageCommand(ui, hardwareManager).Run(c)
@@ -225,29 +208,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_REMOVE_NAME: func(c *cli.Context) error {
 			return securitygroup.NewRuleRemoveCommand(ui, networkManager).Run(c)
-		},
-
-		//subnet 5
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_CANCEL_NAME: func(c *cli.Context) error {
-			return subnet.NewCancelCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_CREATE_NAME: func(c *cli.Context) error {
-			return subnet.NewCreateCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_DETAIL_NAME: func(c *cli.Context) error {
-			return subnet.NewDetailCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_LIST_NAME: func(c *cli.Context) error {
-			return subnet.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_LOOKUP_NAME: func(c *cli.Context) error {
-			return subnet.NewLookupCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_ROUTE_NAME: func(c *cli.Context) error {
-			return subnet.NewRouteCommand(ui, networkManager).Run(c)
-		},
-		NS_SUBNET_NAME + "-" + CMD_SUBNET_CLEAR_ROUTE_NAME: func(c *cli.Context) error {
-			return subnet.NewClearRouteCommand(ui, networkManager).Run(c)
 		},
 
 		//virual server - 20
@@ -432,8 +392,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	}
 
 	// ibmcloud sl tags
-	tagCommands := tags.GetCommandAcionBindings(ui, session)
-	for name, action := range tagCommands {
+	tagsCommands := tags.GetCommandActionBindings(context, ui, session)
+	for name, action := range tagsCommands {
 		CommandActionBindings[name] = action
 	}
 
@@ -448,6 +408,19 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	for name, action := range placementgroupCommands {
 		CommandActionBindings[name] = action
 	}
+
+
+	// ibmcloud sl globalip
+	globalipCommands := globalip.GetCommandActionBindings(context, ui, session)
+	for name, action := range globalipCommands {
+    CommandActionBindings[name] = action
+  }
+
+	// ibmcloud sl subnet
+	subnetCommands := subnet.GetCommandActionBindings(context, ui, session)
+	for name, action := range subnetCommands {
+    CommandActionBindings[name] = action
+  }
 
 	// ibmcloud sl ticket
 	ticketCommands := ticket.GetCommandActionBindings(context, ui, session)

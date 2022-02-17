@@ -22,10 +22,13 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
@@ -172,7 +175,7 @@ func Namespaces() []plugin.Namespace {
 		file.FileNamespace(),
 		dns.DnsNamespace(),
 		//metadata.NS_FIREWALL,
-		metadata.GlobalIpNamespace(),
+		globalip.GlobalIpNamespace(),
 		metadata.HardwareNamespace(),
 		image.ImageNamespace(),
 		metadata.IpsecNamespace(),
@@ -180,14 +183,14 @@ func Namespaces() []plugin.Namespace {
 		metadata.LoadbalNamespace(),
 		metadata.SecurityNamespace(),
 		metadata.SecurityGroupNamespace(),
-		metadata.SubnetNamespace(),
+		subnet.SubnetNamespace(),
 		ticket.TicketNamespace(),
 		metadata.VSNamespace(),
 		placementgroup.PlacementGroupNamespace(),
 		vlan.VlanNamespace(),
 		metadata.OrderNamespace(),
+		tags.TagsNamespace(),
 		user.UserNamespace(),
-		metadata.TagsNamespace(),
 		dedicatedhost.DedicatedhostNamespace(),
 		account.AccountNamespace(),
 	}
@@ -199,7 +202,7 @@ func getCLITopCommands() []cli.Command {
 		file.FileMetaData(),
 		dns.DnsMetaData(),
 		// metadata.CMD_FW,
-		metadata.GlobalIpMetaData(),
+		globalip.GlobalIpMetaData(),
 		metadata.HardwareMetaData(),
 		image.ImageMetaData(),
 		metadata.IpsecMetaData(),
@@ -207,7 +210,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.LoadbalMetaData(),
 		metadata.SecurityMetaData(),
 		metadata.SecurityGroupMetaData(),
-		metadata.SubnetMetaData(),
+		subnet.SubnetMetaData(),
 		ticket.TicketMetaData(),
 		vlan.VlanMetaData(),
 		metadata.VSMetaData(),
@@ -215,7 +218,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.OrderMetaData(),
 		user.UserMetaData(),
 		metadata.CallAPIMetadata(),
-		metadata.TagsMetaData(),
+		tags.TagsMetaData(),
 		dedicatedhost.DedicatedhostMetaData(),
 		account.AccountMetaData(),
 	}
