@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -22,6 +22,22 @@ func NewReplicaPartnersCommand(ui terminal.UI, storageManager managers.StorageMa
 	return &ReplicaPartnersCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func FileReplicaPartnersMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "replica-partners",
+		Description: T("List existing replicant volumes for a file volume"),
+		Usage: T(`${COMMAND_NAME} sl file replica-partners VOLUME_ID [OPTIONS]
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl file replica-partners 12345678
+   This command lists existing replicant volumes for file volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
 	}
 }
 

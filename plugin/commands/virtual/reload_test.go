@@ -12,7 +12,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -30,10 +29,10 @@ var _ = Describe("VS reload", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = virtual.NewReloadCommand(fakeUI, fakeVSManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.VSReloadMetaData().Name,
-			Description: metadata.VSReloadMetaData().Description,
-			Usage:       metadata.VSReloadMetaData().Usage,
-			Flags:       metadata.VSReloadMetaData().Flags,
+			Name:        virtual.VSReloadMetaData().Name,
+			Description: virtual.VSReloadMetaData().Description,
+			Usage:       virtual.VSReloadMetaData().Usage,
+			Flags:       virtual.VSReloadMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

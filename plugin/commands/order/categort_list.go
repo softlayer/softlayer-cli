@@ -73,3 +73,23 @@ func (cmd *CategoryListCommand) Print(categories []datatypes.Product_Package_Ord
 	}
 	table.Print()
 }
+
+func OrderCategoryListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "order",
+		Name:        "category-list",
+		Description: T("List the categories of a package"),
+		Usage: T(`${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME
+	
+EXAMPLE: 
+   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER
+   This command lists the categories of Bare Metal servers.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "required",
+				Usage: T("List only the required categories for the package"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

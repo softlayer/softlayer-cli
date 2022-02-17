@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VS rescue", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewRescueCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSRescueMetaData().Name,
-			Description: metadata.VSRescueMetaData().Description,
-			Usage:       metadata.VSRescueMetaData().Usage,
-			Flags:       metadata.VSRescueMetaData().Flags,
+			Name:        virtual.VSRescueMetaData().Name,
+			Description: virtual.VSRescueMetaData().Description,
+			Usage:       virtual.VSRescueMetaData().Usage,
+			Flags:       virtual.VSRescueMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -22,6 +22,41 @@ func NewAccessRevokeCommand(ui terminal.UI, storageManager managers.StorageManag
 		UI:             ui,
 		StorageManager: storageManager,
 		NetworkManager: networkManager,
+	}
+}
+
+func FileAccessRevokeMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "access-revoke",
+		Description: T("Revoke authorization for hosts that are accessing a specific volume"),
+		Usage: T(`${COMMAND_NAME} sl file access-revoke VOLUME_ID [OPTIONS]
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl file access-revoke 12345678 --virtual-id 87654321
+   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.IntSliceFlag{
+				Name:  "d,hardware-id",
+				Usage: T("The ID of one hardware server to revoke"),
+			},
+			cli.IntSliceFlag{
+				Name:  "v,virtual-id",
+				Usage: T("The ID of one virtual server to revoke"),
+			},
+			cli.IntSliceFlag{
+				Name:  "i,ip-address-id",
+				Usage: T("The ID of one IP address to revoke"),
+			},
+			cli.StringSliceFlag{
+				Name:  "p,ip-address",
+				Usage: T("An IP address to revoke"),
+			},
+			cli.IntSliceFlag{
+				Name:  "s,subnet-id",
+				Usage: T("An ID of one subnet to revoke"),
+			},
+		},
 	}
 }
 

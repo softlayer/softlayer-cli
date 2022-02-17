@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+
 	"os"
 	"reflect"
 	"strings"
@@ -22,14 +23,18 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
@@ -172,8 +177,8 @@ func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
 		metadata.SoftlayerNamespace(),
 		block.BlockNamespace(),
+		file.FileNamespace(),
 		dns.DnsNamespace(),
-		metadata.FileNamespace(),
 		//metadata.NS_FIREWALL,
 		globalip.GlobalIpNamespace(),
 		hardware.HardwareNamespace(),
@@ -182,16 +187,16 @@ func Namespaces() []plugin.Namespace {
 		metadata.LicensesNamespace(),
 		metadata.LoadbalNamespace(),
 		metadata.SecurityNamespace(),
-		metadata.SecurityGroupNamespace(),
+		securitygroup.SecurityGroupNamespace(),
 		subnet.SubnetNamespace(),
 		ticket.TicketNamespace(),
-		metadata.VSNamespace(),
 		placementgroup.PlacementGroupNamespace(),
+		order.OrderNamespace(),
 		vlan.VlanNamespace(),
-		metadata.OrderNamespace(),
 		tags.TagsNamespace(),
 		user.UserNamespace(),
 		dedicatedhost.DedicatedhostNamespace(),
+		virtual.VSNamespace(),
 		account.AccountNamespace(),
 	}
 }
@@ -199,8 +204,8 @@ func Namespaces() []plugin.Namespace {
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
 		block.BlockMetaData(),
+		file.FileMetaData(),
 		dns.DnsMetaData(),
-		metadata.FileMetaData(),
 		// metadata.CMD_FW,
 		globalip.GlobalIpMetaData(),
 		hardware.HardwareMetaData(),
@@ -209,17 +214,17 @@ func getCLITopCommands() []cli.Command {
 		metadata.LicensesMetaData(),
 		metadata.LoadbalMetaData(),
 		metadata.SecurityMetaData(),
-		metadata.SecurityGroupMetaData(),
+		securitygroup.SecurityGroupMetaData(),
 		subnet.SubnetMetaData(),
 		ticket.TicketMetaData(),
 		vlan.VlanMetaData(),
-		metadata.VSMetaData(),
 		placementgroup.PlacementGroupMetaData(),
-		metadata.OrderMetaData(),
+		order.OrderMetaData(),
 		user.UserMetaData(),
 		metadata.CallAPIMetadata(),
 		tags.TagsMetaData(),
 		dedicatedhost.DedicatedhostMetaData(),
+		virtual.VSMetaData(),
 		account.AccountMetaData(),
 	}
 }

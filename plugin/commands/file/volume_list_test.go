@@ -12,7 +12,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +28,10 @@ var _ = Describe("Volume list", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewVolumeListCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileVolumeListMetaData().Name,
-			Description: metadata.FileVolumeListMetaData().Description,
-			Usage:       metadata.FileVolumeListMetaData().Usage,
-			Flags:       metadata.FileVolumeListMetaData().Flags,
+			Name:        file.FileVolumeListMetaData().Name,
+			Description: file.FileVolumeListMetaData().Description,
+			Usage:       file.FileVolumeListMetaData().Usage,
+			Flags:       file.FileVolumeListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

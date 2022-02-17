@@ -14,7 +14,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -32,10 +32,10 @@ var _ = Describe("Volume order", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = file.NewVolumeOrderCommand(fakeUI, FakeStorageManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.FileVolumeOrderMetaData().Name,
-			Description: metadata.FileVolumeOrderMetaData().Description,
-			Usage:       metadata.FileVolumeOrderMetaData().Usage,
-			Flags:       metadata.FileVolumeOrderMetaData().Flags,
+			Name:        file.FileVolumeOrderMetaData().Name,
+			Description: file.FileVolumeOrderMetaData().Description,
+			Usage:       file.FileVolumeOrderMetaData().Usage,
+			Flags:       file.FileVolumeOrderMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

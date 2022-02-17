@@ -7,8 +7,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -97,4 +97,20 @@ func (cmd *InterfaceListCommand) Run(c *cli.Context) error {
 	}
 	serverTable.Print()
 	return nil
+}
+
+func SecurityGroupInterfaceListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "securitygroup",
+		Name:        "interface-list",
+		Description: T("List interfaces associated with security group"),
+		Usage:       "${COMMAND_NAME} sl securitygroup interface-list SECURITYGROUP_ID [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by. Options are: id,virtualServerId,hostname"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

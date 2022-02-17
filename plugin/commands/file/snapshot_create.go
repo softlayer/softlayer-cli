@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -22,6 +22,26 @@ func NewSnapshotCreateCommand(ui terminal.UI, storageManager managers.StorageMan
 	return &SnapshotCreateCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func FileSnapshotCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "snapshot-create",
+		Description: T("Create a snapshot on a given volume"),
+		Usage: T(`${COMMAND_NAME} sl file snapshot-create VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl file snapshot-create 12345678 --note snapshotforibmcloud
+   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,note",
+				Usage: T("Notes to set on the new snapshot"),
+			},
+			metadata.OutputFlag(),
+		},
 	}
 }
 
