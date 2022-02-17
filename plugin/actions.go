@@ -49,7 +49,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	ipsecManager := managers.NewIPSECManager(session)
 
 	hardwareManager := managers.NewHardwareServerManager(session)
-	orderManager := managers.NewOrderManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
 	licensesManager := managers.NewLicensesManager(session)
 
@@ -314,35 +313,11 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
 
-		//order
-		NS_ORDER_NAME + "-" + CMD_ORDER_CATEGORY_LIST_NAME: func(c *cli.Context) error {
-			return order.NewCategoryListCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_ITEM_LIST_NAME: func(c *cli.Context) error {
-			return order.NewItemListCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PACKAGE_LIST_NAME: func(c *cli.Context) error {
-			return order.NewPackageListCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PACKAGE_LOCATION_NAME: func(c *cli.Context) error {
-			return order.NewPackageLocationCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PLACE_NAME: func(c *cli.Context) error {
-			return order.NewPlaceCommand(ui, orderManager, context).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PLACE_QUOTE_NAME: func(c *cli.Context) error {
-			return order.NewPlaceQuoteCommand(ui, orderManager, context).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PRESET_LIST_NAME: func(c *cli.Context) error {
-			return order.NewPresetListCommand(ui, orderManager).Run(c)
-		},
-
-
 		//callapi
 		NS_SL_NAME + "-" + CMD_CALLAPI_NAME: func(c *cli.Context) error {
 			return callapi.NewCallAPICommand(ui, callAPIManager).Run(c)
 		},
-		
+
 		//license
 		NS_LICENSES_NAME + "-" + CMD_LICENSES_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
 			return licenses.NewLicensesOptionsCommand(ui, licensesManager).Run(c)
@@ -400,6 +375,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl loadbal
 	loadbalCommands := loadbal.GetCommandAcionBindings(ui, session)
 	for name, action := range loadbalCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl order
+	orderCommands := order.GetCommandActionBindings(context, ui, session)
+	for name, action := range orderCommands {
 		CommandActionBindings[name] = action
 	}
 
