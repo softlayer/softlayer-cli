@@ -13,7 +13,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -29,10 +28,10 @@ var _ = Describe("Securitygroup list", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = securitygroup.NewListCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupListMetaData().Name,
-			Description: metadata.SecurityGroupListMetaData().Description,
-			Usage:       metadata.SecurityGroupListMetaData().Usage,
-			Flags:       metadata.SecurityGroupListMetaData().Flags,
+			Name:        securitygroup.SecurityGroupListMetaData().Name,
+			Description: securitygroup.SecurityGroupListMetaData().Description,
+			Usage:       securitygroup.SecurityGroupListMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

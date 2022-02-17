@@ -8,7 +8,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -24,10 +23,10 @@ var _ = Describe("Securitygroup delete", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = securitygroup.NewDeleteCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupDeleteMetaData().Name,
-			Description: metadata.SecurityGroupDeleteMetaData().Description,
-			Usage:       metadata.SecurityGroupDeleteMetaData().Usage,
-			Flags:       metadata.SecurityGroupDeleteMetaData().Flags,
+			Name:        securitygroup.SecurityGroupDeleteMetaData().Name,
+			Description: securitygroup.SecurityGroupDeleteMetaData().Description,
+			Usage:       securitygroup.SecurityGroupDeleteMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupDeleteMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

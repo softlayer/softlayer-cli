@@ -31,10 +31,10 @@ var _ = Describe("end to end test", func() {
 		fakeUI = terminal.NewFakeUI()
 		cmd = securitygroup.NewDetailCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupDetailMetaData().Name,
-			Description: metadata.SecurityGroupDetailMetaData().Description,
-			Usage:       metadata.SecurityGroupDetailMetaData().Usage,
-			Flags:       metadata.SecurityGroupDetailMetaData().Flags,
+			Name:        securitygroup.SecurityGroupDetailMetaData().Name,
+			Description: securitygroup.SecurityGroupDetailMetaData().Description,
+			Usage:       securitygroup.SecurityGroupDetailMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupDetailMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

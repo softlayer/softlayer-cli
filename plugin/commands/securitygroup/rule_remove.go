@@ -6,9 +6,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type RuleRemoveCommand struct {
@@ -54,4 +55,16 @@ func (cmd *RuleRemoveCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Rule {{.RuleId}} in security group {{.GroupID}} is removed.", map[string]interface{}{"RuleId": ruleID, "GroupID": groupID}))
 	return nil
+}
+
+func SecurityGroupRuleRemoveMetaData() cli.Command {
+	return cli.Command{
+		Category:    "securitygroup",
+		Name:        "rule-remove",
+		Description: T("Remove a rule from a security group"),
+		Usage:       "${COMMAND_NAME} sl securitygroup rule-remove SECURITYGROUP_ID RULE_ID [OPTIONS]",
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

@@ -14,7 +14,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -32,10 +31,10 @@ var _ = Describe("end to end test", func() {
 		fakeUI = terminal.NewFakeUI()
 		cmd = securitygroup.NewInterfaceListCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupInterfaceListMetaData().Name,
-			Description: metadata.SecurityGroupInterfaceListMetaData().Description,
-			Usage:       metadata.SecurityGroupInterfaceListMetaData().Usage,
-			Flags:       metadata.SecurityGroupInterfaceListMetaData().Flags,
+			Name:        securitygroup.SecurityGroupInterfaceListMetaData().Name,
+			Description: securitygroup.SecurityGroupInterfaceListMetaData().Description,
+			Usage:       securitygroup.SecurityGroupInterfaceListMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupInterfaceListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
@@ -68,10 +67,10 @@ var _ = Describe("Securitygroup interface list", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = securitygroup.NewInterfaceListCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupInterfaceListMetaData().Name,
-			Description: metadata.SecurityGroupInterfaceListMetaData().Description,
-			Usage:       metadata.SecurityGroupInterfaceListMetaData().Usage,
-			Flags:       metadata.SecurityGroupInterfaceListMetaData().Flags,
+			Name:        securitygroup.SecurityGroupInterfaceListMetaData().Name,
+			Description: securitygroup.SecurityGroupInterfaceListMetaData().Description,
+			Usage:       securitygroup.SecurityGroupInterfaceListMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupInterfaceListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
