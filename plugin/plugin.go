@@ -2,7 +2,7 @@ package plugin
 
 import (
 	"fmt"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+
 	"os"
 	"reflect"
 	"strings"
@@ -20,6 +20,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 )
 
 var (
