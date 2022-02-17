@@ -11,7 +11,7 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -27,9 +27,9 @@ var _ = Describe("Volume Limits", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewVolumeLimitCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileVolumeLimitsMetaData().Name,
-			Description: metadata.FileVolumeLimitsMetaData().Description,
-			Usage:       metadata.FileVolumeLimitsMetaData().Usage,
+			Name:        file.FileVolumeLimitsMetaData().Name,
+			Description: file.FileVolumeLimitsMetaData().Description,
+			Usage:       file.FileVolumeLimitsMetaData().Usage,
 			Action:      cmd.Run,
 		}
 	})

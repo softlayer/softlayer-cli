@@ -9,7 +9,7 @@ import (
 
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +25,10 @@ var _ = Describe("Volume snapshot notification status", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewSnapshotGetNotificationStatusCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileVolumeSnapshotGetNotificationStatusMetaData().Name,
-			Description: metadata.FileVolumeSnapshotGetNotificationStatusMetaData().Description,
-			Usage:       metadata.FileVolumeSnapshotGetNotificationStatusMetaData().Usage,
-			Flags:       metadata.FileVolumeSnapshotGetNotificationStatusMetaData().Flags,
+			Name:        file.FileVolumeSnapshotGetNotificationStatusMetaData().Name,
+			Description: file.FileVolumeSnapshotGetNotificationStatusMetaData().Description,
+			Usage:       file.FileVolumeSnapshotGetNotificationStatusMetaData().Usage,
+			Flags:       file.FileVolumeSnapshotGetNotificationStatusMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

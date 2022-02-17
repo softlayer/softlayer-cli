@@ -10,7 +10,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,9 +26,9 @@ var _ = Describe("File Volume Convert", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = file.NewVolumeConvertCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileVolumeConvertMetaData().Name,
-			Description: metadata.FileVolumeConvertMetaData().Description,
-			Usage:       metadata.FileVolumeConvertMetaData().Usage,
+			Name:        file.FileVolumeConvertMetaData().Name,
+			Description: file.FileVolumeConvertMetaData().Description,
+			Usage:       file.FileVolumeConvertMetaData().Usage,
 			Action:      cmd.Run,
 		}
 	})

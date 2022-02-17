@@ -3,6 +3,7 @@ package file
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -17,6 +18,22 @@ func NewVolumeLimitCommand(ui terminal.UI, storageManager managers.StorageManage
 	return &VolumeLimitCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func FileVolumeLimitsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "volume-limits",
+		Description: T("Lists the storage limits per datacenter for this account."),
+		Usage: T(`${COMMAND_NAME} sl file volume-limits [OPTIONS]
+
+EXAMPLE:
+	${COMMAND_NAME} sl file volume-limits
+	This command lists the storage limits per datacenter for this account.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
 	}
 }
 
