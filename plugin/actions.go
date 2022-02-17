@@ -436,7 +436,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	for name, action := range security.GetCommandActionBindings(ui, session) {
+	// ibmcloud sl security
+	securityCommands := security.GetCommandActionBindings(context, ui, session)
+	for name, action := range securityCommands {
 		CommandActionBindings[name] = action
 	}
 

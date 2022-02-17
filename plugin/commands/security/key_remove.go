@@ -9,6 +9,7 @@ import (
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type KeyRemoveCommand struct {
@@ -48,4 +49,20 @@ func (cmd *KeyRemoveCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("SSH key {{.ID}} was removed.", map[string]interface{}{"ID": keyID}))
 	return nil
+}
+
+func SecuritySSHKeyRemoveMetaData() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "sshkey-remove",
+		Description: T("Permanently removes an SSH key"),
+		Usage: T(`${COMMAND_NAME} sl security sshkey-remove IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl security sshkey-remove 12345678 -f 
+   This command removes the SSH key with ID 12345678 without asking for confirmation.`),
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

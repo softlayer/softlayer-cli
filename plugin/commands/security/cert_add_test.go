@@ -11,7 +11,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("Certificate add", func() {
 		cmd = security.NewCertAddCommand(fakeUI, fakeSecurityManager)
 
 		cliCommand = cli.Command{
-			Name:        metadata.SecuritySSLCertAddMetaData().Name,
-			Description: metadata.SecuritySSLCertAddMetaData().Description,
-			Usage:       metadata.SecuritySSLCertAddMetaData().Usage,
-			Flags:       metadata.SecuritySSLCertAddMetaData().Flags,
+			Name:        security.SecuritySSLCertAddMetaData().Name,
+			Description: security.SecuritySSLCertAddMetaData().Description,
+			Usage:       security.SecuritySSLCertAddMetaData().Usage,
+			Flags:       security.SecuritySSLCertAddMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

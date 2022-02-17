@@ -30,6 +30,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 )
 
 var (
@@ -180,7 +181,7 @@ func Namespaces() []plugin.Namespace {
 		metadata.IpsecNamespace(),
 		metadata.LicensesNamespace(),
 		metadata.LoadbalNamespace(),
-		metadata.SecurityNamespace(),
+		security.SecurityNamespace(),
 		metadata.SecurityGroupNamespace(),
 		subnet.SubnetNamespace(),
 		ticket.TicketNamespace(),
@@ -207,7 +208,7 @@ func getCLITopCommands() []cli.Command {
 		metadata.IpsecMetaData(),
 		metadata.LicensesMetaData(),
 		metadata.LoadbalMetaData(),
-		metadata.SecurityMetaData(),
+		security.SecurityMetaData(),
 		metadata.SecurityGroupMetaData(),
 		subnet.SubnetMetaData(),
 		ticket.TicketMetaData(),
