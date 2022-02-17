@@ -49,7 +49,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	ipsecManager := managers.NewIPSECManager(session)
 
 	hardwareManager := managers.NewHardwareServerManager(session)
-	orderManager := managers.NewOrderManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
 	licensesManager := managers.NewLicensesManager(session)
 
@@ -172,44 +171,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return ipsec.NewUpdateCommand(ui, ipsecManager).Run(c)
 		},
 
-		//securitygroup 12
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_CREATE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewCreateCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_DELETE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewDeleteCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_DETAIL_NAME: func(c *cli.Context) error {
-			return securitygroup.NewDetailCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_EDIT_NAME: func(c *cli.Context) error {
-			return securitygroup.NewEditCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_INTERFACE_ADD_NAME: func(c *cli.Context) error {
-			return securitygroup.NewInterfaceAddCommand(ui, networkManager, virtualServerManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_INTERFACE_LIST_NAME: func(c *cli.Context) error {
-			return securitygroup.NewInterfaceListCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_INTERFACE_REMOVE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewInterfaceRemoveCommand(ui, networkManager, virtualServerManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_LIST_NAME: func(c *cli.Context) error {
-			return securitygroup.NewListCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_ADD_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleAddCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_EDIT_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleEditCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_LIST_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleListCommand(ui, networkManager).Run(c)
-		},
-		NS_SECURITYGROUP_NAME + "-" + CMD_SECURITYGROUP_RULE_REMOVE_NAME: func(c *cli.Context) error {
-			return securitygroup.NewRuleRemoveCommand(ui, networkManager).Run(c)
-		},
-
 		//virual server - 20
 		NS_VIRTUAL_NAME + "-" + CMD_VS_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
 			return virtual.NewAuthorizeStorageCommand(ui, virtualServerManager).Run(c)
@@ -314,35 +275,11 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return virtual.NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
 
-		//order
-		NS_ORDER_NAME + "-" + CMD_ORDER_CATEGORY_LIST_NAME: func(c *cli.Context) error {
-			return order.NewCategoryListCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_ITEM_LIST_NAME: func(c *cli.Context) error {
-			return order.NewItemListCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PACKAGE_LIST_NAME: func(c *cli.Context) error {
-			return order.NewPackageListCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PACKAGE_LOCATION_NAME: func(c *cli.Context) error {
-			return order.NewPackageLocationCommand(ui, orderManager).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PLACE_NAME: func(c *cli.Context) error {
-			return order.NewPlaceCommand(ui, orderManager, context).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PLACE_QUOTE_NAME: func(c *cli.Context) error {
-			return order.NewPlaceQuoteCommand(ui, orderManager, context).Run(c)
-		},
-		NS_ORDER_NAME + "-" + CMD_ORDER_PRESET_LIST_NAME: func(c *cli.Context) error {
-			return order.NewPresetListCommand(ui, orderManager).Run(c)
-		},
-
-
 		//callapi
 		NS_SL_NAME + "-" + CMD_CALLAPI_NAME: func(c *cli.Context) error {
 			return callapi.NewCallAPICommand(ui, callAPIManager).Run(c)
 		},
-		
+
 		//license
 		NS_LICENSES_NAME + "-" + CMD_LICENSES_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
 			return licenses.NewLicensesOptionsCommand(ui, licensesManager).Run(c)
@@ -403,12 +340,17 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
+	// ibmcloud sl order
+	orderCommands := order.GetCommandActionBindings(context, ui, session)
+	for name, action := range orderCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl placement-group
 	placementgroupCommands := placementgroup.GetCommandActionBindings(context, ui, session)
 	for name, action := range placementgroupCommands {
 		CommandActionBindings[name] = action
 	}
-
 
 	// ibmcloud sl globalip
 	globalipCommands := globalip.GetCommandActionBindings(context, ui, session)
@@ -428,7 +370,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl security
+	// ibmcloud sl securitygroup
+	securitygroupCommands := securitygroup.GetCommandActionBindings(context, ui, session)
+	for name, action := range securitygroupCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl sshkey
 	// ibmcloud sl ssl
 	userCommands := user.GetCommandActionBindings(ui, session)
