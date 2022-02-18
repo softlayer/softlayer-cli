@@ -6,6 +6,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CancelCommand struct {
@@ -49,4 +50,20 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Load balancer {{.LBID}} is cancelled.", map[string]interface{}{"LBID": loadbalID}))
 	return nil
+}
+
+func LoadbalCancelMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "cancel",
+		Description: T("Cancel an existing load balancer"),
+		Usage:       "${COMMAND_NAME} sl loadbal cancel (--id LOADBAL_ID)",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "id",
+				Usage: T("ID for the load balancer [required]"),
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }

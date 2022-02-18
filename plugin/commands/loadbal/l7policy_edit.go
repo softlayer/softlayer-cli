@@ -100,3 +100,34 @@ func (cmd *L7PolicyEditCommand) Run(c *cli.Context) error {
 	PrintPolicies([]datatypes.Network_LBaaS_L7Policy{policyEdited}, cmd.UI)
 	return nil
 }
+
+func LoadbalL7PolicyEditMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7policy-edit",
+		Description: T("Edit a L7 policy"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "policy-id",
+				Usage: T("ID for the load balancer policy [required]"),
+			},
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Policy name"),
+			},
+			cli.StringFlag{
+				Name:  "a,action",
+				Usage: T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
+			},
+			cli.StringFlag{
+				Name:  "r,redirect",
+				Usage: T("POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action"),
+			},
+			cli.IntFlag{
+				Name:  "p,priority",
+				Usage: T("Policy priority"),
+			},
+		},
+	}
+}
