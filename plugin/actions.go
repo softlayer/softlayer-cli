@@ -196,7 +196,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	}
 
 	// ibmcloud sl loadbal
-	loadbalCommands := loadbal.GetCommandAcionBindings(ui, session)
+	loadbalCommands := loadbal.GetCommandActionBindings(context, ui, session)
 	for name, action := range loadbalCommands {
 		CommandActionBindings[name] = action
 	}
