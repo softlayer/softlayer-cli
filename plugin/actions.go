@@ -41,9 +41,7 @@ import (
 )
 
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-
 	firewallManager := managers.NewFirewallManager(session)
-	hardwareManager := managers.NewHardwareServerManager(session)
 	callAPIManager := managers.NewCallAPIManager(session)
 	licensesManager := managers.NewLicensesManager(session)
 
@@ -64,71 +62,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_FIREWALL_NAME + "-" + CMD_FW_LIST_NAME: func(c *cli.Context) error {
 			return firewall.NewListCommand(ui, firewallManager).Run(c)
-		},
-
-		//hardware -14
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_AUTHORIZE_STORAGE_NAME: func(c *cli.Context) error {
-			return hardware.NewAuthorizeStorageCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_BILLING_NAME: func(c *cli.Context) error {
-			return hardware.NewBillingCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_CANCEL_NAME: func(c *cli.Context) error {
-			return hardware.NewCancelCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_CANCEL_REASONS_NAME: func(c *cli.Context) error {
-			return hardware.NewCancelReasonsCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_CREATE_NAME: func(c *cli.Context) error {
-			return hardware.NewCreateCommand(ui, hardwareManager, context).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
-			return hardware.NewCreateOptionsCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_CREDENTIALS_NAME: func(c *cli.Context) error {
-			return hardware.NewCredentialsCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_DETAIL_NAME: func(c *cli.Context) error {
-			return hardware.NewDetailCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_EDIT_NAME: func(c *cli.Context) error {
-			return hardware.NewEditCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_LIST_NAME: func(c *cli.Context) error {
-			return hardware.NewListCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_POWER_CYCLE_NAME: func(c *cli.Context) error {
-			return hardware.NewPowerCycleCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_POWER_OFF_NAME: func(c *cli.Context) error {
-			return hardware.NewPowerOffCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_POWER_ON_NAME: func(c *cli.Context) error {
-			return hardware.NewPowerOnCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_REBOOT_NAME: func(c *cli.Context) error {
-			return hardware.NewRebootCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_RELOAD_NAME: func(c *cli.Context) error {
-			return hardware.NewReloadCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_RESCUE_NAME: func(c *cli.Context) error {
-			return hardware.NewRescueCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-" + CMD_HARDWARE_UPDATE_FIRMWARE_NAME: func(c *cli.Context) error {
-			return hardware.NewUpdateFirmwareCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-toggle-ipmi": func(c *cli.Context) error {
-			return hardware.NewToggleIPMICommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-bandwidth": func(c *cli.Context) error {
-			return hardware.NewBandwidthCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-storage": func(c *cli.Context) error {
-			return hardware.NewStorageCommand(ui, hardwareManager).Run(c)
-		},
-		NS_HARDWARE_NAME + "-guests": func(c *cli.Context) error {
-			return hardware.NewGuestsCommand(ui, hardwareManager).Run(c)
 		},
 
 		//callapi
@@ -175,6 +108,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl file
 	fileCommands := file.GetCommandAcionBindings(context, ui, session)
 	for name, action := range fileCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl hardware
+	hardwareCommands := hardware.GetCommandActionBindings(context, ui, session)
+	for name, action := range hardwareCommands {
 		CommandActionBindings[name] = action
 	}
 

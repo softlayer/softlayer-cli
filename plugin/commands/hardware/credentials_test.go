@@ -10,7 +10,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("hardware credentials", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewCredentialsCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwareCredentialsMetaData().Name,
-			Description: metadata.HardwareCredentialsMetaData().Description,
-			Usage:       metadata.HardwareCredentialsMetaData().Usage,
-			Flags:       metadata.HardwareCredentialsMetaData().Flags,
+			Name:        hardware.HardwareCredentialsMetaData().Name,
+			Description: hardware.HardwareCredentialsMetaData().Description,
+			Usage:       hardware.HardwareCredentialsMetaData().Usage,
+			Flags:       hardware.HardwareCredentialsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

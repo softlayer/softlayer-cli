@@ -6,9 +6,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 // ToggleIPMICommand is the implementation of Softlayer `hardware toggle-ipmi` command
@@ -51,4 +52,24 @@ func (cmd *ToggleIPMICommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.", map[string]interface{}{"ID": hardwareID}))
 	return nil
+}
+
+func HardwareToggleIPMIMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "toggle-ipmi",
+		Description: T("Toggle the IPMI interface on and off. This command is asynchronous."),
+		Usage:       "${COMMAND_NAME} sl hardware toggle-ipmi IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "enable",
+				Usage: T("Enable the IPMI interface."),
+			},
+			cli.BoolFlag{
+				Name:  "disable",
+				Usage: T("Disable the IPMI interface."),
+			},
+			metadata.QuietFlag(),
+		},
+	}
 }

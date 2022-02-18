@@ -15,7 +15,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -33,10 +32,10 @@ var _ = Describe("hardware create", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = hardware.NewCreateCommand(fakeUI, fakeHardwareManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwareCreateMetaData().Name,
-			Description: metadata.HardwareCreateMetaData().Description,
-			Usage:       metadata.HardwareCreateMetaData().Usage,
-			Flags:       metadata.HardwareCreateMetaData().Flags,
+			Name:        hardware.HardwareCreateMetaData().Name,
+			Description: hardware.HardwareCreateMetaData().Description,
+			Usage:       hardware.HardwareCreateMetaData().Usage,
+			Flags:       hardware.HardwareCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
@@ -132,7 +131,7 @@ var _ = Describe("hardware create", func() {
 		})
 		Context("hardware create with export succeed", func() {
 			It("return file", func() {
-				if os.Getenv("OS") == "Windows_NT"  {
+				if os.Getenv("OS") == "Windows_NT" {
 					Skip("Test doesn't work in windows.")
 				}
 				err := testhelpers.RunCommand(cliCommand, "-s", "S1270_32GB_2X960GBSSD_NORAID", "-H", "ibmcloud-cli", "-D", "ibm.com", "-o", "UBUNTU_16_64", "-d", "dal10", "-p", "1000", "-b", "hourly", "-x", "/tmp/template.json")

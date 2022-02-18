@@ -149,3 +149,71 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func HardwareListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "list",
+		Description: T("List hardware servers"),
+		Usage:       "${COMMAND_NAME} sl hardware list [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "c,cpu",
+				Usage: T("Filter by number of CPU cores"),
+			},
+			cli.StringFlag{
+				Name:  "D,domain",
+				Usage: T("Filter by domain"),
+			},
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Filter by hostname"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Filter by datacenter"),
+			},
+			cli.IntFlag{
+				Name:  "m,memory",
+				Usage: T("Filter by memory in gigabytes"),
+			},
+			cli.IntFlag{
+				Name:  "n,network",
+				Usage: T("Filter by network port speed in Mbps"),
+			},
+			cli.StringSliceFlag{
+				Name:  "g,tag",
+				Usage: T("Filter by tags, multiple occurrence allowed"),
+			},
+			cli.StringFlag{
+				Name:  "p,public-ip",
+				Usage: T("Filter by public IP address"),
+			},
+			cli.StringFlag{
+				Name:  "v,private-ip",
+				Usage: T("Filter by private IP address"),
+			},
+			cli.IntFlag{
+				Name:  "o,order",
+				Usage: T("Filter by ID of the order which purchased hardware server"),
+			},
+			cli.StringFlag{
+				Name:  "owner",
+				Usage: T("Filter by ID of the owner"),
+			},
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by"),
+			},
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display,  options are: id,hostname,domain,public_ip,private_ip,datacenter,status,guid,cpu,memory,os,ipmi_ip,created,created_by,tags. This option can be specified multiple times"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}
