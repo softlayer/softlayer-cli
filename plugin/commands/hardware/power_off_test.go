@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("hardware poweroff", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewPowerOffCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwarePowerOffMetaData().Name,
-			Description: metadata.HardwarePowerOffMetaData().Description,
-			Usage:       metadata.HardwarePowerOffMetaData().Usage,
-			Flags:       metadata.HardwarePowerOffMetaData().Flags,
+			Name:        hardware.HardwarePowerOffMetaData().Name,
+			Description: hardware.HardwarePowerOffMetaData().Description,
+			Usage:       hardware.HardwarePowerOffMetaData().Usage,
+			Flags:       hardware.HardwarePowerOffMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

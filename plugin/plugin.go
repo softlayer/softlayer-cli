@@ -26,8 +26,10 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
@@ -183,11 +185,11 @@ func Namespaces() []plugin.Namespace {
 		dns.DnsNamespace(),
 		//metadata.NS_FIREWALL,
 		globalip.GlobalIpNamespace(),
-		metadata.HardwareNamespace(),
+		hardware.HardwareNamespace(),
 		image.ImageNamespace(),
 		ipsec.IpsecNamespace(),
 		metadata.LicensesNamespace(),
-		metadata.LoadbalNamespace(),
+		loadbal.LoadbalNamespace(),
 		security.SecurityNamespace(),
 		securitygroup.SecurityGroupNamespace(),
 		subnet.SubnetNamespace(),
@@ -210,11 +212,11 @@ func getCLITopCommands() []cli.Command {
 		dns.DnsMetaData(),
 		// metadata.CMD_FW,
 		globalip.GlobalIpMetaData(),
-		metadata.HardwareMetaData(),
+		hardware.HardwareMetaData(),
 		image.ImageMetaData(),
 		ipsec.IpsecMetaData(),
 		metadata.LicensesMetaData(),
-		metadata.LoadbalMetaData(),
+		loadbal.LoadbalMetaData(),
 		security.SecurityMetaData(),
 		securitygroup.SecurityGroupMetaData(),
 		subnet.SubnetMetaData(),

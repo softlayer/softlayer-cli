@@ -139,3 +139,54 @@ func parseServer(servers []string) ([]datatypes.Network_LBaaS_L7Member, error) {
 	}
 	return members, nil
 }
+
+func LoadbalL7PoolAddMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7pool-add",
+		Description: T("Add a new L7 pool"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "id",
+				Usage: T("ID for the load balancer [required]"),
+			},
+			cli.StringFlag{
+				Name:  "n, name",
+				Usage: T("Name for this L7 pool. [required]"),
+			},
+			cli.StringFlag{
+				Name:  "m, method",
+				Usage: T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [default: ROUNDROBIN]"),
+			},
+			cli.StringFlag{
+				Name:  "p, protocol",
+				Usage: T("Protocol type to use for incoming connections. [default: HTTP]"),
+			},
+			cli.StringSliceFlag{
+				Name:  "s, server",
+				Usage: T("Backend servers that are part of this pool. Format: BACKEND_IP:PORT. eg. 10.0.0.1:80 (multiple occurrence permitted)"),
+			},
+			cli.StringFlag{
+				Name:  "health-path",
+				Usage: T("Health check path.  [default: /]"),
+			},
+			cli.IntFlag{
+				Name:  "health-interval",
+				Usage: T("Health check interval between checks. [default: 5]"),
+			},
+			cli.IntFlag{
+				Name:  "health-retry",
+				Usage: T("Health check number of times before marking as DOWN. [default: 2]"),
+			},
+			cli.IntFlag{
+				Name:  "health-timeout",
+				Usage: T("Health check timeout. [default: 2]"),
+			},
+			cli.StringFlag{
+				Name:  "sticky",
+				Usage: T("Use 'cookie' or 'source-ip' to stick"),
+			},
+		},
+	}
+}

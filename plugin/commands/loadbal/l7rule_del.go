@@ -7,6 +7,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type L7RuleDelCommand struct {
@@ -51,4 +52,24 @@ func (cmd *L7RuleDelCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7Rule {{.L7RuleID}} removed", map[string]interface{}{"L7RuleID": l7RuleID}))
 	return nil
+}
+
+func LoadbalL7RuleDelMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7rule-delete",
+		Description: T("Delete a L7 rule"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "policy-uuid",
+				Usage: T("UUID for the load balancer policy [required]"),
+			},
+			cli.StringFlag{
+				Name:  "rule-uuid",
+				Usage: T("UUID for the load balancer rule [required]"),
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }

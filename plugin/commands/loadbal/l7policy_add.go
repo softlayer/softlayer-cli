@@ -109,3 +109,35 @@ func IsValidAction(action string) bool {
 	}
 	return false
 }
+
+func LoadbalL7PolicyAddMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7policy-add",
+		Description: T("Add a new L7 policy"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "protocol-uuid",
+				Usage: T("UUID for the load balancer protocol [required]"),
+			},
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Policy name"),
+			},
+			cli.StringFlag{
+				Name:  "a,action",
+				Usage: T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
+			},
+			cli.StringFlag{
+				Name:  "r,redirect",
+				Usage: T("POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action"),
+			},
+			cli.IntFlag{
+				Name:  "p,priority",
+				Usage: T("Policy priority"),
+				Value: 1,
+			},
+		},
+	}
+}

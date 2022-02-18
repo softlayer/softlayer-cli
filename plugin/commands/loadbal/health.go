@@ -8,7 +8,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	// "github.ibm.com/Bluemix/resource-catalog-cli/plugin/i18n"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -120,4 +119,39 @@ func (cmd *HealthChecksCommand) Run(c *cli.Context) error {
 	}
 	PrintLoadbalancer(updatedLoadbalancer, cmd.UI)
 	return nil
+}
+
+func LoadbalHealthMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "health-edit",
+		Description: T("Edit load balancer health check"),
+		Usage:       "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "lb-id",
+				Usage: T("ID for the load balancer [required]"),
+			},
+			cli.StringFlag{
+				Name:  "health-uuid",
+				Usage: T("Health check UUID to modify [required]"),
+			},
+			cli.IntFlag{
+				Name:  "i,interval",
+				Usage: T("Seconds between checks. [2-60]"),
+			},
+			cli.IntFlag{
+				Name:  "r,retry",
+				Usage: T("Number of times before marking as DOWN. [1-10]"),
+			},
+			cli.IntFlag{
+				Name:  "t,timeout",
+				Usage: T("Seconds to wait for a connection. [1-59]"),
+			},
+			cli.StringFlag{
+				Name:  "u,url",
+				Usage: T("Url path for HTTP/HTTPS checks"),
+			},
+		},
+	}
 }

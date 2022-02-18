@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("Load balancer create", func() {
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
 		cmd = loadbal.NewCreateCommand(fakeUI, fakeLBManager)
 		cliCommand = cli.Command{
-			Name:        metadata.LoadbalOrderMetadata().Name,
-			Description: metadata.LoadbalOrderMetadata().Description,
-			Usage:       metadata.LoadbalOrderMetadata().Usage,
-			Flags:       metadata.LoadbalOrderMetadata().Flags,
+			Name:        loadbal.LoadbalOrderMetadata().Name,
+			Description: loadbal.LoadbalOrderMetadata().Description,
+			Usage:       loadbal.LoadbalOrderMetadata().Usage,
+			Flags:       loadbal.LoadbalOrderMetadata().Flags,
 			Action:      cmd.Run,
 		}
 	})

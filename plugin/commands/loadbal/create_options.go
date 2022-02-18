@@ -142,3 +142,18 @@ func findItemInList(item *int, list []int) bool {
 	}
 	return false
 }
+
+func LoadbalOrderOptionsMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "order-options",
+		Description: T("List options for order a load balancer"),
+		Usage:       "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Show only selected datacenter, use shortname (dal13) format"),
+			},
+		},
+	}
+}

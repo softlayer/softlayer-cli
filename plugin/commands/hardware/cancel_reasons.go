@@ -28,3 +28,12 @@ func (cmd *CancelReasonsCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func HardwareCancelReasonsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "cancel-reasons",
+		Description: T("Display a list of cancellation reasons"),
+		Usage:       "${COMMAND_NAME} sl hardware cancel-reasons",
+	}
+}
