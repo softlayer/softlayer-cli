@@ -29,7 +29,9 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
@@ -183,10 +185,10 @@ func Namespaces() []plugin.Namespace {
 		globalip.GlobalIpNamespace(),
 		hardware.HardwareNamespace(),
 		image.ImageNamespace(),
-		metadata.IpsecNamespace(),
+		ipsec.IpsecNamespace(),
 		metadata.LicensesNamespace(),
 		metadata.LoadbalNamespace(),
-		metadata.SecurityNamespace(),
+		security.SecurityNamespace(),
 		securitygroup.SecurityGroupNamespace(),
 		subnet.SubnetNamespace(),
 		ticket.TicketNamespace(),
@@ -210,10 +212,10 @@ func getCLITopCommands() []cli.Command {
 		globalip.GlobalIpMetaData(),
 		hardware.HardwareMetaData(),
 		image.ImageMetaData(),
-		metadata.IpsecMetaData(),
+		ipsec.IpsecMetaData(),
 		metadata.LicensesMetaData(),
 		metadata.LoadbalMetaData(),
-		metadata.SecurityMetaData(),
+		security.SecurityMetaData(),
 		securitygroup.SecurityGroupMetaData(),
 		subnet.SubnetMetaData(),
 		ticket.TicketMetaData(),

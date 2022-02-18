@@ -64,3 +64,23 @@ func (cmd *KeyPrintCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func SecuritySSHKeyPrintMetaData() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "sshkey-print",
+		Description: T("Prints out an SSH key to the screen"),
+		Usage: T(`${COMMAND_NAME} sl security sshkey-print IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl security sshkey-print 12345678 -f ~/mykey.pub
+   This command shows the ID, label and notes of SSH key with ID 12345678 and write the public key to file: ~/mykey.pub.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "f,out-file",
+				Usage: T("The public SSH key will be written to this file"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

@@ -84,3 +84,38 @@ func (cmd *CertEditCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("SSL certificate {{.ID}} was updated.", map[string]interface{}{"ID": certID}))
 	return nil
 }
+
+func SecuritySSLCertEdit() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "cert-edit",
+		Description: T("Edit SSL certificate"),
+		Usage: T(`${COMMAND_NAME} sl security cert-edit IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl security cert-edit 12345678 --key ~/ibm.com.key 
+   This command edits certificate with ID 12345678 and updates its private key with file: ~/ibm.com.key.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "crt",
+				Usage: T("Certificate file"),
+			},
+			cli.StringFlag{
+				Name:  "csr",
+				Usage: T("Certificate Signing Request file"),
+			},
+			cli.StringFlag{
+				Name:  "icc",
+				Usage: T("Intermediate Certificate file"),
+			},
+			cli.StringFlag{
+				Name:  "key",
+				Usage: T("Private Key file"),
+			},
+			cli.StringFlag{
+				Name:  "notes",
+				Usage: T("Additional notes"),
+			},
+		},
+	}
+}

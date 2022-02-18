@@ -14,7 +14,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -32,10 +31,10 @@ var _ = Describe("IPSec order", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = ipsec.NewOrderCommand(fakeUI, fakeIPSecManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.IpsecOrderMetaData().Name,
-			Description: metadata.IpsecOrderMetaData().Description,
-			Usage:       metadata.IpsecOrderMetaData().Usage,
-			Flags:       metadata.IpsecOrderMetaData().Flags,
+			Name:        ipsec.IpsecOrderMetaData().Name,
+			Description: ipsec.IpsecOrderMetaData().Description,
+			Usage:       ipsec.IpsecOrderMetaData().Usage,
+			Flags:       ipsec.IpsecOrderMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("IPSec config", func() {
 		fakeIPSecManager = new(testhelpers.FakeIPSECManager)
 		cmd = ipsec.NewConfigCommand(fakeUI, fakeIPSecManager)
 		cliCommand = cli.Command{
-			Name:        metadata.IpsecConfigMetaData().Name,
-			Description: metadata.IpsecConfigMetaData().Description,
-			Usage:       metadata.IpsecConfigMetaData().Usage,
-			Flags:       metadata.IpsecConfigMetaData().Flags,
+			Name:        ipsec.IpsecConfigMetaData().Name,
+			Description: ipsec.IpsecConfigMetaData().Description,
+			Usage:       ipsec.IpsecConfigMetaData().Usage,
+			Flags:       ipsec.IpsecConfigMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -42,8 +42,6 @@ import (
 
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	firewallManager := managers.NewFirewallManager(session)
-	ipsecManager := managers.NewIPSECManager(session)
-
 	callAPIManager := managers.NewCallAPIManager(session)
 	licensesManager := managers.NewLicensesManager(session)
 
@@ -64,41 +62,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_FIREWALL_NAME + "-" + CMD_FW_LIST_NAME: func(c *cli.Context) error {
 			return firewall.NewListCommand(ui, firewallManager).Run(c)
-		},
-
-		//ipsec - 11
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_CONFIG_NAME: func(c *cli.Context) error {
-			return ipsec.NewConfigCommand(ui, ipsecManager).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_CANCEL_NAME: func(c *cli.Context) error {
-			return ipsec.NewCancelCommand(ui, ipsecManager).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_ORDER_NAME: func(c *cli.Context) error {
-			return ipsec.NewOrderCommand(ui, ipsecManager, context).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_DETAIL_NAME: func(c *cli.Context) error {
-			return ipsec.NewDetailCommand(ui, ipsecManager).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_LIST_NAME: func(c *cli.Context) error {
-			return ipsec.NewListCommand(ui, ipsecManager).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_SUBNET_ADD_NAME: func(c *cli.Context) error {
-			return ipsec.NewAddSubnetCommand(ui, ipsecManager).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_SUBNET_REMOVE_NAME: func(c *cli.Context) error {
-			return ipsec.NewRemoveSubnetCommand(ui, ipsecManager).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_TRANS_ADD_NAME: func(c *cli.Context) error {
-			return ipsec.NewAddTranslationCommand(ui, ipsecManager).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_TRANS_REMOVE_NAME: func(c *cli.Context) error {
-			return ipsec.NewRemoveTranslationCommand(ui, ipsecManager).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_TRANS_UPDATE_NAME: func(c *cli.Context) error {
-			return ipsec.NewUpdateTranslationCommand(ui, ipsecManager).Run(c)
-		},
-		NS_IPSEC_NAME + "-" + CMD_IPSEC_UPDATE_NAME: func(c *cli.Context) error {
-			return ipsec.NewUpdateCommand(ui, ipsecManager).Run(c)
 		},
 
 		//callapi
@@ -157,6 +120,11 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl image
 	imageCommands := image.GetCommandActionBindings(context, ui, session)
 	for name, action := range imageCommands {
+		CommandActionBindings[name] = action
+	}
+	// ibmcloud sl ipsec
+	ipsecCommands := ipsec.GetCommandActionBindings(context, ui, session)
+	for name, action := range ipsecCommands {
 		CommandActionBindings[name] = action
 	}
 
@@ -220,9 +188,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	}
 
 	// ibmcloud sl security
-	// ibmcloud sl sshkey
-	// ibmcloud sl ssl
-	for name, action := range security.GetCommandActionBindings(ui, session) {
+	securityCommands := security.GetCommandActionBindings(context, ui, session)
+	for name, action := range securityCommands {
 		CommandActionBindings[name] = action
 	}
 

@@ -10,6 +10,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CancelCommand struct {
@@ -50,4 +51,24 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("IPSec {{.ContextID}} is cancelled.", map[string]interface{}{"ContextID": contextId}))
 	return nil
+}
+
+func IpsecCancelMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "cancel",
+		Description: T("Cancel a IPSec VPN tunnel context"),
+		Usage:       T(`${COMMAND_NAME} sl ipsec cancel CONTEXT_ID [OPTIONS]`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "immediate",
+				Usage: T("Cancel the IPSec immediately instead of on the billing anniversary"),
+			},
+			cli.StringFlag{
+				Name:  "reason",
+				Usage: T("An optional reason for cancellation"),
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }

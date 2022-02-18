@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("IPSec add translation", func() {
 		fakeIPSecManager = new(testhelpers.FakeIPSECManager)
 		cmd = ipsec.NewAddTranslationCommand(fakeUI, fakeIPSecManager)
 		cliCommand = cli.Command{
-			Name:        metadata.IpsecTransAddMetaData().Name,
-			Description: metadata.IpsecTransAddMetaData().Description,
-			Usage:       metadata.IpsecTransAddMetaData().Usage,
-			Flags:       metadata.IpsecTransAddMetaData().Flags,
+			Name:        ipsec.IpsecTransAddMetaData().Name,
+			Description: ipsec.IpsecTransAddMetaData().Description,
+			Usage:       ipsec.IpsecTransAddMetaData().Usage,
+			Flags:       ipsec.IpsecTransAddMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
