@@ -9,6 +9,7 @@ import (
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CancelCommand struct {
@@ -20,6 +21,18 @@ func NewCancelCommand(ui terminal.UI, firewallManager managers.FirewallManager) 
 	return &CancelCommand{
 		UI:              ui,
 		FirewallManager: firewallManager,
+	}
+}
+
+func FirewallCancelMetaData() cli.Command {
+	return cli.Command{
+		Category:    "firewall",
+		Name:        "cancel",
+		Description: T("Cancels a firewall"),
+		Usage:       "${COMMAND_NAME} sl firewall cancel IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
 	}
 }
 

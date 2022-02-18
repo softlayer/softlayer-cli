@@ -17,7 +17,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
@@ -35,39 +34,12 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	firewallManager := managers.NewFirewallManager(session)
-	licensesManager := managers.NewLicensesManager(session)
 
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-
-		// firewall - 5
-		NS_FIREWALL_NAME + "-" + CMD_FW_ADD_NAME: func(c *cli.Context) error {
-			return firewall.NewAddCommand(ui, firewallManager).Run(c)
-		},
-		NS_FIREWALL_NAME + "-" + CMD_FW_CANCEL_NAME: func(c *cli.Context) error {
-			return firewall.NewCancelCommand(ui, firewallManager).Run(c)
-		},
-		NS_FIREWALL_NAME + "-" + CMD_FW_DETAIL_NAME: func(c *cli.Context) error {
-			return firewall.NewDetailCommand(ui, firewallManager).Run(c)
-		},
-		NS_FIREWALL_NAME + "-" + CMD_FW_EDIT_NAME: func(c *cli.Context) error {
-			return firewall.NewEditCommand(ui, firewallManager).Run(c)
-		},
-		NS_FIREWALL_NAME + "-" + CMD_FW_LIST_NAME: func(c *cli.Context) error {
-			return firewall.NewListCommand(ui, firewallManager).Run(c)
-		},
-
-		//license
-		NS_LICENSES_NAME + "-" + CMD_LICENSES_CREATE_OPTIONS_NAME: func(c *cli.Context) error {
-			return licenses.NewLicensesOptionsCommand(ui, licensesManager).Run(c)
-		},
-	}
+	CommandActionBindings := map[string]func(c *cli.Context) error{}
 
 	// ibmcloud sl account
 	accountCommands := account.GetCommandAcionBindings(context, ui, session)
@@ -192,6 +164,21 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	for name, action := range securityCommands {
 		CommandActionBindings[name] = action
 	}
+
+	//ibmcloud sl licenses
+	licenseCommands := licenses.GetCommandActionBindings(context, ui, session)
+	for name, action := range licenseCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl firewall
+	// Deprecated for now.
+	/* 
+	firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
+	for name, action := range firewallCommands {
+		CommandActionBindings[name] = action
+	}
+	*/
 
 	actionWithPreCheck := make(map[string]func(c *cli.Context) error)
 

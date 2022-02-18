@@ -11,6 +11,7 @@ import (
 	"github.com/urfave/cli"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -23,6 +24,26 @@ func NewAddCommand(ui terminal.UI, firewallManager managers.FirewallManager) (cm
 	return &AddCommand{
 		UI:              ui,
 		FirewallManager: firewallManager,
+	}
+}
+
+func FirewallAddMetaData() cli.Command {
+	return cli.Command{
+		Category:    "firewall",
+		Name:        "add",
+		Description: T("Create a new firewall"),
+		Usage:       "${COMMAND_NAME} sl firewall add TARGET [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "type",
+				Usage: T("Firewall type  [required]. Options are: vlan,vs,hardware"),
+			},
+			cli.BoolFlag{
+				Name:  "ha,high-availability",
+				Usage: T("High available firewall option"),
+			},
+			metadata.ForceFlag(),
+		},
 	}
 }
 

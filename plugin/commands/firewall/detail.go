@@ -23,6 +23,17 @@ func NewDetailCommand(ui terminal.UI, firewallManager managers.FirewallManager) 
 	}
 }
 
+
+func FirewallDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "firewall",
+		Name:        "detail",
+		Description: T("Detail information about a firewall"),
+		Usage:       "${COMMAND_NAME} sl firewall detail  IDENTIFIER [OPTIONS]",
+	}
+}
+
+
 func (cmd *DetailCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

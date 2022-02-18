@@ -23,6 +23,17 @@ func NewListCommand(ui terminal.UI, firewallManager managers.FirewallManager) (c
 	}
 }
 
+
+func FirewallListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "firewall",
+		Name:        "list",
+		Description:  T("List all firewalls on your account"),
+		Usage:       "${COMMAND_NAME} sl firewall list [OPTIONS]",
+	}
+}
+
+
 func (cmd *ListCommand) Run(c *cli.Context) error {
 	table := cmd.UI.Table([]string{T("firewall id"), T("type"), T("features"), T("server/vlan id")})
 	fwvlans, err := cmd.FirewallManager.GetFirewalls()

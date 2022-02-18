@@ -30,6 +30,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
@@ -183,12 +184,12 @@ func Namespaces() []plugin.Namespace {
 		block.BlockNamespace(),
 		file.FileNamespace(),
 		dns.DnsNamespace(),
-		//metadata.NS_FIREWALL,
+		//firewall.FirewallNamespace(),
 		globalip.GlobalIpNamespace(),
 		hardware.HardwareNamespace(),
 		image.ImageNamespace(),
 		ipsec.IpsecNamespace(),
-		metadata.LicensesNamespace(),
+		licenses.LicensesNamespace(),
 		loadbal.LoadbalNamespace(),
 		security.SecurityNamespace(),
 		securitygroup.SecurityGroupNamespace(),
@@ -210,12 +211,12 @@ func getCLITopCommands() []cli.Command {
 		block.BlockMetaData(),
 		file.FileMetaData(),
 		dns.DnsMetaData(),
-		// metadata.CMD_FW,
+		// firewall.FirewallMetaData(),
 		globalip.GlobalIpMetaData(),
 		hardware.HardwareMetaData(),
 		image.ImageMetaData(),
 		ipsec.IpsecMetaData(),
-		metadata.LicensesMetaData(),
+		licenses.LicensesMetaData(),
 		loadbal.LoadbalMetaData(),
 		security.SecurityMetaData(),
 		securitygroup.SecurityGroupMetaData(),
