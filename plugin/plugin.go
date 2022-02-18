@@ -21,6 +21,7 @@ import (
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
@@ -224,7 +225,7 @@ func getCLITopCommands() []cli.Command {
 		placementgroup.PlacementGroupMetaData(),
 		order.OrderMetaData(),
 		user.UserMetaData(),
-		metadata.CallAPIMetadata(),
+		callapi.CallAPIMetadata(),
 		tags.TagsMetaData(),
 		dedicatedhost.DedicatedhostMetaData(),
 		virtual.VSMetaData(),

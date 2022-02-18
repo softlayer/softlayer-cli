@@ -42,7 +42,6 @@ import (
 
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	firewallManager := managers.NewFirewallManager(session)
-	callAPIManager := managers.NewCallAPIManager(session)
 	licensesManager := managers.NewLicensesManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
@@ -62,11 +61,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		},
 		NS_FIREWALL_NAME + "-" + CMD_FW_LIST_NAME: func(c *cli.Context) error {
 			return firewall.NewListCommand(ui, firewallManager).Run(c)
-		},
-
-		//callapi
-		NS_SL_NAME + "-" + CMD_CALLAPI_NAME: func(c *cli.Context) error {
-			return callapi.NewCallAPICommand(ui, callAPIManager).Run(c)
 		},
 
 		//license
@@ -102,6 +96,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl block
 	blockCommands := block.GetCommandAcionBindings(context, ui, session)
 	for name, action := range blockCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl callapi
+	callapiCommands := callapi.GetCommandActionBindings(context, ui, session)
+	for name, action := range callapiCommands {
 		CommandActionBindings[name] = action
 	}
 
