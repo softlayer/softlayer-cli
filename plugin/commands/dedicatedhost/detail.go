@@ -52,17 +52,17 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add(T("ID"), utils.FormatIntPointer(dedicatedhost.Id))
-	table.Add(T("name"), utils.FormatStringPointer(dedicatedhost.Name))
-	table.Add(T("cpu count"), utils.FormatIntPointer(dedicatedhost.CpuCount))
-	table.Add(T("memory capacity"), utils.FormatIntPointer(dedicatedhost.MemoryCapacity))
-	table.Add(T("disk capacity"), utils.FormatIntPointer(dedicatedhost.DiskCapacity))
-	table.Add(T("create date"), utils.FormatSLTimePointer(dedicatedhost.CreateDate))
-	table.Add(T("modify date"), utils.FormatSLTimePointer(dedicatedhost.ModifyDate))
+	table.Add(T("Name"), utils.FormatStringPointer(dedicatedhost.Name))
+	table.Add(T("Cpu Count"), utils.FormatIntPointer(dedicatedhost.CpuCount))
+	table.Add(T("Memory Capacity"), utils.FormatIntPointer(dedicatedhost.MemoryCapacity))
+	table.Add(T("Disk Capacity"), utils.FormatIntPointer(dedicatedhost.DiskCapacity))
+	table.Add(T("Create Date"), utils.FormatSLTimePointer(dedicatedhost.CreateDate))
+	table.Add(T("Modify Date"), utils.FormatSLTimePointer(dedicatedhost.ModifyDate))
 	if dedicatedhost.BackendRouter != nil && dedicatedhost.BackendRouter.Id != nil {
-		table.Add(T("router id"), utils.FormatIntPointer(dedicatedhost.BackendRouter.Id))
+		table.Add(T("Router Id"), utils.FormatIntPointer(dedicatedhost.BackendRouter.Id))
 	}
 	if dedicatedhost.BackendRouter != nil && dedicatedhost.BackendRouter.Hostname != nil {
-		table.Add(T("router hostname"), utils.FormatStringPointer(dedicatedhost.BackendRouter.Hostname))
+		table.Add(T("Router Hostname"), utils.FormatStringPointer(dedicatedhost.BackendRouter.Hostname))
 	}
 
 	if dedicatedhost.BillingItem != nil &&
@@ -70,10 +70,10 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		dedicatedhost.BillingItem.OrderItem.Order != nil &&
 		dedicatedhost.BillingItem.OrderItem.Order.UserRecord != nil &&
 		dedicatedhost.BillingItem.OrderItem.Order.UserRecord.Username != nil {
-		table.Add(T("owner"), utils.FormatStringPointer(dedicatedhost.BillingItem.OrderItem.Order.UserRecord.Username))
+		table.Add(T("Owner"), utils.FormatStringPointer(dedicatedhost.BillingItem.OrderItem.Order.UserRecord.Username))
 	}
 	if dedicatedhost.Datacenter != nil && dedicatedhost.Datacenter.Name != nil {
-		table.Add(T("datacenter"), utils.FormatStringPointer(dedicatedhost.Datacenter.Name))
+		table.Add(T("Datacenter"), utils.FormatStringPointer(dedicatedhost.Datacenter.Name))
 	}
 
 	if c.IsSet("price") {
@@ -88,13 +88,13 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 				sum += *item.NextInvoiceTotalRecurringAmount
 			}
 		}
-		table.Add(T("price rate"), fmt.Sprintf("%.2f", sum))
+		table.Add(T("Price Rate"), fmt.Sprintf("%.2f", sum))
 	}
 
 	if c.IsSet("guests") {
 		if dedicatedhost.Guests != nil {
 			buf := new(bytes.Buffer)
-			guestTable := terminal.NewTable(buf, []string{T("Id"), T("hostname"), T("domain"), T("uuid")})
+			guestTable := terminal.NewTable(buf, []string{T("Id"), T("Hostname"), T("Domain"), T("uuid")})
 			for _, guest := range dedicatedhost.Guests {
 				guestTable.Add(utils.FormatIntPointer(guest.Id), utils.FormatStringPointer(guest.Hostname), utils.FormatStringPointer(guest.Domain), utils.FormatStringPointer(guest.Uuid))
 			}
