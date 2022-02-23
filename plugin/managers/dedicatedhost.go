@@ -12,12 +12,19 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
+type StatusInfo struct {
+	Id     int
+	Fqdn   string
+	Status string
+}
+
 //Manages SoftLayer Dedicated host.
 type DedicatedHostManager interface {
 	ListGuests(identifier int, cpu int, domain string, hostname string, memory int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
 	GenerateOrderTemplate(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error)
 	VerifyInstanceCreation(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order, error)
 	OrderInstance(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order_Receipt, error)
+	CancelGuests(id int) ([]StatusInfo, error)
 }
 
 type dedicatedhostManager struct {
@@ -25,6 +32,7 @@ type dedicatedhostManager struct {
 	VirtualDedicatedHost services.Virtual_DedicatedHost
 	PackageService       services.Product_Package
 	OrderService         services.Product_Order
+	VirtualGuestService  services.Virtual_Guest
 }
 
 func NewDedicatedhostManager(session *session.Session) *dedicatedhostManager {
@@ -33,7 +41,42 @@ func NewDedicatedhostManager(session *session.Session) *dedicatedhostManager {
 		services.GetVirtualDedicatedHostService(session),
 		services.GetProductPackageService(session),
 		services.GetProductOrderService(session),
+		services.GetVirtualGuestService(session),
 	}
+}
+
+//Cancel an instance immediately, deleting all its data.
+//id: the instance ID to cancel
+func (d dedicatedhostManager) CancelGuests(id int) ([]StatusInfo, error) {
+	guests, err := d.VirtualDedicatedHost.Id(id).GetGuests()
+	var listCaneledGuests []StatusInfo
+	if err != nil {
+		return listCaneledGuests, err
+	}
+
+	for _, guest := range guests {
+		deletedGuest, err := d.DeleteGuest(*guest.Id)
+		if err != nil {
+			return listCaneledGuests, err
+		}
+		var statusGuest = StatusInfo{
+			Id:     *guest.Id,
+			Fqdn:   *guest.FullyQualifiedDomainName,
+			Status: deletedGuest,
+		}
+		listCaneledGuests = append(listCaneledGuests, statusGuest)
+	}
+	return listCaneledGuests, nil
+}
+
+//Deletes a guest and returns 'Cancelled' or and Exception message
+func (d dedicatedhostManager) DeleteGuest(Id int) (string, error) {
+	status := "Cancelled"
+	_, err := d.VirtualGuestService.Id(Id).DeleteObject()
+	if err != nil {
+		return "Failed", err
+	}
+	return status, nil
 }
 
 //Retrieve a list of all virtual servers on the dedicated host.

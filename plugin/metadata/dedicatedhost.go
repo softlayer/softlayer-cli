@@ -11,9 +11,10 @@ var (
 	CMD_DEDICATEDHOST_NAME = "dedicatedhost"
 
 	//sl dedicatedhost
-	CMD_DEDICATEDHOST_LIST_NAME        = "list"
-	CMD_DEDICATEDHOST_LIST_GUESTS_NAME = "list-guests"
-	CMD_DEDICATEDHOST_CREATE_NAME      = "create"
+	CMD_DEDICATEDHOST_LIST_NAME          = "list"
+	CMD_DEDICATEDHOST_LIST_GUESTS_NAME   = "list-guests"
+	CMD_DEDICATEDHOST_CREATE_NAME        = "create"
+	CMD_DEDICATEDHOST_CANCEL_GUESTS_NAME = "cancel-guests"
 )
 
 func DedicatedhostNamespace() plugin.Namespace {
@@ -34,6 +35,7 @@ func DedicatedhostMetaData() cli.Command {
 			DedicatedhostListMetaData(),
 			DedicatedhostListGuestsMetaData(),
 			DedicatedhostCreateMetaData(),
+			DedicatedhostCancelGuestsMetaData(),
 		},
 	}
 }
@@ -86,6 +88,22 @@ EXAMPLE:
 				Hidden: true,
 			},
 			OutputFlag(),
+		},
+	}
+}
+
+func DedicatedhostCancelGuestsMetaData() cli.Command {
+	return cli.Command{
+		Category:    CMD_DEDICATEDHOST_NAME,
+		Name:        CMD_DEDICATEDHOST_CANCEL_GUESTS_NAME,
+		Description: T("Cancel all virtual guests of the dedicated host immediately."),
+		Usage: T(`${COMMAND_NAME} sl dedicatedhost cancel-guests IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dedicatedhost cancel-guests 1234567
+   This command cancel all virtual guests of the dedicated host immediately.`),
+		Flags: []cli.Flag{
+			ForceFlag(),
 		},
 	}
 }

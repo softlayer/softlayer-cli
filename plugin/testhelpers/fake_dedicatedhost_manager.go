@@ -72,6 +72,19 @@ type FakeDedicatedhostManager struct {
 		result1 datatypes.Container_Product_Order_Receipt
 		result2 error
 	}
+	CancelGuestsStub        func(int) ([]managers.StatusInfo, error)
+	cancelGuestsMutex       sync.RWMutex
+	cancelGuestsArgsForCall []struct {
+		arg1 int
+	}
+	cancelGuestsReturns struct {
+		result1 []managers.StatusInfo
+		result2 error
+	}
+	cancelGuestsReturnsOnCall map[int]struct {
+		result1 []managers.StatusInfo
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -266,6 +279,69 @@ func (fake *FakeDedicatedhostManager) OrderInstanceReturnsOnCall(i int, result1 
 	}
 	fake.orderInstanceReturnsOnCall[i] = struct {
 		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeDedicatedhostManager) CancelGuests(arg1 int) ([]managers.StatusInfo, error) {
+	fake.cancelGuestsMutex.Lock()
+	ret, specificReturn := fake.cancelGuestsReturnsOnCall[len(fake.cancelGuestsArgsForCall)]
+	fake.cancelGuestsArgsForCall = append(fake.cancelGuestsArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	fake.recordInvocation("CancelGuests", []interface{}{arg1})
+	fake.cancelGuestsMutex.Unlock()
+	if fake.CancelGuestsStub != nil {
+		return fake.CancelGuestsStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.cancelGuestsReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeDedicatedhostManager) CancelGuestsCallCount() int {
+	fake.cancelGuestsMutex.RLock()
+	defer fake.cancelGuestsMutex.RUnlock()
+	return len(fake.cancelGuestsArgsForCall)
+}
+
+func (fake *FakeDedicatedhostManager) CancelGuestsCalls(stub func(int) ([]managers.StatusInfo, error)) {
+	fake.cancelGuestsMutex.Lock()
+	defer fake.cancelGuestsMutex.Unlock()
+	fake.CancelGuestsStub = stub
+}
+
+func (fake *FakeDedicatedhostManager) CancelGuestsArgsForCall(i int) int {
+	fake.cancelGuestsMutex.RLock()
+	defer fake.cancelGuestsMutex.RUnlock()
+	argsForCall := fake.cancelGuestsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeDedicatedhostManager) CancelGuestsReturns(result1 []managers.StatusInfo, result2 error) {
+	fake.cancelGuestsMutex.Lock()
+	defer fake.cancelGuestsMutex.Unlock()
+	fake.CancelGuestsStub = nil
+	fake.cancelGuestsReturns = struct {
+		result1 []managers.StatusInfo
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeDedicatedhostManager) CancelGuestsReturnsOnCall(i int, result1 []managers.StatusInfo, result2 error) {
+	fake.cancelGuestsMutex.Lock()
+	defer fake.cancelGuestsMutex.Unlock()
+	fake.CancelGuestsStub = nil
+	if fake.cancelGuestsReturnsOnCall == nil {
+		fake.cancelGuestsReturnsOnCall = make(map[int]struct {
+			result1 []managers.StatusInfo
+			result2 error
+		})
+	}
+	fake.cancelGuestsReturnsOnCall[i] = struct {
+		result1 []managers.StatusInfo
 		result2 error
 	}{result1, result2}
 }
