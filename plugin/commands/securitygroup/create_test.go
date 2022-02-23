@@ -10,7 +10,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Securitygroup create", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = securitygroup.NewCreateCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupCreateMetaData().Name,
-			Description: metadata.SecurityGroupCreateMetaData().Description,
-			Usage:       metadata.SecurityGroupCreateMetaData().Usage,
-			Flags:       metadata.SecurityGroupCreateMetaData().Flags,
+			Name:        securitygroup.SecurityGroupCreateMetaData().Name,
+			Description: securitygroup.SecurityGroupCreateMetaData().Description,
+			Usage:       securitygroup.SecurityGroupCreateMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

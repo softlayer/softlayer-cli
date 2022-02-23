@@ -14,7 +14,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -34,10 +33,10 @@ var _ = Describe("VS create host", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = virtual.NewCreateHostCommand(fakeUI, fakeVSManager, fakeNetworkManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCreateHostMetaData().Name,
-			Description: metadata.VSCreateHostMetaData().Description,
-			Usage:       metadata.VSCreateHostMetaData().Usage,
-			Flags:       metadata.VSCreateHostMetaData().Flags,
+			Name:        virtual.VSCreateHostMetaData().Name,
+			Description: virtual.VSCreateHostMetaData().Description,
+			Usage:       virtual.VSCreateHostMetaData().Usage,
+			Flags:       virtual.VSCreateHostMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

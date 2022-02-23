@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Load balancer cancel", func() {
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
 		cmd = loadbal.NewCancelCommand(fakeUI, fakeLBManager)
 		cliCommand = cli.Command{
-			Name:        metadata.LoadbalCancelMetadata().Name,
-			Description: metadata.LoadbalCancelMetadata().Description,
-			Usage:       metadata.LoadbalCancelMetadata().Usage,
-			Flags:       metadata.LoadbalCancelMetadata().Flags,
+			Name:        loadbal.LoadbalCancelMetadata().Name,
+			Description: loadbal.LoadbalCancelMetadata().Description,
+			Usage:       loadbal.LoadbalCancelMetadata().Usage,
+			Flags:       loadbal.LoadbalCancelMetadata().Flags,
 			Action:      cmd.Run,
 		}
 	})

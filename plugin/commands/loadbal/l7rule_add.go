@@ -79,3 +79,38 @@ func (cmd *L7RuleAddCommand) Run(c *cli.Context) error {
 	cmd.UI.Say(T("L7 rule added"))
 	return nil
 }
+
+func LoadbalL7RuleAddMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7rule-add",
+		Description: T("Add a new L7 rule"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "policy-uuid",
+				Usage: T("UUID for the load balancer policy [required]"),
+			},
+			cli.StringFlag{
+				Name:  "t,type",
+				Usage: T("Rule type: HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH. [required]"),
+			},
+			cli.StringFlag{
+				Name:  "c,compare-type",
+				Usage: T("Compare type: EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS. [required]"),
+			},
+			cli.StringFlag{
+				Name:  "v,value",
+				Usage: T("Compared Value [required]"),
+			},
+			cli.StringFlag{
+				Name:  "k,key",
+				Usage: T("Key name. It's only available in HEADER or COOKIE type"),
+			},
+			cli.IntFlag{
+				Name:  "invert",
+				Usage: T("Invert rule: 0 | 1."),
+			},
+		},
+	}
+}

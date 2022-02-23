@@ -82,3 +82,19 @@ func (cmd *PlacementGroupDetailCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func PlacementGroupDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "placement-group",
+		Name:        "detail",
+		Description: T("View details of a placement group"),
+		Usage:       "${COMMAND_NAME} sl placement-group detail (--id PLACEMENTGROUP_ID) [--output FORMAT]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "id",
+				Usage: T("ID for the placement group. [required]"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

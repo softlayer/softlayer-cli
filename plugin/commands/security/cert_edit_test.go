@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Certificate edit", func() {
 		fakeSecurityManager = new(testhelpers.FakeSecurityManager)
 		cmd = security.NewCertEditCommand(fakeUI, fakeSecurityManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecuritySSLCertEdit().Name,
-			Description: metadata.SecuritySSLCertEdit().Description,
-			Usage:       metadata.SecuritySSLCertEdit().Usage,
-			Flags:       metadata.SecuritySSLCertEdit().Flags,
+			Name:        security.SecuritySSLCertEdit().Name,
+			Description: security.SecuritySSLCertEdit().Description,
+			Usage:       security.SecuritySSLCertEdit().Usage,
+			Flags:       security.SecuritySSLCertEdit().Flags,
 			Action:      cmd.Run,
 		}
 	})

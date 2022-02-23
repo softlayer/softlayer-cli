@@ -10,6 +10,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CertRemoveCommand struct {
@@ -49,4 +50,20 @@ func (cmd *CertRemoveCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("SSL certificate {{.ID}} was removed.", map[string]interface{}{"ID": certID}))
 	return nil
+}
+
+func SecuritySSLCertRemove() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "cert-remove",
+		Description: T("Remove SSL certificate"),
+		Usage: T(`${COMMAND_NAME} sl security cert-remove IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl security cert-remove 12345678 
+   This command removes certificate with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

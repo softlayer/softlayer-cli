@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("Subnet lookup", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = subnet.NewLookupCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SubnetLookupMetaData().Name,
-			Description: metadata.SubnetLookupMetaData().Description,
-			Usage:       metadata.SubnetLookupMetaData().Usage,
-			Flags:       metadata.SubnetLookupMetaData().Flags,
+			Name:        subnet.SubnetLookupMetaData().Name,
+			Description: subnet.SubnetLookupMetaData().Description,
+			Usage:       subnet.SubnetLookupMetaData().Usage,
+			Flags:       subnet.SubnetLookupMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

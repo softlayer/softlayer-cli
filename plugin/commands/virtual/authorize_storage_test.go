@@ -11,7 +11,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -27,10 +26,10 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewAuthorizeStorageCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSAuthorizeStorageMetaData().Name,
-			Description: metadata.VSAuthorizeStorageMetaData().Description,
-			Usage:       metadata.VSAuthorizeStorageMetaData().Usage,
-			Flags:       metadata.VSAuthorizeStorageMetaData().Flags,
+			Name:        virtual.VSAuthorizeStorageMetaData().Name,
+			Description: virtual.VSAuthorizeStorageMetaData().Description,
+			Usage:       virtual.VSAuthorizeStorageMetaData().Usage,
+			Flags:       virtual.VSAuthorizeStorageMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

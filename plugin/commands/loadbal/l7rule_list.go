@@ -52,3 +52,18 @@ func (cmd *L7RuleListCommand) Run(c *cli.Context) error {
 	}
 	return nil
 }
+
+func LoadbalL7RuleListMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7rules",
+		Description: T("List l7 rules"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7rules (--policy-id Policy_ID)",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "policy-id",
+				Usage: T("ID for the load balancer policy [required]"),
+			},
+		},
+	}
+}

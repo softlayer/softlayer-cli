@@ -97,3 +97,51 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func SubnetListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "subnet",
+		Name:        "list",
+		Description: T("List all subnets on your account"),
+		Usage: T(`${COMMAND_NAME} sl subnet list [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4
+   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by. Options are: id,identifier,type,network_space,datacenter,vlan_id,IPs,hardware,vs"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Filter by datacenter shortname"),
+			},
+			cli.StringFlag{
+				Name:  "identifier",
+				Usage: T("Filter by network identifier"),
+			},
+			cli.StringFlag{
+				Name:  "t,subnet-type",
+				Usage: T("Filter by subnet type"),
+			},
+			cli.StringFlag{
+				Name:  "network-space",
+				Usage: T("Filter by network space"),
+			},
+			cli.BoolFlag{
+				Name:  "v4,ipv4",
+				Usage: T("Display IPv4 subnets only"),
+			},
+			cli.BoolFlag{
+				Name:  "v6,ipv6",
+				Usage: T("Display IPv6 subnets only"),
+			},
+			cli.IntFlag{
+				Name:  "order",
+				Usage: T("Filter by the ID of order that purchased the subnets"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

@@ -80,3 +80,18 @@ func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal
 		table.Print()
 	}
 }
+
+func LoadbalL7PolicyListMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7policies",
+		Description: T("List L7 policies"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "protocol-id",
+				Usage: T("ID for the load balancer protocol [required]"),
+			},
+		},
+	}
+}

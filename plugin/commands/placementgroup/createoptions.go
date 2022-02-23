@@ -66,3 +66,13 @@ func (cmd *PlacementGroupCreateOptionsCommand) Run(c *cli.Context) error {
 
 	return nil
 }
+
+func PlacementGroupCreateOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "placement-group",
+		Name:        "create-options",
+		Description: T("List options for creating a placement group"),
+		Usage:       "${COMMAND_NAME} sl placement-group create-options",
+		Flags:       []cli.Flag{},
+	}
+}

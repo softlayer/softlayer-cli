@@ -8,7 +8,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"strings"
 )
@@ -25,10 +24,10 @@ var _ = Describe("VS placementgroup-detail", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewPlacementGroupListCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSPlacementGroupDetailMetaData().Name,
-			Description: metadata.VSPlacementGroupDetailMetaData().Description,
-			Usage:       metadata.VSPlacementGroupDetailMetaData().Usage,
-			Flags:       metadata.VSPlacementGroupDetailMetaData().Flags,
+			Name:        virtual.VSPlacementGroupDetailMetaData().Name,
+			Description: virtual.VSPlacementGroupDetailMetaData().Description,
+			Usage:       virtual.VSPlacementGroupDetailMetaData().Usage,
+			Flags:       virtual.VSPlacementGroupDetailMetaData().Flags,
 			Action:      cmd.Run,
 		}
 		Describe("VS placementgroup-detail", func() {

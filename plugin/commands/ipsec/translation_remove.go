@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -51,4 +51,19 @@ func (cmd *RemoveTranslationCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("Removed translation with ID {{.TransID}} from IPSec {{.ID}}.",
 		map[string]interface{}{"TransID": translationId, "ID": contextId}))
 	return nil
+}
+
+func IpsecTransRemoveMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "translation-remove",
+		Description: T("Remove a translation entry from an IPSec"),
+		Usage: T(`${COMMAND_NAME} sl ipsec translation-remove CONTEXT_ID TRANSLATION_ID 
+
+  Remove a translation entry from an IPSEC tunnel context.
+
+  A separate configuration request should be made to realize changes on
+  network devices.`),
+		Flags: []cli.Flag{},
+	}
 }

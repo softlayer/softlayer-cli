@@ -1,9 +1,10 @@
 package virtual
 
 import (
-	"time"
 	"fmt"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"sort"
+	"time"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
@@ -175,4 +176,40 @@ func BuildOutputTable(trackingData []datatypes.Metric_Tracking_Object_Data, ui t
 	
 	return summaryTable, bandwidthTable
 
+}
+
+func VSBandwidthMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "bandwidth",
+		Description: T("Bandwidth data over date range."),
+		Usage: T(`${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]
+Time formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'
+
+Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
+Bandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.
+
+Example::
+
+   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00`, map[string]interface{}{"Command": "vs"}),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "s,start",
+				Usage: T("Start date for bandwdith reporting"),
+			},
+			cli.StringFlag{
+				Name:  "e,end",
+				Usage: T("End date for bandwidth reporting"),
+			},
+			cli.IntFlag{
+				Name:  "r,rollup",
+				Usage: T("Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds"),
+			},
+			cli.BoolFlag{
+				Name:  "q,quite",
+				Usage: T("Only show the summary table."),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

@@ -7,8 +7,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -86,4 +86,48 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(cli.NewMultiError(multiErrors...).Error(), 2)
 	}
 	return nil
+}
+
+func VSEditMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "edit",
+		Description: T("Edit a virtual server instance's details"),
+		Usage: T(`${COMMAND_NAME} sl vs edit IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs edit 12345678 -D ibm.com -H myapp --tag testcli --public-speed 1000
+   This command updates virtual server instance with ID 12345678 and set its domain to be "ibm.com", hostname to "myapp", tag to "testcli", 
+   and public network port speed to 1000 Mbps.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "D,domain",
+				Usage: T("Domain portion of the FQDN"),
+			},
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Host portion of the FQDN. example: server"),
+			},
+			cli.StringSliceFlag{
+				Name:  "g,tag",
+				Usage: T("Tags to set or empty string to remove all"),
+			},
+			cli.StringFlag{
+				Name:  "u,userdata",
+				Usage: T("User defined metadata string"),
+			},
+			cli.StringFlag{
+				Name:  "F,userfile",
+				Usage: T("Read userdata from file"),
+			},
+			cli.IntFlag{
+				Name:  "public-speed",
+				Usage: T("Public port speed, options are: 0,10,100,1000,10000"),
+			},
+			cli.IntFlag{
+				Name:  "private-speed",
+				Usage: T("Private port speed, options are: 0,10,100,1000,10000"),
+			},
+		},
+	}
 }

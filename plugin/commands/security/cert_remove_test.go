@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Certificate remove", func() {
 		fakeSecurityManager = new(testhelpers.FakeSecurityManager)
 		cmd = security.NewCertRemoveCommand(fakeUI, fakeSecurityManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecuritySSLCertRemove().Name,
-			Description: metadata.SecuritySSLCertRemove().Description,
-			Usage:       metadata.SecuritySSLCertRemove().Usage,
-			Flags:       metadata.SecuritySSLCertRemove().Flags,
+			Name:        security.SecuritySSLCertRemove().Name,
+			Description: security.SecuritySSLCertRemove().Description,
+			Usage:       security.SecuritySSLCertRemove().Usage,
+			Flags:       security.SecuritySSLCertRemove().Flags,
 			Action:      cmd.Run,
 		}
 	})

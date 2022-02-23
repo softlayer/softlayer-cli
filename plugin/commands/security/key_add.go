@@ -64,3 +64,31 @@ func (cmd *KeyAddCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("SSH key was added: ") + utils.StringPointertoString(key.Fingerprint))
 	return nil
 }
+
+func SecuritySSHKeyAddMetaData() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "sshkey-add",
+		Description: T("Add a new SSH key"),
+		Usage: T(`${COMMAND_NAME} sl security sshkey-add LABEL [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl security sshkey-add my_sshkey -f ~/.ssh/id_rsa.pub --note mykey
+   This command adds an SSH key from file ~/.ssh/id_rsa.pub with a note "mykey".`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "f,in-file",
+				Usage: T("The id_rsa.pub file to import for this key"),
+			},
+			cli.StringFlag{
+				Name:  "k,key",
+				Usage: T("The actual SSH key"),
+			},
+			cli.StringFlag{
+				Name:  "note",
+				Usage: T("Extra note to be associated with the key"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

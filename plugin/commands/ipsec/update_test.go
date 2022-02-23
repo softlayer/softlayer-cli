@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("IPSec update", func() {
 		fakeIPSecManager = new(testhelpers.FakeIPSECManager)
 		cmd = ipsec.NewUpdateCommand(fakeUI, fakeIPSecManager)
 		cliCommand = cli.Command{
-			Name:        metadata.IpsecUpdateMetaData().Name,
-			Description: metadata.IpsecUpdateMetaData().Description,
-			Usage:       metadata.IpsecUpdateMetaData().Usage,
-			Flags:       metadata.IpsecUpdateMetaData().Flags,
+			Name:        ipsec.IpsecUpdateMetaData().Name,
+			Description: ipsec.IpsecUpdateMetaData().Description,
+			Usage:       ipsec.IpsecUpdateMetaData().Usage,
+			Flags:       ipsec.IpsecUpdateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

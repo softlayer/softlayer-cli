@@ -4,9 +4,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -53,4 +54,28 @@ func (cmd *RebootCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was rebooted.", map[string]interface{}{"VsId": vsID}))
 	return nil
+}
+
+func VSRebootMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "reboot",
+		Description: T("Reboot an active virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs reboot IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs reboot 12345678 --hard
+   This command performs a hard reboot for virtual server instance with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "hard",
+				Usage: T("Perform a hard reboot"),
+			},
+			cli.BoolFlag{
+				Name:  "soft",
+				Usage: T("Perform a soft reboot"),
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }

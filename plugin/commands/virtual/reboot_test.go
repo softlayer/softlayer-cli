@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VS reboot", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewRebootCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSRebootMetaData().Name,
-			Description: metadata.VSRebootMetaData().Description,
-			Usage:       metadata.VSRebootMetaData().Usage,
-			Flags:       metadata.VSRebootMetaData().Flags,
+			Name:        virtual.VSRebootMetaData().Name,
+			Description: virtual.VSRebootMetaData().Description,
+			Usage:       virtual.VSRebootMetaData().Usage,
+			Flags:       virtual.VSRebootMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

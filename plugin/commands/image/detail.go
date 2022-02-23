@@ -6,11 +6,11 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -94,4 +94,20 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
+}
+
+func ImageDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "image",
+		Name:        "detail",
+		Description: T("Get details for an image"),
+		Usage: T(`${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]
+
+EXAMPLE: 
+   ${COMMAND_NAME} sl image detail 12345678
+   This command gets details for image with ID 12345678.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
 }

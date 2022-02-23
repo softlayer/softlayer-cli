@@ -97,3 +97,26 @@ func GetComponentId(vsManager managers.VirtualServerManager, networkComponent in
 	}
 	return networkComponent, nil
 }
+
+func SecurityGroupInterfaceAddMetaData() cli.Command {
+	return cli.Command{
+		Category:    "securitygroup",
+		Name:        "interface-add",
+		Description: T("Attach an interface to a security group"),
+		Usage:       "${COMMAND_NAME} sl securitygroup interface-add SECURITYGROUP_ID [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "n,network-component",
+				Usage: T("The network component ID to associate with the security group"),
+			},
+			cli.StringFlag{
+				Name:  "s,server",
+				Usage: T(" The server ID to associate with the security group"),
+			},
+			cli.StringFlag{
+				Name:  "i,interface",
+				Usage: T("The interface of the server to associate (public/private)"),
+			},
+		},
+	}
+}

@@ -88,3 +88,39 @@ func (cmd *CertAddCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("SSL certificate for {{.CommonName}} was added.", map[string]interface{}{"CommonName": utils.StringPointertoString(cert.CommonName)}))
 	return nil
 }
+
+func SecuritySSLCertAddMetaData() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "cert-add",
+		Description: T("Add and upload SSL certificate details"),
+		Usage: T(`${COMMAND_NAME} sl security cert-add [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key 
+   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "crt",
+				Usage: T("Certificate file"),
+			},
+			cli.StringFlag{
+				Name:  "csr",
+				Usage: T("Certificate Signing Request file"),
+			},
+			cli.StringFlag{
+				Name:  "icc",
+				Usage: T("Intermediate Certificate file"),
+			},
+			cli.StringFlag{
+				Name:  "key",
+				Usage: T("Private Key file"),
+			},
+			cli.StringFlag{
+				Name:  "notes",
+				Usage: T("Additional notes"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

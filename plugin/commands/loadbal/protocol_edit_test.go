@@ -1,15 +1,14 @@
 package loadbal_test
 
 import (
-	"strconv"
 	"errors"
+	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -67,10 +66,10 @@ var _ = Describe("LoadBal_protocol-edit_Test", func() {
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
 		cmd = loadbal.NewProtocolEditCommand(fakeUI, fakeLBManager)
 		cliCommand = cli.Command{
-			Name:        metadata.LoadbalProtocolEditMetadata().Name,
-			Description: metadata.LoadbalProtocolEditMetadata().Description,
-			Usage:       metadata.LoadbalProtocolEditMetadata().Usage,
-			Flags:       metadata.LoadbalProtocolEditMetadata().Flags,
+			Name:        loadbal.LoadbalProtocolEditMetadata().Name,
+			Description: loadbal.LoadbalProtocolEditMetadata().Description,
+			Usage:       loadbal.LoadbalProtocolEditMetadata().Usage,
+			Flags:       loadbal.LoadbalProtocolEditMetadata().Flags,
 			Action:      cmd.Run,
 		}
 	})

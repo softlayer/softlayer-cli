@@ -10,7 +10,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("hardware storage", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewStorageCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwareStorageMetaData().Name,
-			Description: metadata.HardwareStorageMetaData().Description,
-			Usage:       metadata.HardwareStorageMetaData().Usage,
-			Flags:       metadata.HardwareStorageMetaData().Flags,
+			Name:        hardware.HardwareStorageMetaData().Name,
+			Description: hardware.HardwareStorageMetaData().Description,
+			Usage:       hardware.HardwareStorageMetaData().Usage,
+			Flags:       hardware.HardwareStorageMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

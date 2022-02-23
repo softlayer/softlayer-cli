@@ -34,6 +34,15 @@ func NewEditCommand(ui terminal.UI, firewallManager managers.FirewallManager) (c
 	}
 }
 
+func FirewallEditMetaData() cli.Command {
+	return cli.Command{
+		Category:    "firewall",
+		Name:        "edit",
+		Description: T("Edit firewall rules"),
+		Usage:       "${COMMAND_NAME} sl firewall edit IDENTIFIER [OPTIONS]",
+	}
+}
+
 func (cmd *EditCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return bxErr.NewInvalidUsageError(T("This command requires one argument."))

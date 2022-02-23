@@ -61,3 +61,15 @@ func (cmd *PackageLocationCommand) Print(locations []datatypes.Location_Region) 
 	}
 	table.Print()
 }
+
+func OrderPackageLocaionMetaData() cli.Command {
+	return cli.Command{
+		Category:    "order",
+		Name:        "package-locations",
+		Description: T("List datacenters a package can be ordered in"),
+		Usage:       "${COMMAND_NAME} sl order package-locations PACKAGE_KEYNAME [OPTIONS]",
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

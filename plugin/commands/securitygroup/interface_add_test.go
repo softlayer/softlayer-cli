@@ -10,7 +10,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("Securitygroup interface add", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = securitygroup.NewInterfaceAddCommand(fakeUI, fakeNetworkManager, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupInterfaceAddMetaData().Name,
-			Description: metadata.SecurityGroupInterfaceAddMetaData().Description,
-			Usage:       metadata.SecurityGroupInterfaceAddMetaData().Usage,
-			Flags:       metadata.SecurityGroupInterfaceAddMetaData().Flags,
+			Name:        securitygroup.SecurityGroupInterfaceAddMetaData().Name,
+			Description: securitygroup.SecurityGroupInterfaceAddMetaData().Description,
+			Usage:       securitygroup.SecurityGroupInterfaceAddMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupInterfaceAddMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

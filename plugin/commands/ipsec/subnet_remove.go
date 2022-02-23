@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -70,4 +70,23 @@ func (cmd *RemoveSubnetCommand) Run(c *cli.Context) error {
 	}
 	return cli.NewExitError(T("Failed to remove {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.\n",
 		map[string]interface{}{"Type": subnetType, "ID": subnetId, "ContextID": contextId})+err.Error(), 2)
+}
+
+func IpsecSubnetRemoveMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "subnet-remove",
+		Description: T("Remove a subnet from an IPSEC tunnel context"),
+		Usage: T(`${COMMAND_NAME} sl ipsec subnet-remove CONTEXT_ID SUBNET_ID SUBNET_TYPE 
+
+  Remove a subnet from an IPSEC tunnel context.
+
+  The subnet id to remove must be specified.
+
+  Remote subnets are deleted upon removal from a tunnel context.
+
+  A separate configuration request should be made to realize changes on
+  network devices.`),
+		Flags: []cli.Flag{},
+	}
 }

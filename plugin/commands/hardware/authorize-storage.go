@@ -55,3 +55,23 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 
 	return nil
 }
+
+func HardwareAuthorizeStorageMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "authorize-storage",
+		Description: T("Authorize File and Block Storage to a Hardware Server"),
+		Usage: T(`${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567
+   Authorize File and Block Storage to a Hardware Server.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "u, username-storage",
+				Usage: T("The storage username to be added to the hardware server."),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -27,10 +26,10 @@ var _ = Describe("VLAN Cancel", func() {
 
 		cmd = vlan.NewCancelCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VlanCancelMetaData().Name,
-			Description: metadata.VlanCancelMetaData().Description,
-			Usage:       metadata.VlanCancelMetaData().Usage,
-			Flags:       metadata.VlanCancelMetaData().Flags,
+			Name:        vlan.VlanCancelMetaData().Name,
+			Description: vlan.VlanCancelMetaData().Description,
+			Usage:       vlan.VlanCancelMetaData().Usage,
+			Flags:       vlan.VlanCancelMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -45,4 +45,23 @@ func (cmd *ReadyCommand) Run(c *cli.Context) error {
 		cmd.UI.Print(T("Not ready: {{.Message}}", map[string]interface{}{"Message": message}))
 	}
 	return nil
+}
+
+func VSReadyMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "ready",
+		Description: T("Check if a virtual server instance is ready for use"),
+		Usage: T(`${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs ready 12345678 --wait 30
+   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "wait",
+				Usage: T("Wait until the virtual server is finished provisioning for up to X seconds before returning"),
+			},
+		},
+	}
 }
