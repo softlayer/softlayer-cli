@@ -117,3 +117,19 @@ func (cmd *StorageCommand) Run(c *cli.Context) error {
 
 	return nil
 }
+
+func HardwareStorageMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "storage",
+		Description: T("Get storage details for a hardware server."),
+		Usage: T(`${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl hardware storage 1234567
+   Get storage details for a hardware server.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

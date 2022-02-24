@@ -2,13 +2,14 @@ package virtual
 
 import (
 	"errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -110,4 +111,41 @@ func (cmd *DnsSyncCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(cli.NewMultiError(multiErrors...).Error(), 2)
 	}
 	return nil
+}
+
+func VSDNSSyncMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "dns-sync",
+		Description: T("Synchronize DNS records for a virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs dns-sync IDENTIFIER [OPTIONS]
+   Note: If you don't specify any arguments, it will attempt to update both the A
+   and PTR records. If you don't want to update both records, you may use the
+   -a or --ptr arguments to limit the records updated.
+ 
+EXAMPLE:
+   ${COMMAND_NAME} sl vs dns-sync 12345678 --a-record --ttl 3600
+   This command synchronizes A record(IP V4 address) of virtual server instance with ID 12345678 to DNS server and sets ttl of this A record to 3600.
+   ${COMMAND_NAME} sl vs dns-sync 12345678 --aaaa-record --ptr
+   This command synchronizes both AAAA record(IP V6 address) and PTR record of virtual server instance with ID 12345678 to DNS server.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "a,a-record",
+				Usage: T("Sync the A record for the host"),
+			},
+			cli.BoolFlag{
+				Name:  "aaaa-record",
+				Usage: T("Sync the AAAA record for the host"),
+			},
+			cli.BoolFlag{
+				Name:  "ptr",
+				Usage: T("Sync the PTR record for the host"),
+			},
+			cli.IntFlag{
+				Name:  "ttl",
+				Usage: T("Sets the TTL for the A and/or PTR records, default is: 7200"),
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }

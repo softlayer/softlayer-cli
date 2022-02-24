@@ -106,3 +106,27 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func DedicatedhostDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dedicatedhost",
+		Name:        "detail",
+		Description: T("Get details for a dedicated host."),
+		Usage: T(`${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dedicatedhost detail 1234567
+   This command gets the details for a dedicated host.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "price",
+				Usage: T("Show associated prices"),
+			},
+			cli.BoolFlag{
+				Name:  "guests",
+				Usage: T("Show guests on dedicated host"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

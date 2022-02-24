@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("VS edit", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewEditCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSEditMetaData().Name,
-			Description: metadata.VSEditMetaData().Description,
-			Usage:       metadata.VSEditMetaData().Usage,
-			Flags:       metadata.VSEditMetaData().Flags,
+			Name:        virtual.VSEditMetaData().Name,
+			Description: virtual.VSEditMetaData().Description,
+			Usage:       virtual.VSEditMetaData().Usage,
+			Flags:       virtual.VSEditMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

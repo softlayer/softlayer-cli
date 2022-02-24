@@ -1,6 +1,7 @@
 package virtual
 
 import (
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -8,8 +9,8 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -55,4 +56,20 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was cancelled.", map[string]interface{}{"VsId": VsID}))
 	return nil
+}
+
+func VSCancelMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "cancel",
+		Description: T("Cancel virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs cancel 12345678
+   This command cancels virtual server instance with ID of 12345678.`),
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

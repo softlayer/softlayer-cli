@@ -52,3 +52,16 @@ func (cmd *CapacityListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func VSCapacityListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "capacity-list",
+		Description: T("List Reserved Capacity groups.\n"),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-list
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs capacity-list
+   List Reserved Capacity groups.`),
+	}
+}

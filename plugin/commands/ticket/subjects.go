@@ -55,3 +55,16 @@ func (cmd *SubjectsTicketCommand) Run(c *cli.Context) error {
 	}
 
 }
+
+func TicketSubjectsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ticket",
+		Name:        "subjects",
+		Description: T("List Subject IDs for ticket creation"),
+		Usage: T(`${COMMAND_NAME} sl ticket subjects
+  
+EXAMPLE:
+  ${COMMAND_NAME} sl ticket subjects
+  `),
+	}
+}

@@ -52,3 +52,22 @@ func (cmd *L7MembersDelCommand) Run(c *cli.Context) error {
 	cmd.UI.Say(T("Member {{.MemberID}} removed from {{.L7POOL}}", map[string]interface{}{"MemberID": memberUUID, "L7POOL": L7POOL_UUID}))
 	return nil
 }
+
+func LoadbalMemberDelMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "member-delete",
+		Description: T("Remove a load balancer member"),
+		Usage:       "${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "lb-id",
+				Usage: T("ID for the load balancer [required]"),
+			},
+			cli.StringFlag{
+				Name:  "m,member-uuid",
+				Usage: T("Member UUID [required]"),
+			},
+		},
+	}
+}

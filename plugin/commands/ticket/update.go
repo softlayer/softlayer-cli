@@ -53,3 +53,18 @@ func (cmd *UpdateTicketCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	return nil
 }
+
+func TicketUpdataMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ticket",
+		Name:        "update",
+		Description: T("Adds an update to an existing ticket"),
+		Usage: T(`${COMMAND_NAME} sl ticket update TICKETID ["CONTENTS"] 
+  
+    If the second argument is not specified on a non-Windows machine, it will attempt to use either the value stored in the EDITOR environmental variable, or find either nano, vim, or emacs in that order.
+  
+EXAMPLE:
+  ${COMMAND_NAME} sl ticket update 767676 "A problem has been detected."
+  ${COMMAND_NAME} sl ticket update 767667`),
+	}
+}

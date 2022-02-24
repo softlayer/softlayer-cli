@@ -6,9 +6,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type SnapshotCancelCommand struct {
@@ -20,6 +21,30 @@ func NewSnapshotCancelCommand(ui terminal.UI, storageManager managers.StorageMan
 	return &SnapshotCancelCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func FileSnapshotCancelMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "snapshot-cancel",
+		Description: T("Cancel existing snapshot space for a given volume"),
+		Usage: T(`${COMMAND_NAME} sl file snapshot-cancel SNAPSHOT_ID [OPTIONS]
+		
+EXAMPLE:
+   ${COMMAND_NAME} sl file snapshot-cancel 12345678 --immediate -f 
+   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "reason",
+				Usage: T("An optional reason for cancellation"),
+			},
+			cli.BoolFlag{
+				Name:  "immediate",
+				Usage: T("Cancel the snapshot space immediately instead of on the billing anniversary"),
+			},
+			metadata.ForceFlag(),
+		},
 	}
 }
 

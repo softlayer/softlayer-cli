@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("Dedicated host detail", func() {
 		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedhostManager)
 		cmd = dedicatedhost.NewDetailCommand(fakeUI, FakeDedicatedhostManager)
 		cliCommand = cli.Command{
-			Name:        metadata.DedicatedhostDetailMetaData().Name,
-			Description: metadata.DedicatedhostDetailMetaData().Description,
-			Usage:       metadata.DedicatedhostDetailMetaData().Usage,
-			Flags:       metadata.DedicatedhostDetailMetaData().Flags,
+			Name:        dedicatedhost.DedicatedhostDetailMetaData().Name,
+			Description: dedicatedhost.DedicatedhostDetailMetaData().Description,
+			Usage:       dedicatedhost.DedicatedhostDetailMetaData().Usage,
+			Flags:       dedicatedhost.DedicatedhostDetailMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -75,3 +75,19 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func SecurityGroupListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "securitygroup",
+		Name:        "list",
+		Description: T("List security groups"),
+		Usage:       "${COMMAND_NAME} sl securitygroup list [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by. Options are: id,name,description,created"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

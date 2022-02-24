@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -27,10 +26,10 @@ var _ = Describe("Load balancer create options", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = loadbal.NewOptionsCommand(fakeUI, fakeLBManager, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.LoadbalOrderOptionsMetadata().Name,
-			Description: metadata.LoadbalOrderOptionsMetadata().Description,
-			Usage:       metadata.LoadbalOrderOptionsMetadata().Usage,
-			Flags:       metadata.LoadbalOrderOptionsMetadata().Flags,
+			Name:        loadbal.LoadbalOrderOptionsMetadata().Name,
+			Description: loadbal.LoadbalOrderOptionsMetadata().Description,
+			Usage:       loadbal.LoadbalOrderOptionsMetadata().Usage,
+			Flags:       loadbal.LoadbalOrderOptionsMetadata().Flags,
 			Action:      cmd.Run,
 		}
 	})

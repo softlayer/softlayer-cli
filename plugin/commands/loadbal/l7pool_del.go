@@ -48,3 +48,18 @@ func (cmd *L7PoolDelCommand) Run(c *cli.Context) error {
 	cmd.UI.Say(T("L7Pool {{.L7PoolID}} removed", map[string]interface{}{"L7PoolID": l7PoolID}))
 	return nil
 }
+
+func LoadbalL7PoolDelMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7pool-delete",
+		Description: T("Delete a L7 pool"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "pool-id",
+				Usage: T("ID for the load balancer pool [required]"),
+			},
+		},
+	}
+}

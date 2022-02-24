@@ -13,7 +13,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -29,10 +28,10 @@ var _ = Describe("VS capture", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewCaptureCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCaptureMetaData().Name,
-			Description: metadata.VSCaptureMetaData().Description,
-			Usage:       metadata.VSCaptureMetaData().Usage,
-			Flags:       metadata.VSCaptureMetaData().Flags,
+			Name:        virtual.VSCaptureMetaData().Name,
+			Description: virtual.VSCaptureMetaData().Description,
+			Usage:       virtual.VSCaptureMetaData().Usage,
+			Flags:       virtual.VSCaptureMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

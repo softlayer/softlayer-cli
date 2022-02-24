@@ -43,3 +43,16 @@ func (cmd *ZonePrintCommand) Run(c *cli.Context) error {
 	}
 	return nil
 }
+
+func DnsZonePrintMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dns",
+		Name:        "zone-print",
+		Description: T("Print zone and resource records in BIND format"),
+		Usage: T(`${COMMAND_NAME} sl dns zone-print ZONE
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dns zone-print ibm.com
+   This command prints zone that is named ibm.com, and in BIND format.`),
+	}
+}

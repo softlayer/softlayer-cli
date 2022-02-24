@@ -57,3 +57,22 @@ func (cmd *ProtocolDeleteCommand) Run(c *cli.Context) error {
 	cmd.UI.Say(T("Protocol {{.ProtocolID}} removed", map[string]interface{}{"ProtocolID": protocolUUID}))
 	return nil
 }
+
+func LoadbalProtocolDelMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "protocol-delete",
+		Description: T("Delete a protocol"),
+		Usage:       "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "lb-id",
+				Usage: T("ID for the load balancer [required]"),
+			},
+			cli.StringFlag{
+				Name:  "protocol-uuid",
+				Usage: T("UUID for the protocol [required]"),
+			},
+		},
+	}
+}

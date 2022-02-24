@@ -88,3 +88,27 @@ func (cmd *ItemListCommand) Print(items []datatypes.Product_Item) {
 	}
 	table.Print()
 }
+
+func OrderItemListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "order",
+		Name:        "item-list",
+		Description: T("List package items that are used for ordering"),
+		Usage: T(`${COMMAND_NAME} sl order item-list [OPTIONS] PACKAGE_KEYNAME
+	
+EXAMPLE: 
+   ${COMMAND_NAME} sl order item-list CLOUD_SERVER
+   This command lists all items in the VSI package.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "keyword",
+				Usage: T("A word (or string) that is used to filter item names"),
+			},
+			cli.StringFlag{
+				Name:  "category",
+				Usage: T("Category code that is used to filter items"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

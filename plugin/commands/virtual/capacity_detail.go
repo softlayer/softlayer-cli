@@ -92,3 +92,25 @@ func (cmd *CapacityDetailCommand) Run(c *cli.Context) error {
 	mainTable.Print()
 	return nil
 }
+
+func VSCapacityDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "capacity-detail",
+		Description: T("Get Reserved Capacity Group details."),
+		Usage: T(`${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]
+EXAMPLE:
+   ${COMMAND_NAME} sl vs capacity-details 12345678
+    Get Reserved Capacity Group details with ID 12345678.`),
+		Flags: []cli.Flag{
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+			metadata.OutputFlag(),
+		}}
+}

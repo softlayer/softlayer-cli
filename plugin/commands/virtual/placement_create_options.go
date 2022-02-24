@@ -59,3 +59,17 @@ func (cmd *PlacementGroupCreateOptionsCommand) Run(c *cli.Context) error {
 	tableRules.Print()
 	return nil
 }
+
+func VSPlacementGroupCreateOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "placementgroup-create-options",
+		Description: T("Get List options for creating a placement group.."),
+		Usage: T(`${COMMAND_NAME} sl vs placementgroup-create-options
+EXAMPLE:
+   ${COMMAND_NAME} sl vs placementgroup-create-options
+    Get List options for creating a placement group.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		}}
+}

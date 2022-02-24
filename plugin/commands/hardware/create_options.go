@@ -98,3 +98,12 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 	cmd.UI.Print("")
 	return nil
 }
+
+func HardwareCreateOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "create-options",
+		Description: T("Server order options for a given chassis"),
+		Usage:       "${COMMAND_NAME} sl hardware create-options",
+	}
+}

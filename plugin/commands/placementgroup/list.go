@@ -65,3 +65,15 @@ func (cmd *PlacementGroupListCommand) Run(c *cli.Context) error {
 
 	return nil
 }
+
+func PlacementGroupListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "placement-group",
+		Name:        "list",
+		Description: T("List placement groups"),
+		Usage:       "${COMMAND_NAME} sl placement-group list [--output FORMAT]",
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

@@ -13,7 +13,6 @@ import (
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -31,10 +30,10 @@ var _ = Describe("end to end test", func() {
 		fakeUI = terminal.NewFakeUI()
 		cmd = securitygroup.NewDetailCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupDetailMetaData().Name,
-			Description: metadata.SecurityGroupDetailMetaData().Description,
-			Usage:       metadata.SecurityGroupDetailMetaData().Usage,
-			Flags:       metadata.SecurityGroupDetailMetaData().Flags,
+			Name:        securitygroup.SecurityGroupDetailMetaData().Name,
+			Description: securitygroup.SecurityGroupDetailMetaData().Description,
+			Usage:       securitygroup.SecurityGroupDetailMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupDetailMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
@@ -68,10 +67,10 @@ var _ = Describe("Securitygroup detail", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = securitygroup.NewDetailCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupDetailMetaData().Name,
-			Description: metadata.SecurityGroupDetailMetaData().Description,
-			Usage:       metadata.SecurityGroupDetailMetaData().Usage,
-			Flags:       metadata.SecurityGroupDetailMetaData().Flags,
+			Name:        securitygroup.SecurityGroupDetailMetaData().Name,
+			Description: securitygroup.SecurityGroupDetailMetaData().Description,
+			Usage:       securitygroup.SecurityGroupDetailMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupDetailMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

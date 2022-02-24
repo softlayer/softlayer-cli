@@ -52,3 +52,19 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	}
 	return nil
 }
+
+func IpsecListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "list",
+		Description: T("List IPSec VPN tunnel contexts"),
+		Usage:       "${COMMAND_NAME} sl ipsec list [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "order",
+				Usage: T("Filter by ID of the order that purchased the IPSec"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

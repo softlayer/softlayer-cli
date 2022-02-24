@@ -7,10 +7,11 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type VolumeCancelCommand struct {
@@ -22,6 +23,30 @@ func NewVolumeCancelCommand(ui terminal.UI, storageManager managers.StorageManag
 	return &VolumeCancelCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func BlockVolumeCancelMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "volume-cancel",
+		Description: T("Cancel an existing block storage volume"),
+		Usage: T(`${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f 
+   This command cancels volume with ID 12345678 immediately and without asking for confirmation.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "reason",
+				Usage: T("An optional reason for cancellation"),
+			},
+			cli.BoolFlag{
+				Name:  "immediate",
+				Usage: T("Cancel the block storage volume immediately instead of on the billing anniversary"),
+			},
+			metadata.ForceFlag(),
+		},
 	}
 }
 
