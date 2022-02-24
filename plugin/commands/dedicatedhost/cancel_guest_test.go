@@ -11,7 +11,6 @@ import (
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -27,10 +26,10 @@ var _ = Describe("Dedicated host create", func() {
 		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedhostManager)
 		cmd = dedicatedhost.NewCancelCommand(fakeUI, FakeDedicatedhostManager)
 		cliCommand = cli.Command{
-			Name:        metadata.DedicatedhostCancelGuestsMetaData().Name,
-			Description: metadata.DedicatedhostCancelGuestsMetaData().Description,
-			Usage:       metadata.DedicatedhostCancelGuestsMetaData().Usage,
-			Flags:       metadata.DedicatedhostCancelGuestsMetaData().Flags,
+			Name:        dedicatedhost.DedicatedhostCancelGuestsMetaData().Name,
+			Description: dedicatedhost.DedicatedhostCancelGuestsMetaData().Description,
+			Usage:       dedicatedhost.DedicatedhostCancelGuestsMetaData().Usage,
+			Flags:       dedicatedhost.DedicatedhostCancelGuestsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -5,6 +5,7 @@ import (
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -58,4 +59,16 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 	}
 
 	return cli.NewExitError(T("There is not any guest into the dedicated host {{.ID}}.", map[string]interface{}{"ID": HostID}), 2)
+}
+
+func DedicatedhostCancelGuestsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dedicatedhost",
+		Name:        "cancel-guests",
+		Description: T("Cancel all virtual guests of the dedicated host immediately."),
+		Usage:       "${COMMAND_NAME} sl dedicatedhost cancel-guests IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }
