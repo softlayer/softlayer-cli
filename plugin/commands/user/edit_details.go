@@ -65,3 +65,23 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("User {{.UserID}} updated successfully.", map[string]interface{}{"UserID": id}))
 	return nil
 }
+
+func UserEditMetaData() cli.Command {
+	return cli.Command{
+		Category:    "user",
+		Name:        "detail-edit",
+		Description: T("Edit a user's details"),
+		Usage: T(`${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]
+
+EXAMPLE: 
+    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{"firstName": "Test", "lastName": "Testerson"}'
+    This command edit a users details.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "template",
+				Usage: T("A json string describing https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

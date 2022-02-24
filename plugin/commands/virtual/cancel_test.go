@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VS cancel", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewCancelCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCancelMetaData().Name,
-			Description: metadata.VSCancelMetaData().Description,
-			Usage:       metadata.VSCancelMetaData().Usage,
-			Flags:       metadata.VSCancelMetaData().Flags,
+			Name:        virtual.VSCancelMetaData().Name,
+			Description: virtual.VSCancelMetaData().Description,
+			Usage:       virtual.VSCancelMetaData().Usage,
+			Flags:       virtual.VSCancelMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -69,3 +69,27 @@ func (cmd *CertListCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func SecuritySSLCertListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "cert-list",
+		Description: T("List SSL certificates on your account"),
+		Usage: T(`${COMMAND_NAME} sl security cert-list [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire
+   This command lists all valid certificates on current account and sort them by validity days.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "status",
+				Usage: T("Show certificates with this status, default is: all, options are: all,valid,expired"),
+			},
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by. Options are: id,common_name,days_until_expire,note"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

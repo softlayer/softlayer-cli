@@ -42,3 +42,26 @@ func (cmd *KeyEditCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("SSH key {{.ID}} was updated.", map[string]interface{}{"ID": keyID}))
 	return nil
 }
+
+func SecuritySSHKeyEditMetaData() cli.Command {
+	return cli.Command{
+		Category:    "security",
+		Name:        "sshkey-edit",
+		Description: T("Edit an SSH key"),
+		Usage: T(`${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl security sshkey-edit 12345678 --label IBMCloud --note testing
+   This command updates the SSH key with ID 12345678 and sets label to "IBMCloud" and note to "testing".`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "label",
+				Usage: T("The new label for the key"),
+			},
+			cli.StringFlag{
+				Name:  "note",
+				Usage: T("New notes for the key"),
+			},
+		},
+	}
+}

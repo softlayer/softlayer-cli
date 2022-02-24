@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -38,4 +38,13 @@ func (cmd *PowerOnCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Hardware server: {{.ID}} is power on.", map[string]interface{}{"ID": hardwareId}))
 	return nil
+}
+
+func HardwarePowerOnMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "power-on",
+		Description: T("Power on a server"),
+		Usage:       "${COMMAND_NAME} sl hardware power-on IDENTIFIER",
+	}
 }

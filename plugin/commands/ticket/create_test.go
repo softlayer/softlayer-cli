@@ -8,7 +8,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("ticket create", func() {
 		fakeUI = terminal.NewFakeUI()
 		cmd = ticket.NewCreateStandardTicketCommand(fakeUI, fakeTicketManager)
 		cliCommand = cli.Command{
-			Name:        metadata.TicketCreateMetaData().Name,
-			Description: metadata.TicketCreateMetaData().Description,
-			Usage:       metadata.TicketCreateMetaData().Usage,
-			Flags:       metadata.TicketCreateMetaData().Flags,
+			Name:        ticket.TicketCreateMetaData().Name,
+			Description: ticket.TicketCreateMetaData().Description,
+			Usage:       ticket.TicketCreateMetaData().Usage,
+			Flags:       ticket.TicketCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

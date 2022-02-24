@@ -9,7 +9,6 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
@@ -25,16 +24,16 @@ var _ = Describe("Place", func() {
 	)
 	BeforeEach(func() {
 
-		filenames := []string{"getDatacenters_1",}
+		filenames := []string{"getDatacenters_1"}
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 		OrderManager = managers.NewOrderManager(fakeSLSession)
 		fakeUI = terminal.NewFakeUI()
 		cmd = order.NewPlaceCommand(fakeUI, OrderManager, nil)
 		cliCommand = cli.Command{
-			Name:        metadata.OrderPlaceMetaData().Name,
-			Description: metadata.OrderPlaceMetaData().Description,
-			Usage:       metadata.OrderPlaceMetaData().Usage,
-			Flags:       metadata.OrderPlaceMetaData().Flags,
+			Name:        order.OrderPlaceMetaData().Name,
+			Description: order.OrderPlaceMetaData().Description,
+			Usage:       order.OrderPlaceMetaData().Usage,
+			Flags:       order.OrderPlaceMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

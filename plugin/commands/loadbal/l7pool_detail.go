@@ -119,3 +119,18 @@ func printL7Pool(l7pool datatypes.Network_LBaaS_L7Pool, l7Members []datatypes.Ne
 
 	table.Print()
 }
+
+func LoadbalL7PoolDetailMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7pool-detail",
+		Description: T("Show L7 pool details"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "pool-id",
+				Usage: T("ID for the load balancer pool [required]"),
+			},
+		},
+	}
+}

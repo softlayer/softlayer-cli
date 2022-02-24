@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -118,4 +118,75 @@ func (cmd *UpdateCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Updated IPSec {{.ContextID}}.", map[string]interface{}{"ContextID": contextId}))
 	return nil
+}
+
+func IpsecUpdateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "update",
+		Description: T("Update tunnel context properties"),
+		Usage: T(`${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]
+
+  Update tunnel context properties.
+
+  Updates are made atomically, so either all are accepted or none are.
+
+  Key life values must be in the range 120-172800.
+
+  Phase 2 perfect forward secrecy must be in the range 0-1.
+
+  A separate configuration request should be made to realize changes on
+  network devices.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Friendly name"),
+			},
+			cli.StringFlag{
+				Name:  "r,remote-peer",
+				Usage: T("Remote peer IP address"),
+			},
+			cli.StringFlag{
+				Name:  "k,preshared-key",
+				Usage: T("Preshared key"),
+			},
+			cli.StringFlag{
+				Name:  "a,phase1-auth",
+				Usage: T("Phase 1 authentication. Options are: MD5,SHA1,SHA256"),
+			},
+			cli.StringFlag{
+				Name:  "c,phase1-crypto",
+				Usage: T("Phase 1 encryption. Options are: DES,3DES,AES128,AES192,AES256"),
+			},
+			cli.IntFlag{
+				Name:  "d,phase1-dh",
+				Usage: T("Phase 1 Diffie-Hellman group. Options are: 0,1,2,5"),
+			},
+			cli.IntFlag{
+				Name:  "t,phase1-key-ttl",
+				Usage: T("Phase 1 key life. Range is 120-172800"),
+			},
+			cli.StringFlag{
+				Name:  "u,phase2-auth",
+				Usage: T("Phase 2 authentication. Options are: MD5,SHA1,SHA256"),
+			},
+			cli.StringFlag{
+				Name:  "y,phase2-crypto",
+				Usage: T("Phase 2 encryption. Options are: DES,3DES,AES128,AES192,AES256"),
+			},
+			cli.IntFlag{
+				Name:  "e,phase2-dh",
+				Usage: T("Phase 2 Diffie-Hellman group. Options are: 0,1,2,5"),
+			},
+			cli.IntFlag{
+				Name:  "f,phase2-forward-secrecy",
+				Usage: T("Phase 2 perfect forward secrecy. Range is 0-1"),
+			},
+			cli.IntFlag{
+				Name:  "l,phase2-key-ttl",
+				Usage: T("Phase 2 key life. Range is 120-172800"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VS pause", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewPauseCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSPauseMetaData().Name,
-			Description: metadata.VSPauseMetaData().Description,
-			Usage:       metadata.VSPauseMetaData().Usage,
-			Flags:       metadata.VSPauseMetaData().Flags,
+			Name:        virtual.VSPauseMetaData().Name,
+			Description: virtual.VSPauseMetaData().Description,
+			Usage:       virtual.VSPauseMetaData().Usage,
+			Flags:       virtual.VSPauseMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -88,3 +88,28 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func GlobalIpCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "globalip",
+		Name:        "create",
+		Description: T("Create a global IP"),
+		Usage: T(`${COMMAND_NAME} sl globalip create [OPTIONS]
+
+EXAMPLE:
+    ${COMMAND_NAME} sl globalip create --v6 
+	This command creates an IPv6 address.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "v6",
+				Usage: T("Order an IPv6 IP address"),
+			},
+			cli.BoolFlag{
+				Name:  "test",
+				Usage: T("Test order"),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
+	}
+}

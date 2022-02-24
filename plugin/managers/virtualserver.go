@@ -105,6 +105,7 @@ type VirtualServerManager interface {
 	GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error)
 	PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup,error)
 	GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error)
+	PlacementCreate(templateObject *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error)
 	GetDatacenters() ([]datatypes.Location, error)
 	GetAvailablePlacementRouters(id int) ([]datatypes.Hardware, error)
 	GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error)
@@ -1487,3 +1488,10 @@ func (vs virtualServerManager) GetRules() ([]datatypes.Virtual_PlacementGroup_Ru
 	}
 	return rules, err
 }
+
+func (vs virtualServerManager) PlacementCreate(templateObject *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error) {
+	placementService := services.GetVirtualPlacementGroupService(vs.Session)
+	return placementService.CreateObject(templateObject)
+}
+
+

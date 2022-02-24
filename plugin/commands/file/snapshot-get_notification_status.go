@@ -25,6 +25,22 @@ func NewSnapshotGetNotificationStatusCommand(ui terminal.UI, storageManager mana
 	}
 }
 
+func FileVolumeSnapshotGetNotificationStatusMetaData() cli.Command {
+	return cli.Command{
+		Category:    "file",
+		Name:        "snapshot-get-notification-status",
+		Description: T("Get snapshots space usage threshold warning flag setting for a given volume."),
+		Usage: T(`${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID
+
+EXAMPLE:
+	${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID
+	Get snapshots space usage threshold warning flag setting for a given volume.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}
+
 func (cmd *SnapshotGetNotificationStatusCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))

@@ -7,6 +7,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
@@ -19,23 +20,27 @@ func TestManagers(t *testing.T) {
 
 // These are all the commands in security.go
 var availableCommands = []string{
-	"security-sshkey-list",
-	"security-cert-download",
-	"security-cert-remove",
-	"security-sshkey-add",
-	"security-sshkey-print",
 	"security-cert-add",
+	"security-cert-download",
 	"security-cert-edit",
 	"security-cert-list",
+	"security-cert-remove",
+	"security-sshkey-add",
 	"security-sshkey-edit",
+	"security-sshkey-list",
+	"security-sshkey-print",
 	"security-sshkey-remove",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
 var _ = Describe("Test security.GetCommandActionBindings()", func() {
+	var (
+		context plugin.PluginContext
+	)
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
-	commands := security.GetCommandActionBindings(fakeUI, fakeSession)
+	context = plugin.InitPluginContext("softlayer")
+	commands := security.GetCommandActionBindings(context, fakeUI, fakeSession)
 	Context("Test Actions", func() {
 		for _, cmdName := range availableCommands {
 			//necessary to ensure the correct value is passed to the closure

@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VS poweroff", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewPowerOffCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSPowerOffMetaData().Name,
-			Description: metadata.VSPowerOffMetaData().Description,
-			Usage:       metadata.VSPowerOffMetaData().Usage,
-			Flags:       metadata.VSPowerOffMetaData().Flags,
+			Name:        virtual.VSPowerOffMetaData().Name,
+			Description: virtual.VSPowerOffMetaData().Description,
+			Usage:       virtual.VSPowerOffMetaData().Usage,
+			Flags:       virtual.VSPowerOffMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

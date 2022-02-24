@@ -102,3 +102,50 @@ func (cmd *L7PoolEditCommand) Run(c *cli.Context) error {
 	cmd.UI.Say(T("L7 pool updated"))
 	return nil
 }
+
+func LoadbalL7PoolEditMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7pool-edit",
+		Description: T("Edit a L7 pool"),
+		Usage:       "${COMMAND_NAME} sl loadbal l7pool-edit (--pool-uuid L7POOL_UUID) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "pool-uuid",
+				Usage: T("UUID for the load balancer pool [required]"),
+			},
+			cli.StringFlag{
+				Name:  "m, method",
+				Usage: T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"),
+			},
+			cli.StringFlag{
+				Name:  "p, protocol",
+				Usage: T("Protocol type to use for incoming connections"),
+			},
+			cli.StringSliceFlag{
+				Name:  "s, server",
+				Usage: T("Backend servers that are part of this pool. Format: BACKEND_IP:PORT. eg. 10.0.0.1:80 (multiple occurrence permitted)"),
+			},
+			cli.StringFlag{
+				Name:  "health-path",
+				Usage: T("Health check path"),
+			},
+			cli.IntFlag{
+				Name:  "health-interval",
+				Usage: T("Health check interval between checks"),
+			},
+			cli.IntFlag{
+				Name:  "health-retry",
+				Usage: T("Health check number of times before marking as DOWN"),
+			},
+			cli.IntFlag{
+				Name:  "health-timeout",
+				Usage: T("Health check timeout"),
+			},
+			cli.StringFlag{
+				Name:  "sticky",
+				Usage: T("Use 'cookie' or 'source-ip' to stick"),
+			},
+		},
+	}
+}

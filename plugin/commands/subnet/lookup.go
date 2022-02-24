@@ -6,10 +6,10 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -88,4 +88,20 @@ func (cmd *LookupCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
+}
+
+func SubnetLookupMetaData() cli.Command {
+	return cli.Command{
+		Category:    "subnet",
+		Name:        "lookup",
+		Description: T("Find an IP address and display its subnet and device information"),
+		Usage: T(`${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet lookup 9.125.235.255
+   This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
 }

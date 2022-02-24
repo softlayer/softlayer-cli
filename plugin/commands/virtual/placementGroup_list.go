@@ -6,6 +6,7 @@ import (
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -44,4 +45,20 @@ func (cmd *PlacementGroupListCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
+}
+
+func VSPlacementGroupListMetadata() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "placementgroup-list",
+		Description: T(" List placement groups."),
+		Usage: T(`${COMMAND_NAME} sl vs placementgroup-list
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs placementgroup-list
+   This command lists all placement groups.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
 }

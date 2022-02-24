@@ -20,6 +20,16 @@ func NewLicensesOptionsCommand(ui terminal.UI, LicensesManager managers.Licenses
 	}
 }
 
+func LicensesCreateOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "licenses",
+		Name:        "create-options",
+		Description: T("Server order options for a given chassis"),
+		Usage:       "${COMMAND_NAME} sl licenses create-options",
+		Flags:       []cli.Flag{},
+	}
+}
+
 func (cmd *LicensesOptionsCommand) Run(c *cli.Context) error {
 	table := cmd.UI.Table([]string{T("Id"), T("Description"), T("KeyName"), T("Capacity"), T("RecurringFee")})
 	licenses, err := cmd.LicensesManager.CreateLicensesOptions()

@@ -145,3 +145,19 @@ func (cmd *StorageCommand) getLocalType(disk datatypes.Virtual_Guest_Block_Devic
 	}
 	return diskType
 }
+
+func VSStorageMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "storage",
+		Description: T("Get storage details for a virtual server."),
+		Usage: T(`${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs storage 1234567
+   Get storage details for a virtual server.`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

@@ -8,7 +8,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"strings"
 )
@@ -25,10 +24,10 @@ var _ = Describe("VS capacity-detail", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewCapacityDetailCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCapacityDetailMetaData().Name,
-			Description: metadata.VSCapacityDetailMetaData().Description,
-			Usage:       metadata.VSCapacityDetailMetaData().Usage,
-			Flags:       metadata.VSCapacityDetailMetaData().Flags,
+			Name:        virtual.VSCapacityDetailMetaData().Name,
+			Description: virtual.VSCapacityDetailMetaData().Description,
+			Usage:       virtual.VSCapacityDetailMetaData().Usage,
+			Flags:       virtual.VSCapacityDetailMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

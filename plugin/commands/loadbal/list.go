@@ -58,3 +58,13 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	}
 	return nil
 }
+
+func LoadbalListMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "list",
+		Description: T("List active load balancers"),
+		Usage:       "${COMMAND_NAME} sl loadbal list",
+		Flags:       []cli.Flag{},
+	}
+}

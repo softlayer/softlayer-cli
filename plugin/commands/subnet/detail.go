@@ -3,6 +3,8 @@ package subnet
 import (
 	"bytes"
 	"fmt"
+	"strconv"
+
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
@@ -13,7 +15,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
-	"strconv"
 )
 
 type DetailCommand struct {
@@ -68,7 +69,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	if subnet.Datacenter != nil {
 		table.Add(T("datacenter"), utils.FormatStringPointer(subnet.Datacenter.Name))
 	}
-	table.Add(T("usable ips"), strconv.FormatFloat(float64(sl.Get(subnet.UsableIpAddressCount).(datatypes.Float64)),'f',0,64))
+	table.Add(T("usable ips"), strconv.FormatFloat(float64(sl.Get(subnet.UsableIpAddressCount).(datatypes.Float64)), 'f', 0, 64))
 	if !c.IsSet("no-ip") {
 		if subnet.IpAddresses == nil || len(subnet.IpAddresses) == 0 {
 			table.Add(T("IP address"), T("none"))
@@ -132,4 +133,34 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
+}
+
+func SubnetDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "subnet",
+		Name:        "detail",
+		Description: T("Get details of a subnet"),
+		Usage: T(`${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet detail 12345678 
+   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "no-vs",
+				Usage: T("Hide virtual server listing"),
+			},
+			cli.BoolFlag{
+				Name:  "no-hardware",
+				Usage: T("Hide hardware listing"),
+			}, cli.BoolFlag{
+				Name:  "no-ip",
+				Usage: T("Hide IP address listing"),
+			}, cli.BoolFlag{
+				Name:  "no-Tag",
+				Usage: T("Hide Tag listing"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

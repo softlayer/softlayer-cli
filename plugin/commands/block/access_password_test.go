@@ -9,7 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +25,10 @@ var _ = Describe("Access Password", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = block.NewAccessPasswordCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.BlockAccessPasswordMetaData().Name,
-			Description: metadata.BlockAccessPasswordMetaData().Description,
-			Usage:       metadata.BlockAccessPasswordMetaData().Usage,
-			Flags:       metadata.BlockAccessPasswordMetaData().Flags,
+			Name:        block.BlockAccessPasswordMetaData().Name,
+			Description: block.BlockAccessPasswordMetaData().Description,
+			Usage:       block.BlockAccessPasswordMetaData().Usage,
+			Flags:       block.BlockAccessPasswordMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

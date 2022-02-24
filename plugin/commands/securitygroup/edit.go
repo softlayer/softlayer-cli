@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -42,4 +42,23 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Security group {{.ID}} is updated.", map[string]interface{}{"ID": groupID}))
 	return nil
+}
+
+func SecurityGroupEditMetaData() cli.Command {
+	return cli.Command{
+		Category:    "securitygroup",
+		Name:        "edit",
+		Description: T("Edit details of a security group"),
+		Usage:       "${COMMAND_NAME} sl securitygroup edit SECURITYGROUP_ID [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("The name of the security group"),
+			},
+			cli.StringFlag{
+				Name:  "d,description",
+				Usage: T("The description of the security group"),
+			},
+		},
+	}
 }

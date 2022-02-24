@@ -1,0 +1,33 @@
+[
+    {
+        "billingCyclePublicBandwidthUsage": {
+            "amountIn": 7.54252,
+            "amountOut": 7.13308
+        },
+        "id": 309961,
+        "locationGroup": {
+            "description": "All Datacenters in Mexico",
+            "id": 262,
+            "locationGroupTypeId": 1,
+            "name": "MEX"
+        },
+        "name": "MexRegion",
+        "projectedPublicBandwidthUsage": 7.7,
+        "totalBandwidthAllocated": 3361
+    },
+    {
+        "billingCyclePublicBandwidthUsage": {
+            "amountIn": 0,
+            "amountOut": 0
+        },
+        "id": 265721,
+        "locationGroup": {
+            "description": "All Datacenters in the USA and Canada.",
+            "id": 1,
+            "locationGroupTypeId": 1,
+            "name": "US/Canada"
+        },
+        "name": "TestPool",
+        "totalBandwidthAllocated": 0
+    }
+]

@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("hardware powercycle", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewPowerCycleCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwarePowerCycleMetaData().Name,
-			Description: metadata.HardwarePowerCycleMetaData().Description,
-			Usage:       metadata.HardwarePowerCycleMetaData().Usage,
-			Flags:       metadata.HardwarePowerCycleMetaData().Flags,
+			Name:        hardware.HardwarePowerCycleMetaData().Name,
+			Description: hardware.HardwarePowerCycleMetaData().Description,
+			Usage:       hardware.HardwarePowerCycleMetaData().Usage,
+			Flags:       hardware.HardwarePowerCycleMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -6,9 +6,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type UpdateFirmwareCommand struct {
@@ -50,4 +51,16 @@ func (cmd *UpdateFirmwareCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Started to update firmware for hardware server: {{.ID}}.", map[string]interface{}{"ID": hardwareId}))
 	return nil
+}
+
+func HardwareUpdateFirmwareMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "update-firmware",
+		Description: T("Update server firmware"),
+		Usage:       "${COMMAND_NAME} sl hardware update-firmware IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

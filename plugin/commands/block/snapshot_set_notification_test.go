@@ -9,7 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +25,10 @@ var _ = Describe("Volume set snapshot notification status", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = block.NewSnapshotSetNotificationCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.BlockVolumeSnapshotSetNotificationMetaData().Name,
-			Description: metadata.BlockVolumeSnapshotSetNotificationMetaData().Description,
-			Usage:       metadata.BlockVolumeSnapshotSetNotificationMetaData().Usage,
-			Flags:       metadata.BlockVolumeSnapshotSetNotificationMetaData().Flags,
+			Name:        block.BlockVolumeSnapshotSetNotificationMetaData().Name,
+			Description: block.BlockVolumeSnapshotSetNotificationMetaData().Description,
+			Usage:       block.BlockVolumeSnapshotSetNotificationMetaData().Usage,
+			Flags:       block.BlockVolumeSnapshotSetNotificationMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

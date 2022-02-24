@@ -12,7 +12,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -30,10 +30,10 @@ var _ = Describe("Access Revoke", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = file.NewAccessRevokeCommand(fakeUI, FakeStorageManager, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.FileAccessRevokeMetaData().Name,
-			Description: metadata.FileAccessRevokeMetaData().Description,
-			Usage:       metadata.FileAccessRevokeMetaData().Usage,
-			Flags:       metadata.FileAccessRevokeMetaData().Flags,
+			Name:        file.FileAccessRevokeMetaData().Name,
+			Description: file.FileAccessRevokeMetaData().Description,
+			Usage:       file.FileAccessRevokeMetaData().Usage,
+			Flags:       file.FileAccessRevokeMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

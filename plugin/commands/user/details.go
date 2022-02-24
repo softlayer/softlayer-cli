@@ -202,3 +202,38 @@ func baseUserPrint(user datatypes.User_Customer, keys bool, ui terminal.UI) {
 	table.Add("", "")
 	table.Print()
 }
+
+func UserDetailMetaData() cli.Command {
+	return cli.Command{
+		Category:    "user",
+		Name:        "detail",
+		Description: T("User details"),
+		Usage:       "${COMMAND_NAME} sl user detail IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "keys",
+				Usage: T("Show the users API key"),
+			},
+			cli.BoolFlag{
+				Name:  "permissions",
+				Usage: T("Display permissions assigned to this user. Master users do not show permissions"),
+			},
+			cli.BoolFlag{
+				Name:  "hardware",
+				Usage: T("Display hardware this user has access to"),
+			},
+			cli.BoolFlag{
+				Name:  "virtual",
+				Usage: T("Display virtual guests this user has access to"),
+			},
+			cli.BoolFlag{
+				Name:  "logins",
+				Usage: T("Show login history of this user for the last 24 hours"),
+			},
+			cli.BoolFlag{
+				Name:  "events",
+				Usage: T("Show audit log for this user"),
+			},
+		},
+	}
+}

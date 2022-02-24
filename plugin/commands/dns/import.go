@@ -128,3 +128,22 @@ func parseFileContent(content string) (datatypes.Dns_Domain, []datatypes.Dns_Dom
 	zone.ResourceRecords = records
 	return zone, records, nil
 }
+
+func DnsImportMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dns",
+		Name:        "import",
+		Description: T("Import a zone based off a BIND zone file"),
+		Usage: T(`${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dns import ~/ibm.com.txt
+   This command imports zone and its resource records from file: ~/ibm.com.txt.`),
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "dry-run",
+				Usage: T("Don't actually create records"),
+			},
+		},
+	}
+}

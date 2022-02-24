@@ -93,7 +93,7 @@ func PrintLoadbalancer(loadbal datatypes.Network_LBaaS_LoadBalancer, ui terminal
 				mapping,
 				utils.FormatStringPointer(pool.LoadBalancingAlgorithm),
 				utils.FormatIntPointer(listener.ConnectionLimit),
-				fmt.Sprintf("Client: %ss, Server: %ss" , utils.FormatIntPointer(listener.ClientTimeout), utils.FormatIntPointer(listener.ServerTimeout)),
+				fmt.Sprintf("Client: %ss, Server: %ss", utils.FormatIntPointer(listener.ClientTimeout), utils.FormatIntPointer(listener.ServerTimeout)),
 				utils.FormatSLTimePointer(listener.ModifyDate),
 				utils.FormatStringPointer(listener.ProvisioningStatus),
 			)
@@ -192,4 +192,19 @@ func PrintLoadbalancer(loadbal datatypes.Network_LBaaS_LoadBalancer, ui terminal
 	}
 
 	table.Print()
+}
+
+func LoadbalDetailMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "detail",
+		Description: T("Get load balancer details"),
+		Usage:       "${COMMAND_NAME} sl loadbal detail (--id LOADBAL_ID)",
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "id",
+				Usage: T("ID for the load balancer [required]"),
+			},
+		},
+	}
 }

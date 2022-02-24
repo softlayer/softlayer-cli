@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("VS ready", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewReadyCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSReadyMetaData().Name,
-			Description: metadata.VSReadyMetaData().Description,
-			Usage:       metadata.VSReadyMetaData().Usage,
-			Flags:       metadata.VSReadyMetaData().Flags,
+			Name:        virtual.VSReadyMetaData().Name,
+			Description: virtual.VSReadyMetaData().Description,
+			Usage:       virtual.VSReadyMetaData().Usage,
+			Flags:       virtual.VSReadyMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

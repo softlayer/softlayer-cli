@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("GlobalIP cancel", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = globalip.NewCancelCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.GlobalIpCancelMetaData().Name,
-			Description: metadata.GlobalIpCancelMetaData().Description,
-			Usage:       metadata.GlobalIpCancelMetaData().Usage,
-			Flags:       metadata.GlobalIpCancelMetaData().Flags,
+			Name:        globalip.GlobalIpCancelMetaData().Name,
+			Description: globalip.GlobalIpCancelMetaData().Description,
+			Usage:       globalip.GlobalIpCancelMetaData().Usage,
+			Flags:       globalip.GlobalIpCancelMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

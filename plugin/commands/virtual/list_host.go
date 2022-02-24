@@ -58,3 +58,31 @@ func (cmd *ListHostCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func VSListHostMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "host-list",
+		Description: T("List dedicated hosts on your account"),
+		Usage:       "${COMMAND_NAME} sl vs host-list [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Filter by name of the dedicated host"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Filter by datacenter of the dedicated host"),
+			},
+			cli.StringFlag{
+				Name:  "owner",
+				Usage: T("Filter by owner of the dedicated host"),
+			},
+			cli.IntFlag{
+				Name:  "order",
+				Usage: T("Filter by ID of the order which purchased this dedicated host"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

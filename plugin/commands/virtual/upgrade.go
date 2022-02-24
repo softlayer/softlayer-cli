@@ -4,8 +4,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -73,4 +73,44 @@ func (cmd *UpgradeCommand) Run(c *cli.Context) error {
 		map[string]interface{}{"OrderId": *orderReceipt.OrderId, "VsId": vsID}))
 
 	return nil
+}
+
+func VSUpgradeMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "upgrade",
+		Description: T("Upgrade a virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]
+	Note: Classic infrastructure service automatically reboots the instance once upgrade request is
+  	placed. The instance is halted until the upgrade transaction is completed.
+  	However for Network, no reboot is required.
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000
+   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "c,cpu",
+				Usage: T("Number of CPU cores"),
+			},
+			cli.BoolFlag{
+				Name:  "private",
+				Usage: T("CPU core will be on a dedicated host server"),
+			},
+			cli.IntFlag{
+				Name:  "m,memory",
+				Usage: T("Memory in megabytes"),
+			},
+			cli.IntFlag{
+				Name:  "network",
+				Usage: T("Network port speed in Mbps"),
+			},
+			cli.StringFlag{
+				Name:  "flavor",
+				Usage: T("Flavor key name"),
+			},
+			metadata.ForceFlag(),
+			metadata.OutputFlag(),
+		},
+	}
 }

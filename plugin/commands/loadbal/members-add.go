@@ -51,3 +51,26 @@ func (cmd *MembersAddCommand) Run(c *cli.Context) error {
 	cmd.UI.Say(T("Member {{.MemberID}} added", map[string]interface{}{"MemberID": ip}))
 	return nil
 }
+
+func LoadbalL7MemberAddMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "l7member-add",
+		Description: T("Add a new L7 pool member"),
+		Usage:       "${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "pool-uuid",
+				Usage: T("UUID for the load balancer pool [required]"),
+			},
+			cli.StringFlag{
+				Name:  "address",
+				Usage: T("Backend servers IP address. [required]"),
+			},
+			cli.IntFlag{
+				Name:  "port",
+				Usage: T("Backend servers port. [required]"),
+			},
+		},
+	}
+}

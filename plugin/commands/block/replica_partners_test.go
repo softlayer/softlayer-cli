@@ -12,7 +12,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +28,10 @@ var _ = Describe("Replica partners", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = block.NewReplicaPartnersCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.BlockReplicaPartnersMetaData().Name,
-			Description: metadata.BlockReplicaPartnersMetaData().Description,
-			Usage:       metadata.BlockReplicaPartnersMetaData().Usage,
-			Flags:       metadata.BlockReplicaPartnersMetaData().Flags,
+			Name:        block.BlockReplicaPartnersMetaData().Name,
+			Description: block.BlockReplicaPartnersMetaData().Description,
+			Usage:       block.BlockReplicaPartnersMetaData().Usage,
+			Flags:       block.BlockReplicaPartnersMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

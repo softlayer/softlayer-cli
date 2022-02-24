@@ -3,6 +3,7 @@ package virtual
 import (
 	"encoding/json"
 	"errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"io/ioutil"
 	"strconv"
 	"time"
@@ -12,8 +13,8 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -391,4 +392,166 @@ func verifyParams(imageManager managers.ImageManager, c *cli.Context) (map[strin
 		params["placement-group-id"] = c.Int("placement-group-id")
 	}
 	return params, nil
+}
+
+func VSCreateMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "create",
+		Description: T("Create virtual server instance"),
+		Usage: T(`${COMMAND_NAME} sl vs create [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413
+	This command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,
+	operation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.
+	${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test
+	This command tests whether the order is valid with above options before the order is actually placed.
+	${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt
+	This command exports above options to a file: myvsi.txt under user home directory for later use.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Host portion of the FQDN [required]"),
+			},
+			cli.StringFlag{
+				Name:  "D,domain",
+				Usage: T("Domain portion of the FQDN [required]"),
+			},
+			cli.IntFlag{
+				Name:  "c,cpu",
+				Usage: T("Number of CPU cores [required]"),
+			},
+			cli.IntFlag{
+				Name:  "m,memory",
+				Usage: T("Memory in megabytes [required]"),
+			},
+			cli.StringFlag{
+				Name:  "flavor",
+				Usage: T("Public Virtual Server flavor key name"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Datacenter shortname [required]"),
+			},
+			cli.StringFlag{
+				Name:  "o,os",
+				Usage: T("OS install code. Tip: you can specify <OS>_LATEST"),
+			},
+			cli.IntFlag{
+				Name:  "image",
+				Usage: T("Image ID. See: '${COMMAND_NAME} sl image list' for reference"),
+			},
+			cli.StringFlag{
+				Name:  "billing",
+				Usage: T("Billing rate. Default is: hourly. Options are: hourly, monthly"),
+			},
+			cli.BoolFlag{
+				Name:  "dedicated",
+				Usage: T("Create a dedicated Virtual Server (Private Node)"),
+			},
+			cli.IntFlag{
+				Name:  "host-id",
+				Usage: T("Host Id to provision a Dedicated Virtual Server onto"),
+			},
+			cli.BoolFlag{
+				Name:  "san",
+				Usage: T("Use SAN storage instead of local disk"),
+			},
+			cli.BoolFlag{
+				Name:  "test",
+				Usage: T("Do not actually create the virtual server"),
+			},
+			cli.StringFlag{
+				Name:  "export",
+				Usage: T("Exports options to a template file"),
+			},
+			cli.StringFlag{
+				Name:  "i,postinstall",
+				Usage: T("Post-install script to download"),
+			},
+			cli.IntSliceFlag{
+				Name:  "k,key",
+				Usage: T("The IDs of the SSH keys to add to the root user (multiple occurrence permitted)"),
+			},
+			cli.IntSliceFlag{
+				Name:  "disk",
+				Usage: T("Disk sizes (multiple occurrence permitted)"),
+			},
+			cli.BoolFlag{
+				Name:  "private",
+				Usage: T("Forces the virtual server to only have access the private network"),
+			},
+			cli.StringFlag{
+				Name:  "like",
+				Usage: T("Use the configuration from an existing virtual server"),
+			},
+			cli.IntFlag{
+				Name:  "n,network",
+				Usage: T("Network port speed in Mbps"),
+			},
+			cli.StringSliceFlag{
+				Name:  "g,tag",
+				Usage: T("Tags to add to the instance (multiple occurrence permitted)"),
+			},
+			cli.StringFlag{
+				Name:  "t,template",
+				Usage: T("A template file that defaults the command-line options"),
+			},
+			cli.StringFlag{
+				Name:  "u,userdata",
+				Usage: T("User defined metadata string"),
+			},
+			cli.StringFlag{
+				Name:  "F,userfile",
+				Usage: T("Read userdata from file"),
+			},
+			cli.StringFlag{
+				Name:  "vlan-public",
+				Usage: T("The ID of the public VLAN on which you want the virtual server placed"),
+			},
+			cli.StringFlag{
+				Name:  "vlan-private",
+				Usage: T("The ID of the private VLAN on which you want the virtual server placed"),
+			},
+			cli.IntSliceFlag{
+				Name:  "S,public-security-group",
+				Usage: T("Security group ID to associate with the public interface (multiple occurrence permitted)"),
+			},
+			cli.IntSliceFlag{
+				Name:  "s,private-security-group",
+				Usage: T("Security group ID to associate with the private interface (multiple occurrence permitted)"),
+			},
+			cli.IntFlag{
+				Name:  "wait",
+				Usage: T("Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity"),
+			},
+			cli.IntFlag{
+				Name:  "placement-group-id",
+				Usage: T("Placement Group Id to order this guest on."),
+			},
+			cli.StringFlag{
+				Name:  "boot-mode",
+				Usage: T("Specify the mode to boot the OS in. Supported modes are HVM and PV."),
+			},
+			cli.IntFlag{
+				Name:  "subnet-public",
+				Usage: T("The ID of the public SUBNET on which you want the virtual server placed"),
+			},
+			cli.IntFlag{
+				Name:  "subnet-private",
+				Usage: T("The ID of the private SUBNET on which you want the virtual server placed"),
+			},
+			cli.BoolFlag{
+				Name:  "transient",
+				Usage: T("Create a transient virtual server"),
+			},
+			cli.IntFlag{
+				Name:  "quantity",
+				Usage: T("The quantity of virtual server be created. It should be greater or equal to 1. This value defaults to 1."),
+				Value: 1,
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }
