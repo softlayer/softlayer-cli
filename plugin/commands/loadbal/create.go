@@ -10,8 +10,8 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
-	// "github.ibm.com/Bluemix/resource-catalog-cli/plugin/i18n"
 )
 
 type CreateCommand struct {
@@ -170,4 +170,72 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
+}
+
+func LoadbalOrderMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "order",
+		Description: T("Order a load balancer"),
+		Usage:       "${COMMAND_NAME} sl loadbal order (-n, --name NAME) (-d, --datacenter DATACENTER) (-t, --type PublicToPrivate | PrivateToPrivate | PublicToPublic ) [-l, --label LABEL] [ -s, --subnet SUBNET_ID] [--frontend-protocol PROTOCOL] [--frontend-port PORT] [--backend-protocol PROTOCOL] [--backend-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--use-public-subnet] [--verify]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "n,name",
+				Usage: T("Name for this load balancer [required]"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Datacenter name. It can be found from the keyName in the command '${COMMAND_NAME} sl order package-locations LBAAS' output. [required]"),
+			},
+			cli.StringFlag{
+				Name:  "t,type",
+				Usage: T("Load balancer type: PublicToPrivate | PrivateToPrivate | PublicToPublic [required]"),
+			},
+			cli.IntFlag{
+				Name:  "s,subnet",
+				Usage: T("Private subnet Id to order the load balancer. See '${COMMAND_NAME} sl loadbal order-options'. Only available in PublicToPrivate and PrivateToPrivate load balancer type"),
+			},
+			cli.StringFlag{
+				Name:  "l,label",
+				Usage: T("A descriptive label for this load balancer"),
+			},
+			cli.StringFlag{
+				Name:  "frontend-protocol",
+				Usage: T("Frontend protocol [default: HTTP]"),
+			},
+			cli.IntFlag{
+				Name:  "frontend-port",
+				Usage: T("Frontend port [default: 80]"),
+			},
+			cli.StringFlag{
+				Name:  "backend-protocol",
+				Usage: T("Backend protocol [default: HTTP]"),
+			},
+			cli.IntFlag{
+				Name:  "backend-port",
+				Usage: T("Backend port [default: 80]"),
+			},
+			cli.StringFlag{
+				Name:  "m,method",
+				Usage: T("Balancing Method: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR, default: ROUNDROBIN"),
+			},
+			cli.IntFlag{
+				Name:  "c, connections",
+				Usage: T("Maximum number of connections to allow"),
+			},
+			cli.StringFlag{
+				Name:  "sticky",
+				Usage: T("Use 'cookie' or 'source-ip' to stick"),
+			},
+			cli.BoolFlag{
+				Name:  "use-public-subnet",
+				Usage: T("If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type."),
+			},
+			cli.BoolFlag{
+				Name:  "verify",
+				Usage: T("Only verify an order, dont actually create one"),
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }

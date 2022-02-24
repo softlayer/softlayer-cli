@@ -58,3 +58,20 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	return nil
 
 }
+
+func TagsDetailsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "tags",
+		Name:        "detail",
+		Description: T("Get information about the resources using the selected tag."),
+		Usage: T(`${COMMAND_NAME} sl tags detail [TAG NAME]
+
+EXAMPLE:
+	${COMMAND_NAME} sl tags detail tag1
+	Shows all items that are tagged with 'tag1'
+`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

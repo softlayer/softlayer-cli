@@ -6,9 +6,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type ReloadCommand struct {
@@ -48,4 +49,32 @@ func (cmd *ReloadCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Started to reload operating system for hardware server: {{.ID}}.", map[string]interface{}{"ID": hardwareId}))
 	return nil
+}
+
+func HardwareReloadMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "reload",
+		Description: T("Reload operating system on a server"),
+		Usage:       "${COMMAND_NAME} sl hardware reload IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "i,postinstall",
+				Usage: T("Post-install script to download, only HTTPS executes, HTTP leaves file in /root"),
+			},
+			cli.IntSliceFlag{
+				Name:  "k,key",
+				Usage: T("IDs of SSH key to add to the root user, multiple occurrence allowed"),
+			},
+			cli.BoolFlag{
+				Name:  "b,upgrade-bios",
+				Usage: T("Upgrade BIOS"),
+			},
+			cli.BoolFlag{
+				Name:  "w,upgrade-firmware",
+				Usage: T("Upgrade all hard drives' firmware"),
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }

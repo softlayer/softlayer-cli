@@ -73,3 +73,28 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 
 	return nil
 }
+
+
+func VSAuthorizeStorageMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "authorize-storage",
+		Description: T("Authorize File, Block and Portable Storage to a Virtual Server"),
+		Usage: T(`${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567
+   Authorize File, Block and Portable Storage to a Virtual Server.`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "u, username-storage",
+				Usage: T("The storage username to be added to the virtual server."),
+			},
+			cli.IntFlag{
+				Name:  "p, portable-id",
+				Usage: T("The portable storage id to be added to the virtual server"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

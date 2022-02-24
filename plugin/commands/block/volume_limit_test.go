@@ -11,7 +11,7 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -27,9 +27,9 @@ var _ = Describe("Volume Limits", func() {
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		cmd = block.NewVolumeLimitCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.BlockVolumeLimitsMetaData().Name,
-			Description: metadata.BlockVolumeLimitsMetaData().Description,
-			Usage:       metadata.BlockVolumeLimitsMetaData().Usage,
+			Name:        block.BlockVolumeLimitsMetaData().Name,
+			Description: block.BlockVolumeLimitsMetaData().Description,
+			Usage:       block.BlockVolumeLimitsMetaData().Usage,
 			Action:      cmd.Run,
 		}
 	})

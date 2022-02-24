@@ -6,7 +6,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -22,10 +21,10 @@ var _ = Describe("image datacenter", func() {
 		fakeImageManager = new(testhelpers.FakeImageManager)
 		cmd = image.NewDatacenterCommand(fakeUI, fakeImageManager)
 		cliCommand = cli.Command{
-			Name:        metadata.ImageDatacenterMetaData().Name,
-			Description: metadata.ImageDatacenterMetaData().Description,
-			Usage:       metadata.ImageDatacenterMetaData().Usage,
-			Flags:       metadata.ImageDatacenterMetaData().Flags,
+			Name:        image.ImageDatacenterMetaData().Name,
+			Description: image.ImageDatacenterMetaData().Description,
+			Usage:       image.ImageDatacenterMetaData().Usage,
+			Flags:       image.ImageDatacenterMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

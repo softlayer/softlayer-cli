@@ -11,7 +11,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -33,10 +32,10 @@ var _ = Describe("Load balancer L7 policies", func() {
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
 		cmd = loadbal.NewL7PolicyListCommand(fakeUI, fakeLBManager)
 		cliCommand = cli.Command{
-			Name:        metadata.LoadbalL7PolicyListMetadata().Name,
-			Description: metadata.LoadbalL7PolicyListMetadata().Description,
-			Usage:       metadata.LoadbalL7PolicyListMetadata().Usage,
-			Flags:       metadata.LoadbalL7PolicyListMetadata().Flags,
+			Name:        loadbal.LoadbalL7PolicyListMetadata().Name,
+			Description: loadbal.LoadbalL7PolicyListMetadata().Description,
+			Usage:       loadbal.LoadbalL7PolicyListMetadata().Usage,
+			Flags:       loadbal.LoadbalL7PolicyListMetadata().Flags,
 			Action:      cmd.Run,
 		}
 

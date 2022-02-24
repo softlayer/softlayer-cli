@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("Authorize Block, File Storage to a Hardware Server", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewAuthorizeStorageCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwareAuthorizeStorageMetaData().Name,
-			Description: metadata.HardwareAuthorizeStorageMetaData().Description,
-			Usage:       metadata.HardwareAuthorizeStorageMetaData().Usage,
-			Flags:       metadata.HardwareAuthorizeStorageMetaData().Flags,
+			Name:        hardware.HardwareAuthorizeStorageMetaData().Name,
+			Description: hardware.HardwareAuthorizeStorageMetaData().Description,
+			Usage:       hardware.HardwareAuthorizeStorageMetaData().Usage,
+			Flags:       hardware.HardwareAuthorizeStorageMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

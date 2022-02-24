@@ -8,7 +8,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -24,10 +23,10 @@ var _ = Describe("Tags Delete", func() {
 		fakeTagsManager = new(testhelpers.FakeTagsManager)
 		cmd = tags.NewDeleteCommand(fakeUI, fakeTagsManager)
 		cliCommand = cli.Command{
-			Name:        metadata.TagsDeleteMetaData().Name,
-			Description: metadata.TagsDeleteMetaData().Description,
-			Usage:       metadata.TagsDeleteMetaData().Usage,
-			Flags:       metadata.TagsDeleteMetaData().Flags,
+			Name:        tags.TagsDeleteMetaData().Name,
+			Description: tags.TagsDeleteMetaData().Description,
+			Usage:       tags.TagsDeleteMetaData().Usage,
+			Flags:       tags.TagsDeleteMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -9,6 +9,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -66,7 +67,7 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 		}
 		privateVlans, err := cmd.DedicatedHostManager.GetVlansOptions(c.String("d"), c.String("f"), productPackage)
 		if err != nil {
-			return err
+			return cli.NewExitError(T("Failed to get the vlans available for datacener: {{.DATACENTER}} and flavor: {{.FLAVOR}}.", map[string]interface{}{"DATACENTER": c.String("d"), "FLAVOR": c.String("f")})+err.Error(), 2)
 		}
 		table := cmd.UI.Table([]string{T("Id"), T("Name"), T("PrimaryRouter Hostname")})
 		for _, vlans := range privateVlans {
@@ -76,4 +77,29 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 	}
 
 	return nil
+}
+
+func DedicatedhostCreateOptionsMetaData() cli.Command {
+	return cli.Command{
+		Category:    "dedicatedhost",
+		Name:        "create-options",
+		Description: T("Host order options for a given dedicated host."),
+		Usage: T(`${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dedicatedhost create-options
+
+   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB`),
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Filter private vlans by Datacenter shortname e.g. ams01, (requires --flavor)"),
+			},
+			cli.StringFlag{
+				Name:  "f,flavor",
+				Usage: T("Dedicated Virtual Host flavor (requires --datacenter) e.g. 56_CORES_X_242_RAM_X_1_4_TB"),
+			},
+			metadata.OutputFlag(),
+		},
+	}
 }

@@ -7,8 +7,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -90,4 +90,40 @@ func (cmd *AddSubnetCommand) Run(c *cli.Context) error {
 	}
 	return cli.NewExitError(T("Failed to add {{.Type}} subnet #{{.ID}} to IPSec {{.ContextID}}.\n",
 		map[string]interface{}{"Type": subnetType, "ID": subnetId, "ContextID": contextId})+err.Error(), 2)
+}
+
+func IpsecSubnetAddMetaData() cli.Command {
+	return cli.Command{
+		Category:    "ipsec",
+		Name:        "subnet-add",
+		Description: T("Add a subnet to an IPSec tunnel context"),
+		Usage: T(`${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] 
+
+  Add a subnet to an IPSEC tunnel context.
+
+  A subnet id may be specified to link to the existing tunnel context.
+
+  Otherwise, a network identifier in CIDR notation should be specified,
+  indicating that a subnet resource should first be created before
+  associating it with the tunnel context. Note that this is only supported
+  for remote subnets, which are also deleted upon failure to attach to a
+  context.
+
+  A separate configuration request should be made to realize changes on
+  network devices.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "s,subnet-id",
+				Usage: T("Subnet identifier to add, required"),
+			},
+			cli.StringFlag{
+				Name:  "t,subnet-type",
+				Usage: T("Subnet type to add. Options are: internal,remote,service[required]"),
+			},
+			cli.StringFlag{
+				Name:  "n,network",
+				Usage: T("Subnet network identifier to create"),
+			},
+		},
+	}
 }

@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
@@ -20,6 +20,19 @@ func NewVolumeConvertCommand(ui terminal.UI, storageManager managers.StorageMana
 	return &VolumeConvertCommand{
 		UI:             ui,
 		StorageManager: storageManager,
+	}
+}
+
+func BlockVolumeConvertMetaData() cli.Command {
+	return cli.Command{
+		Category:    "block",
+		Name:        "volume-convert",
+		Description: T("Convert a dependent duplicate volume to an independent volume."),
+		Usage: T(`${COMMAND_NAME} sl block volume-convert VOLUME_ID
+
+EXAMPLE:
+	${COMMAND_NAME} sl block volume-convert VOLUME_ID
+	Convert a dependent duplicate VOLUME_ID to an independent volume.`),
 	}
 }
 

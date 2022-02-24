@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Key remove", func() {
 		fakeSecurityManager = new(testhelpers.FakeSecurityManager)
 		cmd = security.NewKeyRemoveCommand(fakeUI, fakeSecurityManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecuritySSHKeyRemoveMetaData().Name,
-			Description: metadata.SecuritySSHKeyRemoveMetaData().Description,
-			Usage:       metadata.SecuritySSHKeyRemoveMetaData().Usage,
-			Flags:       metadata.SecuritySSHKeyRemoveMetaData().Flags,
+			Name:        security.SecuritySSHKeyRemoveMetaData().Name,
+			Description: security.SecuritySSHKeyRemoveMetaData().Description,
+			Usage:       security.SecuritySSHKeyRemoveMetaData().Usage,
+			Flags:       security.SecuritySSHKeyRemoveMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

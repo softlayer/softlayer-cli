@@ -2,7 +2,6 @@ package dedicatedhost_test
 
 import (
 	"errors"
-	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
@@ -11,7 +10,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -27,45 +26,73 @@ var _ = Describe("Dedicated host create options", func() {
 		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedhostManager)
 		cmd = dedicatedhost.NewCreateOptionsCommand(fakeUI, FakeDedicatedhostManager)
 		cliCommand = cli.Command{
-			Name:        metadata.DedicatedhostCreateOptionsMetaData().Name,
-			Description: metadata.DedicatedhostCreateOptionsMetaData().Description,
-			Usage:       metadata.DedicatedhostCreateOptionsMetaData().Usage,
-			Flags:       metadata.DedicatedhostCreateOptionsMetaData().Flags,
+			Name:        dedicatedhost.DedicatedhostCreateOptionsMetaData().Name,
+			Description: dedicatedhost.DedicatedhostCreateOptionsMetaData().Description,
+			Usage:       dedicatedhost.DedicatedhostCreateOptionsMetaData().Usage,
+			Flags:       dedicatedhost.DedicatedhostCreateOptionsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
 
 	Describe("Dedicatedhost create options", func() {
-		Context("VS create options with server fails", func() {
-			BeforeEach(func() {
-				FakeDedicatedhostManager.GetCreateOptionsReturns(map[string]map[string]string{}, errors.New("Internal Server Error"))
-			})
+		Context("Dedicatedhost create options with datacenter but not a flavor", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCommand(cliCommand, "-d", "ams01")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get virtual server creation options.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Both -d|--datacenter and -f|--flavor need to be passed as arguments e.g. ibmcloud sl dedicatedhost create-options -d ams01 -f 56_CORES_X_242_RAM_X_1_4_TB"))
 			})
 		})
 
-		Context("hardware create options", func() {
+		Context("Dedicatedhost create options with flavor but not a datacenter", func() {
+			It("return error", func() {
+				err := testhelpers.RunCommand(cliCommand, "-f", "56_CORES_X_242_RAM_X_1_4_TB")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Both -d|--datacenter and -f|--flavor need to be passed as arguments e.g. ibmcloud sl dedicatedhost create-options -d ams01 -f 56_CORES_X_242_RAM_X_1_4_TB"))
+			})
+		})
+
+		Context("Dedicatedhost create options getting vlans available failed", func() {
 			BeforeEach(func() {
-				fakeHardwareManager.GetCreateOptionsReturns(map[string]map[string]string{
-					managers.KEY_LOCATIONS:  map[string]string{"dal10": "Dallas 10"},
-					managers.KEY_SIZES:      map[string]string{"D2620_128GB_2X1T_SATA_RAID_1xM60_GPU": "Dual Xeon 2620v4, 128GB Ram, 2x800GB SSD disks, RAID1"},
-					managers.KEY_OS:         map[string]string{"CENTOS_6_32": "CentOS 6.5-32"},
-					managers.KEY_PORT_SPEED: map[string]string{"10000": "10 Gbps Redundant Public & Private Network Uplinks"},
-					managers.KEY_EXTRAS:     map[string]string{"8_PUBLIC_IP_ADDRESSES": "8 Public IP Addresses"},
-				})
+				FakeDedicatedhostManager.GetVlansOptionsReturns(nil, errors.New("Internal server error"))
 			})
 			It("return error", func() {
+				err := testhelpers.RunCommand(cliCommand, "-d", "ams01", "-f", "56_CORES_X_242_RAM_X_1_4_TB")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to get the vlans available for datacener: ams01 and flavor: 56_CORES_X_242_RAM_X_1_4_TB."))
+			})
+		})
+
+		Context("Dedicatedhost create options successfully without datacenter and flavor", func() {
+			BeforeEach(func() {
+				FakeDedicatedhostManager.GetCreateOptionsReturns(map[string]map[string]string{
+					managers.LOCATIONS:      map[string]string{"dal10": "Dallas 10"},
+					managers.DEDICATED_HOST: map[string]string{"56_CORES_X_242_RAM_X_1_4_TB": "56 Cores X 242 RAM X 1.2 TB"},
+				})
+			})
+			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("D2620_128GB_2X1T_SATA_RAID_1xM60_GPU"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("CENTOS_6_32"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("10000"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("8_PUBLIC_IP_ADDRESSES"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("56_CORES_X_242_RAM_X_1_4_TB"))
+			})
+		})
+
+		Context("Dedicatedhost create options getting vlans with datacenter and flavor", func() {
+			BeforeEach(func() {
+				FakeDedicatedhostManager.GetCreateOptionsReturns(map[string]map[string]string{})
+				FakeDedicatedhostManager.GetVlansOptionsReturns([]datatypes.Network_Vlan{
+					datatypes.Network_Vlan{
+						Id:            sl.Int(1234),
+						Name:          sl.String("test"),
+						PrimaryRouter: &datatypes.Hardware_Router{},
+					},
+				}, nil)
+			})
+			It("return no error", func() {
+				err := testhelpers.RunCommand(cliCommand, "-d", "ams01", "-f", "56_CORES_X_242_RAM_X_1_4_TB")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("test"))
 			})
 		})
 	})

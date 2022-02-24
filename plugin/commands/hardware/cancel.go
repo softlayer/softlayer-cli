@@ -9,9 +9,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CancelCommand struct {
@@ -55,4 +56,28 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Hardware server {{.ID}} was cancelled.", map[string]interface{}{"ID": hardwareID}))
 	return nil
+}
+
+func HardwareCancelMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "cancel",
+		Description: T("Cancel a hardware server"),
+		Usage:       "${COMMAND_NAME} sl hardware cancel IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "i,immediate",
+				Usage: T("Cancels the server immediately (instead of on the billing anniversary)"),
+			},
+			cli.StringFlag{
+				Name:  "r,reason",
+				Usage: T("An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options"),
+			},
+			cli.StringFlag{
+				Name:  "c,comment",
+				Usage: T("An optional comment to add to the cancellation ticket"),
+			},
+			metadata.ForceFlag(),
+		},
+	}
 }

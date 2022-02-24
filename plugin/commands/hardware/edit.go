@@ -9,8 +9,8 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -85,4 +85,43 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(cli.NewMultiError(multiErrors...).Error(), 2)
 	}
 	return nil
+}
+
+func HardwareEditMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "edit",
+		Description: T("Edit hardware server details"),
+		Usage:       "${COMMAND_NAME} sl hardware edit IDENTIFIER [OPTIONS]",
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Host portion of the FQDN"),
+			},
+			cli.StringFlag{
+				Name:  "D,domain",
+				Usage: T("Domain portion of the FQDN"),
+			},
+			cli.StringSliceFlag{
+				Name:  "g,tag",
+				Usage: T("Tags to set or empty string to remove all (multiple occurrence permitted)."),
+			},
+			cli.StringFlag{
+				Name:  "F,userfile",
+				Usage: T("Read userdata from file"),
+			},
+			cli.StringFlag{
+				Name:  "u,userdata",
+				Usage: T("User defined metadata string"),
+			},
+			cli.IntFlag{
+				Name:  "p,public-speed",
+				Usage: T("Public port speed, options are: 0,10,100,1000,10000"),
+			},
+			cli.IntFlag{
+				Name:  "v,private-speed",
+				Usage: T("Private port speed, options are: 0,10,100,1000,10000"),
+			},
+		},
+	}
 }

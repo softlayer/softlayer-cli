@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -25,10 +24,10 @@ var _ = Describe("Tags Detail", func() {
 		fakeTagsManager = new(testhelpers.FakeTagsManager)
 		cmd = tags.NewDetailCommand(fakeUI, fakeTagsManager)
 		cliCommand = cli.Command{
-			Name:        metadata.TagsDetailsMetaData().Name,
-			Description: metadata.TagsDetailsMetaData().Description,
-			Usage:       metadata.TagsDetailsMetaData().Usage,
-			Flags:       metadata.TagsDetailsMetaData().Flags,
+			Name:        tags.TagsDetailsMetaData().Name,
+			Description: tags.TagsDetailsMetaData().Description,
+			Usage:       tags.TagsDetailsMetaData().Usage,
+			Flags:       tags.TagsDetailsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 		fakeTagsManager.GetTagByTagNameReturns(FakeTags, nil)

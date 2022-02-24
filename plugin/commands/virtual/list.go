@@ -137,3 +137,83 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 
 	return nil
 }
+
+func VSListMetaData() cli.Command {
+	return cli.Command{
+		Category:    "vs",
+		Name:        "list",
+		Description: T("List virtual server instances on your account"),
+		Usage: T(`${COMMAND_NAME} sl vs list [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs list --domain ibm.com --hourly --sortby memory
+   This command lists all hourly-billing virtual server instances on current account filtering domain equals to "ibm.com" and sort them by memory.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "c,cpu",
+				Usage: T("Filter by number of CPU cores"),
+			},
+			cli.StringFlag{
+				Name:  "D,domain",
+				Usage: T("Filter by domain portion of the FQDN"),
+			},
+			cli.StringFlag{
+				Name:  "d,datacenter",
+				Usage: T("Filter by datacenter shortname"),
+			},
+			cli.StringFlag{
+				Name:  "H,hostname",
+				Usage: T("Filter by host portion of the FQDN"),
+			},
+			cli.IntFlag{
+				Name:  "m,memory",
+				Usage: T("Filter by memory in megabytes"),
+			},
+			cli.IntFlag{
+				Name:  "n,network",
+				Usage: T("Filter by network port speed in Mbps"),
+			},
+			cli.StringFlag{
+				Name:  "P,public-ip",
+				Usage: T("Filter by public IP address"),
+			},
+			cli.StringFlag{
+				Name:  "p,private-ip",
+				Usage: T("Filter by private IP address"),
+			},
+			cli.BoolFlag{
+				Name:  "hourly",
+				Usage: T("Show only hourly instances"),
+			},
+			cli.BoolFlag{
+				Name:  "monthly",
+				Usage: T("Show only monthly instances"),
+			},
+			cli.StringSliceFlag{
+				Name:  "g,tag",
+				Usage: T("Filter by tags (multiple occurrence permitted)"),
+			},
+			cli.IntFlag{
+				Name:  "o,order",
+				Usage: T("Filter by ID of the order which purchased this instance"),
+			},
+			cli.StringFlag{
+				Name:  "owner",
+				Usage: T("Filtered by Id of user who owns the instances"),
+			},
+			cli.StringFlag{
+				Name:  "sortby",
+				Usage: T("Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip"),
+			},
+			cli.StringSliceFlag{
+				Name:  "column",
+				Usage: T("Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times"),
+			},
+			cli.StringSliceFlag{
+				Name:   "columns",
+				Hidden: true,
+			},
+			metadata.OutputFlag(),
+		},
+	}
+}

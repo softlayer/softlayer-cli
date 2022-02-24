@@ -8,7 +8,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -24,10 +23,10 @@ var _ = Describe("hardware reboot", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		cmd = hardware.NewRebootCommand(fakeUI, fakeHardwareManager)
 		cliCommand = cli.Command{
-			Name:        metadata.HardwarePowerRebootMetaData().Name,
-			Description: metadata.HardwarePowerRebootMetaData().Description,
-			Usage:       metadata.HardwarePowerRebootMetaData().Usage,
-			Flags:       metadata.HardwarePowerRebootMetaData().Flags,
+			Name:        hardware.HardwarePowerRebootMetaData().Name,
+			Description: hardware.HardwarePowerRebootMetaData().Description,
+			Usage:       hardware.HardwarePowerRebootMetaData().Usage,
+			Flags:       hardware.HardwarePowerRebootMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

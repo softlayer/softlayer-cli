@@ -10,7 +10,6 @@ import (
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -24,16 +23,16 @@ var _ = Describe("Place", func() {
 	)
 	BeforeEach(func() {
 
-		filenames := []string{"getDatacenters_1",}
+		filenames := []string{"getDatacenters_1"}
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 		OrderManager = managers.NewOrderManager(fakeSLSession)
 		fakeUI = terminal.NewFakeUI()
 		cmd = order.NewPlaceQuoteCommand(fakeUI, OrderManager, nil)
 		cliCommand = cli.Command{
-			Name:        metadata.OrderPlaceQuoteMetaData().Name,
-			Description: metadata.OrderPlaceQuoteMetaData().Description,
-			Usage:       metadata.OrderPlaceQuoteMetaData().Usage,
-			Flags:       metadata.OrderPlaceQuoteMetaData().Flags,
+			Name:        order.OrderPlaceQuoteMetaData().Name,
+			Description: order.OrderPlaceQuoteMetaData().Description,
+			Usage:       order.OrderPlaceQuoteMetaData().Usage,
+			Flags:       order.OrderPlaceQuoteMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

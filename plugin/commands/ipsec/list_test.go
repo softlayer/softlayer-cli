@@ -13,7 +13,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -29,10 +28,10 @@ var _ = Describe("IPSec list", func() {
 		fakeIPSecManager = new(testhelpers.FakeIPSECManager)
 		cmd = ipsec.NewListCommand(fakeUI, fakeIPSecManager)
 		cliCommand = cli.Command{
-			Name:        metadata.IpsecListMetaData().Name,
-			Description: metadata.IpsecListMetaData().Description,
-			Usage:       metadata.IpsecListMetaData().Usage,
-			Flags:       metadata.IpsecListMetaData().Flags,
+			Name:        ipsec.IpsecListMetaData().Name,
+			Description: ipsec.IpsecListMetaData().Description,
+			Usage:       ipsec.IpsecListMetaData().Usage,
+			Flags:       ipsec.IpsecListMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

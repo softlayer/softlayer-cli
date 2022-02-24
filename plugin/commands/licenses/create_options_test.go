@@ -7,7 +7,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"strings"
 )
@@ -24,10 +23,10 @@ var _ = Describe("licenses create-options", func() {
 		fakeLicensesManager = new(testhelpers.FakeLicensesManager)
 		cmd = licenses.NewLicensesOptionsCommand(fakeUI, fakeLicensesManager)
 		cliCommand = cli.Command{
-			Name:        metadata.LicensesCreateOptionsMetaData().Name,
-			Description: metadata.LicensesCreateOptionsMetaData().Description,
-			Usage:       metadata.LicensesCreateOptionsMetaData().Usage,
-			Flags:       metadata.LicensesCreateOptionsMetaData().Flags,
+			Name:        licenses.LicensesCreateOptionsMetaData().Name,
+			Description: licenses.LicensesCreateOptionsMetaData().Description,
+			Usage:       licenses.LicensesCreateOptionsMetaData().Usage,
+			Flags:       licenses.LicensesCreateOptionsMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -12,7 +12,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -28,10 +27,10 @@ var _ = Describe("VS migrate", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewMigrageCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSMigrateMetaData().Name,
-			Description: metadata.VSMigrateMetaData().Description,
-			Usage:       metadata.VSMigrateMetaData().Usage,
-			Flags:       metadata.VSMigrateMetaData().Flags,
+			Name:        virtual.VSMigrateMetaData().Name,
+			Description: virtual.VSMigrateMetaData().Description,
+			Usage:       virtual.VSMigrateMetaData().Usage,
+			Flags:       virtual.VSMigrateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

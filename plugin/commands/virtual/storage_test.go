@@ -10,7 +10,6 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("virtual storage", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		cmd = virtual.NewStorageCommand(fakeUI, fakeVSManager)
 		cliCommand = cli.Command{
-			Name:        metadata.VSStorageMetaData().Name,
-			Description: metadata.VSStorageMetaData().Description,
-			Usage:       metadata.VSStorageMetaData().Usage,
-			Flags:       metadata.VSStorageMetaData().Flags,
+			Name:        virtual.VSStorageMetaData().Name,
+			Description: virtual.VSStorageMetaData().Description,
+			Usage:       virtual.VSStorageMetaData().Usage,
+			Flags:       virtual.VSStorageMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -7,7 +7,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"strings"
 )
@@ -26,10 +25,10 @@ var _ = Describe("VS capacity create", func() {
 		context = plugin.InitPluginContext("softlayer")
 		cmd = virtual.NewCapacityCreateCommand(fakeUI, fakeVSManager, context)
 		cliCommand = cli.Command{
-			Name:        metadata.VSCapacityCreateMetaData().Name,
-			Description: metadata.VSCapacityCreateMetaData().Description,
-			Usage:       metadata.VSCapacityCreateMetaData().Usage,
-			Flags:       metadata.VSCapacityCreateMetaData().Flags,
+			Name:        virtual.VSCapacityCreateMetaData().Name,
+			Description: virtual.VSCapacityCreateMetaData().Description,
+			Usage:       virtual.VSCapacityCreateMetaData().Usage,
+			Flags:       virtual.VSCapacityCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

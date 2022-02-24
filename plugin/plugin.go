@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+
 	"os"
 	"reflect"
 	"strings"
@@ -19,6 +20,27 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
 var (
@@ -159,55 +181,55 @@ func convertToPluginFlags(flags []cli.Flag) []plugin.Flag {
 func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
 		metadata.SoftlayerNamespace(),
-		metadata.BlockNamespace(),
-		metadata.DnsNamespace(),
-		metadata.FileNamespace(),
-		//metadata.NS_FIREWALL,
-		metadata.GlobalIpNamespace(),
-		metadata.HardwareNamespace(),
-		metadata.ImageNamespace(),
-		metadata.IpsecNamespace(),
-		metadata.LicensesNamespace(),
-		metadata.LoadbalNamespace(),
-		metadata.SecurityNamespace(),
-		metadata.SecurityGroupNamespace(),
-		metadata.SubnetNamespace(),
-		metadata.TicketNamespace(),
-		metadata.VSNamespace(),
-		metadata.PlacementGroupNamespace(),
-		metadata.VlanNamespace(),
-		metadata.OrderNamespace(),
-		metadata.UserNamespace(),
-		metadata.TagsNamespace(),
-		metadata.DedicatedhostNamespace(),
+		block.BlockNamespace(),
+		file.FileNamespace(),
+		dns.DnsNamespace(),
+		//firewall.FirewallNamespace(),
+		globalip.GlobalIpNamespace(),
+		hardware.HardwareNamespace(),
+		image.ImageNamespace(),
+		ipsec.IpsecNamespace(),
+		licenses.LicensesNamespace(),
+		loadbal.LoadbalNamespace(),
+		security.SecurityNamespace(),
+		securitygroup.SecurityGroupNamespace(),
+		subnet.SubnetNamespace(),
+		ticket.TicketNamespace(),
+		placementgroup.PlacementGroupNamespace(),
+		order.OrderNamespace(),
+		vlan.VlanNamespace(),
+		tags.TagsNamespace(),
+		user.UserNamespace(),
+		dedicatedhost.DedicatedhostNamespace(),
+		virtual.VSNamespace(),
 		account.AccountNamespace(),
 	}
 }
 
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
-		metadata.BlockMetaData(),
-		metadata.DnsMetaData(),
-		metadata.FileMetaData(),
-		// metadata.CMD_FW,
-		metadata.GlobalIpMetaData(),
-		metadata.HardwareMetaData(),
-		metadata.ImageMetaData(),
-		metadata.IpsecMetaData(),
-		metadata.LicensesMetaData(),
-		metadata.LoadbalMetaData(),
-		metadata.SecurityMetaData(),
-		metadata.SecurityGroupMetaData(),
-		metadata.SubnetMetaData(),
-		metadata.TicketMetaData(),
-		metadata.VlanMetaData(),
-		metadata.VSMetaData(),
-		metadata.PlacementGroupMetaData(),
-		metadata.OrderMetaData(),
-		metadata.UserMetaData(),
-		metadata.CallAPIMetadata(),
-		metadata.TagsMetaData(),
-		metadata.DedicatedhostMetaData(),
+		block.BlockMetaData(),
+		file.FileMetaData(),
+		dns.DnsMetaData(),
+		// firewall.FirewallMetaData(),
+		globalip.GlobalIpMetaData(),
+		hardware.HardwareMetaData(),
+		image.ImageMetaData(),
+		ipsec.IpsecMetaData(),
+		licenses.LicensesMetaData(),
+		loadbal.LoadbalMetaData(),
+		security.SecurityMetaData(),
+		securitygroup.SecurityGroupMetaData(),
+		subnet.SubnetMetaData(),
+		ticket.TicketMetaData(),
+		vlan.VlanMetaData(),
+		placementgroup.PlacementGroupMetaData(),
+		order.OrderMetaData(),
+		user.UserMetaData(),
+		callapi.CallAPIMetadata(),
+		tags.TagsMetaData(),
+		dedicatedhost.DedicatedhostMetaData(),
+		virtual.VSMetaData(),
 		account.AccountMetaData(),
 	}
 }

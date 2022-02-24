@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -92,4 +94,61 @@ func (cmd *CallAPICommand) Run(c *cli.Context) error {
 	}
 
 	return nil
+}
+
+func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
+	callAPIManager := managers.NewCallAPIManager(session)
+
+	CommandActionBindings := map[string]func(c *cli.Context) error{
+		"sl-call-api": func(c *cli.Context) error {
+			return NewCallAPICommand(ui, callAPIManager).Run(c)
+		},
+	}
+
+	return CommandActionBindings
+}
+
+func CallAPIMetadata() cli.Command {
+	return cli.Command{
+		Category:    "sl",
+		Name:        "call-api",
+		Description: T("Call arbitrary API endpoints"),
+		Usage: T(`${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]
+
+EXAMPLE: 
+	${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{"notes":"Testing."}]'
+	This command edit a volume notes.
+	
+	${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask "id,firstName,lastName"
+	This command show a user detail.
+	
+	${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{"virtualGuests":{"hostname":{"operation":"cli-test"}}}'
+	This command list virtual guests.`),
+		Flags: []cli.Flag{
+			cli.IntFlag{
+				Name:  "init",
+				Usage: T("Init parameter"),
+			},
+			cli.StringFlag{
+				Name:  "mask",
+				Usage: T("Object mask: use to limit fields returned"),
+			},
+			cli.StringFlag{
+				Name:  "parameters",
+				Usage: T("Append parameters to web call"),
+			},
+			cli.IntFlag{
+				Name:  "limit",
+				Usage: T("Result limit"),
+			},
+			cli.IntFlag{
+				Name:  "offset",
+				Usage: T("Result offset"),
+			},
+			cli.StringFlag{
+				Name:  "filter",
+				Usage: T("Object filters"),
+			},
+		},
+	}
 }

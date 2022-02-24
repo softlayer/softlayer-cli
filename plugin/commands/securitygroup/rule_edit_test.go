@@ -8,7 +8,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -24,10 +23,10 @@ var _ = Describe("Securitygroup ruleedit", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = securitygroup.NewRuleEditCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SecurityGroupRuleEditMetaData().Name,
-			Description: metadata.SecurityGroupRuleEditMetaData().Description,
-			Usage:       metadata.SecurityGroupRuleEditMetaData().Usage,
-			Flags:       metadata.SecurityGroupRuleEditMetaData().Flags,
+			Name:        securitygroup.SecurityGroupRuleEditMetaData().Name,
+			Description: securitygroup.SecurityGroupRuleEditMetaData().Description,
+			Usage:       securitygroup.SecurityGroupRuleEditMetaData().Usage,
+			Flags:       securitygroup.SecurityGroupRuleEditMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -58,4 +59,21 @@ func (cmd *DeleteCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	return nil
 
+}
+
+
+func UserDeleteMataData() cli.Command {
+	return cli.Command{
+		Category:    "user",
+		Name:        "delete",
+		Description: T("Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process"),
+		Usage: T(`${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONS]
+	
+EXAMPLE: 
+   ${COMMAND_NAME} sl user delete userId
+   This command delete user with userId.`),
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
+	}
 }

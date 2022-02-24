@@ -49,3 +49,12 @@ func (cmd *ExportCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("The image {{.ImageId}} was exported successfully!", map[string]interface{}{"ImageId": imageId}))
 	return nil
 }
+
+func ImageExportMetaData() cli.Command {
+	return cli.Command{
+		Category:    "image",
+		Name:        "export",
+		Description: T("Export an image to an object storage"),
+		Usage:       T("${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."),
+	}
+}

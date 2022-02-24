@@ -73,3 +73,15 @@ func (cmd *BillingCommand) Run(c *cli.Context) error {
 	table.Print()
 	return nil
 }
+
+func HardwareBillingMetaData() cli.Command {
+	return cli.Command{
+		Category:    "hardware",
+		Name:        "billing",
+		Description: T("Get billing for a hardware device."),
+		Usage:       "${COMMAND_NAME} sl hardware billing [OPTIONS] IDENTIFIER",
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
+}

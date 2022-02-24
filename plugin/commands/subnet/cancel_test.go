@@ -10,7 +10,6 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -26,10 +25,10 @@ var _ = Describe("Subnet cancel", func() {
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		cmd = subnet.NewCancelCommand(fakeUI, fakeNetworkManager)
 		cliCommand = cli.Command{
-			Name:        metadata.SubnetCancelMetaData().Name,
-			Description: metadata.SubnetCancelMetaData().Description,
-			Usage:       metadata.SubnetCancelMetaData().Usage,
-			Flags:       metadata.SubnetCancelMetaData().Flags,
+			Name:        subnet.SubnetCancelMetaData().Name,
+			Description: subnet.SubnetCancelMetaData().Description,
+			Usage:       subnet.SubnetCancelMetaData().Usage,
+			Flags:       subnet.SubnetCancelMetaData().Flags,
 			Action:      cmd.Run,
 		}
 	})
