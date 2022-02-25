@@ -9,174 +9,17 @@ import (
 )
 
 type FakeOrderManager struct {
-	ListCategoriesStub        func(packageKeyname string) ([]datatypes.Product_Package_Order_Configuration, error)
-	listCategoriesMutex       sync.RWMutex
-	listCategoriesArgsForCall []struct {
-		packageKeyname string
-	}
-	listCategoriesReturns struct {
-		result1 []datatypes.Product_Package_Order_Configuration
-		result2 error
-	}
-	listCategoriesReturnsOnCall map[int]struct {
-		result1 []datatypes.Product_Package_Order_Configuration
-		result2 error
-	}
-	ListItemsStub        func(packageKeyname string, keyword, category string) ([]datatypes.Product_Item, error)
-	listItemsMutex       sync.RWMutex
-	listItemsArgsForCall []struct {
-		packageKeyname string
-		keyword        string
-		category       string
-	}
-	listItemsReturns struct {
-		result1 []datatypes.Product_Item
-		result2 error
-	}
-	listItemsReturnsOnCall map[int]struct {
-		result1 []datatypes.Product_Item
-		result2 error
-	}
-	ListPackageStub        func(keyword, packageType string) ([]datatypes.Product_Package, error)
-	listPackageMutex       sync.RWMutex
-	listPackageArgsForCall []struct {
-		keyword     string
-		packageType string
-	}
-	listPackageReturns struct {
-		result1 []datatypes.Product_Package
-		result2 error
-	}
-	listPackageReturnsOnCall map[int]struct {
-		result1 []datatypes.Product_Package
-		result2 error
-	}
-	PackageLocationStub        func(packageKeyname string) ([]datatypes.Location_Region, error)
-	packageLocationMutex       sync.RWMutex
-	packageLocationArgsForCall []struct {
-		packageKeyname string
-	}
-	packageLocationReturns struct {
-		result1 []datatypes.Location_Region
-		result2 error
-	}
-	packageLocationReturnsOnCall map[int]struct {
-		result1 []datatypes.Location_Region
-		result2 error
-	}
-	VerifyPlaceOrderStub        func(packageKeyname, location string, itemKeynames []string, complexType string, hourly bool, presetKeyname string, extras interface{}, quantity int) (datatypes.Container_Product_Order, error)
-	verifyPlaceOrderMutex       sync.RWMutex
-	verifyPlaceOrderArgsForCall []struct {
-		packageKeyname string
-		location       string
-		itemKeynames   []string
-		complexType    string
-		hourly         bool
-		presetKeyname  string
-		extras         interface{}
-		quantity       int
-	}
-	verifyPlaceOrderReturns struct {
-		result1 datatypes.Container_Product_Order
-		result2 error
-	}
-	verifyPlaceOrderReturnsOnCall map[int]struct {
-		result1 datatypes.Container_Product_Order
-		result2 error
-	}
-	PlaceOrderStub        func(packageKeyname, location string, itemKeynames []string, complexType string, hourly bool, presetKeyname string, extras interface{}, quantity int) (datatypes.Container_Product_Order_Receipt, error)
-	placeOrderMutex       sync.RWMutex
-	placeOrderArgsForCall []struct {
-		packageKeyname string
-		location       string
-		itemKeynames   []string
-		complexType    string
-		hourly         bool
-		presetKeyname  string
-		extras         interface{}
-		quantity       int
-	}
-	placeOrderReturns struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}
-	placeOrderReturnsOnCall map[int]struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}
-	PlaceQuoteStub        func(packageKeyname, location string, itemKeynames []string, complexType, name, presetKeyname string, extras interface{}, sendEmail bool) (datatypes.Container_Product_Order_Receipt, error)
-	placeQuoteMutex       sync.RWMutex
-	placeQuoteArgsForCall []struct {
-		packageKeyname string
-		location       string
-		itemKeynames   []string
-		complexType    string
-		name           string
-		presetKeyname  string
-		extras         interface{}
-		sendEmail      bool
-	}
-	placeQuoteReturns struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}
-	placeQuoteReturnsOnCall map[int]struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}
-	GetPresetbyKeyStub        func(packageKeyname, presetKeyname string) (datatypes.Product_Package_Preset, error)
-	getPresetbyKeyMutex       sync.RWMutex
-	getPresetbyKeyArgsForCall []struct {
-		packageKeyname string
-		presetKeyname  string
-	}
-	getPresetbyKeyReturns struct {
-		result1 datatypes.Product_Package_Preset
-		result2 error
-	}
-	getPresetbyKeyReturnsOnCall map[int]struct {
-		result1 datatypes.Product_Package_Preset
-		result2 error
-	}
-	ListPresetStub        func(packageKeyname, keyword string) ([]datatypes.Product_Package_Preset, error)
-	listPresetMutex       sync.RWMutex
-	listPresetArgsForCall []struct {
-		packageKeyname string
-		keyword        string
-	}
-	listPresetReturns struct {
-		result1 []datatypes.Product_Package_Preset
-		result2 error
-	}
-	listPresetReturnsOnCall map[int]struct {
-		result1 []datatypes.Product_Package_Preset
-		result2 error
-	}
-	GetPackageByKeyStub        func(packagenamem, mask string) (datatypes.Product_Package, error)
-	getPackageByKeyMutex       sync.RWMutex
-	getPackageByKeyArgsForCall []struct {
-		packagenamem string
-		mask         string
-	}
-	getPackageByKeyReturns struct {
-		result1 datatypes.Product_Package
-		result2 error
-	}
-	getPackageByKeyReturnsOnCall map[int]struct {
-		result1 datatypes.Product_Package
-		result2 error
-	}
-	GenerateOrderStub        func(packageKeyname, location string, itemKeynames []string, complexType string, hourly bool, presetKeyname string, extras interface{}, quantity int) (interface{}, error)
+	GenerateOrderStub        func(string, string, []string, string, bool, string, interface{}, int) (interface{}, error)
 	generateOrderMutex       sync.RWMutex
 	generateOrderArgsForCall []struct {
-		packageKeyname string
-		location       string
-		itemKeynames   []string
-		complexType    string
-		hourly         bool
-		presetKeyname  string
-		extras         interface{}
-		quantity       int
+		arg1 string
+		arg2 string
+		arg3 []string
+		arg4 string
+		arg5 bool
+		arg6 string
+		arg7 interface{}
+		arg8 int
 	}
 	generateOrderReturns struct {
 		result1 interface{}
@@ -186,23 +29,10 @@ type FakeOrderManager struct {
 		result1 interface{}
 		result2 error
 	}
-	GetPresetPricesStub        func(presetId int) (datatypes.Product_Package_Preset, error)
-	getPresetPricesMutex       sync.RWMutex
-	getPresetPricesArgsForCall []struct {
-		presetId int
-	}
-	getPresetPricesReturns struct {
-		result1 datatypes.Product_Package_Preset
-		result2 error
-	}
-	getPresetPricesReturnsOnCall map[int]struct {
-		result1 datatypes.Product_Package_Preset
-		result2 error
-	}
-	GetLocationStub        func(location string) (string, error)
+	GetLocationStub        func(string) (string, error)
 	getLocationMutex       sync.RWMutex
 	getLocationArgsForCall []struct {
-		location string
+		arg1 string
 	}
 	getLocationReturns struct {
 		result1 string
@@ -212,12 +42,53 @@ type FakeOrderManager struct {
 		result1 string
 		result2 error
 	}
-	GetPriceIdListStub        func(packageKeyname string, itemKeynames []string, presetCore float64) ([]int, error)
+	GetPackageByKeyStub        func(string, string) (datatypes.Product_Package, error)
+	getPackageByKeyMutex       sync.RWMutex
+	getPackageByKeyArgsForCall []struct {
+		arg1 string
+		arg2 string
+	}
+	getPackageByKeyReturns struct {
+		result1 datatypes.Product_Package
+		result2 error
+	}
+	getPackageByKeyReturnsOnCall map[int]struct {
+		result1 datatypes.Product_Package
+		result2 error
+	}
+	GetPresetPricesStub        func(int) (datatypes.Product_Package_Preset, error)
+	getPresetPricesMutex       sync.RWMutex
+	getPresetPricesArgsForCall []struct {
+		arg1 int
+	}
+	getPresetPricesReturns struct {
+		result1 datatypes.Product_Package_Preset
+		result2 error
+	}
+	getPresetPricesReturnsOnCall map[int]struct {
+		result1 datatypes.Product_Package_Preset
+		result2 error
+	}
+	GetPresetbyKeyStub        func(string, string) (datatypes.Product_Package_Preset, error)
+	getPresetbyKeyMutex       sync.RWMutex
+	getPresetbyKeyArgsForCall []struct {
+		arg1 string
+		arg2 string
+	}
+	getPresetbyKeyReturns struct {
+		result1 datatypes.Product_Package_Preset
+		result2 error
+	}
+	getPresetbyKeyReturnsOnCall map[int]struct {
+		result1 datatypes.Product_Package_Preset
+		result2 error
+	}
+	GetPriceIdListStub        func(string, []string, float64) ([]int, error)
 	getPriceIdListMutex       sync.RWMutex
 	getPriceIdListArgsForCall []struct {
-		packageKeyname string
-		itemKeynames   []string
-		presetCore     float64
+		arg1 string
+		arg2 []string
+		arg3 float64
 	}
 	getPriceIdListReturns struct {
 		result1 []int
@@ -227,589 +98,168 @@ type FakeOrderManager struct {
 		result1 []int
 		result2 error
 	}
+	ListCategoriesStub        func(string) ([]datatypes.Product_Package_Order_Configuration, error)
+	listCategoriesMutex       sync.RWMutex
+	listCategoriesArgsForCall []struct {
+		arg1 string
+	}
+	listCategoriesReturns struct {
+		result1 []datatypes.Product_Package_Order_Configuration
+		result2 error
+	}
+	listCategoriesReturnsOnCall map[int]struct {
+		result1 []datatypes.Product_Package_Order_Configuration
+		result2 error
+	}
+	ListItemsStub        func(string, string, string) ([]datatypes.Product_Item, error)
+	listItemsMutex       sync.RWMutex
+	listItemsArgsForCall []struct {
+		arg1 string
+		arg2 string
+		arg3 string
+	}
+	listItemsReturns struct {
+		result1 []datatypes.Product_Item
+		result2 error
+	}
+	listItemsReturnsOnCall map[int]struct {
+		result1 []datatypes.Product_Item
+		result2 error
+	}
+	ListPackageStub        func(string, string) ([]datatypes.Product_Package, error)
+	listPackageMutex       sync.RWMutex
+	listPackageArgsForCall []struct {
+		arg1 string
+		arg2 string
+	}
+	listPackageReturns struct {
+		result1 []datatypes.Product_Package
+		result2 error
+	}
+	listPackageReturnsOnCall map[int]struct {
+		result1 []datatypes.Product_Package
+		result2 error
+	}
+	ListPresetStub        func(string, string) ([]datatypes.Product_Package_Preset, error)
+	listPresetMutex       sync.RWMutex
+	listPresetArgsForCall []struct {
+		arg1 string
+		arg2 string
+	}
+	listPresetReturns struct {
+		result1 []datatypes.Product_Package_Preset
+		result2 error
+	}
+	listPresetReturnsOnCall map[int]struct {
+		result1 []datatypes.Product_Package_Preset
+		result2 error
+	}
+	PackageLocationStub        func(string) ([]datatypes.Location_Region, error)
+	packageLocationMutex       sync.RWMutex
+	packageLocationArgsForCall []struct {
+		arg1 string
+	}
+	packageLocationReturns struct {
+		result1 []datatypes.Location_Region
+		result2 error
+	}
+	packageLocationReturnsOnCall map[int]struct {
+		result1 []datatypes.Location_Region
+		result2 error
+	}
+	PlaceOrderStub        func(string, string, []string, string, bool, string, interface{}, int) (datatypes.Container_Product_Order_Receipt, error)
+	placeOrderMutex       sync.RWMutex
+	placeOrderArgsForCall []struct {
+		arg1 string
+		arg2 string
+		arg3 []string
+		arg4 string
+		arg5 bool
+		arg6 string
+		arg7 interface{}
+		arg8 int
+	}
+	placeOrderReturns struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}
+	placeOrderReturnsOnCall map[int]struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}
+	PlaceQuoteStub        func(string, string, []string, string, string, string, interface{}, bool) (datatypes.Container_Product_Order_Receipt, error)
+	placeQuoteMutex       sync.RWMutex
+	placeQuoteArgsForCall []struct {
+		arg1 string
+		arg2 string
+		arg3 []string
+		arg4 string
+		arg5 string
+		arg6 string
+		arg7 interface{}
+		arg8 bool
+	}
+	placeQuoteReturns struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}
+	placeQuoteReturnsOnCall map[int]struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}
+	VerifyPlaceOrderStub        func(string, string, []string, string, bool, string, interface{}, int) (datatypes.Container_Product_Order, error)
+	verifyPlaceOrderMutex       sync.RWMutex
+	verifyPlaceOrderArgsForCall []struct {
+		arg1 string
+		arg2 string
+		arg3 []string
+		arg4 string
+		arg5 bool
+		arg6 string
+		arg7 interface{}
+		arg8 int
+	}
+	verifyPlaceOrderReturns struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}
+	verifyPlaceOrderReturnsOnCall map[int]struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeOrderManager) ListCategories(packageKeyname string) ([]datatypes.Product_Package_Order_Configuration, error) {
-	fake.listCategoriesMutex.Lock()
-	ret, specificReturn := fake.listCategoriesReturnsOnCall[len(fake.listCategoriesArgsForCall)]
-	fake.listCategoriesArgsForCall = append(fake.listCategoriesArgsForCall, struct {
-		packageKeyname string
-	}{packageKeyname})
-	fake.recordInvocation("ListCategories", []interface{}{packageKeyname})
-	fake.listCategoriesMutex.Unlock()
-	if fake.ListCategoriesStub != nil {
-		return fake.ListCategoriesStub(packageKeyname)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.listCategoriesReturns.result1, fake.listCategoriesReturns.result2
-}
-
-func (fake *FakeOrderManager) ListCategoriesCallCount() int {
-	fake.listCategoriesMutex.RLock()
-	defer fake.listCategoriesMutex.RUnlock()
-	return len(fake.listCategoriesArgsForCall)
-}
-
-func (fake *FakeOrderManager) ListCategoriesArgsForCall(i int) string {
-	fake.listCategoriesMutex.RLock()
-	defer fake.listCategoriesMutex.RUnlock()
-	return fake.listCategoriesArgsForCall[i].packageKeyname
-}
-
-func (fake *FakeOrderManager) ListCategoriesReturns(result1 []datatypes.Product_Package_Order_Configuration, result2 error) {
-	fake.ListCategoriesStub = nil
-	fake.listCategoriesReturns = struct {
-		result1 []datatypes.Product_Package_Order_Configuration
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) ListCategoriesReturnsOnCall(i int, result1 []datatypes.Product_Package_Order_Configuration, result2 error) {
-	fake.ListCategoriesStub = nil
-	if fake.listCategoriesReturnsOnCall == nil {
-		fake.listCategoriesReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Product_Package_Order_Configuration
-			result2 error
-		})
-	}
-	fake.listCategoriesReturnsOnCall[i] = struct {
-		result1 []datatypes.Product_Package_Order_Configuration
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) ListItems(packageKeyname string, keyword string, category string) ([]datatypes.Product_Item, error) {
-	fake.listItemsMutex.Lock()
-	ret, specificReturn := fake.listItemsReturnsOnCall[len(fake.listItemsArgsForCall)]
-	fake.listItemsArgsForCall = append(fake.listItemsArgsForCall, struct {
-		packageKeyname string
-		keyword        string
-		category       string
-	}{packageKeyname, keyword, category})
-	fake.recordInvocation("ListItems", []interface{}{packageKeyname, keyword, category})
-	fake.listItemsMutex.Unlock()
-	if fake.ListItemsStub != nil {
-		return fake.ListItemsStub(packageKeyname, keyword, category)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.listItemsReturns.result1, fake.listItemsReturns.result2
-}
-
-func (fake *FakeOrderManager) ListItemsCallCount() int {
-	fake.listItemsMutex.RLock()
-	defer fake.listItemsMutex.RUnlock()
-	return len(fake.listItemsArgsForCall)
-}
-
-func (fake *FakeOrderManager) ListItemsArgsForCall(i int) (string, string, string) {
-	fake.listItemsMutex.RLock()
-	defer fake.listItemsMutex.RUnlock()
-	return fake.listItemsArgsForCall[i].packageKeyname, fake.listItemsArgsForCall[i].keyword, fake.listItemsArgsForCall[i].category
-}
-
-func (fake *FakeOrderManager) ListItemsReturns(result1 []datatypes.Product_Item, result2 error) {
-	fake.ListItemsStub = nil
-	fake.listItemsReturns = struct {
-		result1 []datatypes.Product_Item
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) ListItemsReturnsOnCall(i int, result1 []datatypes.Product_Item, result2 error) {
-	fake.ListItemsStub = nil
-	if fake.listItemsReturnsOnCall == nil {
-		fake.listItemsReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Product_Item
-			result2 error
-		})
-	}
-	fake.listItemsReturnsOnCall[i] = struct {
-		result1 []datatypes.Product_Item
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) ListPackage(keyword string, packageType string) ([]datatypes.Product_Package, error) {
-	fake.listPackageMutex.Lock()
-	ret, specificReturn := fake.listPackageReturnsOnCall[len(fake.listPackageArgsForCall)]
-	fake.listPackageArgsForCall = append(fake.listPackageArgsForCall, struct {
-		keyword     string
-		packageType string
-	}{keyword, packageType})
-	fake.recordInvocation("ListPackage", []interface{}{keyword, packageType})
-	fake.listPackageMutex.Unlock()
-	if fake.ListPackageStub != nil {
-		return fake.ListPackageStub(keyword, packageType)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.listPackageReturns.result1, fake.listPackageReturns.result2
-}
-
-func (fake *FakeOrderManager) ListPackageCallCount() int {
-	fake.listPackageMutex.RLock()
-	defer fake.listPackageMutex.RUnlock()
-	return len(fake.listPackageArgsForCall)
-}
-
-func (fake *FakeOrderManager) ListPackageArgsForCall(i int) (string, string) {
-	fake.listPackageMutex.RLock()
-	defer fake.listPackageMutex.RUnlock()
-	return fake.listPackageArgsForCall[i].keyword, fake.listPackageArgsForCall[i].packageType
-}
-
-func (fake *FakeOrderManager) ListPackageReturns(result1 []datatypes.Product_Package, result2 error) {
-	fake.ListPackageStub = nil
-	fake.listPackageReturns = struct {
-		result1 []datatypes.Product_Package
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) ListPackageReturnsOnCall(i int, result1 []datatypes.Product_Package, result2 error) {
-	fake.ListPackageStub = nil
-	if fake.listPackageReturnsOnCall == nil {
-		fake.listPackageReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Product_Package
-			result2 error
-		})
-	}
-	fake.listPackageReturnsOnCall[i] = struct {
-		result1 []datatypes.Product_Package
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) PackageLocation(packageKeyname string) ([]datatypes.Location_Region, error) {
-	fake.packageLocationMutex.Lock()
-	ret, specificReturn := fake.packageLocationReturnsOnCall[len(fake.packageLocationArgsForCall)]
-	fake.packageLocationArgsForCall = append(fake.packageLocationArgsForCall, struct {
-		packageKeyname string
-	}{packageKeyname})
-	fake.recordInvocation("PackageLocation", []interface{}{packageKeyname})
-	fake.packageLocationMutex.Unlock()
-	if fake.PackageLocationStub != nil {
-		return fake.PackageLocationStub(packageKeyname)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.packageLocationReturns.result1, fake.packageLocationReturns.result2
-}
-
-func (fake *FakeOrderManager) PackageLocationCallCount() int {
-	fake.packageLocationMutex.RLock()
-	defer fake.packageLocationMutex.RUnlock()
-	return len(fake.packageLocationArgsForCall)
-}
-
-func (fake *FakeOrderManager) PackageLocationArgsForCall(i int) string {
-	fake.packageLocationMutex.RLock()
-	defer fake.packageLocationMutex.RUnlock()
-	return fake.packageLocationArgsForCall[i].packageKeyname
-}
-
-func (fake *FakeOrderManager) PackageLocationReturns(result1 []datatypes.Location_Region, result2 error) {
-	fake.PackageLocationStub = nil
-	fake.packageLocationReturns = struct {
-		result1 []datatypes.Location_Region
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) PackageLocationReturnsOnCall(i int, result1 []datatypes.Location_Region, result2 error) {
-	fake.PackageLocationStub = nil
-	if fake.packageLocationReturnsOnCall == nil {
-		fake.packageLocationReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Location_Region
-			result2 error
-		})
-	}
-	fake.packageLocationReturnsOnCall[i] = struct {
-		result1 []datatypes.Location_Region
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) VerifyPlaceOrder(packageKeyname string, location string, itemKeynames []string, complexType string, hourly bool, presetKeyname string, extras interface{}, quantity int) (datatypes.Container_Product_Order, error) {
-	var itemKeynamesCopy []string
-	if itemKeynames != nil {
-		itemKeynamesCopy = make([]string, len(itemKeynames))
-		copy(itemKeynamesCopy, itemKeynames)
-	}
-	fake.verifyPlaceOrderMutex.Lock()
-	ret, specificReturn := fake.verifyPlaceOrderReturnsOnCall[len(fake.verifyPlaceOrderArgsForCall)]
-	fake.verifyPlaceOrderArgsForCall = append(fake.verifyPlaceOrderArgsForCall, struct {
-		packageKeyname string
-		location       string
-		itemKeynames   []string
-		complexType    string
-		hourly         bool
-		presetKeyname  string
-		extras         interface{}
-		quantity       int
-	}{packageKeyname, location, itemKeynamesCopy, complexType, hourly, presetKeyname, extras, quantity})
-	fake.recordInvocation("VerifyPlaceOrder", []interface{}{packageKeyname, location, itemKeynamesCopy, complexType, hourly, presetKeyname, extras, quantity})
-	fake.verifyPlaceOrderMutex.Unlock()
-	if fake.VerifyPlaceOrderStub != nil {
-		return fake.VerifyPlaceOrderStub(packageKeyname, location, itemKeynames, complexType, hourly, presetKeyname, extras, quantity)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.verifyPlaceOrderReturns.result1, fake.verifyPlaceOrderReturns.result2
-}
-
-func (fake *FakeOrderManager) VerifyPlaceOrderCallCount() int {
-	fake.verifyPlaceOrderMutex.RLock()
-	defer fake.verifyPlaceOrderMutex.RUnlock()
-	return len(fake.verifyPlaceOrderArgsForCall)
-}
-
-func (fake *FakeOrderManager) VerifyPlaceOrderArgsForCall(i int) (string, string, []string, string, bool, string, interface{}, int) {
-	fake.verifyPlaceOrderMutex.RLock()
-	defer fake.verifyPlaceOrderMutex.RUnlock()
-	return fake.verifyPlaceOrderArgsForCall[i].packageKeyname, fake.verifyPlaceOrderArgsForCall[i].location, fake.verifyPlaceOrderArgsForCall[i].itemKeynames, fake.verifyPlaceOrderArgsForCall[i].complexType, fake.verifyPlaceOrderArgsForCall[i].hourly, fake.verifyPlaceOrderArgsForCall[i].presetKeyname, fake.verifyPlaceOrderArgsForCall[i].extras, fake.verifyPlaceOrderArgsForCall[i].quantity
-}
-
-func (fake *FakeOrderManager) VerifyPlaceOrderReturns(result1 datatypes.Container_Product_Order, result2 error) {
-	fake.VerifyPlaceOrderStub = nil
-	fake.verifyPlaceOrderReturns = struct {
-		result1 datatypes.Container_Product_Order
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) VerifyPlaceOrderReturnsOnCall(i int, result1 datatypes.Container_Product_Order, result2 error) {
-	fake.VerifyPlaceOrderStub = nil
-	if fake.verifyPlaceOrderReturnsOnCall == nil {
-		fake.verifyPlaceOrderReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Container_Product_Order
-			result2 error
-		})
-	}
-	fake.verifyPlaceOrderReturnsOnCall[i] = struct {
-		result1 datatypes.Container_Product_Order
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) PlaceOrder(packageKeyname string, location string, itemKeynames []string, complexType string, hourly bool, presetKeyname string, extras interface{}, quantity int) (datatypes.Container_Product_Order_Receipt, error) {
-	var itemKeynamesCopy []string
-	if itemKeynames != nil {
-		itemKeynamesCopy = make([]string, len(itemKeynames))
-		copy(itemKeynamesCopy, itemKeynames)
-	}
-	fake.placeOrderMutex.Lock()
-	ret, specificReturn := fake.placeOrderReturnsOnCall[len(fake.placeOrderArgsForCall)]
-	fake.placeOrderArgsForCall = append(fake.placeOrderArgsForCall, struct {
-		packageKeyname string
-		location       string
-		itemKeynames   []string
-		complexType    string
-		hourly         bool
-		presetKeyname  string
-		extras         interface{}
-		quantity       int
-	}{packageKeyname, location, itemKeynamesCopy, complexType, hourly, presetKeyname, extras, quantity})
-	fake.recordInvocation("PlaceOrder", []interface{}{packageKeyname, location, itemKeynamesCopy, complexType, hourly, presetKeyname, extras, quantity})
-	fake.placeOrderMutex.Unlock()
-	if fake.PlaceOrderStub != nil {
-		return fake.PlaceOrderStub(packageKeyname, location, itemKeynames, complexType, hourly, presetKeyname, extras, quantity)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.placeOrderReturns.result1, fake.placeOrderReturns.result2
-}
-
-func (fake *FakeOrderManager) PlaceOrderCallCount() int {
-	fake.placeOrderMutex.RLock()
-	defer fake.placeOrderMutex.RUnlock()
-	return len(fake.placeOrderArgsForCall)
-}
-
-func (fake *FakeOrderManager) PlaceOrderArgsForCall(i int) (string, string, []string, string, bool, string, interface{}, int) {
-	fake.placeOrderMutex.RLock()
-	defer fake.placeOrderMutex.RUnlock()
-	return fake.placeOrderArgsForCall[i].packageKeyname, fake.placeOrderArgsForCall[i].location, fake.placeOrderArgsForCall[i].itemKeynames, fake.placeOrderArgsForCall[i].complexType, fake.placeOrderArgsForCall[i].hourly, fake.placeOrderArgsForCall[i].presetKeyname, fake.placeOrderArgsForCall[i].extras, fake.placeOrderArgsForCall[i].quantity
-}
-
-func (fake *FakeOrderManager) PlaceOrderReturns(result1 datatypes.Container_Product_Order_Receipt, result2 error) {
-	fake.PlaceOrderStub = nil
-	fake.placeOrderReturns = struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) PlaceOrderReturnsOnCall(i int, result1 datatypes.Container_Product_Order_Receipt, result2 error) {
-	fake.PlaceOrderStub = nil
-	if fake.placeOrderReturnsOnCall == nil {
-		fake.placeOrderReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Container_Product_Order_Receipt
-			result2 error
-		})
-	}
-	fake.placeOrderReturnsOnCall[i] = struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) PlaceQuote(packageKeyname string, location string, itemKeynames []string, complexType string, name string, presetKeyname string, extras interface{}, sendEmail bool) (datatypes.Container_Product_Order_Receipt, error) {
-	var itemKeynamesCopy []string
-	if itemKeynames != nil {
-		itemKeynamesCopy = make([]string, len(itemKeynames))
-		copy(itemKeynamesCopy, itemKeynames)
-	}
-	fake.placeQuoteMutex.Lock()
-	ret, specificReturn := fake.placeQuoteReturnsOnCall[len(fake.placeQuoteArgsForCall)]
-	fake.placeQuoteArgsForCall = append(fake.placeQuoteArgsForCall, struct {
-		packageKeyname string
-		location       string
-		itemKeynames   []string
-		complexType    string
-		name           string
-		presetKeyname  string
-		extras         interface{}
-		sendEmail      bool
-	}{packageKeyname, location, itemKeynamesCopy, complexType, name, presetKeyname, extras, sendEmail})
-	fake.recordInvocation("PlaceQuote", []interface{}{packageKeyname, location, itemKeynamesCopy, complexType, name, presetKeyname, extras, sendEmail})
-	fake.placeQuoteMutex.Unlock()
-	if fake.PlaceQuoteStub != nil {
-		return fake.PlaceQuoteStub(packageKeyname, location, itemKeynames, complexType, name, presetKeyname, extras, sendEmail)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.placeQuoteReturns.result1, fake.placeQuoteReturns.result2
-}
-
-func (fake *FakeOrderManager) PlaceQuoteCallCount() int {
-	fake.placeQuoteMutex.RLock()
-	defer fake.placeQuoteMutex.RUnlock()
-	return len(fake.placeQuoteArgsForCall)
-}
-
-func (fake *FakeOrderManager) PlaceQuoteArgsForCall(i int) (string, string, []string, string, string, string, interface{}, bool) {
-	fake.placeQuoteMutex.RLock()
-	defer fake.placeQuoteMutex.RUnlock()
-	return fake.placeQuoteArgsForCall[i].packageKeyname, fake.placeQuoteArgsForCall[i].location, fake.placeQuoteArgsForCall[i].itemKeynames, fake.placeQuoteArgsForCall[i].complexType, fake.placeQuoteArgsForCall[i].name, fake.placeQuoteArgsForCall[i].presetKeyname, fake.placeQuoteArgsForCall[i].extras, fake.placeQuoteArgsForCall[i].sendEmail
-}
-
-func (fake *FakeOrderManager) PlaceQuoteReturns(result1 datatypes.Container_Product_Order_Receipt, result2 error) {
-	fake.PlaceQuoteStub = nil
-	fake.placeQuoteReturns = struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) PlaceQuoteReturnsOnCall(i int, result1 datatypes.Container_Product_Order_Receipt, result2 error) {
-	fake.PlaceQuoteStub = nil
-	if fake.placeQuoteReturnsOnCall == nil {
-		fake.placeQuoteReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Container_Product_Order_Receipt
-			result2 error
-		})
-	}
-	fake.placeQuoteReturnsOnCall[i] = struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) GetPresetbyKey(packageKeyname string, presetKeyname string) (datatypes.Product_Package_Preset, error) {
-	fake.getPresetbyKeyMutex.Lock()
-	ret, specificReturn := fake.getPresetbyKeyReturnsOnCall[len(fake.getPresetbyKeyArgsForCall)]
-	fake.getPresetbyKeyArgsForCall = append(fake.getPresetbyKeyArgsForCall, struct {
-		packageKeyname string
-		presetKeyname  string
-	}{packageKeyname, presetKeyname})
-	fake.recordInvocation("GetPresetbyKey", []interface{}{packageKeyname, presetKeyname})
-	fake.getPresetbyKeyMutex.Unlock()
-	if fake.GetPresetbyKeyStub != nil {
-		return fake.GetPresetbyKeyStub(packageKeyname, presetKeyname)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getPresetbyKeyReturns.result1, fake.getPresetbyKeyReturns.result2
-}
-
-func (fake *FakeOrderManager) GetPresetbyKeyCallCount() int {
-	fake.getPresetbyKeyMutex.RLock()
-	defer fake.getPresetbyKeyMutex.RUnlock()
-	return len(fake.getPresetbyKeyArgsForCall)
-}
-
-func (fake *FakeOrderManager) GetPresetbyKeyArgsForCall(i int) (string, string) {
-	fake.getPresetbyKeyMutex.RLock()
-	defer fake.getPresetbyKeyMutex.RUnlock()
-	return fake.getPresetbyKeyArgsForCall[i].packageKeyname, fake.getPresetbyKeyArgsForCall[i].presetKeyname
-}
-
-func (fake *FakeOrderManager) GetPresetbyKeyReturns(result1 datatypes.Product_Package_Preset, result2 error) {
-	fake.GetPresetbyKeyStub = nil
-	fake.getPresetbyKeyReturns = struct {
-		result1 datatypes.Product_Package_Preset
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) GetPresetbyKeyReturnsOnCall(i int, result1 datatypes.Product_Package_Preset, result2 error) {
-	fake.GetPresetbyKeyStub = nil
-	if fake.getPresetbyKeyReturnsOnCall == nil {
-		fake.getPresetbyKeyReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Product_Package_Preset
-			result2 error
-		})
-	}
-	fake.getPresetbyKeyReturnsOnCall[i] = struct {
-		result1 datatypes.Product_Package_Preset
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) ListPreset(packageKeyname string, keyword string) ([]datatypes.Product_Package_Preset, error) {
-	fake.listPresetMutex.Lock()
-	ret, specificReturn := fake.listPresetReturnsOnCall[len(fake.listPresetArgsForCall)]
-	fake.listPresetArgsForCall = append(fake.listPresetArgsForCall, struct {
-		packageKeyname string
-		keyword        string
-	}{packageKeyname, keyword})
-	fake.recordInvocation("ListPreset", []interface{}{packageKeyname, keyword})
-	fake.listPresetMutex.Unlock()
-	if fake.ListPresetStub != nil {
-		return fake.ListPresetStub(packageKeyname, keyword)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.listPresetReturns.result1, fake.listPresetReturns.result2
-}
-
-func (fake *FakeOrderManager) ListPresetCallCount() int {
-	fake.listPresetMutex.RLock()
-	defer fake.listPresetMutex.RUnlock()
-	return len(fake.listPresetArgsForCall)
-}
-
-func (fake *FakeOrderManager) ListPresetArgsForCall(i int) (string, string) {
-	fake.listPresetMutex.RLock()
-	defer fake.listPresetMutex.RUnlock()
-	return fake.listPresetArgsForCall[i].packageKeyname, fake.listPresetArgsForCall[i].keyword
-}
-
-func (fake *FakeOrderManager) ListPresetReturns(result1 []datatypes.Product_Package_Preset, result2 error) {
-	fake.ListPresetStub = nil
-	fake.listPresetReturns = struct {
-		result1 []datatypes.Product_Package_Preset
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) ListPresetReturnsOnCall(i int, result1 []datatypes.Product_Package_Preset, result2 error) {
-	fake.ListPresetStub = nil
-	if fake.listPresetReturnsOnCall == nil {
-		fake.listPresetReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Product_Package_Preset
-			result2 error
-		})
-	}
-	fake.listPresetReturnsOnCall[i] = struct {
-		result1 []datatypes.Product_Package_Preset
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) GetPackageByKey(packagenamem string, mask string) (datatypes.Product_Package, error) {
-	fake.getPackageByKeyMutex.Lock()
-	ret, specificReturn := fake.getPackageByKeyReturnsOnCall[len(fake.getPackageByKeyArgsForCall)]
-	fake.getPackageByKeyArgsForCall = append(fake.getPackageByKeyArgsForCall, struct {
-		packagenamem string
-		mask         string
-	}{packagenamem, mask})
-	fake.recordInvocation("GetPackageByKey", []interface{}{packagenamem, mask})
-	fake.getPackageByKeyMutex.Unlock()
-	if fake.GetPackageByKeyStub != nil {
-		return fake.GetPackageByKeyStub(packagenamem, mask)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getPackageByKeyReturns.result1, fake.getPackageByKeyReturns.result2
-}
-
-func (fake *FakeOrderManager) GetPackageByKeyCallCount() int {
-	fake.getPackageByKeyMutex.RLock()
-	defer fake.getPackageByKeyMutex.RUnlock()
-	return len(fake.getPackageByKeyArgsForCall)
-}
-
-func (fake *FakeOrderManager) GetPackageByKeyArgsForCall(i int) (string, string) {
-	fake.getPackageByKeyMutex.RLock()
-	defer fake.getPackageByKeyMutex.RUnlock()
-	return fake.getPackageByKeyArgsForCall[i].packagenamem, fake.getPackageByKeyArgsForCall[i].mask
-}
-
-func (fake *FakeOrderManager) GetPackageByKeyReturns(result1 datatypes.Product_Package, result2 error) {
-	fake.GetPackageByKeyStub = nil
-	fake.getPackageByKeyReturns = struct {
-		result1 datatypes.Product_Package
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) GetPackageByKeyReturnsOnCall(i int, result1 datatypes.Product_Package, result2 error) {
-	fake.GetPackageByKeyStub = nil
-	if fake.getPackageByKeyReturnsOnCall == nil {
-		fake.getPackageByKeyReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Product_Package
-			result2 error
-		})
-	}
-	fake.getPackageByKeyReturnsOnCall[i] = struct {
-		result1 datatypes.Product_Package
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) GenerateOrder(packageKeyname string, location string, itemKeynames []string, complexType string, hourly bool, presetKeyname string, extras interface{}, quantity int) (interface{}, error) {
-	var itemKeynamesCopy []string
-	if itemKeynames != nil {
-		itemKeynamesCopy = make([]string, len(itemKeynames))
-		copy(itemKeynamesCopy, itemKeynames)
+func (fake *FakeOrderManager) GenerateOrder(arg1 string, arg2 string, arg3 []string, arg4 string, arg5 bool, arg6 string, arg7 interface{}, arg8 int) (interface{}, error) {
+	var arg3Copy []string
+	if arg3 != nil {
+		arg3Copy = make([]string, len(arg3))
+		copy(arg3Copy, arg3)
 	}
 	fake.generateOrderMutex.Lock()
 	ret, specificReturn := fake.generateOrderReturnsOnCall[len(fake.generateOrderArgsForCall)]
 	fake.generateOrderArgsForCall = append(fake.generateOrderArgsForCall, struct {
-		packageKeyname string
-		location       string
-		itemKeynames   []string
-		complexType    string
-		hourly         bool
-		presetKeyname  string
-		extras         interface{}
-		quantity       int
-	}{packageKeyname, location, itemKeynamesCopy, complexType, hourly, presetKeyname, extras, quantity})
-	fake.recordInvocation("GenerateOrder", []interface{}{packageKeyname, location, itemKeynamesCopy, complexType, hourly, presetKeyname, extras, quantity})
+		arg1 string
+		arg2 string
+		arg3 []string
+		arg4 string
+		arg5 bool
+		arg6 string
+		arg7 interface{}
+		arg8 int
+	}{arg1, arg2, arg3Copy, arg4, arg5, arg6, arg7, arg8})
+	stub := fake.GenerateOrderStub
+	fakeReturns := fake.generateOrderReturns
+	fake.recordInvocation("GenerateOrder", []interface{}{arg1, arg2, arg3Copy, arg4, arg5, arg6, arg7, arg8})
 	fake.generateOrderMutex.Unlock()
-	if fake.GenerateOrderStub != nil {
-		return fake.GenerateOrderStub(packageKeyname, location, itemKeynames, complexType, hourly, presetKeyname, extras, quantity)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.generateOrderReturns.result1, fake.generateOrderReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeOrderManager) GenerateOrderCallCount() int {
@@ -818,13 +268,22 @@ func (fake *FakeOrderManager) GenerateOrderCallCount() int {
 	return len(fake.generateOrderArgsForCall)
 }
 
+func (fake *FakeOrderManager) GenerateOrderCalls(stub func(string, string, []string, string, bool, string, interface{}, int) (interface{}, error)) {
+	fake.generateOrderMutex.Lock()
+	defer fake.generateOrderMutex.Unlock()
+	fake.GenerateOrderStub = stub
+}
+
 func (fake *FakeOrderManager) GenerateOrderArgsForCall(i int) (string, string, []string, string, bool, string, interface{}, int) {
 	fake.generateOrderMutex.RLock()
 	defer fake.generateOrderMutex.RUnlock()
-	return fake.generateOrderArgsForCall[i].packageKeyname, fake.generateOrderArgsForCall[i].location, fake.generateOrderArgsForCall[i].itemKeynames, fake.generateOrderArgsForCall[i].complexType, fake.generateOrderArgsForCall[i].hourly, fake.generateOrderArgsForCall[i].presetKeyname, fake.generateOrderArgsForCall[i].extras, fake.generateOrderArgsForCall[i].quantity
+	argsForCall := fake.generateOrderArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8
 }
 
 func (fake *FakeOrderManager) GenerateOrderReturns(result1 interface{}, result2 error) {
+	fake.generateOrderMutex.Lock()
+	defer fake.generateOrderMutex.Unlock()
 	fake.GenerateOrderStub = nil
 	fake.generateOrderReturns = struct {
 		result1 interface{}
@@ -833,6 +292,8 @@ func (fake *FakeOrderManager) GenerateOrderReturns(result1 interface{}, result2 
 }
 
 func (fake *FakeOrderManager) GenerateOrderReturnsOnCall(i int, result1 interface{}, result2 error) {
+	fake.generateOrderMutex.Lock()
+	defer fake.generateOrderMutex.Unlock()
 	fake.GenerateOrderStub = nil
 	if fake.generateOrderReturnsOnCall == nil {
 		fake.generateOrderReturnsOnCall = make(map[int]struct {
@@ -846,72 +307,23 @@ func (fake *FakeOrderManager) GenerateOrderReturnsOnCall(i int, result1 interfac
 	}{result1, result2}
 }
 
-func (fake *FakeOrderManager) GetPresetPrices(presetId int) (datatypes.Product_Package_Preset, error) {
-	fake.getPresetPricesMutex.Lock()
-	ret, specificReturn := fake.getPresetPricesReturnsOnCall[len(fake.getPresetPricesArgsForCall)]
-	fake.getPresetPricesArgsForCall = append(fake.getPresetPricesArgsForCall, struct {
-		presetId int
-	}{presetId})
-	fake.recordInvocation("GetPresetPrices", []interface{}{presetId})
-	fake.getPresetPricesMutex.Unlock()
-	if fake.GetPresetPricesStub != nil {
-		return fake.GetPresetPricesStub(presetId)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getPresetPricesReturns.result1, fake.getPresetPricesReturns.result2
-}
-
-func (fake *FakeOrderManager) GetPresetPricesCallCount() int {
-	fake.getPresetPricesMutex.RLock()
-	defer fake.getPresetPricesMutex.RUnlock()
-	return len(fake.getPresetPricesArgsForCall)
-}
-
-func (fake *FakeOrderManager) GetPresetPricesArgsForCall(i int) int {
-	fake.getPresetPricesMutex.RLock()
-	defer fake.getPresetPricesMutex.RUnlock()
-	return fake.getPresetPricesArgsForCall[i].presetId
-}
-
-func (fake *FakeOrderManager) GetPresetPricesReturns(result1 datatypes.Product_Package_Preset, result2 error) {
-	fake.GetPresetPricesStub = nil
-	fake.getPresetPricesReturns = struct {
-		result1 datatypes.Product_Package_Preset
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) GetPresetPricesReturnsOnCall(i int, result1 datatypes.Product_Package_Preset, result2 error) {
-	fake.GetPresetPricesStub = nil
-	if fake.getPresetPricesReturnsOnCall == nil {
-		fake.getPresetPricesReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Product_Package_Preset
-			result2 error
-		})
-	}
-	fake.getPresetPricesReturnsOnCall[i] = struct {
-		result1 datatypes.Product_Package_Preset
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeOrderManager) GetLocation(location string) (string, error) {
+func (fake *FakeOrderManager) GetLocation(arg1 string) (string, error) {
 	fake.getLocationMutex.Lock()
 	ret, specificReturn := fake.getLocationReturnsOnCall[len(fake.getLocationArgsForCall)]
 	fake.getLocationArgsForCall = append(fake.getLocationArgsForCall, struct {
-		location string
-	}{location})
-	fake.recordInvocation("GetLocation", []interface{}{location})
+		arg1 string
+	}{arg1})
+	stub := fake.GetLocationStub
+	fakeReturns := fake.getLocationReturns
+	fake.recordInvocation("GetLocation", []interface{}{arg1})
 	fake.getLocationMutex.Unlock()
-	if fake.GetLocationStub != nil {
-		return fake.GetLocationStub(location)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.getLocationReturns.result1, fake.getLocationReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeOrderManager) GetLocationCallCount() int {
@@ -920,13 +332,22 @@ func (fake *FakeOrderManager) GetLocationCallCount() int {
 	return len(fake.getLocationArgsForCall)
 }
 
+func (fake *FakeOrderManager) GetLocationCalls(stub func(string) (string, error)) {
+	fake.getLocationMutex.Lock()
+	defer fake.getLocationMutex.Unlock()
+	fake.GetLocationStub = stub
+}
+
 func (fake *FakeOrderManager) GetLocationArgsForCall(i int) string {
 	fake.getLocationMutex.RLock()
 	defer fake.getLocationMutex.RUnlock()
-	return fake.getLocationArgsForCall[i].location
+	argsForCall := fake.getLocationArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeOrderManager) GetLocationReturns(result1 string, result2 error) {
+	fake.getLocationMutex.Lock()
+	defer fake.getLocationMutex.Unlock()
 	fake.GetLocationStub = nil
 	fake.getLocationReturns = struct {
 		result1 string
@@ -935,6 +356,8 @@ func (fake *FakeOrderManager) GetLocationReturns(result1 string, result2 error) 
 }
 
 func (fake *FakeOrderManager) GetLocationReturnsOnCall(i int, result1 string, result2 error) {
+	fake.getLocationMutex.Lock()
+	defer fake.getLocationMutex.Unlock()
 	fake.GetLocationStub = nil
 	if fake.getLocationReturnsOnCall == nil {
 		fake.getLocationReturnsOnCall = make(map[int]struct {
@@ -948,28 +371,224 @@ func (fake *FakeOrderManager) GetLocationReturnsOnCall(i int, result1 string, re
 	}{result1, result2}
 }
 
-func (fake *FakeOrderManager) GetPriceIdList(packageKeyname string, itemKeynames []string, presetCore float64) ([]int, error) {
-	var itemKeynamesCopy []string
-	if itemKeynames != nil {
-		itemKeynamesCopy = make([]string, len(itemKeynames))
-		copy(itemKeynamesCopy, itemKeynames)
-	}
-	fake.getPriceIdListMutex.Lock()
-	ret, specificReturn := fake.getPriceIdListReturnsOnCall[len(fake.getPriceIdListArgsForCall)]
-	fake.getPriceIdListArgsForCall = append(fake.getPriceIdListArgsForCall, struct {
-		packageKeyname string
-		itemKeynames   []string
-		presetCore     float64
-	}{packageKeyname, itemKeynamesCopy, presetCore})
-	fake.recordInvocation("GetPriceIdList", []interface{}{packageKeyname, itemKeynamesCopy, presetCore})
-	fake.getPriceIdListMutex.Unlock()
-	if fake.GetPriceIdListStub != nil {
-		return fake.GetPriceIdListStub(packageKeyname, itemKeynames, presetCore)
+func (fake *FakeOrderManager) GetPackageByKey(arg1 string, arg2 string) (datatypes.Product_Package, error) {
+	fake.getPackageByKeyMutex.Lock()
+	ret, specificReturn := fake.getPackageByKeyReturnsOnCall[len(fake.getPackageByKeyArgsForCall)]
+	fake.getPackageByKeyArgsForCall = append(fake.getPackageByKeyArgsForCall, struct {
+		arg1 string
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetPackageByKeyStub
+	fakeReturns := fake.getPackageByKeyReturns
+	fake.recordInvocation("GetPackageByKey", []interface{}{arg1, arg2})
+	fake.getPackageByKeyMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.getPriceIdListReturns.result1, fake.getPriceIdListReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) GetPackageByKeyCallCount() int {
+	fake.getPackageByKeyMutex.RLock()
+	defer fake.getPackageByKeyMutex.RUnlock()
+	return len(fake.getPackageByKeyArgsForCall)
+}
+
+func (fake *FakeOrderManager) GetPackageByKeyCalls(stub func(string, string) (datatypes.Product_Package, error)) {
+	fake.getPackageByKeyMutex.Lock()
+	defer fake.getPackageByKeyMutex.Unlock()
+	fake.GetPackageByKeyStub = stub
+}
+
+func (fake *FakeOrderManager) GetPackageByKeyArgsForCall(i int) (string, string) {
+	fake.getPackageByKeyMutex.RLock()
+	defer fake.getPackageByKeyMutex.RUnlock()
+	argsForCall := fake.getPackageByKeyArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeOrderManager) GetPackageByKeyReturns(result1 datatypes.Product_Package, result2 error) {
+	fake.getPackageByKeyMutex.Lock()
+	defer fake.getPackageByKeyMutex.Unlock()
+	fake.GetPackageByKeyStub = nil
+	fake.getPackageByKeyReturns = struct {
+		result1 datatypes.Product_Package
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetPackageByKeyReturnsOnCall(i int, result1 datatypes.Product_Package, result2 error) {
+	fake.getPackageByKeyMutex.Lock()
+	defer fake.getPackageByKeyMutex.Unlock()
+	fake.GetPackageByKeyStub = nil
+	if fake.getPackageByKeyReturnsOnCall == nil {
+		fake.getPackageByKeyReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Product_Package
+			result2 error
+		})
+	}
+	fake.getPackageByKeyReturnsOnCall[i] = struct {
+		result1 datatypes.Product_Package
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetPresetPrices(arg1 int) (datatypes.Product_Package_Preset, error) {
+	fake.getPresetPricesMutex.Lock()
+	ret, specificReturn := fake.getPresetPricesReturnsOnCall[len(fake.getPresetPricesArgsForCall)]
+	fake.getPresetPricesArgsForCall = append(fake.getPresetPricesArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetPresetPricesStub
+	fakeReturns := fake.getPresetPricesReturns
+	fake.recordInvocation("GetPresetPrices", []interface{}{arg1})
+	fake.getPresetPricesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) GetPresetPricesCallCount() int {
+	fake.getPresetPricesMutex.RLock()
+	defer fake.getPresetPricesMutex.RUnlock()
+	return len(fake.getPresetPricesArgsForCall)
+}
+
+func (fake *FakeOrderManager) GetPresetPricesCalls(stub func(int) (datatypes.Product_Package_Preset, error)) {
+	fake.getPresetPricesMutex.Lock()
+	defer fake.getPresetPricesMutex.Unlock()
+	fake.GetPresetPricesStub = stub
+}
+
+func (fake *FakeOrderManager) GetPresetPricesArgsForCall(i int) int {
+	fake.getPresetPricesMutex.RLock()
+	defer fake.getPresetPricesMutex.RUnlock()
+	argsForCall := fake.getPresetPricesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeOrderManager) GetPresetPricesReturns(result1 datatypes.Product_Package_Preset, result2 error) {
+	fake.getPresetPricesMutex.Lock()
+	defer fake.getPresetPricesMutex.Unlock()
+	fake.GetPresetPricesStub = nil
+	fake.getPresetPricesReturns = struct {
+		result1 datatypes.Product_Package_Preset
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetPresetPricesReturnsOnCall(i int, result1 datatypes.Product_Package_Preset, result2 error) {
+	fake.getPresetPricesMutex.Lock()
+	defer fake.getPresetPricesMutex.Unlock()
+	fake.GetPresetPricesStub = nil
+	if fake.getPresetPricesReturnsOnCall == nil {
+		fake.getPresetPricesReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Product_Package_Preset
+			result2 error
+		})
+	}
+	fake.getPresetPricesReturnsOnCall[i] = struct {
+		result1 datatypes.Product_Package_Preset
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetPresetbyKey(arg1 string, arg2 string) (datatypes.Product_Package_Preset, error) {
+	fake.getPresetbyKeyMutex.Lock()
+	ret, specificReturn := fake.getPresetbyKeyReturnsOnCall[len(fake.getPresetbyKeyArgsForCall)]
+	fake.getPresetbyKeyArgsForCall = append(fake.getPresetbyKeyArgsForCall, struct {
+		arg1 string
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetPresetbyKeyStub
+	fakeReturns := fake.getPresetbyKeyReturns
+	fake.recordInvocation("GetPresetbyKey", []interface{}{arg1, arg2})
+	fake.getPresetbyKeyMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) GetPresetbyKeyCallCount() int {
+	fake.getPresetbyKeyMutex.RLock()
+	defer fake.getPresetbyKeyMutex.RUnlock()
+	return len(fake.getPresetbyKeyArgsForCall)
+}
+
+func (fake *FakeOrderManager) GetPresetbyKeyCalls(stub func(string, string) (datatypes.Product_Package_Preset, error)) {
+	fake.getPresetbyKeyMutex.Lock()
+	defer fake.getPresetbyKeyMutex.Unlock()
+	fake.GetPresetbyKeyStub = stub
+}
+
+func (fake *FakeOrderManager) GetPresetbyKeyArgsForCall(i int) (string, string) {
+	fake.getPresetbyKeyMutex.RLock()
+	defer fake.getPresetbyKeyMutex.RUnlock()
+	argsForCall := fake.getPresetbyKeyArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeOrderManager) GetPresetbyKeyReturns(result1 datatypes.Product_Package_Preset, result2 error) {
+	fake.getPresetbyKeyMutex.Lock()
+	defer fake.getPresetbyKeyMutex.Unlock()
+	fake.GetPresetbyKeyStub = nil
+	fake.getPresetbyKeyReturns = struct {
+		result1 datatypes.Product_Package_Preset
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetPresetbyKeyReturnsOnCall(i int, result1 datatypes.Product_Package_Preset, result2 error) {
+	fake.getPresetbyKeyMutex.Lock()
+	defer fake.getPresetbyKeyMutex.Unlock()
+	fake.GetPresetbyKeyStub = nil
+	if fake.getPresetbyKeyReturnsOnCall == nil {
+		fake.getPresetbyKeyReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Product_Package_Preset
+			result2 error
+		})
+	}
+	fake.getPresetbyKeyReturnsOnCall[i] = struct {
+		result1 datatypes.Product_Package_Preset
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetPriceIdList(arg1 string, arg2 []string, arg3 float64) ([]int, error) {
+	var arg2Copy []string
+	if arg2 != nil {
+		arg2Copy = make([]string, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.getPriceIdListMutex.Lock()
+	ret, specificReturn := fake.getPriceIdListReturnsOnCall[len(fake.getPriceIdListArgsForCall)]
+	fake.getPriceIdListArgsForCall = append(fake.getPriceIdListArgsForCall, struct {
+		arg1 string
+		arg2 []string
+		arg3 float64
+	}{arg1, arg2Copy, arg3})
+	stub := fake.GetPriceIdListStub
+	fakeReturns := fake.getPriceIdListReturns
+	fake.recordInvocation("GetPriceIdList", []interface{}{arg1, arg2Copy, arg3})
+	fake.getPriceIdListMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeOrderManager) GetPriceIdListCallCount() int {
@@ -978,13 +597,22 @@ func (fake *FakeOrderManager) GetPriceIdListCallCount() int {
 	return len(fake.getPriceIdListArgsForCall)
 }
 
+func (fake *FakeOrderManager) GetPriceIdListCalls(stub func(string, []string, float64) ([]int, error)) {
+	fake.getPriceIdListMutex.Lock()
+	defer fake.getPriceIdListMutex.Unlock()
+	fake.GetPriceIdListStub = stub
+}
+
 func (fake *FakeOrderManager) GetPriceIdListArgsForCall(i int) (string, []string, float64) {
 	fake.getPriceIdListMutex.RLock()
 	defer fake.getPriceIdListMutex.RUnlock()
-	return fake.getPriceIdListArgsForCall[i].packageKeyname, fake.getPriceIdListArgsForCall[i].itemKeynames, fake.getPriceIdListArgsForCall[i].presetCore
+	argsForCall := fake.getPriceIdListArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
 func (fake *FakeOrderManager) GetPriceIdListReturns(result1 []int, result2 error) {
+	fake.getPriceIdListMutex.Lock()
+	defer fake.getPriceIdListMutex.Unlock()
 	fake.GetPriceIdListStub = nil
 	fake.getPriceIdListReturns = struct {
 		result1 []int
@@ -993,6 +621,8 @@ func (fake *FakeOrderManager) GetPriceIdListReturns(result1 []int, result2 error
 }
 
 func (fake *FakeOrderManager) GetPriceIdListReturnsOnCall(i int, result1 []int, result2 error) {
+	fake.getPriceIdListMutex.Lock()
+	defer fake.getPriceIdListMutex.Unlock()
 	fake.GetPriceIdListStub = nil
 	if fake.getPriceIdListReturnsOnCall == nil {
 		fake.getPriceIdListReturnsOnCall = make(map[int]struct {
@@ -1006,37 +636,589 @@ func (fake *FakeOrderManager) GetPriceIdListReturnsOnCall(i int, result1 []int, 
 	}{result1, result2}
 }
 
+func (fake *FakeOrderManager) ListCategories(arg1 string) ([]datatypes.Product_Package_Order_Configuration, error) {
+	fake.listCategoriesMutex.Lock()
+	ret, specificReturn := fake.listCategoriesReturnsOnCall[len(fake.listCategoriesArgsForCall)]
+	fake.listCategoriesArgsForCall = append(fake.listCategoriesArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.ListCategoriesStub
+	fakeReturns := fake.listCategoriesReturns
+	fake.recordInvocation("ListCategories", []interface{}{arg1})
+	fake.listCategoriesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) ListCategoriesCallCount() int {
+	fake.listCategoriesMutex.RLock()
+	defer fake.listCategoriesMutex.RUnlock()
+	return len(fake.listCategoriesArgsForCall)
+}
+
+func (fake *FakeOrderManager) ListCategoriesCalls(stub func(string) ([]datatypes.Product_Package_Order_Configuration, error)) {
+	fake.listCategoriesMutex.Lock()
+	defer fake.listCategoriesMutex.Unlock()
+	fake.ListCategoriesStub = stub
+}
+
+func (fake *FakeOrderManager) ListCategoriesArgsForCall(i int) string {
+	fake.listCategoriesMutex.RLock()
+	defer fake.listCategoriesMutex.RUnlock()
+	argsForCall := fake.listCategoriesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeOrderManager) ListCategoriesReturns(result1 []datatypes.Product_Package_Order_Configuration, result2 error) {
+	fake.listCategoriesMutex.Lock()
+	defer fake.listCategoriesMutex.Unlock()
+	fake.ListCategoriesStub = nil
+	fake.listCategoriesReturns = struct {
+		result1 []datatypes.Product_Package_Order_Configuration
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) ListCategoriesReturnsOnCall(i int, result1 []datatypes.Product_Package_Order_Configuration, result2 error) {
+	fake.listCategoriesMutex.Lock()
+	defer fake.listCategoriesMutex.Unlock()
+	fake.ListCategoriesStub = nil
+	if fake.listCategoriesReturnsOnCall == nil {
+		fake.listCategoriesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Product_Package_Order_Configuration
+			result2 error
+		})
+	}
+	fake.listCategoriesReturnsOnCall[i] = struct {
+		result1 []datatypes.Product_Package_Order_Configuration
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) ListItems(arg1 string, arg2 string, arg3 string) ([]datatypes.Product_Item, error) {
+	fake.listItemsMutex.Lock()
+	ret, specificReturn := fake.listItemsReturnsOnCall[len(fake.listItemsArgsForCall)]
+	fake.listItemsArgsForCall = append(fake.listItemsArgsForCall, struct {
+		arg1 string
+		arg2 string
+		arg3 string
+	}{arg1, arg2, arg3})
+	stub := fake.ListItemsStub
+	fakeReturns := fake.listItemsReturns
+	fake.recordInvocation("ListItems", []interface{}{arg1, arg2, arg3})
+	fake.listItemsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) ListItemsCallCount() int {
+	fake.listItemsMutex.RLock()
+	defer fake.listItemsMutex.RUnlock()
+	return len(fake.listItemsArgsForCall)
+}
+
+func (fake *FakeOrderManager) ListItemsCalls(stub func(string, string, string) ([]datatypes.Product_Item, error)) {
+	fake.listItemsMutex.Lock()
+	defer fake.listItemsMutex.Unlock()
+	fake.ListItemsStub = stub
+}
+
+func (fake *FakeOrderManager) ListItemsArgsForCall(i int) (string, string, string) {
+	fake.listItemsMutex.RLock()
+	defer fake.listItemsMutex.RUnlock()
+	argsForCall := fake.listItemsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeOrderManager) ListItemsReturns(result1 []datatypes.Product_Item, result2 error) {
+	fake.listItemsMutex.Lock()
+	defer fake.listItemsMutex.Unlock()
+	fake.ListItemsStub = nil
+	fake.listItemsReturns = struct {
+		result1 []datatypes.Product_Item
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) ListItemsReturnsOnCall(i int, result1 []datatypes.Product_Item, result2 error) {
+	fake.listItemsMutex.Lock()
+	defer fake.listItemsMutex.Unlock()
+	fake.ListItemsStub = nil
+	if fake.listItemsReturnsOnCall == nil {
+		fake.listItemsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Product_Item
+			result2 error
+		})
+	}
+	fake.listItemsReturnsOnCall[i] = struct {
+		result1 []datatypes.Product_Item
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) ListPackage(arg1 string, arg2 string) ([]datatypes.Product_Package, error) {
+	fake.listPackageMutex.Lock()
+	ret, specificReturn := fake.listPackageReturnsOnCall[len(fake.listPackageArgsForCall)]
+	fake.listPackageArgsForCall = append(fake.listPackageArgsForCall, struct {
+		arg1 string
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.ListPackageStub
+	fakeReturns := fake.listPackageReturns
+	fake.recordInvocation("ListPackage", []interface{}{arg1, arg2})
+	fake.listPackageMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) ListPackageCallCount() int {
+	fake.listPackageMutex.RLock()
+	defer fake.listPackageMutex.RUnlock()
+	return len(fake.listPackageArgsForCall)
+}
+
+func (fake *FakeOrderManager) ListPackageCalls(stub func(string, string) ([]datatypes.Product_Package, error)) {
+	fake.listPackageMutex.Lock()
+	defer fake.listPackageMutex.Unlock()
+	fake.ListPackageStub = stub
+}
+
+func (fake *FakeOrderManager) ListPackageArgsForCall(i int) (string, string) {
+	fake.listPackageMutex.RLock()
+	defer fake.listPackageMutex.RUnlock()
+	argsForCall := fake.listPackageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeOrderManager) ListPackageReturns(result1 []datatypes.Product_Package, result2 error) {
+	fake.listPackageMutex.Lock()
+	defer fake.listPackageMutex.Unlock()
+	fake.ListPackageStub = nil
+	fake.listPackageReturns = struct {
+		result1 []datatypes.Product_Package
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) ListPackageReturnsOnCall(i int, result1 []datatypes.Product_Package, result2 error) {
+	fake.listPackageMutex.Lock()
+	defer fake.listPackageMutex.Unlock()
+	fake.ListPackageStub = nil
+	if fake.listPackageReturnsOnCall == nil {
+		fake.listPackageReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Product_Package
+			result2 error
+		})
+	}
+	fake.listPackageReturnsOnCall[i] = struct {
+		result1 []datatypes.Product_Package
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) ListPreset(arg1 string, arg2 string) ([]datatypes.Product_Package_Preset, error) {
+	fake.listPresetMutex.Lock()
+	ret, specificReturn := fake.listPresetReturnsOnCall[len(fake.listPresetArgsForCall)]
+	fake.listPresetArgsForCall = append(fake.listPresetArgsForCall, struct {
+		arg1 string
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.ListPresetStub
+	fakeReturns := fake.listPresetReturns
+	fake.recordInvocation("ListPreset", []interface{}{arg1, arg2})
+	fake.listPresetMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) ListPresetCallCount() int {
+	fake.listPresetMutex.RLock()
+	defer fake.listPresetMutex.RUnlock()
+	return len(fake.listPresetArgsForCall)
+}
+
+func (fake *FakeOrderManager) ListPresetCalls(stub func(string, string) ([]datatypes.Product_Package_Preset, error)) {
+	fake.listPresetMutex.Lock()
+	defer fake.listPresetMutex.Unlock()
+	fake.ListPresetStub = stub
+}
+
+func (fake *FakeOrderManager) ListPresetArgsForCall(i int) (string, string) {
+	fake.listPresetMutex.RLock()
+	defer fake.listPresetMutex.RUnlock()
+	argsForCall := fake.listPresetArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeOrderManager) ListPresetReturns(result1 []datatypes.Product_Package_Preset, result2 error) {
+	fake.listPresetMutex.Lock()
+	defer fake.listPresetMutex.Unlock()
+	fake.ListPresetStub = nil
+	fake.listPresetReturns = struct {
+		result1 []datatypes.Product_Package_Preset
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) ListPresetReturnsOnCall(i int, result1 []datatypes.Product_Package_Preset, result2 error) {
+	fake.listPresetMutex.Lock()
+	defer fake.listPresetMutex.Unlock()
+	fake.ListPresetStub = nil
+	if fake.listPresetReturnsOnCall == nil {
+		fake.listPresetReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Product_Package_Preset
+			result2 error
+		})
+	}
+	fake.listPresetReturnsOnCall[i] = struct {
+		result1 []datatypes.Product_Package_Preset
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) PackageLocation(arg1 string) ([]datatypes.Location_Region, error) {
+	fake.packageLocationMutex.Lock()
+	ret, specificReturn := fake.packageLocationReturnsOnCall[len(fake.packageLocationArgsForCall)]
+	fake.packageLocationArgsForCall = append(fake.packageLocationArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.PackageLocationStub
+	fakeReturns := fake.packageLocationReturns
+	fake.recordInvocation("PackageLocation", []interface{}{arg1})
+	fake.packageLocationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) PackageLocationCallCount() int {
+	fake.packageLocationMutex.RLock()
+	defer fake.packageLocationMutex.RUnlock()
+	return len(fake.packageLocationArgsForCall)
+}
+
+func (fake *FakeOrderManager) PackageLocationCalls(stub func(string) ([]datatypes.Location_Region, error)) {
+	fake.packageLocationMutex.Lock()
+	defer fake.packageLocationMutex.Unlock()
+	fake.PackageLocationStub = stub
+}
+
+func (fake *FakeOrderManager) PackageLocationArgsForCall(i int) string {
+	fake.packageLocationMutex.RLock()
+	defer fake.packageLocationMutex.RUnlock()
+	argsForCall := fake.packageLocationArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeOrderManager) PackageLocationReturns(result1 []datatypes.Location_Region, result2 error) {
+	fake.packageLocationMutex.Lock()
+	defer fake.packageLocationMutex.Unlock()
+	fake.PackageLocationStub = nil
+	fake.packageLocationReturns = struct {
+		result1 []datatypes.Location_Region
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) PackageLocationReturnsOnCall(i int, result1 []datatypes.Location_Region, result2 error) {
+	fake.packageLocationMutex.Lock()
+	defer fake.packageLocationMutex.Unlock()
+	fake.PackageLocationStub = nil
+	if fake.packageLocationReturnsOnCall == nil {
+		fake.packageLocationReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Location_Region
+			result2 error
+		})
+	}
+	fake.packageLocationReturnsOnCall[i] = struct {
+		result1 []datatypes.Location_Region
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) PlaceOrder(arg1 string, arg2 string, arg3 []string, arg4 string, arg5 bool, arg6 string, arg7 interface{}, arg8 int) (datatypes.Container_Product_Order_Receipt, error) {
+	var arg3Copy []string
+	if arg3 != nil {
+		arg3Copy = make([]string, len(arg3))
+		copy(arg3Copy, arg3)
+	}
+	fake.placeOrderMutex.Lock()
+	ret, specificReturn := fake.placeOrderReturnsOnCall[len(fake.placeOrderArgsForCall)]
+	fake.placeOrderArgsForCall = append(fake.placeOrderArgsForCall, struct {
+		arg1 string
+		arg2 string
+		arg3 []string
+		arg4 string
+		arg5 bool
+		arg6 string
+		arg7 interface{}
+		arg8 int
+	}{arg1, arg2, arg3Copy, arg4, arg5, arg6, arg7, arg8})
+	stub := fake.PlaceOrderStub
+	fakeReturns := fake.placeOrderReturns
+	fake.recordInvocation("PlaceOrder", []interface{}{arg1, arg2, arg3Copy, arg4, arg5, arg6, arg7, arg8})
+	fake.placeOrderMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) PlaceOrderCallCount() int {
+	fake.placeOrderMutex.RLock()
+	defer fake.placeOrderMutex.RUnlock()
+	return len(fake.placeOrderArgsForCall)
+}
+
+func (fake *FakeOrderManager) PlaceOrderCalls(stub func(string, string, []string, string, bool, string, interface{}, int) (datatypes.Container_Product_Order_Receipt, error)) {
+	fake.placeOrderMutex.Lock()
+	defer fake.placeOrderMutex.Unlock()
+	fake.PlaceOrderStub = stub
+}
+
+func (fake *FakeOrderManager) PlaceOrderArgsForCall(i int) (string, string, []string, string, bool, string, interface{}, int) {
+	fake.placeOrderMutex.RLock()
+	defer fake.placeOrderMutex.RUnlock()
+	argsForCall := fake.placeOrderArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8
+}
+
+func (fake *FakeOrderManager) PlaceOrderReturns(result1 datatypes.Container_Product_Order_Receipt, result2 error) {
+	fake.placeOrderMutex.Lock()
+	defer fake.placeOrderMutex.Unlock()
+	fake.PlaceOrderStub = nil
+	fake.placeOrderReturns = struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) PlaceOrderReturnsOnCall(i int, result1 datatypes.Container_Product_Order_Receipt, result2 error) {
+	fake.placeOrderMutex.Lock()
+	defer fake.placeOrderMutex.Unlock()
+	fake.PlaceOrderStub = nil
+	if fake.placeOrderReturnsOnCall == nil {
+		fake.placeOrderReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Container_Product_Order_Receipt
+			result2 error
+		})
+	}
+	fake.placeOrderReturnsOnCall[i] = struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) PlaceQuote(arg1 string, arg2 string, arg3 []string, arg4 string, arg5 string, arg6 string, arg7 interface{}, arg8 bool) (datatypes.Container_Product_Order_Receipt, error) {
+	var arg3Copy []string
+	if arg3 != nil {
+		arg3Copy = make([]string, len(arg3))
+		copy(arg3Copy, arg3)
+	}
+	fake.placeQuoteMutex.Lock()
+	ret, specificReturn := fake.placeQuoteReturnsOnCall[len(fake.placeQuoteArgsForCall)]
+	fake.placeQuoteArgsForCall = append(fake.placeQuoteArgsForCall, struct {
+		arg1 string
+		arg2 string
+		arg3 []string
+		arg4 string
+		arg5 string
+		arg6 string
+		arg7 interface{}
+		arg8 bool
+	}{arg1, arg2, arg3Copy, arg4, arg5, arg6, arg7, arg8})
+	stub := fake.PlaceQuoteStub
+	fakeReturns := fake.placeQuoteReturns
+	fake.recordInvocation("PlaceQuote", []interface{}{arg1, arg2, arg3Copy, arg4, arg5, arg6, arg7, arg8})
+	fake.placeQuoteMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) PlaceQuoteCallCount() int {
+	fake.placeQuoteMutex.RLock()
+	defer fake.placeQuoteMutex.RUnlock()
+	return len(fake.placeQuoteArgsForCall)
+}
+
+func (fake *FakeOrderManager) PlaceQuoteCalls(stub func(string, string, []string, string, string, string, interface{}, bool) (datatypes.Container_Product_Order_Receipt, error)) {
+	fake.placeQuoteMutex.Lock()
+	defer fake.placeQuoteMutex.Unlock()
+	fake.PlaceQuoteStub = stub
+}
+
+func (fake *FakeOrderManager) PlaceQuoteArgsForCall(i int) (string, string, []string, string, string, string, interface{}, bool) {
+	fake.placeQuoteMutex.RLock()
+	defer fake.placeQuoteMutex.RUnlock()
+	argsForCall := fake.placeQuoteArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8
+}
+
+func (fake *FakeOrderManager) PlaceQuoteReturns(result1 datatypes.Container_Product_Order_Receipt, result2 error) {
+	fake.placeQuoteMutex.Lock()
+	defer fake.placeQuoteMutex.Unlock()
+	fake.PlaceQuoteStub = nil
+	fake.placeQuoteReturns = struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) PlaceQuoteReturnsOnCall(i int, result1 datatypes.Container_Product_Order_Receipt, result2 error) {
+	fake.placeQuoteMutex.Lock()
+	defer fake.placeQuoteMutex.Unlock()
+	fake.PlaceQuoteStub = nil
+	if fake.placeQuoteReturnsOnCall == nil {
+		fake.placeQuoteReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Container_Product_Order_Receipt
+			result2 error
+		})
+	}
+	fake.placeQuoteReturnsOnCall[i] = struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) VerifyPlaceOrder(arg1 string, arg2 string, arg3 []string, arg4 string, arg5 bool, arg6 string, arg7 interface{}, arg8 int) (datatypes.Container_Product_Order, error) {
+	var arg3Copy []string
+	if arg3 != nil {
+		arg3Copy = make([]string, len(arg3))
+		copy(arg3Copy, arg3)
+	}
+	fake.verifyPlaceOrderMutex.Lock()
+	ret, specificReturn := fake.verifyPlaceOrderReturnsOnCall[len(fake.verifyPlaceOrderArgsForCall)]
+	fake.verifyPlaceOrderArgsForCall = append(fake.verifyPlaceOrderArgsForCall, struct {
+		arg1 string
+		arg2 string
+		arg3 []string
+		arg4 string
+		arg5 bool
+		arg6 string
+		arg7 interface{}
+		arg8 int
+	}{arg1, arg2, arg3Copy, arg4, arg5, arg6, arg7, arg8})
+	stub := fake.VerifyPlaceOrderStub
+	fakeReturns := fake.verifyPlaceOrderReturns
+	fake.recordInvocation("VerifyPlaceOrder", []interface{}{arg1, arg2, arg3Copy, arg4, arg5, arg6, arg7, arg8})
+	fake.verifyPlaceOrderMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) VerifyPlaceOrderCallCount() int {
+	fake.verifyPlaceOrderMutex.RLock()
+	defer fake.verifyPlaceOrderMutex.RUnlock()
+	return len(fake.verifyPlaceOrderArgsForCall)
+}
+
+func (fake *FakeOrderManager) VerifyPlaceOrderCalls(stub func(string, string, []string, string, bool, string, interface{}, int) (datatypes.Container_Product_Order, error)) {
+	fake.verifyPlaceOrderMutex.Lock()
+	defer fake.verifyPlaceOrderMutex.Unlock()
+	fake.VerifyPlaceOrderStub = stub
+}
+
+func (fake *FakeOrderManager) VerifyPlaceOrderArgsForCall(i int) (string, string, []string, string, bool, string, interface{}, int) {
+	fake.verifyPlaceOrderMutex.RLock()
+	defer fake.verifyPlaceOrderMutex.RUnlock()
+	argsForCall := fake.verifyPlaceOrderArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8
+}
+
+func (fake *FakeOrderManager) VerifyPlaceOrderReturns(result1 datatypes.Container_Product_Order, result2 error) {
+	fake.verifyPlaceOrderMutex.Lock()
+	defer fake.verifyPlaceOrderMutex.Unlock()
+	fake.VerifyPlaceOrderStub = nil
+	fake.verifyPlaceOrderReturns = struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) VerifyPlaceOrderReturnsOnCall(i int, result1 datatypes.Container_Product_Order, result2 error) {
+	fake.verifyPlaceOrderMutex.Lock()
+	defer fake.verifyPlaceOrderMutex.Unlock()
+	fake.VerifyPlaceOrderStub = nil
+	if fake.verifyPlaceOrderReturnsOnCall == nil {
+		fake.verifyPlaceOrderReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Container_Product_Order
+			result2 error
+		})
+	}
+	fake.verifyPlaceOrderReturnsOnCall[i] = struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeOrderManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.generateOrderMutex.RLock()
+	defer fake.generateOrderMutex.RUnlock()
+	fake.getLocationMutex.RLock()
+	defer fake.getLocationMutex.RUnlock()
+	fake.getPackageByKeyMutex.RLock()
+	defer fake.getPackageByKeyMutex.RUnlock()
+	fake.getPresetPricesMutex.RLock()
+	defer fake.getPresetPricesMutex.RUnlock()
+	fake.getPresetbyKeyMutex.RLock()
+	defer fake.getPresetbyKeyMutex.RUnlock()
+	fake.getPriceIdListMutex.RLock()
+	defer fake.getPriceIdListMutex.RUnlock()
 	fake.listCategoriesMutex.RLock()
 	defer fake.listCategoriesMutex.RUnlock()
 	fake.listItemsMutex.RLock()
 	defer fake.listItemsMutex.RUnlock()
 	fake.listPackageMutex.RLock()
 	defer fake.listPackageMutex.RUnlock()
+	fake.listPresetMutex.RLock()
+	defer fake.listPresetMutex.RUnlock()
 	fake.packageLocationMutex.RLock()
 	defer fake.packageLocationMutex.RUnlock()
-	fake.verifyPlaceOrderMutex.RLock()
-	defer fake.verifyPlaceOrderMutex.RUnlock()
 	fake.placeOrderMutex.RLock()
 	defer fake.placeOrderMutex.RUnlock()
 	fake.placeQuoteMutex.RLock()
 	defer fake.placeQuoteMutex.RUnlock()
-	fake.getPresetbyKeyMutex.RLock()
-	defer fake.getPresetbyKeyMutex.RUnlock()
-	fake.listPresetMutex.RLock()
-	defer fake.listPresetMutex.RUnlock()
-	fake.getPackageByKeyMutex.RLock()
-	defer fake.getPackageByKeyMutex.RUnlock()
-	fake.generateOrderMutex.RLock()
-	defer fake.generateOrderMutex.RUnlock()
-	fake.getPresetPricesMutex.RLock()
-	defer fake.getPresetPricesMutex.RUnlock()
-	fake.getLocationMutex.RLock()
-	defer fake.getLocationMutex.RUnlock()
-	fake.getPriceIdListMutex.RLock()
-	defer fake.getPriceIdListMutex.RUnlock()
+	fake.verifyPlaceOrderMutex.RLock()
+	defer fake.verifyPlaceOrderMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
