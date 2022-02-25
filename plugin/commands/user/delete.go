@@ -1,8 +1,9 @@
 package user
 
 import (
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"strconv"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -53,14 +54,13 @@ func (cmd *DeleteCommand) Run(c *cli.Context) error {
 
 	_, err = cmd.UserManager.EditUser(templateObject, id)
 	if err != nil {
-		cli.NewExitError(T("Failed to delete user.\n")+err.Error(), 2)
+		return cli.NewExitError(T("Failed to delete user.\n")+err.Error(), 2)
 	}
 
 	cmd.UI.Ok()
 	return nil
 
 }
-
 
 func UserDeleteMataData() cli.Command {
 	return cli.Command{
