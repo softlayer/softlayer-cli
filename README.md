@@ -1,3 +1,6 @@
+[![Build Status](https://travis.ibm.com/SoftLayer/softlayer-cli.svg?token=pYVqatXcXJaVqayApo1Y&branch=master)](https://travis.ibm.com/SoftLayer/softlayer-cli)
+
+
 # softlayer-cli
 
 This repository houses the code that powers the [ibmcloud-cli sl](https://github.ibm.com/Bluemix/bluemix-cli) command. Altough this project is packaged as a plugin, it is built directly into the ibmcloud-cli.
