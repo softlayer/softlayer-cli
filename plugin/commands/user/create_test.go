@@ -1,10 +1,9 @@
 package user_test
 
 import (
+	"errors"
 	"strings"
 
-	// for ContainSubstrings()
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -34,12 +33,12 @@ var _ = Describe("Create", func() {
 			Flags:       user.UserCreateMetaData().Flags,
 			Action:      cmd.Run,
 		}
+
 		testUser := datatypes.User_Customer{
-			Id: sl.Int(5555),
-			Username: sl.String("ATestUser"),
-			Email: sl.String("user@email.com"),
+			Id:       sl.Int(6666),
+			Username: sl.String("createdUser"),
+			Email:    sl.String("createdUser@email.com"),
 		}
-		fakeUserManager.GetCurrentUserReturns(testUser, nil)
 		fakeUserManager.CreateUserReturns(testUser, nil)
 	})
 	Describe("user create", func() {
@@ -50,22 +49,112 @@ var _ = Describe("Create", func() {
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
 			})
 		})
+
+		Context("create user with fail confirmation", func() {
+			It("return error", func() {
+				fakeUI.Inputs("123456")
+				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord")
+				Expect(err).To(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("You are about to create the following user: createdUser@email.com. Do you wish to continue?"))
+				Expect(err.Error()).To(ContainSubstring("input must be 'y', 'n', 'yes' or 'no'"))
+			})
+		})
+
+		Context("create user with No confirmation", func() {
+			It("return error", func() {
+				fakeUI.Inputs("No")
+				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("You are about to create the following user: createdUser@email.com. Do you wish to continue?"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
+			})
+		})
+
+		Context("User Create error", func() {
+			It("return error", func() {
+				fakeUserManager.CreateUserReturns(datatypes.User_Customer{}, errors.New("Internal server error"))
+				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to add user."))
+			})
+		})
+
 		Context("Basic User Create usage", func() {
 			It("Create a user", func() {
-				err := testhelpers.RunCommand(cliCommand, "user@email.com", "--password", "MyPassWord",  "--email", "user@email.com", "-f")
+				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"user@email.com"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Username   createdUser"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Email      createdUser@email.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Password   MyPassWord"))
 			})
 		})
-	})
 
-	Describe("password", func() {
-		Context("generatePassword", func() {
-			It("return succ", func() {
-				password := user.GeneratePassword(23, 4)
-				Expect(len(password)).To(Equal(23))
+		Context("User Create", func() {
+			It("Create a user", func() {
+				fakeUI.Inputs("Y")
+				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("You are about to create the following user: createdUser@email.com. Do you wish to continue?"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Username   createdUser"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Email      createdUser@email.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Password   MyPassWord"))
 			})
 		})
+
+		Context("User Create from user", func() {
+			It("Create a user", func() {
+				fakeUI.Inputs("Y")
+				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--from-user", "456", "--password", "MyPassWord", "-f")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Username   createdUser"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Email      createdUser@email.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Password   MyPassWord"))
+			})
+		})
+
+		Context("User Create from wrong template", func() {
+			It("Create a user", func() {
+				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f", "--template", ``)
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Unable to unmarshal template json: unexpected end of JSON input"))
+			})
+		})
+
+		Context("User Create from template", func() {
+			It("Create a user", func() {
+				testUser := datatypes.User_Customer{
+					Id:        sl.Int(6666),
+					Username:  sl.String("createdUser"),
+					Email:     sl.String("createdUser@email.com"),
+					FirstName: sl.String("Test"),
+					LastName:  sl.String("Testerson"),
+				}
+				fakeUserManager.CreateUserReturns(testUser, nil)
+				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f", "--template", `{"firstName": "Test", "lastName": "Testerson"}`)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Username   createdUser"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Email      createdUser@email.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Password   MyPassWord"))
+
+			})
+		})
+
+		Context("User Create with generated password", func() {
+			It("Create a user", func() {
+				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "generate", "-f")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(verifyPassword(fakeUI.Outputs())).Should(BeTrue())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Username   createdUser"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Email      createdUser@email.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Password"))
+			})
+		})
+
 	})
 
 	Describe("structAssignment", func() {
@@ -126,3 +215,36 @@ var _ = Describe("Create", func() {
 		})
 	})
 })
+
+func verifyPassword(output string) bool {
+	indexWordPassword := strings.Index(output, "Password")
+	pass := output[indexWordPassword+8:]
+	pass = strings.TrimSpace(pass)
+	var uppercase, lowercase, number, simbol, lenght bool
+	//Verify lenght is 23
+	if len(pass) == 23 {
+		lenght = true
+	}
+	for _, char := range pass {
+		//Verify exist uppercase
+		if int(char) >= 65 && int(char) <= 90 {
+			uppercase = true
+		}
+		//Verify exist lowercase
+		if int(char) >= 97 && int(char) <= 122 {
+			lowercase = true
+		}
+		//Verify exist number
+		if int(char) >= 48 && int(char) <= 57 {
+			number = true
+		}
+		//Verify exist simbol
+		if int(char) >= 33 && int(char) <= 47 {
+			simbol = true
+		}
+	}
+	if uppercase && lowercase && number && simbol && lenght {
+		return true
+	}
+	return false
+}

@@ -36,12 +36,12 @@ func (cmd *PermissionsCommand) Run(c *cli.Context) error {
 	object_mask := "mask[id, permissions, isMasterUserFlag, roles]"
 	user, err := cmd.UserManager.GetUser(id, object_mask)
 	if err != nil {
-		cli.NewExitError(T("Failed to get user.\n")+err.Error(), 2)
+		return cli.NewExitError(T("Failed to get user.\n")+err.Error(), 2)
 	}
 
 	allPermission, err := cmd.UserManager.GetAllPermission()
 	if err != nil {
-		cli.NewExitError(T("Failed to get permissions.\n")+err.Error(), 2)
+		return cli.NewExitError(T("Failed to get permissions.\n")+err.Error(), 2)
 	}
 
 	if user.IsMasterUserFlag != nil && *user.IsMasterUserFlag {

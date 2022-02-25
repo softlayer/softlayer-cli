@@ -63,7 +63,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 
 	users, err := cmd.UserManager.ListUsers(mask)
 	if err != nil {
-		cli.NewExitError(T("Failed to list users.\n")+err.Error(), 2)
+		return cli.NewExitError(T("Failed to list users.\n")+err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {

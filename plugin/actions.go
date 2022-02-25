@@ -154,7 +154,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	userCommands := user.GetCommandActionBindings(ui, session)
+	userCommands := user.GetCommandActionBindings(context, ui, session)
 	for name, action := range userCommands {
 		CommandActionBindings[name] = action
 	}

@@ -5,11 +5,12 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"log"
 	"math/rand"
 	"reflect"
 	"time"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
