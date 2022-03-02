@@ -138,6 +138,7 @@ func (cmd *VolumeDetailCommand) Run(c *cli.Context) error {
 		dupTable.Print()
 		table.Add(T("Duplicate Volume Properties"), buf.String())
 	}
+	table.Add(T("Notes"), utils.FormatStringPointer(blockVolume.Notes))
 	table.Print()
 	return nil
 }
