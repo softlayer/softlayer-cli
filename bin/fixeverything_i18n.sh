@@ -1,3 +1,4 @@
+#!/bin/bash
 # This script is used to resolve any translation related trings.
 # It does the following:
 # 1. Finds the mismatched strings.
