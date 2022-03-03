@@ -1,7 +1,7 @@
 group: bluezone
 language: go
 go:
-  - 1.15.12
+  - 1.17.7
 addons:
   apt:
     packages:
@@ -14,7 +14,6 @@ install:
   #- sudo chmod o+rwx /usr/lib/python3/dist-packages/
   - sudo python3 -m pip install -U pip
   - sudo pip3 install --upgrade "git+https://github.com/ibm/detect-secrets.git@master#egg=detect-secrets"
-  - go get github.com/maximilien/i18n4go/i18n4go
   - curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $GOPATH/bin v2.8.1
 before_script:
   - go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")
