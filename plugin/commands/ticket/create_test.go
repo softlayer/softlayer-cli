@@ -2,6 +2,7 @@ package ticket_test
 
 import (
 	"errors"
+
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
@@ -54,6 +55,13 @@ var _ = Describe("ticket create", func() {
 				fakeTicketManager.CreateStandardTicketReturns(&ticket_id, nil)
 				err := testhelpers.RunCommand(cliCommand, "--subject-id=1522", `--title="Test Title"`, "--attachment=111111", `--rootpwd="thisisapassword"`)
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Ticket ID: 12345"}))
+				Expect(err).ToNot(HaveOccurred())
+			})
+
+			It("Success with all options and virtual guest type", func() {
+				fakeTicketManager.CreateStandardTicketReturns(&ticket_id, nil)
+				err := testhelpers.RunCommand(cliCommand, "--subject-id=1522", `--title="Test Title"`, "--attachment=111111", "--attachment-type=virtual", `--rootpwd="thisisapassword"`)
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Ticket ID: 12345"))
 				Expect(err).ToNot(HaveOccurred())
 			})
 

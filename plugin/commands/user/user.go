@@ -9,8 +9,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
-
-func GetCommandActionBindings(ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
+func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	userManager := managers.NewUserManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{

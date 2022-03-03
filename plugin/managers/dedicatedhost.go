@@ -12,12 +12,19 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
+const (
+	DEDICATEDHOST_DETAIL_MASK = "id,name,cpuCount,memoryCapacity,diskCapacity,createDate,modifyDate,backendRouter[id,hostname,domain]," +
+		"billingItem[id,nextInvoiceTotalRecurringAmount,children[categoryCode,nextInvoiceTotalRecurringAmount],orderItem[id,order.userRecord[username]]]," +
+		"datacenter[id,name,longName],guests[id,hostname,domain,uuid],guestCount"
+)
+
 //Manages SoftLayer Dedicated host.
 type DedicatedHostManager interface {
 	ListGuests(identifier int, cpu int, domain string, hostname string, memory int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
 	GenerateOrderTemplate(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error)
 	VerifyInstanceCreation(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order, error)
 	OrderInstance(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order_Receipt, error)
+	GetInstance(id int, mask string) (datatypes.Virtual_DedicatedHost, error)
 }
 
 type dedicatedhostManager struct {
@@ -70,6 +77,16 @@ func (d dedicatedhostManager) ListGuests(identifier int, cpu int, domain string,
 		return []datatypes.Virtual_Guest{}, err
 	}
 	return guestList, nil
+}
+
+//Get details about a dedicatedhost instance.
+//id: the instance ID
+//mask: mask of properties
+func (d dedicatedhostManager) GetInstance(id int, mask string) (datatypes.Virtual_DedicatedHost, error) {
+	if mask == "" {
+		mask = DEDICATEDHOST_DETAIL_MASK
+	}
+	return d.VirtualDedicatedHost.Id(id).Mask(mask).GetObject()
 }
 
 //Generate dedicated host payload.

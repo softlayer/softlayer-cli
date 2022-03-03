@@ -154,7 +154,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	userCommands := user.GetCommandActionBindings(ui, session)
+	userCommands := user.GetCommandActionBindings(context, ui, session)
 	for name, action := range userCommands {
 		CommandActionBindings[name] = action
 	}
@@ -173,11 +173,11 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	// ibmcloud sl firewall
 	// Deprecated for now.
-	/* 
-	firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
-	for name, action := range firewallCommands {
-		CommandActionBindings[name] = action
-	}
+	/*
+		firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
+		for name, action := range firewallCommands {
+			CommandActionBindings[name] = action
+		}
 	*/
 
 	actionWithPreCheck := make(map[string]func(c *cli.Context) error)
