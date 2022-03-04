@@ -40,7 +40,7 @@ const (
 		"replicationPartners[id,username,serviceResourceBackendIpAddress,serviceResource.datacenter.name,replicationSchedule.type.keyname],notes"
 
 	FILE_VOLUME_DEFAULT_MASK = "id,username,capacityGb,bytesUsed,serviceResource.datacenter.name,serviceResourceBackendIpAddress,activeTransactionCount,fileNetworkMountAddress,storageType.keyName,notes"
-	FILE_VOLUME_DETAIL_MASK  = "id,username,password,capacityGb,bytesUsed,snapshotCapacityGb,parentVolume.snapshotSizeBytes,storageType.keyName,serviceResource.datacenter.name,serviceResourceBackendIpAddress,fileNetworkMountAddress,storageTierLevel,iops,lunId,originalVolumeName,originalSnapshotName,originalVolumeSize,activeTransactionCount,activeTransactions.transactionStatus.friendlyName,replicationPartnerCount,replicationStatus,replicationPartners[id,username,serviceResourceBackendIpAddress,serviceResource.datacenter.name,replicationSchedule.type.keyname]"
+	FILE_VOLUME_DETAIL_MASK  = "id,username,password,capacityGb,bytesUsed,snapshotCapacityGb,parentVolume.snapshotSizeBytes,storageType.keyName,serviceResource.datacenter.name,serviceResourceBackendIpAddress,fileNetworkMountAddress,storageTierLevel,iops,lunId,originalVolumeName,originalSnapshotName,originalVolumeSize,activeTransactionCount,activeTransactions.transactionStatus.friendlyName,replicationPartnerCount,replicationStatus,replicationPartners[id,username,serviceResourceBackendIpAddress,serviceResource.datacenter.name,replicationSchedule.type.keyname],notes"
 )
 
 var (

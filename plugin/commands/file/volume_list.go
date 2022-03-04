@@ -58,7 +58,7 @@ EXAMPLE:
 			},
 			cli.StringSliceFlag{
 				Name:  "column",
-				Usage: T("Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,active_transactions,mount_addr,created_by,notes. This option can be specified multiple times"),
+				Usage: T("Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times"),
 			},
 			cli.StringSliceFlag{
 				Name:   "columns",
@@ -76,10 +76,12 @@ var maskMap = map[string]string{
 	"storage_type":        "storageType.keyName",
 	"capacity_gb":         "capacityGb",
 	"bytes_used":          "bytesUsed",
+	"IOPs":                "iops",
 	"ip_addr":             "serviceResourceBackendIpAddress",
-	"mount_addr":          "fileNetworkMountAddress",
+	"lunId":               "lunId",
 	"active_transactions": "activeTransactionCount",
 	"created_by":          "billingItem.orderItem.order.userRecord.username",
+	"rep_partner_count":   "replicationPartnerCount",
 	"notes":               "notes",
 }
 
@@ -96,7 +98,7 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 		columns = c.StringSlice("columns")
 	}
 
-	defaultColumns := []string{"id", "username", "datacenter", "storage_type", "capacity_gb", "ip_addr", "mount_addr"}
+	defaultColumns := []string{"id", "username", "datacenter", "storage_type", "capacity_gb", "bytes_used", "IOPs", "ip_addr", "lunId", "active_transactions", "rep_partner_count", "notes"}
 	optionalColumns := []string{"created_by", "bytes_used", "active_transactions", "notes"}
 	sortColumns := []string{"id", "username", "datacenter", "storage_type", "capacity_gb", "bytes_used", "ip_addr", "active_transactions", "created_by", "mount_addr"}
 
@@ -164,14 +166,16 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 
 		values["capacity_gb"] = utils.FormatIntPointer(fileVolume.CapacityGb)
 		values["bytes_used"] = utils.FormatStringPointer(fileVolume.BytesUsed)
+		values["IOPs"] = utils.FormatStringPointer(fileVolume.Iops)
 		values["ip_addr"] = utils.FormatStringPointer(fileVolume.ServiceResourceBackendIpAddress)
-		//values["lunId"] = utils.FormatStringPointer(fileVolume.LunId)
+		values["lunId"] = utils.FormatStringPointer(fileVolume.LunId)
 		values["active_transactions"] = utils.FormatUIntPointer(fileVolume.ActiveTransactionCount)
 		if fileVolume.BillingItem != nil && fileVolume.BillingItem.OrderItem != nil && fileVolume.BillingItem.OrderItem.Order != nil && fileVolume.BillingItem.OrderItem.Order.UserRecord != nil {
 			values["created_by"] = utils.FormatStringPointer(fileVolume.BillingItem.OrderItem.Order.UserRecord.Username)
 		} else {
 			values["created_by"] = "-"
 		}
+		values["rep_partner_count"] = utils.FormatUIntPointer(fileVolume.ReplicationPartnerCount)
 		values["mount_addr"] = utils.FormatStringPointer(fileVolume.FileNetworkMountAddress)
 
 		if fileVolume.Notes != nil {
