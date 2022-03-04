@@ -1290,6 +1290,8 @@
 "translation": "未能创建专区：{{.ZoneName}}。\n"},
 {"id": "Failed to create zone: {{.Zone}}.\n",
 "translation": "未能创建专区：{{.Zone}}。\n"},
+{"id": "Failed to decoded the note.\n",
+"translation": "Failed to decoded the note.\n"},
 {"id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
 "translation": "未能删除 L7 池 {{.L7PoolID}}：{{.Error}}。\n"},
 {"id": "Failed to delete L7Rule {{.L7RuleID}}: {{.Error}}.\n",
