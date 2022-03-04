@@ -3,6 +3,7 @@ package file
 import (
 	"bytes"
 	"fmt"
+	"net/url"
 	"strconv"
 	"strings"
 
@@ -73,7 +74,7 @@ func (cmd *VolumeDetailCommand) Run(c *cli.Context) error {
 	table.Add(T("User name"), utils.FormatStringPointer(fileVolume.Username))
 	table.Add(T("Type"), strings.ToLower(utils.FormatStringPointer(fileVolume.StorageType.KeyName)))
 	table.Add(T("Capacity (GB)"), utils.FormatIntPointer(fileVolume.CapacityGb))
-	//table.Add(T("LUN Id"), utils.FormatStringPointer(blockVolume.LunId))
+	table.Add(T("LUN Id"), utils.FormatStringPointer(fileVolume.LunId))
 	if fileVolume.Iops != nil {
 		table.Add(T("IOPs"), utils.FormatStringPointer(fileVolume.Iops))
 	}
@@ -139,6 +140,11 @@ func (cmd *VolumeDetailCommand) Run(c *cli.Context) error {
 		dupTable.Print()
 		table.Add(T("Duplicate Volume Properties"), buf.String())
 	}
+	decodedValue, err := url.QueryUnescape(utils.FormatStringPointer(fileVolume.Notes))
+	if err != nil {
+		return cli.NewExitError(T("Failed to decoded the note.\n")+err.Error(), 2)
+	}
+	table.Add(T("Notes"), decodedValue)
 	table.Print()
 	return nil
 }

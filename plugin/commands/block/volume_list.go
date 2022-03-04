@@ -1,6 +1,7 @@
 package block
 
 import (
+	"net/url"
 	"sort"
 	"strings"
 
@@ -58,7 +59,7 @@ EXAMPLE:
 			},
 			cli.StringSliceFlag{
 				Name:  "column",
-				Usage: T("Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,created_by,active_transactions,notes. This option can be specified multiple times"),
+				Usage: T("Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times"),
 			},
 			cli.StringSliceFlag{
 				Name:   "columns",
@@ -76,10 +77,12 @@ var maskMap = map[string]string{
 	"storage_type":        "storageType.keyName",
 	"capacity_gb":         "capacityGb",
 	"bytes_used":          "bytesUsed",
+	"IOPs":                "iops",
 	"ip_addr":             "serviceResourceBackendIpAddress",
 	"lunId":               "lunId",
 	"active_transactions": "activeTransactionCount",
 	"created_by":          "billingItem.orderItem.order.userRecord.username",
+	"rep_partner_count":   "replicationPartnerCount",
 	"notes":               "notes",
 }
 
@@ -96,7 +99,7 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 		columns = c.StringSlice("columns")
 	}
 
-	defaultColumns := []string{"id", "username", "datacenter", "storage_type", "capacity_gb", "bytes_used", "lunId"}
+	defaultColumns := []string{"id", "username", "datacenter", "storage_type", "capacity_gb", "bytes_used", "IOPs", "ip_addr", "lunId", "active_transactions", "rep_partner_count", "notes"}
 	optionalColumns := []string{"notes", "active_transactions", "created_by", "ip_addr"}
 	sortColumns := []string{"id", "username", "datacenter", "storage_type", "capacity_gb", "bytes_used", "ip_addr", "lunId", "active_transactions", "created_by"}
 
@@ -164,6 +167,7 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 
 		values["capacity_gb"] = utils.FormatIntPointer(blockVolume.CapacityGb)
 		values["bytes_used"] = utils.FormatStringPointer(blockVolume.BytesUsed)
+		values["IOPs"] = utils.FormatStringPointer(blockVolume.Iops)
 		values["ip_addr"] = utils.FormatStringPointer(blockVolume.ServiceResourceBackendIpAddress)
 		values["lunId"] = utils.FormatStringPointer(blockVolume.LunId)
 		values["active_transactions"] = utils.FormatUIntPointer(blockVolume.ActiveTransactionCount)
@@ -172,9 +176,13 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 		} else {
 			values["created_by"] = "-"
 		}
-
+		values["rep_partner_count"] = utils.FormatUIntPointer(blockVolume.ReplicationPartnerCount)
 		if blockVolume.Notes != nil {
-			values["notes"] = utils.FormatStringPointer(blockVolume.Notes)
+			decodedValue, err := url.QueryUnescape(utils.FormatStringPointer(blockVolume.Notes))
+			if err != nil {
+				return cli.NewExitError(T("Failed to decoded the note.\n")+err.Error(), 2)
+			}
+			values["notes"] = decodedValue
 		} else {
 			values["notes"] = "-"
 		}
