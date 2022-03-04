@@ -84,7 +84,6 @@ var _ = Describe("Block Volume Set Note", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234", "--note=thisismynote")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Note could not be set! Please verify your options and try again."))
 			})
 		})
@@ -108,7 +107,7 @@ var _ = Describe("Block Volume Set Note", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234", "--note=thisismynote")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The note was added successfully"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("The note was set successfully"))
 			})
 		})
 

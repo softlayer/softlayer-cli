@@ -812,8 +812,7 @@ func (s storageManager) VolumeSetNote(volumeId int, note string) (bool, error) {
 	noteTemplate := datatypes.Network_Storage{
 		Notes: sl.String(note),
 	}
-	wasAdded, err := s.StorageService.Id(volumeId).EditObject(&noteTemplate)
-	return wasAdded, err
+	return s.StorageService.Id(volumeId).EditObject(&noteTemplate)
 }
 
 //Enables/Disables snapshot space usage threshold warning for a given volume.

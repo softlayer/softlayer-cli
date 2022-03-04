@@ -7,6 +7,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/urfave/cli"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
@@ -16,13 +17,13 @@ var _ = Describe("File Volume Set Note", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *file.VolumeSetNoteCommand
+		cmd                *block.VolumeSetNoteCommand
 		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = file.NewVolumeSetNoteCommand(fakeUI, FakeStorageManager)
+		cmd = block.NewVolumeSetNoteCommand(fakeUI, FakeStorageManager)
 		cliCommand = cli.Command{
 			Name:        file.FileVolumeSetNoteMetaData().Name,
 			Description: file.FileVolumeSetNoteMetaData().Description,
@@ -84,7 +85,6 @@ var _ = Describe("File Volume Set Note", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234", "--note=thisismynote")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Note could not be set! Please verify your options and try again."))
 			})
 		})
@@ -108,7 +108,7 @@ var _ = Describe("File Volume Set Note", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234", "--note=thisismynote")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The note was added successfully"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("The note was set successfully"))
 			})
 		})
 
