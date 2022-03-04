@@ -27,6 +27,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"dedicatedhost-cancel-guests": func(c *cli.Context) error {
 			return NewCancelCommand(ui, dedicatedhostManager).Run(c)
 		},
+		"dedicatedhost-create-options": func(c *cli.Context) error {
+			return NewCreateOptionsCommand(ui, dedicatedhostManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -52,6 +55,7 @@ func DedicatedhostMetaData() cli.Command {
 			DedicatedhostCreateMetaData(),
 			DedicatedhostDetailMetaData(),
 			DedicatedhostCancelGuestsMetaData(),
+			DedicatedhostCreateOptionsMetaData(),
 		},
 	}
 }
