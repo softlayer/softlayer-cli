@@ -1,6 +1,7 @@
 package file
 
 import (
+	"net/url"
 	"sort"
 	"strings"
 
@@ -179,7 +180,11 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 		values["mount_addr"] = utils.FormatStringPointer(fileVolume.FileNetworkMountAddress)
 
 		if fileVolume.Notes != nil {
-			values["notes"] = utils.FormatStringPointer(fileVolume.Notes)
+			decodedValue, err := url.QueryUnescape(utils.FormatStringPointer(fileVolume.Notes))
+			if err != nil {
+				return cli.NewExitError(T("Failed to decoded the note.\n")+err.Error(), 2)
+			}
+			values["notes"] = decodedValue
 		} else {
 			values["notes"] = "-"
 		}

@@ -3,6 +3,7 @@ package file
 import (
 	"bytes"
 	"fmt"
+	"net/url"
 	"strconv"
 	"strings"
 
@@ -139,7 +140,11 @@ func (cmd *VolumeDetailCommand) Run(c *cli.Context) error {
 		dupTable.Print()
 		table.Add(T("Duplicate Volume Properties"), buf.String())
 	}
-	table.Add(T("Notes"), utils.FormatStringPointer(fileVolume.Notes))
+	decodedValue, err := url.QueryUnescape(utils.FormatStringPointer(fileVolume.Notes))
+	if err != nil {
+		return cli.NewExitError(T("Failed to decoded the note.\n")+err.Error(), 2)
+	}
+	table.Add(T("Notes"), decodedValue)
 	table.Print()
 	return nil
 }

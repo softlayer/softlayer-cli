@@ -1,6 +1,7 @@
 package block
 
 import (
+	"net/url"
 	"sort"
 	"strings"
 
@@ -177,7 +178,11 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 		}
 		values["rep_partner_count"] = utils.FormatUIntPointer(blockVolume.ReplicationPartnerCount)
 		if blockVolume.Notes != nil {
-			values["notes"] = utils.FormatStringPointer(blockVolume.Notes)
+			decodedValue, err := url.QueryUnescape(utils.FormatStringPointer(blockVolume.Notes))
+			if err != nil {
+				return cli.NewExitError(T("Failed to decoded the note.\n")+err.Error(), 2)
+			}
+			values["notes"] = decodedValue
 		} else {
 			values["notes"] = "-"
 		}
