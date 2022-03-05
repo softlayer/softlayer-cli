@@ -72,7 +72,7 @@ func BlockVolumeSetNoteMetaData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block volume-set-note 12345678 --note "this is my note"`),
+   ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'this is my note'`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "n,note",
