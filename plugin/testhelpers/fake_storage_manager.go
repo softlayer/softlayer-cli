@@ -289,15 +289,16 @@ type FakeStorageManager struct {
 		result1 datatypes.Network_Storage
 		result2 error
 	}
-	ListVolumesStub        func(string, string, string, string, int, string) ([]datatypes.Network_Storage, error)
+	ListVolumesStub        func(string, string, string, string, string, int, string) ([]datatypes.Network_Storage, error)
 	listVolumesMutex       sync.RWMutex
 	listVolumesArgsForCall []struct {
 		arg1 string
 		arg2 string
 		arg3 string
 		arg4 string
-		arg5 int
-		arg6 string
+		arg5 string
+		arg6 int
+		arg7 string
 	}
 	listVolumesReturns struct {
 		result1 []datatypes.Network_Storage
@@ -502,15 +503,16 @@ func (fake *FakeStorageManager) AuthorizeHostToVolume(arg1 int, arg2 []int, arg3
 		arg4 []int
 		arg5 []int
 	}{arg1, arg2Copy, arg3Copy, arg4Copy, arg5Copy})
+	stub := fake.AuthorizeHostToVolumeStub
+	fakeReturns := fake.authorizeHostToVolumeReturns
 	fake.recordInvocation("AuthorizeHostToVolume", []interface{}{arg1, arg2Copy, arg3Copy, arg4Copy, arg5Copy})
 	fake.authorizeHostToVolumeMutex.Unlock()
-	if fake.AuthorizeHostToVolumeStub != nil {
-		return fake.AuthorizeHostToVolumeStub(arg1, arg2, arg3, arg4, arg5)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.authorizeHostToVolumeReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -568,15 +570,16 @@ func (fake *FakeStorageManager) CancelSnapshotSpace(arg1 string, arg2 int, arg3 
 		arg3 string
 		arg4 bool
 	}{arg1, arg2, arg3, arg4})
+	stub := fake.CancelSnapshotSpaceStub
+	fakeReturns := fake.cancelSnapshotSpaceReturns
 	fake.recordInvocation("CancelSnapshotSpace", []interface{}{arg1, arg2, arg3, arg4})
 	fake.cancelSnapshotSpaceMutex.Unlock()
-	if fake.CancelSnapshotSpaceStub != nil {
-		return fake.CancelSnapshotSpaceStub(arg1, arg2, arg3, arg4)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.cancelSnapshotSpaceReturns
 	return fakeReturns.result1
 }
 
@@ -631,15 +634,16 @@ func (fake *FakeStorageManager) CancelVolume(arg1 string, arg2 int, arg3 string,
 		arg3 string
 		arg4 bool
 	}{arg1, arg2, arg3, arg4})
+	stub := fake.CancelVolumeStub
+	fakeReturns := fake.cancelVolumeReturns
 	fake.recordInvocation("CancelVolume", []interface{}{arg1, arg2, arg3, arg4})
 	fake.cancelVolumeMutex.Unlock()
-	if fake.CancelVolumeStub != nil {
-		return fake.CancelVolumeStub(arg1, arg2, arg3, arg4)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.cancelVolumeReturns
 	return fakeReturns.result1
 }
 
@@ -692,15 +696,16 @@ func (fake *FakeStorageManager) CreateSnapshot(arg1 int, arg2 string) (datatypes
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.CreateSnapshotStub
+	fakeReturns := fake.createSnapshotReturns
 	fake.recordInvocation("CreateSnapshot", []interface{}{arg1, arg2})
 	fake.createSnapshotMutex.Unlock()
-	if fake.CreateSnapshotStub != nil {
-		return fake.CreateSnapshotStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createSnapshotReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -779,15 +784,16 @@ func (fake *FakeStorageManager) DeauthorizeHostToVolume(arg1 int, arg2 []int, ar
 		arg4 []int
 		arg5 []int
 	}{arg1, arg2Copy, arg3Copy, arg4Copy, arg5Copy})
+	stub := fake.DeauthorizeHostToVolumeStub
+	fakeReturns := fake.deauthorizeHostToVolumeReturns
 	fake.recordInvocation("DeauthorizeHostToVolume", []interface{}{arg1, arg2Copy, arg3Copy, arg4Copy, arg5Copy})
 	fake.deauthorizeHostToVolumeMutex.Unlock()
-	if fake.DeauthorizeHostToVolumeStub != nil {
-		return fake.DeauthorizeHostToVolumeStub(arg1, arg2, arg3, arg4, arg5)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.deauthorizeHostToVolumeReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -842,15 +848,16 @@ func (fake *FakeStorageManager) DeleteSnapshot(arg1 int) error {
 	fake.deleteSnapshotArgsForCall = append(fake.deleteSnapshotArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.DeleteSnapshotStub
+	fakeReturns := fake.deleteSnapshotReturns
 	fake.recordInvocation("DeleteSnapshot", []interface{}{arg1})
 	fake.deleteSnapshotMutex.Unlock()
-	if fake.DeleteSnapshotStub != nil {
-		return fake.DeleteSnapshotStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.deleteSnapshotReturns
 	return fakeReturns.result1
 }
 
@@ -903,15 +910,16 @@ func (fake *FakeStorageManager) DisableSnapshots(arg1 int, arg2 string) error {
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.DisableSnapshotsStub
+	fakeReturns := fake.disableSnapshotsReturns
 	fake.recordInvocation("DisableSnapshots", []interface{}{arg1, arg2})
 	fake.disableSnapshotsMutex.Unlock()
-	if fake.DisableSnapshotsStub != nil {
-		return fake.DisableSnapshotsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.disableSnapshotsReturns
 	return fakeReturns.result1
 }
 
@@ -964,15 +972,16 @@ func (fake *FakeStorageManager) DisasterRecoveryFailover(arg1 int, arg2 int) err
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.DisasterRecoveryFailoverStub
+	fakeReturns := fake.disasterRecoveryFailoverReturns
 	fake.recordInvocation("DisasterRecoveryFailover", []interface{}{arg1, arg2})
 	fake.disasterRecoveryFailoverMutex.Unlock()
-	if fake.DisasterRecoveryFailoverStub != nil {
-		return fake.DisasterRecoveryFailoverStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.disasterRecoveryFailoverReturns
 	return fakeReturns.result1
 }
 
@@ -1029,15 +1038,16 @@ func (fake *FakeStorageManager) EnableSnapshot(arg1 int, arg2 string, arg3 int, 
 		arg5 int
 		arg6 string
 	}{arg1, arg2, arg3, arg4, arg5, arg6})
+	stub := fake.EnableSnapshotStub
+	fakeReturns := fake.enableSnapshotReturns
 	fake.recordInvocation("EnableSnapshot", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
 	fake.enableSnapshotMutex.Unlock()
-	if fake.EnableSnapshotStub != nil {
-		return fake.EnableSnapshotStub(arg1, arg2, arg3, arg4, arg5, arg6)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.enableSnapshotReturns
 	return fakeReturns.result1
 }
 
@@ -1089,15 +1099,16 @@ func (fake *FakeStorageManager) FailBackFromReplicant(arg1 int) error {
 	fake.failBackFromReplicantArgsForCall = append(fake.failBackFromReplicantArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.FailBackFromReplicantStub
+	fakeReturns := fake.failBackFromReplicantReturns
 	fake.recordInvocation("FailBackFromReplicant", []interface{}{arg1})
 	fake.failBackFromReplicantMutex.Unlock()
-	if fake.FailBackFromReplicantStub != nil {
-		return fake.FailBackFromReplicantStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.failBackFromReplicantReturns
 	return fakeReturns.result1
 }
 
@@ -1150,15 +1161,16 @@ func (fake *FakeStorageManager) FailOverToReplicant(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.FailOverToReplicantStub
+	fakeReturns := fake.failOverToReplicantReturns
 	fake.recordInvocation("FailOverToReplicant", []interface{}{arg1, arg2})
 	fake.failOverToReplicantMutex.Unlock()
-	if fake.FailOverToReplicantStub != nil {
-		return fake.FailOverToReplicantStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.failOverToReplicantReturns
 	return fakeReturns.result1
 }
 
@@ -1209,15 +1221,16 @@ func (fake *FakeStorageManager) GetAllDatacenters() ([]string, error) {
 	ret, specificReturn := fake.getAllDatacentersReturnsOnCall[len(fake.getAllDatacentersArgsForCall)]
 	fake.getAllDatacentersArgsForCall = append(fake.getAllDatacentersArgsForCall, struct {
 	}{})
+	stub := fake.GetAllDatacentersStub
+	fakeReturns := fake.getAllDatacentersReturns
 	fake.recordInvocation("GetAllDatacenters", []interface{}{})
 	fake.getAllDatacentersMutex.Unlock()
-	if fake.GetAllDatacentersStub != nil {
-		return fake.GetAllDatacentersStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getAllDatacentersReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1265,15 +1278,16 @@ func (fake *FakeStorageManager) GetReplicationLocations(arg1 int) ([]datatypes.L
 	fake.getReplicationLocationsArgsForCall = append(fake.getReplicationLocationsArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetReplicationLocationsStub
+	fakeReturns := fake.getReplicationLocationsReturns
 	fake.recordInvocation("GetReplicationLocations", []interface{}{arg1})
 	fake.getReplicationLocationsMutex.Unlock()
-	if fake.GetReplicationLocationsStub != nil {
-		return fake.GetReplicationLocationsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getReplicationLocationsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1328,15 +1342,16 @@ func (fake *FakeStorageManager) GetReplicationPartners(arg1 int) ([]datatypes.Ne
 	fake.getReplicationPartnersArgsForCall = append(fake.getReplicationPartnersArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetReplicationPartnersStub
+	fakeReturns := fake.getReplicationPartnersReturns
 	fake.recordInvocation("GetReplicationPartners", []interface{}{arg1})
 	fake.getReplicationPartnersMutex.Unlock()
-	if fake.GetReplicationPartnersStub != nil {
-		return fake.GetReplicationPartnersStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getReplicationPartnersReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1391,15 +1406,16 @@ func (fake *FakeStorageManager) GetSnapshotNotificationStatus(arg1 int) (int, er
 	fake.getSnapshotNotificationStatusArgsForCall = append(fake.getSnapshotNotificationStatusArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetSnapshotNotificationStatusStub
+	fakeReturns := fake.getSnapshotNotificationStatusReturns
 	fake.recordInvocation("GetSnapshotNotificationStatus", []interface{}{arg1})
 	fake.getSnapshotNotificationStatusMutex.Unlock()
-	if fake.GetSnapshotNotificationStatusStub != nil {
-		return fake.GetSnapshotNotificationStatusStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getSnapshotNotificationStatusReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1454,15 +1470,16 @@ func (fake *FakeStorageManager) GetVolumeAccessList(arg1 int) (datatypes.Network
 	fake.getVolumeAccessListArgsForCall = append(fake.getVolumeAccessListArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetVolumeAccessListStub
+	fakeReturns := fake.getVolumeAccessListReturns
 	fake.recordInvocation("GetVolumeAccessList", []interface{}{arg1})
 	fake.getVolumeAccessListMutex.Unlock()
-	if fake.GetVolumeAccessListStub != nil {
-		return fake.GetVolumeAccessListStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getVolumeAccessListReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1517,15 +1534,16 @@ func (fake *FakeStorageManager) GetVolumeByUsername(arg1 string) ([]datatypes.Ne
 	fake.getVolumeByUsernameArgsForCall = append(fake.getVolumeByUsernameArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.GetVolumeByUsernameStub
+	fakeReturns := fake.getVolumeByUsernameReturns
 	fake.recordInvocation("GetVolumeByUsername", []interface{}{arg1})
 	fake.getVolumeByUsernameMutex.Unlock()
-	if fake.GetVolumeByUsernameStub != nil {
-		return fake.GetVolumeByUsernameStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getVolumeByUsernameReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1579,15 +1597,16 @@ func (fake *FakeStorageManager) GetVolumeCountLimits() ([]datatypes.Container_Ne
 	ret, specificReturn := fake.getVolumeCountLimitsReturnsOnCall[len(fake.getVolumeCountLimitsArgsForCall)]
 	fake.getVolumeCountLimitsArgsForCall = append(fake.getVolumeCountLimitsArgsForCall, struct {
 	}{})
+	stub := fake.GetVolumeCountLimitsStub
+	fakeReturns := fake.getVolumeCountLimitsReturns
 	fake.recordInvocation("GetVolumeCountLimits", []interface{}{})
 	fake.getVolumeCountLimitsMutex.Unlock()
-	if fake.GetVolumeCountLimitsStub != nil {
-		return fake.GetVolumeCountLimitsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getVolumeCountLimitsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1637,15 +1656,16 @@ func (fake *FakeStorageManager) GetVolumeDetails(arg1 string, arg2 int, arg3 str
 		arg2 int
 		arg3 string
 	}{arg1, arg2, arg3})
+	stub := fake.GetVolumeDetailsStub
+	fakeReturns := fake.getVolumeDetailsReturns
 	fake.recordInvocation("GetVolumeDetails", []interface{}{arg1, arg2, arg3})
 	fake.getVolumeDetailsMutex.Unlock()
-	if fake.GetVolumeDetailsStub != nil {
-		return fake.GetVolumeDetailsStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getVolumeDetailsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1700,15 +1720,16 @@ func (fake *FakeStorageManager) GetVolumeSnapshotList(arg1 int) ([]datatypes.Net
 	fake.getVolumeSnapshotListArgsForCall = append(fake.getVolumeSnapshotListArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetVolumeSnapshotListStub
+	fakeReturns := fake.getVolumeSnapshotListReturns
 	fake.recordInvocation("GetVolumeSnapshotList", []interface{}{arg1})
 	fake.getVolumeSnapshotListMutex.Unlock()
-	if fake.GetVolumeSnapshotListStub != nil {
-		return fake.GetVolumeSnapshotListStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getVolumeSnapshotListReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1763,15 +1784,16 @@ func (fake *FakeStorageManager) GetVolumeSnapshotSchedules(arg1 int) (datatypes.
 	fake.getVolumeSnapshotSchedulesArgsForCall = append(fake.getVolumeSnapshotSchedulesArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetVolumeSnapshotSchedulesStub
+	fakeReturns := fake.getVolumeSnapshotSchedulesReturns
 	fake.recordInvocation("GetVolumeSnapshotSchedules", []interface{}{arg1})
 	fake.getVolumeSnapshotSchedulesMutex.Unlock()
-	if fake.GetVolumeSnapshotSchedulesStub != nil {
-		return fake.GetVolumeSnapshotSchedulesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getVolumeSnapshotSchedulesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1820,7 +1842,7 @@ func (fake *FakeStorageManager) GetVolumeSnapshotSchedulesReturnsOnCall(i int, r
 	}{result1, result2}
 }
 
-func (fake *FakeStorageManager) ListVolumes(arg1 string, arg2 string, arg3 string, arg4 string, arg5 int, arg6 string) ([]datatypes.Network_Storage, error) {
+func (fake *FakeStorageManager) ListVolumes(arg1 string, arg2 string, arg3 string, arg4 string, arg5 string, arg6 int, arg7 string) ([]datatypes.Network_Storage, error) {
 	fake.listVolumesMutex.Lock()
 	ret, specificReturn := fake.listVolumesReturnsOnCall[len(fake.listVolumesArgsForCall)]
 	fake.listVolumesArgsForCall = append(fake.listVolumesArgsForCall, struct {
@@ -1828,18 +1850,20 @@ func (fake *FakeStorageManager) ListVolumes(arg1 string, arg2 string, arg3 strin
 		arg2 string
 		arg3 string
 		arg4 string
-		arg5 int
-		arg6 string
-	}{arg1, arg2, arg3, arg4, arg5, arg6})
-	fake.recordInvocation("ListVolumes", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
+		arg5 string
+		arg6 int
+		arg7 string
+	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
+	stub := fake.ListVolumesStub
+	fakeReturns := fake.listVolumesReturns
+	fake.recordInvocation("ListVolumes", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
 	fake.listVolumesMutex.Unlock()
-	if fake.ListVolumesStub != nil {
-		return fake.ListVolumesStub(arg1, arg2, arg3, arg4, arg5, arg6)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listVolumesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1849,17 +1873,17 @@ func (fake *FakeStorageManager) ListVolumesCallCount() int {
 	return len(fake.listVolumesArgsForCall)
 }
 
-func (fake *FakeStorageManager) ListVolumesCalls(stub func(string, string, string, string, int, string) ([]datatypes.Network_Storage, error)) {
+func (fake *FakeStorageManager) ListVolumesCalls(stub func(string, string, string, string, string, int, string) ([]datatypes.Network_Storage, error)) {
 	fake.listVolumesMutex.Lock()
 	defer fake.listVolumesMutex.Unlock()
 	fake.ListVolumesStub = stub
 }
 
-func (fake *FakeStorageManager) ListVolumesArgsForCall(i int) (string, string, string, string, int, string) {
+func (fake *FakeStorageManager) ListVolumesArgsForCall(i int) (string, string, string, string, string, int, string) {
 	fake.listVolumesMutex.RLock()
 	defer fake.listVolumesMutex.RUnlock()
 	argsForCall := fake.listVolumesArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7
 }
 
 func (fake *FakeStorageManager) ListVolumesReturns(result1 []datatypes.Network_Storage, result2 error) {
@@ -1894,15 +1918,16 @@ func (fake *FakeStorageManager) OrderDuplicateVolume(arg1 managers.DuplicateOrde
 	fake.orderDuplicateVolumeArgsForCall = append(fake.orderDuplicateVolumeArgsForCall, struct {
 		arg1 managers.DuplicateOrderConfig
 	}{arg1})
+	stub := fake.OrderDuplicateVolumeStub
+	fakeReturns := fake.orderDuplicateVolumeReturns
 	fake.recordInvocation("OrderDuplicateVolume", []interface{}{arg1})
 	fake.orderDuplicateVolumeMutex.Unlock()
-	if fake.OrderDuplicateVolumeStub != nil {
-		return fake.OrderDuplicateVolumeStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.orderDuplicateVolumeReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1961,15 +1986,16 @@ func (fake *FakeStorageManager) OrderModifiedVolume(arg1 string, arg2 int, arg3 
 		arg4 int
 		arg5 int
 	}{arg1, arg2, arg3, arg4, arg5})
+	stub := fake.OrderModifiedVolumeStub
+	fakeReturns := fake.orderModifiedVolumeReturns
 	fake.recordInvocation("OrderModifiedVolume", []interface{}{arg1, arg2, arg3, arg4, arg5})
 	fake.orderModifiedVolumeMutex.Unlock()
-	if fake.OrderModifiedVolumeStub != nil {
-		return fake.OrderModifiedVolumeStub(arg1, arg2, arg3, arg4, arg5)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.orderModifiedVolumeReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2030,15 +2056,16 @@ func (fake *FakeStorageManager) OrderReplicantVolume(arg1 string, arg2 int, arg3
 		arg6 int
 		arg7 string
 	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
+	stub := fake.OrderReplicantVolumeStub
+	fakeReturns := fake.orderReplicantVolumeReturns
 	fake.recordInvocation("OrderReplicantVolume", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
 	fake.orderReplicantVolumeMutex.Unlock()
-	if fake.OrderReplicantVolumeStub != nil {
-		return fake.OrderReplicantVolumeStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.orderReplicantVolumeReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2098,15 +2125,16 @@ func (fake *FakeStorageManager) OrderSnapshotSpace(arg1 string, arg2 int, arg3 i
 		arg5 int
 		arg6 bool
 	}{arg1, arg2, arg3, arg4, arg5, arg6})
+	stub := fake.OrderSnapshotSpaceStub
+	fakeReturns := fake.orderSnapshotSpaceReturns
 	fake.recordInvocation("OrderSnapshotSpace", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
 	fake.orderSnapshotSpaceMutex.Unlock()
-	if fake.OrderSnapshotSpaceStub != nil {
-		return fake.OrderSnapshotSpaceStub(arg1, arg2, arg3, arg4, arg5, arg6)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.orderSnapshotSpaceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2169,15 +2197,16 @@ func (fake *FakeStorageManager) OrderVolume(arg1 string, arg2 string, arg3 strin
 		arg8 int
 		arg9 bool
 	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9})
+	stub := fake.OrderVolumeStub
+	fakeReturns := fake.orderVolumeReturns
 	fake.recordInvocation("OrderVolume", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9})
 	fake.orderVolumeMutex.Unlock()
-	if fake.OrderVolumeStub != nil {
-		return fake.OrderVolumeStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.orderVolumeReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2233,15 +2262,16 @@ func (fake *FakeStorageManager) RestoreFromSnapshot(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.RestoreFromSnapshotStub
+	fakeReturns := fake.restoreFromSnapshotReturns
 	fake.recordInvocation("RestoreFromSnapshot", []interface{}{arg1, arg2})
 	fake.restoreFromSnapshotMutex.Unlock()
-	if fake.RestoreFromSnapshotStub != nil {
-		return fake.RestoreFromSnapshotStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.restoreFromSnapshotReturns
 	return fakeReturns.result1
 }
 
@@ -2294,15 +2324,16 @@ func (fake *FakeStorageManager) SetCredentialPassword(arg1 int, arg2 string) err
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.SetCredentialPasswordStub
+	fakeReturns := fake.setCredentialPasswordReturns
 	fake.recordInvocation("SetCredentialPassword", []interface{}{arg1, arg2})
 	fake.setCredentialPasswordMutex.Unlock()
-	if fake.SetCredentialPasswordStub != nil {
-		return fake.SetCredentialPasswordStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.setCredentialPasswordReturns
 	return fakeReturns.result1
 }
 
@@ -2355,15 +2386,16 @@ func (fake *FakeStorageManager) SetLunId(arg1 int, arg2 int) (datatypes.Network_
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.SetLunIdStub
+	fakeReturns := fake.setLunIdReturns
 	fake.recordInvocation("SetLunId", []interface{}{arg1, arg2})
 	fake.setLunIdMutex.Unlock()
-	if fake.SetLunIdStub != nil {
-		return fake.SetLunIdStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.setLunIdReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2419,15 +2451,16 @@ func (fake *FakeStorageManager) SetSnapshotNotification(arg1 int, arg2 bool) err
 		arg1 int
 		arg2 bool
 	}{arg1, arg2})
+	stub := fake.SetSnapshotNotificationStub
+	fakeReturns := fake.setSnapshotNotificationReturns
 	fake.recordInvocation("SetSnapshotNotification", []interface{}{arg1, arg2})
 	fake.setSnapshotNotificationMutex.Unlock()
-	if fake.SetSnapshotNotificationStub != nil {
-		return fake.SetSnapshotNotificationStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.setSnapshotNotificationReturns
 	return fakeReturns.result1
 }
 
@@ -2479,15 +2512,16 @@ func (fake *FakeStorageManager) VolumeConvert(arg1 int) error {
 	fake.volumeConvertArgsForCall = append(fake.volumeConvertArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.VolumeConvertStub
+	fakeReturns := fake.volumeConvertReturns
 	fake.recordInvocation("VolumeConvert", []interface{}{arg1})
 	fake.volumeConvertMutex.Unlock()
-	if fake.VolumeConvertStub != nil {
-		return fake.VolumeConvertStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.volumeConvertReturns
 	return fakeReturns.result1
 }
 
@@ -2540,15 +2574,16 @@ func (fake *FakeStorageManager) VolumeRefresh(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.VolumeRefreshStub
+	fakeReturns := fake.volumeRefreshReturns
 	fake.recordInvocation("VolumeRefresh", []interface{}{arg1, arg2})
 	fake.volumeRefreshMutex.Unlock()
-	if fake.VolumeRefreshStub != nil {
-		return fake.VolumeRefreshStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.volumeRefreshReturns
 	return fakeReturns.result1
 }
 

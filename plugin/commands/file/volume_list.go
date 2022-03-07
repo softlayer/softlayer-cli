@@ -49,6 +49,10 @@ EXAMPLE:
 				Name:  "t,storage-type",
 				Usage: T("Filter by type of storage volume, options are: performance,endurance"),
 			},
+			cli.StringFlag{
+				Name:  "n,notes",
+				Usage: T("Filter by notes"),
+			},
 			cli.IntFlag{
 				Name:  "o,order",
 				Usage: T("Filter by ID of the order that purchased the file storage"),
@@ -115,7 +119,7 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	fileVolumes, err := cmd.StorageManager.ListVolumes("file", c.String("datacenter"), c.String("username"), c.String("storage-type"), c.Int("order"), mask)
+	fileVolumes, err := cmd.StorageManager.ListVolumes("file", c.String("datacenter"), c.String("username"), c.String("storage-type"), c.String("notes"), c.Int("order"), mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to list volumes on your account.\n")+err.Error(), 2)
 	}

@@ -100,7 +100,7 @@ var _ = Describe("StorageManager", func() {
 	Describe("ListBlockVolumes", func() {
 		Context("ListBlockVolumes under current account", func() {
 			It("Return no error", func() {
-				volumes, err := StorageManager.ListVolumes("block", "", "", "", 0, "")
+				volumes, err := StorageManager.ListVolumes("block", "", "", "", "", 0, "")
 				Expect(err).ToNot(HaveOccurred())
 				Expect(len(volumes) > 0).To(BeTrue())
 				for _, volume := range volumes {
