@@ -1816,6 +1816,8 @@
 "translation": "네트워크 포트 속도(Mbps)별 필터링"},
 {"id": "Filter by network space",
 "translation": "네트워크 영역별 필터링"},
+{"id": "Filter by notes",
+"translation": "Filter by notes"},
 {"id": "Filter by number of CPU cores",
 "translation": "CPU 코어 수별 필터링"},
 {"id": "Filter by owner of the dedicated host",

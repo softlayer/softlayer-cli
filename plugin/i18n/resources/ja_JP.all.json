@@ -1816,6 +1816,8 @@
 "translation": "Mbps 単位のネットワーク・ポート速度を基準にフィルター操作します"},
 {"id": "Filter by network space",
 "translation": "ネットワーク・スペースを基準にフィルター操作します"},
+{"id": "Filter by notes",
+"translation": "Filter by notes"},
 {"id": "Filter by number of CPU cores",
 "translation": "CPU コアの数を基準にフィルター操作します"},
 {"id": "Filter by owner of the dedicated host",

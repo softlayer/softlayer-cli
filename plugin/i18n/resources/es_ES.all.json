@@ -1816,6 +1816,8 @@
 "translation": "Filtrar por velocidad de puerto de red en Mbps"},
 {"id": "Filter by network space",
 "translation": "Filtrar por espacio de red"},
+{"id": "Filter by notes",
+"translation": "Filter by notes"},
 {"id": "Filter by number of CPU cores",
 "translation": "Filtrar por número de núcleos de CPU"},
 {"id": "Filter by owner of the dedicated host",

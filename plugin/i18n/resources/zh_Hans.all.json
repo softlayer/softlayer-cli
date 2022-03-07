@@ -1816,6 +1816,8 @@
 "translation": "按网络端口速度过滤（以 Mbps 为单位）"},
 {"id": "Filter by network space",
 "translation": "按网络空间过滤"},
+{"id": "Filter by notes",
+"translation": "Filter by notes"},
 {"id": "Filter by number of CPU cores",
 "translation": "按 CPU 核心数过滤"},
 {"id": "Filter by owner of the dedicated host",
