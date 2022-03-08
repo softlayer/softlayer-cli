@@ -11,7 +11,7 @@ fi
 # Switches to plugin directory or exits if it doesn't exist.
 cd "./plugin" 
 
-RESULTS=`i18n4go -c checkup -q i18n -v`
+RESULTS=`../bin/i18n4go -c checkup -q i18n -v`
 # RESULTS="OKTotal time:"
 OUTPUT=""
 ADD_JSON_OUT=$'[\n'
@@ -57,7 +57,7 @@ while IFS= read -r line; do
     elif [[ $line =~ "exists in en_US, but not in "[a-zA-Z_]{5} ]]
     then
         JSON=`echo "$OUTPUT" | sed -E "s/(.+) exists in the code, but not in en_US/{\"id\": \1, \"translation\": \1},/g"`
-        echo ">>> cd plugin; i18n4go -c checkup -q i18n -v <<<"
+        echo ">>> cd plugin; ../bin/i18n4go -c checkup -q i18n -v <<<"
         echo "The translation files are out of sync, and this script can't fix it."
         echo $RESULTS
         exit 4
