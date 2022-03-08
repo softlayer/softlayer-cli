@@ -312,7 +312,7 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 			filters = append(filters, filter.Path("iscsiNetworkStorage.username").Eq(username))
 		}
 		if notes != "" {
-			filters = append(filters, filter.Path("iscsiNetworkStorage.notes").Eq(notes))
+			filters = append(filters, filter.Path("iscsiNetworkStorage.notes").Contains(notes))
 		}
 		if storageType != "" {
 			keyName := fmt.Sprintf("%s_BLOCK_STORAGE", strings.ToUpper(storageType))
@@ -357,7 +357,7 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 			filters = append(filters, filter.Path("nasNetworkStorage.username").Eq(username))
 		}
 		if notes != "" {
-			filters = append(filters, filter.Path("nasNetworkStorage.notes").Eq(notes))
+			filters = append(filters, filter.Path("nasNetworkStorage.notes").Contains(notes))
 		}
 		if storageType != "" {
 			keyName := fmt.Sprintf("%s_FILE_STORAGE", strings.ToUpper(storageType))
