@@ -99,6 +99,7 @@ type StorageManager interface {
 	GetVolumeCountLimits() ([]datatypes.Container_Network_Storage_DataCenterLimits_VolumeCountLimitContainer, error)
 	VolumeRefresh(volumeId int, snapshotId int) error
 	VolumeConvert(volumeId int) error
+	VolumeSetNote(volumeId int, note string) (bool, error)
 }
 
 type storageManager struct {
@@ -802,6 +803,16 @@ func (s storageManager) VolumeConvert(volumeId int) error {
 func (s storageManager) VolumeRefresh(volumeId int, snapshotId int) error {
 	_, err := s.StorageService.Id(volumeId).RefreshDuplicate(sl.Int(snapshotId))
 	return err
+}
+
+//Add a note in a storage volume.
+//volumeId: The ID of the volume to add.
+//note: The note that will be added.
+func (s storageManager) VolumeSetNote(volumeId int, note string) (bool, error) {
+	noteTemplate := datatypes.Network_Storage{
+		Notes: sl.String(note),
+	}
+	return s.StorageService.Id(volumeId).EditObject(&noteTemplate)
 }
 
 //Enables/Disables snapshot space usage threshold warning for a given volume.

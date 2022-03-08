@@ -55,6 +55,7 @@ func FileMetaData() cli.Command {
 			FileDisasterRecoveryFailoverMetaData(),
 			FileVolumeSnapshotSetNotificationMetaData(),
 			FileVolumeSnapshotGetNotificationStatusMetaData(),
+			FileVolumeSetNoteMetaData(),
 		},
 	}
 }
@@ -156,6 +157,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return NewVolumeConvertCommand(ui, storageManager).Run(c)
 		},
 		// sl file disaster-recovery-failover is in commands/block/block.go
+		// sl file volume-set-note is in commands/block/block.go
 	}
 
 	return CommandActionBindings

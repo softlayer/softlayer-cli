@@ -113,9 +113,15 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		"block-disaster-recovery-failover": func(c *cli.Context) error {
 			return NewDisasterRecoveryFailoverCommand(ui, storageManager).Run(c)
 		},
+		"block-volume-set-note": func(c *cli.Context) error {
+			return NewVolumeSetNoteCommand(ui, storageManager).Run(c)
+		},
 		// Commands that are the same for file and block go here.
 		"file-disaster-recovery-failover": func(c *cli.Context) error {
 			return NewDisasterRecoveryFailoverCommand(ui, storageManager).Run(c)
+		},
+		"file-volume-set-note": func(c *cli.Context) error {
+			return NewVolumeSetNoteCommand(ui, storageManager).Run(c)
 		},
 	}
 
@@ -170,6 +176,7 @@ func BlockMetaData() cli.Command {
 			BlockVolumeConvertMetaData(),
 			BlockVolumeSnapshotSetNotificationMetaData(),
 			BlockVolumeSnapshotGetNotificationStatusMetaData(),
+			BlockVolumeSetNoteMetaData(),
 		},
 	}
 }
