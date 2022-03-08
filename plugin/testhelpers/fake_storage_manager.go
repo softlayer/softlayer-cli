@@ -469,6 +469,20 @@ type FakeStorageManager struct {
 	volumeRefreshReturnsOnCall map[int]struct {
 		result1 error
 	}
+	VolumeSetNoteStub        func(int, string) (bool, error)
+	volumeSetNoteMutex       sync.RWMutex
+	volumeSetNoteArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	volumeSetNoteReturns struct {
+		result1 bool
+		result2 error
+	}
+	volumeSetNoteReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -2629,6 +2643,71 @@ func (fake *FakeStorageManager) VolumeRefreshReturnsOnCall(i int, result1 error)
 	}{result1}
 }
 
+func (fake *FakeStorageManager) VolumeSetNote(arg1 int, arg2 string) (bool, error) {
+	fake.volumeSetNoteMutex.Lock()
+	ret, specificReturn := fake.volumeSetNoteReturnsOnCall[len(fake.volumeSetNoteArgsForCall)]
+	fake.volumeSetNoteArgsForCall = append(fake.volumeSetNoteArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.VolumeSetNoteStub
+	fakeReturns := fake.volumeSetNoteReturns
+	fake.recordInvocation("VolumeSetNote", []interface{}{arg1, arg2})
+	fake.volumeSetNoteMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) VolumeSetNoteCallCount() int {
+	fake.volumeSetNoteMutex.RLock()
+	defer fake.volumeSetNoteMutex.RUnlock()
+	return len(fake.volumeSetNoteArgsForCall)
+}
+
+func (fake *FakeStorageManager) VolumeSetNoteCalls(stub func(int, string) (bool, error)) {
+	fake.volumeSetNoteMutex.Lock()
+	defer fake.volumeSetNoteMutex.Unlock()
+	fake.VolumeSetNoteStub = stub
+}
+
+func (fake *FakeStorageManager) VolumeSetNoteArgsForCall(i int) (int, string) {
+	fake.volumeSetNoteMutex.RLock()
+	defer fake.volumeSetNoteMutex.RUnlock()
+	argsForCall := fake.volumeSetNoteArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeStorageManager) VolumeSetNoteReturns(result1 bool, result2 error) {
+	fake.volumeSetNoteMutex.Lock()
+	defer fake.volumeSetNoteMutex.Unlock()
+	fake.VolumeSetNoteStub = nil
+	fake.volumeSetNoteReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) VolumeSetNoteReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.volumeSetNoteMutex.Lock()
+	defer fake.volumeSetNoteMutex.Unlock()
+	fake.VolumeSetNoteStub = nil
+	if fake.volumeSetNoteReturnsOnCall == nil {
+		fake.volumeSetNoteReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.volumeSetNoteReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -2698,6 +2777,8 @@ func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	defer fake.volumeConvertMutex.RUnlock()
 	fake.volumeRefreshMutex.RLock()
 	defer fake.volumeRefreshMutex.RUnlock()
+	fake.volumeSetNoteMutex.RLock()
+	defer fake.volumeSetNoteMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
