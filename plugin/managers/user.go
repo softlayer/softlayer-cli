@@ -40,6 +40,7 @@ type UserManager interface {
 	CreateUser(templateObject datatypes.User_Customer, password string, vpnPassword string) (datatypes.User_Customer, error)
 	EditUser(templateObject datatypes.User_Customer, UserId int) (bool, error)
 	AddApiAuthenticationKey(UserId int) (string, error)
+	GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error)
 }
 
 type userManager struct {
@@ -47,6 +48,7 @@ type userManager struct {
 	UserCustomerService   services.User_Customer
 	UserPermissionService services.User_Customer_CustomerPermission_Permission
 	EventLogService       services.Event_Log
+	Email_Subscription    services.Email_Subscription
 }
 
 func NewUserManager(session *session.Session) *userManager {
@@ -55,6 +57,7 @@ func NewUserManager(session *session.Session) *userManager {
 		services.GetUserCustomerService(session),
 		services.GetUserCustomerCustomerPermissionPermissionService(session),
 		services.GetEventLogService(session),
+		services.GetEmailSubscriptionService(session),
 	}
 }
 
@@ -221,4 +224,8 @@ func keyNameSearch(permissions []datatypes.User_Customer_CustomerPermission_Perm
 		}
 	}
 	return false
+}
+
+func (u userManager) GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error) {
+	return u.Email_Subscription.Mask(mask).GetAllObjects()
 }

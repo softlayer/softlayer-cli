@@ -79,6 +79,19 @@ type FakeUserManager struct {
 		result1 []datatypes.User_Customer_CustomerPermission_Permission
 		result2 error
 	}
+	GetAllNotificationsStub        func(string) ([]datatypes.Email_Subscription, error)
+	getAllNotificationsMutex       sync.RWMutex
+	getAllNotificationsArgsForCall []struct {
+		arg1 string
+	}
+	getAllNotificationsReturns struct {
+		result1 []datatypes.Email_Subscription
+		result2 error
+	}
+	getAllNotificationsReturnsOnCall map[int]struct {
+		result1 []datatypes.Email_Subscription
+		result2 error
+	}
 	GetAllPermissionStub        func() ([]datatypes.User_Customer_CustomerPermission_Permission, error)
 	getAllPermissionMutex       sync.RWMutex
 	getAllPermissionArgsForCall []struct {
@@ -220,15 +233,16 @@ func (fake *FakeUserManager) AddApiAuthenticationKey(arg1 int) (string, error) {
 	fake.addApiAuthenticationKeyArgsForCall = append(fake.addApiAuthenticationKeyArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.AddApiAuthenticationKeyStub
+	fakeReturns := fake.addApiAuthenticationKeyReturns
 	fake.recordInvocation("AddApiAuthenticationKey", []interface{}{arg1})
 	fake.addApiAuthenticationKeyMutex.Unlock()
-	if fake.AddApiAuthenticationKeyStub != nil {
-		return fake.AddApiAuthenticationKeyStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.addApiAuthenticationKeyReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -289,15 +303,16 @@ func (fake *FakeUserManager) AddPermission(arg1 int, arg2 []datatypes.User_Custo
 		arg1 int
 		arg2 []datatypes.User_Customer_CustomerPermission_Permission
 	}{arg1, arg2Copy})
+	stub := fake.AddPermissionStub
+	fakeReturns := fake.addPermissionReturns
 	fake.recordInvocation("AddPermission", []interface{}{arg1, arg2Copy})
 	fake.addPermissionMutex.Unlock()
-	if fake.AddPermissionStub != nil {
-		return fake.AddPermissionStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.addPermissionReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -354,15 +369,16 @@ func (fake *FakeUserManager) CreateUser(arg1 datatypes.User_Customer, arg2 strin
 		arg2 string
 		arg3 string
 	}{arg1, arg2, arg3})
+	stub := fake.CreateUserStub
+	fakeReturns := fake.createUserReturns
 	fake.recordInvocation("CreateUser", []interface{}{arg1, arg2, arg3})
 	fake.createUserMutex.Unlock()
-	if fake.CreateUserStub != nil {
-		return fake.CreateUserStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createUserReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -418,15 +434,16 @@ func (fake *FakeUserManager) EditUser(arg1 datatypes.User_Customer, arg2 int) (b
 		arg1 datatypes.User_Customer
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.EditUserStub
+	fakeReturns := fake.editUserReturns
 	fake.recordInvocation("EditUser", []interface{}{arg1, arg2})
 	fake.editUserMutex.Unlock()
-	if fake.EditUserStub != nil {
-		return fake.EditUserStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.editUserReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -486,15 +503,16 @@ func (fake *FakeUserManager) FormatPermissionObject(arg1 []string) ([]datatypes.
 	fake.formatPermissionObjectArgsForCall = append(fake.formatPermissionObjectArgsForCall, struct {
 		arg1 []string
 	}{arg1Copy})
+	stub := fake.FormatPermissionObjectStub
+	fakeReturns := fake.formatPermissionObjectReturns
 	fake.recordInvocation("FormatPermissionObject", []interface{}{arg1Copy})
 	fake.formatPermissionObjectMutex.Unlock()
-	if fake.FormatPermissionObjectStub != nil {
-		return fake.FormatPermissionObjectStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.formatPermissionObjectReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -543,20 +561,85 @@ func (fake *FakeUserManager) FormatPermissionObjectReturnsOnCall(i int, result1 
 	}{result1, result2}
 }
 
+func (fake *FakeUserManager) GetAllNotifications(arg1 string) ([]datatypes.Email_Subscription, error) {
+	fake.getAllNotificationsMutex.Lock()
+	ret, specificReturn := fake.getAllNotificationsReturnsOnCall[len(fake.getAllNotificationsArgsForCall)]
+	fake.getAllNotificationsArgsForCall = append(fake.getAllNotificationsArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetAllNotificationsStub
+	fakeReturns := fake.getAllNotificationsReturns
+	fake.recordInvocation("GetAllNotifications", []interface{}{arg1})
+	fake.getAllNotificationsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) GetAllNotificationsCallCount() int {
+	fake.getAllNotificationsMutex.RLock()
+	defer fake.getAllNotificationsMutex.RUnlock()
+	return len(fake.getAllNotificationsArgsForCall)
+}
+
+func (fake *FakeUserManager) GetAllNotificationsCalls(stub func(string) ([]datatypes.Email_Subscription, error)) {
+	fake.getAllNotificationsMutex.Lock()
+	defer fake.getAllNotificationsMutex.Unlock()
+	fake.GetAllNotificationsStub = stub
+}
+
+func (fake *FakeUserManager) GetAllNotificationsArgsForCall(i int) string {
+	fake.getAllNotificationsMutex.RLock()
+	defer fake.getAllNotificationsMutex.RUnlock()
+	argsForCall := fake.getAllNotificationsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeUserManager) GetAllNotificationsReturns(result1 []datatypes.Email_Subscription, result2 error) {
+	fake.getAllNotificationsMutex.Lock()
+	defer fake.getAllNotificationsMutex.Unlock()
+	fake.GetAllNotificationsStub = nil
+	fake.getAllNotificationsReturns = struct {
+		result1 []datatypes.Email_Subscription
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetAllNotificationsReturnsOnCall(i int, result1 []datatypes.Email_Subscription, result2 error) {
+	fake.getAllNotificationsMutex.Lock()
+	defer fake.getAllNotificationsMutex.Unlock()
+	fake.GetAllNotificationsStub = nil
+	if fake.getAllNotificationsReturnsOnCall == nil {
+		fake.getAllNotificationsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Email_Subscription
+			result2 error
+		})
+	}
+	fake.getAllNotificationsReturnsOnCall[i] = struct {
+		result1 []datatypes.Email_Subscription
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeUserManager) GetAllPermission() ([]datatypes.User_Customer_CustomerPermission_Permission, error) {
 	fake.getAllPermissionMutex.Lock()
 	ret, specificReturn := fake.getAllPermissionReturnsOnCall[len(fake.getAllPermissionArgsForCall)]
 	fake.getAllPermissionArgsForCall = append(fake.getAllPermissionArgsForCall, struct {
 	}{})
+	stub := fake.GetAllPermissionStub
+	fakeReturns := fake.getAllPermissionReturns
 	fake.recordInvocation("GetAllPermission", []interface{}{})
 	fake.getAllPermissionMutex.Unlock()
-	if fake.GetAllPermissionStub != nil {
-		return fake.GetAllPermissionStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getAllPermissionReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -603,15 +686,16 @@ func (fake *FakeUserManager) GetCurrentUser() (datatypes.User_Customer, error) {
 	ret, specificReturn := fake.getCurrentUserReturnsOnCall[len(fake.getCurrentUserArgsForCall)]
 	fake.getCurrentUserArgsForCall = append(fake.getCurrentUserArgsForCall, struct {
 	}{})
+	stub := fake.GetCurrentUserStub
+	fakeReturns := fake.getCurrentUserReturns
 	fake.recordInvocation("GetCurrentUser", []interface{}{})
 	fake.getCurrentUserMutex.Unlock()
-	if fake.GetCurrentUserStub != nil {
-		return fake.GetCurrentUserStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getCurrentUserReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -660,15 +744,16 @@ func (fake *FakeUserManager) GetEvents(arg1 int, arg2 time.Time) ([]datatypes.Ev
 		arg1 int
 		arg2 time.Time
 	}{arg1, arg2})
+	stub := fake.GetEventsStub
+	fakeReturns := fake.getEventsReturns
 	fake.recordInvocation("GetEvents", []interface{}{arg1, arg2})
 	fake.getEventsMutex.Unlock()
-	if fake.GetEventsStub != nil {
-		return fake.GetEventsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getEventsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -723,15 +808,16 @@ func (fake *FakeUserManager) GetIdFromUsername(arg1 string) (int, error) {
 	fake.getIdFromUsernameArgsForCall = append(fake.getIdFromUsernameArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.GetIdFromUsernameStub
+	fakeReturns := fake.getIdFromUsernameReturns
 	fake.recordInvocation("GetIdFromUsername", []interface{}{arg1})
 	fake.getIdFromUsernameMutex.Unlock()
-	if fake.GetIdFromUsernameStub != nil {
-		return fake.GetIdFromUsernameStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getIdFromUsernameReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -787,15 +873,16 @@ func (fake *FakeUserManager) GetLogins(arg1 int, arg2 time.Time) ([]datatypes.Us
 		arg1 int
 		arg2 time.Time
 	}{arg1, arg2})
+	stub := fake.GetLoginsStub
+	fakeReturns := fake.getLoginsReturns
 	fake.recordInvocation("GetLogins", []interface{}{arg1, arg2})
 	fake.getLoginsMutex.Unlock()
-	if fake.GetLoginsStub != nil {
-		return fake.GetLoginsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getLoginsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -851,15 +938,16 @@ func (fake *FakeUserManager) GetUser(arg1 int, arg2 string) (datatypes.User_Cust
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetUserStub
+	fakeReturns := fake.getUserReturns
 	fake.recordInvocation("GetUser", []interface{}{arg1, arg2})
 	fake.getUserMutex.Unlock()
-	if fake.GetUserStub != nil {
-		return fake.GetUserStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getUserReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -914,15 +1002,16 @@ func (fake *FakeUserManager) GetUserPermissions(arg1 int) ([]datatypes.User_Cust
 	fake.getUserPermissionsArgsForCall = append(fake.getUserPermissionsArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetUserPermissionsStub
+	fakeReturns := fake.getUserPermissionsReturns
 	fake.recordInvocation("GetUserPermissions", []interface{}{arg1})
 	fake.getUserPermissionsMutex.Unlock()
-	if fake.GetUserPermissionsStub != nil {
-		return fake.GetUserPermissionsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getUserPermissionsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -977,15 +1066,16 @@ func (fake *FakeUserManager) ListUsers(arg1 string) ([]datatypes.User_Customer, 
 	fake.listUsersArgsForCall = append(fake.listUsersArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.ListUsersStub
+	fakeReturns := fake.listUsersReturns
 	fake.recordInvocation("ListUsers", []interface{}{arg1})
 	fake.listUsersMutex.Unlock()
-	if fake.ListUsersStub != nil {
-		return fake.ListUsersStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listUsersReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1041,15 +1131,16 @@ func (fake *FakeUserManager) PermissionFromUser(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.PermissionFromUserStub
+	fakeReturns := fake.permissionFromUserReturns
 	fake.recordInvocation("PermissionFromUser", []interface{}{arg1, arg2})
 	fake.permissionFromUserMutex.Unlock()
-	if fake.PermissionFromUserStub != nil {
-		return fake.PermissionFromUserStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.permissionFromUserReturns
 	return fakeReturns.result1
 }
 
@@ -1107,15 +1198,16 @@ func (fake *FakeUserManager) RemovePermission(arg1 int, arg2 []datatypes.User_Cu
 		arg1 int
 		arg2 []datatypes.User_Customer_CustomerPermission_Permission
 	}{arg1, arg2Copy})
+	stub := fake.RemovePermissionStub
+	fakeReturns := fake.removePermissionReturns
 	fake.recordInvocation("RemovePermission", []interface{}{arg1, arg2Copy})
 	fake.removePermissionMutex.Unlock()
-	if fake.RemovePermissionStub != nil {
-		return fake.RemovePermissionStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.removePermissionReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1177,6 +1269,8 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.editUserMutex.RUnlock()
 	fake.formatPermissionObjectMutex.RLock()
 	defer fake.formatPermissionObjectMutex.RUnlock()
+	fake.getAllNotificationsMutex.RLock()
+	defer fake.getAllNotificationsMutex.RUnlock()
 	fake.getAllPermissionMutex.RLock()
 	defer fake.getAllPermissionMutex.RUnlock()
 	fake.getCurrentUserMutex.RLock()
