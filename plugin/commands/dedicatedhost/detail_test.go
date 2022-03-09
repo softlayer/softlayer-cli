@@ -18,13 +18,13 @@ import (
 var _ = Describe("Dedicated host detail", func() {
 	var (
 		fakeUI                   *terminal.FakeUI
-		FakeDedicatedhostManager *testhelpers.FakeDedicatedhostManager
+		FakeDedicatedhostManager *testhelpers.FakeDedicatedHostManager
 		cmd                      *dedicatedhost.DetailCommand
 		cliCommand               cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedhostManager)
+		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedHostManager)
 		cmd = dedicatedhost.NewDetailCommand(fakeUI, FakeDedicatedhostManager)
 		cliCommand = cli.Command{
 			Name:        dedicatedhost.DedicatedhostDetailMetaData().Name,

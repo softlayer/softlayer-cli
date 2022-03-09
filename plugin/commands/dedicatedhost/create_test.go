@@ -18,7 +18,7 @@ import (
 var _ = Describe("Dedicated host create", func() {
 	var (
 		fakeUI                   *terminal.FakeUI
-		FakeDedicatedhostManager *testhelpers.FakeDedicatedhostManager
+		FakeDedicatedhostManager *testhelpers.FakeDedicatedHostManager
 		fakeNetworkManager       *testhelpers.FakeNetworkManager
 		cmd                      *dedicatedhost.CreateCommand
 		cliCommand               cli.Command
@@ -26,7 +26,7 @@ var _ = Describe("Dedicated host create", func() {
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedhostManager)
+		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedHostManager)
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		context = plugin.InitPluginContext("softlayer")
 		cmd = dedicatedhost.NewCreateCommand(fakeUI, FakeDedicatedhostManager, fakeNetworkManager, context)
