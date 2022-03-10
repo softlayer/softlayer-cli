@@ -289,15 +289,16 @@ type FakeStorageManager struct {
 		result1 datatypes.Network_Storage
 		result2 error
 	}
-	ListVolumesStub        func(string, string, string, string, int, string) ([]datatypes.Network_Storage, error)
+	ListVolumesStub        func(string, string, string, string, string, int, string) ([]datatypes.Network_Storage, error)
 	listVolumesMutex       sync.RWMutex
 	listVolumesArgsForCall []struct {
 		arg1 string
 		arg2 string
 		arg3 string
 		arg4 string
-		arg5 int
-		arg6 string
+		arg5 string
+		arg6 int
+		arg7 string
 	}
 	listVolumesReturns struct {
 		result1 []datatypes.Network_Storage
@@ -1855,7 +1856,7 @@ func (fake *FakeStorageManager) GetVolumeSnapshotSchedulesReturnsOnCall(i int, r
 	}{result1, result2}
 }
 
-func (fake *FakeStorageManager) ListVolumes(arg1 string, arg2 string, arg3 string, arg4 string, arg5 int, arg6 string) ([]datatypes.Network_Storage, error) {
+func (fake *FakeStorageManager) ListVolumes(arg1 string, arg2 string, arg3 string, arg4 string, arg5 string, arg6 int, arg7 string) ([]datatypes.Network_Storage, error) {
 	fake.listVolumesMutex.Lock()
 	ret, specificReturn := fake.listVolumesReturnsOnCall[len(fake.listVolumesArgsForCall)]
 	fake.listVolumesArgsForCall = append(fake.listVolumesArgsForCall, struct {
@@ -1863,15 +1864,16 @@ func (fake *FakeStorageManager) ListVolumes(arg1 string, arg2 string, arg3 strin
 		arg2 string
 		arg3 string
 		arg4 string
-		arg5 int
-		arg6 string
-	}{arg1, arg2, arg3, arg4, arg5, arg6})
+		arg5 string
+		arg6 int
+		arg7 string
+	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
 	stub := fake.ListVolumesStub
 	fakeReturns := fake.listVolumesReturns
-	fake.recordInvocation("ListVolumes", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
+	fake.recordInvocation("ListVolumes", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
 	fake.listVolumesMutex.Unlock()
 	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4, arg5, arg6)
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -1885,17 +1887,17 @@ func (fake *FakeStorageManager) ListVolumesCallCount() int {
 	return len(fake.listVolumesArgsForCall)
 }
 
-func (fake *FakeStorageManager) ListVolumesCalls(stub func(string, string, string, string, int, string) ([]datatypes.Network_Storage, error)) {
+func (fake *FakeStorageManager) ListVolumesCalls(stub func(string, string, string, string, string, int, string) ([]datatypes.Network_Storage, error)) {
 	fake.listVolumesMutex.Lock()
 	defer fake.listVolumesMutex.Unlock()
 	fake.ListVolumesStub = stub
 }
 
-func (fake *FakeStorageManager) ListVolumesArgsForCall(i int) (string, string, string, string, int, string) {
+func (fake *FakeStorageManager) ListVolumesArgsForCall(i int) (string, string, string, string, string, int, string) {
 	fake.listVolumesMutex.RLock()
 	defer fake.listVolumesMutex.RUnlock()
 	argsForCall := fake.listVolumesArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7
 }
 
 func (fake *FakeStorageManager) ListVolumesReturns(result1 []datatypes.Network_Storage, result2 error) {

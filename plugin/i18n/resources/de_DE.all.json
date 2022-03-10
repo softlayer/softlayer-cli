@@ -1834,6 +1834,8 @@
 "translation": "Nach Übertragungsgeschwindigkeit des Netzports in Mbit/s filtern"},
 {"id": "Filter by network space",
 "translation": "Nach Netzbereich filtern"},
+{"id": "Filter by notes",
+"translation": "Filter by notes"},
 {"id": "Filter by number of CPU cores",
 "translation": "Nach Anzahl CPU-Cores filtern"},
 {"id": "Filter by owner of the dedicated host",

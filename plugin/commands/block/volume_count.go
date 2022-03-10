@@ -39,7 +39,7 @@ func BlockVolumeCountMetaData() cli.Command {
 
 func (cmd *VolumeCountCommand) Run(c *cli.Context) error {
 	mask := "mask[id,serviceResource.datacenter.name]"
-	volumes, err := cmd.StorageManager.ListVolumes(managers.VOLUME_TYPE_BLOCK, c.String("d"), "", "", 0, mask)
+	volumes, err := cmd.StorageManager.ListVolumes(managers.VOLUME_TYPE_BLOCK, c.String("d"), "", "", "", 0, mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to list volumes on your account.\n")+err.Error(), 2)
 	}

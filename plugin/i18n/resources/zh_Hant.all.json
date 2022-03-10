@@ -1834,6 +1834,8 @@
 "translation": "依網路埠速度 (Mbps) 過濾"},
 {"id": "Filter by network space",
 "translation": "依網路空間過濾"},
+{"id": "Filter by notes",
+"translation": "Filter by notes"},
 {"id": "Filter by number of CPU cores",
 "translation": "依 CPU 核心數目過濾"},
 {"id": "Filter by owner of the dedicated host",

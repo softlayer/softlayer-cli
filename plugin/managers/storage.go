@@ -77,7 +77,7 @@ type StorageManager interface {
 	GetReplicationPartners(volumeId int) ([]datatypes.Network_Storage, error)
 	GetReplicationLocations(volumeId int) ([]datatypes.Location, error)
 
-	ListVolumes(volumeType string, datacenter string, username string, storageType string, orderId int, mask string) ([]datatypes.Network_Storage, error)
+	ListVolumes(volumeType string, datacenter string, username string, storageType string, notes string, orderId int, mask string) ([]datatypes.Network_Storage, error)
 	GetVolumeDetails(volumeType string, volumeId int, mask string) (datatypes.Network_Storage, error)
 	GetVolumeByUsername(username string) ([]datatypes.Network_Storage, error)
 	OrderVolume(volumeType string, location string, storageType string, osType string, size int, tier float64, iops int, snapshotSize int, billing bool) (datatypes.Container_Product_Order_Receipt, error)
@@ -299,7 +299,7 @@ func (s storageManager) GetReplicationLocations(volumeId int) ([]datatypes.Locat
 //username: Name of volume.
 //storageType: Type of volume: Endurance or Performance
 //orderId: ID of order
-func (s storageManager) ListVolumes(volumeType string, datacenter string, username string, storageType string, orderId int, mask string) ([]datatypes.Network_Storage, error) {
+func (s storageManager) ListVolumes(volumeType string, datacenter string, username string, storageType string, notes string, orderId int, mask string) ([]datatypes.Network_Storage, error) {
 	filters := filter.New()
 	if volumeType == VOLUME_TYPE_BLOCK {
 		if mask == "" {
@@ -311,6 +311,9 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 		}
 		if username != "" {
 			filters = append(filters, filter.Path("iscsiNetworkStorage.username").Eq(username))
+		}
+		if notes != "" {
+			filters = append(filters, filter.Path("iscsiNetworkStorage.notes").Contains(notes))
 		}
 		if storageType != "" {
 			keyName := fmt.Sprintf("%s_BLOCK_STORAGE", strings.ToUpper(storageType))
@@ -353,6 +356,9 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 		}
 		if username != "" {
 			filters = append(filters, filter.Path("nasNetworkStorage.username").Eq(username))
+		}
+		if notes != "" {
+			filters = append(filters, filter.Path("nasNetworkStorage.notes").Contains(notes))
 		}
 		if storageType != "" {
 			keyName := fmt.Sprintf("%s_FILE_STORAGE", strings.ToUpper(storageType))
