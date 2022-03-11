@@ -48,6 +48,15 @@ var _ = Describe("Load balancer cancel", func() {
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"This will cancel the load balancer: 1234 and cannot be undone. Continue?"}))
 		})
 	})
+	Context("cancel with confirmation error", func() {
+		It("return error", func() {
+			fakeUI.Inputs("123456")
+			err := testhelpers.RunCommand(cliCommand, "--id", "1234")
+			Expect(err).To(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring("This will cancel the load balancer: 1234 and cannot be undone. Continue?"))
+			Expect(err.Error()).To(ContainSubstring("input must be 'y', 'n', 'yes' or 'no'"))
+		})
+	})
 	Context("cancel with server fails", func() {
 		BeforeEach(func() {
 			fakeLBManager.CancelLoadBalancerReturns(true, errors.New("Internal server error"))
@@ -68,6 +77,16 @@ var _ = Describe("Load balancer cancel", func() {
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Load balancer 1234 is cancelled."}))
+		})
+	})
+	Context("cancel with server error, load balancer with UUID fail", func() {
+		BeforeEach(func() {
+			fakeLBManager.GetLoadBalancerUUIDReturns("", errors.New("Internal server error"))
+		})
+		It("return no error", func() {
+			err := testhelpers.RunCommand(cliCommand, "--id", "1234", "-f")
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(ContainSubstring("Failed to get load balancer: Internal server error."))
 		})
 	})
 })
