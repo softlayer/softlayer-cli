@@ -41,7 +41,7 @@ func (cmd *EditNotificationsCommand) Run(c *cli.Context) error {
 	}
 
 	if !c.IsSet("disable") && !c.IsSet("enable") && (c.NArg() == 0) {
-		return slErr.NewInvalidUsageError(T("This command requires notification names as arguments and options flags"))
+		return slErr.NewInvalidUsageError(T("This command requires notification names as arguments and options flags."))
 	}
 
 	notificationsInput := []string{}
@@ -78,7 +78,7 @@ func (cmd *EditNotificationsCommand) Run(c *cli.Context) error {
 	}
 
 	if len(failedNotifications) > 0 {
-		cmd.UI.Print(T("Notifications updated unsuccessfully: " + printNotifications(failedNotifications) + ". Review if already set or if the name is correct"))
+		cmd.UI.Print(T("Notifications updated unsuccessfully: " + printNotifications(failedNotifications) + ". Review if already set or if the name is correct."))
 	}
 
 	return nil
