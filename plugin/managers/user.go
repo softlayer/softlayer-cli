@@ -41,6 +41,8 @@ type UserManager interface {
 	EditUser(templateObject datatypes.User_Customer, UserId int) (bool, error)
 	AddApiAuthenticationKey(UserId int) (string, error)
 	GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error)
+	EnableEmailSubscriptionNotification(notificationId int) (bool, error)
+	DisableEmailSubscriptionNotification(notificationId int) (bool, error)
 }
 
 type userManager struct {
@@ -228,4 +230,12 @@ func keyNameSearch(permissions []datatypes.User_Customer_CustomerPermission_Perm
 
 func (u userManager) GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error) {
 	return u.Email_Subscription.Mask(mask).GetAllObjects()
+}
+
+func (u userManager) EnableEmailSubscriptionNotification(notificationId int) (bool, error) {
+	return u.Email_Subscription.Id(notificationId).Enable()
+}
+
+func (u userManager) DisableEmailSubscriptionNotification(notificationId int) (bool, error) {
+	return u.Email_Subscription.Id(notificationId).Disable()
 }
