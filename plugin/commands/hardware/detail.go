@@ -140,6 +140,30 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 			table.Add("Remote users", buf.String())
 		}
 	}
+
+	if c.IsSet("components") {
+		components, err := cmd.HardwareManager.GetHardwareComponents(hardwareId)
+		componentIds := []int{}
+		if err != nil {
+			return cli.NewExitError(T("Failed to get components\n")+err.Error(), 2)
+		}
+		buf := new(bytes.Buffer)
+		componentTable := terminal.NewTable(buf, []string{T("Name"), T("Firmware version"), T("Firmware build date"), T("Type")})
+		for _, component := range components {
+			if utils.IntInSlice(*component.Id, componentIds) == -1 {
+				componentTable.Add(
+					utils.FormatStringPointer(component.HardwareComponentModel.LongDescription),
+					utils.FormatStringPointer(component.HardwareComponentModel.Firmwares[0].Version),
+					utils.FormatSLTimePointer(component.HardwareComponentModel.Firmwares[0].CreateDate),
+					utils.FormatStringPointer(component.HardwareComponentModel.HardwareGenericComponentModel.HardwareComponentType.KeyName),
+				)
+				componentIds = append(componentIds, *component.Id)
+			}
+		}
+		componentTable.Print()
+		table.Add("Components", buf.String())
+	}
+
 	table.Print()
 	return nil
 }
@@ -156,8 +180,12 @@ func HardwareDetailMetaData() cli.Command {
 				Usage: T("Show passwords (check over your shoulder!)"),
 			},
 			cli.BoolFlag{
-				Name:  "c,price",
+				Name:  "b,price",
 				Usage: T("Show associated prices"),
+			},
+			cli.BoolFlag{
+				Name:  "c,components",
+				Usage: T("Show associated hardware components"),
 			},
 			metadata.OutputFlag(),
 		},
