@@ -58,20 +58,20 @@ func (cmd *MembersDelCommand) Run(c *cli.Context) error {
 	return nil
 }
 
-func LoadbalL7MemberDeleteMetadata() cli.Command {
+func LoadbalMemberDelMetadata() cli.Command {
 	return cli.Command{
 		Category:    "loadbal",
-		Name:        "l7member-delete",
+		Name:        "member-delete",
 		Description: T("Remove a load balancer member"),
-		Usage:       "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
+		Usage:       "${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)",
 		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "pool-uuid",
-				Usage: T("UUID for the load balancer pool [required]"),
+			cli.IntFlag{
+				Name:  "lb-id",
+				Usage: T("ID for the load balancer [required]"),
 			},
 			cli.StringFlag{
-				Name:  "member-uuid",
-				Usage: T("UUID for the load balancer member [required]"),
+				Name:  "m,member-uuid",
+				Usage: T("Member UUID [required]"),
 			},
 		},
 	}
