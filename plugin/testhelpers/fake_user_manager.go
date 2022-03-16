@@ -52,6 +52,19 @@ type FakeUserManager struct {
 		result1 datatypes.User_Customer
 		result2 error
 	}
+	DisableEmailSubscriptionNotificationStub        func(int) (bool, error)
+	disableEmailSubscriptionNotificationMutex       sync.RWMutex
+	disableEmailSubscriptionNotificationArgsForCall []struct {
+		arg1 int
+	}
+	disableEmailSubscriptionNotificationReturns struct {
+		result1 bool
+		result2 error
+	}
+	disableEmailSubscriptionNotificationReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	EditUserStub        func(datatypes.User_Customer, int) (bool, error)
 	editUserMutex       sync.RWMutex
 	editUserArgsForCall []struct {
@@ -63,6 +76,19 @@ type FakeUserManager struct {
 		result2 error
 	}
 	editUserReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
+	EnableEmailSubscriptionNotificationStub        func(int) (bool, error)
+	enableEmailSubscriptionNotificationMutex       sync.RWMutex
+	enableEmailSubscriptionNotificationArgsForCall []struct {
+		arg1 int
+	}
+	enableEmailSubscriptionNotificationReturns struct {
+		result1 bool
+		result2 error
+	}
+	enableEmailSubscriptionNotificationReturnsOnCall map[int]struct {
 		result1 bool
 		result2 error
 	}
@@ -427,6 +453,70 @@ func (fake *FakeUserManager) CreateUserReturnsOnCall(i int, result1 datatypes.Us
 	}{result1, result2}
 }
 
+func (fake *FakeUserManager) DisableEmailSubscriptionNotification(arg1 int) (bool, error) {
+	fake.disableEmailSubscriptionNotificationMutex.Lock()
+	ret, specificReturn := fake.disableEmailSubscriptionNotificationReturnsOnCall[len(fake.disableEmailSubscriptionNotificationArgsForCall)]
+	fake.disableEmailSubscriptionNotificationArgsForCall = append(fake.disableEmailSubscriptionNotificationArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DisableEmailSubscriptionNotificationStub
+	fakeReturns := fake.disableEmailSubscriptionNotificationReturns
+	fake.recordInvocation("DisableEmailSubscriptionNotification", []interface{}{arg1})
+	fake.disableEmailSubscriptionNotificationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) DisableEmailSubscriptionNotificationCallCount() int {
+	fake.disableEmailSubscriptionNotificationMutex.RLock()
+	defer fake.disableEmailSubscriptionNotificationMutex.RUnlock()
+	return len(fake.disableEmailSubscriptionNotificationArgsForCall)
+}
+
+func (fake *FakeUserManager) DisableEmailSubscriptionNotificationCalls(stub func(int) (bool, error)) {
+	fake.disableEmailSubscriptionNotificationMutex.Lock()
+	defer fake.disableEmailSubscriptionNotificationMutex.Unlock()
+	fake.DisableEmailSubscriptionNotificationStub = stub
+}
+
+func (fake *FakeUserManager) DisableEmailSubscriptionNotificationArgsForCall(i int) int {
+	fake.disableEmailSubscriptionNotificationMutex.RLock()
+	defer fake.disableEmailSubscriptionNotificationMutex.RUnlock()
+	argsForCall := fake.disableEmailSubscriptionNotificationArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeUserManager) DisableEmailSubscriptionNotificationReturns(result1 bool, result2 error) {
+	fake.disableEmailSubscriptionNotificationMutex.Lock()
+	defer fake.disableEmailSubscriptionNotificationMutex.Unlock()
+	fake.DisableEmailSubscriptionNotificationStub = nil
+	fake.disableEmailSubscriptionNotificationReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) DisableEmailSubscriptionNotificationReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.disableEmailSubscriptionNotificationMutex.Lock()
+	defer fake.disableEmailSubscriptionNotificationMutex.Unlock()
+	fake.DisableEmailSubscriptionNotificationStub = nil
+	if fake.disableEmailSubscriptionNotificationReturnsOnCall == nil {
+		fake.disableEmailSubscriptionNotificationReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.disableEmailSubscriptionNotificationReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeUserManager) EditUser(arg1 datatypes.User_Customer, arg2 int) (bool, error) {
 	fake.editUserMutex.Lock()
 	ret, specificReturn := fake.editUserReturnsOnCall[len(fake.editUserArgsForCall)]
@@ -487,6 +577,70 @@ func (fake *FakeUserManager) EditUserReturnsOnCall(i int, result1 bool, result2 
 		})
 	}
 	fake.editUserReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) EnableEmailSubscriptionNotification(arg1 int) (bool, error) {
+	fake.enableEmailSubscriptionNotificationMutex.Lock()
+	ret, specificReturn := fake.enableEmailSubscriptionNotificationReturnsOnCall[len(fake.enableEmailSubscriptionNotificationArgsForCall)]
+	fake.enableEmailSubscriptionNotificationArgsForCall = append(fake.enableEmailSubscriptionNotificationArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.EnableEmailSubscriptionNotificationStub
+	fakeReturns := fake.enableEmailSubscriptionNotificationReturns
+	fake.recordInvocation("EnableEmailSubscriptionNotification", []interface{}{arg1})
+	fake.enableEmailSubscriptionNotificationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) EnableEmailSubscriptionNotificationCallCount() int {
+	fake.enableEmailSubscriptionNotificationMutex.RLock()
+	defer fake.enableEmailSubscriptionNotificationMutex.RUnlock()
+	return len(fake.enableEmailSubscriptionNotificationArgsForCall)
+}
+
+func (fake *FakeUserManager) EnableEmailSubscriptionNotificationCalls(stub func(int) (bool, error)) {
+	fake.enableEmailSubscriptionNotificationMutex.Lock()
+	defer fake.enableEmailSubscriptionNotificationMutex.Unlock()
+	fake.EnableEmailSubscriptionNotificationStub = stub
+}
+
+func (fake *FakeUserManager) EnableEmailSubscriptionNotificationArgsForCall(i int) int {
+	fake.enableEmailSubscriptionNotificationMutex.RLock()
+	defer fake.enableEmailSubscriptionNotificationMutex.RUnlock()
+	argsForCall := fake.enableEmailSubscriptionNotificationArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeUserManager) EnableEmailSubscriptionNotificationReturns(result1 bool, result2 error) {
+	fake.enableEmailSubscriptionNotificationMutex.Lock()
+	defer fake.enableEmailSubscriptionNotificationMutex.Unlock()
+	fake.EnableEmailSubscriptionNotificationStub = nil
+	fake.enableEmailSubscriptionNotificationReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) EnableEmailSubscriptionNotificationReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.enableEmailSubscriptionNotificationMutex.Lock()
+	defer fake.enableEmailSubscriptionNotificationMutex.Unlock()
+	fake.EnableEmailSubscriptionNotificationStub = nil
+	if fake.enableEmailSubscriptionNotificationReturnsOnCall == nil {
+		fake.enableEmailSubscriptionNotificationReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.enableEmailSubscriptionNotificationReturnsOnCall[i] = struct {
 		result1 bool
 		result2 error
 	}{result1, result2}
@@ -1265,8 +1419,12 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.addPermissionMutex.RUnlock()
 	fake.createUserMutex.RLock()
 	defer fake.createUserMutex.RUnlock()
+	fake.disableEmailSubscriptionNotificationMutex.RLock()
+	defer fake.disableEmailSubscriptionNotificationMutex.RUnlock()
 	fake.editUserMutex.RLock()
 	defer fake.editUserMutex.RUnlock()
+	fake.enableEmailSubscriptionNotificationMutex.RLock()
+	defer fake.enableEmailSubscriptionNotificationMutex.RUnlock()
 	fake.formatPermissionObjectMutex.RLock()
 	defer fake.formatPermissionObjectMutex.RUnlock()
 	fake.getAllNotificationsMutex.RLock()
