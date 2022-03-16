@@ -180,11 +180,11 @@ func HardwareDetailMetaData() cli.Command {
 				Usage: T("Show passwords (check over your shoulder!)"),
 			},
 			cli.BoolFlag{
-				Name:  "b,price",
+				Name:  "c,price",
 				Usage: T("Show associated prices"),
 			},
 			cli.BoolFlag{
-				Name:  "c,components",
+				Name:  "components",
 				Usage: T("Show associated hardware components"),
 			},
 			metadata.OutputFlag(),
