@@ -2,6 +2,7 @@ package reports
 
 import (
 	"fmt"
+
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/softlayer/softlayer-go/session"
@@ -13,6 +14,7 @@ import (
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type Search_Result struct {
@@ -21,6 +23,15 @@ type Search_Result struct {
 	RelevanceScore *datatypes.Float64 `json:"relevanceScore,omitempty" xmlrpc:"relevanceScore,omitempty"`
 	Resource *datatypes.Network_Vlan `json:"resource,omitempty" xmlrpc:"resource,omitempty"`
 	ResourceType *string `json:"resourceType,omitempty" xmlrpc:"resourceType,omitempty"`
+}
+
+type Resource_Object struct {
+	Hostname     	string
+	Id 			 	int
+	PublicVlan 	 	string
+	PrivateVlan  	string
+	ResourceType	string
+	CancelDate	 	string
 }
 
 type DCClosuresCommand struct {
@@ -48,7 +59,12 @@ func DCClosuresMetaData() cli.Command {
 }
 
 func (cmd *DCClosuresCommand) Run(c *cli.Context) error {
-	fmt.Printf("HELLO WORLD")
+
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+
 	closing_filter := filter.New(
 		filter.Path("capabilities").In("CLOSURE_ANNOUNCED"),
 		filter.Path("name").OrderBy("DESC"),
@@ -58,31 +74,60 @@ backendRouterName, frontendRouterName]`
 	search_mask := `mask[
         resource(SoftLayer_Network_Vlan)[
             id,fullyQualifiedName,name,note,vlanNumber,networkSpace,
-            virtualGuests[id,fullyQualifiedDomainName,billingItem[cancellationDate]],
-            hardware[id,fullyQualifiedDomainName,billingItem[cancellationDate]],
-            networkVlanFirewall[id,primaryIpAddress,billingItem[cancellationDate]],
+            virtualGuests[id,fullyQualifiedDomainName,billingItem[id,cancellationDate]],
+            hardware[id,fullyQualifiedDomainName,billingItem[id,cancellationDate]],
+            networkVlanFirewall[id,primaryIpAddress,billingItem[id,cancellationDate]],
             privateNetworkGateways[id,name,networkSpace],
             publicNetworkGateways[id,name,networkSpace]
         ]
     ]`
     resource_search := `_objectType:SoftLayer_Network_Vlan  primaryRouter.hostname: '%v' || primaryRouter.hostname: '%v'`
 	pod_service := services.GetNetworkPodService(cmd.Session)
+	// Get all the pods that are closing
 	closing_pods, err := pod_service.Mask(closing_mask).Filter(closing_filter.Build()).GetAllObjects()
 	if err != nil {
 		return err
 	}
+	
+	table := cmd.UI.Table(
+		[]string{"Id", "Name", "Public VLAN", "Private VLAN", "Type", "Datacenter", "POD", "Cancellation Date"},
+	)
 	for _, pod := range closing_pods {
-		fmt.Printf("%v, %v\n", *pod.Name, *pod.DatacenterLongName)
+		resourceCollection := make(map[int]Resource_Object)
 		search_string := fmt.Sprintf(resource_search, *pod.BackendRouterName, *pod.FrontendRouterName)
+
+		// Search the VLAN for resources
 		vlans, err := AdvancedSearch(cmd.Session, search_string, search_mask)
 		if err != nil {
 			return err
 		}
+
+		// Iterate through the vlans looking for resources and formatting them nicely.
 		for _, vlan := range vlans {
-			fmt.Printf("\t%+v\n", *vlan.Resource.VlanNumber)
+			ProcessVlan(vlan.Resource, resourceCollection)
+		}
+
+		// Add the resources to a table
+		for _, resource := range resourceCollection {
+			table.Add(
+				fmt.Sprintf("%v", resource.Id),
+				resource.Hostname,
+				resource.PublicVlan,
+				resource.PrivateVlan,
+				resource.ResourceType,
+				*pod.DatacenterLongName,
+				*pod.Name,
+				resource.CancelDate,
+			)
 		}
 	}
 
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()	
+	}
+	
 	return nil
 }
 
@@ -96,3 +141,115 @@ func AdvancedSearch(sess *session.Session, q string, mask string)  (resp []Searc
 	return	
 }
 
+// Pulls out the resource objects from the Vlan into resources
+func ProcessVlan(vlan *datatypes.Network_Vlan, resources map[int]Resource_Object) {
+	// VIRTUAL GUESTS
+	if len(vlan.VirtualGuests) > 0 {
+		for _, res := range vlan.VirtualGuests {
+			vsiId := *res.Id
+			resources[vsiId] = buildResourceObject(
+				*res.FullyQualifiedDomainName,
+				vsiId,
+				vlan,
+				"Virtual Guest",
+				sl.Grab(res, "BillingItem.CancellationDate").(datatypes.Time),
+				resources[vsiId],
+			)
+		}
+	}
+
+	// HARDWARE SERVERS
+	if len(vlan.Hardware) > 0 {
+		for _, res := range vlan.Hardware {
+			vsiId := *res.Id
+			resources[vsiId] = buildResourceObject(
+				*res.FullyQualifiedDomainName,
+				vsiId,
+				vlan,
+				"Hardware",
+				sl.Grab(res, "BillingItem.CancellationDate").(datatypes.Time),
+				resources[vsiId],
+			)
+		}
+	}
+
+	// VLAN FIREWALL
+	// There can be only 1 of these
+	if (vlan.NetworkVlanFirewall != nil)  {
+		vsiId := *vlan.NetworkVlanFirewall.Id
+		resources[vsiId] = buildResourceObject(
+			*vlan.NetworkVlanFirewall.FullyQualifiedDomainName,
+			vsiId,
+			vlan,
+			"Firewall",
+			sl.Grab(vlan.NetworkVlanFirewall, "BillingItem.CancellationDate").(datatypes.Time),
+			resources[vsiId],
+		)
+	}
+
+	// PRIVATE GATEWAY
+	if len(vlan.PrivateNetworkGateways) > 0 {
+		for _, res := range vlan.PrivateNetworkGateways {
+			vsiId := *res.Id
+			resources[vsiId] = buildResourceObject(
+				*res.Name,
+				vsiId,
+				vlan,
+				"Gateway",
+				sl.Grab(res, "BillingItem.CancellationDate").(datatypes.Time),
+				resources[vsiId],
+			)
+		}
+	}
+
+	// PUBLIC GATEWAY
+	if len(vlan.PublicNetworkGateways) > 0 {
+		for _, res := range vlan.PublicNetworkGateways {
+			vsiId := *res.Id
+			resources[vsiId] = buildResourceObject(
+				*res.Name,
+				vsiId,
+				vlan,
+				"Gateway",
+				sl.Grab(res, "BillingItem.CancellationDate").(datatypes.Time),
+				resources[vsiId],
+			)
+		}
+	}
+
+
+}
+
+func buildResourceObject(name string, id int, vlan *datatypes.Network_Vlan, resourceType string, cancelDateTime datatypes.Time, foundResource Resource_Object) Resource_Object {
+	var thisResource Resource_Object
+	cancelDate := "-"
+	vlanType := *vlan.NetworkSpace
+	vlanNumber := *vlan.VlanNumber
+
+	if !cancelDateTime.IsZero() {
+		cancelDate = utils.FormatSLTimePointer(&cancelDateTime)
+	}
+
+	// If we have not already setup this resource, add it to the map
+	if (Resource_Object{} == foundResource) {
+		thisResource = Resource_Object{
+			Hostname: name,
+			Id: id,
+			PublicVlan: "-",
+			PrivateVlan: "-",
+			ResourceType: resourceType,
+			CancelDate: cancelDate,
+		}	
+	} else {
+		thisResource = foundResource
+	}
+
+	// Updates the Vlan numbers as appropriate
+	if vlanType == "PRIVATE" {
+		thisResource.PrivateVlan = fmt.Sprintf("%v", vlanNumber)
+	} else {
+		thisResource.PublicVlan = fmt.Sprintf("%v", vlanNumber)
+	}
+
+	return thisResource
+}
