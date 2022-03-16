@@ -52,20 +52,24 @@ func (cmd *L7MembersAddCommand) Run(c *cli.Context) error {
 	return nil
 }
 
-func LoadbalMemberAddMetadata() cli.Command {
+func LoadbalL7MemberAddMetadata() cli.Command {
 	return cli.Command{
 		Category:    "loadbal",
-		Name:        "member-add",
-		Description: T("Add a new load balancer member"),
-		Usage:       "${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)",
+		Name:        "l7member-add",
+		Description: T("Add a new L7 pool member"),
+		Usage:       "${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)",
 		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "id",
-				Usage: T("ID for the load balancer [required]"),
+			cli.StringFlag{
+				Name:  "pool-uuid",
+				Usage: T("UUID for the load balancer pool [required]"),
 			},
 			cli.StringFlag{
-				Name:  "ip",
-				Usage: T("Private IP of the new member [required]"),
+				Name:  "address",
+				Usage: T("Backend servers IP address. [required]"),
+			},
+			cli.IntFlag{
+				Name:  "port",
+				Usage: T("Backend servers port. [required]"),
 			},
 		},
 	}
