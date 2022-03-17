@@ -95,6 +95,7 @@ backendRouterName, frontendRouterName]`
 	for _, pod := range closing_pods {
 		resourceCollection := make(map[int]Resource_Object)
 		search_string := fmt.Sprintf(resource_search, *pod.BackendRouterName, *pod.FrontendRouterName)
+		fmt.Printf("Searching for %v\n", search_string)
 
 		// Search the VLAN for resources
 		vlans, err := AdvancedSearch(cmd.Session, search_string, search_mask)
@@ -178,11 +179,11 @@ func ProcessVlan(vlan *datatypes.Network_Vlan, resources map[int]Resource_Object
 	if (vlan.NetworkVlanFirewall != nil)  {
 		vsiId := *vlan.NetworkVlanFirewall.Id
 		resources[vsiId] = buildResourceObject(
-			*vlan.NetworkVlanFirewall.FullyQualifiedDomainName,
+			*vlan.NetworkVlanFirewall.PrimaryIpAddress,
 			vsiId,
 			vlan,
 			"Firewall",
-			sl.Grab(vlan.NetworkVlanFirewall, "BillingItem.CancellationDate").(datatypes.Time),
+			sl.Grab(*vlan.NetworkVlanFirewall, "BillingItem.CancellationDate").(datatypes.Time),
 			resources[vsiId],
 		)
 	}
@@ -196,7 +197,7 @@ func ProcessVlan(vlan *datatypes.Network_Vlan, resources map[int]Resource_Object
 				vsiId,
 				vlan,
 				"Gateway",
-				sl.Grab(res, "BillingItem.CancellationDate").(datatypes.Time),
+				datatypes.Time{},
 				resources[vsiId],
 			)
 		}
@@ -206,12 +207,13 @@ func ProcessVlan(vlan *datatypes.Network_Vlan, resources map[int]Resource_Object
 	if len(vlan.PublicNetworkGateways) > 0 {
 		for _, res := range vlan.PublicNetworkGateways {
 			vsiId := *res.Id
+			fmt.Printf("Trying for PublicNetworkGateways %+v\n", res)
 			resources[vsiId] = buildResourceObject(
 				*res.Name,
 				vsiId,
 				vlan,
 				"Gateway",
-				sl.Grab(res, "BillingItem.CancellationDate").(datatypes.Time),
+				datatypes.Time{},
 				resources[vsiId],
 			)
 		}

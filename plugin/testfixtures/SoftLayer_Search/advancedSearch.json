@@ -1,0 +1,157 @@
+[
+    {
+        "matchedTerms":
+        [
+            "primaryRouter.hostname:|fcr01a.mex01|"
+        ],
+        "relevanceScore": "5.4415264",
+        "resource":
+        {
+            "fullyQualifiedName": "mex01.fcr01.858",
+            "hardware":
+            [
+                {
+                    "billingItem":{"cancellationDate": null },
+                    "fullyQualifiedDomainName": "testpooling2.ibmtest.com",
+                    "id": 1676221
+                },
+                {
+                    "billingItem":{ "cancellationDate": "2022-03-03T23:59:59-06:00"},
+                    "fullyQualifiedDomainName": "testpooling.ibmtest.com",
+                    "id": 1534033
+                }
+            ],
+            "id": 1133383,
+            "name": "Mex-BM-Public",
+            "networkSpace": "PUBLIC",
+            "privateNetworkGateways":
+            [],
+            "publicNetworkGateways":
+            [],
+            "virtualGuests":
+            [],
+            "vlanNumber": 858
+        },
+        "resourceType": "SoftLayer_Network_Vlan"
+    },
+    {
+        "matchedTerms":
+        [
+            "primaryRouter.hostname:|fcr01a.mex01|"
+        ],
+        "relevanceScore": "5.4415264",
+        "resource":
+        {
+            "fullyQualifiedName": "mex01.fcr01.1257",
+            "hardware":
+            [],
+            "id": 2912280,
+            "networkSpace": "PUBLIC",
+            "privateNetworkGateways":
+            [],
+            "publicNetworkGateways":
+            [],
+            "virtualGuests":
+            [
+                {
+                    "billingItem":{"cancellationDate": null},
+                    "fullyQualifiedDomainName": "imageTest.ibmtest.com",
+                    "id": 127270182
+                },
+                {
+                    "billingItem":{"cancellationDate": null},
+                    "fullyQualifiedDomainName": "test.deleteme.com",
+                    "id": 106291032
+                },
+                {
+                    "billingItem":
+                    {
+                        "cancellationDate": null
+                    },
+                    "fullyQualifiedDomainName": "testslack.test.com",
+                    "id": 127889958
+                }
+            ],
+            "vlanNumber": 1257
+        },
+        "resourceType": "SoftLayer_Network_Vlan"
+    },
+    {
+        "matchedTerms":
+        [
+            "primaryRouter.hostname:|bcr01a.mex01|"
+        ],
+        "relevanceScore": "5.003179",
+        "resource":
+        {
+            "fullyQualifiedName": "mex01.bcr01.1472",
+            "hardware":
+            [],
+            "id": 2912282,
+            "networkSpace": "PRIVATE",
+            "privateNetworkGateways":
+            [],
+            "publicNetworkGateways":
+            [
+                {"id": 6665437457, "Name": "publicNetworkGateways"}
+            ],
+            "virtualGuests":
+            [],
+            "vlanNumber": 1472
+        },
+        "resourceType": "SoftLayer_Network_Vlan"
+    },
+    {
+        "matchedTerms":
+        [
+            "primaryRouter.hostname:|bcr01a.mex01|"
+        ],
+        "relevanceScore": "4.9517627",
+        "resource":
+        {
+            "fullyQualifiedName": "mex01.bcr01.1664",
+            "hardware":
+            [],
+            "id": 3111644,
+            "name": "testmex",
+            "networkSpace": "PRIVATE",
+            "privateNetworkGateways":
+            [
+                {"id": 1234444444, "Name": "privateNetworkGateways" }
+            ],
+            "publicNetworkGateways":
+            [],
+            "virtualGuests":
+            [],
+            "vlanNumber": 1664
+        },
+        "resourceType": "SoftLayer_Network_Vlan"
+    },
+    {
+        "matchedTerms":
+        [
+            "primaryRouter.hostname:|bcr01a.mex01|"
+        ],
+        "relevanceScore": "4.9517627",
+        "resource":
+        {
+            "fullyQualifiedName": "mex01.bcr01.1414",
+            "hardware":
+            [],
+            "id": 2933662,
+            "name": "test-for-trunks",
+            "networkSpace": "PUBLIC",
+            "privateNetworkGateways": [],
+            "publicNetworkGateways": [],
+            "virtualGuests": [],
+            "networkVlanFirewall":
+            {
+                "billingItem": { "cancellationDate": null },
+                "primaryIpAddress": "1.22.33.44",
+                "id": 9999999999
+            },
+            "vlanNumber": 1414
+        },
+        "resourceType": "SoftLayer_Network_Vlan"
+    }
+]

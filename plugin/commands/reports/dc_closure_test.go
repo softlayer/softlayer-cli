@@ -41,13 +41,13 @@ var _ = Describe("Reports Datacenter-Closures", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).NotTo(HaveOccurred())
 				outputs := fakeUI.Outputs()
-				Expect(outputs).To(ContainSubstring("Hello World"))
+				Expect(outputs).To(ContainSubstring("imageTest.ibmtest.com"))
 			})
 			It("Outputs JSON", func() {
 				err := testhelpers.RunCommand(cliCommand, "--output=JSON")
 				Expect(err).NotTo(HaveOccurred())
 				outputs := fakeUI.Outputs()
-				Expect(outputs).To(ContainSubstring("\"amountIn\": 7.54252,"))
+				Expect(outputs).To(ContainSubstring("\"Name\": \"imageTest.ibmtest.com\""))
 	
 			})
 		})
