@@ -29,7 +29,7 @@ func (cmd *NetscalerListCommand) Run(c *cli.Context) error {
 	if len(netscalers) == 0 {
 		cmd.UI.Say(T("No netscalers was found."))
 	} else {
-		table := cmd.UI.Table([]string{T("ID"), T("Name"), T("Location"), T("Description"), T("IP Address"), T("Management IP"), T("Bandwidth"), T("Create Date")})
+		table := cmd.UI.Table([]string{T("ID"), T("Location"), T("Name"), T("Description"), T("IP Address"), T("Management IP"), T("Bandwidth"), T("Create Date")})
 		for _, ns := range netscalers {
 			var location string
 			if ns.Datacenter != nil {
@@ -37,8 +37,8 @@ func (cmd *NetscalerListCommand) Run(c *cli.Context) error {
 			}
 
 			table.Add(utils.FormatIntPointer(ns.Id),
-				utils.FormatStringPointer(ns.Name),
 				location,
+				utils.FormatStringPointer(ns.Name),
 				utils.FormatStringPointer(ns.Description),
 				utils.FormatStringPointer(ns.PrimaryIpAddress),
 				utils.FormatStringPointer(ns.ManagementIpAddress),
@@ -49,4 +49,14 @@ func (cmd *NetscalerListCommand) Run(c *cli.Context) error {
 		table.Print()
 	}
 	return nil
+}
+
+func LoadbalNsListMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "ns-list",
+		Description: T("List netscalers"),
+		Usage:       "${COMMAND_NAME} sl loadbal netscalers",
+		Flags: []cli.Flag{},
+	}
 }
