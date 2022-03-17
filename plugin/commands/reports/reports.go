@@ -25,7 +25,6 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 	return CommandActionBindings
 }
 
-
 func ReportsNamespace() plugin.Namespace {
 	return plugin.Namespace{
 		ParentName:  "sl",
@@ -36,11 +35,11 @@ func ReportsNamespace() plugin.Namespace {
 
 func ReportsMetaData() cli.Command {
 	return cli.Command{
-		Category: 		"sl",
-		Name: 			"reports",
-		Description: 	T("Classic Infrastructure Reports"),
-		Usage:			"${COMMAND_NAME} sl reports",
-		Subcommands:	[]cli.Command{
+		Category:    "sl",
+		Name:        "reports",
+		Description: T("Classic Infrastructure Reports"),
+		Usage:       "${COMMAND_NAME} sl reports",
+		Subcommands: []cli.Command{
 			DCClosuresMetaData(),
 		},
 	}

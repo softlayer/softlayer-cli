@@ -1,12 +1,9 @@
 package reports_test
 
-
 import (
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-
 
 	"github.com/softlayer/softlayer-go/session"
 
@@ -17,21 +14,21 @@ import (
 
 var _ = Describe("Reports Datacenter-Closures", func() {
 	var (
-		fakeUI			*terminal.FakeUI
-		cmd				*reports.DCClosuresCommand
-		cliCommand		cli.Command
-		fakeSession   	*session.Session
+		fakeUI      *terminal.FakeUI
+		cmd         *reports.DCClosuresCommand
+		cliCommand  cli.Command
+		fakeSession *session.Session
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		cmd = reports.NewDCClosuresCommand(fakeUI, fakeSession)
 		cliCommand = cli.Command{
-			Name:	reports.DCClosuresMetaData().Name,
+			Name:        reports.DCClosuresMetaData().Name,
 			Description: reports.DCClosuresMetaData().Description,
-			Usage:	reports.DCClosuresMetaData().Usage,
-			Flags:	reports.DCClosuresMetaData().Flags,
-			Action:	cmd.Run,
+			Usage:       reports.DCClosuresMetaData().Usage,
+			Flags:       reports.DCClosuresMetaData().Flags,
+			Action:      cmd.Run,
 		}
 	})
 
@@ -48,7 +45,7 @@ var _ = Describe("Reports Datacenter-Closures", func() {
 				Expect(err).NotTo(HaveOccurred())
 				outputs := fakeUI.Outputs()
 				Expect(outputs).To(ContainSubstring("\"Name\": \"imageTest.ibmtest.com\""))
-	
+
 			})
 		})
 	})
