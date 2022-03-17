@@ -2266,6 +2266,8 @@
 "translation": "보안 그룹과 연관된 인터페이스 나열"},
 {"id": "List l7 rules",
 "translation": "l7 규칙 나열"},
+{"id": "List netscalers",
+"translation": "List netscalers"},
 {"id": "List number of block storage volumes per datacenter",
 "translation": "데이터 센터당 블록 스토리지 볼륨의 수 나열"},
 {"id": "List number of file storage volumes per datacenter",

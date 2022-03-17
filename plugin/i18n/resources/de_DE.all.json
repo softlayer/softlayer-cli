@@ -2266,6 +2266,8 @@
 "translation": "Schnittstellen auflisten, die der Sicherheitsgruppe zugeordnet sind"},
 {"id": "List l7 rules",
 "translation": "L7-Regeln auflisten"},
+{"id": "List netscalers",
+"translation": "List netscalers"},
 {"id": "List number of block storage volumes per datacenter",
 "translation": "Anzahl der Blockspeicherdatenträger pro Rechenzentrum auflisten"},
 {"id": "List number of file storage volumes per datacenter",

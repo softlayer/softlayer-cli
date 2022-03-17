@@ -2266,6 +2266,8 @@
 "translation": "列出与安全组关联的接口"},
 {"id": "List l7 rules",
 "translation": "列出 L7 规则"},
+{"id": "List netscalers",
+"translation": "List netscalers"},
 {"id": "List number of block storage volumes per datacenter",
 "translation": "列出每个数据中心的块存储卷数"},
 {"id": "List number of file storage volumes per datacenter",

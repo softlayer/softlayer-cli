@@ -2266,6 +2266,8 @@
 "translation": "列出與安全群組相關聯的介面"},
 {"id": "List l7 rules",
 "translation": "列出 l7 規則"},
+{"id": "List netscalers",
+"translation": "List netscalers"},
 {"id": "List number of block storage volumes per datacenter",
 "translation": "列出每個資料中心的區塊儲存磁區數目"},
 {"id": "List number of file storage volumes per datacenter",

@@ -2266,6 +2266,8 @@
 "translation": "List interfaces associated with security group"},
 {"id": "List l7 rules",
 "translation": "List l7 rules"},
+{"id": "List netscalers",
+"translation": "List netscalers"},
 {"id": "List number of block storage volumes per datacenter",
 "translation": "List number of block storage volumes per datacenter"},
 {"id": "List number of file storage volumes per datacenter",
