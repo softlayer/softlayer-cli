@@ -1914,6 +1914,8 @@
 "translation": "GUID"},
 {"id": "Get List options for creating a placement group..",
 "translation": "Get List options for creating a placement group.."},
+{"id": "Get Netscaler details.",
+"translation": "Get Netscaler details."},
 {"id": "Get Reserved Capacity Group details.",
 "translation": "Get Reserved Capacity Group details."},
 {"id": "Get billing details for a virtual server instance",
