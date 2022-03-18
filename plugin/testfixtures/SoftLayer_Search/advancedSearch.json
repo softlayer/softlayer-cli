@@ -44,7 +44,13 @@
         {
             "fullyQualifiedName": "mex01.fcr01.1257",
             "hardware":
-            [],
+            [                
+                {
+                    "billingItem":{"cancellationDate": null },
+                    "fullyQualifiedDomainName": "testpooling2.ibmtest.com",
+                    "id": 1676221
+                }
+            ],
             "id": 2912280,
             "networkSpace": "PUBLIC",
             "privateNetworkGateways":
