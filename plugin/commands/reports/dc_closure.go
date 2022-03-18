@@ -95,7 +95,6 @@ backendRouterName, frontendRouterName]`
 	for _, pod := range closing_pods {
 		resourceCollection := make(map[int]Resource_Object)
 		search_string := fmt.Sprintf(resource_search, *pod.BackendRouterName, *pod.FrontendRouterName)
-		fmt.Printf("Searching for %v\n", search_string)
 
 		// Search the VLAN for resources
 		vlans, err := AdvancedSearch(cmd.Session, search_string, search_mask)
