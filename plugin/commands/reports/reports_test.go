@@ -18,12 +18,9 @@ func TestManagers(t *testing.T) {
 	RunSpecs(t, "Reports Suite")
 }
 
-
 var availableCommands = []string{
 	"reports-datacenter-closures",
 }
-
-
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
 var _ = Describe("Test reports.GetCommandActionBindings()", func() {

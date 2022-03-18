@@ -19,7 +19,7 @@ var _ = Describe("Reports Datacenter-Closures", func() {
 		cmd         *reports.DCClosuresCommand
 		cliCommand  cli.Command
 		fakeSession *session.Session
-		handler		testhelpers.FakeTransportHandler
+		handler     testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
