@@ -6,6 +6,7 @@ import (
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -25,6 +26,13 @@ func (cmd *NetscalerListCommand) Run(c *cli.Context) error {
 	netscalers, err := cmd.LoadBalancerManager.GetADCs()
 	if err != nil {
 		return cli.NewExitError(T("Failed to get netscalers on your account.")+err.Error(), 2)
+	}
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, netscalers)
 	}
 	if len(netscalers) == 0 {
 		cmd.UI.Say(T("No netscalers was found."))
@@ -57,6 +65,8 @@ func LoadbalNsListMetadata() cli.Command {
 		Name:        "ns-list",
 		Description: T("List netscalers"),
 		Usage:       "${COMMAND_NAME} sl loadbal netscalers",
-		Flags: []cli.Flag{},
+		Flags:       []cli.Flag{
+			metadata.OutputFlag(),
+		},
 	}
 }
