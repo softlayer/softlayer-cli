@@ -52,20 +52,7 @@ func (cmd *HealthChecksCommand) Run(c *cli.Context) error {
 			find = true
 			var backendPort, interval, maxRetries, timeout *int
 			var backendProtocol, urlPath *string
-			if listener.DefaultPool == nil {
-				backendProtocol = nil
-				urlPath = nil
-				backendPort = nil
-				interval = nil
-				maxRetries = nil
-				timeout = nil
-			}
-			if listener.DefaultPool.HealthMonitor == nil {
-				backendPort = nil
-				interval = nil
-				maxRetries = nil
-				timeout = nil
-			}
+
 			backendProtocol = listener.DefaultPool.Protocol
 			backendPort = listener.DefaultPool.ProtocolPort
 			interval = listener.DefaultPool.HealthMonitor.Interval
