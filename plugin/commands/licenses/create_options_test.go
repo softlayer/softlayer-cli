@@ -2,13 +2,16 @@ package licenses_test
 
 import (
 	"errors"
+	"strings"
+
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-	"strings"
 )
 
 var _ = Describe("licenses create-options", func() {
@@ -29,6 +32,37 @@ var _ = Describe("licenses create-options", func() {
 			Flags:       licenses.LicensesCreateOptionsMetaData().Flags,
 			Action:      cmd.Run,
 		}
+
+		fakeLicensesOptions := []datatypes.Product_Package{
+			datatypes.Product_Package{
+				Items: []datatypes.Product_Item{
+					datatypes.Product_Item{
+						Id:          sl.Int(123),
+						Description: sl.String("item description"),
+						KeyName:     sl.String("ITEM_KEY_NAME"),
+						Capacity:    sl.Float(28.0),
+						Prices: []datatypes.Product_Item_Price{
+							datatypes.Product_Item_Price{
+								RecurringFee: sl.Float(252.0),
+							},
+						},
+					},
+					datatypes.Product_Item{
+						Id:          sl.Int(1234),
+						Description: sl.String("item description 2"),
+						KeyName:     sl.String("ITEM_KEY_NAME_2"),
+						Capacity:    sl.Float(40.0),
+						Prices: []datatypes.Product_Item_Price{
+							datatypes.Product_Item_Price{
+								RecurringFee: sl.Float(100.0),
+							},
+						},
+					},
+				},
+			},
+		}
+		fakeLicensesManager.CreateLicensesOptionsReturns(fakeLicensesOptions, nil)
+
 	})
 
 	Context("licenses create options returns error", func() {
@@ -43,4 +77,13 @@ var _ = Describe("licenses create-options", func() {
 		})
 	})
 
+	Context("licenses create options", func() {
+		It("return licenses create options", func() {
+			err := testhelpers.RunCommand(cliCommand)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring("Id     Description          KeyName           Capacity    RecurringFee"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("123    item description     ITEM_KEY_NAME     28.000000   252.000000"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("1234   item description 2   ITEM_KEY_NAME_2   40.000000   100.000000"))
+		})
+	})
 })
