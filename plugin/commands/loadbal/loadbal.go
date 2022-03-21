@@ -88,6 +88,12 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"loadbal-protocol-edit": func(c *cli.Context) error {
 			return NewProtocolEditCommand(ui, loadbalManager).Run(c)
 		},
+		"loadbal-ns-detail": func(c *cli.Context) error {
+			return NewNetscalerDetailCommand(ui, loadbalManager).Run(c)
+		},
+		"loadbal-ns-list": func(c *cli.Context) error {
+			return NewNetscalerListCommand(ui, loadbalManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -132,6 +138,8 @@ func LoadbalMetaData() cli.Command {
 			LoadbalL7RuleAddMetadata(),
 			LoadbalL7RuleDelMetadata(),
 			LoadbalL7RuleListMetadata(),
+			LoadbalNetscalerDetailMetadata(),
+			LoadbalNsListMetadata(),
 		},
 	}
 }

@@ -6,6 +6,7 @@ import (
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -26,10 +27,17 @@ func (cmd *NetscalerListCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return cli.NewExitError(T("Failed to get netscalers on your account.")+err.Error(), 2)
 	}
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, netscalers)
+	}
 	if len(netscalers) == 0 {
 		cmd.UI.Say(T("No netscalers was found."))
 	} else {
-		table := cmd.UI.Table([]string{T("ID"), T("Name"), T("Location"), T("Description"), T("IP Address"), T("Management IP"), T("Bandwidth"), T("Create Date")})
+		table := cmd.UI.Table([]string{T("ID"), T("Location"), T("Name"), T("Description"), T("IP Address"), T("Management IP"), T("Bandwidth"), T("Create Date")})
 		for _, ns := range netscalers {
 			var location string
 			if ns.Datacenter != nil {
@@ -37,8 +45,8 @@ func (cmd *NetscalerListCommand) Run(c *cli.Context) error {
 			}
 
 			table.Add(utils.FormatIntPointer(ns.Id),
-				utils.FormatStringPointer(ns.Name),
 				location,
+				utils.FormatStringPointer(ns.Name),
 				utils.FormatStringPointer(ns.Description),
 				utils.FormatStringPointer(ns.PrimaryIpAddress),
 				utils.FormatStringPointer(ns.ManagementIpAddress),
@@ -49,4 +57,16 @@ func (cmd *NetscalerListCommand) Run(c *cli.Context) error {
 		table.Print()
 	}
 	return nil
+}
+
+func LoadbalNsListMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "ns-list",
+		Description: T("List netscalers"),
+		Usage:       "${COMMAND_NAME} sl loadbal netscalers",
+		Flags:       []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
 }

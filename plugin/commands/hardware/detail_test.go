@@ -64,6 +64,7 @@ var _ = Describe("hardware detail", func() {
 
 		Context("VS detail with correct VS ID ", func() {
 			created, _ := time.Parse(time.RFC3339, "2017-11-08T00:00:00Z")
+			firmwareCreated, _ := time.Parse(time.RFC3339, "2015-10-09T00:00:00Z")
 			BeforeEach(func() {
 				fakeHardwareManager.GetHardwareReturns(
 					datatypes.Hardware_Server{
@@ -143,6 +144,25 @@ var _ = Describe("hardware detail", func() {
 							},
 						},
 					}, nil)
+				fakeHardwareManager.GetHardwareComponentsReturns([]datatypes.Hardware_Component{
+					datatypes.Hardware_Component{
+						Id: sl.Int(18787137),
+						HardwareComponentModel: &datatypes.Hardware_Component_Model{
+							LongDescription: sl.String("Aspeed / AST2500 - Onboard / IPMI - KVM / Remote Management Count1"),
+							Firmwares: []datatypes.Hardware_Component_Firmware{
+								datatypes.Hardware_Component_Firmware{
+									Version:    sl.String("3.10"),
+									CreateDate: sl.Time(firmwareCreated),
+								},
+							},
+							HardwareGenericComponentModel: &datatypes.Hardware_Component_Model_Generic{
+								HardwareComponentType: &datatypes.Hardware_Component_Type{
+									KeyName: sl.String("REMOTE_MGMT_CARD"),
+								},
+							},
+						},
+					},
+				}, nil)
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "1234")
@@ -173,7 +193,7 @@ var _ = Describe("hardware detail", func() {
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("1000.00"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--passwords", "--price")
+				err := testhelpers.RunCommand(cliCommand, "1234", "--passwords", "--price", "--components")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("rthtoshfkthr"))
@@ -202,6 +222,10 @@ var _ = Describe("hardware detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("CentOS 7.x (64 bit)"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("os"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("0.00"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Aspeed / AST2500 - Onboard / IPMI - KVM / Remote Management Count1"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("3.10"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2015-10-09T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("REMOTE_MGMT_CARD"))
 			})
 		})
 	})
