@@ -105,4 +105,56 @@ var _ = Describe("Load balancer list", func() {
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dal05"}))
 		})
 	})
+
+	Context("list with location and type as private to private", func() {
+		BeforeEach(func() {
+			address := "address"
+			desc := "desc"
+			isPublic := 0
+			longName := "dal05"
+			fakeLBManager.GetLoadBalancersReturns([]datatypes.Network_LBaaS_LoadBalancer{
+				datatypes.Network_LBaaS_LoadBalancer{
+					Id:          sl.Int(13162),
+					Address:     &address,
+					Description: &desc,
+					Type:        &isPublic,
+					Datacenter: &datatypes.Location{
+						LongName: &longName,
+					},
+				},
+			}, nil)
+		})
+		It("return loadbalancer", func() {
+			err := testhelpers.RunCommand(cliCommand)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring("ID      Name   Address   Type                 Location   Create Date   Status"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("13162   -      address   Private to Private   dal05      -             -/-"))
+		})
+	})
+
+	Context("list with location and type as Public to Public", func() {
+		BeforeEach(func() {
+			address := "address"
+			desc := "desc"
+			isPublic := 2
+			longName := "dal05"
+			fakeLBManager.GetLoadBalancersReturns([]datatypes.Network_LBaaS_LoadBalancer{
+				datatypes.Network_LBaaS_LoadBalancer{
+					Id:          sl.Int(13162),
+					Address:     &address,
+					Description: &desc,
+					Type:        &isPublic,
+					Datacenter: &datatypes.Location{
+						LongName: &longName,
+					},
+				},
+			}, nil)
+		})
+		It("return loadbalancer", func() {
+			err := testhelpers.RunCommand(cliCommand)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring("ID      Name   Address   Type               Location   Create Date   Status"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("13162   -      address   Public to Public   dal05      -             -/-"))
+		})
+	})
 })

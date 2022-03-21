@@ -132,9 +132,6 @@ func (cmd *OptionsCommand) Run(c *cli.Context) error {
 }
 
 func findItemInList(item *int, list []int) bool {
-	if item == nil {
-		return false
-	}
 	for _, i := range list {
 		if *item == i {
 			return true
