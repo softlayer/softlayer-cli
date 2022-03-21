@@ -30,19 +30,35 @@ var _ = Describe("image datacenter", func() {
 	})
 
 	Describe("image datacenter", func() {
-		Context("without id", func() {
+		Context("without option argumment", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--add")
+				err := testhelpers.RunCommand(cliCommand, "123456", "--add")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("flag needs an argument: -add"))
+				Expect(err.Error()).To(ContainSubstring("This command requires one indentifier, the option and the option arguments."))
 			})
 		})
 
 		Context("with wrong id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcd")
+				err := testhelpers.RunCommand(cliCommand, "abcd", "--remove=dal10")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Image ID'. It must be a positive integer."))
+			})
+		})
+
+		Context("without image id", func() {
+			It("return error", func() {
+				err := testhelpers.RunCommand(cliCommand)
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("This command requires one indentifier, the option and the option arguments."))
+			})
+		})
+
+		Context("without options", func() {
+			It("return error", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires --add or --remove option."))
 			})
 		})
 

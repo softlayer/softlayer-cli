@@ -66,6 +66,7 @@ type HardwareServerManager interface {
 	ToggleIPMI(hardwareID int, enabled bool) error
 	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
 	GetHardwareGuests(id int) ([]datatypes.Virtual_Guest, error)
+	GetHardwareComponents(id int) ([]datatypes.Hardware_Component, error)
 }
 
 type hardwareServerManager struct {
@@ -774,4 +775,13 @@ func (hw hardwareServerManager) GetHardwareGuests(id int) ([]datatypes.Virtual_G
 //int id: The hardware server identifier.
 func (hw hardwareServerManager) GetHardwareVirtualHost(id int) (datatypes.Virtual_Host, error) {
 	return hw.HardwareService.Id(id).GetVirtualHost()
+}
+
+//Returns hardware server components.
+//int id: The hardware server identifier.
+func (hw hardwareServerManager) GetHardwareComponents(id int) ([]datatypes.Hardware_Component, error) {
+	objectMask := "mask[id,hardwareComponentModel[longDescription,hardwareGenericComponentModel[description,hardwareComponentType[keyName]],firmwares[createDate,version]]]"
+	objectFilter := filter.New()
+	objectFilter = append(objectFilter, filter.Path("components.hardwareComponentModel.firmwares.createDate").OrderBy("DESC"))
+	return hw.HardwareService.Id(id).Mask(objectMask).Filter(objectFilter.Build()).GetComponents()
 }
