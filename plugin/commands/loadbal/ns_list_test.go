@@ -27,7 +27,11 @@ var _ = Describe("Load balancer edit policies", func() {
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
 		cmd = loadbal.NewNetscalerListCommand(fakeUI, fakeLBManager)
 		cliCommand = cli.Command{
-			Action: cmd.Run,
+			Name:        loadbal.LoadbalNsListMetadata().Name,
+			Description: loadbal.LoadbalNsListMetadata().Description,
+			Usage:       loadbal.LoadbalNsListMetadata().Usage,
+			Flags:       loadbal.LoadbalNsListMetadata().Flags,
+			Action:      cmd.Run,
 		}
 
 		createdDate, _ := time.Parse(time.RFC3339, "2016-12-29T00:00:00Z")
@@ -60,13 +64,36 @@ var _ = Describe("Load balancer edit policies", func() {
 	})
 
 	Describe("ns list", func() {
+		Context("ns details, Invalid Usage", func() {
+			It("Set command with an invalid output option", func() {
+				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
+			})
+		})
+
 		Context("ns list", func() {
 			It("list all netscalers", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("ID     Name               Location   Description               IP Address    Management IP   Bandwidth   Create Date"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("123    Netscaler Name     dal01      Description Netscaler     10.10.10.10   20.20.20.20     2.000000    2016-12-29T00:00:00Z"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1234   Netscaler Name 2   dal02      Description Netscaler 2   10.10.10.11   20.20.20.21     3.000000    2016-12-29T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("ID     Location   Name               Description               IP Address    Management IP   Bandwidth   Create Date"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("123    dal01      Netscaler Name     Description Netscaler     10.10.10.10   20.20.20.20     2.000000    2016-12-29T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234   dal02      Netscaler Name 2   Description Netscaler 2   10.10.10.11   20.20.20.21     3.000000    2016-12-29T00:00:00Z"))
+			})
+
+			It("list all netscalers in output json", func() {
+				err := testhelpers.RunCommand(cliCommand, "--output=json")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"createDate": "2016-12-29T00:00:00Z",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"datacenter": {`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"longName": "dal01"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`},`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"description": "Description Netscaler",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"id": 123,`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"managementIpAddress": "20.20.20.20",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"name": "Netscaler Name",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"outboundPublicBandwidthUsage": 2,`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"primaryIpAddress": "10.10.10.10"`))
 			})
 		})
 

@@ -27,7 +27,11 @@ var _ = Describe("Load balancer edit policies", func() {
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
 		cmd = loadbal.NewNetscalerDetailCommand(fakeUI, fakeLBManager)
 		cliCommand = cli.Command{
-			Action: cmd.Run,
+			Name:        loadbal.LoadbalNetscalerDetailMetadata().Name,
+			Description: loadbal.LoadbalNetscalerDetailMetadata().Description,
+			Usage:       loadbal.LoadbalNetscalerDetailMetadata().Usage,
+			Flags:       loadbal.LoadbalNetscalerDetailMetadata().Flags,
+			Action:      cmd.Run,
 		}
 
 		expirationDate, _ := time.Parse(time.RFC3339, "2016-12-29T00:00:00Z")
@@ -45,31 +49,30 @@ var _ = Describe("Load balancer edit policies", func() {
 			LicenseExpirationDate: sl.Time(expirationDate),
 			Subnets: []datatypes.Network_Subnet{
 				datatypes.Network_Subnet{
-					Id: sl.Int(456),
+					Id:                sl.Int(456),
 					NetworkIdentifier: sl.String("Network identifier"),
-					Cidr: sl.Int(789),
-					SubnetType: sl.String("Type"),
-					AddressSpace: sl.String("Addres subnet"),
+					Cidr:              sl.Int(789),
+					SubnetType:        sl.String("Type"),
+					AddressSpace:      sl.String("Addres subnet"),
 				},
 				datatypes.Network_Subnet{
-					Id: sl.Int(4567),
+					Id:                sl.Int(4567),
 					NetworkIdentifier: sl.String("Network identifier 2"),
-					Cidr: sl.Int(7890),
-					SubnetType: sl.String("Type 2"),
-					AddressSpace: sl.String("Addres subnet 2"),
+					Cidr:              sl.Int(7890),
+					SubnetType:        sl.String("Type 2"),
+					AddressSpace:      sl.String("Addres subnet 2"),
 				},
 			},
 			NetworkVlans: []datatypes.Network_Vlan{
 				datatypes.Network_Vlan{
-					Id: sl.Int(987),
+					Id:         sl.Int(987),
 					VlanNumber: sl.Int(654),
 				},
 				datatypes.Network_Vlan{
-					Id: sl.Int(9876),
+					Id:         sl.Int(9876),
 					VlanNumber: sl.Int(6543),
 				},
 			},
-			
 		}, nil)
 	})
 
@@ -85,6 +88,11 @@ var _ = Describe("Load balancer edit policies", func() {
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: The netscaler ID has to be a positive integer."))
 			})
+			It("Set command with an invalid output option", func() {
+				err := testhelpers.RunCommand(cliCommand, "123465", "--output=xml")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
+			})
 		})
 
 		Context("ns detail", func() {
@@ -95,9 +103,9 @@ var _ = Describe("Load balancer edit policies", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID                   123"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Name                 Netscaler name"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Location             dal01"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Management IP        10.10.10.10"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Management IP        11.11.11.11"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Root Password        abcde123456"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Primary IP           11.11.11.11"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Primary IP           10.10.10.10"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("License Expiration   2016-12-29T00:00:00Z"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Subnet               ID     Subnet                      Type     Space"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("456    Network identifier/789      Type     Addres subnet"))
@@ -105,6 +113,17 @@ var _ = Describe("Load balancer edit policies", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Vlans                ID     Number"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("987    654"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("9876   6543"))
+			})
+			It("with correct id in output json", func() {
+				err := testhelpers.RunCommand(cliCommand, "123", "--output=json")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"datacenter": {`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"longName": "dal01"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`},`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"id": 123,`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"licenseExpirationDate": "2016-12-29T00:00:00Z",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"name": "Netscaler name",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"networkVlans": [`))
 			})
 		})
 

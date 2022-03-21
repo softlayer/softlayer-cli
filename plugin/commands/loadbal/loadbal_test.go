@@ -44,6 +44,8 @@ var availableCommands = []string{
 	"loadbal-protocol-add",
 	"loadbal-protocol-delete",
 	"loadbal-protocol-edit",
+	"loadbal-ns-detail",
+	"loadbal-ns-list",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
