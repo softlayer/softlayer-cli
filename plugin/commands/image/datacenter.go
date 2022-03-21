@@ -37,35 +37,54 @@ func (cmd *DatacenterCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Image ID")
 	}
-	if c.IsSet("add") {
-		datacenter := buildLocation(c.String("add"))
-		_, err = cmd.ImageManager.AddLocation(imageID, datacenter)
-		if err != nil {
-			return err
-		}
-		cmd.UI.Ok()
-		cmd.UI.Print(T("The location was added successfully!"))
 
+	storageLocations, err := cmd.ImageManager.GetDatacenters(imageID)
+	if err != nil {
+		return err
+	}
+
+	if c.IsSet("add") {
+		datacenter := buildLocation(c.String("add"), storageLocations)
+		if datacenter[0].Id != nil {
+			_, err = cmd.ImageManager.AddLocation(imageID, datacenter)
+			if err != nil {
+				return err
+			}
+			cmd.UI.Ok()
+			cmd.UI.Print(T("The location was added successfully!"))
+
+		} else {
+			return slErr.NewInvalidUsageError(T("Datacenter to add is not valid to this image"))
+		}
 	}
 	if c.IsSet("remove") {
-		datacenter := buildLocation(c.String("remove"))
-		_, err = cmd.ImageManager.DeleteLocation(imageID, datacenter)
-		if err != nil {
-			return err
+		datacenter := buildLocation(c.String("remove"), storageLocations)
+		if datacenter[0].Id != nil {
+			_, err = cmd.ImageManager.DeleteLocation(imageID, datacenter)
+			if err != nil {
+				return err
+			}
+			cmd.UI.Ok()
+			cmd.UI.Print(T("The location was removed successfully!"))
+
+		} else {
+			return slErr.NewInvalidUsageError(T("Datacenter to remove is not valid to this image"))
 		}
-		cmd.UI.Ok()
-		cmd.UI.Print(T("The location was removed successfully!"))
 
 	}
 	return nil
 }
 
-func buildLocation(location string) []datatypes.Location {
+func buildLocation(location string, storageLocations []datatypes.Location) []datatypes.Location {
 	locations := datatypes.Location{}
 	datacenter := []datatypes.Location{}
 	match, _ := regexp.MatchString("[a-z]", strings.ToLower(location))
 	if match {
-		locations.Name = &location
+		for _, storageLocation := range storageLocations {
+			if *storageLocation.Name == location {
+				locations.Id = storageLocation.Id
+			}
+		}
 	} else {
 		identifier, _ := strconv.Atoi(location)
 		locations.Id = &identifier
