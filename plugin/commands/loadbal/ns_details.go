@@ -53,8 +53,8 @@ func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add("ID", utils.FormatIntPointer(ns.Id))
-	table.Add("Name", utils.FormatStringPointer(ns.Name))
 	table.Add("Type", utils.FormatStringPointer(ns.Description))
+	table.Add("Name", utils.FormatStringPointer(ns.Name))
 
 	var location string
 	if ns.Datacenter != nil {
@@ -62,7 +62,7 @@ func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
 	}
 	table.Add("Location", location)
 
-	table.Add("Management IP", utils.FormatStringPointer(ns.PrimaryIpAddress))
+	table.Add("Management IP", utils.FormatStringPointer(ns.ManagementIpAddress))
 
 	var password string
 	if ns.Password != nil {
@@ -70,7 +70,7 @@ func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
 	}
 	table.Add("Root Password", password)
 
-	table.Add("Primary IP", utils.FormatStringPointer(ns.ManagementIpAddress))
+	table.Add("Primary IP", utils.FormatStringPointer(ns.PrimaryIpAddress))
 	table.Add("License Expiration", utils.FormatSLTimePointer(ns.LicenseExpirationDate))
 
 	bufSubnet := new(bytes.Buffer)
