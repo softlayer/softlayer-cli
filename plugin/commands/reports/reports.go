@@ -38,7 +38,7 @@ func ReportsMetaData() cli.Command {
 		Category:    "sl",
 		Name:        "report",
 		Description: T("Classic Infrastructure Reports"),
-		Usage:       "${COMMAND_NAME} sl reports",
+		Usage:       "${COMMAND_NAME} sl report",
 		Subcommands: []cli.Command{
 			DCClosuresMetaData(),
 		},
