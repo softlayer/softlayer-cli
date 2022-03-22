@@ -11,6 +11,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -30,9 +31,15 @@ func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError("Netscaler ID is required.")
 	}
+
 	netscalerID, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
 		return errors.NewInvalidUsageError(T("The netscaler ID has to be a positive integer."))
+	}
+
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
 	}
 
 	ns, err := cmd.LoadBalancerManager.GetADC(netscalerID)
@@ -40,8 +47,13 @@ func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to get netscaler {{.ID}} on your account.", map[string]interface{}{"ID": netscalerID})+err.Error(), 2)
 	}
 
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, ns)
+	}
+
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add("ID", utils.FormatIntPointer(ns.Id))
+	table.Add("Type", utils.FormatStringPointer(ns.Description))
 	table.Add("Name", utils.FormatStringPointer(ns.Name))
 
 	var location string
@@ -50,7 +62,7 @@ func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
 	}
 	table.Add("Location", location)
 
-	table.Add("Management IP", utils.FormatStringPointer(ns.PrimaryIpAddress))
+	table.Add("Management IP", utils.FormatStringPointer(ns.ManagementIpAddress))
 
 	var password string
 	if ns.Password != nil {
@@ -58,7 +70,7 @@ func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
 	}
 	table.Add("Root Password", password)
 
-	table.Add("Primary IP", utils.FormatStringPointer(ns.ManagementIpAddress))
+	table.Add("Primary IP", utils.FormatStringPointer(ns.PrimaryIpAddress))
 	table.Add("License Expiration", utils.FormatSLTimePointer(ns.LicenseExpirationDate))
 
 	bufSubnet := new(bytes.Buffer)
@@ -87,4 +99,16 @@ func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
 
 	table.Print()
 	return nil
+}
+
+func LoadbalNetscalerDetailMetadata() cli.Command {
+	return cli.Command{
+		Category:    "loadbal",
+		Name:        "ns-detail",
+		Description: T("Get Netscaler details."),
+		Usage:       "${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER",
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
+	}
 }

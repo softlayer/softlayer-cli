@@ -26,6 +26,13 @@ func NewDatacenterCommand(ui terminal.UI, imageManager managers.ImageManager) (c
 	}
 }
 func (cmd *DatacenterCommand) Run(c *cli.Context) error {
+	if c.NArg() != 1 && (c.String("add") == "" || c.String("remove") == "") {
+		return slErr.NewInvalidUsageError(T("This command requires one indentifier, the option and the option arguments."))
+	}
+	if !c.IsSet("add") && !c.IsSet("remove") {
+		return slErr.NewInvalidUsageError(T("This command requires --add or --remove option."))
+	}
+
 	imageID, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Image ID")
