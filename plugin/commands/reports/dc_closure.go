@@ -48,10 +48,10 @@ func NewDCClosuresCommand(ui terminal.UI, session *session.Session) (cmd *DCClos
 
 func DCClosuresMetaData() cli.Command {
 	return cli.Command{
-		Category:    "reports",
+		Category:    "report",
 		Name:        "datacenter-closures",
 		Description: T("Reports which resources are still active in Datacenters that are scheduled to be closed."),
-		Usage:       T(`${COMMAND_NAME} sl reports datacenter-closures`),
+		Usage:       T(`${COMMAND_NAME} sl report datacenter-closures`),
 		Flags: []cli.Flag{
 			metadata.OutputFlag(),
 		},

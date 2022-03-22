@@ -17,7 +17,7 @@ for every command.
 
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"reports-datacenter-closures": func(c *cli.Context) error {
+		"report-datacenter-closures": func(c *cli.Context) error {
 			return NewDCClosuresCommand(ui, session).Run(c)
 		},
 	}
@@ -28,7 +28,7 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 func ReportsNamespace() plugin.Namespace {
 	return plugin.Namespace{
 		ParentName:  "sl",
-		Name:        "reports",
+		Name:        "report",
 		Description: T("Classic Infrastructure Reports"),
 	}
 }
@@ -36,7 +36,7 @@ func ReportsNamespace() plugin.Namespace {
 func ReportsMetaData() cli.Command {
 	return cli.Command{
 		Category:    "sl",
-		Name:        "reports",
+		Name:        "report",
 		Description: T("Classic Infrastructure Reports"),
 		Usage:       "${COMMAND_NAME} sl reports",
 		Subcommands: []cli.Command{

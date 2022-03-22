@@ -15,15 +15,15 @@ import (
 
 func TestManagers(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Reports Suite")
+	RunSpecs(t, "Report Suite")
 }
 
 var availableCommands = []string{
-	"reports-datacenter-closures",
+	"report-datacenter-closures",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
-var _ = Describe("Test reports.GetCommandActionBindings()", func() {
+var _ = Describe("Test report.GetCommandActionBindings()", func() {
 	var (
 		context plugin.PluginContext
 	)
@@ -82,8 +82,8 @@ var _ = Describe("Test reports.GetCommandActionBindings()", func() {
 	Context("User MetaData", func() {
 		It("User MetaData", func() {
 			Expect(reports.ReportsMetaData().Category).To(ContainSubstring("sl"))
-			Expect(reports.ReportsMetaData().Name).To(ContainSubstring("reports"))
-			Expect(reports.ReportsMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl reports"))
+			Expect(reports.ReportsMetaData().Name).To(ContainSubstring("report"))
+			Expect(reports.ReportsMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl report"))
 			Expect(reports.ReportsMetaData().Description).To(ContainSubstring("Classic Infrastructure Reports"))
 		})
 	})
