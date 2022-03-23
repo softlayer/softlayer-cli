@@ -13,11 +13,17 @@ import (
 var _ = Describe("NetworkManager", func() {
 	var (
 		fakeSLSession  *session.Session
+		fakeHandler    *testhelpers.FakeTransportHandler
 		networkManager managers.NetworkManager
 	)
 	BeforeEach(func() {
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSLSession)
 		networkManager = managers.NewNetworkManager(fakeSLSession)
+	})
+	AfterEach(func() {
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
 	})
 
 	Describe("Get detail about a vlan", func() {
@@ -223,9 +229,9 @@ var _ = Describe("NetworkManager", func() {
 				Expect(err).ToNot(HaveOccurred())
 			})
 			It("Handles API errors", func() {
-				fakeHandler := testhelpers.FakeTransportHandler{}
-                fakeHandler.AddApiError("SoftLayer_Network_Vlan", "getObject", 500, "NO VLAN")
-                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+
+				fakeHandler.AddApiError("SoftLayer_Network_Vlan", "getObject", 500, "NO VLAN")
+
 				networkManager = managers.NewNetworkManager(fakeSLSession)
 				err := networkManager.CancelVLAN(0)
 				Expect(err).To(HaveOccurred())
@@ -280,11 +286,7 @@ var _ = Describe("NetworkManager", func() {
 				Expect(reasons[0]).Should(Equal("This is a fake reason for testing only ok."))
 			})
 			It("Handles API Errors", func() {
-				fakeHandler := testhelpers.FakeTransportHandler{}
-                fakeHandler.AddApiError("SoftLayer_Network_Vlan", "getCancelFailureReasons", 500, "Testing Error")
-                fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
-
-				networkManager = managers.NewNetworkManager(fakeSLSession)
+				fakeHandler.AddApiError("SoftLayer_Network_Vlan", "getCancelFailureReasons", 500, "Testing Error")
 				reasons := networkManager.GetCancelFailureReasons(123)
 				Expect(len(reasons)).Should(BeNumerically(">", 0))
 				Expect(reasons[0]).Should(Equal("Testing Error: Testing Error (HTTP 500)"))
