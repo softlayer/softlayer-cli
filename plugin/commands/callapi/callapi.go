@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-	"unicode"
-	"unicode/utf8"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/softlayer/softlayer-go/session"
@@ -73,9 +71,6 @@ func (cmd *CallAPICommand) Run(c *cli.Context) error {
 
 	if c.IsSet("filter") {
 		options.Filter = c.String("filter")
-	} else {
-		// Set Filter by Default to maintein a order in the requests, or replace when send another filter in the command
-		options.Filter = DefaultFilter(args[1])
 	}
 
 	output, err = cmd.CallAPIManager.CallAPI(args[0], args[1], options, parameters)
@@ -99,20 +94,6 @@ func (cmd *CallAPICommand) Run(c *cli.Context) error {
 	}
 
 	return nil
-}
-
-func DefaultFilter(method string) string {
-	sort := "ASC"
-	getWord := method[0:3]
-	methodToFilter := method[3:]
-	if methodToFilter == "AllObjects" {
-		return fmt.Sprintf(`{"id":{"operation":"orderBy","options":[{"name":"sort","value":["%s"]}]}}`, sort)
-	}
-	if getWord == "get" {
-		r, _ := utf8.DecodeRuneInString(methodToFilter)
-		methodToFilter = string(unicode.ToLower(r)) + methodToFilter[1:]
-	}
-	return fmt.Sprintf(`{"%s":{"id":{"operation":"orderBy","options":[{"name":"sort","value":["%s"]}]}}}`, methodToFilter, sort)
 }
 
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
