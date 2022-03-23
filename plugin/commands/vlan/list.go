@@ -34,10 +34,8 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return cli.NewExitError(T("Failed to list VLANs on your account.\n")+err.Error(), 2)
 	}
-	sortby := "id"
-	if c.String("sortby") != "" {
-		sortby = c.String("sortby")
-	}
+
+	sortby := c.String("sortby")
 	if sortby == "id" || sortby == "ID" {
 		sort.Sort(utils.VlanById(vlans))
 	} else if sortby == "number" {
