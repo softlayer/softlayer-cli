@@ -14,6 +14,7 @@ import (
 var _ = Describe("HardwareServerManager", func() {
 	var (
 		fakeSLSession   *session.Session
+		fakeHandler     *testhelpers.FakeTransportHandler
 		hardwareManager managers.HardwareServerManager
 		productPackage  datatypes.Product_Package
 		datacenter      datatypes.Location_Region
@@ -21,9 +22,14 @@ var _ = Describe("HardwareServerManager", func() {
 
 	BeforeEach(func() {
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSLSession)
 		hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
 	})
 
+	AfterEach(func() {
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
+	})
 	Describe("Cancel hardware", func() {
 		Context("Cancel hardware with billing id not found", func() {
 			BeforeEach(func() {
@@ -56,6 +62,36 @@ var _ = Describe("HardwareServerManager", func() {
 				hws, err := hardwareManager.ListHardware(nil, 0, 0, "", "", "", 0, "", "", "", 0, "")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(len(hws)).To(Equal(2))
+				apiCalls := fakeHandler.ApiCallLogs
+				Expect(len(apiCalls)).To(Equal(1))
+				Expect(apiCalls[0].Service).To(Equal("SoftLayer_Account"))
+				Expect(apiCalls[0].Method).To(Equal("getHardware"))
+			})
+		})
+		Context("List Hardware all options", func() {
+			It("Returns a hardware list", func() {
+				hws, err := hardwareManager.ListHardware(
+					[]string{"tag1"}, 1, 2, "hostnametest", "testdomain", "dctest", 10, "1.2.3.4", "5.6.7.8", "testuser", 55, "mask[id]")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(len(hws)).To(Equal(2))
+				apiCalls := fakeHandler.ApiCallLogs
+				Expect(len(apiCalls)).To(Equal(1))
+				Expect(apiCalls[0].Service).To(Equal("SoftLayer_Account"))
+				slOptions := apiCalls[0].Options
+				// Check to make sure all object filters get set properly.
+				Expect(slOptions.Filter).To(ContainSubstring(`"id":{"operation":"orderBy","options":[{"name":"sort","value":["DESC"]}]}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`id":{"operation":55}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"userRecord":{"username":{"operation":"testuser"}}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"datacenter":{"name":{"operation":"dctest"}}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"domain":{"operation":"testdomain"}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"hostname":{"operation":"hostnametest"}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"memoryCapacity":{"operation":2}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"networkComponents":{"maxSpeed":{"operation":10}}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"primaryBackendIpAddress":{"operation":"5.6.7.8"}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"primaryIpAddress":{"operation":"1.2.3.4"}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"processorPhysicalCoreAmount":{"operation":1}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"tagReferences":{"tag":{"name":{"operation":"in","options":[{"name":"data","value":["tag1"]}]}}`))
+
 			})
 		})
 	})
@@ -146,13 +182,8 @@ var _ = Describe("HardwareServerManager", func() {
 			})
 		})
 		Context("Edit set metadata fails", func() {
-			BeforeEach(func() {
-				fakeHandler := testhelpers.FakeTransportHandler{}
-				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setUserMetadata", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("it returns 1 error", func() {
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setUserMetadata", 500, "BAD")
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{false, true, true, true, true, true, true}))
 				Expect(msgs).NotTo(BeNil())
@@ -160,13 +191,8 @@ var _ = Describe("HardwareServerManager", func() {
 			})
 		})
 		Context("Edit set tag fails", func() {
-			BeforeEach(func() {
-				fakeHandler := testhelpers.FakeTransportHandler{}
-				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setTags", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("it returns 1 error", func() {
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setTags", 500, "BAD")
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{true, false, true, true, true, true, true}))
 				Expect(msgs).NotTo(BeNil())
@@ -174,13 +200,8 @@ var _ = Describe("HardwareServerManager", func() {
 			})
 		})
 		Context("Edit set hostname fails", func() {
-			BeforeEach(func() {
-				fakeHandler := testhelpers.FakeTransportHandler{}
-				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "editObject", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("it returns 1 error", func() {
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "editObject", 500, "BAD")
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{true, true, false, true, true}))
 				Expect(msgs).NotTo(BeNil())
@@ -189,13 +210,8 @@ var _ = Describe("HardwareServerManager", func() {
 		})
 
 		Context("Edit set public port speed fails", func() {
-			BeforeEach(func() {
-				fakeHandler := testhelpers.FakeTransportHandler{}
-				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setPublicNetworkInterfaceSpeed", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("it returns 1 error", func() {
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setPublicNetworkInterfaceSpeed", 500, "BAD")
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{true, true, true, true, true, false, true}))
 				Expect(msgs).NotTo(BeNil())
@@ -204,13 +220,8 @@ var _ = Describe("HardwareServerManager", func() {
 		})
 
 		Context("Edit set private port speed fails", func() {
-			BeforeEach(func() {
-				fakeHandler := testhelpers.FakeTransportHandler{}
-				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setPrivateNetworkInterfaceSpeed", 500, "BAD")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("it returns 1 error", func() {
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "setPrivateNetworkInterfaceSpeed", 500, "BAD")
 				succeeds, msgs := hardwareManager.Edit(123456, "test-userdata", "test-hostname", "test-domain", "test-notes", "test-tags", 100, 100)
 				Expect(succeeds).To(Equal([]bool{true, true, true, true, true, true, false}))
 				Expect(msgs).NotTo(BeNil())
@@ -227,13 +238,8 @@ var _ = Describe("HardwareServerManager", func() {
 			})
 		})
 		Context("UpdateFirmware fails", func() {
-			BeforeEach(func() {
-				fakeHandler := testhelpers.FakeTransportHandler{}
-				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "createFirmwareUpdateTransaction", 500, "FAILED")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("it returns error", func() {
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "createFirmwareUpdateTransaction", 500, "FAILED")
 				err := hardwareManager.UpdateFirmware(123456, true, true, true, true)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(Equal("FAILED: FAILED (HTTP 500)"))
@@ -467,13 +473,8 @@ var _ = Describe("HardwareServerManager", func() {
 		})
 
 		Context("When there is an error", func() {
-			BeforeEach(func() {
-				fakeHandler := testhelpers.FakeTransportHandler{}
-				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "toggleManagementInterface", 500, "IPMI ERROR")
-				fakeSLSession := &session.Session{TransportHandler: fakeHandler}
-				hardwareManager = managers.NewHardwareServerManager(fakeSLSession)
-			})
 			It("should return error", func() {
+				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "toggleManagementInterface", 500, "IPMI ERROR")
 				err := hardwareManager.ToggleIPMI(123456, false)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(Equal("IPMI ERROR: IPMI ERROR (HTTP 500)"))

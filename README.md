@@ -71,19 +71,73 @@ go test -v -coverprofile=coverage.out github.ibm.com/SoftLayer/softlayer-cli/plu
 
 ```
 
-Fake API Errors
+### Fake Session And Handlers
 
-(From managers/network_tests.go)
+At the start of each test you should have something like this:
+
+
+```go
+    var (
+        fakeSLSession  *session.Session
+        fakeHandler     *testhelpers.FakeTransportHandler
+        // Other fake managers/CLI things go here
+    )
+    BeforeEach(func() {
+        fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
+        fakeHandler = testhelpers.GetSessionHandler(fakeSLSession)
+        // Other fake managers/CLI things go here
+    })
+    AfterEach(func() {
+        fakeHandler.ClearApiCallLogs()
+        fakeHandler.ClearErrors()
+    })
 ```
-slError := sl.Error{
-    StatusCode: 500,
-    Exception: "Testing Error",
-    Message: "Testing error message",
-    Wrapped: nil,
-}
-fakeSLSession = testhelpers.NewFakeSoftlayerSessionErrors(nil, slError)
-networkManager = managers.NewNetworkManager(fakeSLSession)
+
+`fakeSLSession` will get used anytime something requres a softlayer-go session.
+`fakeHandler` is responsible for "faking" the API requests. By default it does this by looking up the appropriate JSON file in `testfixtures/<SERVICE>/<METHOD>.json`. It is also possible to specify specific IDs by using this format: `testfixtures/<SERVICE>/<METHOD>-<ID>.json` which if you call `SoftLayer_Hardware/getObject(id=1234)` it will load `testfixtures/SoftLayer_Hardware/GetObject-1234.json`
+
+
+
+#### Forcing an API Error
+
+If you want to force an API error, do something like the following.
+
+(From managers/hardware_tests.go)
+```go
+// Add the API error to the handler
+fakeHandler.AddApiError("SoftLayer_Hardware_Server", "toggleManagementInterface", 500, "IPMI ERROR")
+// Make the API call
+err := hardwareManager.ToggleIPMI(123456, false)
+// Make sure the error happened
+Expect(err).To(HaveOccurred())
+// Check the error message is as expected. The format will be similar to this
+Expect(err.Error()).To(Equal("IPMI ERROR: IPMI ERROR (HTTP 500)"))
 ```
+
+#### Checking for API calls
+
+(from managers/hardware_test.go)
+
+If you want to make sure an API call was properly formatted and made, do the following
+```go
+// Make the API call
+hws, err := hardwareManager.ListHardware(...args)
+// Normal Checks...
+Expect(err).NotTo(HaveOccurred())
+Expect(len(hws)).To(Equal(2))
+// Get the apiCalls from the fakeHandler
+apiCalls := fakeHandler.ApiCallLogs
+// Make sure there was the right number of calls
+Expect(len(apiCalls)).To(Equal(1))
+// Check the service is correct 
+Expect(apiCalls[0].Service).To(Equal("SoftLayer_Account"))
+// get the slOptions
+slOptions := apiCalls[0].Options
+// Check to make sure all object filters get set properly.
+Expect(slOptions.Filter).To(ContainSubstring(`"id":{"operation":"orderBy","options":[{"name":"sort","value":["DESC"]}]}`))
+```
+Check testhelpers/fake_softlayer_session.go for all the fields that get recorded with an API call.
+
 
 
 ### Fake Managers

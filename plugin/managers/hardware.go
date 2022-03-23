@@ -209,6 +209,8 @@ func (hw hardwareServerManager) ListHardware(tags []string, cpus int, memory int
 		filters = append(filters, filter.Path("hardware.billingItem.orderItem.order.id").Eq(orderId))
 	}
 
+	filters = append(filters, filter.Path("hardware.id").OrderBy("DESC"))
+
 	i := 0
 	resourceList := []datatypes.Hardware{}
 	for {
