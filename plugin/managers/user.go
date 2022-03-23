@@ -43,6 +43,10 @@ type UserManager interface {
 	GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error)
 	EnableEmailSubscriptionNotification(notificationId int) (bool, error)
 	DisableEmailSubscriptionNotification(notificationId int) (bool, error)
+	GetUserAllowDevicesPermissions(userId int) ([]datatypes.User_Customer_CustomerPermission_Permission, error)
+	GetDedicatedHosts(userId int) ([]datatypes.Virtual_DedicatedHost, error)
+	GetHardware(userId int) ([]datatypes.Hardware, error)
+	GetVirtualGuests(userId int) ([]datatypes.Virtual_Guest, error)
 }
 
 type userManager struct {
@@ -238,4 +242,21 @@ func (u userManager) EnableEmailSubscriptionNotification(notificationId int) (bo
 
 func (u userManager) DisableEmailSubscriptionNotification(notificationId int) (bool, error) {
 	return u.Email_Subscription.Id(notificationId).Disable()
+}
+
+func (u userManager) GetUserAllowDevicesPermissions(userId int) ([]datatypes.User_Customer_CustomerPermission_Permission, error) {
+	filters := filter.New(filter.Path("permissions.key").Contains("All_"))
+	return u.UserCustomerService.Id(userId).Filter(filters.Build()).GetPermissions()
+}
+
+func (u userManager) GetDedicatedHosts(userId int) ([]datatypes.Virtual_DedicatedHost, error) {
+	return u.UserCustomerService.Id(userId).GetDedicatedHosts()
+}
+
+func (u userManager) GetHardware(userId int) ([]datatypes.Hardware, error) {
+	return u.UserCustomerService.Id(userId).GetHardware()
+}
+
+func (u userManager) GetVirtualGuests(userId int) ([]datatypes.Virtual_Guest, error) {
+	return u.UserCustomerService.Id(userId).GetVirtualGuests()
 }

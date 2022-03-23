@@ -41,6 +41,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"user-edit-notifications": func(c *cli.Context) error {
 			return NewEditNotificationsCommand(ui, userManager).Run(c)
 		},
+		"user-device-access": func(c *cli.Context) error {
+			return NewDeviceAccessCommand(ui, userManager).Run(c)
+		},
 	}
 	return CommandActionBindings
 
@@ -70,6 +73,7 @@ func UserMetaData() cli.Command {
 			UserPermissionsMetaData(),
 			UserNotificationsMetaData(),
 			UserEditNotificationsMetaData(),
+			UserDeviceAccessMetaData(),
 		},
 	}
 }
