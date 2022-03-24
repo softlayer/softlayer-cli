@@ -12,9 +12,9 @@ import (
 
 var _ = Describe("PlacementGroup Tests", func() {
 	var (
-		fakeSLSession  *session.Session
-		fakeHandler    *testhelpers.FakeTransportHandler
-		pgmanager  managers.PlaceGroupManager
+		fakeSLSession *session.Session
+		fakeHandler   *testhelpers.FakeTransportHandler
+		pgmanager     managers.PlaceGroupManager
 	)
 	BeforeEach(func() {
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)

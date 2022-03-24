@@ -13,9 +13,9 @@ import (
 
 var _ = Describe("VirtualServerManager", func() {
 	var (
-		fakeSLSession 	*session.Session
-		fakeHandler		*testhelpers.FakeTransportHandler
-		vsManager		managers.VirtualServerManager
+		fakeSLSession *session.Session
+		fakeHandler   *testhelpers.FakeTransportHandler
+		vsManager     managers.VirtualServerManager
 	)
 
 	BeforeEach(func() {
@@ -370,7 +370,7 @@ var _ = Describe("VirtualServerManager", func() {
 	Describe("GetBandwidthData Tests", func() {
 		var (
 			startTime time.Time
-			endTime time.Time
+			endTime   time.Time
 		)
 		BeforeEach(func() {
 			startTime, _ = time.Parse("2006-01-02", "2021-01-01")
@@ -380,7 +380,7 @@ var _ = Describe("VirtualServerManager", func() {
 			It("Tests API is called properly", func() {
 				data, err := vsManager.GetBandwidthData(12345, startTime, endTime, 300)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(len(data)).To(Equal(12))	
+				Expect(len(data)).To(Equal(12))
 				Expect(*data[0].Type).To(Equal("cpu0"))
 			})
 
