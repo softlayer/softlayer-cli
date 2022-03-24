@@ -2,7 +2,6 @@ package loadbal_test
 
 import (
 	"errors"
-	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
@@ -15,43 +14,8 @@ import (
 )
 
 type OptionMapping struct {
-	SLApiConfig 	datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-	CLIValue		string
-}
-
-var stringValue = "HTTP"
-var intValue = 80
-
-// This lets us not have to spell out every test to test every option.
-var optionMap = map[string]OptionMapping{
-	"front-protocol": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{FrontendProtocol: &stringValue,},
-		CLIValue: stringValue,
-	},
-	"back-protocol": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{BackendProtocol: &stringValue,},
-		CLIValue: stringValue,
-	},
-	"front-port": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{FrontendPort: &intValue,},
-		CLIValue: strconv.Itoa(intValue),
-	},
-	"back-port": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{BackendPort: &intValue,},
-		CLIValue: strconv.Itoa(intValue),
-	},
-	"m": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{LoadBalancingMethod: &stringValue,},
-		CLIValue: stringValue,
-	},
-	"client-timeout": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{ClientTimeout: &intValue,},
-		CLIValue: strconv.Itoa(intValue),
-	},
-	"server-timeout": OptionMapping{
-		SLApiConfig: datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{ServerTimeout: &intValue,},
-		CLIValue: strconv.Itoa(intValue),
-	},
+	SLApiConfig datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+	CLIValue    string
 }
 
 var _ = Describe("LoadBal_protocol-edit_Test", func() {
@@ -80,40 +44,42 @@ var _ = Describe("LoadBal_protocol-edit_Test", func() {
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--id' is required"))
 		})
-		It("Error unable to find Id", func(){
+		It("Error unable to find Id", func() {
 			fakeLBManager.GetLoadBalancerUUIDReturns("-", errors.New("SoftLayer_Exception_ApiError"))
 			err := testhelpers.RunCommand(cliCommand, "--id", "12345")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Failed to get load balancer: SoftLayer_Exception_ApiError"))
 		})
 	})
+
 	Context("No Listener UUID", func() {
 		It("Error no UUID", func() {
 			err := testhelpers.RunCommand(cliCommand, "--id", "12345")
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("'--protocol-uuid' is required"))			
+			Expect(err.Error()).To(ContainSubstring("'--protocol-uuid' is required"))
 		})
 	})
+
 	Context("Testing Options", func() {
-		var listenerUUID = "aaasssbbb-123"
-		BeforeEach(func(){
-			fakeLBManager.GetLoadBalancerUUIDReturns("aaa-bbb-111", nil)
+		It("with all arguments", func() {
+			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--protocol-uuid", "abc123", "--front-protocol", "HTTP", "--back-protocol", "HTTP", "--front-port", "80", "--back-port", "80", "--method", "ROUNDROBIN", "--client-timeout", "100", "--server-timeout", "100", "--sticky", "cookie", "--connections", "5")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("Protocol edited"))
 		})
-		for opt, slOpt := range optionMap {
-			Context("Test " + opt, func() {
-				It("Matches API call", func(){
-					err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--protocol-uuid", listenerUUID, "--"+opt, slOpt.CLIValue)
-					slOpt.SLApiConfig.ListenerUuid = &listenerUUID
-					Expect(err).NotTo(HaveOccurred())
-					lbUUID, argsForCall := fakeLBManager.AddLoadBalancerListenerArgsForCall(0)
-					Expect(*lbUUID).To(Equal("aaa-bbb-111"))
-					Expect(len(argsForCall)).To(Equal(1))
-					Expect(argsForCall[0]).To(Equal(slOpt.SLApiConfig))
-					Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				})
-			})
-		}
+		It("with sticky as source-ip", func() {
+			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--protocol-uuid", "abc123", "--front-protocol", "HTTP", "--back-protocol", "HTTP", "--front-port", "80", "--back-port", "80", "--method", "ROUNDROBIN", "--client-timeout", "100", "--server-timeout", "100", "--sticky", "source-ip", "--connections", "5")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("Protocol edited"))
+		})
+		It("with wrong sticky", func() {
+			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--protocol-uuid", "abc123", "--sticky", "abc")
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(ContainSubstring("Value of option '--sticky' should be cookie or source-ip"))
+		})
 	})
+	
 	Context("API Error", func() {
 		It("Handles API Error", func() {
 			fakeLBManager.AddLoadBalancerListenerReturns(datatypes.Network_LBaaS_LoadBalancer{}, errors.New("SL_API_ERROR"))

@@ -115,6 +115,10 @@ func LoadbalL7PoolEditMetadata() cli.Command {
 				Usage: T("UUID for the load balancer pool [required]"),
 			},
 			cli.StringFlag{
+				Name:  "n, name",
+				Usage: T("Name of the load balancer L7 pool"),
+			},
+			cli.StringFlag{
 				Name:  "m, method",
 				Usage: T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"),
 			},
