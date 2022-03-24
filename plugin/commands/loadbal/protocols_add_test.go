@@ -88,7 +88,12 @@ var _ = Describe("LoadBal_protocol-add_Test", func() {
 			Expect(*argsForCall[0].LoadBalancingMethod).To(Equal("ROUNDROBIN"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 		})
-
+		It("with sticky as cookie", func() {
+			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--sticky", "cookie")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("Protocol added"))
+		})
 	})
 	Context("API Error", func() {
 		It("Handles API Error", func() {
