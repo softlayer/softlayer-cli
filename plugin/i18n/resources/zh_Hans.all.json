@@ -2408,6 +2408,8 @@
 "translation": "映像的名称"},
 {"id": "Name of the image [required]",
 "translation": "映像的名称 [必需]"},
+{"id": "Name of the load balancer L7 pool",
+"translation": "Name of the load balancer L7 pool"},
 {"id": "Network component {{.ComponentID}} is added to security group {{.GroupID}}.",
 "translation": "网络组件 {{.ComponentID}} 已添加到安全组 {{.GroupID}}。"},
 {"id": "Network component {{.ComponentID}} is removed from security group {{.GroupID}}.",

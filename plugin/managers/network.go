@@ -373,6 +373,7 @@ func (n networkManager) IPLookup(ipAddress string) (datatypes.Network_Subnet_IpA
 //orderID: ID of order to be filtered
 func (n networkManager) ListSubnets(identifier string, datacenter string, version int, subnetType string, networkSpace string, orderId int, mask string) ([]datatypes.Network_Subnet, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("subnets.id").OrderBy("ASC"))
 	if identifier != "" {
 		filters = append(filters, filter.Path("subnets.networkIdentifier").Eq(identifier))
 	}
@@ -452,6 +453,7 @@ func (n networkManager) ListGlobalIPs(version int, orderId int) ([]datatypes.Net
 //orderId: ID of order to be filtered
 func (n networkManager) ListVlans(datacenter string, vlanNum int, name string, orderId int, mask string) ([]datatypes.Network_Vlan, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("networkVlans.id").OrderBy("ASC"))
 	if datacenter != "" {
 		filters = append(filters, filter.Path("networkVlans.primaryRouter.datacenter.name").Eq(datacenter))
 	}

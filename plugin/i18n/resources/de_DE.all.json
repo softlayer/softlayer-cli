@@ -2408,6 +2408,8 @@
 "translation": "Name des Images"},
 {"id": "Name of the image [required]",
 "translation": "Name des Images [erforderlich]"},
+{"id": "Name of the load balancer L7 pool",
+"translation": "Name of the load balancer L7 pool"},
 {"id": "Network component {{.ComponentID}} is added to security group {{.GroupID}}.",
 "translation": "Netzkomponente {{.ComponentID}} wird zu Sicherheitsgruppe {{.GroupID}} hinzugefügt."},
 {"id": "Network component {{.ComponentID}} is removed from security group {{.GroupID}}.",
