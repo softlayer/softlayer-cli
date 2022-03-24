@@ -816,6 +816,7 @@ func (vs virtualServerManager) ListDedicatedHost(name, datacenter, owner string,
 //tags: filter based on list of tags
 func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderID int, tags []string, mask string) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("virtualGuests.id").OrderBy("DESC"))
 	if domain != "" {
 		filters = append(filters, utils.QueryFilter(domain, "virtualGuests.domain"))
 	}

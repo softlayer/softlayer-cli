@@ -13,13 +13,15 @@ import (
 
 var _ = Describe("VirtualServerManager", func() {
 	var (
-		fakeSLSession *session.Session
-		vsManager     managers.VirtualServerManager
+		fakeSLSession 	*session.Session
+		fakeHandler		*testhelpers.FakeTransportHandler
+		vsManager		managers.VirtualServerManager
 	)
 
 	BeforeEach(func() {
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
 		vsManager = managers.NewVirtualServerManager(fakeSLSession)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSLSession)
 	})
 
 	Describe("Cancel instance", func() {
@@ -333,6 +335,34 @@ var _ = Describe("VirtualServerManager", func() {
 					Expect(*vs.Account.Id).To(Equal(278444))
 					Expect(*vs.HourlyBillingFlag).To(Equal(false))
 				}
+			})
+		})
+		Context("vsManager.ListInstances checking for objectFilters", func() {
+			It("Builds object filters properly", func() {
+				vss, err := vsManager.ListInstances(
+					false, false, "testdomain", "hostnametest", "dctest", "1.2.3.4", "5.6.7.8", "testuser",
+					10, 22, 99, 777, []string{"tag1"}, "mask[id]",
+				)
+				Expect(len(vss)).To(Equal(4))
+				Expect(err).ToNot(HaveOccurred())
+				apiCalls := fakeHandler.ApiCallLogs
+				Expect(len(apiCalls)).To(Equal(1))
+				Expect(apiCalls[0].Service).To(Equal("SoftLayer_Account"))
+				Expect(apiCalls[0].Method).To(Equal("getVirtualGuests"))
+				slOptions := apiCalls[0].Options
+				Expect(slOptions.Mask).To(Equal("mask[id]"))
+				Expect(slOptions.Filter).To(ContainSubstring(`"id":{"operation":"orderBy","options":[{"name":"sort","value":["DESC"]}]}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`id":{"operation":777}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"userRecord":{"username":{"operation":"testuser"}}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"datacenter":{"name":{"operation":"dctest"}}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"domain":{"operation":"testdomain"}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"hostname":{"operation":"hostnametest"}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"maxMemory":{"operation":22}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"networkComponents":{"maxSpeed":{"operation":99}}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"primaryBackendIpAddress":{"operation":"5.6.7.8"}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"primaryIpAddress":{"operation":"1.2.3.4"}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"maxCpu":{"operation":10}`))
+				Expect(slOptions.Filter).To(ContainSubstring(`"tagReferences":{"tag":{"name":{"operation":"in","options":[{"name":"data","value":["tag1"]}]}}`))
 			})
 		})
 	})
