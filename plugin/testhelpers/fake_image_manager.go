@@ -9,6 +9,20 @@ import (
 )
 
 type FakeImageManager struct {
+	AddLocationStub        func(int, []datatypes.Location) (bool, error)
+	addLocationMutex       sync.RWMutex
+	addLocationArgsForCall []struct {
+		arg1 int
+		arg2 []datatypes.Location
+	}
+	addLocationReturns struct {
+		result1 bool
+		result2 error
+	}
+	addLocationReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	DeleteImageStub        func(int) error
 	deleteImageMutex       sync.RWMutex
 	deleteImageArgsForCall []struct {
@@ -19,6 +33,20 @@ type FakeImageManager struct {
 	}
 	deleteImageReturnsOnCall map[int]struct {
 		result1 error
+	}
+	DeleteLocationStub        func(int, []datatypes.Location) (bool, error)
+	deleteLocationMutex       sync.RWMutex
+	deleteLocationArgsForCall []struct {
+		arg1 int
+		arg2 []datatypes.Location
+	}
+	deleteLocationReturns struct {
+		result1 bool
+		result2 error
+	}
+	deleteLocationReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
 	}
 	EditImageStub        func(int, string, string, string) ([]bool, []string)
 	editImageMutex       sync.RWMutex
@@ -48,6 +76,19 @@ type FakeImageManager struct {
 	}
 	exportImageReturnsOnCall map[int]struct {
 		result1 bool
+		result2 error
+	}
+	GetDatacentersStub        func(int) ([]datatypes.Location, error)
+	getDatacentersMutex       sync.RWMutex
+	getDatacentersArgsForCall []struct {
+		arg1 int
+	}
+	getDatacentersReturns struct {
+		result1 []datatypes.Location
+		result2 error
+	}
+	getDatacentersReturnsOnCall map[int]struct {
+		result1 []datatypes.Location
 		result2 error
 	}
 	GetImageStub        func(int) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
@@ -106,34 +147,76 @@ type FakeImageManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
 
-	datacenterImagesStub        func(int, []datatypes.Location) (bool, error)
-	datacenterImageMutex       sync.RWMutex
-	datacenterImageArgsForCall []struct {
+func (fake *FakeImageManager) AddLocation(arg1 int, arg2 []datatypes.Location) (bool, error) {
+	var arg2Copy []datatypes.Location
+	if arg2 != nil {
+		arg2Copy = make([]datatypes.Location, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.addLocationMutex.Lock()
+	ret, specificReturn := fake.addLocationReturnsOnCall[len(fake.addLocationArgsForCall)]
+	fake.addLocationArgsForCall = append(fake.addLocationArgsForCall, struct {
 		arg1 int
 		arg2 []datatypes.Location
+	}{arg1, arg2Copy})
+	stub := fake.AddLocationStub
+	fakeReturns := fake.addLocationReturns
+	fake.recordInvocation("AddLocation", []interface{}{arg1, arg2Copy})
+	fake.addLocationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
-	datacenterImageReturns struct {
-		result1 bool
-		result2 error
+	if specificReturn {
+		return ret.result1, ret.result2
 	}
-	getStorageDetailsReturnsOnCall map[bool]struct {
-		result1 bool
-		result2 error
-	}
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeImageManager) AddLocation(imageId int, locations []datatypes.Location) (bool, error) {
-	fake.datacenterImageMutex.Lock()
-	defer fake.datacenterImageMutex.Unlock()
-	fake.datacenterImagesStub = nil
-	return fake.datacenterImageReturns.result1, fake.datacenterImageReturns.result2
+func (fake *FakeImageManager) AddLocationCallCount() int {
+	fake.addLocationMutex.RLock()
+	defer fake.addLocationMutex.RUnlock()
+	return len(fake.addLocationArgsForCall)
 }
 
-func (fake *FakeImageManager) DeleteLocation(imageId int, locations []datatypes.Location) (bool, error) {
-	fake.datacenterImageMutex.RLock()
-	defer fake.datacenterImageMutex.RUnlock()
-	return fake.datacenterImageReturns.result1, fake.datacenterImageReturns.result2
+func (fake *FakeImageManager) AddLocationCalls(stub func(int, []datatypes.Location) (bool, error)) {
+	fake.addLocationMutex.Lock()
+	defer fake.addLocationMutex.Unlock()
+	fake.AddLocationStub = stub
+}
+
+func (fake *FakeImageManager) AddLocationArgsForCall(i int) (int, []datatypes.Location) {
+	fake.addLocationMutex.RLock()
+	defer fake.addLocationMutex.RUnlock()
+	argsForCall := fake.addLocationArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeImageManager) AddLocationReturns(result1 bool, result2 error) {
+	fake.addLocationMutex.Lock()
+	defer fake.addLocationMutex.Unlock()
+	fake.AddLocationStub = nil
+	fake.addLocationReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeImageManager) AddLocationReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.addLocationMutex.Lock()
+	defer fake.addLocationMutex.Unlock()
+	fake.AddLocationStub = nil
+	if fake.addLocationReturnsOnCall == nil {
+		fake.addLocationReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.addLocationReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeImageManager) DeleteImage(arg1 int) error {
@@ -142,15 +225,16 @@ func (fake *FakeImageManager) DeleteImage(arg1 int) error {
 	fake.deleteImageArgsForCall = append(fake.deleteImageArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.DeleteImageStub
+	fakeReturns := fake.deleteImageReturns
 	fake.recordInvocation("DeleteImage", []interface{}{arg1})
 	fake.deleteImageMutex.Unlock()
-	if fake.DeleteImageStub != nil {
-		return fake.DeleteImageStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.deleteImageReturns
 	return fakeReturns.result1
 }
 
@@ -196,6 +280,76 @@ func (fake *FakeImageManager) DeleteImageReturnsOnCall(i int, result1 error) {
 	}{result1}
 }
 
+func (fake *FakeImageManager) DeleteLocation(arg1 int, arg2 []datatypes.Location) (bool, error) {
+	var arg2Copy []datatypes.Location
+	if arg2 != nil {
+		arg2Copy = make([]datatypes.Location, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.deleteLocationMutex.Lock()
+	ret, specificReturn := fake.deleteLocationReturnsOnCall[len(fake.deleteLocationArgsForCall)]
+	fake.deleteLocationArgsForCall = append(fake.deleteLocationArgsForCall, struct {
+		arg1 int
+		arg2 []datatypes.Location
+	}{arg1, arg2Copy})
+	stub := fake.DeleteLocationStub
+	fakeReturns := fake.deleteLocationReturns
+	fake.recordInvocation("DeleteLocation", []interface{}{arg1, arg2Copy})
+	fake.deleteLocationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeImageManager) DeleteLocationCallCount() int {
+	fake.deleteLocationMutex.RLock()
+	defer fake.deleteLocationMutex.RUnlock()
+	return len(fake.deleteLocationArgsForCall)
+}
+
+func (fake *FakeImageManager) DeleteLocationCalls(stub func(int, []datatypes.Location) (bool, error)) {
+	fake.deleteLocationMutex.Lock()
+	defer fake.deleteLocationMutex.Unlock()
+	fake.DeleteLocationStub = stub
+}
+
+func (fake *FakeImageManager) DeleteLocationArgsForCall(i int) (int, []datatypes.Location) {
+	fake.deleteLocationMutex.RLock()
+	defer fake.deleteLocationMutex.RUnlock()
+	argsForCall := fake.deleteLocationArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeImageManager) DeleteLocationReturns(result1 bool, result2 error) {
+	fake.deleteLocationMutex.Lock()
+	defer fake.deleteLocationMutex.Unlock()
+	fake.DeleteLocationStub = nil
+	fake.deleteLocationReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeImageManager) DeleteLocationReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.deleteLocationMutex.Lock()
+	defer fake.deleteLocationMutex.Unlock()
+	fake.DeleteLocationStub = nil
+	if fake.deleteLocationReturnsOnCall == nil {
+		fake.deleteLocationReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.deleteLocationReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeImageManager) EditImage(arg1 int, arg2 string, arg3 string, arg4 string) ([]bool, []string) {
 	fake.editImageMutex.Lock()
 	ret, specificReturn := fake.editImageReturnsOnCall[len(fake.editImageArgsForCall)]
@@ -205,15 +359,16 @@ func (fake *FakeImageManager) EditImage(arg1 int, arg2 string, arg3 string, arg4
 		arg3 string
 		arg4 string
 	}{arg1, arg2, arg3, arg4})
+	stub := fake.EditImageStub
+	fakeReturns := fake.editImageReturns
 	fake.recordInvocation("EditImage", []interface{}{arg1, arg2, arg3, arg4})
 	fake.editImageMutex.Unlock()
-	if fake.EditImageStub != nil {
-		return fake.EditImageStub(arg1, arg2, arg3, arg4)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.editImageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -269,15 +424,16 @@ func (fake *FakeImageManager) ExportImage(arg1 int, arg2 datatypes.Container_Vir
 		arg1 int
 		arg2 datatypes.Container_Virtual_Guest_Block_Device_Template_Configuration
 	}{arg1, arg2})
+	stub := fake.ExportImageStub
+	fakeReturns := fake.exportImageReturns
 	fake.recordInvocation("ExportImage", []interface{}{arg1, arg2})
 	fake.exportImageMutex.Unlock()
-	if fake.ExportImageStub != nil {
-		return fake.ExportImageStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.exportImageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -326,21 +482,86 @@ func (fake *FakeImageManager) ExportImageReturnsOnCall(i int, result1 bool, resu
 	}{result1, result2}
 }
 
+func (fake *FakeImageManager) GetDatacenters(arg1 int) ([]datatypes.Location, error) {
+	fake.getDatacentersMutex.Lock()
+	ret, specificReturn := fake.getDatacentersReturnsOnCall[len(fake.getDatacentersArgsForCall)]
+	fake.getDatacentersArgsForCall = append(fake.getDatacentersArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetDatacentersStub
+	fakeReturns := fake.getDatacentersReturns
+	fake.recordInvocation("GetDatacenters", []interface{}{arg1})
+	fake.getDatacentersMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeImageManager) GetDatacentersCallCount() int {
+	fake.getDatacentersMutex.RLock()
+	defer fake.getDatacentersMutex.RUnlock()
+	return len(fake.getDatacentersArgsForCall)
+}
+
+func (fake *FakeImageManager) GetDatacentersCalls(stub func(int) ([]datatypes.Location, error)) {
+	fake.getDatacentersMutex.Lock()
+	defer fake.getDatacentersMutex.Unlock()
+	fake.GetDatacentersStub = stub
+}
+
+func (fake *FakeImageManager) GetDatacentersArgsForCall(i int) int {
+	fake.getDatacentersMutex.RLock()
+	defer fake.getDatacentersMutex.RUnlock()
+	argsForCall := fake.getDatacentersArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeImageManager) GetDatacentersReturns(result1 []datatypes.Location, result2 error) {
+	fake.getDatacentersMutex.Lock()
+	defer fake.getDatacentersMutex.Unlock()
+	fake.GetDatacentersStub = nil
+	fake.getDatacentersReturns = struct {
+		result1 []datatypes.Location
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeImageManager) GetDatacentersReturnsOnCall(i int, result1 []datatypes.Location, result2 error) {
+	fake.getDatacentersMutex.Lock()
+	defer fake.getDatacentersMutex.Unlock()
+	fake.GetDatacentersStub = nil
+	if fake.getDatacentersReturnsOnCall == nil {
+		fake.getDatacentersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Location
+			result2 error
+		})
+	}
+	fake.getDatacentersReturnsOnCall[i] = struct {
+		result1 []datatypes.Location
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeImageManager) GetImage(arg1 int) (datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
 	fake.getImageMutex.Lock()
 	ret, specificReturn := fake.getImageReturnsOnCall[len(fake.getImageArgsForCall)]
 	fake.getImageArgsForCall = append(fake.getImageArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetImageStub
+	fakeReturns := fake.getImageReturns
 	fake.recordInvocation("GetImage", []interface{}{arg1})
 	fake.getImageMutex.Unlock()
-	if fake.GetImageStub != nil {
-		return fake.GetImageStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getImageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -395,15 +616,16 @@ func (fake *FakeImageManager) ImportImage(arg1 datatypes.Container_Virtual_Guest
 	fake.importImageArgsForCall = append(fake.importImageArgsForCall, struct {
 		arg1 datatypes.Container_Virtual_Guest_Block_Device_Template_Configuration
 	}{arg1})
+	stub := fake.ImportImageStub
+	fakeReturns := fake.importImageReturns
 	fake.recordInvocation("ImportImage", []interface{}{arg1})
 	fake.importImageMutex.Unlock()
-	if fake.ImportImageStub != nil {
-		return fake.ImportImageStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.importImageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -459,15 +681,16 @@ func (fake *FakeImageManager) ListPrivateImages(arg1 string, arg2 string) ([]dat
 		arg1 string
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.ListPrivateImagesStub
+	fakeReturns := fake.listPrivateImagesReturns
 	fake.recordInvocation("ListPrivateImages", []interface{}{arg1, arg2})
 	fake.listPrivateImagesMutex.Unlock()
-	if fake.ListPrivateImagesStub != nil {
-		return fake.ListPrivateImagesStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listPrivateImagesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -523,15 +746,16 @@ func (fake *FakeImageManager) ListPublicImages(arg1 string, arg2 string) ([]data
 		arg1 string
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.ListPublicImagesStub
+	fakeReturns := fake.listPublicImagesReturns
 	fake.recordInvocation("ListPublicImages", []interface{}{arg1, arg2})
 	fake.listPublicImagesMutex.Unlock()
-	if fake.ListPublicImagesStub != nil {
-		return fake.ListPublicImagesStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listPublicImagesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -583,12 +807,18 @@ func (fake *FakeImageManager) ListPublicImagesReturnsOnCall(i int, result1 []dat
 func (fake *FakeImageManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.addLocationMutex.RLock()
+	defer fake.addLocationMutex.RUnlock()
 	fake.deleteImageMutex.RLock()
 	defer fake.deleteImageMutex.RUnlock()
+	fake.deleteLocationMutex.RLock()
+	defer fake.deleteLocationMutex.RUnlock()
 	fake.editImageMutex.RLock()
 	defer fake.editImageMutex.RUnlock()
 	fake.exportImageMutex.RLock()
 	defer fake.exportImageMutex.RUnlock()
+	fake.getDatacentersMutex.RLock()
+	defer fake.getDatacentersMutex.RUnlock()
 	fake.getImageMutex.RLock()
 	defer fake.getImageMutex.RUnlock()
 	fake.importImageMutex.RLock()

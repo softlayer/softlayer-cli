@@ -4,6 +4,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
@@ -67,25 +69,42 @@ var _ = Describe("image datacenter", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--add", "265592")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was added successfully!"))
 			})
 		})
 
 		Context("add successfully", func() {
+			BeforeEach(func() {
+				fakerlocations := []datatypes.Location{
+					datatypes.Location{
+						Id:       sl.Int(138124),
+						LongName: sl.String("Dallas 5"),
+						Name:     sl.String("dal05"),
+					},
+				}
+				fakeImageManager.GetDatacentersReturns(fakerlocations, nil)
+			})
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--add", "dal05")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was added successfully!"))
 			})
 		})
 
 		Context("remove successfully", func() {
+			BeforeEach(func() {
+				fakerlocations := []datatypes.Location{
+					datatypes.Location{
+						Id:       sl.Int(138124),
+						LongName: sl.String("Dallas 5"),
+						Name:     sl.String("dal05"),
+					},
+				}
+				fakeImageManager.GetDatacentersReturns(fakerlocations, nil)
+			})
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--remove", "dal05")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was removed successfully!"))
 			})
 		})
 
@@ -94,7 +113,6 @@ var _ = Describe("image datacenter", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--remove", "265592")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was removed successfully!"))
 			})
 		})
 
