@@ -1,4 +1,4 @@
-package account
+package reports
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -17,31 +17,30 @@ for every command.
 
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"account-bandwidth-pools": func(c *cli.Context) error {
-			return NewBandwidthPoolsCommand(ui, session).Run(c)
+		"report-datacenter-closures": func(c *cli.Context) error {
+			return NewDCClosuresCommand(ui, session).Run(c)
 		},
 	}
 
 	return CommandActionBindings
 }
 
-
-func AccountNamespace() plugin.Namespace {
+func ReportsNamespace() plugin.Namespace {
 	return plugin.Namespace{
 		ParentName:  "sl",
-		Name:        "account",
-		Description: T("Classic infrastructure Account commands"),
+		Name:        "report",
+		Description: T("Classic Infrastructure Reports"),
 	}
 }
 
-func AccountMetaData() cli.Command {
+func ReportsMetaData() cli.Command {
 	return cli.Command{
-		Category: 		"sl",
-		Name: 			"account",
-		Description: 	T("Classic infrastructure Account commands"),
-		Usage:			"${COMMAND_NAME} sl account",
-		Subcommands:	[]cli.Command{
-			BandwidthPoolsMetaData(),
+		Category:    "sl",
+		Name:        "report",
+		Description: T("Classic Infrastructure Reports"),
+		Usage:       "${COMMAND_NAME} sl report",
+		Subcommands: []cli.Command{
+			DCClosuresMetaData(),
 		},
 	}
 }

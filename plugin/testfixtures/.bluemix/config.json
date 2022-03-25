@@ -1,20 +1,37 @@
 {
   "APIEndpoint": "",
   "IsPrivate": false,
+  "IsAccessFromVPC": false,
   "ConsoleEndpoint": "",
   "ConsolePrivateEndpoint": "",
+  "ConsolePrivateVPCEndpoint": "",
   "CloudType": "",
   "CloudName": "",
+  "CRIType": "",
   "Region": "",
   "RegionID": "",
   "IAMEndpoint": "",
   "IAMPrivateEndpoint": "",
+  "IAMPrivateVPCEndpoint": "",
   "IAMToken": "",
   "IAMRefreshToken": "",
+  "IsLoggedInAsCRI": false,
   "Account": {
     "GUID": "",
     "Name": "",
     "Owner": ""
+  },
+  "Profile": {
+    "ID": "",
+    "Name": "",
+    "ComputeResource": {
+      "Name": "",
+      "ID": ""
+    },
+    "User": {
+      "Name": "",
+      "ID": ""
+    }
   },
   "ResourceGroup": {
     "GUID": "",
@@ -29,6 +46,7 @@
   "PluginRepos": null,
   "SSLDisabled": false,
   "Locale": "",
+  "MessageOfTheDayTime": 0,
   "Trace": "",
   "ColorEnabled": "",
   "HTTPTimeout": 0,
@@ -37,7 +55,7 @@
   "UsageStatsDisabled": false,
   "UsageStatsEnabled": false,
   "UsageStatsEnabledLastUpdate": "0001-01-01T00:00:00Z",
-  "SDKVersion": "0.5.0",
+  "SDKVersion": "0.9.0",
   "UpdateCheckInterval": 0,
   "UpdateRetryCheckInterval": 0,
   "UpdateNotificationInterval": 0
