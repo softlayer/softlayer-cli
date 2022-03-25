@@ -2,12 +2,14 @@ package managers
 
 import (
 	"fmt"
+
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type TagsManager interface {
@@ -21,7 +23,7 @@ type TagsManager interface {
 
 type tagsManager struct {
 	TagService services.Tag
-	Session *session.Session
+	Session    *session.Session
 }
 
 func NewTagsManager(session *session.Session) *tagsManager {
@@ -45,7 +47,7 @@ func (tag tagsManager) ListTags() ([]datatypes.Tag, error) {
 	i := 0
 	for {
 		resp, err := tag.TagService.Mask(objectMask).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).
-								    GetAttachedTagsForCurrentUser()
+			GetAttachedTagsForCurrentUser()
 		i++
 		if err != nil {
 			return tags, err
@@ -66,7 +68,7 @@ func (tag tagsManager) ListEmptyTags() ([]datatypes.Tag, error) {
 	i := 0
 	for {
 		resp, err := tag.TagService.Mask(objectMask).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).
-								    GetUnattachedTagsForCurrentUser()
+			GetUnattachedTagsForCurrentUser()
 		i++
 		if err != nil {
 			return tags, err
@@ -79,14 +81,16 @@ func (tag tagsManager) ListEmptyTags() ([]datatypes.Tag, error) {
 	return tags, nil
 }
 
-
 func (tag tagsManager) GetTagReferences(tagId int) ([]datatypes.Tag_Reference, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("references.id").OrderBy("ASC"))
+
 	objectMask := "mask[tagType]"
 	tagReferences := []datatypes.Tag_Reference{}
 	i := 0
 	for {
-		references, err := tag.TagService.Mask(objectMask).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).
-										  Id(tagId).GetReferences()
+		references, err := tag.TagService.Mask(objectMask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).
+			Id(tagId).GetReferences()
 		i++
 		if err != nil {
 			return references, err
@@ -100,7 +104,7 @@ func (tag tagsManager) GetTagReferences(tagId int) ([]datatypes.Tag_Reference, e
 	return tagReferences, nil
 }
 
-func (tag tagsManager) DeleteTag(tagName string) (bool, error)  {
+func (tag tagsManager) DeleteTag(tagName string) (bool, error) {
 	return tag.TagService.DeleteTag(&tagName)
 }
 
@@ -175,10 +179,10 @@ func NameCheck(name *string, err error) string {
 		if apiError.StatusCode == 404 {
 			checked_name = "Not Found"
 		} else {
-			checked_name = fmt.Sprintf("%v", err)	
+			checked_name = fmt.Sprintf("%v", err)
 		}
 	} else {
-		checked_name = utils.FormatStringPointer(name)	
+		checked_name = utils.FormatStringPointer(name)
 	}
 	return checked_name
 }

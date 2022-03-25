@@ -7,6 +7,7 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 const (
@@ -67,31 +68,29 @@ func (i imageManager) DeleteImage(imageId int) error {
 //name: filter based on name
 func (i imageManager) ListPrivateImages(name string, mask string) ([]datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("privateBlockDeviceTemplateGroups.id").OrderBy("ASC"))
+
 	if name != "" {
 		filters = append(filters, filter.Path("privateBlockDeviceTemplateGroups.name").Eq(name))
 	}
-
 	if mask == "" {
 		mask = IMAGE_DEFAULT_MASK
 	}
-	//n := 0
-	//var resourceList []datatypes.Virtual_Guest_Block_Device_Template_Group
-	//for {
-	//	resp, err := i.AccountService.Mask(IMAGE_DEFAULT_MASK).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(n * metadata.LIMIT).GetPrivateBlockDeviceTemplateGroups()
-	//	n++
-	//	if err != nil {
-	//		return []datatypes.Virtual_Guest_Block_Device_Template_Group{}, err
-	//	}
-	//	resourceList = append(resourceList, resp...)
-	//	if len(resp) < metadata.LIMIT {
-	//		break
-	//	}
-	//}
 
-	resourceList, err := i.AccountService.Mask(IMAGE_DEFAULT_MASK).Filter(filters.Build()).GetPrivateBlockDeviceTemplateGroups()
-	if err != nil {
-		return []datatypes.Virtual_Guest_Block_Device_Template_Group{}, err
+	n := 0
+	resourceList := []datatypes.Virtual_Guest_Block_Device_Template_Group{}
+	for {
+		resp, err := i.AccountService.Mask(IMAGE_DEFAULT_MASK).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(n * metadata.LIMIT).GetPrivateBlockDeviceTemplateGroups()
+		n++
+		if err != nil {
+			return []datatypes.Virtual_Guest_Block_Device_Template_Group{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
 	}
+
 	return resourceList, nil
 }
 
@@ -99,6 +98,8 @@ func (i imageManager) ListPrivateImages(name string, mask string) ([]datatypes.V
 //name: filter based on name
 func (i imageManager) ListPublicImages(name string, mask string) ([]datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("id").OrderBy("ASC"))
+
 	if name != "" {
 		filters = append(filters, filter.Path("name").Eq(name))
 	}
@@ -106,26 +107,21 @@ func (i imageManager) ListPublicImages(name string, mask string) ([]datatypes.Vi
 		mask = IMAGE_DEFAULT_MASK
 	}
 
-	//n := 0
-	//var resourceList []datatypes.Virtual_Guest_Block_Device_Template_Group
-	//for {
-	//	resp, err := i.ImageService.Mask(IMAGE_DEFAULT_MASK).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(n * metadata.LIMIT).GetPublicImages()
-	//	n++
-	//	if err != nil {
-	//		return []datatypes.Virtual_Guest_Block_Device_Template_Group{}, err
-	//	}
-	//	resourceList = append(resourceList, resp...)
-	//	if len(resp) < metadata.LIMIT {
-	//		break
-	//	}
-	//}
-
-	resourceList, err := i.ImageService.Mask(IMAGE_DEFAULT_MASK).Filter(filters.Build()).GetPublicImages()
-	if err != nil {
-		return []datatypes.Virtual_Guest_Block_Device_Template_Group{}, err
+	n := 0
+	resourceList := []datatypes.Virtual_Guest_Block_Device_Template_Group{}
+	for {
+		resp, err := i.ImageService.Mask(IMAGE_DEFAULT_MASK).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(n * metadata.LIMIT).GetPublicImages()
+		n++
+		if err != nil {
+			return []datatypes.Virtual_Guest_Block_Device_Template_Group{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
 	}
-	return resourceList, nil
 
+	return resourceList, nil
 }
 
 //Edit image related details
