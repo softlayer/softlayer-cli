@@ -303,7 +303,7 @@ func (s storageManager) GetReplicationLocations(volumeId int) ([]datatypes.Locat
 func (s storageManager) ListVolumes(volumeType string, datacenter string, username string, storageType string, notes string, orderId int, mask string) ([]datatypes.Network_Storage, error) {
 	filters := filter.New()
 	if volumeType == VOLUME_TYPE_BLOCK {
-		filters = append(filters, filter.Path("iscsiNetworkStorage.id").OrderBy("DESC"))
+		filters = append(filters, filter.Path("iscsiNetworkStorage.id").OrderBy("ASC"))
 		if mask == "" {
 			mask = BLOCK_VOLUME_DEFAULT_MASK
 		}
@@ -344,7 +344,7 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 		return resourceList, nil
 
 	} else if volumeType == VOLUME_TYPE_FILE {
-		filters = append(filters, filter.Path("nasNetworkStorage.id").OrderBy("DESC"))
+		filters = append(filters, filter.Path("nasNetworkStorage.id").OrderBy("ASC"))
 		if mask == "" {
 			mask = FILE_VOLUME_DEFAULT_MASK
 		}
