@@ -47,10 +47,6 @@ func (cmd *MonitoringListCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to get virtual server: {{.ID}}.\n", map[string]interface{}{"ID": virtualId})+err.Error(), 2)
 	}
 
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, virtual)
-	}
-
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add(T("Domain"), utils.FormatStringPointer(virtual.Domain))
 	table.Add(T("Public IP"), utils.FormatStringPointer(virtual.PrimaryIpAddress))
@@ -74,7 +70,12 @@ func (cmd *MonitoringListCommand) Run(c *cli.Context) error {
 		monitorTable.Print()
 		table.Add("Monitors", buf.String())
 	}
-	table.Print()
+
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()
+	}
 	return nil
 }
 
