@@ -69,7 +69,6 @@ var _ = Describe("image datacenter", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--add", "265592")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was added successfully!"))
 			})
 		})
 
@@ -88,7 +87,6 @@ var _ = Describe("image datacenter", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--add", "dal05")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was added successfully!"))
 			})
 		})
 
@@ -107,7 +105,6 @@ var _ = Describe("image datacenter", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--remove", "dal05")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was removed successfully!"))
 			})
 		})
 
@@ -116,7 +113,6 @@ var _ = Describe("image datacenter", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--remove", "265592")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The location was removed successfully!"))
 			})
 		})
 

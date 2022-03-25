@@ -1,7 +1,6 @@
 package image
 
 import (
-	"regexp"
 	"strconv"
 	"strings"
 
@@ -40,7 +39,7 @@ func (cmd *DatacenterCommand) Run(c *cli.Context) error {
 
 	storageLocations, err := cmd.ImageManager.GetDatacenters(imageID)
 	if err != nil {
-		return err
+		return cli.NewExitError(T("Failed to get image datacenters.\n")+err.Error(), 2)
 	}
 
 	if c.IsSet("add") {
@@ -51,10 +50,11 @@ func (cmd *DatacenterCommand) Run(c *cli.Context) error {
 				return err
 			}
 			cmd.UI.Ok()
-			cmd.UI.Print(T("The location was added successfully!"))
+			i18nsubs := map[string]interface{}{"imageId": imageID, "datacenter": c.String("add"), "action": "added"}
+			cmd.UI.Print(T("{{.imageId}} was {{.action}} from datacenter {{.datacenter}}", i18nsubs))
 
 		} else {
-			return slErr.NewInvalidUsageError(T("Datacenter to add is not valid to this image"))
+			return slErr.NewInvalidUsageError(T("{{.datacenter}} is invalid", map[string]interface{}{"datacenter": c.String("add")}))
 		}
 	}
 	if c.IsSet("remove") {
@@ -65,10 +65,11 @@ func (cmd *DatacenterCommand) Run(c *cli.Context) error {
 				return err
 			}
 			cmd.UI.Ok()
-			cmd.UI.Print(T("The location was removed successfully!"))
+			i18nsubs := map[string]interface{}{"imageId": imageID, "datacenter": c.String("remove"), "action": "removed"}
+			cmd.UI.Print(T("{{.imageId}} was {{.action}} from datacenter {{.datacenter}}", i18nsubs))
 
 		} else {
-			return slErr.NewInvalidUsageError(T("Datacenter to remove is not valid to this image"))
+			return slErr.NewInvalidUsageError(T("{{.datacenter}} is invalid", map[string]interface{}{"datacenter": c.String("remove")}))
 		}
 
 	}
@@ -78,17 +79,17 @@ func (cmd *DatacenterCommand) Run(c *cli.Context) error {
 func buildLocation(location string, storageLocations []datatypes.Location) []datatypes.Location {
 	locations := datatypes.Location{}
 	datacenter := []datatypes.Location{}
-	match, _ := regexp.MatchString("[a-z]", strings.ToLower(location))
-	if match {
+	idLocation, err := strconv.Atoi(location)
+	if err != nil {
 		for _, storageLocation := range storageLocations {
-			if *storageLocation.Name == location {
+			if *storageLocation.Name == strings.ToLower(location) {
 				locations.Id = storageLocation.Id
 			}
 		}
 	} else {
-		identifier, _ := strconv.Atoi(location)
-		locations.Id = &identifier
+		locations.Id = &idLocation
 	}
+
 	datacenter = append(datacenter, locations)
 	return datacenter
 
