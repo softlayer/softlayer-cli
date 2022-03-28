@@ -1,7 +1,6 @@
 package image
 
 import (
-	"regexp"
 	"strconv"
 	"strings"
 
@@ -37,39 +36,60 @@ func (cmd *DatacenterCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Image ID")
 	}
-	if c.IsSet("add") {
-		datacenter := buildLocation(c.String("add"))
-		_, err = cmd.ImageManager.AddLocation(imageID, datacenter)
-		if err != nil {
-			return err
-		}
-		cmd.UI.Ok()
-		cmd.UI.Print(T("The location was added successfully!"))
 
+	storageLocations, err := cmd.ImageManager.GetDatacenters(imageID)
+	if err != nil {
+		return cli.NewExitError(T("Failed to get image datacenters.\n")+err.Error(), 2)
+	}
+
+	if c.IsSet("add") {
+		datacenter := buildLocation(c.String("add"), storageLocations)
+		if datacenter[0].Id != nil {
+			_, err = cmd.ImageManager.AddLocation(imageID, datacenter)
+			if err != nil {
+				return err
+			}
+			cmd.UI.Ok()
+			i18nsubs := map[string]interface{}{"imageId": imageID, "datacenter": c.String("add"), "action": "added"}
+			cmd.UI.Print(T("{{.imageId}} was {{.action}} from datacenter {{.datacenter}}", i18nsubs))
+
+		} else {
+			return slErr.NewInvalidUsageError(T("{{.datacenter}} is invalid", map[string]interface{}{"datacenter": c.String("add")}))
+		}
 	}
 	if c.IsSet("remove") {
-		datacenter := buildLocation(c.String("remove"))
-		_, err = cmd.ImageManager.DeleteLocation(imageID, datacenter)
-		if err != nil {
-			return err
+		datacenter := buildLocation(c.String("remove"), storageLocations)
+		if datacenter[0].Id != nil {
+			_, err = cmd.ImageManager.DeleteLocation(imageID, datacenter)
+			if err != nil {
+				return err
+			}
+			cmd.UI.Ok()
+			i18nsubs := map[string]interface{}{"imageId": imageID, "datacenter": c.String("remove"), "action": "removed"}
+			cmd.UI.Print(T("{{.imageId}} was {{.action}} from datacenter {{.datacenter}}", i18nsubs))
+
+		} else {
+			return slErr.NewInvalidUsageError(T("{{.datacenter}} is invalid", map[string]interface{}{"datacenter": c.String("remove")}))
 		}
-		cmd.UI.Ok()
-		cmd.UI.Print(T("The location was removed successfully!"))
 
 	}
 	return nil
 }
 
-func buildLocation(location string) []datatypes.Location {
+func buildLocation(location string, storageLocations []datatypes.Location) []datatypes.Location {
 	locations := datatypes.Location{}
 	datacenter := []datatypes.Location{}
-	match, _ := regexp.MatchString("[a-z]", strings.ToLower(location))
-	if match {
-		locations.Name = &location
+	idLocation, err := strconv.Atoi(location)
+	if err != nil {
+		for _, storageLocation := range storageLocations {
+			if *storageLocation.Name == strings.ToLower(location) {
+				locations.Id = storageLocation.Id
+			}
+		}
 	} else {
-		identifier, _ := strconv.Atoi(location)
-		locations.Id = &identifier
+		locations.Id = &idLocation
 	}
+
 	datacenter = append(datacenter, locations)
 	return datacenter
 

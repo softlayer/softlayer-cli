@@ -29,6 +29,7 @@ type ImageManager interface {
 	EditImage(imageId int, name string, note string, tag string) ([]bool, []string)
 	ExportImage(imageId int, config datatypes.Container_Virtual_Guest_Block_Device_Template_Configuration) (bool, error)
 	ImportImage(config datatypes.Container_Virtual_Guest_Block_Device_Template_Configuration) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
+	GetDatacenters(imageId int) ([]datatypes.Location, error)
 }
 
 type imageManager struct {
@@ -185,4 +186,11 @@ func (i imageManager) AddLocation(imageId int, locations []datatypes.Location) (
 //location: location to remove of the image.
 func (i imageManager) DeleteLocation(imageId int, locations []datatypes.Location) (bool, error) {
 	return i.ImageService.Id(imageId).RemoveLocations(locations)
+}
+
+//Remove the location of the image
+//imageId: The ID of the image
+//location: location to remove of the image.
+func (i imageManager) GetDatacenters(imageId int) ([]datatypes.Location, error) {
+	return i.ImageService.Id(imageId).GetStorageLocations()
 }

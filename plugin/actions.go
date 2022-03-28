@@ -24,6 +24,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
@@ -42,7 +43,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	CommandActionBindings := map[string]func(c *cli.Context) error{}
 
 	// ibmcloud sl account
-	accountCommands := account.GetCommandAcionBindings(context, ui, session)
+	accountCommands := account.GetCommandActionBindings(context, ui, session)
 	for name, action := range accountCommands {
 		CommandActionBindings[name] = action
 	}
@@ -168,6 +169,11 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	//ibmcloud sl licenses
 	licenseCommands := licenses.GetCommandActionBindings(context, ui, session)
 	for name, action := range licenseCommands {
+		CommandActionBindings[name] = action
+	}
+
+	//ibmcloud sl reports
+	for name, action := range reports.GetCommandActionBindings(context, ui, session) {
 		CommandActionBindings[name] = action
 	}
 

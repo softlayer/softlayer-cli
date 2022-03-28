@@ -49,7 +49,7 @@ var _ = Describe("Load balancer edit policies", func() {
 
 		Context("l7 pool edited", func() {
 			It("with all attributes", func() {
-				err := testhelpers.RunCommand(cliCommand, "--pool-uuid", "123", "--method", "ROUNDROBIN", "--protocol", "80", "--s", "10.0.0.1:80", "--health-path", "/", "--health-interval", "100", "--health-retry", "5", "--health-timeout", "200", "--sticky", "cookie")
+				err := testhelpers.RunCommand(cliCommand, "--pool-uuid", "123", "--name", "NewName", "--method", "ROUNDROBIN", "--protocol", "80", "--s", "10.0.0.1:80", "--health-path", "/", "--health-interval", "100", "--health-retry", "5", "--health-timeout", "200", "--sticky", "cookie")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("L7 pool updated"))

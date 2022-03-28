@@ -33,7 +33,7 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"vs capture": func(c *cli.Context) error {
 			return NewCaptureCommand(ui, virtualServerManager).Run(c)
 		},
-		"vs-create" : func(c *cli.Context) error {
+		"vs-create": func(c *cli.Context) error {
 			return NewCreateCommand(ui, virtualServerManager, imageManager, context).Run(c)
 		},
 		"vs-host-create": func(c *cli.Context) error {
@@ -126,7 +126,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"vs-placementgroup-details": func(c *cli.Context) error {
 			return NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
 		},
-
+		"vs-monitoring-list": func(c *cli.Context) error {
+			return NewMonitoringListCommand(ui, virtualServerManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -173,6 +175,7 @@ func VSMetaData() cli.Command {
 			VSPlacementGroupListMetadata(),
 			VSPlacementGroupDetailMetaData(),
 			VSPlacementGroupCreateOptionsMetaData(),
+			VSMonitoringListMetaData(),
 		},
 	}
 }

@@ -77,6 +77,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"hardware-guests": func(c *cli.Context) error {
 			return NewGuestsCommand(ui, hardwareManager).Run(c)
 		},
+		"hardware-monitoring-list": func(c *cli.Context) error {
+			return NewMonitoringListCommand(ui, hardwareManager).Run(c)
+		},
 	}
 	return CommandActionBindings
 }
@@ -117,6 +120,7 @@ func HardwareMetaData() cli.Command {
 			HardwareBandwidthMetaData(),
 			HardwareStorageMetaData(),
 			HardwareGuestsMetaData(),
+			HardwareMonitoringListMetaData(),
 		},
 	}
 }

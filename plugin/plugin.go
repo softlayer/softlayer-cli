@@ -33,6 +33,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
@@ -203,6 +204,7 @@ func Namespaces() []plugin.Namespace {
 		dedicatedhost.DedicatedhostNamespace(),
 		virtual.VSNamespace(),
 		account.AccountNamespace(),
+		reports.ReportsNamespace(),
 	}
 }
 
@@ -231,5 +233,6 @@ func getCLITopCommands() []cli.Command {
 		dedicatedhost.DedicatedhostMetaData(),
 		virtual.VSMetaData(),
 		account.AccountMetaData(),
+		reports.ReportsMetaData(),
 	}
 }
