@@ -44,9 +44,9 @@ type UserManager interface {
 	EnableEmailSubscriptionNotification(notificationId int) (bool, error)
 	DisableEmailSubscriptionNotification(notificationId int) (bool, error)
 	GetUserAllowDevicesPermissions(userId int) ([]datatypes.User_Customer_CustomerPermission_Permission, error)
-	GetDedicatedHosts(userId int) ([]datatypes.Virtual_DedicatedHost, error)
-	GetHardware(userId int) ([]datatypes.Hardware, error)
-	GetVirtualGuests(userId int) ([]datatypes.Virtual_Guest, error)
+	GetDedicatedHosts(userId int, mask string) ([]datatypes.Virtual_DedicatedHost, error)
+	GetHardware(userId int, mask string) ([]datatypes.Hardware, error)
+	GetVirtualGuests(userId int, mask string) ([]datatypes.Virtual_Guest, error)
 }
 
 type userManager struct {
@@ -249,14 +249,23 @@ func (u userManager) GetUserAllowDevicesPermissions(userId int) ([]datatypes.Use
 	return u.UserCustomerService.Id(userId).Filter(filters.Build()).GetPermissions()
 }
 
-func (u userManager) GetDedicatedHosts(userId int) ([]datatypes.Virtual_DedicatedHost, error) {
-	return u.UserCustomerService.Id(userId).GetDedicatedHosts()
+func (u userManager) GetDedicatedHosts(userId int, mask string) ([]datatypes.Virtual_DedicatedHost, error) {
+	if mask == "" {
+		mask = "mask[id,name,notes]"
+	}
+	return u.UserCustomerService.Id(userId).Mask(mask).GetDedicatedHosts()
 }
 
-func (u userManager) GetHardware(userId int) ([]datatypes.Hardware, error) {
+func (u userManager) GetHardware(userId int, mask string) ([]datatypes.Hardware, error) {
+	if mask == "" {
+		mask = "mask[id,fullyQualifiedDomainName,primaryIpAddress,primaryBackendIpAddress,notes]"
+	}
 	return u.UserCustomerService.Id(userId).GetHardware()
 }
 
-func (u userManager) GetVirtualGuests(userId int) ([]datatypes.Virtual_Guest, error) {
+func (u userManager) GetVirtualGuests(userId int, mask string) ([]datatypes.Virtual_Guest, error) {
+	if mask == "" {
+		mask = "mask[id,fullyQualifiedDomainName,primaryIpAddress,primaryBackendIpAddress,notes]"
+	}
 	return u.UserCustomerService.Id(userId).GetVirtualGuests()
 }

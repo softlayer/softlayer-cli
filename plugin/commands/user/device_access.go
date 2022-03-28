@@ -9,6 +9,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -35,22 +36,27 @@ func (cmd *DeviceAccessCommand) Run(c *cli.Context) error {
 		return errors.NewInvalidUsageError(T("User ID should be a number."))
 	}
 
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+
 	userpermissions, err := cmd.UserManager.GetUserAllowDevicesPermissions(id)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get user permissions.\n")+err.Error(), 2)
 	}
 
-	dedicatedHosts, err := cmd.UserManager.GetDedicatedHosts(id)
+	dedicatedHosts, err := cmd.UserManager.GetDedicatedHosts(id, "")
 	if err != nil {
 		return cli.NewExitError(T("Failed to get dedicated hosts.\n")+err.Error(), 2)
 	}
 
-	hardwares, err := cmd.UserManager.GetHardware(id)
+	hardwares, err := cmd.UserManager.GetHardware(id, "")
 	if err != nil {
 		return cli.NewExitError(T("Failed to get bare metal servers.\n")+err.Error(), 2)
 	}
 
-	virtualGuests, err := cmd.UserManager.GetVirtualGuests(id)
+	virtualGuests, err := cmd.UserManager.GetVirtualGuests(id, "")
 	if err != nil {
 		return cli.NewExitError(T("Failed to get virtual servers.\n")+err.Error(), 2)
 	}
@@ -145,7 +151,11 @@ func (cmd *DeviceAccessCommand) Run(c *cli.Context) error {
 		table.Add(T("Devices"), "User does not have devices")
 	}
 
-	table.Print()
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()
+	}
 	return nil
 }
 
@@ -155,6 +165,8 @@ func UserDeviceAccessMetaData() cli.Command {
 		Name:        "device-access",
 		Description: T("List all devices the user has access and device access permissions."),
 		Usage:       "${COMMAND_NAME} sl user device-access IDENTIFIER",
-		Flags:       []cli.Flag{},
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
 	}
 }

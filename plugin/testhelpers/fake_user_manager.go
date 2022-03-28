@@ -142,10 +142,11 @@ type FakeUserManager struct {
 		result1 datatypes.User_Customer
 		result2 error
 	}
-	GetDedicatedHostsStub        func(int) ([]datatypes.Virtual_DedicatedHost, error)
+	GetDedicatedHostsStub        func(int, string) ([]datatypes.Virtual_DedicatedHost, error)
 	getDedicatedHostsMutex       sync.RWMutex
 	getDedicatedHostsArgsForCall []struct {
 		arg1 int
+		arg2 string
 	}
 	getDedicatedHostsReturns struct {
 		result1 []datatypes.Virtual_DedicatedHost
@@ -169,10 +170,11 @@ type FakeUserManager struct {
 		result1 []datatypes.Event_Log
 		result2 error
 	}
-	GetHardwareStub        func(int) ([]datatypes.Hardware, error)
+	GetHardwareStub        func(int, string) ([]datatypes.Hardware, error)
 	getHardwareMutex       sync.RWMutex
 	getHardwareArgsForCall []struct {
 		arg1 int
+		arg2 string
 	}
 	getHardwareReturns struct {
 		result1 []datatypes.Hardware
@@ -249,10 +251,11 @@ type FakeUserManager struct {
 		result1 []datatypes.User_Customer_CustomerPermission_Permission
 		result2 error
 	}
-	GetVirtualGuestsStub        func(int) ([]datatypes.Virtual_Guest, error)
+	GetVirtualGuestsStub        func(int, string) ([]datatypes.Virtual_Guest, error)
 	getVirtualGuestsMutex       sync.RWMutex
 	getVirtualGuestsArgsForCall []struct {
 		arg1 int
+		arg2 string
 	}
 	getVirtualGuestsReturns struct {
 		result1 []datatypes.Virtual_Guest
@@ -943,18 +946,19 @@ func (fake *FakeUserManager) GetCurrentUserReturnsOnCall(i int, result1 datatype
 	}{result1, result2}
 }
 
-func (fake *FakeUserManager) GetDedicatedHosts(arg1 int) ([]datatypes.Virtual_DedicatedHost, error) {
+func (fake *FakeUserManager) GetDedicatedHosts(arg1 int, arg2 string) ([]datatypes.Virtual_DedicatedHost, error) {
 	fake.getDedicatedHostsMutex.Lock()
 	ret, specificReturn := fake.getDedicatedHostsReturnsOnCall[len(fake.getDedicatedHostsArgsForCall)]
 	fake.getDedicatedHostsArgsForCall = append(fake.getDedicatedHostsArgsForCall, struct {
 		arg1 int
-	}{arg1})
+		arg2 string
+	}{arg1, arg2})
 	stub := fake.GetDedicatedHostsStub
 	fakeReturns := fake.getDedicatedHostsReturns
-	fake.recordInvocation("GetDedicatedHosts", []interface{}{arg1})
+	fake.recordInvocation("GetDedicatedHosts", []interface{}{arg1, arg2})
 	fake.getDedicatedHostsMutex.Unlock()
 	if stub != nil {
-		return stub(arg1)
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -968,17 +972,17 @@ func (fake *FakeUserManager) GetDedicatedHostsCallCount() int {
 	return len(fake.getDedicatedHostsArgsForCall)
 }
 
-func (fake *FakeUserManager) GetDedicatedHostsCalls(stub func(int) ([]datatypes.Virtual_DedicatedHost, error)) {
+func (fake *FakeUserManager) GetDedicatedHostsCalls(stub func(int, string) ([]datatypes.Virtual_DedicatedHost, error)) {
 	fake.getDedicatedHostsMutex.Lock()
 	defer fake.getDedicatedHostsMutex.Unlock()
 	fake.GetDedicatedHostsStub = stub
 }
 
-func (fake *FakeUserManager) GetDedicatedHostsArgsForCall(i int) int {
+func (fake *FakeUserManager) GetDedicatedHostsArgsForCall(i int) (int, string) {
 	fake.getDedicatedHostsMutex.RLock()
 	defer fake.getDedicatedHostsMutex.RUnlock()
 	argsForCall := fake.getDedicatedHostsArgsForCall[i]
-	return argsForCall.arg1
+	return argsForCall.arg1, argsForCall.arg2
 }
 
 func (fake *FakeUserManager) GetDedicatedHostsReturns(result1 []datatypes.Virtual_DedicatedHost, result2 error) {
@@ -1072,18 +1076,19 @@ func (fake *FakeUserManager) GetEventsReturnsOnCall(i int, result1 []datatypes.E
 	}{result1, result2}
 }
 
-func (fake *FakeUserManager) GetHardware(arg1 int) ([]datatypes.Hardware, error) {
+func (fake *FakeUserManager) GetHardware(arg1 int, arg2 string) ([]datatypes.Hardware, error) {
 	fake.getHardwareMutex.Lock()
 	ret, specificReturn := fake.getHardwareReturnsOnCall[len(fake.getHardwareArgsForCall)]
 	fake.getHardwareArgsForCall = append(fake.getHardwareArgsForCall, struct {
 		arg1 int
-	}{arg1})
+		arg2 string
+	}{arg1, arg2})
 	stub := fake.GetHardwareStub
 	fakeReturns := fake.getHardwareReturns
-	fake.recordInvocation("GetHardware", []interface{}{arg1})
+	fake.recordInvocation("GetHardware", []interface{}{arg1, arg2})
 	fake.getHardwareMutex.Unlock()
 	if stub != nil {
-		return stub(arg1)
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -1097,17 +1102,17 @@ func (fake *FakeUserManager) GetHardwareCallCount() int {
 	return len(fake.getHardwareArgsForCall)
 }
 
-func (fake *FakeUserManager) GetHardwareCalls(stub func(int) ([]datatypes.Hardware, error)) {
+func (fake *FakeUserManager) GetHardwareCalls(stub func(int, string) ([]datatypes.Hardware, error)) {
 	fake.getHardwareMutex.Lock()
 	defer fake.getHardwareMutex.Unlock()
 	fake.GetHardwareStub = stub
 }
 
-func (fake *FakeUserManager) GetHardwareArgsForCall(i int) int {
+func (fake *FakeUserManager) GetHardwareArgsForCall(i int) (int, string) {
 	fake.getHardwareMutex.RLock()
 	defer fake.getHardwareMutex.RUnlock()
 	argsForCall := fake.getHardwareArgsForCall[i]
-	return argsForCall.arg1
+	return argsForCall.arg1, argsForCall.arg2
 }
 
 func (fake *FakeUserManager) GetHardwareReturns(result1 []datatypes.Hardware, result2 error) {
@@ -1458,18 +1463,19 @@ func (fake *FakeUserManager) GetUserPermissionsReturnsOnCall(i int, result1 []da
 	}{result1, result2}
 }
 
-func (fake *FakeUserManager) GetVirtualGuests(arg1 int) ([]datatypes.Virtual_Guest, error) {
+func (fake *FakeUserManager) GetVirtualGuests(arg1 int, arg2 string) ([]datatypes.Virtual_Guest, error) {
 	fake.getVirtualGuestsMutex.Lock()
 	ret, specificReturn := fake.getVirtualGuestsReturnsOnCall[len(fake.getVirtualGuestsArgsForCall)]
 	fake.getVirtualGuestsArgsForCall = append(fake.getVirtualGuestsArgsForCall, struct {
 		arg1 int
-	}{arg1})
+		arg2 string
+	}{arg1, arg2})
 	stub := fake.GetVirtualGuestsStub
 	fakeReturns := fake.getVirtualGuestsReturns
-	fake.recordInvocation("GetVirtualGuests", []interface{}{arg1})
+	fake.recordInvocation("GetVirtualGuests", []interface{}{arg1, arg2})
 	fake.getVirtualGuestsMutex.Unlock()
 	if stub != nil {
-		return stub(arg1)
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -1483,17 +1489,17 @@ func (fake *FakeUserManager) GetVirtualGuestsCallCount() int {
 	return len(fake.getVirtualGuestsArgsForCall)
 }
 
-func (fake *FakeUserManager) GetVirtualGuestsCalls(stub func(int) ([]datatypes.Virtual_Guest, error)) {
+func (fake *FakeUserManager) GetVirtualGuestsCalls(stub func(int, string) ([]datatypes.Virtual_Guest, error)) {
 	fake.getVirtualGuestsMutex.Lock()
 	defer fake.getVirtualGuestsMutex.Unlock()
 	fake.GetVirtualGuestsStub = stub
 }
 
-func (fake *FakeUserManager) GetVirtualGuestsArgsForCall(i int) int {
+func (fake *FakeUserManager) GetVirtualGuestsArgsForCall(i int) (int, string) {
 	fake.getVirtualGuestsMutex.RLock()
 	defer fake.getVirtualGuestsMutex.RUnlock()
 	argsForCall := fake.getVirtualGuestsArgsForCall[i]
-	return argsForCall.arg1
+	return argsForCall.arg1, argsForCall.arg2
 }
 
 func (fake *FakeUserManager) GetVirtualGuestsReturns(result1 []datatypes.Virtual_Guest, result2 error) {
