@@ -41,6 +41,12 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"user-edit-notifications": func(c *cli.Context) error {
 			return NewEditNotificationsCommand(ui, userManager).Run(c)
 		},
+		"user-grant-access": func(c *cli.Context) error {
+			return NewGrantAccessCommand(ui, userManager).Run(c)
+		},
+		"user-remove-access": func(c *cli.Context) error {
+			return NewRemoveAccessCommand(ui, userManager).Run(c)
+		},
 	}
 	return CommandActionBindings
 
@@ -70,6 +76,8 @@ func UserMetaData() cli.Command {
 			UserPermissionsMetaData(),
 			UserNotificationsMetaData(),
 			UserEditNotificationsMetaData(),
+			UserGrantAccessMataData(),
+			UserRemoveAccessMataData(),
 		},
 	}
 }
