@@ -50,7 +50,7 @@ func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
 				cmd.UI.Ok()
 				cmd.UI.Print(T("Access was granted from user {{.userId}} to hardware {{.hardwareId}}", i18nsubs))
 			} else {
-				cmd.UI.Print(T("Failed to grant access user{{.userId}} to hardware {{.hardwareId}} device", i18nsubs))
+				cli.NewExitError(T("Failed to grant access user{{.userId}} to hardware {{.hardwareId}}", i18nsubs), 2)
 			}
 		}
 	}
@@ -69,7 +69,7 @@ func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
 				cmd.UI.Ok()
 				cmd.UI.Print(T("Access was granted from user {{.userId}} to dedicated host {{.dedicatedHostId}}", i18nsubs))
 			} else {
-				cmd.UI.Print(T("Failed to grant access user{{.userId}} to dedicated host {{.dedicatedHostId}} device", i18nsubs))
+				cli.NewExitError(T("Failed to grant access user{{.userId}} to dedicated host {{.dedicatedHostId}}", i18nsubs), 2)
 			}
 		}
 	}
@@ -88,7 +88,7 @@ func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
 				cmd.UI.Ok()
 				cmd.UI.Print(T("Access was granted from user {{.userId}} to virtual server {{.virtualId}}", i18nsubs))
 			} else {
-				cmd.UI.Print(T("Failed to grant access user{{.userId}} to virtual server {{.virtualId}} device", i18nsubs))
+				cli.NewExitError(T("Failed to grant access user{{.userId}} to virtual server {{.virtualId}}", i18nsubs), 2)
 			}
 		}
 	}
