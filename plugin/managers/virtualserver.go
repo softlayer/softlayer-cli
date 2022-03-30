@@ -770,6 +770,8 @@ func getDisks(vs datatypes.Virtual_Guest, all bool) []datatypes.Virtual_Guest_Bl
 
 func (vs virtualServerManager) ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("dedicatedHosts.id").OrderBy("ASC"))
+
 	if name != "" {
 		filters = append(filters, filter.Path("dedicatedHosts.name").Eq(name))
 	}
@@ -911,6 +913,7 @@ func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain s
 //This method support a mask and a filter as parameters to retrieve a list of all virtual servers on the account.
 func (vs virtualServerManager) GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("virtualGuests.id").OrderBy("ASC"))
 	if mask == "" {
 		mask = INSTANCE_DEFAULT_MASK
 	}
