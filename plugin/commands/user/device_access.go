@@ -73,9 +73,9 @@ func (cmd *DeviceAccessCommand) Run(c *cli.Context) error {
 			)
 		}
 		permissionsTable.Print()
-		table.Add("Permissions", buf.String())
+		table.Add(T("Permissions"), buf.String())
 	} else {
-		table.Add(T("Permissions"), "User does not have permissions about devices")
+		table.Add(T("Permissions"), "-")
 	}
 
 	if len(dedicatedHosts) != 0 || len(hardwares) != 0 || len(virtualGuests) != 0 {
@@ -146,9 +146,9 @@ func (cmd *DeviceAccessCommand) Run(c *cli.Context) error {
 			}
 		}
 		devicesTable.Print()
-		table.Add("Devices", buf.String())
+		table.Add(T("Devices"), buf.String())
 	} else {
-		table.Add(T("Devices"), "User does not have devices")
+		table.Add(T("Devices"), "-")
 	}
 
 	if outputFormat == "JSON" {
