@@ -19,12 +19,12 @@ var _ = Describe("Reports Datacenter-Closures", func() {
 		cmd         *reports.DCClosuresCommand
 		cliCommand  cli.Command
 		fakeSession *session.Session
-		handler     testhelpers.FakeTransportHandler
+		fakeHandler *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		handler = fakeSession.TransportHandler.(testhelpers.FakeTransportHandler)
+		fakeSession = testhelpers.NewFakeSoftlayerSession(nil)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSession)
 
 		cmd = reports.NewDCClosuresCommand(fakeUI, fakeSession)
 		cliCommand = cli.Command{
@@ -35,7 +35,10 @@ var _ = Describe("Reports Datacenter-Closures", func() {
 			Action:      cmd.Run,
 		}
 	})
-
+	AfterEach(func() {
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
+	})
 	Describe("Datacenter-Closures Testing", func() {
 		Context("Happy Path", func() {
 			It("Runs without issue", func() {
@@ -53,14 +56,14 @@ var _ = Describe("Reports Datacenter-Closures", func() {
 		})
 		Context("Error Handling", func() {
 			It("SoftLayer_Search::advancedSearch() Error", func() {
-				handler.AddApiError("SoftLayer_Search", "advancedSearch", 500, "BAD")
+				fakeHandler.AddApiError("SoftLayer_Search", "advancedSearch", 500, "BAD")
 				err := testhelpers.RunCommand(cliCommand, "--output=JSON")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("BAD: BAD (HTTP 500)"))
 			})
 			It("SoftLayer_Network_Pod::getAllObjects() Error", func() {
-				handler.AddApiError("SoftLayer_Network_Pod", "getAllObjects", 500, "ERRRR")
-				fmt.Printf("API ERRORS ARE NOW\n%v", handler.ErrorMap)
+				fakeHandler.AddApiError("SoftLayer_Network_Pod", "getAllObjects", 500, "ERRRR")
+				fmt.Printf("API ERRORS ARE NOW\n%v", fakeHandler.ErrorMap)
 				err := testhelpers.RunCommand(cliCommand, "--output=JSON")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("ERRRR: ERRRR (HTTP 500)"))
@@ -71,7 +74,7 @@ var _ = Describe("Reports Datacenter-Closures", func() {
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
 			AfterEach(func() {
-				handler.ClearErrors()
+				fakeHandler.ClearErrors()
 			})
 		})
 	})
