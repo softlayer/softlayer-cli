@@ -13,6 +13,7 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -302,6 +303,7 @@ func (s storageManager) GetReplicationLocations(volumeId int) ([]datatypes.Locat
 func (s storageManager) ListVolumes(volumeType string, datacenter string, username string, storageType string, notes string, orderId int, mask string) ([]datatypes.Network_Storage, error) {
 	filters := filter.New()
 	if volumeType == VOLUME_TYPE_BLOCK {
+		filters = append(filters, filter.Path("iscsiNetworkStorage.id").OrderBy("ASC"))
 		if mask == "" {
 			mask = BLOCK_VOLUME_DEFAULT_MASK
 		}
@@ -325,26 +327,24 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 			filters = append(filters, filter.Path("iscsiNetworkStorage.billingItem.orderItem.order.id").Eq(orderId))
 		}
 
-		//i := 0
-		//var resourceList []datatypes.Network_Storage
-		//for {
-		//	resp, err := s.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetIscsiNetworkStorage()
-		//	i++
-		//	if err != nil {
-		//		return []datatypes.Network_Storage{}, err
-		//	}
-		//	resourceList = append(resourceList, resp...)
-		//	if len(resp) < metadata.LIMIT {
-		//		break
-		//	}
-		//}
-		resourceList, err := s.AccountService.Mask(mask).Filter(filters.Build()).GetIscsiNetworkStorage()
-		if err != nil {
-			return []datatypes.Network_Storage{}, err
+		i := 0
+		resourceList := []datatypes.Network_Storage{}
+		for {
+			resp, err := s.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetIscsiNetworkStorage()
+			i++
+			if err != nil {
+				return []datatypes.Network_Storage{}, err
+			}
+			resourceList = append(resourceList, resp...)
+			if len(resp) < metadata.LIMIT {
+				break
+			}
 		}
+
 		return resourceList, nil
 
 	} else if volumeType == VOLUME_TYPE_FILE {
+		filters = append(filters, filter.Path("nasNetworkStorage.id").OrderBy("ASC"))
 		if mask == "" {
 			mask = FILE_VOLUME_DEFAULT_MASK
 		}
@@ -368,25 +368,21 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 			filters = append(filters, filter.Path("nasNetworkStorage.billingItem.orderItem.order.id").Eq(orderId))
 		}
 
-		//i := 0
-		//var resourceList []datatypes.Network_Storage
-		//for {
-		//	resp, err := s.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetNasNetworkStorage()
-		//	i++
-		//	if err != nil {
-		//		return []datatypes.Network_Storage{}, err
-		//	}
-		//	resourceList = append(resourceList, resp...)
-		//	if len(resp) < metadata.LIMIT {
-		//		break
-		//	}
-		//}
-		resourceList, err := s.AccountService.Mask(mask).Filter(filters.Build()).GetNasNetworkStorage()
-		if err != nil {
-			return []datatypes.Network_Storage{}, err
+		i := 0
+		var resourceList []datatypes.Network_Storage
+		for {
+			resp, err := s.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetNasNetworkStorage()
+			i++
+			if err != nil {
+				return []datatypes.Network_Storage{}, err
+			}
+			resourceList = append(resourceList, resp...)
+			if len(resp) < metadata.LIMIT {
+				break
+			}
 		}
-		return resourceList, nil
 
+		return resourceList, nil
 	} else {
 		return nil, errors.New(T("Invalid volume type"))
 	}
