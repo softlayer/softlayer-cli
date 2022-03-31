@@ -42,7 +42,7 @@ const (
 	HOST_DEFAULT_MASK = "id,name,createDate,cpuCount,diskCapacity,memoryCapacity,guestCount,datacenter,backendRouter,allocationStatus"
 
 	KEY_DATABASE      = "databases"
-	KEY_GUEST      = "guests"
+	KEY_GUEST         = "guests"
 	HOST_DEFAULT_SIZE = "56_CORES_X_242_RAM_X_1_4_TB"
 )
 
@@ -103,14 +103,13 @@ type VirtualServerManager interface {
 	GetPods() ([]datatypes.Network_Pod, error)
 	GenerateInstanceCapacityCreationTemplate(reservedCapacity *datatypes.Container_Product_Order_Virtual_ReservedCapacity, params map[string]interface{}) (interface{}, error)
 	GetSummaryUsage(id int, startDate time.Time, endDate time.Time, validType string, periodic int) (resp []datatypes.Metric_Tracking_Object_Data, err error)
-	PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup,error)
+	PlacementsGroupList(mask string) ([]datatypes.Virtual_PlacementGroup, error)
 	GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error)
 	PlacementCreate(templateObject *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error)
 	GetDatacenters() ([]datatypes.Location, error)
 	GetAvailablePlacementRouters(id int) ([]datatypes.Hardware, error)
 	GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error)
 }
-
 
 type virtualServerManager struct {
 	VirtualGuestService  services.Virtual_Guest
@@ -607,12 +606,12 @@ func (vs virtualServerManager) GetCreateOptions(vsiType string, datacenter strin
 			operatingSystems[*item.SoftwareDescription.ReferenceCode] = *item.SoftwareDescription.LongDescription
 
 		case category == "database":
-			database[*item.KeyName]=*item.Description
+			database[*item.KeyName] = *item.Description
 		case category == "port_speed":
 			portSpeeds[utils.FormatStringPointer(item.KeyName)] = *item.Description
 
 		case strings.Contains(category, "guest_disk"):
-				guests[string(*item.KeyName)]= *item.Description
+			guests[string(*item.KeyName)] = *item.Description
 		case utils.WordInList(extraList, category):
 			extras[*item.KeyName] = *item.Description
 		}
@@ -624,7 +623,7 @@ func (vs virtualServerManager) GetCreateOptions(vsiType string, datacenter strin
 		KEY_DATABASE:   database,
 		KEY_OS:         operatingSystems,
 		KEY_PORT_SPEED: portSpeeds,
-		KEY_GUEST: guests,
+		KEY_GUEST:      guests,
 		KEY_EXTRAS:     extras,
 	}, err
 
@@ -771,6 +770,8 @@ func getDisks(vs datatypes.Virtual_Guest, all bool) []datatypes.Virtual_Guest_Bl
 
 func (vs virtualServerManager) ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("dedicatedHosts.id").OrderBy("ASC"))
+
 	if name != "" {
 		filters = append(filters, filter.Path("dedicatedHosts.name").Eq(name))
 	}
@@ -816,6 +817,7 @@ func (vs virtualServerManager) ListDedicatedHost(name, datacenter, owner string,
 //tags: filter based on list of tags
 func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderID int, tags []string, mask string) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("virtualGuests.id").OrderBy("DESC"))
 	if domain != "" {
 		filters = append(filters, utils.QueryFilter(domain, "virtualGuests.domain"))
 	}
@@ -911,6 +913,7 @@ func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain s
 //This method support a mask and a filter as parameters to retrieve a list of all virtual servers on the account.
 func (vs virtualServerManager) GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
+	filters = append(filters, filter.Path("virtualGuests.id").OrderBy("ASC"))
 	if mask == "" {
 		mask = INSTANCE_DEFAULT_MASK
 	}
@@ -1456,8 +1459,7 @@ func (vs virtualServerManager) PlacementsGroupList(mask string) ([]datatypes.Vir
 	return vs.AccountService.Mask(mask).GetPlacementGroups()
 }
 
-
-func (vs virtualServerManager) GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error){
+func (vs virtualServerManager) GetPlacementGroupDetail(id int) (datatypes.Virtual_PlacementGroup, error) {
 	mask := "mask[id, name, createDate, rule, backendRouter[id, hostname],guests[activeTransaction[id,transactionStatus[name,friendlyName]]]]"
 	reservedService := services.GetVirtualPlacementGroupService(vs.Session)
 	return reservedService.Mask(mask).Id(id).GetObject()
@@ -1493,5 +1495,3 @@ func (vs virtualServerManager) PlacementCreate(templateObject *datatypes.Virtual
 	placementService := services.GetVirtualPlacementGroupService(vs.Session)
 	return placementService.CreateObject(templateObject)
 }
-
-

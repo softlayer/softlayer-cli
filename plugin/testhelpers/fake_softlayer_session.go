@@ -1,9 +1,9 @@
 package testhelpers
 
 import (
-	"fmt"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -30,16 +30,20 @@ func (h FakeTransportHandler_True) DoRequest(sess *session.Session, service stri
 }
 
 type FakeTransportHandler struct {
-	FileNames []string
-	ApiError  sl.Error
-	ErrorMap map[string]sl.Error
-
+	FileNames   []string
+	ApiError    sl.Error
+	ErrorMap    map[string]sl.Error
+	ApiCallLogs []ApiCallLog
 }
 
-func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, method string, args []interface{}, options *sl.Options, pResult interface{}) error {
-	// for x, arg := range args {
-	// 	fmt.Printf("args %v:\t %v", x, arg)
-	// }
+type ApiCallLog struct {
+	Service string
+	Method  string
+	Args    []interface{}
+	Options *sl.Options
+}
+
+func (h *FakeTransportHandler) DoRequest(sess *session.Session, service string, method string, args []interface{}, options *sl.Options, pResult interface{}) error {
 
 	if options == nil {
 		options = new(sl.Options)
@@ -51,8 +55,10 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	if options.Id != nil {
 		identifier = *options.Id
 	}
-	
-	fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
+
+	// fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
+
+	h.AddApiLog(service, method, args, options)
 
 	// If we have an error defined for this method, return that.
 	if apiError, ok := h.ErrorMap[apiSig]; ok {
@@ -60,7 +66,7 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	}
 
 	// This is required to prevent pagination requests from going off in an infinite loop
-	if options.Offset != nil  && *options.Offset > 0 {
+	if options.Offset != nil && *options.Offset > 0 {
 		pResult = []byte("[]")
 		return nil
 	}
@@ -72,7 +78,7 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	if err != nil {
 		slError := sl.Error{
 			StatusCode: 555,
-			Exception:  fmt.Sprintf("%v",err),
+			Exception:  fmt.Sprintf("%v", err),
 			Message:    "Erroring doing Fake Handling",
 			Wrapped:    nil,
 		}
@@ -82,7 +88,7 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	if err != nil {
 		slError := sl.Error{
 			StatusCode: 559,
-			Exception:  fmt.Sprintf("%v",err),
+			Exception:  fmt.Sprintf("%v", err),
 			Message:    "Erroring doing json.Unmarshal",
 			Wrapped:    nil,
 		}
@@ -91,7 +97,19 @@ func (h FakeTransportHandler) DoRequest(sess *session.Session, service string, m
 	return err
 }
 
-func (h *FakeTransportHandler) AddApiError(service string,  method string, errorCode int, errorMessage string) {
+// Logs whenever the API is called.
+func (h *FakeTransportHandler) AddApiLog(service string, method string, args []interface{}, options *sl.Options) {
+	apiLog := ApiCallLog{
+		Service: service,
+		Method:  method,
+		Args:    args,
+		Options: options,
+	}
+	h.ApiCallLogs = append(h.ApiCallLogs, apiLog)
+}
+
+// Will return an error when the service+method API is called
+func (h *FakeTransportHandler) AddApiError(service string, method string, errorCode int, errorMessage string) {
 	if h.ErrorMap == nil {
 		h.ErrorMap = make(map[string]sl.Error)
 	}
@@ -105,11 +123,22 @@ func (h *FakeTransportHandler) AddApiError(service string,  method string, error
 	h.ErrorMap[apiSig] = slError
 }
 
-func (h FakeTransportHandler) ClearErrors() {
+func (h *FakeTransportHandler) ClearApiCallLogs() {
+	h.ApiCallLogs = []ApiCallLog{}
+}
+
+func (h *FakeTransportHandler) ClearErrors() {
 	h.ErrorMap = make(map[string]sl.Error)
 }
 
 func NewFakeSoftlayerSession(fileNames []string) *session.Session {
+
+	sess := &session.Session{}
+	sess.TransportHandler = NewFakeTransportHandler(fileNames)
+	return sess
+}
+
+func NewFakeTransportHandler(fileNames []string) session.TransportHandler {
 	slError := sl.Error{
 		StatusCode: 0,
 		Exception:  "",
@@ -117,11 +146,17 @@ func NewFakeSoftlayerSession(fileNames []string) *session.Session {
 		Wrapped:    nil,
 	}
 	errorMap := make(map[string]sl.Error)
-	return &session.Session{
-		TransportHandler: FakeTransportHandler{fileNames, slError, errorMap},
-	}
+	apiCallLogs := []ApiCallLog{}
+	var transportHandler session.TransportHandler
+	transportHandler = &FakeTransportHandler{fileNames, slError, errorMap, apiCallLogs}
+	return transportHandler
 }
 
+// Casts the session transport handler to the FakeTransportHandler
+func GetSessionHandler(sess *session.Session) *FakeTransportHandler {
+	transport := sess.TransportHandler.(*FakeTransportHandler)
+	return transport
+}
 
 // This function tries to find an appropriate JSON file to use as a response object.
 // Fixtures are placed in the plugin/testfixtures directory in this patter:
@@ -156,7 +191,7 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 	}
 
 	// Check for a matchin SoftLayer_Service/method-1234.json file
-	workingPath =  fmt.Sprintf("%s/%s-%d.json", service, method, identifier)
+	workingPath = fmt.Sprintf("%s/%s-%d.json", service, method, identifier)
 	if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", workingPath)); err == nil {
 		fixture = filepath.Join(wd, scope, "testfixtures", workingPath)
 		return ioutil.ReadFile(fixture) // #nosec
@@ -170,5 +205,5 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 	fileNames = append(fileNames, baseFixture)
 	apiCall := fmt.Sprintf("%s::%s(id=%d)", service, method, identifier)
 	files := utils.StringSliceToString(fileNames)
-	return nil, errors.New("Fixture for " + apiCall + " failed to load, looked in these files: " +  files)
+	return nil, errors.New("Fixture for " + apiCall + " failed to load, looked in these files: " + files)
 }

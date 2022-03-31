@@ -1,0 +1,20 @@
+[
+    {
+        "accountId": 99999,
+        "backendRouterId": 122762,
+        "createDate": "2019-06-07T13:34:55-06:00",
+        "id": 140665,
+        "modifyDate": "2020-07-11T11:56:40-06:00",
+        "name": "dal05-ibmtest",
+        "ruleId": 1
+    },
+    {
+        "accountId": 99999,
+        "backendRouterId": 16358,
+        "createDate": "2019-01-30T17:53:00-06:00",
+        "id": 71643,
+        "modifyDate": "2020-07-11T11:56:40-06:00",
+        "name": "TestGroup",
+        "ruleId": 1
+    }
+]

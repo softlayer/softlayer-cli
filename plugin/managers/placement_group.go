@@ -2,6 +2,7 @@ package managers
 
 import (
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -39,9 +40,11 @@ func (p placeGroupManager) List(mask string) ([]datatypes.Virtual_PlacementGroup
 	}
 
 	i := 0
+	filters := filter.New()
+	filters = append(filters, filter.Path("placementGroups.id").OrderBy("DESC"))
 	resourceList := []datatypes.Virtual_PlacementGroup{}
 	for {
-		resp, err := p.Account.Mask(mask).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetPlacementGroups()
+		resp, err := p.Account.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetPlacementGroups()
 		i++
 		if err != nil {
 			return []datatypes.Virtual_PlacementGroup{}, err
