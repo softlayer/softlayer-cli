@@ -58,7 +58,7 @@ func (cmd *EventDetailCommand) Run(c *cli.Context) error {
 
 	event, err := cmd.AccountManager.GetEventDetail(eventID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get events.")+err.Error(), 2)
+		return cli.NewExitError(T("Failed to get the event {{.eventID}}. ", map[string]interface{}{"eventID": eventID})+err.Error(), 2)
 	}
 
 	BasicEventTable(event, cmd.UI, outputFormat)
