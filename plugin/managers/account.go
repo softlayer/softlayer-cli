@@ -10,17 +10,20 @@ type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
+	GetEventDetail(identifier int) (datatypes.Notification_Occurrence_Event, error)
 }
 
 type accountManager struct {
-	AccountService 	services.Account
-	Session			*session.Session
+	AccountService                     services.Account
+	NotificationOccurrenceEventService services.Notification_Occurrence_Event
+	Session                            *session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
-		AccountService: services.GetAccountService(session),
-		Session: session,
+		AccountService:                     services.GetAccountService(session),
+		NotificationOccurrenceEventService: services.GetNotificationOccurrenceEventService(session),
+		Session:                            session,
 	}
 }
 
@@ -61,7 +64,7 @@ func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error)
 // https://sldn.softlayer.com/reference/services/SoftLayer_Account/getBandwidthAllotments/
 func (a accountManager) GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error) {
 	mask := "mask[totalBandwidthAllocated,locationGroup, id, name, projectedPublicBandwidthUsage, " +
-		    "billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
+		"billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
 	pools, err := a.AccountService.Mask(mask).GetBandwidthAllotments()
 	return pools, err
 }
@@ -86,4 +89,13 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 		total += int(*counts.VirtualGuestCount)
 	}
 	return total, err
+}
+
+func (a accountManager) GetEventDetail(identifier int) (datatypes.Notification_Occurrence_Event, error) {
+	mask := "mask[acknowledgedFlag,attachments,impactedResources,statusCode,updates,notificationOccurrenceEventType]"
+	resourceList, err := a.NotificationOccurrenceEventService.Mask(mask).Id(identifier).GetObject()
+	if err != nil {
+		return datatypes.Notification_Occurrence_Event{}, err
+	}
+	return resourceList, err
 }
