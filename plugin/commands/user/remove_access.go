@@ -44,13 +44,13 @@ func (cmd *RemoveAccessCommand) Run(c *cli.Context) error {
 			i18nsubs := map[string]interface{}{"userId": userId, "hardwareId": hardwareId}
 			response, err := cmd.UserManager.RemoveHardwareAccess(userId, hardwareId)
 			if err != nil {
-				return err
+				return cli.NewExitError(T("Failed to remove hardware access.\n")+err.Error(), 2)
 			}
 			if response {
 				cmd.UI.Ok()
 				cmd.UI.Print(T("Access was removed from user {{.userId}} to hardware {{.hardwareId}}", i18nsubs))
 			} else {
-				cli.NewExitError(T("Failed to remove access user{{.userId}} to hardware {{.hardwareId}}", i18nsubs), 2)
+				return cli.NewExitError(T("Failed to remove access user{{.userId}} to hardware {{.hardwareId}}", i18nsubs), 2)
 			}
 		}
 	}
@@ -63,13 +63,13 @@ func (cmd *RemoveAccessCommand) Run(c *cli.Context) error {
 			i18nsubs := map[string]interface{}{"userId": userId, "dedicatedHostId": dedicatedHostId}
 			response, err := cmd.UserManager.RemoveDedicatedHostAccess(userId, dedicatedHostId)
 			if err != nil {
-				return err
+				return cli.NewExitError(T("Failed to remove dedicated host access.\n")+err.Error(), 2)
 			}
 			if response {
 				cmd.UI.Ok()
 				cmd.UI.Print(T("Access was removed from user {{.userId}} to dedicated host {{.dedicatedHostId}}", i18nsubs))
 			} else {
-				cli.NewExitError(T("Failed to remove access user{{.userId}} to dedicated host {{.dedicatedHostId}}", i18nsubs), 2)
+				return cli.NewExitError(T("Failed to remove access user{{.userId}} to dedicated host {{.dedicatedHostId}}", i18nsubs), 2)
 			}
 		}
 	}
@@ -82,13 +82,13 @@ func (cmd *RemoveAccessCommand) Run(c *cli.Context) error {
 			i18nsubs := map[string]interface{}{"userId": userId, "virtualId": virtualId}
 			response, err := cmd.UserManager.RemoveVirtualGuestAccess(userId, virtualId)
 			if err != nil {
-				return err
+				return cli.NewExitError(T("Failed to remove virtual server access.\n")+err.Error(), 2)
 			}
 			if response {
 				cmd.UI.Ok()
 				cmd.UI.Print(T("Access was removed from user {{.userId}} to virtual server {{.virtualId}}", i18nsubs))
 			} else {
-				cli.NewExitError(T("Failed to remove access user{{.userId}} to virtual server {{.virtualId}}", i18nsubs), 2)
+				return cli.NewExitError(T("Failed to remove access user{{.userId}} to virtual server {{.virtualId}}", i18nsubs), 2)
 			}
 		}
 	}

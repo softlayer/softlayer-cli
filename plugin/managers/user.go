@@ -44,11 +44,11 @@ type UserManager interface {
 	EnableEmailSubscriptionNotification(notificationId int) (bool, error)
 	DisableEmailSubscriptionNotification(notificationId int) (bool, error)
 	AddHardwareAccess(userId int, hardwareId int) (bool, error)
-	AddDedicatedHostAccess(userId int, hardwareId int) (bool, error)
-	AddVirtualGuestAccess(userId int, hardwareId int) (bool, error)
+	AddDedicatedHostAccess(userId int, dedicatedHostId int) (bool, error)
+	AddVirtualGuestAccess(userId int, virtualGuestId int) (bool, error)
 	RemoveHardwareAccess(userId int, hardwareId int) (bool, error)
-	RemoveDedicatedHostAccess(userId int, hardwareId int) (bool, error)
-	RemoveVirtualGuestAccess(userId int, hardwareId int) (bool, error)
+	RemoveDedicatedHostAccess(userId int, dedicatedHostId int) (bool, error)
+	RemoveVirtualGuestAccess(userId int, virtualGuestId int) (bool, error)
 }
 
 type userManager struct {
@@ -250,22 +250,22 @@ func (u userManager) AddHardwareAccess(userId int, hardwareId int) (bool, error)
 	return u.UserCustomerService.Id(userId).AddHardwareAccess(&hardwareId)
 }
 
-func (u userManager) AddDedicatedHostAccess(userId int, hardwareId int) (bool, error) {
-	return u.UserCustomerService.Id(userId).AddDedicatedHostAccess(&hardwareId)
+func (u userManager) AddDedicatedHostAccess(userId int, dedicatedHostId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).AddDedicatedHostAccess(&dedicatedHostId)
 }
 
-func (u userManager) AddVirtualGuestAccess(userId int, hardwareId int) (bool, error) {
-	return u.UserCustomerService.Id(userId).AddVirtualGuestAccess(&hardwareId)
+func (u userManager) AddVirtualGuestAccess(userId int, virtualGuestId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).AddVirtualGuestAccess(&virtualGuestId)
 }
 
 func (u userManager) RemoveHardwareAccess(userId int, hardwareId int) (bool, error) {
 	return u.UserCustomerService.Id(userId).RemoveHardwareAccess(&hardwareId)
 }
 
-func (u userManager) RemoveDedicatedHostAccess(userId int, hardwareId int) (bool, error) {
-	return u.UserCustomerService.Id(userId).RemoveDedicatedHostAccess(&hardwareId)
+func (u userManager) RemoveDedicatedHostAccess(userId int, dedicatedHostId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).RemoveDedicatedHostAccess(&dedicatedHostId)
 }
 
-func (u userManager) RemoveVirtualGuestAccess(userId int, hardwareId int) (bool, error) {
-	return u.UserCustomerService.Id(userId).RemoveVirtualGuestAccess(&hardwareId)
+func (u userManager) RemoveVirtualGuestAccess(userId int, virtualGuestId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).RemoveVirtualGuestAccess(&virtualGuestId)
 }
