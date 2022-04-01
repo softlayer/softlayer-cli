@@ -44,28 +44,28 @@ func (cmd *EventsCommand) Run(c *cli.Context) error {
 		return err
 	}
 
+	// Gets three specific types of events
 	plannedEvents, err := cmd.AccountManager.GetEvents("PLANNED")
+	if err != nil {
+		return cli.NewExitError(T("Failed to get planned events.")+err.Error(), 2)
+	}
 	unplannedEvents, err := cmd.AccountManager.GetEvents("UNPLANNED_INCIDENT")
+	if err != nil {
+		return cli.NewExitError(T("Failed to get unplanned events.")+err.Error(), 2)
+	}
 	announcement, err := cmd.AccountManager.GetEvents("ANNOUNCEMENT")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get events.")+err.Error(), 2)
+		return cli.NewExitError(T("Failed to get announcement events.")+err.Error(), 2)
 	}
 
-	if outputFormat == "JSON" {
-		allEvents := []datatypes.Notification_Occurrence_Event{}
-		allEvents = append(allEvents, plannedEvents...)
-		allEvents = append(allEvents, unplannedEvents...)
-		allEvents = append(allEvents, announcement...)
-		return utils.PrintPrettyJSON(cmd.UI, allEvents)
-	}
-
-	PrintPlannedEvents(plannedEvents, cmd.UI)
-	PrintUnplannedEvents(unplannedEvents, cmd.UI)
-	PrintAnnouncement(announcement, cmd.UI)
+	// Print All events with keyname specific: PLANNED, UNPLANNED AND ANNOUNCEMENT
+	PrintPlannedEvents(plannedEvents, cmd.UI, outputFormat)
+	PrintUnplannedEvents(unplannedEvents, cmd.UI, outputFormat)
+	PrintAnnouncementEvents(announcement, cmd.UI, outputFormat)
 	return nil
 }
 
-func PrintPlannedEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI) {
+func PrintPlannedEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
 	tableTitle := ui.Table([]string{T("Planned")})
 	bufEvent := new(bytes.Buffer)
 	table := terminal.NewTable(bufEvent, []string{
@@ -94,12 +94,20 @@ func PrintPlannedEvents(events []datatypes.Notification_Occurrence_Event, ui ter
 			utils.FormatUIntPointer(event.UpdateCount),
 		)
 	}
-	table.Print()
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()
+	}
 	tableTitle.Add(bufEvent.String())
-	tableTitle.Print()
+	if outputFormat == "JSON" {
+		tableTitle.PrintJson()
+	} else {
+		tableTitle.Print()
+	}
 }
 
-func PrintUnplannedEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI) {
+func PrintUnplannedEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
 	tableTitle := ui.Table([]string{T("Unplanned")})
 	bufEvent := new(bytes.Buffer)
 	table := terminal.NewTable(bufEvent, []string{
@@ -126,12 +134,20 @@ func PrintUnplannedEvents(events []datatypes.Notification_Occurrence_Event, ui t
 			utils.FormatUIntPointer(event.UpdateCount),
 		)
 	}
-	table.Print()
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()
+	}
 	tableTitle.Add(bufEvent.String())
-	tableTitle.Print()
+	if outputFormat == "JSON" {
+		tableTitle.PrintJson()
+	} else {
+		tableTitle.Print()
+	}
 }
 
-func PrintAnnouncement(events []datatypes.Notification_Occurrence_Event, ui terminal.UI) {
+func PrintAnnouncementEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
 	tableTitle := ui.Table([]string{T("Announcement")})
 	bufEvent := new(bytes.Buffer)
 	table := terminal.NewTable(bufEvent, []string{
@@ -154,7 +170,15 @@ func PrintAnnouncement(events []datatypes.Notification_Occurrence_Event, ui term
 			utils.FormatUIntPointer(event.UpdateCount),
 		)
 	}
-	table.Print()
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()
+	}
 	tableTitle.Add(bufEvent.String())
-	tableTitle.Print()
+	if outputFormat == "JSON" {
+		tableTitle.PrintJson()
+	} else {
+		tableTitle.Print()
+	}
 }

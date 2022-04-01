@@ -92,6 +92,10 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 	return total, err
 }
 
+/*
+Gets all events with the potential to cause a service interruption with a specific keyName.
+https://sldn.softlayer.com/reference/services/SoftLayer_Notification_Occurrence_Event/getAllObjects/
+*/
 func (a accountManager) GetEvents(typeEvent string) ([]datatypes.Notification_Occurrence_Event, error) {
 	mask := "mask[id, subject, startDate, endDate, modifyDate, statusCode, acknowledgedFlag, impactedResourceCount, updateCount, systemTicketId, notificationOccurrenceEventType[keyName]]"
 	filters := filter.New()
