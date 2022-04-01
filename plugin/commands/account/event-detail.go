@@ -61,10 +61,6 @@ func (cmd *EventDetailCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to get events.")+err.Error(), 2)
 	}
 
-	// if outputFormat == "JSON" {
-	// 	return utils.PrintPrettyJSON(cmd.UI, event)
-	// }
-
 	BasicEventTable(event, cmd.UI, outputFormat)
 	ImpactedTable(event, cmd.UI, outputFormat)
 	UpdateTable(event, cmd.UI, outputFormat)
