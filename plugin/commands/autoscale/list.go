@@ -66,12 +66,12 @@ func AutoScaleListMetaData() cli.Command {
 	return cli.Command{
 		Category:    "autoscale",
 		Name:        "list",
-		Description: T("List all scale groups on your account"),
+		Description: T("List all Autoscale Groups on your account"),
 		Usage: T(`${COMMAND_NAME} sl autoscale list
 
 EXAMPLE: 
    ${COMMAND_NAME} sl autoscale list
-   This command list all scale groups on current account.`),
+   This command list all Autoscale Groups on current account.`),
 		Flags: []cli.Flag{
 			metadata.OutputFlag(),
 		},

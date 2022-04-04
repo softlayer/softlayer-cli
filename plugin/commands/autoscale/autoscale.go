@@ -26,7 +26,7 @@ func AutoScaleNamespace() plugin.Namespace {
 	return plugin.Namespace{
 		ParentName:  "sl",
 		Name:        "autoscale",
-		Description: T("Classic infrastructure Scale Group"),
+		Description: T("Classic infrastructure Autoscale Group"),
 	}
 }
 
@@ -34,7 +34,7 @@ func AutoScaleMetaData() cli.Command {
 	return cli.Command{
 		Category:    "sl",
 		Name:        "autoscale",
-		Description: T("Classic infrastructure Scale Group"),
+		Description: T("Classic infrastructure Autoscale Group"),
 		Usage:       "${COMMAND_NAME} sl autoscale",
 		Subcommands: []cli.Command{
 			AutoScaleListMetaData(),

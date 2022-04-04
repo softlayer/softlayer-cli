@@ -76,7 +76,7 @@ var _ = Describe("Test autoscale.GetCommandActionBindings()", func() {
 		It("AutoScale Name Space", func() {
 			Expect(autoscale.AutoScaleNamespace().ParentName).To(ContainSubstring("sl"))
 			Expect(autoscale.AutoScaleNamespace().Name).To(ContainSubstring("autoscale"))
-			Expect(autoscale.AutoScaleNamespace().Description).To(ContainSubstring("Classic infrastructure Scale Group"))
+			Expect(autoscale.AutoScaleNamespace().Description).To(ContainSubstring("Classic infrastructure Autoscale Group"))
 		})
 	})
 
@@ -85,7 +85,7 @@ var _ = Describe("Test autoscale.GetCommandActionBindings()", func() {
 			Expect(autoscale.AutoScaleMetaData().Category).To(ContainSubstring("sl"))
 			Expect(autoscale.AutoScaleMetaData().Name).To(ContainSubstring("autoscale"))
 			Expect(autoscale.AutoScaleMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl autoscale"))
-			Expect(autoscale.AutoScaleMetaData().Description).To(ContainSubstring("Classic infrastructure Scale Group"))
+			Expect(autoscale.AutoScaleMetaData().Description).To(ContainSubstring("Classic infrastructure Autoscale Group"))
 		})
 	})
 })
