@@ -68,14 +68,19 @@ var _ = Describe("VS poweroff", func() {
 		})
 
 		Context("VS poweroff with correct vs ID but server fails", func() {
-			BeforeEach(func() {
-				fakeVSManager.PowerOffInstanceReturns(errors.New("Internal Server Error"))
-			})
 			It("return error", func() {
+				fakeVSManager.PowerOffInstanceReturns(errors.New("Internal Server Error"))
 				err := testhelpers.RunCommand(cliCommand, "1234", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to power off virtual server instance: 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to power off virtual server instance: 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
+			})
+			It("return error2", func() {
+				fakeVSManager.PowerOffInstanceReturns(errors.New("{\"error\":\"Internal Error\",\"code\":\"SoftLayer_Exception_Public\"}"))
+				err := testhelpers.RunCommand(cliCommand, "1234", "-f")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to power off virtual server instance: 1234."))
+				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_Public"))
 			})
 		})
 
