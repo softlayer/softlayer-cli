@@ -41,16 +41,14 @@ func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Hardware ID should be a number."))
 		} else {
-			i18nsubs := map[string]interface{}{"userId": userId, "hardwareId": hardwareId}
+			i18nsubs := map[string]interface{}{"userId": userId, "objectId": hardwareId}
 			response, err := cmd.UserManager.AddHardwareAccess(userId, hardwareId)
 			if err != nil {
-				return cli.NewExitError(T("Failed to add hardware access.\n")+err.Error(), 2)
+				return cli.NewExitError(T("Failed to update access.\n")+err.Error(), 2)
 			}
 			if response {
 				cmd.UI.Ok()
-				cmd.UI.Print(T("Access was granted from user {{.userId}} to hardware {{.hardwareId}}", i18nsubs))
-			} else {
-				return cli.NewExitError(T("Failed to grant access user{{.userId}} to hardware {{.hardwareId}}", i18nsubs), 2)
+				cmd.UI.Print(T("Access granted to user {{.userId}} for {{.objectId}}", i18nsubs))
 			}
 		}
 	}
@@ -60,16 +58,14 @@ func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Dedicated host ID should be a number."))
 		} else {
-			i18nsubs := map[string]interface{}{"userId": userId, "dedicatedHostId": dedicatedHostId}
+			i18nsubs := map[string]interface{}{"userId": userId, "objectId": dedicatedHostId}
 			response, err := cmd.UserManager.AddDedicatedHostAccess(userId, dedicatedHostId)
 			if err != nil {
-				return cli.NewExitError(T("Failed to add dedicated host access.\n")+err.Error(), 2)
+				return cli.NewExitError(T("Failed to update access.\n")+err.Error(), 2)
 			}
 			if response {
 				cmd.UI.Ok()
-				cmd.UI.Print(T("Access was granted from user {{.userId}} to dedicated host {{.dedicatedHostId}}", i18nsubs))
-			} else {
-				return cli.NewExitError(T("Failed to grant access user{{.userId}} to dedicated host {{.dedicatedHostId}}", i18nsubs), 2)
+				cmd.UI.Print(T("Access granted to user {{.userId}} for {{.objectId}}", i18nsubs))
 			}
 		}
 	}
@@ -79,16 +75,14 @@ func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Virtual server ID should be a number."))
 		} else {
-			i18nsubs := map[string]interface{}{"userId": userId, "virtualId": virtualId}
+			i18nsubs := map[string]interface{}{"userId": userId, "objectId": virtualId}
 			response, err := cmd.UserManager.AddVirtualGuestAccess(userId, virtualId)
 			if err != nil {
-				return cli.NewExitError(T("Failed to add virtual server access.\n")+err.Error(), 2)
+				return cli.NewExitError(T("Failed to update access.\n")+err.Error(), 2)
 			}
 			if response {
 				cmd.UI.Ok()
-				cmd.UI.Print(T("Access was granted from user {{.userId}} to virtual server {{.virtualId}}", i18nsubs))
-			} else {
-				return cli.NewExitError(T("Failed to grant access user{{.userId}} to virtual server {{.virtualId}}", i18nsubs), 2)
+				cmd.UI.Print(T("Access granted to user {{.userId}} for {{.objectId}}", i18nsubs))
 			}
 		}
 	}
@@ -104,21 +98,20 @@ func UserGrantAccessMataData() cli.Command {
 		Description: T("Grant access from a user to an specific device"),
 		Usage: T(`${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]
 	
-EXAMPLE: 
-   ${COMMAND_NAME} sl user grant-access userId --hardware hardwareId
+EXAMPLE:
    ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "hardware",
-				Usage: T("ID of hardware to grant access"),
+				Usage: T("Hardware ID"),
 			},
 			cli.StringFlag{
 				Name:  "virtual",
-				Usage: T("ID of virtual server to grant access"),
+				Usage: T("Virtual Guest ID"),
 			},
 			cli.StringFlag{
 				Name:  "dedicated",
-				Usage: T("ID of dedicated host to grant access"),
+				Usage: T("Dedicated Host ID"),
 			},
 		},
 	}
