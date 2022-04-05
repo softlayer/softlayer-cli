@@ -79,21 +79,21 @@ var _ = Describe("Remove Access", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--hardware=123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Access was removed"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access removed"))
 			})
 
 			It("Set command with valid user and virtual guest", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--virtual=123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Access was removed"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access removed"))
 			})
 
 			It("Set command with valid user and dedicated host", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456", "--dedicated=123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Access was removed"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access removed"))
 			})
 		})
 	})
