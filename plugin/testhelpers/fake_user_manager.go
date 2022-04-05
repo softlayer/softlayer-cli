@@ -184,6 +184,20 @@ type FakeUserManager struct {
 		result1 datatypes.User_Customer
 		result2 error
 	}
+	GetDedicatedHostsStub        func(int, string) ([]datatypes.Virtual_DedicatedHost, error)
+	getDedicatedHostsMutex       sync.RWMutex
+	getDedicatedHostsArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getDedicatedHostsReturns struct {
+		result1 []datatypes.Virtual_DedicatedHost
+		result2 error
+	}
+	getDedicatedHostsReturnsOnCall map[int]struct {
+		result1 []datatypes.Virtual_DedicatedHost
+		result2 error
+	}
 	GetEventsStub        func(int, time.Time) ([]datatypes.Event_Log, error)
 	getEventsMutex       sync.RWMutex
 	getEventsArgsForCall []struct {
@@ -196,6 +210,20 @@ type FakeUserManager struct {
 	}
 	getEventsReturnsOnCall map[int]struct {
 		result1 []datatypes.Event_Log
+		result2 error
+	}
+	GetHardwareStub        func(int, string) ([]datatypes.Hardware, error)
+	getHardwareMutex       sync.RWMutex
+	getHardwareArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getHardwareReturns struct {
+		result1 []datatypes.Hardware
+		result2 error
+	}
+	getHardwareReturnsOnCall map[int]struct {
+		result1 []datatypes.Hardware
 		result2 error
 	}
 	GetIdFromUsernameStub        func(string) (int, error)
@@ -239,6 +267,19 @@ type FakeUserManager struct {
 		result1 datatypes.User_Customer
 		result2 error
 	}
+	GetUserAllowDevicesPermissionsStub        func(int) ([]datatypes.User_Customer_CustomerPermission_Permission, error)
+	getUserAllowDevicesPermissionsMutex       sync.RWMutex
+	getUserAllowDevicesPermissionsArgsForCall []struct {
+		arg1 int
+	}
+	getUserAllowDevicesPermissionsReturns struct {
+		result1 []datatypes.User_Customer_CustomerPermission_Permission
+		result2 error
+	}
+	getUserAllowDevicesPermissionsReturnsOnCall map[int]struct {
+		result1 []datatypes.User_Customer_CustomerPermission_Permission
+		result2 error
+	}
 	GetUserPermissionsStub        func(int) ([]datatypes.User_Customer_CustomerPermission_Permission, error)
 	getUserPermissionsMutex       sync.RWMutex
 	getUserPermissionsArgsForCall []struct {
@@ -250,6 +291,20 @@ type FakeUserManager struct {
 	}
 	getUserPermissionsReturnsOnCall map[int]struct {
 		result1 []datatypes.User_Customer_CustomerPermission_Permission
+		result2 error
+	}
+	GetVirtualGuestsStub        func(int, string) ([]datatypes.Virtual_Guest, error)
+	getVirtualGuestsMutex       sync.RWMutex
+	getVirtualGuestsArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getVirtualGuestsReturns struct {
+		result1 []datatypes.Virtual_Guest
+		result2 error
+	}
+	getVirtualGuestsReturnsOnCall map[int]struct {
+		result1 []datatypes.Virtual_Guest
 		result2 error
 	}
 	ListUsersStub        func(string) ([]datatypes.User_Customer, error)
@@ -1170,6 +1225,71 @@ func (fake *FakeUserManager) GetCurrentUserReturnsOnCall(i int, result1 datatype
 	}{result1, result2}
 }
 
+func (fake *FakeUserManager) GetDedicatedHosts(arg1 int, arg2 string) ([]datatypes.Virtual_DedicatedHost, error) {
+	fake.getDedicatedHostsMutex.Lock()
+	ret, specificReturn := fake.getDedicatedHostsReturnsOnCall[len(fake.getDedicatedHostsArgsForCall)]
+	fake.getDedicatedHostsArgsForCall = append(fake.getDedicatedHostsArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetDedicatedHostsStub
+	fakeReturns := fake.getDedicatedHostsReturns
+	fake.recordInvocation("GetDedicatedHosts", []interface{}{arg1, arg2})
+	fake.getDedicatedHostsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) GetDedicatedHostsCallCount() int {
+	fake.getDedicatedHostsMutex.RLock()
+	defer fake.getDedicatedHostsMutex.RUnlock()
+	return len(fake.getDedicatedHostsArgsForCall)
+}
+
+func (fake *FakeUserManager) GetDedicatedHostsCalls(stub func(int, string) ([]datatypes.Virtual_DedicatedHost, error)) {
+	fake.getDedicatedHostsMutex.Lock()
+	defer fake.getDedicatedHostsMutex.Unlock()
+	fake.GetDedicatedHostsStub = stub
+}
+
+func (fake *FakeUserManager) GetDedicatedHostsArgsForCall(i int) (int, string) {
+	fake.getDedicatedHostsMutex.RLock()
+	defer fake.getDedicatedHostsMutex.RUnlock()
+	argsForCall := fake.getDedicatedHostsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeUserManager) GetDedicatedHostsReturns(result1 []datatypes.Virtual_DedicatedHost, result2 error) {
+	fake.getDedicatedHostsMutex.Lock()
+	defer fake.getDedicatedHostsMutex.Unlock()
+	fake.GetDedicatedHostsStub = nil
+	fake.getDedicatedHostsReturns = struct {
+		result1 []datatypes.Virtual_DedicatedHost
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetDedicatedHostsReturnsOnCall(i int, result1 []datatypes.Virtual_DedicatedHost, result2 error) {
+	fake.getDedicatedHostsMutex.Lock()
+	defer fake.getDedicatedHostsMutex.Unlock()
+	fake.GetDedicatedHostsStub = nil
+	if fake.getDedicatedHostsReturnsOnCall == nil {
+		fake.getDedicatedHostsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Virtual_DedicatedHost
+			result2 error
+		})
+	}
+	fake.getDedicatedHostsReturnsOnCall[i] = struct {
+		result1 []datatypes.Virtual_DedicatedHost
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeUserManager) GetEvents(arg1 int, arg2 time.Time) ([]datatypes.Event_Log, error) {
 	fake.getEventsMutex.Lock()
 	ret, specificReturn := fake.getEventsReturnsOnCall[len(fake.getEventsArgsForCall)]
@@ -1231,6 +1351,71 @@ func (fake *FakeUserManager) GetEventsReturnsOnCall(i int, result1 []datatypes.E
 	}
 	fake.getEventsReturnsOnCall[i] = struct {
 		result1 []datatypes.Event_Log
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetHardware(arg1 int, arg2 string) ([]datatypes.Hardware, error) {
+	fake.getHardwareMutex.Lock()
+	ret, specificReturn := fake.getHardwareReturnsOnCall[len(fake.getHardwareArgsForCall)]
+	fake.getHardwareArgsForCall = append(fake.getHardwareArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetHardwareStub
+	fakeReturns := fake.getHardwareReturns
+	fake.recordInvocation("GetHardware", []interface{}{arg1, arg2})
+	fake.getHardwareMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) GetHardwareCallCount() int {
+	fake.getHardwareMutex.RLock()
+	defer fake.getHardwareMutex.RUnlock()
+	return len(fake.getHardwareArgsForCall)
+}
+
+func (fake *FakeUserManager) GetHardwareCalls(stub func(int, string) ([]datatypes.Hardware, error)) {
+	fake.getHardwareMutex.Lock()
+	defer fake.getHardwareMutex.Unlock()
+	fake.GetHardwareStub = stub
+}
+
+func (fake *FakeUserManager) GetHardwareArgsForCall(i int) (int, string) {
+	fake.getHardwareMutex.RLock()
+	defer fake.getHardwareMutex.RUnlock()
+	argsForCall := fake.getHardwareArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeUserManager) GetHardwareReturns(result1 []datatypes.Hardware, result2 error) {
+	fake.getHardwareMutex.Lock()
+	defer fake.getHardwareMutex.Unlock()
+	fake.GetHardwareStub = nil
+	fake.getHardwareReturns = struct {
+		result1 []datatypes.Hardware
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetHardwareReturnsOnCall(i int, result1 []datatypes.Hardware, result2 error) {
+	fake.getHardwareMutex.Lock()
+	defer fake.getHardwareMutex.Unlock()
+	fake.GetHardwareStub = nil
+	if fake.getHardwareReturnsOnCall == nil {
+		fake.getHardwareReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Hardware
+			result2 error
+		})
+	}
+	fake.getHardwareReturnsOnCall[i] = struct {
+		result1 []datatypes.Hardware
 		result2 error
 	}{result1, result2}
 }
@@ -1429,6 +1614,70 @@ func (fake *FakeUserManager) GetUserReturnsOnCall(i int, result1 datatypes.User_
 	}{result1, result2}
 }
 
+func (fake *FakeUserManager) GetUserAllowDevicesPermissions(arg1 int) ([]datatypes.User_Customer_CustomerPermission_Permission, error) {
+	fake.getUserAllowDevicesPermissionsMutex.Lock()
+	ret, specificReturn := fake.getUserAllowDevicesPermissionsReturnsOnCall[len(fake.getUserAllowDevicesPermissionsArgsForCall)]
+	fake.getUserAllowDevicesPermissionsArgsForCall = append(fake.getUserAllowDevicesPermissionsArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetUserAllowDevicesPermissionsStub
+	fakeReturns := fake.getUserAllowDevicesPermissionsReturns
+	fake.recordInvocation("GetUserAllowDevicesPermissions", []interface{}{arg1})
+	fake.getUserAllowDevicesPermissionsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) GetUserAllowDevicesPermissionsCallCount() int {
+	fake.getUserAllowDevicesPermissionsMutex.RLock()
+	defer fake.getUserAllowDevicesPermissionsMutex.RUnlock()
+	return len(fake.getUserAllowDevicesPermissionsArgsForCall)
+}
+
+func (fake *FakeUserManager) GetUserAllowDevicesPermissionsCalls(stub func(int) ([]datatypes.User_Customer_CustomerPermission_Permission, error)) {
+	fake.getUserAllowDevicesPermissionsMutex.Lock()
+	defer fake.getUserAllowDevicesPermissionsMutex.Unlock()
+	fake.GetUserAllowDevicesPermissionsStub = stub
+}
+
+func (fake *FakeUserManager) GetUserAllowDevicesPermissionsArgsForCall(i int) int {
+	fake.getUserAllowDevicesPermissionsMutex.RLock()
+	defer fake.getUserAllowDevicesPermissionsMutex.RUnlock()
+	argsForCall := fake.getUserAllowDevicesPermissionsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeUserManager) GetUserAllowDevicesPermissionsReturns(result1 []datatypes.User_Customer_CustomerPermission_Permission, result2 error) {
+	fake.getUserAllowDevicesPermissionsMutex.Lock()
+	defer fake.getUserAllowDevicesPermissionsMutex.Unlock()
+	fake.GetUserAllowDevicesPermissionsStub = nil
+	fake.getUserAllowDevicesPermissionsReturns = struct {
+		result1 []datatypes.User_Customer_CustomerPermission_Permission
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetUserAllowDevicesPermissionsReturnsOnCall(i int, result1 []datatypes.User_Customer_CustomerPermission_Permission, result2 error) {
+	fake.getUserAllowDevicesPermissionsMutex.Lock()
+	defer fake.getUserAllowDevicesPermissionsMutex.Unlock()
+	fake.GetUserAllowDevicesPermissionsStub = nil
+	if fake.getUserAllowDevicesPermissionsReturnsOnCall == nil {
+		fake.getUserAllowDevicesPermissionsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.User_Customer_CustomerPermission_Permission
+			result2 error
+		})
+	}
+	fake.getUserAllowDevicesPermissionsReturnsOnCall[i] = struct {
+		result1 []datatypes.User_Customer_CustomerPermission_Permission
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeUserManager) GetUserPermissions(arg1 int) ([]datatypes.User_Customer_CustomerPermission_Permission, error) {
 	fake.getUserPermissionsMutex.Lock()
 	ret, specificReturn := fake.getUserPermissionsReturnsOnCall[len(fake.getUserPermissionsArgsForCall)]
@@ -1489,6 +1738,71 @@ func (fake *FakeUserManager) GetUserPermissionsReturnsOnCall(i int, result1 []da
 	}
 	fake.getUserPermissionsReturnsOnCall[i] = struct {
 		result1 []datatypes.User_Customer_CustomerPermission_Permission
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetVirtualGuests(arg1 int, arg2 string) ([]datatypes.Virtual_Guest, error) {
+	fake.getVirtualGuestsMutex.Lock()
+	ret, specificReturn := fake.getVirtualGuestsReturnsOnCall[len(fake.getVirtualGuestsArgsForCall)]
+	fake.getVirtualGuestsArgsForCall = append(fake.getVirtualGuestsArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetVirtualGuestsStub
+	fakeReturns := fake.getVirtualGuestsReturns
+	fake.recordInvocation("GetVirtualGuests", []interface{}{arg1, arg2})
+	fake.getVirtualGuestsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) GetVirtualGuestsCallCount() int {
+	fake.getVirtualGuestsMutex.RLock()
+	defer fake.getVirtualGuestsMutex.RUnlock()
+	return len(fake.getVirtualGuestsArgsForCall)
+}
+
+func (fake *FakeUserManager) GetVirtualGuestsCalls(stub func(int, string) ([]datatypes.Virtual_Guest, error)) {
+	fake.getVirtualGuestsMutex.Lock()
+	defer fake.getVirtualGuestsMutex.Unlock()
+	fake.GetVirtualGuestsStub = stub
+}
+
+func (fake *FakeUserManager) GetVirtualGuestsArgsForCall(i int) (int, string) {
+	fake.getVirtualGuestsMutex.RLock()
+	defer fake.getVirtualGuestsMutex.RUnlock()
+	argsForCall := fake.getVirtualGuestsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeUserManager) GetVirtualGuestsReturns(result1 []datatypes.Virtual_Guest, result2 error) {
+	fake.getVirtualGuestsMutex.Lock()
+	defer fake.getVirtualGuestsMutex.Unlock()
+	fake.GetVirtualGuestsStub = nil
+	fake.getVirtualGuestsReturns = struct {
+		result1 []datatypes.Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetVirtualGuestsReturnsOnCall(i int, result1 []datatypes.Virtual_Guest, result2 error) {
+	fake.getVirtualGuestsMutex.Lock()
+	defer fake.getVirtualGuestsMutex.Unlock()
+	fake.GetVirtualGuestsStub = nil
+	if fake.getVirtualGuestsReturnsOnCall == nil {
+		fake.getVirtualGuestsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Virtual_Guest
+			result2 error
+		})
+	}
+	fake.getVirtualGuestsReturnsOnCall[i] = struct {
+		result1 []datatypes.Virtual_Guest
 		result2 error
 	}{result1, result2}
 }
@@ -1913,16 +2227,24 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.getAllPermissionMutex.RUnlock()
 	fake.getCurrentUserMutex.RLock()
 	defer fake.getCurrentUserMutex.RUnlock()
+	fake.getDedicatedHostsMutex.RLock()
+	defer fake.getDedicatedHostsMutex.RUnlock()
 	fake.getEventsMutex.RLock()
 	defer fake.getEventsMutex.RUnlock()
+	fake.getHardwareMutex.RLock()
+	defer fake.getHardwareMutex.RUnlock()
 	fake.getIdFromUsernameMutex.RLock()
 	defer fake.getIdFromUsernameMutex.RUnlock()
 	fake.getLoginsMutex.RLock()
 	defer fake.getLoginsMutex.RUnlock()
 	fake.getUserMutex.RLock()
 	defer fake.getUserMutex.RUnlock()
+	fake.getUserAllowDevicesPermissionsMutex.RLock()
+	defer fake.getUserAllowDevicesPermissionsMutex.RUnlock()
 	fake.getUserPermissionsMutex.RLock()
 	defer fake.getUserPermissionsMutex.RUnlock()
+	fake.getVirtualGuestsMutex.RLock()
+	defer fake.getVirtualGuestsMutex.RUnlock()
 	fake.listUsersMutex.RLock()
 	defer fake.listUsersMutex.RUnlock()
 	fake.permissionFromUserMutex.RLock()
