@@ -120,10 +120,19 @@ func UpdateTable(event datatypes.Notification_Occurrence_Event, ui terminal.UI, 
 	text := ""
 	for _, update := range event.Updates {
 		updateStartDate = utils.FormatSLTimePointer(update.StartDate)
-		text += utils.FormatStringPointer(update.Contents)
+		text += utils.FormatStringPointerName(update.Contents)
 	}
 	header := fmt.Sprintf("======= Update #%d on %s =======", len(event.Updates), updateStartDate)
 
-	ui.Print(T(header))
-	ui.Print((text))
+	if outputFormat == "JSON" {
+		table := ui.Table([]string{
+			T("Updated"),
+		})
+		table.Add(header)
+		table.Add(text)
+		table.PrintJson()
+	} else {
+		ui.Print(T(header))
+		ui.Print((text))
+	}
 }
