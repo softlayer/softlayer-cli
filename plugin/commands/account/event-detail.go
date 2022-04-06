@@ -34,7 +34,7 @@ func EventDetailMetaData() cli.Command {
 		Category:    "account",
 		Name:        "event-detail",
 		Description: T("Details of a specific event, and ability to acknowledge event."),
-		Usage:       T(`${COMMAND_NAME} sl account event-detail`),
+		Usage:       T(`${COMMAND_NAME} sl account event-detail IDENTIFIER [OPTIONS]`),
 		Flags: []cli.Flag{
 			metadata.OutputFlag(),
 		},
