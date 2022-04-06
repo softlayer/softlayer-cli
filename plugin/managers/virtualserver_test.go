@@ -23,7 +23,10 @@ var _ = Describe("VirtualServerManager", func() {
 		vsManager = managers.NewVirtualServerManager(fakeSLSession)
 		fakeHandler = testhelpers.GetSessionHandler(fakeSLSession)
 	})
-
+	AfterEach(func() {
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
+	})
 	Describe("Cancel instance", func() {
 		Context("Cancel instance given its ID", func() {
 			It("It returns no error", func() {
@@ -176,6 +179,14 @@ var _ = Describe("VirtualServerManager", func() {
 			It("It returns no error", func() {
 				err := vsManager.PowerOnInstance(123456)
 				Expect(err).ToNot(HaveOccurred())
+			})
+		})
+		Context("Power on Error Handling", func() {
+			It("200 Status, and error", func() {
+				fakeHandler.AddApiError("SoftLayer_Virtual_Guest", "powerOn", 200, "{\"error\":\"Internal Error\",\"code\":\"SoftLayer_Exception_Public\"}")
+				err := vsManager.PowerOnInstance(123456)
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_Public"))
 			})
 		})
 	})
