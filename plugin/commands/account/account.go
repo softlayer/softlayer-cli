@@ -7,6 +7,7 @@ import (
 	"github.com/urfave/cli"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 /*
@@ -16,15 +17,18 @@ for every command.
 */
 
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
+	accountManager := managers.NewAccountManager(session)
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 		"account-bandwidth-pools": func(c *cli.Context) error {
 			return NewBandwidthPoolsCommand(ui, session).Run(c)
+		},
+		"account-invoice-detail": func(c *cli.Context) error {
+			return NewInvoiceDetailCommand(ui, accountManager).Run(c)
 		},
 	}
 
 	return CommandActionBindings
 }
-
 
 func AccountNamespace() plugin.Namespace {
 	return plugin.Namespace{
@@ -36,12 +40,13 @@ func AccountNamespace() plugin.Namespace {
 
 func AccountMetaData() cli.Command {
 	return cli.Command{
-		Category: 		"sl",
-		Name: 			"account",
-		Description: 	T("Classic infrastructure Account commands"),
-		Usage:			"${COMMAND_NAME} sl account",
-		Subcommands:	[]cli.Command{
+		Category:    "sl",
+		Name:        "account",
+		Description: T("Classic infrastructure Account commands"),
+		Usage:       "${COMMAND_NAME} sl account",
+		Subcommands: []cli.Command{
 			BandwidthPoolsMetaData(),
+			InvoiceDetailMetaData(),
 		},
 	}
 }

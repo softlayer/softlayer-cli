@@ -2,25 +2,30 @@ package managers
 
 import (
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
+	GetInvoiceDetail(identifier int) ([]datatypes.Billing_Invoice_Item, error)
 }
 
 type accountManager struct {
-	AccountService 	services.Account
-	Session			*session.Session
+	AccountService        services.Account
+	BillingInoviceService services.Billing_Invoice
+	Session               *session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
-		AccountService: services.GetAccountService(session),
-		Session: session,
+		AccountService:        services.GetAccountService(session),
+		BillingInoviceService: services.GetBillingInvoiceService(session),
+		Session:               session,
 	}
 }
 
@@ -61,7 +66,7 @@ func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error)
 // https://sldn.softlayer.com/reference/services/SoftLayer_Account/getBandwidthAllotments/
 func (a accountManager) GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error) {
 	mask := "mask[totalBandwidthAllocated,locationGroup, id, name, projectedPublicBandwidthUsage, " +
-		    "billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
+		"billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
 	pools, err := a.AccountService.Mask(mask).GetBandwidthAllotments()
 	return pools, err
 }
@@ -86,4 +91,31 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 		total += int(*counts.VirtualGuestCount)
 	}
 	return total, err
+}
+
+/*
+Gets a list of top-level invoice items that are on the currently pending invoice.
+https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Invoice/getInvoiceTopLevelItems/
+*/
+func (a accountManager) GetInvoiceDetail(identifier int) ([]datatypes.Billing_Invoice_Item, error) {
+	mask := "mask[id, description, hostName, domainName, oneTimeAfterTaxAmount, recurringAfterTaxAmount,createDate,categoryCode,category[name],location[name],children[id, category[name], description, oneTimeAfterTaxAmount, recurringAfterTaxAmount]]"
+
+	filters := filter.New()
+	filters = append(filters, filter.Path("hardware.id").OrderBy("DESC"))
+
+	i := 0
+	resourceList := []datatypes.Billing_Invoice_Item{}
+	for {
+		resp, err := a.BillingInoviceService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).Id(identifier).GetInvoiceTopLevelItems()
+		i++
+		if err != nil {
+			return []datatypes.Billing_Invoice_Item{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
+	}
+
+	return resourceList, nil
 }
