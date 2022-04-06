@@ -42,7 +42,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to get scale groups.")+err.Error(), 2)
 	}
 
-	table := cmd.UI.Table([]string{T("Id"), T("Name"), "Status", "Min/Max", "Running"})
+	table := cmd.UI.Table([]string{T("Id"), T("Name"), T("Status"), T("Min/Max"), T("Running")})
 	for _, scale := range scaleGroups {
 		membercount := strconv.Itoa(*scale.MinimumMemberCount) + "/" + strconv.Itoa(*scale.MaximumMemberCount)
 		table.Add(
