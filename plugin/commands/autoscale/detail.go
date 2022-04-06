@@ -150,10 +150,10 @@ func AutoScaleDetailMetaData() cli.Command {
 		Category:    "autoscale",
 		Name:        "detail",
 		Description: T("Get details of an Autoscale group."),
-		Usage: T(`${COMMAND_NAME} sl autoscale detail
+		Usage: T(`${COMMAND_NAME} sl autoscale detail IDENTIFIER
 
 EXAMPLE: 
-   ${COMMAND_NAME} sl autoscale detail`),
+   ${COMMAND_NAME} sl autoscale detail IDENTIFIER`),
 		Flags: []cli.Flag{
 			metadata.OutputFlag(),
 		},
