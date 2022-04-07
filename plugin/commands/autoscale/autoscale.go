@@ -1,0 +1,44 @@
+package autoscale
+
+import (
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+	"github.com/softlayer/softlayer-go/session"
+	"github.com/urfave/cli"
+
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+)
+
+func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
+	autoScaleManager := managers.NewAutoScaleManager(session)
+	securityManager := managers.NewSecurityManager(session)
+
+	CommandActionBindings := map[string]func(c *cli.Context) error{
+		"autoscale-logs": func(c *cli.Context) error {
+			return NewLogsCommand(ui, autoScaleManager, securityManager).Run(c)
+		},
+	}
+
+	return CommandActionBindings
+}
+
+func AutoScaleNamespace() plugin.Namespace {
+	return plugin.Namespace{
+		ParentName:  "sl",
+		Name:        "autoscale",
+		Description: T("Classic infrastructure Autoscale Group"),
+	}
+}
+
+func AutoScaleMetaData() cli.Command {
+	return cli.Command{
+		Category:    "sl",
+		Name:        "autoscale",
+		Description: T("Classic infrastructure Autoscale Group"),
+		Usage:       "${COMMAND_NAME} sl autoscale",
+		Subcommands: []cli.Command{
+			AutoScaleLogsMetaData(),
+		},
+	}
+}
