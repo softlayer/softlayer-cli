@@ -53,15 +53,7 @@ func (cmd *LogsCommand) Run(c *cli.Context) error {
 			return errors.NewInvalidUsageError(T("Invalid format date."))
 		}
 		splitDate := strings.Split(date, "-")
-		date = fmt.Sprintf("%s/%s/%s", splitDate[1], splitDate[2], splitDate[0])
-		datefilter = `{
-			"logs": {
-				"createDate": {
-					"operation": "greaterThanDate",
-					"options": [{"name": "date", "value": ["` + date + `"]}]
-				}
-			}
-		}`
+		datefilter = fmt.Sprintf("%s/%s/%s", splitDate[1], splitDate[2], splitDate[0])
 	}
 
 	mask := "mask[createDate,description]"

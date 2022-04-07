@@ -2,12 +2,13 @@ package managers
 
 import (
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 )
 
 type AutoScaleManager interface {
-	GetLogsScaleGroup(id int, mask string, filter string) ([]datatypes.Scale_Group_Log, error)
+	GetLogsScaleGroup(id int, mask string, dateFilter string) ([]datatypes.Scale_Group_Log, error)
 }
 
 type autoScaleManager struct {
@@ -25,7 +26,11 @@ func NewAutoScaleManager(session *session.Session) *autoScaleManager {
 //Get logs about specific autoscale group
 //id: Auto Sacale Group Id
 //mask: object mask
-//dateFilter: object filter
-func (as autoScaleManager) GetLogsScaleGroup(id int, mask string, filter string) ([]datatypes.Scale_Group_Log, error) {
-	return as.AutoScaleService.Filter(filter).Id(id).Mask(mask).GetLogs()
+//dateFilter: Earliest date to retrieve logs for [YYYY-MM-DD]
+func (as autoScaleManager) GetLogsScaleGroup(id int, mask string, dateFilter string) ([]datatypes.Scale_Group_Log, error) {
+	if dateFilter != "" {
+		filter := filter.New(filter.Path("logs.createDate").DateAfter(dateFilter))
+		return as.AutoScaleService.Filter(filter.Build()).Id(id).Mask(mask).GetLogs()
+	}
+	return as.AutoScaleService.Id(id).Mask(mask).GetLogs()
 }
