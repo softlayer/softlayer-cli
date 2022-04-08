@@ -11,6 +11,7 @@ import (
 )
 
 func RunCommand(c cli.Command, args ...string) error {
+
 	cli.OsExiter = func(errorCode int) {
 		fmt.Println("Fake OS Exit:", errorCode)
 	}
@@ -33,6 +34,22 @@ func GetCliContext(name string) *cli.Context {
 	set := flag.NewFlagSet("test "+name, 0)
 
 	ctx := cli.NewContext(app, set, nil)
+	return ctx
+}
+
+// For when you just want to get a fake context, and have the --help flag set
+func GetCliContextHelp(name string) *cli.Context {
+
+	app := cli.NewApp()
+	set := flag.NewFlagSet("test "+name, 0)
+	helpFlag := cli.BoolFlag{
+		Name:  "help",
+		Usage: "The Help Flag",
+	}
+	helpFlag.Apply(set)
+	set.Parse(append([]string{name}, "help"))
+	ctx := cli.NewContext(app, set, nil)
+
 	return ctx
 }
 
