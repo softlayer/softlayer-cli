@@ -47,7 +47,10 @@ func GetCliContextHelp(name string) *cli.Context {
 		Usage: "The Help Flag",
 	}
 	helpFlag.Apply(set)
-	set.Parse(append([]string{name}, "help"))
+	err := set.Parse(append([]string{name}, "help"))
+	if err != nil {
+		fmt.Printf("Error in GetCliContextHelp() "+ err.Error() + "\n")
+	}
 	ctx := cli.NewContext(app, set, nil)
 
 	return ctx
