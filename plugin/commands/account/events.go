@@ -1,8 +1,6 @@
 package account
 
 import (
-	"bytes"
-
 	"github.com/softlayer/softlayer-go/datatypes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -66,9 +64,7 @@ func (cmd *EventsCommand) Run(c *cli.Context) error {
 }
 
 func PrintPlannedEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
-	tableTitle := ui.Table([]string{T("Planned")})
-	bufEvent := new(bytes.Buffer)
-	table := terminal.NewTable(bufEvent, []string{
+	table := ui.Table([]string{
 		"Event Data",
 		"Id",
 		"Event ID",
@@ -94,23 +90,11 @@ func PrintPlannedEvents(events []datatypes.Notification_Occurrence_Event, ui ter
 			utils.FormatUIntPointer(event.UpdateCount),
 		)
 	}
-	if outputFormat == "JSON" {
-		table.PrintJson()
-	} else {
-		table.Print()
-	}
-	tableTitle.Add(bufEvent.String())
-	if outputFormat == "JSON" {
-		tableTitle.PrintJson()
-	} else {
-		tableTitle.Print()
-	}
+	utils.PrintTableWithTitle(ui, table, "Planned", outputFormat)
 }
 
 func PrintUnplannedEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
-	tableTitle := ui.Table([]string{T("Unplanned")})
-	bufEvent := new(bytes.Buffer)
-	table := terminal.NewTable(bufEvent, []string{
+	table := ui.Table([]string{
 		"Id",
 		"Event ID",
 		"Subject",
@@ -134,23 +118,11 @@ func PrintUnplannedEvents(events []datatypes.Notification_Occurrence_Event, ui t
 			utils.FormatUIntPointer(event.UpdateCount),
 		)
 	}
-	if outputFormat == "JSON" {
-		table.PrintJson()
-	} else {
-		table.Print()
-	}
-	tableTitle.Add(bufEvent.String())
-	if outputFormat == "JSON" {
-		tableTitle.PrintJson()
-	} else {
-		tableTitle.Print()
-	}
+	utils.PrintTableWithTitle(ui, table, "Unplanned", outputFormat)
 }
 
 func PrintAnnouncementEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
-	tableTitle := ui.Table([]string{T("Announcement")})
-	bufEvent := new(bytes.Buffer)
-	table := terminal.NewTable(bufEvent, []string{
+	table := ui.Table([]string{
 		"Id",
 		"Event ID",
 		"Subject",
@@ -170,15 +142,5 @@ func PrintAnnouncementEvents(events []datatypes.Notification_Occurrence_Event, u
 			utils.FormatUIntPointer(event.UpdateCount),
 		)
 	}
-	if outputFormat == "JSON" {
-		table.PrintJson()
-	} else {
-		table.Print()
-	}
-	tableTitle.Add(bufEvent.String())
-	if outputFormat == "JSON" {
-		tableTitle.PrintJson()
-	} else {
-		tableTitle.Print()
-	}
+	utils.PrintTableWithTitle(ui, table, "Announcement", outputFormat)
 }

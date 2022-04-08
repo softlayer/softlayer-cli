@@ -15,16 +15,14 @@ type AccountManager interface {
 }
 
 type accountManager struct {
-	AccountService                     services.Account
-	NotificationOccurrenceEventService services.Notification_Occurrence_Event
-	Session                            *session.Session
+	AccountService services.Account
+	Session        *session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
-		AccountService:                     services.GetAccountService(session),
-		NotificationOccurrenceEventService: services.GetNotificationOccurrenceEventService(session),
-		Session:                            session,
+		AccountService: services.GetAccountService(session),
+		Session:        session,
 	}
 }
 
@@ -97,11 +95,14 @@ Gets all events with the potential to cause a service interruption with a specif
 https://sldn.softlayer.com/reference/services/SoftLayer_Notification_Occurrence_Event/getAllObjects/
 */
 func (a accountManager) GetEvents(typeEvent string) ([]datatypes.Notification_Occurrence_Event, error) {
+	NotificationOccurrenceEventService := services.GetNotificationOccurrenceEventService(a.Session)
+
 	mask := "mask[id, subject, startDate, endDate, modifyDate, statusCode, acknowledgedFlag, impactedResourceCount, updateCount, systemTicketId, notificationOccurrenceEventType[keyName]]"
 	filters := filter.New()
 	filters = append(filters, filter.Path("id").OrderBy("ASC"))
 	filters = append(filters, filter.Path("notificationOccurrenceEventType.keyName").Eq(typeEvent))
-	resourceList, err := a.NotificationOccurrenceEventService.Mask(mask).Filter(filters.Build()).GetAllObjects()
+
+	resourceList, err := NotificationOccurrenceEventService.Mask(mask).Filter(filters.Build()).GetAllObjects()
 	if err != nil {
 		return []datatypes.Notification_Occurrence_Event{}, err
 	}
