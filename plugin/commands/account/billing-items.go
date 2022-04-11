@@ -1,7 +1,6 @@
 package account
 
 import (
-	"bytes"
 	"fmt"
 
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -55,12 +54,7 @@ func (cmd *BillingItemsCommand) Run(c *cli.Context) error {
 }
 
 func PrintBillingItems(billingItems []datatypes.Billing_Item, ui terminal.UI, outputFormat string) {
-	tableTitle := ui.Table([]string{
-		T("Billing Items"),
-	})
-
-	bufEvent := new(bytes.Buffer)
-	table := terminal.NewTable(bufEvent, []string{
+	table := ui.Table([]string{
 		T("Id"),
 		T("Create Date"),
 		T("Cost"),
@@ -76,7 +70,7 @@ func PrintBillingItems(billingItems []datatypes.Billing_Item, ui terminal.UI, ou
 			Description = &fqdn
 		}
 		OrderedBy := "IBM"
-		
+
 		if billingItems.OrderItem != nil {
 			OrderedBy = utils.FormatStringPointer(billingItems.OrderItem.Order.UserRecord.DisplayName)
 		}
@@ -90,15 +84,7 @@ func PrintBillingItems(billingItems []datatypes.Billing_Item, ui terminal.UI, ou
 			NiceString(utils.FormatStringPointer(billingItems.Notes)),
 		)
 	}
-	if outputFormat == "JSON" {
-		table.PrintJson()
-		tableTitle.Add(bufEvent.String())
-		tableTitle.PrintJson()
-	} else {
-		table.Print()
-		tableTitle.Add(bufEvent.String())
-		tableTitle.Print()
-	}
+	utils.PrintTableWithTitle(ui, table, T("Billing Items"), outputFormat)
 }
 
 func NiceString(ugly_string string) string {
