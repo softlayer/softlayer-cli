@@ -68,7 +68,7 @@ func AutoScaleTagMetaData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]
 
 EXAMPLE: 
-   ${COMMAND_NAME} sl autoscale tag 123456 --tags "Use, quotes, if you, want whitespace"
+   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'
    ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
