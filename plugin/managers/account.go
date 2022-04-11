@@ -17,14 +17,12 @@ type AccountManager interface {
 
 type accountManager struct {
 	AccountService        services.Account
-	BillingInoviceService services.Billing_Invoice
 	Session               *session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
 		AccountService:        services.GetAccountService(session),
-		BillingInoviceService: services.GetBillingInvoiceService(session),
 		Session:               session,
 	}
 }
@@ -98,6 +96,8 @@ Gets a list of top-level invoice items that are on the currently pending invoice
 https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Invoice/getInvoiceTopLevelItems/
 */
 func (a accountManager) GetInvoiceDetail(identifier int) ([]datatypes.Billing_Invoice_Item, error) {
+	BillingInoviceService := services.GetBillingInvoiceService(a.Session)
+	
 	mask := "mask[id, description, hostName, domainName, oneTimeAfterTaxAmount, recurringAfterTaxAmount,createDate,categoryCode,category[name],location[name],children[id, category[name], description, oneTimeAfterTaxAmount, recurringAfterTaxAmount]]"
 
 	filters := filter.New()
@@ -106,7 +106,7 @@ func (a accountManager) GetInvoiceDetail(identifier int) ([]datatypes.Billing_In
 	i := 0
 	resourceList := []datatypes.Billing_Invoice_Item{}
 	for {
-		resp, err := a.BillingInoviceService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).Id(identifier).GetInvoiceTopLevelItems()
+		resp, err := BillingInoviceService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).Id(identifier).GetInvoiceTopLevelItems()
 		i++
 		if err != nil {
 			return []datatypes.Billing_Invoice_Item{}, err
@@ -116,6 +116,5 @@ func (a accountManager) GetInvoiceDetail(identifier int) ([]datatypes.Billing_In
 			break
 		}
 	}
-
 	return resourceList, nil
 }

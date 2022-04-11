@@ -1,7 +1,6 @@
 package account
 
 import (
-	"bytes"
 	"fmt"
 	"strconv"
 
@@ -74,12 +73,7 @@ func (cmd *InvoiceDetailCommand) Run(c *cli.Context) error {
 }
 
 func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item, ui terminal.UI, outputFormat string, details bool) {
-	tableTitle := ui.Table([]string{
-		T("Invoice: " + strconv.Itoa(invoiceID)),
-	})
-
-	bufEvent := new(bytes.Buffer)
-	table := terminal.NewTable(bufEvent, []string{
+	table := ui.Table([]string{
 		T("Item Id"),
 		T("Category"),
 		T("Description"),
@@ -121,15 +115,7 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 			}
 		}
 	}
-	if outputFormat == "JSON" {
-		table.PrintJson()
-		tableTitle.Add(bufEvent.String())
-		tableTitle.PrintJson()
-	} else {
-		table.Print()
-		tableTitle.Add(bufEvent.String())
-		tableTitle.Print()
-	}
+	utils.PrintTableWithTitle(ui, table, "Invoice: "+strconv.Itoa(invoiceID), outputFormat)
 }
 
 func NiceString(ugly_string string) string {
