@@ -4,7 +4,6 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/urfave/cli"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -23,11 +22,6 @@ func NewListCommand(ui terminal.UI, autoScaleManager managers.AutoScaleManager) 
 		UI:               ui,
 		AutoScaleManager: autoScaleManager,
 	}
-}
-
-type Autoscale struct {
-	Visibility string
-	datatypes.Scale_Group
 }
 
 func (cmd *ListCommand) Run(c *cli.Context) error {

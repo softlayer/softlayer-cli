@@ -26,5 +26,8 @@ func NewAutoScaleManager(session *session.Session) *autoScaleManager {
 
 //List all scale groups
 func (as autoScaleManager) ListScaleGroups(mask string) ([]datatypes.Scale_Group, error) {
+	if mask == "" {
+		mask = "mask[id,cooldown,createDate,maximumMemberCount,minimumMemberCount,name,virtualGuestMemberTemplate,status,virtualGuestMembers]"
+	}
 	return as.AccountService.Mask(mask).GetScaleGroups()
 }
