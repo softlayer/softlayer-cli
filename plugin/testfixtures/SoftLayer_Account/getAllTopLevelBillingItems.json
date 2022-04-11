@@ -1,0 +1,106 @@
+[
+    {
+        "allowCancellationFlag": 1,
+        "cancellationDate": null,
+        "categoryCode": "ssl_certificate",
+        "createDate": "2016-01-20T11:00:19-06:00",
+        "cycleStartDate": "2016-01-20T11:00:19-06:00",
+        "description": "RapidSSL - 1 year",
+        "id": 81336973,
+        "laborFee": "0",
+        "laborFeeTaxRate": "0",
+        "lastBillDate": "2016-01-20T11:00:19-06:00",
+        "modifyDate": "2016-01-20T11:00:23-06:00",
+        "nextBillDate": "2016-02-04T00:00:00-06:00",
+        "notes": "techbabble.xyz",
+        "oneTimeFee": "0",
+        "oneTimeFeeTaxRate": "0",
+        "orderItemId": 105127121,
+        "parentId": null,
+        "recurringFee": "0",
+        "recurringFeeTaxRate": "0",
+        "recurringMonths": 0,
+        "serviceProviderId": 1,
+        "setupFee": "0",
+        "setupFeeTaxRate": "0",
+        "hourlyFlag": false,
+        "location": {
+            "id": 0,
+            "longName": "No Location",
+            "name": "IMS",
+            "statusId": 2
+        },
+        "nextInvoiceTotalRecurringAmount": 0,
+        "orderItem": {
+            "id": 105127121,
+            "order": {
+                "id": 6672439,
+                "userRecord": {
+                    "displayName": "TestName",
+                    "iamId": "SL-654321",
+                    "id": 654321,
+                    "userStatus": {
+                        "id": 1021,
+                        "keyName": "CANCEL_PENDING",
+                        "name": "cancel_pending"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "allowCancellationFlag": 1,
+        "cancellationDate": null,
+        "categoryCode": "dedicated_virtual_hosts",
+        "createDate": "2022-02-18T12:47:32-06:00",
+        "currentHourlyCharge": "0",
+        "cycleStartDate": "2022-04-03T23:11:16-06:00",
+        "description": "56 Cores X 242 RAM X 1.2 TB",
+        "domainName": "softlayer-internal-development-community.cloud",
+        "hostName": "virtualserver01-0c56",
+        "hourlyRecurringFee": "0",
+        "hoursUsed": "178",
+        "id": 933002170,
+        "laborFee": "0",
+        "laborFeeTaxRate": "0",
+        "lastBillDate": "2022-04-03T23:11:16-06:00",
+        "modifyDate": "2022-04-03T23:11:16-06:00",
+        "nextBillDate": "2022-05-03T23:00:00-06:00",
+        "oneTimeFee": "0",
+        "oneTimeFeeTaxRate": "0",
+        "orderItemId": 893768204,
+        "parentId": null,
+        "recurringFee": "0",
+        "recurringFeeTaxRate": "0",
+        "recurringMonths": 1,
+        "serviceProviderId": 1,
+        "setupFee": "0",
+        "setupFeeTaxRate": "0",
+        "hourlyFlag": true,
+        "location": {
+            "id": 814994,
+            "longName": "Amsterdam 3",
+            "name": "ams03",
+            "statusId": 2
+        },
+        "nextInvoiceTotalRecurringAmount": 0,
+        "orderItem": {
+            "id": 893768204,
+            "order": {
+                "id": 89117828,
+                "userRecord": {
+                    "displayName": "testName2",
+                    "email": "test@test.com",
+                    "iamId": "ID-123456",
+                    "id": 123456,
+                    "userStatus": {
+                        "id": 1001,
+                        "keyName": "ACTIVE",
+                        "name": "Active"
+                    }
+                }
+            }
+        },
+        "resourceTableId": 691394
+    }
+]
