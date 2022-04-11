@@ -48,11 +48,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		)
 	}
 
-	if outputFormat == "JSON" {
-		table.PrintJson()
-	} else {
-		table.Print()
-	}
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
 }
 
