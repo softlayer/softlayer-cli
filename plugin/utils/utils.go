@@ -351,3 +351,11 @@ func WordInList(wordList []string, key string) bool {
 	}
 	return false
 }
+
+func PrintTable(ui terminal.UI ,table terminal.Table, outputFormat string) {
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()
+	}
+}
