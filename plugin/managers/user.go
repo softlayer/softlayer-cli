@@ -43,6 +43,12 @@ type UserManager interface {
 	GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error)
 	EnableEmailSubscriptionNotification(notificationId int) (bool, error)
 	DisableEmailSubscriptionNotification(notificationId int) (bool, error)
+	AddHardwareAccess(userId int, hardwareId int) (bool, error)
+	AddDedicatedHostAccess(userId int, dedicatedHostId int) (bool, error)
+	AddVirtualGuestAccess(userId int, virtualGuestId int) (bool, error)
+	RemoveHardwareAccess(userId int, hardwareId int) (bool, error)
+	RemoveDedicatedHostAccess(userId int, dedicatedHostId int) (bool, error)
+	RemoveVirtualGuestAccess(userId int, virtualGuestId int) (bool, error)
 	GetUserAllowDevicesPermissions(userId int) ([]datatypes.User_Customer_CustomerPermission_Permission, error)
 	GetDedicatedHosts(userId int, mask string) ([]datatypes.Virtual_DedicatedHost, error)
 	GetHardware(userId int, mask string) ([]datatypes.Hardware, error)
@@ -242,6 +248,30 @@ func (u userManager) EnableEmailSubscriptionNotification(notificationId int) (bo
 
 func (u userManager) DisableEmailSubscriptionNotification(notificationId int) (bool, error) {
 	return u.Email_Subscription.Id(notificationId).Disable()
+}
+
+func (u userManager) AddHardwareAccess(userId int, hardwareId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).AddHardwareAccess(&hardwareId)
+}
+
+func (u userManager) AddDedicatedHostAccess(userId int, dedicatedHostId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).AddDedicatedHostAccess(&dedicatedHostId)
+}
+
+func (u userManager) AddVirtualGuestAccess(userId int, virtualGuestId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).AddVirtualGuestAccess(&virtualGuestId)
+}
+
+func (u userManager) RemoveHardwareAccess(userId int, hardwareId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).RemoveHardwareAccess(&hardwareId)
+}
+
+func (u userManager) RemoveDedicatedHostAccess(userId int, dedicatedHostId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).RemoveDedicatedHostAccess(&dedicatedHostId)
+}
+
+func (u userManager) RemoveVirtualGuestAccess(userId int, virtualGuestId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).RemoveVirtualGuestAccess(&virtualGuestId)
 }
 
 func (u userManager) GetUserAllowDevicesPermissions(userId int) ([]datatypes.User_Customer_CustomerPermission_Permission, error) {
