@@ -2,25 +2,28 @@ package managers
 
 import (
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
+	GetBillingItems() ([]datatypes.Billing_Item, error)
 }
 
 type accountManager struct {
-	AccountService 	services.Account
-	Session			*session.Session
+	AccountService services.Account
+	Session        *session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
 		AccountService: services.GetAccountService(session),
-		Session: session,
+		Session:        session,
 	}
 }
 
@@ -61,7 +64,7 @@ func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error)
 // https://sldn.softlayer.com/reference/services/SoftLayer_Account/getBandwidthAllotments/
 func (a accountManager) GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error) {
 	mask := "mask[totalBandwidthAllocated,locationGroup, id, name, projectedPublicBandwidthUsage, " +
-		    "billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
+		"billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
 	pools, err := a.AccountService.Mask(mask).GetBandwidthAllotments()
 	return pools, err
 }
@@ -86,4 +89,32 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 		total += int(*counts.VirtualGuestCount)
 	}
 	return total, err
+}
+
+/*
+Gets All billing items of an account.
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getAllTopLevelBillingItems/
+*/
+func (a accountManager) GetBillingItems() ([]datatypes.Billing_Item, error) {
+	mask := "mask[orderItem[id,order[id,userRecord[id,email,displayName,userStatus]]],nextInvoiceTotalRecurringAmount,location, hourlyFlag]"
+
+	filters := filter.New()
+	filters = append(filters, filter.Path("allTopLevelBillingItems.id").OrderBy("ASC"))
+	filters = append(filters, filter.Path("allTopLevelBillingItems.cancellationDate").IsNull())
+
+	i := 0
+	resourceList := []datatypes.Billing_Item{}
+	for {
+		resp, err := a.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetAllTopLevelBillingItems()
+		i++
+		if err != nil {
+			return []datatypes.Billing_Item{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
+	}
+
+	return resourceList, nil
 }
