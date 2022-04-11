@@ -95,7 +95,7 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 		table.Add(
 			utils.FormatIntPointer(invoiceDetail.Id),
 			Category,
-			NiceString(Description),
+			utils.NiceString(Description),
 			fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
 			fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
 			utils.FormatSLTimePointer(invoiceDetail.CreateDate),
@@ -106,7 +106,7 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 				table.Add(
 					">>>",
 					utils.FormatStringPointer(child.Category.Name),
-					NiceString(utils.FormatStringPointer(child.Description)),
+					utils.NiceString(utils.FormatStringPointer(child.Description)),
 					fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
 					fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
 					"---",
@@ -116,12 +116,4 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 		}
 	}
 	utils.PrintTableWithTitle(ui, table, "Invoice: "+strconv.Itoa(invoiceID), outputFormat)
-}
-
-func NiceString(ugly_string string) string {
-	limit := 100
-	if len(ugly_string) > limit {
-		return ugly_string[:limit] + ".."
-	}
-	return ugly_string
 }

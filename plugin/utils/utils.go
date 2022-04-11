@@ -360,3 +360,11 @@ func PrintTableWithTitle(ui terminal.UI ,table terminal.Table, title string, out
 		table.Print()
 	}
 }
+
+func NiceString(ugly_string string) string {
+	limit := 100
+	if len(ugly_string) > limit {
+		return ugly_string[:limit] + ".."
+	}
+	return ugly_string
+}
