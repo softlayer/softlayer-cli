@@ -1,7 +1,6 @@
 package account
 
 import (
-	"bytes"
 	"fmt"
 	"strconv"
 
@@ -68,14 +67,12 @@ func (cmd *EventDetailCommand) Run(c *cli.Context) error {
 }
 
 func BasicEventTable(event datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
-	tableTitle := ui.Table([]string{T(utils.FormatStringPointer(event.Subject))})
-	bufEvent := new(bytes.Buffer)
-	table := terminal.NewTable(bufEvent, []string{
-		"Id",
-		"Status",
-		"Type",
-		"Start",
-		"End",
+	table := ui.Table([]string{
+		T("Id"),
+		T("Status"),
+		T("Type"),
+		T("Start"),
+		T("End"),
 	})
 	table.Add(
 		utils.FormatIntPointer(event.Id),
@@ -84,15 +81,7 @@ func BasicEventTable(event datatypes.Notification_Occurrence_Event, ui terminal.
 		utils.FormatSLTimePointer(event.StartDate),
 		utils.FormatSLTimePointer(event.EndDate),
 	)
-	if outputFormat == "JSON" {
-		table.PrintJson()
-		tableTitle.Add(bufEvent.String())
-		tableTitle.PrintJson()
-	} else {
-		table.Print()
-		tableTitle.Add(bufEvent.String())
-		tableTitle.Print()
-	}
+	utils.PrintTableWithTitle(ui, table, utils.FormatStringPointer(event.Subject), outputFormat)
 }
 
 func ImpactedTable(event datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
@@ -108,11 +97,7 @@ func ImpactedTable(event datatypes.Notification_Occurrence_Event, ui terminal.UI
 			utils.FormatStringPointer(resources.FilterLabel),
 		)
 	}
-	if outputFormat == "JSON" {
-		table.PrintJson()
-	} else {
-		table.Print()
-	}
+	utils.PrintTable(ui, table, outputFormat)
 }
 
 func UpdateTable(event datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {

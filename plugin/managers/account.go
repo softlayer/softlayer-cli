@@ -15,14 +15,12 @@ type AccountManager interface {
 
 type accountManager struct {
 	AccountService                     services.Account
-	NotificationOccurrenceEventService services.Notification_Occurrence_Event
 	Session                            *session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
 		AccountService:                     services.GetAccountService(session),
-		NotificationOccurrenceEventService: services.GetNotificationOccurrenceEventService(session),
 		Session:                            session,
 	}
 }
@@ -96,8 +94,10 @@ Gets a event with the potential to cause a service interruption.
 https://sldn.softlayer.com/reference/services/SoftLayer_Notification_Occurrence_Event/getObject/
 */
 func (a accountManager) GetEventDetail(identifier int) (datatypes.Notification_Occurrence_Event, error) {
+	NotificationOccurrenceEventService := services.GetNotificationOccurrenceEventService(a.Session)
+	
 	mask := "mask[acknowledgedFlag,attachments,impactedResources,statusCode,updates,notificationOccurrenceEventType]"
-	resourceList, err := a.NotificationOccurrenceEventService.Mask(mask).Id(identifier).GetObject()
+	resourceList, err := NotificationOccurrenceEventService.Mask(mask).Id(identifier).GetObject()
 	if err != nil {
 		return datatypes.Notification_Occurrence_Event{}, err
 	}
