@@ -93,10 +93,6 @@ func (cmd *InvoicesCommand) Run(c *cli.Context) error {
 			utils.FormatUIntPointer(invoice.ItemCount),
 		)
 	}
-	if outputFormat == "JSON" {
-		table.PrintJson()
-	} else {
-		table.Print()
-	}
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
 }
