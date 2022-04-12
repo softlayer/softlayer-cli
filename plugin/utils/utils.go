@@ -360,3 +360,11 @@ func PrintTableWithTitle(ui terminal.UI ,table terminal.Table, title string, out
 		table.Print()
 	}
 }
+
+func PrintTable(ui terminal.UI ,table terminal.Table, outputFormat string) {
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()
+	}
+}

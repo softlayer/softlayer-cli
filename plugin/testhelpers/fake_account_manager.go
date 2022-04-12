@@ -47,6 +47,21 @@ type FakeAccountManager struct {
 		result1 []datatypes.Notification_Occurrence_Event
 		result2 error
 	}
+	GetInvoicesStub        func(int, bool, bool) ([]datatypes.Billing_Invoice, error)
+	getInvoicesMutex       sync.RWMutex
+	getInvoicesArgsForCall []struct {
+		arg1 int
+		arg2 bool
+		arg3 bool
+	}
+	getInvoicesReturns struct {
+		result1 []datatypes.Billing_Invoice
+		result2 error
+	}
+	getInvoicesReturnsOnCall map[int]struct {
+		result1 []datatypes.Billing_Invoice
+		result2 error
+	}
 	SummaryByDatacenterStub        func() (map[string]map[string]int, error)
 	summaryByDatacenterMutex       sync.RWMutex
 	summaryByDatacenterArgsForCall []struct {
@@ -202,6 +217,27 @@ func (fake *FakeAccountManager) GetEvents(arg1 string) ([]datatypes.Notification
 	return fakeReturns.result1, fakeReturns.result2
 }
 
+func (fake *FakeAccountManager) GetInvoices(arg1 int, arg2 bool, arg3 bool) ([]datatypes.Billing_Invoice, error) {
+	fake.getInvoicesMutex.Lock()
+	ret, specificReturn := fake.getInvoicesReturnsOnCall[len(fake.getInvoicesArgsForCall)]
+	fake.getInvoicesArgsForCall = append(fake.getInvoicesArgsForCall, struct {
+		arg1 int
+		arg2 bool
+		arg3 bool
+	}{arg1, arg2, arg3})
+	stub := fake.GetInvoicesStub
+	fakeReturns := fake.getInvoicesReturns
+	fake.recordInvocation("GetInvoices", []interface{}{arg1, arg2, arg3})
+	fake.getInvoicesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
 func (fake *FakeAccountManager) GetEventsCallCount() int {
 	fake.getEventsMutex.RLock()
 	defer fake.getEventsMutex.RUnlock()
@@ -231,6 +267,35 @@ func (fake *FakeAccountManager) GetEventsReturns(result1 []datatypes.Notificatio
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetInvoicesCallCount() int {
+	fake.getInvoicesMutex.RLock()
+	defer fake.getInvoicesMutex.RUnlock()
+	return len(fake.getInvoicesArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetInvoicesCalls(stub func(int, bool, bool) ([]datatypes.Billing_Invoice, error)) {
+	fake.getInvoicesMutex.Lock()
+	defer fake.getInvoicesMutex.Unlock()
+	fake.GetInvoicesStub = stub
+}
+
+func (fake *FakeAccountManager) GetInvoicesArgsForCall(i int) (int, bool, bool) {
+	fake.getInvoicesMutex.RLock()
+	defer fake.getInvoicesMutex.RUnlock()
+	argsForCall := fake.getInvoicesArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeAccountManager) GetInvoicesReturns(result1 []datatypes.Billing_Invoice, result2 error) {
+	fake.getInvoicesMutex.Lock()
+	defer fake.getInvoicesMutex.Unlock()
+	fake.GetInvoicesStub = nil
+	fake.getInvoicesReturns = struct {
+		result1 []datatypes.Billing_Invoice
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAccountManager) GetEventsReturnsOnCall(i int, result1 []datatypes.Notification_Occurrence_Event, result2 error) {
 	fake.getEventsMutex.Lock()
 	defer fake.getEventsMutex.Unlock()
@@ -243,6 +308,21 @@ func (fake *FakeAccountManager) GetEventsReturnsOnCall(i int, result1 []datatype
 	}
 	fake.getEventsReturnsOnCall[i] = struct {
 		result1 []datatypes.Notification_Occurrence_Event
+		result2 error
+	}{result1, result2}
+}
+func (fake *FakeAccountManager) GetInvoicesReturnsOnCall(i int, result1 []datatypes.Billing_Invoice, result2 error) {
+	fake.getInvoicesMutex.Lock()
+	defer fake.getInvoicesMutex.Unlock()
+	fake.GetInvoicesStub = nil
+	if fake.getInvoicesReturnsOnCall == nil {
+		fake.getInvoicesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Billing_Invoice
+			result2 error
+		})
+	}
+	fake.getInvoicesReturnsOnCall[i] = struct {
+		result1 []datatypes.Billing_Invoice
 		result2 error
 	}{result1, result2}
 }
@@ -312,6 +392,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getBandwidthPoolsMutex.RUnlock()
 	fake.getEventsMutex.RLock()
 	defer fake.getEventsMutex.RUnlock()
+	fake.getInvoicesMutex.RLock()
+	defer fake.getInvoicesMutex.RUnlock()
 	fake.summaryByDatacenterMutex.RLock()
 	defer fake.summaryByDatacenterMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
