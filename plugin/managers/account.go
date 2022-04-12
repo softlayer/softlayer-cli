@@ -2,25 +2,28 @@ package managers
 
 import (
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
+	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 }
 
 type accountManager struct {
-	AccountService 	services.Account
-	Session			*session.Session
+	AccountService services.Account
+	Session        *session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
 		AccountService: services.GetAccountService(session),
-		Session: session,
+		Session:        session,
 	}
 }
 
@@ -61,7 +64,7 @@ func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error)
 // https://sldn.softlayer.com/reference/services/SoftLayer_Account/getBandwidthAllotments/
 func (a accountManager) GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error) {
 	mask := "mask[totalBandwidthAllocated,locationGroup, id, name, projectedPublicBandwidthUsage, " +
-		    "billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
+		"billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
 	pools, err := a.AccountService.Mask(mask).GetBandwidthAllotments()
 	return pools, err
 }
@@ -86,4 +89,40 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 		total += int(*counts.VirtualGuestCount)
 	}
 	return total, err
+}
+
+/*
+Gets all invoices from the account
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getInvoices/
+*/
+func (a accountManager) GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error) {
+	mask := "mask[invoiceTotalAmount, itemCount]"
+	filters := filter.New()
+	filters = append(filters, filter.Path("invoices.id").OrderBy("DESC"))
+	if !closed {
+		filters = append(filters, filter.Path("invoices.statusCode").Eq("OPEN"))
+	}
+	resourceList := []datatypes.Billing_Invoice{}
+	if getAll {
+		i := 0
+		for {
+			resp, err := a.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetInvoices()
+			i++
+			if err != nil {
+				return []datatypes.Billing_Invoice{}, err
+			}
+			resourceList = append(resourceList, resp...)
+			if len(resp) < metadata.LIMIT {
+				break
+			}
+		}
+	} else {
+		resp, err := a.AccountService.Mask(mask).Filter(filters.Build()).Limit(limit).GetInvoices()
+		if err != nil {
+			return []datatypes.Billing_Invoice{}, err
+		}
+		resourceList = append(resourceList, resp...)
+	}
+
+	return resourceList, nil
 }
