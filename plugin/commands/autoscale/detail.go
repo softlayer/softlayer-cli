@@ -6,6 +6,7 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -30,7 +31,7 @@ func NewDetailCommand(ui terminal.UI, autoScaleManager managers.AutoScaleManager
 
 func (cmd *DetailCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one identifier."))
+		return errors.NewInvalidUsageError(T("This command requires one argument."))
 	}
 
 	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
@@ -40,7 +41,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	autoScaleGroupId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
-		return errors.NewInvalidUsageError(T("Autoscale group ID should be a number."))
+		slErr.NewInvalidSoftlayerIdInputError("Autoscale Group ID")
 	}
 
 	autoScaleGroup, err := cmd.AutoScaleManager.GetScaleGroup(autoScaleGroupId, "")
@@ -88,7 +89,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		for _, sshKey := range virtualGuestMemberTemplate.SshKeys {
 			sshkeyData, err := cmd.SecurityManager.GetSSHKey(*sshKey.Id)
 			if err != nil {
-				return cli.NewExitError(T("Failed to get SSH key.\n")+err.Error(), 2)
+				return cli.NewExitError(T("Failed to get SSH key."), 2)
 			}
 			virtualGuestMemberTemplateTable.Add(T("SSH Key ")+strconv.Itoa(*sshKey.Id), utils.FormatStringPointer(sshkeyData.Label))
 		}
