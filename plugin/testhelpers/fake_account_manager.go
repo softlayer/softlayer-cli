@@ -34,6 +34,21 @@ type FakeAccountManager struct {
 		result1 []datatypes.Network_Bandwidth_Version1_Allotment
 		result2 error
 	}
+	GetInvoicesStub        func(int, bool, bool) ([]datatypes.Billing_Invoice, error)
+	getInvoicesMutex       sync.RWMutex
+	getInvoicesArgsForCall []struct {
+		arg1 int
+		arg2 bool
+		arg3 bool
+	}
+	getInvoicesReturns struct {
+		result1 []datatypes.Billing_Invoice
+		result2 error
+	}
+	getInvoicesReturnsOnCall map[int]struct {
+		result1 []datatypes.Billing_Invoice
+		result2 error
+	}
 	SummaryByDatacenterStub        func() (map[string]map[string]int, error)
 	summaryByDatacenterMutex       sync.RWMutex
 	summaryByDatacenterArgsForCall []struct {
@@ -56,15 +71,16 @@ func (fake *FakeAccountManager) GetBandwidthPoolServers(arg1 int) (int, error) {
 	fake.getBandwidthPoolServersArgsForCall = append(fake.getBandwidthPoolServersArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetBandwidthPoolServersStub
+	fakeReturns := fake.getBandwidthPoolServersReturns
 	fake.recordInvocation("GetBandwidthPoolServers", []interface{}{arg1})
 	fake.getBandwidthPoolServersMutex.Unlock()
-	if fake.GetBandwidthPoolServersStub != nil {
-		return fake.GetBandwidthPoolServersStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getBandwidthPoolServersReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -118,15 +134,16 @@ func (fake *FakeAccountManager) GetBandwidthPools() ([]datatypes.Network_Bandwid
 	ret, specificReturn := fake.getBandwidthPoolsReturnsOnCall[len(fake.getBandwidthPoolsArgsForCall)]
 	fake.getBandwidthPoolsArgsForCall = append(fake.getBandwidthPoolsArgsForCall, struct {
 	}{})
+	stub := fake.GetBandwidthPoolsStub
+	fakeReturns := fake.getBandwidthPoolsReturns
 	fake.recordInvocation("GetBandwidthPools", []interface{}{})
 	fake.getBandwidthPoolsMutex.Unlock()
-	if fake.GetBandwidthPoolsStub != nil {
-		return fake.GetBandwidthPoolsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getBandwidthPoolsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -168,20 +185,87 @@ func (fake *FakeAccountManager) GetBandwidthPoolsReturnsOnCall(i int, result1 []
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetInvoices(arg1 int, arg2 bool, arg3 bool) ([]datatypes.Billing_Invoice, error) {
+	fake.getInvoicesMutex.Lock()
+	ret, specificReturn := fake.getInvoicesReturnsOnCall[len(fake.getInvoicesArgsForCall)]
+	fake.getInvoicesArgsForCall = append(fake.getInvoicesArgsForCall, struct {
+		arg1 int
+		arg2 bool
+		arg3 bool
+	}{arg1, arg2, arg3})
+	stub := fake.GetInvoicesStub
+	fakeReturns := fake.getInvoicesReturns
+	fake.recordInvocation("GetInvoices", []interface{}{arg1, arg2, arg3})
+	fake.getInvoicesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetInvoicesCallCount() int {
+	fake.getInvoicesMutex.RLock()
+	defer fake.getInvoicesMutex.RUnlock()
+	return len(fake.getInvoicesArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetInvoicesCalls(stub func(int, bool, bool) ([]datatypes.Billing_Invoice, error)) {
+	fake.getInvoicesMutex.Lock()
+	defer fake.getInvoicesMutex.Unlock()
+	fake.GetInvoicesStub = stub
+}
+
+func (fake *FakeAccountManager) GetInvoicesArgsForCall(i int) (int, bool, bool) {
+	fake.getInvoicesMutex.RLock()
+	defer fake.getInvoicesMutex.RUnlock()
+	argsForCall := fake.getInvoicesArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeAccountManager) GetInvoicesReturns(result1 []datatypes.Billing_Invoice, result2 error) {
+	fake.getInvoicesMutex.Lock()
+	defer fake.getInvoicesMutex.Unlock()
+	fake.GetInvoicesStub = nil
+	fake.getInvoicesReturns = struct {
+		result1 []datatypes.Billing_Invoice
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetInvoicesReturnsOnCall(i int, result1 []datatypes.Billing_Invoice, result2 error) {
+	fake.getInvoicesMutex.Lock()
+	defer fake.getInvoicesMutex.Unlock()
+	fake.GetInvoicesStub = nil
+	if fake.getInvoicesReturnsOnCall == nil {
+		fake.getInvoicesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Billing_Invoice
+			result2 error
+		})
+	}
+	fake.getInvoicesReturnsOnCall[i] = struct {
+		result1 []datatypes.Billing_Invoice
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAccountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
 	fake.summaryByDatacenterMutex.Lock()
 	ret, specificReturn := fake.summaryByDatacenterReturnsOnCall[len(fake.summaryByDatacenterArgsForCall)]
 	fake.summaryByDatacenterArgsForCall = append(fake.summaryByDatacenterArgsForCall, struct {
 	}{})
+	stub := fake.SummaryByDatacenterStub
+	fakeReturns := fake.summaryByDatacenterReturns
 	fake.recordInvocation("SummaryByDatacenter", []interface{}{})
 	fake.summaryByDatacenterMutex.Unlock()
-	if fake.SummaryByDatacenterStub != nil {
-		return fake.SummaryByDatacenterStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.summaryByDatacenterReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -230,6 +314,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getBandwidthPoolServersMutex.RUnlock()
 	fake.getBandwidthPoolsMutex.RLock()
 	defer fake.getBandwidthPoolsMutex.RUnlock()
+	fake.getInvoicesMutex.RLock()
+	defer fake.getInvoicesMutex.RUnlock()
 	fake.summaryByDatacenterMutex.RLock()
 	defer fake.summaryByDatacenterMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
