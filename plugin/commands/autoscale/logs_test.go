@@ -43,13 +43,13 @@ var _ = Describe("autoscale logs", func() {
 			It("Set command without Id", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one identifier."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 
 			It("Set command with an invalid Id", func() {
 				err := testhelpers.RunCommand(cliCommand, "abcde")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Autoscale group ID should be a number."))
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Autoscale Group ID'. It must be a positive integer."))
 			})
 
 			It("Set invalid output", func() {

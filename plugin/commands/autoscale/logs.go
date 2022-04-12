@@ -41,7 +41,7 @@ func (cmd *LogsCommand) Run(c *cli.Context) error {
 
 	autoScaleGroupId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Autoscale group ID")
+		return slErr.NewInvalidSoftlayerIdInputError("Autoscale Group ID")
 	}
 
 	datefilter := ""
@@ -65,12 +65,7 @@ func (cmd *LogsCommand) Run(c *cli.Context) error {
 		table.Add(utils.FormatSLTimePointer(log.CreateDate), utils.FormatStringPointer(log.Description))
 	}
 
-	if outputFormat == "JSON" {
-		table.PrintJson()
-	} else {
-		table.Print()
-	}
-
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
 }
 
