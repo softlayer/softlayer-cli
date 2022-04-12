@@ -41,11 +41,16 @@ var _ = Describe("Account list Events", func() {
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
+			It("Set command with an invalid date option", func() {
+				err := testhelpers.RunCommand(cliCommand, "--date-min", "abcd")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid format date."))
+			})
 		})
 
 		Context("Account events, correct use", func() {
 			It("return account events", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCommand(cliCommand, "--date-min", "2022-03-12")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Planned"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Event Data             Id       Event ID    Subject                Status   Items   Start Date             End Date               Acknowledged   Updates"))

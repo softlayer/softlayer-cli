@@ -21,6 +21,7 @@ func TestManagers(t *testing.T) {
 var availableCommands = []string{
 	"account-bandwidth-pools",
 	"account-events",
+	"account-invoices",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
