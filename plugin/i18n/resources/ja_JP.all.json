@@ -614,8 +614,6 @@
 "translation": "ファイル、ブロック、およびポータブルストレージを仮想サーバーに承認する"},
 {"id": "Authorize hosts to access a given volume",
 "translation": "ホストに指定ボリュームへのアクセスを許可します"},
-{"id": "Autoscale group ID should be a number.",
-"translation": "Autoscale group ID should be a number."},
 {"id": "Available Snapshot Size (GB)",
 "translation": "使用可能なスナップショット・サイズ (GB)"},
 {"id": "Average",

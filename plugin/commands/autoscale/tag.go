@@ -5,6 +5,7 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -27,12 +28,12 @@ func NewTagCommand(ui terminal.UI, autoScaleManager managers.AutoScaleManager, v
 
 func (cmd *TagCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one identifier."))
+		return errors.NewInvalidUsageError(T("This command requires one argument."))
 	}
 
 	autoScaleGroupId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
-		return errors.NewInvalidUsageError(T("Autoscale group ID should be a number."))
+		return slErr.NewInvalidSoftlayerIdInputError("Autoscale Group ID")
 	}
 
 	mask := "mask[id,virtualGuestId,virtualGuest[tagReferences,id,hostname]]"
@@ -51,7 +52,7 @@ func (cmd *TagCommand) Run(c *cli.Context) error {
 	for _, virtualGuest := range autoScaleGroupMembers {
 		err := cmd.VirtualServerManager.SetTags(*virtualGuest.VirtualGuest.Id, tags)
 		if err != nil {
-			return cli.NewExitError(T("Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n", map[string]interface{}{"VirtualGuestHostname": *virtualGuest.VirtualGuest.Hostname})+err.Error(), 2)
+			cmd.UI.Failed(T("Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n", map[string]interface{}{"VirtualGuestHostname": *virtualGuest.VirtualGuest.Hostname})+err.Error(), 2)
 		}
 		cmd.UI.Print(T("Setting tags for {{.VirtualGuestHostname}}.", map[string]interface{}{"VirtualGuestHostname": *virtualGuest.VirtualGuest.Hostname}))
 	}

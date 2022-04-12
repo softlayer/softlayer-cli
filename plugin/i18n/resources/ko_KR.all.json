@@ -614,8 +614,6 @@
 "translation": "가상 서버에 대한 파일, 블록 및 휴대용 저장소 권한 부여"},
 {"id": "Authorize hosts to access a given volume",
 "translation": "지정된 볼륨에 액세스하도록 호스트에 권한 부여"},
-{"id": "Autoscale group ID should be a number.",
-"translation": "Autoscale group ID should be a number."},
 {"id": "Available Snapshot Size (GB)",
 "translation": "사용 가능한 스냅샷 크기(GB)"},
 {"id": "Average",

@@ -614,8 +614,6 @@
 "translation": "Authorize File, Block and Portable Storage to a Virtual Server"},
 {"id": "Authorize hosts to access a given volume",
 "translation": "Authorize hosts to access a given volume"},
-{"id": "Autoscale group ID should be a number.",
-"translation": "Autoscale group ID should be a number."},
 {"id": "Available Snapshot Size (GB)",
 "translation": "Available Snapshot Size (GB)"},
 {"id": "Average",
