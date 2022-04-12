@@ -41,7 +41,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	autoScaleGroupId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
-		slErr.NewInvalidSoftlayerIdInputError("Autoscale Group ID")
+		return slErr.NewInvalidSoftlayerIdInputError("Autoscale Group ID")
 	}
 
 	autoScaleGroup, err := cmd.AutoScaleManager.GetScaleGroup(autoScaleGroupId, "")
@@ -138,11 +138,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		table.Add(T("Active Guests"), buf.String())
 	}
 
-	if outputFormat == "JSON" {
-		table.PrintJson()
-	} else {
-		table.Print()
-	}
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
 }
 
