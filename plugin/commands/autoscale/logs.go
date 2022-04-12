@@ -1,13 +1,12 @@
 package autoscale
 
 import (
-	"fmt"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -32,7 +31,7 @@ func NewLogsCommand(ui terminal.UI, autoScaleManager managers.AutoScaleManager, 
 
 func (cmd *LogsCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one identifier."))
+		return errors.NewInvalidUsageError(T("This command requires one argument."))
 	}
 
 	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
@@ -42,18 +41,17 @@ func (cmd *LogsCommand) Run(c *cli.Context) error {
 
 	autoScaleGroupId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
-		return errors.NewInvalidUsageError(T("Autoscale group ID should be a number."))
+		return slErr.NewInvalidSoftlayerIdInputError("Autoscale group ID")
 	}
 
 	datefilter := ""
 	if c.IsSet("date-min") {
 		date := c.String("date-min")
-		_, err := time.Parse(time.RFC3339, date+"T00:00:00Z")
+		time, err := time.Parse(time.RFC3339, date+"T00:00:00Z")
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Invalid format date."))
 		}
-		splitDate := strings.Split(date, "-")
-		datefilter = fmt.Sprintf("%s/%s/%s", splitDate[1], splitDate[2], splitDate[0])
+		datefilter = time.Format("01/02/2006")
 	}
 
 	mask := "mask[createDate,description]"
@@ -80,11 +78,11 @@ func AutoScaleLogsMetaData() cli.Command {
 	return cli.Command{
 		Category:    "autoscale",
 		Name:        "logs",
-		Description: T("Retreive logs for an Autoscale group."),
+		Description: T("Retrieve logs for an Autoscale group."),
 		Usage: T(`${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]
 
 EXAMPLE: 
-   ${COMMAND_NAME} sl autoscale logs 123456 [OPTIONS]`),
+   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "d,date-min",
