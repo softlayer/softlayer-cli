@@ -28,6 +28,9 @@ func NewAutoScaleManager(session *session.Session) *autoScaleManager {
 //mask: object mask
 //dateFilter: Earliest date to retrieve logs for [YYYY-MM-DD]
 func (as autoScaleManager) GetLogsScaleGroup(id int, mask string, dateFilter string) ([]datatypes.Scale_Group_Log, error) {
+	if mask == "" {
+		mask = "mask[id,createDate,description,scaleGroup]"
+	}
 	if dateFilter != "" {
 		filter := filter.New(filter.Path("logs.createDate").DateAfter(dateFilter))
 		return as.AutoScaleService.Filter(filter.Build()).Id(id).Mask(mask).GetLogs()
