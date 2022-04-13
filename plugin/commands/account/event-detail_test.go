@@ -39,12 +39,12 @@ var _ = Describe("Account list EventDetail", func() {
 			It("Set command without id", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Event ID is required."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 			It("Set command with id like letters", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: The event ID has to be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Event ID'. It must be a positive integer."))
 			})
 			It("Set command with an invalid output option", func() {
 				err := testhelpers.RunCommand(cliCommand, "123", "--output=xml")
@@ -73,8 +73,8 @@ var _ = Describe("Account list EventDetail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Id": "340846",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Status": "Published",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Type": "ANNOUNCEMENT",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Updated": "======= Update #1 on 2022-03-23T00:50:57Z ======="`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Updated": "Updated message"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Updates": "======= Update #1 on 2022-03-23T00:50:57Z ======="`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Updates": "Updated message"`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))

@@ -1,6 +1,7 @@
 package account
 
 import (
+	"bytes"
 	"fmt"
 	"strconv"
 
@@ -8,8 +9,7 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
-
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -42,12 +42,12 @@ func EventDetailMetaData() cli.Command {
 
 func (cmd *EventDetailCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError("Event ID is required.")
+		return slErr.NewInvalidUsageError(T("This command requires one argument."))
 	}
 
 	eventID, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
-		return errors.NewInvalidUsageError(T("The event ID has to be a positive integer."))
+		return slErr.NewInvalidSoftlayerIdInputError("Event ID")
 	}
 
 	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
@@ -67,7 +67,8 @@ func (cmd *EventDetailCommand) Run(c *cli.Context) error {
 }
 
 func BasicEventTable(event datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
-	table := ui.Table([]string{
+	bufEvent := new(bytes.Buffer)
+	table := terminal.NewTable(bufEvent, []string{
 		T("Id"),
 		T("Status"),
 		T("Type"),
@@ -81,7 +82,8 @@ func BasicEventTable(event datatypes.Notification_Occurrence_Event, ui terminal.
 		utils.FormatSLTimePointer(event.StartDate),
 		utils.FormatSLTimePointer(event.EndDate),
 	)
-	utils.PrintTableWithTitle(ui, table, utils.FormatStringPointer(event.Subject), outputFormat)
+	utils.PrintTableWithTitle(ui, table, bufEvent, utils.FormatStringPointer(event.Subject), outputFormat)
+	
 }
 
 func ImpactedTable(event datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
@@ -111,13 +113,13 @@ func UpdateTable(event datatypes.Notification_Occurrence_Event, ui terminal.UI, 
 
 	if outputFormat == "JSON" {
 		table := ui.Table([]string{
-			T("Updated"),
+			T("Updates"),
 		})
 		table.Add(header)
 		table.Add(text)
 		table.PrintJson()
 	} else {
-		ui.Print(T(header))
-		ui.Print((text))
+		ui.Print(header)
+		ui.Print(text)
 	}
 }
