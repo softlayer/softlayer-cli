@@ -1,6 +1,7 @@
 package account
 
 import (
+	"bytes"
 	"fmt"
 	"strconv"
 
@@ -9,7 +10,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -46,12 +47,12 @@ func InvoiceDetailMetaData() cli.Command {
 
 func (cmd *InvoiceDetailCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError("Invoice ID is required.")
+		return slErr.NewInvalidUsageError(T("This command requires one argument."))
 	}
 
 	invoiceID, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
-		return errors.NewInvalidUsageError(T("The invoice ID has to be a positive integer."))
+		return slErr.NewInvalidSoftlayerIdInputError("Invoice ID")
 	}
 
 	details := false
@@ -63,8 +64,9 @@ func (cmd *InvoiceDetailCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-
-	invoice, err := cmd.AccountManager.GetInvoiceDetail(invoiceID)
+	
+	mask := "mask[id, description, hostName, domainName, oneTimeAfterTaxAmount, recurringAfterTaxAmount,createDate,categoryCode,category[name],location[name],children[id, category[name], description, oneTimeAfterTaxAmount, recurringAfterTaxAmount]]"
+	invoice, err := cmd.AccountManager.GetInvoiceDetail(invoiceID, mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get the invoice {{.invoiceID}}. ", map[string]interface{}{"invoiceID": invoiceID})+err.Error(), 2)
 	}
@@ -73,7 +75,8 @@ func (cmd *InvoiceDetailCommand) Run(c *cli.Context) error {
 }
 
 func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item, ui terminal.UI, outputFormat string, details bool) {
-	table := ui.Table([]string{
+	bufEvent := new(bytes.Buffer)
+	table := terminal.NewTable(bufEvent, []string{
 		T("Item Id"),
 		T("Category"),
 		T("Description"),
@@ -95,7 +98,7 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 		table.Add(
 			utils.FormatIntPointer(invoiceDetail.Id),
 			Category,
-			utils.NiceString(Description),
+			utils.ShortenString(Description),
 			fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
 			fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
 			utils.FormatSLTimePointer(invoiceDetail.CreateDate),
@@ -106,7 +109,7 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 				table.Add(
 					">>>",
 					utils.FormatStringPointer(child.Category.Name),
-					utils.NiceString(utils.FormatStringPointer(child.Description)),
+					utils.ShortenString(utils.FormatStringPointer(child.Description)),
 					fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
 					fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
 					"---",
@@ -115,5 +118,5 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 			}
 		}
 	}
-	utils.PrintTableWithTitle(ui, table, "Invoice: "+strconv.Itoa(invoiceID), outputFormat)
+	utils.PrintTableWithTitle(ui, table, bufEvent, "Invoice: "+strconv.Itoa(invoiceID), outputFormat)
 }

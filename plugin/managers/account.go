@@ -12,7 +12,7 @@ type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
-	GetInvoiceDetail(identifier int) ([]datatypes.Billing_Invoice_Item, error)
+	GetInvoiceDetail(identifier int, mask string) ([]datatypes.Billing_Invoice_Item, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 }
 
@@ -96,13 +96,11 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 Gets a list of top-level invoice items that are on the currently pending invoice.
 https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Invoice/getInvoiceTopLevelItems/
 */
-func (a accountManager) GetInvoiceDetail(identifier int) ([]datatypes.Billing_Invoice_Item, error) {
+func (a accountManager) GetInvoiceDetail(identifier int, mask string) ([]datatypes.Billing_Invoice_Item, error) {
 	BillingInoviceService := services.GetBillingInvoiceService(a.Session)
 
-	mask := "mask[id, description, hostName, domainName, oneTimeAfterTaxAmount, recurringAfterTaxAmount,createDate,categoryCode,category[name],location[name],children[id, category[name], description, oneTimeAfterTaxAmount, recurringAfterTaxAmount]]"
-
 	filters := filter.New()
-	filters = append(filters, filter.Path("hardware.id").OrderBy("DESC"))
+	filters = append(filters, filter.Path("invoiceTopLevelItems.id").OrderBy("DESC"))
 
 	i := 0
 	resourceList := []datatypes.Billing_Invoice_Item{}

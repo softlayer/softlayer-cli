@@ -34,10 +34,11 @@ type FakeAccountManager struct {
 		result1 []datatypes.Network_Bandwidth_Version1_Allotment
 		result2 error
 	}
-	GetInvoiceDetailStub        func(int) ([]datatypes.Billing_Invoice_Item, error)
+	GetInvoiceDetailStub        func(int, string) ([]datatypes.Billing_Invoice_Item, error)
 	getInvoiceDetailMutex       sync.RWMutex
 	getInvoiceDetailArgsForCall []struct {
 		arg1 int
+		arg2 string
 	}
 	getInvoiceDetailReturns struct {
 		result1 []datatypes.Billing_Invoice_Item
@@ -198,23 +199,69 @@ func (fake *FakeAccountManager) GetBandwidthPoolsReturnsOnCall(i int, result1 []
 	}{result1, result2}
 }
 
-func (fake *FakeAccountManager) GetInvoiceDetail(arg1 int) ([]datatypes.Billing_Invoice_Item, error) {
+func (fake *FakeAccountManager) GetInvoiceDetail(arg1 int, arg2 string) ([]datatypes.Billing_Invoice_Item, error) {
 	fake.getInvoiceDetailMutex.Lock()
 	ret, specificReturn := fake.getInvoiceDetailReturnsOnCall[len(fake.getInvoiceDetailArgsForCall)]
 	fake.getInvoiceDetailArgsForCall = append(fake.getInvoiceDetailArgsForCall, struct {
 		arg1 int
-	}{arg1})
+		arg2 string
+	}{arg1, arg2})
 	stub := fake.GetInvoiceDetailStub
 	fakeReturns := fake.getInvoiceDetailReturns
-	fake.recordInvocation("GetInvoiceDetail", []interface{}{arg1})
+	fake.recordInvocation("GetInvoiceDetail", []interface{}{arg1, arg2})
 	fake.getInvoiceDetailMutex.Unlock()
 	if stub != nil {
-		return stub(arg1)
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
 	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailCallCount() int {
+	fake.getInvoiceDetailMutex.RLock()
+	defer fake.getInvoiceDetailMutex.RUnlock()
+	return len(fake.getInvoiceDetailArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailCalls(stub func(int, string) ([]datatypes.Billing_Invoice_Item, error)) {
+	fake.getInvoiceDetailMutex.Lock()
+	defer fake.getInvoiceDetailMutex.Unlock()
+	fake.GetInvoiceDetailStub = stub
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailArgsForCall(i int) (int, string) {
+	fake.getInvoiceDetailMutex.RLock()
+	defer fake.getInvoiceDetailMutex.RUnlock()
+	argsForCall := fake.getInvoiceDetailArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailReturns(result1 []datatypes.Billing_Invoice_Item, result2 error) {
+	fake.getInvoiceDetailMutex.Lock()
+	defer fake.getInvoiceDetailMutex.Unlock()
+	fake.GetInvoiceDetailStub = nil
+	fake.getInvoiceDetailReturns = struct {
+		result1 []datatypes.Billing_Invoice_Item
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailReturnsOnCall(i int, result1 []datatypes.Billing_Invoice_Item, result2 error) {
+	fake.getInvoiceDetailMutex.Lock()
+	defer fake.getInvoiceDetailMutex.Unlock()
+	fake.GetInvoiceDetailStub = nil
+	if fake.getInvoiceDetailReturnsOnCall == nil {
+		fake.getInvoiceDetailReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Billing_Invoice_Item
+			result2 error
+		})
+	}
+	fake.getInvoiceDetailReturnsOnCall[i] = struct {
+		result1 []datatypes.Billing_Invoice_Item
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) GetInvoices(arg1 int, arg2 bool, arg3 bool) ([]datatypes.Billing_Invoice, error) {
@@ -236,35 +283,6 @@ func (fake *FakeAccountManager) GetInvoices(arg1 int, arg2 bool, arg3 bool) ([]d
 		return ret.result1, ret.result2
 	}
 	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeAccountManager) GetInvoiceDetailCallCount() int {
-	fake.getInvoiceDetailMutex.RLock()
-	defer fake.getInvoiceDetailMutex.RUnlock()
-	return len(fake.getInvoiceDetailArgsForCall)
-}
-
-func (fake *FakeAccountManager) GetInvoiceDetailCalls(stub func(int) ([]datatypes.Billing_Invoice_Item, error)) {
-	fake.getInvoiceDetailMutex.Lock()
-	defer fake.getInvoiceDetailMutex.Unlock()
-	fake.GetInvoiceDetailStub = stub
-}
-
-func (fake *FakeAccountManager) GetInvoiceDetailArgsForCall(i int) int {
-	fake.getInvoiceDetailMutex.RLock()
-	defer fake.getInvoiceDetailMutex.RUnlock()
-	argsForCall := fake.getInvoiceDetailArgsForCall[i]
-	return argsForCall.arg1
-}
-
-func (fake *FakeAccountManager) GetInvoiceDetailReturns(result1 []datatypes.Billing_Invoice_Item, result2 error) {
-	fake.getInvoiceDetailMutex.Lock()
-	defer fake.getInvoiceDetailMutex.Unlock()
-	fake.GetInvoiceDetailStub = nil
-	fake.getInvoiceDetailReturns = struct {
-		result1 []datatypes.Billing_Invoice_Item
-		result2 error
-	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) GetInvoicesCallCount() int {
@@ -292,22 +310,6 @@ func (fake *FakeAccountManager) GetInvoicesReturns(result1 []datatypes.Billing_I
 	fake.GetInvoicesStub = nil
 	fake.getInvoicesReturns = struct {
 		result1 []datatypes.Billing_Invoice
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeAccountManager) GetInvoiceDetailReturnsOnCall(i int, result1 []datatypes.Billing_Invoice_Item, result2 error) {
-	fake.getInvoiceDetailMutex.Lock()
-	defer fake.getInvoiceDetailMutex.Unlock()
-	fake.GetInvoiceDetailStub = nil
-	if fake.getInvoiceDetailReturnsOnCall == nil {
-		fake.getInvoiceDetailReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Billing_Invoice_Item
-			result2 error
-		})
-	}
-	fake.getInvoiceDetailReturnsOnCall[i] = struct {
-		result1 []datatypes.Billing_Invoice_Item
 		result2 error
 	}{result1, result2}
 }

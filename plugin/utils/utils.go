@@ -374,10 +374,17 @@ func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) {
 	}
 }
 
-func NiceString(ugly_string string) string {
-	limit := 100
+func ShortenString(ugly_string string) string {
+	limit := 80
 	if len(ugly_string) > limit {
-		return ugly_string[:limit] + ".."
+		return ugly_string[:limit] + "..."
+	}
+	return ugly_string
+}
+
+func ShortenStringWithLimit(ugly_string string, limit int) string {
+	if len(ugly_string) > limit {
+		return ugly_string[:limit] + "..."
 	}
 	return ugly_string
 }
