@@ -658,8 +658,6 @@
 "translation": "Billing"},
 {"id": "Billing Item Id",
 "translation": "Billing Item Id"},
-{"id": "Billing Items",
-"translation": "Billing Items"},
 {"id": "Billing item not found",
 "translation": "Billing item not found"},
 {"id": "Billing rate [hourly|monthly], [default: hourly]",
