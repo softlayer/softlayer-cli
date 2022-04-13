@@ -54,8 +54,8 @@ func (cmd *EventDetailCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-
-	event, err := cmd.AccountManager.GetEventDetail(eventID)
+	mask := "mask[acknowledgedFlag,attachments,impactedResources,statusCode,updates,notificationOccurrenceEventType]"
+	event, err := cmd.AccountManager.GetEventDetail(eventID, mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get the event {{.eventID}}. ", map[string]interface{}{"eventID": eventID})+err.Error(), 2)
 	}
