@@ -1,11 +1,14 @@
 package managers
 
 import (
+	"fmt"
+
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type AccountManager interface {
@@ -13,6 +16,7 @@ type AccountManager interface {
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
+	CancelItem(identifier int) error
 }
 
 type accountManager struct {
@@ -125,4 +129,23 @@ func (a accountManager) GetInvoices(limit int, closed bool, getAll bool) ([]data
 	}
 
 	return resourceList, nil
+}
+
+/*
+Cancels the resource or service for a billing Item
+https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Item/cancelItem/
+*/
+func (a accountManager) CancelItem(identifier int) error {
+	BillingItemService := services.GetBillingItemService(a.Session)
+
+	CancelImmediately := false
+	cancelAssociatedBillingItems := true
+	Reason := "No longer needed"
+
+	mask := "mask[id,displayName,email,username]"
+	user, _ := a.AccountService.Mask(mask).GetCurrentUser()
+	Note := fmt.Sprintf("Cancelled by %s with the ibmcloud sl", utils.FormatStringPointerName(user.Username))
+
+	_, err := BillingItemService.Mask(mask).Id(identifier).CancelItem(&CancelImmediately, &cancelAssociatedBillingItems, &Reason, &Note)
+	return err
 }
