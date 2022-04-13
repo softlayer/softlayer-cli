@@ -1,6 +1,7 @@
 package account
 
 import (
+	"bytes"
 	"fmt"
 
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -45,7 +46,8 @@ func (cmd *BillingItemsCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	billingItems, err := cmd.AccountManager.GetBillingItems()
+	mask := "mask[orderItem[id,order[id,userRecord[id,email,displayName,userStatus]]],nextInvoiceTotalRecurringAmount,location, hourlyFlag]"
+	billingItems, err := cmd.AccountManager.GetBillingItems(mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get billing items.")+err.Error(), 2)
 	}
@@ -54,7 +56,8 @@ func (cmd *BillingItemsCommand) Run(c *cli.Context) error {
 }
 
 func PrintBillingItems(billingItems []datatypes.Billing_Item, ui terminal.UI, outputFormat string) {
-	table := ui.Table([]string{
+	bufEvent := new(bytes.Buffer)
+	table := terminal.NewTable(bufEvent, []string{
 		T("Id"),
 		T("Create Date"),
 		T("Cost"),
@@ -80,17 +83,9 @@ func PrintBillingItems(billingItems []datatypes.Billing_Item, ui terminal.UI, ou
 			fmt.Sprintf("%.2f", *billingItems.NextInvoiceTotalRecurringAmount),
 			utils.FormatStringPointer(billingItems.CategoryCode),
 			utils.FormatStringPointer(&OrderedBy),
-			NiceString(utils.FormatStringPointer(Description)),
-			NiceString(utils.FormatStringPointer(billingItems.Notes)),
+			utils.ShortenStringWithLimit(utils.FormatStringPointer(Description), 50),
+			utils.ShortenStringWithLimit(utils.FormatStringPointer(billingItems.Notes), 50),
 		)
 	}
-	utils.PrintTableWithTitle(ui, table, T("Billing Items"), outputFormat)
-}
-
-func NiceString(ugly_string string) string {
-	limit := 50
-	if len(ugly_string) > limit {
-		return ugly_string[:limit] + ".."
-	}
-	return ugly_string
+	utils.PrintTableWithTitle(ui, table, bufEvent, "Billing Items", outputFormat)
 }

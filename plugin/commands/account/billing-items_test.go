@@ -48,9 +48,9 @@ var _ = Describe("Account list BillingItems", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Billing Items"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Id          Create Date            Cost   Category Code             Ordered By   Description                                            Notes"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("81336973    2016-01-20T17:00:19Z   0.00   ssl_certificate           TestName     RapidSSL - 1 year                                      techbabble.xyz"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("933002170   2022-02-18T18:47:32Z   0.00   dedicated_virtual_hosts   testName2    virtualserver01-0c56.softlayer-internal-developmen..   -"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Id          Create Date            Cost   Category Code             Ordered By   Description                                             Notes"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("81336973    2016-01-20T17:00:19Z   0.00   ssl_certificate           TestName     RapidSSL - 1 year                                       techbabble.xyz"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("933002170   2022-02-18T18:47:32Z   0.00   dedicated_virtual_hosts   testName2    virtualserver01-0c56.softlayer-internal-developmen...   -"))
 
 			})
 			It("return account events in format json", func() {

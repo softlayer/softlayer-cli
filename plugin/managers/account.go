@@ -12,7 +12,7 @@ type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
-	GetBillingItems() ([]datatypes.Billing_Item, error)
+	GetBillingItems(mask string) ([]datatypes.Billing_Item, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 }
 
@@ -96,9 +96,7 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 Gets All billing items of an account.
 https://sldn.softlayer.com/reference/services/SoftLayer_Account/getAllTopLevelBillingItems/
 */
-func (a accountManager) GetBillingItems() ([]datatypes.Billing_Item, error) {
-	mask := "mask[orderItem[id,order[id,userRecord[id,email,displayName,userStatus]]],nextInvoiceTotalRecurringAmount,location, hourlyFlag]"
-
+func (a accountManager) GetBillingItems(mask string) ([]datatypes.Billing_Item, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("allTopLevelBillingItems.id").OrderBy("ASC"))
 	filters = append(filters, filter.Path("allTopLevelBillingItems.cancellationDate").IsNull())
