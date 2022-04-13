@@ -47,7 +47,7 @@ func (cmd *EventDetailCommand) Run(c *cli.Context) error {
 
 	eventID, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Event ID")
+		return slErr.NewInvalidSoftlayerIdInputError(T("Event ID"))
 	}
 
 	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
