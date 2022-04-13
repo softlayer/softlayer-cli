@@ -2,7 +2,6 @@ package account
 
 import (
 	"bytes"
-	"fmt"
 	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -64,7 +63,6 @@ func (cmd *EventsCommand) Run(c *cli.Context) error {
 		time = time.AddDate(0, -1, 0) // rest 1 month
 		datefilter = time.Format("01/02/2006")
 	}
-	fmt.Println(datefilter)
 
 	mask := "mask[id, subject, startDate, endDate, modifyDate, statusCode, acknowledgedFlag, impactedResourceCount, updateCount, systemTicketId, notificationOccurrenceEventType[keyName]]"
 	// Gets three specific types of events
@@ -76,7 +74,7 @@ func (cmd *EventsCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return cli.NewExitError(T("Failed to get unplanned events.")+err.Error(), 2)
 	}
-	announcement, err := cmd.AccountManager.GetEvents("ANNOUNCEMENT", mask, datefilter)
+	announcement, err := cmd.AccountManager.GetEvents("ANNOUNCEMENT", mask, "")
 	if err != nil {
 		return cli.NewExitError(T("Failed to get announcement events.")+err.Error(), 2)
 	}
@@ -91,16 +89,16 @@ func (cmd *EventsCommand) Run(c *cli.Context) error {
 func PrintPlannedEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
 	bufEvent := new(bytes.Buffer)
 	table := terminal.NewTable(bufEvent, []string{
-		"Event Data",
-		"Id",
-		"Event ID",
-		"Subject",
-		"Status",
-		"Items",
-		"Start Date",
-		"End Date",
-		"Acknowledged",
-		"Updates",
+		T("Event Data"),
+		T("Id"),
+		T("Event ID"),
+		T("Subject"),
+		T("Status"),
+		T("Items"),
+		T("Start Date"),
+		T("End Date"),
+		T("Acknowledged"),
+		T("Updates"),
 	})
 	for _, event := range events {
 		table.Add(
@@ -122,15 +120,15 @@ func PrintPlannedEvents(events []datatypes.Notification_Occurrence_Event, ui ter
 func PrintUnplannedEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
 	bufEvent := new(bytes.Buffer)
 	table := terminal.NewTable(bufEvent, []string{
-		"Id",
-		"Event ID",
-		"Subject",
-		"Status",
-		"Items",
-		"Start Date",
-		"Last Updated",
-		"Acknowledged",
-		"Updates",
+		T("Id"),
+		T("Event ID"),
+		T("Subject"),
+		T("Status"),
+		T("Items"),
+		T("Start Date"),
+		T("Last Updated"),
+		T("Acknowledged"),
+		T("Updates"),
 	})
 	for _, event := range events {
 		table.Add(
@@ -151,13 +149,13 @@ func PrintUnplannedEvents(events []datatypes.Notification_Occurrence_Event, ui t
 func PrintAnnouncementEvents(events []datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {
 	bufEvent := new(bytes.Buffer)
 	table := terminal.NewTable(bufEvent, []string{
-		"Id",
-		"Event ID",
-		"Subject",
-		"Status",
-		"Items",
-		"Acknowledged",
-		"Updates",
+		T("Id"),
+		T("Event ID"),
+		T("Subject"),
+		T("Status"),
+		T("Items"),
+		T("Acknowledged"),
+		T("Updates"),
 	})
 	for _, event := range events {
 		table.Add(

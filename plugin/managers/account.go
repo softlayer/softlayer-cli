@@ -108,9 +108,9 @@ func (a accountManager) GetEvents(typeEvent string, mask string, dateFilter stri
 		if typeEvent == "UNPLANNED_INCIDENT"{
 			filters = append(filters, filter.Path("modifyDate").DateAfter(dateFilter))
 		}
-		if typeEvent == "ANNOUNCEMENT"{
-			filters = append(filters, filter.Path("statusCode.keyName").Eq("PUBLISHED"))
-		}
+	}
+	if typeEvent == "ANNOUNCEMENT"{
+		filters = append(filters, filter.Path("statusCode.keyName").Eq("PUBLISHED"))
 	}
 
 	resourceList, err := NotificationOccurrenceEventService.Mask(mask).Filter(filters.Build()).GetAllObjects()
