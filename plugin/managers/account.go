@@ -13,17 +13,18 @@ type AccountManager interface {
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
 	GetInvoiceDetail(identifier int) ([]datatypes.Billing_Invoice_Item, error)
+	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 }
 
 type accountManager struct {
-	AccountService        services.Account
-	Session               *session.Session
+	AccountService services.Account
+	Session        *session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
-		AccountService:        services.GetAccountService(session),
-		Session:               session,
+		AccountService: services.GetAccountService(session),
+		Session:        session,
 	}
 }
 
@@ -97,7 +98,7 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Invoice/getInvoi
 */
 func (a accountManager) GetInvoiceDetail(identifier int) ([]datatypes.Billing_Invoice_Item, error) {
 	BillingInoviceService := services.GetBillingInvoiceService(a.Session)
-	
+
 	mask := "mask[id, description, hostName, domainName, oneTimeAfterTaxAmount, recurringAfterTaxAmount,createDate,categoryCode,category[name],location[name],children[id, category[name], description, oneTimeAfterTaxAmount, recurringAfterTaxAmount]]"
 
 	filters := filter.New()
@@ -116,5 +117,41 @@ func (a accountManager) GetInvoiceDetail(identifier int) ([]datatypes.Billing_In
 			break
 		}
 	}
+	return resourceList, nil
+}
+
+/*
+Gets all invoices from the account
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getInvoices/
+*/
+func (a accountManager) GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error) {
+	mask := "mask[invoiceTotalAmount, itemCount]"
+	filters := filter.New()
+	filters = append(filters, filter.Path("invoices.id").OrderBy("DESC"))
+	if !closed {
+		filters = append(filters, filter.Path("invoices.statusCode").Eq("OPEN"))
+	}
+	resourceList := []datatypes.Billing_Invoice{}
+	if getAll {
+		i := 0
+		for {
+			resp, err := a.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetInvoices()
+			i++
+			if err != nil {
+				return []datatypes.Billing_Invoice{}, err
+			}
+			resourceList = append(resourceList, resp...)
+			if len(resp) < metadata.LIMIT {
+				break
+			}
+		}
+	} else {
+		resp, err := a.AccountService.Mask(mask).Filter(filters.Build()).Limit(limit).GetInvoices()
+		if err != nil {
+			return []datatypes.Billing_Invoice{}, err
+		}
+		resourceList = append(resourceList, resp...)
+	}
+
 	return resourceList, nil
 }

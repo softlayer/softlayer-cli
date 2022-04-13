@@ -29,6 +29,8 @@ var availableCommands = []string{
 	"user-permission-edit",
 	"user-notifications",
 	"user-edit-notifications",
+	"user-grant-access",
+	"user-remove-access",
 	"user-device-access",
 }
 
