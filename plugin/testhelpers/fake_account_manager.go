@@ -9,6 +9,17 @@ import (
 )
 
 type FakeAccountManager struct {
+	CancelItemStub        func(int) error
+	cancelItemMutex       sync.RWMutex
+	cancelItemArgsForCall []struct {
+		arg1 int
+	}
+	cancelItemReturns struct {
+		result1 error
+	}
+	cancelItemReturnsOnCall map[int]struct {
+		result1 error
+	}
 	GetBandwidthPoolServersStub        func(int) (int, error)
 	getBandwidthPoolServersMutex       sync.RWMutex
 	getBandwidthPoolServersArgsForCall []struct {
@@ -63,6 +74,67 @@ type FakeAccountManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeAccountManager) CancelItem(arg1 int) error {
+	fake.cancelItemMutex.Lock()
+	ret, specificReturn := fake.cancelItemReturnsOnCall[len(fake.cancelItemArgsForCall)]
+	fake.cancelItemArgsForCall = append(fake.cancelItemArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.CancelItemStub
+	fakeReturns := fake.cancelItemReturns
+	fake.recordInvocation("CancelItem", []interface{}{arg1})
+	fake.cancelItemMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeAccountManager) CancelItemCallCount() int {
+	fake.cancelItemMutex.RLock()
+	defer fake.cancelItemMutex.RUnlock()
+	return len(fake.cancelItemArgsForCall)
+}
+
+func (fake *FakeAccountManager) CancelItemCalls(stub func(int) error) {
+	fake.cancelItemMutex.Lock()
+	defer fake.cancelItemMutex.Unlock()
+	fake.CancelItemStub = stub
+}
+
+func (fake *FakeAccountManager) CancelItemArgsForCall(i int) int {
+	fake.cancelItemMutex.RLock()
+	defer fake.cancelItemMutex.RUnlock()
+	argsForCall := fake.cancelItemArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) CancelItemReturns(result1 error) {
+	fake.cancelItemMutex.Lock()
+	defer fake.cancelItemMutex.Unlock()
+	fake.CancelItemStub = nil
+	fake.cancelItemReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeAccountManager) CancelItemReturnsOnCall(i int, result1 error) {
+	fake.cancelItemMutex.Lock()
+	defer fake.cancelItemMutex.Unlock()
+	fake.CancelItemStub = nil
+	if fake.cancelItemReturnsOnCall == nil {
+		fake.cancelItemReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.cancelItemReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeAccountManager) GetBandwidthPoolServers(arg1 int) (int, error) {
@@ -310,6 +382,8 @@ func (fake *FakeAccountManager) SummaryByDatacenterReturnsOnCall(i int, result1 
 func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.cancelItemMutex.RLock()
+	defer fake.cancelItemMutex.RUnlock()
 	fake.getBandwidthPoolServersMutex.RLock()
 	defer fake.getBandwidthPoolServersMutex.RUnlock()
 	fake.getBandwidthPoolsMutex.RLock()
