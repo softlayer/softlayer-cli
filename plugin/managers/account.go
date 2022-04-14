@@ -12,6 +12,7 @@ type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
+	GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 }
 
@@ -89,6 +90,20 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 		total += int(*counts.VirtualGuestCount)
 	}
 	return total, err
+}
+
+/*
+Gets a event with the potential to cause a service interruption.
+https://sldn.softlayer.com/reference/services/SoftLayer_Notification_Occurrence_Event/getObject/
+*/
+func (a accountManager) GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error) {
+	NotificationOccurrenceEventService := services.GetNotificationOccurrenceEventService(a.Session)
+	
+	resourceList, err := NotificationOccurrenceEventService.Mask(mask).Id(identifier).GetObject()
+	if err != nil {
+		return datatypes.Notification_Occurrence_Event{}, err
+	}
+	return resourceList, err
 }
 
 /*
