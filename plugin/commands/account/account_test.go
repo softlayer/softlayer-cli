@@ -21,6 +21,7 @@ func TestManagers(t *testing.T) {
 var availableCommands = []string{
 	"account-bandwidth-pools",
 	"account-events",
+	"account-event-detail",
 	"account-invoices",
 }
 
