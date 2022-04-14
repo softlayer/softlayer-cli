@@ -22,6 +22,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"account-bandwidth-pools": func(c *cli.Context) error {
 			return NewBandwidthPoolsCommand(ui, session).Run(c)
 		},
+		"account-events": func(c *cli.Context) error {
+			return NewEventsCommand(ui, accountManager).Run(c)
+		},
 		"account-event-detail": func(c *cli.Context) error {
 			return NewEventDetailCommand(ui, accountManager).Run(c)
 		},
@@ -49,6 +52,7 @@ func AccountMetaData() cli.Command {
 		Usage:       "${COMMAND_NAME} sl account",
 		Subcommands: []cli.Command{
 			BandwidthPoolsMetaData(),
+			EventsMetaData(),
 			EventDetailMetaData(),
 			InvoicesMetaData(),
 		},
