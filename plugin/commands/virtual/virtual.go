@@ -30,7 +30,7 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"vs-cancel": func(c *cli.Context) error {
 			return NewCancelCommand(ui, virtualServerManager).Run(c)
 		},
-		"vs capture": func(c *cli.Context) error {
+		"vs-capture": func(c *cli.Context) error {
 			return NewCaptureCommand(ui, virtualServerManager).Run(c)
 		},
 		"vs-create": func(c *cli.Context) error {

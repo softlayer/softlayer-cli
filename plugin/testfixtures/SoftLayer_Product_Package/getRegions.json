@@ -1,1 +1,16 @@
-[{"id":1854895,"name":"dal13","regions":[{"keyname":"DALLAS13"}]}]
+[
+    {
+        "id": 1854895,
+        "name": "dal13",
+        "regions": [
+            {"keyname": "DALLAS13"}
+        ],
+
+        "location": {
+            "location": {
+                "name": "dal13"
+            }
+        }
+
+    }
+]
