@@ -10,6 +10,7 @@ import (
 //See product information here: https://knowledgelayer.softlayer.com/topic/image-templates
 type AutoScaleManager interface {
 	GetScaleGroup(id int, mask string) (datatypes.Scale_Group, error)
+	ListScaleGroups(mask string) ([]datatypes.Scale_Group, error)
 }
 
 type autoScaleManager struct {
@@ -34,4 +35,12 @@ func (as autoScaleManager) GetScaleGroup(id int, mask string) (datatypes.Scale_G
 		loadBalancers,regionalGroup[locations]]`
 	}
 	return as.AutoScaleService.Id(id).Mask(mask).GetObject()
+}
+
+//List all scale groups
+func (as autoScaleManager) ListScaleGroups(mask string) ([]datatypes.Scale_Group, error) {
+	if mask == "" {
+		mask = "mask[id,cooldown,createDate,maximumMemberCount,minimumMemberCount,name,virtualGuestMemberTemplate,status,virtualGuestMembers]"
+	}
+	return as.AccountService.Mask(mask).GetScaleGroups()
 }

@@ -150,7 +150,7 @@ func AutoScaleDetailMetaData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl autoscale detail IDENTIFIER
 
 EXAMPLE: 
-   ${COMMAND_NAME} sl autoscale detail IDENTIFIER`),
+   ${COMMAND_NAME} sl autoscale detail 123456`),
 		Flags: []cli.Flag{
 			metadata.OutputFlag(),
 		},
