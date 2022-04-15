@@ -9,6 +9,7 @@ import (
 //Manages SoftLayer server images.
 //See product information here: https://knowledgelayer.softlayer.com/topic/image-templates
 type AutoScaleManager interface {
+	GetScaleGroup(id int, mask string) (datatypes.Scale_Group, error)
 	ListScaleGroups(mask string) ([]datatypes.Scale_Group, error)
 }
 
@@ -22,6 +23,18 @@ func NewAutoScaleManager(session *session.Session) *autoScaleManager {
 		services.GetScaleGroupService(session),
 		services.GetAccountService(session),
 	}
+}
+
+//Get details about specific autoscale group
+func (as autoScaleManager) GetScaleGroup(id int, mask string) (datatypes.Scale_Group, error) {
+	if mask == "" {
+		mask = `mask[virtualGuestMembers[id,virtualGuest[id,hostname,domain,provisionDate]],terminationPolicy,
+		virtualGuestMemberCount,virtualGuestMemberTemplate[sshKeys],
+		policies[id,name,createDate,cooldown,actions,triggers,scaleActions],
+		networkVlans[networkVlanId,networkVlan[networkSpace,primaryRouter[hostname]]],
+		loadBalancers,regionalGroup[locations]]`
+	}
+	return as.AutoScaleService.Id(id).Mask(mask).GetObject()
 }
 
 //List all scale groups

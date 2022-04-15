@@ -20,6 +20,7 @@ func TestManagers(t *testing.T) {
 
 // These are all the commands in autoscale.go
 var availableCommands = []string{
+	"autoscale-detail",
 	"autoscale-list",
 }
 
