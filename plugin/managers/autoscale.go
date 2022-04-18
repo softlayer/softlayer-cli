@@ -27,7 +27,7 @@ func NewAutoScaleManager(session *session.Session) *autoScaleManager {
 //mask: object mask
 func (as autoScaleManager) GetVirtualGuestMembers(id int, mask string) ([]datatypes.Scale_Member_Virtual_Guest, error) {
 	if mask == "" {
-		mask = "mask[id,createDate,scaleGroup]"
+		mask = "mask[id, createDate, scaleGroup]"
 	}
 	return as.AutoScaleService.Id(id).Mask(mask).GetVirtualGuestMembers()
 }

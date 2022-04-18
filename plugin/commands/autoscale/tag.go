@@ -36,7 +36,7 @@ func (cmd *TagCommand) Run(c *cli.Context) error {
 		return slErr.NewInvalidSoftlayerIdInputError("Autoscale Group ID")
 	}
 
-	mask := "mask[id,virtualGuestId,virtualGuest[tagReferences,id,hostname]]"
+	mask := "mask[id, virtualGuestId, virtualGuest[tagReferences, id, hostname]]"
 	autoScaleGroupMembers, err := cmd.AutoScaleManager.GetVirtualGuestMembers(autoScaleGroupId, mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get virtual guest members.\n")+err.Error(), 2)
