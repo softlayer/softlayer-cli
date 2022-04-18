@@ -34,6 +34,20 @@ type FakeAccountManager struct {
 		result1 []datatypes.Network_Bandwidth_Version1_Allotment
 		result2 error
 	}
+	GetInvoiceDetailStub        func(int, string) ([]datatypes.Billing_Invoice_Item, error)
+	getInvoiceDetailMutex       sync.RWMutex
+	getInvoiceDetailArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getInvoiceDetailReturns struct {
+		result1 []datatypes.Billing_Invoice_Item
+		result2 error
+	}
+	getInvoiceDetailReturnsOnCall map[int]struct {
+		result1 []datatypes.Billing_Invoice_Item
+		result2 error
+	}
 	GetEventsStub        func(string, string, string) ([]datatypes.Notification_Occurrence_Event, error)
 	getEventsMutex       sync.RWMutex
 	getEventsArgsForCall []struct {
@@ -214,6 +228,26 @@ func (fake *FakeAccountManager) GetBandwidthPoolsReturnsOnCall(i int, result1 []
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetInvoiceDetail(arg1 int, arg2 string) ([]datatypes.Billing_Invoice_Item, error) {
+	fake.getInvoiceDetailMutex.Lock()
+	ret, specificReturn := fake.getInvoiceDetailReturnsOnCall[len(fake.getInvoiceDetailArgsForCall)]
+	fake.getInvoiceDetailArgsForCall = append(fake.getInvoiceDetailArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetInvoiceDetailStub
+	fakeReturns := fake.getInvoiceDetailReturns
+	fake.recordInvocation("GetInvoiceDetail", []interface{}{arg1, arg2})
+	fake.getInvoiceDetailMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
 func (fake *FakeAccountManager) GetEvents(arg1 string, arg2 string, arg3 string) ([]datatypes.Notification_Occurrence_Event, error) {
 	fake.getEventsMutex.Lock()
 	ret, specificReturn := fake.getEventsReturnsOnCall[len(fake.getEventsArgsForCall)]
@@ -253,6 +287,35 @@ func (fake *FakeAccountManager) GetEventDetail(arg1 int, arg2 string) (datatypes
 		return ret.result1, ret.result2
 	}
 	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailCallCount() int {
+	fake.getInvoiceDetailMutex.RLock()
+	defer fake.getInvoiceDetailMutex.RUnlock()
+	return len(fake.getInvoiceDetailArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailCalls(stub func(int, string) ([]datatypes.Billing_Invoice_Item, error)) {
+	fake.getInvoiceDetailMutex.Lock()
+	defer fake.getInvoiceDetailMutex.Unlock()
+	fake.GetInvoiceDetailStub = stub
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailArgsForCall(i int) (int, string) {
+	fake.getInvoiceDetailMutex.RLock()
+	defer fake.getInvoiceDetailMutex.RUnlock()
+	argsForCall := fake.getInvoiceDetailArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailReturns(result1 []datatypes.Billing_Invoice_Item, result2 error) {
+	fake.getInvoiceDetailMutex.Lock()
+	defer fake.getInvoiceDetailMutex.Unlock()
+	fake.GetInvoiceDetailStub = nil
+	fake.getInvoiceDetailReturns = struct {
+		result1 []datatypes.Billing_Invoice_Item
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) GetEventsCallCount() int {
@@ -325,6 +388,22 @@ func (fake *FakeAccountManager) GetEventsReturnsOnCall(i int, result1 []datatype
 	}
 	fake.getEventsReturnsOnCall[i] = struct {
 		result1 []datatypes.Notification_Occurrence_Event
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetailReturnsOnCall(i int, result1 []datatypes.Billing_Invoice_Item, result2 error) {
+	fake.getInvoiceDetailMutex.Lock()
+	defer fake.getInvoiceDetailMutex.Unlock()
+	fake.GetInvoiceDetailStub = nil
+	if fake.getInvoiceDetailReturnsOnCall == nil {
+		fake.getInvoiceDetailReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Billing_Invoice_Item
+			result2 error
+		})
+	}
+	fake.getInvoiceDetailReturnsOnCall[i] = struct {
+		result1 []datatypes.Billing_Invoice_Item
 		result2 error
 	}{result1, result2}
 }
@@ -474,6 +553,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getBandwidthPoolServersMutex.RUnlock()
 	fake.getBandwidthPoolsMutex.RLock()
 	defer fake.getBandwidthPoolsMutex.RUnlock()
+	fake.getInvoiceDetailMutex.RLock()
+	defer fake.getInvoiceDetailMutex.RUnlock()
 	fake.getEventsMutex.RLock()
 	defer fake.getEventsMutex.RUnlock()
 	fake.getEventDetailMutex.RLock()
