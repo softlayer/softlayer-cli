@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -352,10 +353,38 @@ func WordInList(wordList []string, key string) bool {
 	return false
 }
 
-func PrintTable(ui terminal.UI ,table terminal.Table, outputFormat string) {
+func PrintTableWithTitle(ui terminal.UI, table terminal.Table, bufEvent *bytes.Buffer, title string, outputFormat string) {
+	tableTitle := ui.Table([]string{T(title)})
+	if outputFormat == "JSON" {
+		table.PrintJson()
+		tableTitle.Add(bufEvent.String())
+		tableTitle.PrintJson()
+	} else {
+		table.Print()
+		tableTitle.Add(bufEvent.String())
+		tableTitle.Print()
+	}
+}
+
+func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) {
 	if outputFormat == "JSON" {
 		table.PrintJson()
 	} else {
 		table.Print()
 	}
+}
+
+func ShortenString(ugly_string string) string {
+	limit := 80
+	if len(ugly_string) > limit {
+		return ugly_string[:limit] + "..."
+	}
+	return ugly_string
+}
+
+func ShortenStringWithLimit(ugly_string string, limit int) string {
+	if len(ugly_string) > limit {
+		return ugly_string[:limit] + "..."
+	}
+	return ugly_string
 }

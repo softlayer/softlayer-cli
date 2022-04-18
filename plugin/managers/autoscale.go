@@ -9,6 +9,8 @@ import (
 
 type AutoScaleManager interface {
 	GetLogsScaleGroup(id int, mask string, dateFilter string) ([]datatypes.Scale_Group_Log, error)
+	GetScaleGroup(id int, mask string) (datatypes.Scale_Group, error)
+	ListScaleGroups(mask string) ([]datatypes.Scale_Group, error)
 }
 
 type autoScaleManager struct {
@@ -36,4 +38,27 @@ func (as autoScaleManager) GetLogsScaleGroup(id int, mask string, dateFilter str
 		return as.AutoScaleService.Filter(filter.Build()).Id(id).Mask(mask).GetLogs()
 	}
 	return as.AutoScaleService.Id(id).Mask(mask).GetLogs()
+}
+
+//Get details about specific autoscale group
+//id: Auto Sacale Group Id
+//mask: object mask
+func (as autoScaleManager) GetScaleGroup(id int, mask string) (datatypes.Scale_Group, error) {
+	if mask == "" {
+		mask = `mask[virtualGuestMembers[id,virtualGuest[id,hostname,domain,provisionDate]],terminationPolicy,
+		virtualGuestMemberCount,virtualGuestMemberTemplate[sshKeys],
+		policies[id,name,createDate,cooldown,actions,triggers,scaleActions],
+		networkVlans[networkVlanId,networkVlan[networkSpace,primaryRouter[hostname]]],
+		loadBalancers,regionalGroup[locations]]`
+	}
+	return as.AutoScaleService.Id(id).Mask(mask).GetObject()
+}
+
+//List all scale groups
+//mask: object mask
+func (as autoScaleManager) ListScaleGroups(mask string) ([]datatypes.Scale_Group, error) {
+	if mask == "" {
+		mask = "mask[id,cooldown,createDate,maximumMemberCount,minimumMemberCount,name,virtualGuestMemberTemplate,status,virtualGuestMembers]"
+	}
+	return as.AccountService.Mask(mask).GetScaleGroups()
 }
