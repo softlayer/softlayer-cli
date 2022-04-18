@@ -12,6 +12,8 @@ type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
+	GetEvents(typeEvent string, mask string, dateFilter string) ([]datatypes.Notification_Occurrence_Event, error)
+	GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error)
 	GetInvoiceDetail(identifier int, mask string) ([]datatypes.Billing_Invoice_Item, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 }
@@ -116,6 +118,48 @@ func (a accountManager) GetInvoiceDetail(identifier int, mask string) ([]datatyp
 		}
 	}
 	return resourceList, nil
+}
+
+/*
+Gets all events with the potential to cause a service interruption with a specific keyName.
+https://sldn.softlayer.com/reference/services/SoftLayer_Notification_Occurrence_Event/getAllObjects/
+*/
+func (a accountManager) GetEvents(typeEvent string, mask string, dateFilter string) ([]datatypes.Notification_Occurrence_Event, error) {
+	NotificationOccurrenceEventService := services.GetNotificationOccurrenceEventService(a.Session)
+	filters := filter.New()
+	filters = append(filters, filter.Path("id").OrderBy("ASC"))
+	filters = append(filters, filter.Path("notificationOccurrenceEventType.keyName").Eq(typeEvent))
+	if dateFilter != "" {
+		if typeEvent == "PLANNED"{
+			filters = append(filters, filter.Path("endDate").DateAfter(dateFilter))
+		}
+		if typeEvent == "UNPLANNED_INCIDENT"{
+			filters = append(filters, filter.Path("modifyDate").DateAfter(dateFilter))
+		}
+	}
+	if typeEvent == "ANNOUNCEMENT"{
+		filters = append(filters, filter.Path("statusCode.keyName").Eq("PUBLISHED"))
+	}
+
+	resourceList, err := NotificationOccurrenceEventService.Mask(mask).Filter(filters.Build()).GetAllObjects()
+	if err != nil {
+		return []datatypes.Notification_Occurrence_Event{}, err
+	}
+	return resourceList, err
+}
+
+/*
+Gets a event with the potential to cause a service interruption.
+https://sldn.softlayer.com/reference/services/SoftLayer_Notification_Occurrence_Event/getObject/
+*/
+func (a accountManager) GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error) {
+	NotificationOccurrenceEventService := services.GetNotificationOccurrenceEventService(a.Session)
+	
+	resourceList, err := NotificationOccurrenceEventService.Mask(mask).Id(identifier).GetObject()
+	if err != nil {
+		return datatypes.Notification_Occurrence_Event{}, err
+	}
+	return resourceList, err
 }
 
 /*

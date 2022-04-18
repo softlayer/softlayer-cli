@@ -1,0 +1,41 @@
+{
+    "acknowledgedFlag": false,
+    "id": 340846,
+    "impactedResources": [
+        {
+            "active": 1,
+            "filterLabel": "Capacity - Windows",
+            "notificationOccurrenceEventId": 340846,
+            "resourceAccountId": 307608,
+            "resourceName": "resource.softlayer.test",
+            "resourceTableId": 112238162
+        },
+        {
+            "active": 1,
+            "filterLabel": "Capacity - Windows",
+            "notificationOccurrenceEventId": 340846,
+            "resourceAccountId": 307608,
+            "resourceName": "resource2.softlayer2.test2",
+            "resourceTableId": 121450334
+        }
+    ],
+    "lastImpactedUserCount": 34163,
+    "modifyDate": "2022-03-22T18:54:26-06:00",
+    "notificationOccurrenceEventType": {
+        "keyName": "ANNOUNCEMENT"
+    },
+    "statusCode": {
+        "keyName": "PUBLISHED",
+        "name": "Published"
+    },
+    "subject": "ACTION REQUIRED - Windows",
+    "summary": "Summary",
+    "systemTicketId": 144313654,
+    "updates": [
+        {
+            "contents": "Updated message",
+            "createDate": "2022-03-22T18:50:57-06:00",
+            "startDate": "2022-03-22T18:50:57-06:00"
+        }
+    ]
+}
