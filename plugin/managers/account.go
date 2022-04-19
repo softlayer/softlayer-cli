@@ -14,6 +14,7 @@ type AccountManager interface {
 	GetBandwidthPoolServers(identifier int) (int, error)
 	GetEvents(typeEvent string, mask string, dateFilter string) ([]datatypes.Notification_Occurrence_Event, error)
 	GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error)
+	GetInvoiceDetail(identifier int, mask string) ([]datatypes.Billing_Invoice_Item, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 }
 
@@ -91,6 +92,32 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 		total += int(*counts.VirtualGuestCount)
 	}
 	return total, err
+}
+
+/*
+Gets a list of top-level invoice items that are on the currently pending invoice.
+https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Invoice/getInvoiceTopLevelItems/
+*/
+func (a accountManager) GetInvoiceDetail(identifier int, mask string) ([]datatypes.Billing_Invoice_Item, error) {
+	BillingInoviceService := services.GetBillingInvoiceService(a.Session)
+
+	filters := filter.New()
+	filters = append(filters, filter.Path("invoiceTopLevelItems.id").OrderBy("DESC"))
+
+	i := 0
+	resourceList := []datatypes.Billing_Invoice_Item{}
+	for {
+		resp, err := BillingInoviceService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).Id(identifier).GetInvoiceTopLevelItems()
+		i++
+		if err != nil {
+			return []datatypes.Billing_Invoice_Item{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
+	}
+	return resourceList, nil
 }
 
 /*
