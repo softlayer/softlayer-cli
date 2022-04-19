@@ -24,6 +24,7 @@ var availableCommands = []string{
 	"account-event-detail",
 	"account-invoices",
 	"account-invoice-detail",
+	"account-billing-items",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
