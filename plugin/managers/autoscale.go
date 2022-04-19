@@ -8,6 +8,7 @@ import (
 )
 
 type AutoScaleManager interface {
+	GetVirtualGuestMembers(id int, mask string) ([]datatypes.Scale_Member_Virtual_Guest, error)
 	GetLogsScaleGroup(id int, mask string, dateFilter string) ([]datatypes.Scale_Group_Log, error)
 	GetScaleGroup(id int, mask string) (datatypes.Scale_Group, error)
 	ListScaleGroups(mask string) ([]datatypes.Scale_Group, error)
@@ -23,6 +24,16 @@ func NewAutoScaleManager(session *session.Session) *autoScaleManager {
 		services.GetScaleGroupService(session),
 		services.GetAccountService(session),
 	}
+}
+
+//Get virtual guest members about specific autoscale group
+//id: Auto Sacale Group Id
+//mask: object mask
+func (as autoScaleManager) GetVirtualGuestMembers(id int, mask string) ([]datatypes.Scale_Member_Virtual_Guest, error) {
+	if mask == "" {
+		mask = "mask[id, createDate, scaleGroup]"
+	}
+	return as.AutoScaleService.Id(id).Mask(mask).GetVirtualGuestMembers()
 }
 
 //Get logs about specific autoscale group

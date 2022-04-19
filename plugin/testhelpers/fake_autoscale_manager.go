@@ -38,6 +38,20 @@ type FakeAutoScaleManager struct {
 		result1 datatypes.Scale_Group
 		result2 error
 	}
+	GetVirtualGuestMembersStub        func(int, string) ([]datatypes.Scale_Member_Virtual_Guest, error)
+	getVirtualGuestMembersMutex       sync.RWMutex
+	getVirtualGuestMembersArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getVirtualGuestMembersReturns struct {
+		result1 []datatypes.Scale_Member_Virtual_Guest
+		result2 error
+	}
+	getVirtualGuestMembersReturnsOnCall map[int]struct {
+		result1 []datatypes.Scale_Member_Virtual_Guest
+		result2 error
+	}
 	ListScaleGroupsStub        func(string) ([]datatypes.Scale_Group, error)
 	listScaleGroupsMutex       sync.RWMutex
 	listScaleGroupsArgsForCall []struct {
@@ -186,6 +200,71 @@ func (fake *FakeAutoScaleManager) GetScaleGroupReturnsOnCall(i int, result1 data
 	}{result1, result2}
 }
 
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembers(arg1 int, arg2 string) ([]datatypes.Scale_Member_Virtual_Guest, error) {
+	fake.getVirtualGuestMembersMutex.Lock()
+	ret, specificReturn := fake.getVirtualGuestMembersReturnsOnCall[len(fake.getVirtualGuestMembersArgsForCall)]
+	fake.getVirtualGuestMembersArgsForCall = append(fake.getVirtualGuestMembersArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetVirtualGuestMembersStub
+	fakeReturns := fake.getVirtualGuestMembersReturns
+	fake.recordInvocation("GetVirtualGuestMembers", []interface{}{arg1, arg2})
+	fake.getVirtualGuestMembersMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersCallCount() int {
+	fake.getVirtualGuestMembersMutex.RLock()
+	defer fake.getVirtualGuestMembersMutex.RUnlock()
+	return len(fake.getVirtualGuestMembersArgsForCall)
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersCalls(stub func(int, string) ([]datatypes.Scale_Member_Virtual_Guest, error)) {
+	fake.getVirtualGuestMembersMutex.Lock()
+	defer fake.getVirtualGuestMembersMutex.Unlock()
+	fake.GetVirtualGuestMembersStub = stub
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersArgsForCall(i int) (int, string) {
+	fake.getVirtualGuestMembersMutex.RLock()
+	defer fake.getVirtualGuestMembersMutex.RUnlock()
+	argsForCall := fake.getVirtualGuestMembersArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersReturns(result1 []datatypes.Scale_Member_Virtual_Guest, result2 error) {
+	fake.getVirtualGuestMembersMutex.Lock()
+	defer fake.getVirtualGuestMembersMutex.Unlock()
+	fake.GetVirtualGuestMembersStub = nil
+	fake.getVirtualGuestMembersReturns = struct {
+		result1 []datatypes.Scale_Member_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersReturnsOnCall(i int, result1 []datatypes.Scale_Member_Virtual_Guest, result2 error) {
+	fake.getVirtualGuestMembersMutex.Lock()
+	defer fake.getVirtualGuestMembersMutex.Unlock()
+	fake.GetVirtualGuestMembersStub = nil
+	if fake.getVirtualGuestMembersReturnsOnCall == nil {
+		fake.getVirtualGuestMembersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Scale_Member_Virtual_Guest
+			result2 error
+		})
+	}
+	fake.getVirtualGuestMembersReturnsOnCall[i] = struct {
+		result1 []datatypes.Scale_Member_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAutoScaleManager) ListScaleGroups(arg1 string) ([]datatypes.Scale_Group, error) {
 	fake.listScaleGroupsMutex.Lock()
 	ret, specificReturn := fake.listScaleGroupsReturnsOnCall[len(fake.listScaleGroupsArgsForCall)]
@@ -257,6 +336,8 @@ func (fake *FakeAutoScaleManager) Invocations() map[string][][]interface{} {
 	defer fake.getLogsScaleGroupMutex.RUnlock()
 	fake.getScaleGroupMutex.RLock()
 	defer fake.getScaleGroupMutex.RUnlock()
+	fake.getVirtualGuestMembersMutex.RLock()
+	defer fake.getVirtualGuestMembersMutex.RUnlock()
 	fake.listScaleGroupsMutex.RLock()
 	defer fake.listScaleGroupsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
