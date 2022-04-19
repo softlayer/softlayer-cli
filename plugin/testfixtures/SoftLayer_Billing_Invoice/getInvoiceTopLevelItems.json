@@ -1,0 +1,74 @@
+[
+    {
+        "categoryCode": "server",
+        "createDate": "2022-04-03T23:10:20-06:00",
+        "description": "Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz)",
+        "domainName": "support-softlayer-for-test-with-second-aditional-description.com",
+        "hostName": "test-gpu.softlayer-community-for-test-with-aditional-description",
+        "id": 123456789,
+        "oneTimeAfterTaxAmount": "10.234",
+        "recurringAfterTaxAmount": "20.345",
+        "category": {
+            "name": "Server"
+        },
+        "children": [
+            {
+                "description": "Intel Xeon (12 Cores, 2.40 GHz)",
+                "id": 123456,
+                "oneTimeAfterTaxAmount": "5.2367",
+                "recurringAfterTaxAmount": "6.1234",
+                "category": {
+                    "name": "Second Processor"
+                }
+            },
+            {
+                "description": "Virtual (up to 1Gbps)",
+                "id": 1234567,
+                "oneTimeAfterTaxAmount": "7.123",
+                "recurringAfterTaxAmount": "8.789",
+                "category": {
+                    "name": "Operating System"
+                }
+            }
+        ],
+        "location": {
+            "name": "mex01"
+        }
+    },
+    {
+        "categoryCode": "server",
+        "createDate": "2022-04-03T23:10:21-06:00",
+        "description": "Dual E5-2690 v3 (12 Cores, 2.60 GHz)",
+        "domainName": "support2.com",
+        "hostName": "test-vs",
+        "id": 123456789123,
+        "oneTimeAfterTaxAmount": "11.234",
+        "recurringAfterTaxAmount": "21.123",
+        "category": {
+            "name": ""
+        },
+        "children": [
+            {
+                "description": "Intel Xeon (12 Cores, 2.40 GHz)",
+                "id": 12345678,
+                "oneTimeAfterTaxAmount": "5.3456",
+                "recurringAfterTaxAmount": "6.2345",
+                "category": {
+                    "name": "Second Processor"
+                }
+            },
+            {
+                "description": "Virtual (up to 1Gbps)",
+                "id": 123456798,
+                "oneTimeAfterTaxAmount": "7.234",
+                "recurringAfterTaxAmount": "8.678",
+                "category": {
+                    "name": "Operating System"
+                }
+            }
+        ],
+        "location": {
+            "name": "ams01"
+        }
+    }
+]
