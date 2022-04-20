@@ -1,6 +1,12 @@
 [
     {
+
         "createDate": "2016-11-07T01:51:56-06:00",
+        "pendingMigrationFlag": false,
+        "dedicatedHost": {
+            "name": "test-dh",
+            "id": 12345
+        },
         "dedicatedAccountHostOnlyFlag": false,
         "domain": "softlayer.com",
         "fullyQualifiedDomainName": "3169-2-stemcell-for-dirtycow.softlayer.com",
@@ -87,6 +93,11 @@
     },
     {
         "createDate": "2016-11-09T02:14:13-06:00",
+        "pendingMigrationFlag": false,
+        "dedicatedHost": {
+            "name": "test-dh",
+            "id": 12345
+        },
         "dedicatedAccountHostOnlyFlag": false,
         "domain": "softlayer.com",
         "fullyQualifiedDomainName": "3263-10-1-stemcell-bluemix.softlayer.com",
@@ -174,6 +185,11 @@
     {
         "createDate": "2016-11-10T00:36:05-06:00",
         "dedicatedAccountHostOnlyFlag": false,
+        "dedicatedHost": {
+            "name": "test-dh",
+            "id": 12345
+        },
+        "pendingMigrationFlag": true,
         "domain": "softlayer.com",
         "fullyQualifiedDomainName": "3263-10-2-stemcell-bluemix.softlayer.com",
         "hostname": "3263-10-2-stemcell-bluemix",
@@ -259,11 +275,16 @@
     },
     {
         "createDate": "2016-11-18T11:21:32-06:00",
+        "dedicatedHost": {
+            "name": "test-dh",
+            "id": 12345
+        },
         "dedicatedAccountHostOnlyFlag": false,
         "domain": "softlayer.com",
         "fullyQualifiedDomainName": "3263-10-3-stemcell-bluemix.softlayer.com",
         "hostname": "3263-10-3-stemcell-bluemix",
         "id": 26165071,
+        "pendingMigrationFlag": false,
         "maxCpu": 2,
         "maxMemory": 4096,
         "modifyDate": "2016-11-21T03:10:17-06:00",

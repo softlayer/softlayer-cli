@@ -23,6 +23,21 @@ type FakeAutoScaleManager struct {
 		result1 bool
 		result2 error
 	}
+	GetLogsScaleGroupStub        func(int, string, string) ([]datatypes.Scale_Group_Log, error)
+	getLogsScaleGroupMutex       sync.RWMutex
+	getLogsScaleGroupArgsForCall []struct {
+		arg1 int
+		arg2 string
+		arg3 string
+	}
+	getLogsScaleGroupReturns struct {
+		result1 []datatypes.Scale_Group_Log
+		result2 error
+	}
+	getLogsScaleGroupReturnsOnCall map[int]struct {
+		result1 []datatypes.Scale_Group_Log
+		result2 error
+	}
 	GetScaleGroupStub        func(int, string) (datatypes.Scale_Group, error)
 	getScaleGroupMutex       sync.RWMutex
 	getScaleGroupArgsForCall []struct {
@@ -35,6 +50,33 @@ type FakeAutoScaleManager struct {
 	}
 	getScaleGroupReturnsOnCall map[int]struct {
 		result1 datatypes.Scale_Group
+		result2 error
+	}
+	GetVirtualGuestMembersStub        func(int, string) ([]datatypes.Scale_Member_Virtual_Guest, error)
+	getVirtualGuestMembersMutex       sync.RWMutex
+	getVirtualGuestMembersArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getVirtualGuestMembersReturns struct {
+		result1 []datatypes.Scale_Member_Virtual_Guest
+		result2 error
+	}
+	getVirtualGuestMembersReturnsOnCall map[int]struct {
+		result1 []datatypes.Scale_Member_Virtual_Guest
+		result2 error
+	}
+	ListScaleGroupsStub        func(string) ([]datatypes.Scale_Group, error)
+	listScaleGroupsMutex       sync.RWMutex
+	listScaleGroupsArgsForCall []struct {
+		arg1 string
+	}
+	listScaleGroupsReturns struct {
+		result1 []datatypes.Scale_Group
+		result2 error
+	}
+	listScaleGroupsReturnsOnCall map[int]struct {
+		result1 []datatypes.Scale_Group
 		result2 error
 	}
 	invocations      map[string][][]interface{}
@@ -106,6 +148,72 @@ func (fake *FakeAutoScaleManager) EditScaleGroupReturnsOnCall(i int, result1 boo
 	}{result1, result2}
 }
 
+func (fake *FakeAutoScaleManager) GetLogsScaleGroup(arg1 int, arg2 string, arg3 string) ([]datatypes.Scale_Group_Log, error) {
+	fake.getLogsScaleGroupMutex.Lock()
+	ret, specificReturn := fake.getLogsScaleGroupReturnsOnCall[len(fake.getLogsScaleGroupArgsForCall)]
+	fake.getLogsScaleGroupArgsForCall = append(fake.getLogsScaleGroupArgsForCall, struct {
+		arg1 int
+		arg2 string
+		arg3 string
+	}{arg1, arg2, arg3})
+	stub := fake.GetLogsScaleGroupStub
+	fakeReturns := fake.getLogsScaleGroupReturns
+	fake.recordInvocation("GetLogsScaleGroup", []interface{}{arg1, arg2, arg3})
+	fake.getLogsScaleGroupMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAutoScaleManager) GetLogsScaleGroupCallCount() int {
+	fake.getLogsScaleGroupMutex.RLock()
+	defer fake.getLogsScaleGroupMutex.RUnlock()
+	return len(fake.getLogsScaleGroupArgsForCall)
+}
+
+func (fake *FakeAutoScaleManager) GetLogsScaleGroupCalls(stub func(int, string, string) ([]datatypes.Scale_Group_Log, error)) {
+	fake.getLogsScaleGroupMutex.Lock()
+	defer fake.getLogsScaleGroupMutex.Unlock()
+	fake.GetLogsScaleGroupStub = stub
+}
+
+func (fake *FakeAutoScaleManager) GetLogsScaleGroupArgsForCall(i int) (int, string, string) {
+	fake.getLogsScaleGroupMutex.RLock()
+	defer fake.getLogsScaleGroupMutex.RUnlock()
+	argsForCall := fake.getLogsScaleGroupArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeAutoScaleManager) GetLogsScaleGroupReturns(result1 []datatypes.Scale_Group_Log, result2 error) {
+	fake.getLogsScaleGroupMutex.Lock()
+	defer fake.getLogsScaleGroupMutex.Unlock()
+	fake.GetLogsScaleGroupStub = nil
+	fake.getLogsScaleGroupReturns = struct {
+		result1 []datatypes.Scale_Group_Log
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAutoScaleManager) GetLogsScaleGroupReturnsOnCall(i int, result1 []datatypes.Scale_Group_Log, result2 error) {
+	fake.getLogsScaleGroupMutex.Lock()
+	defer fake.getLogsScaleGroupMutex.Unlock()
+	fake.GetLogsScaleGroupStub = nil
+	if fake.getLogsScaleGroupReturnsOnCall == nil {
+		fake.getLogsScaleGroupReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Scale_Group_Log
+			result2 error
+		})
+	}
+	fake.getLogsScaleGroupReturnsOnCall[i] = struct {
+		result1 []datatypes.Scale_Group_Log
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAutoScaleManager) GetScaleGroup(arg1 int, arg2 string) (datatypes.Scale_Group, error) {
 	fake.getScaleGroupMutex.Lock()
 	ret, specificReturn := fake.getScaleGroupReturnsOnCall[len(fake.getScaleGroupArgsForCall)]
@@ -171,13 +279,148 @@ func (fake *FakeAutoScaleManager) GetScaleGroupReturnsOnCall(i int, result1 data
 	}{result1, result2}
 }
 
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembers(arg1 int, arg2 string) ([]datatypes.Scale_Member_Virtual_Guest, error) {
+	fake.getVirtualGuestMembersMutex.Lock()
+	ret, specificReturn := fake.getVirtualGuestMembersReturnsOnCall[len(fake.getVirtualGuestMembersArgsForCall)]
+	fake.getVirtualGuestMembersArgsForCall = append(fake.getVirtualGuestMembersArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetVirtualGuestMembersStub
+	fakeReturns := fake.getVirtualGuestMembersReturns
+	fake.recordInvocation("GetVirtualGuestMembers", []interface{}{arg1, arg2})
+	fake.getVirtualGuestMembersMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersCallCount() int {
+	fake.getVirtualGuestMembersMutex.RLock()
+	defer fake.getVirtualGuestMembersMutex.RUnlock()
+	return len(fake.getVirtualGuestMembersArgsForCall)
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersCalls(stub func(int, string) ([]datatypes.Scale_Member_Virtual_Guest, error)) {
+	fake.getVirtualGuestMembersMutex.Lock()
+	defer fake.getVirtualGuestMembersMutex.Unlock()
+	fake.GetVirtualGuestMembersStub = stub
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersArgsForCall(i int) (int, string) {
+	fake.getVirtualGuestMembersMutex.RLock()
+	defer fake.getVirtualGuestMembersMutex.RUnlock()
+	argsForCall := fake.getVirtualGuestMembersArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersReturns(result1 []datatypes.Scale_Member_Virtual_Guest, result2 error) {
+	fake.getVirtualGuestMembersMutex.Lock()
+	defer fake.getVirtualGuestMembersMutex.Unlock()
+	fake.GetVirtualGuestMembersStub = nil
+	fake.getVirtualGuestMembersReturns = struct {
+		result1 []datatypes.Scale_Member_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAutoScaleManager) GetVirtualGuestMembersReturnsOnCall(i int, result1 []datatypes.Scale_Member_Virtual_Guest, result2 error) {
+	fake.getVirtualGuestMembersMutex.Lock()
+	defer fake.getVirtualGuestMembersMutex.Unlock()
+	fake.GetVirtualGuestMembersStub = nil
+	if fake.getVirtualGuestMembersReturnsOnCall == nil {
+		fake.getVirtualGuestMembersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Scale_Member_Virtual_Guest
+			result2 error
+		})
+	}
+	fake.getVirtualGuestMembersReturnsOnCall[i] = struct {
+		result1 []datatypes.Scale_Member_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAutoScaleManager) ListScaleGroups(arg1 string) ([]datatypes.Scale_Group, error) {
+	fake.listScaleGroupsMutex.Lock()
+	ret, specificReturn := fake.listScaleGroupsReturnsOnCall[len(fake.listScaleGroupsArgsForCall)]
+	fake.listScaleGroupsArgsForCall = append(fake.listScaleGroupsArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.ListScaleGroupsStub
+	fakeReturns := fake.listScaleGroupsReturns
+	fake.recordInvocation("ListScaleGroups", []interface{}{arg1})
+	fake.listScaleGroupsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAutoScaleManager) ListScaleGroupsCallCount() int {
+	fake.listScaleGroupsMutex.RLock()
+	defer fake.listScaleGroupsMutex.RUnlock()
+	return len(fake.listScaleGroupsArgsForCall)
+}
+
+func (fake *FakeAutoScaleManager) ListScaleGroupsCalls(stub func(string) ([]datatypes.Scale_Group, error)) {
+	fake.listScaleGroupsMutex.Lock()
+	defer fake.listScaleGroupsMutex.Unlock()
+	fake.ListScaleGroupsStub = stub
+}
+
+func (fake *FakeAutoScaleManager) ListScaleGroupsArgsForCall(i int) string {
+	fake.listScaleGroupsMutex.RLock()
+	defer fake.listScaleGroupsMutex.RUnlock()
+	argsForCall := fake.listScaleGroupsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAutoScaleManager) ListScaleGroupsReturns(result1 []datatypes.Scale_Group, result2 error) {
+	fake.listScaleGroupsMutex.Lock()
+	defer fake.listScaleGroupsMutex.Unlock()
+	fake.ListScaleGroupsStub = nil
+	fake.listScaleGroupsReturns = struct {
+		result1 []datatypes.Scale_Group
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAutoScaleManager) ListScaleGroupsReturnsOnCall(i int, result1 []datatypes.Scale_Group, result2 error) {
+	fake.listScaleGroupsMutex.Lock()
+	defer fake.listScaleGroupsMutex.Unlock()
+	fake.ListScaleGroupsStub = nil
+	if fake.listScaleGroupsReturnsOnCall == nil {
+		fake.listScaleGroupsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Scale_Group
+			result2 error
+		})
+	}
+	fake.listScaleGroupsReturnsOnCall[i] = struct {
+		result1 []datatypes.Scale_Group
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAutoScaleManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
 	fake.editScaleGroupMutex.RLock()
 	defer fake.editScaleGroupMutex.RUnlock()
+	fake.getLogsScaleGroupMutex.RLock()
+	defer fake.getLogsScaleGroupMutex.RUnlock()
 	fake.getScaleGroupMutex.RLock()
 	defer fake.getScaleGroupMutex.RUnlock()
+	fake.getVirtualGuestMembersMutex.RLock()
+	defer fake.getVirtualGuestMembersMutex.RUnlock()
+	fake.listScaleGroupsMutex.RLock()
+	defer fake.listScaleGroupsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
