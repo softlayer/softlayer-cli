@@ -84,7 +84,7 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 			}
 			if c.IsSet("userfile") {
 				userfile := c.String("userfile")
-				content, err := ioutil.ReadFile(userfile) // #nosec
+				content, err := ioutil.ReadFile(userfile)
 				if err != nil {
 					return cli.NewExitError((T("Failed to read user data from file: {{.File}}.", map[string]interface{}{"File": userfile})), 2)
 				}
@@ -102,6 +102,7 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 
 	if response {
 		cmd.UI.Ok()
+		cmd.UI.Print(T("Autoscale Group {{.Id}} was updated", map[string]interface{}{"Id": autoScaleGroupId}))
 	}
 	return nil
 }
@@ -114,7 +115,8 @@ func AutoScaleEditMetaData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]
 
 EXAMPLE: 
-   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname`),
+   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname
+   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "name",
