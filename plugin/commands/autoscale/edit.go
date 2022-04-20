@@ -84,7 +84,7 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 			}
 			if c.IsSet("userfile") {
 				userfile := c.String("userfile")
-				content, err := ioutil.ReadFile(userfile)
+				content, err := ioutil.ReadFile(userfile) // #nosec
 				if err != nil {
 					return cli.NewExitError((T("Failed to read user data from file: {{.File}}.", map[string]interface{}{"File": userfile})), 2)
 				}
