@@ -20,6 +20,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
@@ -29,8 +30,8 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
@@ -182,6 +183,7 @@ func convertToPluginFlags(flags []cli.Flag) []plugin.Flag {
 func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
 		metadata.SoftlayerNamespace(),
+		autoscale.AutoScaleNamespace(),
 		block.BlockNamespace(),
 		file.FileNamespace(),
 		dns.DnsNamespace(),
@@ -210,6 +212,7 @@ func Namespaces() []plugin.Namespace {
 
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
+		autoscale.AutoScaleMetaData(),
 		block.BlockMetaData(),
 		file.FileMetaData(),
 		dns.DnsMetaData(),

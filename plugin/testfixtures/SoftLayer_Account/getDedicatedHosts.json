@@ -1,13 +1,24 @@
-[
-    {
-        "datacenter": {
-        "name": "dal05"
+[{
+    "datacenter": {"name": "dal05"},
+    "backendRouter": {"hostname": "bcr01.test"},
+    "allocationStatus": {
+        "cpuAllocated": 1,
+        "cpuCount": 2,
+        "memoryAllocated": 100,
+        "memoryCapacity": 500,
+        "diskAllocated": 44,
+        "diskCapacity": 99,
     },
     "memoryCapacity": 242,
     "name": "test-dedicated",
+    "hostname": "test-dedicatd.testing.com",
     "diskCapacity": 1200,
     "guestCount": 1,
     "cpuCount": 56,
-    "id": 12345
+    "id": 12345,
+    "pendingMigrationFlag": false,
+    "dedicatedHost": {
+        "name": "test-dh",
+        "id": 12345
     }
-]
+}]

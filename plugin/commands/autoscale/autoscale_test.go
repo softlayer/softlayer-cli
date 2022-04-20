@@ -1,41 +1,40 @@
-package account_test
+package autoscale_test
 
 import (
 	"reflect"
+	"testing"
+
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-
-	"testing"
 )
 
 func TestManagers(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Account Suite")
+	RunSpecs(t, "Autoscale Suite")
 }
 
+// These are all the commands in autoscale.go
 var availableCommands = []string{
-	"account-bandwidth-pools",
-	"account-events",
-	"account-event-detail",
-	"account-invoices",
-	"account-invoice-detail",
-	"account-billing-items",
+	"autoscale-tag",
+	"autoscale-logs",
+	"autoscale-detail",
+	"autoscale-list",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
-var _ = Describe("Test account.GetCommandActionBindings()", func() {
+var _ = Describe("Test autoscale.GetCommandActionBindings()", func() {
 	var (
 		context plugin.PluginContext
 	)
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
 	context = plugin.InitPluginContext("softlayer")
-	commands := account.GetCommandActionBindings(context, fakeUI, fakeSession)
+	commands := autoscale.GetCommandActionBindings(context, fakeUI, fakeSession)
 
 	Context("Test Actions", func() {
 		for _, cmdName := range availableCommands {
@@ -71,25 +70,25 @@ var _ = Describe("Test account.GetCommandActionBindings()", func() {
 						break
 					}
 				}
-				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in account.go")
+				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in autoscale.go")
 			})
 		}
 	})
 
-	Context("Account Namespace", func() {
-		It("Account Name Space", func() {
-			Expect(account.AccountNamespace().ParentName).To(ContainSubstring("sl"))
-			Expect(account.AccountNamespace().Name).To(ContainSubstring("account"))
-			Expect(account.AccountNamespace().Description).To(ContainSubstring("Classic infrastructure Account"))
+	Context("AutoScale Namespace", func() {
+		It("AutoScale Name Space", func() {
+			Expect(autoscale.AutoScaleNamespace().ParentName).To(ContainSubstring("sl"))
+			Expect(autoscale.AutoScaleNamespace().Name).To(ContainSubstring("autoscale"))
+			Expect(autoscale.AutoScaleNamespace().Description).To(ContainSubstring("Classic infrastructure Autoscale Group"))
 		})
 	})
 
-	Context("Account MetaData", func() {
-		It("Account MetaData", func() {
-			Expect(account.AccountMetaData().Category).To(ContainSubstring("sl"))
-			Expect(account.AccountMetaData().Name).To(ContainSubstring("account"))
-			Expect(account.AccountMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl account"))
-			Expect(account.AccountMetaData().Description).To(ContainSubstring("Classic infrastructure Account"))
+	Context("User MetaData", func() {
+		It("User MetaData", func() {
+			Expect(autoscale.AutoScaleMetaData().Category).To(ContainSubstring("sl"))
+			Expect(autoscale.AutoScaleMetaData().Name).To(ContainSubstring("autoscale"))
+			Expect(autoscale.AutoScaleMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl autoscale"))
+			Expect(autoscale.AutoScaleMetaData().Description).To(ContainSubstring("Classic infrastructure Autoscale Group"))
 		})
 	})
 })
