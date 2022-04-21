@@ -51,11 +51,6 @@ func (cmd *ItemDetailCommand) Run(c *cli.Context) error {
 		return slErr.NewInvalidSoftlayerIdInputError("Item ID")
 	}
 
-	details := false
-	if c.IsSet("details") {
-		details = true
-	}
-
 	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
 	if err != nil {
 		return err
@@ -65,11 +60,11 @@ func (cmd *ItemDetailCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return cli.NewExitError(T("Failed to get the item {{.itemID}}. ", map[string]interface{}{"itemID": itemID})+err.Error(), 2)
 	}
-	PrintItemDetail(itemID, item, cmd.UI, outputFormat, details)
+	PrintItemDetail(itemID, item, cmd.UI, outputFormat)
 	return nil
 }
 
-func PrintItemDetail(itemID int, item datatypes.Billing_Item, ui terminal.UI, outputFormat string, details bool) {
+func PrintItemDetail(itemID int, item datatypes.Billing_Item, ui terminal.UI, outputFormat string) {
 	bufEvent := new(bytes.Buffer)
 	table := terminal.NewTable(bufEvent, []string{
 		T("Key"),
