@@ -20,6 +20,32 @@ type FakeAccountManager struct {
 	cancelItemReturnsOnCall map[int]struct {
 		result1 error
 	}
+	GetActiveAccountLicensesStub        func(string) ([]datatypes.Software_AccountLicense, error)
+	getActiveAccountLicensesMutex       sync.RWMutex
+	getActiveAccountLicensesArgsForCall []struct {
+		arg1 string
+	}
+	getActiveAccountLicensesReturns struct {
+		result1 []datatypes.Software_AccountLicense
+		result2 error
+	}
+	getActiveAccountLicensesReturnsOnCall map[int]struct {
+		result1 []datatypes.Software_AccountLicense
+		result2 error
+	}
+	GetActiveVirtualLicensesStub        func(string) ([]datatypes.Software_VirtualLicense, error)
+	getActiveVirtualLicensesMutex       sync.RWMutex
+	getActiveVirtualLicensesArgsForCall []struct {
+		arg1 string
+	}
+	getActiveVirtualLicensesReturns struct {
+		result1 []datatypes.Software_VirtualLicense
+		result2 error
+	}
+	getActiveVirtualLicensesReturnsOnCall map[int]struct {
+		result1 []datatypes.Software_VirtualLicense
+		result2 error
+	}
 	GetBandwidthPoolServersStub        func(int) (int, error)
 	getBandwidthPoolServersMutex       sync.RWMutex
 	getBandwidthPoolServersArgsForCall []struct {
@@ -205,6 +231,134 @@ func (fake *FakeAccountManager) CancelItemReturnsOnCall(i int, result1 error) {
 	fake.cancelItemReturnsOnCall[i] = struct {
 		result1 error
 	}{result1}
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicenses(arg1 string) ([]datatypes.Software_AccountLicense, error) {
+	fake.getActiveAccountLicensesMutex.Lock()
+	ret, specificReturn := fake.getActiveAccountLicensesReturnsOnCall[len(fake.getActiveAccountLicensesArgsForCall)]
+	fake.getActiveAccountLicensesArgsForCall = append(fake.getActiveAccountLicensesArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetActiveAccountLicensesStub
+	fakeReturns := fake.getActiveAccountLicensesReturns
+	fake.recordInvocation("GetActiveAccountLicenses", []interface{}{arg1})
+	fake.getActiveAccountLicensesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesCallCount() int {
+	fake.getActiveAccountLicensesMutex.RLock()
+	defer fake.getActiveAccountLicensesMutex.RUnlock()
+	return len(fake.getActiveAccountLicensesArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesCalls(stub func(string) ([]datatypes.Software_AccountLicense, error)) {
+	fake.getActiveAccountLicensesMutex.Lock()
+	defer fake.getActiveAccountLicensesMutex.Unlock()
+	fake.GetActiveAccountLicensesStub = stub
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesArgsForCall(i int) string {
+	fake.getActiveAccountLicensesMutex.RLock()
+	defer fake.getActiveAccountLicensesMutex.RUnlock()
+	argsForCall := fake.getActiveAccountLicensesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesReturns(result1 []datatypes.Software_AccountLicense, result2 error) {
+	fake.getActiveAccountLicensesMutex.Lock()
+	defer fake.getActiveAccountLicensesMutex.Unlock()
+	fake.GetActiveAccountLicensesStub = nil
+	fake.getActiveAccountLicensesReturns = struct {
+		result1 []datatypes.Software_AccountLicense
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesReturnsOnCall(i int, result1 []datatypes.Software_AccountLicense, result2 error) {
+	fake.getActiveAccountLicensesMutex.Lock()
+	defer fake.getActiveAccountLicensesMutex.Unlock()
+	fake.GetActiveAccountLicensesStub = nil
+	if fake.getActiveAccountLicensesReturnsOnCall == nil {
+		fake.getActiveAccountLicensesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Software_AccountLicense
+			result2 error
+		})
+	}
+	fake.getActiveAccountLicensesReturnsOnCall[i] = struct {
+		result1 []datatypes.Software_AccountLicense
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicenses(arg1 string) ([]datatypes.Software_VirtualLicense, error) {
+	fake.getActiveVirtualLicensesMutex.Lock()
+	ret, specificReturn := fake.getActiveVirtualLicensesReturnsOnCall[len(fake.getActiveVirtualLicensesArgsForCall)]
+	fake.getActiveVirtualLicensesArgsForCall = append(fake.getActiveVirtualLicensesArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetActiveVirtualLicensesStub
+	fakeReturns := fake.getActiveVirtualLicensesReturns
+	fake.recordInvocation("GetActiveVirtualLicenses", []interface{}{arg1})
+	fake.getActiveVirtualLicensesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesCallCount() int {
+	fake.getActiveVirtualLicensesMutex.RLock()
+	defer fake.getActiveVirtualLicensesMutex.RUnlock()
+	return len(fake.getActiveVirtualLicensesArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesCalls(stub func(string) ([]datatypes.Software_VirtualLicense, error)) {
+	fake.getActiveVirtualLicensesMutex.Lock()
+	defer fake.getActiveVirtualLicensesMutex.Unlock()
+	fake.GetActiveVirtualLicensesStub = stub
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesArgsForCall(i int) string {
+	fake.getActiveVirtualLicensesMutex.RLock()
+	defer fake.getActiveVirtualLicensesMutex.RUnlock()
+	argsForCall := fake.getActiveVirtualLicensesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesReturns(result1 []datatypes.Software_VirtualLicense, result2 error) {
+	fake.getActiveVirtualLicensesMutex.Lock()
+	defer fake.getActiveVirtualLicensesMutex.Unlock()
+	fake.GetActiveVirtualLicensesStub = nil
+	fake.getActiveVirtualLicensesReturns = struct {
+		result1 []datatypes.Software_VirtualLicense
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesReturnsOnCall(i int, result1 []datatypes.Software_VirtualLicense, result2 error) {
+	fake.getActiveVirtualLicensesMutex.Lock()
+	defer fake.getActiveVirtualLicensesMutex.Unlock()
+	fake.GetActiveVirtualLicensesStub = nil
+	if fake.getActiveVirtualLicensesReturnsOnCall == nil {
+		fake.getActiveVirtualLicensesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Software_VirtualLicense
+			result2 error
+		})
+	}
+	fake.getActiveVirtualLicensesReturnsOnCall[i] = struct {
+		result1 []datatypes.Software_VirtualLicense
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) GetBandwidthPoolServers(arg1 int) (int, error) {
@@ -779,6 +933,10 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.invocationsMutex.RUnlock()
 	fake.cancelItemMutex.RLock()
 	defer fake.cancelItemMutex.RUnlock()
+	fake.getActiveAccountLicensesMutex.RLock()
+	defer fake.getActiveAccountLicensesMutex.RUnlock()
+	fake.getActiveVirtualLicensesMutex.RLock()
+	defer fake.getActiveVirtualLicensesMutex.RUnlock()
 	fake.getBandwidthPoolServersMutex.RLock()
 	defer fake.getBandwidthPoolServersMutex.RUnlock()
 	fake.getBandwidthPoolsMutex.RLock()
