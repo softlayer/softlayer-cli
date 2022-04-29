@@ -21,6 +21,7 @@ type AccountManager interface {
 	GetInvoiceDetail(identifier int, mask string) ([]datatypes.Billing_Invoice_Item, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 	CancelItem(identifier int) error
+	GetItemDetail(identifier int, mask string) (datatypes.Billing_Item, error)
 }
 
 type accountManager struct {
@@ -244,4 +245,13 @@ func (a accountManager) CancelItem(identifier int) error {
 
 	_, err := BillingItemService.Mask(mask).Id(identifier).CancelItem(&CancelImmediately, &cancelAssociatedBillingItems, &Reason, &Note)
 	return err
+}
+
+/*
+Gets the detail of a item
+https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Item/getObject/
+*/
+func (a accountManager) GetItemDetail(identifier int, mask string) (datatypes.Billing_Item, error) {
+	BillingItemService := services.GetBillingItemService(a.Session)
+	return BillingItemService.Mask(mask).Id(identifier).GetObject()
 }
