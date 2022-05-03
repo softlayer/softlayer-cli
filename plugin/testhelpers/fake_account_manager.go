@@ -58,18 +58,18 @@ type FakeAccountManager struct {
 		result1 []datatypes.Billing_Item
 		result2 error
 	}
-	GetInvoiceDetailStub        func(int, string) ([]datatypes.Billing_Invoice_Item, error)
-	getInvoiceDetailMutex       sync.RWMutex
-	getInvoiceDetailArgsForCall []struct {
+	GetEventDetailStub        func(int, string) (datatypes.Notification_Occurrence_Event, error)
+	getEventDetailMutex       sync.RWMutex
+	getEventDetailArgsForCall []struct {
 		arg1 int
 		arg2 string
 	}
-	getInvoiceDetailReturns struct {
-		result1 []datatypes.Billing_Invoice_Item
+	getEventDetailReturns struct {
+		result1 datatypes.Notification_Occurrence_Event
 		result2 error
 	}
-	getInvoiceDetailReturnsOnCall map[int]struct {
-		result1 []datatypes.Billing_Invoice_Item
+	getEventDetailReturnsOnCall map[int]struct {
+		result1 datatypes.Notification_Occurrence_Event
 		result2 error
 	}
 	GetEventsStub        func(string, string, string) ([]datatypes.Notification_Occurrence_Event, error)
@@ -87,18 +87,18 @@ type FakeAccountManager struct {
 		result1 []datatypes.Notification_Occurrence_Event
 		result2 error
 	}
-	GetEventDetailStub        func(int, string) (datatypes.Notification_Occurrence_Event, error)
-	getEventDetailMutex       sync.RWMutex
-	getEventDetailArgsForCall []struct {
+	GetInvoiceDetailStub        func(int, string) ([]datatypes.Billing_Invoice_Item, error)
+	getInvoiceDetailMutex       sync.RWMutex
+	getInvoiceDetailArgsForCall []struct {
 		arg1 int
 		arg2 string
 	}
-	getEventDetailReturns struct {
-		result1 datatypes.Notification_Occurrence_Event
+	getInvoiceDetailReturns struct {
+		result1 []datatypes.Billing_Invoice_Item
 		result2 error
 	}
-	getEventDetailReturnsOnCall map[int]struct {
-		result1 datatypes.Notification_Occurrence_Event
+	getInvoiceDetailReturnsOnCall map[int]struct {
+		result1 []datatypes.Billing_Invoice_Item
 		result2 error
 	}
 	GetInvoicesStub        func(int, bool, bool) ([]datatypes.Billing_Invoice, error)
@@ -114,6 +114,20 @@ type FakeAccountManager struct {
 	}
 	getInvoicesReturnsOnCall map[int]struct {
 		result1 []datatypes.Billing_Invoice
+		result2 error
+	}
+	GetItemDetailStub        func(int, string) (datatypes.Billing_Item, error)
+	getItemDetailMutex       sync.RWMutex
+	getItemDetailArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getItemDetailReturns struct {
+		result1 datatypes.Billing_Item
+		result2 error
+	}
+	getItemDetailReturnsOnCall map[int]struct {
+		result1 datatypes.Billing_Item
 		result2 error
 	}
 	SummaryByDatacenterStub        func() (map[string]map[string]int, error)
@@ -332,47 +346,6 @@ func (fake *FakeAccountManager) GetBillingItems(arg1 string) ([]datatypes.Billin
 	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeAccountManager) GetInvoiceDetail(arg1 int, arg2 string) ([]datatypes.Billing_Invoice_Item, error) {
-	fake.getInvoiceDetailMutex.Lock()
-	ret, specificReturn := fake.getInvoiceDetailReturnsOnCall[len(fake.getInvoiceDetailArgsForCall)]
-	fake.getInvoiceDetailArgsForCall = append(fake.getInvoiceDetailArgsForCall, struct {
-		arg1 int
-		arg2 string
-	}{arg1, arg2})
-	stub := fake.GetInvoiceDetailStub
-	fakeReturns := fake.getInvoiceDetailReturns
-	fake.recordInvocation("GetInvoiceDetail", []interface{}{arg1, arg2})
-	fake.getInvoiceDetailMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeAccountManager) GetEvents(arg1 string, arg2 string, arg3 string) ([]datatypes.Notification_Occurrence_Event, error) {
-	fake.getEventsMutex.Lock()
-	ret, specificReturn := fake.getEventsReturnsOnCall[len(fake.getEventsArgsForCall)]
-	fake.getEventsArgsForCall = append(fake.getEventsArgsForCall, struct {
-		arg1 string
-		arg2 string
-		arg3 string
-	}{arg1, arg2, arg3})
-	stub := fake.GetEventsStub
-	fakeReturns := fake.getEventsReturns
-	fake.recordInvocation("GetEvents", []interface{}{arg1, arg2, arg3})
-	fake.getEventsMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fakeReturns.result1, fakeReturns.result2
-}
-
 func (fake *FakeAccountManager) GetBillingItemsCallCount() int {
 	fake.getBillingItemsMutex.RLock()
 	defer fake.getBillingItemsMutex.RUnlock()
@@ -402,6 +375,22 @@ func (fake *FakeAccountManager) GetBillingItemsReturns(result1 []datatypes.Billi
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetBillingItemsReturnsOnCall(i int, result1 []datatypes.Billing_Item, result2 error) {
+	fake.getBillingItemsMutex.Lock()
+	defer fake.getBillingItemsMutex.Unlock()
+	fake.GetBillingItemsStub = nil
+	if fake.getBillingItemsReturnsOnCall == nil {
+		fake.getBillingItemsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Billing_Item
+			result2 error
+		})
+	}
+	fake.getBillingItemsReturnsOnCall[i] = struct {
+		result1 []datatypes.Billing_Item
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAccountManager) GetEventDetail(arg1 int, arg2 string) (datatypes.Notification_Occurrence_Event, error) {
 	fake.getEventDetailMutex.Lock()
 	ret, specificReturn := fake.getEventDetailReturnsOnCall[len(fake.getEventDetailArgsForCall)]
@@ -413,6 +402,137 @@ func (fake *FakeAccountManager) GetEventDetail(arg1 int, arg2 string) (datatypes
 	fakeReturns := fake.getEventDetailReturns
 	fake.recordInvocation("GetEventDetail", []interface{}{arg1, arg2})
 	fake.getEventDetailMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetEventDetailCallCount() int {
+	fake.getEventDetailMutex.RLock()
+	defer fake.getEventDetailMutex.RUnlock()
+	return len(fake.getEventDetailArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetEventDetailCalls(stub func(int, string) (datatypes.Notification_Occurrence_Event, error)) {
+	fake.getEventDetailMutex.Lock()
+	defer fake.getEventDetailMutex.Unlock()
+	fake.GetEventDetailStub = stub
+}
+
+func (fake *FakeAccountManager) GetEventDetailArgsForCall(i int) (int, string) {
+	fake.getEventDetailMutex.RLock()
+	defer fake.getEventDetailMutex.RUnlock()
+	argsForCall := fake.getEventDetailArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAccountManager) GetEventDetailReturns(result1 datatypes.Notification_Occurrence_Event, result2 error) {
+	fake.getEventDetailMutex.Lock()
+	defer fake.getEventDetailMutex.Unlock()
+	fake.GetEventDetailStub = nil
+	fake.getEventDetailReturns = struct {
+		result1 datatypes.Notification_Occurrence_Event
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetEventDetailReturnsOnCall(i int, result1 datatypes.Notification_Occurrence_Event, result2 error) {
+	fake.getEventDetailMutex.Lock()
+	defer fake.getEventDetailMutex.Unlock()
+	fake.GetEventDetailStub = nil
+	if fake.getEventDetailReturnsOnCall == nil {
+		fake.getEventDetailReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Notification_Occurrence_Event
+			result2 error
+		})
+	}
+	fake.getEventDetailReturnsOnCall[i] = struct {
+		result1 datatypes.Notification_Occurrence_Event
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetEvents(arg1 string, arg2 string, arg3 string) ([]datatypes.Notification_Occurrence_Event, error) {
+	fake.getEventsMutex.Lock()
+	ret, specificReturn := fake.getEventsReturnsOnCall[len(fake.getEventsArgsForCall)]
+	fake.getEventsArgsForCall = append(fake.getEventsArgsForCall, struct {
+		arg1 string
+		arg2 string
+		arg3 string
+	}{arg1, arg2, arg3})
+	stub := fake.GetEventsStub
+	fakeReturns := fake.getEventsReturns
+	fake.recordInvocation("GetEvents", []interface{}{arg1, arg2, arg3})
+	fake.getEventsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetEventsCallCount() int {
+	fake.getEventsMutex.RLock()
+	defer fake.getEventsMutex.RUnlock()
+	return len(fake.getEventsArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetEventsCalls(stub func(string, string, string) ([]datatypes.Notification_Occurrence_Event, error)) {
+	fake.getEventsMutex.Lock()
+	defer fake.getEventsMutex.Unlock()
+	fake.GetEventsStub = stub
+}
+
+func (fake *FakeAccountManager) GetEventsArgsForCall(i int) (string, string, string) {
+	fake.getEventsMutex.RLock()
+	defer fake.getEventsMutex.RUnlock()
+	argsForCall := fake.getEventsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeAccountManager) GetEventsReturns(result1 []datatypes.Notification_Occurrence_Event, result2 error) {
+	fake.getEventsMutex.Lock()
+	defer fake.getEventsMutex.Unlock()
+	fake.GetEventsStub = nil
+	fake.getEventsReturns = struct {
+		result1 []datatypes.Notification_Occurrence_Event
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetEventsReturnsOnCall(i int, result1 []datatypes.Notification_Occurrence_Event, result2 error) {
+	fake.getEventsMutex.Lock()
+	defer fake.getEventsMutex.Unlock()
+	fake.GetEventsStub = nil
+	if fake.getEventsReturnsOnCall == nil {
+		fake.getEventsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Notification_Occurrence_Event
+			result2 error
+		})
+	}
+	fake.getEventsReturnsOnCall[i] = struct {
+		result1 []datatypes.Notification_Occurrence_Event
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetInvoiceDetail(arg1 int, arg2 string) ([]datatypes.Billing_Invoice_Item, error) {
+	fake.getInvoiceDetailMutex.Lock()
+	ret, specificReturn := fake.getInvoiceDetailReturnsOnCall[len(fake.getInvoiceDetailArgsForCall)]
+	fake.getInvoiceDetailArgsForCall = append(fake.getInvoiceDetailArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetInvoiceDetailStub
+	fakeReturns := fake.getInvoiceDetailReturns
+	fake.recordInvocation("GetInvoiceDetail", []interface{}{arg1, arg2})
+	fake.getInvoiceDetailMutex.Unlock()
 	if stub != nil {
 		return stub(arg1, arg2)
 	}
@@ -451,80 +571,6 @@ func (fake *FakeAccountManager) GetInvoiceDetailReturns(result1 []datatypes.Bill
 	}{result1, result2}
 }
 
-func (fake *FakeAccountManager) GetEventsCallCount() int {
-	fake.getEventsMutex.RLock()
-	defer fake.getEventsMutex.RUnlock()
-	return len(fake.getEventsArgsForCall)
-}
-
-func (fake *FakeAccountManager) GetEventsCalls(stub func(string, string, string) ([]datatypes.Notification_Occurrence_Event, error)) {
-	fake.getEventsMutex.Lock()
-	defer fake.getEventsMutex.Unlock()
-	fake.GetEventsStub = stub
-}
-
-func (fake *FakeAccountManager) GetEventsArgsForCall(i int) (string, string, string) {
-	fake.getEventsMutex.RLock()
-	defer fake.getEventsMutex.RUnlock()
-	argsForCall := fake.getEventsArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
-}
-
-func (fake *FakeAccountManager) GetEventsReturns(result1 []datatypes.Notification_Occurrence_Event, result2 error) {
-	fake.getEventsMutex.Lock()
-	defer fake.getEventsMutex.Unlock()
-	fake.GetEventsStub = nil
-	fake.getEventsReturns = struct {
-		result1 []datatypes.Notification_Occurrence_Event
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeAccountManager) GetEventDetailCallCount() int {
-	fake.getEventDetailMutex.RLock()
-	defer fake.getEventDetailMutex.RUnlock()
-	return len(fake.getEventDetailArgsForCall)
-}
-
-func (fake *FakeAccountManager) GetEventDetailCalls(stub func(int, string) (datatypes.Notification_Occurrence_Event, error)) {
-	fake.getEventDetailMutex.Lock()
-	defer fake.getEventDetailMutex.Unlock()
-	fake.GetEventDetailStub = stub
-}
-
-func (fake *FakeAccountManager) GetEventDetailArgsForCall(i int) (int, string) {
-	fake.getEventDetailMutex.RLock()
-	defer fake.getEventDetailMutex.RUnlock()
-	argsForCall := fake.getEventDetailArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2
-}
-
-func (fake *FakeAccountManager) GetEventDetailReturns(result1 datatypes.Notification_Occurrence_Event, result2 error) {
-	fake.getEventDetailMutex.Lock()
-	defer fake.getEventDetailMutex.Unlock()
-	fake.GetEventDetailStub = nil
-	fake.getEventDetailReturns = struct {
-		result1 datatypes.Notification_Occurrence_Event
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeAccountManager) GetEventsReturnsOnCall(i int, result1 []datatypes.Notification_Occurrence_Event, result2 error) {
-	fake.getEventsMutex.Lock()
-	defer fake.getEventsMutex.Unlock()
-	fake.GetEventsStub = nil
-	if fake.getEventsReturnsOnCall == nil {
-		fake.getEventsReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Notification_Occurrence_Event
-			result2 error
-		})
-	}
-	fake.getEventsReturnsOnCall[i] = struct {
-		result1 []datatypes.Notification_Occurrence_Event
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeAccountManager) GetInvoiceDetailReturnsOnCall(i int, result1 []datatypes.Billing_Invoice_Item, result2 error) {
 	fake.getInvoiceDetailMutex.Lock()
 	defer fake.getInvoiceDetailMutex.Unlock()
@@ -537,38 +583,6 @@ func (fake *FakeAccountManager) GetInvoiceDetailReturnsOnCall(i int, result1 []d
 	}
 	fake.getInvoiceDetailReturnsOnCall[i] = struct {
 		result1 []datatypes.Billing_Invoice_Item
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeAccountManager) GetBillingItemsReturnsOnCall(i int, result1 []datatypes.Billing_Item, result2 error) {
-	fake.getBillingItemsMutex.Lock()
-	defer fake.getBillingItemsMutex.Unlock()
-	fake.GetBillingItemsStub = nil
-	if fake.getBillingItemsReturnsOnCall == nil {
-		fake.getBillingItemsReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Billing_Item
-			result2 error
-		})
-	}
-	fake.getBillingItemsReturnsOnCall[i] = struct {
-		result1 []datatypes.Billing_Item
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeAccountManager) GetEventDetailReturnsOnCall(i int, result1 datatypes.Notification_Occurrence_Event, result2 error) {
-	fake.getEventDetailMutex.Lock()
-	defer fake.getEventDetailMutex.Unlock()
-	fake.GetEventDetailStub = nil
-	if fake.getEventDetailReturnsOnCall == nil {
-		fake.getEventDetailReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Notification_Occurrence_Event
-			result2 error
-		})
-	}
-	fake.getEventDetailReturnsOnCall[i] = struct {
-		result1 datatypes.Notification_Occurrence_Event
 		result2 error
 	}{result1, result2}
 }
@@ -635,6 +649,71 @@ func (fake *FakeAccountManager) GetInvoicesReturnsOnCall(i int, result1 []dataty
 	}
 	fake.getInvoicesReturnsOnCall[i] = struct {
 		result1 []datatypes.Billing_Invoice
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetItemDetail(arg1 int, arg2 string) (datatypes.Billing_Item, error) {
+	fake.getItemDetailMutex.Lock()
+	ret, specificReturn := fake.getItemDetailReturnsOnCall[len(fake.getItemDetailArgsForCall)]
+	fake.getItemDetailArgsForCall = append(fake.getItemDetailArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetItemDetailStub
+	fakeReturns := fake.getItemDetailReturns
+	fake.recordInvocation("GetItemDetail", []interface{}{arg1, arg2})
+	fake.getItemDetailMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetItemDetailCallCount() int {
+	fake.getItemDetailMutex.RLock()
+	defer fake.getItemDetailMutex.RUnlock()
+	return len(fake.getItemDetailArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetItemDetailCalls(stub func(int, string) (datatypes.Billing_Item, error)) {
+	fake.getItemDetailMutex.Lock()
+	defer fake.getItemDetailMutex.Unlock()
+	fake.GetItemDetailStub = stub
+}
+
+func (fake *FakeAccountManager) GetItemDetailArgsForCall(i int) (int, string) {
+	fake.getItemDetailMutex.RLock()
+	defer fake.getItemDetailMutex.RUnlock()
+	argsForCall := fake.getItemDetailArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAccountManager) GetItemDetailReturns(result1 datatypes.Billing_Item, result2 error) {
+	fake.getItemDetailMutex.Lock()
+	defer fake.getItemDetailMutex.Unlock()
+	fake.GetItemDetailStub = nil
+	fake.getItemDetailReturns = struct {
+		result1 datatypes.Billing_Item
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetItemDetailReturnsOnCall(i int, result1 datatypes.Billing_Item, result2 error) {
+	fake.getItemDetailMutex.Lock()
+	defer fake.getItemDetailMutex.Unlock()
+	fake.GetItemDetailStub = nil
+	if fake.getItemDetailReturnsOnCall == nil {
+		fake.getItemDetailReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Billing_Item
+			result2 error
+		})
+	}
+	fake.getItemDetailReturnsOnCall[i] = struct {
+		result1 datatypes.Billing_Item
 		result2 error
 	}{result1, result2}
 }
@@ -706,14 +785,16 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getBandwidthPoolsMutex.RUnlock()
 	fake.getBillingItemsMutex.RLock()
 	defer fake.getBillingItemsMutex.RUnlock()
-	fake.getInvoiceDetailMutex.RLock()
-	defer fake.getInvoiceDetailMutex.RUnlock()
-	fake.getEventsMutex.RLock()
-	defer fake.getEventsMutex.RUnlock()
 	fake.getEventDetailMutex.RLock()
 	defer fake.getEventDetailMutex.RUnlock()
+	fake.getEventsMutex.RLock()
+	defer fake.getEventsMutex.RUnlock()
+	fake.getInvoiceDetailMutex.RLock()
+	defer fake.getInvoiceDetailMutex.RUnlock()
 	fake.getInvoicesMutex.RLock()
 	defer fake.getInvoicesMutex.RUnlock()
+	fake.getItemDetailMutex.RLock()
+	defer fake.getItemDetailMutex.RUnlock()
 	fake.summaryByDatacenterMutex.RLock()
 	defer fake.summaryByDatacenterMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
