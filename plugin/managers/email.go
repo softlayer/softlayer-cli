@@ -5,7 +5,6 @@ import (
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
@@ -66,10 +65,6 @@ Gets all statistics by email.
 https://sldn.softlayer.com/reference/services/SoftLayer_Network_Message_Delivery_Email_Sendgrid/getStatistics/
 */
 func (a emailManager) GetStatistics(emailId int) ([]datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics, error) {
-	options := datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics_Options{
-		Days:               sl.Int(30),
-		SelectedStatistics: []string{"requests", "delivered", "opens", "clicks", "bounds"},
-		AggregatesOnly:     sl.Bool(true),
-	}
+	options := datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics_Options{}
 	return a.EmailService.Id(emailId).GetStatistics(&options)
 }
