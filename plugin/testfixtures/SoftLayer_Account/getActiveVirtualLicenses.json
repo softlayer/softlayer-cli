@@ -1,0 +1,65 @@
+[
+    {
+        "id": 1234,
+        "ipAddress": "11.111.11.11",
+        "key": "ABCD.00000000.0000",
+        "billingItem": {
+            "categoryCode": "control_panel",
+            "createDate": "2020-09-09T14:28:28-06:00",
+            "description": "Plesk Onyx (Linux) - (Unlimited) - VPS "
+        },
+        "softwareDescription": {
+            "longDescription": "Plesk - Unlimited Domain w/ Power Pack for VPS 17.8.11 Linux",
+            "manufacturer": "Plesk",
+            "name": "Plesk - Unlimited Domain w/ Power Pack for VPS"
+        },
+        "subnet": {
+            "broadcastAddress": "44.444.44.44",
+            "cidr": 28,
+            "gateway": "33.333.33.33",
+            "id": 12345678,
+            "isCustomerOwned": false,
+            "isCustomerRoutable": false,
+            "modifyDate": "2020-12-02T14:47:40-06:00",
+            "netmask": "255.255.255.240",
+            "networkIdentifier": "33.333.33.33",
+            "networkVlanId": 123456789,
+            "note": "test registration",
+            "sortOrder": "1",
+            "subnetType": "ADDITIONAL_PRIMARY",
+            "totalIpAddresses": "16",
+            "usableIpAddressCount": "13",
+            "version": 4
+        }
+    },
+    {
+        "id": 12345,
+        "ipAddress": "222.222.222.22",
+        "key": "ABCD.11111111.0000",
+        "billingItem": {
+            "categoryCode": "control_panel",
+            "createDate": "2021-11-15T14:22:03-06:00",
+            "description": "Plesk Obsidian (Windows) - (30 Domain) - VPS"
+        },
+        "softwareDescription": {
+            "longDescription": "Plesk - 30 Domain w/ Power Pack for VPS 18.x Windows",
+            "manufacturer": "Plesk",
+            "name": "Plesk - 30 Domain w/ Power Pack for VPS"
+        },
+        "subnet": {
+            "broadcastAddress": "",
+            "cidr": 32,
+            "gateway": "",
+            "id": 654321,
+            "isCustomerOwned": false,
+            "isCustomerRoutable": true,
+            "modifyDate": "2021-03-11T23:15:28-06:00",
+            "netmask": "255.255.255.255",
+            "networkIdentifier": "123.123.123.12",
+            "networkVlanId": null,
+            "totalIpAddresses": "1",
+            "usableIpAddressCount": "1",
+            "version": 4
+        }
+    }
+]
