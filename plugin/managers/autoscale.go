@@ -8,6 +8,7 @@ import (
 )
 
 type AutoScaleManager interface {
+	EditScaleGroup(id int, autoScaleTemplate *datatypes.Scale_Group) (bool, error)
 	GetVirtualGuestMembers(id int, mask string) ([]datatypes.Scale_Member_Virtual_Guest, error)
 	GetLogsScaleGroup(id int, mask string, dateFilter string) ([]datatypes.Scale_Group_Log, error)
 	GetScaleGroup(id int, mask string) (datatypes.Scale_Group, error)
@@ -63,6 +64,13 @@ func (as autoScaleManager) GetScaleGroup(id int, mask string) (datatypes.Scale_G
 		loadBalancers,regionalGroup[locations]]`
 	}
 	return as.AutoScaleService.Id(id).Mask(mask).GetObject()
+}
+
+//Edit specific autoscale group
+//id: Auto Sacale Group Id
+//autoScaleTemplate: New Auto Scale Group data
+func (as autoScaleManager) EditScaleGroup(id int, autoScaleTemplate *datatypes.Scale_Group) (bool, error) {
+	return as.AutoScaleService.Id(id).EditObject(autoScaleTemplate)
 }
 
 //List all scale groups
