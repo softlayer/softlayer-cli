@@ -17,6 +17,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
@@ -64,6 +65,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl dns
 	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
 	for name, action := range dnsCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl dns
+	emailCommands := email.GetCommandActionBindings(context, ui, session)
+	for name, action := range emailCommands {
 		CommandActionBindings[name] = action
 	}
 
