@@ -20,6 +20,46 @@ type FakeAccountManager struct {
 	cancelItemReturnsOnCall map[int]struct {
 		result1 error
 	}
+	GetAccountAllBillingOrdersStub        func(string, int) ([]datatypes.Billing_Order, error)
+	getAccountAllBillingOrdersMutex       sync.RWMutex
+	getAccountAllBillingOrdersArgsForCall []struct {
+		arg1 string
+		arg2 int
+	}
+	getAccountAllBillingOrdersReturns struct {
+		result1 []datatypes.Billing_Order
+		result2 error
+	}
+	getAccountAllBillingOrdersReturnsOnCall map[int]struct {
+		result1 []datatypes.Billing_Order
+		result2 error
+	}
+	GetActiveAccountLicensesStub        func(string) ([]datatypes.Software_AccountLicense, error)
+	getActiveAccountLicensesMutex       sync.RWMutex
+	getActiveAccountLicensesArgsForCall []struct {
+		arg1 string
+	}
+	getActiveAccountLicensesReturns struct {
+		result1 []datatypes.Software_AccountLicense
+		result2 error
+	}
+	getActiveAccountLicensesReturnsOnCall map[int]struct {
+		result1 []datatypes.Software_AccountLicense
+		result2 error
+	}
+	GetActiveVirtualLicensesStub        func(string) ([]datatypes.Software_VirtualLicense, error)
+	getActiveVirtualLicensesMutex       sync.RWMutex
+	getActiveVirtualLicensesArgsForCall []struct {
+		arg1 string
+	}
+	getActiveVirtualLicensesReturns struct {
+		result1 []datatypes.Software_VirtualLicense
+		result2 error
+	}
+	getActiveVirtualLicensesReturnsOnCall map[int]struct {
+		result1 []datatypes.Software_VirtualLicense
+		result2 error
+	}
 	GetBandwidthPoolServersStub        func(int) (int, error)
 	getBandwidthPoolServersMutex       sync.RWMutex
 	getBandwidthPoolServersArgsForCall []struct {
@@ -130,6 +170,19 @@ type FakeAccountManager struct {
 		result1 datatypes.Billing_Item
 		result2 error
 	}
+	GetSummaryStub        func(string) (datatypes.Account, error)
+	getSummaryMutex       sync.RWMutex
+	getSummaryArgsForCall []struct {
+		arg1 string
+	}
+	getSummaryReturns struct {
+		result1 datatypes.Account
+		result2 error
+	}
+	getSummaryReturnsOnCall map[int]struct {
+		result1 datatypes.Account
+		result2 error
+	}
 	SummaryByDatacenterStub        func() (map[string]map[string]int, error)
 	summaryByDatacenterMutex       sync.RWMutex
 	summaryByDatacenterArgsForCall []struct {
@@ -205,6 +258,199 @@ func (fake *FakeAccountManager) CancelItemReturnsOnCall(i int, result1 error) {
 	fake.cancelItemReturnsOnCall[i] = struct {
 		result1 error
 	}{result1}
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrders(arg1 string, arg2 int) ([]datatypes.Billing_Order, error) {
+	fake.getAccountAllBillingOrdersMutex.Lock()
+	ret, specificReturn := fake.getAccountAllBillingOrdersReturnsOnCall[len(fake.getAccountAllBillingOrdersArgsForCall)]
+	fake.getAccountAllBillingOrdersArgsForCall = append(fake.getAccountAllBillingOrdersArgsForCall, struct {
+		arg1 string
+		arg2 int
+	}{arg1, arg2})
+	stub := fake.GetAccountAllBillingOrdersStub
+	fakeReturns := fake.getAccountAllBillingOrdersReturns
+	fake.recordInvocation("GetAccountAllBillingOrders", []interface{}{arg1, arg2})
+	fake.getAccountAllBillingOrdersMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersCallCount() int {
+	fake.getAccountAllBillingOrdersMutex.RLock()
+	defer fake.getAccountAllBillingOrdersMutex.RUnlock()
+	return len(fake.getAccountAllBillingOrdersArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersCalls(stub func(string, int) ([]datatypes.Billing_Order, error)) {
+	fake.getAccountAllBillingOrdersMutex.Lock()
+	defer fake.getAccountAllBillingOrdersMutex.Unlock()
+	fake.GetAccountAllBillingOrdersStub = stub
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersArgsForCall(i int) (string, int) {
+	fake.getAccountAllBillingOrdersMutex.RLock()
+	defer fake.getAccountAllBillingOrdersMutex.RUnlock()
+	argsForCall := fake.getAccountAllBillingOrdersArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersReturns(result1 []datatypes.Billing_Order, result2 error) {
+	fake.getAccountAllBillingOrdersMutex.Lock()
+	defer fake.getAccountAllBillingOrdersMutex.Unlock()
+	fake.GetAccountAllBillingOrdersStub = nil
+	fake.getAccountAllBillingOrdersReturns = struct {
+		result1 []datatypes.Billing_Order
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersReturnsOnCall(i int, result1 []datatypes.Billing_Order, result2 error) {
+	fake.getAccountAllBillingOrdersMutex.Lock()
+	defer fake.getAccountAllBillingOrdersMutex.Unlock()
+	fake.GetAccountAllBillingOrdersStub = nil
+	if fake.getAccountAllBillingOrdersReturnsOnCall == nil {
+		fake.getAccountAllBillingOrdersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Billing_Order
+			result2 error
+		})
+	}
+	fake.getAccountAllBillingOrdersReturnsOnCall[i] = struct {
+		result1 []datatypes.Billing_Order
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicenses(arg1 string) ([]datatypes.Software_AccountLicense, error) {
+	fake.getActiveAccountLicensesMutex.Lock()
+	ret, specificReturn := fake.getActiveAccountLicensesReturnsOnCall[len(fake.getActiveAccountLicensesArgsForCall)]
+	fake.getActiveAccountLicensesArgsForCall = append(fake.getActiveAccountLicensesArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetActiveAccountLicensesStub
+	fakeReturns := fake.getActiveAccountLicensesReturns
+	fake.recordInvocation("GetActiveAccountLicenses", []interface{}{arg1})
+	fake.getActiveAccountLicensesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesCallCount() int {
+	fake.getActiveAccountLicensesMutex.RLock()
+	defer fake.getActiveAccountLicensesMutex.RUnlock()
+	return len(fake.getActiveAccountLicensesArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesCalls(stub func(string) ([]datatypes.Software_AccountLicense, error)) {
+	fake.getActiveAccountLicensesMutex.Lock()
+	defer fake.getActiveAccountLicensesMutex.Unlock()
+	fake.GetActiveAccountLicensesStub = stub
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesArgsForCall(i int) string {
+	fake.getActiveAccountLicensesMutex.RLock()
+	defer fake.getActiveAccountLicensesMutex.RUnlock()
+	argsForCall := fake.getActiveAccountLicensesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesReturns(result1 []datatypes.Software_AccountLicense, result2 error) {
+	fake.getActiveAccountLicensesMutex.Lock()
+	defer fake.getActiveAccountLicensesMutex.Unlock()
+	fake.GetActiveAccountLicensesStub = nil
+	fake.getActiveAccountLicensesReturns = struct {
+		result1 []datatypes.Software_AccountLicense
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetActiveAccountLicensesReturnsOnCall(i int, result1 []datatypes.Software_AccountLicense, result2 error) {
+	fake.getActiveAccountLicensesMutex.Lock()
+	defer fake.getActiveAccountLicensesMutex.Unlock()
+	fake.GetActiveAccountLicensesStub = nil
+	if fake.getActiveAccountLicensesReturnsOnCall == nil {
+		fake.getActiveAccountLicensesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Software_AccountLicense
+			result2 error
+		})
+	}
+	fake.getActiveAccountLicensesReturnsOnCall[i] = struct {
+		result1 []datatypes.Software_AccountLicense
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicenses(arg1 string) ([]datatypes.Software_VirtualLicense, error) {
+	fake.getActiveVirtualLicensesMutex.Lock()
+	ret, specificReturn := fake.getActiveVirtualLicensesReturnsOnCall[len(fake.getActiveVirtualLicensesArgsForCall)]
+	fake.getActiveVirtualLicensesArgsForCall = append(fake.getActiveVirtualLicensesArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetActiveVirtualLicensesStub
+	fakeReturns := fake.getActiveVirtualLicensesReturns
+	fake.recordInvocation("GetActiveVirtualLicenses", []interface{}{arg1})
+	fake.getActiveVirtualLicensesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesCallCount() int {
+	fake.getActiveVirtualLicensesMutex.RLock()
+	defer fake.getActiveVirtualLicensesMutex.RUnlock()
+	return len(fake.getActiveVirtualLicensesArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesCalls(stub func(string) ([]datatypes.Software_VirtualLicense, error)) {
+	fake.getActiveVirtualLicensesMutex.Lock()
+	defer fake.getActiveVirtualLicensesMutex.Unlock()
+	fake.GetActiveVirtualLicensesStub = stub
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesArgsForCall(i int) string {
+	fake.getActiveVirtualLicensesMutex.RLock()
+	defer fake.getActiveVirtualLicensesMutex.RUnlock()
+	argsForCall := fake.getActiveVirtualLicensesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesReturns(result1 []datatypes.Software_VirtualLicense, result2 error) {
+	fake.getActiveVirtualLicensesMutex.Lock()
+	defer fake.getActiveVirtualLicensesMutex.Unlock()
+	fake.GetActiveVirtualLicensesStub = nil
+	fake.getActiveVirtualLicensesReturns = struct {
+		result1 []datatypes.Software_VirtualLicense
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetActiveVirtualLicensesReturnsOnCall(i int, result1 []datatypes.Software_VirtualLicense, result2 error) {
+	fake.getActiveVirtualLicensesMutex.Lock()
+	defer fake.getActiveVirtualLicensesMutex.Unlock()
+	fake.GetActiveVirtualLicensesStub = nil
+	if fake.getActiveVirtualLicensesReturnsOnCall == nil {
+		fake.getActiveVirtualLicensesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Software_VirtualLicense
+			result2 error
+		})
+	}
+	fake.getActiveVirtualLicensesReturnsOnCall[i] = struct {
+		result1 []datatypes.Software_VirtualLicense
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) GetBandwidthPoolServers(arg1 int) (int, error) {
@@ -718,6 +964,70 @@ func (fake *FakeAccountManager) GetItemDetailReturnsOnCall(i int, result1 dataty
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetSummary(arg1 string) (datatypes.Account, error) {
+	fake.getSummaryMutex.Lock()
+	ret, specificReturn := fake.getSummaryReturnsOnCall[len(fake.getSummaryArgsForCall)]
+	fake.getSummaryArgsForCall = append(fake.getSummaryArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetSummaryStub
+	fakeReturns := fake.getSummaryReturns
+	fake.recordInvocation("GetSummary", []interface{}{arg1})
+	fake.getSummaryMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetSummaryCallCount() int {
+	fake.getSummaryMutex.RLock()
+	defer fake.getSummaryMutex.RUnlock()
+	return len(fake.getSummaryArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetSummaryCalls(stub func(string) (datatypes.Account, error)) {
+	fake.getSummaryMutex.Lock()
+	defer fake.getSummaryMutex.Unlock()
+	fake.GetSummaryStub = stub
+}
+
+func (fake *FakeAccountManager) GetSummaryArgsForCall(i int) string {
+	fake.getSummaryMutex.RLock()
+	defer fake.getSummaryMutex.RUnlock()
+	argsForCall := fake.getSummaryArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) GetSummaryReturns(result1 datatypes.Account, result2 error) {
+	fake.getSummaryMutex.Lock()
+	defer fake.getSummaryMutex.Unlock()
+	fake.GetSummaryStub = nil
+	fake.getSummaryReturns = struct {
+		result1 datatypes.Account
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetSummaryReturnsOnCall(i int, result1 datatypes.Account, result2 error) {
+	fake.getSummaryMutex.Lock()
+	defer fake.getSummaryMutex.Unlock()
+	fake.GetSummaryStub = nil
+	if fake.getSummaryReturnsOnCall == nil {
+		fake.getSummaryReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Account
+			result2 error
+		})
+	}
+	fake.getSummaryReturnsOnCall[i] = struct {
+		result1 datatypes.Account
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAccountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
 	fake.summaryByDatacenterMutex.Lock()
 	ret, specificReturn := fake.summaryByDatacenterReturnsOnCall[len(fake.summaryByDatacenterArgsForCall)]
@@ -779,6 +1089,12 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.invocationsMutex.RUnlock()
 	fake.cancelItemMutex.RLock()
 	defer fake.cancelItemMutex.RUnlock()
+	fake.getAccountAllBillingOrdersMutex.RLock()
+	defer fake.getAccountAllBillingOrdersMutex.RUnlock()
+	fake.getActiveAccountLicensesMutex.RLock()
+	defer fake.getActiveAccountLicensesMutex.RUnlock()
+	fake.getActiveVirtualLicensesMutex.RLock()
+	defer fake.getActiveVirtualLicensesMutex.RUnlock()
 	fake.getBandwidthPoolServersMutex.RLock()
 	defer fake.getBandwidthPoolServersMutex.RUnlock()
 	fake.getBandwidthPoolsMutex.RLock()
@@ -795,6 +1111,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getInvoicesMutex.RUnlock()
 	fake.getItemDetailMutex.RLock()
 	defer fake.getItemDetailMutex.RUnlock()
+	fake.getSummaryMutex.RLock()
+	defer fake.getSummaryMutex.RUnlock()
 	fake.summaryByDatacenterMutex.RLock()
 	defer fake.summaryByDatacenterMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}

@@ -72,6 +72,18 @@ var _ = Describe("autoscale scale", func() {
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '[--up]', '[--down]' are exclusive"))
 			})
+
+			It("Set command with --amount data as float", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456", "--amount=1.1", "--by", "--up", "--down")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring(`invalid value "1.1" for flag -amount: parse error`))
+			})
+
+			It("Set command with --amount data as string", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456", "--amount=abcde", "--by", "--up", "--down")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring(`invalid value "abcde" for flag -amount: parse error`))
+			})
 		})
 
 		Context("Scale method returns error", func() {

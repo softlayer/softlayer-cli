@@ -43,6 +43,15 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"account-item-detail": func(c *cli.Context) error {
 			return NewItemDetailCommand(ui, accountManager).Run(c)
 		},
+		"account-licenses": func(c *cli.Context) error {
+			return NewLicensesCommand(ui, accountManager).Run(c)
+		},
+		"account-orders": func(c *cli.Context) error {
+			return NewOrdersCommand(ui, accountManager).Run(c)
+		},
+		"account-summary": func(c *cli.Context) error {
+			return NewSummaryCommand(ui, accountManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -71,6 +80,9 @@ func AccountMetaData() cli.Command {
 			EventDetailMetaData(),
 			InvoicesMetaData(),
 			ItemDetailMetaData(),
+			LicensesMetaData(),
+			OrdersMetaData(),
+			SummaryMetaData(),
 		},
 	}
 }
