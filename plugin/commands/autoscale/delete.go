@@ -6,6 +6,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -34,6 +35,17 @@ func (cmd *DeleteCommand) Run(c *cli.Context) error {
 		return slErr.NewInvalidSoftlayerIdInputError("Autoscale Group ID")
 	}
 
+	if !c.IsSet("f") && !c.IsSet("force") {
+		confirm, err := cmd.UI.Confirm(T("This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?", map[string]interface{}{"autoScaleGroupId": autoScaleGroupId}))
+		if err != nil {
+			return cli.NewExitError(err.Error(), 1)
+		}
+		if !confirm {
+			cmd.UI.Print(T("Aborted."))
+			return nil
+		}
+	}
+
 	response, err := cmd.AutoScaleManager.Delete(autoScaleGroupId)
 	if err != nil {
 		return cli.NewExitError(T("Failed to delete AutoScale Group.\n")+err.Error(), 2)
@@ -55,6 +67,8 @@ func AutoScaleDeleteMetaData() cli.Command {
 
 EXAMPLE: 
    ${COMMAND_NAME} sl autoscale delete 123456`),
-		Flags: []cli.Flag{},
+		Flags: []cli.Flag{
+			metadata.ForceFlag(),
+		},
 	}
 }

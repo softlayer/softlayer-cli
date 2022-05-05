@@ -53,9 +53,34 @@ var _ = Describe("autoscale delete", func() {
 				fakeAutoScaleManager.DeleteReturns(false, errors.New("Failed to delete Auto Scale Group."))
 			})
 			It("Failed delete scale group", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCommand(cliCommand, "123456", "-f")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to delete Auto Scale Group."))
+			})
+		})
+
+		Context("Return error", func() {
+			BeforeEach(func() {
+				fakeUI.Inputs("abcde")
+			})
+			It("Cancel with invalid input", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("input must be 'y', 'n', 'yes' or 'no'"))
+			})
+		})
+
+		Context("Return no error", func() {
+			BeforeEach(func() {
+				fakeAutoScaleManager.DeleteReturns(true, nil)
+				fakeUI.Inputs("y")
+			})
+
+			It("Delete scale group", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Auto Scale Group was deleted successfully"))
 			})
 		})
 
@@ -64,11 +89,23 @@ var _ = Describe("autoscale delete", func() {
 				fakeAutoScaleManager.DeleteReturns(true, nil)
 			})
 
-			It("Delete scale group", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+			It("Delete scale group without confirmation", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Auto Scale Group was deleted successfully"))
+			})
+		})
+
+		Context("Return no error", func() {
+			BeforeEach(func() {
+				fakeUI.Inputs("n")
+			})
+
+			It("Cancel", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
 			})
 		})
 	})
