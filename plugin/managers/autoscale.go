@@ -13,6 +13,8 @@ type AutoScaleManager interface {
 	GetLogsScaleGroup(id int, mask string, dateFilter string) ([]datatypes.Scale_Group_Log, error)
 	GetScaleGroup(id int, mask string) (datatypes.Scale_Group, error)
 	ListScaleGroups(mask string) ([]datatypes.Scale_Group, error)
+	Scale(id int, delta int) ([]datatypes.Scale_Member, error)
+	ScaleTo(id int, delta int) ([]datatypes.Scale_Member, error)
 }
 
 type autoScaleManager struct {
@@ -80,4 +82,18 @@ func (as autoScaleManager) ListScaleGroups(mask string) ([]datatypes.Scale_Group
 		mask = "mask[id,cooldown,createDate,maximumMemberCount,minimumMemberCount,name,virtualGuestMemberTemplate,status,virtualGuestMembers]"
 	}
 	return as.AccountService.Mask(mask).GetScaleGroups()
+}
+
+//Scale this group up or down by the amount given.
+//id: Auto Sacale Group Id
+//delta: amount given
+func (as autoScaleManager) Scale(id int, delta int) ([]datatypes.Scale_Member, error) {
+	return as.AutoScaleService.Id(id).Scale(&delta)
+}
+
+//Scale this group up or down to the number given.
+//id: Auto Sacale Group Id
+//delta: amount given
+func (as autoScaleManager) ScaleTo(id int, delta int) ([]datatypes.Scale_Member, error) {
+	return as.AutoScaleService.Id(id).ScaleTo(&delta)
 }
