@@ -74,11 +74,6 @@ var _ = Describe("Account shows Summary ", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "275246.130000""`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "Upcoming Invoice","`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "3052.870000""`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(``))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(``))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(``))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(``))
-				
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
