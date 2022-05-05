@@ -25,6 +25,7 @@ type AccountManager interface {
 	GetActiveVirtualLicenses(mask string) ([]datatypes.Software_VirtualLicense, error)
 	GetActiveAccountLicenses(mask string) ([]datatypes.Software_AccountLicense, error)
 	GetAccountAllBillingOrders(mask string, limit int) ([]datatypes.Billing_Order, error)
+	GetSummary(mask string) (datatypes.Account, error)
 }
 
 type accountManager struct {
@@ -313,4 +314,12 @@ func (a accountManager) GetAccountAllBillingOrders(mask string, limit int) ([]da
 	filters = append(filters, filter.Path("id").OrderBy("DESC"))
 
 	return BillingOrderService.Mask(mask).Filter(filters.Build()).Limit(limit).GetAllObjects()
+}
+
+/*
+Gets a SoftLayer_Account record.
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getObject/
+*/
+func (a accountManager) GetSummary(mask string) (datatypes.Account, error) {
+	return a.AccountService.Mask(mask).GetObject()
 }

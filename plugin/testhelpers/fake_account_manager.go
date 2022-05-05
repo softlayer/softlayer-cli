@@ -170,6 +170,19 @@ type FakeAccountManager struct {
 		result1 datatypes.Billing_Item
 		result2 error
 	}
+	GetSummaryStub        func(string) (datatypes.Account, error)
+	getSummaryMutex       sync.RWMutex
+	getSummaryArgsForCall []struct {
+		arg1 string
+	}
+	getSummaryReturns struct {
+		result1 datatypes.Account
+		result2 error
+	}
+	getSummaryReturnsOnCall map[int]struct {
+		result1 datatypes.Account
+		result2 error
+	}
 	SummaryByDatacenterStub        func() (map[string]map[string]int, error)
 	summaryByDatacenterMutex       sync.RWMutex
 	summaryByDatacenterArgsForCall []struct {
@@ -951,6 +964,70 @@ func (fake *FakeAccountManager) GetItemDetailReturnsOnCall(i int, result1 dataty
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetSummary(arg1 string) (datatypes.Account, error) {
+	fake.getSummaryMutex.Lock()
+	ret, specificReturn := fake.getSummaryReturnsOnCall[len(fake.getSummaryArgsForCall)]
+	fake.getSummaryArgsForCall = append(fake.getSummaryArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetSummaryStub
+	fakeReturns := fake.getSummaryReturns
+	fake.recordInvocation("GetSummary", []interface{}{arg1})
+	fake.getSummaryMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetSummaryCallCount() int {
+	fake.getSummaryMutex.RLock()
+	defer fake.getSummaryMutex.RUnlock()
+	return len(fake.getSummaryArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetSummaryCalls(stub func(string) (datatypes.Account, error)) {
+	fake.getSummaryMutex.Lock()
+	defer fake.getSummaryMutex.Unlock()
+	fake.GetSummaryStub = stub
+}
+
+func (fake *FakeAccountManager) GetSummaryArgsForCall(i int) string {
+	fake.getSummaryMutex.RLock()
+	defer fake.getSummaryMutex.RUnlock()
+	argsForCall := fake.getSummaryArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) GetSummaryReturns(result1 datatypes.Account, result2 error) {
+	fake.getSummaryMutex.Lock()
+	defer fake.getSummaryMutex.Unlock()
+	fake.GetSummaryStub = nil
+	fake.getSummaryReturns = struct {
+		result1 datatypes.Account
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetSummaryReturnsOnCall(i int, result1 datatypes.Account, result2 error) {
+	fake.getSummaryMutex.Lock()
+	defer fake.getSummaryMutex.Unlock()
+	fake.GetSummaryStub = nil
+	if fake.getSummaryReturnsOnCall == nil {
+		fake.getSummaryReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Account
+			result2 error
+		})
+	}
+	fake.getSummaryReturnsOnCall[i] = struct {
+		result1 datatypes.Account
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAccountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
 	fake.summaryByDatacenterMutex.Lock()
 	ret, specificReturn := fake.summaryByDatacenterReturnsOnCall[len(fake.summaryByDatacenterArgsForCall)]
@@ -1034,6 +1111,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getInvoicesMutex.RUnlock()
 	fake.getItemDetailMutex.RLock()
 	defer fake.getItemDetailMutex.RUnlock()
+	fake.getSummaryMutex.RLock()
+	defer fake.getSummaryMutex.RUnlock()
 	fake.summaryByDatacenterMutex.RLock()
 	defer fake.summaryByDatacenterMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
