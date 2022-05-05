@@ -24,6 +24,7 @@ type AccountManager interface {
 	GetItemDetail(identifier int, mask string) (datatypes.Billing_Item, error)
 	GetActiveVirtualLicenses(mask string) ([]datatypes.Software_VirtualLicense, error)
 	GetActiveAccountLicenses(mask string) ([]datatypes.Software_AccountLicense, error)
+	GetAccountAllBillingOrders(mask string, limit int) ([]datatypes.Billing_Order, error)
 }
 
 type accountManager struct {
@@ -300,4 +301,16 @@ func (a accountManager) GetActiveAccountLicenses(mask string) ([]datatypes.Softw
 		}
 	}
 	return resourceList, nil
+}
+
+/*
+Gets all billing orders for your account
+https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Order/getAllObjects/
+*/
+func (a accountManager) GetAccountAllBillingOrders(mask string, limit int) ([]datatypes.Billing_Order, error) {
+	BillingOrderService := services.GetBillingOrderService(a.Session)
+	filters := filter.New()
+	filters = append(filters, filter.Path("id").OrderBy("DESC"))
+
+	return BillingOrderService.Mask(mask).Filter(filters.Build()).Limit(limit).GetAllObjects()
 }

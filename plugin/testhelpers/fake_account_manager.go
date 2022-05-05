@@ -20,6 +20,20 @@ type FakeAccountManager struct {
 	cancelItemReturnsOnCall map[int]struct {
 		result1 error
 	}
+	GetAccountAllBillingOrdersStub        func(string, int) ([]datatypes.Billing_Order, error)
+	getAccountAllBillingOrdersMutex       sync.RWMutex
+	getAccountAllBillingOrdersArgsForCall []struct {
+		arg1 string
+		arg2 int
+	}
+	getAccountAllBillingOrdersReturns struct {
+		result1 []datatypes.Billing_Order
+		result2 error
+	}
+	getAccountAllBillingOrdersReturnsOnCall map[int]struct {
+		result1 []datatypes.Billing_Order
+		result2 error
+	}
 	GetActiveAccountLicensesStub        func(string) ([]datatypes.Software_AccountLicense, error)
 	getActiveAccountLicensesMutex       sync.RWMutex
 	getActiveAccountLicensesArgsForCall []struct {
@@ -231,6 +245,71 @@ func (fake *FakeAccountManager) CancelItemReturnsOnCall(i int, result1 error) {
 	fake.cancelItemReturnsOnCall[i] = struct {
 		result1 error
 	}{result1}
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrders(arg1 string, arg2 int) ([]datatypes.Billing_Order, error) {
+	fake.getAccountAllBillingOrdersMutex.Lock()
+	ret, specificReturn := fake.getAccountAllBillingOrdersReturnsOnCall[len(fake.getAccountAllBillingOrdersArgsForCall)]
+	fake.getAccountAllBillingOrdersArgsForCall = append(fake.getAccountAllBillingOrdersArgsForCall, struct {
+		arg1 string
+		arg2 int
+	}{arg1, arg2})
+	stub := fake.GetAccountAllBillingOrdersStub
+	fakeReturns := fake.getAccountAllBillingOrdersReturns
+	fake.recordInvocation("GetAccountAllBillingOrders", []interface{}{arg1, arg2})
+	fake.getAccountAllBillingOrdersMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersCallCount() int {
+	fake.getAccountAllBillingOrdersMutex.RLock()
+	defer fake.getAccountAllBillingOrdersMutex.RUnlock()
+	return len(fake.getAccountAllBillingOrdersArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersCalls(stub func(string, int) ([]datatypes.Billing_Order, error)) {
+	fake.getAccountAllBillingOrdersMutex.Lock()
+	defer fake.getAccountAllBillingOrdersMutex.Unlock()
+	fake.GetAccountAllBillingOrdersStub = stub
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersArgsForCall(i int) (string, int) {
+	fake.getAccountAllBillingOrdersMutex.RLock()
+	defer fake.getAccountAllBillingOrdersMutex.RUnlock()
+	argsForCall := fake.getAccountAllBillingOrdersArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersReturns(result1 []datatypes.Billing_Order, result2 error) {
+	fake.getAccountAllBillingOrdersMutex.Lock()
+	defer fake.getAccountAllBillingOrdersMutex.Unlock()
+	fake.GetAccountAllBillingOrdersStub = nil
+	fake.getAccountAllBillingOrdersReturns = struct {
+		result1 []datatypes.Billing_Order
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetAccountAllBillingOrdersReturnsOnCall(i int, result1 []datatypes.Billing_Order, result2 error) {
+	fake.getAccountAllBillingOrdersMutex.Lock()
+	defer fake.getAccountAllBillingOrdersMutex.Unlock()
+	fake.GetAccountAllBillingOrdersStub = nil
+	if fake.getAccountAllBillingOrdersReturnsOnCall == nil {
+		fake.getAccountAllBillingOrdersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Billing_Order
+			result2 error
+		})
+	}
+	fake.getAccountAllBillingOrdersReturnsOnCall[i] = struct {
+		result1 []datatypes.Billing_Order
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) GetActiveAccountLicenses(arg1 string) ([]datatypes.Software_AccountLicense, error) {
@@ -933,6 +1012,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.invocationsMutex.RUnlock()
 	fake.cancelItemMutex.RLock()
 	defer fake.cancelItemMutex.RUnlock()
+	fake.getAccountAllBillingOrdersMutex.RLock()
+	defer fake.getAccountAllBillingOrdersMutex.RUnlock()
 	fake.getActiveAccountLicensesMutex.RLock()
 	defer fake.getActiveAccountLicensesMutex.RUnlock()
 	fake.getActiveVirtualLicensesMutex.RLock()
