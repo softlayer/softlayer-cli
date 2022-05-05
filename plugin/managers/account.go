@@ -21,6 +21,10 @@ type AccountManager interface {
 	GetInvoiceDetail(identifier int, mask string) ([]datatypes.Billing_Invoice_Item, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 	CancelItem(identifier int) error
+	GetItemDetail(identifier int, mask string) (datatypes.Billing_Item, error)
+	GetActiveVirtualLicenses(mask string) ([]datatypes.Software_VirtualLicense, error)
+	GetActiveAccountLicenses(mask string) ([]datatypes.Software_AccountLicense, error)
+	GetAccountAllBillingOrders(mask string, limit int) ([]datatypes.Billing_Order, error)
 }
 
 type accountManager struct {
@@ -160,14 +164,14 @@ func (a accountManager) GetEvents(typeEvent string, mask string, dateFilter stri
 	filters = append(filters, filter.Path("id").OrderBy("ASC"))
 	filters = append(filters, filter.Path("notificationOccurrenceEventType.keyName").Eq(typeEvent))
 	if dateFilter != "" {
-		if typeEvent == "PLANNED"{
+		if typeEvent == "PLANNED" {
 			filters = append(filters, filter.Path("endDate").DateAfter(dateFilter))
 		}
-		if typeEvent == "UNPLANNED_INCIDENT"{
+		if typeEvent == "UNPLANNED_INCIDENT" {
 			filters = append(filters, filter.Path("modifyDate").DateAfter(dateFilter))
 		}
 	}
-	if typeEvent == "ANNOUNCEMENT"{
+	if typeEvent == "ANNOUNCEMENT" {
 		filters = append(filters, filter.Path("statusCode.keyName").Eq("PUBLISHED"))
 	}
 
@@ -184,7 +188,7 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Notification_Occurrence_
 */
 func (a accountManager) GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error) {
 	NotificationOccurrenceEventService := services.GetNotificationOccurrenceEventService(a.Session)
-	
+
 	resourceList, err := NotificationOccurrenceEventService.Mask(mask).Id(identifier).GetObject()
 	if err != nil {
 		return datatypes.Notification_Occurrence_Event{}, err
@@ -244,4 +248,69 @@ func (a accountManager) CancelItem(identifier int) error {
 
 	_, err := BillingItemService.Mask(mask).Id(identifier).CancelItem(&CancelImmediately, &cancelAssociatedBillingItems, &Reason, &Note)
 	return err
+}
+
+/*
+Gets the detail of a item
+https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Item/getObject/
+*/
+func (a accountManager) GetItemDetail(identifier int, mask string) (datatypes.Billing_Item, error) {
+	BillingItemService := services.GetBillingItemService(a.Session)
+	return BillingItemService.Mask(mask).Id(identifier).GetObject()
+}
+
+/*
+Gets virtual software licenses controlled by an account
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getActiveVirtualLicenses/
+*/
+func (a accountManager) GetActiveVirtualLicenses(mask string) ([]datatypes.Software_VirtualLicense, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("activeVirtualLicenses.id").OrderBy("ASC"))
+	i := 0
+	resourceList := []datatypes.Software_VirtualLicense{}
+	for {
+		resp, err := a.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetActiveVirtualLicenses()
+		i++
+		if err != nil {
+			return []datatypes.Software_VirtualLicense{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
+	}
+	return resourceList, nil
+}
+
+/*
+Gets active account software licenses owned by an account
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getActiveVirtualLicenses/
+*/
+func (a accountManager) GetActiveAccountLicenses(mask string) ([]datatypes.Software_AccountLicense, error) {
+	i := 0
+	resourceList := []datatypes.Software_AccountLicense{}
+	for {
+		resp, err := a.AccountService.Mask(mask).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetActiveAccountLicenses()
+		i++
+		if err != nil {
+			return []datatypes.Software_AccountLicense{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
+	}
+	return resourceList, nil
+}
+
+/*
+Gets all billing orders for your account
+https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Order/getAllObjects/
+*/
+func (a accountManager) GetAccountAllBillingOrders(mask string, limit int) ([]datatypes.Billing_Order, error) {
+	BillingOrderService := services.GetBillingOrderService(a.Session)
+	filters := filter.New()
+	filters = append(filters, filter.Path("id").OrderBy("DESC"))
+
+	return BillingOrderService.Mask(mask).Filter(filters.Build()).Limit(limit).GetAllObjects()
 }
