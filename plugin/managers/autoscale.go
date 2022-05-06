@@ -15,6 +15,7 @@ type AutoScaleManager interface {
 	ListScaleGroups(mask string) ([]datatypes.Scale_Group, error)
 	Scale(id int, delta int) ([]datatypes.Scale_Member, error)
 	ScaleTo(id int, delta int) ([]datatypes.Scale_Member, error)
+	Delete(id int) (bool, error)
 }
 
 type autoScaleManager struct {
@@ -96,4 +97,10 @@ func (as autoScaleManager) Scale(id int, delta int) ([]datatypes.Scale_Member, e
 //delta: amount given
 func (as autoScaleManager) ScaleTo(id int, delta int) ([]datatypes.Scale_Member, error) {
 	return as.AutoScaleService.Id(id).ScaleTo(&delta)
+}
+
+//Delete this group and members.
+//id: Auto Sacale Group Id
+func (as autoScaleManager) Delete(id int) (bool, error) {
+	return as.AutoScaleService.Id(id).ForceDeleteObject()
 }

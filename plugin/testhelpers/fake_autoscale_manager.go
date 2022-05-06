@@ -9,6 +9,19 @@ import (
 )
 
 type FakeAutoScaleManager struct {
+	DeleteStub        func(int) (bool, error)
+	deleteMutex       sync.RWMutex
+	deleteArgsForCall []struct {
+		arg1 int
+	}
+	deleteReturns struct {
+		result1 bool
+		result2 error
+	}
+	deleteReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	EditScaleGroupStub        func(int, *datatypes.Scale_Group) (bool, error)
 	editScaleGroupMutex       sync.RWMutex
 	editScaleGroupArgsForCall []struct {
@@ -109,6 +122,70 @@ type FakeAutoScaleManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeAutoScaleManager) Delete(arg1 int) (bool, error) {
+	fake.deleteMutex.Lock()
+	ret, specificReturn := fake.deleteReturnsOnCall[len(fake.deleteArgsForCall)]
+	fake.deleteArgsForCall = append(fake.deleteArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteStub
+	fakeReturns := fake.deleteReturns
+	fake.recordInvocation("Delete", []interface{}{arg1})
+	fake.deleteMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAutoScaleManager) DeleteCallCount() int {
+	fake.deleteMutex.RLock()
+	defer fake.deleteMutex.RUnlock()
+	return len(fake.deleteArgsForCall)
+}
+
+func (fake *FakeAutoScaleManager) DeleteCalls(stub func(int) (bool, error)) {
+	fake.deleteMutex.Lock()
+	defer fake.deleteMutex.Unlock()
+	fake.DeleteStub = stub
+}
+
+func (fake *FakeAutoScaleManager) DeleteArgsForCall(i int) int {
+	fake.deleteMutex.RLock()
+	defer fake.deleteMutex.RUnlock()
+	argsForCall := fake.deleteArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAutoScaleManager) DeleteReturns(result1 bool, result2 error) {
+	fake.deleteMutex.Lock()
+	defer fake.deleteMutex.Unlock()
+	fake.DeleteStub = nil
+	fake.deleteReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAutoScaleManager) DeleteReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.deleteMutex.Lock()
+	defer fake.deleteMutex.Unlock()
+	fake.DeleteStub = nil
+	if fake.deleteReturnsOnCall == nil {
+		fake.deleteReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.deleteReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAutoScaleManager) EditScaleGroup(arg1 int, arg2 *datatypes.Scale_Group) (bool, error) {
@@ -569,6 +646,8 @@ func (fake *FakeAutoScaleManager) ScaleToReturnsOnCall(i int, result1 []datatype
 func (fake *FakeAutoScaleManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.deleteMutex.RLock()
+	defer fake.deleteMutex.RUnlock()
 	fake.editScaleGroupMutex.RLock()
 	defer fake.editScaleGroupMutex.RUnlock()
 	fake.getLogsScaleGroupMutex.RLock()
