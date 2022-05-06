@@ -9,6 +9,19 @@ import (
 )
 
 type FakeAutoScaleManager struct {
+	CreateScaleGroupStub        func(*datatypes.Scale_Group) (datatypes.Scale_Group, error)
+	createScaleGroupMutex       sync.RWMutex
+	createScaleGroupArgsForCall []struct {
+		arg1 *datatypes.Scale_Group
+	}
+	createScaleGroupReturns struct {
+		result1 datatypes.Scale_Group
+		result2 error
+	}
+	createScaleGroupReturnsOnCall map[int]struct {
+		result1 datatypes.Scale_Group
+		result2 error
+	}
 	DeleteStub        func(int) (bool, error)
 	deleteMutex       sync.RWMutex
 	deleteArgsForCall []struct {
@@ -34,6 +47,19 @@ type FakeAutoScaleManager struct {
 	}
 	editScaleGroupReturnsOnCall map[int]struct {
 		result1 bool
+		result2 error
+	}
+	GetDatacenterByNameStub        func(string) ([]datatypes.Location, error)
+	getDatacenterByNameMutex       sync.RWMutex
+	getDatacenterByNameArgsForCall []struct {
+		arg1 string
+	}
+	getDatacenterByNameReturns struct {
+		result1 []datatypes.Location
+		result2 error
+	}
+	getDatacenterByNameReturnsOnCall map[int]struct {
+		result1 []datatypes.Location
 		result2 error
 	}
 	GetLogsScaleGroupStub        func(int, string, string) ([]datatypes.Scale_Group_Log, error)
@@ -122,6 +148,70 @@ type FakeAutoScaleManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeAutoScaleManager) CreateScaleGroup(arg1 *datatypes.Scale_Group) (datatypes.Scale_Group, error) {
+	fake.createScaleGroupMutex.Lock()
+	ret, specificReturn := fake.createScaleGroupReturnsOnCall[len(fake.createScaleGroupArgsForCall)]
+	fake.createScaleGroupArgsForCall = append(fake.createScaleGroupArgsForCall, struct {
+		arg1 *datatypes.Scale_Group
+	}{arg1})
+	stub := fake.CreateScaleGroupStub
+	fakeReturns := fake.createScaleGroupReturns
+	fake.recordInvocation("CreateScaleGroup", []interface{}{arg1})
+	fake.createScaleGroupMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAutoScaleManager) CreateScaleGroupCallCount() int {
+	fake.createScaleGroupMutex.RLock()
+	defer fake.createScaleGroupMutex.RUnlock()
+	return len(fake.createScaleGroupArgsForCall)
+}
+
+func (fake *FakeAutoScaleManager) CreateScaleGroupCalls(stub func(*datatypes.Scale_Group) (datatypes.Scale_Group, error)) {
+	fake.createScaleGroupMutex.Lock()
+	defer fake.createScaleGroupMutex.Unlock()
+	fake.CreateScaleGroupStub = stub
+}
+
+func (fake *FakeAutoScaleManager) CreateScaleGroupArgsForCall(i int) *datatypes.Scale_Group {
+	fake.createScaleGroupMutex.RLock()
+	defer fake.createScaleGroupMutex.RUnlock()
+	argsForCall := fake.createScaleGroupArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAutoScaleManager) CreateScaleGroupReturns(result1 datatypes.Scale_Group, result2 error) {
+	fake.createScaleGroupMutex.Lock()
+	defer fake.createScaleGroupMutex.Unlock()
+	fake.CreateScaleGroupStub = nil
+	fake.createScaleGroupReturns = struct {
+		result1 datatypes.Scale_Group
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAutoScaleManager) CreateScaleGroupReturnsOnCall(i int, result1 datatypes.Scale_Group, result2 error) {
+	fake.createScaleGroupMutex.Lock()
+	defer fake.createScaleGroupMutex.Unlock()
+	fake.CreateScaleGroupStub = nil
+	if fake.createScaleGroupReturnsOnCall == nil {
+		fake.createScaleGroupReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Scale_Group
+			result2 error
+		})
+	}
+	fake.createScaleGroupReturnsOnCall[i] = struct {
+		result1 datatypes.Scale_Group
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAutoScaleManager) Delete(arg1 int) (bool, error) {
@@ -249,6 +339,70 @@ func (fake *FakeAutoScaleManager) EditScaleGroupReturnsOnCall(i int, result1 boo
 	}
 	fake.editScaleGroupReturnsOnCall[i] = struct {
 		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAutoScaleManager) GetDatacenterByName(arg1 string) ([]datatypes.Location, error) {
+	fake.getDatacenterByNameMutex.Lock()
+	ret, specificReturn := fake.getDatacenterByNameReturnsOnCall[len(fake.getDatacenterByNameArgsForCall)]
+	fake.getDatacenterByNameArgsForCall = append(fake.getDatacenterByNameArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetDatacenterByNameStub
+	fakeReturns := fake.getDatacenterByNameReturns
+	fake.recordInvocation("GetDatacenterByName", []interface{}{arg1})
+	fake.getDatacenterByNameMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAutoScaleManager) GetDatacenterByNameCallCount() int {
+	fake.getDatacenterByNameMutex.RLock()
+	defer fake.getDatacenterByNameMutex.RUnlock()
+	return len(fake.getDatacenterByNameArgsForCall)
+}
+
+func (fake *FakeAutoScaleManager) GetDatacenterByNameCalls(stub func(string) ([]datatypes.Location, error)) {
+	fake.getDatacenterByNameMutex.Lock()
+	defer fake.getDatacenterByNameMutex.Unlock()
+	fake.GetDatacenterByNameStub = stub
+}
+
+func (fake *FakeAutoScaleManager) GetDatacenterByNameArgsForCall(i int) string {
+	fake.getDatacenterByNameMutex.RLock()
+	defer fake.getDatacenterByNameMutex.RUnlock()
+	argsForCall := fake.getDatacenterByNameArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAutoScaleManager) GetDatacenterByNameReturns(result1 []datatypes.Location, result2 error) {
+	fake.getDatacenterByNameMutex.Lock()
+	defer fake.getDatacenterByNameMutex.Unlock()
+	fake.GetDatacenterByNameStub = nil
+	fake.getDatacenterByNameReturns = struct {
+		result1 []datatypes.Location
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAutoScaleManager) GetDatacenterByNameReturnsOnCall(i int, result1 []datatypes.Location, result2 error) {
+	fake.getDatacenterByNameMutex.Lock()
+	defer fake.getDatacenterByNameMutex.Unlock()
+	fake.GetDatacenterByNameStub = nil
+	if fake.getDatacenterByNameReturnsOnCall == nil {
+		fake.getDatacenterByNameReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Location
+			result2 error
+		})
+	}
+	fake.getDatacenterByNameReturnsOnCall[i] = struct {
+		result1 []datatypes.Location
 		result2 error
 	}{result1, result2}
 }
@@ -646,10 +800,14 @@ func (fake *FakeAutoScaleManager) ScaleToReturnsOnCall(i int, result1 []datatype
 func (fake *FakeAutoScaleManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.createScaleGroupMutex.RLock()
+	defer fake.createScaleGroupMutex.RUnlock()
 	fake.deleteMutex.RLock()
 	defer fake.deleteMutex.RUnlock()
 	fake.editScaleGroupMutex.RLock()
 	defer fake.editScaleGroupMutex.RUnlock()
+	fake.getDatacenterByNameMutex.RLock()
+	defer fake.getDatacenterByNameMutex.RUnlock()
 	fake.getLogsScaleGroupMutex.RLock()
 	defer fake.getLogsScaleGroupMutex.RUnlock()
 	fake.getScaleGroupMutex.RLock()

@@ -16,17 +16,21 @@ type AutoScaleManager interface {
 	Scale(id int, delta int) ([]datatypes.Scale_Member, error)
 	ScaleTo(id int, delta int) ([]datatypes.Scale_Member, error)
 	Delete(id int) (bool, error)
+	CreateScaleGroup(autoScaleTemplate *datatypes.Scale_Group) (datatypes.Scale_Group, error)
+	GetDatacenterByName(name string) ([]datatypes.Location, error)
 }
 
 type autoScaleManager struct {
 	AutoScaleService services.Scale_Group
 	AccountService   services.Account
+	LocationService  services.Location
 }
 
 func NewAutoScaleManager(session *session.Session) *autoScaleManager {
 	return &autoScaleManager{
 		services.GetScaleGroupService(session),
 		services.GetAccountService(session),
+		services.GetLocationService(session),
 	}
 }
 
@@ -103,4 +107,18 @@ func (as autoScaleManager) ScaleTo(id int, delta int) ([]datatypes.Scale_Member,
 //id: Auto Sacale Group Id
 func (as autoScaleManager) Delete(id int) (bool, error) {
 	return as.AutoScaleService.Id(id).ForceDeleteObject()
+}
+
+//Create autoscale group
+//autoScaleTemplate: New Auto Scale Group data
+func (as autoScaleManager) CreateScaleGroup(autoScaleTemplate *datatypes.Scale_Group) (datatypes.Scale_Group, error) {
+	return as.AutoScaleService.CreateObject(autoScaleTemplate)
+}
+
+//Get location using the name as filter
+//name: location name
+func (as autoScaleManager) GetDatacenterByName(name string) ([]datatypes.Location, error) {
+	objectfilter := filter.New()
+	objectfilter = append(objectfilter, filter.Path("name").Eq(name))
+	return as.LocationService.Filter(objectfilter.Build()).GetDatacenters()
 }

@@ -27,6 +27,7 @@ var availableCommands = []string{
 	"autoscale-list",
 	"autoscale-scale",
 	"autoscale-delete",
+	"autoscale-create",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
