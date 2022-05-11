@@ -1,7 +1,6 @@
 package eventlog
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 
@@ -134,7 +133,6 @@ func (cmd *GetCommand) Run(c *cli.Context) error {
 
 		utils.PrintTable(cmd.UI, table, outputFormat)
 	} else {
-		fmt.Println(filter)
 		cmd.UI.Print(T("No logs available for filter {{.filter}}", map[string]interface{}{"filter": filter}))
 	}
 
