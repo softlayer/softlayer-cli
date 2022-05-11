@@ -17,6 +17,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/eventlog"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
@@ -82,6 +83,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl callapi
 	callapiCommands := callapi.GetCommandActionBindings(context, ui, session)
 	for name, action := range callapiCommands {
+		CommandActionBindings[name] = action
+	}
+
+	// ibmcloud sl event-log
+	eventLogCommands := eventlog.GetCommandActionBindings(context, ui, session)
+	for name, action := range eventLogCommands {
 		CommandActionBindings[name] = action
 	}
 
