@@ -17,6 +17,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"event-log-get": func(c *cli.Context) error {
 			return NewGetCommand(ui, eventLogManager).Run(c)
 		},
+		"event-log-types": func(c *cli.Context) error {
+			return NewTypesCommand(ui, eventLogManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -38,6 +41,7 @@ func EventLogMetaData() cli.Command {
 		Usage:       "${COMMAND_NAME} sl event-log",
 		Subcommands: []cli.Command{
 			EventLogGetMetaData(),
+			EventLogTypesMetaData(),
 		},
 	}
 }

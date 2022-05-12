@@ -66,7 +66,7 @@ var _ = Describe("event-log get", func() {
 			BeforeEach(func() {
 				fakeEventLogManager.GetEventLogsReturns([]datatypes.Event_Log{}, errors.New("Failed to get Event Logs."))
 			})
-			It("Failed get scale group logs", func() {
+			It("Failed get event logs", func() {
 				err := testhelpers.RunCommand(cliCommand, "--limit=10")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get Event Logs."))

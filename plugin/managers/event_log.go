@@ -8,6 +8,7 @@ import (
 
 type EventLogManager interface {
 	GetEventLogs(mask string, filter string, limit int) ([]datatypes.Event_Log, error)
+	GetEventLogTypes() ([]string, error)
 }
 
 type eventLogManager struct {
@@ -26,4 +27,9 @@ func NewEventLogManager(session *session.Session) *eventLogManager {
 //limit: limit of event logs
 func (as eventLogManager) GetEventLogs(mask string, filter string, limit int) ([]datatypes.Event_Log, error) {
 	return as.EventLogService.Limit(limit).Filter(filter).Mask(mask).GetAllObjects()
+}
+
+//Get Event Log Types
+func (as eventLogManager) GetEventLogTypes() ([]string, error) {
+	return as.EventLogService.GetAllEventObjectNames()
 }
