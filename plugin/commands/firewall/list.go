@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -23,18 +24,28 @@ func NewListCommand(ui terminal.UI, firewallManager managers.FirewallManager) (c
 	}
 }
 
-
 func FirewallListMetaData() cli.Command {
 	return cli.Command{
 		Category:    "firewall",
 		Name:        "list",
-		Description:  T("List all firewalls on your account"),
-		Usage:       "${COMMAND_NAME} sl firewall list [OPTIONS]",
+		Description: T("List all firewalls on your account"),
+		Usage: T(`${COMMAND_NAME} sl firewall list [OPTIONS]
+
+EXAMPLE: 
+   ${COMMAND_NAME} sl firewall list`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
 	}
 }
 
-
 func (cmd *ListCommand) Run(c *cli.Context) error {
+
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+
 	table := cmd.UI.Table([]string{T("firewall id"), T("type"), T("features"), T("server/vlan id")})
 	fwvlans, err := cmd.FirewallManager.GetFirewalls()
 	if err != nil {
@@ -84,7 +95,8 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 			}
 		}
 	}
-	table.Print()
+
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
 }
 
