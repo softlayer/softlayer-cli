@@ -208,6 +208,8 @@
 "translation": "${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\n例:\n\t${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\t親 SNAPSHOT_ID のスナップショットで重複 VOLUME_ID をリフレッシュします。"},
 {"id": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'",
 "translation": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'"},
+{"id": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list",
+"translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list"},
 {"id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
 "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\n例:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tこのコマンドは、ID 12345678 の IP アドレスを、IP アドレスが 9.111.123.456 であるターゲット・デバイスに割り当てます。"},
 {"id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",

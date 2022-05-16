@@ -208,6 +208,8 @@
 "translation": "${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\n예:\n\t${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\t복제 VOLUME_ID를 해당 상위 SNAPSHOT_ID의 스냅샷으로 새로 고칩니다."},
 {"id": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'",
 "translation": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'"},
+{"id": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list",
+"translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list"},
 {"id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
 "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\n예:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\t이 명령은 ID가 12345678인 IP 주소를 해당 IP 주소가 9.111.123.456인 대상 디바이스에 지정합니다."},
 {"id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
