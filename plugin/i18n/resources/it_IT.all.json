@@ -208,6 +208,8 @@
 "translation": "${COMMAND_NAME} sl file volume-refresh ID_VOLUME ID_ISTANTANEA\n\nESEMPIO\n\t${COMMAND_NAME} sl file volume-refresh ID_VOLUME ID_ISTANTANEA\n\tAggiorna un ID_VOLUME duplicato con un'istantanea dal suo ID_ISTANTANEA principale."},
 {"id": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'",
 "translation": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'"},
+{"id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678",
+"translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678"},
 {"id": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list",
 "translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list"},
 {"id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
