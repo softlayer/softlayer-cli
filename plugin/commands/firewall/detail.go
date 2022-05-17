@@ -8,6 +8,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -23,18 +24,30 @@ func NewDetailCommand(ui terminal.UI, firewallManager managers.FirewallManager) 
 	}
 }
 
-
 func FirewallDetailMetaData() cli.Command {
 	return cli.Command{
 		Category:    "firewall",
 		Name:        "detail",
 		Description: T("Detail information about a firewall"),
-		Usage:       "${COMMAND_NAME} sl firewall detail  IDENTIFIER [OPTIONS]",
+		Usage: T(`${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]
+		
+EXAMPLE: 
+${COMMAND_NAME} sl firewall detail vs:12345
+${COMMAND_NAME} sl firewall detail server:234567
+${COMMAND_NAME} sl firewall detail vlan:345678`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
 	}
 }
 
-
 func (cmd *DetailCommand) Run(c *cli.Context) error {
+
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+
 	if c.NArg() != 1 {
 		return errors.NewInvalidUsageError(T("This command requires one argument."))
 	}
@@ -74,6 +87,6 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 				utils.FormatStringPointer(rule.DestinationIpSubnetMask))
 		}
 	}
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
 }
