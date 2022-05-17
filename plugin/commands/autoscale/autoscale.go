@@ -16,6 +16,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 	securityManager := managers.NewSecurityManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
+		"autoscale-edit": func(c *cli.Context) error {
+			return NewEditCommand(ui, autoScaleManager).Run(c)
+		},
 		"autoscale-tag": func(c *cli.Context) error {
 			return NewTagCommand(ui, autoScaleManager, virtualServerManager).Run(c)
 		},
@@ -27,6 +30,12 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		},
 		"autoscale-list": func(c *cli.Context) error {
 			return NewListCommand(ui, autoScaleManager).Run(c)
+		},
+		"autoscale-scale": func(c *cli.Context) error {
+			return NewScaleCommand(ui, autoScaleManager).Run(c)
+		},
+		"autoscale-delete": func(c *cli.Context) error {
+			return NewDeleteCommand(ui, autoScaleManager).Run(c)
 		},
 	}
 
@@ -48,10 +57,13 @@ func AutoScaleMetaData() cli.Command {
 		Description: T("Classic infrastructure Autoscale Group"),
 		Usage:       "${COMMAND_NAME} sl autoscale",
 		Subcommands: []cli.Command{
+			AutoScaleEditMetaData(),
 			AutoScaleTagMetaData(),
 			AutoScaleLogsMetaData(),
 			AutoScaleDetailMetaData(),
 			AutoScaleListMetaData(),
+			AutoScaleScaleMetaData(),
+			AutoScaleDeleteMetaData(),
 		},
 	}
 }
