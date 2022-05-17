@@ -16,6 +16,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"email-list": func(c *cli.Context) error {
 			return NewListCommand(ui, emailManager).Run(c)
 		},
+		"email-detail": func(c *cli.Context) error {
+			return NewDetailCommand(ui, emailManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -37,6 +40,7 @@ func EmailMetaData() cli.Command {
 		Usage:       "${COMMAND_NAME} sl email",
 		Subcommands: []cli.Command{
 			ListMetaData(),
+			DetailMetaData(),
 		},
 	}
 }

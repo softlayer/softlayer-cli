@@ -12,6 +12,7 @@ type EmailManager interface {
 	GetNetworkMessageDeliveryAccounts(mask string) ([]datatypes.Network_Message_Delivery, error)
 	GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error)
 	GetStatistics(emailId int) ([]datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics, error)
+	GetInstance(emailId int, mask string) (datatypes.Network_Message_Delivery_Email_Sendgrid, error)
 }
 
 type emailManager struct {
@@ -67,4 +68,12 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Network_Message_Delivery
 func (a emailManager) GetStatistics(emailId int) ([]datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics, error) {
 	options := datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics_Options{}
 	return a.EmailService.Id(emailId).GetStatistics(&options)
+}
+
+/*
+Gets a SoftLayer_Network_Message_Delivery_Email_Sendgrid record.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Message_Delivery_Email_Sendgrid/getObject/
+*/
+func (a emailManager) GetInstance(emailId int, mask string) (datatypes.Network_Message_Delivery_Email_Sendgrid, error) {
+	return a.EmailService.Mask(mask).Id(emailId).GetObject()
 }
