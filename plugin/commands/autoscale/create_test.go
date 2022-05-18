@@ -55,7 +55,7 @@ var _ = Describe("autoscale create", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeAutoScaleManager.GetDatacenterByNameReturns([]datatypes.Location{}, errors.New("Failed to get Datacenters."))
+				fakeAutoScaleManager.GetDatacenterByNameReturns([]datatypes.Location{}, errors.New("Failed to get Datacenter"))
 			})
 
 			It("Failed get datacenter", func() {
