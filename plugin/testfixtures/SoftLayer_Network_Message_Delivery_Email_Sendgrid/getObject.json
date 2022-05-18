@@ -1,0 +1,48 @@
+{
+    "accountId": 123456,
+    "createDate": "2020-07-06T10:29:11-06:00",
+    "id": 295324,
+    "modifyDate": "2021-05-17T16:35:55-06:00",
+    "password": "Test123456",
+    "typeId": 21,
+    "username": "test.test2@ie.ibm.com",
+    "vendorId": 1,
+    "billingItem": {
+        "allowCancellationFlag": 1,
+        "cancellationDate": null,
+        "categoryCode": "network_message_delivery",
+        "createDate": "2020-07-06T10:28:51-06:00",
+        "cycleStartDate": "2022-05-03T23:10:01-06:00",
+        "description": "Free Package",
+        "id": 695735054,
+        "laborFee": "0",
+        "laborFeeTaxRate": "0",
+        "lastBillDate": "2022-05-03T23:10:01-06:00",
+        "modifyDate": "2022-05-03T23:10:01-06:00",
+        "nextBillDate": "2022-06-03T23:00:00-06:00",
+        "notes": "test.test2@ie.ibm.com",
+        "oneTimeFee": "0",
+        "oneTimeFeeTaxRate": "0",
+        "orderItemId": 696966402,
+        "parentId": null,
+        "recurringFee": "0",
+        "recurringFeeTaxRate": "0",
+        "recurringMonths": 1,
+        "serviceProviderId": 1,
+        "setupFee": "0",
+        "setupFeeTaxRate": "0"
+    },
+    "type": {
+        "description": "Delivery of messages through e-mail",
+        "id": 21,
+        "keyName": "EMAIL",
+        "name": "Email"
+    },
+    "vendor": {
+        "id": 1,
+        "keyName": "SENDGRID",
+        "name": "SendGrid"
+    },
+    "emailAddress": "test.test3@ie.ibm.com",
+    "smtpAccess": "1"
+}

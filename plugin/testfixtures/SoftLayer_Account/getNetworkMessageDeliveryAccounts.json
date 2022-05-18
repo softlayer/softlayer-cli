@@ -1,0 +1,48 @@
+[
+    {
+        "accountId": 123456,
+        "createDate": "2020-07-06T10:29:11-06:00",
+        "id": 295324,
+        "modifyDate": "2021-05-17T16:35:55-06:00",
+        "password": "Test123456",
+        "typeId": 21,
+        "username": "test.test2@ibm.com",
+        "vendorId": 1,
+        "type": {
+            "description": "Delivery of messages through e-mail",
+            "id": 21,
+            "keyName": "EMAIL",
+            "name": "Email"
+        },
+        "vendor": {
+            "id": 1,
+            "keyName": "SENDGRID",
+            "name": "SendGrid"
+        },
+        "emailAddress": "test.test3@ibm.com",
+        "smtpAccess": "1"
+    },
+    {
+        "accountId": 1234567,
+        "createDate": "2020-07-06T10:29:11-06:00",
+        "id": 295324,
+        "modifyDate": "2021-05-17T16:35:55-06:00",
+        "password": "Test123456",
+        "typeId": 21,
+        "username": "test.test5@ibm.com",
+        "vendorId": 1,
+        "type": {
+            "description": "Delivery of messages through e-mail",
+            "id": 21,
+            "keyName": "EMAIL",
+            "name": "Email"
+        },
+        "vendor": {
+            "id": 1,
+            "keyName": "SENDGRID",
+            "name": "SendGrid"
+        },
+        "emailAddress": "test.test6@ibm.com",
+        "smtpAccess": "1"
+    }
+]
