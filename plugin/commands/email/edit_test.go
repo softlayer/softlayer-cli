@@ -57,12 +57,12 @@ var _ = Describe("Edit email", func() {
 			It("return ok email account updated", func() {
 				err := testhelpers.RunCommand(cliCommand, "123", "--username", "newusername", "--password", "xxxxxxxxxxxx")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring(""))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Email account 123 was updated."))
 			})
 			It("return ok email account updated", func() {
 				err := testhelpers.RunCommand(cliCommand, "123", "--email", "newemail@test.com")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring(""))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Email address 123 was updated."))
 			})
 		})
 	})
