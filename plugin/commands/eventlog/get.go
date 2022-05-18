@@ -36,11 +36,10 @@ func (cmd *GetCommand) Run(c *cli.Context) error {
 
 	limit := 50
 	if c.IsSet("limit") {
-		newLimit, err := strconv.Atoi(c.String("limit"))
+		limit, err = strconv.Atoi(c.String("limit"))
 		if err != nil {
 			return errors.NewInvalidSoftlayerIdInputError("limit")
 		}
-		limit = newLimit
 	}
 
 	dateMin := ""
