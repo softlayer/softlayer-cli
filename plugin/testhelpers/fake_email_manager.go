@@ -9,6 +9,18 @@ import (
 )
 
 type FakeEmailManager struct {
+	EditObjectStub        func(int, datatypes.Network_Message_Delivery) error
+	editObjectMutex       sync.RWMutex
+	editObjectArgsForCall []struct {
+		arg1 int
+		arg2 datatypes.Network_Message_Delivery
+	}
+	editObjectReturns struct {
+		result1 error
+	}
+	editObjectReturnsOnCall map[int]struct {
+		result1 error
+	}
 	GetAccountOverviewStub        func(int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error)
 	getAccountOverviewMutex       sync.RWMutex
 	getAccountOverviewArgsForCall []struct {
@@ -62,8 +74,82 @@ type FakeEmailManager struct {
 		result1 []datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics
 		result2 error
 	}
+	UpdateEmailStub        func(int, string) error
+	updateEmailMutex       sync.RWMutex
+	updateEmailArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	updateEmailReturns struct {
+		result1 error
+	}
+	updateEmailReturnsOnCall map[int]struct {
+		result1 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeEmailManager) EditObject(arg1 int, arg2 datatypes.Network_Message_Delivery) error {
+	fake.editObjectMutex.Lock()
+	ret, specificReturn := fake.editObjectReturnsOnCall[len(fake.editObjectArgsForCall)]
+	fake.editObjectArgsForCall = append(fake.editObjectArgsForCall, struct {
+		arg1 int
+		arg2 datatypes.Network_Message_Delivery
+	}{arg1, arg2})
+	stub := fake.EditObjectStub
+	fakeReturns := fake.editObjectReturns
+	fake.recordInvocation("EditObject", []interface{}{arg1, arg2})
+	fake.editObjectMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeEmailManager) EditObjectCallCount() int {
+	fake.editObjectMutex.RLock()
+	defer fake.editObjectMutex.RUnlock()
+	return len(fake.editObjectArgsForCall)
+}
+
+func (fake *FakeEmailManager) EditObjectCalls(stub func(int, datatypes.Network_Message_Delivery) error) {
+	fake.editObjectMutex.Lock()
+	defer fake.editObjectMutex.Unlock()
+	fake.EditObjectStub = stub
+}
+
+func (fake *FakeEmailManager) EditObjectArgsForCall(i int) (int, datatypes.Network_Message_Delivery) {
+	fake.editObjectMutex.RLock()
+	defer fake.editObjectMutex.RUnlock()
+	argsForCall := fake.editObjectArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeEmailManager) EditObjectReturns(result1 error) {
+	fake.editObjectMutex.Lock()
+	defer fake.editObjectMutex.Unlock()
+	fake.EditObjectStub = nil
+	fake.editObjectReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeEmailManager) EditObjectReturnsOnCall(i int, result1 error) {
+	fake.editObjectMutex.Lock()
+	defer fake.editObjectMutex.Unlock()
+	fake.EditObjectStub = nil
+	if fake.editObjectReturnsOnCall == nil {
+		fake.editObjectReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.editObjectReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeEmailManager) GetAccountOverview(arg1 int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error) {
@@ -323,9 +409,73 @@ func (fake *FakeEmailManager) GetStatisticsReturnsOnCall(i int, result1 []dataty
 	}{result1, result2}
 }
 
+func (fake *FakeEmailManager) UpdateEmail(arg1 int, arg2 string) error {
+	fake.updateEmailMutex.Lock()
+	ret, specificReturn := fake.updateEmailReturnsOnCall[len(fake.updateEmailArgsForCall)]
+	fake.updateEmailArgsForCall = append(fake.updateEmailArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.UpdateEmailStub
+	fakeReturns := fake.updateEmailReturns
+	fake.recordInvocation("UpdateEmail", []interface{}{arg1, arg2})
+	fake.updateEmailMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeEmailManager) UpdateEmailCallCount() int {
+	fake.updateEmailMutex.RLock()
+	defer fake.updateEmailMutex.RUnlock()
+	return len(fake.updateEmailArgsForCall)
+}
+
+func (fake *FakeEmailManager) UpdateEmailCalls(stub func(int, string) error) {
+	fake.updateEmailMutex.Lock()
+	defer fake.updateEmailMutex.Unlock()
+	fake.UpdateEmailStub = stub
+}
+
+func (fake *FakeEmailManager) UpdateEmailArgsForCall(i int) (int, string) {
+	fake.updateEmailMutex.RLock()
+	defer fake.updateEmailMutex.RUnlock()
+	argsForCall := fake.updateEmailArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeEmailManager) UpdateEmailReturns(result1 error) {
+	fake.updateEmailMutex.Lock()
+	defer fake.updateEmailMutex.Unlock()
+	fake.UpdateEmailStub = nil
+	fake.updateEmailReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeEmailManager) UpdateEmailReturnsOnCall(i int, result1 error) {
+	fake.updateEmailMutex.Lock()
+	defer fake.updateEmailMutex.Unlock()
+	fake.UpdateEmailStub = nil
+	if fake.updateEmailReturnsOnCall == nil {
+		fake.updateEmailReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.updateEmailReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
+}
+
 func (fake *FakeEmailManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.editObjectMutex.RLock()
+	defer fake.editObjectMutex.RUnlock()
 	fake.getAccountOverviewMutex.RLock()
 	defer fake.getAccountOverviewMutex.RUnlock()
 	fake.getInstanceMutex.RLock()
@@ -334,6 +484,8 @@ func (fake *FakeEmailManager) Invocations() map[string][][]interface{} {
 	defer fake.getNetworkMessageDeliveryAccountsMutex.RUnlock()
 	fake.getStatisticsMutex.RLock()
 	defer fake.getStatisticsMutex.RUnlock()
+	fake.updateEmailMutex.RLock()
+	defer fake.updateEmailMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

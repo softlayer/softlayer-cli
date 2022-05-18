@@ -5,7 +5,6 @@ import (
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
@@ -14,8 +13,8 @@ type EmailManager interface {
 	GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error)
 	GetStatistics(emailId int) ([]datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics, error)
 	GetInstance(emailId int, mask string) (datatypes.Network_Message_Delivery_Email_Sendgrid, error)
-	UpdateEmail(emailId int, emailAddress string) (error)
-	EditObject(emailId int, username string, password string) (error)
+	UpdateEmail(emailId int, emailAddress string) error
+	EditObject(emailId int, templateObject datatypes.Network_Message_Delivery) error
 }
 
 type emailManager struct {
@@ -85,8 +84,8 @@ func (a emailManager) GetInstance(emailId int, mask string) (datatypes.Network_M
 Edits a email adrress from a user.
 https://sldn.softlayer.com/reference/services/SoftLayer_Network_Message_Delivery_Email_Sendgrid/updateEmailAddress/
 */
-func (a emailManager) UpdateEmail(emailId int, emailAddress string) (error) {
-	_, err :=a.EmailService.Id(emailId).UpdateEmailAddress(&emailAddress)
+func (a emailManager) UpdateEmail(emailId int, emailAddress string) error {
+	_, err := a.EmailService.Id(emailId).UpdateEmailAddress(&emailAddress)
 	return err
 }
 
@@ -94,15 +93,7 @@ func (a emailManager) UpdateEmail(emailId int, emailAddress string) (error) {
 Edits the email object from a user.
 https://sldn.softlayer.com/reference/services/SoftLayer_Network_Message_Delivery_Email_Sendgrid/editObject/
 */
-func (a emailManager) EditObject(emailId int, username string, password string) (error) {
-
-	templateObject := datatypes.Network_Message_Delivery{}
-	if username != "" {
-		templateObject.Username = sl.String(username)
-	}
-	if password != "" {
-		templateObject.Password = sl.String(password)
-	}
-	_, err :=a.EmailService.Id(emailId).EditObject(&templateObject)
+func (a emailManager) EditObject(emailId int, templateObject datatypes.Network_Message_Delivery) error {
+	_, err := a.EmailService.Id(emailId).EditObject(&templateObject)
 	return err
 }

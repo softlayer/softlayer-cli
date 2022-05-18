@@ -4,6 +4,8 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -66,19 +68,27 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		if err != nil {
 			return cli.NewExitError(T("Failed to Edit emailAddress account: {{.emailID}}.\n", map[string]interface{}{"emailID": emailID})+err.Error(), 2)
 		}
+		cmd.UI.Ok()
+		cmd.UI.Print(T("Email address {{.emailID}} was updated.", map[string]interface{}{"emailID": emailID}))
 	}
 
-	cmd.UI.Ok()
-	cmd.UI.Print(T("Email address {{.emailID}} was updated.", map[string]interface{}{"emailID": emailID}))
-
 	if c.IsSet("username") || c.IsSet("password") {
-		err = cmd.EmailManager.EditObject(emailID, c.String("username"), c.String("password"))
+		username := c.String("username")
+		password := c.String("password")
+		templateObject := datatypes.Network_Message_Delivery{}
+		if username != "" {
+			templateObject.Username = sl.String(username)
+		}
+		if password != "" {
+			templateObject.Password = sl.String(password)
+		}
+		err = cmd.EmailManager.EditObject(emailID, templateObject)
 		if err != nil {
 			return cli.NewExitError(T("Failed to Edit email account: {{.emailID}}.\n", map[string]interface{}{"emailID": emailID})+err.Error(), 2)
 		}
+		cmd.UI.Ok()
+		cmd.UI.Print(T("Email account {{.emailID}} was updated.", map[string]interface{}{"emailID": emailID}))
 	}
 
-	cmd.UI.Ok()
-	cmd.UI.Print(T("Email account {{.emailID}} was updated.", map[string]interface{}{"emailID": emailID}))
 	return nil
 }
