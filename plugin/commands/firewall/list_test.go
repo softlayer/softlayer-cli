@@ -92,7 +92,21 @@ var _ = Describe("firewall list", func() {
 						},
 					},
 				}
+				fakerMultiVlans := []datatypes.Network_Gateway{
+					datatypes.Network_Gateway{
+						InsideVlans: []datatypes.Network_Gateway_Vlan{
+							datatypes.Network_Gateway_Vlan{
+								NetworkVlanId: sl.Int(888888),
+							},
+						},
+						NetworkFirewall: &datatypes.Network_Vlan_Firewall{
+							Id:           sl.Int(777777),
+							FirewallType: sl.String("fortigate-security-appliance-10gb"),
+						},
+					},
+				}
 				fakeFirewallManager.GetFirewallsReturns(fakerVlans, nil)
+				fakeFirewallManager.GetMultiVlanFirewallsReturns(fakerMultiVlans, nil)
 			})
 
 			It("get firewalls", func() {
@@ -112,6 +126,11 @@ var _ = Describe("firewall list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Hardware Server - standard"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("-"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("666666"))
+
+				Expect(fakeUI.Outputs()).To(ContainSubstring("multiVlan:777777"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("fortigate-security-appliance-10gb"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("-"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("888888"))
 			})
 		})
 	})

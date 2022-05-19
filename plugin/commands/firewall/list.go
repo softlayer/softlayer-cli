@@ -2,6 +2,7 @@ package firewall
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -46,10 +47,29 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	table := cmd.UI.Table([]string{T("firewall id"), T("type"), T("features"), T("server/vlan id")})
+	table := cmd.UI.Table([]string{T("Firewall ID"), T("Type"), T("Features"), T("Server/Vlan Id")})
 	fwvlans, err := cmd.FirewallManager.GetFirewalls()
 	if err != nil {
 		return cli.NewExitError(T("Failed to get firewalls on your account.\n")+err.Error(), 2)
+	}
+	multiVlanFirewalls, err := cmd.FirewallManager.GetMultiVlanFirewalls("")
+	if err != nil {
+		return cli.NewExitError(T("Failed to get multi vlan firewalls on your account.\n")+err.Error(), 2)
+	}
+	//multi vlan firewalls
+	for _, firewall := range multiVlanFirewalls {
+		features := "-"
+		vlans := "-"
+		if firewall.InsideVlans != nil && len(firewall.InsideVlans) != 0 {
+			for _, vlan := range firewall.InsideVlans {
+				vlans = vlans + strconv.Itoa(*vlan.NetworkVlanId) + "\n"
+			}
+		}
+		table.Add(
+			fmt.Sprintf("multiVlan:%d", *firewall.NetworkFirewall.Id),
+			utils.FormatStringPointer(firewall.NetworkFirewall.FirewallType),
+			features,
+			vlans)
 	}
 	//dedicated firewalls
 	for _, vlan := range fwvlans {

@@ -36,6 +36,7 @@ type FirewallManager interface {
 	ParseFirewallID(inputString string) (string, int, error)
 	EditDedicatedFirewallRules(firewallId int, rules []datatypes.Network_Vlan_Firewall_Rule) (datatypes.Network_Firewall_Update_Request, error)
 	EditStandardFirewallRules(firewallId int, rules []datatypes.Network_Component_Firewall_Rule) (datatypes.Network_Firewall_Update_Request, error)
+	GetMultiVlanFirewalls(mask string) ([]datatypes.Network_Gateway, error)
 }
 
 type firewallManager struct {
@@ -136,6 +137,24 @@ func (fw firewallManager) GetFirewalls() ([]datatypes.Network_Vlan, error) {
 	for _, vlan := range vlans {
 		if fw.HasFirewall(vlan) {
 			firewalls = append(firewalls, vlan)
+		}
+	}
+	return firewalls, nil
+}
+
+//Returns a list of multi vlan firewalls on the account.
+func (fw firewallManager) GetMultiVlanFirewalls(mask string) ([]datatypes.Network_Gateway, error) {
+	if mask == "" {
+		mask = "mask[networkFirewall[firewallType],insideVlans]"
+	}
+	firewalls := []datatypes.Network_Gateway{}
+	firewallResponse, err := fw.AccountService.Mask(mask).GetNetworkGateways()
+	if err != nil {
+		return nil, err
+	}
+	for _, firewall := range firewallResponse {
+		if firewall.NetworkFirewall != nil && firewall.NetworkFirewall.Id != nil {
+			firewalls = append(firewalls, firewall)
 		}
 	}
 	return firewalls, nil
