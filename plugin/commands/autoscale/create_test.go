@@ -55,7 +55,7 @@ var _ = Describe("autoscale create", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeAutoScaleManager.GetDatacenterByNameReturns([]datatypes.Location{}, errors.New("Failed to get Datacenters."))
+				fakeAutoScaleManager.GetDatacenterByNameReturns([]datatypes.Location{}, errors.New("Failed to get Datacenter"))
 			})
 
 			It("Failed get datacenter", func() {
@@ -63,7 +63,7 @@ var _ = Describe("autoscale create", func() {
 					"--hostname=testcreatehostname", "--cooldown=3600", "--min=1", "--max=3", "--regional=142", "--termination-policy=2",
 					"-os=CENTOS_7_64", "--cpu=2", "--memory=1024", "--disk=25")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get Datacenters."))
+				Expect(err.Error()).To(ContainSubstring("Failed to get Datacenter"))
 			})
 		})
 
