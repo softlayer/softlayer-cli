@@ -37,6 +37,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"autoscale-delete": func(c *cli.Context) error {
 			return NewDeleteCommand(ui, autoScaleManager).Run(c)
 		},
+		"autoscale-create": func(c *cli.Context) error {
+			return NewCreateCommand(ui, autoScaleManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -64,6 +67,7 @@ func AutoScaleMetaData() cli.Command {
 			AutoScaleListMetaData(),
 			AutoScaleScaleMetaData(),
 			AutoScaleDeleteMetaData(),
+			AutoScaleCreateMetaData(),
 		},
 	}
 }
