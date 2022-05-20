@@ -26,6 +26,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/eventlog"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
@@ -188,6 +189,7 @@ func Namespaces() []plugin.Namespace {
 		block.BlockNamespace(),
 		file.FileNamespace(),
 		dns.DnsNamespace(),
+		eventlog.EventLogNamespace(),
 		email.EmailNamespace(),
 		//firewall.FirewallNamespace(),
 		globalip.GlobalIpNamespace(),
@@ -218,6 +220,7 @@ func getCLITopCommands() []cli.Command {
 		block.BlockMetaData(),
 		file.FileMetaData(),
 		dns.DnsMetaData(),
+		eventlog.EventLogMetaData(),
 		email.EmailMetaData(),
 		// firewall.FirewallMetaData(),
 		globalip.GlobalIpMetaData(),
