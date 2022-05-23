@@ -49,10 +49,11 @@ type FakeAutoScaleManager struct {
 		result1 bool
 		result2 error
 	}
-	GetDatacenterByNameStub        func(string) ([]datatypes.Location, error)
+	GetDatacenterByNameStub        func(string, string) ([]datatypes.Location, error)
 	getDatacenterByNameMutex       sync.RWMutex
 	getDatacenterByNameArgsForCall []struct {
 		arg1 string
+		arg2 string
 	}
 	getDatacenterByNameReturns struct {
 		result1 []datatypes.Location
@@ -343,18 +344,19 @@ func (fake *FakeAutoScaleManager) EditScaleGroupReturnsOnCall(i int, result1 boo
 	}{result1, result2}
 }
 
-func (fake *FakeAutoScaleManager) GetDatacenterByName(arg1 string) ([]datatypes.Location, error) {
+func (fake *FakeAutoScaleManager) GetDatacenterByName(arg1 string, arg2 string) ([]datatypes.Location, error) {
 	fake.getDatacenterByNameMutex.Lock()
 	ret, specificReturn := fake.getDatacenterByNameReturnsOnCall[len(fake.getDatacenterByNameArgsForCall)]
 	fake.getDatacenterByNameArgsForCall = append(fake.getDatacenterByNameArgsForCall, struct {
 		arg1 string
-	}{arg1})
+		arg2 string
+	}{arg1, arg2})
 	stub := fake.GetDatacenterByNameStub
 	fakeReturns := fake.getDatacenterByNameReturns
-	fake.recordInvocation("GetDatacenterByName", []interface{}{arg1})
+	fake.recordInvocation("GetDatacenterByName", []interface{}{arg1, arg2})
 	fake.getDatacenterByNameMutex.Unlock()
 	if stub != nil {
-		return stub(arg1)
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -368,17 +370,17 @@ func (fake *FakeAutoScaleManager) GetDatacenterByNameCallCount() int {
 	return len(fake.getDatacenterByNameArgsForCall)
 }
 
-func (fake *FakeAutoScaleManager) GetDatacenterByNameCalls(stub func(string) ([]datatypes.Location, error)) {
+func (fake *FakeAutoScaleManager) GetDatacenterByNameCalls(stub func(string, string) ([]datatypes.Location, error)) {
 	fake.getDatacenterByNameMutex.Lock()
 	defer fake.getDatacenterByNameMutex.Unlock()
 	fake.GetDatacenterByNameStub = stub
 }
 
-func (fake *FakeAutoScaleManager) GetDatacenterByNameArgsForCall(i int) string {
+func (fake *FakeAutoScaleManager) GetDatacenterByNameArgsForCall(i int) (string, string) {
 	fake.getDatacenterByNameMutex.RLock()
 	defer fake.getDatacenterByNameMutex.RUnlock()
 	argsForCall := fake.getDatacenterByNameArgsForCall[i]
-	return argsForCall.arg1
+	return argsForCall.arg1, argsForCall.arg2
 }
 
 func (fake *FakeAutoScaleManager) GetDatacenterByNameReturns(result1 []datatypes.Location, result2 error) {

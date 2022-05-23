@@ -34,15 +34,29 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	datacenter, err := cmd.AutoScaleManager.GetDatacenterByName(c.String("datacenter"))
+	datacenterInput := c.String("datacenter")
+	datacenter, err := cmd.AutoScaleManager.GetDatacenterByName(datacenterInput, "shortname")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Datacenters.\n")+err.Error(), 2)
+		return cli.NewExitError(T("Failed to get Datacenter {{.datacenter}}.\n", map[string]interface{}{"datacenter": datacenterInput})+err.Error(), 2)
+	}
+	if len(datacenter) > 1 {
+		return cli.NewExitError(T("Failed to get Datacenter {{.datacenter}}.\n", map[string]interface{}{"datacenter": datacenterInput}), 2)
+	}
+	if len(datacenter) == 0 {
+		datacenter, err = cmd.AutoScaleManager.GetDatacenterByName(datacenterInput, "longname")
+		if err != nil {
+			return cli.NewExitError(T("Failed to get Datacenter {{.datacenter}}.\n", map[string]interface{}{"datacenter": datacenterInput})+err.Error(), 2)
+		}
+		if len(datacenter) != 1 {
+			return cli.NewExitError(T("Failed to get Datacenter {{.datacenter}}.\n", map[string]interface{}{"datacenter": datacenterInput}), 2)
+		}
 	}
 
 	disks := c.IntSlice("disk")
 	numDisk := 0
 	block := []datatypes.Virtual_Guest_Block_Device{}
 	for _, disk := range disks {
+		// disk 1 is reserved to boot
 		if numDisk == 1 {
 			numDisk++
 		}
@@ -190,12 +204,12 @@ func AutoScaleCreateMetaData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl autoscale create [OPTIONS]
 
 EXAMPLE: 
-   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 
-   --regional 142 --termination-policy 2 -o CENTOS_7_64 --cpu 2 --memory 1024 --disk 25
+   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 
+   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25
 
-   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 
+   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 
    --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE 
-   --policy-name mypolicy --policy-amount 3 --postinstall http://mypostinstallscript.com --key 1111111 --key 2222222`),
+   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:     "name",
