@@ -21,6 +21,7 @@ func TestManagers(t *testing.T) {
 // These are all the commands in eventlog.go
 var availableCommands = []string{
 	"event-log-get",
+	"event-log-types",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings

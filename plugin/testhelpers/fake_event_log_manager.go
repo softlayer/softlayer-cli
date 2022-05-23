@@ -9,6 +9,18 @@ import (
 )
 
 type FakeEventLogManager struct {
+	GetEventLogTypesStub        func() ([]string, error)
+	getEventLogTypesMutex       sync.RWMutex
+	getEventLogTypesArgsForCall []struct {
+	}
+	getEventLogTypesReturns struct {
+		result1 []string
+		result2 error
+	}
+	getEventLogTypesReturnsOnCall map[int]struct {
+		result1 []string
+		result2 error
+	}
 	GetEventLogsStub        func(string, string, int) ([]datatypes.Event_Log, error)
 	getEventLogsMutex       sync.RWMutex
 	getEventLogsArgsForCall []struct {
@@ -26,6 +38,62 @@ type FakeEventLogManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeEventLogManager) GetEventLogTypes() ([]string, error) {
+	fake.getEventLogTypesMutex.Lock()
+	ret, specificReturn := fake.getEventLogTypesReturnsOnCall[len(fake.getEventLogTypesArgsForCall)]
+	fake.getEventLogTypesArgsForCall = append(fake.getEventLogTypesArgsForCall, struct {
+	}{})
+	stub := fake.GetEventLogTypesStub
+	fakeReturns := fake.getEventLogTypesReturns
+	fake.recordInvocation("GetEventLogTypes", []interface{}{})
+	fake.getEventLogTypesMutex.Unlock()
+	if stub != nil {
+		return stub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeEventLogManager) GetEventLogTypesCallCount() int {
+	fake.getEventLogTypesMutex.RLock()
+	defer fake.getEventLogTypesMutex.RUnlock()
+	return len(fake.getEventLogTypesArgsForCall)
+}
+
+func (fake *FakeEventLogManager) GetEventLogTypesCalls(stub func() ([]string, error)) {
+	fake.getEventLogTypesMutex.Lock()
+	defer fake.getEventLogTypesMutex.Unlock()
+	fake.GetEventLogTypesStub = stub
+}
+
+func (fake *FakeEventLogManager) GetEventLogTypesReturns(result1 []string, result2 error) {
+	fake.getEventLogTypesMutex.Lock()
+	defer fake.getEventLogTypesMutex.Unlock()
+	fake.GetEventLogTypesStub = nil
+	fake.getEventLogTypesReturns = struct {
+		result1 []string
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeEventLogManager) GetEventLogTypesReturnsOnCall(i int, result1 []string, result2 error) {
+	fake.getEventLogTypesMutex.Lock()
+	defer fake.getEventLogTypesMutex.Unlock()
+	fake.GetEventLogTypesStub = nil
+	if fake.getEventLogTypesReturnsOnCall == nil {
+		fake.getEventLogTypesReturnsOnCall = make(map[int]struct {
+			result1 []string
+			result2 error
+		})
+	}
+	fake.getEventLogTypesReturnsOnCall[i] = struct {
+		result1 []string
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeEventLogManager) GetEventLogs(arg1 string, arg2 string, arg3 int) ([]datatypes.Event_Log, error) {
@@ -97,6 +165,8 @@ func (fake *FakeEventLogManager) GetEventLogsReturnsOnCall(i int, result1 []data
 func (fake *FakeEventLogManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.getEventLogTypesMutex.RLock()
+	defer fake.getEventLogTypesMutex.RUnlock()
 	fake.getEventLogsMutex.RLock()
 	defer fake.getEventLogsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
