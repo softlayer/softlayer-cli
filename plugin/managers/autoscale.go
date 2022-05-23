@@ -17,7 +17,7 @@ type AutoScaleManager interface {
 	ScaleTo(id int, delta int) ([]datatypes.Scale_Member, error)
 	Delete(id int) (bool, error)
 	CreateScaleGroup(autoScaleTemplate *datatypes.Scale_Group) (datatypes.Scale_Group, error)
-	GetDatacenterByName(name string) ([]datatypes.Location, error)
+	GetDatacenterByName(name string, typeName string) ([]datatypes.Location, error)
 }
 
 type autoScaleManager struct {
@@ -117,8 +117,13 @@ func (as autoScaleManager) CreateScaleGroup(autoScaleTemplate *datatypes.Scale_G
 
 //Get location using the name as filter
 //name: location name
-func (as autoScaleManager) GetDatacenterByName(name string) ([]datatypes.Location, error) {
+func (as autoScaleManager) GetDatacenterByName(name string, typeName string) ([]datatypes.Location, error) {
 	objectfilter := filter.New()
-	objectfilter = append(objectfilter, filter.Path("name").Eq(name))
+	if typeName == "shortname" {
+		objectfilter = append(objectfilter, filter.Path("name").Eq(name))
+	}
+	if typeName == "longname" {
+		objectfilter = append(objectfilter, filter.Path("longName").Eq(name))
+	}
 	return as.LocationService.Filter(objectfilter.Build()).GetDatacenters()
 }
