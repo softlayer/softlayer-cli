@@ -13,10 +13,10 @@ type LicensesOptionsCommand struct {
 	LicensesManager managers.LicensesManager
 }
 
-func NewLicensesOptionsCommand(ui terminal.UI, LicensesManager managers.LicensesManager) (cmd *LicensesOptionsCommand) {
+func NewLicensesOptionsCommand(ui terminal.UI, licensesManager managers.LicensesManager) (cmd *LicensesOptionsCommand) {
 	return &LicensesOptionsCommand{
 		UI:              ui,
-		LicensesManager: LicensesManager,
+		LicensesManager: licensesManager,
 	}
 }
 

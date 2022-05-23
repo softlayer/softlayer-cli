@@ -16,6 +16,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"licenses-create-options": func(c *cli.Context) error {
 			return NewLicensesOptionsCommand(ui, licensesManager).Run(c)
 		},
+		"licenses-create": func(c *cli.Context) error {
+			return NewCreateCommand(ui, licensesManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -37,6 +40,7 @@ func LicensesMetaData() cli.Command {
 		Usage:       "${COMMAND_NAME} sl licenses",
 		Subcommands: []cli.Command{
 			LicensesCreateOptionsMetaData(),
+			CreateMetaData(),
 		},
 	}
 }
