@@ -44,13 +44,13 @@ func CreateMetaData() cli.Command {
 
 func (cmd *CreateCommand) Run(c *cli.Context) error {
 
-	if !c.IsSet("datacenter") || !c.IsSet("key") {
-		return slErr.NewInvalidUsageError(T("This command requires two arguments."))
-	}
-	
 	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
 	if err != nil {
 		return err
+	}
+
+	if !c.IsSet("datacenter") || !c.IsSet("key") {
+		return slErr.NewInvalidUsageError(T("This command requires two arguments."))
 	}
 	
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})

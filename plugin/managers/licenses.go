@@ -13,7 +13,7 @@ import (
 
 type LicensesManager interface {
 	CreateLicensesOptions() ([]datatypes.Product_Package, error)
-	CreateLicense(key string, datacenter string) (datatypes.Container_Product_Order_Receipt, error)
+	CreateLicense(datacenter string, itemKeyName string) (datatypes.Container_Product_Order_Receipt, error)
 }
 
 type licensesManager struct {
