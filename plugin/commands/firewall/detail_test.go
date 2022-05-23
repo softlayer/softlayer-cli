@@ -87,6 +87,18 @@ var _ = Describe("firewall detail", func() {
 			})
 		})
 
+		Context("Return error", func() {
+			BeforeEach(func() {
+				fakeFirewallManager.ParseFirewallIDReturns("multiVlan", 123456, nil)
+				fakeFirewallManager.GetMultiVlanFirewallReturns(datatypes.Network_Vlan_Firewall{}, errors.New("Failed to get multi vlan firewall."))
+			})
+			It("Failed get standard firewall", func() {
+				err := testhelpers.RunCommand(cliCommand, "multiVlan:123456")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to get multi vlan firewall."))
+			})
+		})
+
 		Context("Return no error", func() {
 			BeforeEach(func() {
 				fakeFirewallManager.ParseFirewallIDReturns("vlan", 123456, nil)
@@ -138,9 +150,79 @@ var _ = Describe("firewall detail", func() {
 				fakeFirewallManager.GetStandardFirewallRulesReturns(fakerRules, nil)
 			})
 
-			It("get stadard firewalls rules", func() {
+			It("get standard firewalls rules", func() {
 				err := testhelpers.RunCommand(cliCommand, "vs:123456")
 				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("permit"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("tcp"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0.0.0.0"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0.0.0.0"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("any on server:85-85"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("255.255.255.255"))
+			})
+		})
+
+		Context("Return no error", func() {
+			BeforeEach(func() {
+				fakeFirewallManager.ParseFirewallIDReturns("multiVlan", 123456, nil)
+				fakerMultiVlan := datatypes.Network_Vlan_Firewall{
+					NetworkGateway: &datatypes.Network_Gateway{
+						Name: sl.String("firewall1"),
+						PublicIpAddress: &datatypes.Network_Subnet_IpAddress{
+							IpAddress: sl.String("1.1.1.1"),
+						},
+						PrivateIpAddress: &datatypes.Network_Subnet_IpAddress{
+							IpAddress: sl.String("192.168.1.2"),
+						},
+						PublicIpv6Address: &datatypes.Network_Subnet_IpAddress{
+							IpAddress: sl.String("2607:f0d0:1704:0020:0000:0000:0000:0002"),
+						},
+						PublicVlan: &datatypes.Network_Vlan{
+							VlanNumber: sl.Int(1111),
+						},
+						PrivateVlan: &datatypes.Network_Vlan{
+							VlanNumber: sl.Int(2222),
+						},
+					},
+					Datacenter: &datatypes.Location{
+						LongName: sl.String("Dallas 13"),
+					},
+					FirewallType: sl.String("fortigate-security-appliance-10gb"),
+					ManagementCredentials: &datatypes.Software_Component_Password{
+						Username: sl.String("myUsername"),
+						Password: sl.String("test1234."),
+					},
+					Rules: []datatypes.Network_Vlan_Firewall_Rule{
+						datatypes.Network_Vlan_Firewall_Rule{
+							OrderValue:                sl.Int(1),
+							Action:                    sl.String("permit"),
+							Protocol:                  sl.String("tcp"),
+							SourceIpAddress:           sl.String("0.0.0.0"),
+							SourceIpSubnetMask:        sl.String("0.0.0.0"),
+							DestinationIpAddress:      sl.String("any on server"),
+							DestinationPortRangeStart: sl.Int(85),
+							DestinationPortRangeEnd:   sl.Int(85),
+							DestinationIpSubnetMask:   sl.String("255.255.255.255"),
+						},
+					},
+				}
+				fakeFirewallManager.GetMultiVlanFirewallReturns(fakerMultiVlan, nil)
+			})
+
+			It("get multi vlan with credentials", func() {
+				err := testhelpers.RunCommand(cliCommand, "multiVlan:123456", "--credentials")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("firewall1"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1.1.1.1"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("192.168.1.2"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2607:f0d0:1704:0020:0000:0000:0000:0002"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1111"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2222"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Dallas 13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("fortigate-security-appliance-10gb"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("myUsername"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("test1234."))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("permit"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("tcp"))
