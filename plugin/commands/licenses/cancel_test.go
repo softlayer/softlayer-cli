@@ -12,7 +12,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("Licenses list CancelItem", func() {
+var _ = Describe("Licenses list Cancel Item", func() {
 	var (
 		fakeUI              *terminal.FakeUI
 		fakeLicensesManager *testhelpers.FakeLicensesManager
@@ -30,8 +30,6 @@ var _ = Describe("Licenses list CancelItem", func() {
 			Flags:       licenses.CancelItemMetaData().Flags,
 			Action:      cmd.Run,
 		}
-
-		// fakeLicensesManager.CancelItemReturns(testPlaceOrder, nil)
 	})
 
 	Describe("Licenses cancel item", func() {
@@ -47,25 +45,26 @@ var _ = Describe("Licenses list CancelItem", func() {
 			It("return licenses cancel item", func() {
 				err := testhelpers.RunCommand(cliCommand, "XXX_XXX_XXX", "--immediate")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("nelx1"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("License: XXX_XXX_XXX was cancelled."))
 			})
 		})
+
 		Context("Licenses cancel errors", func() {
 			It("return license error", func() {
 				fakeLicensesManager.CancelItemReturns(errors.New("SoftLayer_Exception_ObjectNotFound"))
 				err := testhelpers.RunCommand(cliCommand, "XXX_XXX_XXX")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("nelx2"))
+				Expect(err.Error()).To(ContainSubstring("Unable to find license with key: XXX_XXX_XXX."))
 				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ObjectNotFound"))
 			})
 			It("return license error", func() {
 				fakeLicensesManager.CancelItemReturns(errors.New("Internal server error"))
 				err := testhelpers.RunCommand(cliCommand, "XXX_XXX_XXX")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("nelx3"))
+				Expect(err.Error()).To(ContainSubstring("Failed to cancel license: XXX_XXX_XXX."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
-
 		})
 	})
 })
