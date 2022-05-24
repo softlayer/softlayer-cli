@@ -19,6 +19,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"licenses-create": func(c *cli.Context) error {
 			return NewCreateCommand(ui, licensesManager).Run(c)
 		},
+		"licenses-cancel": func(c *cli.Context) error {
+			return NewCancelItemCommand(ui, licensesManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -41,6 +44,7 @@ func LicensesMetaData() cli.Command {
 		Subcommands: []cli.Command{
 			LicensesCreateOptionsMetaData(),
 			CreateMetaData(),
+			CancelItemMetaData(),
 		},
 	}
 }

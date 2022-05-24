@@ -2,6 +2,7 @@ package managers
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -9,11 +10,13 @@ import (
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type LicensesManager interface {
 	CreateLicensesOptions() ([]datatypes.Product_Package, error)
 	CreateLicense(datacenter string, itemKeyName string) (datatypes.Container_Product_Order_Receipt, error)
+	CancelItem(key string, immediate bool) error
 }
 
 type licensesManager struct {
@@ -127,4 +130,34 @@ func (l licensesManager) GetPackageId(packageKeyName string) (int, error) {
 		}
 	}
 	return 0, errors.New("Invalid package keyName.")
+}
+
+//Cancels a license using the request cancel item
+//https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Item/cancelItem/
+func (l licensesManager) CancelItem(key string, immediate bool) error {
+	SoftwareAccountLicenseService := services.GetSoftwareAccountLicenseService(l.Session)
+	BillingItemService := services.GetBillingItemService(l.Session)
+	AccountService := services.GetAccountService(l.Session)
+	
+	mask := "mask[softwareDescription,billingItem]"
+	licenses, err := SoftwareAccountLicenseService.Mask(mask).GetAllObjects()
+	if err != nil {
+		return err
+	}
+
+	cancelAssociatedBillingItems := true
+	Reason := "No longer needed"
+	user, _ := AccountService.Mask(mask).GetCurrentUser()
+	Note := fmt.Sprintf("Cancelled by %s with the ibmcloud sl", utils.FormatStringPointerName(user.Username))
+	
+	for _, license := range licenses {
+		if *license.Key == key {
+			if license.BillingItem != nil {
+				_, err := BillingItemService.Mask(mask).Id(*license.BillingItem.Id).CancelItem(&immediate, &cancelAssociatedBillingItems, &Reason, &Note)
+				return err
+			}
+			return errors.New("SoftLayer_Exception_ObjectNotFound")
+		}
+	}
+	return errors.New("SoftLayer_Exception_ObjectNotFound")
 }
