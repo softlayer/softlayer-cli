@@ -104,7 +104,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	utils.PrintTable(cmd.UI, table, outputFormat)
 
 	cmd.UI.Print("\n")
-	table = cmd.UI.Table([]string{T("Firewall ID"), T("Firewall"), T("Type"), T("Hostname"), T("Location"), T("Public Ip"), T("Private Ip"), T("Associated vlan"), T("Status")})
+	table = cmd.UI.Table([]string{T("Firewall ID"), T("Firewall"), T("Type"), T("Hostname"), T("Location"), T("Public Ip"), T("Private Ip"), T("Associated VLANs"), T("Status")})
 	//multi vlan firewalls
 	for _, firewall := range multiVlanFirewalls {
 		table.Add(
