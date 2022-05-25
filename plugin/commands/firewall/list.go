@@ -59,6 +59,9 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	//multi vlan firewalls
 	for _, firewall := range multiVlanFirewalls {
 		features := "-"
+		if *firewall.MemberCount > 1 {
+			features = "HA"
+		}
 		vlans := "-"
 		if firewall.InsideVlans != nil && len(firewall.InsideVlans) != 0 {
 			for _, vlan := range firewall.InsideVlans {
