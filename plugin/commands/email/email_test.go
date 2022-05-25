@@ -21,6 +21,7 @@ func TestManagers(t *testing.T) {
 var availableCommands = []string{
 	"email-list",
 	"email-detail",
+	"email-edit",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
