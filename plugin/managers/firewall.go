@@ -145,7 +145,8 @@ func (fw firewallManager) GetFirewalls() ([]datatypes.Network_Vlan, error) {
 //Returns a list of multi vlan firewalls on the account.
 func (fw firewallManager) GetMultiVlanFirewalls(mask string) ([]datatypes.Network_Gateway, error) {
 	if mask == "" {
-		mask = "mask[networkFirewallFlag,networkFirewall[firewallType],insideVlans,memberCount]"
+		mask = `mask[id,networkSpace,name,networkFirewall[id,firewallType,datacenter[name]],status[keyName],insideVlans[id],
+		privateIpAddress[ipAddress],publicVlan[id,primaryRouter[hostname]],publicIpAddress[ipAddress],members[id,hardware[hostname]]]`
 	}
 	objectFilter := filter.New()
 	objectFilter = append(objectFilter, filter.Path("networkGateways.networkFirewallFlag").Eq("1"))

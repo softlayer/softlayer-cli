@@ -102,6 +102,26 @@ var _ = Describe("firewall list", func() {
 						NetworkFirewall: &datatypes.Network_Vlan_Firewall{
 							Id:           sl.Int(777777),
 							FirewallType: sl.String("fortigate-security-appliance-10gb"),
+							Datacenter: &datatypes.Location{
+								Name: sl.String("dal13"),
+							},
+						},
+						Name: sl.String("testfirewall"),
+						Members: []datatypes.Network_Gateway_Member{
+							datatypes.Network_Gateway_Member{
+								Hardware: &datatypes.Hardware{
+									Hostname: sl.String("dft03.pod03.dal13"),
+								},
+							},
+						},
+						PublicIpAddress: &datatypes.Network_Subnet_IpAddress{
+							IpAddress: sl.String("65.65.65.65"),
+						},
+						PrivateIpAddress: &datatypes.Network_Subnet_IpAddress{
+							IpAddress: sl.String("10.2.2.2"),
+						},
+						Status: &datatypes.Network_Gateway_Status{
+							KeyName: sl.String("ACTIVE"),
 						},
 					},
 				}
@@ -128,9 +148,14 @@ var _ = Describe("firewall list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("666666"))
 
 				Expect(fakeUI.Outputs()).To(ContainSubstring("multiVlan:777777"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("testfirewall"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("fortigate-security-appliance-10gb"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("-"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("888888"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dft03.pod03.dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("65.65.65.65"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("10.2.2.2"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1 VLANs"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("ACTIVE"))
 			})
 		})
 	})

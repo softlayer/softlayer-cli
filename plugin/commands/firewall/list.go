@@ -2,7 +2,6 @@ package firewall
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -56,24 +55,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return cli.NewExitError(T("Failed to get multi vlan firewalls on your account.\n")+err.Error(), 2)
 	}
-	//multi vlan firewalls
-	for _, firewall := range multiVlanFirewalls {
-		features := "-"
-		if *firewall.MemberCount > 1 {
-			features = "HA"
-		}
-		vlans := "-"
-		if firewall.InsideVlans != nil && len(firewall.InsideVlans) != 0 {
-			for _, vlan := range firewall.InsideVlans {
-				vlans = vlans + strconv.Itoa(*vlan.NetworkVlanId) + "\n"
-			}
-		}
-		table.Add(
-			fmt.Sprintf("multiVlan:%d", *firewall.NetworkFirewall.Id),
-			utils.FormatStringPointer(firewall.NetworkFirewall.FirewallType),
-			features,
-			vlans)
-	}
+
 	//dedicated firewalls
 	for _, vlan := range fwvlans {
 		if vlan.NetworkVlanFirewall == nil {
@@ -117,6 +99,25 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 					utils.FormatIntPointer(hw.NetworkComponent.DownlinkComponent.HardwareId))
 			}
 		}
+	}
+
+	utils.PrintTable(cmd.UI, table, outputFormat)
+
+	cmd.UI.Print("\n")
+	table = cmd.UI.Table([]string{T("Firewall ID"), T("Firewall"), T("Type"), T("Hostname"), T("Location"), T("Public Ip"), T("Private Ip"), T("Associated vlan"), T("Status")})
+	//multi vlan firewalls
+	for _, firewall := range multiVlanFirewalls {
+		table.Add(
+			fmt.Sprintf("multiVlan:%d", *firewall.NetworkFirewall.Id),
+			utils.FormatStringPointer(firewall.Name),
+			utils.FormatStringPointer(firewall.NetworkFirewall.FirewallType),
+			utils.FormatStringPointer(firewall.Members[0].Hardware.Hostname),
+			utils.FormatStringPointer(firewall.NetworkFirewall.Datacenter.Name),
+			utils.FormatStringPointer(firewall.PublicIpAddress.IpAddress),
+			utils.FormatStringPointer(firewall.PrivateIpAddress.IpAddress),
+			fmt.Sprintf("%d VLANs", len(firewall.InsideVlans)),
+			utils.FormatStringPointer(firewall.Status.KeyName),
+		)
 	}
 
 	utils.PrintTable(cmd.UI, table, outputFormat)
