@@ -48,26 +48,37 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		return bxErr.NewInvalidUsageError(T("This command requires one argument."))
 	}
 
+	file, err := ioutil.TempFile("", "rules")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	firewallType, firewallID, err := cmd.FirewallManager.ParseFirewallID(c.Args()[0])
 	if err != nil {
 		return cli.NewExitError(T("Failed to parse firewall ID : {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": c.Args()[0]})+err.Error(), 1)
+	}
+
+	if firewallType == "multiVlan" {
+		cmd.UI.Print(T("All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials."))
+		return nil
 	}
 	if firewallType == "vlan" {
 		origRules, err := cmd.FirewallManager.GetDedicatedFirewallRules(firewallID)
 		if err != nil {
 			return cli.NewExitError(T("Failed to get dedicated firewall rules for {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID})+err.Error(), 2)
 		}
-		_, err = OpenEditorForVlanRules(origRules)
+		_, err = OpenEditorForVlanRules(origRules, file.Name())
 		if err != nil {
 			return cli.NewExitError(T("Failed to open editor for vlan rules: {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID})+err.Error(), 2)
 		}
-		b, err := ioutil.ReadFile("/tmp/rules.tmp")
+		b, err := ioutil.ReadFile(file.Name())
 		cmd.UI.Print(string(b))
 		confirm, err := cmd.UI.Confirm(T("Would you like to submit the rules. Continue?"))
 		if err != nil {
 			return cli.NewExitError(err.Error(), 1)
 		}
 		if !confirm {
+			deleteTempFile(*file)
 			cmd.UI.Print(T("Aborted."))
 			return nil
 		}
@@ -79,6 +90,7 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		if err != nil {
 			return cli.NewExitError(T("Failed to edit dedicated firewall rules.\n")+err.Error(), 2)
 		}
+		deleteTempFile(*file)
 		cmd.UI.Ok()
 		cmd.UI.Print(T("Firewall {{.FirewallID}} was updated.", map[string]interface{}{"FirewallID": firewallID}))
 	} else {
@@ -86,17 +98,18 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		if err != nil {
 			return cli.NewExitError(T("Failed to get standard firewall rules for {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID})+err.Error(), 2)
 		}
-		_, err = OpenEditorForComponentRules(origRules)
+		_, err = OpenEditorForComponentRules(origRules, file.Name())
 		if err != nil {
 			return cli.NewExitError(T("Failed to open editor for component rules:  {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID})+err.Error(), 2)
 		}
-		b, err := ioutil.ReadFile("/tmp/rules.tmp")
+		b, err := ioutil.ReadFile(file.Name())
 		cmd.UI.Print(string(b))
 		confirm, err := cmd.UI.Confirm(T("Would you like to submit the rules. Continue?"))
 		if err != nil {
 			return cli.NewExitError(err.Error(), 1)
 		}
 		if !confirm {
+			deleteTempFile(*file)
 			cmd.UI.Print(T("Aborted."))
 			return nil
 		}
@@ -108,6 +121,7 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		if err != nil {
 			return cli.NewExitError(T("Failed to edit standard firewall rules.\n")+err.Error(), 2)
 		}
+		deleteTempFile(*file)
 		cmd.UI.Ok()
 		cmd.UI.Print(T("Firewall {{.FirewallID}} was updated.", map[string]interface{}{"FirewallID": firewallID}))
 	}
@@ -123,8 +137,8 @@ func openEditor(file string) error {
 	return err
 }
 
-func OpenEditorForComponentRules(origRules []datatypes.Network_Component_Firewall_Rule) (*os.File, error) {
-	tempFile := "/tmp/rules.tmp"
+func OpenEditorForComponentRules(origRules []datatypes.Network_Component_Firewall_Rule, filePath string) (*os.File, error) {
+	tempFile := filePath
 	f, err := os.Create(tempFile)
 	if err != nil {
 		return nil, err
@@ -166,8 +180,8 @@ func OpenEditorForComponentRules(origRules []datatypes.Network_Component_Firewal
 	}
 	return f, err
 }
-func OpenEditorForVlanRules(origRules []datatypes.Network_Vlan_Firewall_Rule) (*os.File, error) {
-	tempFile := "/tmp/rules.tmp"
+func OpenEditorForVlanRules(origRules []datatypes.Network_Vlan_Firewall_Rule, filePath string) (*os.File, error) {
+	tempFile := filePath
 	f, err := os.Create(tempFile)
 	if err != nil {
 		return nil, err
@@ -383,4 +397,12 @@ func ParseComponentRulefile(content string) ([]datatypes.Network_Component_Firew
 		parsedRules = append(parsedRules, parsedRule)
 	}
 	return parsedRules, nil
+}
+
+func deleteTempFile(file os.File) {
+	file.Close()
+	fErr := os.Remove(file.Name())
+	if fErr != nil {
+		log.Fatal(fErr)
+	}
 }

@@ -297,8 +297,8 @@ func (fw firewallManager) ParseFirewallID(inputString string) (string, int, erro
 		return "", 0, errors.New(T("Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID.", map[string]interface{}{"ID": inputString}))
 	}
 	firewallType := keyvalue[0]
-	if firewallType != "vs" && firewallType != "vlan" && firewallType != "server" {
-		return "", 0, errors.New(T("Invalid firewall type {{.Type}}: firewall type should be either vlan, vs or server.", map[string]interface{}{"Type": firewallType}))
+	if firewallType != "vs" && firewallType != "vlan" && firewallType != "server" && firewallType != "multiVlan" {
+		return "", 0, errors.New(T("Invalid firewall type {{.Type}}: firewall type should be either vlan, multiVlan, vs or server.", map[string]interface{}{"Type": firewallType}))
 	}
 	firewallID, err := strconv.Atoi(keyvalue[1])
 	if err != nil {
