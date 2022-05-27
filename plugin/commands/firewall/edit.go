@@ -48,11 +48,6 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		return bxErr.NewInvalidUsageError(T("This command requires one argument."))
 	}
 
-	file, err := ioutil.TempFile("", "rules")
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	firewallType, firewallID, err := cmd.FirewallManager.ParseFirewallID(c.Args()[0])
 	if err != nil {
 		return cli.NewExitError(T("Failed to parse firewall ID : {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": c.Args()[0]})+err.Error(), 1)
@@ -62,6 +57,12 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		cmd.UI.Print(T("All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials."))
 		return nil
 	}
+
+	file, err := ioutil.TempFile("", "rules")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	if firewallType == "vlan" {
 		origRules, err := cmd.FirewallManager.GetDedicatedFirewallRules(firewallID)
 		if err != nil {
