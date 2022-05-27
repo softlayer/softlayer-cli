@@ -20,6 +20,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/eventlog"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
@@ -199,13 +200,10 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	}
 
 	// ibmcloud sl firewall
-	// Deprecated for now.
-	/*
-		firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
-		for name, action := range firewallCommands {
-			CommandActionBindings[name] = action
-		}
-	*/
+	firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
+	for name, action := range firewallCommands {
+		CommandActionBindings[name] = action
+	}
 
 	actionWithPreCheck := make(map[string]func(c *cli.Context) error)
 
