@@ -37,6 +37,7 @@ type FirewallManager interface {
 	EditDedicatedFirewallRules(firewallId int, rules []datatypes.Network_Vlan_Firewall_Rule) (datatypes.Network_Firewall_Update_Request, error)
 	EditStandardFirewallRules(firewallId int, rules []datatypes.Network_Component_Firewall_Rule) (datatypes.Network_Firewall_Update_Request, error)
 	GetMultiVlanFirewall(fwId int, mask string) (datatypes.Network_Vlan_Firewall, error)
+	GetMultiVlanFirewalls(mask string) ([]datatypes.Network_Gateway, error)
 }
 
 type firewallManager struct {
@@ -140,6 +141,17 @@ func (fw firewallManager) GetFirewalls() ([]datatypes.Network_Vlan, error) {
 		}
 	}
 	return firewalls, nil
+}
+
+//Returns a list of multi vlan firewalls on the account.
+func (fw firewallManager) GetMultiVlanFirewalls(mask string) ([]datatypes.Network_Gateway, error) {
+	if mask == "" {
+		mask = `mask[id,networkSpace,name,networkFirewall[id,firewallType,datacenter[name]],status[keyName],insideVlans[id],
+		privateIpAddress[ipAddress],publicVlan[id,primaryRouter[hostname]],publicIpAddress[ipAddress],members[id,hardware[hostname]]]`
+	}
+	objectFilter := filter.New()
+	objectFilter = append(objectFilter, filter.Path("networkGateways.networkFirewallFlag").Eq("1"))
+	return fw.AccountService.Filter(objectFilter.Build()).Mask(mask).GetNetworkGateways()
 }
 
 func (fw firewallManager) HasFirewall(vlan datatypes.Network_Vlan) bool {

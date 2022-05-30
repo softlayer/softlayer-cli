@@ -19,6 +19,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"email-detail": func(c *cli.Context) error {
 			return NewDetailCommand(ui, emailManager).Run(c)
 		},
+		"email-edit": func(c *cli.Context) error {
+			return NewEditCommand(ui, emailManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -41,6 +44,7 @@ func EmailMetaData() cli.Command {
 		Subcommands: []cli.Command{
 			ListMetaData(),
 			DetailMetaData(),
+			EditMetaData(),
 		},
 	}
 }
