@@ -401,7 +401,9 @@ func ParseComponentRulefile(content string) ([]datatypes.Network_Component_Firew
 }
 
 func deleteTempFile(file os.File) {
-	file.Close()
+	if fErr := file.Close(); fErr != nil {
+		log.Fatal(fErr)
+	}
 	fErr := os.Remove(file.Name())
 	if fErr != nil {
 		log.Fatal(fErr)
