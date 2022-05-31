@@ -36,6 +36,7 @@ type FirewallManager interface {
 	ParseFirewallID(inputString string) (string, int, error)
 	EditDedicatedFirewallRules(firewallId int, rules []datatypes.Network_Vlan_Firewall_Rule) (datatypes.Network_Firewall_Update_Request, error)
 	EditStandardFirewallRules(firewallId int, rules []datatypes.Network_Component_Firewall_Rule) (datatypes.Network_Firewall_Update_Request, error)
+	GetMultiVlanFirewall(fwId int, mask string) (datatypes.Network_Vlan_Firewall, error)
 	GetMultiVlanFirewalls(mask string) ([]datatypes.Network_Gateway, error)
 }
 
@@ -194,6 +195,14 @@ func (fw firewallManager) GetDedicatedFirewallRules(fwId int) ([]datatypes.Netwo
 	return fw.VlanFirewallService.Id(fwId).Mask(RULE_MASK).GetRules()
 }
 
+//Get a multi vlan firewall.
+func (fw firewallManager) GetMultiVlanFirewall(fwId int, mask string) (datatypes.Network_Vlan_Firewall, error) {
+	if mask == "" {
+		mask = "mask[firewallType,networkGateway[insideVlans, members,privateIpAddress,publicIpAddress,publicIpv6Address,privateVlan,publicVlan],datacenter,rules,managementCredentials]"
+	}
+	return fw.VlanFirewallService.Id(fwId).Mask(mask).GetObject()
+}
+
 //Cancels the specified firewall.
 func (fw firewallManager) CancelFirewall(fwId int, dedicated bool) error {
 	firewallBillingItem, err := fw.GetFirewallBillingItem(fwId, dedicated)
@@ -297,7 +306,7 @@ func (fw firewallManager) ParseFirewallID(inputString string) (string, int, erro
 		return "", 0, errors.New(T("Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID.", map[string]interface{}{"ID": inputString}))
 	}
 	firewallType := keyvalue[0]
-	if firewallType != "vs" && firewallType != "vlan" && firewallType != "server" {
+	if firewallType != "vs" && firewallType != "vlan" && firewallType != "server" && firewallType != "multiVlan" {
 		return "", 0, errors.New(T("Invalid firewall type {{.Type}}: firewall type should be either vlan, vs or server.", map[string]interface{}{"Type": firewallType}))
 	}
 	firewallID, err := strconv.Atoi(keyvalue[1])
