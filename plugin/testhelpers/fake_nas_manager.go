@@ -9,6 +9,20 @@ import (
 )
 
 type FakeNasNetworkStorageManager struct {
+	GetNasNetworkStorageStub        func(int, string) (datatypes.Network_Storage, error)
+	getNasNetworkStorageMutex       sync.RWMutex
+	getNasNetworkStorageArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getNasNetworkStorageReturns struct {
+		result1 datatypes.Network_Storage
+		result2 error
+	}
+	getNasNetworkStorageReturnsOnCall map[int]struct {
+		result1 datatypes.Network_Storage
+		result2 error
+	}
 	ListNasNetworkStoragesStub        func(string) ([]datatypes.Network_Storage, error)
 	listNasNetworkStoragesMutex       sync.RWMutex
 	listNasNetworkStoragesArgsForCall []struct {
@@ -24,6 +38,71 @@ type FakeNasNetworkStorageManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeNasNetworkStorageManager) GetNasNetworkStorage(arg1 int, arg2 string) (datatypes.Network_Storage, error) {
+	fake.getNasNetworkStorageMutex.Lock()
+	ret, specificReturn := fake.getNasNetworkStorageReturnsOnCall[len(fake.getNasNetworkStorageArgsForCall)]
+	fake.getNasNetworkStorageArgsForCall = append(fake.getNasNetworkStorageArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetNasNetworkStorageStub
+	fakeReturns := fake.getNasNetworkStorageReturns
+	fake.recordInvocation("GetNasNetworkStorage", []interface{}{arg1, arg2})
+	fake.getNasNetworkStorageMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNasNetworkStorageManager) GetNasNetworkStorageCallCount() int {
+	fake.getNasNetworkStorageMutex.RLock()
+	defer fake.getNasNetworkStorageMutex.RUnlock()
+	return len(fake.getNasNetworkStorageArgsForCall)
+}
+
+func (fake *FakeNasNetworkStorageManager) GetNasNetworkStorageCalls(stub func(int, string) (datatypes.Network_Storage, error)) {
+	fake.getNasNetworkStorageMutex.Lock()
+	defer fake.getNasNetworkStorageMutex.Unlock()
+	fake.GetNasNetworkStorageStub = stub
+}
+
+func (fake *FakeNasNetworkStorageManager) GetNasNetworkStorageArgsForCall(i int) (int, string) {
+	fake.getNasNetworkStorageMutex.RLock()
+	defer fake.getNasNetworkStorageMutex.RUnlock()
+	argsForCall := fake.getNasNetworkStorageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeNasNetworkStorageManager) GetNasNetworkStorageReturns(result1 datatypes.Network_Storage, result2 error) {
+	fake.getNasNetworkStorageMutex.Lock()
+	defer fake.getNasNetworkStorageMutex.Unlock()
+	fake.GetNasNetworkStorageStub = nil
+	fake.getNasNetworkStorageReturns = struct {
+		result1 datatypes.Network_Storage
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNasNetworkStorageManager) GetNasNetworkStorageReturnsOnCall(i int, result1 datatypes.Network_Storage, result2 error) {
+	fake.getNasNetworkStorageMutex.Lock()
+	defer fake.getNasNetworkStorageMutex.Unlock()
+	fake.GetNasNetworkStorageStub = nil
+	if fake.getNasNetworkStorageReturnsOnCall == nil {
+		fake.getNasNetworkStorageReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_Storage
+			result2 error
+		})
+	}
+	fake.getNasNetworkStorageReturnsOnCall[i] = struct {
+		result1 datatypes.Network_Storage
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeNasNetworkStorageManager) ListNasNetworkStorages(arg1 string) ([]datatypes.Network_Storage, error) {
@@ -93,6 +172,8 @@ func (fake *FakeNasNetworkStorageManager) ListNasNetworkStoragesReturnsOnCall(i 
 func (fake *FakeNasNetworkStorageManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.getNasNetworkStorageMutex.RLock()
+	defer fake.getNasNetworkStorageMutex.RUnlock()
 	fake.listNasNetworkStoragesMutex.RLock()
 	defer fake.listNasNetworkStoragesMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}

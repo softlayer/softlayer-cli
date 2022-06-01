@@ -17,6 +17,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"nas-list": func(c *cli.Context) error {
 			return NewListCommand(ui, nasNetworkStorageManager).Run(c)
 		},
+		"nas-credentials": func(c *cli.Context) error {
+			return NewCredentialsCommand(ui, nasNetworkStorageManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -38,6 +41,7 @@ func NasNetworkStorageMetaData() cli.Command {
 		Usage:       "${COMMAND_NAME} sl nas",
 		Subcommands: []cli.Command{
 			NasListMetaData(),
+			NasCredentialsMetaData(),
 		},
 	}
 }
