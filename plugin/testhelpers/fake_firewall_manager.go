@@ -143,6 +143,20 @@ type FakeFirewallManager struct {
 		result1 []datatypes.Network_Vlan
 		result2 error
 	}
+	GetMultiVlanFirewallStub        func(int, string) (datatypes.Network_Vlan_Firewall, error)
+	getMultiVlanFirewallMutex       sync.RWMutex
+	getMultiVlanFirewallArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getMultiVlanFirewallReturns struct {
+		result1 datatypes.Network_Vlan_Firewall
+		result2 error
+	}
+	getMultiVlanFirewallReturnsOnCall map[int]struct {
+		result1 datatypes.Network_Vlan_Firewall
+		result2 error
+	}
 	GetMultiVlanFirewallsStub        func(string) ([]datatypes.Network_Gateway, error)
 	getMultiVlanFirewallsMutex       sync.RWMutex
 	getMultiVlanFirewallsArgsForCall []struct {
@@ -859,6 +873,71 @@ func (fake *FakeFirewallManager) GetFirewallsReturnsOnCall(i int, result1 []data
 	}{result1, result2}
 }
 
+func (fake *FakeFirewallManager) GetMultiVlanFirewall(arg1 int, arg2 string) (datatypes.Network_Vlan_Firewall, error) {
+	fake.getMultiVlanFirewallMutex.Lock()
+	ret, specificReturn := fake.getMultiVlanFirewallReturnsOnCall[len(fake.getMultiVlanFirewallArgsForCall)]
+	fake.getMultiVlanFirewallArgsForCall = append(fake.getMultiVlanFirewallArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetMultiVlanFirewallStub
+	fakeReturns := fake.getMultiVlanFirewallReturns
+	fake.recordInvocation("GetMultiVlanFirewall", []interface{}{arg1, arg2})
+	fake.getMultiVlanFirewallMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeFirewallManager) GetMultiVlanFirewallCallCount() int {
+	fake.getMultiVlanFirewallMutex.RLock()
+	defer fake.getMultiVlanFirewallMutex.RUnlock()
+	return len(fake.getMultiVlanFirewallArgsForCall)
+}
+
+func (fake *FakeFirewallManager) GetMultiVlanFirewallCalls(stub func(int, string) (datatypes.Network_Vlan_Firewall, error)) {
+	fake.getMultiVlanFirewallMutex.Lock()
+	defer fake.getMultiVlanFirewallMutex.Unlock()
+	fake.GetMultiVlanFirewallStub = stub
+}
+
+func (fake *FakeFirewallManager) GetMultiVlanFirewallArgsForCall(i int) (int, string) {
+	fake.getMultiVlanFirewallMutex.RLock()
+	defer fake.getMultiVlanFirewallMutex.RUnlock()
+	argsForCall := fake.getMultiVlanFirewallArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeFirewallManager) GetMultiVlanFirewallReturns(result1 datatypes.Network_Vlan_Firewall, result2 error) {
+	fake.getMultiVlanFirewallMutex.Lock()
+	defer fake.getMultiVlanFirewallMutex.Unlock()
+	fake.GetMultiVlanFirewallStub = nil
+	fake.getMultiVlanFirewallReturns = struct {
+		result1 datatypes.Network_Vlan_Firewall
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeFirewallManager) GetMultiVlanFirewallReturnsOnCall(i int, result1 datatypes.Network_Vlan_Firewall, result2 error) {
+	fake.getMultiVlanFirewallMutex.Lock()
+	defer fake.getMultiVlanFirewallMutex.Unlock()
+	fake.GetMultiVlanFirewallStub = nil
+	if fake.getMultiVlanFirewallReturnsOnCall == nil {
+		fake.getMultiVlanFirewallReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_Vlan_Firewall
+			result2 error
+		})
+	}
+	fake.getMultiVlanFirewallReturnsOnCall[i] = struct {
+		result1 datatypes.Network_Vlan_Firewall
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeFirewallManager) GetMultiVlanFirewalls(arg1 string) ([]datatypes.Network_Gateway, error) {
 	fake.getMultiVlanFirewallsMutex.Lock()
 	ret, specificReturn := fake.getMultiVlanFirewallsReturnsOnCall[len(fake.getMultiVlanFirewallsArgsForCall)]
@@ -1203,6 +1282,8 @@ func (fake *FakeFirewallManager) Invocations() map[string][][]interface{} {
 	defer fake.getFirewallPortSpeedMutex.RUnlock()
 	fake.getFirewallsMutex.RLock()
 	defer fake.getFirewallsMutex.RUnlock()
+	fake.getMultiVlanFirewallMutex.RLock()
+	defer fake.getMultiVlanFirewallMutex.RUnlock()
 	fake.getMultiVlanFirewallsMutex.RLock()
 	defer fake.getMultiVlanFirewallsMutex.RUnlock()
 	fake.getStandardFirewallRulesMutex.RLock()
