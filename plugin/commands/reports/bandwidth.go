@@ -148,8 +148,6 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 		sort.Sort(ByPrivateOut(tableRows))
 	case "pool":
 		sort.Sort(ByPool(tableRows))
-	default:
-		sort.Sort(ByHostname(tableRows))
 	}
 
 	table := cmd.UI.Table([]string{T("type"), T("hostname"), T("publicIn"), T("publicOut"), T("privateIn"), T("privateOut"), T("pool")})
@@ -255,7 +253,7 @@ func getVirtualBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, st
 		if virtualGuest.MetricTrackingObjectId != nil {
 			metricTrackingSummary, err := cmd.ReportManager.GetMetricTrackingSummaryData(*virtualGuest.MetricTrackingObjectId, start, end, validTypes)
 			if err != nil {
-				return metricObjects, cli.NewExitError(T("Failed to get metric tracking summary to Metric Tracking Object Id {{.MetricTrackingObjectId}}.",
+				return metricObjects, cli.NewExitError(T("Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
 					map[string]interface{}{"MetricTrackingObjectId": *virtualGuest.MetricTrackingObjectId})+err.Error(), 2)
 			}
 			pool := "-"
@@ -315,7 +313,7 @@ func getHardwareBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, s
 			if hardware.MetricTrackingObject.Id != nil {
 				metricTrackingSummary, err := cmd.ReportManager.GetMetricTrackingSummaryData(*hardware.MetricTrackingObject.Id, start, end, validTypes)
 				if err != nil {
-					return metricObjects, cli.NewExitError(T("Failed to get metric tracking summary to Metric Tracking Object Id {{.MetricTrackingObjectId}}.",
+					return metricObjects, cli.NewExitError(T("Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
 						map[string]interface{}{"MetricTrackingObjectId": *hardware.MetricTrackingObject.Id})+err.Error(), 2)
 				}
 				pool := "-"
@@ -375,7 +373,7 @@ func getPoolBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, start
 		if pool.MetricTrackingObjectId != nil {
 			metricTrackingSummary, err := cmd.ReportManager.GetMetricTrackingSummaryData(*pool.MetricTrackingObjectId, start, end, validTypes)
 			if err != nil {
-				return metricObjects, cli.NewExitError(T("Failed to get metric tracking summary to Metric Tracking Object Id {{.MetricTrackingObjectId}}.",
+				return metricObjects, cli.NewExitError(T("Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
 					map[string]interface{}{"MetricTrackingObjectId": *pool.MetricTrackingObjectId})+err.Error(), 2)
 			}
 			virtualGuestMetricObject := metricObject{
