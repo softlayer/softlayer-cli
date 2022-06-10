@@ -35,6 +35,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
@@ -199,6 +200,7 @@ func Namespaces() []plugin.Namespace {
 		ipsec.IpsecNamespace(),
 		licenses.LicensesNamespace(),
 		loadbal.LoadbalNamespace(),
+		nas.NasNetworkStorageNamespace(),
 		security.SecurityNamespace(),
 		securitygroup.SecurityGroupNamespace(),
 		subnet.SubnetNamespace(),
@@ -230,6 +232,7 @@ func getCLITopCommands() []cli.Command {
 		ipsec.IpsecMetaData(),
 		licenses.LicensesMetaData(),
 		loadbal.LoadbalMetaData(),
+		nas.NasNetworkStorageMetaData(),
 		security.SecurityMetaData(),
 		securitygroup.SecurityGroupMetaData(),
 		subnet.SubnetMetaData(),
