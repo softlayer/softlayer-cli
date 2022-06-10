@@ -44,7 +44,7 @@ var _ = Describe("reports bandwidth", func() {
 			})
 
 			It("Set invalid --sortby option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby=Type")
+				err := testhelpers.RunCommand(cliCommand, "--sortby=id")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid --sortBy option."))
 			})

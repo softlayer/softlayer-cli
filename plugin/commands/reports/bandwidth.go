@@ -3,6 +3,7 @@ package reports
 import (
 	"fmt"
 	"sort"
+	"strings"
 	"time"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -57,9 +58,9 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 	if !c.IsSet("sortby") {
 		sortBy = "hostname"
 	} else {
-		sortBy = c.String("sortby")
-		if sortBy != "type" && sortBy != "hostname" && sortBy != "publicIn" && sortBy != "publicOut" && sortBy != "privateIn" &&
-			sortBy != "privateOut" && sortBy != "pool" {
+		sortBy = strings.ToLower(c.String("sortby"))
+		if sortBy != "type" && sortBy != "hostname" && sortBy != "publicin" && sortBy != "publicout" && sortBy != "privatein" &&
+			sortBy != "privateout" && sortBy != "pool" {
 			return errors.NewInvalidUsageError(T("Invalid --sortBy option."))
 		}
 	}
@@ -138,13 +139,13 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 		sort.Sort(ByType(tableRows))
 	case "hostname":
 		sort.Sort(ByHostname(tableRows))
-	case "publicIn":
+	case "publicin":
 		sort.Sort(ByPublicIn(tableRows))
-	case "publicOut":
+	case "publicout":
 		sort.Sort(ByPublicOut(tableRows))
-	case "privateIn":
+	case "privatein":
 		sort.Sort(ByPrivateIn(tableRows))
-	case "privateOut":
+	case "privateout":
 		sort.Sort(ByPrivateOut(tableRows))
 	case "pool":
 		sort.Sort(ByPool(tableRows))
@@ -444,7 +445,7 @@ EXAMPLE:
 			},
 			cli.StringFlag{
 				Name:  "sortby",
-				Usage: T("Column to sort by [default: hostname]"),
+				Usage: T("Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: hostname]"),
 			},
 			cli.BoolFlag{
 				Name:  "virtual",
