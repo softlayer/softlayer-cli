@@ -8,6 +8,7 @@ import (
 
 type NasNetworkStorageManager interface {
 	ListNasNetworkStorages(mask string) ([]datatypes.Network_Storage, error)
+	GetNasNetworkStorage(netwokStorageId int, mask string) (datatypes.Network_Storage, error)
 }
 
 type nasNetworkStorageManager struct {
@@ -29,4 +30,14 @@ func (nas nasNetworkStorageManager) ListNasNetworkStorages(mask string) ([]datat
 		mask = "mask[eventCount,serviceResource[datacenter.name]]"
 	}
 	return nas.AccountService.Mask(mask).GetNasNetworkStorage()
+}
+
+//Get NAS Network Storage object
+//netwokStorageId: Id of Network Storage object
+//mask: object mask
+func (nas nasNetworkStorageManager) GetNasNetworkStorage(netwokStorageId int, mask string) (datatypes.Network_Storage, error) {
+	if mask == "" {
+		mask = "mask[accountId,capacityGb,createDate,id,nasType]"
+	}
+	return nas.NasNetworkStorageService.Id(netwokStorageId).Mask(mask).GetObject()
 }

@@ -21,6 +21,7 @@ func TestManagers(t *testing.T) {
 // These are all the commands in nas.go
 var availableCommands = []string{
 	"nas-list",
+	"nas-credentials",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
