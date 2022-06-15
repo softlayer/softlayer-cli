@@ -94,6 +94,10 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 		startDate = endDate.AddDate(0, -1, 0)
 	}
 
+	if !endDate.After(startDate) {
+		return errors.NewInvalidUsageError(T("End Date must be greater than Start Date."))
+	}
+
 	cmd.UI.Print(T("Generating bandwidth report for {{.startDate}} to {{.endDate}}",
 		map[string]interface{}{"startDate": startDate.Format("2006-01-02 15:04:05"), "endDate": endDate.Format("2006-01-02 15:04:05")}))
 

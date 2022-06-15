@@ -1332,6 +1332,8 @@
 "translation": "End Date"},
 {"id": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]",
 "translation": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]"},
+{"id": "End Date must be greater than Start Date.",
+"translation": "End Date must be greater than Start Date."},
 {"id": "End date for bandwidth reporting",
 "translation": "End date for bandwidth reporting"},
 {"id": "Ending Balance",

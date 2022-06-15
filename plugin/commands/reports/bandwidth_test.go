@@ -60,6 +60,12 @@ var _ = Describe("reports bandwidth", func() {
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid format date to --end."))
 			})
+
+			It("--end is not greater than --start", func() {
+				err := testhelpers.RunCommand(cliCommand, "--start=2022-04-05", "--end=2022-03-05")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: End Date must be greater than Start Date."))
+			})
 		})
 
 		Context("Return error", func() {
