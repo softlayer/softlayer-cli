@@ -1,14 +1,14 @@
 package file_test
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"github.com/softlayer/softlayer-go/session"
-
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/sl"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
@@ -17,18 +17,15 @@ import (
 
 var _ = Describe("file duplicate-convert-status", func() {
 	var (
-		fakeUI      *terminal.FakeUI
-		cmd         *block.DuplicateConvertStatusCommand
-		cliCommand  cli.Command
-		fakeSession *session.Session
-		fakeHandler *testhelpers.FakeTransportHandler
+		fakeUI             *terminal.FakeUI
+		fakeStorageManager *testhelpers.FakeStorageManager
+		cmd                *block.DuplicateConvertStatusCommand
+		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeSession = testhelpers.NewFakeSoftlayerSession(nil)
-		fakeHandler = testhelpers.GetSessionHandler(fakeSession)
-
-		cmd = block.NewDuplicateConvertStatusCommand(fakeUI, fakeSession)
+		fakeStorageManager = new(testhelpers.FakeStorageManager)
+		cmd = block.NewDuplicateConvertStatusCommand(fakeUI, fakeStorageManager)
 		cliCommand = cli.Command{
 			Name:        file.FileDuplicateConvertStatusMetaData().Name,
 			Description: file.FileDuplicateConvertStatusMetaData().Description,
@@ -37,10 +34,7 @@ var _ = Describe("file duplicate-convert-status", func() {
 			Action:      cmd.Run,
 		}
 	})
-	AfterEach(func() {
-		fakeHandler.ClearApiCallLogs()
-		fakeHandler.ClearErrors()
-	})
+
 	Describe("file duplicate-convert-status", func() {
 
 		Context("Return error", func() {
@@ -61,28 +55,34 @@ var _ = Describe("file duplicate-convert-status", func() {
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
+		})
 
-			It("SoftLayer_Network_Storage::getDuplicateConversionStatus() Error", func() {
-				fakeHandler.AddApiError("SoftLayer_Network_Storage", "getDuplicateConversionStatus", 500, "ERRRR")
-				fmt.Printf("API ERRORS ARE NOW\n%v", fakeHandler.ErrorMap)
+		Context("Return error", func() {
+			BeforeEach(func() {
+				fakeStorageManager.GetDuplicateConversionStatusReturns(datatypes.Container_Network_Storage_DuplicateConversionStatusInformation{}, errors.New("Failed to get duplicate conversion status"))
+			})
+			It("Failed get duplicate conversion status", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("ERRRR: ERRRR (HTTP 500)"))
-			})
-
-			AfterEach(func() {
-				fakeHandler.ClearErrors()
+				Expect(err.Error()).To(ContainSubstring("Failed to get duplicate conversion status"))
 			})
 		})
 
 		Context("Return no error", func() {
+			BeforeEach(func() {
+				fakerDuplicateConversionStatus := datatypes.Container_Network_Storage_DuplicateConversionStatusInformation{
+					ActiveConversionStartTime:       sl.String("2022-06-13 14:59:17"),
+					DeDuplicateConversionPercentage: sl.Int(68),
+					VolumeUsername:                  sl.String("SL02SEVC123456_74"),
+				}
+				fakeStorageManager.GetDuplicateConversionStatusReturns(fakerDuplicateConversionStatus, nil)
+			})
 			It("Return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456")
 				Expect(err).NotTo(HaveOccurred())
-				outputs := fakeUI.Outputs()
-				Expect(outputs).To(ContainSubstring("2022-06-13 14:59:17"))
-				Expect(outputs).To(ContainSubstring("68"))
-				Expect(outputs).To(ContainSubstring("SL02SEVC123456_74"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2022-06-13 14:59:17"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("68"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("SL02SEVC123456_74"))
 			})
 		})
 	})
