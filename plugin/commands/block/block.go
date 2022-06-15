@@ -117,7 +117,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return NewVolumeSetNoteCommand(ui, storageManager).Run(c)
 		},
 		"block-duplicate-convert-status": func(c *cli.Context) error {
-			return NewDuplicateConvertStatusCommand(ui, session).Run(c)
+			return NewDuplicateConvertStatusCommand(ui, storageManager).Run(c)
 		},
 		// Commands that are the same for file and block go here.
 		"file-disaster-recovery-failover": func(c *cli.Context) error {
@@ -127,7 +127,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 			return NewVolumeSetNoteCommand(ui, storageManager).Run(c)
 		},
 		"file-duplicate-convert-status": func(c *cli.Context) error {
-			return NewDuplicateConvertStatusCommand(ui, session).Run(c)
+			return NewDuplicateConvertStatusCommand(ui, storageManager).Run(c)
 		},
 	}
 

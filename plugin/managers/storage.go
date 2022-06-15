@@ -101,6 +101,7 @@ type StorageManager interface {
 	VolumeRefresh(volumeId int, snapshotId int) error
 	VolumeConvert(volumeId int) error
 	VolumeSetNote(volumeId int, note string) (bool, error)
+	GetDuplicateConversionStatus(volumeID int, mask string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error)
 }
 
 type storageManager struct {
@@ -836,4 +837,14 @@ func (s storageManager) GetSnapshotNotificationStatus(volumeId int) (int, error)
 
 	result, err := strconv.Atoi(status)
 	return result, err
+}
+
+//Get the status of the duplication process of a volume
+//volumeID: id of duplicated volume
+//mask: object mask
+func (s storageManager) GetDuplicateConversionStatus(volumeID int, mask string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error) {
+	if mask == "" {
+		mask = "mask[activeConversionStartTime,deDuplicateConversionPercentage,volumeUsername]"
+	}
+	return s.StorageService.Id(volumeID).Mask(mask).GetDuplicateConversionStatus()
 }
