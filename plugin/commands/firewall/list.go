@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -23,23 +24,38 @@ func NewListCommand(ui terminal.UI, firewallManager managers.FirewallManager) (c
 	}
 }
 
-
 func FirewallListMetaData() cli.Command {
 	return cli.Command{
 		Category:    "firewall",
 		Name:        "list",
-		Description:  T("List all firewalls on your account"),
-		Usage:       "${COMMAND_NAME} sl firewall list [OPTIONS]",
+		Description: T("List all firewalls on your account"),
+		Usage: T(`${COMMAND_NAME} sl firewall list [OPTIONS]
+
+EXAMPLE: 
+   ${COMMAND_NAME} sl firewall list`),
+		Flags: []cli.Flag{
+			metadata.OutputFlag(),
+		},
 	}
 }
 
-
 func (cmd *ListCommand) Run(c *cli.Context) error {
-	table := cmd.UI.Table([]string{T("firewall id"), T("type"), T("features"), T("server/vlan id")})
+
+	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	if err != nil {
+		return err
+	}
+
+	table := cmd.UI.Table([]string{T("Firewall ID"), T("Type"), T("Features"), T("Server/Vlan Id")})
 	fwvlans, err := cmd.FirewallManager.GetFirewalls()
 	if err != nil {
 		return cli.NewExitError(T("Failed to get firewalls on your account.\n")+err.Error(), 2)
 	}
+	multiVlanFirewalls, err := cmd.FirewallManager.GetMultiVlanFirewalls("")
+	if err != nil {
+		return cli.NewExitError(T("Failed to get multi vlan firewalls on your account.\n")+err.Error(), 2)
+	}
+
 	//dedicated firewalls
 	for _, vlan := range fwvlans {
 		if vlan.NetworkVlanFirewall == nil {
@@ -84,7 +100,27 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 			}
 		}
 	}
-	table.Print()
+
+	utils.PrintTable(cmd.UI, table, outputFormat)
+
+	cmd.UI.Print("\n")
+	table = cmd.UI.Table([]string{T("Firewall ID"), T("Firewall"), T("Type"), T("Hostname"), T("Location"), T("Public Ip"), T("Private Ip"), T("Associated VLANs"), T("Status")})
+	//multi vlan firewalls
+	for _, firewall := range multiVlanFirewalls {
+		table.Add(
+			fmt.Sprintf("multiVlan:%d", *firewall.NetworkFirewall.Id),
+			utils.FormatStringPointer(firewall.Name),
+			utils.FormatStringPointer(firewall.NetworkFirewall.FirewallType),
+			utils.FormatStringPointer(firewall.Members[0].Hardware.Hostname),
+			utils.FormatStringPointer(firewall.NetworkFirewall.Datacenter.Name),
+			utils.FormatStringPointer(firewall.PublicIpAddress.IpAddress),
+			utils.FormatStringPointer(firewall.PrivateIpAddress.IpAddress),
+			fmt.Sprintf("%d VLANs", len(firewall.InsideVlans)),
+			utils.FormatStringPointer(firewall.Status.KeyName),
+		)
+	}
+
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
 }
 

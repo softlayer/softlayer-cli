@@ -1,8 +1,5 @@
 package firewall
 
-// These commands are not actually part of the ibmcloud sl command at the moment because they are legacy
-// Need to update these at some point.
-
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
@@ -15,7 +12,7 @@ import (
 func FirewallNamespace() plugin.Namespace {
 	return plugin.Namespace{
 		ParentName:  "sl",
-		Name:        "file",
+		Name:        "firewall",
 		Description: T("Classic infrastructure Firewalls"),
 	}
 }
@@ -36,8 +33,7 @@ func FirewallMetaData() cli.Command {
 	}
 }
 
-
-func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
+func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	firewallManager := managers.NewFirewallManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
