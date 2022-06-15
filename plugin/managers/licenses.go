@@ -1,9 +1,6 @@
 package managers
 
 import (
-	"errors"
-	"strconv"
-
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
@@ -40,19 +37,21 @@ func (l licensesManager) CreateLicensesOptions() ([]datatypes.Product_Package, e
 //https://sldn.softlayer.com/reference/services/SoftLayer_Product_Order/placeOrder/
 func (l licensesManager) CreateLicense(datacenter string, itemKeyName string) (datatypes.Container_Product_Order_Receipt, error) {
 	BillingOrderService := services.GetProductOrderService(l.Session)
+	orderManager := NewOrderManager(l.Session)
 
 	licensePackageKeyName := "SOFTWARE_LICENSE_PACKAGE"
-	packageLicenseItemId, err := l.GetPackageId(licensePackageKeyName)
+	packageLicenseItemId, err := orderManager.GetPackageByKey(licensePackageKeyName, "")
 	if err != nil {
 		return datatypes.Container_Product_Order_Receipt{}, err
 	}
 
-	locationId, err := l.GetLocationId(datacenter)
+	locationId, err := orderManager.GetLocation(datacenter)
 	if err != nil {
 		return datatypes.Container_Product_Order_Receipt{}, err
 	}
 
-	itemPriceId, err := l.GetItemPriceId(packageLicenseItemId, itemKeyName)
+	arrayItemKeyName := []string{itemKeyName}
+	itemPriceId, err := orderManager.GetPriceIdList(licensePackageKeyName, arrayItemKeyName, 0)
 	if err != nil {
 		return datatypes.Container_Product_Order_Receipt{}, err
 	}
@@ -60,71 +59,16 @@ func (l licensesManager) CreateLicense(datacenter string, itemKeyName string) (d
 	licenseOrder := datatypes.Container_Product_Order_Software_License{
 		Container_Product_Order: datatypes.Container_Product_Order{
 			ComplexType: sl.String("SoftLayer_Container_Product_Order_Software_License"),
-			Location:    sl.String(strconv.Itoa(locationId)),
+			Location:    sl.String(locationId),
 			Prices: []datatypes.Product_Item_Price{
 				datatypes.Product_Item_Price{
-					Id: sl.Int(itemPriceId),
+					Id: sl.Int(itemPriceId[len(itemPriceId)-1]),
 				},
 			},
-			PackageId:        sl.Int(packageLicenseItemId),
+			PackageId:        sl.Int(*packageLicenseItemId.Id),
 			Quantity:         sl.Int(1),
 			UseHourlyPricing: sl.Bool(false),
 		},
 	}
 	return BillingOrderService.PlaceOrder(&licenseOrder, sl.Bool(false))
-}
-
-//Returns location id of datacenter for ProductOrder::placeOrder().
-//location: shortname of datacenter
-//https://sldn.softlayer.com/reference/services/SoftLayer_Location/getDatacenters/
-func (l licensesManager) GetLocationId(location string) (int, error) {
-	LocationDatacenterService := services.GetLocationDatacenterService(l.Session)
-	filters := filter.New(filter.Path("name").Eq(location))
-	datacenters, err := LocationDatacenterService.Mask("longName,id,name").Filter(filters.Build()).GetDatacenters()
-	if err != nil {
-		return 0, err
-	}
-	for _, datacenter := range datacenters {
-		if datacenter.Name != nil && *datacenter.Name == location {
-			return *datacenter.Id, nil
-		}
-	}
-	return 0, errors.New("Invalid datacenter name specified.")
-}
-
-//Returns a itemPriceId valid for a package.
-//itemPricesId: id from a specific package.
-//keyName: name from a specific item price.
-//https://sldn.softlayer.com/reference/services/SoftLayer_Product_Package/getItemPrices/
-func (l licensesManager) GetItemPriceId(itemPricesId int, keyName string) (int, error) {
-	ProductPackageService := services.GetProductPackageService(l.Session)
-	itemPrices, err := ProductPackageService.Id(itemPricesId).GetItems()
-	if err != nil {
-		return 0, err
-	}
-	for _, itemPrice := range itemPrices {
-		if *itemPrice.KeyName == keyName {
-			for _, price := range itemPrice.Prices {
-				return *price.Id, nil
-			}
-		}
-	}
-	return 0, errors.New("Invalid keyName.")
-}
-
-//Returns all the active packages. This will give you a basic description of the packages that are currently active
-//packageKeyName: name from a specific package.
-//https://sldn.softlayer.com/reference/services/SoftLayer_Product_Package/getAllObjects/
-func (l licensesManager) GetPackageId(packageKeyName string) (int, error) {
-	ProductPackageService := services.GetProductPackageService(l.Session)
-	packageItems, err := ProductPackageService.GetAllObjects()
-	if err != nil {
-		return 0, err
-	}
-	for _, packageItem := range packageItems {
-		if *packageItem.KeyName == packageKeyName {
-			return *packageItem.Id, nil
-		}
-	}
-	return 0, errors.New("Invalid package keyName.")
 }
