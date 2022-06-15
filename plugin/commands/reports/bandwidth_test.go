@@ -131,8 +131,7 @@ var _ = Describe("reports bandwidth", func() {
 			})
 			It("Failed to get virtual guest metric tracking summary", func() {
 				err := testhelpers.RunCommand(cliCommand, "--virtual")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get metric tracking summary"))
+				Expect(err).NotTo(HaveOccurred())
 			})
 		})
 
@@ -150,8 +149,7 @@ var _ = Describe("reports bandwidth", func() {
 			})
 			It("Failed to get pool metric tracking summary", func() {
 				err := testhelpers.RunCommand(cliCommand, "--pool")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get metric tracking summary"))
+				Expect(err).NotTo(HaveOccurred())
 			})
 		})
 
