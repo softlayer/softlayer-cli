@@ -56,7 +56,7 @@ func (re reportManager) GetVirtualDedicatedRacks(mask string) ([]datatypes.Netwo
 //id: Metric Tracking Object Id
 //mask: object mask
 func (re reportManager) GetMetricTrackingSummaryData(metricTrackingObjectID int, startDateTime datatypes.Time, endDateTime datatypes.Time, validTypes []datatypes.Container_Metric_Data_Type) ([]datatypes.Metric_Tracking_Object_Data, error) {
-	summaryPeriod := 3600
+	summaryPeriod := 86400
 	return re.MetricTrackingObjectService.Id(metricTrackingObjectID).GetSummaryData(
 		&startDateTime,
 		&endDateTime,

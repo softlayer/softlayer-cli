@@ -2,6 +2,7 @@ package reports
 
 import (
 	"fmt"
+	"log"
 	"sort"
 	"strings"
 	"time"
@@ -56,11 +57,11 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 
 	sortBy := ""
 	if !c.IsSet("sortby") {
-		sortBy = "hostname"
+		sortBy = "publicout"
 	} else {
 		sortBy = strings.ToLower(c.String("sortby"))
-		if sortBy != "type" && sortBy != "hostname" && sortBy != "publicin" && sortBy != "publicout" && sortBy != "privatein" &&
-			sortBy != "privateout" && sortBy != "pool" {
+		sortByOptions := []string{"type", "hostname", "publicin", "publicout", "privatein", "privateout", "pool"}
+		if !utils.WordInList(sortByOptions, sortBy) {
 			return errors.NewInvalidUsageError(T("Invalid --sortBy option."))
 		}
 	}
@@ -149,6 +150,8 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 		sort.Sort(ByPrivateOut(tableRows))
 	case "pool":
 		sort.Sort(ByPool(tableRows))
+	default:
+		sort.Sort(ByPublicOut(tableRows))
 	}
 
 	table := cmd.UI.Table([]string{T("type"), T("hostname"), T("publicIn"), T("publicOut"), T("privateIn"), T("privateOut"), T("pool")})
@@ -254,8 +257,9 @@ func getVirtualBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, st
 		if virtualGuest.MetricTrackingObjectId != nil {
 			metricTrackingSummary, err := cmd.ReportManager.GetMetricTrackingSummaryData(*virtualGuest.MetricTrackingObjectId, start, end, validTypes)
 			if err != nil {
-				return metricObjects, cli.NewExitError(T("Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-					map[string]interface{}{"MetricTrackingObjectId": *virtualGuest.MetricTrackingObjectId})+err.Error(), 2)
+				log.Println(T("Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
+					map[string]interface{}{"MetricTrackingObjectId": *virtualGuest.MetricTrackingObjectId}) + err.Error())
+				continue
 			}
 			pool := "-"
 			if virtualGuest.VirtualRack != nil {
@@ -314,8 +318,9 @@ func getHardwareBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, s
 			if hardware.MetricTrackingObject.Id != nil {
 				metricTrackingSummary, err := cmd.ReportManager.GetMetricTrackingSummaryData(*hardware.MetricTrackingObject.Id, start, end, validTypes)
 				if err != nil {
-					return metricObjects, cli.NewExitError(T("Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-						map[string]interface{}{"MetricTrackingObjectId": *hardware.MetricTrackingObject.Id})+err.Error(), 2)
+					log.Println(T("Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
+						map[string]interface{}{"MetricTrackingObjectId": *hardware.MetricTrackingObject.Id}) + err.Error())
+					continue
 				}
 				pool := "-"
 				if hardware.VirtualRack != nil {
@@ -374,8 +379,9 @@ func getPoolBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, start
 		if pool.MetricTrackingObjectId != nil {
 			metricTrackingSummary, err := cmd.ReportManager.GetMetricTrackingSummaryData(*pool.MetricTrackingObjectId, start, end, validTypes)
 			if err != nil {
-				return metricObjects, cli.NewExitError(T("Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-					map[string]interface{}{"MetricTrackingObjectId": *pool.MetricTrackingObjectId})+err.Error(), 2)
+				log.Println(T("Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
+					map[string]interface{}{"MetricTrackingObjectId": *pool.MetricTrackingObjectId}) + err.Error())
+				continue
 			}
 			virtualGuestMetricObject := metricObject{
 				id:         *pool.Id,
@@ -445,7 +451,7 @@ EXAMPLE:
 			},
 			cli.StringFlag{
 				Name:  "sortby",
-				Usage: T("Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: hostname]"),
+				Usage: T("Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]"),
 			},
 			cli.BoolFlag{
 				Name:  "virtual",
