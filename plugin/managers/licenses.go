@@ -138,26 +138,26 @@ func (l licensesManager) CancelItem(key string, immediate bool) error {
 	SoftwareAccountLicenseService := services.GetSoftwareAccountLicenseService(l.Session)
 	BillingItemService := services.GetBillingItemService(l.Session)
 	AccountService := services.GetAccountService(l.Session)
-	
+
+	filters := filter.New(filter.Path("key").Eq(key))
 	mask := "mask[softwareDescription,billingItem]"
-	licenses, err := SoftwareAccountLicenseService.Mask(mask).GetAllObjects()
+	licenses, err := SoftwareAccountLicenseService.Filter(filters.Build()).Mask(mask).GetAllObjects()
 	if err != nil {
 		return err
 	}
 
+	if len(licenses) == 0 {
+		return errors.New("SoftLayer_Exception_ObjectNotFound")
+	}
+
+	if licenses[len(licenses)-1].BillingItem == nil {
+		return errors.New("SoftLayer_Exception_ObjectNotFound")
+	}
 	cancelAssociatedBillingItems := true
 	Reason := "No longer needed"
 	user, _ := AccountService.Mask(mask).GetCurrentUser()
 	Note := fmt.Sprintf("Cancelled by %s with the ibmcloud sl", utils.FormatStringPointerName(user.Username))
-	
-	for _, license := range licenses {
-		if *license.Key == key {
-			if license.BillingItem != nil {
-				_, err := BillingItemService.Mask(mask).Id(*license.BillingItem.Id).CancelItem(&immediate, &cancelAssociatedBillingItems, &Reason, &Note)
-				return err
-			}
-			return errors.New("SoftLayer_Exception_ObjectNotFound")
-		}
-	}
-	return errors.New("SoftLayer_Exception_ObjectNotFound")
+
+	_, err = BillingItemService.Mask(mask).Id(*licenses[len(licenses)-1].BillingItem.Id).CancelItem(&immediate, &cancelAssociatedBillingItems, &Reason, &Note)
+	return err
 }
