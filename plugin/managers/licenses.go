@@ -1,11 +1,15 @@
 package managers
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type LicensesManager interface {
@@ -72,4 +76,34 @@ func (l licensesManager) CreateLicense(datacenter string, itemKeyName string) (d
 		},
 	}
 	return BillingOrderService.PlaceOrder(&licenseOrder, sl.Bool(false))
+}
+
+//Cancels a license using the request cancel item
+//https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Item/cancelItem/
+func (l licensesManager) CancelItem(key string, immediate bool) error {
+	SoftwareAccountLicenseService := services.GetSoftwareAccountLicenseService(l.Session)
+	BillingItemService := services.GetBillingItemService(l.Session)
+	AccountService := services.GetAccountService(l.Session)
+
+	filters := filter.New(filter.Path("key").Eq(key))
+	mask := "mask[softwareDescription,billingItem]"
+	licenses, err := SoftwareAccountLicenseService.Filter(filters.Build()).Mask(mask).GetAllObjects()
+	if err != nil {
+		return err
+	}
+
+	if len(licenses) == 0 {
+		return errors.New("SoftLayer_Exception_ObjectNotFound")
+	}
+
+	if licenses[len(licenses)-1].BillingItem == nil {
+		return errors.New("SoftLayer_Exception_ObjectNotFound")
+	}
+	cancelAssociatedBillingItems := true
+	Reason := "No longer needed"
+	user, _ := AccountService.Mask(mask).GetCurrentUser()
+	Note := fmt.Sprintf("Cancelled by %s with the ibmcloud sl", utils.FormatStringPointerName(user.Username))
+
+	_, err = BillingItemService.Mask(mask).Id(*licenses[len(licenses)-1].BillingItem.Id).CancelItem(&immediate, &cancelAssociatedBillingItems, &Reason, &Note)
+	return err
 }
