@@ -67,11 +67,11 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 
 	var options sl.Options
 	if option == "network" {
-		fmt.Println("network")
 		arrayNetwork := []string{}
 		var macAddress string
 		var parameter string
 		var response string
+
 		for _, network := range NetworkRequest() {
 			requestMac := strings.Contains(network, "MacAddresses")
 			if !requestMac {
@@ -79,71 +79,40 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 			} else {
 				parameter = ""
 			}
-			fmt.Println("network", network)
-			fmt.Println("macAddress", macAddress)
-			fmt.Println("parameter", parameter)
-			fmt.Println("**********************")
-			// result, err := cmd.MetadataManager.CallAPIService("SoftLayer_Resource_Metadata", network, options, parameter)
-			// if err != nil {
-			// 	return err
-			// }
 
-			// response, err = ObtainResponse(result, cmd.UI)
-			// if err != nil {
-			// 	return err
-			// }
-			response = MockReturnMetadataNetwork(network, macAddress)
+			result, err := cmd.MetadataManager.CallAPIService("SoftLayer_Resource_Metadata", network, options, parameter)
+			if err != nil {
+				return err
+			}
+
+			response, err = ObtainResponse(result, cmd.UI)
+			if err != nil {
+				return err
+			}
+
 			if requestMac {
-				fmt.Println("mac response")
 				macAddress = response
 			}
+
 			arrayNetwork = append(arrayNetwork, response)
 		}
+
 		printNetwork(cmd.UI, arrayNetwork)
 		return nil
 	}
 
 	request := availableMetadataRequests()[option]
-
+	
 	result, err := cmd.MetadataManager.CallAPIService("SoftLayer_Resource_Metadata", request, options, "")
 	if err != nil {
 		return err
 	}
-
 	response, err := ObtainResponse(result, cmd.UI)
 	if err != nil {
 		return err
 	}
 	cmd.UI.Print(response)
 	return nil
-}
-
-func MockReturnMetadataNetwork(option string, macAddress string) string {
-	if option == "getFrontendMacAddresses" {
-		return "06:99:63:17:c8:f1"
-	}
-	if option == "getRouter" && macAddress == "06:99:63:17:c8:f1" {
-		return "fcr02.dal10"
-	}
-	if option == "getVlans" && macAddress == "06:99:63:17:c8:f1" {
-		return "1647"
-	}
-	if option == "getVlanIds" && macAddress == "06:99:63:17:c8:f1" {
-		return "3180592"
-	}
-	if option == "getBackendMacAddresses" {
-		return "06:d5:ee:60:7c:b9"
-	}
-	if option == "getRouter" && macAddress == "06:d5:ee:60:7c:b9" {
-		return "bcr02.dal10"
-	}
-	if option == "getVlans" && macAddress == "06:d5:ee:60:7c:b9" {
-		return "1866"
-	}
-	if option == "getVlanIds" && macAddress == "06:d5:ee:60:7c:b9" {
-		return "3180594"
-	}
-	return ""
 }
 
 func printNetwork(ui terminal.UI, arrayNetwork []string) {
