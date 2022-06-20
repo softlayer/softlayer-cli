@@ -7,6 +7,7 @@ import (
 	"github.com/urfave/cli"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 /*
@@ -16,9 +17,14 @@ for every command.
 */
 
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
+	reportManager := managers.NewReportManager(session)
+
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 		"report-datacenter-closures": func(c *cli.Context) error {
 			return NewDCClosuresCommand(ui, session).Run(c)
+		},
+		"report-bandwidth": func(c *cli.Context) error {
+			return NewBandwidthCommand(ui, reportManager).Run(c)
 		},
 	}
 
@@ -41,6 +47,7 @@ func ReportsMetaData() cli.Command {
 		Usage:       "${COMMAND_NAME} sl report",
 		Subcommands: []cli.Command{
 			DCClosuresMetaData(),
+			ReportBandwidthMetaData(),
 		},
 	}
 }
