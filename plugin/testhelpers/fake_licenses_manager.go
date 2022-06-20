@@ -9,6 +9,18 @@ import (
 )
 
 type FakeLicensesManager struct {
+	CancelItemStub        func(string, bool) error
+	cancelItemMutex       sync.RWMutex
+	cancelItemArgsForCall []struct {
+		arg1 string
+		arg2 bool
+	}
+	cancelItemReturns struct {
+		result1 error
+	}
+	cancelItemReturnsOnCall map[int]struct {
+		result1 error
+	}
 	CreateLicenseStub        func(string, string) (datatypes.Container_Product_Order_Receipt, error)
 	createLicenseMutex       sync.RWMutex
 	createLicenseArgsForCall []struct {
@@ -37,6 +49,68 @@ type FakeLicensesManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeLicensesManager) CancelItem(arg1 string, arg2 bool) error {
+	fake.cancelItemMutex.Lock()
+	ret, specificReturn := fake.cancelItemReturnsOnCall[len(fake.cancelItemArgsForCall)]
+	fake.cancelItemArgsForCall = append(fake.cancelItemArgsForCall, struct {
+		arg1 string
+		arg2 bool
+	}{arg1, arg2})
+	stub := fake.CancelItemStub
+	fakeReturns := fake.cancelItemReturns
+	fake.recordInvocation("CancelItem", []interface{}{arg1, arg2})
+	fake.cancelItemMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeLicensesManager) CancelItemCallCount() int {
+	fake.cancelItemMutex.RLock()
+	defer fake.cancelItemMutex.RUnlock()
+	return len(fake.cancelItemArgsForCall)
+}
+
+func (fake *FakeLicensesManager) CancelItemCalls(stub func(string, bool) error) {
+	fake.cancelItemMutex.Lock()
+	defer fake.cancelItemMutex.Unlock()
+	fake.CancelItemStub = stub
+}
+
+func (fake *FakeLicensesManager) CancelItemArgsForCall(i int) (string, bool) {
+	fake.cancelItemMutex.RLock()
+	defer fake.cancelItemMutex.RUnlock()
+	argsForCall := fake.cancelItemArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeLicensesManager) CancelItemReturns(result1 error) {
+	fake.cancelItemMutex.Lock()
+	defer fake.cancelItemMutex.Unlock()
+	fake.CancelItemStub = nil
+	fake.cancelItemReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeLicensesManager) CancelItemReturnsOnCall(i int, result1 error) {
+	fake.cancelItemMutex.Lock()
+	defer fake.cancelItemMutex.Unlock()
+	fake.CancelItemStub = nil
+	if fake.cancelItemReturnsOnCall == nil {
+		fake.cancelItemReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.cancelItemReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeLicensesManager) CreateLicense(arg1 string, arg2 string) (datatypes.Container_Product_Order_Receipt, error) {
@@ -163,6 +237,8 @@ func (fake *FakeLicensesManager) CreateLicensesOptionsReturnsOnCall(i int, resul
 func (fake *FakeLicensesManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.cancelItemMutex.RLock()
+	defer fake.cancelItemMutex.RUnlock()
 	fake.createLicenseMutex.RLock()
 	defer fake.createLicenseMutex.RUnlock()
 	fake.createLicensesOptionsMutex.RLock()
