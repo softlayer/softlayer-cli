@@ -28,6 +28,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/eventlog"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
@@ -35,6 +36,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
@@ -191,14 +193,15 @@ func Namespaces() []plugin.Namespace {
 		file.FileNamespace(),
 		dns.DnsNamespace(),
 		eventlog.EventLogNamespace(),
+		firewall.FirewallNamespace(),
 		email.EmailNamespace(),
-		//firewall.FirewallNamespace(),
 		globalip.GlobalIpNamespace(),
 		hardware.HardwareNamespace(),
 		image.ImageNamespace(),
 		ipsec.IpsecNamespace(),
 		licenses.LicensesNamespace(),
 		loadbal.LoadbalNamespace(),
+		nas.NasNetworkStorageNamespace(),
 		security.SecurityNamespace(),
 		securitygroup.SecurityGroupNamespace(),
 		subnet.SubnetNamespace(),
@@ -222,8 +225,8 @@ func getCLITopCommands() []cli.Command {
 		file.FileMetaData(),
 		dns.DnsMetaData(),
 		eventlog.EventLogMetaData(),
+		firewall.FirewallMetaData(),
 		email.EmailMetaData(),
-		// firewall.FirewallMetaData(),
 		globalip.GlobalIpMetaData(),
 		hardware.HardwareMetaData(),
 		image.ImageMetaData(),
@@ -231,6 +234,7 @@ func getCLITopCommands() []cli.Command {
 		licenses.LicensesMetaData(),
 		loadbal.LoadbalMetaData(),
 		commandMetadata.MetadataMetadata(),
+		nas.NasNetworkStorageMetaData(),
 		security.SecurityMetaData(),
 		securitygroup.SecurityGroupMetaData(),
 		subnet.SubnetMetaData(),

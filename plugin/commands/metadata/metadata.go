@@ -107,20 +107,20 @@ func printNetwork(ui terminal.UI, arrayNetwork []string) {
 		T("Name"),
 		T("Value"),
 	})
-	tableFront.Add("Mac addresses", arrayNetwork[0])
-	tableFront.Add("Router", arrayNetwork[1])
-	tableFront.Add("Vlans", arrayNetwork[2])
-	tableFront.Add("Vlan ids", arrayNetwork[3])
+	tableFront.Add(T("Mac addresses"), arrayNetwork[0])
+	tableFront.Add(T("Router"), arrayNetwork[1])
+	tableFront.Add(T("Vlans"), arrayNetwork[2])
+	tableFront.Add(T("Vlan ids"), arrayNetwork[3])
 	tableFront.Print()
 
 	tableBack := ui.Table([]string{
 		T("Name"),
 		T("Value"),
 	})
-	tableBack.Add("Mac addresses", arrayNetwork[4])
-	tableBack.Add("Router", arrayNetwork[5])
-	tableBack.Add("Vlans", arrayNetwork[6])
-	tableBack.Add("Vlan ids", arrayNetwork[7])
+	tableBack.Add(T("Mac addresses"), arrayNetwork[4])
+	tableBack.Add(T("Router"), arrayNetwork[5])
+	tableBack.Add(T("Vlans"), arrayNetwork[6])
+	tableBack.Add(T("Vlan ids"), arrayNetwork[7])
 	tableBack.Print()
 }
 

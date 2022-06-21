@@ -20,12 +20,14 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/eventlog"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
@@ -135,6 +137,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
+	// ibmcloud sl nas
+	nasCommands := nas.GetCommandActionBindings(context, ui, session)
+	for name, action := range nasCommands {
+		CommandActionBindings[name] = action
+	}
+
 	// ibmcloud sl vs
 	vsCommands := virtual.GetCommandActionBindings(context, ui, session)
 	for name, action := range vsCommands {
@@ -205,13 +213,10 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	}
 
 	// ibmcloud sl firewall
-	// Deprecated for now.
-	/*
-		firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
-		for name, action := range firewallCommands {
-			CommandActionBindings[name] = action
-		}
-	*/
+	firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
+	for name, action := range firewallCommands {
+		CommandActionBindings[name] = action
+	}
 
 	actionWithPreCheck := make(map[string]func(c *cli.Context) error)
 

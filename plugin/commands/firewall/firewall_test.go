@@ -1,4 +1,4 @@
-package reports_test
+package firewall_test
 
 import (
 	"reflect"
@@ -9,29 +9,33 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 func TestManagers(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Report Suite")
+	RunSpecs(t, "Firewall Suite")
 }
 
+// These are all the commands in firewall.go
 var availableCommands = []string{
-	"report-datacenter-closures",
-	"report-bandwidth",
+	"firewall-add",
+	"firewall-cancel",
+	"firewall-detail",
+	"firewall-edit",
+	"firewall-list",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
-var _ = Describe("Test report.GetCommandActionBindings()", func() {
+var _ = Describe("Test firewall.GetCommandActionBindings()", func() {
 	var (
 		context plugin.PluginContext
 	)
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
 	context = plugin.InitPluginContext("softlayer")
-	commands := reports.GetCommandActionBindings(context, fakeUI, fakeSession)
+	commands := firewall.GetCommandActionBindings(context, fakeUI, fakeSession)
 
 	Context("Test Actions", func() {
 		for _, cmdName := range availableCommands {
@@ -67,25 +71,25 @@ var _ = Describe("Test report.GetCommandActionBindings()", func() {
 						break
 					}
 				}
-				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in user.go")
+				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in firewall.go")
 			})
 		}
 	})
 
-	Context("Report Namespace", func() {
-		It("Report Name Space", func() {
-			Expect(reports.ReportsNamespace().ParentName).To(ContainSubstring("sl"))
-			Expect(reports.ReportsNamespace().Name).To(ContainSubstring("report"))
-			Expect(reports.ReportsNamespace().Description).To(ContainSubstring("Classic Infrastructure Reports"))
+	Context("Firewall Namespace", func() {
+		It("Firewall Name Space", func() {
+			Expect(firewall.FirewallNamespace().ParentName).To(ContainSubstring("sl"))
+			Expect(firewall.FirewallNamespace().Name).To(ContainSubstring("firewall"))
+			Expect(firewall.FirewallNamespace().Description).To(ContainSubstring("Classic infrastructure Firewalls"))
 		})
 	})
 
 	Context("User MetaData", func() {
 		It("User MetaData", func() {
-			Expect(reports.ReportsMetaData().Category).To(ContainSubstring("sl"))
-			Expect(reports.ReportsMetaData().Name).To(ContainSubstring("report"))
-			Expect(reports.ReportsMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl report"))
-			Expect(reports.ReportsMetaData().Description).To(ContainSubstring("Classic Infrastructure Reports"))
+			Expect(firewall.FirewallMetaData().Category).To(ContainSubstring("sl"))
+			Expect(firewall.FirewallMetaData().Name).To(ContainSubstring("firewall"))
+			Expect(firewall.FirewallMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl firewall"))
+			Expect(firewall.FirewallMetaData().Description).To(ContainSubstring("Classic infrastructure Firewalls"))
 		})
 	})
 })

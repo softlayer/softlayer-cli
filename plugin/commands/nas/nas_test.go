@@ -1,4 +1,4 @@
-package reports_test
+package nas_test
 
 import (
 	"reflect"
@@ -9,29 +9,30 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 func TestManagers(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Report Suite")
+	RunSpecs(t, "Network Attached Storage Suite")
 }
 
+// These are all the commands in nas.go
 var availableCommands = []string{
-	"report-datacenter-closures",
-	"report-bandwidth",
+	"nas-list",
+	"nas-credentials",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
-var _ = Describe("Test report.GetCommandActionBindings()", func() {
+var _ = Describe("Test nas.GetCommandActionBindings()", func() {
 	var (
 		context plugin.PluginContext
 	)
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
 	context = plugin.InitPluginContext("softlayer")
-	commands := reports.GetCommandActionBindings(context, fakeUI, fakeSession)
+	commands := nas.GetCommandActionBindings(context, fakeUI, fakeSession)
 
 	Context("Test Actions", func() {
 		for _, cmdName := range availableCommands {
@@ -67,25 +68,25 @@ var _ = Describe("Test report.GetCommandActionBindings()", func() {
 						break
 					}
 				}
-				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in user.go")
+				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in nas.go")
 			})
 		}
 	})
 
-	Context("Report Namespace", func() {
-		It("Report Name Space", func() {
-			Expect(reports.ReportsNamespace().ParentName).To(ContainSubstring("sl"))
-			Expect(reports.ReportsNamespace().Name).To(ContainSubstring("report"))
-			Expect(reports.ReportsNamespace().Description).To(ContainSubstring("Classic Infrastructure Reports"))
+	Context("Network Attached Storage Namespace", func() {
+		It("Network Attached Storage Name Space", func() {
+			Expect(nas.NasNetworkStorageNamespace().ParentName).To(ContainSubstring("sl"))
+			Expect(nas.NasNetworkStorageNamespace().Name).To(ContainSubstring("nas"))
+			Expect(nas.NasNetworkStorageNamespace().Description).To(ContainSubstring("Classic infrastructure Network Attached Storage"))
 		})
 	})
 
-	Context("User MetaData", func() {
-		It("User MetaData", func() {
-			Expect(reports.ReportsMetaData().Category).To(ContainSubstring("sl"))
-			Expect(reports.ReportsMetaData().Name).To(ContainSubstring("report"))
-			Expect(reports.ReportsMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl report"))
-			Expect(reports.ReportsMetaData().Description).To(ContainSubstring("Classic Infrastructure Reports"))
+	Context("Network Attached Storage MetaData", func() {
+		It("Network Attached Storage MetaData", func() {
+			Expect(nas.NasNetworkStorageMetaData().Category).To(ContainSubstring("sl"))
+			Expect(nas.NasNetworkStorageMetaData().Name).To(ContainSubstring("nas"))
+			Expect(nas.NasNetworkStorageMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl nas"))
+			Expect(nas.NasNetworkStorageMetaData().Description).To(ContainSubstring("Classic infrastructure Network Attached Storage"))
 		})
 	})
 })
