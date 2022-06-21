@@ -9,7 +9,7 @@ import (
 )
 
 type MetadataManager interface {
-	CallAPIService(string, string, sl.Options, string) ([]byte, error)
+	CallAPIService(string, string, sl.Options, string) (string, error)
 }
 
 type metadataManager struct {
@@ -22,11 +22,10 @@ func NewMetadataManager(session *session.Session) *metadataManager {
 	}
 }
 
-func (call metadataManager) CallAPIService(service string, method string, options sl.Options, parameters string) ([]byte, error) {
+func (call metadataManager) CallAPIService(service string, method string, options sl.Options, parameters string) (string, error) {
 	call.Session.Endpoint = *sl.String("https://api.service.softlayer.com/rest/v3.1")
 
 	var output string
-
 	var arg []interface{}
 	if parameters != "" {
 		_parameters := []byte(parameters)
@@ -36,5 +35,5 @@ func (call metadataManager) CallAPIService(service string, method string, option
 		}
 	}
 	err := call.Session.DoRequest(service, method, arg, &options, &output)
-	return []byte(output), err
+	return output, err
 }

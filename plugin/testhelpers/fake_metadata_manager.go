@@ -9,7 +9,7 @@ import (
 )
 
 type FakeMetadataManager struct {
-	CallAPIServiceStub        func(string, string, sl.Options, string) ([]byte, error)
+	CallAPIServiceStub        func(string, string, sl.Options, string) (string, error)
 	callAPIServiceMutex       sync.RWMutex
 	callAPIServiceArgsForCall []struct {
 		arg1 string
@@ -18,18 +18,18 @@ type FakeMetadataManager struct {
 		arg4 string
 	}
 	callAPIServiceReturns struct {
-		result1 []byte
+		result1 string
 		result2 error
 	}
 	callAPIServiceReturnsOnCall map[int]struct {
-		result1 []byte
+		result1 string
 		result2 error
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeMetadataManager) CallAPIService(arg1 string, arg2 string, arg3 sl.Options, arg4 string) ([]byte, error) {
+func (fake *FakeMetadataManager) CallAPIService(arg1 string, arg2 string, arg3 sl.Options, arg4 string) (string, error) {
 	fake.callAPIServiceMutex.Lock()
 	ret, specificReturn := fake.callAPIServiceReturnsOnCall[len(fake.callAPIServiceArgsForCall)]
 	fake.callAPIServiceArgsForCall = append(fake.callAPIServiceArgsForCall, struct {
@@ -57,7 +57,7 @@ func (fake *FakeMetadataManager) CallAPIServiceCallCount() int {
 	return len(fake.callAPIServiceArgsForCall)
 }
 
-func (fake *FakeMetadataManager) CallAPIServiceCalls(stub func(string, string, sl.Options, string) ([]byte, error)) {
+func (fake *FakeMetadataManager) CallAPIServiceCalls(stub func(string, string, sl.Options, string) (string, error)) {
 	fake.callAPIServiceMutex.Lock()
 	defer fake.callAPIServiceMutex.Unlock()
 	fake.CallAPIServiceStub = stub
@@ -70,28 +70,28 @@ func (fake *FakeMetadataManager) CallAPIServiceArgsForCall(i int) (string, strin
 	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4
 }
 
-func (fake *FakeMetadataManager) CallAPIServiceReturns(result1 []byte, result2 error) {
+func (fake *FakeMetadataManager) CallAPIServiceReturns(result1 string, result2 error) {
 	fake.callAPIServiceMutex.Lock()
 	defer fake.callAPIServiceMutex.Unlock()
 	fake.CallAPIServiceStub = nil
 	fake.callAPIServiceReturns = struct {
-		result1 []byte
+		result1 string
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeMetadataManager) CallAPIServiceReturnsOnCall(i int, result1 []byte, result2 error) {
+func (fake *FakeMetadataManager) CallAPIServiceReturnsOnCall(i int, result1 string, result2 error) {
 	fake.callAPIServiceMutex.Lock()
 	defer fake.callAPIServiceMutex.Unlock()
 	fake.CallAPIServiceStub = nil
 	if fake.callAPIServiceReturnsOnCall == nil {
 		fake.callAPIServiceReturnsOnCall = make(map[int]struct {
-			result1 []byte
+			result1 string
 			result2 error
 		})
 	}
 	fake.callAPIServiceReturnsOnCall[i] = struct {
-		result1 []byte
+		result1 string
 		result2 error
 	}{result1, result2}
 }

@@ -1,8 +1,6 @@
 package metadata
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -70,7 +68,6 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 		arrayNetwork := []string{}
 		var macAddress string
 		var parameter string
-		var response string
 
 		for _, network := range NetworkRequest() {
 			requestMac := strings.Contains(network, "MacAddresses")
@@ -80,12 +77,7 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 				parameter = ""
 			}
 
-			result, err := cmd.MetadataManager.CallAPIService("SoftLayer_Resource_Metadata", network, options, parameter)
-			if err != nil {
-				return err
-			}
-
-			response, err = ObtainResponse(result, cmd.UI)
+			response, err := cmd.MetadataManager.CallAPIService("SoftLayer_Resource_Metadata", network, options, parameter)
 			if err != nil {
 				return err
 			}
@@ -102,12 +94,7 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 	}
 
 	request := availableMetadataRequests()[option]
-	
-	result, err := cmd.MetadataManager.CallAPIService("SoftLayer_Resource_Metadata", request, options, "")
-	if err != nil {
-		return err
-	}
-	response, err := ObtainResponse(result, cmd.UI)
+	response, err := cmd.MetadataManager.CallAPIService("SoftLayer_Resource_Metadata", request, options, "")
 	if err != nil {
 		return err
 	}
@@ -135,21 +122,6 @@ func printNetwork(ui terminal.UI, arrayNetwork []string) {
 	tableBack.Add("Vlans", arrayNetwork[6])
 	tableBack.Add("Vlan ids", arrayNetwork[7])
 	tableBack.Print()
-}
-
-func ObtainResponse(result []byte, ui terminal.UI) (string, error) {
-	var out bytes.Buffer
-	err := json.Indent(&out, result, "", "\t")
-
-	if err != nil {
-		_, err := ui.Writer().Write(result)
-		if err != nil {
-			return "", err
-		}
-	} else {
-		return out.String(), nil
-	}
-	return "", err
 }
 
 func NetworkRequest() []string {
