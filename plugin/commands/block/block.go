@@ -110,6 +110,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		"block-volume-convert": func(c *cli.Context) error {
 			return NewVolumeConvertCommand(ui, storageManager).Run(c)
 		},
+		"block-object-list": func(c *cli.Context) error {
+			return NewObjectListCommand(ui, storageManager).Run(c)
+		},
 		"block-disaster-recovery-failover": func(c *cli.Context) error {
 			return NewDisasterRecoveryFailoverCommand(ui, storageManager).Run(c)
 		},
@@ -177,6 +180,7 @@ func BlockMetaData() cli.Command {
 			BlockVolumeSnapshotSetNotificationMetaData(),
 			BlockVolumeSnapshotGetNotificationStatusMetaData(),
 			BlockVolumeSetNoteMetaData(),
+			BlockObjectListMetaData(),
 		},
 	}
 }
