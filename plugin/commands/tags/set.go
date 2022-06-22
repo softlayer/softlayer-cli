@@ -29,6 +29,7 @@ func (cmd *SetCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to set tags.\n")+err.Error(), 2)
 	}
 	if response {
+		cmd.UI.Ok()
 		cmd.UI.Print("Set tags successfully")
 	}
 
