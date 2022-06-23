@@ -36,6 +36,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
@@ -206,6 +207,7 @@ func Namespaces() []plugin.Namespace {
 		subnet.SubnetNamespace(),
 		ticket.TicketNamespace(),
 		placementgroup.PlacementGroupNamespace(),
+		objectstorage.ObjectStorageNamespace(),
 		order.OrderNamespace(),
 		vlan.VlanNamespace(),
 		tags.TagsNamespace(),
@@ -239,6 +241,7 @@ func getCLITopCommands() []cli.Command {
 		ticket.TicketMetaData(),
 		vlan.VlanMetaData(),
 		placementgroup.PlacementGroupMetaData(),
+		objectstorage.ObjectStorageMetaData(),
 		order.OrderMetaData(),
 		user.UserMetaData(),
 		callapi.CallAPIMetadata(),

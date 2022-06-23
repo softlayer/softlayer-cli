@@ -27,6 +27,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
@@ -209,6 +210,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl firewall
 	firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
 	for name, action := range firewallCommands {
+		CommandActionBindings[name] = action
+	}
+
+	//ibmcloud sl object-storage
+	objectstorageCommands := objectstorage.GetCommandActionBindings(context, ui, session)
+	for name, action := range objectstorageCommands {
 		CommandActionBindings[name] = action
 	}
 
