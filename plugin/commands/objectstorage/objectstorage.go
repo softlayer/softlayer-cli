@@ -11,9 +11,9 @@ import (
 )
 
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	
+
 	objectStorageManager := managers.NewObjectStorageManager(session)
-	
+
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 		"object-storage-accounts": func(c *cli.Context) error {
 			return NewAccountsCommand(ui, objectStorageManager).Run(c)

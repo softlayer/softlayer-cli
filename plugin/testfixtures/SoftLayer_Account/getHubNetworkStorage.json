@@ -1,0 +1,13 @@
+[
+    {
+        "id": 123456789,
+        "username": "SLUSER",
+        "serviceResource": {
+            "id": 7654,
+            "name": "Cleversafe - US Region",
+            "type": {
+                "type": "CLEVERSAFE"
+            }
+        }
+    }
+]

@@ -53,7 +53,7 @@ func (cmd *AccountsCommand) Run(c *cli.Context) error {
 		limit = c.Int("limit")
 	}
 
-	mask := "mask[ id,username,notes,vendorName,serviceResource ]"
+	mask := "mask[id,username,notes,vendorName,serviceResource]"
 	accounts, err := cmd.ObjectStorageManager.GetAccounts(mask, limit)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get account’s associated Virtual Storage volumes.")+err.Error(), 2)
