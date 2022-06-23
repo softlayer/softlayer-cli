@@ -29,6 +29,19 @@ type FakeOrderManager struct {
 		result1 interface{}
 		result2 error
 	}
+	GetActiveQuotesStub        func(string) ([]datatypes.Billing_Order_Quote, error)
+	getActiveQuotesMutex       sync.RWMutex
+	getActiveQuotesArgsForCall []struct {
+		arg1 string
+	}
+	getActiveQuotesReturns struct {
+		result1 []datatypes.Billing_Order_Quote
+		result2 error
+	}
+	getActiveQuotesReturnsOnCall map[int]struct {
+		result1 []datatypes.Billing_Order_Quote
+		result2 error
+	}
 	GetLocationStub        func(string) (string, error)
 	getLocationMutex       sync.RWMutex
 	getLocationArgsForCall []struct {
@@ -303,6 +316,70 @@ func (fake *FakeOrderManager) GenerateOrderReturnsOnCall(i int, result1 interfac
 	}
 	fake.generateOrderReturnsOnCall[i] = struct {
 		result1 interface{}
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetActiveQuotes(arg1 string) ([]datatypes.Billing_Order_Quote, error) {
+	fake.getActiveQuotesMutex.Lock()
+	ret, specificReturn := fake.getActiveQuotesReturnsOnCall[len(fake.getActiveQuotesArgsForCall)]
+	fake.getActiveQuotesArgsForCall = append(fake.getActiveQuotesArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetActiveQuotesStub
+	fakeReturns := fake.getActiveQuotesReturns
+	fake.recordInvocation("GetActiveQuotes", []interface{}{arg1})
+	fake.getActiveQuotesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) GetActiveQuotesCallCount() int {
+	fake.getActiveQuotesMutex.RLock()
+	defer fake.getActiveQuotesMutex.RUnlock()
+	return len(fake.getActiveQuotesArgsForCall)
+}
+
+func (fake *FakeOrderManager) GetActiveQuotesCalls(stub func(string) ([]datatypes.Billing_Order_Quote, error)) {
+	fake.getActiveQuotesMutex.Lock()
+	defer fake.getActiveQuotesMutex.Unlock()
+	fake.GetActiveQuotesStub = stub
+}
+
+func (fake *FakeOrderManager) GetActiveQuotesArgsForCall(i int) string {
+	fake.getActiveQuotesMutex.RLock()
+	defer fake.getActiveQuotesMutex.RUnlock()
+	argsForCall := fake.getActiveQuotesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeOrderManager) GetActiveQuotesReturns(result1 []datatypes.Billing_Order_Quote, result2 error) {
+	fake.getActiveQuotesMutex.Lock()
+	defer fake.getActiveQuotesMutex.Unlock()
+	fake.GetActiveQuotesStub = nil
+	fake.getActiveQuotesReturns = struct {
+		result1 []datatypes.Billing_Order_Quote
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetActiveQuotesReturnsOnCall(i int, result1 []datatypes.Billing_Order_Quote, result2 error) {
+	fake.getActiveQuotesMutex.Lock()
+	defer fake.getActiveQuotesMutex.Unlock()
+	fake.GetActiveQuotesStub = nil
+	if fake.getActiveQuotesReturnsOnCall == nil {
+		fake.getActiveQuotesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Billing_Order_Quote
+			result2 error
+		})
+	}
+	fake.getActiveQuotesReturnsOnCall[i] = struct {
+		result1 []datatypes.Billing_Order_Quote
 		result2 error
 	}{result1, result2}
 }
@@ -1193,6 +1270,8 @@ func (fake *FakeOrderManager) Invocations() map[string][][]interface{} {
 	defer fake.invocationsMutex.RUnlock()
 	fake.generateOrderMutex.RLock()
 	defer fake.generateOrderMutex.RUnlock()
+	fake.getActiveQuotesMutex.RLock()
+	defer fake.getActiveQuotesMutex.RUnlock()
 	fake.getLocationMutex.RLock()
 	defer fake.getLocationMutex.RUnlock()
 	fake.getPackageByKeyMutex.RLock()
