@@ -59,7 +59,7 @@ var _ = Describe("account bandwidth_pools_details", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeAccountManager.GetbandwidthPoolDetailReturns(datatypes.Network_Bandwidth_Version1_Allotment{}, errors.New("Failed to get Bandwidth Pool."))
+				fakeAccountManager.GetBandwidthPoolDetailReturns(datatypes.Network_Bandwidth_Version1_Allotment{}, errors.New("Failed to get Bandwidth Pool."))
 			})
 			It("Failed Bandwidth Pool", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456")
@@ -120,7 +120,7 @@ var _ = Describe("account bandwidth_pools_details", func() {
 						},
 					},
 				}
-				fakeAccountManager.GetbandwidthPoolDetailReturns(fakerBandwidthPool, nil)
+				fakeAccountManager.GetBandwidthPoolDetailReturns(fakerBandwidthPool, nil)
 			})
 			It("Get Bandwidth Pool with devices", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456")
@@ -168,7 +168,7 @@ var _ = Describe("account bandwidth_pools_details", func() {
 					VirtualGuests:                 []datatypes.Virtual_Guest{},
 					BareMetalInstances:            []datatypes.Hardware{},
 				}
-				fakeAccountManager.GetbandwidthPoolDetailReturns(fakerBandwidthPool, nil)
+				fakeAccountManager.GetBandwidthPoolDetailReturns(fakerBandwidthPool, nil)
 			})
 			It("Get Bandwidth Pool with devices", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456")

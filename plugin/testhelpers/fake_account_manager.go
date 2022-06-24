@@ -60,6 +60,20 @@ type FakeAccountManager struct {
 		result1 []datatypes.Software_VirtualLicense
 		result2 error
 	}
+	GetBandwidthPoolDetailStub        func(int, string) (datatypes.Network_Bandwidth_Version1_Allotment, error)
+	getBandwidthPoolDetailMutex       sync.RWMutex
+	getBandwidthPoolDetailArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getBandwidthPoolDetailReturns struct {
+		result1 datatypes.Network_Bandwidth_Version1_Allotment
+		result2 error
+	}
+	getBandwidthPoolDetailReturnsOnCall map[int]struct {
+		result1 datatypes.Network_Bandwidth_Version1_Allotment
+		result2 error
+	}
 	GetBandwidthPoolServersStub        func(int) (int, error)
 	getBandwidthPoolServersMutex       sync.RWMutex
 	getBandwidthPoolServersArgsForCall []struct {
@@ -181,20 +195,6 @@ type FakeAccountManager struct {
 	}
 	getSummaryReturnsOnCall map[int]struct {
 		result1 datatypes.Account
-		result2 error
-	}
-	GetbandwidthPoolDetailStub        func(int, string) (datatypes.Network_Bandwidth_Version1_Allotment, error)
-	getbandwidthPoolDetailMutex       sync.RWMutex
-	getbandwidthPoolDetailArgsForCall []struct {
-		arg1 int
-		arg2 string
-	}
-	getbandwidthPoolDetailReturns struct {
-		result1 datatypes.Network_Bandwidth_Version1_Allotment
-		result2 error
-	}
-	getbandwidthPoolDetailReturnsOnCall map[int]struct {
-		result1 datatypes.Network_Bandwidth_Version1_Allotment
 		result2 error
 	}
 	SummaryByDatacenterStub        func() (map[string]map[string]int, error)
@@ -463,6 +463,71 @@ func (fake *FakeAccountManager) GetActiveVirtualLicensesReturnsOnCall(i int, res
 	}
 	fake.getActiveVirtualLicensesReturnsOnCall[i] = struct {
 		result1 []datatypes.Software_VirtualLicense
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetBandwidthPoolDetail(arg1 int, arg2 string) (datatypes.Network_Bandwidth_Version1_Allotment, error) {
+	fake.getBandwidthPoolDetailMutex.Lock()
+	ret, specificReturn := fake.getBandwidthPoolDetailReturnsOnCall[len(fake.getBandwidthPoolDetailArgsForCall)]
+	fake.getBandwidthPoolDetailArgsForCall = append(fake.getBandwidthPoolDetailArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetBandwidthPoolDetailStub
+	fakeReturns := fake.getBandwidthPoolDetailReturns
+	fake.recordInvocation("GetBandwidthPoolDetail", []interface{}{arg1, arg2})
+	fake.getBandwidthPoolDetailMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetBandwidthPoolDetailCallCount() int {
+	fake.getBandwidthPoolDetailMutex.RLock()
+	defer fake.getBandwidthPoolDetailMutex.RUnlock()
+	return len(fake.getBandwidthPoolDetailArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetBandwidthPoolDetailCalls(stub func(int, string) (datatypes.Network_Bandwidth_Version1_Allotment, error)) {
+	fake.getBandwidthPoolDetailMutex.Lock()
+	defer fake.getBandwidthPoolDetailMutex.Unlock()
+	fake.GetBandwidthPoolDetailStub = stub
+}
+
+func (fake *FakeAccountManager) GetBandwidthPoolDetailArgsForCall(i int) (int, string) {
+	fake.getBandwidthPoolDetailMutex.RLock()
+	defer fake.getBandwidthPoolDetailMutex.RUnlock()
+	argsForCall := fake.getBandwidthPoolDetailArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAccountManager) GetBandwidthPoolDetailReturns(result1 datatypes.Network_Bandwidth_Version1_Allotment, result2 error) {
+	fake.getBandwidthPoolDetailMutex.Lock()
+	defer fake.getBandwidthPoolDetailMutex.Unlock()
+	fake.GetBandwidthPoolDetailStub = nil
+	fake.getBandwidthPoolDetailReturns = struct {
+		result1 datatypes.Network_Bandwidth_Version1_Allotment
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetBandwidthPoolDetailReturnsOnCall(i int, result1 datatypes.Network_Bandwidth_Version1_Allotment, result2 error) {
+	fake.getBandwidthPoolDetailMutex.Lock()
+	defer fake.getBandwidthPoolDetailMutex.Unlock()
+	fake.GetBandwidthPoolDetailStub = nil
+	if fake.getBandwidthPoolDetailReturnsOnCall == nil {
+		fake.getBandwidthPoolDetailReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_Bandwidth_Version1_Allotment
+			result2 error
+		})
+	}
+	fake.getBandwidthPoolDetailReturnsOnCall[i] = struct {
+		result1 datatypes.Network_Bandwidth_Version1_Allotment
 		result2 error
 	}{result1, result2}
 }
@@ -1042,71 +1107,6 @@ func (fake *FakeAccountManager) GetSummaryReturnsOnCall(i int, result1 datatypes
 	}{result1, result2}
 }
 
-func (fake *FakeAccountManager) GetbandwidthPoolDetail(arg1 int, arg2 string) (datatypes.Network_Bandwidth_Version1_Allotment, error) {
-	fake.getbandwidthPoolDetailMutex.Lock()
-	ret, specificReturn := fake.getbandwidthPoolDetailReturnsOnCall[len(fake.getbandwidthPoolDetailArgsForCall)]
-	fake.getbandwidthPoolDetailArgsForCall = append(fake.getbandwidthPoolDetailArgsForCall, struct {
-		arg1 int
-		arg2 string
-	}{arg1, arg2})
-	stub := fake.GetbandwidthPoolDetailStub
-	fakeReturns := fake.getbandwidthPoolDetailReturns
-	fake.recordInvocation("GetbandwidthPoolDetail", []interface{}{arg1, arg2})
-	fake.getbandwidthPoolDetailMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeAccountManager) GetbandwidthPoolDetailCallCount() int {
-	fake.getbandwidthPoolDetailMutex.RLock()
-	defer fake.getbandwidthPoolDetailMutex.RUnlock()
-	return len(fake.getbandwidthPoolDetailArgsForCall)
-}
-
-func (fake *FakeAccountManager) GetbandwidthPoolDetailCalls(stub func(int, string) (datatypes.Network_Bandwidth_Version1_Allotment, error)) {
-	fake.getbandwidthPoolDetailMutex.Lock()
-	defer fake.getbandwidthPoolDetailMutex.Unlock()
-	fake.GetbandwidthPoolDetailStub = stub
-}
-
-func (fake *FakeAccountManager) GetbandwidthPoolDetailArgsForCall(i int) (int, string) {
-	fake.getbandwidthPoolDetailMutex.RLock()
-	defer fake.getbandwidthPoolDetailMutex.RUnlock()
-	argsForCall := fake.getbandwidthPoolDetailArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2
-}
-
-func (fake *FakeAccountManager) GetbandwidthPoolDetailReturns(result1 datatypes.Network_Bandwidth_Version1_Allotment, result2 error) {
-	fake.getbandwidthPoolDetailMutex.Lock()
-	defer fake.getbandwidthPoolDetailMutex.Unlock()
-	fake.GetbandwidthPoolDetailStub = nil
-	fake.getbandwidthPoolDetailReturns = struct {
-		result1 datatypes.Network_Bandwidth_Version1_Allotment
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeAccountManager) GetbandwidthPoolDetailReturnsOnCall(i int, result1 datatypes.Network_Bandwidth_Version1_Allotment, result2 error) {
-	fake.getbandwidthPoolDetailMutex.Lock()
-	defer fake.getbandwidthPoolDetailMutex.Unlock()
-	fake.GetbandwidthPoolDetailStub = nil
-	if fake.getbandwidthPoolDetailReturnsOnCall == nil {
-		fake.getbandwidthPoolDetailReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_Bandwidth_Version1_Allotment
-			result2 error
-		})
-	}
-	fake.getbandwidthPoolDetailReturnsOnCall[i] = struct {
-		result1 datatypes.Network_Bandwidth_Version1_Allotment
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeAccountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
 	fake.summaryByDatacenterMutex.Lock()
 	ret, specificReturn := fake.summaryByDatacenterReturnsOnCall[len(fake.summaryByDatacenterArgsForCall)]
@@ -1174,6 +1174,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getActiveAccountLicensesMutex.RUnlock()
 	fake.getActiveVirtualLicensesMutex.RLock()
 	defer fake.getActiveVirtualLicensesMutex.RUnlock()
+	fake.getBandwidthPoolDetailMutex.RLock()
+	defer fake.getBandwidthPoolDetailMutex.RUnlock()
 	fake.getBandwidthPoolServersMutex.RLock()
 	defer fake.getBandwidthPoolServersMutex.RUnlock()
 	fake.getBandwidthPoolsMutex.RLock()
@@ -1192,8 +1194,6 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getItemDetailMutex.RUnlock()
 	fake.getSummaryMutex.RLock()
 	defer fake.getSummaryMutex.RUnlock()
-	fake.getbandwidthPoolDetailMutex.RLock()
-	defer fake.getbandwidthPoolDetailMutex.RUnlock()
 	fake.summaryByDatacenterMutex.RLock()
 	defer fake.summaryByDatacenterMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}

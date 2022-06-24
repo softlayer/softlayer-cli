@@ -57,7 +57,7 @@ func (cmd *BandwidthPoolsDetailCommand) Run(c *cli.Context) error {
 		return errors.NewInvalidSoftlayerIdInputError("Bandwidth Pool ID")
 	}
 
-	bandwidthPool, err := cmd.AccountManager.GetbandwidthPoolDetail(bandwidthPoolId, "")
+	bandwidthPool, err := cmd.AccountManager.GetBandwidthPoolDetail(bandwidthPoolId, "")
 	if err != nil {
 		return cli.NewExitError(T("Failed to get Bandwidth Pool.\n")+err.Error(), 2)
 	}

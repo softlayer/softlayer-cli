@@ -26,20 +26,18 @@ type AccountManager interface {
 	GetActiveAccountLicenses(mask string) ([]datatypes.Software_AccountLicense, error)
 	GetAccountAllBillingOrders(mask string, limit int) ([]datatypes.Billing_Order, error)
 	GetSummary(mask string) (datatypes.Account, error)
-	GetbandwidthPoolDetail(bandwidthPoolId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment, error)
+	GetBandwidthPoolDetail(bandwidthPoolId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment, error)
 }
 
 type accountManager struct {
-	AccountService          services.Account
-	Session                 *session.Session
-	NetworkBandwidthService services.Network_Bandwidth_Version1_Allotment
+	AccountService services.Account
+	Session        *session.Session
 }
 
 func NewAccountManager(session *session.Session) *accountManager {
 	return &accountManager{
-		AccountService:          services.GetAccountService(session),
-		Session:                 session,
-		NetworkBandwidthService: services.GetNetworkBandwidthVersion1AllotmentService(session),
+		AccountService: services.GetAccountService(session),
+		Session:        session,
 	}
 }
 
@@ -331,12 +329,13 @@ func (a accountManager) GetSummary(mask string) (datatypes.Account, error) {
 Gets a SoftLayer_Network_Bandwidth_Version1_Allotment object record.
 https://sldn.softlayer.com/reference/services/SoftLayer_Network_Bandwidth_Version1_Allotment/getObject/
 */
-func (a accountManager) GetbandwidthPoolDetail(bandwidthPoolId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment, error) {
+func (a accountManager) GetBandwidthPoolDetail(bandwidthPoolId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment, error) {
+	networkBandwidthService := services.GetNetworkBandwidthVersion1AllotmentService(a.Session)
 	if mask == "" {
 		mask = `mask[activeDetails[allocation],projectedPublicBandwidthUsage, billingCyclePublicBandwidthUsage,
         hardware[outboundBandwidthUsage,bandwidthAllotmentDetail[allocation]],inboundPublicBandwidthUsage,
         virtualGuests[outboundPublicBandwidthUsage,bandwidthAllotmentDetail[allocation]],
         bareMetalInstances[outboundBandwidthUsage,bandwidthAllotmentDetail[allocation]]]`
 	}
-	return a.NetworkBandwidthService.Id(bandwidthPoolId).Mask(mask).GetObject()
+	return networkBandwidthService.Id(bandwidthPoolId).Mask(mask).GetObject()
 }
