@@ -80,7 +80,7 @@ func PrintAccounts(accounts []datatypes.Network_Storage, ui terminal.UI, outputF
 		if account.VendorName != nil && strings.Contains(utils.FormatStringPointerName(account.VendorName), SWITF) {
 			apiType = SWITF
 		} else {
-			if strings.Contains(utils.FormatStringPointerName(account.ServiceResource.Name), "Cleversafe") {
+			if strings.Contains(utils.FormatStringPointerName(account.ServiceResource.Name), CLEVERSAFE) {
 				apiType = "S3"
 			}
 		}
