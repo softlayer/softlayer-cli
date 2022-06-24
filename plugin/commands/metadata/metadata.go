@@ -44,11 +44,26 @@ func MetadataMetadata() cli.Command {
 		Category:    "sl",
 		Name:        "metadata",
 		Description: T("Find details about the machine making these API calls."),
-		Usage: T(`${COMMAND_NAME} sl metadata {backend_ip|backend_mac|datacenter|datacenter_id|fqdn|frontend_mac|id|ip|network|provision_state|tags|user_data} [OPTIONS]
+		Usage: T(`${COMMAND_NAME} sl metadata [OPTIONS]
 		
-		.. csv-table:: Choices: 
-	backend_ip     backend_mac     datacenter     datacenter_id     fqdn     frontend_mac     id     ip     network     provision_state     tags     user_data
-	
+	.. csv-table:: Choices: 
+		- backend_ip
+		- backend_mac
+		- datacenter
+		- datacenter_id
+		- fqdn
+		- frontend_mac
+		- id
+		- ip
+		- network
+		- provision_state
+		- tags
+		- user_data
+		
+		Examples:
+					${COMMAND_NAME} sl metadata backend_ip
+					${COMMAND_NAME} sl metadata network
+
 	These commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.`),
 	}
 }
