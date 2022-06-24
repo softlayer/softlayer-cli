@@ -14,6 +14,11 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
+const (
+	SWITF      = "Swift"
+	CLEVERSAFE = "Cleversafe"
+)
+
 type AccountsCommand struct {
 	UI                   terminal.UI
 	ObjectStorageManager managers.ObjectStorageManager
@@ -35,7 +40,8 @@ func AccountsMetaData() cli.Command {
 		Flags: []cli.Flag{
 			cli.IntFlag{
 				Name:  "limit",
-				Usage: T("Result limit [Default: 50]"),
+				Usage: T("Result limit."),
+				Value: 50,
 			},
 			metadata.OutputFlag(),
 		},
@@ -53,7 +59,7 @@ func (cmd *AccountsCommand) Run(c *cli.Context) error {
 		limit = c.Int("limit")
 	}
 
-	mask := "mask[id,username,notes,vendorName,serviceResource]"
+	mask := ""
 	accounts, err := cmd.ObjectStorageManager.GetAccounts(mask, limit)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get account’s associated Virtual Storage volumes.")+err.Error(), 2)
@@ -71,8 +77,8 @@ func PrintAccounts(accounts []datatypes.Network_Storage, ui terminal.UI, outputF
 
 	for _, account := range accounts {
 		apiType := ""
-		if account.VendorName != nil && strings.Contains(utils.FormatStringPointerName(account.VendorName), "Swift") {
-			apiType = "Swift"
+		if account.VendorName != nil && strings.Contains(utils.FormatStringPointerName(account.VendorName), SWITF) {
+			apiType = SWITF
 		} else {
 			if strings.Contains(utils.FormatStringPointerName(account.ServiceResource.Name), "Cleversafe") {
 				apiType = "S3"

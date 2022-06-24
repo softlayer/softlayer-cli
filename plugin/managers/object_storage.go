@@ -2,6 +2,7 @@ package managers
 
 import (
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 )
@@ -27,5 +28,12 @@ Gets an account’s associated Virtual Storage volumes.
 https://sldn.softlayer.com/reference/services/SoftLayer_Account/getHubNetworkStorage/
 */
 func (a objectStorageManager) GetAccounts(mask string, limit int) ([]datatypes.Network_Storage, error) {
-	return a.ObjectStorageService.Mask(mask).Limit(limit).GetHubNetworkStorage()
+	if mask == "" {
+		mask = "mask[id,username,notes,vendorName,serviceResource]"
+	}
+
+	filters := filter.New()
+	filters = append(filters, filter.Path("id").OrderBy("ASC"))
+
+	return a.ObjectStorageService.Mask(mask).Filter(filters.Build()).Limit(limit).GetHubNetworkStorage()
 }
