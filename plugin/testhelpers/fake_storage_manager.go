@@ -171,6 +171,20 @@ type FakeStorageManager struct {
 		result1 []string
 		result2 error
 	}
+	GetDuplicateConversionStatusStub        func(int, string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error)
+	getDuplicateConversionStatusMutex       sync.RWMutex
+	getDuplicateConversionStatusArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getDuplicateConversionStatusReturns struct {
+		result1 datatypes.Container_Network_Storage_DuplicateConversionStatusInformation
+		result2 error
+	}
+	getDuplicateConversionStatusReturnsOnCall map[int]struct {
+		result1 datatypes.Container_Network_Storage_DuplicateConversionStatusInformation
+		result2 error
+	}
 	GetHubNetworkStorageStub        func(string) ([]datatypes.Network_Storage, error)
 	getHubNetworkStorageMutex       sync.RWMutex
 	getHubNetworkStorageArgsForCall []struct {
@@ -1295,6 +1309,71 @@ func (fake *FakeStorageManager) GetAllDatacentersReturnsOnCall(i int, result1 []
 	}
 	fake.getAllDatacentersReturnsOnCall[i] = struct {
 		result1 []string
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetDuplicateConversionStatus(arg1 int, arg2 string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error) {
+	fake.getDuplicateConversionStatusMutex.Lock()
+	ret, specificReturn := fake.getDuplicateConversionStatusReturnsOnCall[len(fake.getDuplicateConversionStatusArgsForCall)]
+	fake.getDuplicateConversionStatusArgsForCall = append(fake.getDuplicateConversionStatusArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetDuplicateConversionStatusStub
+	fakeReturns := fake.getDuplicateConversionStatusReturns
+	fake.recordInvocation("GetDuplicateConversionStatus", []interface{}{arg1, arg2})
+	fake.getDuplicateConversionStatusMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) GetDuplicateConversionStatusCallCount() int {
+	fake.getDuplicateConversionStatusMutex.RLock()
+	defer fake.getDuplicateConversionStatusMutex.RUnlock()
+	return len(fake.getDuplicateConversionStatusArgsForCall)
+}
+
+func (fake *FakeStorageManager) GetDuplicateConversionStatusCalls(stub func(int, string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error)) {
+	fake.getDuplicateConversionStatusMutex.Lock()
+	defer fake.getDuplicateConversionStatusMutex.Unlock()
+	fake.GetDuplicateConversionStatusStub = stub
+}
+
+func (fake *FakeStorageManager) GetDuplicateConversionStatusArgsForCall(i int) (int, string) {
+	fake.getDuplicateConversionStatusMutex.RLock()
+	defer fake.getDuplicateConversionStatusMutex.RUnlock()
+	argsForCall := fake.getDuplicateConversionStatusArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeStorageManager) GetDuplicateConversionStatusReturns(result1 datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, result2 error) {
+	fake.getDuplicateConversionStatusMutex.Lock()
+	defer fake.getDuplicateConversionStatusMutex.Unlock()
+	fake.GetDuplicateConversionStatusStub = nil
+	fake.getDuplicateConversionStatusReturns = struct {
+		result1 datatypes.Container_Network_Storage_DuplicateConversionStatusInformation
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetDuplicateConversionStatusReturnsOnCall(i int, result1 datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, result2 error) {
+	fake.getDuplicateConversionStatusMutex.Lock()
+	defer fake.getDuplicateConversionStatusMutex.Unlock()
+	fake.GetDuplicateConversionStatusStub = nil
+	if fake.getDuplicateConversionStatusReturnsOnCall == nil {
+		fake.getDuplicateConversionStatusReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Container_Network_Storage_DuplicateConversionStatusInformation
+			result2 error
+		})
+	}
+	fake.getDuplicateConversionStatusReturnsOnCall[i] = struct {
+		result1 datatypes.Container_Network_Storage_DuplicateConversionStatusInformation
 		result2 error
 	}{result1, result2}
 }
@@ -2812,6 +2891,8 @@ func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	defer fake.failOverToReplicantMutex.RUnlock()
 	fake.getAllDatacentersMutex.RLock()
 	defer fake.getAllDatacentersMutex.RUnlock()
+	fake.getDuplicateConversionStatusMutex.RLock()
+	defer fake.getDuplicateConversionStatusMutex.RUnlock()
 	fake.getHubNetworkStorageMutex.RLock()
 	defer fake.getHubNetworkStorageMutex.RUnlock()
 	fake.getReplicationLocationsMutex.RLock()

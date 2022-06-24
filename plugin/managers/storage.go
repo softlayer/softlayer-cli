@@ -102,6 +102,7 @@ type StorageManager interface {
 	VolumeConvert(volumeId int) error
 	VolumeSetNote(volumeId int, note string) (bool, error)
 	GetHubNetworkStorage(mask string) ([]datatypes.Network_Storage, error)
+	GetDuplicateConversionStatus(volumeID int, mask string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error)
 }
 
 type storageManager struct {
@@ -845,4 +846,14 @@ func (s storageManager) GetHubNetworkStorage(mask string) ([]datatypes.Network_S
 		mask = "mask[id,username,billingItem,storageType, notes]"
 	}
 	return s.AccountService.Mask(mask).GetHubNetworkStorage()
+}
+
+//Get the status of the duplication process of a volume
+//volumeID: id of duplicated volume
+//mask: object mask
+func (s storageManager) GetDuplicateConversionStatus(volumeID int, mask string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error) {
+	if mask == "" {
+		mask = "mask[activeConversionStartTime,deDuplicateConversionPercentage,volumeUsername]"
+	}
+	return s.StorageService.Id(volumeID).Mask(mask).GetDuplicateConversionStatus()
 }
