@@ -9,7 +9,7 @@ require (
 	github.com/nicksnyder/go-i18n v1.10.1
 	github.com/onsi/ginkgo v1.16.2
 	github.com/onsi/gomega v1.11.0
-	github.com/softlayer/softlayer-go v1.0.4
+	github.com/softlayer/softlayer-go v1.0.6
 	github.com/stretchr/testify v1.7.0
 	github.com/urfave/cli v1.22.2
 )
