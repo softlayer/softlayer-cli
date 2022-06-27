@@ -84,6 +84,21 @@ type FakeTagsManager struct {
 	referenceLookupReturnsOnCall map[int]struct {
 		result1 string
 	}
+	SetTagsStub        func(string, string, int) (bool, error)
+	setTagsMutex       sync.RWMutex
+	setTagsArgsForCall []struct {
+		arg1 string
+		arg2 string
+		arg3 int
+	}
+	setTagsReturns struct {
+		result1 bool
+		result2 error
+	}
+	setTagsReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -94,15 +109,16 @@ func (fake *FakeTagsManager) DeleteTag(arg1 string) (bool, error) {
 	fake.deleteTagArgsForCall = append(fake.deleteTagArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.DeleteTagStub
+	fakeReturns := fake.deleteTagReturns
 	fake.recordInvocation("DeleteTag", []interface{}{arg1})
 	fake.deleteTagMutex.Unlock()
-	if fake.DeleteTagStub != nil {
-		return fake.DeleteTagStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.deleteTagReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -157,15 +173,16 @@ func (fake *FakeTagsManager) GetTagByTagName(arg1 string) ([]datatypes.Tag, erro
 	fake.getTagByTagNameArgsForCall = append(fake.getTagByTagNameArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.GetTagByTagNameStub
+	fakeReturns := fake.getTagByTagNameReturns
 	fake.recordInvocation("GetTagByTagName", []interface{}{arg1})
 	fake.getTagByTagNameMutex.Unlock()
-	if fake.GetTagByTagNameStub != nil {
-		return fake.GetTagByTagNameStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getTagByTagNameReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -220,15 +237,16 @@ func (fake *FakeTagsManager) GetTagReferences(arg1 int) ([]datatypes.Tag_Referen
 	fake.getTagReferencesArgsForCall = append(fake.getTagReferencesArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetTagReferencesStub
+	fakeReturns := fake.getTagReferencesReturns
 	fake.recordInvocation("GetTagReferences", []interface{}{arg1})
 	fake.getTagReferencesMutex.Unlock()
-	if fake.GetTagReferencesStub != nil {
-		return fake.GetTagReferencesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getTagReferencesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -282,15 +300,16 @@ func (fake *FakeTagsManager) ListEmptyTags() ([]datatypes.Tag, error) {
 	ret, specificReturn := fake.listEmptyTagsReturnsOnCall[len(fake.listEmptyTagsArgsForCall)]
 	fake.listEmptyTagsArgsForCall = append(fake.listEmptyTagsArgsForCall, struct {
 	}{})
+	stub := fake.ListEmptyTagsStub
+	fakeReturns := fake.listEmptyTagsReturns
 	fake.recordInvocation("ListEmptyTags", []interface{}{})
 	fake.listEmptyTagsMutex.Unlock()
-	if fake.ListEmptyTagsStub != nil {
-		return fake.ListEmptyTagsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listEmptyTagsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -337,15 +356,16 @@ func (fake *FakeTagsManager) ListTags() ([]datatypes.Tag, error) {
 	ret, specificReturn := fake.listTagsReturnsOnCall[len(fake.listTagsArgsForCall)]
 	fake.listTagsArgsForCall = append(fake.listTagsArgsForCall, struct {
 	}{})
+	stub := fake.ListTagsStub
+	fakeReturns := fake.listTagsReturns
 	fake.recordInvocation("ListTags", []interface{}{})
 	fake.listTagsMutex.Unlock()
-	if fake.ListTagsStub != nil {
-		return fake.ListTagsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listTagsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -394,15 +414,16 @@ func (fake *FakeTagsManager) ReferenceLookup(arg1 string, arg2 int) string {
 		arg1 string
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.ReferenceLookupStub
+	fakeReturns := fake.referenceLookupReturns
 	fake.recordInvocation("ReferenceLookup", []interface{}{arg1, arg2})
 	fake.referenceLookupMutex.Unlock()
-	if fake.ReferenceLookupStub != nil {
-		return fake.ReferenceLookupStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.referenceLookupReturns
 	return fakeReturns.result1
 }
 
@@ -448,6 +469,72 @@ func (fake *FakeTagsManager) ReferenceLookupReturnsOnCall(i int, result1 string)
 	}{result1}
 }
 
+func (fake *FakeTagsManager) SetTags(arg1 string, arg2 string, arg3 int) (bool, error) {
+	fake.setTagsMutex.Lock()
+	ret, specificReturn := fake.setTagsReturnsOnCall[len(fake.setTagsArgsForCall)]
+	fake.setTagsArgsForCall = append(fake.setTagsArgsForCall, struct {
+		arg1 string
+		arg2 string
+		arg3 int
+	}{arg1, arg2, arg3})
+	stub := fake.SetTagsStub
+	fakeReturns := fake.setTagsReturns
+	fake.recordInvocation("SetTags", []interface{}{arg1, arg2, arg3})
+	fake.setTagsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeTagsManager) SetTagsCallCount() int {
+	fake.setTagsMutex.RLock()
+	defer fake.setTagsMutex.RUnlock()
+	return len(fake.setTagsArgsForCall)
+}
+
+func (fake *FakeTagsManager) SetTagsCalls(stub func(string, string, int) (bool, error)) {
+	fake.setTagsMutex.Lock()
+	defer fake.setTagsMutex.Unlock()
+	fake.SetTagsStub = stub
+}
+
+func (fake *FakeTagsManager) SetTagsArgsForCall(i int) (string, string, int) {
+	fake.setTagsMutex.RLock()
+	defer fake.setTagsMutex.RUnlock()
+	argsForCall := fake.setTagsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeTagsManager) SetTagsReturns(result1 bool, result2 error) {
+	fake.setTagsMutex.Lock()
+	defer fake.setTagsMutex.Unlock()
+	fake.SetTagsStub = nil
+	fake.setTagsReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeTagsManager) SetTagsReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.setTagsMutex.Lock()
+	defer fake.setTagsMutex.Unlock()
+	fake.SetTagsStub = nil
+	if fake.setTagsReturnsOnCall == nil {
+		fake.setTagsReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.setTagsReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeTagsManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -463,6 +550,8 @@ func (fake *FakeTagsManager) Invocations() map[string][][]interface{} {
 	defer fake.listTagsMutex.RUnlock()
 	fake.referenceLookupMutex.RLock()
 	defer fake.referenceLookupMutex.RUnlock()
+	fake.setTagsMutex.RLock()
+	defer fake.setTagsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
