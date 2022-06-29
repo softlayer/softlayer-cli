@@ -101,6 +101,7 @@ type StorageManager interface {
 	VolumeRefresh(volumeId int, snapshotId int) error
 	VolumeConvert(volumeId int) error
 	VolumeSetNote(volumeId int, note string) (bool, error)
+	GetHubNetworkStorage(mask string) ([]datatypes.Network_Storage, error)
 	GetDuplicateConversionStatus(volumeID int, mask string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error)
 }
 
@@ -837,6 +838,14 @@ func (s storageManager) GetSnapshotNotificationStatus(volumeId int) (int, error)
 
 	result, err := strconv.Atoi(status)
 	return result, err
+}
+
+//Returns a list of cloud object storages.
+func (s storageManager) GetHubNetworkStorage(mask string) ([]datatypes.Network_Storage, error) {
+	if mask == "" {
+		mask = "mask[id,username,billingItem,storageType, notes]"
+	}
+	return s.AccountService.Mask(mask).GetHubNetworkStorage()
 }
 
 //Get the status of the duplication process of a volume
