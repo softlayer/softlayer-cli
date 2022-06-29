@@ -203,7 +203,7 @@ func obtainMac(arrayMacs string) string {
 
 func cleanResponse(response string) string {
 	if strings.Contains(response, "[") {
-		return response[1 : len(response)-2]
+		return response[1 : len(response)-1]
 	}
 	return response
 }

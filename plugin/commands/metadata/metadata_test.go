@@ -1,6 +1,7 @@
 package metadata_test
 
 import (
+	"fmt"
 	"reflect"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
@@ -115,12 +116,13 @@ var _ = Describe("Metadata list Metadata", func() {
 			It("return table with all datas from network", func() {
 				err := testhelpers.RunCommand(cliCommand, "network")
 				Expect(err).NotTo(HaveOccurred())
+				fmt.Println("responseee:", fakeUI.Outputs())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Name            Value"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Mac addresses   00:a1:b2:c3:d4:e5"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Mac addresses   \"00:a1:b2:c3:d4:e5\""))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Router          fcr02.dal06"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Vlans           12345"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Vlan ids        1234567"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Mac addresses   11:a1:b2:c3:d4:e5"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Mac addresses   \"11:a1:b2:c3:d4:e5\""))
 			})
 			It("return backend id", func() {
 				err := testhelpers.RunCommand(cliCommand, "backend_ip")
@@ -135,7 +137,7 @@ var _ = Describe("Metadata list Metadata", func() {
 			It("return backend mac", func() {
 				err := testhelpers.RunCommand(cliCommand, "backend_mac")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("11:a1:b2:c3:d4:e5"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"11:a1:b2:c3:d4:e5"`))
 			})
 			It("return name datacenter", func() {
 				err := testhelpers.RunCommand(cliCommand, "datacenter")
@@ -155,7 +157,7 @@ var _ = Describe("Metadata list Metadata", func() {
 			It("return frontend mac", func() {
 				err := testhelpers.RunCommand(cliCommand, "frontend_mac")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("00:a1:b2:c3:d4:e5"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"00:a1:b2:c3:d4:e5"`))
 			})
 			It("return id machine", func() {
 				err := testhelpers.RunCommand(cliCommand, "id")
@@ -175,7 +177,8 @@ var _ = Describe("Metadata list Metadata", func() {
 			It("return tags", func() {
 				err := testhelpers.RunCommand(cliCommand, "tags")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("testTags"))
+				fmt.Println("tagss:",fakeUI.Outputs())
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"testTags"`))
 			})
 			It("return user data", func() {
 				err := testhelpers.RunCommand(cliCommand, "user_data")
