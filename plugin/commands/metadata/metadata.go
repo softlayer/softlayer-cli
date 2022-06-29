@@ -87,7 +87,7 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 		for _, network := range NetworkRequest() {
 			requestMac := strings.Contains(network, "MacAddresses")
 			if !requestMac {
-				parameter = fmt.Sprintf(`[{"macAddress":"%s"}]`, macAddress)
+				parameter = fmt.Sprintf(`["%s"]`, macAddress)
 			} else {
 				parameter = ""
 			}
@@ -97,8 +97,9 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 				return err
 			}
 
+			response = cleanResponse(response)
 			if requestMac {
-				macAddress = response
+				macAddress = obtainMac(response)
 			}
 
 			arrayNetwork = append(arrayNetwork, response)
@@ -113,7 +114,7 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	cmd.UI.Print(response)
+	cmd.UI.Print(cleanResponse(response))
 	return nil
 }
 
@@ -193,4 +194,16 @@ func availableMetadataRequests() map[string]string {
 		"vlans":               "getVlans",
 	}
 	return availableMetadataRequests
+}
+
+func obtainMac(arrayMacs string) string {
+	firstMac := strings.Split(arrayMacs, ",")
+	return firstMac[0][1 : len(firstMac[0])-1]
+}
+
+func cleanResponse(response string) string {
+	if strings.Contains(response, "[") {
+		return response[1 : len(response)-2]
+	}
+	return response
 }
