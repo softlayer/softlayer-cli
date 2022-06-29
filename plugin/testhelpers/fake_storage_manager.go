@@ -185,6 +185,19 @@ type FakeStorageManager struct {
 		result1 datatypes.Container_Network_Storage_DuplicateConversionStatusInformation
 		result2 error
 	}
+	GetHubNetworkStorageStub        func(string) ([]datatypes.Network_Storage, error)
+	getHubNetworkStorageMutex       sync.RWMutex
+	getHubNetworkStorageArgsForCall []struct {
+		arg1 string
+	}
+	getHubNetworkStorageReturns struct {
+		result1 []datatypes.Network_Storage
+		result2 error
+	}
+	getHubNetworkStorageReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Storage
+		result2 error
+	}
 	GetReplicationLocationsStub        func(int) ([]datatypes.Location, error)
 	getReplicationLocationsMutex       sync.RWMutex
 	getReplicationLocationsArgsForCall []struct {
@@ -1361,6 +1374,70 @@ func (fake *FakeStorageManager) GetDuplicateConversionStatusReturnsOnCall(i int,
 	}
 	fake.getDuplicateConversionStatusReturnsOnCall[i] = struct {
 		result1 datatypes.Container_Network_Storage_DuplicateConversionStatusInformation
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetHubNetworkStorage(arg1 string) ([]datatypes.Network_Storage, error) {
+	fake.getHubNetworkStorageMutex.Lock()
+	ret, specificReturn := fake.getHubNetworkStorageReturnsOnCall[len(fake.getHubNetworkStorageArgsForCall)]
+	fake.getHubNetworkStorageArgsForCall = append(fake.getHubNetworkStorageArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetHubNetworkStorageStub
+	fakeReturns := fake.getHubNetworkStorageReturns
+	fake.recordInvocation("GetHubNetworkStorage", []interface{}{arg1})
+	fake.getHubNetworkStorageMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) GetHubNetworkStorageCallCount() int {
+	fake.getHubNetworkStorageMutex.RLock()
+	defer fake.getHubNetworkStorageMutex.RUnlock()
+	return len(fake.getHubNetworkStorageArgsForCall)
+}
+
+func (fake *FakeStorageManager) GetHubNetworkStorageCalls(stub func(string) ([]datatypes.Network_Storage, error)) {
+	fake.getHubNetworkStorageMutex.Lock()
+	defer fake.getHubNetworkStorageMutex.Unlock()
+	fake.GetHubNetworkStorageStub = stub
+}
+
+func (fake *FakeStorageManager) GetHubNetworkStorageArgsForCall(i int) string {
+	fake.getHubNetworkStorageMutex.RLock()
+	defer fake.getHubNetworkStorageMutex.RUnlock()
+	argsForCall := fake.getHubNetworkStorageArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeStorageManager) GetHubNetworkStorageReturns(result1 []datatypes.Network_Storage, result2 error) {
+	fake.getHubNetworkStorageMutex.Lock()
+	defer fake.getHubNetworkStorageMutex.Unlock()
+	fake.GetHubNetworkStorageStub = nil
+	fake.getHubNetworkStorageReturns = struct {
+		result1 []datatypes.Network_Storage
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetHubNetworkStorageReturnsOnCall(i int, result1 []datatypes.Network_Storage, result2 error) {
+	fake.getHubNetworkStorageMutex.Lock()
+	defer fake.getHubNetworkStorageMutex.Unlock()
+	fake.GetHubNetworkStorageStub = nil
+	if fake.getHubNetworkStorageReturnsOnCall == nil {
+		fake.getHubNetworkStorageReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Storage
+			result2 error
+		})
+	}
+	fake.getHubNetworkStorageReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Storage
 		result2 error
 	}{result1, result2}
 }
@@ -2816,6 +2893,8 @@ func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	defer fake.getAllDatacentersMutex.RUnlock()
 	fake.getDuplicateConversionStatusMutex.RLock()
 	defer fake.getDuplicateConversionStatusMutex.RUnlock()
+	fake.getHubNetworkStorageMutex.RLock()
+	defer fake.getHubNetworkStorageMutex.RUnlock()
 	fake.getReplicationLocationsMutex.RLock()
 	defer fake.getReplicationLocationsMutex.RUnlock()
 	fake.getReplicationPartnersMutex.RLock()

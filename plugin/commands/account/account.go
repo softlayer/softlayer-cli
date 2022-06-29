@@ -52,6 +52,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"account-summary": func(c *cli.Context) error {
 			return NewSummaryCommand(ui, accountManager).Run(c)
 		},
+		"account-bandwidth-pools-detail": func(c *cli.Context) error {
+			return NewBandwidthPoolsDetailCommand(ui, accountManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -83,6 +86,7 @@ func AccountMetaData() cli.Command {
 			LicensesMetaData(),
 			OrdersMetaData(),
 			SummaryMetaData(),
+			BandwidthPoolsDetailMetaData(),
 		},
 	}
 }

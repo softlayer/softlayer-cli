@@ -19,6 +19,7 @@ type TagsManager interface {
 	GetTagReferences(tagId int) ([]datatypes.Tag_Reference, error)
 	ReferenceLookup(resourceType string, resourceId int) string
 	DeleteTag(tagName string) (bool, error)
+	SetTags(tags string, keyName string, resourceId int) (bool, error)
 }
 
 type tagsManager struct {
@@ -100,7 +101,7 @@ func (tag tagsManager) GetTagReferences(tagId int) ([]datatypes.Tag_Reference, e
 			break
 		}
 	}
-	
+
 	return tagReferences, nil
 }
 
@@ -185,4 +186,8 @@ func NameCheck(name *string, err error) string {
 		checked_name = utils.FormatStringPointer(name)
 	}
 	return checked_name
+}
+
+func (tag tagsManager) SetTags(tags string, keyName string, resourceId int) (bool, error) {
+	return tag.TagService.SetTags(&tags, &keyName, &resourceId)
 }
