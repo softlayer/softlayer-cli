@@ -35,6 +35,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
@@ -234,6 +235,7 @@ func getCLITopCommands() []cli.Command {
 		ipsec.IpsecMetaData(),
 		licenses.LicensesMetaData(),
 		loadbal.LoadbalMetaData(),
+		commandMetadata.MetadataMetadata(),
 		nas.NasNetworkStorageMetaData(),
 		security.SecurityMetaData(),
 		securitygroup.SecurityGroupMetaData(),
