@@ -3414,8 +3414,6 @@
 "translation": "使用給定 Snapshot 還原檔案磁區"},
 {"id": "Result limit",
 "translation": "結果限制"},
-{"id": "Result limit.",
-"translation": "Result limit."},
 {"id": "Result offset",
 "translation": "結果偏移"},
 {"id": "Resume a paused virtual server instance",

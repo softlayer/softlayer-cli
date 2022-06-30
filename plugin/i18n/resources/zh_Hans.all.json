@@ -3414,8 +3414,6 @@
 "translation": "使用给定快照复原文件卷"},
 {"id": "Result limit",
 "translation": "结果限制"},
-{"id": "Result limit.",
-"translation": "Result limit."},
 {"id": "Result offset",
 "translation": "结果偏移量"},
 {"id": "Resume a paused virtual server instance",

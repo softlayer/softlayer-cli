@@ -45,7 +45,7 @@ var _ = Describe("Object Storage list Object Storages", func() {
 
 		Context("Object Storage accounts, correct use", func() {
 			It("return objectstorage accounts", func() {
-				err := testhelpers.RunCommand(cliCommand, "--limit", "10")
+				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Id          Name     ApiType"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789   SLUSER   S3"))

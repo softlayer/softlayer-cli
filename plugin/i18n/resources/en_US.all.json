@@ -3414,8 +3414,6 @@
 "translation": "Restore file volume using a given snapshot"},
 {"id": "Result limit",
 "translation": "Result limit"},
-{"id": "Result limit.",
-"translation": "Result limit."},
 {"id": "Result offset",
 "translation": "Result offset"},
 {"id": "Resume a paused virtual server instance",

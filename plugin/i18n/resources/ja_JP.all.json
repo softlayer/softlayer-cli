@@ -3414,8 +3414,6 @@
 "translation": "指定されたスナップショットを使用してファイル・ボリュームをリストアします"},
 {"id": "Result limit",
 "translation": "結果の制限"},
-{"id": "Result limit.",
-"translation": "Result limit."},
 {"id": "Result offset",
 "translation": "結果のオフセット"},
 {"id": "Resume a paused virtual server instance",

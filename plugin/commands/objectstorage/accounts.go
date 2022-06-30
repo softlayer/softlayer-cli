@@ -38,11 +38,6 @@ func AccountsMetaData() cli.Command {
 		Description: T("List Object Storage accounts."),
 		Usage:       T(`${COMMAND_NAME} sl object-storage accounts`),
 		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "limit",
-				Usage: T("Result limit."),
-				Value: 50,
-			},
 			metadata.OutputFlag(),
 		},
 	}
@@ -54,13 +49,8 @@ func (cmd *AccountsCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	limit := 50
-	if c.IsSet("limit") {
-		limit = c.Int("limit")
-	}
-
 	mask := ""
-	accounts, err := cmd.ObjectStorageManager.GetAccounts(mask, limit)
+	accounts, err := cmd.ObjectStorageManager.GetAccounts(mask)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get account’s associated Virtual Storage volumes.")+err.Error(), 2)
 	}
@@ -79,11 +69,11 @@ func PrintAccounts(accounts []datatypes.Network_Storage, ui terminal.UI, outputF
 		apiType := ""
 		if account.VendorName != nil && strings.Contains(utils.FormatStringPointerName(account.VendorName), SWITF) {
 			apiType = SWITF
-		} else {
-			if strings.Contains(utils.FormatStringPointerName(account.ServiceResource.Name), CLEVERSAFE) {
-				apiType = "S3"
-			}
 		}
+		if strings.Contains(utils.FormatStringPointerName(account.ServiceResource.Name), CLEVERSAFE) {
+			apiType = "S3"
+		}
+
 		table.Add(
 			utils.FormatIntPointer(account.Id),
 			utils.FormatStringPointerName(account.Username),

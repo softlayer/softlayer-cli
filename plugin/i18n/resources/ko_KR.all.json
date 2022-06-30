@@ -3414,8 +3414,6 @@
 "translation": "지정된 스냅샷을 사용하여 파일 볼륨 복원"},
 {"id": "Result limit",
 "translation": "결과 한계"},
-{"id": "Result limit.",
-"translation": "Result limit."},
 {"id": "Result offset",
 "translation": "결과 오프셋"},
 {"id": "Resume a paused virtual server instance",

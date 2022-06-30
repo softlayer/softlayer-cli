@@ -3414,8 +3414,6 @@
 "translation": "Restaurar volume de arquivo usando uma captura instantânea especificada"},
 {"id": "Result limit",
 "translation": "Limite de resultados"},
-{"id": "Result limit.",
-"translation": "Result limit."},
 {"id": "Result offset",
 "translation": "Diferença do resultado"},
 {"id": "Resume a paused virtual server instance",
