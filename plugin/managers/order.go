@@ -37,6 +37,7 @@ type OrderManager interface {
 	GetPresetPrices(presetId int) (datatypes.Product_Package_Preset, error)
 	GetLocation(location string) (string, error)
 	GetPriceIdList(packageKeyname string, itemKeynames []string, presetCore float64) ([]int, error)
+	GetActiveQuotes(mask string) ([]datatypes.Billing_Order_Quote, error)
 }
 
 type orderManager struct {
@@ -44,6 +45,7 @@ type orderManager struct {
 	OrderService    services.Product_Order
 	LocationService services.Location_Datacenter
 	PackagePreset   services.Product_Package_Preset
+	AccountService  services.Account
 }
 
 func NewOrderManager(session *session.Session) *orderManager {
@@ -52,6 +54,7 @@ func NewOrderManager(session *session.Session) *orderManager {
 		services.GetProductOrderService(session),
 		services.GetLocationDatacenterService(session),
 		services.GetProductPackagePresetService(session),
+		services.GetAccountService(session),
 	}
 }
 
@@ -348,11 +351,11 @@ func (i orderManager) GetPriceIdList(packageKeyname string, itemKeynames []strin
 						}
 					}
 					// Some prices might have a specific TermLengh (in months), select only the 0 month price
-					if (p.TermLength == nil || *p.TermLength == 0) {
+					if p.TermLength == nil || *p.TermLength == 0 {
 						// No Capacity restrictions to check
 						if capacityMin == -1 || presetCore == 0 {
 							priceId = *p.Id
-						// Get restricted Price
+							// Get restricted Price
 						} else if float64(capacityMin) <= presetCore && presetCore <= float64(capacityMax) {
 							priceId = *p.Id
 						}
@@ -383,4 +386,12 @@ func (i orderManager) GetPresetPrices(presetId int) (datatypes.Product_Package_P
 		return datatypes.Product_Package_Preset{}, nil
 	}
 	return prices, nil
+}
+
+//Returns active quotes on your account
+func (i orderManager) GetActiveQuotes(mask string) ([]datatypes.Billing_Order_Quote, error) {
+	if mask == "" {
+		mask = "mask[order[id,items[id,package[id,keyName]]]]"
+	}
+	return i.AccountService.Mask(mask).GetActiveQuotes()
 }

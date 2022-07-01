@@ -30,6 +30,7 @@ var availableCommands = []string{
 	"account-licenses",
 	"account-orders",
 	"account-summary",
+	"account-bandwidth-pools-detail",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
