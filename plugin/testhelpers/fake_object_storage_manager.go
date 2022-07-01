@@ -23,6 +23,19 @@ type FakeObjectStorageManager struct {
 		result1 []datatypes.Network_Storage
 		result2 error
 	}
+	GetEndpointsStub        func(int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error)
+	getEndpointsMutex       sync.RWMutex
+	getEndpointsArgsForCall []struct {
+		arg1 int
+	}
+	getEndpointsReturns struct {
+		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint
+		result2 error
+	}
+	getEndpointsReturnsOnCall map[int]struct {
+		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -92,11 +105,77 @@ func (fake *FakeObjectStorageManager) GetAccountsReturnsOnCall(i int, result1 []
 	}{result1, result2}
 }
 
+func (fake *FakeObjectStorageManager) GetEndpoints(arg1 int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error) {
+	fake.getEndpointsMutex.Lock()
+	ret, specificReturn := fake.getEndpointsReturnsOnCall[len(fake.getEndpointsArgsForCall)]
+	fake.getEndpointsArgsForCall = append(fake.getEndpointsArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetEndpointsStub
+	fakeReturns := fake.getEndpointsReturns
+	fake.recordInvocation("GetEndpoints", []interface{}{arg1})
+	fake.getEndpointsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeObjectStorageManager) GetEndpointsCallCount() int {
+	fake.getEndpointsMutex.RLock()
+	defer fake.getEndpointsMutex.RUnlock()
+	return len(fake.getEndpointsArgsForCall)
+}
+
+func (fake *FakeObjectStorageManager) GetEndpointsCalls(stub func(int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error)) {
+	fake.getEndpointsMutex.Lock()
+	defer fake.getEndpointsMutex.Unlock()
+	fake.GetEndpointsStub = stub
+}
+
+func (fake *FakeObjectStorageManager) GetEndpointsArgsForCall(i int) int {
+	fake.getEndpointsMutex.RLock()
+	defer fake.getEndpointsMutex.RUnlock()
+	argsForCall := fake.getEndpointsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeObjectStorageManager) GetEndpointsReturns(result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, result2 error) {
+	fake.getEndpointsMutex.Lock()
+	defer fake.getEndpointsMutex.Unlock()
+	fake.GetEndpointsStub = nil
+	fake.getEndpointsReturns = struct {
+		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeObjectStorageManager) GetEndpointsReturnsOnCall(i int, result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, result2 error) {
+	fake.getEndpointsMutex.Lock()
+	defer fake.getEndpointsMutex.Unlock()
+	fake.GetEndpointsStub = nil
+	if fake.getEndpointsReturnsOnCall == nil {
+		fake.getEndpointsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint
+			result2 error
+		})
+	}
+	fake.getEndpointsReturnsOnCall[i] = struct {
+		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeObjectStorageManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
 	fake.getAccountsMutex.RLock()
 	defer fake.getAccountsMutex.RUnlock()
+	fake.getEndpointsMutex.RLock()
+	defer fake.getEndpointsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

@@ -1,6 +1,7 @@
 package objectstorage
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -107,6 +108,7 @@ func PrintEndpoints(endpoints []datatypes.Container_Network_Storage_Hub_ObjectSt
 						arraySinglePrivate = append(arraySinglePrivate, data)
 					}
 				} else {
+					fmt.Println("paso?")
 					if *endpoint.Type == "public" {
 						data := []string{LEGACY_FALSE, SINGLE, PUBLIC, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
 						arraySinglePublic = append(arraySinglePublic, data)
