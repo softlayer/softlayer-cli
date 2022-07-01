@@ -9,6 +9,7 @@ import (
 
 type ObjectStorageManager interface {
 	GetAccounts(mask string, limit int) ([]datatypes.Network_Storage, error)
+	GetEndpoints(HubNetworkStorageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error)
 }
 
 type objectStorageManager struct {
@@ -36,4 +37,14 @@ func (a objectStorageManager) GetAccounts(mask string, limit int) ([]datatypes.N
 	filters = append(filters, filter.Path("id").OrderBy("ASC"))
 
 	return a.ObjectStorageService.Mask(mask).Filter(filters.Build()).Limit(limit).GetHubNetworkStorage()
+}
+
+/*
+Returns a collection of endpoint URLs available to this IBM Cloud Object Storage account.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getEndpoints/
+*/
+func (a objectStorageManager) GetEndpoints(HubNetworkStorageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error) {
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(a.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Id(HubNetworkStorageId).GetEndpoints(nil)
 }
