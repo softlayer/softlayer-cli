@@ -3,6 +3,7 @@ package i18n_test
 import (
 	"os"
 	"fmt"
+	"strings"
 	"io/ioutil"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -24,16 +25,31 @@ func prepareConfigForCLI(cliConfigContent string) core_config.Repository {
 	})
 }
 
+var xlationMap map[string]string
+
 var _ = Describe("I18NTests", func() {
 	coreConfig := prepareConfigForCLI(`{"UsageStatsEnabled": true}`)
+	xlationMap = map[string]string {
+		"de_DE": "Wiederkehrender Preis",
+		"es_ES": "Precio recurrente",
+		"fr_FR": "Prix récurrent",
+		"it_IT": "Prezzo ricorrente",
+		"ja_JP": "定期払い価格",
+		"ko_KR": "반복 가격",
+		"pt_BR": "Preço recorrente",
+		"zh_Hans": "重复出价",
+		"zh_Hant": "循環價格",
+		"en_US": "Recurring Price",
+	}
 	Describe("Language Init Tests", func() {
 		Context("Tests All Languages", func() {
 			for _, language := range i18n.SUPPORTED_LOCALES {
 				language := language
+
 				It("Testing " + language, func() {
 					coreConfig.SetLocale(language)
 					translator := i18n.Init(coreConfig)
-					Expect(translator("Recurring Price")).To(Equal("Recurring Price"))
+					Expect(translator("Recurring Price")).To(Equal(xlationMap[language]))
 				})
 			}
 		})
@@ -43,31 +59,16 @@ var _ = Describe("I18NTests", func() {
 		BeforeEach(func() {
 			coreConfig.SetLocale("")
 		})
-
-		It("Tests es_ES from ENV", func() {
-			os.Setenv("LANGUAGE", "es-ES")
-			translator := i18n.Init(coreConfig)
-			Expect(translator("# of Active Transactions")).To(Equal("# de transacciones activas"))
-		})
-		It("Tests de_DE from ENV", func() {
-			os.Setenv("LANGUAGE", "de-DE")
-			translator := i18n.Init(coreConfig)
-			Expect(translator("# of Active Transactions")).To(Equal("Anzahl aktiver Transaktionen"))
-		})
-		It("Tests ja_JP from ENV", func() {
-			os.Setenv("LANGUAGE", "ja_JP")
-			translator := i18n.Init(coreConfig)
-			Expect(translator("# of Active Transactions")).To(Equal("アクティブなトランザクションの数"))
-		})
-		It("Tests zh_Hans from ENV", func() {
-			os.Setenv("LANGUAGE", "zh-CN")
-			translator := i18n.Init(coreConfig)
-			Expect(translator("# of Active Transactions")).To(Equal("活动事务数"))
-		})
-		It("Tests zh_Hant from ENV", func() {
-			os.Setenv("LANGUAGE", "zh-TW")
-			translator := i18n.Init(coreConfig)
-			Expect(translator("# of Active Transactions")).To(Equal("作用中交易數目"))
+		Context("Test loading from ENV variables", func() {
+			for _, language := range i18n.SUPPORTED_LOCALES {
+				language := language
+				envLang := strings.Replace(language, "_", "-", 1)
+				It("LANGUAGE=" + envLang, func() {
+					os.Setenv("LANGUAGE", envLang)
+					translator := i18n.Init(coreConfig)
+					Expect(translator("Recurring Price")).To(Equal(xlationMap[language]))
+				})
+			}
 		})
 		AfterEach(func() {
 			defer os.Setenv("LANGUAGE", oldLang)	
