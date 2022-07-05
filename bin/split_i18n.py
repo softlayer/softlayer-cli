@@ -58,6 +58,13 @@ def keep_good_matches(bad_dct, mixed_dct):
 
     return clean_i18n
 
+def sync_en_US(file_name, file_to_update):
+    """Adds keys that are in en_US to all the other all.json files
+
+    :param file_name: location of en_US.all.json
+    :param file_to_update: location of target language file
+    """
+
 
 def cleanup_i18n_file(file_name, bad_file='bad.json', bad=True):
     """
