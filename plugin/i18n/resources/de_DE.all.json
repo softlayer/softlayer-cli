@@ -36,6 +36,10 @@
     "translation": "${COMMAND_NAME} sl account bandwidth-pools"
   },
   {
+    "id": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456",
+    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl account cancel-item IDENTIFIER",
     "translation": "${COMMAND_NAME} sl account cancel-item IDENTIFIER"
   },
@@ -130,6 +134,10 @@
   {
     "id": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678",
     "translation": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONEN] DATENTRÄGER-ID\n\nBEISPIEL:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678"
+  },
+  {
+    "id": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list",
+    "translation": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list"
   },
   {
     "id": "${COMMAND_NAME} sl block replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
@@ -552,6 +560,10 @@
     "translation": "${COMMAND_NAME} sl licenses cancel SCHLÜSSEL"
   },
   {
+    "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
+    "translation": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources."
+  },
+  {
     "id": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456",
     "translation": "${COMMAND_NAME} sl nas credentials ID [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl nas credentials 123456"
   },
@@ -582,6 +594,10 @@
   {
     "id": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  This command lists the presets for Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order preset-list [OPTIONEN] PACKAGE_KEYNAME\n\n   BEISPIEL: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\tMit diesem Befehl werden die Voreinstellungen für Bare Metal Server aufgelistet."
+  },
+  {
+    "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
+    "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list"
   },
   {
     "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
@@ -670,6 +686,10 @@
   {
     "id": "${COMMAND_NAME} sl tags list [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags list\n\tShows all tags and a count of devices associated with that tag.\n\n\t${COMMAND_NAME} sl tags list -d\n\tShows all tags with devices, and some basic information about devices using this tag.\n",
     "translation": "${COMMAND_NAME} sl tags list [OPTIONEN]\n\nBEISPIEL:\n\t${COMMAND_NAME} sl tags list\n\tZeigt alle Tags sowie die Anzahl der Geräte an, die diesem Tag zugeordnet sind.\n\n\t${COMMAND_NAME} sl tags list -d\n\tZeigt alle Tags mit Geräten sowie einige grundlegende Informationen zu den Geräten an, die diesen Tag verwenden.\n"
+  },
+  {
+    "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
+    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
   {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
@@ -1166,6 +1186,10 @@
   {
     "id": "Account ID",
     "translation": "Konto-ID"
+  },
+  {
+    "id": "Account name",
+    "translation": "Account name"
   },
   {
     "id": "Accounting",
@@ -1966,6 +1990,10 @@
   {
     "id": "Column to sort by. Options are: id,virtualServerId,hostname",
     "translation": "Spalte, nach der sortiert werden soll. Optionen: id,virtualServerId,hostname"
+  },
+  {
+    "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
+    "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
   {
     "id": "Company",
@@ -2780,6 +2808,10 @@
     "translation": "Ereignis-ID"
   },
   {
+    "id": "Expiration",
+    "translation": "Expiration"
+  },
+  {
     "id": "Export an image to an object storage",
     "translation": "Ein Image in einen Objektspeicher exportieren"
   },
@@ -3208,6 +3240,14 @@
     "translation": "Die Autoskalierungsgruppe konnte nicht abgerufen werden.\n"
   },
   {
+    "id": "Failed to get Bandwidth Pool.\n",
+    "translation": "Failed to get Bandwidth Pool.\n"
+  },
+  {
+    "id": "Failed to get Cloud Object Storages.\n",
+    "translation": "Failed to get Cloud Object Storages.\n"
+  },
+  {
     "id": "Failed to get Datacenter {{.datacenter}}.\n",
     "translation": "Das Rechenzentrum {{.datacenter}} konnte nicht abgerufen werden.\n"
   },
@@ -3254,6 +3294,10 @@
   {
     "id": "Failed to get Network Message Delivery Accounts.",
     "translation": "Abrufen von Zustellungskonten für Netznachrichten fehlgeschlagen."
+  },
+  {
+    "id": "Failed to get Quotes.\n",
+    "translation": "Failed to get Quotes.\n"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3956,6 +4000,10 @@
     "translation": "Festlegen des Kennworts für den Host {{.HostID}} fehlgeschlagen.\n"
   },
   {
+    "id": "Failed to set tags.\n",
+    "translation": "Failed to set tags.\n"
+  },
+  {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
     "translation": "Die Momentaufnahmenbenachrichtigung für Datenträger \"{{.ID}}\" ist fehlgeschlagen.\n"
   },
@@ -4372,6 +4420,10 @@
     "translation": "IP-Adresse suchen und ihr Teilnetz sowie Gerätedaten anzeigen"
   },
   {
+    "id": "Find details about the machine making these API calls.",
+    "translation": "Find details about the machine making these API calls."
+  },
+  {
     "id": "Firewall",
     "translation": "Firewall"
   },
@@ -4474,6 +4526,10 @@
   {
     "id": "Get Reserved Capacity Group details.",
     "translation": "Details zur Gruppe reservierter Kapazität abrufen."
+  },
+  {
+    "id": "Get bandwidth pool details.",
+    "translation": "Get bandwidth pool details."
   },
   {
     "id": "Get billing details for a virtual server instance",
@@ -4586,6 +4642,10 @@
   {
     "id": "HARDWARE",
     "translation": "HARDWARE"
+  },
+  {
+    "id": "Hardware",
+    "translation": "Hardware"
   },
   {
     "id": "Hardware ID",
@@ -4784,6 +4844,10 @@
     "translation": "ID eines Originaldatenträgersnapshots zur Verwendung für die Duplizierung"
   },
   {
+    "id": "ID of the object being tagged  [required]",
+    "translation": "ID of the object being tagged  [required]"
+  },
+  {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
     "translation": "Die IDs der SSH-Schlüssel, die dem Rootbenutzer hinzugefügt werden sollen, Mehrfachvorkommen zulässig"
   },
@@ -4926,6 +4990,10 @@
   {
     "id": "Import an image from an object storage",
     "translation": "Image aus einem Objektspeicher importieren"
+  },
+  {
+    "id": "Inbound Usage",
+    "translation": "Inbound Usage"
   },
   {
     "id": "Include extra resources. Options are: at,is,rs,sr,ss",
@@ -5112,6 +5180,10 @@
     "translation": "Schlüsselname"
   },
   {
+    "id": "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]",
+    "translation": "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]"
+  },
+  {
     "id": "Key name. It's only available in HEADER or COOKIE type",
     "translation": "Schlüsselname. Nur im Typ HEADER oder COOKIE verfügbar."
   },
@@ -5244,6 +5316,10 @@
     "translation": "Alle Autoskalierungsgruppen für Ihr Konto auflisten"
   },
   {
+    "id": "List all active quotes on an account",
+    "translation": "List all active quotes on an account"
+  },
+  {
     "id": "List all devices the user has access and device access permissions.",
     "translation": "Listet alle Geräte auf, auf die der Benutzer Zugriff und Gerätezugriffsberechtigungen hat."
   },
@@ -5298,6 +5374,10 @@
   {
     "id": "List block storage snapshots",
     "translation": "Blockspeichersnapshots auflisten"
+  },
+  {
+    "id": "List cloud block storage.",
+    "translation": "List cloud block storage."
   },
   {
     "id": "List datacenters a package can be ordered in",
@@ -5474,6 +5554,10 @@
   {
     "id": "Long Name",
     "translation": "Langer Name"
+  },
+  {
+    "id": "Mac addresses",
+    "translation": "Mac addresses"
   },
   {
     "id": "Manage Classic infrastructure services",
@@ -5654,6 +5738,10 @@
   {
     "id": "Name of the load balancer L7 pool",
     "translation": "Name des L7-Pools der Lastausgleichsfunktion"
+  },
+  {
+    "id": "Netscaler",
+    "translation": "Netscaler"
   },
   {
     "id": "Network",
@@ -6150,6 +6238,14 @@
   {
     "id": "Package",
     "translation": "Paket"
+  },
+  {
+    "id": "Package Id",
+    "translation": "Package Id"
+  },
+  {
+    "id": "Package Name",
+    "translation": "Package Name"
   },
   {
     "id": "Package {{.Package}} does not exist.",
@@ -6844,6 +6940,10 @@
     "translation": "Das Rootkennwort muss mit dem Flag 'rootpwd' angegeben werden, wenn eine Zuordnung festgelegt ist."
   },
   {
+    "id": "Router",
+    "translation": "Router"
+  },
+  {
     "id": "Router Hostname",
     "translation": "Router-Hostname"
   },
@@ -7006,6 +7106,10 @@
   {
     "id": "Session Stickiness",
     "translation": "Sitzungsaffinität"
+  },
+  {
+    "id": "Set Tags.",
+    "translation": "Set Tags."
   },
   {
     "id": "Set note for an existing block storage volume.",
@@ -8032,6 +8136,10 @@
     "translation": "Mit dieser Schnittstelle können Sie die Route Ihrer kontoeigenen Teilnetze entfernen."
   },
   {
+    "id": "This option is not available.",
+    "translation": "This option is not available."
+  },
+  {
     "id": "This volume cannot be modified since it does not support Encryption at Rest.",
     "translation": "Dieser Datenträger kann nicht geändert werden, da er keine Verschlüsselung ruhender Daten unterstützt."
   },
@@ -8520,6 +8628,10 @@
     "translation": "Benutzerberechtigungen anzeigen"
   },
   {
+    "id": "Virtual",
+    "translation": "Virtual"
+  },
+  {
     "id": "Virtual Guest ID",
     "translation": "ID der virtuellen Gastmaschine"
   },
@@ -8594,6 +8706,14 @@
   {
     "id": "Vlan Name",
     "translation": "VLAN-Name"
+  },
+  {
+    "id": "Vlan ids",
+    "translation": "Vlan ids"
+  },
+  {
+    "id": "Vlans",
+    "translation": "Vlans"
   },
   {
     "id": "Volume Name",

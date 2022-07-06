@@ -57,8 +57,12 @@ while IFS= read -r line; do
     elif [[ $line =~ "exists in en_US, but not in "[a-zA-Z_]{5} ]]
     then
         JSON=`echo "$OUTPUT" | sed -E "s/(.+) exists in the code, but not in en_US/{\"id\": \1, \"translation\": \1},/g"`
-        echo ">>> cd plugin; ../bin/i18n4go -c checkup -q i18n -v <<<"
-        echo "The translation files are out of sync, and this script can't fix it."
+        # echo ">>> |$OUTPUT| <<<"
+        OUTPUT=""
+        ADD_JSON_OUT=`printf "%s\n    %s" "${ADD_JSON_OUT}" "${JSON}"`
+        JSON=""
+        printf "\033[0;31m>>> cd plugin; ../bin/i18n4go -c checkup -q i18n -v <<<\033[0m\n"
+        printf "\033[0;31m>>> The translation files are out of sync. Run \`python bin/sync_enUS.py\`.<<<\033[0m\n"
         echo $RESULTS
         exit 4
 
@@ -71,7 +75,7 @@ while IFS= read -r line; do
         ADD_JSON_OUT=`printf "%s\n]" "${ADD_JSON_OUT}"`
         # JSON panics when it hits tab characters.
         ADD_JSON_OUT=`echo "$ADD_JSON_OUT" | sed -E 's/\t/\\\t/g'`
-        printf "====== ADD THESE =======\n"
+        printf "\033[0;34m ====== ADD THESE ======= \033[0m \n"
         echo "$ADD_JSON_OUT"
         echo "$ADD_JSON_OUT" > ../old-i18n/add_these.json
 
@@ -81,7 +85,7 @@ while IFS= read -r line; do
         DEL_JSON_OUT=`printf "%s\n]" "${DEL_JSON_OUT}"`
         # JSON panics when it hits tab characters.
         DEL_JSON_OUT=`echo "$DEL_JSON_OUT" | sed -E 's/\t/\\\t/g'`
-        printf "====== DEL THESE =======\n"
+        printf "\033[0;34m ====== DEL THESE ======= \033[0m \n"
         echo "$DEL_JSON_OUT"
         echo "$DEL_JSON_OUT" > ../old-i18n/remove_these.json
         # python ./bin/split_i18n.py
