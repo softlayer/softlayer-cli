@@ -91,8 +91,8 @@ def cleanup_i18n_file(file_name, bad_file='bad.json', bad=True):
     else:
         clean_i18n = keep_good_matches(bad_i18n, mixed_i18n)
 
-    with open(file_name, 'w', encoding="utf8") as f:
-       json.dump(clean_i18n, f, sort_keys=True, separators=(',\n', ': '), ensure_ascii=False)
+    with open(file_name, 'w', encoding="utf8", newline='\n') as f:
+       json.dump(clean_i18n, f, sort_keys=True, separators=(',', ': ',), ensure_ascii=False, indent=2)
     f.close()
 
 
