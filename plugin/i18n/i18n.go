@@ -3,10 +3,11 @@ package i18n
 import (
 	"path/filepath"
 	"strings"
+	"fmt"
 
+	"github.com/Xuanwo/go-locale"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	goi18n "github.com/nicksnyder/go-i18n/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n/detection"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/resources"
 )
 
@@ -37,20 +38,11 @@ func SetResourcePath(path string) {
 	resourcePath = path
 }
 
-var T goi18n.TranslateFunc = Init(core_config.NewCoreConfig(func(error) {}), new(detection.JibberJabberDetector))
+var T goi18n.TranslateFunc = Init(core_config.NewCoreConfig(func(error) {}))
 
-func Init(coreConfig core_config.Repository, detector detection.Detector) goi18n.TranslateFunc {
+func Init(coreConfig core_config.Repository) goi18n.TranslateFunc {
 	userLocale := coreConfig.Locale()
-	if userLocale != "" {
-		return initWithLocale(userLocale)
-	}
-	locale := supportedLocale(detector.DetectLocale())
-	if locale == "" {
-		locale = defaultLocaleForLang(detector.DetectLanguage())
-	}
-	if locale == "" {
-		locale = DEFAULT_LOCALE
-	}
+	locale := supportedLocale(userLocale)
 	return initWithLocale(locale)
 }
 
@@ -73,34 +65,39 @@ func loadFromAsset(locale string) (err error) {
 	return
 }
 
-func supportedLocale(locale string) string {
-	locale = normailizeLocale(locale)
+// Tries to determine the system locale
+func DetectLocal() string {
+    tag, err := locale.Detect()
+    if err != nil {
+        panic(err)
+    }
+    // tag is en-US, needs to be en_US
+    locale := strings.Replace(fmt.Sprintf("%v", tag), "-", "_", 1)
+    return locale
+}
+
+// Tries to match the system locale with a supported locale, otherwise sets a DEFAULT_LOCALE
+func supportedLocale(configLocal string) string {
+
+	// Check if the configLocal matches, this takes precendent
+	for _, l := range SUPPORTED_LOCALES {
+		if strings.EqualFold(configLocal, l) {
+			return l
+		}
+	}
+
+	// Check if the system has a local that matches
+	locale := DetectLocal()
 	for _, l := range SUPPORTED_LOCALES {
 		if strings.EqualFold(locale, l) {
 			return l
 		}
 	}
-	switch locale {
-	case "zh_cn", "zh_sg":
-		return "zh_Hans"
-	case "zh_hk", "zh_tw":
-		return "zh_Hant"
+	switch strings.ToLower(locale) {
+		case "zh_cn", "zh_sg":
+			return "zh_Hans"
+		case "zh_hk", "zh_tw":
+			return "zh_Hant"
 	}
-	return ""
-}
-
-func normailizeLocale(locale string) string {
-	return strings.ToLower(strings.Replace(locale, "-", "_", 1))
-}
-
-func defaultLocaleForLang(lang string) string {
-	if lang != "" {
-		lang = strings.ToLower(lang)
-		for _, l := range SUPPORTED_LOCALES {
-			if lang == l[0:2] {
-				return l
-			}
-		}
-	}
-	return ""
+	return DEFAULT_LOCALE
 }
