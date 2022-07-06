@@ -42,7 +42,7 @@ func (cmd *QuoteDetailCommand) Run(c *cli.Context) error {
 
 	quote, err := cmd.OrderManager.GetQuote(quoteId, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Quote.\n", err.Error()), 2)
+		return cli.NewExitError(T("Failed to get Quote.\n"+err.Error()), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
