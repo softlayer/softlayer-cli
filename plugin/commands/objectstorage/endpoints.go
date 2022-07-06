@@ -41,7 +41,7 @@ func EndpointsMetaData() cli.Command {
 		Category:    "object-storage",
 		Name:        "endpoints",
 		Description: T("List object storage endpoints."),
-		Usage:       T(`${COMMAND_NAME} sl object-storage endpoints`),
+		Usage:       T(`${COMMAND_NAME} sl object-storage endpoints IDENTIFIER`),
 		Flags: []cli.Flag{
 			metadata.OutputFlag(),
 		},
@@ -80,164 +80,76 @@ func PrintEndpoints(endpoints []datatypes.Container_Network_Storage_Hub_ObjectSt
 		T("Url"),
 	})
 
-	arrayCrossPublic := [][]string{}
-	arrayCrossPrivate := [][]string{}
-	arrayRegionPublic := [][]string{}
-	arrayRegionPrivate := [][]string{}
-	arraySinglePublic := [][]string{}
-	arraySinglePrivate := [][]string{}
-
-	legacyArrayCrossPublic := [][]string{}
-	legacyArrayCrossPrivate := [][]string{}
-	legacyArrayRegionPublic := [][]string{}
-	legacyArrayRegionPrivate := [][]string{}
-	legacyArraySinglePublic := [][]string{}
-	legacyArraySinglePrivate := [][]string{}
 	allArrays := [][]string{}
 
 	for _, endpoint := range endpoints {
-		if !*endpoint.Legacy {
-			if *endpoint.Region == "singleSite" {
-				if endpoint.Location != nil {
-					if *endpoint.Type == "public" {
-						data := []string{LEGACY_FALSE, SINGLE, PUBLIC, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-						arraySinglePublic = append(arraySinglePublic, data)
-					} else {
-						data := []string{LEGACY_FALSE, SINGLE, PRIVATE, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-						arraySinglePrivate = append(arraySinglePrivate, data)
-					}
-				} else {
-					if *endpoint.Type == "public" {
-						data := []string{LEGACY_FALSE, SINGLE, PUBLIC, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-						arraySinglePublic = append(arraySinglePublic, data)
-					} else {
-						data := []string{LEGACY_FALSE, SINGLE, PRIVATE, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-						arraySinglePrivate = append(arraySinglePrivate, data)
-					}
-				}
-			} else {
-				if *endpoint.Region == "regional" {
-					if endpoint.Location != nil {
-						if *endpoint.Type == "public" {
-							data := []string{LEGACY_FALSE, REGION, PUBLIC, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-							arrayRegionPublic = append(arrayRegionPublic, data)
-						} else {
-							data := []string{LEGACY_FALSE, REGION, PRIVATE, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-							arrayRegionPrivate = append(arrayRegionPrivate, data)
-						}
-					} else {
-						if *endpoint.Type == "public" {
-							data := []string{LEGACY_FALSE, REGION, PUBLIC, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-							arrayRegionPublic = append(arrayRegionPublic, data)
-						} else {
-							data := []string{LEGACY_FALSE, REGION, PRIVATE, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-							arrayRegionPrivate = append(arrayRegionPrivate, data)
-						}
-					}
-				} else {
-
-					if endpoint.Location != nil {
-						if *endpoint.Type == "public" {
-							data := []string{LEGACY_FALSE, CROS, PUBLIC, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-							arrayCrossPublic = append(arrayCrossPublic, data)
-						} else {
-							data := []string{LEGACY_FALSE, CROS, PRIVATE, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-							arrayCrossPrivate = append(arrayCrossPrivate, data)
-						}
-					} else {
-						if *endpoint.Type == "public" {
-							data := []string{LEGACY_FALSE, CROS, PUBLIC, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-							arrayCrossPublic = append(arrayCrossPublic, data)
-						} else {
-							data := []string{LEGACY_FALSE, CROS, PRIVATE, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-							arrayCrossPrivate = append(arrayCrossPrivate, data)
-						}
-					}
-				}
-			}
-		} else {
-			if *endpoint.Region == "singleSite" {
-				if endpoint.Location != nil {
-					if *endpoint.Type == "public" {
-						data := []string{LEGACY_TRUE, SINGLE, PUBLIC, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-						legacyArraySinglePublic = append(legacyArraySinglePublic, data)
-					} else {
-						data := []string{LEGACY_TRUE, SINGLE, PRIVATE, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-						legacyArraySinglePrivate = append(legacyArraySinglePrivate, data)
-					}
-				} else {
-					if *endpoint.Type == "public" {
-						data := []string{LEGACY_TRUE, SINGLE, PUBLIC, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-						legacyArraySinglePublic = append(legacyArraySinglePublic, data)
-					} else {
-						data := []string{LEGACY_TRUE, SINGLE, PRIVATE, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-						legacyArraySinglePrivate = append(legacyArraySinglePrivate, data)
-					}
-				}
-			} else {
-				if *endpoint.Region == "regional" {
-					if endpoint.Location != nil {
-						if *endpoint.Type == "public" {
-							data := []string{LEGACY_TRUE, REGION, PUBLIC, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-							legacyArrayRegionPublic = append(legacyArrayRegionPublic, data)
-						} else {
-							data := []string{LEGACY_TRUE, REGION, PRIVATE, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-							legacyArrayRegionPrivate = append(legacyArrayRegionPrivate, data)
-						}
-					} else {
-						if *endpoint.Type == "public" {
-							data := []string{LEGACY_TRUE, REGION, PUBLIC, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-							legacyArrayRegionPublic = append(legacyArrayRegionPublic, data)
-						} else {
-							data := []string{LEGACY_TRUE, REGION, PRIVATE, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-							legacyArrayRegionPrivate = append(legacyArrayRegionPrivate, data)
-						}
-					}
-				} else {
-
-					if endpoint.Location != nil {
-						if *endpoint.Type == "public" {
-							data := []string{LEGACY_TRUE, CROS, PUBLIC, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-							legacyArrayCrossPublic = append(legacyArrayCrossPublic, data)
-						} else {
-							data := []string{LEGACY_TRUE, CROS, PRIVATE, utils.FormatStringPointerName(endpoint.Location), utils.FormatStringPointerName(endpoint.Url)}
-							legacyArrayCrossPrivate = append(legacyArrayCrossPrivate, data)
-						}
-					} else {
-						if *endpoint.Type == "public" {
-							data := []string{LEGACY_TRUE, CROS, PUBLIC, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-							legacyArrayCrossPublic = append(legacyArrayCrossPublic, data)
-						} else {
-							data := []string{LEGACY_TRUE, CROS, PRIVATE, utils.FormatStringPointerName(endpoint.Region), utils.FormatStringPointerName(endpoint.Url)}
-							legacyArrayCrossPrivate = append(legacyArrayCrossPrivate, data)
-						}
-					}
-				}
-			}
-		}
+		data := []string{LegacyReturn(*endpoint.Legacy), EndPointTypeReturn(*endpoint.Region), PublicPrivate(*endpoint.Type), LocationRegion(endpoint), *endpoint.Url}
+		allArrays = append(allArrays, data)
 	}
 
-	allArrays = append(allArrays, arrayCrossPublic...)
-	allArrays = append(allArrays, arrayCrossPrivate...)
-	allArrays = append(allArrays, arrayRegionPublic...)
-	allArrays = append(allArrays, arrayRegionPrivate...)
-	allArrays = append(allArrays, arraySinglePublic...)
-	allArrays = append(allArrays, arraySinglePrivate...)
-	allArrays = append(allArrays, legacyArrayCrossPublic...)
-	allArrays = append(allArrays, legacyArrayCrossPrivate...)
-	allArrays = append(allArrays, legacyArrayRegionPublic...)
-	allArrays = append(allArrays, legacyArrayRegionPrivate...)
-	allArrays = append(allArrays, legacyArraySinglePublic...)
-	allArrays = append(allArrays, legacyArraySinglePrivate...)
-
+	allArrays = SortEndpoint(allArrays)
 	for _, array := range allArrays {
 		table.Add(
-			array[0],
-			array[1],
-			array[2],
-			array[3],
-			array[4],
+			array[0], array[1], array[2], array[3], array[4],
 		)
 	}
 	utils.PrintTable(ui, table, outputFormat)
+}
+
+func LegacyReturn(data bool) string {
+	if data {
+		return "True"
+	}
+	return "False"
+}
+
+func EndPointTypeReturn(endpoint string) string {
+	if endpoint == "singleSite" {
+		return "Single Site"
+	}
+	if endpoint == "regional" {
+		return "Region"
+	}
+	return "Cross Region"
+}
+
+func PublicPrivate(data string) string {
+	if data == "public" {
+		return "Public"
+	}
+	return "Private"
+}
+
+func LocationRegion(endpoint datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint) string {
+	if endpoint.Location != nil {
+		return *endpoint.Location
+	}
+	return *endpoint.Region
+}
+
+func SortEndpoint(endpoints [][]string) [][]string {
+	endpoint_type := ""
+	if len(endpoints) > 0 {
+		endpoint_type = endpoints[0][1]
+	}
+	public := [][]string{}
+	private := [][]string{}
+	array_final := [][]string{}
+	for _, endpoint := range endpoints {
+		if endpoint[1] != endpoint_type {
+			endpoint_type = endpoint[1]
+			array_final = append(array_final, public...)
+			array_final = append(array_final, private...)
+			public = [][]string{}
+			private = [][]string{}
+		}
+		if endpoint[2] == "Public" {
+			public = append(public, endpoint)
+		} else {
+			private = append(private, endpoint)
+		}
+	}
+	array_final = append(array_final, public...)
+	array_final = append(array_final, private...)
+	return array_final
 }
