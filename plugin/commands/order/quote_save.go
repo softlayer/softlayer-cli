@@ -41,7 +41,7 @@ func (cmd *QuoteSaveCommand) Run(c *cli.Context) error {
 
 	quote, err := cmd.OrderManager.SaveQuote(quoteId)
 	if err != nil {
-		return cli.NewExitError(T("Failed to save Quote.\n", err.Error()), 2)
+		return cli.NewExitError(T("Failed to save Quote.\n")+err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Id"), T("Name"), T("Created"), T("Modified"), T("Status")})
