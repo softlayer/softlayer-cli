@@ -572,6 +572,14 @@
     "translation": "${COMMAND_NAME} sl nas list\n\nBEISPIEL: \n   ${COMMAND_NAME} sl nas list"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage accounts",
+    "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONEN] PACKAGE_KEYNAME\n\t\nBEISPIEL: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   Mit diesem Befehl werden die Bare Metal Server-Kategorien aufgeführt."
   },
@@ -1356,6 +1364,10 @@
     "translation": "Ein optionaler Grund für den Abbruch"
   },
   {
+    "id": "ApiType",
+    "translation": "ApiType"
+  },
+  {
     "id": "Append parameters to web call",
     "translation": "Parameter an Webaufruf anhängen"
   },
@@ -1858,6 +1870,10 @@
   {
     "id": "Classic infrastructure Network subnets",
     "translation": "Klassische Infrastruktur - Netz - Teilnetze"
+  },
+  {
+    "id": "Classic infrastructure Object Storage commands",
+    "translation": "Classic infrastructure Object Storage commands"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -2736,6 +2752,10 @@
     "translation": "Enddatum für Bandbreitenberichte"
   },
   {
+    "id": "EndPoint Type",
+    "translation": "EndPoint Type"
+  },
+  {
     "id": "Ending Balance",
     "translation": "Endsaldo"
   },
@@ -3328,6 +3348,10 @@
     "translation": "Kontolizenzen konnten nicht abgerufen werden."
   },
   {
+    "id": "Failed to get account’s associated Virtual Storage volumes.",
+    "translation": "Failed to get account’s associated Virtual Storage volumes."
+  },
+  {
     "id": "Failed to get all datacenters.\n",
     "translation": "Abrufen sämtlicher Rechenzentren fehlgeschlagen.\n"
   },
@@ -3430,6 +3454,10 @@
   {
     "id": "Failed to get l7 rules: {{.Error}}.\n",
     "translation": "Abrufen der L7-Regeln fehlgeschlagen: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to get list object storage endpoints.",
+    "translation": "Failed to get list object storage endpoints."
   },
   {
     "id": "Failed to get load balancer product packages.",
@@ -5256,6 +5284,10 @@
     "translation": "Letzte Aktualisierung"
   },
   {
+    "id": "Legacy",
+    "translation": "Legacy"
+  },
+  {
     "id": "License key",
     "translation": "Lizenzschlüssel"
   },
@@ -5286,6 +5318,10 @@
   {
     "id": "List NAS accounts.",
     "translation": "NAS-Konten auflisten."
+  },
+  {
+    "id": "List Object Storage accounts.",
+    "translation": "List Object Storage accounts."
   },
   {
     "id": "List Reserved Capacity groups.\n",
@@ -5448,6 +5484,10 @@
     "translation": "Anzahl der Dateispeicherdatenträger pro Rechenzentrum auflisten"
   },
   {
+    "id": "List object storage endpoints.",
+    "translation": "List object storage endpoints."
+  },
+  {
     "id": "List only the required categories for the package",
     "translation": "Nur die erforderlichen Kategorien für das Paket auflisten"
   },
@@ -5550,6 +5590,10 @@
   {
     "id": "Location",
     "translation": "Standort"
+  },
+  {
+    "id": "Location/Region",
+    "translation": "Location/Region"
   },
   {
     "id": "Long Name",
@@ -6712,6 +6756,10 @@
     "translation": "Übertragungsgeschwindigkeit des öffentlichen Ports; Optionen: 0, 10, 100, 1000, 10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Ram",
     "translation": "RAM"
   },
@@ -6906,6 +6954,10 @@
   {
     "id": "Result limit",
     "translation": "Ergebnisbegrenzung"
+  },
+  {
+    "id": "Result limit.",
+    "translation": "Result limit."
   },
   {
     "id": "Result offset",
@@ -8538,6 +8590,10 @@
   {
     "id": "Upgrade all hard drives' firmware",
     "translation": "Upgrade für Firmware der Festplattenlaufwerke durchführen"
+  },
+  {
+    "id": "Url",
+    "translation": "Url"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",

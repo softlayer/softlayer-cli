@@ -572,6 +572,14 @@
     "translation": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage accounts",
+    "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers."
   },
@@ -1356,6 +1364,10 @@
     "translation": "An optional reason for cancellation"
   },
   {
+    "id": "ApiType",
+    "translation": "ApiType"
+  },
+  {
     "id": "Append parameters to web call",
     "translation": "Append parameters to web call"
   },
@@ -1858,6 +1870,10 @@
   {
     "id": "Classic infrastructure Network subnets",
     "translation": "Classic infrastructure Network subnets"
+  },
+  {
+    "id": "Classic infrastructure Object Storage commands",
+    "translation": "Classic infrastructure Object Storage commands"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -2736,6 +2752,10 @@
     "translation": "End date for bandwidth reporting"
   },
   {
+    "id": "EndPoint Type",
+    "translation": "EndPoint Type"
+  },
+  {
     "id": "Ending Balance",
     "translation": "Ending Balance"
   },
@@ -3328,6 +3348,10 @@
     "translation": "Failed to get account licenses."
   },
   {
+    "id": "Failed to get account’s associated Virtual Storage volumes.",
+    "translation": "Failed to get account’s associated Virtual Storage volumes."
+  },
+  {
     "id": "Failed to get all datacenters.\n",
     "translation": "Failed to get all datacenters.\n"
   },
@@ -3430,6 +3454,10 @@
   {
     "id": "Failed to get l7 rules: {{.Error}}.\n",
     "translation": "Failed to get l7 rules: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to get list object storage endpoints.",
+    "translation": "Failed to get list object storage endpoints."
   },
   {
     "id": "Failed to get load balancer product packages.",
@@ -5256,6 +5284,10 @@
     "translation": "Last Updated"
   },
   {
+    "id": "Legacy",
+    "translation": "Legacy"
+  },
+  {
     "id": "License key",
     "translation": "License key"
   },
@@ -5286,6 +5318,10 @@
   {
     "id": "List NAS accounts.",
     "translation": "List NAS accounts."
+  },
+  {
+    "id": "List Object Storage accounts.",
+    "translation": "List Object Storage accounts."
   },
   {
     "id": "List Reserved Capacity groups.\n",
@@ -5448,6 +5484,10 @@
     "translation": "List number of file storage volumes per datacenter"
   },
   {
+    "id": "List object storage endpoints.",
+    "translation": "List object storage endpoints."
+  },
+  {
     "id": "List only the required categories for the package",
     "translation": "List only the required categories for the package"
   },
@@ -5550,6 +5590,10 @@
   {
     "id": "Location",
     "translation": "Location"
+  },
+  {
+    "id": "Location/Region",
+    "translation": "Location/Region"
   },
   {
     "id": "Long Name",
@@ -6712,6 +6756,10 @@
     "translation": "Public port speed, options are: 0,10,100,1000,10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Ram",
     "translation": "Ram"
   },
@@ -6906,6 +6954,10 @@
   {
     "id": "Result limit",
     "translation": "Result limit"
+  },
+  {
+    "id": "Result limit.",
+    "translation": "Result limit."
   },
   {
     "id": "Result offset",
@@ -8538,6 +8590,10 @@
   {
     "id": "Upgrade all hard drives' firmware",
     "translation": "Upgrade all hard drives' firmware"
+  },
+  {
+    "id": "Url",
+    "translation": "Url"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",

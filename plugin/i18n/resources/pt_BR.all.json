@@ -572,6 +572,14 @@
     "translation": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage accounts",
+    "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXEMPLO: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   Este comando lista as categorias para os servidores Bare Metal."
   },
@@ -1356,6 +1364,10 @@
     "translation": "Um motivo opcional para cancelamento"
   },
   {
+    "id": "ApiType",
+    "translation": "ApiType"
+  },
+  {
     "id": "Append parameters to web call",
     "translation": "Anexar parâmetros à chamada da web"
   },
@@ -1858,6 +1870,10 @@
   {
     "id": "Classic infrastructure Network subnets",
     "translation": "Sub-redes de rede da infraestrutura clássica"
+  },
+  {
+    "id": "Classic infrastructure Object Storage commands",
+    "translation": "Classic infrastructure Object Storage commands"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -2736,6 +2752,10 @@
     "translation": "Data de encerramento para relatório de largura de banda"
   },
   {
+    "id": "EndPoint Type",
+    "translation": "EndPoint Type"
+  },
+  {
     "id": "Ending Balance",
     "translation": "Saldo final"
   },
@@ -3328,6 +3348,10 @@
     "translation": "Falha em obter licenças de contas."
   },
   {
+    "id": "Failed to get account’s associated Virtual Storage volumes.",
+    "translation": "Failed to get account’s associated Virtual Storage volumes."
+  },
+  {
     "id": "Failed to get all datacenters.\n",
     "translation": "Falha ao obter todos os datacenters.\n"
   },
@@ -3430,6 +3454,10 @@
   {
     "id": "Failed to get l7 rules: {{.Error}}.\n",
     "translation": "Falha ao obter as regras da Camada 7: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to get list object storage endpoints.",
+    "translation": "Failed to get list object storage endpoints."
   },
   {
     "id": "Failed to get load balancer product packages.",
@@ -5256,6 +5284,10 @@
     "translation": "Última atualização"
   },
   {
+    "id": "Legacy",
+    "translation": "Legacy"
+  },
+  {
     "id": "License key",
     "translation": "Chave de licença"
   },
@@ -5286,6 +5318,10 @@
   {
     "id": "List NAS accounts.",
     "translation": "Listar contas NAS."
+  },
+  {
+    "id": "List Object Storage accounts.",
+    "translation": "List Object Storage accounts."
   },
   {
     "id": "List Reserved Capacity groups.\n",
@@ -5448,6 +5484,10 @@
     "translation": "Listar o número de volumes de armazenamento de arquivos por data center"
   },
   {
+    "id": "List object storage endpoints.",
+    "translation": "List object storage endpoints."
+  },
+  {
     "id": "List only the required categories for the package",
     "translation": "Listar somente as categorias requeridas para o pacote"
   },
@@ -5550,6 +5590,10 @@
   {
     "id": "Location",
     "translation": "Localização"
+  },
+  {
+    "id": "Location/Region",
+    "translation": "Location/Region"
   },
   {
     "id": "Long Name",
@@ -6712,6 +6756,10 @@
     "translation": "Velocidade da porta pública, as opções são: 0, 10, 100, 1.000, 10.000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Ram",
     "translation": "Ram"
   },
@@ -6906,6 +6954,10 @@
   {
     "id": "Result limit",
     "translation": "Limite de resultados"
+  },
+  {
+    "id": "Result limit.",
+    "translation": "Result limit."
   },
   {
     "id": "Result offset",
@@ -8538,6 +8590,10 @@
   {
     "id": "Upgrade all hard drives' firmware",
     "translation": "Fazer upgrade do firmware de todos discos rígidos"
+  },
+  {
+    "id": "Url",
+    "translation": "Url"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",
