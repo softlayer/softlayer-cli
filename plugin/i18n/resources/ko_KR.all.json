@@ -576,6 +576,10 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
     "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
@@ -3722,6 +3726,10 @@
   {
     "id": "Failed to list categories.\n",
     "translation": "카테고리를 나열하는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
   },
   {
     "id": "Failed to list datacenters.\n",
@@ -6968,6 +6976,10 @@
     "translation": "일시정지된 가상 서버 인스턴스 재개"
   },
   {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
+  },
+  {
     "id": "Retrieve logs for an Autoscale group.",
     "translation": "자동 스케일 그룹에 대한 로그를 검색합니다."
   },
@@ -8390,6 +8402,10 @@
   {
     "id": "Type",
     "translation": "유형"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",

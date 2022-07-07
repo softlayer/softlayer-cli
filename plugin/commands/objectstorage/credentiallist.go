@@ -57,7 +57,7 @@ func (cmd *CredentialListCommand) Run(c *cli.Context) error {
 	mask := ""
 	credentialList, err := cmd.ObjectStorageManager.ListCredential(StorageID, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list credentials.")+err.Error(), 2)
+		return cli.NewExitError(T("Failed to list credentials. ")+err.Error(), 2)
 	}
 	PrintCredentialList(credentialList, cmd.UI, outputFormat)
 	return nil
