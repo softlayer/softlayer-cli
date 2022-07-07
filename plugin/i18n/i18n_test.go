@@ -5,8 +5,11 @@ import (
 	"fmt"
 	"strings"
 	"io/ioutil"
+	"regexp"
+	"encoding/json"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	gomegaFormat "github.com/onsi/gomega/format"
 	"testing"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -27,7 +30,14 @@ func prepareConfigForCLI(cliConfigContent string) core_config.Repository {
 
 var xlationMap map[string]string
 
+type I18nXlation struct {
+	Id 			string `json: "id"`
+	Translation string `json: "translation"`
+}
+
 var _ = Describe("I18NTests", func() {
+	// gomegaFormat.TruncateThreshold = 200
+	gomegaFormat.CharactersAroundMismatchToInclude  = 80
 	coreConfig := prepareConfigForCLI(`{"UsageStatsEnabled": true}`)
 	xlationMap = map[string]string {
 		"de_DE": "Wiederkehrender Preis",
@@ -43,6 +53,7 @@ var _ = Describe("I18NTests", func() {
 	}
 	Describe("Language Init Tests", func() {
 		Context("Tests All Languages", func() {
+
 			for _, language := range i18n.SUPPORTED_LOCALES {
 				language := language
 
@@ -50,6 +61,20 @@ var _ = Describe("I18NTests", func() {
 					coreConfig.SetLocale(language)
 					translator := i18n.Init(coreConfig)
 					Expect(translator("Recurring Price")).To(Equal(xlationMap[language]))
+				})
+				It("Testing " + language + " everything", func() {
+					regex, _ := regexp.Compile("{{.([[:alnum:]])*}}")
+					coreConfig.SetLocale(language)
+					translator := i18n.Init(coreConfig)
+					file, err := ioutil.ReadFile("resources/" + language + ".all.json")
+					Expect(err).NotTo(HaveOccurred())
+					xlations := []I18nXlation{}
+					jsonErr  := json.Unmarshal([]byte(file), &xlations)
+					Expect(jsonErr).NotTo(HaveOccurred())
+					for i := 0; i < len(xlations); i++ {
+						subs := regex.ReplaceAllString(xlations[i].Translation,"<no value>")
+						Expect(translator(xlations[i].Id)).To(Equal(subs))
+					}
 				})
 			}
 		})

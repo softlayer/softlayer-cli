@@ -16,7 +16,7 @@
     "translation": " 예약된 용량을 실제로 작성하지 않음"
   },
   {
-    "id": " List placement groups.",
+    "id": "List placement groups.",
     "translation": " 배치 그룹을 나열합니다."
   },
   {
@@ -5288,7 +5288,7 @@
     "translation": "NAS 계정을 나열합니다."
   },
   {
-    "id": "List Reserved Capacity groups.\n",
+    "id": "List Reserved Capacity groups.",
     "translation": "예약 용량 그룹을 나열합니다. \n"
   },
   {
