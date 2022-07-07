@@ -31,8 +31,8 @@ func prepareConfigForCLI(cliConfigContent string) core_config.Repository {
 var xlationMap map[string]string
 
 type I18nXlation struct {
-	Id 			string `json: "id"`
-	Translation string `json: "translation"`
+	Id 			string `json:"id"`
+	Translation string `json:"translation"`
 }
 
 var _ = Describe("I18NTests", func() {
