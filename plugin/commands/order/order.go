@@ -41,6 +41,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"order-quote-detail": func(c *cli.Context) error {
 			return NewQuoteDetailCommand(ui, orderManager).Run(c)
 		},
+		"order-quote-save": func(c *cli.Context) error {
+			return NewQuoteSaveCommand(ui, orderManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -70,6 +73,7 @@ func OrderMetaData() cli.Command {
 			OrderPresetListMetaData(),
 			OrderQuoteListMetaData(),
 			OrderQuoteDetailMetaData(),
+			OrderQuoteSaveMetaData(),
 		},
 	}
 }
