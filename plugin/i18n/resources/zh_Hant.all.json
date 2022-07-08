@@ -576,6 +576,10 @@
     "translation": "${COMMAND_NAME} sl nas list\n\n範例：\n   ${COMMAND_NAME} sl nas list"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage accounts",
+    "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n範例：\n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   這個指令列出 Bare Metal Server 的種類。"
   },
@@ -1376,6 +1380,10 @@
     "translation": "選用的取消理由"
   },
   {
+    "id": "ApiType",
+    "translation": "ApiType"
+  },
+  {
     "id": "Append parameters to web call",
     "translation": "附加參數至 Web 呼叫"
   },
@@ -1878,6 +1886,10 @@
   {
     "id": "Classic infrastructure Network subnets",
     "translation": "標準基礎架構網路子網路"
+  },
+  {
+    "id": "Classic infrastructure Object Storage commands",
+    "translation": "Classic infrastructure Object Storage commands"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -3350,6 +3362,10 @@
   {
     "id": "Failed to get account licenses.",
     "translation": "無法取得帳戶授權。"
+  },
+  {
+    "id": "Failed to get account’s associated Virtual Storage volumes.",
+    "translation": "Failed to get account’s associated Virtual Storage volumes."
   },
   {
     "id": "Failed to get all datacenters.\n",
@@ -5322,6 +5338,10 @@
   {
     "id": "List NAS accounts.",
     "translation": "列出 NAS 帳戶。"
+  },
+  {
+    "id": "List Object Storage accounts.",
+    "translation": "List Object Storage accounts."
   },
   {
     "id": "List Reserved Capacity groups.\n",

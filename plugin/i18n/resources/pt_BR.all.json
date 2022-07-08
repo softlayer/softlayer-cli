@@ -576,6 +576,10 @@
     "translation": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage accounts",
+    "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXEMPLO: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   Este comando lista as categorias para os servidores Bare Metal."
   },
@@ -1376,6 +1380,10 @@
     "translation": "Um motivo opcional para cancelamento"
   },
   {
+    "id": "ApiType",
+    "translation": "ApiType"
+  },
+  {
     "id": "Append parameters to web call",
     "translation": "Anexar parâmetros à chamada da web"
   },
@@ -1878,6 +1886,10 @@
   {
     "id": "Classic infrastructure Network subnets",
     "translation": "Sub-redes de rede da infraestrutura clássica"
+  },
+  {
+    "id": "Classic infrastructure Object Storage commands",
+    "translation": "Classic infrastructure Object Storage commands"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -3350,6 +3362,10 @@
   {
     "id": "Failed to get account licenses.",
     "translation": "Falha em obter licenças de contas."
+  },
+  {
+    "id": "Failed to get account’s associated Virtual Storage volumes.",
+    "translation": "Failed to get account’s associated Virtual Storage volumes."
   },
   {
     "id": "Failed to get all datacenters.\n",
@@ -5322,6 +5338,10 @@
   {
     "id": "List NAS accounts.",
     "translation": "Listar contas NAS."
+  },
+  {
+    "id": "List Object Storage accounts.",
+    "translation": "List Object Storage accounts."
   },
   {
     "id": "List Reserved Capacity groups.\n",
