@@ -74,7 +74,7 @@ func (cmd *QuoteCommand) Run(c *cli.Context) error {
 			return cli.NewExitError(T("Failed to verify Quote.\n"+err.Error()), 2)
 		}
 
-		table = cmd.UI.Table([]string{T("keyName"), T("description"), T("cost")})
+		table = cmd.UI.Table([]string{T("KeyName"), T("Description"), T("Cost")})
 		for _, price := range order.Prices {
 			costKey := "recurringFee"
 			if *order.UseHourlyPricing {
