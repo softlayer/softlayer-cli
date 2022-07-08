@@ -572,6 +572,10 @@
     "translation": "${COMMAND_NAME} sl nas list \n \n 示例：\n ${COMMAND_NAME} sl nas list"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage accounts",
+    "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n示例：\n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   此命令列出 Bare Metal Server 的类别。"
   },
@@ -596,8 +600,16 @@
     "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   示例：\n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  此命令列出 Bare Metal Server 的预设。"
   },
   {
+    "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
+    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
     "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
+    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456"
   },
   {
     "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
@@ -1356,6 +1368,10 @@
     "translation": "可选的取消原因"
   },
   {
+    "id": "ApiType",
+    "translation": "ApiType"
+  },
+  {
     "id": "Append parameters to web call",
     "translation": "将参数附加到 Web 调用"
   },
@@ -1858,6 +1874,10 @@
   {
     "id": "Classic infrastructure Network subnets",
     "translation": "经典基础架构网络子网"
+  },
+  {
+    "id": "Classic infrastructure Object Storage commands",
+    "translation": "Classic infrastructure Object Storage commands"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -3296,6 +3316,10 @@
     "translation": "未能获取网络消息传递帐户。"
   },
   {
+    "id": "Failed to get Quote.\n",
+    "translation": "Failed to get Quote.\n"
+  },
+  {
     "id": "Failed to get Quotes.\n",
     "translation": "Failed to get Quotes.\n"
   },
@@ -3326,6 +3350,10 @@
   {
     "id": "Failed to get account licenses.",
     "translation": "未能获取帐户许可证。"
+  },
+  {
+    "id": "Failed to get account’s associated Virtual Storage volumes.",
+    "translation": "Failed to get account’s associated Virtual Storage volumes."
   },
   {
     "id": "Failed to get all datacenters.\n",
@@ -3986,6 +4014,10 @@
   {
     "id": "Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
     "translation": "未能使用类型 {{.TYPE}} 和标识 {{.IDENTIFIER}}进行路由。\n"
+  },
+  {
+    "id": "Failed to save Quote.\n",
+    "translation": "Failed to save Quote.\n"
   },
   {
     "id": "Failed to scale Auto Scale Group.",
@@ -5288,8 +5320,12 @@
     "translation": "列出 NAS 帐户。"
   },
   {
+    "id": "List Object Storage accounts.",
+    "translation": "List Object Storage accounts."
+  },
+  {
     "id": "List Reserved Capacity groups.",
-    "translation": "列示保留容量组。\n"
+    "translation": "列示保留容量组。"
   },
   {
     "id": "List SSH keys on your account",
@@ -6012,6 +6048,10 @@
     "translation": "对象掩码：用于限制返回的字段"
   },
   {
+    "id": "One Time",
+    "translation": "One Time"
+  },
+  {
     "id": "One of --name, --note and --tag must be specified.",
     "translation": "必须指定 --name、--note 和 --tag 其中一项。"
   },
@@ -6712,6 +6752,10 @@
     "translation": "公共端口速度，选项为：0、10、100、1000 或 10000"
   },
   {
+    "id": "Quantity",
+    "translation": "Quantity"
+  },
+  {
     "id": "Ram",
     "translation": "RAM"
   },
@@ -6746,6 +6790,10 @@
   {
     "id": "Record data, such as an IP address",
     "translation": "记录数据（如 IP 地址）"
+  },
+  {
+    "id": "Recurring",
+    "translation": "Recurring"
   },
   {
     "id": "Recurring Fee",
@@ -7034,6 +7082,10 @@
   {
     "id": "San disk number cannot excceed five.",
     "translation": "SAN 磁盘数不能超过 5 个。"
+  },
+  {
+    "id": "Save a quote",
+    "translation": "Save a quote"
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
@@ -8618,6 +8670,10 @@
   {
     "id": "Vendor",
     "translation": "供应商"
+  },
+  {
+    "id": "View a quote",
+    "translation": "View a quote"
   },
   {
     "id": "View details of a placement group",

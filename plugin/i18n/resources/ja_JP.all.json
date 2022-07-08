@@ -572,6 +572,10 @@
     "translation": "${COMMAND_NAME} sl nas list \n \nEXAMPLE: \n ${COMMAND_NAME} sl nas list"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage accounts",
+    "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n例: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   このコマンドは、ベアメタル・サーバーのカテゴリーをリストします。"
   },
@@ -596,8 +600,16 @@
     "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   例: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  このコマンドは、ベアメタル・サーバーの事前設定をリストします。"
   },
   {
+    "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
+    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
     "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
+    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456"
   },
   {
     "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
@@ -1356,6 +1368,10 @@
     "translation": "取り消しの理由 (オプション)"
   },
   {
+    "id": "ApiType",
+    "translation": "ApiType"
+  },
+  {
     "id": "Append parameters to web call",
     "translation": "Web 呼び出しにパラメーターを追加します"
   },
@@ -1858,6 +1874,10 @@
   {
     "id": "Classic infrastructure Network subnets",
     "translation": "クラシック・インフラストラクチャー・ネットワーク・サブネット"
+  },
+  {
+    "id": "Classic infrastructure Object Storage commands",
+    "translation": "Classic infrastructure Object Storage commands"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -3296,6 +3316,10 @@
     "translation": "ネットワーク・メッセージ配信アカウントの取得に失敗しました。"
   },
   {
+    "id": "Failed to get Quote.\n",
+    "translation": "Failed to get Quote.\n"
+  },
+  {
     "id": "Failed to get Quotes.\n",
     "translation": "Failed to get Quotes.\n"
   },
@@ -3326,6 +3350,10 @@
   {
     "id": "Failed to get account licenses.",
     "translation": "アカウント・ライセンスの取得に失敗しました。"
+  },
+  {
+    "id": "Failed to get account’s associated Virtual Storage volumes.",
+    "translation": "Failed to get account’s associated Virtual Storage volumes."
   },
   {
     "id": "Failed to get all datacenters.\n",
@@ -3986,6 +4014,10 @@
   {
     "id": "Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
     "translation": "タイプ {{.TYPE}} および ID {{.IDENTIFIER}}を使用した経路指定に失敗しました。\n"
+  },
+  {
+    "id": "Failed to save Quote.\n",
+    "translation": "Failed to save Quote.\n"
   },
   {
     "id": "Failed to scale Auto Scale Group.",
@@ -5288,8 +5320,12 @@
     "translation": "NAS アカウントをリストします。"
   },
   {
+    "id": "List Object Storage accounts.",
+    "translation": "List Object Storage accounts."
+  },
+  {
     "id": "List Reserved Capacity groups.",
-    "translation": "予約済みキャパシティー・グループをリストします。\n"
+    "translation": "予約済みキャパシティー・グループをリストします。"
   },
   {
     "id": "List SSH keys on your account",
@@ -6012,6 +6048,10 @@
     "translation": "オブジェクト・マスク: 返されるフィールドを制限するために使用します"
   },
   {
+    "id": "One Time",
+    "translation": "One Time"
+  },
+  {
     "id": "One of --name, --note and --tag must be specified.",
     "translation": "--name、--note および --tag のいずれか 1 つを指定してください。"
   },
@@ -6712,6 +6752,10 @@
     "translation": "パブリック・ポート速度。オプションは、0、10、100、1000、10000 です"
   },
   {
+    "id": "Quantity",
+    "translation": "Quantity"
+  },
+  {
     "id": "Ram",
     "translation": "RAM"
   },
@@ -6746,6 +6790,10 @@
   {
     "id": "Record data, such as an IP address",
     "translation": "レコード・データ (IP アドレスなど)"
+  },
+  {
+    "id": "Recurring",
+    "translation": "Recurring"
   },
   {
     "id": "Recurring Fee",
@@ -7034,6 +7082,10 @@
   {
     "id": "San disk number cannot excceed five.",
     "translation": "San ディスク数は 5 を超えてはなりません。"
+  },
+  {
+    "id": "Save a quote",
+    "translation": "Save a quote"
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
@@ -8618,6 +8670,10 @@
   {
     "id": "Vendor",
     "translation": "ベンダー"
+  },
+  {
+    "id": "View a quote",
+    "translation": "View a quote"
   },
   {
     "id": "View details of a placement group",

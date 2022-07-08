@@ -38,14 +38,17 @@ type OrderManager interface {
 	GetLocation(location string) (string, error)
 	GetPriceIdList(packageKeyname string, itemKeynames []string, presetCore float64) ([]int, error)
 	GetActiveQuotes(mask string) ([]datatypes.Billing_Order_Quote, error)
+	GetQuote(quoteId int, mask string) (datatypes.Billing_Order_Quote, error)
+	SaveQuote(quoteId int) (datatypes.Billing_Order_Quote, error)
 }
 
 type orderManager struct {
-	PackageService  services.Product_Package
-	OrderService    services.Product_Order
-	LocationService services.Location_Datacenter
-	PackagePreset   services.Product_Package_Preset
-	AccountService  services.Account
+	PackageService           services.Product_Package
+	OrderService             services.Product_Order
+	LocationService          services.Location_Datacenter
+	PackagePreset            services.Product_Package_Preset
+	AccountService           services.Account
+	BillingOrderQuoteService services.Billing_Order_Quote
 }
 
 func NewOrderManager(session *session.Session) *orderManager {
@@ -55,6 +58,7 @@ func NewOrderManager(session *session.Session) *orderManager {
 		services.GetLocationDatacenterService(session),
 		services.GetProductPackagePresetService(session),
 		services.GetAccountService(session),
+		services.GetBillingOrderQuoteService(session),
 	}
 }
 
@@ -394,4 +398,17 @@ func (i orderManager) GetActiveQuotes(mask string) ([]datatypes.Billing_Order_Qu
 		mask = "mask[order[id,items[id,package[id,keyName]]]]"
 	}
 	return i.AccountService.Mask(mask).GetActiveQuotes()
+}
+
+//Returns active quote detail on your account
+func (i orderManager) GetQuote(quoteId int, mask string) (datatypes.Billing_Order_Quote, error) {
+	if mask == "" {
+		mask = "mask[order[id,items[package[id,keyName]]]]"
+	}
+	return i.BillingOrderQuoteService.Id(quoteId).Mask(mask).GetObject()
+}
+
+//Save quote
+func (i orderManager) SaveQuote(quoteId int) (datatypes.Billing_Order_Quote, error) {
+	return i.BillingOrderQuoteService.Id(quoteId).SaveQuote()
 }
