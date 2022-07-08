@@ -600,6 +600,10 @@
     "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] NOM_CLE_PACKAGE\n\n   EXEMPLE : \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  Cette commande répertorie les préréglages pour les serveurs Bare Metal."
   },
   {
+    "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
+    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
     "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list"
   },
@@ -3306,6 +3310,10 @@
   {
     "id": "Failed to get Network Message Delivery Accounts.",
     "translation": "Echec de l'obtention des comptes de distribution de messages réseau."
+  },
+  {
+    "id": "Failed to get Quote.\n",
+    "translation": "Failed to get Quote.\n"
   },
   {
     "id": "Failed to get Quotes.\n",
@@ -6032,6 +6040,10 @@
     "translation": "Masque d'objet : utilisez pour limiter les zones renvoyées"
   },
   {
+    "id": "One Time",
+    "translation": "One Time"
+  },
+  {
     "id": "One of --name, --note and --tag must be specified.",
     "translation": "L'une des options --name, --note ou --tag doit être spécifiée."
   },
@@ -6732,6 +6744,10 @@
     "translation": "Vitesse du port public, options : 0,10,100,1000,10000"
   },
   {
+    "id": "Quantity",
+    "translation": "Quantity"
+  },
+  {
     "id": "Ram",
     "translation": "Ram"
   },
@@ -6766,6 +6782,10 @@
   {
     "id": "Record data, such as an IP address",
     "translation": "Enregistrer des données, comme une adresse IP"
+  },
+  {
+    "id": "Recurring",
+    "translation": "Recurring"
   },
   {
     "id": "Recurring Fee",
@@ -8638,6 +8658,10 @@
   {
     "id": "Vendor",
     "translation": "Vendeur"
+  },
+  {
+    "id": "View a quote",
+    "translation": "View a quote"
   },
   {
     "id": "View details of a placement group",
