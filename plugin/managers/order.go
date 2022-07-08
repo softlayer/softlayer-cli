@@ -39,6 +39,7 @@ type OrderManager interface {
 	GetPriceIdList(packageKeyname string, itemKeynames []string, presetCore float64) ([]int, error)
 	GetActiveQuotes(mask string) ([]datatypes.Billing_Order_Quote, error)
 	GetQuote(quoteId int, mask string) (datatypes.Billing_Order_Quote, error)
+	SaveQuote(quoteId int) (datatypes.Billing_Order_Quote, error)
 }
 
 type orderManager struct {
@@ -405,4 +406,9 @@ func (i orderManager) GetQuote(quoteId int, mask string) (datatypes.Billing_Orde
 		mask = "mask[order[id,items[package[id,keyName]]]]"
 	}
 	return i.BillingOrderQuoteService.Id(quoteId).Mask(mask).GetObject()
+}
+
+//Save quote
+func (i orderManager) SaveQuote(quoteId int) (datatypes.Billing_Order_Quote, error) {
+	return i.BillingOrderQuoteService.Id(quoteId).SaveQuote()
 }

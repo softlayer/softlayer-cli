@@ -608,6 +608,10 @@
     "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list"
   },
   {
+    "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
+    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
     "translation": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut"
   },
@@ -4012,6 +4016,10 @@
     "translation": "Falha ao rotear usando o tipo: {{.TYPE}} e identificador: {{.IDENTIFIER}}.\n"
   },
   {
+    "id": "Failed to save Quote.\n",
+    "translation": "Failed to save Quote.\n"
+  },
+  {
     "id": "Failed to scale Auto Scale Group.",
     "translation": "Falha ao ajustar a escala do Auto Scale Group."
   },
@@ -7074,6 +7082,10 @@
   {
     "id": "San disk number cannot excceed five.",
     "translation": "O número de discos SAN não pode exceder cinco."
+  },
+  {
+    "id": "Save a quote",
+    "translation": "Save a quote"
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
