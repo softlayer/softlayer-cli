@@ -9,7 +9,7 @@ import (
 )
 
 type ObjectStorageManager interface {
-	GetAccounts(limit int) ([]datatypes.Network_Storage, error)
+	GetAccounts(mask string) ([]datatypes.Network_Storage, error)
 	GetEndpoints(HubNetworkStorageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error)
 }
 

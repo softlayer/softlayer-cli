@@ -14,15 +14,13 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-const (
-	LEGACY_TRUE  = "True"
-	LEGACY_FALSE = "False"
-	CROS         = "Cross Region"
-	REGION       = "Region"
-	SINGLE       = "Single Site"
-	PUBLIC       = "Public"
-	PRIVATE      = "Private"
-)
+type EndpointData struct {
+	LocationRegion string
+	Url            string
+	EndPointType   string
+	PublicPrivate  string
+	Legacy         string
+}
 
 type EndpointsCommand struct {
 	UI                   terminal.UI
@@ -73,24 +71,33 @@ func (cmd *EndpointsCommand) Run(c *cli.Context) error {
 
 func PrintEndpoints(endpoints []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, ui terminal.UI, outputFormat string) {
 	table := ui.Table([]string{
-		T("Legacy"),
-		T("EndPoint Type"),
-		T("Public/Private"),
 		T("Location/Region"),
 		T("Url"),
+		T("EndPoint Type"),
+		T("Public/Private"),
+		T("Legacy"),
 	})
 
-	allArrays := [][]string{}
-
+	allArrays := []EndpointData{}
 	for _, endpoint := range endpoints {
-		data := []string{LegacyReturn(*endpoint.Legacy), EndPointTypeReturn(*endpoint.Region), PublicPrivate(*endpoint.Type), LocationRegion(endpoint), *endpoint.Url}
+		data := EndpointData{
+			LocationRegion: LocationRegion(endpoint),
+			Url:            *endpoint.Url,
+			EndPointType:   EndPointTypeReturn(*endpoint.Region),
+			PublicPrivate:  PublicPrivate(*endpoint.Type),
+			Legacy:         LegacyReturn(*endpoint.Legacy),
+		}
 		allArrays = append(allArrays, data)
 	}
 
 	allArrays = SortEndpoint(allArrays)
 	for _, array := range allArrays {
 		table.Add(
-			array[0], array[1], array[2], array[3], array[4],
+			array.LocationRegion,
+			array.Url,
+			array.EndPointType,
+			array.PublicPrivate,
+			array.Legacy,
 		)
 	}
 	utils.PrintTable(ui, table, outputFormat)
@@ -98,26 +105,26 @@ func PrintEndpoints(endpoints []datatypes.Container_Network_Storage_Hub_ObjectSt
 
 func LegacyReturn(data bool) string {
 	if data {
-		return "True"
+		return T("True")
 	}
-	return "False"
+	return T("False")
 }
 
 func EndPointTypeReturn(endpoint string) string {
 	if endpoint == "singleSite" {
-		return "Single Site"
+		return T("Single Site")
 	}
 	if endpoint == "regional" {
-		return "Region"
+		return T("Region")
 	}
-	return "Cross Region"
+	return T("Cross Region")
 }
 
 func PublicPrivate(data string) string {
 	if data == "public" {
-		return "Public"
+		return T("Public")
 	}
-	return "Private"
+	return T("Private")
 }
 
 func LocationRegion(endpoint datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint) string {
@@ -127,23 +134,24 @@ func LocationRegion(endpoint datatypes.Container_Network_Storage_Hub_ObjectStora
 	return *endpoint.Region
 }
 
-func SortEndpoint(endpoints [][]string) [][]string {
+func SortEndpoint(endpoints []EndpointData) []EndpointData {
 	endpoint_type := ""
+	firstItem := 0
 	if len(endpoints) > 0 {
-		endpoint_type = endpoints[0][1]
+		endpoint_type = endpoints[firstItem].EndPointType
 	}
-	public := [][]string{}
-	private := [][]string{}
-	array_final := [][]string{}
+	public := []EndpointData{}
+	private := []EndpointData{}
+	array_final := []EndpointData{}
 	for _, endpoint := range endpoints {
-		if endpoint[1] != endpoint_type {
-			endpoint_type = endpoint[1]
+		if endpoint.EndPointType != endpoint_type {
+			endpoint_type = endpoint.EndPointType
 			array_final = append(array_final, public...)
 			array_final = append(array_final, private...)
-			public = [][]string{}
-			private = [][]string{}
+			public = []EndpointData{}
+			private = []EndpointData{}
 		}
-		if endpoint[2] == "Public" {
+		if endpoint.PublicPrivate == T("Public") {
 			public = append(public, endpoint)
 		} else {
 			private = append(private, endpoint)
