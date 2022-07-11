@@ -484,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPZIONI] IDENTIFICATIVO\n\nESEMPIO:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Elenca le Guest Virtuali in esecuzione su questo server."
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPZIONI] IDENTIFICATIVO\n\nESEMPIO:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Ottiene i dettagli sullo storage del server hardware."
   },
@@ -2256,6 +2260,14 @@
     "translation": "Crediti utilizzati"
   },
   {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
     "id": "Current Members",
     "translation": "Membri correnti"
   },
@@ -2446,6 +2458,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "Disabilitato: la soglia di utilizzo dello spazio delle istantanee è disabilitata per il volume '{{.ID}}'."
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -3406,6 +3422,10 @@
   {
     "id": "Failed to get firewalls on your account.\n",
     "translation": "Impossibile ottenere i firewall per il tuo account.\n"
+  },
+  {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
   },
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
@@ -5612,6 +5632,10 @@
     "translation": "Produttore"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "Numero massimo di IOPS"
   },
@@ -5674,6 +5698,10 @@
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "Migrare TUTTI i guest che richiedono la migrazione immediatamente."
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6756,6 +6784,10 @@
     "translation": "Quantity"
   },
   {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
+  },
+  {
     "id": "Ram",
     "translation": "Ram"
   },
@@ -6766,6 +6798,10 @@
   {
     "id": "Read userdata from file",
     "translation": "Leggi dati utente dal file"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -6962,6 +6998,10 @@
   {
     "id": "Resume a paused virtual server instance",
     "translation": "Riprendi un'istanza del server virtuale in pausa"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7234,6 +7274,10 @@
   {
     "id": "Show certificates with this status, default is: all, options are: all,valid,expired",
     "translation": "Mostra certificati con questo stato, il valore predefinito è: all, le opzioni sono: all,valid,expired"
+  },
+  {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
   },
   {
     "id": "Show guests on dedicated host",
@@ -7646,6 +7690,10 @@
   {
     "id": "Target address",
     "translation": "Indirizzo di destinazione"
+  },
+  {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
   },
   {
     "id": "Template file: {{.Location}} does not exist.",
@@ -8772,6 +8820,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "Nome volume"
   },
@@ -8790,6 +8842,10 @@
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity",
     "translation": "Attendi finché il server virtuale non ha terminato il provisioning fino a X secondi prima di ritornare. Non è compatibile con l'opzione --quantity"
+  },
+  {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",

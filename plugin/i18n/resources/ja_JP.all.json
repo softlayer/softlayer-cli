@@ -484,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware guests 1234567\n このサーバー上で稼働している仮想ゲストをリストします。"
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware storage 1234567\n ハードウェア・サーバーのストレージ詳細を取得します。"
   },
@@ -2256,6 +2260,14 @@
     "translation": "使用されたクレジット"
   },
   {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
     "id": "Current Members",
     "translation": "現行メンバー"
   },
@@ -2446,6 +2458,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "無効: ボリューム '{{.ID}}' のスナップショット・スペース使用量のしきい値が無効になっています。"
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -3406,6 +3422,10 @@
   {
     "id": "Failed to get firewalls on your account.\n",
     "translation": "ご使用のアカウントのファイアウォールの取得に失敗しました。\n"
+  },
+  {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
   },
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
@@ -5612,6 +5632,10 @@
     "translation": "製造元"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "最大 IOPS"
   },
@@ -5674,6 +5698,10 @@
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "即時にマイグレーションを必要とするすべてのゲストをマイグレーションします。"
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6756,6 +6784,10 @@
     "translation": "Quantity"
   },
   {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
+  },
+  {
     "id": "Ram",
     "translation": "RAM"
   },
@@ -6766,6 +6798,10 @@
   {
     "id": "Read userdata from file",
     "translation": "ユーザー・データをファイルから読み取ります"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -6962,6 +6998,10 @@
   {
     "id": "Resume a paused virtual server instance",
     "translation": "一時停止された Virtual Server インスタンスを再開します"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7234,6 +7274,10 @@
   {
     "id": "Show certificates with this status, default is: all, options are: all,valid,expired",
     "translation": "この状況の証明書を表示します。デフォルトは all、オプションは all、valid、expired です"
+  },
+  {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
   },
   {
     "id": "Show guests on dedicated host",
@@ -7646,6 +7690,10 @@
   {
     "id": "Target address",
     "translation": "ターゲット・アドレス"
+  },
+  {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
   },
   {
     "id": "Template file: {{.Location}} does not exist.",
@@ -8772,6 +8820,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "ボリューム名"
   },
@@ -8790,6 +8842,10 @@
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity",
     "translation": "Virtual Server でのプロビジョニング終了を最大 X 秒待ってから戻ります。 これは、オプション --quantity との互換性はありません"
+  },
+  {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",

@@ -484,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl hardware guests 1234567\n   列出在此伺服器上執行的虛擬訪客。"
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl hardware storage 1234567\n   取得硬體伺服器的儲存體詳細資料。"
   },
@@ -2256,6 +2260,14 @@
     "translation": "已使用的額度"
   },
   {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
     "id": "Current Members",
     "translation": "目前的成員"
   },
@@ -2446,6 +2458,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "已停用：已停用磁區 '{{.ID}}' 的 Snapshot 空間使用情形臨界值。"
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -3406,6 +3422,10 @@
   {
     "id": "Failed to get firewalls on your account.\n",
     "translation": "無法在您的帳戶中取得防火牆。\n"
+  },
+  {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
   },
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
@@ -5612,6 +5632,10 @@
     "translation": "製造商"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "最大 IOPS"
   },
@@ -5674,6 +5698,10 @@
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "立即移轉所有需要移轉的訪客。"
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6756,6 +6784,10 @@
     "translation": "Quantity"
   },
   {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
+  },
+  {
     "id": "Ram",
     "translation": "RAM"
   },
@@ -6766,6 +6798,10 @@
   {
     "id": "Read userdata from file",
     "translation": "從檔案讀取使用者資料"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -6962,6 +6998,10 @@
   {
     "id": "Resume a paused virtual server instance",
     "translation": "繼續已暫停的虛擬伺服器實例"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7234,6 +7274,10 @@
   {
     "id": "Show certificates with this status, default is: all, options are: all,valid,expired",
     "translation": "顯示具有以下狀態的憑證，預設值為：all，選項包含：all、valid、expired"
+  },
+  {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
   },
   {
     "id": "Show guests on dedicated host",
@@ -7646,6 +7690,10 @@
   {
     "id": "Target address",
     "translation": "目標位址"
+  },
+  {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
   },
   {
     "id": "Template file: {{.Location}} does not exist.",
@@ -8772,6 +8820,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "磁區名稱"
   },
@@ -8790,6 +8842,10 @@
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity",
     "translation": "等待虛擬伺服器完成佈建，最多 X 秒即返回。與選項 --quantity 不相容"
+  },
+  {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",

@@ -484,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] ID\n\n예:\n ${COMMAND_NAME} sl hardware guests 1234567\n 이 서버에서 실행 중인 가상 게스트를 나열합니다."
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] ID\n\n예:\n   ${COMMAND_NAME} sl hardware storage 1234567\n 하드웨어 서버의 스토리지 세부사항을 가져옵니다."
   },
@@ -2256,6 +2260,14 @@
     "translation": "사용한 크레딧"
   },
   {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
     "id": "Current Members",
     "translation": "현재 멤버"
   },
@@ -2446,6 +2458,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "사용 안함: '{{.ID}}' 볼륨에 대한 스냅샷 공간 사용 임계값이 사용 안함으로 설정되었습니다."
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -3406,6 +3422,10 @@
   {
     "id": "Failed to get firewalls on your account.\n",
     "translation": "계정에서 방화벽을 가져오는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
   },
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
@@ -5612,6 +5632,10 @@
     "translation": "제조업체"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "최대 IOPS"
   },
@@ -5674,6 +5698,10 @@
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "마이그레이션이 필요한 모든 게스트를 즉시 마이그레이션합니다."
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6756,6 +6784,10 @@
     "translation": "Quantity"
   },
   {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
+  },
+  {
     "id": "Ram",
     "translation": "RAM"
   },
@@ -6766,6 +6798,10 @@
   {
     "id": "Read userdata from file",
     "translation": "파일에서 사용자 데이터 읽기"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -6962,6 +6998,10 @@
   {
     "id": "Resume a paused virtual server instance",
     "translation": "일시정지된 가상 서버 인스턴스 재개"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7234,6 +7274,10 @@
   {
     "id": "Show certificates with this status, default is: all, options are: all,valid,expired",
     "translation": "이 상태의 인증서 표시, 기본값: all, 옵션: all,valid,expired"
+  },
+  {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
   },
   {
     "id": "Show guests on dedicated host",
@@ -7646,6 +7690,10 @@
   {
     "id": "Target address",
     "translation": "대상 주소"
+  },
+  {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
   },
   {
     "id": "Template file: {{.Location}} does not exist.",
@@ -8772,6 +8820,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "볼륨 이름"
   },
@@ -8790,6 +8842,10 @@
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity",
     "translation": "리턴하기 전에 가상 서버가 프로비저닝을 완료할 때까지 최대 X초 동안 대기합니다. 이는 옵션 --quantity와 호환되지 않습니다."
+  },
+  {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
