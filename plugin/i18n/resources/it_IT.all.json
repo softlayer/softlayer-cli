@@ -2756,6 +2756,10 @@
     "translation": "Data di fine per il reporting della larghezza di banda"
   },
   {
+    "id": "EndPoint Type",
+    "translation": "EndPoint Type"
+  },
+  {
     "id": "Ending Balance",
     "translation": "Saldo Finale"
   },
@@ -3458,6 +3462,10 @@
   {
     "id": "Failed to get l7 rules: {{.Error}}.\n",
     "translation": "Impossibile ottenere le regole l7: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to get list object storage endpoints.",
+    "translation": "Failed to get list object storage endpoints."
   },
   {
     "id": "Failed to get load balancer product packages.",
@@ -5288,6 +5296,10 @@
     "translation": "Ultimo aggiornamento"
   },
   {
+    "id": "Legacy",
+    "translation": "Legacy"
+  },
+  {
     "id": "License key",
     "translation": "Codice di licenza"
   },
@@ -5484,6 +5496,10 @@
     "translation": "Elenca il numero di volumi di archiviazione file per datacenter"
   },
   {
+    "id": "List object storage endpoints.",
+    "translation": "List object storage endpoints."
+  },
+  {
     "id": "List only the required categories for the package",
     "translation": "Elenca solo le categorie obbligatorie per il pacchetto"
   },
@@ -5586,6 +5602,10 @@
   {
     "id": "Location",
     "translation": "Ubicazione"
+  },
+  {
+    "id": "Location/Region",
+    "translation": "Location/Region"
   },
   {
     "id": "Long Name",
@@ -6954,6 +6974,10 @@
   {
     "id": "Result limit",
     "translation": "Limite di risultati"
+  },
+  {
+    "id": "Result limit.",
+    "translation": "Result limit."
   },
   {
     "id": "Result offset",
@@ -8590,6 +8614,10 @@
   {
     "id": "Upgrade all hard drives' firmware",
     "translation": "Esegui upgrade del firmware di tutte le unità"
+  },
+  {
+    "id": "Url",
+    "translation": "Url"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",
