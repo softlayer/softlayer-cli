@@ -9,11 +9,10 @@ import (
 )
 
 type FakeObjectStorageManager struct {
-	GetAccountsStub        func(string, int) ([]datatypes.Network_Storage, error)
+	GetAccountsStub        func(string) ([]datatypes.Network_Storage, error)
 	getAccountsMutex       sync.RWMutex
 	getAccountsArgsForCall []struct {
 		arg1 string
-		arg2 int
 	}
 	getAccountsReturns struct {
 		result1 []datatypes.Network_Storage
@@ -40,19 +39,18 @@ type FakeObjectStorageManager struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeObjectStorageManager) GetAccounts(arg1 string, arg2 int) ([]datatypes.Network_Storage, error) {
+func (fake *FakeObjectStorageManager) GetAccounts(arg1 string) ([]datatypes.Network_Storage, error) {
 	fake.getAccountsMutex.Lock()
 	ret, specificReturn := fake.getAccountsReturnsOnCall[len(fake.getAccountsArgsForCall)]
 	fake.getAccountsArgsForCall = append(fake.getAccountsArgsForCall, struct {
 		arg1 string
-		arg2 int
-	}{arg1, arg2})
+	}{arg1})
 	stub := fake.GetAccountsStub
 	fakeReturns := fake.getAccountsReturns
-	fake.recordInvocation("GetAccounts", []interface{}{arg1, arg2})
+	fake.recordInvocation("GetAccounts", []interface{}{arg1})
 	fake.getAccountsMutex.Unlock()
 	if stub != nil {
-		return stub(arg1, arg2)
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -66,17 +64,17 @@ func (fake *FakeObjectStorageManager) GetAccountsCallCount() int {
 	return len(fake.getAccountsArgsForCall)
 }
 
-func (fake *FakeObjectStorageManager) GetAccountsCalls(stub func(string, int) ([]datatypes.Network_Storage, error)) {
+func (fake *FakeObjectStorageManager) GetAccountsCalls(stub func(string) ([]datatypes.Network_Storage, error)) {
 	fake.getAccountsMutex.Lock()
 	defer fake.getAccountsMutex.Unlock()
 	fake.GetAccountsStub = stub
 }
 
-func (fake *FakeObjectStorageManager) GetAccountsArgsForCall(i int) (string, int) {
+func (fake *FakeObjectStorageManager) GetAccountsArgsForCall(i int) string {
 	fake.getAccountsMutex.RLock()
 	defer fake.getAccountsMutex.RUnlock()
 	argsForCall := fake.getAccountsArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2
+	return argsForCall.arg1
 }
 
 func (fake *FakeObjectStorageManager) GetAccountsReturns(result1 []datatypes.Network_Storage, result2 error) {
