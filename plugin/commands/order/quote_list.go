@@ -30,7 +30,7 @@ func (cmd *QuoteListCommand) Run(c *cli.Context) error {
 
 	quotes, err := cmd.OrderManager.GetActiveQuotes("")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Quotes.\n", err.Error()), 2)
+		return cli.NewExitError(T("Failed to get Quotes.\n")+err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Id"), T("Name"), T("Created"), T("Expiration"), T("Status"), T("Package Name"), T("Package Id")})

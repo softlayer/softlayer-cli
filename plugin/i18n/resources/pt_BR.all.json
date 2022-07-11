@@ -576,14 +576,6 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER"
-  },
-  {
-    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
-  },
-  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXEMPLO: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   Este comando lista as categorias para os servidores Bare Metal."
   },
@@ -608,8 +600,16 @@
     "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n EXEMPLO: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  Este comando lista as pré-configurações para servidores Bare Metal."
   },
   {
+    "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
+    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
     "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
+    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456"
   },
   {
     "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
@@ -3320,6 +3320,10 @@
     "translation": "Falha ao obter Contas de Entrega de Mensagem de Rede."
   },
   {
+    "id": "Failed to get Quote.\n",
+    "translation": "Failed to get Quote.\n"
+  },
+  {
     "id": "Failed to get Quotes.\n",
     "translation": "Failed to get Quotes.\n"
   },
@@ -4022,6 +4026,10 @@
   {
     "id": "Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
     "translation": "Falha ao rotear usando o tipo: {{.TYPE}} e identificador: {{.IDENTIFIER}}.\n"
+  },
+  {
+    "id": "Failed to save Quote.\n",
+    "translation": "Failed to save Quote.\n"
   },
   {
     "id": "Failed to scale Auto Scale Group.",
@@ -6064,6 +6072,10 @@
     "translation": "Máscara de objeto: use para limitar os campos retornados"
   },
   {
+    "id": "One Time",
+    "translation": "One Time"
+  },
+  {
     "id": "One of --name, --note and --tag must be specified.",
     "translation": "Um de --name, --note e --tag deve ser especificado."
   },
@@ -6764,8 +6776,8 @@
     "translation": "Velocidade da porta pública, as opções são: 0, 10, 100, 1.000, 10.000"
   },
   {
-    "id": "Public/Private",
-    "translation": "Public/Private"
+    "id": "Quantity",
+    "translation": "Quantity"
   },
   {
     "id": "Ram",
@@ -6802,6 +6814,10 @@
   {
     "id": "Record data, such as an IP address",
     "translation": "Registrar dados, como um endereço IP"
+  },
+  {
+    "id": "Recurring",
+    "translation": "Recurring"
   },
   {
     "id": "Recurring Fee",
@@ -7098,6 +7114,10 @@
   {
     "id": "San disk number cannot excceed five.",
     "translation": "O número de discos SAN não pode exceder cinco."
+  },
+  {
+    "id": "Save a quote",
+    "translation": "Save a quote"
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
@@ -8690,6 +8710,10 @@
   {
     "id": "Vendor",
     "translation": "Fornecedor"
+  },
+  {
+    "id": "View a quote",
+    "translation": "View a quote"
   },
   {
     "id": "View details of a placement group",

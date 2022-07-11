@@ -576,14 +576,6 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER"
-  },
-  {
-    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
-  },
-  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n예: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   이 명령은 Bare Metal 서버의 카테고리를 나열합니다."
   },
@@ -608,8 +600,16 @@
     "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   예: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  이 명령은 Bare Metal 서버의 사전 설정을 나열합니다."
   },
   {
+    "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
+    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
     "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
+    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456"
   },
   {
     "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
@@ -3320,6 +3320,10 @@
     "translation": "네트워크 메시지 전달 계정을 가져오는 데 실패했습니다."
   },
   {
+    "id": "Failed to get Quote.\n",
+    "translation": "Failed to get Quote.\n"
+  },
+  {
     "id": "Failed to get Quotes.\n",
     "translation": "Failed to get Quotes.\n"
   },
@@ -4022,6 +4026,10 @@
   {
     "id": "Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
     "translation": "{{.TYPE}} 유형 및 ID {{.IDENTIFIER}}을(를) 사용하여 라우팅하는 데 실패했습니다. \n"
+  },
+  {
+    "id": "Failed to save Quote.\n",
+    "translation": "Failed to save Quote.\n"
   },
   {
     "id": "Failed to scale Auto Scale Group.",
@@ -6064,6 +6072,10 @@
     "translation": "오브젝트 마스크: 리턴된 필드를 제한하는 데 사용"
   },
   {
+    "id": "One Time",
+    "translation": "One Time"
+  },
+  {
     "id": "One of --name, --note and --tag must be specified.",
     "translation": "--name, --note 및 --tag 중 하나를 지정해야 합니다."
   },
@@ -6764,8 +6776,8 @@
     "translation": "공용 포트 속도, 옵션: 0,10,100,1000,10000"
   },
   {
-    "id": "Public/Private",
-    "translation": "Public/Private"
+    "id": "Quantity",
+    "translation": "Quantity"
   },
   {
     "id": "Ram",
@@ -6802,6 +6814,10 @@
   {
     "id": "Record data, such as an IP address",
     "translation": "레코드 데이터(예: IP 주소)"
+  },
+  {
+    "id": "Recurring",
+    "translation": "Recurring"
   },
   {
     "id": "Recurring Fee",
@@ -7098,6 +7114,10 @@
   {
     "id": "San disk number cannot excceed five.",
     "translation": "SAN 디스크 번호는 5를 초과할 수 없습니다."
+  },
+  {
+    "id": "Save a quote",
+    "translation": "Save a quote"
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
@@ -8690,6 +8710,10 @@
   {
     "id": "Vendor",
     "translation": "공급업체"
+  },
+  {
+    "id": "View a quote",
+    "translation": "View a quote"
   },
   {
     "id": "View details of a placement group",
