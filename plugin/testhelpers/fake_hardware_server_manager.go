@@ -253,6 +253,20 @@ type FakeHardwareServerManager struct {
 		result1 int
 		result2 error
 	}
+	GetSensorDataStub        func(int, string) ([]datatypes.Container_RemoteManagement_SensorReading, error)
+	getSensorDataMutex       sync.RWMutex
+	getSensorDataArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getSensorDataReturns struct {
+		result1 []datatypes.Container_RemoteManagement_SensorReading
+		result2 error
+	}
+	getSensorDataReturnsOnCall map[int]struct {
+		result1 []datatypes.Container_RemoteManagement_SensorReading
+		result2 error
+	}
 	GetStorageCredentialsStub        func(int) (datatypes.Network_Storage_Allowed_Host, error)
 	getStorageCredentialsMutex       sync.RWMutex
 	getStorageCredentialsArgsForCall []struct {
@@ -1551,6 +1565,71 @@ func (fake *FakeHardwareServerManager) GetPortSpeedPriceIdReturnsOnCall(i int, r
 	}{result1, result2}
 }
 
+func (fake *FakeHardwareServerManager) GetSensorData(arg1 int, arg2 string) ([]datatypes.Container_RemoteManagement_SensorReading, error) {
+	fake.getSensorDataMutex.Lock()
+	ret, specificReturn := fake.getSensorDataReturnsOnCall[len(fake.getSensorDataArgsForCall)]
+	fake.getSensorDataArgsForCall = append(fake.getSensorDataArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetSensorDataStub
+	fakeReturns := fake.getSensorDataReturns
+	fake.recordInvocation("GetSensorData", []interface{}{arg1, arg2})
+	fake.getSensorDataMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) GetSensorDataCallCount() int {
+	fake.getSensorDataMutex.RLock()
+	defer fake.getSensorDataMutex.RUnlock()
+	return len(fake.getSensorDataArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) GetSensorDataCalls(stub func(int, string) ([]datatypes.Container_RemoteManagement_SensorReading, error)) {
+	fake.getSensorDataMutex.Lock()
+	defer fake.getSensorDataMutex.Unlock()
+	fake.GetSensorDataStub = stub
+}
+
+func (fake *FakeHardwareServerManager) GetSensorDataArgsForCall(i int) (int, string) {
+	fake.getSensorDataMutex.RLock()
+	defer fake.getSensorDataMutex.RUnlock()
+	argsForCall := fake.getSensorDataArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeHardwareServerManager) GetSensorDataReturns(result1 []datatypes.Container_RemoteManagement_SensorReading, result2 error) {
+	fake.getSensorDataMutex.Lock()
+	defer fake.getSensorDataMutex.Unlock()
+	fake.GetSensorDataStub = nil
+	fake.getSensorDataReturns = struct {
+		result1 []datatypes.Container_RemoteManagement_SensorReading
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) GetSensorDataReturnsOnCall(i int, result1 []datatypes.Container_RemoteManagement_SensorReading, result2 error) {
+	fake.getSensorDataMutex.Lock()
+	defer fake.getSensorDataMutex.Unlock()
+	fake.GetSensorDataStub = nil
+	if fake.getSensorDataReturnsOnCall == nil {
+		fake.getSensorDataReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Container_RemoteManagement_SensorReading
+			result2 error
+		})
+	}
+	fake.getSensorDataReturnsOnCall[i] = struct {
+		result1 []datatypes.Container_RemoteManagement_SensorReading
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeHardwareServerManager) GetStorageCredentials(arg1 int) (datatypes.Network_Storage_Allowed_Host, error) {
 	fake.getStorageCredentialsMutex.Lock()
 	ret, specificReturn := fake.getStorageCredentialsReturnsOnCall[len(fake.getStorageCredentialsArgsForCall)]
@@ -2429,6 +2508,8 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.getPackageMutex.RUnlock()
 	fake.getPortSpeedPriceIdMutex.RLock()
 	defer fake.getPortSpeedPriceIdMutex.RUnlock()
+	fake.getSensorDataMutex.RLock()
+	defer fake.getSensorDataMutex.RUnlock()
 	fake.getStorageCredentialsMutex.RLock()
 	defer fake.getStorageCredentialsMutex.RUnlock()
 	fake.getStorageDetailsMutex.RLock()
