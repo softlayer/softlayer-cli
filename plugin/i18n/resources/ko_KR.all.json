@@ -16,10 +16,6 @@
     "translation": " 예약된 용량을 실제로 작성하지 않음"
   },
   {
-    "id": "List placement groups.",
-    "translation": "배치 그룹을 나열합니다."
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " 보안 그룹과 연관시킬 서버 ID"
   },
@@ -576,6 +572,10 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n예: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   이 명령은 Bare Metal 서버의 카테고리를 나열합니다."
   },
@@ -674,6 +674,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   이 명령은 가상 서버 및 하드웨어 서버 정보를 포함하여 ID 12345678인 서브넷에 대한 자세한 정보를 표시합니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -2012,6 +2016,10 @@
     "translation": "정렬 기준 열. 옵션: id,virtualServerId,hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2254,6 +2262,10 @@
   {
     "id": "Credits used",
     "translation": "사용한 크레딧"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
   },
   {
     "id": "Current Members",
@@ -2650,6 +2662,10 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "로드 밸런서 프로토콜 편집"
+  },
+  {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -4036,12 +4052,20 @@
     "translation": "볼륨 {{.VolumeID}}의 LUN ID를 설정하는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "호스트 {{.HostID}}의 비밀번호를 설정하는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4250,6 +4274,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "{{.VolumeID}} 볼륨에 대해 장애 조치(failover) 조작을 시작할 수 없습니다.\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5536,6 +5564,10 @@
     "translation": "배치 그룹 나열"
   },
   {
+    "id": "List placement groups.",
+    "translation": "배치 그룹을 나열합니다."
+  },
+  {
     "id": "List security group rules",
     "translation": "보안 그룹 규칙 나열"
   },
@@ -6772,6 +6804,10 @@
     "translation": "공용 포트 속도, 옵션: 0,10,100,1000,10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
   },
@@ -6974,10 +7010,6 @@
   {
     "id": "Result limit",
     "translation": "결과 한계"
-  },
-  {
-    "id": "Result limit.",
-    "translation": "Result limit."
   },
   {
     "id": "Result offset",
@@ -7196,8 +7228,16 @@
     "translation": "기존 파일 스토리지 볼륨에 대한 참고사항을 설정합니다."
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "이 사용자 권한과 일치하는 권한을 설정합니다. 적절한 권한을 추가하고 제거합니다."
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7306,6 +7346,10 @@
   {
     "id": "Single",
     "translation": "단일"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7896,6 +7940,10 @@
     "translation": "키에 대한 새 레이블"
   },
   {
+    "id": "The note ",
+    "translation": "The note "
+  },
+  {
     "id": "The note of hardware server: {{.ID}} was updated.",
     "translation": "하드웨어 서버 {{.ID}}의 참고가 업데이트되었습니다."
   },
@@ -8410,6 +8458,10 @@
   {
     "id": "Transaction",
     "translation": "트랜잭션"
+  },
+  {
+    "id": "True",
+    "translation": "True"
   },
   {
     "id": "Type",

@@ -16,10 +16,6 @@
     "translation": " 实际不创建保留容量"
   },
   {
-    "id": "List placement groups.",
-    "translation": "列出放置组。"
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " 要与安全组关联的服务器标识"
   },
@@ -576,6 +572,10 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n示例：\n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   此命令列出 Bare Metal Server 的类别。"
   },
@@ -674,6 +674,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   此命令显示有关标识为 12345678 的子网的详细信息，包括虚拟服务器和硬件服务器信息。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -2012,6 +2016,10 @@
     "translation": "要作为排序依据的列。选项为：id、virtualServerId 或 hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2254,6 +2262,10 @@
   {
     "id": "Credits used",
     "translation": "已用信用值"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
   },
   {
     "id": "Current Members",
@@ -2650,6 +2662,10 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "编辑负载均衡器协议"
+  },
+  {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -4036,12 +4052,20 @@
     "translation": "未能设置卷 {{.VolumeID}} 的 LUN 标识。\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "未能设置主机 {{.HostID}} 的密码。\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4250,6 +4274,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "无法对卷 {{.VolumeID}} 启动故障转移操作。\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5536,6 +5564,10 @@
     "translation": "列出放置组"
   },
   {
+    "id": "List placement groups.",
+    "translation": "列出放置组。"
+  },
+  {
     "id": "List security group rules",
     "translation": "列出安全组规则"
   },
@@ -6772,6 +6804,10 @@
     "translation": "公共端口速度，选项为：0、10、100、1000 或 10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
   },
@@ -6974,10 +7010,6 @@
   {
     "id": "Result limit",
     "translation": "结果限制"
-  },
-  {
-    "id": "Result limit.",
-    "translation": "Result limit."
   },
   {
     "id": "Result offset",
@@ -7196,8 +7228,16 @@
     "translation": "为现有文件存储卷设置注释。"
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "将许可权设置为与此用户的许可权相匹配。添加和除去相应的许可权"
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7306,6 +7346,10 @@
   {
     "id": "Single",
     "translation": "单核"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7896,6 +7940,10 @@
     "translation": "密钥的新标签"
   },
   {
+    "id": "The note ",
+    "translation": "The note "
+  },
+  {
     "id": "The note of hardware server: {{.ID}} was updated.",
     "translation": "硬件服务器 {{.ID}} 的注释已更新。"
   },
@@ -8410,6 +8458,10 @@
   {
     "id": "Transaction",
     "translation": "事务"
+  },
+  {
+    "id": "True",
+    "translation": "True"
   },
   {
     "id": "Type",

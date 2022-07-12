@@ -16,10 +16,6 @@
     "translation": " Non creare effettivamente la capacità riservata"
   },
   {
-    "id": "List placement groups.",
-    "translation": "Elenco gruppi di posizionamenti."
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " L'ID del server da associare al gruppo di sicurezza"
   },
@@ -576,6 +572,10 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPZIONI] NOMECHIAVE_PACCHETTO\n\t\nESEMPIO: \n   ${COMMAND_NAME} sl order category-list SERVER_BARE_METAL\n   Questo comando elenca le categorie dei server Bare Metal."
   },
@@ -674,6 +674,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   Questo comando mostra le informazioni dettagliate sulla sottorete con ID 12345678, inclusi i server virtuali e le informazioni sui server hardware."
+  },
+  {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -2012,6 +2016,10 @@
     "translation": "Colonna in base alla quale ordinare. Le opzioni sono: id,virtualServerId,hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2254,6 +2262,10 @@
   {
     "id": "Credits used",
     "translation": "Crediti utilizzati"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
   },
   {
     "id": "Current Members",
@@ -2650,6 +2662,10 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "Modifica protocollo del sistema di bilanciamento del carico"
+  },
+  {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -4036,12 +4052,20 @@
     "translation": "Impossibile impostare l'ID LUN per il volume {{.VolumeID}}.\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "Impossibile impostare la password per l'host {{.HostID}}.\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4250,6 +4274,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "Impossibile avviare l'operazione di failover per il volume {{.VolumeID}}.\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5536,6 +5564,10 @@
     "translation": "Elenca i gruppi di posizionamento"
   },
   {
+    "id": "List placement groups.",
+    "translation": "Elenco gruppi di posizionamenti."
+  },
+  {
     "id": "List security group rules",
     "translation": "Elenca le regole del gruppo di sicurezza"
   },
@@ -6772,6 +6804,10 @@
     "translation": "Velocità porta pubblica, le opzioni sono: 0,10,100,1000,10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
   },
@@ -6974,10 +7010,6 @@
   {
     "id": "Result limit",
     "translation": "Limite di risultati"
-  },
-  {
-    "id": "Result limit.",
-    "translation": "Result limit."
   },
   {
     "id": "Result offset",
@@ -7196,8 +7228,16 @@
     "translation": "Impostare nota per un volume di storage file esistente."
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "Imposta le autorizzazioni in modo che corrispondano alle autorizzazioni di questo utente. Aggiunge e rimuove le autorizzazioni appropriate"
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7306,6 +7346,10 @@
   {
     "id": "Single",
     "translation": "Singolo"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7896,6 +7940,10 @@
     "translation": "La nuova etichetta per la chiave"
   },
   {
+    "id": "The note ",
+    "translation": "The note "
+  },
+  {
     "id": "The note of hardware server: {{.ID}} was updated.",
     "translation": "La nota del server hardware: {{.ID}} è stata aggiornata."
   },
@@ -8410,6 +8458,10 @@
   {
     "id": "Transaction",
     "translation": "Transazione"
+  },
+  {
+    "id": "True",
+    "translation": "True"
   },
   {
     "id": "Type",
