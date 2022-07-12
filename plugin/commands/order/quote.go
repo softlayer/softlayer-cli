@@ -51,12 +51,12 @@ func (cmd *QuoteCommand) Run(c *cli.Context) error {
 
 	quote, err := cmd.OrderManager.GetQuote(quoteId, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Quote.\n"+err.Error()), 2)
+		return cli.NewExitError(T("Failed to get Quote.\n")+err.Error(), 2)
 	}
 
 	recalculatedOrderContainer, err := cmd.OrderManager.GetRecalculatedOrderContainer(quoteId)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Recalculated Order Container.\n"+err.Error()), 2)
+		return cli.NewExitError(T("Failed to get Recalculated Order Container.\n")+err.Error(), 2)
 	}
 
 	extra, err := setArguments(c, cmd, recalculatedOrderContainer)
@@ -71,7 +71,7 @@ func (cmd *QuoteCommand) Run(c *cli.Context) error {
 	if c.IsSet("verify") {
 		order, err := cmd.OrderManager.VerifyOrder(quoteId, extra)
 		if err != nil {
-			return cli.NewExitError(T("Failed to verify Quote.\n"+err.Error()), 2)
+			return cli.NewExitError(T("Failed to verify Quote.\n")+err.Error(), 2)
 		}
 
 		table = cmd.UI.Table([]string{T("KeyName"), T("Description"), T("Cost")})
@@ -98,7 +98,7 @@ func (cmd *QuoteCommand) Run(c *cli.Context) error {
 	} else {
 		order, err := cmd.OrderManager.OrderQuote(quoteId, extra)
 		if err != nil {
-			return cli.NewExitError(T("Failed to order Quote.\n"+err.Error()), 2)
+			return cli.NewExitError(T("Failed to order Quote.\n")+err.Error(), 2)
 		}
 
 		table = cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -183,7 +183,7 @@ func setArguments(c *cli.Context, cmd *QuoteCommand, recalculatedOrderContainer 
 	if c.IsSet("image") {
 		image, err := cmd.ImageManager.GetImage(c.Int("image"))
 		if err != nil {
-			return datatypes.Container_Product_Order{}, cli.NewExitError(T("Failed to get Image.\n"+err.Error()), 2)
+			return datatypes.Container_Product_Order{}, cli.NewExitError(T("Failed to get Image.\n")+err.Error(), 2)
 		}
 		recalculatedOrderContainer.ImageTemplateGlobalIdentifier = image.GlobalIdentifier
 	}

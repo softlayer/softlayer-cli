@@ -3300,6 +3300,10 @@
     "translation": "未能获取标识为 {{.ID}} 的 IPSec。\n"
   },
   {
+    "id": "Failed to get Image.\n",
+    "translation": "Failed to get Image.\n"
+  },
+  {
     "id": "Failed to get L7 Health Monitor: {{.Error}}.\n",
     "translation": "未能获取 L7 运行状况监视器：{{.Error}}。\n"
   },
@@ -3334,6 +3338,10 @@
   {
     "id": "Failed to get Quotes.\n",
     "translation": "Failed to get Quotes.\n"
+  },
+  {
+    "id": "Failed to get Recalculated Order Container.\n",
+    "translation": "Failed to get Recalculated Order Container.\n"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3840,6 +3848,10 @@
     "translation": "未能订购 IPSec。请稍后重试。\n"
   },
   {
+    "id": "Failed to order Quote.\n",
+    "translation": "Failed to order Quote.\n"
+  },
+  {
     "id": "Failed to order block volume.Please verify your options and try again.\n",
     "translation": "未能订购块卷。请验证选项，然后重试。\n"
   },
@@ -4194,6 +4206,10 @@
   {
     "id": "Failed to upgrade virtual server instance: {{.VsID}}.\n",
     "translation": "未能升级虚拟服务器实例：{{.VsID}}。\n"
+  },
+  {
+    "id": "Failed to verify Quote.\n",
+    "translation": "Failed to verify Quote.\n"
   },
   {
     "id": "Failed to verify load balancer with name {{.Name}} on {{.Location}}.\n",

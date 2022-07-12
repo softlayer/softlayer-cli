@@ -3300,6 +3300,10 @@
     "translation": "Abrufen von IPSec mit ID {{.ID}} fehlgeschlagen.\n"
   },
   {
+    "id": "Failed to get Image.\n",
+    "translation": "Failed to get Image.\n"
+  },
+  {
     "id": "Failed to get L7 Health Monitor: {{.Error}}.\n",
     "translation": "Abrufen der L7-Statusüberwachung fehlgeschlagen: {{.Error}}.\n"
   },
@@ -3334,6 +3338,10 @@
   {
     "id": "Failed to get Quotes.\n",
     "translation": "Failed to get Quotes.\n"
+  },
+  {
+    "id": "Failed to get Recalculated Order Container.\n",
+    "translation": "Failed to get Recalculated Order Container.\n"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3840,6 +3848,10 @@
     "translation": "Anfordern von IPSec fehlgeschlagen. Bitte versuchen Sie es später noch einmal.\n"
   },
   {
+    "id": "Failed to order Quote.\n",
+    "translation": "Failed to order Quote.\n"
+  },
+  {
     "id": "Failed to order block volume.Please verify your options and try again.\n",
     "translation": "Anfordern des Blockdatenträgers fehlgeschlagen. Prüfen Sie Ihre Optionen und wiederholen Sie den Versuch.\n"
   },
@@ -4194,6 +4206,10 @@
   {
     "id": "Failed to upgrade virtual server instance: {{.VsID}}.\n",
     "translation": "Upgrade der virtuellen Serverinstanz {{.VsID}} fehlgeschlagen.\n"
+  },
+  {
+    "id": "Failed to verify Quote.\n",
+    "translation": "Failed to verify Quote.\n"
   },
   {
     "id": "Failed to verify load balancer with name {{.Name}} on {{.Location}}.\n",
