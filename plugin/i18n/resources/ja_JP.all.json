@@ -16,8 +16,8 @@
     "translation": " 予約済み容量を実際には作成しない"
   },
   {
-    "id": " List placement groups.",
-    "translation": " 配置グループをリストします。"
+    "id": "List placement groups.",
+    "translation": "配置グループをリストします。"
   },
   {
     "id": " The server ID to associate with the security group",
@@ -5336,8 +5336,8 @@
     "translation": "List Object Storage accounts."
   },
   {
-    "id": "List Reserved Capacity groups.\n",
-    "translation": "予約済みキャパシティー・グループをリストします。\n"
+    "id": "List Reserved Capacity groups.",
+    "translation": "予約済みキャパシティー・グループをリストします。"
   },
   {
     "id": "List SSH keys on your account",

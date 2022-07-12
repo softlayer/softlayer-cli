@@ -57,7 +57,7 @@ func VSCapacityListMetaData() cli.Command {
 	return cli.Command{
 		Category:    "vs",
 		Name:        "capacity-list",
-		Description: T("List Reserved Capacity groups.\n"),
+		Description: T("List Reserved Capacity groups."),
 		Usage: T(`${COMMAND_NAME} sl vs capacity-list
 
 EXAMPLE:

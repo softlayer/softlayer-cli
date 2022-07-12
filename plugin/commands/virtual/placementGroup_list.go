@@ -51,7 +51,7 @@ func VSPlacementGroupListMetadata() cli.Command {
 	return cli.Command{
 		Category:    "vs",
 		Name:        "placementgroup-list",
-		Description: T(" List placement groups."),
+		Description: T("List placement groups."),
 		Usage: T(`${COMMAND_NAME} sl vs placementgroup-list
 
 EXAMPLE:
