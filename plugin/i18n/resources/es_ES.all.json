@@ -576,6 +576,14 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEJEMPLO: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   Este mandato muestra una lista de las categorías de servidores nativos."
   },
@@ -2254,6 +2262,10 @@
   {
     "id": "Credits used",
     "translation": "Créditos utilizados"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
   },
   {
     "id": "Current Members",
@@ -4254,6 +4266,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "No se ha podido iniciar la operación de migración tras error para el volumen {{.VolumeID}}.\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -6776,6 +6792,10 @@
     "translation": "Velocidad de puerto público, las opciones son: 0,10,100,1000,10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
   },
@@ -6978,10 +6998,6 @@
   {
     "id": "Result limit",
     "translation": "Límite de resultados"
-  },
-  {
-    "id": "Result limit.",
-    "translation": "Result limit."
   },
   {
     "id": "Result offset",
@@ -7314,6 +7330,10 @@
   {
     "id": "Single",
     "translation": "Único"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -8418,6 +8438,10 @@
   {
     "id": "Transaction",
     "translation": "Transacción"
+  },
+  {
+    "id": "True",
+    "translation": "True"
   },
   {
     "id": "Type",
