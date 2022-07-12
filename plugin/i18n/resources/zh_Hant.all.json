@@ -2756,6 +2756,10 @@
     "translation": "頻寬報告的結束日期"
   },
   {
+    "id": "EndPoint Type",
+    "translation": "EndPoint Type"
+  },
+  {
     "id": "Ending Balance",
     "translation": "期末餘額"
   },
@@ -3458,6 +3462,10 @@
   {
     "id": "Failed to get l7 rules: {{.Error}}.\n",
     "translation": "無法取得 l7 規則：{{.Error}}。\n"
+  },
+  {
+    "id": "Failed to get list object storage endpoints.",
+    "translation": "Failed to get list object storage endpoints."
   },
   {
     "id": "Failed to get load balancer product packages.",
@@ -5288,6 +5296,10 @@
     "translation": "前次更新時間"
   },
   {
+    "id": "Legacy",
+    "translation": "Legacy"
+  },
+  {
     "id": "License key",
     "translation": "授權碼"
   },
@@ -5484,6 +5496,10 @@
     "translation": "列出每個資料中心的檔案儲存磁區數目"
   },
   {
+    "id": "List object storage endpoints.",
+    "translation": "List object storage endpoints."
+  },
+  {
     "id": "List only the required categories for the package",
     "translation": "只列出套件的必要種類"
   },
@@ -5586,6 +5602,10 @@
   {
     "id": "Location",
     "translation": "位置"
+  },
+  {
+    "id": "Location/Region",
+    "translation": "Location/Region"
   },
   {
     "id": "Long Name",
@@ -6954,6 +6974,10 @@
   {
     "id": "Result limit",
     "translation": "結果限制"
+  },
+  {
+    "id": "Result limit.",
+    "translation": "Result limit."
   },
   {
     "id": "Result offset",
@@ -8590,6 +8614,10 @@
   {
     "id": "Upgrade all hard drives' firmware",
     "translation": "升級所有硬碟的韌體"
+  },
+  {
+    "id": "Url",
+    "translation": "Url"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",
