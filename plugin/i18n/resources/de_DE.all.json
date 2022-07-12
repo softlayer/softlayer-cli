@@ -16,7 +16,7 @@
     "translation": " Reservierte Kapazität nicht tatsächlich erstellen"
   },
   {
-    "id": " List placement groups.",
+    "id": "List placement groups.",
     "translation": " Platzierungsgruppen auflisten."
   },
   {
@@ -5336,8 +5336,8 @@
     "translation": "List Object Storage accounts."
   },
   {
-    "id": "List Reserved Capacity groups.\n",
-    "translation": "Reservierte Kapazitätsgruppen auflisten.\n"
+    "id": "List Reserved Capacity groups.",
+    "translation": "Reservierte Kapazitätsgruppen auflisten."
   },
   {
     "id": "List SSH keys on your account",
