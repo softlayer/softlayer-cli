@@ -12,6 +12,7 @@ type ObjectStorageManager interface {
 	GetAccounts(mask string) ([]datatypes.Network_Storage, error)
 	GetEndpoints(HubNetworkStorageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error)
 	ListCredential(StorageId int, mask string)([]datatypes.Network_Storage_Credential, error)
+	CreateCredential(StorageId int, mask string)([]datatypes.Network_Storage_Credential, error)
 }
 
 type objectStorageManager struct {
@@ -72,4 +73,14 @@ func (a objectStorageManager) ListCredential(StorageId int, mask string) ([]data
 	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(a.Session)
 
 	return NetworkStorageHubCleversafeAccountService.Mask(mask).Id(StorageId).GetCredentials()
+}
+
+/*
+Create credentials for an IBM Cloud Object Storage Account.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/credentialCreate/
+*/
+func (a objectStorageManager) CreateCredential(StorageId int, mask string) ([]datatypes.Network_Storage_Credential, error) {
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(a.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Mask(mask).Id(StorageId).CredentialCreate()
 }
