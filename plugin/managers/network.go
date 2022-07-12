@@ -70,6 +70,8 @@ type NetworkManager interface {
 	GetCancelFailureReasons(vlanId int) []string
 	Route(subnetId int, typeRoute string, typeId string) (bool, error)
 	ClearRoute(subnetId int) (bool, error)
+	SetSubnetTags(subnetId int, tags string) (bool, error)
+	SetSubnetNote(subnetId int, note string) (bool, error)
 }
 
 type networkManager struct {
@@ -747,4 +749,18 @@ func (n networkManager) Route(subnetId int, typeRoute string, typeId string) (bo
 //subnetId int: The subnet identifier.
 func (n networkManager) ClearRoute(subnetId int) (bool, error) {
 	return n.SubnetService.Id(subnetId).ClearRoute()
+}
+
+// Set tags of a subnet.
+// subnetId int: The subnet identifier.
+// tags string: Tags to be set.
+func (n networkManager) SetSubnetTags(subnetId int, tags string) (bool, error) {
+	return n.SubnetService.Id(subnetId).SetTags(&tags)
+}
+
+// Set note of a subnet.
+// subnetId int: The subnet identifier.
+// note string: Note to be set.
+func (n networkManager) SetSubnetNote(subnetId int, note string) (bool, error) {
+	return n.SubnetService.Id(subnetId).EditNote(&note)
 }
