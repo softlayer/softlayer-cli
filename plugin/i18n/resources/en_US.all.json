@@ -16,8 +16,8 @@
     "translation": " Do not actually create the reserved capacity"
   },
   {
-    "id": " List placement groups.",
-    "translation": " List placement groups."
+    "id": "List placement groups.",
+    "translation": "List placement groups."
   },
   {
     "id": " The server ID to associate with the security group",
@@ -5356,8 +5356,8 @@
     "translation": "List Object Storage accounts."
   },
   {
-    "id": "List Reserved Capacity groups.\n",
-    "translation": "List Reserved Capacity groups.\n"
+    "id": "List Reserved Capacity groups.",
+    "translation": "List Reserved Capacity groups."
   },
   {
     "id": "List SSH keys on your account",
