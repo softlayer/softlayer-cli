@@ -14,6 +14,8 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
+const discreteOption = "discrete"
+
 type SensorCommand struct {
 	UI              terminal.UI
 	HardwareManager managers.HardwareServerManager
@@ -42,7 +44,7 @@ func (cmd *SensorCommand) Run(c *cli.Context) error {
 	}
 
 	displayDiscrateTable := false
-	if c.IsSet("discrete") && c.Bool("discrete") {
+	if c.IsSet(discreteOption) && c.Bool(discreteOption) {
 		displayDiscrateTable = true
 	}
 
