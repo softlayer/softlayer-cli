@@ -576,6 +576,10 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321",
+    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -2252,6 +2256,10 @@
     "translation": "Cria um usuário"
   },
   {
+    "id": "Credential: {{.CredentialID}} was deleted.",
+    "translation": "Credential: {{.CredentialID}} was deleted."
+  },
+  {
     "id": "Credit allowed",
     "translation": "Crédito permitido"
   },
@@ -2394,6 +2402,10 @@
   {
     "id": "Delete an image ",
     "translation": "Excluir uma imagem "
+  },
+  {
+    "id": "Delete the credential of an Object Storage Account.",
+    "translation": "Delete the credential of an Object Storage Account."
   },
   {
     "id": "Delete the given security group",
@@ -3150,6 +3162,10 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "Falha ao excluir o membro da Camada 7 {{.Member}}: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to delete credential: {{.StorageID}}.\n",
+    "translation": "Failed to delete credential: {{.StorageID}}.\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -8252,6 +8268,10 @@
     "translation": "Esta interface permite remover a rota de suas sub-redes de conta própria."
   },
   {
+    "id": "This is the credential id associated with the volume. [REQUIRED]",
+    "translation": "This is the credential id associated with the volume. [REQUIRED]"
+  },
+  {
     "id": "This option is not available.",
     "translation": "This option is not available."
   },
@@ -8528,6 +8548,10 @@
     "translation": "Não é possível localizar código de categoria deste volume."
   },
   {
+    "id": "Unable to find credential with ID: {{.CredentialID}}.\n",
+    "translation": "Unable to find credential with ID: {{.CredentialID}}.\n"
+  },
+  {
     "id": "Unable to find firewall with ID: {{.ID}}",
     "translation": "Não é possível localizar firewall com ID: {{.ID}}"
   },
@@ -8562,6 +8586,10 @@
   {
     "id": "Unable to find network port speed for this device.",
     "translation": "Não é possível localizar velocidade da porta de rede para este dispositivo."
+  },
+  {
+    "id": "Unable to find object-storage with ID: {{.StorageID}}.\n",
+    "translation": "Unable to find object-storage with ID: {{.StorageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
