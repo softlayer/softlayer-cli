@@ -16,10 +16,6 @@
     "translation": " 不實際建立保留容量"
   },
   {
-    "id": "List placement groups.",
-    "translation": "列出放置群組。"
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " 要與安全群組相關聯的伺服器 ID"
   },
@@ -576,8 +572,8 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER"
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -5554,6 +5550,10 @@
   {
     "id": "List placement groups",
     "translation": "列出放置群組"
+  },
+  {
+    "id": "List placement groups.",
+    "translation": "列出放置群組。"
   },
   {
     "id": "List security group rules",

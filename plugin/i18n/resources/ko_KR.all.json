@@ -16,10 +16,6 @@
     "translation": " 예약된 용량을 실제로 작성하지 않음"
   },
   {
-    "id": "List placement groups.",
-    "translation": "배치 그룹을 나열합니다."
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " 보안 그룹과 연관시킬 서버 ID"
   },
@@ -576,8 +572,8 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER"
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -5554,6 +5550,10 @@
   {
     "id": "List placement groups",
     "translation": "배치 그룹 나열"
+  },
+  {
+    "id": "List placement groups.",
+    "translation": "배치 그룹을 나열합니다."
   },
   {
     "id": "List security group rules",
