@@ -32,7 +32,7 @@ func CredentialListMetaData() cli.Command {
 		Category:    "object-storage",
 		Name:        "credential-list",
 		Description: T("Retrieve credentials used for generating an AWS signature. Max of 2."),
-		Usage:       T(`${COMMAND_NAME} sl object-storage credential-list IDENTIFIER`),
+		Usage:       T(`${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]`),
 		Flags: []cli.Flag{
 			metadata.OutputFlag(),
 		},

@@ -16,10 +16,6 @@
     "translation": " No crear realmente la capacidad reservada"
   },
   {
-    "id": " List placement groups.",
-    "translation": " Listar grupos de colocación."
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " El ID de servidor para asociar al grupo de seguridad"
   },
@@ -576,12 +572,12 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
+    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER"
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -5368,8 +5364,8 @@
     "translation": "List Object Storage accounts."
   },
   {
-    "id": "List Reserved Capacity groups.\n",
-    "translation": "Listar grupos de capacidad reservada.\n"
+    "id": "List Reserved Capacity groups.",
+    "translation": "Listar grupos de capacidad reservada."
   },
   {
     "id": "List SSH keys on your account",
@@ -5566,6 +5562,10 @@
   {
     "id": "List placement groups",
     "translation": "Listar grupos de colocación"
+  },
+  {
+    "id": "List placement groups.",
+    "translation": "Listar grupos de colocación."
   },
   {
     "id": "List security group rules",

@@ -32,7 +32,7 @@ func CredentialCreateMetaData() cli.Command {
 		Category:    "object-storage",
 		Name:        "credential-create",
 		Description: T("Create credentials for an IBM Cloud Object Storage Account."),
-		Usage: T(`${COMMAND_NAME} sl object-storage credential-create IDENTIFIER
+		Usage: T(`${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]
 
 Examples:
 	${COMMAND_NAME} sl object-storage credential-create 123456`),
