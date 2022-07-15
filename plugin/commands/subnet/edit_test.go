@@ -46,6 +46,12 @@ var _ = Describe("subnet edit", func() {
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Subnet ID'. It must be a positive integer."))
 			})
+
+			It("Set command without option", func() {
+				err := testhelpers.RunCommand(cliCommand, "123456")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Please pass at least one of the flags."))
+			})
 		})
 
 		Context("Return error", func() {

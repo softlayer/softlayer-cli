@@ -31,6 +31,10 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		return errors.NewInvalidSoftlayerIdInputError("Subnet ID")
 	}
 
+	if !c.IsSet("tags") && !c.IsSet("note") {
+		return errors.NewInvalidUsageError(T("Please pass at least one of the flags."))
+	}
+
 	if c.IsSet("tags") {
 		tags := c.String("tags")
 		response, err := cmd.NetworkManager.SetSubnetTags(subnetID, tags)
