@@ -16,16 +16,16 @@
     "translation": " No crear realmente la capacidad reservada"
   },
   {
-    "id": " List placement groups.",
-    "translation": " Listar grupos de colocación."
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " El ID de servidor para asociar al grupo de seguridad"
   },
   {
     "id": " The server ID to remove from the security group",
     "translation": " El ID de servidor para eliminar del grupo de seguridad"
+  },
+  {
+    "id": " is not following <hostname>.<domain.name.tld> --fqdn option format",
+    "translation": " is not following <hostname>.<domain.name.tld> --fqdn option format"
   },
   {
     "id": "# of Active Transactions",
@@ -580,6 +580,14 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEJEMPLO: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   Este mandato muestra una lista de las categorías de servidores nativos."
   },
@@ -602,6 +610,10 @@
   {
     "id": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  This command lists the presets for Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   EJEMPLO: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  Este mandato muestra una lista de lo preestablecido para servidores nativos."
+  },
+  {
+    "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
+    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
   },
   {
     "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
@@ -1118,6 +1130,10 @@
   {
     "id": "300, 600, 1800, 3600, 43200 or 86400 seconds.",
     "translation": "300, 600, 1800, 3600, 43200 o 86400 segundos."
+  },
+  {
+    "id": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]",
+    "translation": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]"
   },
   {
     "id": "A custom name to be assigned to the quote (optional)",
@@ -2268,6 +2284,10 @@
     "translation": "Critical Min"
   },
   {
+    "id": "Cross Region",
+    "translation": "Cross Region"
+  },
+  {
     "id": "Current Members",
     "translation": "Miembros actuales"
   },
@@ -2770,6 +2790,10 @@
   {
     "id": "End date for bandwidth reporting",
     "translation": "Fecha de finalización de los informes de ancho de banda"
+  },
+  {
+    "id": "EndPoint Type",
+    "translation": "EndPoint Type"
   },
   {
     "id": "Ending Balance",
@@ -3304,6 +3328,10 @@
     "translation": "No se ha podido obtener la IPSec con ID {{.ID}}.\n"
   },
   {
+    "id": "Failed to get Image.\n",
+    "translation": "Failed to get Image.\n"
+  },
+  {
     "id": "Failed to get L7 Health Monitor: {{.Error}}.\n",
     "translation": "No se ha podido obtener el supervisor de estado de L7: {{.Error}}.\n"
   },
@@ -3338,6 +3366,10 @@
   {
     "id": "Failed to get Quotes.\n",
     "translation": "Failed to get Quotes.\n"
+  },
+  {
+    "id": "Failed to get Recalculated Order Container.\n",
+    "translation": "Failed to get Recalculated Order Container.\n"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3478,6 +3510,10 @@
   {
     "id": "Failed to get l7 rules: {{.Error}}.\n",
     "translation": "No se han podido obtener las reglas de l7: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to get list object storage endpoints.",
+    "translation": "Failed to get list object storage endpoints."
   },
   {
     "id": "Failed to get load balancer product packages.",
@@ -3744,6 +3780,10 @@
     "translation": "No se han podido listar las categorías.\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "No se han podido listar los centros de datos.\n"
   },
@@ -3846,6 +3886,10 @@
   {
     "id": "Failed to order IPSec.Please try again later.\n",
     "translation": "No se ha podido solicitar la IPSec. Vuelva a intentarlo más adelante.\n"
+  },
+  {
+    "id": "Failed to order Quote.\n",
+    "translation": "Failed to order Quote.\n"
   },
   {
     "id": "Failed to order block volume.Please verify your options and try again.\n",
@@ -4204,6 +4248,10 @@
     "translation": "No se ha podido actualizar la instancia de servidor virtual: {{.VsID}}.\n"
   },
   {
+    "id": "Failed to verify Quote.\n",
+    "translation": "Failed to verify Quote.\n"
+  },
+  {
     "id": "Failed to verify load balancer with name {{.Name}} on {{.Location}}.\n",
     "translation": "No se ha podido verificar el equilibrador de carga con el nombre {{.Name}} en {{.Location}}.\n"
   },
@@ -4262,6 +4310,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "No se ha podido iniciar la operación de migración tras error para el volumen {{.VolumeID}}.\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5012,12 +5064,20 @@
     "translation": "Id"
   },
   {
+    "id": "If specified, will only show what the quote will order, will NOT place an order [default: False]",
+    "translation": "If specified, will only show what the quote will order, will NOT place an order [default: False]"
+  },
+  {
     "id": "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type.",
     "translation": "Si se especifica esta opción, la ip pública se asignará desde una subred pública en esta cuenta. De lo contrario, se asignara desde una agrupación del sistema de IBM. Solo disponible en el tipo de equilibrador de carga PublicToPrivate."
   },
   {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
     "translation": "ID de imagen. Consulte: '${COMMAND_NAME} sl image list' para su referencia"
+  },
+  {
+    "id": "Image ID. See: 'ibmcloud sl image list' for reference",
+    "translation": "Image ID. See: 'ibmcloud sl image list' for reference"
   },
   {
     "id": "Image ID. The default is to use the current operating system.\nSee: '${COMMAND_NAME} sl image list' for reference",
@@ -5308,6 +5368,10 @@
     "translation": "Última actualización"
   },
   {
+    "id": "Legacy",
+    "translation": "Legacy"
+  },
+  {
     "id": "License key",
     "translation": "Clave de licencia"
   },
@@ -5344,8 +5408,8 @@
     "translation": "List Object Storage accounts."
   },
   {
-    "id": "List Reserved Capacity groups.\n",
-    "translation": "Listar grupos de capacidad reservada.\n"
+    "id": "List Reserved Capacity groups.",
+    "translation": "Listar grupos de capacidad reservada."
   },
   {
     "id": "List SSH keys on your account",
@@ -5504,6 +5568,10 @@
     "translation": "Listar el número de volúmenes de almacenamiento de archivos por centro de datos"
   },
   {
+    "id": "List object storage endpoints.",
+    "translation": "List object storage endpoints."
+  },
+  {
     "id": "List only the required categories for the package",
     "translation": "Listar solo las categorías obligatorias para el paquete"
   },
@@ -5538,6 +5606,10 @@
   {
     "id": "List placement groups",
     "translation": "Listar grupos de colocación"
+  },
+  {
+    "id": "List placement groups.",
+    "translation": "Listar grupos de colocación."
   },
   {
     "id": "List security group rules",
@@ -5606,6 +5678,10 @@
   {
     "id": "Location",
     "translation": "Ubicación"
+  },
+  {
+    "id": "Location/Region",
+    "translation": "Location/Region"
   },
   {
     "id": "Long Name",
@@ -6780,6 +6856,10 @@
     "translation": "Velocidad de puerto público, las opciones son: 0,10,100,1000,10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
   },
@@ -7004,6 +7084,10 @@
     "translation": "Retrieve a server’s hardware state via its internal sensors."
   },
   {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
+  },
+  {
     "id": "Retrieve logs for an Autoscale group.",
     "translation": "Recuperar registros para un grupo de escalado automático."
   },
@@ -7074,6 +7158,10 @@
   {
     "id": "SSH Key ",
     "translation": "Clave SSH "
+  },
+  {
+    "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
+    "translation": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)"
   },
   {
     "id": "SSH key was added: ",
@@ -7326,6 +7414,10 @@
   {
     "id": "Single",
     "translation": "Único"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7780,6 +7872,10 @@
     "translation": "La clave SSH real"
   },
   {
+    "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
+    "translation": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]"
+  },
+  {
     "id": "The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'",
     "translation": "El tipo completo del pedido. El tipo suele comenzar por 'SoftLayer_Container_Product_Order_'"
   },
@@ -7978,6 +8074,10 @@
   {
     "id": "The public network speed of virtual server instance: {{.VsId}} was updated.",
     "translation": "La velocidad de la red pública de la instancia de servidor virtual: {{.VsId}} se ha actualizado."
+  },
+  {
+    "id": "The quantity of the item being ordered if different from quoted value",
+    "translation": "The quantity of the item being ordered if different from quoted value"
   },
   {
     "id": "The quantity of the item being ordered. This value defaults to 1",
@@ -8436,8 +8536,16 @@
     "translation": "Transacción"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "Tipo"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8640,6 +8748,10 @@
     "translation": "Actualizar todo el firmware de los discos duros"
   },
   {
+    "id": "Url",
+    "translation": "Url"
+  },
+  {
     "id": "Url path for HTTP/HTTPS checks",
     "translation": "Vía de acceso de url para las comprobaciones HTTP/HTTPS"
   },
@@ -8722,6 +8834,10 @@
   {
     "id": "View a quote",
     "translation": "View a quote"
+  },
+  {
+    "id": "View and Order a quote",
+    "translation": "View and Order a quote"
   },
   {
     "id": "View details of a placement group",

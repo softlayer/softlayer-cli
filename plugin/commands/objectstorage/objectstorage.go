@@ -18,6 +18,12 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"object-storage-accounts": func(c *cli.Context) error {
 			return NewAccountsCommand(ui, objectStorageManager).Run(c)
 		},
+		"object-storage-endpoints": func(c *cli.Context) error {
+			return NewEndpointsCommand(ui, objectStorageManager).Run(c)
+		},
+		"object-storage-credential-list": func(c *cli.Context) error {
+			return NewCredentialListCommand(ui, objectStorageManager).Run(c)
+		},
 	}
 	return CommandActionBindings
 }
@@ -38,6 +44,8 @@ func ObjectStorageMetaData() cli.Command {
 		Usage:       "${COMMAND_NAME} sl object-storage",
 		Subcommands: []cli.Command{
 			AccountsMetaData(),
+			EndpointsMetaData(),
+			CredentialListMetaData(),
 		},
 	}
 }

@@ -10,6 +10,8 @@ import (
 
 type ObjectStorageManager interface {
 	GetAccounts(mask string) ([]datatypes.Network_Storage, error)
+	GetEndpoints(HubNetworkStorageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error)
+	ListCredential(StorageId int, mask string)([]datatypes.Network_Storage_Credential, error)
 }
 
 type objectStorageManager struct {
@@ -50,4 +52,24 @@ func (a objectStorageManager) GetAccounts(mask string) ([]datatypes.Network_Stor
 		}
 	}
 	return resourceList, nil
+}
+
+/*
+Returns a collection of endpoint URLs available to this IBM Cloud Object Storage account.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getEndpoints/
+*/
+func (a objectStorageManager) GetEndpoints(HubNetworkStorageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error) {
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(a.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Id(HubNetworkStorageId).GetEndpoints(nil)
+}
+
+/*
+Gets credentials used for generating an AWS signature. Max of 2.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getCredentials/
+*/
+func (a objectStorageManager) ListCredential(StorageId int, mask string) ([]datatypes.Network_Storage_Credential, error) {
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(a.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Mask(mask).Id(StorageId).GetCredentials()
 }

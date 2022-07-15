@@ -16,16 +16,16 @@
     "translation": " 予約済み容量を実際には作成しない"
   },
   {
-    "id": " List placement groups.",
-    "translation": " 配置グループをリストします。"
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " セキュリティー・グループに関連付けるサーバー ID"
   },
   {
     "id": " The server ID to remove from the security group",
     "translation": " セキュリティー・グループから削除するサーバー ID"
+  },
+  {
+    "id": " is not following <hostname>.<domain.name.tld> --fqdn option format",
+    "translation": " is not following <hostname>.<domain.name.tld> --fqdn option format"
   },
   {
     "id": "# of Active Transactions",
@@ -580,6 +580,14 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n例: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   このコマンドは、ベアメタル・サーバーのカテゴリーをリストします。"
   },
@@ -602,6 +610,10 @@
   {
     "id": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  This command lists the presets for Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   例: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  このコマンドは、ベアメタル・サーバーの事前設定をリストします。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
+    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
   },
   {
     "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
@@ -1118,6 +1130,10 @@
   {
     "id": "300, 600, 1800, 3600, 43200 or 86400 seconds.",
     "translation": "300、600、1800、3600、43200、または 86400 秒。"
+  },
+  {
+    "id": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]",
+    "translation": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]"
   },
   {
     "id": "A custom name to be assigned to the quote (optional)",
@@ -2268,6 +2284,10 @@
     "translation": "Critical Min"
   },
   {
+    "id": "Cross Region",
+    "translation": "Cross Region"
+  },
+  {
     "id": "Current Members",
     "translation": "現行メンバー"
   },
@@ -2770,6 +2790,10 @@
   {
     "id": "End date for bandwidth reporting",
     "translation": "帯域幅レポートの終了日"
+  },
+  {
+    "id": "EndPoint Type",
+    "translation": "EndPoint Type"
   },
   {
     "id": "Ending Balance",
@@ -3304,6 +3328,10 @@
     "translation": "ID {{.ID}} の IPSec の取得に失敗しました。\n"
   },
   {
+    "id": "Failed to get Image.\n",
+    "translation": "Failed to get Image.\n"
+  },
+  {
     "id": "Failed to get L7 Health Monitor: {{.Error}}.\n",
     "translation": "L7 ヘルス・モニターの取得に失敗しました: {{.Error}}。\n"
   },
@@ -3338,6 +3366,10 @@
   {
     "id": "Failed to get Quotes.\n",
     "translation": "Failed to get Quotes.\n"
+  },
+  {
+    "id": "Failed to get Recalculated Order Container.\n",
+    "translation": "Failed to get Recalculated Order Container.\n"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3478,6 +3510,10 @@
   {
     "id": "Failed to get l7 rules: {{.Error}}.\n",
     "translation": "l7 ルールの取得に失敗しました: {{.Error}}。\n"
+  },
+  {
+    "id": "Failed to get list object storage endpoints.",
+    "translation": "Failed to get list object storage endpoints."
   },
   {
     "id": "Failed to get load balancer product packages.",
@@ -3744,6 +3780,10 @@
     "translation": "カテゴリーのリストに失敗しました。\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "データ・センターのリストに失敗しました。\n"
   },
@@ -3846,6 +3886,10 @@
   {
     "id": "Failed to order IPSec.Please try again later.\n",
     "translation": "IPSec の注文に失敗しました。後で再試行してください。\n"
+  },
+  {
+    "id": "Failed to order Quote.\n",
+    "translation": "Failed to order Quote.\n"
   },
   {
     "id": "Failed to order block volume.Please verify your options and try again.\n",
@@ -4204,6 +4248,10 @@
     "translation": "Virtual Server インスタンス: {{.VsID}} のアップグレードに失敗しました。\n"
   },
   {
+    "id": "Failed to verify Quote.\n",
+    "translation": "Failed to verify Quote.\n"
+  },
+  {
     "id": "Failed to verify load balancer with name {{.Name}} on {{.Location}}.\n",
     "translation": "{{.Location}} で名前 {{.Name}} を使ったロード・バランサーの検証に失敗しました。\n"
   },
@@ -4262,6 +4310,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "ボリューム {{.VolumeID}} に対してフェイルオーバー操作を開始できませんでした。\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5012,12 +5064,20 @@
     "translation": "ID"
   },
   {
+    "id": "If specified, will only show what the quote will order, will NOT place an order [default: False]",
+    "translation": "If specified, will only show what the quote will order, will NOT place an order [default: False]"
+  },
+  {
     "id": "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type.",
     "translation": "このオプションを指定する場合、このアカウントのパブリック・サブネットからパブリック IP が割り当てられます。 このオプションを指定しない場合は、IBM システム・プールから割り振られます。 PublicToPrivate ロード・バランサー・タイプでのみ使用可能です。"
   },
   {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
     "translation": "イメージ ID。 '${COMMAND_NAME} sl image list' を参照してください"
+  },
+  {
+    "id": "Image ID. See: 'ibmcloud sl image list' for reference",
+    "translation": "Image ID. See: 'ibmcloud sl image list' for reference"
   },
   {
     "id": "Image ID. The default is to use the current operating system.\nSee: '${COMMAND_NAME} sl image list' for reference",
@@ -5308,6 +5368,10 @@
     "translation": "最終更新日"
   },
   {
+    "id": "Legacy",
+    "translation": "Legacy"
+  },
+  {
     "id": "License key",
     "translation": "ライセンス・キー"
   },
@@ -5344,8 +5408,8 @@
     "translation": "List Object Storage accounts."
   },
   {
-    "id": "List Reserved Capacity groups.\n",
-    "translation": "予約済みキャパシティー・グループをリストします。\n"
+    "id": "List Reserved Capacity groups.",
+    "translation": "予約済みキャパシティー・グループをリストします。"
   },
   {
     "id": "List SSH keys on your account",
@@ -5504,6 +5568,10 @@
     "translation": "データ・センターごとの File Storage ボリュームの数をリストします"
   },
   {
+    "id": "List object storage endpoints.",
+    "translation": "List object storage endpoints."
+  },
+  {
     "id": "List only the required categories for the package",
     "translation": "パッケージに必要なカテゴリーのみをリストします"
   },
@@ -5538,6 +5606,10 @@
   {
     "id": "List placement groups",
     "translation": "配置グループをリストします"
+  },
+  {
+    "id": "List placement groups.",
+    "translation": "配置グループをリストします。"
   },
   {
     "id": "List security group rules",
@@ -5606,6 +5678,10 @@
   {
     "id": "Location",
     "translation": "場所"
+  },
+  {
+    "id": "Location/Region",
+    "translation": "Location/Region"
   },
   {
     "id": "Long Name",
@@ -6780,6 +6856,10 @@
     "translation": "パブリック・ポート速度。オプションは、0、10、100、1000、10000 です"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
   },
@@ -7004,6 +7084,10 @@
     "translation": "Retrieve a server’s hardware state via its internal sensors."
   },
   {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
+  },
+  {
     "id": "Retrieve logs for an Autoscale group.",
     "translation": "Autoscale グループのログを取得します。"
   },
@@ -7074,6 +7158,10 @@
   {
     "id": "SSH Key ",
     "translation": "SSH 鍵 "
+  },
+  {
+    "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
+    "translation": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)"
   },
   {
     "id": "SSH key was added: ",
@@ -7326,6 +7414,10 @@
   {
     "id": "Single",
     "translation": "単一"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7780,6 +7872,10 @@
     "translation": "実際の SSH 鍵"
   },
   {
+    "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
+    "translation": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]"
+  },
+  {
     "id": "The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'",
     "translation": "注文の複合タイプ。 タイプは「SoftLayer_Container_Product_Order_」で始まります"
   },
@@ -7978,6 +8074,10 @@
   {
     "id": "The public network speed of virtual server instance: {{.VsId}} was updated.",
     "translation": "Virtual Server インスタンス: {{.VsId}} のパブリック・ネットワーク速度は更新されました。"
+  },
+  {
+    "id": "The quantity of the item being ordered if different from quoted value",
+    "translation": "The quantity of the item being ordered if different from quoted value"
   },
   {
     "id": "The quantity of the item being ordered. This value defaults to 1",
@@ -8436,8 +8536,16 @@
     "translation": "トランザクション"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "タイプ"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8640,6 +8748,10 @@
     "translation": "すべてのハード・ディスクのファームウェアをアップグレードします"
   },
   {
+    "id": "Url",
+    "translation": "Url"
+  },
+  {
     "id": "Url path for HTTP/HTTPS checks",
     "translation": "HTTP/HTTPS チェックの URL パス"
   },
@@ -8722,6 +8834,10 @@
   {
     "id": "View a quote",
     "translation": "View a quote"
+  },
+  {
+    "id": "View and Order a quote",
+    "translation": "View and Order a quote"
   },
   {
     "id": "View details of a placement group",

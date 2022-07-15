@@ -1,0 +1,752 @@
+[
+    {
+        "legacy": false,
+        "region": "us-geo",
+        "type": "public",
+        "url": "s3.us.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "region": "us-geo",
+        "type": "private",
+        "url": "s3.private.us.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Dallas",
+        "region": "us-geo",
+        "type": "public",
+        "url": "s3.dal.us.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Dallas",
+        "region": "us-geo",
+        "type": "private",
+        "url": "s3.private.dal.us.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Washington",
+        "region": "us-geo",
+        "type": "public",
+        "url": "s3.wdc.us.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Washington",
+        "region": "us-geo",
+        "type": "private",
+        "url": "s3.private.wdc.us.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "San Jose",
+        "region": "us-geo",
+        "type": "public",
+        "url": "s3.sjc.us.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "San Jose",
+        "region": "us-geo",
+        "type": "private",
+        "url": "s3.private.sjc.us.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "region": "eu-geo",
+        "type": "public",
+        "url": "s3.eu.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "region": "eu-geo",
+        "type": "private",
+        "url": "s3.private.eu.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Amsterdam",
+        "region": "eu-geo",
+        "type": "public",
+        "url": "s3.ams.eu.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Amsterdam",
+        "region": "eu-geo",
+        "type": "private",
+        "url": "s3.private.ams.eu.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Frankfurt",
+        "region": "eu-geo",
+        "type": "public",
+        "url": "s3.fra.eu.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Frankfurt",
+        "region": "eu-geo",
+        "type": "private",
+        "url": "s3.private.fra.eu.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Milan",
+        "region": "eu-geo",
+        "type": "public",
+        "url": "s3.mil.eu.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Milan",
+        "region": "eu-geo",
+        "type": "private",
+        "url": "s3.private.mil.eu.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "region": "ap-geo",
+        "type": "public",
+        "url": "s3.ap.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "region": "ap-geo",
+        "type": "private",
+        "url": "s3.private.ap.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Tokyo",
+        "region": "ap-geo",
+        "type": "public",
+        "url": "s3.tok.ap.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Tokyo",
+        "region": "ap-geo",
+        "type": "private",
+        "url": "s3.private.tok.ap.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Seoul",
+        "region": "ap-geo",
+        "type": "public",
+        "url": "s3.seo.ap.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Seoul",
+        "region": "ap-geo",
+        "type": "private",
+        "url": "s3.private.seo.ap.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Hong Kong",
+        "region": "ap-geo",
+        "type": "public",
+        "url": "s3.hkg.ap.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "Hong Kong",
+        "region": "ap-geo",
+        "type": "private",
+        "url": "s3.private.hkg.ap.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "us-south",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.us-south.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "us-south",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.private.us-south.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "region": "regional",
+        "type": "public",
+        "url": "s3.us-east.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "region": "regional",
+        "type": "private",
+        "url": "s3.private.us-east.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "eu-gb",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.eu-gb.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "eu-gb",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.private.eu-gb.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "eu-de",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.eu-de.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "eu-de",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.private.eu-de.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "jp-tok",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.jp-tok.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "jp-tok",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.private.jp-tok.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "au-syd",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.au-syd.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "au-syd",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.private.au-syd.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "ca-tor",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.ca-tor.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "ca-tor",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.private.ca-tor.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "br-sao",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.br-sao.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "br-sao",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.private.br-sao.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "ams03",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.ams03.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "ams03",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.ams03.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.che01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.che01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "sao01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.sao01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "sao01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.sao01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "seo01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.seo01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "seo01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.seo01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "mon01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.mon01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "mon01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.mon01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "mex01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.mex01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "mex01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.mex01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "sjc04",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.sjc04.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "sjc04",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.sjc04.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "mil01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.mil01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "mil01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.mil01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "hkg02",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.hkg02.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "hkg02",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.hkg02.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "par01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.par01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "par01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.par01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "sng01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.sng01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": false,
+        "location": "sng01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.private.sng01.cloud-object-storage.appdomain.cloud"
+    },
+    {
+        "legacy": true,
+        "region": "us-geo",
+        "type": "public",
+        "url": "s3-api.us-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "region": "us-geo",
+        "type": "private",
+        "url": "s3-api.us-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "Dallas",
+        "region": "us-geo",
+        "type": "public",
+        "url": "s3-api.dal-us-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "Dallas",
+        "region": "us-geo",
+        "type": "private",
+        "url": "s3-api.dal-us-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "Washington",
+        "region": "us-geo",
+        "type": "public",
+        "url": "s3-api.wdc-us-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "Washington",
+        "region": "us-geo",
+        "type": "private",
+        "url": "s3-api.wdc-us-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "San Jose",
+        "region": "us-geo",
+        "type": "public",
+        "url": "s3-api.sjc-us-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "San Jose",
+        "region": "us-geo",
+        "type": "private",
+        "url": "s3-api.sjc-us-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "region": "eu-geo",
+        "type": "public",
+        "url": "s3.eu-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "region": "eu-geo",
+        "type": "private",
+        "url": "s3.eu-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "Amsterdam",
+        "region": "eu-geo",
+        "type": "public",
+        "url": "s3.ams-eu-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "Amsterdam",
+        "region": "eu-geo",
+        "type": "private",
+        "url": "s3.ams-eu-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "Frankfurt",
+        "region": "eu-geo",
+        "type": "public",
+        "url": "s3.fra-eu-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "Frankfurt",
+        "region": "eu-geo",
+        "type": "private",
+        "url": "s3.fra-eu-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "Milan",
+        "region": "eu-geo",
+        "type": "public",
+        "url": "s3.mil-eu-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "Milan",
+        "region": "eu-geo",
+        "type": "private",
+        "url": "s3.mil-eu-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "region": "ap-geo",
+        "type": "public",
+        "url": "s3.ap-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "region": "ap-geo",
+        "type": "private",
+        "url": "s3.ap-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "Tokyo",
+        "region": "ap-geo",
+        "type": "public",
+        "url": "s3.tok-ap-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "Tokyo",
+        "region": "ap-geo",
+        "type": "private",
+        "url": "s3.tok-ap-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "Seoul",
+        "region": "ap-geo",
+        "type": "public",
+        "url": "s3.seo-ap-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "Seoul",
+        "region": "ap-geo",
+        "type": "private",
+        "url": "s3.seo-ap-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "Hong Kong",
+        "region": "ap-geo",
+        "type": "public",
+        "url": "s3.hkg-ap-geo.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "Hong Kong",
+        "region": "ap-geo",
+        "type": "private",
+        "url": "s3.hkg-ap-geo.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "us-south",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.us-south.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "us-south",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.us-south.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "region": "regional",
+        "type": "public",
+        "url": "s3.us-east.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "region": "regional",
+        "type": "private",
+        "url": "s3.us-east.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "eu-gb",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.eu-gb.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "eu-gb",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.eu-gb.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "eu-de",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.eu-de.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "eu-de",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.eu-de.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "jp-tok",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.jp-tok.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "jp-tok",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.jp-tok.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "au-syd",
+        "region": "regional",
+        "type": "public",
+        "url": "s3.au-syd.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "au-syd",
+        "region": "regional",
+        "type": "private",
+        "url": "s3.au-syd.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "ams03",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.ams03.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "ams03",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.ams03.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.che01.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.che01.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "sao01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.sao01.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "sao01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.sao01.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "seo01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.seo01.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "seo01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.seo01.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "mon01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.mon01.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "mon01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.mon01.objectstorage.service.networklayer.com"
+    },
+    {
+        "legacy": true,
+        "location": "mex01",
+        "region": "singleSite",
+        "type": "public",
+        "url": "s3.mex01.objectstorage.softlayer.net"
+    },
+    {
+        "legacy": true,
+        "location": "mex01",
+        "region": "singleSite",
+        "type": "private",
+        "url": "s3.mex01.objectstorage.service.networklayer.com"
+    }
+]
