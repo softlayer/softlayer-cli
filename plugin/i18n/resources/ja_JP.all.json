@@ -16,10 +16,6 @@
     "translation": " 予約済み容量を実際には作成しない"
   },
   {
-    "id": "List placement groups.",
-    "translation": "配置グループをリストします。"
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " セキュリティー・グループに関連付けるサーバー ID"
   },
@@ -578,6 +574,14 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -2268,6 +2272,10 @@
     "translation": "使用されたクレジット"
   },
   {
+    "id": "Cross Region",
+    "translation": "Cross Region"
+  },
+  {
     "id": "Current Members",
     "translation": "現行メンバー"
   },
@@ -3752,6 +3760,10 @@
     "translation": "カテゴリーのリストに失敗しました。\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "データ・センターのリストに失敗しました。\n"
   },
@@ -4278,6 +4290,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "ボリューム {{.VolumeID}} に対してフェイルオーバー操作を開始できませんでした。\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5572,6 +5588,10 @@
     "translation": "配置グループをリストします"
   },
   {
+    "id": "List placement groups.",
+    "translation": "配置グループをリストします。"
+  },
+  {
     "id": "List security group rules",
     "translation": "セキュリティー・グループ・ルールをリストします"
   },
@@ -6808,6 +6828,10 @@
     "translation": "パブリック・ポート速度。オプションは、0、10、100、1000、10000 です"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
   },
@@ -7012,16 +7036,16 @@
     "translation": "結果の制限"
   },
   {
-    "id": "Result limit.",
-    "translation": "Result limit."
-  },
-  {
     "id": "Result offset",
     "translation": "結果のオフセット"
   },
   {
     "id": "Resume a paused virtual server instance",
     "translation": "一時停止された Virtual Server インスタンスを再開します"
+  },
+  {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7346,6 +7370,10 @@
   {
     "id": "Single",
     "translation": "単一"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -8460,8 +8488,16 @@
     "translation": "トランザクション"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "タイプ"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",

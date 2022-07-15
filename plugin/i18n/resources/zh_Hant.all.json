@@ -16,10 +16,6 @@
     "translation": " 不實際建立保留容量"
   },
   {
-    "id": "List placement groups.",
-    "translation": "列出放置群組。"
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " 要與安全群組相關聯的伺服器 ID"
   },
@@ -578,6 +574,14 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -2268,6 +2272,10 @@
     "translation": "已使用的額度"
   },
   {
+    "id": "Cross Region",
+    "translation": "Cross Region"
+  },
+  {
     "id": "Current Members",
     "translation": "目前的成員"
   },
@@ -3752,6 +3760,10 @@
     "translation": "無法列出種類。\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "無法列出資料中心。\n"
   },
@@ -4278,6 +4290,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "無法為磁區 {{.VolumeID}} 起始失效接手作業。\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5572,6 +5588,10 @@
     "translation": "列出放置群組"
   },
   {
+    "id": "List placement groups.",
+    "translation": "列出放置群組。"
+  },
+  {
     "id": "List security group rules",
     "translation": "列出安全群組規則"
   },
@@ -6808,6 +6828,10 @@
     "translation": "公用埠速度，選項包含：0、10、100、1000、10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
   },
@@ -7012,16 +7036,16 @@
     "translation": "結果限制"
   },
   {
-    "id": "Result limit.",
-    "translation": "Result limit."
-  },
-  {
     "id": "Result offset",
     "translation": "結果偏移"
   },
   {
     "id": "Resume a paused virtual server instance",
     "translation": "繼續已暫停的虛擬伺服器實例"
+  },
+  {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7346,6 +7370,10 @@
   {
     "id": "Single",
     "translation": "單核"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -8460,8 +8488,16 @@
     "translation": "交易"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "類型"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",

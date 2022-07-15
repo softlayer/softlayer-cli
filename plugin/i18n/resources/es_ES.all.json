@@ -16,10 +16,6 @@
     "translation": " No crear realmente la capacidad reservada"
   },
   {
-    "id": "List placement groups.",
-    "translation": "Listar grupos de colocación."
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " El ID de servidor para asociar al grupo de seguridad"
   },
@@ -578,6 +574,14 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -2268,6 +2272,10 @@
     "translation": "Créditos utilizados"
   },
   {
+    "id": "Cross Region",
+    "translation": "Cross Region"
+  },
+  {
     "id": "Current Members",
     "translation": "Miembros actuales"
   },
@@ -3752,6 +3760,10 @@
     "translation": "No se han podido listar las categorías.\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "No se han podido listar los centros de datos.\n"
   },
@@ -4278,6 +4290,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "No se ha podido iniciar la operación de migración tras error para el volumen {{.VolumeID}}.\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5572,6 +5588,10 @@
     "translation": "Listar grupos de colocación"
   },
   {
+    "id": "List placement groups.",
+    "translation": "Listar grupos de colocación."
+  },
+  {
     "id": "List security group rules",
     "translation": "Listar reglas de grupo de seguridad"
   },
@@ -6808,6 +6828,10 @@
     "translation": "Velocidad de puerto público, las opciones son: 0,10,100,1000,10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
   },
@@ -7012,16 +7036,16 @@
     "translation": "Límite de resultados"
   },
   {
-    "id": "Result limit.",
-    "translation": "Result limit."
-  },
-  {
     "id": "Result offset",
     "translation": "Desplazamiento de resultado"
   },
   {
     "id": "Resume a paused virtual server instance",
     "translation": "Reanudar una instancia de servidor virtual detenida"
+  },
+  {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7346,6 +7370,10 @@
   {
     "id": "Single",
     "translation": "Único"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -8460,8 +8488,16 @@
     "translation": "Transacción"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "Tipo"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
