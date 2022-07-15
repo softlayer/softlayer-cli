@@ -40,6 +40,9 @@ type OrderManager interface {
 	GetActiveQuotes(mask string) ([]datatypes.Billing_Order_Quote, error)
 	GetQuote(quoteId int, mask string) (datatypes.Billing_Order_Quote, error)
 	SaveQuote(quoteId int) (datatypes.Billing_Order_Quote, error)
+	VerifyOrder(quoteId int, extra datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error)
+	OrderQuote(quoteId int, extra datatypes.Container_Product_Order) (datatypes.Container_Product_Order_Receipt, error)
+	GetRecalculatedOrderContainer(quoteId int) (datatypes.Container_Product_Order, error)
 }
 
 type orderManager struct {
@@ -411,4 +414,26 @@ func (i orderManager) GetQuote(quoteId int, mask string) (datatypes.Billing_Orde
 //Save quote
 func (i orderManager) SaveQuote(quoteId int) (datatypes.Billing_Order_Quote, error) {
 	return i.BillingOrderQuoteService.Id(quoteId).SaveQuote()
+}
+
+// Verify quote
+// quoteId: ID of quote
+// extra: container with extras to verify
+func (i orderManager) VerifyOrder(quoteId int, extra datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error) {
+	return i.BillingOrderQuoteService.Id(quoteId).VerifyOrder(&extra)
+}
+
+// Place order from a quote
+// quoteId: ID of quote
+// extra: container with extras to order
+func (i orderManager) OrderQuote(quoteId int, extra datatypes.Container_Product_Order) (datatypes.Container_Product_Order_Receipt, error) {
+	return i.BillingOrderQuoteService.Id(quoteId).PlaceOrder(&extra)
+}
+
+// Get Recalculated Order Container
+// quoteId: ID of quote
+func (i orderManager) GetRecalculatedOrderContainer(quoteId int) (datatypes.Container_Product_Order, error) {
+	orderBeingPlacedFlag := false
+	userOrderData := datatypes.Container_Product_Order{}
+	return i.BillingOrderQuoteService.Id(quoteId).GetRecalculatedOrderContainer(&userOrderData, &orderBeingPlacedFlag)
 }
