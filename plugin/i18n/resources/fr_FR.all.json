@@ -580,6 +580,10 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456 [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456 [OPTIONS]"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -2256,6 +2260,10 @@
     "translation": "Crée un utilisateur"
   },
   {
+    "id": "Credential limits for this IBM Cloud Object Storage account.",
+    "translation": "Credential limits for this IBM Cloud Object Storage account."
+  },
+  {
     "id": "Credential: {{.CredentialID}} was deleted.",
     "translation": "Credential: {{.CredentialID}} was deleted."
   },
@@ -3414,6 +3422,10 @@
   {
     "id": "Failed to get components\n",
     "translation": "Impossible d'obtenir les composants \n"
+  },
+  {
+    "id": "Failed to get credential limit. ",
+    "translation": "Failed to get credential limit. "
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -5350,6 +5362,10 @@
   {
     "id": "License: {{.key}} was cancelled.",
     "translation": "La licence {{.key}} a été annulée."
+  },
+  {
+    "id": "Limit",
+    "translation": "Limit"
   },
   {
     "id": "List Dedicated Host Guests.",
