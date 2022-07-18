@@ -137,7 +137,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		lastTransaction = fmt.Sprintf("%s (%s)", *virtualGuest.LastTransaction.TransactionGroup.Name,
 			utils.FormatSLTimePointer(virtualGuest.LastTransaction.ModifyDate))
 	}
-	table.Add(T("lastTransaction"), lastTransaction)
+	table.Add(T("last transaction"), lastTransaction)
 
 	billing := "Monthly"
 	if virtualGuest.HourlyBillingFlag != nil && *virtualGuest.HourlyBillingFlag {
