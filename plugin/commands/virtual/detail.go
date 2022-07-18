@@ -3,6 +3,7 @@ package virtual
 import (
 	"bytes"
 	"fmt"
+	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -44,6 +45,11 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	virtualGuest, err := cmd.VirtualServerManager.GetInstance(vsID, managers.INSTANCE_DETAIL_MASK)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get virtual server instance: {{.VsID}}.\n", map[string]interface{}{"VsID": vsID})+err.Error(), 2)
+	}
+
+	localDisks, err := cmd.VirtualServerManager.GetLocalDisks(vsID)
+	if err != nil {
+		return cli.NewExitError(T("Failed to get the local disks detail for the virtual server {{.ID}}.\n", map[string]interface{}{"ID": vsID})+err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -88,12 +94,65 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	table.Add(T("cpu cores"), utils.FormatIntPointer(virtualGuest.MaxCpu))
 	table.Add(T("memory"), utils.FormatIntPointer(virtualGuest.MaxMemory))
+
+	if localDisks != nil && len(localDisks) > 0 {
+		buf := new(bytes.Buffer)
+		drivesTable := terminal.NewTable(buf, []string{T("type"), T("name"), T("drive"), T("capacity")})
+		for _, localDisk := range localDisks {
+			diskType := "System"
+			if localDisk.DiskImage != nil && localDisk.DiskImage.Description != nil {
+				if strings.Contains(*localDisk.DiskImage.Description, "SWAP") {
+					diskType = "Swap"
+				}
+			}
+			drivesTable.Add(
+				diskType,
+				utils.FormatStringPointer(localDisk.MountType),
+				utils.FormatStringPointer(localDisk.Device),
+				fmt.Sprintf("%d %s", *localDisk.DiskImage.Capacity, *localDisk.DiskImage.Units),
+			)
+		}
+		drivesTable.Print()
+		table.Add("drives", buf.String())
+	} else {
+		table.Add("drives", "-")
+	}
+
 	table.Add(T("public ip"), utils.FormatStringPointer(virtualGuest.PrimaryIpAddress))
 	table.Add(T("private ip"), utils.FormatStringPointer(virtualGuest.PrimaryBackendIpAddress))
 	table.Add(T("private network"), utils.FormatBoolPointer(virtualGuest.PrivateNetworkOnlyFlag))
 	table.Add(T("private cpu"), utils.FormatBoolPointer(virtualGuest.DedicatedAccountHostOnlyFlag))
+
+	if virtualGuest.TransientGuestFlag != nil {
+		table.Add(T("transient"), utils.FormatBoolPointer(virtualGuest.TransientGuestFlag))
+	} else {
+		table.Add(T("transient"), "false")
+	}
+
 	table.Add(T("created"), utils.FormatSLTimePointer(virtualGuest.CreateDate))
 	table.Add(T("updated"), utils.FormatSLTimePointer(virtualGuest.ModifyDate))
+
+	lastTransaction := "-"
+	if virtualGuest.LastTransaction != nil && virtualGuest.LastTransaction.TransactionGroup != nil {
+		lastTransaction = fmt.Sprintf("%s (%s)", *virtualGuest.LastTransaction.TransactionGroup.Name,
+			utils.FormatSLTimePointer(virtualGuest.LastTransaction.ModifyDate))
+	}
+	table.Add(T("lastTransaction"), lastTransaction)
+
+	billing := "Monthly"
+	if virtualGuest.HourlyBillingFlag != nil && *virtualGuest.HourlyBillingFlag {
+		billing = "Hourly"
+	}
+	table.Add(T("billing"), billing)
+
+	if virtualGuest.BillingItem != nil &&
+		virtualGuest.BillingItem.OrderItem != nil &&
+		virtualGuest.BillingItem.OrderItem.Preset != nil &&
+		virtualGuest.BillingItem.OrderItem.Preset.KeyName != nil {
+		table.Add(T("preset"), utils.FormatStringPointer(virtualGuest.BillingItem.OrderItem.Preset.KeyName))
+	} else {
+		table.Add(T("preset"), "-")
+	}
 
 	if virtualGuest.BillingItem != nil &&
 		virtualGuest.BillingItem.OrderItem != nil &&
@@ -103,11 +162,15 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	}
 
 	if virtualGuest.Notes != nil && *virtualGuest.Notes != "" {
-		table.Add(T("note"), utils.FormatStringPointer(virtualGuest.Notes))
+		table.Add(T("notes"), utils.FormatStringPointer(virtualGuest.Notes))
+	} else {
+		table.Add(T("notes"), "-")
 	}
 
-	if tags := virtualGuest.TagReferences; len(tags) > 0 {
-		table.Add(T("tag"), utils.TagRefsToString(tags))
+	if virtualGuest.TagReferences != nil && len(virtualGuest.TagReferences) > 0 {
+		table.Add(T("tags"), utils.TagRefsToString(virtualGuest.TagReferences))
+	} else {
+		table.Add(T("tags"), "-")
 	}
 
 	if vlans := virtualGuest.NetworkVlans; len(vlans) > 0 {
