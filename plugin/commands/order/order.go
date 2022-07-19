@@ -12,6 +12,7 @@ import (
 
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	orderManager := managers.NewOrderManager(session)
+	imageManager := managers.NewImageManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 		"order-category-list": func(c *cli.Context) error {
@@ -44,6 +45,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"order-quote-save": func(c *cli.Context) error {
 			return NewQuoteSaveCommand(ui, orderManager).Run(c)
 		},
+		"order-quote": func(c *cli.Context) error {
+			return NewQuoteCommand(ui, orderManager, imageManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -74,6 +78,7 @@ func OrderMetaData() cli.Command {
 			OrderQuoteListMetaData(),
 			OrderQuoteDetailMetaData(),
 			OrderQuoteSaveMetaData(),
+			OrderQuoteMetaData(),
 		},
 	}
 }

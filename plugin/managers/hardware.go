@@ -67,6 +67,7 @@ type HardwareServerManager interface {
 	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
 	GetHardwareGuests(id int) ([]datatypes.Virtual_Guest, error)
 	GetHardwareComponents(id int) ([]datatypes.Hardware_Component, error)
+	GetSensorData(id int, mask string) ([]datatypes.Container_RemoteManagement_SensorReading, error)
 }
 
 type hardwareServerManager struct {
@@ -786,4 +787,14 @@ func (hw hardwareServerManager) GetHardwareComponents(id int) ([]datatypes.Hardw
 	objectFilter := filter.New()
 	objectFilter = append(objectFilter, filter.Path("components.hardwareComponentModel.firmwares.createDate").OrderBy("DESC"))
 	return hw.HardwareService.Id(id).Mask(objectMask).Filter(objectFilter.Build()).GetComponents()
+}
+
+//Returns hardware server sensor data.
+//int id: The hardware server identifier.
+//string mask: Object mask.
+func (hw hardwareServerManager) GetSensorData(id int, mask string) ([]datatypes.Container_RemoteManagement_SensorReading, error) {
+	if mask == "" {
+		mask = "mask[sensorId,status,sensorReading,lowerCritical,lowerNonCritical,upperNonCritical,upperCritical]"
+	}
+	return hw.HardwareService.Id(id).Mask(mask).GetSensorData()
 }

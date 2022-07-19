@@ -80,6 +80,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"hardware-monitoring-list": func(c *cli.Context) error {
 			return NewMonitoringListCommand(ui, hardwareManager).Run(c)
 		},
+		"hardware-sensor": func(c *cli.Context) error {
+			return NewSensorCommand(ui, hardwareManager).Run(c)
+		},
 	}
 	return CommandActionBindings
 }
@@ -121,6 +124,7 @@ func HardwareMetaData() cli.Command {
 			HardwareStorageMetaData(),
 			HardwareGuestsMetaData(),
 			HardwareMonitoringListMetaData(),
+			HardwareSensorMetaData(),
 		},
 	}
 }
