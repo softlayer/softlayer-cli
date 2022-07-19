@@ -576,8 +576,8 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321",
-    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321"
+    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
+    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
@@ -2256,8 +2256,8 @@
     "translation": "建立使用者"
   },
   {
-    "id": "Credential: {{.CredentialID}} was deleted.",
-    "translation": "Credential: {{.CredentialID}} was deleted."
+    "id": "Credential: {{.credentialID}} was deleted.",
+    "translation": "Credential: {{.credentialID}} was deleted."
   },
   {
     "id": "Credit allowed",
@@ -3164,8 +3164,8 @@
     "translation": "無法刪除 L7member {{.Member}}：{{.Error}}。\n"
   },
   {
-    "id": "Failed to delete credential: {{.StorageID}}.\n",
-    "translation": "Failed to delete credential: {{.StorageID}}.\n"
+    "id": "Failed to delete credential: {{.storageID}}.\n",
+    "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -8268,8 +8268,8 @@
     "translation": "此介面可讓您移除「帳戶擁有的子網路」的路徑。"
   },
   {
-    "id": "This is the credential id associated with the volume. [REQUIRED]",
-    "translation": "This is the credential id associated with the volume. [REQUIRED]"
+    "id": "This is the credential id associated with the volume. [Required]",
+    "translation": "This is the credential id associated with the volume. [Required]"
   },
   {
     "id": "This option is not available.",
@@ -8548,8 +8548,8 @@
     "translation": "在這個磁區中找不到種類代碼。"
   },
   {
-    "id": "Unable to find credential with ID: {{.CredentialID}}.\n",
-    "translation": "Unable to find credential with ID: {{.CredentialID}}.\n"
+    "id": "Unable to find credential with ID: {{.credentialID}}.\n",
+    "translation": "Unable to find credential with ID: {{.credentialID}}.\n"
   },
   {
     "id": "Unable to find firewall with ID: {{.ID}}",
@@ -8588,8 +8588,8 @@
     "translation": "找不到此裝置的網路埠速度。"
   },
   {
-    "id": "Unable to find object-storage with ID: {{.StorageID}}.\n",
-    "translation": "Unable to find object-storage with ID: {{.StorageID}}.\n"
+    "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
+    "translation": "Unable to find object-storage with ID: {{.storageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",

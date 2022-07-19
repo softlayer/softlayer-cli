@@ -51,12 +51,12 @@ var _ = Describe("Object Storage delete Object Storages", func() {
 			It("Set command with id but whitout credentialID", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--credential_id' is required"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--credential-id' is required"))
 			})
 		})
 		Context("Object Storage delete credential, correct use", func() {
 			It("return objectstorage delete credential", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--credential_id", "654321")
+				err := testhelpers.RunCommand(cliCommand, "123456", "--credential-id", "654321")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Credential: 654321 was deleted."))
@@ -90,21 +90,21 @@ var _ = Describe("Object Storage delete Object Storages", func() {
 		Context("Object Storage delete credential, errors", func() {
 			It("return error with storageID", func() {
 				fakeObjectStorageManager.DeleteCredentialReturns(errors.New("SoftLayer_Exception_ObjectNotFound: Unable to find object with id of '123456'. (HTTP 404)"))
-				err := testhelpers.RunCommand(cliCommand, "123456", "--credential_id", "654321")
+				err := testhelpers.RunCommand(cliCommand, "123456", "--credential-id", "654321")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Unable to find object-storage with ID: 123456."))
 				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ObjectNotFound: Unable to find object with id of '123456'. (HTTP 404)"))
 			})
 			It("return error with credentialID", func() {
 				fakeObjectStorageManager.DeleteCredentialReturns(errors.New("ObjectNotFound: Unable to find object with id of '654321'. (HTTP 404)"))
-				err := testhelpers.RunCommand(cliCommand, "123456", "--credential_id", "654321")
+				err := testhelpers.RunCommand(cliCommand, "123456", "--credential-id", "654321")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Unable to find credential with ID: 654321."))
 				Expect(err.Error()).To(ContainSubstring("ObjectNotFound: Unable to find object with id of '654321'. (HTTP 404)"))
 			})
 			It("return generic error", func() {
 				fakeObjectStorageManager.DeleteCredentialReturns(errors.New("Internal Server Error"))
-				err := testhelpers.RunCommand(cliCommand, "123456", "--credential_id", "654321")
+				err := testhelpers.RunCommand(cliCommand, "123456", "--credential-id", "654321")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to delete credential: 123456."))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
