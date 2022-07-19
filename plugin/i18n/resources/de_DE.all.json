@@ -24,6 +24,10 @@
     "translation": " Die Server-ID, die aus der Sicherheitsgruppe entfernt werden soll"
   },
   {
+    "id": " is not following <hostname>.<domain.name.tld> --fqdn option format",
+    "translation": " is not following <hostname>.<domain.name.tld> --fqdn option format"
+  },
+  {
     "id": "# of Active Transactions",
     "translation": "Anzahl aktiver Transaktionen"
   },
@@ -480,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONEN] ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware guests 1234567\n Listet die auf diesem Server ausgeführten virtuellen Gastmaschinen auf."
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONEN] ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware storage 1234567\n Speicherdetails für einen Hardwareserver abrufen."
   },
@@ -608,6 +616,10 @@
     "translation": "${COMMAND_NAME} sl order preset-list [OPTIONEN] PACKAGE_KEYNAME\n\n   BEISPIEL: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\tMit diesem Befehl werden die Voreinstellungen für Bare Metal Server aufgelistet."
   },
   {
+    "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
+    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
+  },
+  {
     "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
     "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456"
   },
@@ -682,6 +694,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   Dieser Befehl zeigt Detailinformationen zum Teilnetz mit der ID 12345678 an, einschließlich virtuellen Servern und Informationen zu Hardware-Servern."
+  },
+  {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -1122,6 +1138,10 @@
   {
     "id": "300, 600, 1800, 3600, 43200 or 86400 seconds.",
     "translation": "300, 600, 1800, 3600, 43200 oder 86400 Sekunden."
+  },
+  {
+    "id": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]",
+    "translation": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]"
   },
   {
     "id": "A custom name to be assigned to the quote (optional)",
@@ -2020,6 +2040,10 @@
     "translation": "Spalte, nach der sortiert werden soll. Optionen: id,virtualServerId,hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2268,6 +2292,14 @@
     "translation": "Genutztes Guthaben"
   },
   {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
     "id": "Cross Region",
     "translation": "Cross Region"
   },
@@ -2462,6 +2494,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "Inaktiviert: Der Schwellenwert für die Speicherbelegung für Momentaufnahmen ist für Datenträger \"{{.ID}}\" inaktiviert."
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -2666,6 +2702,10 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "Protokoll der Lastausgleichsfunktion bearbeiten"
+  },
+  {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -3312,6 +3352,10 @@
     "translation": "Abrufen von IPSec mit ID {{.ID}} fehlgeschlagen.\n"
   },
   {
+    "id": "Failed to get Image.\n",
+    "translation": "Failed to get Image.\n"
+  },
+  {
     "id": "Failed to get L7 Health Monitor: {{.Error}}.\n",
     "translation": "Abrufen der L7-Statusüberwachung fehlgeschlagen: {{.Error}}.\n"
   },
@@ -3346,6 +3390,10 @@
   {
     "id": "Failed to get Quotes.\n",
     "translation": "Failed to get Quotes.\n"
+  },
+  {
+    "id": "Failed to get Recalculated Order Container.\n",
+    "translation": "Failed to get Recalculated Order Container.\n"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3430,6 +3478,10 @@
   {
     "id": "Failed to get firewalls on your account.\n",
     "translation": "Abrufen von Firewalls für eigenes Konto fehlgeschlagen.\n"
+  },
+  {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
   },
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
@@ -3860,6 +3912,10 @@
     "translation": "Anfordern von IPSec fehlgeschlagen. Bitte versuchen Sie es später noch einmal.\n"
   },
   {
+    "id": "Failed to order Quote.\n",
+    "translation": "Failed to order Quote.\n"
+  },
+  {
     "id": "Failed to order block volume.Please verify your options and try again.\n",
     "translation": "Anfordern des Blockdatenträgers fehlgeschlagen. Prüfen Sie Ihre Optionen und wiederholen Sie den Versuch.\n"
   },
@@ -4060,12 +4116,20 @@
     "translation": "Festlegen der LUN-ID für Datenträger {{.VolumeID}} fehlgeschlagen.\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "Festlegen des Kennworts für den Host {{.HostID}} fehlgeschlagen.\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4214,6 +4278,10 @@
   {
     "id": "Failed to upgrade virtual server instance: {{.VsID}}.\n",
     "translation": "Upgrade der virtuellen Serverinstanz {{.VsID}} fehlgeschlagen.\n"
+  },
+  {
+    "id": "Failed to verify Quote.\n",
+    "translation": "Failed to verify Quote.\n"
   },
   {
     "id": "Failed to verify load balancer with name {{.Name}} on {{.Location}}.\n",
@@ -5028,12 +5096,20 @@
     "translation": "ID"
   },
   {
+    "id": "If specified, will only show what the quote will order, will NOT place an order [default: False]",
+    "translation": "If specified, will only show what the quote will order, will NOT place an order [default: False]"
+  },
+  {
     "id": "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type.",
     "translation": "Wenn diese Option angegeben wird, wird die öffentliche IP-Adresse aus einem öffentlichen Teilnetz in diesem Konto zugeordnet. Andernfalls wird sie aus dem IBM Systempool zugeordnet. Nur im Lastausgleichstyp PublicToPrivate verfügbar."
   },
   {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
     "translation": "Image-ID. Siehe '${COMMAND_NAME} sl image list'"
+  },
+  {
+    "id": "Image ID. See: 'ibmcloud sl image list' for reference",
+    "translation": "Image ID. See: 'ibmcloud sl image list' for reference"
   },
   {
     "id": "Image ID. The default is to use the current operating system.\nSee: '${COMMAND_NAME} sl image list' for reference",
@@ -5664,6 +5740,10 @@
     "translation": "Hersteller"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "Max. E/A-Operationen pro Sekunde"
   },
@@ -5726,6 +5806,10 @@
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "Migrieren Sie ALLE Gastmaschinen, die sofort migriert werden müssen."
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6812,6 +6896,10 @@
     "translation": "Quantity"
   },
   {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
+  },
+  {
     "id": "Ram",
     "translation": "RAM"
   },
@@ -6822,6 +6910,10 @@
   {
     "id": "Read userdata from file",
     "translation": "Benutzerdaten aus Datei lesen"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -7020,6 +7112,10 @@
     "translation": "Angehaltene virtuelle Serverinstanz wieder aufnehmen"
   },
   {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
+  },
+  {
     "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
     "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
@@ -7094,6 +7190,10 @@
   {
     "id": "SSH Key ",
     "translation": "SSH-Schlüssel "
+  },
+  {
+    "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
+    "translation": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)"
   },
   {
     "id": "SSH key was added: ",
@@ -7232,8 +7332,16 @@
     "translation": "Hinweis für einen vorhandenen Dateispeicherdatenträger festlegen."
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "Berechtigungen festlegen, die mit den Berechtigungen dieses Benutzers übereinstimmen. Fügt die entsprechenden Berechtigungen hinzu und entfernt sie."
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7294,6 +7402,10 @@
   {
     "id": "Show certificates with this status, default is: all, options are: all,valid,expired",
     "translation": "Zertifikate mit diesem Status anzeigen; Standard: 'all'; Optionen: all,valid,expired"
+  },
+  {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
   },
   {
     "id": "Show guests on dedicated host",
@@ -7712,6 +7824,10 @@
     "translation": "Zieladresse"
   },
   {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
+  },
+  {
     "id": "Template file: {{.Location}} does not exist.",
     "translation": "Vorlagendatei {{.Location}} ist nicht vorhanden."
   },
@@ -7794,6 +7910,10 @@
   {
     "id": "The actual SSH key",
     "translation": "Der tatsächliche SSH-Schlüssel"
+  },
+  {
+    "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
+    "translation": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]"
   },
   {
     "id": "The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'",
@@ -7936,6 +8056,10 @@
     "translation": "Die neue Bezeichnung für den Schlüssel"
   },
   {
+    "id": "The note ",
+    "translation": "The note "
+  },
+  {
     "id": "The note of hardware server: {{.ID}} was updated.",
     "translation": "Die Anmerkung des Hardware-Servers {{.ID}} wurde aktualisiert."
   },
@@ -7994,6 +8118,10 @@
   {
     "id": "The public network speed of virtual server instance: {{.VsId}} was updated.",
     "translation": "Die Übertragungsgeschwindigkeit des öffentlichen Netzes für die virtuelle Serverinstanz {{.VsId}} wurde aktualisiert."
+  },
+  {
+    "id": "The quantity of the item being ordered if different from quoted value",
+    "translation": "The quantity of the item being ordered if different from quoted value"
   },
   {
     "id": "The quantity of the item being ordered. This value defaults to 1",
@@ -8752,6 +8880,10 @@
     "translation": "View a quote"
   },
   {
+    "id": "View and Order a quote",
+    "translation": "View and Order a quote"
+  },
+  {
     "id": "View details of a placement group",
     "translation": "Details zu einer Platzierungruppe anzeigen"
   },
@@ -8848,6 +8980,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "Datenträgername"
   },
@@ -8866,6 +9002,10 @@
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity",
     "translation": "Vor der Rückgabe bis zu X Sekunden warten, bis die Einrichtung des virtuellen Servers fertiggestellt ist. Nicht kompatibel mit der Option --quantity."
+  },
+  {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
