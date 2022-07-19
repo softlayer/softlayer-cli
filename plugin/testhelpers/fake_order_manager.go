@@ -125,6 +125,19 @@ type FakeOrderManager struct {
 		result1 datatypes.Billing_Order_Quote
 		result2 error
 	}
+	GetRecalculatedOrderContainerStub        func(int) (datatypes.Container_Product_Order, error)
+	getRecalculatedOrderContainerMutex       sync.RWMutex
+	getRecalculatedOrderContainerArgsForCall []struct {
+		arg1 int
+	}
+	getRecalculatedOrderContainerReturns struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}
+	getRecalculatedOrderContainerReturnsOnCall map[int]struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}
 	ListCategoriesStub        func(string) ([]datatypes.Product_Package_Order_Configuration, error)
 	listCategoriesMutex       sync.RWMutex
 	listCategoriesArgsForCall []struct {
@@ -179,6 +192,20 @@ type FakeOrderManager struct {
 	}
 	listPresetReturnsOnCall map[int]struct {
 		result1 []datatypes.Product_Package_Preset
+		result2 error
+	}
+	OrderQuoteStub        func(int, datatypes.Container_Product_Order) (datatypes.Container_Product_Order_Receipt, error)
+	orderQuoteMutex       sync.RWMutex
+	orderQuoteArgsForCall []struct {
+		arg1 int
+		arg2 datatypes.Container_Product_Order
+	}
+	orderQuoteReturns struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}
+	orderQuoteReturnsOnCall map[int]struct {
+		result1 datatypes.Container_Product_Order_Receipt
 		result2 error
 	}
 	PackageLocationStub        func(string) ([]datatypes.Location_Region, error)
@@ -245,6 +272,20 @@ type FakeOrderManager struct {
 	}
 	saveQuoteReturnsOnCall map[int]struct {
 		result1 datatypes.Billing_Order_Quote
+		result2 error
+	}
+	VerifyOrderStub        func(int, datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error)
+	verifyOrderMutex       sync.RWMutex
+	verifyOrderArgsForCall []struct {
+		arg1 int
+		arg2 datatypes.Container_Product_Order
+	}
+	verifyOrderReturns struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}
+	verifyOrderReturnsOnCall map[int]struct {
+		result1 datatypes.Container_Product_Order
 		result2 error
 	}
 	VerifyPlaceOrderStub        func(string, string, []string, string, bool, string, interface{}, int) (datatypes.Container_Product_Order, error)
@@ -805,6 +846,70 @@ func (fake *FakeOrderManager) GetQuoteReturnsOnCall(i int, result1 datatypes.Bil
 	}{result1, result2}
 }
 
+func (fake *FakeOrderManager) GetRecalculatedOrderContainer(arg1 int) (datatypes.Container_Product_Order, error) {
+	fake.getRecalculatedOrderContainerMutex.Lock()
+	ret, specificReturn := fake.getRecalculatedOrderContainerReturnsOnCall[len(fake.getRecalculatedOrderContainerArgsForCall)]
+	fake.getRecalculatedOrderContainerArgsForCall = append(fake.getRecalculatedOrderContainerArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetRecalculatedOrderContainerStub
+	fakeReturns := fake.getRecalculatedOrderContainerReturns
+	fake.recordInvocation("GetRecalculatedOrderContainer", []interface{}{arg1})
+	fake.getRecalculatedOrderContainerMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) GetRecalculatedOrderContainerCallCount() int {
+	fake.getRecalculatedOrderContainerMutex.RLock()
+	defer fake.getRecalculatedOrderContainerMutex.RUnlock()
+	return len(fake.getRecalculatedOrderContainerArgsForCall)
+}
+
+func (fake *FakeOrderManager) GetRecalculatedOrderContainerCalls(stub func(int) (datatypes.Container_Product_Order, error)) {
+	fake.getRecalculatedOrderContainerMutex.Lock()
+	defer fake.getRecalculatedOrderContainerMutex.Unlock()
+	fake.GetRecalculatedOrderContainerStub = stub
+}
+
+func (fake *FakeOrderManager) GetRecalculatedOrderContainerArgsForCall(i int) int {
+	fake.getRecalculatedOrderContainerMutex.RLock()
+	defer fake.getRecalculatedOrderContainerMutex.RUnlock()
+	argsForCall := fake.getRecalculatedOrderContainerArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeOrderManager) GetRecalculatedOrderContainerReturns(result1 datatypes.Container_Product_Order, result2 error) {
+	fake.getRecalculatedOrderContainerMutex.Lock()
+	defer fake.getRecalculatedOrderContainerMutex.Unlock()
+	fake.GetRecalculatedOrderContainerStub = nil
+	fake.getRecalculatedOrderContainerReturns = struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetRecalculatedOrderContainerReturnsOnCall(i int, result1 datatypes.Container_Product_Order, result2 error) {
+	fake.getRecalculatedOrderContainerMutex.Lock()
+	defer fake.getRecalculatedOrderContainerMutex.Unlock()
+	fake.GetRecalculatedOrderContainerStub = nil
+	if fake.getRecalculatedOrderContainerReturnsOnCall == nil {
+		fake.getRecalculatedOrderContainerReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Container_Product_Order
+			result2 error
+		})
+	}
+	fake.getRecalculatedOrderContainerReturnsOnCall[i] = struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeOrderManager) ListCategories(arg1 string) ([]datatypes.Product_Package_Order_Configuration, error) {
 	fake.listCategoriesMutex.Lock()
 	ret, specificReturn := fake.listCategoriesReturnsOnCall[len(fake.listCategoriesArgsForCall)]
@@ -1061,6 +1166,71 @@ func (fake *FakeOrderManager) ListPresetReturnsOnCall(i int, result1 []datatypes
 	}
 	fake.listPresetReturnsOnCall[i] = struct {
 		result1 []datatypes.Product_Package_Preset
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) OrderQuote(arg1 int, arg2 datatypes.Container_Product_Order) (datatypes.Container_Product_Order_Receipt, error) {
+	fake.orderQuoteMutex.Lock()
+	ret, specificReturn := fake.orderQuoteReturnsOnCall[len(fake.orderQuoteArgsForCall)]
+	fake.orderQuoteArgsForCall = append(fake.orderQuoteArgsForCall, struct {
+		arg1 int
+		arg2 datatypes.Container_Product_Order
+	}{arg1, arg2})
+	stub := fake.OrderQuoteStub
+	fakeReturns := fake.orderQuoteReturns
+	fake.recordInvocation("OrderQuote", []interface{}{arg1, arg2})
+	fake.orderQuoteMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) OrderQuoteCallCount() int {
+	fake.orderQuoteMutex.RLock()
+	defer fake.orderQuoteMutex.RUnlock()
+	return len(fake.orderQuoteArgsForCall)
+}
+
+func (fake *FakeOrderManager) OrderQuoteCalls(stub func(int, datatypes.Container_Product_Order) (datatypes.Container_Product_Order_Receipt, error)) {
+	fake.orderQuoteMutex.Lock()
+	defer fake.orderQuoteMutex.Unlock()
+	fake.OrderQuoteStub = stub
+}
+
+func (fake *FakeOrderManager) OrderQuoteArgsForCall(i int) (int, datatypes.Container_Product_Order) {
+	fake.orderQuoteMutex.RLock()
+	defer fake.orderQuoteMutex.RUnlock()
+	argsForCall := fake.orderQuoteArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeOrderManager) OrderQuoteReturns(result1 datatypes.Container_Product_Order_Receipt, result2 error) {
+	fake.orderQuoteMutex.Lock()
+	defer fake.orderQuoteMutex.Unlock()
+	fake.OrderQuoteStub = nil
+	fake.orderQuoteReturns = struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) OrderQuoteReturnsOnCall(i int, result1 datatypes.Container_Product_Order_Receipt, result2 error) {
+	fake.orderQuoteMutex.Lock()
+	defer fake.orderQuoteMutex.Unlock()
+	fake.OrderQuoteStub = nil
+	if fake.orderQuoteReturnsOnCall == nil {
+		fake.orderQuoteReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Container_Product_Order_Receipt
+			result2 error
+		})
+	}
+	fake.orderQuoteReturnsOnCall[i] = struct {
+		result1 datatypes.Container_Product_Order_Receipt
 		result2 error
 	}{result1, result2}
 }
@@ -1345,6 +1515,71 @@ func (fake *FakeOrderManager) SaveQuoteReturnsOnCall(i int, result1 datatypes.Bi
 	}{result1, result2}
 }
 
+func (fake *FakeOrderManager) VerifyOrder(arg1 int, arg2 datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error) {
+	fake.verifyOrderMutex.Lock()
+	ret, specificReturn := fake.verifyOrderReturnsOnCall[len(fake.verifyOrderArgsForCall)]
+	fake.verifyOrderArgsForCall = append(fake.verifyOrderArgsForCall, struct {
+		arg1 int
+		arg2 datatypes.Container_Product_Order
+	}{arg1, arg2})
+	stub := fake.VerifyOrderStub
+	fakeReturns := fake.verifyOrderReturns
+	fake.recordInvocation("VerifyOrder", []interface{}{arg1, arg2})
+	fake.verifyOrderMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) VerifyOrderCallCount() int {
+	fake.verifyOrderMutex.RLock()
+	defer fake.verifyOrderMutex.RUnlock()
+	return len(fake.verifyOrderArgsForCall)
+}
+
+func (fake *FakeOrderManager) VerifyOrderCalls(stub func(int, datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error)) {
+	fake.verifyOrderMutex.Lock()
+	defer fake.verifyOrderMutex.Unlock()
+	fake.VerifyOrderStub = stub
+}
+
+func (fake *FakeOrderManager) VerifyOrderArgsForCall(i int) (int, datatypes.Container_Product_Order) {
+	fake.verifyOrderMutex.RLock()
+	defer fake.verifyOrderMutex.RUnlock()
+	argsForCall := fake.verifyOrderArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeOrderManager) VerifyOrderReturns(result1 datatypes.Container_Product_Order, result2 error) {
+	fake.verifyOrderMutex.Lock()
+	defer fake.verifyOrderMutex.Unlock()
+	fake.VerifyOrderStub = nil
+	fake.verifyOrderReturns = struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) VerifyOrderReturnsOnCall(i int, result1 datatypes.Container_Product_Order, result2 error) {
+	fake.verifyOrderMutex.Lock()
+	defer fake.verifyOrderMutex.Unlock()
+	fake.VerifyOrderStub = nil
+	if fake.verifyOrderReturnsOnCall == nil {
+		fake.verifyOrderReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Container_Product_Order
+			result2 error
+		})
+	}
+	fake.verifyOrderReturnsOnCall[i] = struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeOrderManager) VerifyPlaceOrder(arg1 string, arg2 string, arg3 []string, arg4 string, arg5 bool, arg6 string, arg7 interface{}, arg8 int) (datatypes.Container_Product_Order, error) {
 	var arg3Copy []string
 	if arg3 != nil {
@@ -1440,6 +1675,8 @@ func (fake *FakeOrderManager) Invocations() map[string][][]interface{} {
 	defer fake.getPriceIdListMutex.RUnlock()
 	fake.getQuoteMutex.RLock()
 	defer fake.getQuoteMutex.RUnlock()
+	fake.getRecalculatedOrderContainerMutex.RLock()
+	defer fake.getRecalculatedOrderContainerMutex.RUnlock()
 	fake.listCategoriesMutex.RLock()
 	defer fake.listCategoriesMutex.RUnlock()
 	fake.listItemsMutex.RLock()
@@ -1448,6 +1685,8 @@ func (fake *FakeOrderManager) Invocations() map[string][][]interface{} {
 	defer fake.listPackageMutex.RUnlock()
 	fake.listPresetMutex.RLock()
 	defer fake.listPresetMutex.RUnlock()
+	fake.orderQuoteMutex.RLock()
+	defer fake.orderQuoteMutex.RUnlock()
 	fake.packageLocationMutex.RLock()
 	defer fake.packageLocationMutex.RUnlock()
 	fake.placeOrderMutex.RLock()
@@ -1456,6 +1695,8 @@ func (fake *FakeOrderManager) Invocations() map[string][][]interface{} {
 	defer fake.placeQuoteMutex.RUnlock()
 	fake.saveQuoteMutex.RLock()
 	defer fake.saveQuoteMutex.RUnlock()
+	fake.verifyOrderMutex.RLock()
+	defer fake.verifyOrderMutex.RUnlock()
 	fake.verifyPlaceOrderMutex.RLock()
 	defer fake.verifyPlaceOrderMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
