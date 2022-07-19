@@ -35,6 +35,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"subnet-clear-route": func(c *cli.Context) error {
 			return NewClearRouteCommand(ui, networkManager).Run(c)
 		},
+		"subnet-edit": func(c *cli.Context) error {
+			return NewEditCommand(ui, networkManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -62,6 +65,7 @@ func SubnetMetaData() cli.Command {
 			SubnetLookupMetaData(),
 			SubnetRouteMetaData(),
 			SubnetClearRouteMetaData(),
+			SubnetEditMetaData(),
 		},
 	}
 }

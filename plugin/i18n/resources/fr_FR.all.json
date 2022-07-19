@@ -692,6 +692,10 @@
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME}  sl subnet detail 12345678 \n   Cette commande affiche des informations détaillées sur le sous-réseau avec l'ID 12345678, y compris des informations sur les serveurs virtuels et les serveurs matériels."
   },
   {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
+  },
+  {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
     "translation": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   Cette commande répertorie les sous-réseaux IPv4 V4 sur le compte en cours en les filtrant par le centre de données dal09, le type de sous-réseau PRIMARY et l'espace réseau PUBLIC."
   },
@@ -2032,6 +2036,10 @@
     "translation": "Colonne de tri, options : id,virtualServerId,hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2686,6 +2694,10 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "Editer le protocole de l'équilibreur de charge"
+  },
+  {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -4092,12 +4104,20 @@
     "translation": "Echec de la définition de l'ID LUN pour le volume {{.VolumeID}}.\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "Echec de la définition du mot de passe pour l'hôte {{.HostID}}.\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -7300,8 +7320,16 @@
     "translation": "Définir une note pour un volume de stockage de fichiers existant."
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "Définissez des droits qui correspondent aux droits de cet utilisateur. Cela permet d'ajouter et de retirer les droits appropriés."
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -8014,6 +8042,10 @@
   {
     "id": "The new label for the key",
     "translation": "Nouveau libellé de la clé"
+  },
+  {
+    "id": "The note ",
+    "translation": "The note "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
