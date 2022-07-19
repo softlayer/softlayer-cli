@@ -33,7 +33,7 @@ func CredentialLimitMetaData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]
 
 Examples:
-	${COMMAND_NAME} sl object-storage credential-limit 123456 [OPTIONS]`),
+	${COMMAND_NAME} sl object-storage credential-limit 123456`),
 		Flags: []cli.Flag{
 			metadata.OutputFlag(),
 		},
@@ -45,7 +45,7 @@ func (cmd *CredentialLimitCommand) Run(c *cli.Context) error {
 		return slErr.NewInvalidUsageError(T("This command requires one argument."))
 	}
 
-	StorageID, err := strconv.Atoi(c.Args()[0])
+	storageID, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Storage ID")
 	}
@@ -55,7 +55,7 @@ func (cmd *CredentialLimitCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	credentialLimit, err := cmd.ObjectStorageManager.LimitCredential(StorageID)
+	credentialLimit, err := cmd.ObjectStorageManager.LimitCredential(storageID)
 	if err != nil {
 		return cli.NewExitError(T("Failed to get credential limit. ")+err.Error(), 2)
 	}
