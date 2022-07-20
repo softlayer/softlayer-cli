@@ -38,6 +38,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"subnet-edit": func(c *cli.Context) error {
 			return NewEditCommand(ui, networkManager).Run(c)
 		},
+		"subnet-edit-ip": func(c *cli.Context) error {
+			return NewEditIpCommand(ui, networkManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -66,6 +69,7 @@ func SubnetMetaData() cli.Command {
 			SubnetRouteMetaData(),
 			SubnetClearRouteMetaData(),
 			SubnetEditMetaData(),
+			SubnetEditIpMetaData(),
 		},
 	}
 }
