@@ -129,7 +129,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl block replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nWenn der Zugriff auf einen Datenträger (mit Replikation) aufgrund eines Ausfalls nicht mehr möglich ist, kann mithilfe dieser Methode ein sofortiger \nFailover auf einen verfügbaren Replikatdatenträger an einem anderen Standort durchgeführt werden. Diese Methode lässt keinen Failback über die API zu. \nFür einen Failback auf den ursprünglichen Datenträger nach der Verwendung dieser Methode öffnen Sie ein Support-Ticket. \nZum Testen des Failovers verwenden Sie stattdessen '${COMMAND_NAME} sl block replica-failover'. \n\nBEISPIEL:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tMit diesem Befehl wird eine Failover-Operation für den Datenträger mit der ID 12345678 auf den Replikatdatenträger mit der ID 87654321 durchgeführt. "
+    "translation": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nWenn der Zugriff auf einen Datenträger (mit Replikation) aufgrund eines Ausfalls nicht mehr möglich ist, kann mithilfe dieser Methode ein sofortiger \nFailover auf einen verfügbaren Replikatdatenträger an einem anderen Standort durchgeführt werden. Diese Methode lässt keinen Failback über die API zu. \nFür einen Failback auf den ursprünglichen Datenträger nach der Verwendung dieser Methode öffnen Sie ein Support-Ticket. \nZum Testen des Failovers verwenden Sie stattdessen '${COMMAND_NAME} sl block replica-failover'. \n\nBEISPIEL:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tMit diesem Befehl wird eine Failover-Operation für den Datenträger mit der ID 12345678 auf den Replikatdatenträger mit der ID 87654321 durchgeführt."
   },
   {
     "id": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678",
@@ -337,7 +337,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl file replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nWenn der Zugriff auf einen Datenträger (mit Replikation) aufgrund eines Ausfalls nicht mehr möglich ist, kann mithilfe dieser Methode ein sofortiger \nFailover auf einen verfügbaren Replikatdatenträger an einem anderen Standort durchgeführt werden. Diese Methode lässt keinen Failback über die API zu. \nFür einen Failback auf den ursprünglichen Datenträger nach der Verwendung dieser Methode öffnen Sie ein Support-Ticket. \nZum Testen des Failovers verwenden Sie stattdessen '${COMMAND_NAME} sl file replica-failover'. \n\nBEISPIEL:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tMit diesem Befehl wird eine Failover-Operation für den Datenträger mit der ID 12345678 auf den Replikatdatenträger mit der ID 87654321 durchgeführt. "
+    "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nWenn der Zugriff auf einen Datenträger (mit Replikation) aufgrund eines Ausfalls nicht mehr möglich ist, kann mithilfe dieser Methode ein sofortiger \nFailover auf einen verfügbaren Replikatdatenträger an einem anderen Standort durchgeführt werden. Diese Methode lässt keinen Failback über die API zu. \nFür einen Failback auf den ursprünglichen Datenträger nach der Verwendung dieser Methode öffnen Sie ein Support-Ticket. \nZum Testen des Failovers verwenden Sie stattdessen '${COMMAND_NAME} sl file replica-failover'. \n\nBEISPIEL:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tMit diesem Befehl wird eine Failover-Operation für den Datenträger mit der ID 12345678 auf den Replikatdatenträger mit der ID 87654321 durchgeführt."
   },
   {
     "id": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678",
@@ -2189,7 +2189,7 @@
   },
   {
     "id": "Create a dedicatedhost",
-    "translation": "Erstellen Sie einen dedicatedhost."
+    "translation": "Erstellen Sie einen dedicatedhost"
   },
   {
     "id": "Create a global IP",
@@ -4321,7 +4321,7 @@
   },
   {
     "id": "Failover an inaccessible volume to its available replicant volume.",
-    "translation": "Failover für einen Datenträger, auf den kein Zugriff mehr besteht, auf den zugehörigen verfügbaren Replikatdatenträger durchführen. "
+    "translation": "Failover für einen Datenträger, auf den kein Zugriff mehr besteht, auf den zugehörigen verfügbaren Replikatdatenträger durchführen."
   },
   {
     "id": "Failover of volume {{.VolumeID}} to replica {{.ReplicaID}} is now in progress.",
@@ -4997,19 +4997,19 @@
   },
   {
     "id": "INTEGER Set the maximum number of guests",
-    "translation": "INTEGER Legen Sie die maximale Anzahl an Gastmaschinen fest"
+    "translation": "INTEGER Legen Sie die maximale Anzahl der Gäste fest"
   },
   {
     "id": "INTEGER Set the maximum number of guests  [required]",
-    "translation": "INTEGER Legen Sie die maximale Anzahl der Gastmaschinen fest [erforderlich]"
+    "translation": "INTEGER Legen Sie die maximale Anzahl der Gäste fest [erforderlich]"
   },
   {
     "id": "INTEGER Set the minimum number of guests",
-    "translation": "INTEGER Legen Sie die Mindestanzahl der Gastmaschinen fest"
+    "translation": "INTEGER Legen Sie die Mindestanzahl der Gäste fest"
   },
   {
     "id": "INTEGER Set the minimum number of guests  [required]",
-    "translation": "INTEGER Legen Sie die Mindestanzahl der Gastmaschinen fest [erforderlich]"
+    "translation": "INTEGER Legen Sie die Mindestanzahl der Gäste fest [erforderlich]"
   },
   {
     "id": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]",
@@ -5789,7 +5789,7 @@
   },
   {
     "id": "Metric_Data_Type keyName e.g. CPU0, CPU1, MEMORY_USAGE, etc.  [required]",
-    "translation": "Metric_Data_Type-Schlüsselname, z. B. CPU0, CPU1, MEMORY_USAGE usw.  [erforderlich]"
+    "translation": "Metric_Data_Type keyName, z. B. CPU0, CPU1, MEMORY_USAGE usw. [erforderlich]"
   },
   {
     "id": "Migrate ALL guests that require migration immediately.",
@@ -6117,7 +6117,7 @@
   },
   {
     "id": "Number of guests for the scale action.",
-    "translation": "Anzahl der Gastmaschinen für die Skalierungsaktion."
+    "translation": "Anzahl der Gäste für die Skalierungsaktion."
   },
   {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
@@ -7033,7 +7033,7 @@
   },
   {
     "id": "Removes guests. (Only set --up or --down)",
-    "translation": "Entfernt Gastmaschinen. (Nur --up oder --down festlegen)"
+    "translation": "Entfernt Gäste. (Nur --up oder --down festlegen)"
   },
   {
     "id": "Replicant Count",
