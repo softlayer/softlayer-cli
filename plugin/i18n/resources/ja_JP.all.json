@@ -2189,7 +2189,7 @@
   },
   {
     "id": "Create a dedicatedhost",
-    "translation": "専用ホストを作成します"
+    "translation": "専用ホストを作成します。"
   },
   {
     "id": "Create a global IP",
@@ -2425,7 +2425,7 @@
   },
   {
     "id": "Delete this group and destroy all members of it",
-    "translation": "このグループを削除し、そのすべてのメンバーを破棄します"
+    "translation": "このグループを削除し、そのすべてのメンバーを破棄します。"
   },
   {
     "id": "Delivered",
@@ -2637,7 +2637,7 @@
   },
   {
     "id": "Edit a L7 policy",
-    "translation": "L7 ポリシーの編集"
+    "translation": "L7 ポリシーを編集します"
   },
   {
     "id": "Edit a L7 pool",
@@ -4657,7 +4657,7 @@
   },
   {
     "id": "Get billing details for a virtual server instance",
-    "translation": "仮想サーバー・インスタンスの請求詳細の取得"
+    "translation": "仮想サーバー・インスタンスの請求詳細を取得します。"
   },
   {
     "id": "Get billing for a hardware device.",
@@ -4745,7 +4745,7 @@
   },
   {
     "id": "Grant access from a user to an specific device",
-    "translation": "ユーザーから特定のデバイスへのアクセス権限の付与"
+    "translation": "ユーザーから特定のデバイスへのアクセス権限を付与します。"
   },
   {
     "id": "Guest ID",
@@ -5453,7 +5453,7 @@
   },
   {
     "id": "List all Autoscale Groups on your account",
-    "translation": "アカウントのすべての自動スケーリング・グループをリストします"
+    "translation": "アカウントのすべての自動スケーリング・グループをリストします。"
   },
   {
     "id": "List all active quotes on an account",
@@ -5697,7 +5697,7 @@
   },
   {
     "id": "Location",
-    "translation": "場所"
+    "translation": "ロケーション"
   },
   {
     "id": "Location/Region",

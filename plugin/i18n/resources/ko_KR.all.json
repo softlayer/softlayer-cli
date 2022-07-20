@@ -77,7 +77,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222",
-    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
+    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456",
@@ -89,7 +89,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048",
-    "translation": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048"
+    "translation": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n   This command list all Autoscale Groups on current account.",
@@ -97,19 +97,19 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31",
-    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
+    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to",
-    "translation": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to"
+    "translation": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas",
-    "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags '공백을 원하면 작은따옴표 또는 큰따옴표를 사용하십시오.'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 그렇지 않으면 쉼표를 사용하십시오."
+    "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags '공백을 원하면 작은따옴표 또는 큰따옴표를 사용하십시오.'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 그렇지 않으면 쉼표를 사용하십시오."
   },
   {
     "id": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
+    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\n예:\n${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
@@ -133,7 +133,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678"
+    "translation": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678"
   },
   {
     "id": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list",
@@ -181,7 +181,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고 플래그 설정을 가져옵니다."
+    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\n예:\n${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고 플래그 설정을 가져옵니다."
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
@@ -245,7 +245,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note '참고사항입니다.'"
+    "translation": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note '참고사항입니다.'"
   },
   {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
@@ -321,7 +321,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n 지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
+    "translation": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\n예:\n${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n 지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl file access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
@@ -341,7 +341,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678"
+    "translation": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678"
   },
   {
     "id": "${COMMAND_NAME} sl file replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
@@ -1337,7 +1337,7 @@
   },
   {
     "id": "Adds guests. (Only set --up or --down) (default)",
-    "translation": "게스트를 추가합니다. (--up 또는 --down만을 설정함)(기본값)"
+    "translation": "게스트를 추가합니다. (--up 또는 --down만 설정)(기본값)"
   },
   {
     "id": "Advanced configuration flag",
@@ -2765,7 +2765,7 @@
   },
   {
     "id": "Enable snapshot notification.",
-    "translation": "스냅샷 알림을 사용합니다."
+    "translation": "스냅샷 알림을 사용으로 설정합니다."
   },
   {
     "id": "Enable snapshots for a given volume on the specified schedule",
@@ -2793,7 +2793,7 @@
   },
   {
     "id": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]",
-    "translation": "종료 날짜(예: 2019-4-2(yyyy-MM-dd) [필수]"
+    "translation": "종료 날짜 예: 2019-4-2(yyyy-MM-dd) [필수]"
   },
   {
     "id": "End Date must be greater than Start Date.",
@@ -3093,7 +3093,7 @@
   },
   {
     "id": "Failed to clear the route for the subnet: {{.ID}}.\n",
-    "translation": "{{.ID}} 서브넷의 경로를 지우는 데 실패했습니다. \n"
+    "translation": "{{.ID}} 서브넷의 라우트를 지우는 데 실패했습니다. \n"
   },
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
@@ -4321,7 +4321,7 @@
   },
   {
     "id": "Failover an inaccessible volume to its available replicant volume.",
-    "translation": "액세스 불가능한 볼륨을 해당 가용 복제 볼륨으로 장애 복구합니다. "
+    "translation": "액세스 불가능한 볼륨을 해당 가용 복제 볼륨으로 장애 복구합니다."
   },
   {
     "id": "Failover of volume {{.VolumeID}} to replica {{.ReplicaID}} is now in progress.",
@@ -6385,7 +6385,7 @@
   },
   {
     "id": "PATH Read userdata from a file",
-    "translation": "파일에서 사용자 데이터 경로 읽기"
+    "translation": "PATH 파일에서 사용자 데이터 읽기"
   },
   {
     "id": "POD",
@@ -7033,7 +7033,7 @@
   },
   {
     "id": "Removes guests. (Only set --up or --down)",
-    "translation": "게스트를 제거합니다. (--up 또는 --down만 설정됨)"
+    "translation": "게스트를 제거합니다. (--up 또는 --down만 설정)"
   },
   {
     "id": "Replicant Count",
@@ -7545,7 +7545,7 @@
   },
   {
     "id": "Specify output format, only JSON is supported now.",
-    "translation": "출력 형식을 지정하십시오. 현재는 JSON만 지원됩니다."
+    "translation": "출력 형식을 지정합니다. 현재는 JSON만 지원됩니다."
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
@@ -7757,7 +7757,7 @@
   },
   {
     "id": "TEXT The termination policy for the group(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [required]",
-    "translation": "TEXT 그룹의 종료 정책(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3). [필수]"
+    "translation": "TEXT 그룹의 종료 정책입니다(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3). [필수]"
   },
   {
     "id": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE).",
@@ -8361,11 +8361,11 @@
   },
   {
     "id": "This interface allows you to change the route of your Account Owned subnets.",
-    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 경로를 변경할 수 있습니다."
+    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 라우트를 변경할 수 있습니다."
   },
   {
     "id": "This interface allows you to remove the route of your Account Owned subnets.",
-    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 경로를 제거할 수 있습니다."
+    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 라우트를 제거할 수 있습니다."
   },
   {
     "id": "This option is not available.",
@@ -9001,11 +9001,11 @@
   },
   {
     "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "지정된 수로 그룹의 게스트 수를 가져오기 위해 여러 게스트를 추가/제거합니다. (--by 또는 --to만 설정함)"
+    "translation": "지정된 수로 그룹의 게스트 수를 가져오기 위해 여러 게스트를 추가/제거합니다. (--by 또는 --to만 설정)"
   },
   {
     "id": "Will add/remove the specified number of guests. (Only set --by or --to)",
-    "translation": "지정된 게스트 수를 추가/제거합니다. (--by 또는 --to만 설정함)"
+    "translation": "지정된 게스트 수를 추가/제거합니다. (--by 또는 --to만 설정)"
   },
   {
     "id": "Would you like to submit the rules. Continue?",
