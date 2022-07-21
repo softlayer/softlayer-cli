@@ -16,4 +16,6 @@ vendor/
 
 plugin/commands/security/wilma.org.crt
 plugin/commands/security/wilma.org.key
+old-i18n/add_these.json
+old-i18n/remove_these.json
 
