@@ -109,7 +109,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification ID_VOLUME\n\nESEMPIO:\n${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\nEnables/Disables snapshot space usage threshold warning for a given volume."
+    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification ID_VOLUME\n\nESEMPIO:\n${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\nAbilita/Disabilita la soglia di utilizzo dello spazio dell'istantanea di un determinato volume."
   },
   {
     "id": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
@@ -181,7 +181,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status ID_VOLUME\n\nESEMPIO:\n${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\nGet snapshots space usage threshold warning flag setting for a given volume."
+    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status ID_VOLUME\n\nESEMPIO:\n${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\nOttenere l'impostazione dell'indicatore di avviso della soglia di utilizzo dello spazio di un determinato volume."
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
@@ -385,7 +385,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl file snapshot-get-notification-status ID_VOLUME\n\nESEMPIO:\n${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\nOttiene l'impostazione dell'indicatore di avviso della soglia di utilizzo dello spazio di un determinato volume."
+    "translation": "${COMMAND_NAME} sl file snapshot-get-notification-status ID_VOLUME\n\nESEMPIO:\n${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\nOttenere l'impostazione dell'indicatore di avviso della soglia di utilizzo dello spazio di un determinato volume."
   },
   {
     "id": "${COMMAND_NAME} sl file snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
@@ -1341,7 +1341,7 @@
   },
   {
     "id": "Adds guests. (Only set --up or --down) (default)",
-    "translation": "Aggiunge guest. (Impostare solo --up o --down) (valore predefinito)"
+    "translation": "Aggiunge i guest. (Impostare solo --up o --down) (valore predefinito)"
   },
   {
     "id": "Advanced configuration flag",
@@ -1457,15 +1457,15 @@
   },
   {
     "id": "Auto Scale Group was deleted successfully",
-    "translation": "Gruppo di scaling automatico correttamente eliminato"
+    "translation": "Il gruppo di ridimensionamento automatico è stato eliminato correttamente"
   },
   {
     "id": "Auto Scale Group was scaled successfully",
-    "translation": "Gruppo di scaling automatico correttamente scalato"
+    "translation": "Il gruppo di ridimensionamento automatico è stato ridimensionato correttamente"
   },
   {
     "id": "Autoscale Group {{.Id}} was updated",
-    "translation": "Il gruppo di scaling automatico {{.Id}} è stato aggiornato"
+    "translation": "Il gruppo di ridimensionamento automatico {{.Id}} è stato aggiornato"
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1533,7 +1533,7 @@
   },
   {
     "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [default: ROUNDROBIN]",
-    "translation": "Metodo di bilanciamento: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [Valore predefinito: ROUNDROBIN]"
+    "translation": "Metodo di bilanciamento: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [valore predefinito: ROUNDROBIN]"
   },
   {
     "id": "Bandwidth",
@@ -1541,11 +1541,11 @@
   },
   {
     "id": "Bandwidth data over date range.",
-    "translation": "Dati larghezza di banda oltre l'intervallo di date."
+    "translation": "Dati relativi alla larghezza di banda oltre l'intervallo di date."
   },
   {
     "id": "Bandwidth report for every pool/server.",
-    "translation": "Report larghezza di banda per ogni pool/server."
+    "translation": "Report relativo alla larghezza di banda per ciascun pool/server."
   },
   {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
@@ -1565,7 +1565,7 @@
   },
   {
     "id": "Billing rate [hourly|monthly], [default: hourly]",
-    "translation": "Frequenza di fatturazione [hourly|monthly], [default: hourly]"
+    "translation": "Frequenza di fatturazione [hourly|monthly], [valore predefinito: hourly]"
   },
   {
     "id": "Billing rate, either hourly or monthly, default is hourly if not specified",
@@ -1689,7 +1689,7 @@
   },
   {
     "id": "Cancel all virtual guests of the dedicated host immediately.",
-    "translation": "Annullare immediatamente tutti guest virtuali dell'host dedicato."
+    "translation": "Annulla immediatamente tutti i guest virtuali dell'host dedicato."
   },
   {
     "id": "Cancel an existing block storage volume",
@@ -1833,7 +1833,7 @@
   },
   {
     "id": "Classic infrastructure Autoscale Group",
-    "translation": "Gruppo di scaling automatico dell'infrastruttura classica"
+    "translation": "Gruppo di ridimensionamento automatico dell'infrastruttura classica"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1845,7 +1845,7 @@
   },
   {
     "id": "Classic infrastructure Dedicatedhost",
-    "translation": "Dedicatedhost dell'infrastruttura classica"
+    "translation": "Host dedicato dell'infrastruttura classica"
   },
   {
     "id": "Classic infrastructure Domain Name System",
@@ -1973,7 +1973,7 @@
   },
   {
     "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]",
-    "translation": "Colonna da visualizzare. [Le opzioni sono: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]"
+    "translation": "Colonna da visualizzare. [Le opzioni sono: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [valore predefinito: id,hostname,domain,primary_ip,backend_ip,power_state]"
   },
   {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
@@ -2185,7 +2185,7 @@
   },
   {
     "id": "Create a Reserved Capacity instance.",
-    "translation": "Creare un'istanza Capacità riservata."
+    "translation": "Crea un'istanza di capacità riservata."
   },
   {
     "id": "Create a dedicated Virtual Server (Private Node)",
@@ -2193,7 +2193,7 @@
   },
   {
     "id": "Create a dedicatedhost",
-    "translation": "Crea un dedicatedhost"
+    "translation": "Crea un host dedicato"
   },
   {
     "id": "Create a global IP",
@@ -2217,7 +2217,7 @@
   },
   {
     "id": "Create a placement group.",
-    "translation": "Creare un gruppo di posizionamento."
+    "translation": "Crea un gruppo di posizionamento."
   },
   {
     "id": "Create a security group",
@@ -2481,7 +2481,7 @@
   },
   {
     "id": "Disable snapshot notification.",
-    "translation": "Disabilitare la notifica dell'istantanea."
+    "translation": "Disabilita la notifica dell'istantanea."
   },
   {
     "id": "Disable snapshots on the specified schedule for a given volume",
@@ -2577,7 +2577,7 @@
   },
   {
     "id": "Do not actually create the dedicatedhost",
-    "translation": "Non creare realmente il dedicatedhost"
+    "translation": "Non creare realmente l'host dedicato"
   },
   {
     "id": "Do not actually create the virtual server",
@@ -2701,7 +2701,7 @@
   },
   {
     "id": "Edit load balancer protocol",
-    "translation": "Modifica protocollo del sistema di bilanciamento del carico"
+    "translation": "Modifica il protocollo del sistema di bilanciamento del carico"
   },
   {
     "id": "Edit note and tags of a subnet.",
@@ -2725,7 +2725,7 @@
   },
   {
     "id": "Edits an Autoscale group.",
-    "translation": "Modificare un gruppo di scaling automatico"
+    "translation": "Modifica un gruppo di ridimensionamento automatico."
   },
   {
     "id": "Either '--enable' or '--disable' is required.",
@@ -2765,7 +2765,7 @@
   },
   {
     "id": "Enable or Disable specific notifications for the active user.",
-    "translation": "Abilitare o Disabilitare le notifiche specifiche dell'utente attivo."
+    "translation": "Abilita o disabilita le notifiche specifiche dell'utente attivo."
   },
   {
     "id": "Enable or Disable specific permissions",
@@ -2773,7 +2773,7 @@
   },
   {
     "id": "Enable snapshot notification.",
-    "translation": "Abilitare la notifica dell'istantanea."
+    "translation": "Abilita la notifica dell'istantanea."
   },
   {
     "id": "Enable snapshots for a given volume on the specified schedule",
@@ -2789,7 +2789,7 @@
   },
   {
     "id": "Enables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "Abilitare/Disabilitare la soglia di soglia di utilizzo dello spazio dell'istantanea di un determinato volume."
+    "translation": "Abilita/Disabilita la soglia di soglia di utilizzo dello spazio dell'istantanea di un determinato volume."
   },
   {
     "id": "End",
@@ -2953,7 +2953,7 @@
   },
   {
     "id": "Failed to Order the dedicatedhost.\n",
-    "translation": "Impossibile ordinare il dedicatedhost.\n"
+    "translation": "Impossibile ordinare l'host dedicato.\n"
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -3109,7 +3109,7 @@
   },
   {
     "id": "Failed to create Auto Scale Group.\n",
-    "translation": "Impossibile creare Gruppo di scaling automantico.\n"
+    "translation": "Impossibile creare il gruppo di ridimensionamento automatico.\n"
   },
   {
     "id": "Failed to create credential. ",
@@ -3177,7 +3177,7 @@
   },
   {
     "id": "Failed to delete AutoScale Group.\n",
-    "translation": "Impossibile eliminare Gruppo di scaling automantico.\n"
+    "translation": "Impossibile eliminare il gruppo di ridimensionamento automatico.\n"
   },
   {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
@@ -3317,11 +3317,11 @@
   },
   {
     "id": "Failed to get AutoScale group logs.\n",
-    "translation": "Impossibile ottenere i log del gruppo di scaling automatico.\n"
+    "translation": "Impossibile ottenere i log del gruppo di ridimensionamento automatico.\n"
   },
   {
     "id": "Failed to get AutoScale group.\n",
-    "translation": "Impossibile ottenere il gruppo di scaling automatico.\n"
+    "translation": "Impossibile ottenere il gruppo di ridimensionamento automatico.\n"
   },
   {
     "id": "Failed to get Bandwidth Pool.\n",
@@ -3625,7 +3625,7 @@
   },
   {
     "id": "Failed to get scale groups.",
-    "translation": "Impossibile ottenere gruppi di scaling."
+    "translation": "Impossibile ottenere i gruppi di ridimensionamento."
   },
   {
     "id": "Failed to get security group {{.GroupID}}.\n",
@@ -4109,7 +4109,7 @@
   },
   {
     "id": "Failed to scale Auto Scale Group.",
-    "translation": "Impossibile scalare il Gruppo di scaling automatico."
+    "translation": "Impossibile ridimensionare il gruppo di ridimensionamento automatico."
   },
   {
     "id": "Failed to set LUN ID for volume {{.VolumeID}}.\n",
@@ -4185,7 +4185,7 @@
   },
   {
     "id": "Failed to update Auto Scale Group.\n",
-    "translation": "Impossibile aggiornare Gruppo di scaling automantico.\n"
+    "translation": "Impossibile aggiornare il gruppo di ridimensionamento automatico.\n"
   },
   {
     "id": "Failed to update IPSec {{.ContextID}}.\n",
@@ -4333,7 +4333,7 @@
   },
   {
     "id": "Failover an inaccessible volume to its available replicant volume.",
-    "translation": "Failover di un volume inaccessibile per il relativo volume di replica. "
+    "translation": "Failover di un volume inaccessibile per il relativo volume di replica."
   },
   {
     "id": "Failover of volume {{.VolumeID}} to replica {{.ReplicaID}} is now in progress.",
@@ -4653,15 +4653,15 @@
   },
   {
     "id": "Get List options for creating a placement group..",
-    "translation": "Ottenere le opzioni di elenco per la creazione di un gruppo di posizionamento."
+    "translation": "Ottieni le opzioni di elenco per la creazione di un gruppo di posizionamento."
   },
   {
     "id": "Get Netscaler details.",
-    "translation": "Ottenere dettagli Netscaler."
+    "translation": "Ottieni i dettagli Netscaler."
   },
   {
     "id": "Get Reserved Capacity Group details.",
-    "translation": "Ottenere dettagli del Gruppo di Capacità Riservate."
+    "translation": "Ottieni i dettagli del gruppo di capacità riservate."
   },
   {
     "id": "Get bandwidth pool details.",
@@ -4669,11 +4669,11 @@
   },
   {
     "id": "Get billing details for a virtual server instance",
-    "translation": "Ottenere dettagli di fatturazione di un'istanza del server virtuale"
+    "translation": "Ottieni i dettagli di fatturazione di un'istanza del server virtuale"
   },
   {
     "id": "Get billing for a hardware device.",
-    "translation": "Ottenere la fatturazione di un dispositivo hardware."
+    "translation": "Ottieni fatturazione di un dispositivo hardware."
   },
   {
     "id": "Get details about a VLAN",
@@ -4685,11 +4685,11 @@
   },
   {
     "id": "Get details for a dedicated host.",
-    "translation": "Ottenere dettagli di un host dedicato."
+    "translation": "Ottieni i dettagli di un host dedicato."
   },
   {
     "id": "Get details for a hardware monitors device.",
-    "translation": "Ottenere i dettagli di un dispositivo di monitoraggio hardware."
+    "translation": "Ottieni i dettagli di un dispositivo di monitoraggio hardware."
   },
   {
     "id": "Get details for a hardware server",
@@ -4705,7 +4705,7 @@
   },
   {
     "id": "Get details for a vsi monitors device.",
-    "translation": "Ottenere i dettagli di un dispositivo di monitor vsi."
+    "translation": "Ottieni i dettagli di un dispositivo di monitoraggio vsi."
   },
   {
     "id": "Get details for an image",
@@ -4717,7 +4717,7 @@
   },
   {
     "id": "Get details of an Autoscale group.",
-    "translation": "Ottenere dettagli di un gruppo di scaling automatico."
+    "translation": "Ottieni i dettagli di un gruppo di ridimensionamento automatico."
   },
   {
     "id": "Get information about the resources using the selected tag.",
@@ -4729,7 +4729,7 @@
   },
   {
     "id": "Get placement Group details.",
-    "translation": "Ottenere i dettagli del gruppo di posizionamento."
+    "translation": "Ottieni i dettagli del gruppo di posizionamento."
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
@@ -4745,11 +4745,11 @@
   },
   {
     "id": "Get storage details for a hardware server.",
-    "translation": "Ottenere dettagli di storage di un server hardware."
+    "translation": "Ottieni i dettagli di storage di un server hardware."
   },
   {
     "id": "Get storage details for a virtual server.",
-    "translation": "Ottenere dettagli di storage di un server virtuale."
+    "translation": "Ottieni i dettagli di storage di un server virtuale."
   },
   {
     "id": "Gets detailed information about a billing item.",
@@ -4757,7 +4757,7 @@
   },
   {
     "id": "Grant access from a user to an specific device",
-    "translation": "Concedi l'accesso da un utente a un dispositivo specifico"
+    "translation": "Concedi all'utente l'accesso a un dispositivo specifico"
   },
   {
     "id": "Guest ID",
@@ -4833,7 +4833,7 @@
   },
   {
     "id": "Health check interval between checks. [default: 5]",
-    "translation": "Intervallo del controllo di integrità tra i controlli. [Valore predefinito: 5]"
+    "translation": "Intervallo del controllo di integrità tra i controlli. [valore predefinito: 5]"
   },
   {
     "id": "Health check number of times before marking as DOWN",
@@ -4841,7 +4841,7 @@
   },
   {
     "id": "Health check number of times before marking as DOWN. [default: 2]",
-    "translation": "Numero di tentativi del controllo di integrità prima di contrassegnare come DOWN. [Valore predefinito: 2]"
+    "translation": "Numero di tentativi del controllo di integrità prima di contrassegnare come DOWN. [valore predefinito: 2]"
   },
   {
     "id": "Health check path",
@@ -4849,7 +4849,7 @@
   },
   {
     "id": "Health check path.  [default: /]",
-    "translation": "Percorso del controllo integrità.  [Valore predefinito: /]"
+    "translation": "Percorso del controllo integrità.  [valore predefinito: /]"
   },
   {
     "id": "Health check timeout",
@@ -4857,7 +4857,7 @@
   },
   {
     "id": "Health check timeout. [default: 2]",
-    "translation": "Timeout del controllo integrità. [Valore predefinito: 2]"
+    "translation": "Timeout del controllo integrità. [valore predefinito: 2]"
   },
   {
     "id": "Hide IP address listing",
@@ -5025,7 +5025,7 @@
   },
   {
     "id": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]",
-    "translation": "INTERO L'identificativo del gruppo regionale a cui è assegnato questo gruppo di scaling.  [obbligatorio]"
+    "translation": "INTERO L'identificativo del gruppo regionale a cui è assegnato questo gruppo di ridimensionamento.  [obbligatorio]"
   },
   {
     "id": "INTEGER The number of seconds this group will wait after lastActionDate before performing another action.  [required]",
@@ -5441,7 +5441,7 @@
   },
   {
     "id": "List Reserved Capacity groups.",
-    "translation": "Elenco Gruppi di Capacità Riservata."
+    "translation": "Elenca i gruppi di capacità riservata."
   },
   {
     "id": "List SSH keys on your account",
@@ -5465,7 +5465,7 @@
   },
   {
     "id": "List all Autoscale Groups on your account",
-    "translation": "Elenca tutti i Gruppi di scaling automatico sull'account dell'utente"
+    "translation": "Elenca tutti i gruppi di ridimensionamento automatico sull'account dell'utente"
   },
   {
     "id": "List all active quotes on an account",
@@ -5473,7 +5473,7 @@
   },
   {
     "id": "List all devices the user has access and device access permissions.",
-    "translation": "Elencare tutti i dispositivi a cui l'utente ha accesso e le autorizzazioni di accesso al dispositivo."
+    "translation": "Elenca tutti i dispositivi a cui l'utente ha accesso e le autorizzazioni di accesso al dispositivo."
   },
   {
     "id": "List all firewalls on your account",
@@ -5589,7 +5589,7 @@
   },
   {
     "id": "List netscalers",
-    "translation": "Elenca i netscalers"
+    "translation": "Elenca i netscaler"
   },
   {
     "id": "List number of block storage volumes per datacenter",
@@ -5609,7 +5609,7 @@
   },
   {
     "id": "List options for creating Reserved Capacity Group instance",
-    "translation": "elenca opzioni di creazione dell'istanza Gruppo di capacità riservata"
+    "translation": "Elenca le opzioni di creazione dell'istanza del gruppo di capacità riservata"
   },
   {
     "id": "List options for creating a placement group",
@@ -6129,7 +6129,7 @@
   },
   {
     "id": "Number of guests for the scale action.",
-    "translation": "Numero di ospiti per l'azione di scaling."
+    "translation": "Numero di guest per l'azione di ridimensionamento."
   },
   {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
@@ -6337,11 +6337,11 @@
   },
   {
     "id": "Order/Create License.",
-    "translation": "Ordine/Crea licenza."
+    "translation": "Ordina/crea una licenza."
   },
   {
     "id": "Order/Create a scale group.",
-    "translation": "Ordine/Crea un gruppo di scaling."
+    "translation": "Ordina/crea un gruppo di ridimensionamento."
   },
   {
     "id": "Order/create a hardware server",
@@ -6829,7 +6829,7 @@
   },
   {
     "id": "Protocol type to use for incoming connections. [default: HTTP]",
-    "translation": "Tipo di protocollo da utilizzare per le connessioni in entrata. [Valore predefinito: HTTP]"
+    "translation": "Tipo di protocollo da utilizzare per le connessioni in entrata. [valore predefinito: HTTP]"
   },
   {
     "id": "Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP",
@@ -6873,7 +6873,7 @@
   },
   {
     "id": "Public Virtual Server flavor key name",
-    "translation": "Nome chiave caratteristica Virtual Server pubblico"
+    "translation": "Nome chiave caratteristica del server virtuale pubblico"
   },
   {
     "id": "Public network interface speed must be in: 0, 10, 100, 1000, 10000 (Mbps).",
@@ -7025,7 +7025,7 @@
   },
   {
     "id": "Remove access from a user to an specific device",
-    "translation": "Rimuovere l'accesso di un utente a un dispositivo specifico"
+    "translation": "Rimuovi l'accesso utente a un dispositivo specifico"
   },
   {
     "id": "Remove resource record from a zone",
@@ -7065,7 +7065,7 @@
   },
   {
     "id": "Reports which resources are still active in Datacenters that are scheduled to be closed.",
-    "translation": "Segnala quali risorse sono ancora attive nei Datacenter e che sono programmate per essere chiuse."
+    "translation": "Segnala le risorse ancora attive nei datacenter di cui è prevista chiusura."
   },
   {
     "id": "Reputation",
@@ -7121,7 +7121,7 @@
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
-    "translation": "Richiamare i log di un gruppo di scaling automatico."
+    "translation": "Richiama i log di un gruppo di ridimensionamento automatico."
   },
   {
     "id": "Return ALL invoices. There may be a lot of these. [default: False]",
@@ -7249,7 +7249,7 @@
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
-    "translation": "Scala un gruppo di scaling automatico. Ignora il periodo di raffreddamento di un gruppo di scaling."
+    "translation": "Ridimensiona un gruppo di ridimensionamento automatico. Ignora il periodo di raffreddamento per un gruppo di ridimensionamento."
   },
   {
     "id": "Schedule",
@@ -7325,11 +7325,11 @@
   },
   {
     "id": "Set note for an existing block storage volume.",
-    "translation": "Impostare nota per un volume di storage a blocchi esistente."
+    "translation": "Imposta nota per un volume di storage a blocchi esistente."
   },
   {
     "id": "Set note for an existing file storage volume.",
-    "translation": "Impostare nota per un volume di storage file esistente."
+    "translation": "Imposta nota per un volume di storage file esistente."
   },
   {
     "id": "Set note successfully",
@@ -7757,11 +7757,11 @@
   },
   {
     "id": "TEXT Scale group's name.",
-    "translation": "TESTO Nome gruppo di scaling."
+    "translation": "TESTO Nome gruppo di ridimensionamento."
   },
   {
     "id": "TEXT Scale group's name.  [required]",
-    "translation": "TESTO Nome gruppo di scaling. [obbligatorio]"
+    "translation": "TESTO Nome gruppo di ridimensionamento. [obbligatorio]"
   },
   {
     "id": "TEXT The number to scale by. This number has different meanings based on type.",
@@ -7773,7 +7773,7 @@
   },
   {
     "id": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE).",
-    "translation": "TESTO Il tipo di scaling da eseguire(ABSOLUTE, PERCENT, RELATIVE)."
+    "translation": "TESTO Il tipo di ridimensionamento da eseguire(ABSOLUTE, PERCENT, RELATIVE)."
   },
   {
     "id": "TEXT User defined metadata string",
@@ -7793,7 +7793,7 @@
   },
   {
     "id": "Tags all guests in an autoscale group.",
-    "translation": "Applica tag a tutti i guest in un gruppo di scaling automatico."
+    "translation": "Applica tag a tutti i guest in un gruppo di ridimensionamento automatico."
   },
   {
     "id": "Tags for the image",
@@ -8373,11 +8373,11 @@
   },
   {
     "id": "This interface allows you to change the route of your Account Owned subnets.",
-    "translation": "Questa interfaccia consente di modificare l'instradamento delle sottoreti dell'Account di proprietà."
+    "translation": "Questa interfaccia consente di modificare l'instradamento delle sottoreti dell'account di proprietà."
   },
   {
     "id": "This interface allows you to remove the route of your Account Owned subnets.",
-    "translation": "Questa interfaccia consente di rimuovere l'instradamento delle sottoreti dell'Account di proprietà."
+    "translation": "Questa interfaccia consente di rimuovere l'instradamento delle sottoreti dell'account di proprietà."
   },
   {
     "id": "This option is not available.",
@@ -8393,11 +8393,11 @@
   },
   {
     "id": "This will cancel all virtual server instances in the dedicatedhost: {{.HostID}} and cannot be undone. Continue?",
-    "translation": "In questo modo verranno annullate tutte le istanze del server virtuale nel dedicatedhost: {{.HostID}} e non possono essere annullate. Continuare?"
+    "translation": "In questo modo verranno annullate tutte le istanze del server virtuale nell'host dedicato: {{.HostID}} e non possono essere annullate. Continuare?"
   },
   {
     "id": "This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?",
-    "translation": "Questo annullerà l'istanza del Gruppo di scaling automatico: {{.autoScaleGroupId}} e tutti i relativi membri, questa azione non può essere annullata. Continuare?"
+    "translation": "Questo annullerà l'istanza del gruppo di ridimensionamento automatico: {{.autoScaleGroupId}} e tutti i relativi membri, questa azione non può essere annullata. Continuare?"
   },
   {
     "id": "This will cancel the IP address: {{.ID}} and cannot be undone. Continue?",
@@ -9717,7 +9717,7 @@
   },
   {
     "id": "usage data over date range.",
-    "translation": "dati di utilizzo nell'intervallo di date."
+    "translation": "Dati di utilizzo nell'intervallo di date."
   },
   {
     "id": "user_name",

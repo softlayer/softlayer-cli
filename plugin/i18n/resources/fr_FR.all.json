@@ -193,7 +193,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block snapshot-restore ID_VOLUME ID_IMAGE_INSTANTANEE\n\t\nEXEMPLE :\n   ${COMMAND_NAME}   sl block snapshot-restore 12345678 87654321\n   Cette commande restaure le volume avec l'ID 12345678 à partir de l'image instantanée avec l'ID 87654321."
+    "translation": "${COMMAND_NAME} sl block snapshot-restore ID_VOLUME ID_IMAGE_INSTANTANEE\n\nEXEMPLE :\n   ${COMMAND_NAME}   sl block snapshot-restore 12345678 87654321\n   Cette commande restaure le volume avec l'ID 12345678 à partir de l'image instantanée avec l'ID 87654321."
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  This command list snapshot schedules for volume with ID 12345678",
@@ -241,7 +241,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl block volume-set-lun-id ID_VOLUME ID_LUN\n\n\tL'ID de numéro d'unité logique (LUN) entre uniquement en vigueur lors du processus d'autorisation d'hôte. Il est \n\trecommandé (mais pas obligatoire) de désautoriser tous les hôtes avant d'utiliser\n\tcette méthode.\n\tID_VOLUME - ID de volume sur lequel l'ID LUN doit être défini.\n\tID_LUN - la plage recommandée est un entier compris entre 0 et 255. Les utilisateurs expérimentés\n\tpeuvent utiliser un entier compris entre 0 et 4095."
+    "translation": "${COMMAND_NAME} sl block volume-set-lun-id ID_VOLUME ID_LUN\n\nL'ID de numéro d'unité logique (LUN) entre uniquement en vigueur lors du processus d'autorisation d'hôte. Il est \nrecommandé (mais pas obligatoire) de désautoriser tous les hôtes avant d'utiliser\ncette méthode.\nID_VOLUME - ID de volume sur lequel l'ID LUN doit être défini.\nID_LUN - la plage recommandée est un entier compris entre 0 et 255. Les utilisateurs expérimentés\npeuvent utiliser un entier compris entre 0 et 4095."
   },
   {
     "id": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'this is my note'",
@@ -397,7 +397,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file snapshot-restore ID_VOLUME ID_IMAGE_INSTANTANEE\n\t\nEXEMPLE :\n   ${COMMAND_NAME}   sl file snapshot-restore 12345678 87654321\n   Cette commande restaure le volume avec l'ID 12345678 à partir de l'image instantanée avec l'ID 87654321."
+    "translation": "${COMMAND_NAME} sl file snapshot-restore ID_VOLUME ID_IMAGE_INSTANTANEE\n\nEXEMPLE :\n   ${COMMAND_NAME}   sl file snapshot-restore 12345678 87654321\n   Cette commande restaure le volume avec l'ID 12345678 à partir de l'image instantanée avec l'ID 87654321."
   },
   {
     "id": "${COMMAND_NAME} sl file snapshot-schedule-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-schedule-list 12345678\n   This command list snapshot schedules for volume with ID 12345678",
@@ -757,7 +757,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl ticket upload TICKETID FILEPATH\n  \nEXAMPLE:\n\t${COMMAND_NAME} sl ticket upload 767676 \"/home/user/screenshot.png\"",
-    "translation": "${COMMAND_NAME} sl ticket upload TICKETID FILEPATH\n  \nEXEMPLE :\n\t${COMMAND_NAME} sl ticket upload 767676 \"/home/user/screenshot.png\""
+    "translation": "${COMMAND_NAME} sl ticket upload TICKETID FILEPATH\n  \nEXEMPLE :\n${COMMAND_NAME} sl ticket upload 767676 \"/home/user/screenshot.png\""
   },
   {
     "id": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXAMPLE: \t\n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Remember to set the permissions and access for this new user.",
@@ -2761,7 +2761,7 @@
   },
   {
     "id": "Enable or Disable selected permissions. Accepted inputs are 'true' and 'false'. default is 'true'",
-    "translation": "Activez ou désactivez les droits sélectionnés. Les entrées admises sont 'true' et 'false'. La valeur par défaut est 'true'"
+    "translation": "Activer ou désactiver les droits sélectionnés. Les entrées admises sont 'true' et 'false'. La valeur par défaut est 'true'"
   },
   {
     "id": "Enable or Disable specific notifications for the active user.",
@@ -4733,7 +4733,7 @@
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "Obtenez des images instantanées d'avertissement de seuil d'utilisation de l'espace pour un volume donné."
+    "translation": "Obtenir des images instantanées d'avertissement de seuil d'utilisation de l'espace pour un volume donné."
   },
   {
     "id": "Get status for split or move completed percentage of a given block storage duplicate volume.",
@@ -4989,47 +4989,47 @@
   },
   {
     "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
-    "translation": "INTEGER Tailles des disques (les occurrences multiples sont autorisées) [obligatoire]."
+    "translation": "ENTIER Tailles des disques (les occurrences multiples sont autorisées) [obligatoire]."
   },
   {
     "id": "INTEGER Number of CPUs for new guests (existing not effected)",
-    "translation": "INTEGER Nombre de CPU pour les nouveaux invités (les existants ne sont pas affectés)"
+    "translation": "ENTIER Nombre de CPU pour les nouveaux invités (les existants ne sont pas affectés)"
   },
   {
     "id": "INTEGER Number of CPUs for new guests (existing not effected)  [required]",
-    "translation": "INTEGER Nombre de CPU pour les nouveaux invités (les existants ne sont pas concernés) [obligatoire]."
+    "translation": "ENTIER Nombre de CPU pour les nouveaux invités (les existants ne sont pas concernés) [obligatoire]."
   },
   {
     "id": "INTEGER RAM in MB or GB for new guests (existing not effected)",
-    "translation": "INTEGER RAM en Mo ou Go pour les nouveaux invités (les existants ne sont pas affectés)"
+    "translation": "ENTIER RAM en Mo ou Go pour les nouveaux invités (les existants ne sont pas affectés)"
   },
   {
     "id": "INTEGER RAM in MB or GB for new guests (existing not effected)  [required]",
-    "translation": "INTEGER RAM en Mo ou Go pour les nouveaux clients (les clients existants ne sont pas affectés) [obligatoire]."
+    "translation": "ENTIER RAM en Mo ou Go pour les nouveaux clients (les clients existants ne sont pas affectés) [obligatoire]."
   },
   {
     "id": "INTEGER Set the maximum number of guests",
-    "translation": "INTEGER Définition du nombre maximal d'invités"
+    "translation": "ENTIER Définition du nombre maximal d'invités"
   },
   {
     "id": "INTEGER Set the maximum number of guests  [required]",
-    "translation": "INTEGER Définition du nombre maximum d'invités [requis]"
+    "translation": "ENTIER Définition du nombre maximum d'invités [requis]"
   },
   {
     "id": "INTEGER Set the minimum number of guests",
-    "translation": "INTEGER Définir le nombre minimum d'invités"
+    "translation": "ENTIER Définir le nombre minimum d'invités"
   },
   {
     "id": "INTEGER Set the minimum number of guests  [required]",
-    "translation": "INTEGER Définir le nombre minimum d'invités [requis]"
+    "translation": "ENTIER Définir le nombre minimum d'invités [requis]"
   },
   {
     "id": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]",
-    "translation": "INTEGER Identificateur du groupe régional auquel ce groupe AutoScale est affecté.  [requis]"
+    "translation": "ENTIER Identificateur du groupe régional auquel ce groupe AutoScale est affecté.  [requis]"
   },
   {
     "id": "INTEGER The number of seconds this group will wait after lastActionDate before performing another action.  [required]",
-    "translation": "INTEGER Durée d'attente en secondes par le groupe de la fin de lastActionDate avant d'effectuer une autre action.  [requis]"
+    "translation": "ENTIER Durée d'attente en secondes par le groupe de la fin de lastActionDate avant d'effectuer une autre action.  [requis]"
   },
   {
     "id": "IOPS",
@@ -5141,7 +5141,7 @@
   },
   {
     "id": "Include extra resources. Options are: at,is,rs,sr,ss",
-    "translation": "Ajoutez des ressources supplémentaires. Options : at,is,rs,sr,ss"
+    "translation": "Ajouter des ressources supplémentaires. Options : at,is,rs,sr,ss"
   },
   {
     "id": "Include invoices with a CLOSED status. [default: False]",
@@ -5213,7 +5213,7 @@
   },
   {
     "id": "Invalid datacenter name specified. Please provide the lower case short name (e.g.: dal09).",
-    "translation": "Nom de centre de données spécifié non valide. Indiquez le nom abrégé en minuscules (par exemple : dal09)."
+    "translation": "Nom de centre de données spécifié non valide. Indiquer le nom abrégé en minuscules (par exemple : dal09)."
   },
   {
     "id": "Invalid firewall type {{.Type}}: firewall type should be either vlan, multiVlan, vs or server.",
@@ -5441,7 +5441,7 @@
   },
   {
     "id": "List Reserved Capacity groups.",
-    "translation": "Liste des groupes de capacité réservée."
+    "translation": "Afficher la liste des groupes de capacité réservée."
   },
   {
     "id": "List SSH keys on your account",
@@ -5465,7 +5465,7 @@
   },
   {
     "id": "List all Autoscale Groups on your account",
-    "translation": "Liste de tous les groupes de mise à l'échelle automatique sur votre compte"
+    "translation": "Afficher la liste de tous les groupes de mise à l'échelle automatique sur votre compte"
   },
   {
     "id": "List all active quotes on an account",
@@ -5473,51 +5473,51 @@
   },
   {
     "id": "List all devices the user has access and device access permissions.",
-    "translation": "Liste de tous les périphériques auxquels l'utilisateur a accès et des autorisations d'accès aux périphériques."
+    "translation": "Afficher la liste de tous les périphériques auxquels l'utilisateur a accès et des autorisations d'accès aux périphériques."
   },
   {
     "id": "List all firewalls on your account",
-    "translation": "Répertorier tous les pare-feux sur votre compte"
+    "translation": "Afficher la liste de tous les pare-feux sur votre compte"
   },
   {
     "id": "List all global IPs on your account",
-    "translation": "Répertorier toutes les adresses IP globales sur votre compte"
+    "translation": "Afficher la liste de toutes les adresses IP globales sur votre compte"
   },
   {
     "id": "List all images on your account",
-    "translation": "Répertorier toutes les images sur votre compte"
+    "translation": "Afficher la liste de toutes les images sur votre compte"
   },
   {
     "id": "List all options for ordering a block storage",
-    "translation": "Répertorier toutes les options pour la commande d'un stockage par blocs"
+    "translation": "Afficher la liste de toutes les options pour la commande d'un stockage par blocs"
   },
   {
     "id": "List all options for ordering a file storage",
-    "translation": "Répertorier toutes les options pour la commande d'un stockage de fichiers"
+    "translation": "Afficher la liste de toutes les options pour la commande d'un stockage de fichiers"
   },
   {
     "id": "List all subnets on your account",
-    "translation": "Répertorier tous les sous-réseaux sur votre compte"
+    "translation": "Afficher la liste de tous les sous-réseaux sur votre compte"
   },
   {
     "id": "List all tags currently on your account",
-    "translation": "Répertorier toutes les étiquettes actuelles de votre compte"
+    "translation": "Afficher la liste de toutes les étiquettes actuelles de votre compte"
   },
   {
     "id": "List all the VLANs on your account",
-    "translation": "Répertorier tous les réseaux locaux virtuels sur votre compte"
+    "translation": "Afficher la liste de tous les réseaux locaux virtuels sur votre compte"
   },
   {
     "id": "List all the options for creating VLAN",
-    "translation": "Répertorier toutes les options de création de réseau local virtuel"
+    "translation": "Afficher la liste de toutes les options de création de réseau local virtuel"
   },
   {
     "id": "List all the resource records in a zone",
-    "translation": "Répertorier tous les enregistrements de ressource d'une zone"
+    "translation": "Afficher la liste de tous les enregistrements de ressource d'une zone"
   },
   {
     "id": "List all zones on your account",
-    "translation": "Répertorier toutes les zones sur votre compte"
+    "translation": "Afficher la liste de toutes les zones sur votre compte"
   },
   {
     "id": "List block storage",
@@ -5609,19 +5609,19 @@
   },
   {
     "id": "List options for creating Reserved Capacity Group instance",
-    "translation": "Options de liste pour la création d'une instance de groupe de capacité réservée"
+    "translation": "Afficher la liste des options pour la création d'une instance de groupe de capacité réservée"
   },
   {
     "id": "List options for creating a placement group",
-    "translation": "Répertorier les options de création d'un groupe de placement"
+    "translation": "Afficher la liste des options pour la création d'un groupe de placement"
   },
   {
     "id": "List options for creating virtual server instance",
-    "translation": "Répertorier les options de création de l'instance de serveur virtuel"
+    "translation": "Afficher la liste des options pour la création de l'instance de serveur virtuel"
   },
   {
     "id": "List options for order a load balancer",
-    "translation": "Répertorier les options de commande d'un équilibreur de charge"
+    "translation": "Afficher la liste des options pour la commande d'un équilibreur de charge"
   },
   {
     "id": "List package items that are used for ordering",
@@ -5661,7 +5661,7 @@
   },
   {
     "id": "List the categories of a package",
-    "translation": "Répertorier les catégories d'un package"
+    "translation": "Afficher la liste des catégories d'un package"
   },
   {
     "id": "List tickets",
@@ -6397,7 +6397,7 @@
   },
   {
     "id": "PATH Read userdata from a file",
-    "translation": "PATH Lire les données utilisateur d'un fichier"
+    "translation": "CHEMIN Lire les données utilisateur d'un fichier"
   },
   {
     "id": "POD",
@@ -6445,7 +6445,7 @@
   },
   {
     "id": "Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol",
-    "translation": "Mot de passe à définir pour cet utilisateur. Si aucun mot de passe n'est indiqué, un courrier électronique est envoyé à l'utilisateur afin qu'il en génère un qui expire au bout de 24 heures. ' Spécifiez l'option '-p generate' pour qu'un mot de passe soit généré pour vous. Les mots de passe requièrent au moins 8 caractères incluant des majuscules et des minuscules, un nombre et un symbole."
+    "translation": "Mot de passe à définir pour cet utilisateur. Si aucun mot de passe n'est indiqué, un courrier électronique est envoyé à l'utilisateur afin qu'il en génère un qui expire au bout de 24 heures. ' Spécifier l'option '-p generate' pour qu'un mot de passe soit généré pour vous. Les mots de passe requièrent au moins 8 caractères incluant des majuscules et des minuscules, un nombre et un symbole."
   },
   {
     "id": "Pause an active virtual server instance",
@@ -7561,11 +7561,11 @@
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
-    "translation": "Indiquez le mode d'amorçage du système d'exploitation. Les modes pris en charge sont HVM et PV."
+    "translation": "Indiquer le mode d'amorçage du système d'exploitation. Les modes pris en charge sont HVM et PV."
   },
   {
     "id": "Specify the type of attachment, hardware or virtual. default is hardware",
-    "translation": "Indiquez le type d'élément joint, matériel ou virtuel. La valeur par défaut est 'matériel'"
+    "translation": "Indiquer le type d'élément joint, matériel ou virtuel. La valeur par défaut est 'matériel'"
   },
   {
     "id": "Start",
@@ -7729,27 +7729,27 @@
   },
   {
     "id": "TEXT Collection of policies for this group. This can be empty.",
-    "translation": "TEXT Collecte des politiques de ce groupe. Peut être vide."
+    "translation": "TEXTE Collecte des politiques de ce groupe. Peut être vide."
   },
   {
     "id": "TEXT Datacenter shortname  [required]",
-    "translation": "TEXT Nom abrégé de centre de données [obligatoire]"
+    "translation": "TEXTE Nom abrégé de centre de données [obligatoire]"
   },
   {
     "id": "TEXT Domain portion of the FQDN  [required]",
-    "translation": "TEXT Partie du nom de domaine complet [requis]"
+    "translation": "TEXTE Partie du nom de domaine complet [requis]"
   },
   {
     "id": "TEXT Host portion of the FQDN  [required]",
-    "translation": "TEXT Partie hôte du nom e domaine complet distinctif [requis]"
+    "translation": "TEXTE Partie hôte du nom e domaine complet distinctif [requis]"
   },
   {
     "id": "TEXT OS install code. Tip: you can specify <OS>_LATEST  [required]",
-    "translation": "TEXT Code d'installation du système d'exploitation. Astuce : vous pouvez indiquer <OS>_LATEST [requis]"
+    "translation": "TEXTE Code d'installation du système d'exploitation. Astuce : vous pouvez indiquer <OS>_LATEST [requis]"
   },
   {
     "id": "TEXT Post-install script to download",
-    "translation": "TEXT Script de post-installation à télécharger"
+    "translation": "TEXTE Script de post-installation à télécharger"
   },
   {
     "id": "TEXT SSH keys to add to the root user (multiple occurrence permitted)",
@@ -7757,7 +7757,7 @@
   },
   {
     "id": "TEXT Scale group's name.",
-    "translation": "TEXT Nom du groupe d'échelle."
+    "translation": "TEXTE Nom du groupe d'échelle."
   },
   {
     "id": "TEXT Scale group's name.  [required]",
@@ -7765,19 +7765,19 @@
   },
   {
     "id": "TEXT The number to scale by. This number has different meanings based on type.",
-    "translation": "TEXT Le nombre en fonction duquel effectuer la mise à l'échellle. Ce nombre a des significations différentes selon le type."
+    "translation": "TEXTE Nombre en fonction duquel effectuer la mise à l'échelle. Ce nombre a des significations différentes selon le type."
   },
   {
     "id": "TEXT The termination policy for the group(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [required]",
-    "translation": "TEXT La règle de résiliation du groupe (CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [requis]"
+    "translation": "TEXTE Règle de résiliation du groupe (CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [requis]"
   },
   {
     "id": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE).",
-    "translation": "TEXT Type d'échelle à effectuer (ABSOLUTE, PERCENT, RELATIVE)."
+    "translation": "TEXTE Type d'échelle à effectuer (ABSOLUTE, PERCENT, RELATIVE)."
   },
   {
     "id": "TEXT User defined metadata string",
-    "translation": "TEXT Chaîne de métadonnées définie par l'utilisateur"
+    "translation": "TEXTE Chaîne de métadonnées définie par l'utilisateur"
   },
   {
     "id": "TTL(Time-To-Live) in seconds, such as: 86400",
