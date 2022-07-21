@@ -57,11 +57,11 @@ while IFS= read -r line; do
         EXIT_CODE=2
 
     # A translation exists in en_US but missing from some other file
-    elif [[ $line =~ "exists in en_US, but not in "[a-zA-Z_]{5,7} ]]
+    elif [[ $line =~ "exists in "([a-zA-Z_]{5,7})", but not in "[a-zA-Z_]{5,7} ]]
     then
         # JSON=`echo "$OUTPUT" | sed -E "s/(.+) exists in en_US, but not in [a-zA-Z_]{5,7}/{\"id\": \1, \"translation\": \1},/g"`
-        JSON=`echo "$OUTPUT" | sed -E "s/(.+) exists in en_US, but not in ([a-zA-Z_]{5,7})/id: \1 is missing from \2.all.json/g"`
-        printf "\t\033[0;33m>>> $JSON <<<\033[0m\n"
+        JSON=`echo "$OUTPUT" | sed -E "s/(.+) exists in ([a-zA-Z_]{5,7}), but not in ([a-zA-Z_]{5,7})/id: \1 is missing from \3.all.json/g"`
+        printf "\033[0;33m>>>  $JSON <<<\033[0m\n"
         OUTPUT=""
         # ADD_JSON_OUT=`printf "%s\n    %s" "${ADD_JSON_OUT}" "${JSON}"`
         JSON=""
