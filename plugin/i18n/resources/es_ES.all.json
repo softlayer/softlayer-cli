@@ -580,14 +580,6 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
-    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
-  },
-  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -1977,7 +1969,7 @@
   },
   {
     "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]",
-    "translation": "Columna a visualizar. [Las opciones son: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]"
+    "translation": "Columna a visualizar. [Las opciones son: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [predeterminado: id,hostname,domain,primary_ip,backend_ip,power_state]"
   },
   {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
@@ -1985,7 +1977,7 @@
   },
   {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
-    "translation": "Columna por la que ordenar (type, hostname, publicIn, publicOut, privateIn, privateOut, pool) [default: publicOut]"
+    "translation": "Columna por la que ordenar (type, hostname, publicIn, publicOut, privateIn, privateOut, pool) [predeterminado: publicOut]"
   },
   {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
@@ -2242,10 +2234,6 @@
   {
     "id": "Create a zone",
     "translation": "Crear una zona"
-  },
-  {
-    "id": "Create credentials for an IBM Cloud Object Storage Account.",
-    "translation": "Create credentials for an IBM Cloud Object Storage Account."
   },
   {
     "id": "Create virtual server instance",
@@ -2645,11 +2633,11 @@
   },
   {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
-    "translation": "Fecha más temprana para recuperar sucesos para [AAAA-MM-DD.]"
+    "translation": "Fecha más temprana para recuperar los sucesos [AAAA-MM-DD]."
   },
   {
     "id": "Earliest date to retrieve logs for [YYYY-MM-DD].",
-    "translation": "Fecha más temprana para recuperar registros para [AAAA-MM-DD]."
+    "translation": "Fecha más temprana para recuperar los registros [AAAA-MM-DD]."
   },
   {
     "id": "Edit SSL certificate",
@@ -3122,10 +3110,6 @@
   {
     "id": "Failed to create Auto Scale Group.\n",
     "translation": "No se ha podido crear el grupo de escalado automático.\n"
-  },
-  {
-    "id": "Failed to create credential. ",
-    "translation": "Failed to create credential. "
   },
   {
     "id": "Failed to create dedicated host.\n",
@@ -6353,11 +6337,11 @@
   },
   {
     "id": "Order/Create License.",
-    "translation": "Licencia de pedido/creación."
+    "translation": "Licencia de Solicitar/Crear."
   },
   {
     "id": "Order/Create a scale group.",
-    "translation": "Pedido/Crear un grupo de escalado."
+    "translation": "Solicitar/Crear un grupo de escalado."
   },
   {
     "id": "Order/create a hardware server",

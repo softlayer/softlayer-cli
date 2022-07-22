@@ -580,14 +580,6 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
-    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
-  },
-  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -2197,7 +2189,7 @@
   },
   {
     "id": "Create a dedicatedhost",
-    "translation": "専用ホストを作成します"
+    "translation": "専用ホストを作成します。"
   },
   {
     "id": "Create a global IP",
@@ -2242,10 +2234,6 @@
   {
     "id": "Create a zone",
     "translation": "ゾーンを作成します"
-  },
-  {
-    "id": "Create credentials for an IBM Cloud Object Storage Account.",
-    "translation": "Create credentials for an IBM Cloud Object Storage Account."
   },
   {
     "id": "Create virtual server instance",
@@ -2445,7 +2433,7 @@
   },
   {
     "id": "Delete this group and destroy all members of it",
-    "translation": "このグループを削除し、そのすべてのメンバーを破棄します"
+    "translation": "このグループを削除し、そのすべてのメンバーを破棄します。"
   },
   {
     "id": "Delivered",
@@ -2657,7 +2645,7 @@
   },
   {
     "id": "Edit a L7 policy",
-    "translation": "L7 ポリシーの編集"
+    "translation": "L7 ポリシーを編集します"
   },
   {
     "id": "Edit a L7 pool",
@@ -3122,10 +3110,6 @@
   {
     "id": "Failed to create Auto Scale Group.\n",
     "translation": "オート・スケール・グループの作成に失敗しました。\n"
-  },
-  {
-    "id": "Failed to create credential. ",
-    "translation": "Failed to create credential. "
   },
   {
     "id": "Failed to create dedicated host.\n",
@@ -4685,7 +4669,7 @@
   },
   {
     "id": "Get billing details for a virtual server instance",
-    "translation": "仮想サーバー・インスタンスの請求詳細の取得"
+    "translation": "仮想サーバー・インスタンスの請求詳細を取得します。"
   },
   {
     "id": "Get billing for a hardware device.",
@@ -4773,7 +4757,7 @@
   },
   {
     "id": "Grant access from a user to an specific device",
-    "translation": "ユーザーから特定のデバイスへのアクセス権限の付与"
+    "translation": "ユーザーから特定のデバイスへのアクセス権限を付与します。"
   },
   {
     "id": "Guest ID",
@@ -5481,7 +5465,7 @@
   },
   {
     "id": "List all Autoscale Groups on your account",
-    "translation": "アカウントのすべての自動スケーリング・グループをリストします"
+    "translation": "アカウントのすべての自動スケーリング・グループをリストします。"
   },
   {
     "id": "List all active quotes on an account",
@@ -5725,7 +5709,7 @@
   },
   {
     "id": "Location",
-    "translation": "場所"
+    "translation": "ロケーション"
   },
   {
     "id": "Location/Region",

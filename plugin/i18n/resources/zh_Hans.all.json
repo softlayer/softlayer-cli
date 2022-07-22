@@ -580,14 +580,6 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
-    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
-  },
-  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -733,7 +725,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
-    "translation": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \n示例：\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567"
+    "translation": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \n示例：\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 "
   },
   {
     "id": "${COMMAND_NAME} sl ticket create [OPTIONS]\n\nEXAMPLE: \t\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"This is an example ticket. Please disregard.\"\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"This is an example ticket. Please disregard.\" --attachment 8675654 --attachment-type hardware --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"This is an example ticket. Please disregard.\" --attachment 1234567 --attachment-type virtual --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --attachment 8675654 --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522",
@@ -753,7 +745,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl ticket subjects\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket subjects\n  ",
-    "translation": "${COMMAND_NAME} sl ticket subjects\n  \n示例：\n  ${COMMAND_NAME} sl ticket subjects\n"
+    "translation": "${COMMAND_NAME} sl ticket subjects\n  \n示例：\n  ${COMMAND_NAME} sl ticket subjects\n  "
   },
   {
     "id": "${COMMAND_NAME} sl ticket update TICKETID [\"CONTENTS\"] \n  \n    If the second argument is not specified on a non-Windows machine, it will attempt to use either the value stored in the EDITOR environmental variable, or find either nano, vim, or emacs in that order.\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket update 767676 \"A problem has been detected.\"\n  ${COMMAND_NAME} sl ticket update 767667",
@@ -937,7 +929,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
-    "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\n 虚拟服务器的用法信息。\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
+    "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\n 虚拟服务器的用法信息。\n示例：\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
   {
     "id": "${COMMAND_NAME} slcli account billing-items [OPTIONS]",
@@ -1849,7 +1841,7 @@
   },
   {
     "id": "Classic infrastructure Dedicatedhost",
-    "translation": "经典基础架构 Dedicatedhost"
+    "translation": "经典基础架构专用主机"
   },
   {
     "id": "Classic infrastructure Domain Name System",
@@ -2177,7 +2169,7 @@
   },
   {
     "id": "Cpu: ",
-    "translation": "CPU："
+    "translation": "CPU： "
   },
   {
     "id": "Cpus",
@@ -2197,7 +2189,7 @@
   },
   {
     "id": "Create a dedicatedhost",
-    "translation": "创建 dedicatedhost"
+    "translation": "创建专用主机"
   },
   {
     "id": "Create a global IP",
@@ -2221,7 +2213,7 @@
   },
   {
     "id": "Create a placement group.",
-    "translation": "创建布置组。"
+    "translation": "创建放置组。"
   },
   {
     "id": "Create a security group",
@@ -2244,10 +2236,6 @@
     "translation": "创建专区"
   },
   {
-    "id": "Create credentials for an IBM Cloud Object Storage Account.",
-    "translation": "Create credentials for an IBM Cloud Object Storage Account."
-  },
-  {
     "id": "Create virtual server instance",
     "translation": "创建虚拟服务器实例"
   },
@@ -2257,7 +2245,7 @@
   },
   {
     "id": "Created",
-    "translation": "已创建"
+    "translation": "创建时间"
   },
   {
     "id": "Created Date",
@@ -2317,7 +2305,7 @@
   },
   {
     "id": "Current Usage",
-    "translation": "当前使用情况"
+    "translation": "当前使用量"
   },
   {
     "id": "Current account is not linked to a Softlayer account. Use '{{.Command}}' to switch account.",
@@ -2365,7 +2353,7 @@
   },
   {
     "id": "Datacenter: ",
-    "translation": "数据中心："
+    "translation": "数据中心： "
   },
   {
     "id": "Date",
@@ -2433,7 +2421,7 @@
   },
   {
     "id": "Delete an image ",
-    "translation": "删除映像"
+    "translation": "删除映像 "
   },
   {
     "id": "Delete the credential of an Object Storage Account.",
@@ -2589,7 +2577,7 @@
   },
   {
     "id": "Do not actually create the dedicatedhost",
-    "translation": "未实际创建 dedicatedhost"
+    "translation": "未实际创建专用主机"
   },
   {
     "id": "Do not actually create the virtual server",
@@ -2621,7 +2609,7 @@
   },
   {
     "id": "Domain: ",
-    "translation": "域："
+    "translation": "域： "
   },
   {
     "id": "Don't actually create records",
@@ -2801,7 +2789,7 @@
   },
   {
     "id": "Enables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "对给定卷启用/禁用快照空间使用情况阈值警告。"
+    "translation": "对给定卷启用/禁用快照空间使用阈值警告。"
   },
   {
     "id": "End",
@@ -2949,7 +2937,7 @@
   },
   {
     "id": "Failed due to error: ",
-    "translation": "失败，错误为："
+    "translation": "失败，错误为： "
   },
   {
     "id": "Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n",
@@ -2965,7 +2953,7 @@
   },
   {
     "id": "Failed to Order the dedicatedhost.\n",
-    "translation": "未能对 dedicatedhost 进行排序。\n"
+    "translation": "未能对专用主机进行排序。\n"
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -3057,7 +3045,7 @@
   },
   {
     "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.\n",
-    "translation": "未能取消 dedicatedhost 中的所有访客：{{.HostID}}。\n"
+    "translation": "未能取消专用主机中的所有访客：{{.HostID}}。\n"
   },
   {
     "id": "Failed to cancel block volume: {{.ID}}.\n",
@@ -3122,10 +3110,6 @@
   {
     "id": "Failed to create Auto Scale Group.\n",
     "translation": "未能创建自动缩放组。\n"
-  },
-  {
-    "id": "Failed to create credential. ",
-    "translation": "Failed to create credential. "
   },
   {
     "id": "Failed to create dedicated host.\n",
@@ -3481,7 +3465,7 @@
   },
   {
     "id": "Failed to get dedicatedhost instance: {{.HostID}}.\n",
-    "translation": "未能获取 dedicatedhost 实例：{{.HostID}}。\n"
+    "translation": "未能获取专用主机实例：{{.HostID}}。\n"
   },
   {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
@@ -4217,7 +4201,7 @@
   },
   {
     "id": "Failed to update health check: ",
-    "translation": "未能更新运行状况检查："
+    "translation": "未能更新运行状况检查： "
   },
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
@@ -4669,7 +4653,7 @@
   },
   {
     "id": "Get List options for creating a placement group..",
-    "translation": "用于创建布置组的 \"获取列表\" 选项。"
+    "translation": "获取用于创建放置组的列表选项。"
   },
   {
     "id": "Get Netscaler details.",
@@ -4749,7 +4733,7 @@
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "获取给定卷的快照空间使用率阈值警告标志设置。"
+    "translation": "获取给定卷的快照空间使用阈值警告标志设置。"
   },
   {
     "id": "Get status for split or move completed percentage of a given block storage duplicate volume.",
@@ -4789,7 +4773,7 @@
   },
   {
     "id": "Guests: ",
-    "translation": "访客："
+    "translation": "访客： "
   },
   {
     "id": "HARDWARE",
@@ -4945,7 +4929,7 @@
   },
   {
     "id": "Hostname: ",
-    "translation": "主机名："
+    "translation": "主机名： "
   },
   {
     "id": "Hour of the day when snapshots should be taken, integer between 0 to 23",
@@ -5017,31 +5001,31 @@
   },
   {
     "id": "INTEGER RAM in MB or GB for new guests (existing not effected)",
-    "translation": "新访客的 INTEGER RAM（以 MB 或 GB 为单位，现有未受影响）"
+    "translation": "INTEGER 新访客的 RAM，以 MB 或 GB 为单位（现有不受影响）"
   },
   {
     "id": "INTEGER RAM in MB or GB for new guests (existing not effected)  [required]",
-    "translation": "新访客的 INTEGER RAM（以 MB 或 GB 为单位）[必需]"
+    "translation": "INTEGER 新访客的 RAM，以 MB 或 GB 为单位（现有不受影响）[必需]"
   },
   {
     "id": "INTEGER Set the maximum number of guests",
-    "translation": "INTEGER 设置访客的最大数量"
+    "translation": "INTEGER 设置最大访客数"
   },
   {
     "id": "INTEGER Set the maximum number of guests  [required]",
-    "translation": "INTEGER 设置访客的最大数量 [必需]"
+    "translation": "INTEGER 设置最大访客数 [必需]"
   },
   {
     "id": "INTEGER Set the minimum number of guests",
-    "translation": "INTEGER: 设置最小访客数"
+    "translation": "INTEGER 设置最小访客数"
   },
   {
     "id": "INTEGER Set the minimum number of guests  [required]",
-    "translation": "INTEGER: 设置最小访客数 [必需]"
+    "translation": "INTEGER 设置最小访客数 [必需]"
   },
   {
     "id": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]",
-    "translation": "INTEGER: 将此缩放组分配到的区域组的标识。 [必需]"
+    "translation": "INTEGER 将此缩放组分配到的区域组的标识。 [必需]"
   },
   {
     "id": "INTEGER The number of seconds this group will wait after lastActionDate before performing another action.  [required]",
@@ -5169,7 +5153,7 @@
   },
   {
     "id": "Incorrect Usage: ",
-    "translation": "用法不正确："
+    "translation": "用法不正确： "
   },
   {
     "id": "Incorrect complex type: {{.Type}}",
@@ -5605,7 +5589,7 @@
   },
   {
     "id": "List netscalers",
-    "translation": "列出 netscalers"
+    "translation": "列出 Netscaler"
   },
   {
     "id": "List number of block storage volumes per datacenter",
@@ -5805,7 +5789,7 @@
   },
   {
     "id": "Memory: ",
-    "translation": "内存："
+    "translation": "内存： "
   },
   {
     "id": "Metadata",
@@ -6061,7 +6045,7 @@
   },
   {
     "id": "No placement group was found.",
-    "translation": "找不到布置组。"
+    "translation": "找不到放置组。"
   },
   {
     "id": "No primary IP address associated with virtual server instance: {{.VsId}}.",
@@ -6245,7 +6229,7 @@
   },
   {
     "id": "Operating System Code: ",
-    "translation": "操作系统代码："
+    "translation": "操作系统代码： "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -6825,7 +6809,7 @@
   },
   {
     "id": "Projected Usage",
-    "translation": "预计使用量"
+    "translation": "预测使用量"
   },
   {
     "id": "Protocol",
@@ -7213,7 +7197,7 @@
   },
   {
     "id": "SSH key was added: ",
-    "translation": "SSH 密钥已添加："
+    "translation": "SSH 密钥已添加： "
   },
   {
     "id": "SSH key {{.ID}} was removed.",
@@ -7533,7 +7517,7 @@
   },
   {
     "id": "Snapshots space usage threshold warning notification has been set to '{{.ENABLE}}' for volume '{{.ID}}'.",
-    "translation": "卷 \"{{.ID}}\" 的快照空间使用率阈值警告通知已设置为 \"{{.ENABLE}}\"。"
+    "translation": "卷 \"{{.ID}}\" 的快照空间使用阈值警告通知已设置为 \"{{.ENABLE}}\"。"
   },
   {
     "id": "SoftLayer_Exception_ObjectNotFound: Unable to find object with id {{.ContextID}}",
@@ -7745,7 +7729,7 @@
   },
   {
     "id": "TEXT Collection of policies for this group. This can be empty.",
-    "translation": "TEXT 此组的策略集合。 这可以为空。"
+    "translation": "TEXT 此组的策略集合。 可以为空。"
   },
   {
     "id": "TEXT Datacenter shortname  [required]",
@@ -7753,11 +7737,11 @@
   },
   {
     "id": "TEXT Domain portion of the FQDN  [required]",
-    "translation": "FQDN 的 TEXT 域部分 [必需]"
+    "translation": "TEXT FQDN 的域部分 [必需]"
   },
   {
     "id": "TEXT Host portion of the FQDN  [required]",
-    "translation": "FQDN 的 TEXT 主机部分 [必需]"
+    "translation": "TEXT FQDN 的主机部分 [必需]"
   },
   {
     "id": "TEXT OS install code. Tip: you can specify <OS>_LATEST  [required]",
@@ -7765,11 +7749,11 @@
   },
   {
     "id": "TEXT Post-install script to download",
-    "translation": "要下载的 TEXT 安装后脚本"
+    "translation": "TEXT 要下载的安装后脚本"
   },
   {
     "id": "TEXT SSH keys to add to the root user (multiple occurrence permitted)",
-    "translation": "要添加到 root 用户的 TEXT SSH 密钥（允许多次出现）"
+    "translation": "TEXT 要添加到 root 用户的 SSH 密钥（允许多次出现）"
   },
   {
     "id": "TEXT Scale group's name.",
@@ -7781,7 +7765,7 @@
   },
   {
     "id": "TEXT The number to scale by. This number has different meanings based on type.",
-    "translation": "TEXT 要缩放的数字。 根据类型，此数字具有不同的含义。"
+    "translation": "TEXT 要缩放的数量。 根据类型，此数量具有不同的含义。"
   },
   {
     "id": "TEXT The termination policy for the group(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [required]",
@@ -7789,7 +7773,7 @@
   },
   {
     "id": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE).",
-    "translation": "文本要执行的缩放类型（绝对值、百分比或相对值）。"
+    "translation": "TEXT 要执行的缩放类型（绝对值、百分比或相对值）。"
   },
   {
     "id": "TEXT User defined metadata string",
@@ -8389,11 +8373,11 @@
   },
   {
     "id": "This interface allows you to change the route of your Account Owned subnets.",
-    "translation": "此接口允许更改“拥有的帐户”子网的路由。"
+    "translation": "此接口允许更改帐户拥有的子网的路由。"
   },
   {
     "id": "This interface allows you to remove the route of your Account Owned subnets.",
-    "translation": "此接口允许除去“帐户拥有的子网”的路由。"
+    "translation": "此接口允许除去帐户拥有的子网的路由。"
   },
   {
     "id": "This is the credential id associated with the volume. [Required]",
@@ -8413,7 +8397,7 @@
   },
   {
     "id": "This will cancel all virtual server instances in the dedicatedhost: {{.HostID}} and cannot be undone. Continue?",
-    "translation": "这将取消 dedicatedhost 中的所有虚拟服务器实例：{{.HostID}}，此操作无法撤销。 继续吗？"
+    "translation": "这将取消专用主机中的所有虚拟服务器实例：{{.HostID}}，此操作无法撤销。 继续吗？"
   },
   {
     "id": "This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?",
@@ -9041,11 +9025,11 @@
   },
   {
     "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "将添加/除去多个访客，以将组的访客计数添加到指定的数量。 （仅设置为 --by 或 --to）"
+    "translation": "将添加/除去多个访客，以将组的访客计数添加到指定的数量。 （仅设置 --by 或 --to）"
   },
   {
     "id": "Will add/remove the specified number of guests. (Only set --by or --to)",
-    "translation": "将添加/除去指定数量的访客。 （仅设置为 --by 或 --to）"
+    "translation": "将添加/除去指定数量的访客。 （仅设置 --by 或 --to）"
   },
   {
     "id": "Would you like to submit the rules. Continue?",
