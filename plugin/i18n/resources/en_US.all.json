@@ -252,6 +252,10 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests."
   },
   {
+    "id": "${COMMAND_NAME} sl cdn list",
+    "translation": "${COMMAND_NAME} sl cdn list"
+  },
+  {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
     "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
   },
@@ -1840,6 +1844,10 @@
     "translation": "Classic infrastructure Block Storage"
   },
   {
+    "id": "Classic infrastructure Cdn commands",
+    "translation": "Classic infrastructure Cdn commands"
+  },
+  {
     "id": "Classic infrastructure Compute images",
     "translation": "Classic infrastructure Compute images"
   },
@@ -1946,6 +1954,10 @@
   {
     "id": "Closed:",
     "translation": "Closed:"
+  },
+  {
+    "id": "Cname",
+    "translation": "Cname"
   },
   {
     "id": "Code",
@@ -3326,6 +3338,10 @@
   {
     "id": "Failed to get Bandwidth Pool.\n",
     "translation": "Failed to get Bandwidth Pool.\n"
+  },
+  {
+    "id": "Failed to get Cdn List. ",
+    "translation": "Failed to get Cdn List. "
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -5468,6 +5484,10 @@
     "translation": "List all Autoscale Groups on your account"
   },
   {
+    "id": "List all CDN accounts.",
+    "translation": "List all CDN accounts."
+  },
+  {
     "id": "List all active quotes on an account",
     "translation": "List all active quotes on an account"
   },
@@ -6354,6 +6374,10 @@
   {
     "id": "Ordering package is not found",
     "translation": "Ordering package is not found"
+  },
+  {
+    "id": "Origin",
+    "translation": "Origin"
   },
   {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
@@ -8738,6 +8762,10 @@
   {
     "id": "Unassign a global IP from a target router or device",
     "translation": "Unassign a global IP from a target router or device"
+  },
+  {
+    "id": "Unique Id",
+    "translation": "Unique Id"
   },
   {
     "id": "Update ID",
