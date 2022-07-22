@@ -2268,10 +2268,6 @@
     "translation": "Erstellt einen Benutzer"
   },
   {
-    "id": "Credential: {{.credentialID}} was deleted.",
-    "translation": "Credential: {{.credentialID}} was deleted."
-  },
-  {
     "id": "Credit allowed",
     "translation": "Kredit zulässig"
   },
@@ -2422,10 +2418,6 @@
   {
     "id": "Delete an image ",
     "translation": "Image löschen "
-  },
-  {
-    "id": "Delete the credential of an Object Storage Account.",
-    "translation": "Delete the credential of an Object Storage Account."
   },
   {
     "id": "Delete the given security group",
@@ -3186,10 +3178,6 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "Löschen des L7-Mitglieds {{.Member}} fehlgeschlagen: {{.Error}}.\n"
-  },
-  {
-    "id": "Failed to delete credential: {{.storageID}}.\n",
-    "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -8380,10 +8368,6 @@
     "translation": "Mit dieser Schnittstelle können Sie die Route Ihrer kontoeigenen Teilnetze entfernen."
   },
   {
-    "id": "This is the credential id associated with the volume. [Required]",
-    "translation": "This is the credential id associated with the volume. [Required]"
-  },
-  {
     "id": "This option is not available.",
     "translation": "This option is not available."
   },
@@ -8660,10 +8644,6 @@
     "translation": "Der Kategoriecode von diesem Datenträger wurde nicht gefunden."
   },
   {
-    "id": "Unable to find credential with ID: {{.credentialID}}.\n",
-    "translation": "Unable to find credential with ID: {{.credentialID}}.\n"
-  },
-  {
     "id": "Unable to find firewall with ID: {{.ID}}",
     "translation": "Die Firewall mit der ID {{.ID}} wurde nicht gefunden"
   },
@@ -8698,10 +8678,6 @@
   {
     "id": "Unable to find network port speed for this device.",
     "translation": "Die Übertragungsgeschwindigkeit des Netzports für dieses Gerät wurde nicht gefunden."
-  },
-  {
-    "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
-    "translation": "Unable to find object-storage with ID: {{.storageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",

@@ -2268,10 +2268,6 @@
     "translation": "创建用户"
   },
   {
-    "id": "Credential: {{.credentialID}} was deleted.",
-    "translation": "Credential: {{.credentialID}} was deleted."
-  },
-  {
     "id": "Credit allowed",
     "translation": "允许信用值"
   },
@@ -2422,10 +2418,6 @@
   {
     "id": "Delete an image ",
     "translation": "删除映像 "
-  },
-  {
-    "id": "Delete the credential of an Object Storage Account.",
-    "translation": "Delete the credential of an Object Storage Account."
   },
   {
     "id": "Delete the given security group",
@@ -3186,10 +3178,6 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "未能删除 L7 成员 {{.Member}}：{{.Error}}。\n"
-  },
-  {
-    "id": "Failed to delete credential: {{.storageID}}.\n",
-    "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -8380,10 +8368,6 @@
     "translation": "此接口允许除去帐户拥有的子网的路由。"
   },
   {
-    "id": "This is the credential id associated with the volume. [Required]",
-    "translation": "This is the credential id associated with the volume. [Required]"
-  },
-  {
     "id": "This option is not available.",
     "translation": "This option is not available."
   },
@@ -8660,10 +8644,6 @@
     "translation": "找不到此卷的类别代码。"
   },
   {
-    "id": "Unable to find credential with ID: {{.credentialID}}.\n",
-    "translation": "Unable to find credential with ID: {{.credentialID}}.\n"
-  },
-  {
     "id": "Unable to find firewall with ID: {{.ID}}",
     "translation": "找不到标识为 {{.ID}} 的防火墙"
   },
@@ -8698,10 +8678,6 @@
   {
     "id": "Unable to find network port speed for this device.",
     "translation": "找不到此设备的网络端口速度。"
-  },
-  {
-    "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
-    "translation": "Unable to find object-storage with ID: {{.storageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
