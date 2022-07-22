@@ -580,6 +580,10 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -2236,6 +2240,10 @@
     "translation": "Create a zone"
   },
   {
+    "id": "Create credentials for an IBM Cloud Object Storage Account.",
+    "translation": "Create credentials for an IBM Cloud Object Storage Account."
+  },
+  {
     "id": "Create virtual server instance",
     "translation": "Create virtual server instance"
   },
@@ -3102,6 +3110,10 @@
   {
     "id": "Failed to create Auto Scale Group.\n",
     "translation": "Failed to create Auto Scale Group.\n"
+  },
+  {
+    "id": "Failed to create credential. ",
+    "translation": "Failed to create credential. "
   },
   {
     "id": "Failed to create dedicated host.\n",
