@@ -54,6 +54,18 @@ var _ = Describe("VS detail", func() {
 
 		Context("VS detail with server fails", func() {
 			BeforeEach(func() {
+				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{}, nil)
+				fakeVSManager.GetLocalDisksReturns([]datatypes.Virtual_Guest_Block_Device{}, errors.New("Failed to get the local disks detail for the virtual server"))
+			})
+			It("return error", func() {
+				err := testhelpers.RunCommand(cliCommand, "1234")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to get the local disks detail for the virtual server"))
+			})
+		})
+
+		Context("VS detail with server fails", func() {
+			BeforeEach(func() {
 				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
@@ -67,6 +79,7 @@ var _ = Describe("VS detail", func() {
 		Context("VS detail with correct VS ID ", func() {
 			created, _ := time.Parse(time.RFC3339, "2016-12-25T00:00:00Z")
 			modified, _ := time.Parse(time.RFC3339, "2017-01-01T00:00:00Z")
+			lastTransaction, _ := time.Parse(time.RFC3339, "2017-02-01T00:00:00Z")
 			BeforeEach(func() {
 				fakeVSManager.GetInstanceReturns(
 					datatypes.Virtual_Guest{
@@ -121,6 +134,9 @@ var _ = Describe("VS detail", func() {
 											Username: sl.String("wilmawang"),
 										},
 									},
+									Preset: &datatypes.Product_Package_Preset{
+										KeyName: sl.String("C1_2X2X25"),
+									},
 								},
 								RecurringFee:                    sl.Float(1000.00),
 								NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
@@ -146,6 +162,26 @@ var _ = Describe("VS detail", func() {
 								NetworkSpace: sl.String("PRIMARY"),
 							},
 						},
+						TransientGuestFlag: sl.Bool(false),
+						LastTransaction: &datatypes.Provisioning_Version1_Transaction{
+							TransactionGroup: &datatypes.Provisioning_Version1_Transaction_Group{
+								Name: sl.String("Service Setup"),
+							},
+							ModifyDate: sl.Time(lastTransaction),
+						},
+						HourlyBillingFlag: sl.Bool(true),
+					}, nil)
+				fakeVSManager.GetLocalDisksReturns(
+					[]datatypes.Virtual_Guest_Block_Device{
+						datatypes.Virtual_Guest_Block_Device{
+							DiskImage: &datatypes.Virtual_Disk_Image{
+								Description: sl.String("123456789-SWAP"),
+								Capacity:    sl.Int(2),
+								Units:       sl.String("GB"),
+							},
+							MountType: sl.String("Disk"),
+							Device:    sl.String("1"),
+						},
 					}, nil)
 			})
 			It("return no error", func() {
@@ -163,10 +199,18 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"6.0"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"8"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"4096"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Swap"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Disk"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2 GB"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.9"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1.1.1.1"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"false"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-25T00:00:00Z"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2017-01-01T00:00:00Z"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Service Setup (2017-02-01T00:00:00Z)"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Hourly"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"C1_2X2X25"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilmawang"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"mynotes"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"tag1,tag2"}))
@@ -192,10 +236,18 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"6.0"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"8"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"4096"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Swap"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Disk"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2 GB"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.9"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1.1.1.1"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"false"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-25T00:00:00Z"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2017-01-01T00:00:00Z"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Service Setup (2017-02-01T00:00:00Z)"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Hourly"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"C1_2X2X25"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilmawang"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"mynotes"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"tag1,tag2"}))

@@ -9204,6 +9204,10 @@
     "translation": "balanced local - ssd"
   },
   {
+    "id": "billing",
+    "translation": "billing"
+  },
+  {
     "id": "broadcast",
     "translation": "broadcast"
   },
@@ -9326,6 +9330,10 @@
   {
     "id": "domain",
     "translation": "domain"
+  },
+  {
+    "id": "drive",
+    "translation": "drive"
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",
@@ -9456,6 +9464,10 @@
     "translation": "label"
   },
   {
+    "id": "last transaction",
+    "translation": "last transaction"
+  },
+  {
     "id": "lists bandwidth pools",
     "translation": "lists bandwidth pools"
   },
@@ -9550,6 +9562,10 @@
   {
     "id": "powerState",
     "translation": "powerState"
+  },
+  {
+    "id": "preset",
+    "translation": "preset"
   },
   {
     "id": "price rate",
@@ -9676,8 +9692,8 @@
     "translation": "subnets"
   },
   {
-    "id": "tag",
-    "translation": "tag"
+    "id": "tags",
+    "translation": "tags"
   },
   {
     "id": "target",
@@ -9694,6 +9710,10 @@
   {
     "id": "transaction_id",
     "translation": "transaction_id"
+  },
+  {
+    "id": "transient",
+    "translation": "transient"
   },
   {
     "id": "ttl",
