@@ -3436,10 +3436,6 @@
     "translation": "구성요소를 가져오는 데 실패함 \n"
   },
   {
-    "id": "Failed to get credential limit. ",
-    "translation": "Failed to get credential limit. "
-  },
-  {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
     "translation": "{{.VolumeID}} 볼륨의 데이터 센터를 가져오는 데 실패했습니다.\n"
   },
@@ -5402,10 +5398,6 @@
   {
     "id": "License: {{.key}} was cancelled.",
     "translation": "{{.key}} 라이센스가 취소되었습니다."
-  },
-  {
-    "id": "Limit",
-    "translation": "Limit"
   },
   {
     "id": "List Dedicated Host Guests.",

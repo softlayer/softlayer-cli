@@ -3436,10 +3436,6 @@
     "translation": "無法取得元件 \n"
   },
   {
-    "id": "Failed to get credential limit. ",
-    "translation": "Failed to get credential limit. "
-  },
-  {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
     "translation": "無法取得磁區 {{.VolumeID}} 的資料中心。\n"
   },
@@ -5402,10 +5398,6 @@
   {
     "id": "License: {{.key}} was cancelled.",
     "translation": "授權 {{.key}} 已取消。"
-  },
-  {
-    "id": "Limit",
-    "translation": "Limit"
   },
   {
     "id": "List Dedicated Host Guests.",

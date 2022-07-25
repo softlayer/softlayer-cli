@@ -3436,10 +3436,6 @@
     "translation": "Falha ao obter componentes\n"
   },
   {
-    "id": "Failed to get credential limit. ",
-    "translation": "Failed to get credential limit. "
-  },
-  {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
     "translation": "Falha ao obter datacenters para o volume {{.VolumeID}}.\n"
   },
@@ -5402,10 +5398,6 @@
   {
     "id": "License: {{.key}} was cancelled.",
     "translation": "Licença: {{.key}} foi cancelada."
-  },
-  {
-    "id": "Limit",
-    "translation": "Limit"
   },
   {
     "id": "List Dedicated Host Guests.",
