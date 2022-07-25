@@ -580,18 +580,6 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321",
-    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321"
-  },
-  {
-    "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456"
-  },
-  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -745,7 +733,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654\n  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567",
-    "translation": "${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]\n  \n範例：\n  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567 "
+    "translation": "${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]\n  \n範例：\n  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567"
   },
   {
     "id": "${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket detail 767676\n  ${COMMAND_NAME} sl ticket detail 767676 --count 10",
@@ -2181,7 +2169,7 @@
   },
   {
     "id": "Cpu: ",
-    "translation": "CPU："
+    "translation": "CPU： "
   },
   {
     "id": "Cpus",
@@ -2248,10 +2236,6 @@
     "translation": "建立區域"
   },
   {
-    "id": "Create credentials for an IBM Cloud Object Storage Account.",
-    "translation": "Create credentials for an IBM Cloud Object Storage Account."
-  },
-  {
     "id": "Create virtual server instance",
     "translation": "建立虛擬伺服器實例"
   },
@@ -2282,14 +2266,6 @@
   {
     "id": "Creates a user",
     "translation": "建立使用者"
-  },
-  {
-    "id": "Credential limits for this IBM Cloud Object Storage account.",
-    "translation": "Credential limits for this IBM Cloud Object Storage account."
-  },
-  {
-    "id": "Credential: {{.CredentialID}} was deleted.",
-    "translation": "Credential: {{.CredentialID}} was deleted."
   },
   {
     "id": "Credit allowed",
@@ -2373,7 +2349,7 @@
   },
   {
     "id": "Datacenter: ",
-    "translation": "資料中心："
+    "translation": "資料中心： "
   },
   {
     "id": "Date",
@@ -2441,11 +2417,7 @@
   },
   {
     "id": "Delete an image ",
-    "translation": "刪除映像檔"
-  },
-  {
-    "id": "Delete the credential of an Object Storage Account.",
-    "translation": "Delete the credential of an Object Storage Account."
+    "translation": "刪除映像檔 "
   },
   {
     "id": "Delete the given security group",
@@ -2629,7 +2601,7 @@
   },
   {
     "id": "Domain: ",
-    "translation": "網域："
+    "translation": "網域： "
   },
   {
     "id": "Don't actually create records",
@@ -2657,7 +2629,7 @@
   },
   {
     "id": "Earliest date to retrieve logs for [YYYY-MM-DD].",
-    "translation": "擷取日誌的最早日期 [YYYY-MM-DD]。"
+    "translation": "擷取 [YYYY-MM-DD] 日誌的最早日期。"
   },
   {
     "id": "Edit SSL certificate",
@@ -2957,7 +2929,7 @@
   },
   {
     "id": "Failed due to error: ",
-    "translation": "因為錯誤而失敗："
+    "translation": "因為錯誤而失敗： "
   },
   {
     "id": "Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n",
@@ -3132,10 +3104,6 @@
     "translation": "無法建立「自動調整群組」。\n"
   },
   {
-    "id": "Failed to create credential. ",
-    "translation": "Failed to create credential. "
-  },
-  {
     "id": "Failed to create dedicated host.\n",
     "translation": "無法建立專用主機。\n"
   },
@@ -3210,10 +3178,6 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "無法刪除 L7member {{.Member}}：{{.Error}}。\n"
-  },
-  {
-    "id": "Failed to delete credential: {{.StorageID}}.\n",
-    "translation": "Failed to delete credential: {{.StorageID}}.\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -4229,7 +4193,7 @@
   },
   {
     "id": "Failed to update health check: ",
-    "translation": "無法更新性能檢查："
+    "translation": "無法更新性能檢查： "
   },
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
@@ -4681,7 +4645,7 @@
   },
   {
     "id": "Get List options for creating a placement group..",
-    "translation": "用於建立放置群組的「取得清單」選項。"
+    "translation": "取得用於建立放置群組的清單選項。"
   },
   {
     "id": "Get Netscaler details.",
@@ -4801,7 +4765,7 @@
   },
   {
     "id": "Guests: ",
-    "translation": "訪客："
+    "translation": "訪客： "
   },
   {
     "id": "HARDWARE",
@@ -4957,7 +4921,7 @@
   },
   {
     "id": "Hostname: ",
-    "translation": "主機名稱："
+    "translation": "主機名稱： "
   },
   {
     "id": "Hour of the day when snapshots should be taken, integer between 0 to 23",
@@ -5181,7 +5145,7 @@
   },
   {
     "id": "Incorrect Usage: ",
-    "translation": "用法不正確："
+    "translation": "用法不正確： "
   },
   {
     "id": "Incorrect complex type: {{.Type}}",
@@ -5821,7 +5785,7 @@
   },
   {
     "id": "Memory: ",
-    "translation": "記憶體："
+    "translation": "記憶體： "
   },
   {
     "id": "Metadata",
@@ -5877,7 +5841,7 @@
   },
   {
     "id": "Monthly",
-    "translation": "按月"
+    "translation": "每月"
   },
   {
     "id": "More than one packages were found for {{.CategoryCode}}.",
@@ -6261,7 +6225,7 @@
   },
   {
     "id": "Operating System Code: ",
-    "translation": "作業系統程式碼："
+    "translation": "作業系統程式碼： "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -6913,7 +6877,7 @@
   },
   {
     "id": "Public notes related to a Storage volume  [required]",
-    "translation": "與儲存磁區相關的公用注意事項 [必要]"
+    "translation": "與儲存磁區相關的公用附註 [必要]"
   },
   {
     "id": "Public port speed, options are: 0,10,100,1000,10000",
@@ -7229,7 +7193,7 @@
   },
   {
     "id": "SSH key was added: ",
-    "translation": "已新增 SSH 金鑰："
+    "translation": "已新增 SSH 金鑰： "
   },
   {
     "id": "SSH key {{.ID}} was removed.",
@@ -7281,7 +7245,7 @@
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
-    "translation": "調整自動調整群組。 略過尺度群組的緩和期間。"
+    "translation": "調整自動調整群組。 略過調整群組的緩和期間。"
   },
   {
     "id": "Schedule",
@@ -7937,7 +7901,7 @@
   },
   {
     "id": "The VMware License Key. To get the required package you can use the command sl licenses create-options Package. E.g VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2  [required]",
-    "translation": "VMware 授權金鑰。 若要取得必要套件，您可以使用指令 sl licenses create-options Package。 例如 VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [必要]"
+    "translation": "VMware 授權碼。 若要取得必要套件，您可以使用指令 sl licenses create-options Package。 例如 VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [必要]"
   },
   {
     "id": "The actual SSH key",
@@ -8412,10 +8376,6 @@
     "translation": "此介面可讓您移除「帳戶擁有的子網路」的路徑。"
   },
   {
-    "id": "This is the credential id associated with the volume. [REQUIRED]",
-    "translation": "This is the credential id associated with the volume. [REQUIRED]"
-  },
-  {
     "id": "This option is not available.",
     "translation": "This option is not available."
   },
@@ -8692,10 +8652,6 @@
     "translation": "在這個磁區中找不到種類代碼。"
   },
   {
-    "id": "Unable to find credential with ID: {{.CredentialID}}.\n",
-    "translation": "Unable to find credential with ID: {{.CredentialID}}.\n"
-  },
-  {
     "id": "Unable to find firewall with ID: {{.ID}}",
     "translation": "找不到 ID 為 {{.ID}} 的防火牆。"
   },
@@ -8730,10 +8686,6 @@
   {
     "id": "Unable to find network port speed for this device.",
     "translation": "找不到此裝置的網路埠速度。"
-  },
-  {
-    "id": "Unable to find object-storage with ID: {{.StorageID}}.\n",
-    "translation": "Unable to find object-storage with ID: {{.StorageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
@@ -9057,7 +9009,7 @@
   },
   {
     "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "將新增/移除訪客數目，以將群組的訪客計數設為指定的數目。 （僅設定 -- by 或 -- to）"
+    "translation": "將新增/移除一些訪客，以使該群組的訪客數達到指定的數目。 （僅設定 -- by 或 -- to）"
   },
   {
     "id": "Will add/remove the specified number of guests. (Only set --by or --to)",

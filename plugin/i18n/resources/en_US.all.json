@@ -584,8 +584,8 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321",
-    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321"
+    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
+    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
@@ -2284,12 +2284,8 @@
     "translation": "Creates a user"
   },
   {
-    "id": "Credential limits for this IBM Cloud Object Storage account.",
-    "translation": "Credential limits for this IBM Cloud Object Storage account."
-  },
-  {
-    "id": "Credential: {{.CredentialID}} was deleted.",
-    "translation": "Credential: {{.CredentialID}} was deleted."
+    "id": "Credential: {{.credentialID}} was deleted.",
+    "translation": "Credential: {{.credentialID}} was deleted."
   },
   {
     "id": "Credit allowed",
@@ -3212,8 +3208,8 @@
     "translation": "Failed to delete L7member {{.Member}}: {{.Error}}.\n"
   },
   {
-    "id": "Failed to delete credential: {{.StorageID}}.\n",
-    "translation": "Failed to delete credential: {{.StorageID}}.\n"
+    "id": "Failed to delete credential: {{.storageID}}.\n",
+    "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -8412,8 +8408,8 @@
     "translation": "This interface allows you to remove the route of your Account Owned subnets."
   },
   {
-    "id": "This is the credential id associated with the volume. [REQUIRED]",
-    "translation": "This is the credential id associated with the volume. [REQUIRED]"
+    "id": "This is the credential id associated with the volume. [Required]",
+    "translation": "This is the credential id associated with the volume. [Required]"
   },
   {
     "id": "This option is not available.",
@@ -8692,8 +8688,8 @@
     "translation": "Unable to find category code from this volume."
   },
   {
-    "id": "Unable to find credential with ID: {{.CredentialID}}.\n",
-    "translation": "Unable to find credential with ID: {{.CredentialID}}.\n"
+    "id": "Unable to find credential with ID: {{.credentialID}}.\n",
+    "translation": "Unable to find credential with ID: {{.credentialID}}.\n"
   },
   {
     "id": "Unable to find firewall with ID: {{.ID}}",
@@ -8732,8 +8728,8 @@
     "translation": "Unable to find network port speed for this device."
   },
   {
-    "id": "Unable to find object-storage with ID: {{.StorageID}}.\n",
-    "translation": "Unable to find object-storage with ID: {{.StorageID}}.\n"
+    "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
+    "translation": "Unable to find object-storage with ID: {{.storageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
@@ -9248,6 +9244,10 @@
     "translation": "balanced local - ssd"
   },
   {
+    "id": "billing",
+    "translation": "billing"
+  },
+  {
     "id": "broadcast",
     "translation": "broadcast"
   },
@@ -9370,6 +9370,10 @@
   {
     "id": "domain",
     "translation": "domain"
+  },
+  {
+    "id": "drive",
+    "translation": "drive"
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",
@@ -9500,6 +9504,10 @@
     "translation": "label"
   },
   {
+    "id": "last transaction",
+    "translation": "last transaction"
+  },
+  {
     "id": "lists bandwidth pools",
     "translation": "lists bandwidth pools"
   },
@@ -9594,6 +9602,10 @@
   {
     "id": "powerState",
     "translation": "powerState"
+  },
+  {
+    "id": "preset",
+    "translation": "preset"
   },
   {
     "id": "price rate",
@@ -9720,8 +9732,8 @@
     "translation": "subnets"
   },
   {
-    "id": "tag",
-    "translation": "tag"
+    "id": "tags",
+    "translation": "tags"
   },
   {
     "id": "target",
@@ -9738,6 +9750,10 @@
   {
     "id": "transaction_id",
     "translation": "transaction_id"
+  },
+  {
+    "id": "transient",
+    "translation": "transient"
   },
   {
     "id": "ttl",

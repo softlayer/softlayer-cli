@@ -32,12 +32,11 @@ func CredentialDeleteMetaData() cli.Command {
 		Usage: T(`${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]
 
 Examples:
-	${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID
-	${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321`),
+	${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321`),
 		Flags: []cli.Flag{
 			cli.IntFlag{
-				Name:  "credential_id",
-				Usage: T("This is the credential id associated with the volume. [REQUIRED]"),
+				Name:  "credential-id",
+				Usage: T("This is the credential id associated with the volume. [Required]"),
 			},
 		},
 	}
@@ -48,29 +47,29 @@ func (cmd *CredentialDeleteCommand) Run(c *cli.Context) error {
 		return slErr.NewInvalidUsageError(T("This command requires one argument."))
 	}
 
-	StorageID, err := strconv.Atoi(c.Args()[0])
+	storageID, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Storage ID")
 	}
 
-	if !c.IsSet("credential_id") {
-		return slErr.NewMissingInputError("--credential_id")
+	if !c.IsSet("credential-id") {
+		return slErr.NewMissingInputError("--credential-id")
 	}
 
-	CredentialID := c.Int("credential_id")
+	credentialID := c.Int("credential-id")
 
-	err = cmd.ObjectStorageManager.DeleteCredential(StorageID, CredentialID)
+	err = cmd.ObjectStorageManager.DeleteCredential(storageID, credentialID)
 	if err != nil {
 		if strings.Contains(err.Error(), slErr.SL_EXP_OBJ_NOT_FOUND) {
-			return cli.NewExitError(T("Unable to find object-storage with ID: {{.StorageID}}.\n", map[string]interface{}{"StorageID": StorageID})+err.Error(), 0)
+			return cli.NewExitError(T("Unable to find object-storage with ID: {{.storageID}}.\n", map[string]interface{}{"storageID": storageID})+err.Error(), 0)
 		}
 		if strings.Contains(err.Error(), "ObjectNotFound") {
-			return cli.NewExitError(T("Unable to find credential with ID: {{.CredentialID}}.\n", map[string]interface{}{"CredentialID": CredentialID})+err.Error(), 0)
+			return cli.NewExitError(T("Unable to find credential with ID: {{.credentialID}}.\n", map[string]interface{}{"credentialID": credentialID})+err.Error(), 0)
 		}
-		return cli.NewExitError(T("Failed to delete credential: {{.StorageID}}.\n", map[string]interface{}{"StorageID": StorageID})+err.Error(), 2)
+		return cli.NewExitError(T("Failed to delete credential: {{.storageID}}.\n", map[string]interface{}{"storageID": storageID})+err.Error(), 2)
 	}
 
 	cmd.UI.Ok()
-	cmd.UI.Print(T("Credential: {{.CredentialID}} was deleted.", map[string]interface{}{"CredentialID": CredentialID}))
+	cmd.UI.Print(T("Credential: {{.credentialID}} was deleted.", map[string]interface{}{"credentialID": credentialID}))
 	return nil
 }

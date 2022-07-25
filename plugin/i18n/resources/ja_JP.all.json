@@ -580,18 +580,6 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
-    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321",
-    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete ObjectStorageID --credential_id CredentialID\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential_id 654321"
-  },
-  {
-    "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456"
-  },
-  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -2201,7 +2189,7 @@
   },
   {
     "id": "Create a dedicatedhost",
-    "translation": "専用ホストを作成します"
+    "translation": "専用ホストを作成します。"
   },
   {
     "id": "Create a global IP",
@@ -2248,10 +2236,6 @@
     "translation": "ゾーンを作成します"
   },
   {
-    "id": "Create credentials for an IBM Cloud Object Storage Account.",
-    "translation": "Create credentials for an IBM Cloud Object Storage Account."
-  },
-  {
     "id": "Create virtual server instance",
     "translation": "Virtual Server インスタンスを作成します"
   },
@@ -2282,14 +2266,6 @@
   {
     "id": "Creates a user",
     "translation": "ユーザーを作成します"
-  },
-  {
-    "id": "Credential limits for this IBM Cloud Object Storage account.",
-    "translation": "Credential limits for this IBM Cloud Object Storage account."
-  },
-  {
-    "id": "Credential: {{.CredentialID}} was deleted.",
-    "translation": "Credential: {{.CredentialID}} was deleted."
   },
   {
     "id": "Credit allowed",
@@ -2444,16 +2420,12 @@
     "translation": "イメージを削除します "
   },
   {
-    "id": "Delete the credential of an Object Storage Account.",
-    "translation": "Delete the credential of an Object Storage Account."
-  },
-  {
     "id": "Delete the given security group",
     "translation": "指定されたセキュリティー・グループを削除します"
   },
   {
     "id": "Delete this group and destroy all members of it",
-    "translation": "このグループを削除し、そのすべてのメンバーを破棄します"
+    "translation": "このグループを削除し、そのすべてのメンバーを破棄します。"
   },
   {
     "id": "Delivered",
@@ -2665,7 +2637,7 @@
   },
   {
     "id": "Edit a L7 policy",
-    "translation": "L7 ポリシーの編集"
+    "translation": "L7 ポリシーを編集します"
   },
   {
     "id": "Edit a L7 pool",
@@ -3132,10 +3104,6 @@
     "translation": "オート・スケール・グループの作成に失敗しました。\n"
   },
   {
-    "id": "Failed to create credential. ",
-    "translation": "Failed to create credential. "
-  },
-  {
     "id": "Failed to create dedicated host.\n",
     "translation": "専用ホストの作成に失敗しました。\n"
   },
@@ -3210,10 +3178,6 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "L7member {{.Member}} の削除に失敗しました: {{.Error}}。\n"
-  },
-  {
-    "id": "Failed to delete credential: {{.StorageID}}.\n",
-    "translation": "Failed to delete credential: {{.StorageID}}.\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -4697,7 +4661,7 @@
   },
   {
     "id": "Get billing details for a virtual server instance",
-    "translation": "仮想サーバー・インスタンスの請求詳細の取得"
+    "translation": "仮想サーバー・インスタンスの請求詳細を取得します。"
   },
   {
     "id": "Get billing for a hardware device.",
@@ -4785,7 +4749,7 @@
   },
   {
     "id": "Grant access from a user to an specific device",
-    "translation": "ユーザーから特定のデバイスへのアクセス権限の付与"
+    "translation": "ユーザーから特定のデバイスへのアクセス権限を付与します。"
   },
   {
     "id": "Guest ID",
@@ -5497,7 +5461,7 @@
   },
   {
     "id": "List all Autoscale Groups on your account",
-    "translation": "アカウントのすべての自動スケーリング・グループをリストします"
+    "translation": "アカウントのすべての自動スケーリング・グループをリストします。"
   },
   {
     "id": "List all active quotes on an account",
@@ -5741,7 +5705,7 @@
   },
   {
     "id": "Location",
-    "translation": "場所"
+    "translation": "ロケーション"
   },
   {
     "id": "Location/Region",
@@ -8412,10 +8376,6 @@
     "translation": "このインターフェースを使用すると、アカウント所有サブネットの経路を削除できます。"
   },
   {
-    "id": "This is the credential id associated with the volume. [REQUIRED]",
-    "translation": "This is the credential id associated with the volume. [REQUIRED]"
-  },
-  {
     "id": "This option is not available.",
     "translation": "This option is not available."
   },
@@ -8692,10 +8652,6 @@
     "translation": "このボリュームからカテゴリー・コードを検出できません。"
   },
   {
-    "id": "Unable to find credential with ID: {{.CredentialID}}.\n",
-    "translation": "Unable to find credential with ID: {{.CredentialID}}.\n"
-  },
-  {
     "id": "Unable to find firewall with ID: {{.ID}}",
     "translation": "ID: {{.ID}} のファイアウォールが見つかりません"
   },
@@ -8730,10 +8686,6 @@
   {
     "id": "Unable to find network port speed for this device.",
     "translation": "このデバイスのネットワーク・ポート速度が見つかりません。"
-  },
-  {
-    "id": "Unable to find object-storage with ID: {{.StorageID}}.\n",
-    "translation": "Unable to find object-storage with ID: {{.StorageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",

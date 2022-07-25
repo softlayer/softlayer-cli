@@ -20,18 +20,20 @@ from pprint import pprint as pp
 # returns JSON object as 
 # a dictionary
 
-files = [
-'de_DE.all.json',
-'en_US.all.json',
-'es_ES.all.json',
-'fr_FR.all.json',
-'it_IT.all.json',
-'ja_JP.all.json',
-'ko_KR.all.json',
-'pt_BR.all.json',
-'zh_Hans.all.json',
-'zh_Hant.all.json',
-]
+# files = [
+# 'de_DE.all.json',
+# 'en_US.all.json',
+# 'es_ES.all.json',
+# 'fr_FR.all.json',
+# 'it_IT.all.json',
+# 'ja_JP.all.json',
+# 'ko_KR.all.json',
+# 'pt_BR.all.json',
+# 'zh_Hans.all.json',
+# 'zh_Hant.all.json',
+# ]
+
+files = ['en_US.all.json']
 
 def prune_bad_matches(bad_dct, mixed_dct):
 
