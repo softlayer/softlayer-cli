@@ -25,7 +25,7 @@ func CdnNamespace() plugin.Namespace {
 	return plugin.Namespace{
 		ParentName:  "sl",
 		Name:        "cdn",
-		Description: T("Classic infrastructure Cdn commands"),
+		Description: T("Classic infrastructure CDN commands"),
 	}
 }
 
@@ -33,7 +33,7 @@ func CdnMetaData() cli.Command {
 	return cli.Command{
 		Category:    "sl",
 		Name:        "cdn",
-		Description: T("Classic infrastructure Cdn commands"),
+		Description: T("Classic infrastructure CDN commands"),
 		Usage:       "${COMMAND_NAME} sl cdn",
 		Subcommands: []cli.Command{
 			ListMetaData(),

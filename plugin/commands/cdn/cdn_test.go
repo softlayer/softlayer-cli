@@ -75,7 +75,7 @@ var _ = Describe("Test cdn.GetCommandActionBindings()", func() {
 		It("Cdn Name Space", func() {
 			Expect(cdn.CdnNamespace().ParentName).To(ContainSubstring("sl"))
 			Expect(cdn.CdnNamespace().Name).To(ContainSubstring("cdn"))
-			Expect(cdn.CdnNamespace().Description).To(ContainSubstring("Classic infrastructure Cdn"))
+			Expect(cdn.CdnNamespace().Description).To(ContainSubstring("Classic infrastructure CDN"))
 		})
 	})
 
@@ -84,7 +84,7 @@ var _ = Describe("Test cdn.GetCommandActionBindings()", func() {
 			Expect(cdn.CdnMetaData().Category).To(ContainSubstring("sl"))
 			Expect(cdn.CdnMetaData().Name).To(ContainSubstring("cdn"))
 			Expect(cdn.CdnMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl cdn"))
-			Expect(cdn.CdnMetaData().Description).To(ContainSubstring("Classic infrastructure Cdn"))
+			Expect(cdn.CdnMetaData().Description).To(ContainSubstring("Classic infrastructure CDN"))
 		})
 	})
 })
