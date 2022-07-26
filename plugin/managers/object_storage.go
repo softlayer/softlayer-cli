@@ -1,6 +1,8 @@
 package managers
 
 import (
+	"fmt"
+
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
@@ -13,6 +15,7 @@ type ObjectStorageManager interface {
 	GetEndpoints(HubNetworkStorageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error)
 	ListCredential(StorageId int, mask string) ([]datatypes.Network_Storage_Credential, error)
 	CreateCredential(StorageId int, mask string) ([]datatypes.Network_Storage_Credential, error)
+	DeleteCredential(StorageId int, CredentialId int) error
 }
 
 type objectStorageManager struct {
@@ -79,4 +82,25 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Clev
 */
 func (a objectStorageManager) CreateCredential(StorageId int, mask string) ([]datatypes.Network_Storage_Credential, error) {
 	return a.ObjectStorageService.Mask(mask).Id(StorageId).CredentialCreate()
+}
+
+/*
+Deletes a credential.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/credentialDelete/
+*/
+func (a objectStorageManager) DeleteCredential(StorageId int, CredentialId int) error {
+	filters := filter.New()
+	filters = append(filters, filter.Path("credentials.id").Eq(CredentialId))
+
+	credential, err := a.ObjectStorageService.Filter(filters.Build()).Id(StorageId).GetCredentials()
+	if err != nil {
+		return err
+	}
+
+	if len(credential) == 0 {
+		return fmt.Errorf("ObjectNotFound: Unable to find object with id of '%d'. (HTTP 404)", CredentialId)
+	}
+
+	_, err = a.ObjectStorageService.Mask(mask).Id(StorageId).CredentialDelete(&credential[0])
+	return err
 }
