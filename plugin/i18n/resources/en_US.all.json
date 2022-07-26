@@ -1848,8 +1848,8 @@
     "translation": "Classic infrastructure Block Storage"
   },
   {
-    "id": "Classic infrastructure Cdn commands",
-    "translation": "Classic infrastructure Cdn commands"
+    "id": "Classic infrastructure CDN commands",
+    "translation": "Classic infrastructure CDN commands"
   },
   {
     "id": "Classic infrastructure Compute images",
@@ -3356,8 +3356,8 @@
     "translation": "Failed to get Bandwidth Pool.\n"
   },
   {
-    "id": "Failed to get Cdn List. ",
-    "translation": "Failed to get Cdn List. "
+    "id": "Failed to get CDN List. ",
+    "translation": "Failed to get CDN List. "
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
