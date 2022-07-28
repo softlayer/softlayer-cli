@@ -38,7 +38,11 @@ func (cmd *EditIpCommand) Run(c *cli.Context) error {
 		ipAddress := c.Args()[0]
 		subnetIpAddress, err := cmd.NetworkManager.GetIpByAddress(ipAddress)
 		if err != nil {
-			return cli.NewExitError(T("Failed to get Subnet IP by address\n")+err.Error(), 2)
+			return cli.NewExitError(T("Failed to get Subnet IP by address")+"\n"+err.Error(), 2)
+		}
+		if subnetIpAddress.Id == nil {
+			address := map[string]interface{}{"address": ipAddress}
+			return cli.NewExitError(T("Unable to find object with IP address: {{.address}}", address), 2)
 		}
 		subnetIpAddressID = *subnetIpAddress.Id
 	}
@@ -49,7 +53,8 @@ func (cmd *EditIpCommand) Run(c *cli.Context) error {
 	}
 	response, err := cmd.NetworkManager.EditSubnetIpAddress(subnetIpAddressID, subnetIpAddressTemplate)
 	if err != nil {
-		return cli.NewExitError(T("Failed to set note: {{.note}}.\n", map[string]interface{}{"note": note})+err.Error(), 2)
+		note := map[string]interface{}{"note": note}
+		return cli.NewExitError(T("Failed to set note: {{.note}}.", note)+"\n"+err.Error(), 2)
 	}
 	if response {
 		cmd.UI.Ok()

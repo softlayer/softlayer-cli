@@ -773,7 +773,7 @@ func (n networkManager) GetIpByAddress(ipAddress string) (datatypes.Network_Subn
 	return n.IPService.GetByIpAddress(&ipAddress)
 }
 
-// Set note of a subnet ip.
+// Edit subnet ip address.
 // ipId int: The ip identifier.
 // subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress: New subnet ip address templatet.
 func (n networkManager) EditSubnetIpAddress(subnetIpAddressId int, subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress) (bool, error) {
