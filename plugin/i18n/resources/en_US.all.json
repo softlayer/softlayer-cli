@@ -16,10 +16,6 @@
     "translation": " Do not actually create the reserved capacity"
   },
   {
-    "id": "List placement groups.",
-    "translation": "List placement groups."
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " The server ID to associate with the security group"
   },
@@ -488,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server."
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server."
   },
@@ -578,6 +578,22 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
+    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -682,6 +698,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information."
+  },
+  {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -2024,6 +2044,10 @@
     "translation": "Column to sort by. Options are: id,virtualServerId,hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2220,6 +2244,10 @@
     "translation": "Create a zone"
   },
   {
+    "id": "Create credentials for an IBM Cloud Object Storage Account.",
+    "translation": "Create credentials for an IBM Cloud Object Storage Account."
+  },
+  {
     "id": "Create virtual server instance",
     "translation": "Create virtual server instance"
   },
@@ -2252,6 +2280,10 @@
     "translation": "Creates a user"
   },
   {
+    "id": "Credential: {{.credentialID}} was deleted.",
+    "translation": "Credential: {{.credentialID}} was deleted."
+  },
+  {
     "id": "Credit allowed",
     "translation": "Credit allowed"
   },
@@ -2266,6 +2298,18 @@
   {
     "id": "Credits used",
     "translation": "Credits used"
+  },
+  {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
   },
   {
     "id": "Current Members",
@@ -2392,6 +2436,10 @@
     "translation": "Delete an image "
   },
   {
+    "id": "Delete the credential of an Object Storage Account.",
+    "translation": "Delete the credential of an Object Storage Account."
+  },
+  {
     "id": "Delete the given security group",
     "translation": "Delete the given security group"
   },
@@ -2458,6 +2506,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'."
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -2662,6 +2714,10 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "Edit load balancer protocol"
+  },
+  {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -3068,6 +3124,10 @@
     "translation": "Failed to create Auto Scale Group.\n"
   },
   {
+    "id": "Failed to create credential. ",
+    "translation": "Failed to create credential. "
+  },
+  {
     "id": "Failed to create dedicated host.\n",
     "translation": "Failed to create dedicated host.\n"
   },
@@ -3142,6 +3202,10 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "Failed to delete L7member {{.Member}}: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to delete credential: {{.storageID}}.\n",
+    "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -3430,6 +3494,10 @@
   {
     "id": "Failed to get firewalls on your account.\n",
     "translation": "Failed to get firewalls on your account.\n"
+  },
+  {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
   },
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
@@ -3752,6 +3820,10 @@
     "translation": "Failed to list categories.\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "Failed to list datacenters.\n"
   },
@@ -4060,12 +4132,20 @@
     "translation": "Failed to set LUN ID for volume {{.VolumeID}}.\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "Failed to set password for host {{.HostID}}.\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4278,6 +4358,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "Failover operation could not be initiated for volume {{.VolumeID}}.\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5572,6 +5656,10 @@
     "translation": "List placement groups"
   },
   {
+    "id": "List placement groups.",
+    "translation": "List placement groups."
+  },
+  {
     "id": "List security group rules",
     "translation": "List security group rules"
   },
@@ -5668,6 +5756,10 @@
     "translation": "Manufacturer"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "Max IOPS"
   },
@@ -5730,6 +5822,10 @@
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "Migrate ALL guests that require migration immediately."
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6808,8 +6904,16 @@
     "translation": "Public port speed, options are: 0,10,100,1000,10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
+  },
+  {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
   },
   {
     "id": "Ram",
@@ -6822,6 +6926,10 @@
   {
     "id": "Read userdata from file",
     "translation": "Read userdata from file"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -7012,16 +7120,20 @@
     "translation": "Result limit"
   },
   {
-    "id": "Result limit.",
-    "translation": "Result limit."
-  },
-  {
     "id": "Result offset",
     "translation": "Result offset"
   },
   {
     "id": "Resume a paused virtual server instance",
     "translation": "Resume a paused virtual server instance"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
+  },
+  {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7236,8 +7348,16 @@
     "translation": "Set note for an existing file storage volume."
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions"
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7300,6 +7420,10 @@
     "translation": "Show certificates with this status, default is: all, options are: all,valid,expired"
   },
   {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
+  },
+  {
     "id": "Show guests on dedicated host",
     "translation": "Show guests on dedicated host"
   },
@@ -7346,6 +7470,10 @@
   {
     "id": "Single",
     "translation": "Single"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7712,6 +7840,10 @@
     "translation": "Target address"
   },
   {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
+  },
+  {
     "id": "Template file: {{.Location}} does not exist.",
     "translation": "Template file: {{.Location}} does not exist."
   },
@@ -7938,6 +8070,10 @@
   {
     "id": "The new label for the key",
     "translation": "The new label for the key"
+  },
+  {
+    "id": "The note ",
+    "translation": "The note "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
@@ -8260,6 +8396,10 @@
     "translation": "This interface allows you to remove the route of your Account Owned subnets."
   },
   {
+    "id": "This is the credential id associated with the volume. [Required]",
+    "translation": "This is the credential id associated with the volume. [Required]"
+  },
+  {
     "id": "This option is not available.",
     "translation": "This option is not available."
   },
@@ -8460,8 +8600,16 @@
     "translation": "Transaction"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "Type"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8528,6 +8676,10 @@
     "translation": "Unable to find category code from this volume."
   },
   {
+    "id": "Unable to find credential with ID: {{.credentialID}}.\n",
+    "translation": "Unable to find credential with ID: {{.credentialID}}.\n"
+  },
+  {
     "id": "Unable to find firewall with ID: {{.ID}}",
     "translation": "Unable to find firewall with ID: {{.ID}}"
   },
@@ -8562,6 +8714,10 @@
   {
     "id": "Unable to find network port speed for this device.",
     "translation": "Unable to find network port speed for this device."
+  },
+  {
+    "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
+    "translation": "Unable to find object-storage with ID: {{.storageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
@@ -8852,6 +9008,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "Volume Name"
   },
@@ -8870,6 +9030,10 @@
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity",
     "translation": "Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity"
+  },
+  {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
@@ -9068,6 +9232,10 @@
     "translation": "balanced local - ssd"
   },
   {
+    "id": "billing",
+    "translation": "billing"
+  },
+  {
     "id": "broadcast",
     "translation": "broadcast"
   },
@@ -9190,6 +9358,10 @@
   {
     "id": "domain",
     "translation": "domain"
+  },
+  {
+    "id": "drive",
+    "translation": "drive"
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",
@@ -9320,6 +9492,10 @@
     "translation": "label"
   },
   {
+    "id": "last transaction",
+    "translation": "last transaction"
+  },
+  {
     "id": "lists bandwidth pools",
     "translation": "lists bandwidth pools"
   },
@@ -9414,6 +9590,10 @@
   {
     "id": "powerState",
     "translation": "powerState"
+  },
+  {
+    "id": "preset",
+    "translation": "preset"
   },
   {
     "id": "price rate",
@@ -9540,8 +9720,8 @@
     "translation": "subnets"
   },
   {
-    "id": "tag",
-    "translation": "tag"
+    "id": "tags",
+    "translation": "tags"
   },
   {
     "id": "target",
@@ -9558,6 +9738,10 @@
   {
     "id": "transaction_id",
     "translation": "transaction_id"
+  },
+  {
+    "id": "transient",
+    "translation": "transient"
   },
   {
     "id": "ttl",

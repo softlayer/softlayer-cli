@@ -485,6 +485,34 @@ type FakeNetworkManager struct {
 		result1 bool
 		result2 error
 	}
+	SetSubnetNoteStub        func(int, string) (bool, error)
+	setSubnetNoteMutex       sync.RWMutex
+	setSubnetNoteArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	setSubnetNoteReturns struct {
+		result1 bool
+		result2 error
+	}
+	setSubnetNoteReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
+	SetSubnetTagsStub        func(int, string) (bool, error)
+	setSubnetTagsMutex       sync.RWMutex
+	setSubnetTagsArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	setSubnetTagsReturns struct {
+		result1 bool
+		result2 error
+	}
+	setSubnetTagsReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	UnassignGlobalIPStub        func(int) (bool, error)
 	unassignGlobalIPMutex       sync.RWMutex
 	unassignGlobalIPArgsForCall []struct {
@@ -509,15 +537,16 @@ func (fake *FakeNetworkManager) AddGlobalIP(arg1 int, arg2 bool) (datatypes.Cont
 		arg1 int
 		arg2 bool
 	}{arg1, arg2})
+	stub := fake.AddGlobalIPStub
+	fakeReturns := fake.addGlobalIPReturns
 	fake.recordInvocation("AddGlobalIP", []interface{}{arg1, arg2})
 	fake.addGlobalIPMutex.Unlock()
-	if fake.AddGlobalIPStub != nil {
-		return fake.AddGlobalIPStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.addGlobalIPReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -579,15 +608,16 @@ func (fake *FakeNetworkManager) AddSecurityGroupRule(arg1 int, arg2 string, arg3
 		arg7 int
 		arg8 string
 	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8})
+	stub := fake.AddSecurityGroupRuleStub
+	fakeReturns := fake.addSecurityGroupRuleReturns
 	fake.recordInvocation("AddSecurityGroupRule", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8})
 	fake.addSecurityGroupRuleMutex.Unlock()
-	if fake.AddSecurityGroupRuleStub != nil {
-		return fake.AddSecurityGroupRuleStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.addSecurityGroupRuleReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -648,15 +678,16 @@ func (fake *FakeNetworkManager) AddSecurityGroupRules(arg1 int, arg2 []datatypes
 		arg1 int
 		arg2 []datatypes.Network_SecurityGroup_Rule
 	}{arg1, arg2Copy})
+	stub := fake.AddSecurityGroupRulesStub
+	fakeReturns := fake.addSecurityGroupRulesReturns
 	fake.recordInvocation("AddSecurityGroupRules", []interface{}{arg1, arg2Copy})
 	fake.addSecurityGroupRulesMutex.Unlock()
-	if fake.AddSecurityGroupRulesStub != nil {
-		return fake.AddSecurityGroupRulesStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.addSecurityGroupRulesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -715,15 +746,16 @@ func (fake *FakeNetworkManager) AddSubnet(arg1 string, arg2 int, arg3 int, arg4 
 		arg4 int
 		arg5 bool
 	}{arg1, arg2, arg3, arg4, arg5})
+	stub := fake.AddSubnetStub
+	fakeReturns := fake.addSubnetReturns
 	fake.recordInvocation("AddSubnet", []interface{}{arg1, arg2, arg3, arg4, arg5})
 	fake.addSubnetMutex.Unlock()
-	if fake.AddSubnetStub != nil {
-		return fake.AddSubnetStub(arg1, arg2, arg3, arg4, arg5)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.addSubnetReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -781,15 +813,16 @@ func (fake *FakeNetworkManager) AddVlan(arg1 string, arg2 string, arg3 string, a
 		arg3 string
 		arg4 string
 	}{arg1, arg2, arg3, arg4})
+	stub := fake.AddVlanStub
+	fakeReturns := fake.addVlanReturns
 	fake.recordInvocation("AddVlan", []interface{}{arg1, arg2, arg3, arg4})
 	fake.addVlanMutex.Unlock()
-	if fake.AddVlanStub != nil {
-		return fake.AddVlanStub(arg1, arg2, arg3, arg4)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.addVlanReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -845,15 +878,16 @@ func (fake *FakeNetworkManager) AssignGlobalIP(arg1 int, arg2 string) (bool, err
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.AssignGlobalIPStub
+	fakeReturns := fake.assignGlobalIPReturns
 	fake.recordInvocation("AssignGlobalIP", []interface{}{arg1, arg2})
 	fake.assignGlobalIPMutex.Unlock()
-	if fake.AssignGlobalIPStub != nil {
-		return fake.AssignGlobalIPStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.assignGlobalIPReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -909,15 +943,16 @@ func (fake *FakeNetworkManager) AttachSecurityGroupComponent(arg1 int, arg2 int)
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.AttachSecurityGroupComponentStub
+	fakeReturns := fake.attachSecurityGroupComponentReturns
 	fake.recordInvocation("AttachSecurityGroupComponent", []interface{}{arg1, arg2})
 	fake.attachSecurityGroupComponentMutex.Unlock()
-	if fake.AttachSecurityGroupComponentStub != nil {
-		return fake.AttachSecurityGroupComponentStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.attachSecurityGroupComponentReturns
 	return fakeReturns.result1
 }
 
@@ -975,15 +1010,16 @@ func (fake *FakeNetworkManager) AttachSecurityGroupComponents(arg1 int, arg2 []i
 		arg1 int
 		arg2 []int
 	}{arg1, arg2Copy})
+	stub := fake.AttachSecurityGroupComponentsStub
+	fakeReturns := fake.attachSecurityGroupComponentsReturns
 	fake.recordInvocation("AttachSecurityGroupComponents", []interface{}{arg1, arg2Copy})
 	fake.attachSecurityGroupComponentsMutex.Unlock()
-	if fake.AttachSecurityGroupComponentsStub != nil {
-		return fake.AttachSecurityGroupComponentsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.attachSecurityGroupComponentsReturns
 	return fakeReturns.result1
 }
 
@@ -1035,15 +1071,16 @@ func (fake *FakeNetworkManager) CancelGlobalIP(arg1 int) error {
 	fake.cancelGlobalIPArgsForCall = append(fake.cancelGlobalIPArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.CancelGlobalIPStub
+	fakeReturns := fake.cancelGlobalIPReturns
 	fake.recordInvocation("CancelGlobalIP", []interface{}{arg1})
 	fake.cancelGlobalIPMutex.Unlock()
-	if fake.CancelGlobalIPStub != nil {
-		return fake.CancelGlobalIPStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.cancelGlobalIPReturns
 	return fakeReturns.result1
 }
 
@@ -1095,15 +1132,16 @@ func (fake *FakeNetworkManager) CancelSubnet(arg1 int) error {
 	fake.cancelSubnetArgsForCall = append(fake.cancelSubnetArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.CancelSubnetStub
+	fakeReturns := fake.cancelSubnetReturns
 	fake.recordInvocation("CancelSubnet", []interface{}{arg1})
 	fake.cancelSubnetMutex.Unlock()
-	if fake.CancelSubnetStub != nil {
-		return fake.CancelSubnetStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.cancelSubnetReturns
 	return fakeReturns.result1
 }
 
@@ -1155,15 +1193,16 @@ func (fake *FakeNetworkManager) CancelVLAN(arg1 int) error {
 	fake.cancelVLANArgsForCall = append(fake.cancelVLANArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.CancelVLANStub
+	fakeReturns := fake.cancelVLANReturns
 	fake.recordInvocation("CancelVLAN", []interface{}{arg1})
 	fake.cancelVLANMutex.Unlock()
-	if fake.CancelVLANStub != nil {
-		return fake.CancelVLANStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.cancelVLANReturns
 	return fakeReturns.result1
 }
 
@@ -1215,15 +1254,16 @@ func (fake *FakeNetworkManager) ClearRoute(arg1 int) (bool, error) {
 	fake.clearRouteArgsForCall = append(fake.clearRouteArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.ClearRouteStub
+	fakeReturns := fake.clearRouteReturns
 	fake.recordInvocation("ClearRoute", []interface{}{arg1})
 	fake.clearRouteMutex.Unlock()
-	if fake.ClearRouteStub != nil {
-		return fake.ClearRouteStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.clearRouteReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1279,15 +1319,16 @@ func (fake *FakeNetworkManager) CreateSecurityGroup(arg1 string, arg2 string) (d
 		arg1 string
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.CreateSecurityGroupStub
+	fakeReturns := fake.createSecurityGroupReturns
 	fake.recordInvocation("CreateSecurityGroup", []interface{}{arg1, arg2})
 	fake.createSecurityGroupMutex.Unlock()
-	if fake.CreateSecurityGroupStub != nil {
-		return fake.CreateSecurityGroupStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createSecurityGroupReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1342,15 +1383,16 @@ func (fake *FakeNetworkManager) DeleteSecurityGroup(arg1 int) error {
 	fake.deleteSecurityGroupArgsForCall = append(fake.deleteSecurityGroupArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.DeleteSecurityGroupStub
+	fakeReturns := fake.deleteSecurityGroupReturns
 	fake.recordInvocation("DeleteSecurityGroup", []interface{}{arg1})
 	fake.deleteSecurityGroupMutex.Unlock()
-	if fake.DeleteSecurityGroupStub != nil {
-		return fake.DeleteSecurityGroupStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.deleteSecurityGroupReturns
 	return fakeReturns.result1
 }
 
@@ -1403,15 +1445,16 @@ func (fake *FakeNetworkManager) DetachSecurityGroupComponent(arg1 int, arg2 int)
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.DetachSecurityGroupComponentStub
+	fakeReturns := fake.detachSecurityGroupComponentReturns
 	fake.recordInvocation("DetachSecurityGroupComponent", []interface{}{arg1, arg2})
 	fake.detachSecurityGroupComponentMutex.Unlock()
-	if fake.DetachSecurityGroupComponentStub != nil {
-		return fake.DetachSecurityGroupComponentStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.detachSecurityGroupComponentReturns
 	return fakeReturns.result1
 }
 
@@ -1469,15 +1512,16 @@ func (fake *FakeNetworkManager) DetachSecurityGroupComponents(arg1 int, arg2 []i
 		arg1 int
 		arg2 []int
 	}{arg1, arg2Copy})
+	stub := fake.DetachSecurityGroupComponentsStub
+	fakeReturns := fake.detachSecurityGroupComponentsReturns
 	fake.recordInvocation("DetachSecurityGroupComponents", []interface{}{arg1, arg2Copy})
 	fake.detachSecurityGroupComponentsMutex.Unlock()
-	if fake.DetachSecurityGroupComponentsStub != nil {
-		return fake.DetachSecurityGroupComponentsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.detachSecurityGroupComponentsReturns
 	return fakeReturns.result1
 }
 
@@ -1531,15 +1575,16 @@ func (fake *FakeNetworkManager) EditSecurityGroup(arg1 int, arg2 string, arg3 st
 		arg2 string
 		arg3 string
 	}{arg1, arg2, arg3})
+	stub := fake.EditSecurityGroupStub
+	fakeReturns := fake.editSecurityGroupReturns
 	fake.recordInvocation("EditSecurityGroup", []interface{}{arg1, arg2, arg3})
 	fake.editSecurityGroupMutex.Unlock()
-	if fake.EditSecurityGroupStub != nil {
-		return fake.EditSecurityGroupStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.editSecurityGroupReturns
 	return fakeReturns.result1
 }
 
@@ -1599,15 +1644,16 @@ func (fake *FakeNetworkManager) EditSecurityGroupRule(arg1 int, arg2 int, arg3 s
 		arg8 int
 		arg9 string
 	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9})
+	stub := fake.EditSecurityGroupRuleStub
+	fakeReturns := fake.editSecurityGroupRuleReturns
 	fake.recordInvocation("EditSecurityGroupRule", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9})
 	fake.editSecurityGroupRuleMutex.Unlock()
-	if fake.EditSecurityGroupRuleStub != nil {
-		return fake.EditSecurityGroupRuleStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.editSecurityGroupRuleReturns
 	return fakeReturns.result1
 }
 
@@ -1665,15 +1711,16 @@ func (fake *FakeNetworkManager) EditSecurityGroupRules(arg1 int, arg2 []datatype
 		arg1 int
 		arg2 []datatypes.Network_SecurityGroup_Rule
 	}{arg1, arg2Copy})
+	stub := fake.EditSecurityGroupRulesStub
+	fakeReturns := fake.editSecurityGroupRulesReturns
 	fake.recordInvocation("EditSecurityGroupRules", []interface{}{arg1, arg2Copy})
 	fake.editSecurityGroupRulesMutex.Unlock()
-	if fake.EditSecurityGroupRulesStub != nil {
-		return fake.EditSecurityGroupRulesStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.editSecurityGroupRulesReturns
 	return fakeReturns.result1
 }
 
@@ -1726,15 +1773,16 @@ func (fake *FakeNetworkManager) EditVlan(arg1 int, arg2 string) error {
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.EditVlanStub
+	fakeReturns := fake.editVlanReturns
 	fake.recordInvocation("EditVlan", []interface{}{arg1, arg2})
 	fake.editVlanMutex.Unlock()
-	if fake.EditVlanStub != nil {
-		return fake.EditVlanStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.editVlanReturns
 	return fakeReturns.result1
 }
 
@@ -1786,15 +1834,16 @@ func (fake *FakeNetworkManager) GetCancelFailureReasons(arg1 int) []string {
 	fake.getCancelFailureReasonsArgsForCall = append(fake.getCancelFailureReasonsArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetCancelFailureReasonsStub
+	fakeReturns := fake.getCancelFailureReasonsReturns
 	fake.recordInvocation("GetCancelFailureReasons", []interface{}{arg1})
 	fake.getCancelFailureReasonsMutex.Unlock()
-	if fake.GetCancelFailureReasonsStub != nil {
-		return fake.GetCancelFailureReasonsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.getCancelFailureReasonsReturns
 	return fakeReturns.result1
 }
 
@@ -1847,15 +1896,16 @@ func (fake *FakeNetworkManager) GetSecurityGroup(arg1 int, arg2 string) (datatyp
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetSecurityGroupStub
+	fakeReturns := fake.getSecurityGroupReturns
 	fake.recordInvocation("GetSecurityGroup", []interface{}{arg1, arg2})
 	fake.getSecurityGroupMutex.Unlock()
-	if fake.GetSecurityGroupStub != nil {
-		return fake.GetSecurityGroupStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getSecurityGroupReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1911,15 +1961,16 @@ func (fake *FakeNetworkManager) GetSubnet(arg1 int, arg2 string) (datatypes.Netw
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetSubnetStub
+	fakeReturns := fake.getSubnetReturns
 	fake.recordInvocation("GetSubnet", []interface{}{arg1, arg2})
 	fake.getSubnetMutex.Unlock()
-	if fake.GetSubnetStub != nil {
-		return fake.GetSubnetStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getSubnetReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1975,15 +2026,16 @@ func (fake *FakeNetworkManager) GetVlan(arg1 int, arg2 string) (datatypes.Networ
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetVlanStub
+	fakeReturns := fake.getVlanReturns
 	fake.recordInvocation("GetVlan", []interface{}{arg1, arg2})
 	fake.getVlanMutex.Unlock()
-	if fake.GetVlanStub != nil {
-		return fake.GetVlanStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getVlanReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2038,15 +2090,16 @@ func (fake *FakeNetworkManager) IPLookup(arg1 string) (datatypes.Network_Subnet_
 	fake.iPLookupArgsForCall = append(fake.iPLookupArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.IPLookupStub
+	fakeReturns := fake.iPLookupReturns
 	fake.recordInvocation("IPLookup", []interface{}{arg1})
 	fake.iPLookupMutex.Unlock()
-	if fake.IPLookupStub != nil {
-		return fake.IPLookupStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.iPLookupReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2100,15 +2153,16 @@ func (fake *FakeNetworkManager) ListDatacenters() (map[int]string, error) {
 	ret, specificReturn := fake.listDatacentersReturnsOnCall[len(fake.listDatacentersArgsForCall)]
 	fake.listDatacentersArgsForCall = append(fake.listDatacentersArgsForCall, struct {
 	}{})
+	stub := fake.ListDatacentersStub
+	fakeReturns := fake.listDatacentersReturns
 	fake.recordInvocation("ListDatacenters", []interface{}{})
 	fake.listDatacentersMutex.Unlock()
-	if fake.ListDatacentersStub != nil {
-		return fake.ListDatacentersStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listDatacentersReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2157,15 +2211,16 @@ func (fake *FakeNetworkManager) ListGlobalIPs(arg1 int, arg2 int) ([]datatypes.N
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.ListGlobalIPsStub
+	fakeReturns := fake.listGlobalIPsReturns
 	fake.recordInvocation("ListGlobalIPs", []interface{}{arg1, arg2})
 	fake.listGlobalIPsMutex.Unlock()
-	if fake.ListGlobalIPsStub != nil {
-		return fake.ListGlobalIPsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listGlobalIPsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2221,15 +2276,16 @@ func (fake *FakeNetworkManager) ListRouters(arg1 int, arg2 string) ([]string, er
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.ListRoutersStub
+	fakeReturns := fake.listRoutersReturns
 	fake.recordInvocation("ListRouters", []interface{}{arg1, arg2})
 	fake.listRoutersMutex.Unlock()
-	if fake.ListRoutersStub != nil {
-		return fake.ListRoutersStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listRoutersReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2284,15 +2340,16 @@ func (fake *FakeNetworkManager) ListSecurityGroupRules(arg1 int) ([]datatypes.Ne
 	fake.listSecurityGroupRulesArgsForCall = append(fake.listSecurityGroupRulesArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.ListSecurityGroupRulesStub
+	fakeReturns := fake.listSecurityGroupRulesReturns
 	fake.recordInvocation("ListSecurityGroupRules", []interface{}{arg1})
 	fake.listSecurityGroupRulesMutex.Unlock()
-	if fake.ListSecurityGroupRulesStub != nil {
-		return fake.ListSecurityGroupRulesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listSecurityGroupRulesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2346,15 +2403,16 @@ func (fake *FakeNetworkManager) ListSecurityGroups() ([]datatypes.Network_Securi
 	ret, specificReturn := fake.listSecurityGroupsReturnsOnCall[len(fake.listSecurityGroupsArgsForCall)]
 	fake.listSecurityGroupsArgsForCall = append(fake.listSecurityGroupsArgsForCall, struct {
 	}{})
+	stub := fake.ListSecurityGroupsStub
+	fakeReturns := fake.listSecurityGroupsReturns
 	fake.recordInvocation("ListSecurityGroups", []interface{}{})
 	fake.listSecurityGroupsMutex.Unlock()
-	if fake.ListSecurityGroupsStub != nil {
-		return fake.ListSecurityGroupsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listSecurityGroupsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2408,15 +2466,16 @@ func (fake *FakeNetworkManager) ListSubnets(arg1 string, arg2 string, arg3 int, 
 		arg6 int
 		arg7 string
 	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
+	stub := fake.ListSubnetsStub
+	fakeReturns := fake.listSubnetsReturns
 	fake.recordInvocation("ListSubnets", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
 	fake.listSubnetsMutex.Unlock()
-	if fake.ListSubnetsStub != nil {
-		return fake.ListSubnetsStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listSubnetsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2475,15 +2534,16 @@ func (fake *FakeNetworkManager) ListVlans(arg1 string, arg2 int, arg3 string, ar
 		arg4 int
 		arg5 string
 	}{arg1, arg2, arg3, arg4, arg5})
+	stub := fake.ListVlansStub
+	fakeReturns := fake.listVlansReturns
 	fake.recordInvocation("ListVlans", []interface{}{arg1, arg2, arg3, arg4, arg5})
 	fake.listVlansMutex.Unlock()
-	if fake.ListVlansStub != nil {
-		return fake.ListVlansStub(arg1, arg2, arg3, arg4, arg5)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listVlansReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2539,15 +2599,16 @@ func (fake *FakeNetworkManager) RemoveSecurityGroupRule(arg1 int, arg2 int) erro
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.RemoveSecurityGroupRuleStub
+	fakeReturns := fake.removeSecurityGroupRuleReturns
 	fake.recordInvocation("RemoveSecurityGroupRule", []interface{}{arg1, arg2})
 	fake.removeSecurityGroupRuleMutex.Unlock()
-	if fake.RemoveSecurityGroupRuleStub != nil {
-		return fake.RemoveSecurityGroupRuleStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.removeSecurityGroupRuleReturns
 	return fakeReturns.result1
 }
 
@@ -2605,15 +2666,16 @@ func (fake *FakeNetworkManager) RemoveSecurityGroupRules(arg1 int, arg2 []int) e
 		arg1 int
 		arg2 []int
 	}{arg1, arg2Copy})
+	stub := fake.RemoveSecurityGroupRulesStub
+	fakeReturns := fake.removeSecurityGroupRulesReturns
 	fake.recordInvocation("RemoveSecurityGroupRules", []interface{}{arg1, arg2Copy})
 	fake.removeSecurityGroupRulesMutex.Unlock()
-	if fake.RemoveSecurityGroupRulesStub != nil {
-		return fake.RemoveSecurityGroupRulesStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.removeSecurityGroupRulesReturns
 	return fakeReturns.result1
 }
 
@@ -2667,15 +2729,16 @@ func (fake *FakeNetworkManager) Route(arg1 int, arg2 string, arg3 string) (bool,
 		arg2 string
 		arg3 string
 	}{arg1, arg2, arg3})
+	stub := fake.RouteStub
+	fakeReturns := fake.routeReturns
 	fake.recordInvocation("Route", []interface{}{arg1, arg2, arg3})
 	fake.routeMutex.Unlock()
-	if fake.RouteStub != nil {
-		return fake.RouteStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.routeReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2724,21 +2787,152 @@ func (fake *FakeNetworkManager) RouteReturnsOnCall(i int, result1 bool, result2 
 	}{result1, result2}
 }
 
+func (fake *FakeNetworkManager) SetSubnetNote(arg1 int, arg2 string) (bool, error) {
+	fake.setSubnetNoteMutex.Lock()
+	ret, specificReturn := fake.setSubnetNoteReturnsOnCall[len(fake.setSubnetNoteArgsForCall)]
+	fake.setSubnetNoteArgsForCall = append(fake.setSubnetNoteArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.SetSubnetNoteStub
+	fakeReturns := fake.setSubnetNoteReturns
+	fake.recordInvocation("SetSubnetNote", []interface{}{arg1, arg2})
+	fake.setSubnetNoteMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNetworkManager) SetSubnetNoteCallCount() int {
+	fake.setSubnetNoteMutex.RLock()
+	defer fake.setSubnetNoteMutex.RUnlock()
+	return len(fake.setSubnetNoteArgsForCall)
+}
+
+func (fake *FakeNetworkManager) SetSubnetNoteCalls(stub func(int, string) (bool, error)) {
+	fake.setSubnetNoteMutex.Lock()
+	defer fake.setSubnetNoteMutex.Unlock()
+	fake.SetSubnetNoteStub = stub
+}
+
+func (fake *FakeNetworkManager) SetSubnetNoteArgsForCall(i int) (int, string) {
+	fake.setSubnetNoteMutex.RLock()
+	defer fake.setSubnetNoteMutex.RUnlock()
+	argsForCall := fake.setSubnetNoteArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeNetworkManager) SetSubnetNoteReturns(result1 bool, result2 error) {
+	fake.setSubnetNoteMutex.Lock()
+	defer fake.setSubnetNoteMutex.Unlock()
+	fake.SetSubnetNoteStub = nil
+	fake.setSubnetNoteReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNetworkManager) SetSubnetNoteReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.setSubnetNoteMutex.Lock()
+	defer fake.setSubnetNoteMutex.Unlock()
+	fake.SetSubnetNoteStub = nil
+	if fake.setSubnetNoteReturnsOnCall == nil {
+		fake.setSubnetNoteReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.setSubnetNoteReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNetworkManager) SetSubnetTags(arg1 int, arg2 string) (bool, error) {
+	fake.setSubnetTagsMutex.Lock()
+	ret, specificReturn := fake.setSubnetTagsReturnsOnCall[len(fake.setSubnetTagsArgsForCall)]
+	fake.setSubnetTagsArgsForCall = append(fake.setSubnetTagsArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.SetSubnetTagsStub
+	fakeReturns := fake.setSubnetTagsReturns
+	fake.recordInvocation("SetSubnetTags", []interface{}{arg1, arg2})
+	fake.setSubnetTagsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNetworkManager) SetSubnetTagsCallCount() int {
+	fake.setSubnetTagsMutex.RLock()
+	defer fake.setSubnetTagsMutex.RUnlock()
+	return len(fake.setSubnetTagsArgsForCall)
+}
+
+func (fake *FakeNetworkManager) SetSubnetTagsCalls(stub func(int, string) (bool, error)) {
+	fake.setSubnetTagsMutex.Lock()
+	defer fake.setSubnetTagsMutex.Unlock()
+	fake.SetSubnetTagsStub = stub
+}
+
+func (fake *FakeNetworkManager) SetSubnetTagsArgsForCall(i int) (int, string) {
+	fake.setSubnetTagsMutex.RLock()
+	defer fake.setSubnetTagsMutex.RUnlock()
+	argsForCall := fake.setSubnetTagsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeNetworkManager) SetSubnetTagsReturns(result1 bool, result2 error) {
+	fake.setSubnetTagsMutex.Lock()
+	defer fake.setSubnetTagsMutex.Unlock()
+	fake.SetSubnetTagsStub = nil
+	fake.setSubnetTagsReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNetworkManager) SetSubnetTagsReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.setSubnetTagsMutex.Lock()
+	defer fake.setSubnetTagsMutex.Unlock()
+	fake.SetSubnetTagsStub = nil
+	if fake.setSubnetTagsReturnsOnCall == nil {
+		fake.setSubnetTagsReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.setSubnetTagsReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeNetworkManager) UnassignGlobalIP(arg1 int) (bool, error) {
 	fake.unassignGlobalIPMutex.Lock()
 	ret, specificReturn := fake.unassignGlobalIPReturnsOnCall[len(fake.unassignGlobalIPArgsForCall)]
 	fake.unassignGlobalIPArgsForCall = append(fake.unassignGlobalIPArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.UnassignGlobalIPStub
+	fakeReturns := fake.unassignGlobalIPReturns
 	fake.recordInvocation("UnassignGlobalIP", []interface{}{arg1})
 	fake.unassignGlobalIPMutex.Unlock()
-	if fake.UnassignGlobalIPStub != nil {
-		return fake.UnassignGlobalIPStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.unassignGlobalIPReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2860,6 +3054,10 @@ func (fake *FakeNetworkManager) Invocations() map[string][][]interface{} {
 	defer fake.removeSecurityGroupRulesMutex.RUnlock()
 	fake.routeMutex.RLock()
 	defer fake.routeMutex.RUnlock()
+	fake.setSubnetNoteMutex.RLock()
+	defer fake.setSubnetNoteMutex.RUnlock()
+	fake.setSubnetTagsMutex.RLock()
+	defer fake.setSubnetTagsMutex.RUnlock()
 	fake.unassignGlobalIPMutex.RLock()
 	defer fake.unassignGlobalIPMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}

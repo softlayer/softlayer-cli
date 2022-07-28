@@ -16,10 +16,6 @@
     "translation": " 予約済み容量を実際には作成しない"
   },
   {
-    "id": "List placement groups.",
-    "translation": "配置グループをリストします。"
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " セキュリティー・グループに関連付けるサーバー ID"
   },
@@ -488,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware guests 1234567\n このサーバー上で稼働している仮想ゲストをリストします。"
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware storage 1234567\n ハードウェア・サーバーのストレージ詳細を取得します。"
   },
@@ -578,6 +578,14 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -682,6 +690,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   このコマンドは、ID 12345678 のサブネットに関する詳細情報 (Virtual Server およびハードウェア・サーバーの情報を含む) を表示します。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -2024,6 +2036,10 @@
     "translation": "ソートの基準にする列。 オプション: id、virtualServerId、hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2173,7 +2189,7 @@
   },
   {
     "id": "Create a dedicatedhost",
-    "translation": "専用ホストを作成します"
+    "translation": "専用ホストを作成します。"
   },
   {
     "id": "Create a global IP",
@@ -2266,6 +2282,18 @@
   {
     "id": "Credits used",
     "translation": "使用されたクレジット"
+  },
+  {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
   },
   {
     "id": "Current Members",
@@ -2397,7 +2425,7 @@
   },
   {
     "id": "Delete this group and destroy all members of it",
-    "translation": "このグループを削除し、そのすべてのメンバーを破棄します"
+    "translation": "このグループを削除し、そのすべてのメンバーを破棄します。"
   },
   {
     "id": "Delivered",
@@ -2458,6 +2486,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "無効: ボリューム '{{.ID}}' のスナップショット・スペース使用量のしきい値が無効になっています。"
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -2605,7 +2637,7 @@
   },
   {
     "id": "Edit a L7 policy",
-    "translation": "L7 ポリシーの編集"
+    "translation": "L7 ポリシーを編集します"
   },
   {
     "id": "Edit a L7 pool",
@@ -2662,6 +2694,10 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "ロード・バランサー・プロトコルの編集"
+  },
+  {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -3432,6 +3468,10 @@
     "translation": "ご使用のアカウントのファイアウォールの取得に失敗しました。\n"
   },
   {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
+  },
+  {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "ハードウェア・サーバー {{.ID}} の取得に失敗しました。\n"
   },
@@ -3752,6 +3792,10 @@
     "translation": "カテゴリーのリストに失敗しました。\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "データ・センターのリストに失敗しました。\n"
   },
@@ -4060,12 +4104,20 @@
     "translation": "ボリューム {{.VolumeID}} の LUN ID の設定に失敗しました。\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "ホスト {{.HostID}} のパスワードの設定に失敗しました。\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4278,6 +4330,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "ボリューム {{.VolumeID}} に対してフェイルオーバー操作を開始できませんでした。\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -4601,7 +4657,7 @@
   },
   {
     "id": "Get billing details for a virtual server instance",
-    "translation": "仮想サーバー・インスタンスの請求詳細の取得"
+    "translation": "仮想サーバー・インスタンスの請求詳細を取得します。"
   },
   {
     "id": "Get billing for a hardware device.",
@@ -4689,7 +4745,7 @@
   },
   {
     "id": "Grant access from a user to an specific device",
-    "translation": "ユーザーから特定のデバイスへのアクセス権限の付与"
+    "translation": "ユーザーから特定のデバイスへのアクセス権限を付与します。"
   },
   {
     "id": "Guest ID",
@@ -5397,7 +5453,7 @@
   },
   {
     "id": "List all Autoscale Groups on your account",
-    "translation": "アカウントのすべての自動スケーリング・グループをリストします"
+    "translation": "アカウントのすべての自動スケーリング・グループをリストします。"
   },
   {
     "id": "List all active quotes on an account",
@@ -5572,6 +5628,10 @@
     "translation": "配置グループをリストします"
   },
   {
+    "id": "List placement groups.",
+    "translation": "配置グループをリストします。"
+  },
+  {
     "id": "List security group rules",
     "translation": "セキュリティー・グループ・ルールをリストします"
   },
@@ -5637,7 +5697,7 @@
   },
   {
     "id": "Location",
-    "translation": "場所"
+    "translation": "ロケーション"
   },
   {
     "id": "Location/Region",
@@ -5666,6 +5726,10 @@
   {
     "id": "Manufacturer",
     "translation": "製造元"
+  },
+  {
+    "id": "Max",
+    "translation": "Max"
   },
   {
     "id": "Max IOPS",
@@ -5730,6 +5794,10 @@
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "即時にマイグレーションを必要とするすべてのゲストをマイグレーションします。"
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6808,8 +6876,16 @@
     "translation": "パブリック・ポート速度。オプションは、0、10、100、1000、10000 です"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
+  },
+  {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
   },
   {
     "id": "Ram",
@@ -6822,6 +6898,10 @@
   {
     "id": "Read userdata from file",
     "translation": "ユーザー・データをファイルから読み取ります"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -7012,16 +7092,20 @@
     "translation": "結果の制限"
   },
   {
-    "id": "Result limit.",
-    "translation": "Result limit."
-  },
-  {
     "id": "Result offset",
     "translation": "結果のオフセット"
   },
   {
     "id": "Resume a paused virtual server instance",
     "translation": "一時停止された Virtual Server インスタンスを再開します"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
+  },
+  {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7236,8 +7320,16 @@
     "translation": "既存のファイル・ストレージ・ボリュームのメモを設定します。"
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "このユーザーの許可に一致する許可を設定します。 適切な許可を追加および削除します"
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7300,6 +7392,10 @@
     "translation": "この状況の証明書を表示します。デフォルトは all、オプションは all、valid、expired です"
   },
   {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
+  },
+  {
     "id": "Show guests on dedicated host",
     "translation": "専用ホスト上のゲストの表示"
   },
@@ -7346,6 +7442,10 @@
   {
     "id": "Single",
     "translation": "単一"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7712,6 +7812,10 @@
     "translation": "ターゲット・アドレス"
   },
   {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
+  },
+  {
     "id": "Template file: {{.Location}} does not exist.",
     "translation": "テンプレート・ファイル: {{.Location}} は存在しません。"
   },
@@ -7938,6 +8042,10 @@
   {
     "id": "The new label for the key",
     "translation": "鍵の新しいラベル"
+  },
+  {
+    "id": "The note ",
+    "translation": "The note "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
@@ -8460,8 +8568,16 @@
     "translation": "トランザクション"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "タイプ"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8852,6 +8968,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "ボリューム名"
   },
@@ -8870,6 +8990,10 @@
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity",
     "translation": "Virtual Server でのプロビジョニング終了を最大 X 秒待ってから戻ります。 これは、オプション --quantity との互換性はありません"
+  },
+  {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",

@@ -9,6 +9,32 @@ import (
 )
 
 type FakeObjectStorageManager struct {
+	CreateCredentialStub        func(int, string) ([]datatypes.Network_Storage_Credential, error)
+	createCredentialMutex       sync.RWMutex
+	createCredentialArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	createCredentialReturns struct {
+		result1 []datatypes.Network_Storage_Credential
+		result2 error
+	}
+	createCredentialReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Storage_Credential
+		result2 error
+	}
+	DeleteCredentialStub        func(int, int) error
+	deleteCredentialMutex       sync.RWMutex
+	deleteCredentialArgsForCall []struct {
+		arg1 int
+		arg2 int
+	}
+	deleteCredentialReturns struct {
+		result1 error
+	}
+	deleteCredentialReturnsOnCall map[int]struct {
+		result1 error
+	}
 	GetAccountsStub        func(string) ([]datatypes.Network_Storage, error)
 	getAccountsMutex       sync.RWMutex
 	getAccountsArgsForCall []struct {
@@ -35,8 +61,149 @@ type FakeObjectStorageManager struct {
 		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint
 		result2 error
 	}
+	ListCredentialStub        func(int, string) ([]datatypes.Network_Storage_Credential, error)
+	listCredentialMutex       sync.RWMutex
+	listCredentialArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	listCredentialReturns struct {
+		result1 []datatypes.Network_Storage_Credential
+		result2 error
+	}
+	listCredentialReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Storage_Credential
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeObjectStorageManager) CreateCredential(arg1 int, arg2 string) ([]datatypes.Network_Storage_Credential, error) {
+	fake.createCredentialMutex.Lock()
+	ret, specificReturn := fake.createCredentialReturnsOnCall[len(fake.createCredentialArgsForCall)]
+	fake.createCredentialArgsForCall = append(fake.createCredentialArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.CreateCredentialStub
+	fakeReturns := fake.createCredentialReturns
+	fake.recordInvocation("CreateCredential", []interface{}{arg1, arg2})
+	fake.createCredentialMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeObjectStorageManager) CreateCredentialCallCount() int {
+	fake.createCredentialMutex.RLock()
+	defer fake.createCredentialMutex.RUnlock()
+	return len(fake.createCredentialArgsForCall)
+}
+
+func (fake *FakeObjectStorageManager) CreateCredentialCalls(stub func(int, string) ([]datatypes.Network_Storage_Credential, error)) {
+	fake.createCredentialMutex.Lock()
+	defer fake.createCredentialMutex.Unlock()
+	fake.CreateCredentialStub = stub
+}
+
+func (fake *FakeObjectStorageManager) CreateCredentialArgsForCall(i int) (int, string) {
+	fake.createCredentialMutex.RLock()
+	defer fake.createCredentialMutex.RUnlock()
+	argsForCall := fake.createCredentialArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeObjectStorageManager) CreateCredentialReturns(result1 []datatypes.Network_Storage_Credential, result2 error) {
+	fake.createCredentialMutex.Lock()
+	defer fake.createCredentialMutex.Unlock()
+	fake.CreateCredentialStub = nil
+	fake.createCredentialReturns = struct {
+		result1 []datatypes.Network_Storage_Credential
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeObjectStorageManager) CreateCredentialReturnsOnCall(i int, result1 []datatypes.Network_Storage_Credential, result2 error) {
+	fake.createCredentialMutex.Lock()
+	defer fake.createCredentialMutex.Unlock()
+	fake.CreateCredentialStub = nil
+	if fake.createCredentialReturnsOnCall == nil {
+		fake.createCredentialReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Storage_Credential
+			result2 error
+		})
+	}
+	fake.createCredentialReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Storage_Credential
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeObjectStorageManager) DeleteCredential(arg1 int, arg2 int) error {
+	fake.deleteCredentialMutex.Lock()
+	ret, specificReturn := fake.deleteCredentialReturnsOnCall[len(fake.deleteCredentialArgsForCall)]
+	fake.deleteCredentialArgsForCall = append(fake.deleteCredentialArgsForCall, struct {
+		arg1 int
+		arg2 int
+	}{arg1, arg2})
+	stub := fake.DeleteCredentialStub
+	fakeReturns := fake.deleteCredentialReturns
+	fake.recordInvocation("DeleteCredential", []interface{}{arg1, arg2})
+	fake.deleteCredentialMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeObjectStorageManager) DeleteCredentialCallCount() int {
+	fake.deleteCredentialMutex.RLock()
+	defer fake.deleteCredentialMutex.RUnlock()
+	return len(fake.deleteCredentialArgsForCall)
+}
+
+func (fake *FakeObjectStorageManager) DeleteCredentialCalls(stub func(int, int) error) {
+	fake.deleteCredentialMutex.Lock()
+	defer fake.deleteCredentialMutex.Unlock()
+	fake.DeleteCredentialStub = stub
+}
+
+func (fake *FakeObjectStorageManager) DeleteCredentialArgsForCall(i int) (int, int) {
+	fake.deleteCredentialMutex.RLock()
+	defer fake.deleteCredentialMutex.RUnlock()
+	argsForCall := fake.deleteCredentialArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeObjectStorageManager) DeleteCredentialReturns(result1 error) {
+	fake.deleteCredentialMutex.Lock()
+	defer fake.deleteCredentialMutex.Unlock()
+	fake.DeleteCredentialStub = nil
+	fake.deleteCredentialReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeObjectStorageManager) DeleteCredentialReturnsOnCall(i int, result1 error) {
+	fake.deleteCredentialMutex.Lock()
+	defer fake.deleteCredentialMutex.Unlock()
+	fake.DeleteCredentialStub = nil
+	if fake.deleteCredentialReturnsOnCall == nil {
+		fake.deleteCredentialReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.deleteCredentialReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeObjectStorageManager) GetAccounts(arg1 string) ([]datatypes.Network_Storage, error) {
@@ -167,13 +334,84 @@ func (fake *FakeObjectStorageManager) GetEndpointsReturnsOnCall(i int, result1 [
 	}{result1, result2}
 }
 
+func (fake *FakeObjectStorageManager) ListCredential(arg1 int, arg2 string) ([]datatypes.Network_Storage_Credential, error) {
+	fake.listCredentialMutex.Lock()
+	ret, specificReturn := fake.listCredentialReturnsOnCall[len(fake.listCredentialArgsForCall)]
+	fake.listCredentialArgsForCall = append(fake.listCredentialArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.ListCredentialStub
+	fakeReturns := fake.listCredentialReturns
+	fake.recordInvocation("ListCredential", []interface{}{arg1, arg2})
+	fake.listCredentialMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeObjectStorageManager) ListCredentialCallCount() int {
+	fake.listCredentialMutex.RLock()
+	defer fake.listCredentialMutex.RUnlock()
+	return len(fake.listCredentialArgsForCall)
+}
+
+func (fake *FakeObjectStorageManager) ListCredentialCalls(stub func(int, string) ([]datatypes.Network_Storage_Credential, error)) {
+	fake.listCredentialMutex.Lock()
+	defer fake.listCredentialMutex.Unlock()
+	fake.ListCredentialStub = stub
+}
+
+func (fake *FakeObjectStorageManager) ListCredentialArgsForCall(i int) (int, string) {
+	fake.listCredentialMutex.RLock()
+	defer fake.listCredentialMutex.RUnlock()
+	argsForCall := fake.listCredentialArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeObjectStorageManager) ListCredentialReturns(result1 []datatypes.Network_Storage_Credential, result2 error) {
+	fake.listCredentialMutex.Lock()
+	defer fake.listCredentialMutex.Unlock()
+	fake.ListCredentialStub = nil
+	fake.listCredentialReturns = struct {
+		result1 []datatypes.Network_Storage_Credential
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeObjectStorageManager) ListCredentialReturnsOnCall(i int, result1 []datatypes.Network_Storage_Credential, result2 error) {
+	fake.listCredentialMutex.Lock()
+	defer fake.listCredentialMutex.Unlock()
+	fake.ListCredentialStub = nil
+	if fake.listCredentialReturnsOnCall == nil {
+		fake.listCredentialReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Storage_Credential
+			result2 error
+		})
+	}
+	fake.listCredentialReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Storage_Credential
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeObjectStorageManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.createCredentialMutex.RLock()
+	defer fake.createCredentialMutex.RUnlock()
+	fake.deleteCredentialMutex.RLock()
+	defer fake.deleteCredentialMutex.RUnlock()
 	fake.getAccountsMutex.RLock()
 	defer fake.getAccountsMutex.RUnlock()
 	fake.getEndpointsMutex.RLock()
 	defer fake.getEndpointsMutex.RUnlock()
+	fake.listCredentialMutex.RLock()
+	defer fake.listCredentialMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

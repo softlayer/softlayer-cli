@@ -16,10 +16,6 @@
     "translation": " Reservierte Kapazität nicht tatsächlich erstellen"
   },
   {
-    "id": "List placement groups.",
-    "translation": " Platzierungsgruppen auflisten."
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " Die Server-ID, die der Sicherheitsgruppe zugeordnet werden soll"
   },
@@ -133,7 +129,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl block replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nWenn der Zugriff auf einen Datenträger (mit Replikation) aufgrund eines Ausfalls nicht mehr möglich ist, kann mithilfe dieser Methode ein sofortiger \nFailover auf einen verfügbaren Replikatdatenträger an einem anderen Standort durchgeführt werden. Diese Methode lässt keinen Failback über die API zu. \nFür einen Failback auf den ursprünglichen Datenträger nach der Verwendung dieser Methode öffnen Sie ein Support-Ticket. \nZum Testen des Failovers verwenden Sie stattdessen '${COMMAND_NAME} sl block replica-failover'. \n\nBEISPIEL:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tMit diesem Befehl wird eine Failover-Operation für den Datenträger mit der ID 12345678 auf den Replikatdatenträger mit der ID 87654321 durchgeführt. "
+    "translation": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nWenn der Zugriff auf einen Datenträger (mit Replikation) aufgrund eines Ausfalls nicht mehr möglich ist, kann mithilfe dieser Methode ein sofortiger \nFailover auf einen verfügbaren Replikatdatenträger an einem anderen Standort durchgeführt werden. Diese Methode lässt keinen Failback über die API zu. \nFür einen Failback auf den ursprünglichen Datenträger nach der Verwendung dieser Methode öffnen Sie ein Support-Ticket. \nZum Testen des Failovers verwenden Sie stattdessen '${COMMAND_NAME} sl block replica-failover'. \n\nBEISPIEL:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tMit diesem Befehl wird eine Failover-Operation für den Datenträger mit der ID 12345678 auf den Replikatdatenträger mit der ID 87654321 durchgeführt."
   },
   {
     "id": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678",
@@ -341,7 +337,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl file replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nWenn der Zugriff auf einen Datenträger (mit Replikation) aufgrund eines Ausfalls nicht mehr möglich ist, kann mithilfe dieser Methode ein sofortiger \nFailover auf einen verfügbaren Replikatdatenträger an einem anderen Standort durchgeführt werden. Diese Methode lässt keinen Failback über die API zu. \nFür einen Failback auf den ursprünglichen Datenträger nach der Verwendung dieser Methode öffnen Sie ein Support-Ticket. \nZum Testen des Failovers verwenden Sie stattdessen '${COMMAND_NAME} sl file replica-failover'. \n\nBEISPIEL:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tMit diesem Befehl wird eine Failover-Operation für den Datenträger mit der ID 12345678 auf den Replikatdatenträger mit der ID 87654321 durchgeführt. "
+    "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nWenn der Zugriff auf einen Datenträger (mit Replikation) aufgrund eines Ausfalls nicht mehr möglich ist, kann mithilfe dieser Methode ein sofortiger \nFailover auf einen verfügbaren Replikatdatenträger an einem anderen Standort durchgeführt werden. Diese Methode lässt keinen Failback über die API zu. \nFür einen Failback auf den ursprünglichen Datenträger nach der Verwendung dieser Methode öffnen Sie ein Support-Ticket. \nZum Testen des Failovers verwenden Sie stattdessen '${COMMAND_NAME} sl file replica-failover'. \n\nBEISPIEL:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tMit diesem Befehl wird eine Failover-Operation für den Datenträger mit der ID 12345678 auf den Replikatdatenträger mit der ID 87654321 durchgeführt."
   },
   {
     "id": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678",
@@ -488,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONEN] ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware guests 1234567\n Listet die auf diesem Server ausgeführten virtuellen Gastmaschinen auf."
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONEN] ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware storage 1234567\n Speicherdetails für einen Hardwareserver abrufen."
   },
@@ -578,6 +578,14 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -682,6 +690,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   Dieser Befehl zeigt Detailinformationen zum Teilnetz mit der ID 12345678 an, einschließlich virtuellen Servern und Informationen zu Hardware-Servern."
+  },
+  {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -2024,6 +2036,10 @@
     "translation": "Spalte, nach der sortiert werden soll. Optionen: id,virtualServerId,hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2173,7 +2189,7 @@
   },
   {
     "id": "Create a dedicatedhost",
-    "translation": "Erstellen Sie einen dedicatedhost."
+    "translation": "Erstellen Sie einen dedicatedhost"
   },
   {
     "id": "Create a global IP",
@@ -2266,6 +2282,18 @@
   {
     "id": "Credits used",
     "translation": "Genutztes Guthaben"
+  },
+  {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
   },
   {
     "id": "Current Members",
@@ -2458,6 +2486,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "Inaktiviert: Der Schwellenwert für die Speicherbelegung für Momentaufnahmen ist für Datenträger \"{{.ID}}\" inaktiviert."
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -2662,6 +2694,10 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "Protokoll der Lastausgleichsfunktion bearbeiten"
+  },
+  {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -3432,6 +3468,10 @@
     "translation": "Abrufen von Firewalls für eigenes Konto fehlgeschlagen.\n"
   },
   {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
+  },
+  {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "Abrufen des Hardware-Servers {{.ID}} fehlgeschlagen.\n"
   },
@@ -3752,6 +3792,10 @@
     "translation": "Auflisten von Kategorien fehlgeschlagen.\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "Auflisten von Rechenzentren fehlgeschlagen.\n"
   },
@@ -4060,12 +4104,20 @@
     "translation": "Festlegen der LUN-ID für Datenträger {{.VolumeID}} fehlgeschlagen.\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "Festlegen des Kennworts für den Host {{.HostID}} fehlgeschlagen.\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4269,7 +4321,7 @@
   },
   {
     "id": "Failover an inaccessible volume to its available replicant volume.",
-    "translation": "Failover für einen Datenträger, auf den kein Zugriff mehr besteht, auf den zugehörigen verfügbaren Replikatdatenträger durchführen. "
+    "translation": "Failover für einen Datenträger, auf den kein Zugriff mehr besteht, auf den zugehörigen verfügbaren Replikatdatenträger durchführen."
   },
   {
     "id": "Failover of volume {{.VolumeID}} to replica {{.ReplicaID}} is now in progress.",
@@ -4278,6 +4330,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "Failover-Operation konnte für Datenträger {{.VolumeID}} nicht initialisiert werden.\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -4941,19 +4997,19 @@
   },
   {
     "id": "INTEGER Set the maximum number of guests",
-    "translation": "INTEGER Legen Sie die maximale Anzahl an Gastmaschinen fest"
+    "translation": "INTEGER Legen Sie die maximale Anzahl der Gäste fest"
   },
   {
     "id": "INTEGER Set the maximum number of guests  [required]",
-    "translation": "INTEGER Legen Sie die maximale Anzahl der Gastmaschinen fest [erforderlich]"
+    "translation": "INTEGER Legen Sie die maximale Anzahl der Gäste fest [erforderlich]"
   },
   {
     "id": "INTEGER Set the minimum number of guests",
-    "translation": "INTEGER Legen Sie die Mindestanzahl der Gastmaschinen fest"
+    "translation": "INTEGER Legen Sie die Mindestanzahl der Gäste fest"
   },
   {
     "id": "INTEGER Set the minimum number of guests  [required]",
-    "translation": "INTEGER Legen Sie die Mindestanzahl der Gastmaschinen fest [erforderlich]"
+    "translation": "INTEGER Legen Sie die Mindestanzahl der Gäste fest [erforderlich]"
   },
   {
     "id": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]",
@@ -5572,6 +5628,10 @@
     "translation": "Platzierungruppen auflisten"
   },
   {
+    "id": "List placement groups.",
+    "translation": " Platzierungsgruppen auflisten."
+  },
+  {
     "id": "List security group rules",
     "translation": "Sicherheitsgruppenregeln auflisten"
   },
@@ -5668,6 +5728,10 @@
     "translation": "Hersteller"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "Max. E/A-Operationen pro Sekunde"
   },
@@ -5725,11 +5789,15 @@
   },
   {
     "id": "Metric_Data_Type keyName e.g. CPU0, CPU1, MEMORY_USAGE, etc.  [required]",
-    "translation": "Metric_Data_Type-Schlüsselname, z. B. CPU0, CPU1, MEMORY_USAGE usw.  [erforderlich]"
+    "translation": "Metric_Data_Type keyName, z. B. CPU0, CPU1, MEMORY_USAGE usw. [erforderlich]"
   },
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "Migrieren Sie ALLE Gastmaschinen, die sofort migriert werden müssen."
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6049,7 +6117,7 @@
   },
   {
     "id": "Number of guests for the scale action.",
-    "translation": "Anzahl der Gastmaschinen für die Skalierungsaktion."
+    "translation": "Anzahl der Gäste für die Skalierungsaktion."
   },
   {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
@@ -6808,8 +6876,16 @@
     "translation": "Übertragungsgeschwindigkeit des öffentlichen Ports; Optionen: 0, 10, 100, 1000, 10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
+  },
+  {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
   },
   {
     "id": "Ram",
@@ -6822,6 +6898,10 @@
   {
     "id": "Read userdata from file",
     "translation": "Benutzerdaten aus Datei lesen"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -6953,7 +7033,7 @@
   },
   {
     "id": "Removes guests. (Only set --up or --down)",
-    "translation": "Entfernt Gastmaschinen. (Nur --up oder --down festlegen)"
+    "translation": "Entfernt Gäste. (Nur --up oder --down festlegen)"
   },
   {
     "id": "Replicant Count",
@@ -7012,16 +7092,20 @@
     "translation": "Ergebnisbegrenzung"
   },
   {
-    "id": "Result limit.",
-    "translation": "Result limit."
-  },
-  {
     "id": "Result offset",
     "translation": "Offset bei Ergebnissen"
   },
   {
     "id": "Resume a paused virtual server instance",
     "translation": "Angehaltene virtuelle Serverinstanz wieder aufnehmen"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
+  },
+  {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7236,8 +7320,16 @@
     "translation": "Hinweis für einen vorhandenen Dateispeicherdatenträger festlegen."
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "Berechtigungen festlegen, die mit den Berechtigungen dieses Benutzers übereinstimmen. Fügt die entsprechenden Berechtigungen hinzu und entfernt sie."
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7300,6 +7392,10 @@
     "translation": "Zertifikate mit diesem Status anzeigen; Standard: 'all'; Optionen: all,valid,expired"
   },
   {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
+  },
+  {
     "id": "Show guests on dedicated host",
     "translation": "Gäste auf dediziertem Host anzeigen"
   },
@@ -7346,6 +7442,10 @@
   {
     "id": "Single",
     "translation": "Einfach"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7712,6 +7812,10 @@
     "translation": "Zieladresse"
   },
   {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
+  },
+  {
     "id": "Template file: {{.Location}} does not exist.",
     "translation": "Vorlagendatei {{.Location}} ist nicht vorhanden."
   },
@@ -7938,6 +8042,10 @@
   {
     "id": "The new label for the key",
     "translation": "Die neue Bezeichnung für den Schlüssel"
+  },
+  {
+    "id": "The note ",
+    "translation": "The note "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
@@ -8460,8 +8568,16 @@
     "translation": "Transaktion"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "Typ"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8852,6 +8968,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "Datenträgername"
   },
@@ -8870,6 +8990,10 @@
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity",
     "translation": "Vor der Rückgabe bis zu X Sekunden warten, bis die Einrichtung des virtuellen Servers fertiggestellt ist. Nicht kompatibel mit der Option --quantity."
+  },
+  {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",

@@ -16,10 +16,6 @@
     "translation": " 不實際建立保留容量"
   },
   {
-    "id": "List placement groups.",
-    "translation": "列出放置群組。"
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " 要與安全群組相關聯的伺服器 ID"
   },
@@ -488,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl hardware guests 1234567\n   列出在此伺服器上執行的虛擬訪客。"
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl hardware storage 1234567\n   取得硬體伺服器的儲存體詳細資料。"
   },
@@ -578,6 +578,14 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -684,6 +692,10 @@
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   這個指令會顯示子網路（其 ID 為 12345678）的詳細資訊，包括虛擬伺服器及硬體伺服器資訊。"
   },
   {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
+  },
+  {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
     "translation": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   這個指令會列出現行帳戶上的 IPv4 子網路，用來過濾的資料中心為 dal09、子網路類型為 PRIMARY，而網路空間為 PUBLIC。"
   },
@@ -721,7 +733,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654\n  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567",
-    "translation": "${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]\n  \n範例：\n  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567 "
+    "translation": "${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]\n  \n範例：\n  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567"
   },
   {
     "id": "${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket detail 767676\n  ${COMMAND_NAME} sl ticket detail 767676 --count 10",
@@ -2024,6 +2036,10 @@
     "translation": "直欄排序方式，選項包含：id、virtualServerId、hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2153,7 +2169,7 @@
   },
   {
     "id": "Cpu: ",
-    "translation": "CPU："
+    "translation": "CPU： "
   },
   {
     "id": "Cpus",
@@ -2268,6 +2284,18 @@
     "translation": "已使用的額度"
   },
   {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
+  },
+  {
     "id": "Current Members",
     "translation": "目前的成員"
   },
@@ -2321,7 +2349,7 @@
   },
   {
     "id": "Datacenter: ",
-    "translation": "資料中心："
+    "translation": "資料中心： "
   },
   {
     "id": "Date",
@@ -2389,7 +2417,7 @@
   },
   {
     "id": "Delete an image ",
-    "translation": "刪除映像檔"
+    "translation": "刪除映像檔 "
   },
   {
     "id": "Delete the given security group",
@@ -2458,6 +2486,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "已停用：已停用磁區 '{{.ID}}' 的 Snapshot 空間使用情形臨界值。"
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -2569,7 +2601,7 @@
   },
   {
     "id": "Domain: ",
-    "translation": "網域："
+    "translation": "網域： "
   },
   {
     "id": "Don't actually create records",
@@ -2597,7 +2629,7 @@
   },
   {
     "id": "Earliest date to retrieve logs for [YYYY-MM-DD].",
-    "translation": "擷取日誌的最早日期 [YYYY-MM-DD]。"
+    "translation": "擷取 [YYYY-MM-DD] 日誌的最早日期。"
   },
   {
     "id": "Edit SSL certificate",
@@ -2662,6 +2694,10 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "編輯負載平衡器通訊協定"
+  },
+  {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -2893,7 +2929,7 @@
   },
   {
     "id": "Failed due to error: ",
-    "translation": "因為錯誤而失敗："
+    "translation": "因為錯誤而失敗： "
   },
   {
     "id": "Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n",
@@ -3432,6 +3468,10 @@
     "translation": "無法在您的帳戶中取得防火牆。\n"
   },
   {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
+  },
+  {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "無法取得硬體伺服器 {{.ID}}。\n"
   },
@@ -3752,6 +3792,10 @@
     "translation": "無法列出種類。\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "無法列出資料中心。\n"
   },
@@ -4060,12 +4104,20 @@
     "translation": "無法設定磁區 {{.VolumeID}} 的 LUN ID。\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "無法設定主機 {{.HostID}} 的密碼。\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4137,7 +4189,7 @@
   },
   {
     "id": "Failed to update health check: ",
-    "translation": "無法更新性能檢查："
+    "translation": "無法更新性能檢查： "
   },
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
@@ -4278,6 +4330,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "無法為磁區 {{.VolumeID}} 起始失效接手作業。\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -4585,7 +4641,7 @@
   },
   {
     "id": "Get List options for creating a placement group..",
-    "translation": "用於建立放置群組的「取得清單」選項。"
+    "translation": "取得用於建立放置群組的清單選項。"
   },
   {
     "id": "Get Netscaler details.",
@@ -4705,7 +4761,7 @@
   },
   {
     "id": "Guests: ",
-    "translation": "訪客："
+    "translation": "訪客： "
   },
   {
     "id": "HARDWARE",
@@ -4861,7 +4917,7 @@
   },
   {
     "id": "Hostname: ",
-    "translation": "主機名稱："
+    "translation": "主機名稱： "
   },
   {
     "id": "Hour of the day when snapshots should be taken, integer between 0 to 23",
@@ -5085,7 +5141,7 @@
   },
   {
     "id": "Incorrect Usage: ",
-    "translation": "用法不正確："
+    "translation": "用法不正確： "
   },
   {
     "id": "Incorrect complex type: {{.Type}}",
@@ -5572,6 +5628,10 @@
     "translation": "列出放置群組"
   },
   {
+    "id": "List placement groups.",
+    "translation": "列出放置群組。"
+  },
+  {
     "id": "List security group rules",
     "translation": "列出安全群組規則"
   },
@@ -5668,6 +5728,10 @@
     "translation": "製造商"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "最大 IOPS"
   },
@@ -5713,7 +5777,7 @@
   },
   {
     "id": "Memory: ",
-    "translation": "記憶體："
+    "translation": "記憶體： "
   },
   {
     "id": "Metadata",
@@ -5730,6 +5794,10 @@
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "立即移轉所有需要移轉的訪客。"
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -5765,7 +5833,7 @@
   },
   {
     "id": "Monthly",
-    "translation": "按月"
+    "translation": "每月"
   },
   {
     "id": "More than one packages were found for {{.CategoryCode}}.",
@@ -6149,7 +6217,7 @@
   },
   {
     "id": "Operating System Code: ",
-    "translation": "作業系統程式碼："
+    "translation": "作業系統程式碼： "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -6801,15 +6869,23 @@
   },
   {
     "id": "Public notes related to a Storage volume  [required]",
-    "translation": "與儲存磁區相關的公用注意事項 [必要]"
+    "translation": "與儲存磁區相關的公用附註 [必要]"
   },
   {
     "id": "Public port speed, options are: 0,10,100,1000,10000",
     "translation": "公用埠速度，選項包含：0、10、100、1000、10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
+  },
+  {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
   },
   {
     "id": "Ram",
@@ -6822,6 +6898,10 @@
   {
     "id": "Read userdata from file",
     "translation": "從檔案讀取使用者資料"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -7012,16 +7092,20 @@
     "translation": "結果限制"
   },
   {
-    "id": "Result limit.",
-    "translation": "Result limit."
-  },
-  {
     "id": "Result offset",
     "translation": "結果偏移"
   },
   {
     "id": "Resume a paused virtual server instance",
     "translation": "繼續已暫停的虛擬伺服器實例"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
+  },
+  {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7101,7 +7185,7 @@
   },
   {
     "id": "SSH key was added: ",
-    "translation": "已新增 SSH 金鑰："
+    "translation": "已新增 SSH 金鑰： "
   },
   {
     "id": "SSH key {{.ID}} was removed.",
@@ -7153,7 +7237,7 @@
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
-    "translation": "調整自動調整群組。 略過尺度群組的緩和期間。"
+    "translation": "調整自動調整群組。 略過調整群組的緩和期間。"
   },
   {
     "id": "Schedule",
@@ -7236,8 +7320,16 @@
     "translation": "設定現有檔案儲存磁區的附註。"
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "設定許可權以符合這個使用者的許可權。新增及移除適當的許可權"
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7300,6 +7392,10 @@
     "translation": "顯示具有以下狀態的憑證，預設值為：all，選項包含：all、valid、expired"
   },
   {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
+  },
+  {
     "id": "Show guests on dedicated host",
     "translation": "顯示專用主機上的訪客"
   },
@@ -7346,6 +7442,10 @@
   {
     "id": "Single",
     "translation": "單核"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7712,6 +7812,10 @@
     "translation": "目標位址"
   },
   {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
+  },
+  {
     "id": "Template file: {{.Location}} does not exist.",
     "translation": "範本檔案 {{.Location}} 不存在。"
   },
@@ -7789,7 +7893,7 @@
   },
   {
     "id": "The VMware License Key. To get the required package you can use the command sl licenses create-options Package. E.g VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2  [required]",
-    "translation": "VMware 授權金鑰。 若要取得必要套件，您可以使用指令 sl licenses create-options Package。 例如 VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [必要]"
+    "translation": "VMware 授權碼。 若要取得必要套件，您可以使用指令 sl licenses create-options Package。 例如 VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [必要]"
   },
   {
     "id": "The actual SSH key",
@@ -7938,6 +8042,10 @@
   {
     "id": "The new label for the key",
     "translation": "金鑰的新標籤"
+  },
+  {
+    "id": "The note ",
+    "translation": "The note "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
@@ -8460,8 +8568,16 @@
     "translation": "交易"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "類型"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8852,6 +8968,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "磁區名稱"
   },
@@ -8872,12 +8992,16 @@
     "translation": "等待虛擬伺服器完成佈建，最多 X 秒即返回。與選項 --quantity 不相容"
   },
   {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
+  },
+  {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
     "translation": "這個副本是否將為原始磁區的獨立副本。"
   },
   {
     "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "將新增/移除訪客數目，以將群組的訪客計數設為指定的數目。 （僅設定 -- by 或 -- to）"
+    "translation": "將新增/移除一些訪客，以使該群組的訪客數達到指定的數目。 （僅設定 -- by 或 -- to）"
   },
   {
     "id": "Will add/remove the specified number of guests. (Only set --by or --to)",

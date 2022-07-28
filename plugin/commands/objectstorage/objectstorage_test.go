@@ -21,6 +21,9 @@ func TestManagers(t *testing.T) {
 var availableCommands = []string{
 	"object-storage-accounts",
 	"object-storage-endpoints",
+	"object-storage-credential-list",
+	"object-storage-credential-create",
+	"object-storage-credential-delete",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings

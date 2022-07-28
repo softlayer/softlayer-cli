@@ -16,10 +16,6 @@
     "translation": " 예약된 용량을 실제로 작성하지 않음"
   },
   {
-    "id": "List placement groups.",
-    "translation": "배치 그룹을 나열합니다."
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " 보안 그룹과 연관시킬 서버 ID"
   },
@@ -81,7 +77,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222",
-    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
+    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456",
@@ -93,7 +89,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048",
-    "translation": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048"
+    "translation": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n   This command list all Autoscale Groups on current account.",
@@ -101,19 +97,19 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31",
-    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
+    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to",
-    "translation": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to"
+    "translation": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas",
-    "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags '공백을 원하면 작은따옴표 또는 큰따옴표를 사용하십시오.'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 그렇지 않으면 쉼표를 사용하십시오."
+    "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags '공백을 원하면 작은따옴표 또는 큰따옴표를 사용하십시오.'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 그렇지 않으면 쉼표를 사용하십시오."
   },
   {
     "id": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
+    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\n예:\n${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
@@ -137,7 +133,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678"
+    "translation": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678"
   },
   {
     "id": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list",
@@ -185,7 +181,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고 플래그 설정을 가져옵니다."
+    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\n예:\n${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고 플래그 설정을 가져옵니다."
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
@@ -249,7 +245,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note '참고사항입니다.'"
+    "translation": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note '참고사항입니다.'"
   },
   {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
@@ -325,7 +321,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n 지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
+    "translation": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\n예:\n${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n 지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl file access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
@@ -345,7 +341,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678"
+    "translation": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678"
   },
   {
     "id": "${COMMAND_NAME} sl file replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
@@ -488,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] ID\n\n예:\n ${COMMAND_NAME} sl hardware guests 1234567\n 이 서버에서 실행 중인 가상 게스트를 나열합니다."
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] ID\n\n예:\n   ${COMMAND_NAME} sl hardware storage 1234567\n 하드웨어 서버의 스토리지 세부사항을 가져옵니다."
   },
@@ -578,6 +578,14 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -682,6 +690,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   이 명령은 가상 서버 및 하드웨어 서버 정보를 포함하여 ID 12345678인 서브넷에 대한 자세한 정보를 표시합니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -1325,7 +1337,7 @@
   },
   {
     "id": "Adds guests. (Only set --up or --down) (default)",
-    "translation": "게스트를 추가합니다. (--up 또는 --down만을 설정함)(기본값)"
+    "translation": "게스트를 추가합니다. (--up 또는 --down만 설정)(기본값)"
   },
   {
     "id": "Advanced configuration flag",
@@ -2024,6 +2036,10 @@
     "translation": "정렬 기준 열. 옵션: id,virtualServerId,hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2268,6 +2284,18 @@
     "translation": "사용한 크레딧"
   },
   {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
+  },
+  {
     "id": "Current Members",
     "translation": "현재 멤버"
   },
@@ -2458,6 +2486,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "사용 안함: '{{.ID}}' 볼륨에 대한 스냅샷 공간 사용 임계값이 사용 안함으로 설정되었습니다."
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -2664,6 +2696,10 @@
     "translation": "로드 밸런서 프로토콜 편집"
   },
   {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
+  },
+  {
     "id": "Edit the details about a VLAN",
     "translation": "VLAN에 대한 세부사항 편집"
   },
@@ -2729,7 +2765,7 @@
   },
   {
     "id": "Enable snapshot notification.",
-    "translation": "스냅샷 알림을 사용합니다."
+    "translation": "스냅샷 알림을 사용으로 설정합니다."
   },
   {
     "id": "Enable snapshots for a given volume on the specified schedule",
@@ -2757,7 +2793,7 @@
   },
   {
     "id": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]",
-    "translation": "종료 날짜(예: 2019-4-2(yyyy-MM-dd) [필수]"
+    "translation": "종료 날짜 예: 2019-4-2(yyyy-MM-dd) [필수]"
   },
   {
     "id": "End Date must be greater than Start Date.",
@@ -3057,7 +3093,7 @@
   },
   {
     "id": "Failed to clear the route for the subnet: {{.ID}}.\n",
-    "translation": "{{.ID}} 서브넷의 경로를 지우는 데 실패했습니다. \n"
+    "translation": "{{.ID}} 서브넷의 라우트를 지우는 데 실패했습니다. \n"
   },
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
@@ -3432,6 +3468,10 @@
     "translation": "계정에서 방화벽을 가져오는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
+  },
+  {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "하드웨어 서버 {{.ID}}을(를) 가져오는 데 실패했습니다.\n"
   },
@@ -3752,6 +3792,10 @@
     "translation": "카테고리를 나열하는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "데이터 센터를 나열하는 데 실패했습니다.\n"
   },
@@ -4060,12 +4104,20 @@
     "translation": "볼륨 {{.VolumeID}}의 LUN ID를 설정하는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "호스트 {{.HostID}}의 비밀번호를 설정하는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4269,7 +4321,7 @@
   },
   {
     "id": "Failover an inaccessible volume to its available replicant volume.",
-    "translation": "액세스 불가능한 볼륨을 해당 가용 복제 볼륨으로 장애 복구합니다. "
+    "translation": "액세스 불가능한 볼륨을 해당 가용 복제 볼륨으로 장애 복구합니다."
   },
   {
     "id": "Failover of volume {{.VolumeID}} to replica {{.ReplicaID}} is now in progress.",
@@ -4278,6 +4330,10 @@
   {
     "id": "Failover operation could not be initiated for volume {{.VolumeID}}.\n",
     "translation": "{{.VolumeID}} 볼륨에 대해 장애 조치(failover) 조작을 시작할 수 없습니다.\n"
+  },
+  {
+    "id": "False",
+    "translation": "False"
   },
   {
     "id": "Features",
@@ -5572,6 +5628,10 @@
     "translation": "배치 그룹 나열"
   },
   {
+    "id": "List placement groups.",
+    "translation": "배치 그룹을 나열합니다."
+  },
+  {
     "id": "List security group rules",
     "translation": "보안 그룹 규칙 나열"
   },
@@ -5668,6 +5728,10 @@
     "translation": "제조업체"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "최대 IOPS"
   },
@@ -5730,6 +5794,10 @@
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "마이그레이션이 필요한 모든 게스트를 즉시 마이그레이션합니다."
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6317,7 +6385,7 @@
   },
   {
     "id": "PATH Read userdata from a file",
-    "translation": "파일에서 사용자 데이터 경로 읽기"
+    "translation": "PATH 파일에서 사용자 데이터 읽기"
   },
   {
     "id": "POD",
@@ -6808,8 +6876,16 @@
     "translation": "공용 포트 속도, 옵션: 0,10,100,1000,10000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
+  },
+  {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
   },
   {
     "id": "Ram",
@@ -6822,6 +6898,10 @@
   {
     "id": "Read userdata from file",
     "translation": "파일에서 사용자 데이터 읽기"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -6953,7 +7033,7 @@
   },
   {
     "id": "Removes guests. (Only set --up or --down)",
-    "translation": "게스트를 제거합니다. (--up 또는 --down만 설정됨)"
+    "translation": "게스트를 제거합니다. (--up 또는 --down만 설정)"
   },
   {
     "id": "Replicant Count",
@@ -7012,16 +7092,20 @@
     "translation": "결과 한계"
   },
   {
-    "id": "Result limit.",
-    "translation": "Result limit."
-  },
-  {
     "id": "Result offset",
     "translation": "결과 오프셋"
   },
   {
     "id": "Resume a paused virtual server instance",
     "translation": "일시정지된 가상 서버 인스턴스 재개"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
+  },
+  {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7236,8 +7320,16 @@
     "translation": "기존 파일 스토리지 볼륨에 대한 참고사항을 설정합니다."
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "이 사용자 권한과 일치하는 권한을 설정합니다. 적절한 권한을 추가하고 제거합니다."
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7300,6 +7392,10 @@
     "translation": "이 상태의 인증서 표시, 기본값: all, 옵션: all,valid,expired"
   },
   {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
+  },
+  {
     "id": "Show guests on dedicated host",
     "translation": "전용 호스트에의 게스트 표시"
   },
@@ -7346,6 +7442,10 @@
   {
     "id": "Single",
     "translation": "단일"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7445,7 +7545,7 @@
   },
   {
     "id": "Specify output format, only JSON is supported now.",
-    "translation": "출력 형식을 지정하십시오. 현재는 JSON만 지원됩니다."
+    "translation": "출력 형식을 지정합니다. 현재는 JSON만 지원됩니다."
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
@@ -7657,7 +7757,7 @@
   },
   {
     "id": "TEXT The termination policy for the group(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [required]",
-    "translation": "TEXT 그룹의 종료 정책(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3). [필수]"
+    "translation": "TEXT 그룹의 종료 정책입니다(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3). [필수]"
   },
   {
     "id": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE).",
@@ -7710,6 +7810,10 @@
   {
     "id": "Target address",
     "translation": "대상 주소"
+  },
+  {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
   },
   {
     "id": "Template file: {{.Location}} does not exist.",
@@ -7938,6 +8042,10 @@
   {
     "id": "The new label for the key",
     "translation": "키에 대한 새 레이블"
+  },
+  {
+    "id": "The note ",
+    "translation": "The note "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
@@ -8253,11 +8361,11 @@
   },
   {
     "id": "This interface allows you to change the route of your Account Owned subnets.",
-    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 경로를 변경할 수 있습니다."
+    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 라우트를 변경할 수 있습니다."
   },
   {
     "id": "This interface allows you to remove the route of your Account Owned subnets.",
-    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 경로를 제거할 수 있습니다."
+    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 라우트를 제거할 수 있습니다."
   },
   {
     "id": "This option is not available.",
@@ -8460,8 +8568,16 @@
     "translation": "트랜잭션"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "유형"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8852,6 +8968,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "볼륨 이름"
   },
@@ -8872,16 +8992,20 @@
     "translation": "리턴하기 전에 가상 서버가 프로비저닝을 완료할 때까지 최대 X초 동안 대기합니다. 이는 옵션 --quantity와 호환되지 않습니다."
   },
   {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
+  },
+  {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
     "translation": "이 복제가 원본 볼륨의 종속 복제인지 여부입니다."
   },
   {
     "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "지정된 수로 그룹의 게스트 수를 가져오기 위해 여러 게스트를 추가/제거합니다. (--by 또는 --to만 설정함)"
+    "translation": "지정된 수로 그룹의 게스트 수를 가져오기 위해 여러 게스트를 추가/제거합니다. (--by 또는 --to만 설정)"
   },
   {
     "id": "Will add/remove the specified number of guests. (Only set --by or --to)",
-    "translation": "지정된 게스트 수를 추가/제거합니다. (--by 또는 --to만 설정함)"
+    "translation": "지정된 게스트 수를 추가/제거합니다. (--by 또는 --to만 설정)"
   },
   {
     "id": "Would you like to submit the rules. Continue?",

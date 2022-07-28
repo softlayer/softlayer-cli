@@ -16,10 +16,6 @@
     "translation": " Na verdade não crie a capacidade reservada"
   },
   {
-    "id": "List placement groups.",
-    "translation": "Lista de grupos de posicionamento"
-  },
-  {
     "id": " The server ID to associate with the security group",
     "translation": " O ID do servidor a ser associado ao grupo de segurança"
   },
@@ -488,6 +484,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lista os guests virtuais em execução neste servidor."
   },
   {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n Obter detalhes de armazenamento para um servidor de hardware."
   },
@@ -578,6 +578,14 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -682,6 +690,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   Esse comando mostra informações detalhadas sobre a sub-rede com o ID 12345678, incluindo informações de servidores virtuais e de servidores de hardware."
+  },
+  {
+    "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -1345,7 +1357,7 @@
   },
   {
     "id": "Amount",
-    "translation": "Montante"
+    "translation": "Quantia"
   },
   {
     "id": "An ID of one subnet to authorize",
@@ -1673,7 +1685,7 @@
   },
   {
     "id": "Cancel all virtual guests of the dedicated host immediately.",
-    "translation": "Cancele todos os guests virtuais do host dedicado imediatamente."
+    "translation": "Cancelar todos os guests virtuais do host dedicado imediatamente."
   },
   {
     "id": "Cancel an existing block storage volume",
@@ -2024,6 +2036,10 @@
     "translation": "Coluna pela qual classificar. As opções são: id,virtualServerId,hostname"
   },
   {
+    "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
+    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+  },
+  {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
     "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
   },
@@ -2268,6 +2284,18 @@
     "translation": "Créditos utilizados"
   },
   {
+    "id": "Critical Max",
+    "translation": "Critical Max"
+  },
+  {
+    "id": "Critical Min",
+    "translation": "Critical Min"
+  },
+  {
+    "id": "Cross Region",
+    "translation": "Cross Region"
+  },
+  {
     "id": "Current Members",
     "translation": "Membros atuais"
   },
@@ -2349,7 +2377,7 @@
   },
   {
     "id": "Dedicated Virtual Host flavor (requires --datacenter) e.g. 56_CORES_X_242_RAM_X_1_4_TB",
-    "translation": "Tipo de host virtual dedicado (requer --datacenter) ex: 56_CORES_X_242_RAM_X_1_4_TB"
+    "translation": "Tipo de host virtual dedicado (requer --datacenter), por exemplo: 56_CORES_X_242_RAM_X_1_4_TB"
   },
   {
     "id": "Dedicated host ID should be a number.",
@@ -2397,7 +2425,7 @@
   },
   {
     "id": "Delete this group and destroy all members of it",
-    "translation": "Exclua este grupo e destrua todos os membros dele"
+    "translation": "Excluir este grupo e destruir todos os membros dele"
   },
   {
     "id": "Delivered",
@@ -2458,6 +2486,10 @@
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "Desativado: Limite de uso do espaço de capturas instantâneas é desativado para volume '{{.ID}}'."
+  },
+  {
+    "id": "Discrete Sensor",
+    "translation": "Discrete Sensor"
   },
   {
     "id": "Disk",
@@ -2664,6 +2696,10 @@
     "translation": "Editar protocolo do balanceador de carga"
   },
   {
+    "id": "Edit note and tags of a subnet.",
+    "translation": "Edit note and tags of a subnet."
+  },
+  {
     "id": "Edit the details about a VLAN",
     "translation": "Editar os detalhes sobre uma VLAN"
   },
@@ -2721,7 +2757,7 @@
   },
   {
     "id": "Enable or Disable specific notifications for the active user.",
-    "translation": "Ative ou desative notificações específicas para o usuário ativo."
+    "translation": "Ativar ou desativar notificações específicas para o usuário ativo."
   },
   {
     "id": "Enable or Disable specific permissions",
@@ -2757,7 +2793,7 @@
   },
   {
     "id": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]",
-    "translation": "Data de encerramento ex: 2019-4-2 (yyyy-MM-dd) [obrigatório]"
+    "translation": "Data de encerramento, por exemplo: 2019-4-2 (yyyy-MM-dd) [obrigatório]"
   },
   {
     "id": "End Date must be greater than Start Date.",
@@ -3432,6 +3468,10 @@
     "translation": "Falha ao obter firewall em sua conta.\n"
   },
   {
+    "id": "Failed to get hardware sensor data.\n",
+    "translation": "Failed to get hardware sensor data.\n"
+  },
+  {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "Falha ao obter o servidor de hardware {{.ID}}.\n"
   },
@@ -3752,6 +3792,10 @@
     "translation": "Falha ao listar categorias.\n"
   },
   {
+    "id": "Failed to list credentials. ",
+    "translation": "Failed to list credentials. "
+  },
+  {
     "id": "Failed to list datacenters.\n",
     "translation": "Falha ao listar datacenters.\n"
   },
@@ -4060,12 +4104,20 @@
     "translation": "Falha ao configurar ID de LUN para o volume {{.VolumeID}}.\n"
   },
   {
+    "id": "Failed to set note: {{.note}}.\n",
+    "translation": "Failed to set note: {{.note}}.\n"
+  },
+  {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "Falha ao configurar a senha para o host {{.HostID}}.\n"
   },
   {
     "id": "Failed to set tags.\n",
     "translation": "Failed to set tags.\n"
+  },
+  {
+    "id": "Failed to set tags: {{.tags}}.\n",
+    "translation": "Failed to set tags: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4280,6 +4332,10 @@
     "translation": "Não foi possível iniciar a operação de failover para o volume {{.VolumeID}}.\n"
   },
   {
+    "id": "False",
+    "translation": "False"
+  },
+  {
     "id": "Features",
     "translation": "Recursos"
   },
@@ -4477,7 +4533,7 @@
   },
   {
     "id": "Filter private vlans by Datacenter shortname e.g. ams01, (requires --flavor)",
-    "translation": "Filtrar vlans privadas por nome abreviado do Datacenter, ex. ams01, (requer --flavor)"
+    "translation": "Filtrar vlans privadas por nome abreviado do Datacenter, por exemplo: ams01, (requer --flavor)"
   },
   {
     "id": "Filtered by Id of user who owns the instances",
@@ -4637,7 +4693,7 @@
   },
   {
     "id": "Get details for a vsi monitors device.",
-    "translation": "Obter detalhes para um dispositivo monitora vsi."
+    "translation": "Obter detalhes para um dispositivo de monitores vsi."
   },
   {
     "id": "Get details for an image",
@@ -4669,7 +4725,7 @@
   },
   {
     "id": "Get status for split or move completed percentage of a given block storage duplicate volume.",
-    "translation": "Obter status para divisão ou movimentação completa porcentagem de um dado volume duplicado de armazenamento de bloco."
+    "translation": "Obter status para divisão ou porcentagem concluída de movimentação de um determinado volume duplicado de armazenamento de bloco."
   },
   {
     "id": "Get status for split or move completed percentage of a given file storage duplicate volume.",
@@ -5181,7 +5237,7 @@
   },
   {
     "id": "Invalid output format, only JSON is supported now.",
-    "translation": "Formato de saída inválido. Somente o JSON é suportado agora."
+    "translation": "Formato de saída inválido. Somente JSON é suportado agora."
   },
   {
     "id": "Invalid storage type",
@@ -5345,7 +5401,7 @@
   },
   {
     "id": "List Dedicated Host Guests.",
-    "translation": "Lista guests de hosts dedicados."
+    "translation": "Listar guests de hosts dedicados."
   },
   {
     "id": "List IPSec VPN tunnel context details",
@@ -5541,7 +5597,7 @@
   },
   {
     "id": "List options for creating Reserved Capacity Group instance",
-    "translation": "Opções de lista para criação de instância Reserved Capacity Group"
+    "translation": "Listar opções para a criação de uma instância Reserved Capacity Group"
   },
   {
     "id": "List options for creating a placement group",
@@ -5570,6 +5626,10 @@
   {
     "id": "List placement groups",
     "translation": "Listar grupos de posicionamento"
+  },
+  {
+    "id": "List placement groups.",
+    "translation": "Lista de grupos de posicionamento"
   },
   {
     "id": "List security group rules",
@@ -5668,6 +5728,10 @@
     "translation": "Fabricante"
   },
   {
+    "id": "Max",
+    "translation": "Max"
+  },
+  {
     "id": "Max IOPS",
     "translation": "Máximo de IOPS"
   },
@@ -5725,11 +5789,15 @@
   },
   {
     "id": "Metric_Data_Type keyName e.g. CPU0, CPU1, MEMORY_USAGE, etc.  [required]",
-    "translation": "Metric_Data_Type keyName ex: CPU0, CPU1, MEMORY_USAGE, etc. [obrigatório]"
+    "translation": "Metric_Data_Type keyName, por exemplo: CPU0, CPU1, MEMORY_USAGE, etc. [obrigatório]"
   },
   {
     "id": "Migrate ALL guests that require migration immediately.",
     "translation": "Migre TODOS os guests que requerem migração imediatamente."
+  },
+  {
+    "id": "Min",
+    "translation": "Min"
   },
   {
     "id": "Min IOPS",
@@ -6257,15 +6325,15 @@
   },
   {
     "id": "Order/Create License.",
-    "translation": "Fazer pedido / criar Licença."
+    "translation": "Fazer pedido/criar licença."
   },
   {
     "id": "Order/Create a scale group.",
-    "translation": "Ordenar / criar um grupo de escala."
+    "translation": "Fazer pedido/criar um grupo de escala."
   },
   {
     "id": "Order/create a hardware server",
-    "translation": "Pedir/criar um servidor de hardware"
+    "translation": "Fazer pedido/criar um servidor de hardware"
   },
   {
     "id": "Ordered By",
@@ -6309,7 +6377,7 @@
   },
   {
     "id": "Other",
-    "translation": "outras"
+    "translation": "Outros"
   },
   {
     "id": "Owner",
@@ -6561,7 +6629,7 @@
   },
   {
     "id": "Pool Name",
-    "translation": "Nome do Conjunto"
+    "translation": "Nome do conjunto"
   },
   {
     "id": "Port Range Max",
@@ -6729,7 +6797,7 @@
   },
   {
     "id": "Projected Usage",
-    "translation": "Uso Projetado"
+    "translation": "Uso projetado"
   },
   {
     "id": "Protocol",
@@ -6808,8 +6876,16 @@
     "translation": "Velocidade da porta pública, as opções são: 0, 10, 100, 1.000, 10.000"
   },
   {
+    "id": "Public/Private",
+    "translation": "Public/Private"
+  },
+  {
     "id": "Quantity",
     "translation": "Quantity"
+  },
+  {
+    "id": "RPM Sensor",
+    "translation": "RPM Sensor"
   },
   {
     "id": "Ram",
@@ -6822,6 +6898,10 @@
   {
     "id": "Read userdata from file",
     "translation": "Ler dados do usuário do arquivo"
+  },
+  {
+    "id": "Reading",
+    "translation": "Reading"
   },
   {
     "id": "Reason",
@@ -7012,16 +7092,20 @@
     "translation": "Limite de resultados"
   },
   {
-    "id": "Result limit.",
-    "translation": "Result limit."
-  },
-  {
     "id": "Result offset",
     "translation": "Diferença do resultado"
   },
   {
     "id": "Resume a paused virtual server instance",
     "translation": "Continuar uma instância de servidor virtual pausada"
+  },
+  {
+    "id": "Retrieve a server’s hardware state via its internal sensors.",
+    "translation": "Retrieve a server’s hardware state via its internal sensors."
+  },
+  {
+    "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
+    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7213,7 +7297,7 @@
   },
   {
     "id": "Servers",
-    "translation": "Servers"
+    "translation": "Servidores"
   },
   {
     "id": "Service Subnets",
@@ -7236,8 +7320,16 @@
     "translation": "Configurar nota para um volume de armazenamento de arquivos existente."
   },
   {
+    "id": "Set note successfully",
+    "translation": "Set note successfully"
+  },
+  {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
     "translation": "Configurar permissões para corresponder com as permissões desse usuário. Inclui e remove as permissões apropriadas"
+  },
+  {
+    "id": "Set tags successfully",
+    "translation": "Set tags successfully"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7300,6 +7392,10 @@
     "translation": "Mostrar certificados com este status, o padrão é: todos, as opções são: todos, válido, expirado"
   },
   {
+    "id": "Show discrete units associated hardware sensor",
+    "translation": "Show discrete units associated hardware sensor"
+  },
+  {
     "id": "Show guests on dedicated host",
     "translation": "Mostrar guests em host dedicado"
   },
@@ -7346,6 +7442,10 @@
   {
     "id": "Single",
     "translation": "Único"
+  },
+  {
+    "id": "Single Site",
+    "translation": "Single Site"
   },
   {
     "id": "Size",
@@ -7465,7 +7565,7 @@
   },
   {
     "id": "Start Date e.g. 2019-3-4 (yyyy-MM-dd)  [required]",
-    "translation": "Data de Início ex: 2019-3-4 (yyyy-MM-dd) [obrigatório]"
+    "translation": "Data de início, por exemplo: 2019-3-4 (yyyy-MM-dd) [obrigatório]"
   },
   {
     "id": "Start date for bandwdith reporting",
@@ -7693,7 +7793,7 @@
   },
   {
     "id": "Tags to set for each guest in this group. Existing tags are overwritten. An empty string will remove all tags.",
-    "translation": "Identifica para configurar cada guest neste grupo. As tags existentes são sobrescritas. Uma sequência vazia removerá todas as tags."
+    "translation": "Tags para configurar cada guest neste grupo. As tags existentes são sobrescritas. Uma sequência vazia removerá todas as tags."
   },
   {
     "id": "Tags to set or empty string to remove all",
@@ -7710,6 +7810,10 @@
   {
     "id": "Target address",
     "translation": "Endereço de destino"
+  },
+  {
+    "id": "Temperature (°C) Sensor",
+    "translation": "Temperature (°C) Sensor"
   },
   {
     "id": "Template file: {{.Location}} does not exist.",
@@ -7938,6 +8042,10 @@
   {
     "id": "The new label for the key",
     "translation": "O novo rótulo para a chave"
+  },
+  {
+    "id": "The note ",
+    "translation": "The note "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
@@ -8460,8 +8568,16 @@
     "translation": "Transação"
   },
   {
+    "id": "True",
+    "translation": "True"
+  },
+  {
     "id": "Type",
     "translation": "Tipo"
+  },
+  {
+    "id": "Type Name",
+    "translation": "Type Name"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8852,6 +8968,10 @@
     "translation": "Vlans"
   },
   {
+    "id": "Volts Sensor",
+    "translation": "Volts Sensor"
+  },
+  {
     "id": "Volume Name",
     "translation": "Nome do volume"
   },
@@ -8872,16 +8992,20 @@
     "translation": "Aguarde até que o servidor virtual conclua o fornecimento por até X segundos antes de retornar. Ele não é compatível com a opção --quantity"
   },
   {
+    "id": "Watts Sensor",
+    "translation": "Watts Sensor"
+  },
+  {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
     "translation": "Se essa duplicata será ou não uma duplicata dependente do volume de origem."
   },
   {
     "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "Incluirá / removerá um número de guests para obter a contagem de guests do grupo para o número especificado. (Apenas configurado --by ou --to)"
+    "translation": "Incluirá/removerá um número de guests para obter a contagem de guests do grupo para o número especificado. (Apenas configurado --by ou --to)"
   },
   {
     "id": "Will add/remove the specified number of guests. (Only set --by or --to)",
-    "translation": "Incluirá / removerá o número especificado de guests. (Apenas configurado --by ou --to)"
+    "translation": "Incluirá/removerá o número especificado de guests. (Apenas configurado --by ou --to)"
   },
   {
     "id": "Would you like to submit the rules. Continue?",
