@@ -580,6 +580,14 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
+    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -2236,6 +2244,10 @@
     "translation": "Create a zone"
   },
   {
+    "id": "Create credentials for an IBM Cloud Object Storage Account.",
+    "translation": "Create credentials for an IBM Cloud Object Storage Account."
+  },
+  {
     "id": "Create virtual server instance",
     "translation": "Create virtual server instance"
   },
@@ -2266,6 +2278,10 @@
   {
     "id": "Creates a user",
     "translation": "Creates a user"
+  },
+  {
+    "id": "Credential: {{.credentialID}} was deleted.",
+    "translation": "Credential: {{.credentialID}} was deleted."
   },
   {
     "id": "Credit allowed",
@@ -2418,6 +2434,10 @@
   {
     "id": "Delete an image ",
     "translation": "Delete an image "
+  },
+  {
+    "id": "Delete the credential of an Object Storage Account.",
+    "translation": "Delete the credential of an Object Storage Account."
   },
   {
     "id": "Delete the given security group",
@@ -3104,6 +3124,10 @@
     "translation": "Failed to create Auto Scale Group.\n"
   },
   {
+    "id": "Failed to create credential. ",
+    "translation": "Failed to create credential. "
+  },
+  {
     "id": "Failed to create dedicated host.\n",
     "translation": "Failed to create dedicated host.\n"
   },
@@ -3178,6 +3202,10 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "Failed to delete L7member {{.Member}}: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to delete credential: {{.storageID}}.\n",
+    "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -8368,6 +8396,10 @@
     "translation": "This interface allows you to remove the route of your Account Owned subnets."
   },
   {
+    "id": "This is the credential id associated with the volume. [Required]",
+    "translation": "This is the credential id associated with the volume. [Required]"
+  },
+  {
     "id": "This option is not available.",
     "translation": "This option is not available."
   },
@@ -8644,6 +8676,10 @@
     "translation": "Unable to find category code from this volume."
   },
   {
+    "id": "Unable to find credential with ID: {{.credentialID}}.\n",
+    "translation": "Unable to find credential with ID: {{.credentialID}}.\n"
+  },
+  {
     "id": "Unable to find firewall with ID: {{.ID}}",
     "translation": "Unable to find firewall with ID: {{.ID}}"
   },
@@ -8678,6 +8714,10 @@
   {
     "id": "Unable to find network port speed for this device.",
     "translation": "Unable to find network port speed for this device."
+  },
+  {
+    "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
+    "translation": "Unable to find object-storage with ID: {{.storageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
@@ -9192,6 +9232,10 @@
     "translation": "balanced local - ssd"
   },
   {
+    "id": "billing",
+    "translation": "billing"
+  },
+  {
     "id": "broadcast",
     "translation": "broadcast"
   },
@@ -9314,6 +9358,10 @@
   {
     "id": "domain",
     "translation": "domain"
+  },
+  {
+    "id": "drive",
+    "translation": "drive"
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",
@@ -9444,6 +9492,10 @@
     "translation": "label"
   },
   {
+    "id": "last transaction",
+    "translation": "last transaction"
+  },
+  {
     "id": "lists bandwidth pools",
     "translation": "lists bandwidth pools"
   },
@@ -9538,6 +9590,10 @@
   {
     "id": "powerState",
     "translation": "powerState"
+  },
+  {
+    "id": "preset",
+    "translation": "preset"
   },
   {
     "id": "price rate",
@@ -9664,8 +9720,8 @@
     "translation": "subnets"
   },
   {
-    "id": "tag",
-    "translation": "tag"
+    "id": "tags",
+    "translation": "tags"
   },
   {
     "id": "target",
@@ -9682,6 +9738,10 @@
   {
     "id": "transaction_id",
     "translation": "transaction_id"
+  },
+  {
+    "id": "transient",
+    "translation": "transient"
   },
   {
     "id": "ttl",
