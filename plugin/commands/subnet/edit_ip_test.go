@@ -63,6 +63,17 @@ var _ = Describe("subnet edit-ip", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
+				fakeNetworkManager.GetIpByAddressReturns(datatypes.Network_Subnet_IpAddress{}, nil)
+			})
+			It("Set command with and inexistent ip address", func() {
+				err := testhelpers.RunCommand(cliCommand, "11.22.33.44", "--note=myNote")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Unable to find object"))
+			})
+		})
+
+		Context("Return error", func() {
+			BeforeEach(func() {
 				fakerSubnetIp := datatypes.Network_Subnet_IpAddress{
 					Id: sl.Int(123456),
 				}

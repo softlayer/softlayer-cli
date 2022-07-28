@@ -68,7 +68,7 @@ func SubnetEditIpMetaData() cli.Command {
 		Category:    "subnet",
 		Name:        "edit-ip",
 		Description: T("Set the note of the ipAddress."),
-		Usage: T(`${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]
+		Usage: T(`${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]
 
 EXAMPLE:
    ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote
