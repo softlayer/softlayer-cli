@@ -138,7 +138,7 @@ EXAMPLE:
    ${COMMAND_NAME} sl vlan list -d dal09 --sortby number
    This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.
  
-   Note: In field Pod, if add (*) indicated that closed soon`),
+Note: In field Pod, if add (*) indicated that closed soon`),
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "sortby",

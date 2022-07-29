@@ -46,6 +46,14 @@ var _ = Describe("VLAN List", func() {
 				Expect(strings.Contains(err.Error(), "Failed to list VLANs on your account.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
 			})
+			It("return error", func() {
+				fakeNetworkManager.ListVlansReturns([]datatypes.Network_Vlan{}, nil)
+				fakeNetworkManager.GetPodsReturns([]datatypes.Network_Pod{}, errors.New("Internal Server Error"))
+				err := testhelpers.RunCommand(cliCommand, "")
+				Expect(err).To(HaveOccurred())
+				Expect(strings.Contains(err.Error(), "Failed to get Pods.")).To(BeTrue())
+				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+			})
 		})
 
 		Context("VLAN list with wrong --sortby", func() {
@@ -74,9 +82,10 @@ var _ = Describe("VLAN List", func() {
 			BeforeEach(func() {
 				fakeNetworkManager.ListVlansReturns([]datatypes.Network_Vlan{
 					datatypes.Network_Vlan{
-						Id:         sl.Int(123456),
-						VlanNumber: sl.Int(100),
-						Name:       sl.String("Bill"),
+						Id:                 sl.Int(123456),
+						VlanNumber:         sl.Int(100),
+						FullyQualifiedName: sl.String("dal05.fcr01.784"),
+						Name:               sl.String("Bill"),
 						FirewallInterfaces: []datatypes.Network_Firewall_Module_Context_Interface{
 							datatypes.Network_Firewall_Module_Context_Interface{
 								Id: sl.Int(1),
@@ -85,18 +94,78 @@ var _ = Describe("VLAN List", func() {
 								Id: sl.Int(2),
 							},
 						},
+						PrimaryRouter: &datatypes.Hardware_Router{
+							Hardware_Switch: datatypes.Hardware_Switch{
+								datatypes.Hardware{
+									Id: sl.Int(987654),
+									Datacenter: &datatypes.Location{
+										Name: sl.String("dal05"),
+									},
+								},
+							},
+						},
+						BillingItem: &datatypes.Billing_Item{
+							Id: sl.Int(456321),
+						},
+						AttachedNetworkGateway: &datatypes.Network_Gateway{
+							Name: sl.String("support"),
+						},
+						NetworkSpace:               sl.String("Public"),
 						HardwareCount:              sl.Uint(uint(30)),
 						VirtualGuestCount:          sl.Uint(uint(40)),
 						TotalPrimaryIpAddressCount: sl.Uint(uint(50)),
+						TagReferences: []datatypes.Tag_Reference{
+							datatypes.Tag_Reference{
+								Tag: &datatypes.Tag{
+									Name: sl.String("Tag"),
+								},
+							},
+						},
 					},
 					datatypes.Network_Vlan{
-						Id:                         sl.Int(123458),
-						VlanNumber:                 sl.Int(73),
-						Name:                       sl.String("Anne"),
-						FirewallInterfaces:         []datatypes.Network_Firewall_Module_Context_Interface{},
+						Id:                 sl.Int(123458),
+						VlanNumber:         sl.Int(73),
+						FullyQualifiedName: sl.String("dal06.fcr01.797"),
+						Name:               sl.String("Anne"),
+						FirewallInterfaces: []datatypes.Network_Firewall_Module_Context_Interface{},
+						PrimaryRouter: &datatypes.Hardware_Router{
+							Hardware_Switch: datatypes.Hardware_Switch{
+								datatypes.Hardware{
+									Id: sl.Int(87654),
+									Datacenter: &datatypes.Location{
+										Name: sl.String("dal06"),
+									},
+								},
+							},
+						},
+						NetworkVlanFirewall: &datatypes.Network_Vlan_Firewall{
+							FullyQualifiedDomainName: sl.String("firewall"),
+						},
+						NetworkSpace:               sl.String("Private"),
 						HardwareCount:              sl.Uint(uint(5)),
 						VirtualGuestCount:          sl.Uint(uint(6)),
 						TotalPrimaryIpAddressCount: sl.Uint(uint(7)),
+						TagReferences: []datatypes.Tag_Reference{
+							datatypes.Tag_Reference{
+								Tag: &datatypes.Tag{
+									Name: sl.String("Tag"),
+								},
+							},
+						},
+					},
+				}, nil)
+				fakeNetworkManager.GetPodsReturns([]datatypes.Network_Pod{
+					datatypes.Network_Pod{
+						BackendRouterId:  sl.Int(987654),
+						FrontendRouterId: sl.Int(123456),
+						Capabilities:     []string{"CLOSURE_ANNOUNCED"},
+						Name:             sl.String("dal05.pod01"),
+					},
+					datatypes.Network_Pod{
+						BackendRouterId:  sl.Int(213456),
+						FrontendRouterId: sl.Int(87654),
+						Capabilities:     []string{},
+						Name:             sl.String("dal06.pod02"),
 					},
 				}, nil)
 			})
@@ -132,13 +201,13 @@ var _ = Describe("VLAN List", func() {
 				Expect(strings.Contains(results[2], "Yes")).To(BeTrue())
 			})
 
-			// It("return no error", func() {
-			// 	err := testhelpers.RunCommand(cliCommand, "--sortby", "datacenter")
-			// 	Expect(err).NotTo(HaveOccurred())
-			// 	results := strings.Split(fakeUI.Outputs.String(), "\n")
-			// 	Expect(strings.Contains(results[1], "dal01")).To(BeTrue())
-			// 	Expect(strings.Contains(results[2], "tok02")).To(BeTrue())
-			// })
+			It("return no error", func() {
+				err := testhelpers.RunCommand(cliCommand, "--sortby", "datacenter")
+				Expect(err).NotTo(HaveOccurred())
+				results := strings.Split(fakeUI.Outputs(), "\n")
+				Expect(strings.Contains(results[1], "dal05")).To(BeTrue())
+				Expect(strings.Contains(results[2], "dal06")).To(BeTrue())
+			})
 
 			It("return no error", func() {
 				err := testhelpers.RunCommand(cliCommand, "--sortby", "hardware")
@@ -162,6 +231,15 @@ var _ = Describe("VLAN List", func() {
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "7")).To(BeTrue())
 				Expect(strings.Contains(results[2], "50")).To(BeTrue())
+			})
+
+			It("return no error", func() {
+				err := testhelpers.RunCommand(cliCommand, "--output", "json")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`]`))
 			})
 		})
 	})

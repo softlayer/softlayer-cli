@@ -290,6 +290,19 @@ type FakeNetworkManager struct {
 	getCancelFailureReasonsReturnsOnCall map[int]struct {
 		result1 []string
 	}
+	GetPodsStub        func(string) ([]datatypes.Network_Pod, error)
+	getPodsMutex       sync.RWMutex
+	getPodsArgsForCall []struct {
+		arg1 string
+	}
+	getPodsReturns struct {
+		result1 []datatypes.Network_Pod
+		result2 error
+	}
+	getPodsReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Pod
+		result2 error
+	}
 	GetSecurityGroupStub        func(int, string) (datatypes.Network_SecurityGroup, error)
 	getSecurityGroupMutex       sync.RWMutex
 	getSecurityGroupArgsForCall []struct {
@@ -1889,6 +1902,70 @@ func (fake *FakeNetworkManager) GetCancelFailureReasonsReturnsOnCall(i int, resu
 	}{result1}
 }
 
+func (fake *FakeNetworkManager) GetPods(arg1 string) ([]datatypes.Network_Pod, error) {
+	fake.getPodsMutex.Lock()
+	ret, specificReturn := fake.getPodsReturnsOnCall[len(fake.getPodsArgsForCall)]
+	fake.getPodsArgsForCall = append(fake.getPodsArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetPodsStub
+	fakeReturns := fake.getPodsReturns
+	fake.recordInvocation("GetPods", []interface{}{arg1})
+	fake.getPodsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNetworkManager) GetPodsCallCount() int {
+	fake.getPodsMutex.RLock()
+	defer fake.getPodsMutex.RUnlock()
+	return len(fake.getPodsArgsForCall)
+}
+
+func (fake *FakeNetworkManager) GetPodsCalls(stub func(string) ([]datatypes.Network_Pod, error)) {
+	fake.getPodsMutex.Lock()
+	defer fake.getPodsMutex.Unlock()
+	fake.GetPodsStub = stub
+}
+
+func (fake *FakeNetworkManager) GetPodsArgsForCall(i int) string {
+	fake.getPodsMutex.RLock()
+	defer fake.getPodsMutex.RUnlock()
+	argsForCall := fake.getPodsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeNetworkManager) GetPodsReturns(result1 []datatypes.Network_Pod, result2 error) {
+	fake.getPodsMutex.Lock()
+	defer fake.getPodsMutex.Unlock()
+	fake.GetPodsStub = nil
+	fake.getPodsReturns = struct {
+		result1 []datatypes.Network_Pod
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNetworkManager) GetPodsReturnsOnCall(i int, result1 []datatypes.Network_Pod, result2 error) {
+	fake.getPodsMutex.Lock()
+	defer fake.getPodsMutex.Unlock()
+	fake.GetPodsStub = nil
+	if fake.getPodsReturnsOnCall == nil {
+		fake.getPodsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Pod
+			result2 error
+		})
+	}
+	fake.getPodsReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Pod
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeNetworkManager) GetSecurityGroup(arg1 int, arg2 string) (datatypes.Network_SecurityGroup, error) {
 	fake.getSecurityGroupMutex.Lock()
 	ret, specificReturn := fake.getSecurityGroupReturnsOnCall[len(fake.getSecurityGroupArgsForCall)]
@@ -3026,6 +3103,8 @@ func (fake *FakeNetworkManager) Invocations() map[string][][]interface{} {
 	defer fake.editVlanMutex.RUnlock()
 	fake.getCancelFailureReasonsMutex.RLock()
 	defer fake.getCancelFailureReasonsMutex.RUnlock()
+	fake.getPodsMutex.RLock()
+	defer fake.getPodsMutex.RUnlock()
 	fake.getSecurityGroupMutex.RLock()
 	defer fake.getSecurityGroupMutex.RUnlock()
 	fake.getSubnetMutex.RLock()
