@@ -588,6 +588,10 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -2288,6 +2292,10 @@
     "translation": "Creates a user"
   },
   {
+    "id": "Credential limits for this IBM Cloud Object Storage account.",
+    "translation": "Credential limits for this IBM Cloud Object Storage account."
+  },
+  {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "Credential: {{.credentialID}} was deleted."
   },
@@ -3482,6 +3490,10 @@
   {
     "id": "Failed to get components\n",
     "translation": "Failed to get components\n"
+  },
+  {
+    "id": "Failed to get credential limit. ",
+    "translation": "Failed to get credential limit. "
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -5446,6 +5458,10 @@
   {
     "id": "License: {{.key}} was cancelled.",
     "translation": "License: {{.key}} was cancelled."
+  },
+  {
+    "id": "Limit",
+    "translation": "Limit"
   },
   {
     "id": "List Dedicated Host Guests.",

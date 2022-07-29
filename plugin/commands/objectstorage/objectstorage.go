@@ -30,6 +30,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"object-storage-credential-delete": func(c *cli.Context) error {
 			return NewCredentialDeleteCommand(ui, objectStorageManager).Run(c)
 		},
+		"object-storage-credential-limit": func(c *cli.Context) error {
+			return NewCredentialLimitCommand(ui, objectStorageManager).Run(c)
+		},
 	}
 	return CommandActionBindings
 }
@@ -54,6 +57,7 @@ func ObjectStorageMetaData() cli.Command {
 			CredentialListMetaData(),
 			CredentialCreateMetaData(),
 			CredentialDeleteMetaData(),
+			CredentialLimitMetaData(),
 		},
 	}
 }
