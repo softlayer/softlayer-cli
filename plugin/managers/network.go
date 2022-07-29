@@ -19,7 +19,7 @@ const (
 	DEFAULT_GLOBALIP_MASK      = "id,ipAddress,destinationIpAddress[ipAddress,virtualGuest.fullyQualifiedDomainName,hardware.fullyQualifiedDomainName]"
 	DEFAULT_SUBNET_MASK        = "id,datacenter.name,hardware.id,ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests.id"
 	DEFAULT_SUBNET_DETAIL_MASK = "id,broadcastAddress,cidr,datacenter.name,gateway,hardware[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress],ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress]"
-	DEFAULT_VLAN_MASK          = "id,vlanNumber,name,firewallInterfaces,primaryRouter[id,fullyQualifiedDomainName,datacenter.name,hostname],hardwareCount,networkSpace,subnetCount,virtualGuestCount,totalPrimaryIpAddressCount"
+	DEFAULT_VLAN_MASK          = "firewallInterfaces,hardwareCount,primaryRouter[id, fullyQualifiedDomainName, datacenter],subnetCount,billingItem,totalPrimaryIpAddressCount,virtualGuestCount,networkSpace,networkVlanFirewall[id,fullyQualifiedDomainName,primaryIpAddress],attachedNetworkGateway[id,name,networkFirewall],tagReferences[tag[name]]"
 	DEFAULT_VLAN_DETAIL_MASK   = "id,vlanNumber,primaryRouter[datacenterName,fullyQualifiedDomainName],firewallInterfaces," +
 		"subnets[id,networkIdentifier,netmask,gateway,subnetType,usableIpAddressCount]," +
 		"virtualGuests[hostname,domain,primaryIpAddress,primaryBackendIpAddress]," +
@@ -72,6 +72,7 @@ type NetworkManager interface {
 	ClearRoute(subnetId int) (bool, error)
 	SetSubnetTags(subnetId int, tags string) (bool, error)
 	SetSubnetNote(subnetId int, note string) (bool, error)
+	GetPods(mask string) ([]datatypes.Network_Pod, error)
 }
 
 type networkManager struct {
@@ -85,6 +86,7 @@ type networkManager struct {
 	BillingService       services.Billing_Item
 	LocationService      services.Location_Datacenter
 	SecurityGroupService services.Network_SecurityGroup
+	*session.Session
 }
 
 func NewNetworkManager(session *session.Session) *networkManager {
@@ -99,6 +101,7 @@ func NewNetworkManager(session *session.Session) *networkManager {
 		services.GetBillingItemService(session),
 		services.GetLocationDatacenterService(session),
 		services.GetNetworkSecurityGroupService(session),
+		session,
 	}
 }
 
@@ -763,4 +766,15 @@ func (n networkManager) SetSubnetTags(subnetId int, tags string) (bool, error) {
 // note string: Note to be set.
 func (n networkManager) SetSubnetNote(subnetId int, note string) (bool, error) {
 	return n.SubnetService.Id(subnetId).EditNote(&note)
+}
+
+func (n networkManager) GetPods(mask string) ([]datatypes.Network_Pod, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("networkVlans.id").OrderBy("ASC"))
+
+	if mask == "" {
+		mask = "mask[name, datacenterLongName, frontendRouterId, capabilities, datacenterId, backendRouterId,backendRouterName, frontendRouterName]"
+	}
+	NetworkPodService := services.GetNetworkPodService(n.Session)
+	return NetworkPodService.Mask(mask).Filter(filters.Build()).GetAllObjects()
 }
