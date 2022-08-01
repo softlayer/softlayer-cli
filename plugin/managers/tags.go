@@ -20,6 +20,7 @@ type TagsManager interface {
 	ReferenceLookup(resourceType string, resourceId int) string
 	DeleteTag(tagName string) (bool, error)
 	SetTags(tags string, keyName string, resourceId int) (bool, error)
+	GetUnattachedTags(mask string) ([]datatypes.Tag, error)
 }
 
 type tagsManager struct {
@@ -190,4 +191,10 @@ func NameCheck(name *string, err error) string {
 
 func (tag tagsManager) SetTags(tags string, keyName string, resourceId int) (bool, error) {
 	return tag.TagService.SetTags(&tags, &keyName, &resourceId)
+}
+
+// Returns unattached tags for current user
+// mask: Object mask
+func (tag tagsManager) GetUnattachedTags(mask string) ([]datatypes.Tag, error) {
+	return tag.TagService.Mask(mask).GetUnattachedTagsForCurrentUser()
 }

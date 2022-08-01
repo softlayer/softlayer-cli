@@ -16,6 +16,7 @@ type ObjectStorageManager interface {
 	ListCredential(StorageId int, mask string) ([]datatypes.Network_Storage_Credential, error)
 	CreateCredential(StorageId int, mask string) ([]datatypes.Network_Storage_Credential, error)
 	DeleteCredential(StorageId int, CredentialId int) error
+	LimitCredential(StorageId int) (int, error)
 }
 
 type objectStorageManager struct {
@@ -103,4 +104,12 @@ func (a objectStorageManager) DeleteCredential(StorageId int, CredentialId int) 
 
 	_, err = a.ObjectStorageService.Mask(mask).Id(StorageId).CredentialDelete(&credential[0])
 	return err
+}
+
+/*
+Returns credential limits for this IBM Cloud Object Storage account.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getCredentialLimit/
+*/
+func (a objectStorageManager) LimitCredential(StorageId int) (int, error) {
+	return a.ObjectStorageService.Id(StorageId).GetCredentialLimit()
 }
