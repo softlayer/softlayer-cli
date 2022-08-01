@@ -96,7 +96,7 @@ var _ = Describe("VLAN List", func() {
 						},
 						PrimaryRouter: &datatypes.Hardware_Router{
 							Hardware_Switch: datatypes.Hardware_Switch{
-								datatypes.Hardware{
+								Hardware: datatypes.Hardware{
 									Id: sl.Int(987654),
 									Datacenter: &datatypes.Location{
 										Name: sl.String("dal05"),
