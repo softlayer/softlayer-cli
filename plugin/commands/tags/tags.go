@@ -25,6 +25,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"tags-set": func(c *cli.Context) error {
 			return NewSetCommand(ui, tagsManager).Run(c)
 		},
+		"tags-cleanup": func(c *cli.Context) error {
+			return NewCleanupCommand(ui, tagsManager).Run(c)
+		},
 	}
 	return CommandActionBindings
 }
@@ -48,6 +51,7 @@ func TagsMetaData() cli.Command {
 			TagsDetailsMetaData(),
 			TagsDeleteMetaData(),
 			TagsSetMetaData(),
+			TagsCleanupMetaData(),
 		},
 	}
 }
