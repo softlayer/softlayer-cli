@@ -130,7 +130,7 @@ var _ = Describe("VLAN List", func() {
 						FirewallInterfaces: []datatypes.Network_Firewall_Module_Context_Interface{},
 						PrimaryRouter: &datatypes.Hardware_Router{
 							Hardware_Switch: datatypes.Hardware_Switch{
-								datatypes.Hardware{
+								Hardware: datatypes.Hardware{
 									Id: sl.Int(87654),
 									Datacenter: &datatypes.Location{
 										Name: sl.String("dal06"),
