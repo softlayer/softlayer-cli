@@ -48,6 +48,19 @@ type FakeTagsManager struct {
 		result1 []datatypes.Tag_Reference
 		result2 error
 	}
+	GetUnattachedTagsStub        func(string) ([]datatypes.Tag, error)
+	getUnattachedTagsMutex       sync.RWMutex
+	getUnattachedTagsArgsForCall []struct {
+		arg1 string
+	}
+	getUnattachedTagsReturns struct {
+		result1 []datatypes.Tag
+		result2 error
+	}
+	getUnattachedTagsReturnsOnCall map[int]struct {
+		result1 []datatypes.Tag
+		result2 error
+	}
 	ListEmptyTagsStub        func() ([]datatypes.Tag, error)
 	listEmptyTagsMutex       sync.RWMutex
 	listEmptyTagsArgsForCall []struct {
@@ -291,6 +304,70 @@ func (fake *FakeTagsManager) GetTagReferencesReturnsOnCall(i int, result1 []data
 	}
 	fake.getTagReferencesReturnsOnCall[i] = struct {
 		result1 []datatypes.Tag_Reference
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeTagsManager) GetUnattachedTags(arg1 string) ([]datatypes.Tag, error) {
+	fake.getUnattachedTagsMutex.Lock()
+	ret, specificReturn := fake.getUnattachedTagsReturnsOnCall[len(fake.getUnattachedTagsArgsForCall)]
+	fake.getUnattachedTagsArgsForCall = append(fake.getUnattachedTagsArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetUnattachedTagsStub
+	fakeReturns := fake.getUnattachedTagsReturns
+	fake.recordInvocation("GetUnattachedTags", []interface{}{arg1})
+	fake.getUnattachedTagsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeTagsManager) GetUnattachedTagsCallCount() int {
+	fake.getUnattachedTagsMutex.RLock()
+	defer fake.getUnattachedTagsMutex.RUnlock()
+	return len(fake.getUnattachedTagsArgsForCall)
+}
+
+func (fake *FakeTagsManager) GetUnattachedTagsCalls(stub func(string) ([]datatypes.Tag, error)) {
+	fake.getUnattachedTagsMutex.Lock()
+	defer fake.getUnattachedTagsMutex.Unlock()
+	fake.GetUnattachedTagsStub = stub
+}
+
+func (fake *FakeTagsManager) GetUnattachedTagsArgsForCall(i int) string {
+	fake.getUnattachedTagsMutex.RLock()
+	defer fake.getUnattachedTagsMutex.RUnlock()
+	argsForCall := fake.getUnattachedTagsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeTagsManager) GetUnattachedTagsReturns(result1 []datatypes.Tag, result2 error) {
+	fake.getUnattachedTagsMutex.Lock()
+	defer fake.getUnattachedTagsMutex.Unlock()
+	fake.GetUnattachedTagsStub = nil
+	fake.getUnattachedTagsReturns = struct {
+		result1 []datatypes.Tag
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeTagsManager) GetUnattachedTagsReturnsOnCall(i int, result1 []datatypes.Tag, result2 error) {
+	fake.getUnattachedTagsMutex.Lock()
+	defer fake.getUnattachedTagsMutex.Unlock()
+	fake.GetUnattachedTagsStub = nil
+	if fake.getUnattachedTagsReturnsOnCall == nil {
+		fake.getUnattachedTagsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Tag
+			result2 error
+		})
+	}
+	fake.getUnattachedTagsReturnsOnCall[i] = struct {
+		result1 []datatypes.Tag
 		result2 error
 	}{result1, result2}
 }
@@ -544,6 +621,8 @@ func (fake *FakeTagsManager) Invocations() map[string][][]interface{} {
 	defer fake.getTagByTagNameMutex.RUnlock()
 	fake.getTagReferencesMutex.RLock()
 	defer fake.getTagReferencesMutex.RUnlock()
+	fake.getUnattachedTagsMutex.RLock()
+	defer fake.getUnattachedTagsMutex.RUnlock()
 	fake.listEmptyTagsMutex.RLock()
 	defer fake.listEmptyTagsMutex.RUnlock()
 	fake.listTagsMutex.RLock()

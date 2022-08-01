@@ -588,6 +588,10 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -714,6 +718,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
     "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets."
+  },
+  {
+    "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
+    "translation": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup"
   },
   {
     "id": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemoves \"tag\" from your account.\n",
@@ -950,6 +958,10 @@
   {
     "id": "'{{.Input}}' is required",
     "translation": "'{{.Input}}' is required"
+  },
+  {
+    "id": "(Dry Run) Removing Tag: {{.tag}}.",
+    "translation": "(Dry Run) Removing Tag: {{.tag}}."
   },
   {
     "id": "--billing can only be either hourly or monthly.",
@@ -2280,6 +2292,10 @@
     "translation": "Creates a user"
   },
   {
+    "id": "Credential limits for this IBM Cloud Object Storage account.",
+    "translation": "Credential limits for this IBM Cloud Object Storage account."
+  },
+  {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "Credential: {{.credentialID}} was deleted."
   },
@@ -2626,6 +2642,10 @@
   {
     "id": "Don't actually create records",
     "translation": "Don't actually create records"
+  },
+  {
+    "id": "Don't delete, just show what will be deleted.",
+    "translation": "Don't delete, just show what will be deleted."
   },
   {
     "id": "Done",
@@ -3204,6 +3224,10 @@
     "translation": "Failed to delete L7member {{.Member}}: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete Tag: {{.tag}}.",
+    "translation": "Failed to delete Tag: {{.tag}}."
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
@@ -3432,6 +3456,10 @@
     "translation": "Failed to get Statistics."
   },
   {
+    "id": "Failed to get Unattached Tags.",
+    "translation": "Failed to get Unattached Tags."
+  },
+  {
     "id": "Failed to get VLAN: {{.VLANID}}.\n",
     "translation": "Failed to get VLAN: {{.VLANID}}.\n"
   },
@@ -3466,6 +3494,10 @@
   {
     "id": "Failed to get components\n",
     "translation": "Failed to get components\n"
+  },
+  {
+    "id": "Failed to get credential limit. ",
+    "translation": "Failed to get credential limit. "
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -5440,6 +5472,10 @@
     "translation": "License: {{.key}} was cancelled."
   },
   {
+    "id": "Limit",
+    "translation": "Limit"
+  },
+  {
     "id": "List Dedicated Host Guests.",
     "translation": "List Dedicated Host Guests."
   },
@@ -7080,12 +7116,20 @@
     "translation": "Removed {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}."
   },
   {
+    "id": "Removes all empty tags.",
+    "translation": "Removes all empty tags."
+  },
+  {
     "id": "Removes an empty tag from your account.",
     "translation": "Removes an empty tag from your account."
   },
   {
     "id": "Removes guests. (Only set --up or --down)",
     "translation": "Removes guests. (Only set --up or --down)"
+  },
+  {
+    "id": "Removing Tag: {{.tag}}.",
+    "translation": "Removing Tag: {{.tag}}."
   },
   {
     "id": "Replicant Count",
