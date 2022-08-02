@@ -32,7 +32,7 @@ func DetailMetaData() cli.Command {
 	return cli.Command{
 		Category:    "cdn",
 		Name:        "detail",
-		Description: T("Detail all CDN accounts."),
+		Description: T("Detail a CDN Account."),
 		Usage:       T(`${COMMAND_NAME} sl cdn detail`),
 		Flags: []cli.Flag{
 			cli.IntFlag{
