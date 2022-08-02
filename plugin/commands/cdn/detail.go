@@ -52,7 +52,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	cdnId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("cnd ID")
+		return slErr.NewInvalidSoftlayerIdInputError("cdn ID")
 	}
 
 	history := c.Int("history")
