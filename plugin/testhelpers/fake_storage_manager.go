@@ -9,6 +9,20 @@ import (
 )
 
 type FakeStorageManager struct {
+	AssignSubnetsToAclStub        func(int, []int) ([]int, error)
+	assignSubnetsToAclMutex       sync.RWMutex
+	assignSubnetsToAclArgsForCall []struct {
+		arg1 int
+		arg2 []int
+	}
+	assignSubnetsToAclReturns struct {
+		result1 []int
+		result2 error
+	}
+	assignSubnetsToAclReturnsOnCall map[int]struct {
+		result1 []int
+		result2 error
+	}
 	AuthorizeHostToVolumeStub        func(int, []int, []int, []int, []int) ([]datatypes.Network_Storage_Allowed_Host, error)
 	authorizeHostToVolumeMutex       sync.RWMutex
 	authorizeHostToVolumeArgsForCall []struct {
@@ -526,6 +540,76 @@ type FakeStorageManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeStorageManager) AssignSubnetsToAcl(arg1 int, arg2 []int) ([]int, error) {
+	var arg2Copy []int
+	if arg2 != nil {
+		arg2Copy = make([]int, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.assignSubnetsToAclMutex.Lock()
+	ret, specificReturn := fake.assignSubnetsToAclReturnsOnCall[len(fake.assignSubnetsToAclArgsForCall)]
+	fake.assignSubnetsToAclArgsForCall = append(fake.assignSubnetsToAclArgsForCall, struct {
+		arg1 int
+		arg2 []int
+	}{arg1, arg2Copy})
+	stub := fake.AssignSubnetsToAclStub
+	fakeReturns := fake.assignSubnetsToAclReturns
+	fake.recordInvocation("AssignSubnetsToAcl", []interface{}{arg1, arg2Copy})
+	fake.assignSubnetsToAclMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) AssignSubnetsToAclCallCount() int {
+	fake.assignSubnetsToAclMutex.RLock()
+	defer fake.assignSubnetsToAclMutex.RUnlock()
+	return len(fake.assignSubnetsToAclArgsForCall)
+}
+
+func (fake *FakeStorageManager) AssignSubnetsToAclCalls(stub func(int, []int) ([]int, error)) {
+	fake.assignSubnetsToAclMutex.Lock()
+	defer fake.assignSubnetsToAclMutex.Unlock()
+	fake.AssignSubnetsToAclStub = stub
+}
+
+func (fake *FakeStorageManager) AssignSubnetsToAclArgsForCall(i int) (int, []int) {
+	fake.assignSubnetsToAclMutex.RLock()
+	defer fake.assignSubnetsToAclMutex.RUnlock()
+	argsForCall := fake.assignSubnetsToAclArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeStorageManager) AssignSubnetsToAclReturns(result1 []int, result2 error) {
+	fake.assignSubnetsToAclMutex.Lock()
+	defer fake.assignSubnetsToAclMutex.Unlock()
+	fake.AssignSubnetsToAclStub = nil
+	fake.assignSubnetsToAclReturns = struct {
+		result1 []int
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) AssignSubnetsToAclReturnsOnCall(i int, result1 []int, result2 error) {
+	fake.assignSubnetsToAclMutex.Lock()
+	defer fake.assignSubnetsToAclMutex.Unlock()
+	fake.AssignSubnetsToAclStub = nil
+	if fake.assignSubnetsToAclReturnsOnCall == nil {
+		fake.assignSubnetsToAclReturnsOnCall = make(map[int]struct {
+			result1 []int
+			result2 error
+		})
+	}
+	fake.assignSubnetsToAclReturnsOnCall[i] = struct {
+		result1 []int
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeStorageManager) AuthorizeHostToVolume(arg1 int, arg2 []int, arg3 []int, arg4 []int, arg5 []int) ([]datatypes.Network_Storage_Allowed_Host, error) {
@@ -2946,6 +3030,8 @@ func (fake *FakeStorageManager) VolumeSetNoteReturnsOnCall(i int, result1 bool, 
 func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.assignSubnetsToAclMutex.RLock()
+	defer fake.assignSubnetsToAclMutex.RUnlock()
 	fake.authorizeHostToVolumeMutex.RLock()
 	defer fake.authorizeHostToVolumeMutex.RUnlock()
 	fake.cancelSnapshotSpaceMutex.RLock()
