@@ -25,7 +25,7 @@
   },
   {
     "id": " is not following <hostname>.<domain.name.tld> --fqdn option format",
-    "translation": " is not following <hostname>.<domain.name.tld> --fqdn option format"
+    "translation": " non segue il formato <hostname>.<domain.name.tld> dell'opzione --fqdn"
   },
   {
     "id": "# of Active Transactions",
@@ -37,7 +37,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456",
-    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
+    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\nESEMPIO: \n   ${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
   },
   {
     "id": "${COMMAND_NAME} sl account cancel-item IDENTIFIER",
@@ -137,7 +137,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list",
-    "translation": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list"
+    "translation": "${COMMAND_NAME} sl block object-list [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl block object-list"
   },
   {
     "id": "${COMMAND_NAME} sl block replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
@@ -485,7 +485,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFICATIVO [OPZIONI]\n\nESEMPIO: \n   ${COMMAND_NAME} sl hardware sensor 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
@@ -565,7 +565,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
-    "translation": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources."
+    "translation": "${COMMAND_NAME} sl metadata [OPZIONI]\n\n.. csv-table:: Scelte: \n- backend_ip\n- backend_mac\n- datacenter\n- datacenter_id\n- fqdn\n- frontend_mac\n- id\n- ip\n- network\n- provision_state\n- tags\n- user_data\n\nEsempi:\n${COMMAND_NAME} sl metadata backend_ip\n${COMMAND_NAME} sl metadata network\n\nQuesti comandi funzionano solo su dispositivi nella rete SoftLayer di backend. Questo consente il rilevamento automatico per le risorse di nuovo provisioning."
   },
   {
     "id": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456",
@@ -580,12 +580,20 @@
     "translation": "${COMMAND_NAME} sl object-storage accounts"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFICATIVO [OPZIONI]\n\nEsempi:\n${COMMAND_NAME} sl object-storage credential-create 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
+    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFICATIVO [OPZIONI]\n\nEsemi:\n${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFICATIVO [OPZIONI]"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER"
+    "translation": "${COMMAND_NAME} sl object-storage endpoints IDENTIFICATIVO"
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
@@ -613,19 +621,19 @@
   },
   {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
-    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
+    "translation": "${COMMAND_NAME} sl order quote IDENTIFICATIVO [OPZIONI]\n\nESEMPIO: \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
   },
   {
     "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
-    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456"
+    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFICATIVO [OPZIONI]\n\nESEMPIO: \n${COMMAND_NAME} sl order quote-detail 123456"
   },
   {
     "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
-    "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list"
+    "translation": "${COMMAND_NAME} sl order quote-list [OPZIONI]\n\n   ESEMPIO: \n ${COMMAND_NAME} sl order quote-list"
   },
   {
     "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
-    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456"
+    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFICATIVO [OPZIONI]\n\nESEMPIO: \n${COMMAND_NAME} sl order quote-save 123456"
   },
   {
     "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
@@ -693,7 +701,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
-    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -721,7 +729,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
-    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
+    "translation": "${COMMAND_NAME} sl tags set [OPZIONI]\n\nESEMPIO:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
   {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
@@ -1137,7 +1145,7 @@
   },
   {
     "id": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]",
-    "translation": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]"
+    "translation": "Nome formattato <hostname>.<domain.name.tld> da utilizzare. Specificare un fqdn per server (ammessa ricorrenza multipla) [obbligatorio]"
   },
   {
     "id": "A custom name to be assigned to the quote (optional)",
@@ -1225,7 +1233,7 @@
   },
   {
     "id": "Account name",
-    "translation": "Account name"
+    "translation": "Nome account"
   },
   {
     "id": "Accounting",
@@ -1441,11 +1449,11 @@
   },
   {
     "id": "Authorize File and Block Storage to a Hardware Server",
-    "translation": "Autorizza File e Storage a blocchi su un Server Hardware"
+    "translation": "Autorizza file e storage a blocchi su un server hardware"
   },
   {
     "id": "Authorize File, Block and Portable Storage to a Virtual Server",
-    "translation": "Autorizza Storage File, a Blocchi e Portatile su un Server Virtuale"
+    "translation": "Autorizza storage file, a blocchi e portatile su un server virtuale"
   },
   {
     "id": "Authorize hosts to access a given volume",
@@ -1901,7 +1909,7 @@
   },
   {
     "id": "Classic infrastructure Object Storage commands",
-    "translation": "Classic infrastructure Object Storage commands"
+    "translation": "Comandi Object Storage infrastruttura classica"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -2037,11 +2045,11 @@
   },
   {
     "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
-    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+    "translation": "Elenco separato da virgole di tag, racchiusi tra virgolette. 'tag1, tag2'"
   },
   {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
-    "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
+    "translation": "Elenco separato da virgole di tag, racchiusi tra virgolette. 'tag1,tag2'  [obbligatorio]"
   },
   {
     "id": "Company",
@@ -2236,6 +2244,10 @@
     "translation": "Crea una zona"
   },
   {
+    "id": "Create credentials for an IBM Cloud Object Storage Account.",
+    "translation": "Creare le credenziali per un account IBM Cloud Object Storage."
+  },
+  {
     "id": "Create virtual server instance",
     "translation": "Crea un'istanza del server virtuale"
   },
@@ -2245,7 +2257,7 @@
   },
   {
     "id": "Created",
-    "translation": "Creato"
+    "translation": "Data di creazione"
   },
   {
     "id": "Created Date",
@@ -2268,6 +2280,10 @@
     "translation": "Crea un utente"
   },
   {
+    "id": "Credential: {{.credentialID}} was deleted.",
+    "translation": "Credenziale: {{.credentialID}} è stato eliminato."
+  },
+  {
     "id": "Credit allowed",
     "translation": "Credito consentito"
   },
@@ -2285,15 +2301,15 @@
   },
   {
     "id": "Critical Max",
-    "translation": "Critical Max"
+    "translation": "Massimo critico"
   },
   {
     "id": "Critical Min",
-    "translation": "Critical Min"
+    "translation": "Minimo critico"
   },
   {
     "id": "Cross Region",
-    "translation": "Cross Region"
+    "translation": "Più regioni"
   },
   {
     "id": "Current Members",
@@ -2420,6 +2436,10 @@
     "translation": "Elimina un'immagine "
   },
   {
+    "id": "Delete the credential of an Object Storage Account.",
+    "translation": "Eliminare la credenziale di un account Object Storage."
+  },
+  {
     "id": "Delete the given security group",
     "translation": "Elimina il gruppo di sicurezza fornito"
   },
@@ -2489,7 +2509,7 @@
   },
   {
     "id": "Discrete Sensor",
-    "translation": "Discrete Sensor"
+    "translation": "Sensore discreto"
   },
   {
     "id": "Disk",
@@ -2697,7 +2717,7 @@
   },
   {
     "id": "Edit note and tags of a subnet.",
-    "translation": "Edit note and tags of a subnet."
+    "translation": "Modificare nota e tag di una sottorete."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -2805,7 +2825,7 @@
   },
   {
     "id": "EndPoint Type",
-    "translation": "EndPoint Type"
+    "translation": "Tipo di endpoint"
   },
   {
     "id": "Ending Balance",
@@ -2881,7 +2901,7 @@
   },
   {
     "id": "Expiration",
-    "translation": "Expiration"
+    "translation": "Scadenza"
   },
   {
     "id": "Export an image to an object storage",
@@ -3104,6 +3124,10 @@
     "translation": "Impossibile creare il gruppo di ridimensionamento automatico.\n"
   },
   {
+    "id": "Failed to create credential. ",
+    "translation": "Impossibile creare la credenziale. "
+  },
+  {
     "id": "Failed to create dedicated host.\n",
     "translation": "Impossibile creare l'host dedicato.\n"
   },
@@ -3178,6 +3202,10 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "Impossibile eliminare il membro L7: {{.Member}}: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to delete credential: {{.storageID}}.\n",
+    "translation": "Impossibile eliminare la credenziale: {{.storageID}}. \n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -3313,11 +3341,11 @@
   },
   {
     "id": "Failed to get Bandwidth Pool.\n",
-    "translation": "Failed to get Bandwidth Pool.\n"
+    "translation": "Impossibile ottenere il pool di larghezza di banda.\n"
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
-    "translation": "Failed to get Cloud Object Storages.\n"
+    "translation": "Impossibile ottenere Cloud Object Storage.\n"
   },
   {
     "id": "Failed to get Datacenter {{.datacenter}}.\n",
@@ -3341,7 +3369,7 @@
   },
   {
     "id": "Failed to get Image.\n",
-    "translation": "Failed to get Image.\n"
+    "translation": "Impossibile ottenere l'immagine.\n"
   },
   {
     "id": "Failed to get L7 Health Monitor: {{.Error}}.\n",
@@ -3373,15 +3401,15 @@
   },
   {
     "id": "Failed to get Quote.\n",
-    "translation": "Failed to get Quote.\n"
+    "translation": "Impossibile ottenere il preventivo.\n"
   },
   {
     "id": "Failed to get Quotes.\n",
-    "translation": "Failed to get Quotes.\n"
+    "translation": "Impossibile ottenere i preventivi.\n"
   },
   {
     "id": "Failed to get Recalculated Order Container.\n",
-    "translation": "Failed to get Recalculated Order Container.\n"
+    "translation": "Impossibile ottenere il contenitore dell'ordine ricalcolato.\n"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3413,7 +3441,7 @@
   },
   {
     "id": "Failed to get account’s associated Virtual Storage volumes.",
-    "translation": "Failed to get account’s associated Virtual Storage volumes."
+    "translation": "Impossibile ottenere i volumi di archiviazione virtuale associati dell'account."
   },
   {
     "id": "Failed to get all datacenters.\n",
@@ -3469,7 +3497,7 @@
   },
   {
     "id": "Failed to get hardware sensor data.\n",
-    "translation": "Failed to get hardware sensor data.\n"
+    "translation": "Impossibile ottenere i dati del sensore hardware.\n"
   },
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
@@ -3525,7 +3553,7 @@
   },
   {
     "id": "Failed to get list object storage endpoints.",
-    "translation": "Failed to get list object storage endpoints."
+    "translation": "Impossibile ottenere elenco endpoint di archiviazione oggetti."
   },
   {
     "id": "Failed to get load balancer product packages.",
@@ -3793,7 +3821,7 @@
   },
   {
     "id": "Failed to list credentials. ",
-    "translation": "Failed to list credentials. "
+    "translation": "Impossibile elencare le credenziali. "
   },
   {
     "id": "Failed to list datacenters.\n",
@@ -3901,7 +3929,7 @@
   },
   {
     "id": "Failed to order Quote.\n",
-    "translation": "Failed to order Quote.\n"
+    "translation": "Impossibile ordinare il preventivo.\n"
   },
   {
     "id": "Failed to order block volume.Please verify your options and try again.\n",
@@ -4093,7 +4121,7 @@
   },
   {
     "id": "Failed to save Quote.\n",
-    "translation": "Failed to save Quote.\n"
+    "translation": "Impossibile salvare il preventivo.\n"
   },
   {
     "id": "Failed to scale Auto Scale Group.",
@@ -4105,7 +4133,7 @@
   },
   {
     "id": "Failed to set note: {{.note}}.\n",
-    "translation": "Failed to set note: {{.note}}.\n"
+    "translation": "Impossibile impostare la nota: {{.note}}.\n"
   },
   {
     "id": "Failed to set password for host {{.HostID}}.\n",
@@ -4113,11 +4141,11 @@
   },
   {
     "id": "Failed to set tags.\n",
-    "translation": "Failed to set tags.\n"
+    "translation": "Impossibile impostare i tag.\n"
   },
   {
     "id": "Failed to set tags: {{.tags}}.\n",
-    "translation": "Failed to set tags: {{.tags}}.\n"
+    "translation": "Impossibile impostare i tag: {{.tags}}.\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4269,7 +4297,7 @@
   },
   {
     "id": "Failed to verify Quote.\n",
-    "translation": "Failed to verify Quote.\n"
+    "translation": "Impossibile verificare il preventivo.\n"
   },
   {
     "id": "Failed to verify load balancer with name {{.Name}} on {{.Location}}.\n",
@@ -4333,7 +4361,7 @@
   },
   {
     "id": "False",
-    "translation": "False"
+    "translation": "No"
   },
   {
     "id": "Features",
@@ -4541,11 +4569,11 @@
   },
   {
     "id": "Find an IP address and display its subnet and device information",
-    "translation": "Trova un indirizzo IP e visualizzane le sottoreti e le informazioni sul dispositivo"
+    "translation": "Trova un indirizzo IP e visualizza le relative sottoreti e le informazioni sul dispositivo"
   },
   {
     "id": "Find details about the machine making these API calls.",
-    "translation": "Find details about the machine making these API calls."
+    "translation": "Scoprire i dettagli sulla macchina che effettua queste chiamate API."
   },
   {
     "id": "Firewall",
@@ -4653,7 +4681,7 @@
   },
   {
     "id": "Get bandwidth pool details.",
-    "translation": "Get bandwidth pool details."
+    "translation": "Ottenere i dettagli del pool di larghezza di banda."
   },
   {
     "id": "Get billing details for a virtual server instance",
@@ -4969,7 +4997,7 @@
   },
   {
     "id": "ID of the object being tagged  [required]",
-    "translation": "ID of the object being tagged  [required]"
+    "translation": "ID dell'oggetto su cui si impostano tag [obbligatorio]"
   },
   {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
@@ -5085,7 +5113,7 @@
   },
   {
     "id": "If specified, will only show what the quote will order, will NOT place an order [default: False]",
-    "translation": "If specified, will only show what the quote will order, will NOT place an order [default: False]"
+    "translation": "Se specificato, mostrerà solo quello che il preventivo ordinerà, NON effettuerà un ordine [predefinito: False]"
   },
   {
     "id": "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type.",
@@ -5097,7 +5125,7 @@
   },
   {
     "id": "Image ID. See: 'ibmcloud sl image list' for reference",
-    "translation": "Image ID. See: 'ibmcloud sl image list' for reference"
+    "translation": "ID immagine. Vedere: 'ibmcloud sl image list' per riferimento"
   },
   {
     "id": "Image ID. The default is to use the current operating system.\nSee: '${COMMAND_NAME} sl image list' for reference",
@@ -5125,7 +5153,7 @@
   },
   {
     "id": "Inbound Usage",
-    "translation": "Inbound Usage"
+    "translation": "Utilizzo in entrata"
   },
   {
     "id": "Include extra resources. Options are: at,is,rs,sr,ss",
@@ -5237,7 +5265,7 @@
   },
   {
     "id": "Invalid output format, only JSON is supported now.",
-    "translation": "Formato dell'output non valido, al momento è supportato solo JSON."
+    "translation": "Formato dell'output non valido, al momento è supportato solo il formato JSON."
   },
   {
     "id": "Invalid storage type",
@@ -5313,7 +5341,7 @@
   },
   {
     "id": "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]",
-    "translation": "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]"
+    "translation": "Nome chiave di un tipo di tag, ad es. GUEST, HARDWARE. Vedere l'output di slcli tags taggable. [obbligatorio]"
   },
   {
     "id": "Key name. It's only available in HEADER or COOKIE type",
@@ -5401,7 +5429,7 @@
   },
   {
     "id": "List Dedicated Host Guests.",
-    "translation": "Elenco guest dell'host dedicato."
+    "translation": "Elenca guest dell'host dedicato."
   },
   {
     "id": "List IPSec VPN tunnel context details",
@@ -5425,11 +5453,11 @@
   },
   {
     "id": "List Object Storage accounts.",
-    "translation": "List Object Storage accounts."
+    "translation": "Elencare gli account Object Storage."
   },
   {
     "id": "List Reserved Capacity groups.",
-    "translation": "Elenca i gruppi di capacità riservata."
+    "translation": "Elencare i gruppi di capacità riservata."
   },
   {
     "id": "List SSH keys on your account",
@@ -5457,7 +5485,7 @@
   },
   {
     "id": "List all active quotes on an account",
-    "translation": "List all active quotes on an account"
+    "translation": "Elencare tutti i preventivi attivi su un account"
   },
   {
     "id": "List all devices the user has access and device access permissions.",
@@ -5517,7 +5545,7 @@
   },
   {
     "id": "List cloud block storage.",
-    "translation": "List cloud block storage."
+    "translation": "Elencare l'archiviazione a blocchi cloud."
   },
   {
     "id": "List datacenters a package can be ordered in",
@@ -5589,7 +5617,7 @@
   },
   {
     "id": "List object storage endpoints.",
-    "translation": "List object storage endpoints."
+    "translation": "Elencare gli endpoint di archiviazione oggetti."
   },
   {
     "id": "List only the required categories for the package",
@@ -5629,7 +5657,7 @@
   },
   {
     "id": "List placement groups.",
-    "translation": "Elenco gruppi di posizionamenti."
+    "translation": "Elenca i gruppi di posizionamento."
   },
   {
     "id": "List security group rules",
@@ -5701,7 +5729,7 @@
   },
   {
     "id": "Location/Region",
-    "translation": "Location/Region"
+    "translation": "Ubicazione/Regione"
   },
   {
     "id": "Long Name",
@@ -5709,7 +5737,7 @@
   },
   {
     "id": "Mac addresses",
-    "translation": "Mac addresses"
+    "translation": "Indirizzi MAC"
   },
   {
     "id": "Manage Classic infrastructure services",
@@ -5729,7 +5757,7 @@
   },
   {
     "id": "Max",
-    "translation": "Max"
+    "translation": "Massimo"
   },
   {
     "id": "Max IOPS",
@@ -6173,7 +6201,7 @@
   },
   {
     "id": "One Time",
-    "translation": "One Time"
+    "translation": "Una volta"
   },
   {
     "id": "One of --name, --note and --tag must be specified.",
@@ -6405,11 +6433,11 @@
   },
   {
     "id": "Package Id",
-    "translation": "Package Id"
+    "translation": "ID pacchetto"
   },
   {
     "id": "Package Name",
-    "translation": "Package Name"
+    "translation": "Nome pacchetto"
   },
   {
     "id": "Package {{.Package}} does not exist.",
@@ -6877,7 +6905,7 @@
   },
   {
     "id": "Public/Private",
-    "translation": "Public/Private"
+    "translation": "Pubblico/Privato"
   },
   {
     "id": "Quantity",
@@ -6885,7 +6913,7 @@
   },
   {
     "id": "RPM Sensor",
-    "translation": "RPM Sensor"
+    "translation": "Sensore RPM"
   },
   {
     "id": "Ram",
@@ -6901,7 +6929,7 @@
   },
   {
     "id": "Reading",
-    "translation": "Reading"
+    "translation": "Lettura"
   },
   {
     "id": "Reason",
@@ -6929,7 +6957,7 @@
   },
   {
     "id": "Recurring",
-    "translation": "Recurring"
+    "translation": "Ricorrente"
   },
   {
     "id": "Recurring Fee",
@@ -7053,7 +7081,7 @@
   },
   {
     "id": "Reports which resources are still active in Datacenters that are scheduled to be closed.",
-    "translation": "Segnala le risorse ancora attive nei datacenter di cui è prevista chiusura."
+    "translation": "Segnala le risorse ancora attive nei datacenter di cui è prevista la chiusura."
   },
   {
     "id": "Reputation",
@@ -7101,11 +7129,11 @@
   },
   {
     "id": "Retrieve a server’s hardware state via its internal sensors.",
-    "translation": "Retrieve a server’s hardware state via its internal sensors."
+    "translation": "Richiamare lo stato hardware di un server tramite i sensori interni."
   },
   {
     "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
-    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
+    "translation": "Richiamare le credenziali utilizzate per la generazione di una firma AWS. Massimo di 2."
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7181,7 +7209,7 @@
   },
   {
     "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
-    "translation": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)"
+    "translation": "ID chiave SSH da aggiungere all'utente root. Vedere: \"ibmcloud sl security sshkey-list\" per riferimento (consentita ricorrenza multipla)"
   },
   {
     "id": "SSH key was added: ",
@@ -7233,7 +7261,7 @@
   },
   {
     "id": "Save a quote",
-    "translation": "Save a quote"
+    "translation": "Salva un preventivo"
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
@@ -7309,7 +7337,7 @@
   },
   {
     "id": "Set Tags.",
-    "translation": "Set Tags."
+    "translation": "Impostare i tag."
   },
   {
     "id": "Set note for an existing block storage volume.",
@@ -7321,7 +7349,7 @@
   },
   {
     "id": "Set note successfully",
-    "translation": "Set note successfully"
+    "translation": "Nota impostata correttamente"
   },
   {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
@@ -7329,7 +7357,7 @@
   },
   {
     "id": "Set tags successfully",
-    "translation": "Set tags successfully"
+    "translation": "Tag impostati correttamente"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7393,7 +7421,7 @@
   },
   {
     "id": "Show discrete units associated hardware sensor",
-    "translation": "Show discrete units associated hardware sensor"
+    "translation": "Mostra sensore hardware associato a unità discrete"
   },
   {
     "id": "Show guests on dedicated host",
@@ -7445,7 +7473,7 @@
   },
   {
     "id": "Single Site",
-    "translation": "Single Site"
+    "translation": "Sito singolo"
   },
   {
     "id": "Size",
@@ -7545,7 +7573,7 @@
   },
   {
     "id": "Specify output format, only JSON is supported now.",
-    "translation": "Specifica il formato dell'output, al momento è supportato solo JSON."
+    "translation": "Specifica il formato dell'output, al momento è supportato solo il formato JSON."
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
@@ -7813,7 +7841,7 @@
   },
   {
     "id": "Temperature (°C) Sensor",
-    "translation": "Temperature (°C) Sensor"
+    "translation": "Sensore temperatura (°C)"
   },
   {
     "id": "Template file: {{.Location}} does not exist.",
@@ -7901,7 +7929,7 @@
   },
   {
     "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
-    "translation": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]"
+    "translation": "Il tipo complesso dell'ordine. Inizia con 'SoftLayer_Container_Product_Order'. [predefinito: SoftLayer_Container_Product_Order_Hardware_Server]"
   },
   {
     "id": "The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'",
@@ -8045,7 +8073,7 @@
   },
   {
     "id": "The note ",
-    "translation": "The note "
+    "translation": "La nota "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
@@ -8109,7 +8137,7 @@
   },
   {
     "id": "The quantity of the item being ordered if different from quoted value",
-    "translation": "The quantity of the item being ordered if different from quoted value"
+    "translation": "La quantità dell'elemento ordinato se diversa dal valore di preventivo"
   },
   {
     "id": "The quantity of the item being ordered. This value defaults to 1",
@@ -8368,8 +8396,12 @@
     "translation": "Questa interfaccia consente di rimuovere l'instradamento delle sottoreti dell'account di proprietà."
   },
   {
+    "id": "This is the credential id associated with the volume. [Required]",
+    "translation": "Questo è l'id credenziale associato al volume. [Obbligatorio]"
+  },
+  {
     "id": "This option is not available.",
-    "translation": "This option is not available."
+    "translation": "Questa opzione non è disponibile."
   },
   {
     "id": "This volume cannot be modified since it does not support Encryption at Rest.",
@@ -8569,7 +8601,7 @@
   },
   {
     "id": "True",
-    "translation": "True"
+    "translation": "Vero"
   },
   {
     "id": "Type",
@@ -8577,7 +8609,7 @@
   },
   {
     "id": "Type Name",
-    "translation": "Type Name"
+    "translation": "Nome tipo"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8644,6 +8676,10 @@
     "translation": "Impossibile trovare il codice della categoria per questo volume."
   },
   {
+    "id": "Unable to find credential with ID: {{.credentialID}}.\n",
+    "translation": "Impossibile trovare la credenziale con ID: {{.credentialID}}.\n"
+  },
+  {
     "id": "Unable to find firewall with ID: {{.ID}}",
     "translation": "Impossibile trovare il firewall con ID: {{.ID}}"
   },
@@ -8678,6 +8714,10 @@
   {
     "id": "Unable to find network port speed for this device.",
     "translation": "Impossibile trovare la porta di rete per questo dispositivo."
+  },
+  {
+    "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
+    "translation": "Impossibile trovare l'archivio oggetti con ID: {{.storageID}}.\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
@@ -8781,7 +8821,7 @@
   },
   {
     "id": "Url",
-    "translation": "Url"
+    "translation": "URL"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",
@@ -8865,11 +8905,11 @@
   },
   {
     "id": "View a quote",
-    "translation": "View a quote"
+    "translation": "Visualizza un preventivo"
   },
   {
     "id": "View and Order a quote",
-    "translation": "View and Order a quote"
+    "translation": "Visualizza e ordina un preventivo"
   },
   {
     "id": "View details of a placement group",
@@ -8881,7 +8921,7 @@
   },
   {
     "id": "Virtual",
-    "translation": "Virtual"
+    "translation": "Virtuale"
   },
   {
     "id": "Virtual Guest ID",
@@ -8961,15 +9001,15 @@
   },
   {
     "id": "Vlan ids",
-    "translation": "Vlan ids"
+    "translation": "Id vlan"
   },
   {
     "id": "Vlans",
-    "translation": "Vlans"
+    "translation": "Vlan"
   },
   {
     "id": "Volts Sensor",
-    "translation": "Volts Sensor"
+    "translation": "Sensore volt"
   },
   {
     "id": "Volume Name",
@@ -8993,7 +9033,7 @@
   },
   {
     "id": "Watts Sensor",
-    "translation": "Watts Sensor"
+    "translation": "Sensore watt"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
@@ -9192,6 +9232,10 @@
     "translation": "bilanciato locale - ssd"
   },
   {
+    "id": "billing",
+    "translation": "fatturazione"
+  },
+  {
     "id": "broadcast",
     "translation": "broadcast"
   },
@@ -9314,6 +9358,10 @@
   {
     "id": "domain",
     "translation": "dominio"
+  },
+  {
+    "id": "drive",
+    "translation": "unità"
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",
@@ -9444,6 +9492,10 @@
     "translation": "label"
   },
   {
+    "id": "last transaction",
+    "translation": "ultima transazione"
+  },
+  {
     "id": "lists bandwidth pools",
     "translation": "elenca i pool di larghezza di banda"
   },
@@ -9538,6 +9590,10 @@
   {
     "id": "powerState",
     "translation": "powerState"
+  },
+  {
+    "id": "preset",
+    "translation": "preimpostato"
   },
   {
     "id": "price rate",
@@ -9664,7 +9720,7 @@
     "translation": "sottoreti"
   },
   {
-    "id": "tag",
+    "id": "tags",
     "translation": "tag"
   },
   {
@@ -9682,6 +9738,10 @@
   {
     "id": "transaction_id",
     "translation": "transaction_id"
+  },
+  {
+    "id": "transient",
+    "translation": "temporaneo"
   },
   {
     "id": "ttl",
