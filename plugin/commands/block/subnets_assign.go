@@ -63,7 +63,7 @@ func (cmd *SubnetsAssignCommand) Run(c *cli.Context) error {
 
 	for _, subnet := range subnetsResponse {
 		values := map[string]interface{}{"subnetID": subnet, "accessID": accessID}
-		cmd.UI.Print(T("Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{accessID}}", values))
+		cmd.UI.Print(T("Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}", values))
 	}
 
 	return nil
