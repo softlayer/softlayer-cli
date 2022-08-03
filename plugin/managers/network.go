@@ -72,6 +72,8 @@ type NetworkManager interface {
 	ClearRoute(subnetId int) (bool, error)
 	SetSubnetTags(subnetId int, tags string) (bool, error)
 	SetSubnetNote(subnetId int, note string) (bool, error)
+	GetIpByAddress(ipAddress string) (datatypes.Network_Subnet_IpAddress, error)
+	EditSubnetIpAddress(subnetIpAddressId int, subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress) (bool, error)
 }
 
 type networkManager struct {
@@ -763,4 +765,17 @@ func (n networkManager) SetSubnetTags(subnetId int, tags string) (bool, error) {
 // note string: Note to be set.
 func (n networkManager) SetSubnetNote(subnetId int, note string) (bool, error) {
 	return n.SubnetService.Id(subnetId).EditNote(&note)
+}
+
+// Get ip object by address.
+// ipAddress string: ip address to find.
+func (n networkManager) GetIpByAddress(ipAddress string) (datatypes.Network_Subnet_IpAddress, error) {
+	return n.IPService.GetByIpAddress(&ipAddress)
+}
+
+// Edit subnet ip address.
+// ipId int: The ip identifier.
+// subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress: New subnet ip address templatet.
+func (n networkManager) EditSubnetIpAddress(subnetIpAddressId int, subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress) (bool, error) {
+	return n.IPService.Id(subnetIpAddressId).EditObject(&subnetIpAddressTemplate)
 }
