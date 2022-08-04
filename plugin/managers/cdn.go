@@ -36,7 +36,7 @@ func (a cdnManager) GetNetworkCdnMarketplaceConfigurationMapping(mask string) ([
 }
 
 /*
-SOAP API will return the domain mapping based on the uniqueId.
+Gets the domain mapping based on the uniqueId.
 https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping/listDomainMappingByUniqueId/
 */
 func (a cdnManager) GetDetailCDN(uniqueId int, mask string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
@@ -49,8 +49,8 @@ func (a cdnManager) GetDetailCDN(uniqueId int, mask string) (datatypes.Container
 }
 
 /*
-SOAP API will return the domain mapping based on the uniqueId.
-https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping/listDomainMappingByUniqueId/
+Gets the total number of predetermined statistics for direct display for the given mapping.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Metrics/getMappingUsageMetrics/
 */
 func (a cdnManager) GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error) {
 	NetworkCdnMarketplaceMetricsService := services.GetNetworkCdnMarketplaceMetricsService(a.Session)

@@ -14,7 +14,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("Cdn list Detail", func() {
+var _ = Describe("Cdn detail", func() {
 	var (
 		fakeUI         *terminal.FakeUI
 		cmd            *cdn.DetailCommand
