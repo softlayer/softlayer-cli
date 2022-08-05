@@ -9,6 +9,7 @@ import (
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type SubnetsAssignCommand struct {
@@ -61,9 +62,13 @@ func (cmd *SubnetsAssignCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to assign subnets.")+"\n"+err.Error(), 2)
 	}
 
-	for _, subnet := range subnetsResponse {
+	for _, subnet := range subnetsToAssign {
 		values := map[string]interface{}{"subnetID": subnet, "accessID": accessID}
-		cmd.UI.Print(T("Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}", values))
+		if utils.IntInSlice(subnet, subnetsResponse) != -1 {
+			cmd.UI.Print(T("Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}", values))
+		} else {
+			cmd.UI.Print(T("Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}", values))
+		}
 	}
 
 	return nil

@@ -3044,6 +3044,10 @@
     "translation": "Failed to assign global IP {{.IpID}} to target {{.Target}}.\n"
   },
   {
+    "id": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}"
+  },
+  {
     "id": "Failed to assign subnets.",
     "translation": "Failed to assign subnets."
   },
