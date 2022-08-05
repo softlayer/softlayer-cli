@@ -208,6 +208,10 @@
     "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>"
   },
   {
+    "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>"
+  },
+  {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
     "translation": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation."
   },
@@ -4148,6 +4152,14 @@
     "translation": "Failed to remove rule {{.RuleId}} in security group {{.GroupID}}.\n"
   },
   {
+    "id": "Failed to remove subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "Failed to remove subnet id: {{.subnetID}} to allowed host id: {{.accessID}}"
+  },
+  {
+    "id": "Failed to remove subnets.",
+    "translation": "Failed to remove subnets."
+  },
+  {
     "id": "Failed to remove translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "Failed to remove translation with ID {{.TransID}} from IPSec {{.ID}}."
   },
@@ -5074,6 +5086,10 @@
   {
     "id": "IDs of the subnets to assign",
     "translation": "IDs of the subnets to assign"
+  },
+  {
+    "id": "IDs of the subnets to remove",
+    "translation": "IDs of the subnets to remove"
   },
   {
     "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
@@ -7128,6 +7144,10 @@
     "translation": "Remove access from a user to an specific device"
   },
   {
+    "id": "Remove block storage subnets to the given host id.",
+    "translation": "Remove block storage subnets to the given host id."
+  },
+  {
     "id": "Remove resource record from a zone",
     "translation": "Remove resource record from a zone"
   },
@@ -7790,6 +7810,10 @@
   {
     "id": "Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}.",
     "translation": "Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}."
+  },
+  {
+    "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
