@@ -61,6 +61,19 @@ type FakeObjectStorageManager struct {
 		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint
 		result2 error
 	}
+	LimitCredentialStub        func(int) (int, error)
+	limitCredentialMutex       sync.RWMutex
+	limitCredentialArgsForCall []struct {
+		arg1 int
+	}
+	limitCredentialReturns struct {
+		result1 int
+		result2 error
+	}
+	limitCredentialReturnsOnCall map[int]struct {
+		result1 int
+		result2 error
+	}
 	ListCredentialStub        func(int, string) ([]datatypes.Network_Storage_Credential, error)
 	listCredentialMutex       sync.RWMutex
 	listCredentialArgsForCall []struct {
@@ -334,6 +347,70 @@ func (fake *FakeObjectStorageManager) GetEndpointsReturnsOnCall(i int, result1 [
 	}{result1, result2}
 }
 
+func (fake *FakeObjectStorageManager) LimitCredential(arg1 int) (int, error) {
+	fake.limitCredentialMutex.Lock()
+	ret, specificReturn := fake.limitCredentialReturnsOnCall[len(fake.limitCredentialArgsForCall)]
+	fake.limitCredentialArgsForCall = append(fake.limitCredentialArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.LimitCredentialStub
+	fakeReturns := fake.limitCredentialReturns
+	fake.recordInvocation("LimitCredential", []interface{}{arg1})
+	fake.limitCredentialMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeObjectStorageManager) LimitCredentialCallCount() int {
+	fake.limitCredentialMutex.RLock()
+	defer fake.limitCredentialMutex.RUnlock()
+	return len(fake.limitCredentialArgsForCall)
+}
+
+func (fake *FakeObjectStorageManager) LimitCredentialCalls(stub func(int) (int, error)) {
+	fake.limitCredentialMutex.Lock()
+	defer fake.limitCredentialMutex.Unlock()
+	fake.LimitCredentialStub = stub
+}
+
+func (fake *FakeObjectStorageManager) LimitCredentialArgsForCall(i int) int {
+	fake.limitCredentialMutex.RLock()
+	defer fake.limitCredentialMutex.RUnlock()
+	argsForCall := fake.limitCredentialArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeObjectStorageManager) LimitCredentialReturns(result1 int, result2 error) {
+	fake.limitCredentialMutex.Lock()
+	defer fake.limitCredentialMutex.Unlock()
+	fake.LimitCredentialStub = nil
+	fake.limitCredentialReturns = struct {
+		result1 int
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeObjectStorageManager) LimitCredentialReturnsOnCall(i int, result1 int, result2 error) {
+	fake.limitCredentialMutex.Lock()
+	defer fake.limitCredentialMutex.Unlock()
+	fake.LimitCredentialStub = nil
+	if fake.limitCredentialReturnsOnCall == nil {
+		fake.limitCredentialReturnsOnCall = make(map[int]struct {
+			result1 int
+			result2 error
+		})
+	}
+	fake.limitCredentialReturnsOnCall[i] = struct {
+		result1 int
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeObjectStorageManager) ListCredential(arg1 int, arg2 string) ([]datatypes.Network_Storage_Credential, error) {
 	fake.listCredentialMutex.Lock()
 	ret, specificReturn := fake.listCredentialReturnsOnCall[len(fake.listCredentialArgsForCall)]
@@ -410,6 +487,8 @@ func (fake *FakeObjectStorageManager) Invocations() map[string][][]interface{} {
 	defer fake.getAccountsMutex.RUnlock()
 	fake.getEndpointsMutex.RLock()
 	defer fake.getEndpointsMutex.RUnlock()
+	fake.limitCredentialMutex.RLock()
+	defer fake.limitCredentialMutex.RUnlock()
 	fake.listCredentialMutex.RLock()
 	defer fake.listCredentialMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
