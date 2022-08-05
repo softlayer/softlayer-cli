@@ -260,6 +260,10 @@
     "translation": "${COMMAND_NAME} sl cdn detail"
   },
   {
+    "id": "${COMMAND_NAME} sl cdn edit",
+    "translation": "${COMMAND_NAME} sl cdn edit"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
   },
@@ -1676,6 +1680,14 @@
     "translation": "CRN of the root key in your KMS instance"
   },
   {
+    "id": "Cache key optimization",
+    "translation": "Cache key optimization"
+  },
+  {
+    "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
+    "translation": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description."
+  },
+  {
     "id": "Calculating for bandwidth pools",
     "translation": "Calculating for bandwidth pools"
   },
@@ -2712,6 +2724,10 @@
     "translation": "Edit SSL certificate"
   },
   {
+    "id": "Edit a CDN Account.",
+    "translation": "Edit a CDN Account."
+  },
+  {
     "id": "Edit a L7 policy",
     "translation": "Edit a L7 policy"
   },
@@ -3310,6 +3326,10 @@
   {
     "id": "Failed to dump content for zone: {{.Zone}}.\n",
     "translation": "Failed to dump content for zone: {{.Zone}}.\n"
+  },
+  {
+    "id": "Failed to edit CDN. ",
+    "translation": "Failed to edit CDN. "
   },
   {
     "id": "Failed to edit SSH key: {{.ID}}.\n",
@@ -4884,6 +4904,14 @@
     "translation": "HARDWARE"
   },
   {
+    "id": "HTTP port.",
+    "translation": "HTTP port."
+  },
+  {
+    "id": "HTTPS port.",
+    "translation": "HTTPS port."
+  },
+  {
     "id": "Hardware",
     "translation": "Hardware"
   },
@@ -4926,6 +4954,10 @@
   {
     "id": "Hardware size[required]",
     "translation": "Hardware size[required]"
+  },
+  {
+    "id": "Header",
+    "translation": "Header"
   },
   {
     "id": "Health check UUID to modify [required]",
@@ -5000,6 +5032,10 @@
     "translation": "Host Name"
   },
   {
+    "id": "Host header.",
+    "translation": "Host header."
+  },
+  {
     "id": "Host name",
     "translation": "Host name"
   },
@@ -5050,6 +5086,14 @@
   {
     "id": "How many results to get in one api call. [default: 50]",
     "translation": "How many results to get in one api call. [default: 50]"
+  },
+  {
+    "id": "Http Port",
+    "translation": "Http Port"
+  },
+  {
+    "id": "Https Port",
+    "translation": "Https Port"
   },
   {
     "id": "IAM token is required. Use '{{.Command}}' to log in.",
@@ -5242,6 +5286,10 @@
   {
     "id": "Import an image from an object storage",
     "translation": "Import an image from an object storage"
+  },
+  {
+    "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
+    "translation": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description."
   },
   {
     "id": "Inbound Usage",
@@ -6368,8 +6416,16 @@
     "translation": "Operating system"
   },
   {
+    "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
+    "translation": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration."
+  },
+  {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",
     "translation": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private]."
+  },
+  {
+    "id": "Option respect-headers just accept '0' or '1'",
+    "translation": "Option respect-headers just accept '0' or '1'"
   },
   {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
@@ -6482,6 +6538,18 @@
   {
     "id": "Origin",
     "translation": "Origin"
+  },
+  {
+    "id": "Origin Type",
+    "translation": "Origin Type"
+  },
+  {
+    "id": "Origin server address",
+    "translation": "Origin server address"
+  },
+  {
+    "id": "Origin server address.",
+    "translation": "Origin server address."
   },
   {
     "id": "Origin type",
@@ -6606,6 +6674,10 @@
   {
     "id": "Perform a soft shutdown",
     "translation": "Perform a soft shutdown"
+  },
+  {
+    "id": "Performance Configuration",
+    "translation": "Performance Configuration"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
@@ -7238,6 +7310,14 @@
   {
     "id": "Resource record {{.ID}} was removed.",
     "translation": "Resource record {{.ID}} was removed."
+  },
+  {
+    "id": "Respect Headers",
+    "translation": "Respect Headers"
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "Respect headers. The value 1 is On and 0 is Off."
   },
   {
     "id": "Restore block volume using a given snapshot",
@@ -9060,6 +9140,10 @@
     "translation": "Vendor"
   },
   {
+    "id": "Vendor Name",
+    "translation": "Vendor Name"
+  },
+  {
     "id": "View a quote",
     "translation": "View a quote"
   },
@@ -9394,6 +9478,14 @@
   {
     "id": "broadcast",
     "translation": "broadcast"
+  },
+  {
+    "id": "cache-description is only used with the cache option",
+    "translation": "cache-description is only used with the cache option"
+  },
+  {
+    "id": "cache-description option must be used ",
+    "translation": "cache-description option must be used "
   },
   {
     "id": "capacity",
