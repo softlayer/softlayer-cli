@@ -83,6 +83,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"hardware-sensor": func(c *cli.Context) error {
 			return NewSensorCommand(ui, hardwareManager).Run(c)
 		},
+		"hardware-reflash-firmware": func(c *cli.Context) error {
+			return NewReflashFirmwareCommand(ui, hardwareManager).Run(c)
+		},
 	}
 	return CommandActionBindings
 }
@@ -125,6 +128,7 @@ func HardwareMetaData() cli.Command {
 			HardwareGuestsMetaData(),
 			HardwareMonitoringListMetaData(),
 			HardwareSensorMetaData(),
+			HardwareReflashFirmwareMetaData(),
 		},
 	}
 }

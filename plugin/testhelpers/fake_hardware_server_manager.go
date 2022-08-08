@@ -38,6 +38,19 @@ type FakeHardwareServerManager struct {
 	cancelHardwareReturnsOnCall map[int]struct {
 		result1 error
 	}
+	CreateFirmwareReflashTransactionStub        func(int) (bool, error)
+	createFirmwareReflashTransactionMutex       sync.RWMutex
+	createFirmwareReflashTransactionArgsForCall []struct {
+		arg1 int
+	}
+	createFirmwareReflashTransactionReturns struct {
+		result1 bool
+		result2 error
+	}
+	createFirmwareReflashTransactionReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	EditStub        func(int, string, string, string, string, string, int, int) ([]bool, []string)
 	editMutex       sync.RWMutex
 	editArgsForCall []struct {
@@ -574,6 +587,70 @@ func (fake *FakeHardwareServerManager) CancelHardwareReturnsOnCall(i int, result
 	fake.cancelHardwareReturnsOnCall[i] = struct {
 		result1 error
 	}{result1}
+}
+
+func (fake *FakeHardwareServerManager) CreateFirmwareReflashTransaction(arg1 int) (bool, error) {
+	fake.createFirmwareReflashTransactionMutex.Lock()
+	ret, specificReturn := fake.createFirmwareReflashTransactionReturnsOnCall[len(fake.createFirmwareReflashTransactionArgsForCall)]
+	fake.createFirmwareReflashTransactionArgsForCall = append(fake.createFirmwareReflashTransactionArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.CreateFirmwareReflashTransactionStub
+	fakeReturns := fake.createFirmwareReflashTransactionReturns
+	fake.recordInvocation("CreateFirmwareReflashTransaction", []interface{}{arg1})
+	fake.createFirmwareReflashTransactionMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) CreateFirmwareReflashTransactionCallCount() int {
+	fake.createFirmwareReflashTransactionMutex.RLock()
+	defer fake.createFirmwareReflashTransactionMutex.RUnlock()
+	return len(fake.createFirmwareReflashTransactionArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) CreateFirmwareReflashTransactionCalls(stub func(int) (bool, error)) {
+	fake.createFirmwareReflashTransactionMutex.Lock()
+	defer fake.createFirmwareReflashTransactionMutex.Unlock()
+	fake.CreateFirmwareReflashTransactionStub = stub
+}
+
+func (fake *FakeHardwareServerManager) CreateFirmwareReflashTransactionArgsForCall(i int) int {
+	fake.createFirmwareReflashTransactionMutex.RLock()
+	defer fake.createFirmwareReflashTransactionMutex.RUnlock()
+	argsForCall := fake.createFirmwareReflashTransactionArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeHardwareServerManager) CreateFirmwareReflashTransactionReturns(result1 bool, result2 error) {
+	fake.createFirmwareReflashTransactionMutex.Lock()
+	defer fake.createFirmwareReflashTransactionMutex.Unlock()
+	fake.CreateFirmwareReflashTransactionStub = nil
+	fake.createFirmwareReflashTransactionReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) CreateFirmwareReflashTransactionReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.createFirmwareReflashTransactionMutex.Lock()
+	defer fake.createFirmwareReflashTransactionMutex.Unlock()
+	fake.CreateFirmwareReflashTransactionStub = nil
+	if fake.createFirmwareReflashTransactionReturnsOnCall == nil {
+		fake.createFirmwareReflashTransactionReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.createFirmwareReflashTransactionReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeHardwareServerManager) Edit(arg1 int, arg2 string, arg3 string, arg4 string, arg5 string, arg6 string, arg7 int, arg8 int) ([]bool, []string) {
@@ -2478,6 +2555,8 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.authorizeStorageMutex.RUnlock()
 	fake.cancelHardwareMutex.RLock()
 	defer fake.cancelHardwareMutex.RUnlock()
+	fake.createFirmwareReflashTransactionMutex.RLock()
+	defer fake.createFirmwareReflashTransactionMutex.RUnlock()
 	fake.editMutex.RLock()
 	defer fake.editMutex.RUnlock()
 	fake.generateCreateTemplateMutex.RLock()
