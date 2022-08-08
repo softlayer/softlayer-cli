@@ -2,10 +2,11 @@ package account
 
 import (
 	"fmt"
-	"github.com/softlayer/softlayer-go/session"
+	// "github.com/softlayer/softlayer-go/session"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	// "github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,15 +15,23 @@ import (
 )
 
 type BandwidthPoolsCommand struct {
-	UI      terminal.UI
-	Session *session.Session
+	*metadata.SoftlayerCommand
 }
 
-func NewBandwidthPoolsCommand(ui terminal.UI, session *session.Session) (cmd *BandwidthPoolsCommand) {
-	return &BandwidthPoolsCommand{
-		UI:      ui,
-		Session: session,
+func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *cobra.Command {
+	thisCmd := &BandwidthPoolsCommand{
+		SoftlayerCommand: sl,
 	}
+	cobraCmd := &cobra.Command{
+		Use: "bandwidth-pools",
+		Short: T("lists bandwidth pools"),
+		Long: T(`${COMMAND_NAME} sl account bandwidth-pools`),
+		Args: cobra.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	return cobraCmd
 }
 
 func BandwidthPoolsMetaData() cli.Command {
@@ -37,17 +46,15 @@ func BandwidthPoolsMetaData() cli.Command {
 	}
 }
 
-func (cmd *BandwidthPoolsCommand) Run(c *cli.Context) error {
+func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 	accountManager := managers.NewAccountManager(cmd.Session)
 	pools, err := accountManager.GetBandwidthPools()
 	if err != nil {
 		return err
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.OutputFlag
+
 	if outputFormat == "JSON" {
 		return utils.PrintPrettyJSON(cmd.UI, pools)
 	}

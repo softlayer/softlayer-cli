@@ -6,6 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/urfave/cli"
+
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
@@ -17,6 +19,12 @@ var (
 )
 
 const OutputJSON = "JSON"
+
+type SoftlayerCommand struct {
+	UI terminal.UI
+	Session *session.Session
+	OutputFlag string
+}
 
 func SoftlayerNamespace() plugin.Namespace {
 	return plugin.Namespace{

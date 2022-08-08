@@ -5,9 +5,11 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 /*
@@ -16,12 +18,24 @@ because I'd like to eventually adpot this pattern throughout to get away from ha
 for every command.
 */
 
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use: "account",
+		Short: T("Classic infrastructure Account commands"),
+		Long: "${COMMAND_NAME} sl account",
+		RunE: nil,
+	}
+	// cobraCmd.AddCommand(account.New<COMMAND>Command(ui, session))
+	cobraCmd.AddCommand(NewBandwidthPoolsCommand(sl))
+	return cobraCmd	
+}
+
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	accountManager := managers.NewAccountManager(session)
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"account-bandwidth-pools": func(c *cli.Context) error {
-			return NewBandwidthPoolsCommand(ui, session).Run(c)
-		},
+		// "account-bandwidth-pools": func(c *cli.Context) error {
+		// 	return NewBandwidthPoolsCommand(ui, session).Run(c)
+		// },
 		"account-cancel-item": func(c *cli.Context) error {
 			return NewCancelItemCommand(ui, accountManager).Run(c)
 		},

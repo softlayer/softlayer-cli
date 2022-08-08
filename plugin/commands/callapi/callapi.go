@@ -10,9 +10,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/softlayer/softlayer-go/session"
+	// "github.com/softlayer/softlayer-go/session"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CallAPICommand struct {
@@ -27,18 +28,18 @@ type CallAPICommand struct {
 }
 
 
-func GetCommandActionBindings(ui terminal.UI, session *session.Session) map[string]*cobra.Command {
-	CommandActionBindings := map[string]*cobra.Command {
-		"call-api": NewCallAPICommand(ui, session),
-	}
-	return CommandActionBindings
-}
+// func GetCommandActionBindings(ui terminal.UI, session *session.Session) map[string]*cobra.Command {
+// 	CommandActionBindings := map[string]*cobra.Command {
+// 		"call-api": NewCallAPICommand(ui, session),
+// 	}
+// 	return CommandActionBindings
+// }
 
 
-func NewCallAPICommand(ui terminal.UI, session *session.Session) *cobra.Command {
-	callAPIManager := managers.NewCallAPIManager(session)
+func NewCallAPICommand(sl *metadata.SoftlayerCommand) *cobra.Command {
+	callAPIManager := managers.NewCallAPIManager(sl.Session)
 	thisCmd := &CallAPICommand{
-		UI:             ui,
+		UI:             sl.UI,
 		CallAPIManager: callAPIManager,
 	}
 
