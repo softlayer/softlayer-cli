@@ -6,114 +6,46 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-
+	"github.com/spf13/cobra"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 type CallAPICommand struct {
-	UI             terminal.UI
-	CallAPIManager managers.CallAPIManager
+	UI              terminal.UI
+	CallAPIManager  managers.CallAPIManager
+	Init		    int
+	Mask			string
+	Parameters		string
+	Limit			int
+	Offset			int
+	Filter			string
 }
 
-func NewCallAPICommand(ui terminal.UI, callAPIManager managers.CallAPIManager) (cmd *CallAPICommand) {
-	return &CallAPICommand{
-		UI:             ui,
-		CallAPIManager: callAPIManager,
+
+func GetCommandActionBindings(ui terminal.UI, session *session.Session) map[string]*cobra.Command {
+	CommandActionBindings := map[string]*cobra.Command {
+		"call-api": NewCallAPICommand(ui, session),
 	}
-}
-
-func (cmd *CallAPICommand) Run(c *cli.Context) error {
-	if c.NArg() != 2 {
-		return errors.NewInvalidUsageError(T("This command requires two arguments."))
-	}
-
-	args := c.Args()
-	var err error
-	var output []byte
-
-	parameters := ""
-
-	var options sl.Options
-
-	if c.IsSet("init") {
-		initparam := c.Int("init")
-		options.Id = &initparam
-	}
-
-	if c.IsSet("mask") {
-		mask := c.String("mask")
-		if !strings.HasPrefix(mask, "mask[") && (strings.Contains(mask, "[") || strings.Contains(mask, ",")) {
-			mask = fmt.Sprintf("mask[%s]", mask)
-		}
-		options.Mask = mask
-	}
-
-	if c.IsSet("limit") {
-		limit := c.Int("limit")
-		options.Limit = &limit
-	}
-
-	if c.IsSet("offset") {
-		offset := c.Int("offset")
-		options.Offset = &offset
-	}
-
-	if c.IsSet("parameters") {
-		parameters = c.String("parameters")
-	}
-
-	if c.IsSet("filter") {
-		options.Filter = c.String("filter")
-	}
-
-	output, err = cmd.CallAPIManager.CallAPI(args[0], args[1], options, parameters)
-	if err != nil {
-		return err
-	}
-
-	var out bytes.Buffer
-	err = json.Indent(&out, output, "", "\t")
-
-	if err != nil {
-		_, err := cmd.UI.Writer().Write(output)
-		if err != nil {
-			return err
-		}
-	} else {
-		_, err := out.WriteTo(cmd.UI.Writer())
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	callAPIManager := managers.NewCallAPIManager(session)
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"sl-call-api": func(c *cli.Context) error {
-			return NewCallAPICommand(ui, callAPIManager).Run(c)
-		},
-	}
-
 	return CommandActionBindings
 }
 
-func CallAPIMetadata() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "call-api",
-		Description: T("Call arbitrary API endpoints"),
-		Usage: T(`${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]
+
+func NewCallAPICommand(ui terminal.UI, session *session.Session) *cobra.Command {
+	callAPIManager := managers.NewCallAPIManager(session)
+	thisCmd := &CallAPICommand{
+		UI:             ui,
+		CallAPIManager: callAPIManager,
+	}
+
+	cobraCmd := &cobra.Command{
+		Use: "call-api",
+		Short: T("Call arbitrary API endpoints"),
+		Long: T(`${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]
 
 EXAMPLE: 
 	${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{"notes":"Testing."}]'
@@ -124,31 +56,60 @@ EXAMPLE:
 	
 	${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{"virtualGuests":{"hostname":{"operation":"cli-test"}}}'
 	This command list virtual guests.`),
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "init",
-				Usage: T("Init parameter"),
-			},
-			cli.StringFlag{
-				Name:  "mask",
-				Usage: T("Object mask: use to limit fields returned"),
-			},
-			cli.StringFlag{
-				Name:  "parameters",
-				Usage: T("Append parameters to web call"),
-			},
-			cli.IntFlag{
-				Name:  "limit",
-				Usage: T("Result limit"),
-			},
-			cli.IntFlag{
-				Name:  "offset",
-				Usage: T("Result offset"),
-			},
-			cli.StringFlag{
-				Name:  "filter",
-				Usage: T("Object filters"),
-			},
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().IntVar(&thisCmd.Init, "init", 0, T("Init parameter"))
+	cobraCmd.Flags().StringVar(&thisCmd.Mask, "mask", "", T("Object mask: use to limit fields returned"))
+	cobraCmd.Flags().StringVar(&thisCmd.Parameters, "parameters", "", T("Append parameters to web call"))
+	cobraCmd.Flags().IntVar(&thisCmd.Limit, "limit", 0, T("Result limit"))
+	cobraCmd.Flags().IntVar(&thisCmd.Offset, "offset", 0, T("Result offset"))
+	cobraCmd.Flags().StringVar(&thisCmd.Filter, "filter", "", T("Object filters"))
+
+	return cobraCmd
+}
+
+func (cmd *CallAPICommand) Run(args []string)  error {
+    var err error
+    var output []byte
+    var out bytes.Buffer
+    var options sl.Options
+
+    if cmd.Init != 0 {
+    	options.Id = &cmd.Init
+    }
+    if !strings.HasPrefix(cmd.Mask, "mask[") && (strings.Contains(cmd.Mask, "[") || strings.Contains(cmd.Mask, ",")) {
+        cmd.Mask = fmt.Sprintf("mask[%s]", cmd.Mask)
+    }
+    options.Mask = cmd.Mask
+
+    if cmd.Offset != 0 {
+    	options.Offset = &cmd.Offset
+    }
+    if cmd.Limit != 0 {
+    	options.Limit = &cmd.Limit
+    }
+    if cmd.Filter != "" { 
+    	options.Filter = cmd.Filter
+    }
+
+    output, err = cmd.CallAPIManager.CallAPI(args[0], args[1], options, cmd.Parameters)
+    if err != nil {
+    	return err
+    }
+    err = json.Indent(&out, output, "", "\t")
+    if err != nil {
+        _, err := cmd.UI.Writer().Write(output)
+        if err != nil {
+            return err
+        }
+    } else {
+        _, err := out.WriteTo(cmd.UI.Writer())
+        if err != nil {
+            return err
+        }
+    }
+	return nil
 }
