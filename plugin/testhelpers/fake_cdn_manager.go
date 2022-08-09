@@ -44,10 +44,9 @@ type FakeCdnManager struct {
 		result1 datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
 		result2 error
 	}
-	GetNetworkCdnMarketplaceConfigurationMappingStub        func(string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	GetNetworkCdnMarketplaceConfigurationMappingStub        func() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	getNetworkCdnMarketplaceConfigurationMappingMutex       sync.RWMutex
 	getNetworkCdnMarketplaceConfigurationMappingArgsForCall []struct {
-		arg1 string
 	}
 	getNetworkCdnMarketplaceConfigurationMappingReturns struct {
 		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
@@ -213,18 +212,17 @@ func (fake *FakeCdnManager) GetDetailCDNReturnsOnCall(i int, result1 datatypes.C
 	}{result1, result2}
 }
 
-func (fake *FakeCdnManager) GetNetworkCdnMarketplaceConfigurationMapping(arg1 string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
+func (fake *FakeCdnManager) GetNetworkCdnMarketplaceConfigurationMapping() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
 	fake.getNetworkCdnMarketplaceConfigurationMappingMutex.Lock()
 	ret, specificReturn := fake.getNetworkCdnMarketplaceConfigurationMappingReturnsOnCall[len(fake.getNetworkCdnMarketplaceConfigurationMappingArgsForCall)]
 	fake.getNetworkCdnMarketplaceConfigurationMappingArgsForCall = append(fake.getNetworkCdnMarketplaceConfigurationMappingArgsForCall, struct {
-		arg1 string
-	}{arg1})
+	}{})
 	stub := fake.GetNetworkCdnMarketplaceConfigurationMappingStub
 	fakeReturns := fake.getNetworkCdnMarketplaceConfigurationMappingReturns
-	fake.recordInvocation("GetNetworkCdnMarketplaceConfigurationMapping", []interface{}{arg1})
+	fake.recordInvocation("GetNetworkCdnMarketplaceConfigurationMapping", []interface{}{})
 	fake.getNetworkCdnMarketplaceConfigurationMappingMutex.Unlock()
 	if stub != nil {
-		return stub(arg1)
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -238,17 +236,10 @@ func (fake *FakeCdnManager) GetNetworkCdnMarketplaceConfigurationMappingCallCoun
 	return len(fake.getNetworkCdnMarketplaceConfigurationMappingArgsForCall)
 }
 
-func (fake *FakeCdnManager) GetNetworkCdnMarketplaceConfigurationMappingCalls(stub func(string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)) {
+func (fake *FakeCdnManager) GetNetworkCdnMarketplaceConfigurationMappingCalls(stub func() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)) {
 	fake.getNetworkCdnMarketplaceConfigurationMappingMutex.Lock()
 	defer fake.getNetworkCdnMarketplaceConfigurationMappingMutex.Unlock()
 	fake.GetNetworkCdnMarketplaceConfigurationMappingStub = stub
-}
-
-func (fake *FakeCdnManager) GetNetworkCdnMarketplaceConfigurationMappingArgsForCall(i int) string {
-	fake.getNetworkCdnMarketplaceConfigurationMappingMutex.RLock()
-	defer fake.getNetworkCdnMarketplaceConfigurationMappingMutex.RUnlock()
-	argsForCall := fake.getNetworkCdnMarketplaceConfigurationMappingArgsForCall[i]
-	return argsForCall.arg1
 }
 
 func (fake *FakeCdnManager) GetNetworkCdnMarketplaceConfigurationMappingReturns(result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, result2 error) {

@@ -11,7 +11,7 @@ import (
 )
 
 type CdnManager interface {
-	GetNetworkCdnMarketplaceConfigurationMapping(mask string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	GetNetworkCdnMarketplaceConfigurationMapping() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetDetailCDN(uniqueId int, mask string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
 	EditCDN(uniqueId int, header string, httpPort int, httpsPort int, origin string, respectHeaders string, cache string, cacheDescription string, performanceConfiguration string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
@@ -33,8 +33,8 @@ func NewCdnManager(session *session.Session) *cdnManager {
 SOAP API will return all domains for a particular customer.
 https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping/listDomainMappings/
 */
-func (a cdnManager) GetNetworkCdnMarketplaceConfigurationMapping(mask string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
-	return a.CdnService.Mask(mask).ListDomainMappings()
+func (a cdnManager) GetNetworkCdnMarketplaceConfigurationMapping() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
+	return a.CdnService.ListDomainMappings()
 }
 
 /*

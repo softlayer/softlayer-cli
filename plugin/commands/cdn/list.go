@@ -42,8 +42,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		return err
 	}
 
-	mask := ""
-	cdnList, err := cmd.CdnManager.GetNetworkCdnMarketplaceConfigurationMapping(mask)
+	cdnList, err := cmd.CdnManager.GetNetworkCdnMarketplaceConfigurationMapping()
 	if err != nil {
 		return cli.NewExitError(T("Failed to get CDN List. ")+err.Error(), 2)
 	}
