@@ -237,6 +237,20 @@ type FakeStorageManager struct {
 		result1 int
 		result2 error
 	}
+	GetSubnetsInAclStub        func(int, string) ([]datatypes.Network_Subnet, error)
+	getSubnetsInAclMutex       sync.RWMutex
+	getSubnetsInAclArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getSubnetsInAclReturns struct {
+		result1 []datatypes.Network_Subnet
+		result2 error
+	}
+	getSubnetsInAclReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Subnet
+		result2 error
+	}
 	GetVolumeAccessListStub        func(int) (datatypes.Network_Storage, error)
 	getVolumeAccessListMutex       sync.RWMutex
 	getVolumeAccessListArgsForCall []struct {
@@ -1634,6 +1648,71 @@ func (fake *FakeStorageManager) GetSnapshotNotificationStatusReturnsOnCall(i int
 	}{result1, result2}
 }
 
+func (fake *FakeStorageManager) GetSubnetsInAcl(arg1 int, arg2 string) ([]datatypes.Network_Subnet, error) {
+	fake.getSubnetsInAclMutex.Lock()
+	ret, specificReturn := fake.getSubnetsInAclReturnsOnCall[len(fake.getSubnetsInAclArgsForCall)]
+	fake.getSubnetsInAclArgsForCall = append(fake.getSubnetsInAclArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetSubnetsInAclStub
+	fakeReturns := fake.getSubnetsInAclReturns
+	fake.recordInvocation("GetSubnetsInAcl", []interface{}{arg1, arg2})
+	fake.getSubnetsInAclMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) GetSubnetsInAclCallCount() int {
+	fake.getSubnetsInAclMutex.RLock()
+	defer fake.getSubnetsInAclMutex.RUnlock()
+	return len(fake.getSubnetsInAclArgsForCall)
+}
+
+func (fake *FakeStorageManager) GetSubnetsInAclCalls(stub func(int, string) ([]datatypes.Network_Subnet, error)) {
+	fake.getSubnetsInAclMutex.Lock()
+	defer fake.getSubnetsInAclMutex.Unlock()
+	fake.GetSubnetsInAclStub = stub
+}
+
+func (fake *FakeStorageManager) GetSubnetsInAclArgsForCall(i int) (int, string) {
+	fake.getSubnetsInAclMutex.RLock()
+	defer fake.getSubnetsInAclMutex.RUnlock()
+	argsForCall := fake.getSubnetsInAclArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeStorageManager) GetSubnetsInAclReturns(result1 []datatypes.Network_Subnet, result2 error) {
+	fake.getSubnetsInAclMutex.Lock()
+	defer fake.getSubnetsInAclMutex.Unlock()
+	fake.GetSubnetsInAclStub = nil
+	fake.getSubnetsInAclReturns = struct {
+		result1 []datatypes.Network_Subnet
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetSubnetsInAclReturnsOnCall(i int, result1 []datatypes.Network_Subnet, result2 error) {
+	fake.getSubnetsInAclMutex.Lock()
+	defer fake.getSubnetsInAclMutex.Unlock()
+	fake.GetSubnetsInAclStub = nil
+	if fake.getSubnetsInAclReturnsOnCall == nil {
+		fake.getSubnetsInAclReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Subnet
+			result2 error
+		})
+	}
+	fake.getSubnetsInAclReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Subnet
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeStorageManager) GetVolumeAccessList(arg1 int) (datatypes.Network_Storage, error) {
 	fake.getVolumeAccessListMutex.Lock()
 	ret, specificReturn := fake.getVolumeAccessListReturnsOnCall[len(fake.getVolumeAccessListArgsForCall)]
@@ -2901,6 +2980,8 @@ func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	defer fake.getReplicationPartnersMutex.RUnlock()
 	fake.getSnapshotNotificationStatusMutex.RLock()
 	defer fake.getSnapshotNotificationStatusMutex.RUnlock()
+	fake.getSubnetsInAclMutex.RLock()
+	defer fake.getSubnetsInAclMutex.RUnlock()
 	fake.getVolumeAccessListMutex.RLock()
 	defer fake.getVolumeAccessListMutex.RUnlock()
 	fake.getVolumeByUsernameMutex.RLock()
