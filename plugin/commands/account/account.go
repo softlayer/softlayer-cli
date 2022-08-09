@@ -27,6 +27,8 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	}
 	// cobraCmd.AddCommand(account.New<COMMAND>Command(ui, session))
 	cobraCmd.AddCommand(NewBandwidthPoolsCommand(sl))
+	cobraCmd.AddCommand(NewBandwidthPoolsDetailCommand(sl))
+	cobraCmd.AddCommand(NewBillingItemsCommand(sl))
 	return cobraCmd	
 }
 
@@ -39,9 +41,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"account-cancel-item": func(c *cli.Context) error {
 			return NewCancelItemCommand(ui, accountManager).Run(c)
 		},
-		"account-billing-items": func(c *cli.Context) error {
-			return NewBillingItemsCommand(ui, accountManager).Run(c)
-		},
+		// "account-billing-items": func(c *cli.Context) error {
+		// 	return NewBillingItemsCommand(ui, accountManager).Run(c)
+		// },
 		"account-invoice-detail": func(c *cli.Context) error {
 			return NewInvoiceDetailCommand(ui, accountManager).Run(c)
 		},
@@ -66,9 +68,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"account-summary": func(c *cli.Context) error {
 			return NewSummaryCommand(ui, accountManager).Run(c)
 		},
-		"account-bandwidth-pools-detail": func(c *cli.Context) error {
-			return NewBandwidthPoolsDetailCommand(ui, accountManager).Run(c)
-		},
+		// "account-bandwidth-pools-detail": func(c *cli.Context) error {
+		// 	return NewBandwidthPoolsDetailCommand(ui, accountManager).Run(c)
+		// },
 	}
 
 	return CommandActionBindings
@@ -82,6 +84,7 @@ func AccountNamespace() plugin.Namespace {
 	}
 }
 
+/*
 func AccountMetaData() cli.Command {
 	return cli.Command{
 		Category:    "sl",
@@ -104,3 +107,4 @@ func AccountMetaData() cli.Command {
 		},
 	}
 }
+*/

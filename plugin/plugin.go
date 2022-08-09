@@ -39,7 +39,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
-	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
+//	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
@@ -55,21 +55,9 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
-var (
-	COMMAND_HELP_TEMPLATE = T("NAME:") + `
-{{.Name}} - {{.Usage}}{{with .ShortName}}
-` + T("ALIAS:") + `
-   {{.}}{{end}}
-
-` + T("USAGE:") + `
-   {{.Description}}
-{{with .Flags}}
-` + T("OPTIONS:") + `
-{{range .}}   {{.}}
-{{end}}{{end}}
-`
-)
-
+var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} {{.Use}}{{else}}{{.Use}}{{end}}` +
+`{{if .HasAvailableFlags}} [` + T("OPTIONS") +  `] {{end}}
+{{.Long}}`
 func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
 		Name:       version.PLUGIN_SOFTLAYER,
@@ -98,9 +86,10 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	sl.ui = terminal.NewStdUI()
 	sl.session, _ = client.NewSoftlayerClientSessionFromConfig(context)
 	// initCustomizedHelp(context)
-	cli.CommandHelpTemplate = COMMAND_HELP_TEMPLATE
 
 	cobraCommand := getTopCobraCommand(sl.ui, sl.session)
+	// cobraCommand.SetHelpTemplate(COMMAND_HELP_TEMPLATE)
+	// cobraCommand.SetUsageTemplate(USEAGE_TEMPLATE)
 	
 	// When the command comes in from the ibmcloud-cli it has `sl` in the Namespace, which we need to remove
 	args = append(strings.Split(context.CommandNamespace(), " "), args...)
@@ -207,6 +196,7 @@ func Namespaces() []plugin.Namespace {
 	}
 }
 
+/*
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
 		autoscale.AutoScaleMetaData(),
@@ -241,7 +231,7 @@ func getCLITopCommands() []cli.Command {
 		reports.ReportsMetaData(),
 	}
 }
-
+*/
 func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag{
 	var pluginFlags []plugin.Flag
 	flagSet.VisitAll(func(pflag *pflag.Flag) {
@@ -254,18 +244,20 @@ func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag{
 		pluginFlags = append(pluginFlags, thisFlag)
 	})
 	// TODO, see if its possible to have global values added like VisitAll?
-	outputFlag := plugin.Flag{
-		Name: "output",
-		Description: "--output=JSON for json output.",
-		HasValue: false,
-		Hidden: false,
-	}
-	pluginFlags = append(pluginFlags, outputFlag)
+	// outputFlag := plugin.Flag{
+	// 	Name: "output",
+	// 	Description: "--output=JSON for json output.",
+	// 	HasValue: false,
+	// 	Hidden: false,
+	// }
+	// pluginFlags = append(pluginFlags, outputFlag)
 	return pluginFlags
 }
 
 func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Command {
 	var pluginCommands []plugin.Command
+	// Custom Usage to ibmcloud CLI prints out a nice messages for us
+	topCommand.SetUsageTemplate(USEAGE_TEMPLATE)
 	for _, cliCmd := range topCommand.Commands() {
 		if len(cliCmd.Commands()) > 0 {
 			pluginCommands = append(pluginCommands, cobraToCLIMeta(cliCmd, namespace + " " + cliCmd.Use)...)
@@ -274,7 +266,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 				Namespace: namespace,
 				Name: cliCmd.Use,
 				Description: cliCmd.Short,
-				Usage: cliCmd.Long,
+				Usage: cliCmd.UsageString(),
 				Flags: cobraFlagToPlugin(cliCmd.Flags()),
 			}
 			pluginCommands = append(pluginCommands, thisCmd)
@@ -300,7 +292,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 		Long: T("Manage Classic infrastructure services"),
 		RunE: nil,
 	}
-
+	
 	// Persistent Flags
 	cobraCmd.PersistentFlags().StringVar(&slCommand.OutputFlag, "output", "", "--output=JSON for json output.")
 	// Commands

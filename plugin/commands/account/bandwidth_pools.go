@@ -2,10 +2,7 @@ package account
 
 import (
 	"fmt"
-	// "github.com/softlayer/softlayer-go/session"
 
-	// "github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
 	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -16,17 +13,19 @@ import (
 
 type BandwidthPoolsCommand struct {
 	*metadata.SoftlayerCommand
+	AccountManager managers.AccountManager
 }
 
 func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *cobra.Command {
 	thisCmd := &BandwidthPoolsCommand{
 		SoftlayerCommand: sl,
+		AccountManager: managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use: "bandwidth-pools",
 		Short: T("lists bandwidth pools"),
 		Long: T(`${COMMAND_NAME} sl account bandwidth-pools`),
-		Args: cobra.NoArgs,
+		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -34,21 +33,8 @@ func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *cobra.Command {
 	return cobraCmd
 }
 
-func BandwidthPoolsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "bandwidth-pools",
-		Description: T("lists bandwidth pools"),
-		Usage:       T(`${COMMAND_NAME} sl account bandwidth-pools`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
-}
-
 func (cmd *BandwidthPoolsCommand) Run(args []string) error {
-	accountManager := managers.NewAccountManager(cmd.Session)
-	pools, err := accountManager.GetBandwidthPools()
+	pools, err := cmd.AccountManager.GetBandwidthPools()
 	if err != nil {
 		return err
 	}
@@ -79,7 +65,7 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 		if pool.TotalBandwidthAllocated != nil {
 			allocation = fmt.Sprintf("%d GB", uint(*pool.TotalBandwidthAllocated))
 		}
-		serverCount, _ := accountManager.GetBandwidthPoolServers(*pool.Id)
+		serverCount, _ := cmd.AccountManager.GetBandwidthPoolServers(*pool.Id)
 		table.Add(
 			utils.FormatIntPointer(pool.Id),
 			utils.FormatStringPointer(pool.Name),

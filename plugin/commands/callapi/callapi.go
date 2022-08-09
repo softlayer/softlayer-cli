@@ -57,7 +57,7 @@ EXAMPLE:
 	
 	${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{"virtualGuests":{"hostname":{"operation":"cli-test"}}}'
 	This command list virtual guests.`),
-		Args: cobra.ExactArgs(2),
+		Args: metadata.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

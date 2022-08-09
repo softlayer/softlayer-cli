@@ -26,6 +26,7 @@ type SoftlayerCommand struct {
 	OutputFlag string
 }
 
+
 func SoftlayerNamespace() plugin.Namespace {
 	return plugin.Namespace{
 		Name:        NS_SL_NAME,
