@@ -803,6 +803,10 @@ func (hw hardwareServerManager) GetSensorData(id int, mask string) ([]datatypes.
 //Create a transaction to reflash firmware.
 //int id: The hardware server identifier.
 func (hw hardwareServerManager) CreateFirmwareReflashTransaction(id int) (bool, error) {
+	// int ipmi: Reflash the ipmi firmware.
+	// int raid_controller: Reflash the raid controller firmware.
+	// int bios: Reflash the bios firmware.
+	// the values were set as 1 to represent true
 	ipmi := 1
 	raidController := 1
 	bios := 1
