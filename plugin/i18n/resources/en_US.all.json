@@ -3376,8 +3376,8 @@
     "translation": "Failed to get AutoScale group.\n"
   },
   {
-    "id": "Failed to get Bandwidth Pool.\n",
-    "translation": "Failed to get Bandwidth Pool.\n"
+    "id": "Failed to get Bandwidth Pool.",
+    "translation": "Failed to get Bandwidth Pool."
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -9272,6 +9272,18 @@
     "translation": "[-u|--userdata] is not allowed with [-F|--userfile]."
   },
   {
+    "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
+    "translation": "accepts at most {{.Limit}} arg(s), received {{.Args}}"
+  },
+  {
+    "id": "accepts between {{.Min}} and {{.Max}} arg(s), received {{.Args}}",
+    "translation": "accepts between {{.Min}} and {{.Max}} arg(s), received {{.Args}}"
+  },
+  {
+    "id": "accepts {{.Limit}} arg(s), received {{.Args}}",
+    "translation": "accepts {{.Limit}} arg(s), received {{.Args}}"
+  },
+  {
     "id": "account",
     "translation": "account"
   },
@@ -9552,6 +9564,10 @@
     "translation": "intermediate certificate not found"
   },
   {
+    "id": "invalid argument {{.Arg}} for {{.Path}}",
+    "translation": "invalid argument {{.Arg}} for {{.Path}}"
+  },
+  {
     "id": "ip",
     "translation": "ip"
   },
@@ -9748,6 +9764,10 @@
     "translation": "replication"
   },
   {
+    "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
+    "translation": "requires at least {{.Limit}} arg(s), only received {{.Args}}"
+  },
+  {
     "id": "router",
     "translation": "router"
   },
@@ -9830,6 +9850,10 @@
   {
     "id": "type",
     "translation": "type"
+  },
+  {
+    "id": "unknown command {{.Arg}} for {{.Command}}",
+    "translation": "unknown command {{.Arg}} for {{.Command}}"
   },
   {
     "id": "updated",

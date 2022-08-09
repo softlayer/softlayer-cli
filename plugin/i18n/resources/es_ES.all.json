@@ -37,7 +37,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456",
-    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEJEMPLO: \n${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
+    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEJEMPLO:\n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
   },
   {
     "id": "${COMMAND_NAME} sl account cancel-item IDENTIFIER",
@@ -3340,7 +3340,7 @@
     "translation": "No se ha podido obtener el grupo de escalado automático.\n"
   },
   {
-    "id": "Failed to get Bandwidth Pool.\n",
+    "id": "Failed to get Bandwidth Pool.",
     "translation": "No se ha podido obtener la agrupación de ancho de banda.\n"
   },
   {
