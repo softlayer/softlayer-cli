@@ -104,6 +104,8 @@ type StorageManager interface {
 	GetHubNetworkStorage(mask string) ([]datatypes.Network_Storage, error)
 	GetDuplicateConversionStatus(volumeID int, mask string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error)
 	GetSubnetsInAcl(accessID int, mask string) ([]datatypes.Network_Subnet, error)
+	AssignSubnetsToAcl(accessID int, subnets []int) ([]int, error)
+	RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error)
 }
 
 type storageManager struct {
@@ -867,4 +869,18 @@ func (s storageManager) GetSubnetsInAcl(accessID int, mask string) ([]datatypes.
 		mask = "mask[id,modifyDate,networkIdentifier,cidr]"
 	}
 	return s.AllowedHostService.Id(accessID).Mask(mask).GetSubnetsInAcl()
+}
+
+// Assign block storage subnets to this allowed host
+// accessID: id of allowed host
+// subnets: subnets IDs to be assigned
+func (s storageManager) AssignSubnetsToAcl(accessID int, subnets []int) ([]int, error) {
+	return s.AllowedHostService.Id(accessID).AssignSubnetsToAcl(subnets)
+}
+
+// Remove block storage subnets to this allowed host
+// accessID: id of allowed host
+// subnets: subnets IDs to be assigned
+func (s storageManager) RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error) {
+	return s.AllowedHostService.Id(accessID).RemoveSubnetsFromAcl(subnets)
 }
