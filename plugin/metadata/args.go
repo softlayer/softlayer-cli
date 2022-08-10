@@ -89,6 +89,15 @@ func ExactArgs(n int) cobra.PositionalArgs {
 	}
 }
 
+// Just one arg
+func OneArgs(cmd *cobra.Command, args []string) error {
+	if len(args) != 1 {
+		return fmt.Errorf(T("Incorrect Usage: This command requires one argument."))
+	}
+	return nil
+}
+
+
 // ExactValidArgs returns an error if
 // there are not exactly N positional args OR
 // there are any positional args that are not in the `ValidArgs` field of `Command`

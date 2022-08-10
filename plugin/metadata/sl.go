@@ -7,6 +7,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/urfave/cli"
 
+
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -23,7 +24,18 @@ const OutputJSON = "JSON"
 type SoftlayerCommand struct {
 	UI terminal.UI
 	Session *session.Session
-	OutputFlag string
+	OutputFlag *CobraOutputFlag
+}
+
+func NewSoftlayerCommand(ui terminal.UI, session *session.Session) *SoftlayerCommand {
+	return &SoftlayerCommand{
+		UI: ui,
+		Session: session,
+		OutputFlag: &CobraOutputFlag{""},
+	}
+}
+func (slcmd *SoftlayerCommand) GetOutputFlag() string {
+	return slcmd.OutputFlag.String()
 }
 
 
@@ -33,6 +45,7 @@ func SoftlayerNamespace() plugin.Namespace {
 		Description: T("Manage Classic infrastructure services"),
 	}
 }
+
 
 func ForceFlag() cli.BoolFlag {
 	return cli.BoolFlag{
@@ -71,4 +84,31 @@ func QuietFlag() cli.BoolFlag {
 		Name:  "q, quiet",
 		Usage: T("Suppress verbose output"),
 	}
+}
+
+
+
+// A custom flag type so we can do type checking like expected.
+// Basically this just calls strings.ToUpper on --output
+type CobraOutputFlag struct {
+	Value string
+}
+
+func (o *CobraOutputFlag) String() string {
+	return o.Value
+}
+
+func (o *CobraOutputFlag) Set(p string) error {
+	p = strings.ToUpper(p)
+	for _, supported := range SupportedOutputFormat {
+		if p == supported {
+			o.Value = p
+			return nil
+		}
+	}
+	return errors.NewInvalidUsageError(T("Invalid output format, only JSON is supported now."))
+}
+
+func (o *CobraOutputFlag) Type() string {
+	return "string"
 }

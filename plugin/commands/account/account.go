@@ -26,9 +26,9 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 		RunE: nil,
 	}
 	// cobraCmd.AddCommand(account.New<COMMAND>Command(ui, session))
-	cobraCmd.AddCommand(NewBandwidthPoolsCommand(sl))
-	cobraCmd.AddCommand(NewBandwidthPoolsDetailCommand(sl))
-	cobraCmd.AddCommand(NewBillingItemsCommand(sl))
+	cobraCmd.AddCommand(NewBandwidthPoolsCommand(sl).Command)
+	cobraCmd.AddCommand(NewBandwidthPoolsDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewBillingItemsCommand(sl).Command)
 	return cobraCmd	
 }
 

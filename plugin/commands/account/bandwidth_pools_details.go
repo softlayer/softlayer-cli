@@ -20,9 +20,10 @@ import (
 type BandwidthPoolsDetailCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
+	Command *cobra.Command
 }
 
-func NewBandwidthPoolsDetailCommand(sl *metadata.SoftlayerCommand) *cobra.Command {
+func NewBandwidthPoolsDetailCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsDetailCommand {
 
 	thisCmd := &BandwidthPoolsDetailCommand{
 		SoftlayerCommand: sl,
@@ -31,18 +32,19 @@ func NewBandwidthPoolsDetailCommand(sl *metadata.SoftlayerCommand) *cobra.Comman
 	cobraCmd := &cobra.Command{
 		Use: "bandwidth-pools-detail",
 		Short: T("Get bandwidth pool details."),
-		Args: metadata.ExactArgs(1),
+		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
             return thisCmd.Run(args)
         },
 	}
-	return cobraCmd
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 
 func (cmd *BandwidthPoolsDetailCommand) Run(args []string) error {
 
-	outputFormat := cmd.OutputFlag
+	outputFormat := cmd.GetOutputFlag()
 
 	bandwidthPoolId, err := strconv.Atoi(args[0])
 	if err != nil {

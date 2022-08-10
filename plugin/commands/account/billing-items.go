@@ -19,9 +19,10 @@ import (
 type BillingItemsCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
+	Command *cobra.Command
 }
 
-func NewBillingItemsCommand(sl *metadata.SoftlayerCommand) *cobra.Command {
+func NewBillingItemsCommand(sl *metadata.SoftlayerCommand) *BillingItemsCommand {
 	thisCmd := &BillingItemsCommand{
 		SoftlayerCommand: sl,
 		AccountManager: managers.NewAccountManager(sl.Session),
@@ -35,13 +36,14 @@ func NewBillingItemsCommand(sl *metadata.SoftlayerCommand) *cobra.Command {
 			return thisCmd.Run(args)
 		},
 	}
-	return cobraCmd
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 
 func (cmd *BillingItemsCommand)  Run(args []string) error {
 
-	outputFormat := cmd.OutputFlag
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := "mask[orderItem[id,order[id,userRecord[id,email,displayName,userStatus]]],nextInvoiceTotalRecurringAmount,location, hourlyFlag]"
 	billingItems, err := cmd.AccountManager.GetBillingItems(mask)

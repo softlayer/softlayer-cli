@@ -14,9 +14,10 @@ import (
 type BandwidthPoolsCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
+	Command *cobra.Command
 }
 
-func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *cobra.Command {
+func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsCommand {
 	thisCmd := &BandwidthPoolsCommand{
 		SoftlayerCommand: sl,
 		AccountManager: managers.NewAccountManager(sl.Session),
@@ -30,7 +31,8 @@ func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *cobra.Command {
 			return thisCmd.Run(args)
 		},
 	}
-	return cobraCmd
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 func (cmd *BandwidthPoolsCommand) Run(args []string) error {
@@ -39,7 +41,7 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 		return err
 	}
 
-	outputFormat := cmd.OutputFlag
+	outputFormat := cmd.GetOutputFlag()
 
 	if outputFormat == "JSON" {
 		return utils.PrintPrettyJSON(cmd.UI, pools)

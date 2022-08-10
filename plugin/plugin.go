@@ -281,11 +281,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 
 func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command {
 
-	slCommand := metadata.SoftlayerCommand{
-		UI: ui,
-		Session: session,
-		OutputFlag: "",
-	}
+	slCommand := metadata.NewSoftlayerCommand(ui, session)
 	cobraCmd := &cobra.Command{
 		Use: "sl",
 		Short: T("Manage Classic infrastructure services"),
@@ -294,9 +290,9 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	}
 	
 	// Persistent Flags
-	cobraCmd.PersistentFlags().StringVar(&slCommand.OutputFlag, "output", "", "--output=JSON for json output.")
+	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", "--output=JSON for json output.")
 	// Commands
-	cobraCmd.AddCommand(callapi.NewCallAPICommand(&slCommand))
-	cobraCmd.AddCommand(account.SetupCobraCommands(&slCommand))
+	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
+	cobraCmd.AddCommand(account.SetupCobraCommands(slCommand))
 	return cobraCmd
 }
