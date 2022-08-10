@@ -116,6 +116,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		"block-subnets-list": func(c *cli.Context) error {
 			return NewSubnetsListCommand(ui, storageManager).Run(c)
 		},
+		"block-subnets-assign": func(c *cli.Context) error {
+			return NewSubnetsAssignCommand(ui, storageManager).Run(c)
+		},
 		"block-disaster-recovery-failover": func(c *cli.Context) error {
 			return NewDisasterRecoveryFailoverCommand(ui, storageManager).Run(c)
 		},
@@ -191,6 +194,7 @@ func BlockMetaData() cli.Command {
 			BlockVolumeSetNoteMetaData(),
 			BlockObjectListMetaData(),
 			BlockSubnetsListMetaData(),
+			BlockSubnetsAssignMetaData(),
 			BlockDuplicateConvertStatusMetaData(),
 		},
 	}
