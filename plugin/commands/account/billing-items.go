@@ -30,7 +30,6 @@ func NewBillingItemsCommand(sl *metadata.SoftlayerCommand) *BillingItemsCommand 
 	cobraCmd := &cobra.Command{
 		Use: "billing-items",
 		Short: T("Lists billing items with some other useful information."),
-		Long: T(`${COMMAND_NAME} slcli account billing-items [OPTIONS]`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

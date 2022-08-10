@@ -264,7 +264,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 		} else {
 			thisCmd := plugin.Command{
 				Namespace: namespace,
-				Name: cliCmd.Use,
+				Name: cliCmd.Name(),
 				Description: cliCmd.Short,
 				Usage: cliCmd.UsageString(),
 				Flags: cobraFlagToPlugin(cliCmd.Flags()),

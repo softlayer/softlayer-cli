@@ -7,7 +7,7 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -17,42 +17,38 @@ import (
 )
 
 type EventsCommand struct {
-	UI             terminal.UI
-	AccountManager managers.AccountManager
+	*metadata.SoftlayerCommand
+	AccountManager 	managers.AccountManager
+	Command 		*cobra.Command
+	DateMin			string
 }
 
-func NewEventsCommand(ui terminal.UI, accountManager managers.AccountManager) (cmd *EventsCommand) {
-	return &EventsCommand{
-		UI:             ui,
-		AccountManager: accountManager,
+func NewEventsCommand(sl *metadata.SoftlayerCommand) *EventsCommand {
+	thisCmd := &EventsCommand{
+		SoftlayerCommand: sl,
+		AccountManager: managers.NewAccountManager(sl.Session),
 	}
-}
-
-func EventsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "events",
-		Description: T("Summary and acknowledgement of upcoming and ongoing maintenance events"),
-		Usage:       T(`${COMMAND_NAME} sl account events`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "d,date-min",
-				Usage: T("Earliest date to retrieve events for [YYYY-MM-DD]."),
-			},
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use: "events",
+		Short: T("Summary and acknowledgement of upcoming and ongoing maintenance events"),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVarP(&thisCmd.DateMin, "date-min", "d", "",
+								T("Earliest date to retrieve events for [YYYY-MM-DD]."))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *EventsCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+
+func (cmd *EventsCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
 	datefilter := ""
-	if c.IsSet("date-min") {
-		date := c.String("date-min")
+	if cmd.DateMin != "" {
+		date := cmd.DateMin
 		time, err := time.Parse(time.RFC3339, date+"T00:00:00Z")
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Invalid format date."))
@@ -68,15 +64,15 @@ func (cmd *EventsCommand) Run(c *cli.Context) error {
 	// Gets three specific types of events
 	plannedEvents, err := cmd.AccountManager.GetEvents("PLANNED", mask, datefilter)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get planned events.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get planned events."), err.Error(), 2)
 	}
 	unplannedEvents, err := cmd.AccountManager.GetEvents("UNPLANNED_INCIDENT", mask, datefilter)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get unplanned events.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get unplanned events."), err.Error(), 2)
 	}
 	announcement, err := cmd.AccountManager.GetEvents("ANNOUNCEMENT", mask, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get announcement events.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get announcement events."), err.Error(), 2)
 	}
 
 	// Print All events with keyname specific: PLANNED, UNPLANNED AND ANNOUNCEMENT

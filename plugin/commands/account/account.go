@@ -22,13 +22,15 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd := &cobra.Command{
 		Use: "account",
 		Short: T("Classic infrastructure Account commands"),
-		Long: "${COMMAND_NAME} sl account",
 		RunE: nil,
 	}
 	// cobraCmd.AddCommand(account.New<COMMAND>Command(ui, session))
 	cobraCmd.AddCommand(NewBandwidthPoolsCommand(sl).Command)
 	cobraCmd.AddCommand(NewBandwidthPoolsDetailCommand(sl).Command)
 	cobraCmd.AddCommand(NewBillingItemsCommand(sl).Command)
+	cobraCmd.AddCommand(NewCancelItemCommand(sl).Command)
+	cobraCmd.AddCommand(NewInvoiceDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewEventsCommand(sl).Command)
 	return cobraCmd	
 }
 
@@ -38,18 +40,18 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		// "account-bandwidth-pools": func(c *cli.Context) error {
 		// 	return NewBandwidthPoolsCommand(ui, session).Run(c)
 		// },
-		"account-cancel-item": func(c *cli.Context) error {
-			return NewCancelItemCommand(ui, accountManager).Run(c)
-		},
+		// "account-cancel-item": func(c *cli.Context) error {
+		// 	return NewCancelItemCommand(ui, accountManager).Run(c)
+		// },
 		// "account-billing-items": func(c *cli.Context) error {
 		// 	return NewBillingItemsCommand(ui, accountManager).Run(c)
 		// },
-		"account-invoice-detail": func(c *cli.Context) error {
-			return NewInvoiceDetailCommand(ui, accountManager).Run(c)
-		},
-		"account-events": func(c *cli.Context) error {
-			return NewEventsCommand(ui, accountManager).Run(c)
-		},
+		// "account-invoice-detail": func(c *cli.Context) error {
+		// 	return NewInvoiceDetailCommand(ui, accountManager).Run(c)
+		// },
+		// "account-events": func(c *cli.Context) error {
+		// 	return NewEventsCommand(ui, accountManager).Run(c)
+		// },
 		"account-event-detail": func(c *cli.Context) error {
 			return NewEventDetailCommand(ui, accountManager).Run(c)
 		},

@@ -63,7 +63,7 @@ import "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 ```go
 type BandwidthPoolsCommand struct {
-    *metadata.SoftlayerCommand
+    *metadata.SoftlayerCommand  // this format makes BandwidthPoolsCommand inherit the properties from SoftlayerCommand, so it has access to UI and Session 
     AccountManager managers.AccountManager
     Command *cobra.Command  // all commands will have this, the reference to the actual cobra.Command
 }
@@ -82,9 +82,10 @@ func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsComm
         AccountManager: managers.NewAccountManager(sl.Session)
     }
     cobraCmd := &cobra.Command{
-        Use: "bandwidth-pools",
+        // The first 'word' in the Use line is the command name. Anything after that will show up in the help text
+        Use: "bandwidth-pools",  // if a command takes arguments, add them here in ex: IDENTIFIER
         Short: T("lists bandwidth pools"),
-        Long: T(`${COMMAND_NAME} sl account bandwidth-pools`),
+        Long: "",  // Remove this if the Usage from the old command is just basic information about how to run it. The Long description should be for examples, detailed information about the command.
         Args: metadata.NoArgs,
         RunE: func(cmd *cobra.Command, args []string) error {
             return thisCmd.Run(args)
@@ -110,7 +111,7 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
         return err
     }
 
-    outputFormat := cmd.OutputFlag
+    outputFormat := cmd.GetOutputFlag()
     // Rest of the function was unchanged
     return nil
 }
@@ -136,7 +137,7 @@ bandwidthPoolId, err := strconv.Atoi(args[0])
         return err
     }
 */
-    outputFormat := cmd.OutputFlag
+    outputFormat := cmd.GetOutputFlag()
 ```
 
 Update any cli.NewExitError messages
@@ -170,6 +171,28 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 
 ### Refactor Unit Tests
 
+Quick Replaces / copy-paste
+
+Test setup, just need to change `cliCommand` and the accountManager
+```go
+    var (
+        fakeUI              *terminal.FakeUI
+        cliCommand          *account.{{WHATEVER}}Command
+        fakeSession         *session.Session
+        slCommand           *metadata.SoftlayerCommand
+        fakeAccountManager  *testhelpers.FakeAccountManager
+    )
+    BeforeEach(func() {
+        fakeUI = terminal.NewFakeUI()
+        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+        fakeAccountManager = new(testhelpers.FakeAccountManager)
+        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+        cliCommand = account.New{{WHATEVER}}Command(slCommand)
+        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+        cliCommand.AccountManager = fakeAccountManager
+    })
+```
+`RunCommand(cliCommand   ---->   RunCobraCommand(cliCommand.Command`
 
 #### account_test.go
 
@@ -214,6 +237,7 @@ var _ = Describe("Account Bandwidth-Pools", func() {
         fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
         slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
         cliCommand = account.NewBandwidthPoolsCommand(slCommand)
+        // Only needed if your testing json output for this command.
         cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
     })
 

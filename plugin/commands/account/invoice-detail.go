@@ -8,7 +8,7 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -18,59 +18,49 @@ import (
 )
 
 type InvoiceDetailCommand struct {
-	UI             terminal.UI
-	AccountManager managers.AccountManager
+	*metadata.SoftlayerCommand
+	AccountManager 	managers.AccountManager
+	Command 		*cobra.Command
+	Details			bool
 }
 
-func NewInvoiceDetailCommand(ui terminal.UI, accountManager managers.AccountManager) (cmd *InvoiceDetailCommand) {
-	return &InvoiceDetailCommand{
-		UI:             ui,
-		AccountManager: accountManager,
+func NewInvoiceDetailCommand(sl *metadata.SoftlayerCommand) *InvoiceDetailCommand {
+	thisCmd := &InvoiceDetailCommand{
+		SoftlayerCommand: sl,
+		AccountManager: managers.NewAccountManager(sl.Session),
 	}
-}
-
-func InvoiceDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "invoice-detail",
-		Description: T("Invoice details."),
-		Usage:       T(`${COMMAND_NAME} sl account invoice-detail IDENTIFIER [OPTIONS]`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "details",
-				Usage: T("Shows a very detailed list of charges"),
-			},
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use: "invoice-detail " + T("IDENTIFIER"),
+		Short: T("Invoice details."),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().BoolVar(&thisCmd.Details, "details", false, T("Shows a very detailed list of charges"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *InvoiceDetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
 
-	invoiceID, err := strconv.Atoi(c.Args()[0])
+func (cmd *InvoiceDetailCommand) Run(args []string) error {
+
+	invoiceID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Invoice ID")
 	}
 
-	details := false
-	if c.IsSet("details") {
-		details = true
-	}
-
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 	
-	mask := "mask[id, description, hostName, domainName, oneTimeAfterTaxAmount, recurringAfterTaxAmount,createDate,categoryCode,category[name],location[name],children[id, category[name], description, oneTimeAfterTaxAmount, recurringAfterTaxAmount]]"
+	mask := `mask[id, description, hostName, domainName, oneTimeAfterTaxAmount, recurringAfterTaxAmount, ` +
+			`createDate,categoryCode,category[name],location[name],children[id, category[name], description, ` +
+			`oneTimeAfterTaxAmount, recurringAfterTaxAmount]]`
 	invoice, err := cmd.AccountManager.GetInvoiceDetail(invoiceID, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the invoice {{.invoiceID}}. ", map[string]interface{}{"invoiceID": invoiceID})+err.Error(), 2)
+		subs := map[string]interface{}{"invoiceID": invoiceID}
+		return slErr.NewAPIError(T("Failed to get the invoice {{.invoiceID}}. ", subs), err.Error(), 2)
 	}
-	PrintInvoiceDetail(invoiceID, invoice, cmd.UI, outputFormat, details)
+	PrintInvoiceDetail(invoiceID, invoice, cmd.UI, outputFormat, cmd.Details)
 	return nil
 }
 
