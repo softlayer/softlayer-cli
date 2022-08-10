@@ -451,6 +451,20 @@ type FakeStorageManager struct {
 		result1 datatypes.Container_Product_Order_Receipt
 		result2 error
 	}
+	RemoveSubnetsFromAclStub        func(int, []int) ([]int, error)
+	removeSubnetsFromAclMutex       sync.RWMutex
+	removeSubnetsFromAclArgsForCall []struct {
+		arg1 int
+		arg2 []int
+	}
+	removeSubnetsFromAclReturns struct {
+		result1 []int
+		result2 error
+	}
+	removeSubnetsFromAclReturnsOnCall map[int]struct {
+		result1 []int
+		result2 error
+	}
 	RestoreFromSnapshotStub        func(int, int) error
 	restoreFromSnapshotMutex       sync.RWMutex
 	restoreFromSnapshotArgsForCall []struct {
@@ -2588,6 +2602,76 @@ func (fake *FakeStorageManager) OrderVolumeReturnsOnCall(i int, result1 datatype
 	}{result1, result2}
 }
 
+func (fake *FakeStorageManager) RemoveSubnetsFromAcl(arg1 int, arg2 []int) ([]int, error) {
+	var arg2Copy []int
+	if arg2 != nil {
+		arg2Copy = make([]int, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.removeSubnetsFromAclMutex.Lock()
+	ret, specificReturn := fake.removeSubnetsFromAclReturnsOnCall[len(fake.removeSubnetsFromAclArgsForCall)]
+	fake.removeSubnetsFromAclArgsForCall = append(fake.removeSubnetsFromAclArgsForCall, struct {
+		arg1 int
+		arg2 []int
+	}{arg1, arg2Copy})
+	stub := fake.RemoveSubnetsFromAclStub
+	fakeReturns := fake.removeSubnetsFromAclReturns
+	fake.recordInvocation("RemoveSubnetsFromAcl", []interface{}{arg1, arg2Copy})
+	fake.removeSubnetsFromAclMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) RemoveSubnetsFromAclCallCount() int {
+	fake.removeSubnetsFromAclMutex.RLock()
+	defer fake.removeSubnetsFromAclMutex.RUnlock()
+	return len(fake.removeSubnetsFromAclArgsForCall)
+}
+
+func (fake *FakeStorageManager) RemoveSubnetsFromAclCalls(stub func(int, []int) ([]int, error)) {
+	fake.removeSubnetsFromAclMutex.Lock()
+	defer fake.removeSubnetsFromAclMutex.Unlock()
+	fake.RemoveSubnetsFromAclStub = stub
+}
+
+func (fake *FakeStorageManager) RemoveSubnetsFromAclArgsForCall(i int) (int, []int) {
+	fake.removeSubnetsFromAclMutex.RLock()
+	defer fake.removeSubnetsFromAclMutex.RUnlock()
+	argsForCall := fake.removeSubnetsFromAclArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeStorageManager) RemoveSubnetsFromAclReturns(result1 []int, result2 error) {
+	fake.removeSubnetsFromAclMutex.Lock()
+	defer fake.removeSubnetsFromAclMutex.Unlock()
+	fake.RemoveSubnetsFromAclStub = nil
+	fake.removeSubnetsFromAclReturns = struct {
+		result1 []int
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) RemoveSubnetsFromAclReturnsOnCall(i int, result1 []int, result2 error) {
+	fake.removeSubnetsFromAclMutex.Lock()
+	defer fake.removeSubnetsFromAclMutex.Unlock()
+	fake.RemoveSubnetsFromAclStub = nil
+	if fake.removeSubnetsFromAclReturnsOnCall == nil {
+		fake.removeSubnetsFromAclReturnsOnCall = make(map[int]struct {
+			result1 []int
+			result2 error
+		})
+	}
+	fake.removeSubnetsFromAclReturnsOnCall[i] = struct {
+		result1 []int
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeStorageManager) RestoreFromSnapshot(arg1 int, arg2 int) error {
 	fake.restoreFromSnapshotMutex.Lock()
 	ret, specificReturn := fake.restoreFromSnapshotReturnsOnCall[len(fake.restoreFromSnapshotArgsForCall)]
@@ -3092,6 +3176,8 @@ func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	defer fake.orderSnapshotSpaceMutex.RUnlock()
 	fake.orderVolumeMutex.RLock()
 	defer fake.orderVolumeMutex.RUnlock()
+	fake.removeSubnetsFromAclMutex.RLock()
+	defer fake.removeSubnetsFromAclMutex.RUnlock()
 	fake.restoreFromSnapshotMutex.RLock()
 	defer fake.restoreFromSnapshotMutex.RUnlock()
 	fake.setCredentialPasswordMutex.RLock()
