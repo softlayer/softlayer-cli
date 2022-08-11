@@ -25,7 +25,7 @@
   },
   {
     "id": " is not following <hostname>.<domain.name.tld> --fqdn option format",
-    "translation": " is not following <hostname>.<domain.name.tld> --fqdn option format"
+    "translation": " 未遵循 <hostname>.<domain.name.tld> --fqdn 选项格式"
   },
   {
     "id": "# of Active Transactions",
@@ -37,7 +37,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456",
-    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
+    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\n示例：\n${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
   },
   {
     "id": "${COMMAND_NAME} sl account cancel-item IDENTIFIER",
@@ -137,7 +137,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list",
-    "translation": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list"
+    "translation": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block object-list"
   },
   {
     "id": "${COMMAND_NAME} sl block replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
@@ -485,7 +485,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl hardware sensor 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
@@ -565,7 +565,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
-    "translation": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources."
+    "translation": "${COMMAND_NAME} sl metadata [OPTIONS]\n\n.. csv-table:: 选项：\n- backend_ip\n- backend_mac\n- datacenter\n- datacenter_id\n- fqdn\n- frontend_mac\n- id\n- ip\n- network\n- provision_state\n- tags\n- user_data\n\n示例：\n${COMMAND_NAME} sl metadata backend_ip\n${COMMAND_NAME} sl metadata network\n\n这些命令仅适用于后端 SoftLayer 网络上的设备。 这允许对新供应的资源进行自发现。"
   },
   {
     "id": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456",
@@ -578,6 +578,14 @@
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
     "translation": "${COMMAND_NAME} sl object-storage accounts"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl object-storage credential-create 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
+    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
@@ -613,19 +621,19 @@
   },
   {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
-    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
+    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
   },
   {
     "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
-    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456"
+    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl order quote-detail 123456"
   },
   {
     "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
-    "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list"
+    "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   示例：\n  ${COMMAND_NAME} sl order quote-list"
   },
   {
     "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
-    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456"
+    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl order quote-save 123456"
   },
   {
     "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
@@ -693,7 +701,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
-    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -721,7 +729,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
-    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
+    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
   {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
@@ -1137,7 +1145,7 @@
   },
   {
     "id": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]",
-    "translation": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]"
+    "translation": "要使用的 <hostname>.<domain.name.tld> 格式化名称。 为每个服务器指定一个 fqdn（允许多次出现）[必需]"
   },
   {
     "id": "A custom name to be assigned to the quote (optional)",
@@ -1225,7 +1233,7 @@
   },
   {
     "id": "Account name",
-    "translation": "Account name"
+    "translation": "帐户名称"
   },
   {
     "id": "Accounting",
@@ -1901,7 +1909,7 @@
   },
   {
     "id": "Classic infrastructure Object Storage commands",
-    "translation": "Classic infrastructure Object Storage commands"
+    "translation": "经典基础架构 Object Storage 命令"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -2037,11 +2045,11 @@
   },
   {
     "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
-    "translation": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
+    "translation": "以逗号分隔的标记列表，括在引号中。 'tag1, tag2'"
   },
   {
     "id": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]",
-    "translation": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
+    "translation": "以逗号分隔的标记列表，括在引号中。 'tag1,tag2'  [必需]"
   },
   {
     "id": "Company",
@@ -2236,6 +2244,10 @@
     "translation": "创建专区"
   },
   {
+    "id": "Create credentials for an IBM Cloud Object Storage Account.",
+    "translation": "为 IBM Cloud Object Storage 帐户创建凭证。"
+  },
+  {
     "id": "Create virtual server instance",
     "translation": "创建虚拟服务器实例"
   },
@@ -2268,6 +2280,10 @@
     "translation": "创建用户"
   },
   {
+    "id": "Credential: {{.credentialID}} was deleted.",
+    "translation": "已删除凭证：{{.credentialID}}。"
+  },
+  {
     "id": "Credit allowed",
     "translation": "允许信用值"
   },
@@ -2285,15 +2301,15 @@
   },
   {
     "id": "Critical Max",
-    "translation": "Critical Max"
+    "translation": "临界最大值"
   },
   {
     "id": "Critical Min",
-    "translation": "Critical Min"
+    "translation": "临界最小值"
   },
   {
     "id": "Cross Region",
-    "translation": "Cross Region"
+    "translation": "跨区域"
   },
   {
     "id": "Current Members",
@@ -2420,6 +2436,10 @@
     "translation": "删除映像 "
   },
   {
+    "id": "Delete the credential of an Object Storage Account.",
+    "translation": "删除 Object Storage 帐户的凭证。"
+  },
+  {
     "id": "Delete the given security group",
     "translation": "删除给定的安全组"
   },
@@ -2489,7 +2509,7 @@
   },
   {
     "id": "Discrete Sensor",
-    "translation": "Discrete Sensor"
+    "translation": "离散传感器"
   },
   {
     "id": "Disk",
@@ -2697,7 +2717,7 @@
   },
   {
     "id": "Edit note and tags of a subnet.",
-    "translation": "Edit note and tags of a subnet."
+    "translation": "编辑子网的注释和标记。"
   },
   {
     "id": "Edit the details about a VLAN",
@@ -2805,7 +2825,7 @@
   },
   {
     "id": "EndPoint Type",
-    "translation": "EndPoint Type"
+    "translation": "端点类型"
   },
   {
     "id": "Ending Balance",
@@ -2881,7 +2901,7 @@
   },
   {
     "id": "Expiration",
-    "translation": "Expiration"
+    "translation": "到期时间"
   },
   {
     "id": "Export an image to an object storage",
@@ -3104,6 +3124,10 @@
     "translation": "未能创建自动缩放组。\n"
   },
   {
+    "id": "Failed to create credential. ",
+    "translation": "未能创建凭证。 "
+  },
+  {
     "id": "Failed to create dedicated host.\n",
     "translation": "未能创建专用主机。\n"
   },
@@ -3178,6 +3202,10 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "未能删除 L7 成员 {{.Member}}：{{.Error}}。\n"
+  },
+  {
+    "id": "Failed to delete credential: {{.storageID}}.\n",
+    "translation": "未能删除凭证：{{.storageID}}。\n"
   },
   {
     "id": "Failed to delete image: {{.ImageID}}.\n",
@@ -3313,11 +3341,11 @@
   },
   {
     "id": "Failed to get Bandwidth Pool.\n",
-    "translation": "Failed to get Bandwidth Pool.\n"
+    "translation": "未能获取带宽池。\n"
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
-    "translation": "Failed to get Cloud Object Storages.\n"
+    "translation": "未能获取 Cloud Object Storage。\n"
   },
   {
     "id": "Failed to get Datacenter {{.datacenter}}.\n",
@@ -3341,7 +3369,7 @@
   },
   {
     "id": "Failed to get Image.\n",
-    "translation": "Failed to get Image.\n"
+    "translation": "未能获取映像。\n"
   },
   {
     "id": "Failed to get L7 Health Monitor: {{.Error}}.\n",
@@ -3373,15 +3401,15 @@
   },
   {
     "id": "Failed to get Quote.\n",
-    "translation": "Failed to get Quote.\n"
+    "translation": "未能获取报价。\n"
   },
   {
     "id": "Failed to get Quotes.\n",
-    "translation": "Failed to get Quotes.\n"
+    "translation": "未能获取报价。\n"
   },
   {
     "id": "Failed to get Recalculated Order Container.\n",
-    "translation": "Failed to get Recalculated Order Container.\n"
+    "translation": "未能获取重新计算的订单容器。\n"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3413,7 +3441,7 @@
   },
   {
     "id": "Failed to get account’s associated Virtual Storage volumes.",
-    "translation": "Failed to get account’s associated Virtual Storage volumes."
+    "translation": "未能获取帐户的关联虚拟存储器卷。"
   },
   {
     "id": "Failed to get all datacenters.\n",
@@ -3469,7 +3497,7 @@
   },
   {
     "id": "Failed to get hardware sensor data.\n",
-    "translation": "Failed to get hardware sensor data.\n"
+    "translation": "未能获取硬件传感器数据。\n"
   },
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
@@ -3525,7 +3553,7 @@
   },
   {
     "id": "Failed to get list object storage endpoints.",
-    "translation": "Failed to get list object storage endpoints."
+    "translation": "未能获取列表对象存储器端点。"
   },
   {
     "id": "Failed to get load balancer product packages.",
@@ -3793,7 +3821,7 @@
   },
   {
     "id": "Failed to list credentials. ",
-    "translation": "Failed to list credentials. "
+    "translation": "未能列出凭证。 "
   },
   {
     "id": "Failed to list datacenters.\n",
@@ -3901,7 +3929,7 @@
   },
   {
     "id": "Failed to order Quote.\n",
-    "translation": "Failed to order Quote.\n"
+    "translation": "未能订购报价。\n"
   },
   {
     "id": "Failed to order block volume.Please verify your options and try again.\n",
@@ -4093,7 +4121,7 @@
   },
   {
     "id": "Failed to save Quote.\n",
-    "translation": "Failed to save Quote.\n"
+    "translation": "未能保存报价。\n"
   },
   {
     "id": "Failed to scale Auto Scale Group.",
@@ -4105,7 +4133,7 @@
   },
   {
     "id": "Failed to set note: {{.note}}.\n",
-    "translation": "Failed to set note: {{.note}}.\n"
+    "translation": "未能设置注释：{{.note}}。\n"
   },
   {
     "id": "Failed to set password for host {{.HostID}}.\n",
@@ -4113,11 +4141,11 @@
   },
   {
     "id": "Failed to set tags.\n",
-    "translation": "Failed to set tags.\n"
+    "translation": "未能设置标记。\n"
   },
   {
     "id": "Failed to set tags: {{.tags}}.\n",
-    "translation": "Failed to set tags: {{.tags}}.\n"
+    "translation": "未能设置标记：{{.tags}}。\n"
   },
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
@@ -4269,7 +4297,7 @@
   },
   {
     "id": "Failed to verify Quote.\n",
-    "translation": "Failed to verify Quote.\n"
+    "translation": "未能验证报价。\n"
   },
   {
     "id": "Failed to verify load balancer with name {{.Name}} on {{.Location}}.\n",
@@ -4545,7 +4573,7 @@
   },
   {
     "id": "Find details about the machine making these API calls.",
-    "translation": "Find details about the machine making these API calls."
+    "translation": "查找有关进行这些 API 调用的机器的详细信息。"
   },
   {
     "id": "Firewall",
@@ -4653,7 +4681,7 @@
   },
   {
     "id": "Get bandwidth pool details.",
-    "translation": "Get bandwidth pool details."
+    "translation": "获取带宽池详细信息。"
   },
   {
     "id": "Get billing details for a virtual server instance",
@@ -4769,7 +4797,7 @@
   },
   {
     "id": "Hardware",
-    "translation": "Hardware"
+    "translation": "硬件"
   },
   {
     "id": "Hardware ID",
@@ -4969,7 +4997,7 @@
   },
   {
     "id": "ID of the object being tagged  [required]",
-    "translation": "ID of the object being tagged  [required]"
+    "translation": "正在标记的对象的标识 [必需]"
   },
   {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
@@ -5085,7 +5113,7 @@
   },
   {
     "id": "If specified, will only show what the quote will order, will NOT place an order [default: False]",
-    "translation": "If specified, will only show what the quote will order, will NOT place an order [default: False]"
+    "translation": "如果指定，那么将仅显示报价将订购的内容，而不会下订单 [缺省值：False]"
   },
   {
     "id": "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type.",
@@ -5097,7 +5125,7 @@
   },
   {
     "id": "Image ID. See: 'ibmcloud sl image list' for reference",
-    "translation": "Image ID. See: 'ibmcloud sl image list' for reference"
+    "translation": "映像标识。 请参阅“ibmcloud sl image list”，以获取参考信息"
   },
   {
     "id": "Image ID. The default is to use the current operating system.\nSee: '${COMMAND_NAME} sl image list' for reference",
@@ -5125,7 +5153,7 @@
   },
   {
     "id": "Inbound Usage",
-    "translation": "Inbound Usage"
+    "translation": "入站使用情况"
   },
   {
     "id": "Include extra resources. Options are: at,is,rs,sr,ss",
@@ -5313,7 +5341,7 @@
   },
   {
     "id": "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]",
-    "translation": "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]"
+    "translation": "标记类型的键名称，例如 GUEST、HARDWARE。 请参阅 slcli 标记可标记输出。[必需]"
   },
   {
     "id": "Key name. It's only available in HEADER or COOKIE type",
@@ -5389,7 +5417,7 @@
   },
   {
     "id": "Legacy",
-    "translation": "Legacy"
+    "translation": "旧版"
   },
   {
     "id": "License key",
@@ -5425,7 +5453,7 @@
   },
   {
     "id": "List Object Storage accounts.",
-    "translation": "List Object Storage accounts."
+    "translation": "列示 Object Storage 帐户。"
   },
   {
     "id": "List Reserved Capacity groups.",
@@ -5457,7 +5485,7 @@
   },
   {
     "id": "List all active quotes on an account",
-    "translation": "List all active quotes on an account"
+    "translation": "列示帐户上的所有活动报价"
   },
   {
     "id": "List all devices the user has access and device access permissions.",
@@ -5517,7 +5545,7 @@
   },
   {
     "id": "List cloud block storage.",
-    "translation": "List cloud block storage."
+    "translation": "列示云块存储器。"
   },
   {
     "id": "List datacenters a package can be ordered in",
@@ -5589,7 +5617,7 @@
   },
   {
     "id": "List object storage endpoints.",
-    "translation": "List object storage endpoints."
+    "translation": "列示对象存储器端点。"
   },
   {
     "id": "List only the required categories for the package",
@@ -5701,7 +5729,7 @@
   },
   {
     "id": "Location/Region",
-    "translation": "Location/Region"
+    "translation": "位置/区域"
   },
   {
     "id": "Long Name",
@@ -5709,7 +5737,7 @@
   },
   {
     "id": "Mac addresses",
-    "translation": "Mac addresses"
+    "translation": "MAC 地址"
   },
   {
     "id": "Manage Classic infrastructure services",
@@ -5729,7 +5757,7 @@
   },
   {
     "id": "Max",
-    "translation": "Max"
+    "translation": "最大值"
   },
   {
     "id": "Max IOPS",
@@ -5797,7 +5825,7 @@
   },
   {
     "id": "Min",
-    "translation": "Min"
+    "translation": "最小值"
   },
   {
     "id": "Min IOPS",
@@ -6173,7 +6201,7 @@
   },
   {
     "id": "One Time",
-    "translation": "One Time"
+    "translation": "一次"
   },
   {
     "id": "One of --name, --note and --tag must be specified.",
@@ -6405,11 +6433,11 @@
   },
   {
     "id": "Package Id",
-    "translation": "Package Id"
+    "translation": "包标识"
   },
   {
     "id": "Package Name",
-    "translation": "Package Name"
+    "translation": "软件包名称"
   },
   {
     "id": "Package {{.Package}} does not exist.",
@@ -6877,15 +6905,15 @@
   },
   {
     "id": "Public/Private",
-    "translation": "Public/Private"
+    "translation": "公用/专用"
   },
   {
     "id": "Quantity",
-    "translation": "Quantity"
+    "translation": "数量"
   },
   {
     "id": "RPM Sensor",
-    "translation": "RPM Sensor"
+    "translation": "RPM 传感器"
   },
   {
     "id": "Ram",
@@ -6901,7 +6929,7 @@
   },
   {
     "id": "Reading",
-    "translation": "Reading"
+    "translation": "雷丁"
   },
   {
     "id": "Reason",
@@ -6929,7 +6957,7 @@
   },
   {
     "id": "Recurring",
-    "translation": "Recurring"
+    "translation": "周期性"
   },
   {
     "id": "Recurring Fee",
@@ -7101,11 +7129,11 @@
   },
   {
     "id": "Retrieve a server’s hardware state via its internal sensors.",
-    "translation": "Retrieve a server’s hardware state via its internal sensors."
+    "translation": "通过服务器的内部传感器来检索服务器的硬件状态。"
   },
   {
     "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
-    "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
+    "translation": "检索用于生成 AWS 签名的凭证。 最大值为 2。"
   },
   {
     "id": "Retrieve logs for an Autoscale group.",
@@ -7133,7 +7161,7 @@
   },
   {
     "id": "Router",
-    "translation": "Router"
+    "translation": "路由器"
   },
   {
     "id": "Router Hostname",
@@ -7181,7 +7209,7 @@
   },
   {
     "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
-    "translation": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)"
+    "translation": "要添加到 root 用户的 SSH 密钥标识。 请参阅“ibmcloud sl security sshkey-list”，以获取参考信息（允许多次出现）"
   },
   {
     "id": "SSH key was added: ",
@@ -7233,7 +7261,7 @@
   },
   {
     "id": "Save a quote",
-    "translation": "Save a quote"
+    "translation": "保存报价"
   },
   {
     "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
@@ -7309,7 +7337,7 @@
   },
   {
     "id": "Set Tags.",
-    "translation": "Set Tags."
+    "translation": "设置标记。"
   },
   {
     "id": "Set note for an existing block storage volume.",
@@ -7321,7 +7349,7 @@
   },
   {
     "id": "Set note successfully",
-    "translation": "Set note successfully"
+    "translation": "已成功设置注释"
   },
   {
     "id": "Set permissions to match this user's permissions. Adds and removes the appropriate permissions",
@@ -7329,7 +7357,7 @@
   },
   {
     "id": "Set tags successfully",
-    "translation": "Set tags successfully"
+    "translation": "已成功设置标记"
   },
   {
     "id": "Set the LUN ID on an existing block storage volume",
@@ -7393,7 +7421,7 @@
   },
   {
     "id": "Show discrete units associated hardware sensor",
-    "translation": "Show discrete units associated hardware sensor"
+    "translation": "显示与硬件传感器关联的离散单元"
   },
   {
     "id": "Show guests on dedicated host",
@@ -7445,7 +7473,7 @@
   },
   {
     "id": "Single Site",
-    "translation": "Single Site"
+    "translation": "单站点"
   },
   {
     "id": "Size",
@@ -7813,7 +7841,7 @@
   },
   {
     "id": "Temperature (°C) Sensor",
-    "translation": "Temperature (°C) Sensor"
+    "translation": "温度 (°C) 传感器"
   },
   {
     "id": "Template file: {{.Location}} does not exist.",
@@ -7901,7 +7929,7 @@
   },
   {
     "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
-    "translation": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]"
+    "translation": "订单的复杂类型。 以“SoftLayer_Container_Product_Order”开头。[缺省值：SoftLayer_Container_Product_Order_Hardware_Server]"
   },
   {
     "id": "The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'",
@@ -8045,7 +8073,7 @@
   },
   {
     "id": "The note ",
-    "translation": "The note "
+    "translation": "注释 "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
@@ -8109,7 +8137,7 @@
   },
   {
     "id": "The quantity of the item being ordered if different from quoted value",
-    "translation": "The quantity of the item being ordered if different from quoted value"
+    "translation": "正在订购的商品的数量（如果不同于报价值）"
   },
   {
     "id": "The quantity of the item being ordered. This value defaults to 1",
@@ -8368,8 +8396,12 @@
     "translation": "此接口允许除去帐户拥有的子网的路由。"
   },
   {
+    "id": "This is the credential id associated with the volume. [Required]",
+    "translation": "这是与该卷关联的凭证标识。 [必需]"
+  },
+  {
     "id": "This option is not available.",
-    "translation": "This option is not available."
+    "translation": "此选项不可用。"
   },
   {
     "id": "This volume cannot be modified since it does not support Encryption at Rest.",
@@ -8577,7 +8609,7 @@
   },
   {
     "id": "Type Name",
-    "translation": "Type Name"
+    "translation": "类型名称"
   },
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
@@ -8644,6 +8676,10 @@
     "translation": "找不到此卷的类别代码。"
   },
   {
+    "id": "Unable to find credential with ID: {{.credentialID}}.\n",
+    "translation": "找不到标识为 {{.credentialID}} 的凭证。\n"
+  },
+  {
     "id": "Unable to find firewall with ID: {{.ID}}",
     "translation": "找不到标识为 {{.ID}} 的防火墙"
   },
@@ -8678,6 +8714,10 @@
   {
     "id": "Unable to find network port speed for this device.",
     "translation": "找不到此设备的网络端口速度。"
+  },
+  {
+    "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
+    "translation": "找不到标识为 {{.storageID}} 的对象存储器。\n"
   },
   {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
@@ -8865,11 +8905,11 @@
   },
   {
     "id": "View a quote",
-    "translation": "View a quote"
+    "translation": "查看报价"
   },
   {
     "id": "View and Order a quote",
-    "translation": "View and Order a quote"
+    "translation": "查看和订购报价"
   },
   {
     "id": "View details of a placement group",
@@ -8881,7 +8921,7 @@
   },
   {
     "id": "Virtual",
-    "translation": "Virtual"
+    "translation": "虚拟"
   },
   {
     "id": "Virtual Guest ID",
@@ -8961,15 +9001,15 @@
   },
   {
     "id": "Vlan ids",
-    "translation": "Vlan ids"
+    "translation": "Vlan 标识"
   },
   {
     "id": "Vlans",
-    "translation": "Vlans"
+    "translation": "Vlan"
   },
   {
     "id": "Volts Sensor",
-    "translation": "Volts Sensor"
+    "translation": "伏特传感器"
   },
   {
     "id": "Volume Name",
@@ -8993,7 +9033,7 @@
   },
   {
     "id": "Watts Sensor",
-    "translation": "Watts Sensor"
+    "translation": "瓦特传感器"
   },
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
@@ -9192,6 +9232,10 @@
     "translation": "balanced local - ssd"
   },
   {
+    "id": "billing",
+    "translation": "收费"
+  },
+  {
     "id": "broadcast",
     "translation": "broadcast"
   },
@@ -9314,6 +9358,10 @@
   {
     "id": "domain",
     "translation": "domain"
+  },
+  {
+    "id": "drive",
+    "translation": "驱动器"
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",
@@ -9444,6 +9492,10 @@
     "translation": "label"
   },
   {
+    "id": "last transaction",
+    "translation": "上次交易"
+  },
+  {
     "id": "lists bandwidth pools",
     "translation": "列出带宽池"
   },
@@ -9538,6 +9590,10 @@
   {
     "id": "powerState",
     "translation": "PowerState"
+  },
+  {
+    "id": "preset",
+    "translation": "预设"
   },
   {
     "id": "price rate",
@@ -9664,8 +9720,8 @@
     "translation": "subnets"
   },
   {
-    "id": "tag",
-    "translation": "tag"
+    "id": "tags",
+    "translation": "标记"
   },
   {
     "id": "target",
@@ -9682,6 +9738,10 @@
   {
     "id": "transaction_id",
     "translation": "transaction_id"
+  },
+  {
+    "id": "transient",
+    "translation": "transient"
   },
   {
     "id": "ttl",

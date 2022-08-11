@@ -267,6 +267,20 @@ type FakeNetworkManager struct {
 	editSecurityGroupRulesReturnsOnCall map[int]struct {
 		result1 error
 	}
+	EditSubnetIpAddressStub        func(int, datatypes.Network_Subnet_IpAddress) (bool, error)
+	editSubnetIpAddressMutex       sync.RWMutex
+	editSubnetIpAddressArgsForCall []struct {
+		arg1 int
+		arg2 datatypes.Network_Subnet_IpAddress
+	}
+	editSubnetIpAddressReturns struct {
+		result1 bool
+		result2 error
+	}
+	editSubnetIpAddressReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	EditVlanStub        func(int, string) error
 	editVlanMutex       sync.RWMutex
 	editVlanArgsForCall []struct {
@@ -301,6 +315,19 @@ type FakeNetworkManager struct {
 	}
 	getPodsReturnsOnCall map[int]struct {
 		result1 []datatypes.Network_Pod
+		result2 error
+	}
+	GetIpByAddressStub        func(string) (datatypes.Network_Subnet_IpAddress, error)
+	getIpByAddressMutex       sync.RWMutex
+	getIpByAddressArgsForCall []struct {
+		arg1 string
+	}
+	getIpByAddressReturns struct {
+		result1 datatypes.Network_Subnet_IpAddress
+		result2 error
+	}
+	getIpByAddressReturnsOnCall map[int]struct {
+		result1 datatypes.Network_Subnet_IpAddress
 		result2 error
 	}
 	GetSecurityGroupStub        func(int, string) (datatypes.Network_SecurityGroup, error)
@@ -1779,6 +1806,71 @@ func (fake *FakeNetworkManager) EditSecurityGroupRulesReturnsOnCall(i int, resul
 	}{result1}
 }
 
+func (fake *FakeNetworkManager) EditSubnetIpAddress(arg1 int, arg2 datatypes.Network_Subnet_IpAddress) (bool, error) {
+	fake.editSubnetIpAddressMutex.Lock()
+	ret, specificReturn := fake.editSubnetIpAddressReturnsOnCall[len(fake.editSubnetIpAddressArgsForCall)]
+	fake.editSubnetIpAddressArgsForCall = append(fake.editSubnetIpAddressArgsForCall, struct {
+		arg1 int
+		arg2 datatypes.Network_Subnet_IpAddress
+	}{arg1, arg2})
+	stub := fake.EditSubnetIpAddressStub
+	fakeReturns := fake.editSubnetIpAddressReturns
+	fake.recordInvocation("EditSubnetIpAddress", []interface{}{arg1, arg2})
+	fake.editSubnetIpAddressMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNetworkManager) EditSubnetIpAddressCallCount() int {
+	fake.editSubnetIpAddressMutex.RLock()
+	defer fake.editSubnetIpAddressMutex.RUnlock()
+	return len(fake.editSubnetIpAddressArgsForCall)
+}
+
+func (fake *FakeNetworkManager) EditSubnetIpAddressCalls(stub func(int, datatypes.Network_Subnet_IpAddress) (bool, error)) {
+	fake.editSubnetIpAddressMutex.Lock()
+	defer fake.editSubnetIpAddressMutex.Unlock()
+	fake.EditSubnetIpAddressStub = stub
+}
+
+func (fake *FakeNetworkManager) EditSubnetIpAddressArgsForCall(i int) (int, datatypes.Network_Subnet_IpAddress) {
+	fake.editSubnetIpAddressMutex.RLock()
+	defer fake.editSubnetIpAddressMutex.RUnlock()
+	argsForCall := fake.editSubnetIpAddressArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeNetworkManager) EditSubnetIpAddressReturns(result1 bool, result2 error) {
+	fake.editSubnetIpAddressMutex.Lock()
+	defer fake.editSubnetIpAddressMutex.Unlock()
+	fake.EditSubnetIpAddressStub = nil
+	fake.editSubnetIpAddressReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNetworkManager) EditSubnetIpAddressReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.editSubnetIpAddressMutex.Lock()
+	defer fake.editSubnetIpAddressMutex.Unlock()
+	fake.EditSubnetIpAddressStub = nil
+	if fake.editSubnetIpAddressReturnsOnCall == nil {
+		fake.editSubnetIpAddressReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.editSubnetIpAddressReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeNetworkManager) EditVlan(arg1 int, arg2 string) error {
 	fake.editVlanMutex.Lock()
 	ret, specificReturn := fake.editVlanReturnsOnCall[len(fake.editVlanArgsForCall)]
@@ -1921,6 +2013,25 @@ func (fake *FakeNetworkManager) GetPods(arg1 string) ([]datatypes.Network_Pod, e
 	return fakeReturns.result1, fakeReturns.result2
 }
 
+func (fake *FakeNetworkManager) GetIpByAddress(arg1 string) (datatypes.Network_Subnet_IpAddress, error) {
+	fake.getIpByAddressMutex.Lock()
+	ret, specificReturn := fake.getIpByAddressReturnsOnCall[len(fake.getIpByAddressArgsForCall)]
+	fake.getIpByAddressArgsForCall = append(fake.getIpByAddressArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetIpByAddressStub
+	fakeReturns := fake.getIpByAddressReturns
+	fake.recordInvocation("GetIpByAddress", []interface{}{arg1})
+	fake.getIpByAddressMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
 func (fake *FakeNetworkManager) GetPodsCallCount() int {
 	fake.getPodsMutex.RLock()
 	defer fake.getPodsMutex.RUnlock()
@@ -1950,6 +2061,35 @@ func (fake *FakeNetworkManager) GetPodsReturns(result1 []datatypes.Network_Pod, 
 	}{result1, result2}
 }
 
+func (fake *FakeNetworkManager) GetIpByAddressCallCount() int {
+	fake.getIpByAddressMutex.RLock()
+	defer fake.getIpByAddressMutex.RUnlock()
+	return len(fake.getIpByAddressArgsForCall)
+}
+
+func (fake *FakeNetworkManager) GetIpByAddressCalls(stub func(string) (datatypes.Network_Subnet_IpAddress, error)) {
+	fake.getIpByAddressMutex.Lock()
+	defer fake.getIpByAddressMutex.Unlock()
+	fake.GetIpByAddressStub = stub
+}
+
+func (fake *FakeNetworkManager) GetIpByAddressArgsForCall(i int) string {
+	fake.getIpByAddressMutex.RLock()
+	defer fake.getIpByAddressMutex.RUnlock()
+	argsForCall := fake.getIpByAddressArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeNetworkManager) GetIpByAddressReturns(result1 datatypes.Network_Subnet_IpAddress, result2 error) {
+	fake.getIpByAddressMutex.Lock()
+	defer fake.getIpByAddressMutex.Unlock()
+	fake.GetIpByAddressStub = nil
+	fake.getIpByAddressReturns = struct {
+		result1 datatypes.Network_Subnet_IpAddress
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeNetworkManager) GetPodsReturnsOnCall(i int, result1 []datatypes.Network_Pod, result2 error) {
 	fake.getPodsMutex.Lock()
 	defer fake.getPodsMutex.Unlock()
@@ -1962,6 +2102,22 @@ func (fake *FakeNetworkManager) GetPodsReturnsOnCall(i int, result1 []datatypes.
 	}
 	fake.getPodsReturnsOnCall[i] = struct {
 		result1 []datatypes.Network_Pod
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNetworkManager) GetIpByAddressReturnsOnCall(i int, result1 datatypes.Network_Subnet_IpAddress, result2 error) {
+	fake.getIpByAddressMutex.Lock()
+	defer fake.getIpByAddressMutex.Unlock()
+	fake.GetIpByAddressStub = nil
+	if fake.getIpByAddressReturnsOnCall == nil {
+		fake.getIpByAddressReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_Subnet_IpAddress
+			result2 error
+		})
+	}
+	fake.getIpByAddressReturnsOnCall[i] = struct {
+		result1 datatypes.Network_Subnet_IpAddress
 		result2 error
 	}{result1, result2}
 }
@@ -3099,12 +3255,16 @@ func (fake *FakeNetworkManager) Invocations() map[string][][]interface{} {
 	defer fake.editSecurityGroupRuleMutex.RUnlock()
 	fake.editSecurityGroupRulesMutex.RLock()
 	defer fake.editSecurityGroupRulesMutex.RUnlock()
+	fake.editSubnetIpAddressMutex.RLock()
+	defer fake.editSubnetIpAddressMutex.RUnlock()
 	fake.editVlanMutex.RLock()
 	defer fake.editVlanMutex.RUnlock()
 	fake.getCancelFailureReasonsMutex.RLock()
 	defer fake.getCancelFailureReasonsMutex.RUnlock()
 	fake.getPodsMutex.RLock()
 	defer fake.getPodsMutex.RUnlock()
+	fake.getIpByAddressMutex.RLock()
+	defer fake.getIpByAddressMutex.RUnlock()
 	fake.getSecurityGroupMutex.RLock()
 	defer fake.getSecurityGroupMutex.RUnlock()
 	fake.getSubnetMutex.RLock()

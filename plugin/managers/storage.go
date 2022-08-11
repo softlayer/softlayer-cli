@@ -103,6 +103,9 @@ type StorageManager interface {
 	VolumeSetNote(volumeId int, note string) (bool, error)
 	GetHubNetworkStorage(mask string) ([]datatypes.Network_Storage, error)
 	GetDuplicateConversionStatus(volumeID int, mask string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error)
+	GetSubnetsInAcl(accessID int, mask string) ([]datatypes.Network_Subnet, error)
+	AssignSubnetsToAcl(accessID int, subnets []int) ([]int, error)
+	RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error)
 }
 
 type storageManager struct {
@@ -856,4 +859,28 @@ func (s storageManager) GetDuplicateConversionStatus(volumeID int, mask string) 
 		mask = "mask[activeConversionStartTime,deDuplicateConversionPercentage,volumeUsername]"
 	}
 	return s.StorageService.Id(volumeID).Mask(mask).GetDuplicateConversionStatus()
+}
+
+//Get records assigned to the ACL for this allowed host
+//accessID: id of allowed host
+//mask: object mask
+func (s storageManager) GetSubnetsInAcl(accessID int, mask string) ([]datatypes.Network_Subnet, error) {
+	if mask == "" {
+		mask = "mask[id,modifyDate,networkIdentifier,cidr]"
+	}
+	return s.AllowedHostService.Id(accessID).Mask(mask).GetSubnetsInAcl()
+}
+
+// Assign block storage subnets to this allowed host
+// accessID: id of allowed host
+// subnets: subnets IDs to be assigned
+func (s storageManager) AssignSubnetsToAcl(accessID int, subnets []int) ([]int, error) {
+	return s.AllowedHostService.Id(accessID).AssignSubnetsToAcl(subnets)
+}
+
+// Remove block storage subnets to this allowed host
+// accessID: id of allowed host
+// subnets: subnets IDs to be assigned
+func (s storageManager) RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error) {
+	return s.AllowedHostService.Id(accessID).RemoveSubnetsFromAcl(subnets)
 }

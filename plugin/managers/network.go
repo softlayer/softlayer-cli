@@ -73,6 +73,8 @@ type NetworkManager interface {
 	SetSubnetTags(subnetId int, tags string) (bool, error)
 	SetSubnetNote(subnetId int, note string) (bool, error)
 	GetPods(mask string) ([]datatypes.Network_Pod, error)
+	GetIpByAddress(ipAddress string) (datatypes.Network_Subnet_IpAddress, error)
+	EditSubnetIpAddress(subnetIpAddressId int, subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress) (bool, error)
 }
 
 type networkManager struct {
@@ -777,4 +779,17 @@ func (n networkManager) GetPods(mask string) ([]datatypes.Network_Pod, error) {
 	}
 	NetworkPodService := services.GetNetworkPodService(n.Session)
 	return NetworkPodService.Mask(mask).Filter(filters.Build()).GetAllObjects()
+}
+
+// Get ip object by address.
+// ipAddress string: ip address to find.
+func (n networkManager) GetIpByAddress(ipAddress string) (datatypes.Network_Subnet_IpAddress, error) {
+	return n.IPService.GetByIpAddress(&ipAddress)
+}
+
+// Edit subnet ip address.
+// ipId int: The ip identifier.
+// subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress: New subnet ip address templatet.
+func (n networkManager) EditSubnetIpAddress(subnetIpAddressId int, subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress) (bool, error) {
+	return n.IPService.Id(subnetIpAddressId).EditObject(&subnetIpAddressTemplate)
 }

@@ -23,6 +23,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
@@ -192,6 +193,7 @@ func Namespaces() []plugin.Namespace {
 		autoscale.AutoScaleNamespace(),
 		block.BlockNamespace(),
 		file.FileNamespace(),
+		cdn.CdnNamespace(),
 		dns.DnsNamespace(),
 		eventlog.EventLogNamespace(),
 		firewall.FirewallNamespace(),
@@ -225,6 +227,7 @@ func getCLITopCommands() []cli.Command {
 		autoscale.AutoScaleMetaData(),
 		block.BlockMetaData(),
 		file.FileMetaData(),
+		cdn.CdnMetaData(),
 		dns.DnsMetaData(),
 		eventlog.EventLogMetaData(),
 		firewall.FirewallMetaData(),
