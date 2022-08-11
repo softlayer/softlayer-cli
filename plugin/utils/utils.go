@@ -388,3 +388,16 @@ func ShortenStringWithLimit(ugly_string string, limit int) string {
 	}
 	return ugly_string
 }
+
+func ArrayStringToString(array []string) string {
+	if len(array) == 0 {
+		return EMPTY_STRING
+	}
+
+	var valueToReturn string
+	for _, value := range array {
+		valueToReturn += "'" + value + "' "
+	}
+
+	return valueToReturn
+}

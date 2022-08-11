@@ -1,0 +1,1036 @@
+[
+    {
+        "backendRouterId": 117917,
+        "backendRouterName": "bcr01a.ams01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 265592,
+        "datacenterLongName": "Amsterdam 1",
+        "frontendRouterId": 117960,
+        "frontendRouterName": "fcr01a.ams01",
+        "name": "ams01.pod01"
+    },
+    {
+        "backendRouterId": 190854,
+        "backendRouterName": "bcr02a.ams01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 265592,
+        "datacenterLongName": "Amsterdam 1",
+        "frontendRouterId": 190856,
+        "frontendRouterName": "fcr02a.ams01",
+        "name": "ams01.pod02"
+    },
+    {
+        "backendRouterId": 468132,
+        "backendRouterName": "bcr01a.ams03",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 814994,
+        "datacenterLongName": "Amsterdam 3",
+        "frontendRouterId": 468136,
+        "frontendRouterName": "fcr01a.ams03",
+        "name": "ams03.pod01"
+    },
+    {
+        "backendRouterId": 859819,
+        "backendRouterName": "bcr02a.ams03",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 814994,
+        "datacenterLongName": "Amsterdam 3",
+        "frontendRouterId": 859813,
+        "frontendRouterName": "fcr02a.ams03",
+        "name": "ams03.pod02"
+    },
+    {
+        "backendRouterId": 664113,
+        "backendRouterName": "bcr01a.che01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1004997,
+        "datacenterLongName": "Chennai 1",
+        "frontendRouterId": 664313,
+        "frontendRouterName": "fcr01a.che01",
+        "name": "che01.pod01"
+    },
+    {
+        "backendRouterId": 32164,
+        "backendRouterName": "bcr01.dal00",
+        "capabilities": [
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 2,
+        "datacenterLongName": "Corporate HQ Lab",
+        "frontendRouterId": 44487,
+        "frontendRouterName": "fcr01.dal00",
+        "name": "dal00.pod01"
+    },
+    {
+        "backendRouterId": 51218,
+        "backendRouterName": "bcr01a.dal05",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 138124,
+        "datacenterLongName": "Dallas 5",
+        "frontendRouterId": 51217,
+        "frontendRouterName": "fcr01a.dal05",
+        "name": "dal05.pod01"
+    },
+    {
+        "backendRouterId": 122762,
+        "backendRouterName": "bcr03a.dal05",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 138124,
+        "datacenterLongName": "Dallas 5",
+        "frontendRouterId": 122880,
+        "frontendRouterName": "fcr03a.dal05",
+        "name": "dal05.pod03"
+    },
+    {
+        "backendRouterId": 147566,
+        "backendRouterName": "bcr04a.dal05",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 138124,
+        "datacenterLongName": "Dallas 5",
+        "frontendRouterId": 147568,
+        "frontendRouterName": "fcr04a.dal05",
+        "name": "dal05.pod04"
+    },
+    {
+        "backendRouterId": 209251,
+        "backendRouterName": "bcr01a.dal06",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 154820,
+        "datacenterLongName": "Dallas 6",
+        "frontendRouterId": 209248,
+        "frontendRouterName": "fcr01a.dal06",
+        "name": "dal06.pod01"
+    },
+    {
+        "backendRouterId": 511844,
+        "backendRouterName": "bcr02a.dal06",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 154820,
+        "datacenterLongName": "Dallas 6",
+        "frontendRouterId": 512162,
+        "frontendRouterName": "fcr02a.dal06",
+        "name": "dal06.pod02"
+    },
+    {
+        "backendRouterId": 268674,
+        "backendRouterName": "bcr01a.dal09",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449494,
+        "datacenterLongName": "Dallas 9",
+        "frontendRouterId": 267468,
+        "frontendRouterName": "fcr01a.dal09",
+        "name": "dal09.pod01"
+    },
+    {
+        "backendRouterId": 462912,
+        "backendRouterName": "bcr02a.dal09",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449494,
+        "datacenterLongName": "Dallas 9",
+        "frontendRouterId": 462914,
+        "frontendRouterName": "fcr02a.dal09",
+        "name": "dal09.pod02"
+    },
+    {
+        "backendRouterId": 637113,
+        "backendRouterName": "bcr03a.dal09",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449494,
+        "datacenterLongName": "Dallas 9",
+        "frontendRouterId": 632313,
+        "frontendRouterName": "fcr03a.dal09",
+        "name": "dal09.pod03"
+    },
+    {
+        "backendRouterId": 694613,
+        "backendRouterName": "bcr04a.dal09",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449494,
+        "datacenterLongName": "Dallas 9",
+        "frontendRouterId": 1728167,
+        "frontendRouterName": "fcr04a.dal09",
+        "name": "dal09.pod04"
+    },
+    {
+        "backendRouterId": 781115,
+        "backendRouterName": "bcr05a.dal09",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449494,
+        "datacenterLongName": "Dallas 9",
+        "frontendRouterId": 769139,
+        "frontendRouterName": "fcr05a.dal09",
+        "name": "dal09.pod05"
+    },
+    {
+        "backendRouterId": 694513,
+        "backendRouterName": "bcr06a.dal09",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449494,
+        "datacenterLongName": "Dallas 9",
+        "frontendRouterId": 694515,
+        "frontendRouterName": "fcr06a.dal09",
+        "name": "dal09.pod06"
+    },
+    {
+        "backendRouterId": 843613,
+        "backendRouterName": "bcr01a.dal10",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1441195,
+        "datacenterLongName": "Dallas 10",
+        "frontendRouterId": 843913,
+        "frontendRouterName": "fcr01a.dal10",
+        "name": "dal10.pod01"
+    },
+    {
+        "backendRouterId": 981027,
+        "backendRouterName": "bcr02a.dal10",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1441195,
+        "datacenterLongName": "Dallas 10",
+        "frontendRouterId": 981025,
+        "frontendRouterName": "fcr02a.dal10",
+        "name": "dal10.pod02"
+    },
+    {
+        "backendRouterId": 1227993,
+        "backendRouterName": "bcr03a.dal10",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1441195,
+        "datacenterLongName": "Dallas 10",
+        "frontendRouterId": 1228195,
+        "frontendRouterName": "fcr03a.dal10",
+        "name": "dal10.pod03"
+    },
+    {
+        "backendRouterId": 1525893,
+        "backendRouterName": "bcr04a.dal10",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1441195,
+        "datacenterLongName": "Dallas 10",
+        "frontendRouterId": 1525993,
+        "frontendRouterName": "fcr04a.dal10",
+        "name": "dal10.pod04"
+    },
+    {
+        "backendRouterId": 1076595,
+        "backendRouterName": "bcr01a.dal12",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1854795,
+        "datacenterLongName": "Dallas 12",
+        "frontendRouterId": 1079399,
+        "frontendRouterName": "fcr01a.dal12",
+        "name": "dal12.pod01"
+    },
+    {
+        "backendRouterId": 1406293,
+        "backendRouterName": "bcr02a.dal12",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1854795,
+        "datacenterLongName": "Dallas 12",
+        "frontendRouterId": 1432593,
+        "frontendRouterName": "fcr02a.dal12",
+        "name": "dal12.pod02"
+    },
+    {
+        "backendRouterId": 1883692,
+        "backendRouterName": "bcr01a.dal13",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1854895,
+        "datacenterLongName": "Dallas 13",
+        "frontendRouterId": 1076163,
+        "frontendRouterName": "fcr01a.dal13",
+        "name": "dal13.pod01"
+    },
+    {
+        "backendRouterId": 1411193,
+        "backendRouterName": "bcr02a.dal13",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1854895,
+        "datacenterLongName": "Dallas 13",
+        "frontendRouterId": 1415017,
+        "frontendRouterName": "fcr02a.dal13",
+        "name": "dal13.pod02"
+    },
+    {
+        "backendRouterId": 1968764,
+        "backendRouterName": "bcr03a.dal13",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1854895,
+        "datacenterLongName": "Dallas 13",
+        "frontendRouterId": 1968760,
+        "frontendRouterName": "fcr03a.dal13",
+        "name": "dal13.pod03"
+    },
+    {
+        "backendRouterId": 335012,
+        "backendRouterName": "bcr01a.fra02",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449506,
+        "datacenterLongName": "Frankfurt 2",
+        "frontendRouterId": 335916,
+        "frontendRouterName": "fcr01a.fra02",
+        "name": "fra02.pod01"
+    },
+    {
+        "backendRouterId": 1186647,
+        "backendRouterName": "bcr02a.fra02",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449506,
+        "datacenterLongName": "Frankfurt 2",
+        "frontendRouterId": 1186651,
+        "frontendRouterName": "fcr02a.fra02",
+        "name": "fra02.pod02"
+    },
+    {
+        "backendRouterId": 1781321,
+        "backendRouterName": "bcr03a.fra02",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449506,
+        "datacenterLongName": "Frankfurt 2",
+        "frontendRouterId": 1775987,
+        "frontendRouterName": "fcr03a.fra02",
+        "name": "fra02.pod03"
+    },
+    {
+        "backendRouterId": 1420717,
+        "backendRouterName": "bcr01a.fra04",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2434695,
+        "datacenterLongName": "Frankfurt 4",
+        "frontendRouterId": 1463393,
+        "frontendRouterName": "fcr01a.fra04",
+        "name": "fra04.pod01"
+    },
+    {
+        "backendRouterId": 1524997,
+        "backendRouterName": "bcr01a.fra05",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2417495,
+        "datacenterLongName": "Frankfurt 5",
+        "frontendRouterId": 1504795,
+        "frontendRouterName": "fcr01a.fra05",
+        "name": "fra05.pod01"
+    },
+    {
+        "backendRouterId": 212460,
+        "backendRouterName": "bcr01a.hkg02",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 352494,
+        "datacenterLongName": "Hong Kong 2",
+        "frontendRouterId": 212463,
+        "frontendRouterName": "fcr01a.hkg02",
+        "name": "hkg02.pod01"
+    },
+    {
+        "backendRouterId": 379916,
+        "backendRouterName": "bcr02a.hkg02",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 352494,
+        "datacenterLongName": "Hong Kong 2",
+        "frontendRouterId": 379914,
+        "frontendRouterName": "fcr02a.hkg02",
+        "name": "hkg02.pod02"
+    },
+    {
+        "backendRouterId": 253310,
+        "backendRouterName": "bcr01a.lon02",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 358694,
+        "datacenterLongName": "London 2",
+        "frontendRouterId": 253306,
+        "frontendRouterName": "fcr01a.lon02",
+        "name": "lon02.pod01"
+    },
+    {
+        "backendRouterId": 652137,
+        "backendRouterName": "bcr02a.lon02",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 358694,
+        "datacenterLongName": "London 2",
+        "frontendRouterId": 615413,
+        "frontendRouterName": "fcr02a.lon02",
+        "name": "lon02.pod02"
+    },
+    {
+        "backendRouterId": 1121995,
+        "backendRouterName": "bcr01a.lon04",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2017395,
+        "datacenterLongName": "London 4",
+        "frontendRouterId": 1121893,
+        "frontendRouterName": "fcr01a.lon04",
+        "name": "lon04.pod01"
+    },
+    {
+        "backendRouterId": 1622265,
+        "backendRouterName": "bcr01a.lon05",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2123995,
+        "datacenterLongName": "London 5",
+        "frontendRouterId": 1658273,
+        "frontendRouterName": "fcr01a.lon05",
+        "name": "lon05.pod01"
+    },
+    {
+        "backendRouterId": 1222893,
+        "backendRouterName": "bcr01a.lon06",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2124095,
+        "datacenterLongName": "London 6",
+        "frontendRouterId": 1222793,
+        "frontendRouterName": "fcr01a.lon06",
+        "name": "lon06.pod01"
+    },
+    {
+        "backendRouterId": 329266,
+        "backendRouterName": "bcr01a.mex01",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 449600,
+        "datacenterLongName": "Mexico 1",
+        "frontendRouterId": 329270,
+        "frontendRouterName": "fcr01a.mex01",
+        "name": "mex01.pod01"
+    },
+    {
+        "backendRouterId": 563617,
+        "backendRouterName": "bcr01a.mil01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 815394,
+        "datacenterLongName": "Milan 1",
+        "frontendRouterId": 562713,
+        "frontendRouterName": "fcr01a.mil01",
+        "name": "mil01.pod01"
+    },
+    {
+        "backendRouterId": 370414,
+        "backendRouterName": "bcr01a.mon01",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449610,
+        "datacenterLongName": "Montreal 1",
+        "frontendRouterId": 367912,
+        "frontendRouterName": "fcr01a.mon01",
+        "name": "mon01.pod01"
+    },
+    {
+        "backendRouterId": 935515,
+        "backendRouterName": "bcr02a.mon01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 449610,
+        "datacenterLongName": "Montreal 1",
+        "frontendRouterId": 935315,
+        "frontendRouterName": "fcr02a.mon01",
+        "name": "mon01.pod02"
+    },
+    {
+        "backendRouterId": 1951160,
+        "backendRouterName": "bcr01a.osa21",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 3023812,
+        "datacenterLongName": "Osaka 21",
+        "frontendRouterId": 1951062,
+        "frontendRouterName": "fcr01a.osa21",
+        "name": "osa21.pod01"
+    },
+    {
+        "backendRouterId": 1968060,
+        "backendRouterName": "bcr01a.osa22",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 3023712,
+        "datacenterLongName": "Osaka 22",
+        "frontendRouterId": 1968062,
+        "frontendRouterName": "fcr01a.osa22",
+        "name": "osa22.pod01"
+    },
+    {
+        "backendRouterId": 1968726,
+        "backendRouterName": "bcr01a.osa23",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 3023912,
+        "datacenterLongName": "Osaka 23",
+        "frontendRouterId": 1968728,
+        "frontendRouterName": "fcr01a.osa23",
+        "name": "osa23.pod01"
+    },
+    {
+        "backendRouterId": 298590,
+        "backendRouterName": "bcr01a.par01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449500,
+        "datacenterLongName": "Paris 1",
+        "frontendRouterId": 299214,
+        "frontendRouterName": "fcr01a.par01",
+        "name": "par01.pod01"
+    },
+    {
+        "backendRouterId": 1902014,
+        "backendRouterName": "bcr01a.par04",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2954997,
+        "datacenterLongName": "Paris 4",
+        "frontendRouterId": 1898596,
+        "frontendRouterName": "fcr01a.par04",
+        "name": "par04.pod01"
+    },
+    {
+        "backendRouterId": 1909710,
+        "backendRouterName": "bcr01a.par05",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2979912,
+        "datacenterLongName": "Paris 5",
+        "frontendRouterId": 1910816,
+        "frontendRouterName": "fcr01a.par05",
+        "name": "par05.pod01"
+    },
+    {
+        "backendRouterId": 1918474,
+        "backendRouterName": "bcr01a.par06",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2979914,
+        "datacenterLongName": "Paris 6",
+        "frontendRouterId": 1914704,
+        "frontendRouterName": "fcr01a.par06",
+        "name": "par06.pod01"
+    },
+    {
+        "backendRouterId": 629113,
+        "backendRouterName": "bcr01a.sao01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 983497,
+        "datacenterLongName": "Sao Paulo 1",
+        "frontendRouterId": 628913,
+        "frontendRouterName": "fcr01a.sao01",
+        "name": "sao01.pod01"
+    },
+    {
+        "backendRouterId": 3108116,
+        "backendRouterName": "bcr01a.sao04",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 3083112,
+        "datacenterLongName": "Sao Paulo 4",
+        "frontendRouterId": 3108118,
+        "frontendRouterName": "fcr01a.sao04",
+        "name": "sao04.pod01"
+    },
+    {
+        "backendRouterId": 3102046,
+        "backendRouterName": "bcr01a.sao05",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 3083212,
+        "datacenterLongName": "Sao Paulo 5",
+        "frontendRouterId": 3102042,
+        "frontendRouterName": "fcr01a.sao05",
+        "name": "sao05.pod01"
+    },
+    {
+        "backendRouterId": 667615,
+        "backendRouterName": "bcr01a.seo01",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 1555995,
+        "datacenterLongName": "Seoul 1",
+        "frontendRouterId": 673815,
+        "frontendRouterName": "fcr01a.seo01",
+        "name": "seo01.pod01"
+    },
+    {
+        "backendRouterId": 82461,
+        "backendRouterName": "bcr01a.sjc01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 168642,
+        "datacenterLongName": "San Jose 1",
+        "frontendRouterId": 82412,
+        "frontendRouterName": "fcr01a.sjc01",
+        "name": "sjc01.pod01"
+    },
+    {
+        "backendRouterId": 159113,
+        "backendRouterName": "bcr02a.sjc01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP",
+            "CLOSURE_ANNOUNCED"
+        ],
+        "datacenterId": 168642,
+        "datacenterLongName": "San Jose 1",
+        "frontendRouterId": 159111,
+        "frontendRouterName": "fcr02a.sjc01",
+        "name": "sjc01.pod02"
+    },
+    {
+        "backendRouterId": 327866,
+        "backendRouterName": "bcr03a.sjc01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 168642,
+        "datacenterLongName": "San Jose 1",
+        "frontendRouterId": 327864,
+        "frontendRouterName": "fcr03a.sjc01",
+        "name": "sjc01.pod03"
+    },
+    {
+        "backendRouterId": 476912,
+        "backendRouterName": "bcr01a.sjc03",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1004995,
+        "datacenterLongName": "San Jose 3",
+        "frontendRouterId": 476552,
+        "frontendRouterName": "fcr01a.sjc03",
+        "name": "sjc03.pod01"
+    },
+    {
+        "backendRouterId": 743413,
+        "backendRouterName": "bcr02a.sjc03",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 1004995,
+        "datacenterLongName": "San Jose 3",
+        "frontendRouterId": 694415,
+        "frontendRouterName": "fcr02a.sjc03",
+        "name": "sjc03.pod02"
+    },
+    {
+        "backendRouterId": 1498197,
+        "backendRouterName": "bcr01a.sjc04",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2178495,
+        "datacenterLongName": "San Jose 4",
+        "frontendRouterId": 1122095,
+        "frontendRouterName": "fcr01a.sjc04",
+        "name": "sjc04.pod01"
+    },
+    {
+        "backendRouterId": 112262,
+        "backendRouterName": "bcr01a.sng01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 224092,
+        "datacenterLongName": "Singapore 1",
+        "frontendRouterId": 112260,
+        "frontendRouterName": "fcr01a.sng01",
+        "name": "sng01.pod01"
+    },
+    {
+        "backendRouterId": 273566,
+        "backendRouterName": "bcr02a.sng01",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 224092,
+        "datacenterLongName": "Singapore 1",
+        "frontendRouterId": 273560,
+        "frontendRouterName": "fcr02a.sng01",
+        "name": "sng01.pod02"
+    },
+    {
+        "backendRouterId": 337312,
+        "backendRouterName": "bcr01a.syd01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449612,
+        "datacenterLongName": "Sydney 1",
+        "frontendRouterId": 336116,
+        "frontendRouterName": "fcr01a.syd01",
+        "name": "syd01.pod01"
+    },
+    {
+        "backendRouterId": 1677969,
+        "backendRouterName": "bcr02a.syd01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449612,
+        "datacenterLongName": "Sydney 1",
+        "frontendRouterId": 1659541,
+        "frontendRouterName": "fcr02a.syd01",
+        "name": "syd01.pod02"
+    },
+    {
+        "backendRouterId": 3348444,
+        "backendRouterName": "bcr01a.syd04",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2013295,
+        "datacenterLongName": "Sydney 4",
+        "frontendRouterId": 1103797,
+        "frontendRouterName": "fcr01a.syd04",
+        "name": "syd04.pod01"
+    },
+    {
+        "backendRouterId": 1659169,
+        "backendRouterName": "bcr01a.syd05",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2408595,
+        "datacenterLongName": "Sydney 5",
+        "frontendRouterId": 1621243,
+        "frontendRouterName": "fcr01a.syd05",
+        "name": "syd05.pod01"
+    },
+    {
+        "backendRouterId": 329260,
+        "backendRouterName": "bcr01a.tok02",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449604,
+        "datacenterLongName": "Tokyo 2",
+        "frontendRouterId": 328318,
+        "frontendRouterName": "fcr01a.tok02",
+        "name": "tok02.pod01"
+    },
+    {
+        "backendRouterId": 1673467,
+        "backendRouterName": "bcr02a.tok02",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 449604,
+        "datacenterLongName": "Tokyo 2",
+        "frontendRouterId": 1672567,
+        "frontendRouterName": "fcr02a.tok02",
+        "name": "tok02.pod02"
+    },
+    {
+        "backendRouterId": 1570395,
+        "backendRouterName": "bcr01a.tok04",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2344395,
+        "datacenterLongName": "Tokyo 4",
+        "frontendRouterId": 1569595,
+        "frontendRouterName": "fcr01a.tok04",
+        "name": "tok04.pod01"
+    },
+    {
+        "backendRouterId": 1587015,
+        "backendRouterName": "bcr01a.tok05",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2344397,
+        "datacenterLongName": "Tokyo 5",
+        "frontendRouterId": 1585493,
+        "frontendRouterName": "fcr01a.tok05",
+        "name": "tok05.pod01"
+    },
+    {
+        "backendRouterId": 266212,
+        "backendRouterName": "bcr01a.tor01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 448994,
+        "datacenterLongName": "Toronto 1",
+        "frontendRouterId": 266412,
+        "frontendRouterName": "fcr01a.tor01",
+        "name": "tor01.pod01"
+    },
+    {
+        "backendRouterId": 615213,
+        "backendRouterName": "bcr02a.tor01",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 448994,
+        "datacenterLongName": "Toronto 1",
+        "frontendRouterId": 617513,
+        "frontendRouterName": "fcr02a.tor01",
+        "name": "tor01.pod02"
+    },
+    {
+        "backendRouterId": 3059090,
+        "backendRouterName": "bcr01a.tor04",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 3079212,
+        "datacenterLongName": "Toronto 4",
+        "frontendRouterId": 3069276,
+        "frontendRouterName": "fcr01a.tor04",
+        "name": "tor04.pod01"
+    },
+    {
+        "backendRouterId": 3038868,
+        "backendRouterName": "bcr01a.tor05",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 3079312,
+        "datacenterLongName": "Toronto 5",
+        "frontendRouterId": 3040544,
+        "frontendRouterName": "fcr01a.tor05",
+        "name": "tor05.pod01"
+    },
+    {
+        "backendRouterId": 235754,
+        "backendRouterName": "bcr05a.wdc01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 37473,
+        "datacenterLongName": "Washington 1",
+        "frontendRouterId": 235748,
+        "frontendRouterName": "fcr05a.wdc01",
+        "name": "wdc01.pod05"
+    },
+    {
+        "backendRouterId": 359412,
+        "backendRouterName": "bcr06a.wdc01",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 37473,
+        "datacenterLongName": "Washington 1",
+        "frontendRouterId": 359314,
+        "frontendRouterName": "fcr06a.wdc01",
+        "name": "wdc01.pod06"
+    },
+    {
+        "backendRouterId": 465752,
+        "backendRouterName": "bcr01a.wdc04",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 957095,
+        "datacenterLongName": "Washington 4",
+        "frontendRouterId": 465750,
+        "frontendRouterName": "fcr01a.wdc04",
+        "name": "wdc04.pod01"
+    },
+    {
+        "backendRouterId": 749143,
+        "backendRouterName": "bcr02a.wdc04",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 957095,
+        "datacenterLongName": "Washington 4",
+        "frontendRouterId": 698015,
+        "frontendRouterName": "fcr02a.wdc04",
+        "name": "wdc04.pod02"
+    },
+    {
+        "backendRouterId": 1063893,
+        "backendRouterName": "bcr03a.wdc04",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 957095,
+        "datacenterLongName": "Washington 4",
+        "frontendRouterId": 1043393,
+        "frontendRouterName": "fcr03a.wdc04",
+        "name": "wdc04.pod03"
+    },
+    {
+        "backendRouterId": 1096795,
+        "backendRouterName": "bcr04a.wdc04",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 957095,
+        "datacenterLongName": "Washington 4",
+        "frontendRouterId": 1234509,
+        "frontendRouterName": "fcr04a.wdc04",
+        "name": "wdc04.pod04"
+    },
+    {
+        "backendRouterId": 1725913,
+        "backendRouterName": "bcr05a.wdc04",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 957095,
+        "datacenterLongName": "Washington 4",
+        "frontendRouterId": 1738535,
+        "frontendRouterName": "fcr05a.wdc04",
+        "name": "wdc04.pod05"
+    },
+    {
+        "backendRouterId": 1091495,
+        "backendRouterName": "bcr01a.wdc06",
+        "capabilities": [
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2017695,
+        "datacenterLongName": "Washington 6",
+        "frontendRouterId": 1092195,
+        "frontendRouterName": "fcr01a.wdc06",
+        "name": "wdc06.pod01"
+    },
+    {
+        "backendRouterId": 1115295,
+        "backendRouterName": "bcr01a.wdc07",
+        "capabilities": [
+            "SUPPORTS_MULTI_VLAN_DEDICATED_FIREWALL",
+            "SUPPORTS_SECURITY_GROUP"
+        ],
+        "datacenterId": 2017603,
+        "datacenterLongName": "Washington 7",
+        "frontendRouterId": 1797427,
+        "frontendRouterName": "fcr01a.wdc07",
+        "name": "wdc07.pod01"
+    }
+]

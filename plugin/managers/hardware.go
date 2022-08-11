@@ -68,6 +68,7 @@ type HardwareServerManager interface {
 	GetHardwareGuests(id int) ([]datatypes.Virtual_Guest, error)
 	GetHardwareComponents(id int) ([]datatypes.Hardware_Component, error)
 	GetSensorData(id int, mask string) ([]datatypes.Container_RemoteManagement_SensorReading, error)
+	CreateFirmwareReflashTransaction(id int) (bool, error)
 }
 
 type hardwareServerManager struct {
@@ -797,4 +798,17 @@ func (hw hardwareServerManager) GetSensorData(id int, mask string) ([]datatypes.
 		mask = "mask[sensorId,status,sensorReading,lowerCritical,lowerNonCritical,upperNonCritical,upperCritical]"
 	}
 	return hw.HardwareService.Id(id).Mask(mask).GetSensorData()
+}
+
+//Create a transaction to reflash firmware.
+//int id: The hardware server identifier.
+func (hw hardwareServerManager) CreateFirmwareReflashTransaction(id int) (bool, error) {
+	// int ipmi: Reflash the ipmi firmware.
+	// int raid_controller: Reflash the raid controller firmware.
+	// int bios: Reflash the bios firmware.
+	// the values were set as 1 to represent true
+	ipmi := 1
+	raidController := 1
+	bios := 1
+	return hw.HardwareService.Id(id).CreateFirmwareReflashTransaction(&ipmi, &raidController, &bios)
 }

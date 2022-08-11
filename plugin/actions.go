@@ -13,7 +13,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	// "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
@@ -215,6 +215,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	//ibmcloud sl object-storage
 	objectstorageCommands := objectstorage.GetCommandActionBindings(context, ui, session)
 	for name, action := range objectstorageCommands {
+		CommandActionBindings[name] = action
+	}
+
+	//ibmcloud sl cdn
+	cdnCommands := cdn.GetCommandActionBindings(context, ui, session)
+	for name, action := range cdnCommands {
 		CommandActionBindings[name] = action
 	}
 
