@@ -16,6 +16,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		"cdn-list": func(c *cli.Context) error {
 			return NewListCommand(ui, cdnManager).Run(c)
 		},
+		"cdn-detail": func(c *cli.Context) error {
+			return NewDetailCommand(ui, cdnManager).Run(c)
+		},
 	}
 
 	return CommandActionBindings
@@ -37,6 +40,7 @@ func CdnMetaData() cli.Command {
 		Usage:       "${COMMAND_NAME} sl cdn",
 		Subcommands: []cli.Command{
 			ListMetaData(),
+			DetailMetaData(),
 		},
 	}
 }

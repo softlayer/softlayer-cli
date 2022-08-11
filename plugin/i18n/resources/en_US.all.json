@@ -264,6 +264,10 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests."
   },
   {
+    "id": "${COMMAND_NAME} sl cdn detail",
+    "translation": "${COMMAND_NAME} sl cdn detail"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
   },
@@ -1592,6 +1596,10 @@
     "translation": "Bandwidth report for every pool/server."
   },
   {
+    "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
+    "translation": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum."
+  },
+  {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
     "translation": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template"
   },
@@ -2516,6 +2524,10 @@
     "translation": "Detach devices from a ticket"
   },
   {
+    "id": "Detail a CDN Account.",
+    "translation": "Detail a CDN Account."
+  },
+  {
     "id": "Detail information about a firewall",
     "translation": "Detail information about a firewall"
   },
@@ -3412,8 +3424,16 @@
     "translation": "Failed to get Bandwidth Pool.\n"
   },
   {
+    "id": "Failed to get CDN Detail. ",
+    "translation": "Failed to get CDN Detail. "
+  },
+  {
     "id": "Failed to get CDN List. ",
     "translation": "Failed to get CDN List. "
+  },
+  {
+    "id": "Failed to get CDN Metrics. ",
+    "translation": "Failed to get CDN Metrics. "
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -5004,6 +5024,10 @@
     "translation": "High available firewall option"
   },
   {
+    "id": "Hit Radio",
+    "translation": "Hit Radio"
+  },
+  {
     "id": "Host ID",
     "translation": "Host ID"
   },
@@ -6508,6 +6532,10 @@
     "translation": "Origin"
   },
   {
+    "id": "Origin type",
+    "translation": "Origin type"
+  },
+  {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
     "translation": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)"
   },
@@ -6598,6 +6626,10 @@
   {
     "id": "Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol",
     "translation": "Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol"
+  },
+  {
+    "id": "Path",
+    "translation": "Path"
   },
   {
     "id": "Pause an active virtual server instance",
@@ -7002,6 +7034,10 @@
   {
     "id": "Protocol {{.ProtocolID}} removed",
     "translation": "Protocol {{.ProtocolID}} removed"
+  },
+  {
+    "id": "Provider",
+    "translation": "Provider"
   },
   {
     "id": "Provisioned",
@@ -8764,6 +8800,14 @@
     "translation": "Total"
   },
   {
+    "id": "Total bandwidth",
+    "translation": "Total bandwidth"
+  },
+  {
+    "id": "Total hits",
+    "translation": "Total hits"
+  },
+  {
     "id": "Total monthly cost",
     "translation": "Total monthly cost"
   },
@@ -8950,6 +8994,10 @@
   {
     "id": "Unique Id",
     "translation": "Unique Id"
+  },
+  {
+    "id": "Unique id",
+    "translation": "Unique id"
   },
   {
     "id": "Update ID",
