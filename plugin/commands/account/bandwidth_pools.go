@@ -25,7 +25,6 @@ func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsComm
 	cobraCmd := &cobra.Command{
 		Use: "bandwidth-pools",
 		Short: T("lists bandwidth pools"),
-		Long: T(`${COMMAND_NAME} sl account bandwidth-pools`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

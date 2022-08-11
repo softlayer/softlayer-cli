@@ -84,12 +84,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl callapi
-	// callapiCommands := callapi.GetCommandActionBindings(context, ui, session)
-	// for name, action := range callapiCommands {
-	// 	CommandActionBindings[name] = action
-	// }
-
 	// ibmcloud sl event-log
 	eventLogCommands := eventlog.GetCommandActionBindings(context, ui, session)
 	for name, action := range eventLogCommands {

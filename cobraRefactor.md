@@ -6,6 +6,15 @@ The cobra library is what the main ibmcloud CLI uses, and has a lot more feature
 
 Along with changing the library, I'd also like to enforce that each command take in as arguments the terminal UI, and session parameters, and nothing else. Each CLI command should create an instance of a softlayer-cli manager if needed.
 
+## Environment Setup
+
+We will be working from the [`cobraCommands`](https://github.ibm.com/SoftLayer/softlayer-cli/tree/cobraCommands/plugin) branch for this project. Name your branch something like `cobra<commandGroup>` or something similar. cobra and the commandGroup should be in the branch name, and if needed a number or some other marker.
+
+```bash
+git checkout cobraCommands
+git checkout -b cobraVirtual
+```
+
 ## Refactoring Pattern
 
 This example will cover refactoring the `sl account` commands, the same patterns should be used in the other command groups as well.
@@ -309,3 +318,10 @@ var _ = Describe("account bandwidth_pools_details", func() {
             })
         })
 ```
+
+
+## Pull Requests
+
+Smaller pull requests are easier to check, so I would prefer making pull requests contain AT MOST 1 group of commands, and at least 1 actual command. Ideally limit your pull requests to about a days worth of work, and I'll try to get them all merged in at the start of the day.
+
+`cobraCommands` is the branch we will be merging into while we get everything ready.
