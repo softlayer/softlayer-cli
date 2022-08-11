@@ -84,7 +84,7 @@ Make sure to list any flags/options here as well.
 
 ```go
 func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsCommand {
-    thisCmd := &BandwidthPoolsCommand{
+    thisCmd := &BandwidthPoolsCommand{ //Update this line
         SoftlayerCommand: sl,
         AccountManager: managers.NewAccountManager(sl.Session),
     }
@@ -93,15 +93,19 @@ func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsComm
         Use: "bandwidth-pools",  // if a command takes arguments, add them here in ex: + T("IDENTIFIER")
         Short: T("lists bandwidth pools"), // Updates this from metadata
         Long: "",  // Remove this if the Usage from the old command is just basic information about how to run it. The Long description should be for examples, detailed information about the command.
-        Args: metadata.NoArgs,
+        Args: metadata.NoArgs, // Make sure this accepts the correct number of args
         RunE: func(cmd *cobra.Command, args []string) error {
             return thisCmd.Run(args)
         },
     }
+    // Add any flags here
+    // cobraCmd.Flags().IntVar(&thisCmd.Init, "init", 0, T("Init parameter"))
     thisCmd.Command = cobraCmd
+
     return thisCmd
 }
 ```
+Make sure to remove all these comment lines if you are copy/pasting this bit. They exist to remind you which lines need attention.
 Options for `Args`: https://github.com/spf13/cobra/blob/main/user_guide.md#positional-and-custom-arguments
 I had to re-define these in the metadata package though (/plugin/commands/sl/args.go) so I could translate the error messages. Basically just copy/paste though. Just do `metadata.MaximumNArgs(1)` instead of `cobra.MaximumNArgs(1)` or whatever.
 

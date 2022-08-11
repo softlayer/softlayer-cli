@@ -6,55 +6,53 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type LicensesCommand struct {
-	UI             terminal.UI
-	AccountManager managers.AccountManager
+    *metadata.SoftlayerCommand
+    AccountManager managers.AccountManager
+    Command *cobra.Command
 }
 
-func NewLicensesCommand(ui terminal.UI, accountManager managers.AccountManager) (cmd *LicensesCommand) {
-	return &LicensesCommand{
-		UI:             ui,
-		AccountManager: accountManager,
-	}
+func NewLicensesCommand(sl *metadata.SoftlayerCommand) *LicensesCommand {
+    thisCmd := &LicensesCommand{
+        SoftlayerCommand: sl,
+        AccountManager: managers.NewAccountManager(sl.Session),
+    }
+    cobraCmd := &cobra.Command{
+        Use: "licenses",
+        Short: T("Show all licenses."),
+        Args: metadata.NoArgs,
+        RunE: func(cmd *cobra.Command, args []string) error {
+            return thisCmd.Run(args)
+        },
+    }
+    thisCmd.Command = cobraCmd
+    return thisCmd
 }
 
-func LicensesMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "licenses",
-		Description: T("Show all licenses."),
-		Usage:       T(`${COMMAND_NAME} sl account licenses [OPTIONS]`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
-}
 
-func (cmd *LicensesCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *LicensesCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := "mask[billingItem[categoryCode,createDate,description],key,id,ipAddress,softwareDescription[longDescription,name,manufacturer],subnet]"
 	virtualLicenses, err := cmd.AccountManager.GetActiveVirtualLicenses(mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get virtual licenses.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get virtual licenses."), err.Error(), 2)
 	}
 	PrintVirtualLicenses(virtualLicenses, cmd.UI, outputFormat)
 
 	mask = "mask[billingItem,softwareDescription]"
 	vmwares, err := cmd.AccountManager.GetActiveAccountLicenses(mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get account licenses.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get account licenses."), err.Error(), 2)
 	}
 	PrintVmwaresLicenses(vmwares, cmd.UI, outputFormat)
 	return nil
