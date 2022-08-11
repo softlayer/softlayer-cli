@@ -508,6 +508,10 @@
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server."
   },
   {
+    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
     "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456"
   },
@@ -4184,6 +4188,10 @@
     "translation": "Failed to reboot virtual server instance: {{.VsID}}.\n"
   },
   {
+    "id": "Failed to reflash firmware.",
+    "translation": "Failed to reflash firmware."
+  },
+  {
     "id": "Failed to reload operating system for hardware server: {{.ID}}.\n",
     "translation": "Failed to reload operating system for hardware server: {{.ID}}.\n"
   },
@@ -7232,6 +7240,10 @@
     "translation": "Redirect"
   },
   {
+    "id": "Reflash server firmware.",
+    "translation": "Reflash server firmware."
+  },
+  {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
     "translation": "Refresh a duplicate volume with a snapshot from its parent."
   },
@@ -7978,6 +7990,10 @@
   {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}"
+  },
+  {
+    "id": "Successfully device firmware reflashed",
+    "translation": "Successfully device firmware reflashed"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
@@ -8802,6 +8818,10 @@
   {
     "id": "This will power off hardware server: {{.ID}}. Continue?",
     "translation": "This will power off hardware server: {{.ID}}. Continue?"
+  },
+  {
+    "id": "This will power off the server with id {{.hardwareID}} and reflash device firmware. Continue?",
+    "translation": "This will power off the server with id {{.hardwareID}} and reflash device firmware. Continue?"
   },
   {
     "id": "This will power off virtual server instance: {{.VsId}}. Continue?",
