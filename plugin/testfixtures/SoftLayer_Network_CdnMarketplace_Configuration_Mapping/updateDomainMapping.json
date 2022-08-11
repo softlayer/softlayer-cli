@@ -1,0 +1,23 @@
+[
+    {
+        "cacheKeyQueryRule": "include-all",
+        "certificateType": "WILDCARD_CERT",
+        "cname": "cdnakaog136c8gfq12000010.cdn.appdomain.cloud",
+        "createDate": "2020-10-07T07:13:41-06:00",
+        "domain": "www.testgo.com",
+        "header": "www.techsupport.com",
+        "httpPort": 80,
+        "httpsPort": null,
+        "modifyDate": "2022-08-05T08:36:49-06:00",
+        "originHost": "10.10.15.2",
+        "originType": "HOST_SERVER",
+        "path": "/example/*",
+        "performanceConfiguration": "General web delivery",
+        "protocol": "HTTP",
+        "respectHeaders": false,
+        "serveStale": true,
+        "status": "RUNNING",
+        "uniqueId": "172498049151824",
+        "vendorName": "akamai"
+    }
+]
