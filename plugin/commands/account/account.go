@@ -31,6 +31,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewCancelItemCommand(sl).Command)
 	cobraCmd.AddCommand(NewInvoiceDetailCommand(sl).Command)
 	cobraCmd.AddCommand(NewEventsCommand(sl).Command)
+	cobraCmd.AddCommand(NewEventDetailCommand(sl).Command)
 	return cobraCmd	
 }
 
@@ -52,9 +53,9 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 		// "account-events": func(c *cli.Context) error {
 		// 	return NewEventsCommand(ui, accountManager).Run(c)
 		// },
-		"account-event-detail": func(c *cli.Context) error {
-			return NewEventDetailCommand(ui, accountManager).Run(c)
-		},
+		// "account-event-detail": func(c *cli.Context) error {
+		// 	return NewEventDetailCommand(ui, accountManager).Run(c)
+		// },
 		"account-invoices": func(c *cli.Context) error {
 			return NewInvoicesCommand(ui, accountManager).Run(c)
 		},

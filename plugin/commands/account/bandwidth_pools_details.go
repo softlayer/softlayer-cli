@@ -30,7 +30,7 @@ func NewBandwidthPoolsDetailCommand(sl *metadata.SoftlayerCommand) *BandwidthPoo
 		AccountManager: managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use: "bandwidth-pools-detail" + T("IDENTIFIER"),
+		Use: "bandwidth-pools-detail " + T("IDENTIFIER"),
 		Short: T("Get bandwidth pool details."),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
