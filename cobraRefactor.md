@@ -63,14 +63,21 @@ import "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 ```go
 type BandwidthPoolsCommand struct {
-    *metadata.SoftlayerCommand  // this format makes BandwidthPoolsCommand inherit the properties from SoftlayerCommand, so it has access to UI and Session 
+    *metadata.SoftlayerCommand
     AccountManager managers.AccountManager
-    Command *cobra.Command  // all commands will have this, the reference to the actual cobra.Command
+    Command *cobra.Command
+    //Flag1 int
+    //Flag2 string
 }
 ```
+
+`*metadata.SoftlayerCommand  // this format makes BandwidthPoolsCommand inherit the properties from SoftlayerCommand, so it has access to UI and Session `
+`Command *cobra.Command  // all commands will have this, the reference to the actual cobra.Command`
+
 Because BandwidthPoolsCommand inherits from metadata.SoftlayerCommand, BandwidthPoolsCommand has access to BandwidthPoolsCommand.UI, BandwidthPoolsCommand.Session, and BandwidthPoolsCommand.OutputFlag.
 
 This struct should also have a reference for the manager the command needs.
+Make sure to list any flags/options here as well.
 
 
 3. Update `NewBandwidthPoolsCommand` to be the new pattern. `thisCmd` will be a reference to the BandwidthPoolsCommand struct, and `cobraCmd` will be the actual Cobra command instance. `RunE` will have the reference to the actual `thisCmd.Run(args)` method. The Command Struct should also have a variable for each manager the command needs (usually just one though)
@@ -79,12 +86,12 @@ This struct should also have a reference for the manager the command needs.
 func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsCommand {
     thisCmd := &BandwidthPoolsCommand{
         SoftlayerCommand: sl,
-        AccountManager: managers.NewAccountManager(sl.Session)
+        AccountManager: managers.NewAccountManager(sl.Session),
     }
     cobraCmd := &cobra.Command{
         // The first 'word' in the Use line is the command name. Anything after that will show up in the help text
-        Use: "bandwidth-pools",  // if a command takes arguments, add them here in ex: IDENTIFIER
-        Short: T("lists bandwidth pools"),
+        Use: "bandwidth-pools",  // if a command takes arguments, add them here in ex: + T("IDENTIFIER")
+        Short: T("lists bandwidth pools"), // Updates this from metadata
         Long: "",  // Remove this if the Usage from the old command is just basic information about how to run it. The Long description should be for examples, detailed information about the command.
         Args: metadata.NoArgs,
         RunE: func(cmd *cobra.Command, args []string) error {
@@ -120,6 +127,7 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 
 Since we can enforce a number of args in the `NewBandwidthPoolsCommand` definition, the following, and similar lines are no longer needed (if you see them, not all commands have them)
 ```go
+// This section can be removed,  `Args: metadata.OneArgs,` is the same thing.
     if c.NArg() != 1 {
         return errors.NewInvalidUsageError(T("This command requires one argument."))
     }

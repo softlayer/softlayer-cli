@@ -6,48 +6,40 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Account list ItemDetail", func() {
-	var (
-		fakeUI             *terminal.FakeUI
-		cmd                *account.ItemDetailCommand
-		cliCommand         cli.Command
-		fakeSession        *session.Session
-		fakeAccountManager managers.AccountManager
-	)
-	BeforeEach(func() {
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		fakeAccountManager = managers.NewAccountManager(fakeSession)
-		fakeUI = terminal.NewFakeUI()
-		cmd = account.NewItemDetailCommand(fakeUI, fakeAccountManager)
-		cliCommand = cli.Command{
-			Name:        account.ItemDetailMetaData().Name,
-			Description: account.ItemDetailMetaData().Description,
-			Usage:       account.ItemDetailMetaData().Usage,
-			Flags:       account.ItemDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
-	})
+    var (
+        fakeUI              *terminal.FakeUI
+        cliCommand          *account.ItemDetailCommand
+        fakeSession         *session.Session
+        slCommand           *metadata.SoftlayerCommand
+    )
+    BeforeEach(func() {
+        fakeUI = terminal.NewFakeUI()
+        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+        cliCommand = account.NewItemDetailCommand(slCommand)
+        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+    })
 
 	Describe("Account item detail", func() {
 		Context("Account item detail, Invalid Usage", func() {
 			It("Set command without id", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 			It("Set command with id like letters", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Item ID'. It must be a positive integer."))
 			})
 			It("Set command with an invalid output option", func() {
-				err := testhelpers.RunCommand(cliCommand, "123", "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -55,7 +47,7 @@ var _ = Describe("Account list ItemDetail", func() {
 
 		Context("Account item detail, correct use", func() {
 			It("return account item detail", func() {
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1 x 2.0 GHz or higher Core"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Key                   Value"))
@@ -71,7 +63,7 @@ var _ = Describe("Account list ItemDetail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("guest_disk0           100 GB (SAN)"))
 			})
 			It("return account item detail in format json", func() {
-				err := testhelpers.RunCommand(cliCommand, "123", "--output", "json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"1 x 2.0 GHz or higher Core":`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Key":`))
