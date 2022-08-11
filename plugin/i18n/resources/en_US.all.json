@@ -832,8 +832,8 @@
     "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   This command updates vlan with ID 12345678 and gives it a new name \"myvlan-rename\"."
   },
   {
-    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number."
+    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -3472,6 +3472,10 @@
     "translation": "Failed to get Network Message Delivery Accounts."
   },
   {
+    "id": "Failed to get Pods.\n",
+    "translation": "Failed to get Pods.\n"
+  },
+  {
     "id": "Failed to get Quote.\n",
     "translation": "Failed to get Quote.\n"
   },
@@ -4748,8 +4752,16 @@
     "translation": "Frontend protocol [default: HTTP]"
   },
   {
+    "id": "Fully qualified name",
+    "translation": "Fully qualified name"
+  },
+  {
     "id": "GUID",
     "translation": "GUID"
+  },
+  {
+    "id": "Gateway/Firewall",
+    "translation": "Gateway/Firewall"
   },
   {
     "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
@@ -6760,6 +6772,10 @@
     "translation": "Please run command '{{.CommandName}} login' to login to IBM Cloud."
   },
   {
+    "id": "Pod",
+    "translation": "Pod"
+  },
+  {
     "id": "Policies",
     "translation": "Policies"
   },
@@ -6830,6 +6846,10 @@
   {
     "id": "Power on a virtual server instance",
     "translation": "Power on a virtual server instance"
+  },
+  {
+    "id": "Premium",
+    "translation": "Premium"
   },
   {
     "id": "Preset {{.Preset}} does not exist in package {{.Package}}",
@@ -7014,6 +7034,10 @@
   {
     "id": "Public Virtual Server flavor key name",
     "translation": "Public Virtual Server flavor key name"
+  },
+  {
+    "id": "Public ips",
+    "translation": "Public ips"
   },
   {
     "id": "Public network interface speed must be in: 0, 10, 100, 1000, 10000 (Mbps).",
@@ -7954,6 +7978,10 @@
   {
     "id": "Tag",
     "translation": "Tag"
+  },
+  {
+    "id": "Tags",
+    "translation": "Tags"
   },
   {
     "id": "Tags all guests in an autoscale group.",
@@ -9148,6 +9176,10 @@
     "translation": "Virtual server template is exported to: {{.Template}}."
   },
   {
+    "id": "Virtual servers",
+    "translation": "Virtual servers"
+  },
+  {
     "id": "Vlan",
     "translation": "Vlan"
   },
@@ -9810,10 +9842,6 @@
   {
     "id": "public_ip",
     "translation": "public_ip"
-  },
-  {
-    "id": "public_ips",
-    "translation": "public_ips"
   },
   {
     "id": "ready",
