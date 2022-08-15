@@ -3,7 +3,7 @@ package nas
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -14,31 +14,36 @@ import (
 )
 
 type CredentialsCommand struct {
-	UI                       terminal.UI
+	*metadata.SoftlayerCommand
 	NasNetworkStorageManager managers.NasNetworkStorageManager
+	Command                  *cobra.Command
 }
 
-func NewCredentialsCommand(ui terminal.UI, nasNetworkStorageManager managers.NasNetworkStorageManager) (cmd *CredentialsCommand) {
-	return &CredentialsCommand{
-		UI:                       ui,
-		NasNetworkStorageManager: nasNetworkStorageManager,
+func NewCredentialsCommand(sl *metadata.SoftlayerCommand) *CredentialsCommand {
+	thisCmd := &CredentialsCommand{
+		SoftlayerCommand:         sl,
+		NasNetworkStorageManager: managers.NewNasNetworkStorageManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "credentials " + T("IDENTIFIER"),
+		Short: T("List NAS account credentials."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CredentialsCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *CredentialsCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	nasNetworkStorageId, err := strconv.Atoi(c.Args()[0])
+	nasNetworkStorageId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return errors.NewInvalidSoftlayerIdInputError("Autoscale Group ID")
 	}
+
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := "mask[id,username,password]"
 	nasNetworkStorage, err := cmd.NasNetworkStorageManager.GetNasNetworkStorage(nasNetworkStorageId, mask)
@@ -59,19 +64,4 @@ func (cmd *CredentialsCommand) Run(c *cli.Context) error {
 
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func NasCredentialsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "nas",
-		Name:        "credentials",
-		Description: T("List NAS account credentials."),
-		Usage: T(`${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]
-
-EXAMPLE: 
-   ${COMMAND_NAME} sl nas credentials 123456`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

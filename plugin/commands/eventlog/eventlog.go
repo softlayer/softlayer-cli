@@ -1,28 +1,23 @@
 package eventlog
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	eventLogManager := managers.NewEventLogManager(session)
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"event-log-get": func(c *cli.Context) error {
-			return NewGetCommand(ui, eventLogManager).Run(c)
-		},
-		"event-log-types": func(c *cli.Context) error {
-			return NewTypesCommand(ui, eventLogManager).Run(c)
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "event-log",
+		Short: T("Classic infrastructure Event Log Group"),
+		RunE:  nil,
 	}
 
-	return CommandActionBindings
+	cobraCmd.AddCommand(NewGetCommand(sl).Command)
+	cobraCmd.AddCommand(NewTypesCommand(sl).Command)
+	return cobraCmd
 }
 
 func EventLogNamespace() plugin.Namespace {
@@ -30,18 +25,5 @@ func EventLogNamespace() plugin.Namespace {
 		ParentName:  "sl",
 		Name:        "event-log",
 		Description: T("Classic infrastructure Event Log Group"),
-	}
-}
-
-func EventLogMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "event-log",
-		Description: T("Classic infrastructure Event Log Group"),
-		Usage:       "${COMMAND_NAME} sl event-log",
-		Subcommands: []cli.Command{
-			EventLogGetMetaData(),
-			EventLogTypesMetaData(),
-		},
 	}
 }
