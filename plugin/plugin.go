@@ -11,9 +11,9 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/urfave/cli"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
+	"github.com/urfave/cli"
 
 	"github.com/softlayer/softlayer-go/session"
 
@@ -40,7 +40,8 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
-//	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
+
+	//	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
@@ -57,19 +58,20 @@ import (
 )
 
 var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} {{.Use}}{{else}}{{.Use}}{{end}}` +
-`{{if .HasAvailableFlags}} [` + T("OPTIONS") +  `] {{end}}
+	`{{if .HasAvailableFlags}} [` + T("OPTIONS") + `] {{end}}
 {{.Long}}`
+
 func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
 		Name:       version.PLUGIN_SOFTLAYER,
-		Namespaces:  Namespaces(),
+		Namespaces: Namespaces(),
 		// TODO change this to convert cobra commands to pluginCommands... maybe see if another plugin does this already???
-		Commands:   cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
+		Commands: cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
 	}
 }
 
 type SoftlayerPlugin struct {
-	ui terminal.UI
+	ui      terminal.UI
 	session *session.Session
 }
 
@@ -91,7 +93,7 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	cobraCommand := getTopCobraCommand(sl.ui, sl.session)
 	// cobraCommand.SetHelpTemplate(COMMAND_HELP_TEMPLATE)
 	// cobraCommand.SetUsageTemplate(USEAGE_TEMPLATE)
-	
+
 	// When the command comes in from the ibmcloud-cli it has `sl` in the Namespace, which we need to remove
 	args = append(strings.Split(context.CommandNamespace(), " "), args...)
 	if args[0] == "sl" || args[0] == "" {
@@ -235,14 +237,14 @@ func getCLITopCommands() []cli.Command {
 	}
 }
 */
-func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag{
+func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag {
 	var pluginFlags []plugin.Flag
 	flagSet.VisitAll(func(pflag *pflag.Flag) {
 		thisFlag := plugin.Flag{
-			Name: pflag.Name,
+			Name:        pflag.Name,
 			Description: pflag.Usage,
-			HasValue: false,
-			Hidden: false,
+			HasValue:    false,
+			Hidden:      false,
 		}
 		pluginFlags = append(pluginFlags, thisFlag)
 	})
@@ -263,14 +265,14 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 	topCommand.SetUsageTemplate(USEAGE_TEMPLATE)
 	for _, cliCmd := range topCommand.Commands() {
 		if len(cliCmd.Commands()) > 0 {
-			pluginCommands = append(pluginCommands, cobraToCLIMeta(cliCmd, namespace + " " + cliCmd.Use)...)
+			pluginCommands = append(pluginCommands, cobraToCLIMeta(cliCmd, namespace+" "+cliCmd.Use)...)
 		} else {
 			thisCmd := plugin.Command{
-				Namespace: namespace,
-				Name: cliCmd.Name(),
+				Namespace:   namespace,
+				Name:        cliCmd.Name(),
 				Description: cliCmd.Short,
-				Usage: cliCmd.UsageString(),
-				Flags: cobraFlagToPlugin(cliCmd.Flags()),
+				Usage:       cliCmd.UsageString(),
+				Flags:       cobraFlagToPlugin(cliCmd.Flags()),
 			}
 			pluginCommands = append(pluginCommands, thisCmd)
 		}
@@ -286,16 +288,17 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 
 	slCommand := metadata.NewSoftlayerCommand(ui, session)
 	cobraCmd := &cobra.Command{
-		Use: "sl",
+		Use:   "sl",
 		Short: T("Manage Classic infrastructure services"),
-		Long: T("Manage Classic infrastructure services"),
-		RunE: nil,
+		Long:  T("Manage Classic infrastructure services"),
+		RunE:  nil,
 	}
-	
+
 	// Persistent Flags
 	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", "--output=JSON for json output.")
 	// Commands
 	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
 	cobraCmd.AddCommand(account.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(nas.SetupCobraCommands(slCommand))
 	return cobraCmd
 }
