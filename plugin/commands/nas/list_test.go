@@ -8,37 +8,36 @@ import (
 	. "github.com/onsi/gomega"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("nas list", func() {
 	var (
 		fakeUI                       *terminal.FakeUI
+		cliCommand                   *nas.ListCommand
+		fakeSession                  *session.Session
+		slCommand                    *metadata.SoftlayerCommand
 		fakeNasNetworkStorageManager *testhelpers.FakeNasNetworkStorageManager
-		cmd                          *nas.ListCommand
-		cliCommand                   cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = nas.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeNasNetworkStorageManager = new(testhelpers.FakeNasNetworkStorageManager)
-		cmd = nas.NewListCommand(fakeUI, fakeNasNetworkStorageManager)
-		cliCommand = cli.Command{
-			Name:        nas.NasListMetaData().Name,
-			Description: nas.NasListMetaData().Description,
-			Usage:       nas.NasListMetaData().Usage,
-			Flags:       nas.NasListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.NasNetworkStorageManager = fakeNasNetworkStorageManager
 	})
 
 	Describe("nas list", func() {
-
 		Context("Return error", func() {
 			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -48,8 +47,9 @@ var _ = Describe("nas list", func() {
 			BeforeEach(func() {
 				fakeNasNetworkStorageManager.ListNasNetworkStoragesReturns([]datatypes.Network_Storage{}, errors.New("Failed to get NAS Network Storages."))
 			})
+
 			It("Failed get NAS Network Storages", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get NAS Network Storages."))
 			})
@@ -71,8 +71,9 @@ var _ = Describe("nas list", func() {
 				}
 				fakeNasNetworkStorageManager.ListNasNetworkStoragesReturns(fakerNasNetworkStorages, nil)
 			})
+
 			It("List NAS Network Storages", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("lon06"))
