@@ -300,5 +300,6 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
 	cobraCmd.AddCommand(account.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(eventlog.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(nas.SetupCobraCommands(slCommand))
 	return cobraCmd
 }
