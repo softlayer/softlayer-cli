@@ -7,7 +7,9 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+
+	"github.com/spf13/cobra"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -16,50 +18,42 @@ import (
 )
 
 type BandwidthPoolsDetailCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
+	Command *cobra.Command
 }
 
-func NewBandwidthPoolsDetailCommand(ui terminal.UI, accountManager managers.AccountManager) (cmd *BandwidthPoolsDetailCommand) {
-	return &BandwidthPoolsDetailCommand{
-		UI:             ui,
-		AccountManager: accountManager,
+func NewBandwidthPoolsDetailCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsDetailCommand {
+
+	thisCmd := &BandwidthPoolsDetailCommand{
+		SoftlayerCommand: sl,
+		AccountManager: managers.NewAccountManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use: "bandwidth-pools-detail " + T("IDENTIFIER"),
+		Short: T("Get bandwidth pool details."),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+            return thisCmd.Run(args)
+        },
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func BandwidthPoolsDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "bandwidth-pools-detail",
-		Description: T("Get bandwidth pool details."),
-		Usage: T(`${COMMAND_NAME} sl account bandwidth-pools-detail
-EXAMPLE: 
-	${COMMAND_NAME} sl account bandwidth-pools-detail 123456`),
 
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
-}
+func (cmd *BandwidthPoolsDetailCommand) Run(args []string) error {
 
-func (cmd *BandwidthPoolsDetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	bandwidthPoolId, err := strconv.Atoi(c.Args()[0])
+	bandwidthPoolId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return errors.NewInvalidSoftlayerIdInputError("Bandwidth Pool ID")
 	}
 
 	bandwidthPool, err := cmd.AccountManager.GetBandwidthPoolDetail(bandwidthPoolId, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Bandwidth Pool.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Bandwidth Pool."), err.Error(), 2)
 	}
 
 	currentUsage := "-"

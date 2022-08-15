@@ -8,6 +8,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	faketerminal "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 )
 
 func RunCommand(c cli.Command, args ...string) error {
@@ -26,6 +27,14 @@ func RunCommand(c cli.Command, args ...string) error {
 	}
 	ctx := cli.NewContext(app, set, nil)
 	return c.Run(ctx)
+}
+
+
+
+func RunCobraCommand(cmd *cobra.Command, args ...string) error {
+	cmd.SetArgs(args)
+	_, err := cmd.ExecuteC()
+	return err
 }
 
 // For when you just want to get a fake context, not actually run the command yet

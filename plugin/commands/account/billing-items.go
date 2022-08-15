@@ -7,8 +7,9 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -16,40 +17,37 @@ import (
 )
 
 type BillingItemsCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
+	Command *cobra.Command
 }
 
-func NewBillingItemsCommand(ui terminal.UI, accountManager managers.AccountManager) (cmd *BillingItemsCommand) {
-	return &BillingItemsCommand{
-		UI:             ui,
-		AccountManager: accountManager,
+func NewBillingItemsCommand(sl *metadata.SoftlayerCommand) *BillingItemsCommand {
+	thisCmd := &BillingItemsCommand{
+		SoftlayerCommand: sl,
+		AccountManager: managers.NewAccountManager(sl.Session),
 	}
-}
-
-func BillingItemsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "billing-items",
-		Description: T("Lists billing items with some other useful information."),
-		Usage:       T(`${COMMAND_NAME} slcli account billing-items [OPTIONS]`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use: "billing-items",
+		Short: T("Lists billing items with some other useful information."),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *BillingItemsCommand) Run(c *cli.Context) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *BillingItemsCommand)  Run(args []string) error {
+
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := "mask[orderItem[id,order[id,userRecord[id,email,displayName,userStatus]]],nextInvoiceTotalRecurringAmount,location, hourlyFlag]"
 	billingItems, err := cmd.AccountManager.GetBillingItems(mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get billing items.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get billing items."), err.Error(), 2)
 	}
 	PrintBillingItems(billingItems, cmd.UI, outputFormat)
 	return nil

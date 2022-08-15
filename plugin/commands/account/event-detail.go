@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/spf13/cobra"
 	"github.com/softlayer/softlayer-go/datatypes"
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -17,47 +17,43 @@ import (
 )
 
 type EventDetailCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
+	Command *cobra.Command
 }
 
-func NewEventDetailCommand(ui terminal.UI, accountManager managers.AccountManager) (cmd *EventDetailCommand) {
-	return &EventDetailCommand{
-		UI:             ui,
-		AccountManager: accountManager,
+func NewEventDetailCommand(sl *metadata.SoftlayerCommand) *EventDetailCommand {
+	thisCmd := &EventDetailCommand{
+		SoftlayerCommand: sl,
+		AccountManager: managers.NewAccountManager(sl.Session),
 	}
-}
-
-func EventDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "event-detail",
-		Description: T("Details of a specific event, and ability to acknowledge event."),
-		Usage:       T(`${COMMAND_NAME} sl account event-detail IDENTIFIER [OPTIONS]`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use: "event-detail " + T("IDENTIFIER"),
+		Short: T("Details of a specific event, and ability to acknowledge event."),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *EventDetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
 
-	eventID, err := strconv.Atoi(c.Args()[0])
+func (cmd *EventDetailCommand) Run(args []string) error {
+
+	eventID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError(T("Event ID"))
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
+
 	mask := "mask[acknowledgedFlag,attachments,impactedResources,statusCode,updates,notificationOccurrenceEventType]"
 	event, err := cmd.AccountManager.GetEventDetail(eventID, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the event {{.eventID}}. ", map[string]interface{}{"eventID": eventID})+err.Error(), 2)
+		sub := map[string]interface{}{"eventID": eventID}
+		return slErr.NewAPIError(T("Failed to get the event {{.eventID}}. ", sub), err.Error(), 2)
 	}
 
 	BasicEventTable(event, cmd.UI, outputFormat)
