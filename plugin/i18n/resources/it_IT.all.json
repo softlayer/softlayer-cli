@@ -200,6 +200,18 @@
     "translation": "${COMMAND_NAME} sl block snapshot-schedule-list ID_VOLUME [OPZIONI]\n\n   ESEMPIO:\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  Questo comando elenca le pianificazioni dell'istantanea per il volume con ID 12345678"
   },
   {
+    "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-assign ID_ACCESSO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ID_ACCESSO è l'id host ottenuto da: ibmcloud sl block access-list <volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-list ID_ACCESSO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ID_ACCESSO è l'id host ottenuto da: ibmcloud sl block access-list <volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-remove ID_ACCESSO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ID_ACCESSO è l'id host ottenuto da: ibmcloud sl block access-list <volume_id>"
+  },
+  {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
     "translation": "${COMMAND_NAME} sl block volume-cancel ID_VOLUME [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   Questo comando annulla il volume con ID 12345678 immediatamente e senza richiedere conferma."
   },
@@ -250,6 +262,10 @@
   {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVIZIO METODO [OPZIONI]\n\nESEMPIO: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tQuesto comando modifica le note del volume.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tQuesto comando mostra un dettaglio utente.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tQuesto comando elenca i guest virtuali."
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn list",
+    "translation": "${COMMAND_NAME} sl cdn list"
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
@@ -588,6 +604,10 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFICATIVO [OPZIONI]\n\nEsemi:\n${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFICATIVO [OPZIONI]\n\nEsempi:\n${COMMAND_NAME} sl object-storage credential-limit 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFICATIVO [OPZIONI]"
   },
@@ -704,6 +724,10 @@
     "translation": "${COMMAND_NAME} sl subnet edit IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
+    "id": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote",
+    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote"
+  },
+  {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
     "translation": "${COMMAND_NAME} sl subnet list [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARIO --network-space PUBBLICO --v4\n   Questo comando elenca le sottoreti IPv4 nell'account corrente, il filtro per datacenter è dal09, il tipo di sottorete è PRIMARIO e lo spazio di rete è PUBBLICO."
   },
@@ -714,6 +738,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
     "translation": "${COMMAND_NAME} sl subnet route IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Questo comando consente di cambiare l'instradamento delle sottoreti di proprietà dell'account."
+  },
+  {
+    "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
+    "translation": "${COMMAND_NAME} sl tags cleanup [OPZIONI]\n\nESEMPIO:\n${COMMAND_NAME} sl tags cleanup"
   },
   {
     "id": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemoves \"tag\" from your account.\n",
@@ -952,6 +980,10 @@
     "translation": "'{{.Input}}' è obbligatorio"
   },
   {
+    "id": "(Dry Run) Removing Tag: {{.tag}}.",
+    "translation": "(Dry-run) Rimozione tag: {{.tag}}."
+  },
+  {
     "id": "--billing can only be either hourly or monthly.",
     "translation": "--billing può essere solo hourly o monthly."
   },
@@ -962,6 +994,10 @@
   {
     "id": "--columns {{.Column}} is not supported.",
     "translation": "--columns {{.Column}} non è supportato."
+  },
+  {
+    "id": "--note",
+    "translation": "--note"
   },
   {
     "id": "--server needs a port. {{.Server}} improperly formatted",
@@ -1412,6 +1448,10 @@
     "translation": "Assegna un IP globale a un dispositivo o a un router di destinazione"
   },
   {
+    "id": "Assign block storage subnets to the given host id.",
+    "translation": "Assegnare le sottoreti di archiviazione blocchi all'id host fornito."
+  },
+  {
     "id": "Assigned",
     "translation": "Assegnato"
   },
@@ -1844,6 +1884,10 @@
     "translation": "Block Storage infrastruttura classica"
   },
   {
+    "id": "Classic infrastructure CDN commands",
+    "translation": "Comandi CDN di infrastruttura classica"
+  },
+  {
     "id": "Classic infrastructure Compute images",
     "translation": "Immagini di calcolo infrastruttura classica"
   },
@@ -1950,6 +1994,10 @@
   {
     "id": "Closed:",
     "translation": "Chiuso:"
+  },
+  {
+    "id": "Cname",
+    "translation": "Cname"
   },
   {
     "id": "Code",
@@ -2278,6 +2326,10 @@
   {
     "id": "Creates a user",
     "translation": "Crea un utente"
+  },
+  {
+    "id": "Credential limits for this IBM Cloud Object Storage account.",
+    "translation": "Limiti di credenziali per questo account IBM Cloud Object Storage."
   },
   {
     "id": "Credential: {{.credentialID}} was deleted.",
@@ -2626,6 +2678,10 @@
   {
     "id": "Don't actually create records",
     "translation": "Non creare al momento i record"
+  },
+  {
+    "id": "Don't delete, just show what will be deleted.",
+    "translation": "Non eliminare, mostrare solo cosa verrà eliminato."
   },
   {
     "id": "Done",
@@ -3032,6 +3088,14 @@
     "translation": "Impossibile assegnare l'IP globale {{.IpID}} alla destinazione {{.Target}}.\n"
   },
   {
+    "id": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "Impossibile assegnare l'id sottorete: {{.subnetID}} all'id host consentito: {{.accessID}}"
+  },
+  {
+    "id": "Failed to assign subnets.",
+    "translation": "Impossibile assegnare le sottoreti."
+  },
+  {
     "id": "Failed to authorize host to volume {{.VolumeID}}.\n",
     "translation": "Impossibile autorizzare l'host per il volume {{.VolumeID}}.\n"
   },
@@ -3204,6 +3268,10 @@
     "translation": "Impossibile eliminare il membro L7: {{.Member}}: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete Tag: {{.tag}}.",
+    "translation": "Impossibile eliminare tag: {{.tag}}."
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "Impossibile eliminare la credenziale: {{.storageID}}. \n"
   },
@@ -3344,6 +3412,10 @@
     "translation": "Impossibile ottenere il pool di larghezza di banda.\n"
   },
   {
+    "id": "Failed to get CDN List. ",
+    "translation": "Impossibile ottenere l'elenco CDN. "
+  },
+  {
     "id": "Failed to get Cloud Object Storages.\n",
     "translation": "Impossibile ottenere Cloud Object Storage.\n"
   },
@@ -3428,6 +3500,14 @@
     "translation": "Impossibile ottenere statistiche."
   },
   {
+    "id": "Failed to get Subnet IP by address",
+    "translation": "Impossibile ottenere l'IP di sottorete per indirizzo"
+  },
+  {
+    "id": "Failed to get Unattached Tags.",
+    "translation": "Impossibile ottenere tag non collegati."
+  },
+  {
     "id": "Failed to get VLAN: {{.VLANID}}.\n",
     "translation": "Impossibile ottenere la VLAN: {{.VLANID}}.\n"
   },
@@ -3462,6 +3542,10 @@
   {
     "id": "Failed to get components\n",
     "translation": "Impossibile ottenere i componenti \n"
+  },
+  {
+    "id": "Failed to get credential limit. ",
+    "translation": "Impossibile ottenere il limite delle credenziali. "
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -4084,6 +4168,14 @@
     "translation": "Impossibile rimuovere la regola {{.RuleId}} nel gruppo di sicurezza {{.GroupID}}.\n"
   },
   {
+    "id": "Failed to remove subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "Impossibile rimuovere l'id sottorete: {{.subnetID}} per l'id host consentito: {{.accessID}}"
+  },
+  {
+    "id": "Failed to remove subnets.",
+    "translation": "Impossibile rimuovere le sottoreti."
+  },
+  {
     "id": "Failed to remove translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "Impossibile rimuovere la traduzione con ID {{.TransID}} da IPSec {{.ID}}."
   },
@@ -4130,6 +4222,10 @@
   {
     "id": "Failed to set LUN ID for volume {{.VolumeID}}.\n",
     "translation": "Impossibile impostare l'ID LUN per il volume {{.VolumeID}}.\n"
+  },
+  {
+    "id": "Failed to set note: {{.note}}.",
+    "translation": "Impossibile impostare la nota: {{.note}}."
   },
   {
     "id": "Failed to set note: {{.note}}.\n",
@@ -5004,6 +5100,14 @@
     "translation": "Gli ID della chiave SSH da aggiungere all'utente root, più ricorrenze consentite"
   },
   {
+    "id": "IDs of the subnets to assign",
+    "translation": "ID delle sottoreti da assegnare"
+  },
+  {
+    "id": "IDs of the subnets to remove",
+    "translation": "ID delle sottoreti da rimuovere"
+  },
+  {
     "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
     "translation": "INTERO Dimensioni disco (ricorrenza multipla consentita) [obbligatorio]"
   },
@@ -5428,6 +5532,10 @@
     "translation": "Licenza: {{.key}} è stata annullata."
   },
   {
+    "id": "Limit",
+    "translation": "Limite"
+  },
+  {
     "id": "List Dedicated Host Guests.",
     "translation": "Elenca guest dell'host dedicato."
   },
@@ -5484,6 +5592,10 @@
     "translation": "Elenca tutti i gruppi di ridimensionamento automatico sull'account dell'utente"
   },
   {
+    "id": "List all CDN accounts.",
+    "translation": "Elenca tutti gli account CDN."
+  },
+  {
     "id": "List all active quotes on an account",
     "translation": "Elencare tutti i preventivi attivi su un account"
   },
@@ -5538,6 +5650,10 @@
   {
     "id": "List block storage",
     "translation": "Elenca l'archivio blocchi"
+  },
+  {
+    "id": "List block storage assigned subnets for the given host id.",
+    "translation": "Elencare le sottoreti assegnate all'archiviazione a blocchi per l'id host fornito."
   },
   {
     "id": "List block storage snapshots",
@@ -5934,6 +6050,10 @@
   {
     "id": "Network",
     "translation": "Rete"
+  },
+  {
+    "id": "Network Identifier",
+    "translation": "Identificativo di rete"
   },
   {
     "id": "Network Type",
@@ -6370,6 +6490,10 @@
   {
     "id": "Ordering package is not found",
     "translation": "Ordinazione pacchetto non trovata"
+  },
+  {
+    "id": "Origin",
+    "translation": "Origine"
   },
   {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
@@ -7044,6 +7168,10 @@
     "translation": "Rimuovi l'accesso utente a un dispositivo specifico"
   },
   {
+    "id": "Remove block storage subnets to the given host id.",
+    "translation": "Rimuovere le sottoreti di archiviazione blocchi per l'id host fornito."
+  },
+  {
     "id": "Remove resource record from a zone",
     "translation": "Rimuovi il record della risorsa da una zona"
   },
@@ -7056,12 +7184,20 @@
     "translation": "La sottorete {{.Type}} #{{.ID}} è stata rimossa da IPSec {{.ContextID}}."
   },
   {
+    "id": "Removes all empty tags.",
+    "translation": "Rimuove tutti i tag vuoti."
+  },
+  {
     "id": "Removes an empty tag from your account.",
     "translation": "Rimuove una tag vuota dal tuo account."
   },
   {
     "id": "Removes guests. (Only set --up or --down)",
     "translation": "Rimuove i guest. (Impostare solo --up o --down)"
+  },
+  {
+    "id": "Removing Tag: {{.tag}}.",
+    "translation": "Rimozione tag: {{.tag}}."
   },
   {
     "id": "Replicant Count",
@@ -7362,6 +7498,10 @@
   {
     "id": "Set the LUN ID on an existing block storage volume",
     "translation": "Imposta l'ID LUN su un volume di archiviazione blocchi esistente"
+  },
+  {
+    "id": "Set the note of the ipAddress.",
+    "translation": "Impostare la nota dell'indirizzo IP."
   },
   {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
@@ -7680,6 +7820,10 @@
     "translation": "Accesso riuscito?"
   },
   {
+    "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "Id sottorete assegnato correttamente: {{.subnetID}} all'id host consentito: {{.accessID}}"
+  },
+  {
     "id": "Successfully authorized storage: {{.PortableID}} was added.",
     "translation": "Memoria autorizzata correttamente: {{.PortableID}} aggiunto."
   },
@@ -7690,6 +7834,10 @@
   {
     "id": "Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}.",
     "translation": "Gruppo di posizionamento creato correttamente: ID: {{.ID}}, Nome: {{.Name}}."
+  },
+  {
+    "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "Id sottorete rimosso correttamente: {{.subnetID}} per l'id host consentito: {{.accessID}}"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
@@ -8716,6 +8864,10 @@
     "translation": "Impossibile trovare la porta di rete per questo dispositivo."
   },
   {
+    "id": "Unable to find object with IP address: {{.address}}",
+    "translation": "Impossibile trovare l'oggetto con indirizzo IP: {{.address}}"
+  },
+  {
     "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
     "translation": "Impossibile trovare l'archivio oggetti con ID: {{.storageID}}.\n"
   },
@@ -8766,6 +8918,10 @@
   {
     "id": "Unassign a global IP from a target router or device",
     "translation": "Annulla l'assegnazione di un IP globale da un router o un dispositivo di destinazione."
+  },
+  {
+    "id": "Unique Id",
+    "translation": "Id univoco"
   },
   {
     "id": "Update ID",

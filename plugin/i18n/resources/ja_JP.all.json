@@ -200,6 +200,18 @@
     "translation": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   例:\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  このコマンドは、ID 12345678 のボリュームのスナップショット・スケジュールをリストします"
   },
   {
+    "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID は、ibmcloud sl block access-list によって取得される host_id です。<volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID は ibmcloud sl block access-list によって取得される host_id です。<volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID は ibmcloud sl block access-list によって取得される host_id です。<volume_id>"
+  },
+  {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
     "translation": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   このコマンドは、ID 12345678 のボリュームを、確認を求めずに即時に取り消します。"
   },
@@ -250,6 +262,10 @@
   {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n例: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tこのコマンドは、ボリューム・メモを編集します。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tこのコマンドは、ユーザーの詳細を表示します。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tこのコマンドは、仮想ゲストをリストします。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn list",
+    "translation": "${COMMAND_NAME}SL CDN リスト"
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
@@ -588,6 +604,10 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\n例:\n${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
+    "translation": "${COMMAND_NAME} Sl Object-Storage Credential-Limit IDENTIFIER [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl object-storage credential-limit 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -704,6 +724,10 @@
     "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
+    "id": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote",
+    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote \n ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote"
+  },
+  {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
     "translation": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   このコマンドは、現行アカウントの IPv4 サブネットをリストし、データ・センターが dal09、サブネット・タイプが PRIMARY、ネットワーク・スペースが PUBLIC という基準でフィルター操作します。"
   },
@@ -714,6 +738,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
     "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl subnet route -- type-id 1234567 -- type SoftLayer_Network_Subnet_IpAddress 12345678\n このコマンドを使用すると、アカウント所有サブネットの経路を変更できます。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
+    "translation": "${COMMAND_NAME} sl タグのクリーンアップ [OPTIONS]\n\n 例: \n ${COMMAND_NAME} sl タグのクリーンアップ"
   },
   {
     "id": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemoves \"tag\" from your account.\n",
@@ -952,6 +980,10 @@
     "translation": "'{{.Input}}' は必須です"
   },
   {
+    "id": "(Dry Run) Removing Tag: {{.tag}}.",
+    "translation": "(ドライラン) タグを削除しています: {{.tag}}。"
+  },
+  {
     "id": "--billing can only be either hourly or monthly.",
     "translation": "--billing は、hourly または monthly のいずれかのみにできます。"
   },
@@ -962,6 +994,10 @@
   {
     "id": "--columns {{.Column}} is not supported.",
     "translation": "--columns {{.Column}} はサポートされていません。"
+  },
+  {
+    "id": "--note",
+    "translation": "--note"
   },
   {
     "id": "--server needs a port. {{.Server}} improperly formatted",
@@ -1412,6 +1448,10 @@
     "translation": "グローバル IP をターゲットのルーターまたはデバイスに割り当てます"
   },
   {
+    "id": "Assign block storage subnets to the given host id.",
+    "translation": "指定されたホスト ID にブロック・ストレージ・サブネットを割り当てます。"
+  },
+  {
     "id": "Assigned",
     "translation": "割り当て済み"
   },
@@ -1844,6 +1884,10 @@
     "translation": "クラシック・インフラストラクチャー Block Storage"
   },
   {
+    "id": "Classic infrastructure CDN commands",
+    "translation": "クラシック・インフラストラクチャー CDN コマンド"
+  },
+  {
     "id": "Classic infrastructure Compute images",
     "translation": "クラシック・インフラストラクチャー・コンピュート・イメージ"
   },
@@ -1950,6 +1994,10 @@
   {
     "id": "Closed:",
     "translation": "クローズ済み:"
+  },
+  {
+    "id": "Cname",
+    "translation": "CNAME"
   },
   {
     "id": "Code",
@@ -2278,6 +2326,10 @@
   {
     "id": "Creates a user",
     "translation": "ユーザーを作成します"
+  },
+  {
+    "id": "Credential limits for this IBM Cloud Object Storage account.",
+    "translation": "この IBM Cloud Object Storage アカウントの資格情報の制限。"
   },
   {
     "id": "Credential: {{.credentialID}} was deleted.",
@@ -2626,6 +2678,10 @@
   {
     "id": "Don't actually create records",
     "translation": "実際にはレコードを作成しません"
+  },
+  {
+    "id": "Don't delete, just show what will be deleted.",
+    "translation": "削除しないで、削除されるものを表示します。"
   },
   {
     "id": "Done",
@@ -3032,6 +3088,14 @@
     "translation": "グローバル IP {{.IpID}} をターゲット {{.Target}} に割り当てるのに失敗しました。\n"
   },
   {
+    "id": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "サブネット ID {{.subnetID}}を許可されたホスト ID {{.accessID}} に割り当てることができませんでした"
+  },
+  {
+    "id": "Failed to assign subnets.",
+    "translation": "サブネットの割り当てに失敗しました。"
+  },
+  {
     "id": "Failed to authorize host to volume {{.VolumeID}}.\n",
     "translation": "ホストにボリューム {{.VolumeID}} への権限を付与するのに失敗しました。\n"
   },
@@ -3204,6 +3268,10 @@
     "translation": "L7member {{.Member}} の削除に失敗しました: {{.Error}}。\n"
   },
   {
+    "id": "Failed to delete Tag: {{.tag}}.",
+    "translation": "タグ{{.tag}}の削除に失敗しました。"
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "資格情報の削除に失敗しました: {{.storageID}}。\n"
   },
@@ -3344,6 +3412,10 @@
     "translation": "帯域幅プールの取得に失敗しました。\n"
   },
   {
+    "id": "Failed to get CDN List. ",
+    "translation": "CDN リストの取得に失敗しました。 "
+  },
+  {
     "id": "Failed to get Cloud Object Storages.\n",
     "translation": "Cloud Object Storage の取得に失敗しました。\n"
   },
@@ -3428,6 +3500,14 @@
     "translation": "統計の取得に失敗しました。"
   },
   {
+    "id": "Failed to get Subnet IP by address",
+    "translation": "アドレスによるサブネット IP の取得に失敗しました"
+  },
+  {
+    "id": "Failed to get Unattached Tags.",
+    "translation": "未添付タグの取得に失敗しました。"
+  },
+  {
     "id": "Failed to get VLAN: {{.VLANID}}.\n",
     "translation": "VLAN: {{.VLANID}}  の取得に失敗しました。\n"
   },
@@ -3462,6 +3542,10 @@
   {
     "id": "Failed to get components\n",
     "translation": "コンポーネントの取得に失敗しました \n"
+  },
+  {
+    "id": "Failed to get credential limit. ",
+    "translation": "資格情報の制限を取得できませんでした。 "
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -4084,6 +4168,14 @@
     "translation": "セキュリティー・グループ {{.GroupID}} 内のルール {{.RuleId}}の削除に失敗しました。\n"
   },
   {
+    "id": "Failed to remove subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "サブネット ID {{.subnetID}} を許可されたホスト ID {{.accessID}} に削除できませんでした"
+  },
+  {
+    "id": "Failed to remove subnets.",
+    "translation": "サブネットの削除に失敗しました。"
+  },
+  {
     "id": "Failed to remove translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "IPSec {{.ID}} からの ID {{.TransID}} の変換の削除に失敗しました。"
   },
@@ -4130,6 +4222,10 @@
   {
     "id": "Failed to set LUN ID for volume {{.VolumeID}}.\n",
     "translation": "ボリューム {{.VolumeID}} の LUN ID の設定に失敗しました。\n"
+  },
+  {
+    "id": "Failed to set note: {{.note}}.",
+    "translation": "メモの設定に失敗しました: {{.note}}。"
   },
   {
     "id": "Failed to set note: {{.note}}.\n",
@@ -5004,6 +5100,14 @@
     "translation": "root ユーザーに追加する SSH 鍵の ID (複数のオカレンスが許可されます)"
   },
   {
+    "id": "IDs of the subnets to assign",
+    "translation": "割り当てようとするサブネットの ID"
+  },
+  {
+    "id": "IDs of the subnets to remove",
+    "translation": "削除対象のサブネットの ID"
+  },
+  {
     "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
     "translation": "INTEGER ディスク・サイズ (複数のオカレンスが許可されます) [必須]"
   },
@@ -5428,6 +5532,10 @@
     "translation": "ライセンス: {{.key}} がキャンセルされました。"
   },
   {
+    "id": "Limit",
+    "translation": "制限"
+  },
+  {
     "id": "List Dedicated Host Guests.",
     "translation": "専用ホスト・ゲストをリストします。"
   },
@@ -5484,6 +5592,10 @@
     "translation": "アカウントのすべての自動スケーリング・グループをリストします。"
   },
   {
+    "id": "List all CDN accounts.",
+    "translation": "すべての CDN アカウントをリストします。"
+  },
+  {
     "id": "List all active quotes on an account",
     "translation": "アカウントのすべてのアクティブな見積もりをリストします"
   },
@@ -5538,6 +5650,10 @@
   {
     "id": "List block storage",
     "translation": "Block Storage をリストします"
+  },
+  {
+    "id": "List block storage assigned subnets for the given host id.",
+    "translation": "指定されたホスト ID のブロック・ストレージ割り当てサブネットをリストします。"
   },
   {
     "id": "List block storage snapshots",
@@ -5934,6 +6050,10 @@
   {
     "id": "Network",
     "translation": "Network"
+  },
+  {
+    "id": "Network Identifier",
+    "translation": "ネットワーク ID"
   },
   {
     "id": "Network Type",
@@ -6370,6 +6490,10 @@
   {
     "id": "Ordering package is not found",
     "translation": "注文パッケージが見つかりません"
+  },
+  {
+    "id": "Origin",
+    "translation": "起点"
   },
   {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
@@ -7044,6 +7168,10 @@
     "translation": "ユーザーから特定のデバイスへのアクセス権限を削除する"
   },
   {
+    "id": "Remove block storage subnets to the given host id.",
+    "translation": "指定されたホスト ID のブロック・ストレージ・サブネットを削除します。"
+  },
+  {
     "id": "Remove resource record from a zone",
     "translation": "ゾーンからリソース・レコードを削除します"
   },
@@ -7056,12 +7184,20 @@
     "translation": "{{.Type}} サブネット #{{.ID}} を IPSec {{.ContextID}} から削除しました。"
   },
   {
+    "id": "Removes all empty tags.",
+    "translation": "空のタグをすべて削除します。"
+  },
+  {
     "id": "Removes an empty tag from your account.",
     "translation": "アカウントから空のタグを削除します。"
   },
   {
     "id": "Removes guests. (Only set --up or --down)",
     "translation": "ゲストを削除します。 (セットアップのみ --up または --down)"
+  },
+  {
+    "id": "Removing Tag: {{.tag}}.",
+    "translation": "タグ{{.tag}}を削除しています。"
   },
   {
     "id": "Replicant Count",
@@ -7362,6 +7498,10 @@
   {
     "id": "Set the LUN ID on an existing block storage volume",
     "translation": "既存の Block Storage ボリュームで LUN ID を設定します"
+  },
+  {
+    "id": "Set the note of the ipAddress.",
+    "translation": "ipAddress のメモを設定します。"
   },
   {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
@@ -7680,6 +7820,10 @@
     "translation": "ログイン成功?"
   },
   {
+    "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "サブネット ID {{.subnetID}}が許可されたホスト ID {{.accessID}}に正常に割り当てられました"
+  },
+  {
     "id": "Successfully authorized storage: {{.PortableID}} was added.",
     "translation": "正常に許可されたストレージ: {{.PortableID}} が追加されました。"
   },
@@ -7690,6 +7834,10 @@
   {
     "id": "Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}.",
     "translation": "配置グループが正常に作成されました: ID: {{.ID}}、名前: {{.Name}}。"
+  },
+  {
+    "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "サブネット ID {{.subnetID}}を許可されたホスト ID {{.accessID}}に正常に削除しました"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
@@ -8716,6 +8864,10 @@
     "translation": "このデバイスのネットワーク・ポート速度が見つかりません。"
   },
   {
+    "id": "Unable to find object with IP address: {{.address}}",
+    "translation": "IP アドレス{{.address}}のオブジェクトが見つかりません"
+  },
+  {
     "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
     "translation": "ID {{.storageID}} のオブジェクト・ストレージが見つかりません。\n"
   },
@@ -8766,6 +8918,10 @@
   {
     "id": "Unassign a global IP from a target router or device",
     "translation": "ターゲットのルーターまたはデバイスからグローバル IP を割り当て解除します"
+  },
+  {
+    "id": "Unique Id",
+    "translation": "固有ID"
   },
   {
     "id": "Update ID",
