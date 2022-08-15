@@ -1,5 +1,13 @@
 [
   {
+    "id": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log get \n\t${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n\t${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
+    "translation": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log get \n\t${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n\t${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
+  },
+  {
+    "id": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log types",
+    "translation": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log types"
+  },
+  {
     "id": "\nLUN name",
     "translation": "\nLUN name"
   },
@@ -290,14 +298,6 @@
   {
     "id": "${COMMAND_NAME} sl email list",
     "translation": "${COMMAND_NAME} sl email list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
-    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
-  },
-  {
-    "id": "${COMMAND_NAME} sl event-log types\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log types",
-    "translation": "${COMMAND_NAME} sl event-log types\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log types"
   },
   {
     "id": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",

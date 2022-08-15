@@ -7,57 +7,45 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/eventlog"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("event-log get", func() {
 	var (
 		fakeUI              *terminal.FakeUI
+		cliCommand          *eventlog.GetCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 		fakeEventLogManager *testhelpers.FakeEventLogManager
-		cmd                 *eventlog.GetCommand
-		cliCommand          cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeEventLogManager = new(testhelpers.FakeEventLogManager)
-		cmd = eventlog.NewGetCommand(fakeUI, fakeEventLogManager)
-		cliCommand = cli.Command{
-			Name:        eventlog.EventLogGetMetaData().Name,
-			Description: eventlog.EventLogGetMetaData().Description,
-			Usage:       eventlog.EventLogGetMetaData().Usage,
-			Flags:       eventlog.EventLogGetMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = eventlog.NewGetCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.EventLogManager = fakeEventLogManager
 	})
 
 	Describe("event-log get", func() {
 
 		Context("Return error", func() {
-			It("Set command with invalid limit", func() {
-				err := testhelpers.RunCommand(cliCommand, "--limit=abcde")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'limit'. It must be a positive integer."))
-			})
-
-			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
-			})
 
 			It("Set invalid --date-min value", func() {
-				err := testhelpers.RunCommand(cliCommand, "--date-min=05/10/2022")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--date-min=05/10/2022")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid format date to --date-min."))
 			})
 
 			It("Set invalid --date-max value", func() {
-				err := testhelpers.RunCommand(cliCommand, "--date-max=05/10/2022")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--date-max=05/10/2022")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid format date to --date-max."))
 			})
@@ -67,7 +55,7 @@ var _ = Describe("event-log get", func() {
 				fakeEventLogManager.GetEventLogsReturns([]datatypes.Event_Log{}, errors.New("Failed to get Event Logs."))
 			})
 			It("Failed get event logs", func() {
-				err := testhelpers.RunCommand(cliCommand, "--limit=10")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--limit=10")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get Event Logs."))
 			})
@@ -93,7 +81,7 @@ var _ = Describe("event-log get", func() {
 			})
 
 			It("Set command with all options", func() {
-				err := testhelpers.RunCommand(cliCommand, "--date-min=2016-01-01", "--date-max=2017-02-01", "--obj-id=123456", "--obj-event=Create", "--obj-type=Create", "--metadata", "--utc-offset=-0000")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--date-min=2016-01-01", "--date-max=2017-02-01", "--obj-id=123456", "--obj-event=Create", "--obj-type=Create", "--metadata", "--utc-offset=-0000")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("IAM Token validation successful"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("sl307608-chechu"))
@@ -121,7 +109,7 @@ var _ = Describe("event-log get", func() {
 			})
 
 			It("Set command with only --date-min", func() {
-				err := testhelpers.RunCommand(cliCommand, "--date-min=2016-01-01")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--date-min=2016-01-01")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Power On"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("testvs-ab8s.domain.com"))
@@ -131,7 +119,7 @@ var _ = Describe("event-log get", func() {
 			})
 
 			It("Set command with only --date-max", func() {
-				err := testhelpers.RunCommand(cliCommand, "--date-max=2016-01-01")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--date-max=2016-01-01")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Power On"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("testvs-ab8s.domain.com"))
@@ -152,7 +140,7 @@ var _ = Describe("event-log get", func() {
 			})
 
 			It("Set command with all options", func() {
-				err := testhelpers.RunCommand(cliCommand, "--date-min=2016-01-01", "--date-max=2017-02-01", "--obj-id=123456", "--obj-event=Create", "--obj-type=Create", "--metadata", "--utc-offset=-0000")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--date-min=2016-01-01", "--date-max=2017-02-01", "--obj-id=123456", "--obj-event=Create", "--obj-type=Create", "--metadata", "--utc-offset=-0000")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("No logs available for filter"))
 			})
