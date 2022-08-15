@@ -7,33 +7,32 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.com/softlayer/softlayer-go/session"
-
+	"github.com/softlayer/softlayer-go/sl"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("reports bandwidth", func() {
-    var (
-        fakeUI          *terminal.FakeUI
-        cliCommand      *reports.BandwidthCommand
-        fakeSession     *session.Session
-        slCommand       *metadata.SoftlayerCommand
-        fakeReportManager *testhelpers.FakeReportManager
-    )
-    BeforeEach(func() {
-        fakeUI = terminal.NewFakeUI()
-        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-        fakeReportManager = new(testhelpers.FakeReportManager)
-        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-        cliCommand = reports.NewBandwidthCommand(slCommand)
-        cliCommand.ReportManager = fakeReportManager
-        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+	var (
+		fakeUI            *terminal.FakeUI
+		cliCommand        *reports.BandwidthCommand
+		fakeSession       *session.Session
+		slCommand         *metadata.SoftlayerCommand
+		fakeReportManager *testhelpers.FakeReportManager
+	)
+	BeforeEach(func() {
+		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeReportManager = new(testhelpers.FakeReportManager)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = reports.NewBandwidthCommand(slCommand)
+		cliCommand.ReportManager = fakeReportManager
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 
-    })
+	})
 
 	Describe("reports bandwidth", func() {
 

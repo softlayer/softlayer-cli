@@ -9,28 +9,26 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-
-
 var _ = Describe("Reports Datacenter-Closures", func() {
-    var (
-        fakeUI          *terminal.FakeUI
-        cliCommand      *reports.DCClosuresCommand
-        fakeSession     *session.Session
-        slCommand       *metadata.SoftlayerCommand
-        fakeHandler *testhelpers.FakeTransportHandler
-    )
-    BeforeEach(func() {
-        fakeUI = terminal.NewFakeUI()
-        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-        fakeHandler = testhelpers.GetSessionHandler(fakeSession)
-        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-        cliCommand = reports.NewDCClosuresCommand(slCommand)
-        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-    })
+	var (
+		fakeUI      *terminal.FakeUI
+		cliCommand  *reports.DCClosuresCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
+		fakeHandler *testhelpers.FakeTransportHandler
+	)
+	BeforeEach(func() {
+		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeHandler = testhelpers.GetSessionHandler(fakeSession)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = reports.NewDCClosuresCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+	})
 	AfterEach(func() {
 		fakeHandler.ClearApiCallLogs()
 		fakeHandler.ClearErrors()

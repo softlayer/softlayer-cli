@@ -39,23 +39,21 @@ type DCClosuresCommand struct {
 }
 
 func NewDCClosuresCommand(sl *metadata.SoftlayerCommand) *DCClosuresCommand {
-    thisCmd := &DCClosuresCommand{ //Update this line
-        SoftlayerCommand: sl,
-    }
-    cobraCmd := &cobra.Command{
-        Use: "datacenter-closures",
-        Short: T("Reports which resources are still active in Datacenters that are scheduled to be closed."),
-        Args: metadata.NoArgs,
-        RunE: func(cmd *cobra.Command, args []string) error {
-            return thisCmd.Run(args)
-        },
-    }
+	thisCmd := &DCClosuresCommand{
+		SoftlayerCommand: sl,
+	}
+	cobraCmd := &cobra.Command{
+		Use:   "datacenter-closures",
+		Short: T("Reports which resources are still active in Datacenters that are scheduled to be closed."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
 
-    thisCmd.Command = cobraCmd
-    return thisCmd
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
-
-
 
 func (cmd *DCClosuresCommand) Run(args []string) error {
 

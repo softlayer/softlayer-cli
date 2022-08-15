@@ -20,15 +20,14 @@ import (
 
 type BandwidthCommand struct {
 	*metadata.SoftlayerCommand
-	ReportManager 	managers.ReportManager
-	Command 			*cobra.Command
-	Start 			string
-	End				string
-	SortBy			string
-	Virtual			bool
-	Server			bool
-	Pool				bool
-	
+	ReportManager managers.ReportManager
+	Command       *cobra.Command
+	Start         string
+	End           string
+	SortBy        string
+	Virtual       bool
+	Server        bool
+	Pool          bool
 }
 
 type metricObject struct {
@@ -50,32 +49,32 @@ type tableRow struct {
 }
 
 func NewBandwidthCommand(sl *metadata.SoftlayerCommand) *BandwidthCommand {
-    thisCmd := &BandwidthCommand{ //Update this line
-        SoftlayerCommand: sl,
-        ReportManager: managers.NewReportManager(sl.Session),
-    }
-    cobraCmd := &cobra.Command{
+	thisCmd := &BandwidthCommand{
+		SoftlayerCommand: sl,
+		ReportManager:    managers.NewReportManager(sl.Session),
+	}
+	cobraCmd := &cobra.Command{
 
-        Use: "bandwidth",  // if a command takes arguments, add them here in ex: + T("IDENTIFIER")
-        Short: T("Bandwidth report for every pool/server."),
-        Long: `EXAMPLE: 
+		Use:   "bandwidth",
+		Short: T("Bandwidth report for every pool/server."),
+		Long: `EXAMPLE: 
    ${COMMAND_NAME} sl report bandwidth
    ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08
    ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut`,
-        Args: metadata.NoArgs, // Make sure this accepts the correct number of args
-        RunE: func(cmd *cobra.Command, args []string) error {
-            return thisCmd.Run(args)
-        },
-    }
-    // Add any flags here
-    cobraCmd.Flags().StringVar(&thisCmd.Start, "start", "", T("datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"))
-    cobraCmd.Flags().StringVar(&thisCmd.End, "end", "", T("datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"))
-    cobraCmd.Flags().StringVar(&thisCmd.SortBy, "sortby", "",T("Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]"))
-    cobraCmd.Flags().BoolVar(&thisCmd.Virtual, "virtual", false, T("Show only the bandwidth summary for each virtual server"))
-    cobraCmd.Flags().BoolVar(&thisCmd.Server, "server", false, T("Show only the bandwidth summary for each hardware server "))
-    cobraCmd.Flags().BoolVar(&thisCmd.Pool, "pool", false, ("Show only the bandwidth pool summary."))
-    thisCmd.Command = cobraCmd
-    return thisCmd
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Start, "start", "", T("datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"))
+	cobraCmd.Flags().StringVar(&thisCmd.End, "end", "", T("datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"))
+	cobraCmd.Flags().StringVar(&thisCmd.SortBy, "sortby", "", T("Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Virtual, "virtual", false, T("Show only the bandwidth summary for each virtual server"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Server, "server", false, T("Show only the bandwidth summary for each hardware server "))
+	cobraCmd.Flags().BoolVar(&thisCmd.Pool, "pool", false, ("Show only the bandwidth pool summary."))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 
 }
 
@@ -90,7 +89,7 @@ func (cmd *BandwidthCommand) Run(args []string) error {
 		sortByOptions := []string{"type", "hostname", "publicin", "publicout", "privatein", "privateout", "pool"}
 		if !utils.WordInList(sortByOptions, sortBy) {
 			return errors.NewInvalidUsageError(T("Invalid --sortBy option."))
-		}		
+		}
 	}
 
 	var endDate time.Time
@@ -251,7 +250,7 @@ func (a ByPool) Len() int           { return len(a) }
 func (a ByPool) Less(i, j int) bool { return a[i].pool < a[j].pool }
 func (a ByPool) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 
-//Return Bandwidth Summary of each virtual guest on account
+// Return Bandwidth Summary of each virtual guest on account
 func getVirtualBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, start datatypes.Time, end datatypes.Time) ([]metricObject, error) {
 
 	virtualGuests, err := cmd.ReportManager.GetVirtualGuests("")
@@ -311,7 +310,7 @@ func getVirtualBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, st
 	return metricObjects, nil
 }
 
-//Return Bandwidth Summary of each hardware server on account
+// Return Bandwidth Summary of each hardware server on account
 func getHardwareBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, start datatypes.Time, end datatypes.Time) ([]metricObject, error) {
 
 	hardwareServers, err := cmd.ReportManager.GetHardwareServers("")
@@ -373,7 +372,7 @@ func getHardwareBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, s
 	return metricObjects, nil
 }
 
-//Return Bandwidth Summary of each pool on account
+// Return Bandwidth Summary of each pool on account
 func getPoolBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, start datatypes.Time, end datatypes.Time) ([]metricObject, error) {
 
 	pools, err := cmd.ReportManager.GetVirtualDedicatedRacks("")
@@ -449,7 +448,7 @@ func getTableRows(metricObjects []metricObject) []tableRow {
 	return tableRows
 }
 
-//Return the total of an specific traffic type
+// Return the total of an specific traffic type
 func getTotalByTypeKey(typeKey string, metricObjectData []datatypes.Metric_Tracking_Object_Data) int {
 	total := 0
 	for _, data := range metricObjectData {
@@ -459,4 +458,3 @@ func getTotalByTypeKey(typeKey string, metricObjectData []datatypes.Metric_Track
 	}
 	return total
 }
-

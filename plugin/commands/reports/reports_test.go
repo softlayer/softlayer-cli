@@ -8,15 +8,14 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 func TestManagers(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Report Suite")
 }
-
 
 var _ = Describe("Test report commands", func() {
 	fakeUI := terminal.NewFakeUI()
