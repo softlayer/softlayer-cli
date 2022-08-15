@@ -1,5 +1,13 @@
 [
   {
+    "id": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log get \n\t${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n\t${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
+    "translation": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log get \n\t${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n\t${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
+  },
+  {
+    "id": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log types",
+    "translation": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log types"
+  },
+  {
     "id": "\nLUN name",
     "translation": "\nLUN name"
   },
@@ -30,50 +38,6 @@
   {
     "id": "# of Active Transactions",
     "translation": "# of Active Transactions"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account bandwidth-pools",
-    "translation": "${COMMAND_NAME} sl account bandwidth-pools"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456",
-    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account cancel-item IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl account cancel-item IDENTIFIER"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account event-detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account event-detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account events",
-    "translation": "${COMMAND_NAME} sl account events"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account invoice-detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account invoice-detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account invoices [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account invoices [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account item-detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account item-detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account licenses [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account licenses [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account orders [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account orders [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account summary [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account summary [OPTIONS]"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222",
@@ -334,14 +298,6 @@
   {
     "id": "${COMMAND_NAME} sl email list",
     "translation": "${COMMAND_NAME} sl email list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
-    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
-  },
-  {
-    "id": "${COMMAND_NAME} sl event-log types\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log types",
-    "translation": "${COMMAND_NAME} sl event-log types\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log types"
   },
   {
     "id": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
@@ -980,10 +936,6 @@
     "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
   {
-    "id": "${COMMAND_NAME} slcli account billing-items [OPTIONS]",
-    "translation": "${COMMAND_NAME} slcli account billing-items [OPTIONS]"
-  },
-  {
     "id": "%s is not a valid permission",
     "translation": "%s is not a valid permission"
   },
@@ -1230,10 +1182,6 @@
   {
     "id": "A word (or string) used to filter presets",
     "translation": "A word (or string) used to filter presets"
-  },
-  {
-    "id": "ALIAS:",
-    "translation": "ALIAS:"
   },
   {
     "id": "APIKEY",
@@ -5184,6 +5132,10 @@
     "translation": "ID of the object being tagged  [required]"
   },
   {
+    "id": "IDENTIFIER",
+    "translation": "IDENTIFIER"
+  },
+  {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
     "translation": "IDs of SSH key to add to the root user, multiple occurrence allowed"
   },
@@ -5366,6 +5318,10 @@
   {
     "id": "Incorrect Usage: ",
     "translation": "Incorrect Usage: "
+  },
+  {
+    "id": "Incorrect Usage: This command requires one argument.",
+    "translation": "Incorrect Usage: This command requires one argument."
   },
   {
     "id": "Incorrect complex type: {{.Type}}",
@@ -6096,10 +6052,6 @@
     "translation": "Must specify [--cpu] when using [--private]."
   },
   {
-    "id": "NAME:",
-    "translation": "NAME:"
-  },
-  {
     "id": "NETWORK has to be either public or private.",
     "translation": "NETWORK has to be either public or private."
   },
@@ -6376,8 +6328,8 @@
     "translation": "Number of updates"
   },
   {
-    "id": "OPTIONS:",
-    "translation": "OPTIONS:"
+    "id": "OPTIONS",
+    "translation": "OPTIONS"
   },
   {
     "id": "OS",
@@ -7988,12 +7940,12 @@
     "translation": "Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}."
   },
   {
-    "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
-    "translation": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}"
-  },
-  {
     "id": "Successfully device firmware reflashed",
     "translation": "Successfully device firmware reflashed"
+  },
+  {
+    "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
@@ -8942,10 +8894,6 @@
   {
     "id": "Types",
     "translation": "Types"
-  },
-  {
-    "id": "USAGE:",
-    "translation": "USAGE:"
   },
   {
     "id": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]",
