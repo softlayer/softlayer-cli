@@ -297,5 +297,6 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	// Commands
 	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
 	cobraCmd.AddCommand(account.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(reports.SetupCobraCommands(slCommand))
 	return cobraCmd
 }

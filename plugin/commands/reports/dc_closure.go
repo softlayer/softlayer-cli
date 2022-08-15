@@ -9,8 +9,7 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -35,35 +34,32 @@ type Resource_Object struct {
 }
 
 type DCClosuresCommand struct {
-	UI      terminal.UI
-	Session *session.Session
+	*metadata.SoftlayerCommand
+	Command *cobra.Command
 }
 
-func NewDCClosuresCommand(ui terminal.UI, session *session.Session) (cmd *DCClosuresCommand) {
-	return &DCClosuresCommand{
-		UI:      ui,
-		Session: session,
-	}
+func NewDCClosuresCommand(sl *metadata.SoftlayerCommand) *DCClosuresCommand {
+    thisCmd := &DCClosuresCommand{ //Update this line
+        SoftlayerCommand: sl,
+    }
+    cobraCmd := &cobra.Command{
+        Use: "datacenter-closures",
+        Short: T("Reports which resources are still active in Datacenters that are scheduled to be closed."),
+        Args: metadata.NoArgs,
+        RunE: func(cmd *cobra.Command, args []string) error {
+            return thisCmd.Run(args)
+        },
+    }
+
+    thisCmd.Command = cobraCmd
+    return thisCmd
 }
 
-func DCClosuresMetaData() cli.Command {
-	return cli.Command{
-		Category:    "report",
-		Name:        "datacenter-closures",
-		Description: T("Reports which resources are still active in Datacenters that are scheduled to be closed."),
-		Usage:       T(`${COMMAND_NAME} sl report datacenter-closures`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
-}
 
-func (cmd *DCClosuresCommand) Run(c *cli.Context) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *DCClosuresCommand) Run(args []string) error {
+
+	outputFormat := cmd.GetOutputFlag()
 
 	closing_filter := filter.New(
 		filter.Path("capabilities").In("CLOSURE_ANNOUNCED"),

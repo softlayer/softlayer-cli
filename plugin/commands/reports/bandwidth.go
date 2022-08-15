@@ -7,10 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -20,8 +19,16 @@ import (
 )
 
 type BandwidthCommand struct {
-	UI            terminal.UI
-	ReportManager managers.ReportManager
+	*metadata.SoftlayerCommand
+	ReportManager 	managers.ReportManager
+	Command 			*cobra.Command
+	Start 			string
+	End				string
+	SortBy			string
+	Virtual			bool
+	Server			bool
+	Pool				bool
+	
 }
 
 type metricObject struct {
@@ -42,33 +49,53 @@ type tableRow struct {
 	pool       string
 }
 
-func NewBandwidthCommand(ui terminal.UI, reportManager managers.ReportManager) (cmd *BandwidthCommand) {
-	return &BandwidthCommand{
-		UI:            ui,
-		ReportManager: reportManager,
-	}
+func NewBandwidthCommand(sl *metadata.SoftlayerCommand) *BandwidthCommand {
+    thisCmd := &BandwidthCommand{ //Update this line
+        SoftlayerCommand: sl,
+        ReportManager: managers.NewReportManager(sl.Session),
+    }
+    cobraCmd := &cobra.Command{
+
+        Use: "bandwidth",  // if a command takes arguments, add them here in ex: + T("IDENTIFIER")
+        Short: T("Bandwidth report for every pool/server."),
+        Long: `EXAMPLE: 
+   ${COMMAND_NAME} sl report bandwidth
+   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08
+   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut`,
+        Args: metadata.NoArgs, // Make sure this accepts the correct number of args
+        RunE: func(cmd *cobra.Command, args []string) error {
+            return thisCmd.Run(args)
+        },
+    }
+    // Add any flags here
+    cobraCmd.Flags().StringVar(&thisCmd.Start, "start", "", T("datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"))
+    cobraCmd.Flags().StringVar(&thisCmd.End, "end", "", T("datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"))
+    cobraCmd.Flags().StringVar(&thisCmd.SortBy, "sortby", "",T("Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]"))
+    cobraCmd.Flags().BoolVar(&thisCmd.Virtual, "virtual", false, T("Show only the bandwidth summary for each virtual server"))
+    cobraCmd.Flags().BoolVar(&thisCmd.Server, "server", false, T("Show only the bandwidth summary for each hardware server "))
+    cobraCmd.Flags().BoolVar(&thisCmd.Pool, "pool", false, ("Show only the bandwidth pool summary."))
+    thisCmd.Command = cobraCmd
+    return thisCmd
+
 }
 
-func (cmd *BandwidthCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	sortBy := ""
-	if !c.IsSet("sortby") {
+func (cmd *BandwidthCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
+	var err error
+	sortBy := cmd.SortBy
+	if sortBy == "" {
 		sortBy = "publicout"
 	} else {
-		sortBy = strings.ToLower(c.String("sortby"))
+		sortBy = strings.ToLower(sortBy)
 		sortByOptions := []string{"type", "hostname", "publicin", "publicout", "privatein", "privateout", "pool"}
 		if !utils.WordInList(sortByOptions, sortBy) {
 			return errors.NewInvalidUsageError(T("Invalid --sortBy option."))
-		}
+		}		
 	}
 
 	var endDate time.Time
-	if c.IsSet("end") {
-		date := c.String("end")
+	if cmd.End != "" {
+		date := cmd.End
 		endDate, err = time.Parse("2006-01-02 15:04:05", date)
 		if err != nil {
 			endDate, err = time.Parse("2006-01-02", date)
@@ -81,8 +108,8 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 	}
 
 	var startDate time.Time
-	if c.IsSet("start") {
-		date := c.String("start")
+	if cmd.Start != "" {
+		date := cmd.Start
 		startDate, err = time.Parse("2006-01-02 15:04:05", date)
 		if err != nil {
 			startDate, err = time.Parse("2006-01-02", date)
@@ -102,7 +129,7 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 		map[string]interface{}{"startDate": startDate.Format("2006-01-02 15:04:05"), "endDate": endDate.Format("2006-01-02 15:04:05")}))
 
 	metricObjects := []metricObject{}
-	if !c.IsSet("virtual") && !c.IsSet("server") && !c.IsSet("pool") {
+	if !cmd.Virtual && !cmd.Server && !cmd.Pool {
 		metricObjects, err = getVirtualBandwidth(cmd, metricObjects, datatypes.Time{Time: startDate}, datatypes.Time{Time: endDate})
 		if err != nil {
 			return err
@@ -116,19 +143,19 @@ func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 			return err
 		}
 	} else {
-		if c.IsSet("virtual") && c.Bool("virtual") {
+		if cmd.Virtual {
 			metricObjects, err = getVirtualBandwidth(cmd, metricObjects, datatypes.Time{Time: startDate}, datatypes.Time{Time: endDate})
 			if err != nil {
 				return err
 			}
 		}
-		if c.IsSet("server") && c.Bool("server") {
+		if cmd.Server {
 			metricObjects, err = getHardwareBandwidth(cmd, metricObjects, datatypes.Time{Time: startDate}, datatypes.Time{Time: endDate})
 			if err != nil {
 				return err
 			}
 		}
-		if c.IsSet("pool") && c.Bool("pool") {
+		if cmd.Pool {
 			metricObjects, err = getPoolBandwidth(cmd, metricObjects, datatypes.Time{Time: startDate}, datatypes.Time{Time: endDate})
 			if err != nil {
 				return err
@@ -229,7 +256,7 @@ func getVirtualBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, st
 
 	virtualGuests, err := cmd.ReportManager.GetVirtualGuests("")
 	if err != nil {
-		return metricObjects, cli.NewExitError(T("Failed to get virtual guests on your account.\n")+err.Error(), 2)
+		return metricObjects, errors.NewAPIError(T("Failed to get virtual guests on your account.\n"), err.Error(), 2)
 	}
 
 	validTypes := []datatypes.Container_Metric_Data_Type{
@@ -289,7 +316,7 @@ func getHardwareBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, s
 
 	hardwareServers, err := cmd.ReportManager.GetHardwareServers("")
 	if err != nil {
-		return metricObjects, cli.NewExitError(T("Failed to get hardware servers on your account.\n")+err.Error(), 2)
+		return metricObjects, errors.NewAPIError(T("Failed to get hardware servers on your account.\n"), err.Error(), 2)
 	}
 
 	validTypes := []datatypes.Container_Metric_Data_Type{
@@ -351,7 +378,7 @@ func getPoolBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, start
 
 	pools, err := cmd.ReportManager.GetVirtualDedicatedRacks("")
 	if err != nil {
-		return metricObjects, cli.NewExitError(T("Failed to get virtual dedicated racks on your account.\n")+err.Error(), 2)
+		return metricObjects, errors.NewAPIError(T("Failed to get virtual dedicated racks on your account.\n"), err.Error(), 2)
 	}
 
 	validTypes := []datatypes.Container_Metric_Data_Type{
@@ -433,43 +460,3 @@ func getTotalByTypeKey(typeKey string, metricObjectData []datatypes.Metric_Track
 	return total
 }
 
-func ReportBandwidthMetaData() cli.Command {
-	return cli.Command{
-		Category:    "report",
-		Name:        "bandwidth",
-		Description: T("Bandwidth report for every pool/server."),
-		Usage: T(`${COMMAND_NAME} sl report bandwidth
-
-EXAMPLE: 
-   ${COMMAND_NAME} sl report bandwidth
-   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08
-   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "start",
-				Usage: T("datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"),
-			},
-			cli.StringFlag{
-				Name:  "end",
-				Usage: T("datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"),
-			},
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]"),
-			},
-			cli.BoolFlag{
-				Name:  "virtual",
-				Usage: T("Show only the bandwidth summary for each virtual server"),
-			},
-			cli.BoolFlag{
-				Name:  "server",
-				Usage: T("Show only the bandwidth summary for each hardware server "),
-			},
-			cli.BoolFlag{
-				Name:  "pool",
-				Usage: T("Show only the bandwidth pool summary."),
-			},
-			metadata.OutputFlag(),
-		},
-	}
-}
