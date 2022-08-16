@@ -99,8 +99,8 @@ func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsComm
     }
     cobraCmd := &cobra.Command{
         // The first 'word' in the Use line is the command name. Anything after that will show up in the help text
-        Use: "bandwidth-pools",  // if a command takes arguments, add them here in ex: + T("IDENTIFIER")
-        Short: T("lists bandwidth pools"), // Updates this from metadata
+        Use: "THE-COMMAND-NAME-HERE",  // if a command takes arguments, add them here in ex: + T("IDENTIFIER")
+        Short: T("Your translated short description goes here"), // Updates this from metadata
         Long: "",  // Remove this if the Usage from the old command is just basic information about how to run it. The Long description should be for examples, detailed information about the command.
         Args: metadata.NoArgs, // Make sure this accepts the correct number of args
         RunE: func(cmd *cobra.Command, args []string) error {
