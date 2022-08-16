@@ -7,62 +7,62 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("reports bandwidth", func() {
 	var (
 		fakeUI            *terminal.FakeUI
+		cliCommand        *reports.BandwidthCommand
+		fakeSession       *session.Session
+		slCommand         *metadata.SoftlayerCommand
 		fakeReportManager *testhelpers.FakeReportManager
-		cmd               *reports.BandwidthCommand
-		cliCommand        cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeReportManager = new(testhelpers.FakeReportManager)
-		cmd = reports.NewBandwidthCommand(fakeUI, fakeReportManager)
-		cliCommand = cli.Command{
-			Name:        reports.ReportBandwidthMetaData().Name,
-			Description: reports.ReportBandwidthMetaData().Description,
-			Usage:       reports.ReportBandwidthMetaData().Usage,
-			Flags:       reports.ReportBandwidthMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = reports.NewBandwidthCommand(slCommand)
+		cliCommand.ReportManager = fakeReportManager
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+
 	})
 
 	Describe("reports bandwidth", func() {
 
 		Context("Return error", func() {
 			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
 
 			It("Set invalid --sortby option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby=id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby=id")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid --sortBy option."))
 			})
 
 			It("Set invalid --start option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--start=20220305")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--start=20220305")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid format date to --start."))
 			})
 
 			It("Set invalid --end option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--end=20220305")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--end=20220305")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid format date to --end."))
 			})
 
 			It("--end is not greater than --start", func() {
-				err := testhelpers.RunCommand(cliCommand, "--start=2022-04-05", "--end=2022-03-05")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--start=2022-04-05", "--end=2022-03-05")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: End Date must be greater than Start Date."))
 			})
@@ -73,13 +73,13 @@ var _ = Describe("reports bandwidth", func() {
 				fakeReportManager.GetVirtualGuestsReturns([]datatypes.Virtual_Guest{}, errors.New("Failed to get virtual guests on your account."))
 			})
 			It("Failed get virtual guests with --virtual option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--virtual")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--virtual")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get virtual guests on your account."))
 			})
 
 			It("Failed get virtual guests without --virtual option", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get virtual guests on your account."))
 			})
@@ -90,13 +90,13 @@ var _ = Describe("reports bandwidth", func() {
 				fakeReportManager.GetHardwareServersReturns([]datatypes.Hardware{}, errors.New("Failed to get hardware servers on your account."))
 			})
 			It("Failed get hardware servers with --server option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--server")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--server")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get hardware servers on your account."))
 			})
 
 			It("Failed get hardware servers without --server option", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get hardware servers on your account."))
 			})
@@ -107,13 +107,13 @@ var _ = Describe("reports bandwidth", func() {
 				fakeReportManager.GetVirtualDedicatedRacksReturns([]datatypes.Network_Bandwidth_Version1_Allotment{}, errors.New("Failed to get virtual dedicated racks on your account."))
 			})
 			It("Failed get pools with --pool option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--pool")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get virtual dedicated racks on your account."))
 			})
 
 			It("Failed get pools without --pool option", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get virtual dedicated racks on your account."))
 			})
@@ -136,7 +136,7 @@ var _ = Describe("reports bandwidth", func() {
 				fakeReportManager.GetMetricTrackingSummaryDataReturns([]datatypes.Metric_Tracking_Object_Data{}, errors.New("Failed to get metric tracking summary"))
 			})
 			It("Failed to get virtual guest metric tracking summary", func() {
-				err := testhelpers.RunCommand(cliCommand, "--virtual")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--virtual")
 				Expect(err).NotTo(HaveOccurred())
 			})
 		})
@@ -154,7 +154,7 @@ var _ = Describe("reports bandwidth", func() {
 				fakeReportManager.GetMetricTrackingSummaryDataReturns([]datatypes.Metric_Tracking_Object_Data{}, errors.New("Failed to get metric tracking summary"))
 			})
 			It("Failed to get pool metric tracking summary", func() {
-				err := testhelpers.RunCommand(cliCommand, "--pool")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool")
 				Expect(err).NotTo(HaveOccurred())
 			})
 		})
@@ -194,7 +194,7 @@ var _ = Describe("reports bandwidth", func() {
 				fakeReportManager.GetMetricTrackingSummaryDataReturns(fakeMetricTrackingSummaryData, nil)
 			})
 			It("Display virtual guests bandwidth summary with diferents --sortby options", func() {
-				err := testhelpers.RunCommand(cliCommand, "--virtual", "--sortby=type")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--virtual", "--sortby=type")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtual"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtualGuestHostname"))
@@ -206,7 +206,7 @@ var _ = Describe("reports bandwidth", func() {
 			})
 
 			It("Display virtual guests bandwidth summary", func() {
-				err := testhelpers.RunCommand(cliCommand, "--virtual", "--sortby=hostname")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--virtual", "--sortby=hostname")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtual"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtualGuestHostname"))
@@ -218,7 +218,7 @@ var _ = Describe("reports bandwidth", func() {
 			})
 
 			It("Display virtual guests bandwidth summary", func() {
-				err := testhelpers.RunCommand(cliCommand, "--virtual", "--sortby=publicIn")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--virtual", "--sortby=publicIn")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtual"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtualGuestHostname"))
@@ -230,7 +230,7 @@ var _ = Describe("reports bandwidth", func() {
 			})
 
 			It("Display virtual guests bandwidth summary", func() {
-				err := testhelpers.RunCommand(cliCommand, "--virtual", "--sortby=publicOut")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--virtual", "--sortby=publicOut")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtual"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtualGuestHostname"))
@@ -242,7 +242,7 @@ var _ = Describe("reports bandwidth", func() {
 			})
 
 			It("Display virtual guests bandwidth summary", func() {
-				err := testhelpers.RunCommand(cliCommand, "--virtual", "--sortby=privateIn")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--virtual", "--sortby=privateIn")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtual"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtualGuestHostname"))
@@ -254,7 +254,7 @@ var _ = Describe("reports bandwidth", func() {
 			})
 
 			It("Display virtual guests bandwidth summary", func() {
-				err := testhelpers.RunCommand(cliCommand, "--virtual", "--sortby=privateOut")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--virtual", "--sortby=privateOut")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtual"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtualGuestHostname"))
@@ -266,7 +266,7 @@ var _ = Describe("reports bandwidth", func() {
 			})
 
 			It("Display virtual guests bandwidth summary", func() {
-				err := testhelpers.RunCommand(cliCommand, "--virtual", "--sortby=pool")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--virtual", "--sortby=pool")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtual"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("virtualGuestHostname"))
@@ -309,7 +309,7 @@ var _ = Describe("reports bandwidth", func() {
 				fakeReportManager.GetMetricTrackingSummaryDataReturns(fakeMetricTrackingSummaryData, nil)
 			})
 			It("Display pool bandwidth summary", func() {
-				err := testhelpers.RunCommand(cliCommand, "--pool")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("pool"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("poolName"))
