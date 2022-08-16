@@ -302,6 +302,8 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(reports.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(eventlog.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(nas.SetupCobraCommands(slCommand))
+	// Block and File
+	cobraCmd.AddCommand(block.SetupCobraCommands(slCommand))
 
 	return cobraCmd
 }

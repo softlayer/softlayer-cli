@@ -5,24 +5,38 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
+
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "block",
+		Short: T("Classic infrastructure Block Storage"),
+		RunE:  nil,
+	}
+	cobraCmd.AddCommand(NewAccessAuthorizeCommand(sl).Command)
+	return cobraCmd
+}
+
 
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	storageManager := managers.NewStorageManager(session)
 	networkManager := managers.NewNetworkManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"block-access-authorize": func(c *cli.Context) error {
-			return NewAccessAuthorizeCommand(ui, storageManager, networkManager).Run(c)
-		},
+		// "block-access-authorize": func(c *cli.Context) error {
+		// 	return NewAccessAuthorizeCommand(ui, storageManager, networkManager).Run(c)
+		// },
 		"block-access-list": func(c *cli.Context) error {
 			return NewAccessListCommand(ui, storageManager).Run(c)
 		},
-		"block-access-password": func(c *cli.Context) error {
-			return NewAccessPasswordCommand(ui, storageManager).Run(c)
-		},
+		// "block-access-password": func(c *cli.Context) error {
+		// 	return NewAccessPasswordCommand(ui, storageManager).Run(c)
+		// },
 		"block-access-revoke": func(c *cli.Context) error {
 			return NewAccessRevokeCommand(ui, storageManager, networkManager).Run(c)
 		},
@@ -151,55 +165,5 @@ func BlockNamespace() plugin.Namespace {
 		ParentName:  "sl",
 		Name:        "block",
 		Description: T("Classic infrastructure Block Storage"),
-	}
-}
-
-func BlockMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "block",
-		Description: T("Classic infrastructure Block Storage"),
-		Usage:       "${COMMAND_NAME} sl block",
-		Subcommands: []cli.Command{
-			BlockAccessAuthorizeMetaData(),
-			BlockAccessListMetaData(),
-			BlockAccessPasswordMetaData(),
-			BlockAccessRevokeMetaData(),
-			BlockDisasterRecoveryFailoverMetaData(),
-			BlockReplicaFailbackMetaData(),
-			BlockReplicaFailOverMetaData(),
-			BlockReplicaLocationsMetaData(),
-			BlockReplicaOrderMetaData(),
-			BlockReplicaPartnersMetaData(),
-			BlockSnapshotCancelMetaData(),
-			BlockSnapshotCreateMetaData(),
-			BlockSnapshotDisableMetaData(),
-			BlockSnapshotEnableMetaData(),
-			BlockSnapshotDeleteMetaData(),
-			BlockSnapshotListMetaData(),
-			BlockSnapshotScheduleListMetaData(),
-			BlockSnapshotOrderMetaData(),
-			BlockSnapshotRestoreMetaData(),
-			BlockVolumeCancelMetaData(),
-			BlockVolumeCountMetaData(),
-			BlockVolumeListMetaData(),
-			BlockVolumeDetailMetaData(),
-			BlockVolumeDuplicateMetaData(),
-			BlockVolumeModifyMetaData(),
-			BlockVolumeOrderMetaData(),
-			BlockVolumeOptionsMetaData(),
-			BlockVolumeLunMetaData(),
-			BlockVolumeLimitsMetaData(),
-			BlockVolumeRefreshMetaData(),
-			BlockVolumeConvertMetaData(),
-			BlockVolumeSnapshotSetNotificationMetaData(),
-			BlockVolumeSnapshotGetNotificationStatusMetaData(),
-			BlockVolumeSetNoteMetaData(),
-			BlockObjectListMetaData(),
-			BlockSubnetsListMetaData(),
-			BlockSubnetsAssignMetaData(),
-			BlockSubnetsRemoveMetaData(),
-			BlockDuplicateConvertStatusMetaData(),
-		},
 	}
 }
