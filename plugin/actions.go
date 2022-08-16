@@ -3,8 +3,6 @@ package plugin
 import (
 	"fmt"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
-
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
 
@@ -167,12 +165,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl security
 	securityCommands := security.GetCommandActionBindings(context, ui, session)
 	for name, action := range securityCommands {
-		CommandActionBindings[name] = action
-	}
-
-	//ibmcloud sl licenses
-	licenseCommands := licenses.GetCommandActionBindings(context, ui, session)
-	for name, action := range licenseCommands {
 		CommandActionBindings[name] = action
 	}
 

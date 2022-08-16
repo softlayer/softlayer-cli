@@ -1,8 +1,7 @@
 package licenses
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -11,53 +10,45 @@ import (
 )
 
 type CreateCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
+	Command         *cobra.Command
 	LicensesManager managers.LicensesManager
+	Key             string
+	Datacenter      string
 }
 
-func NewCreateCommand(ui terminal.UI, licensesManager managers.LicensesManager) (cmd *CreateCommand) {
-	return &CreateCommand{
-		UI:              ui,
-		LicensesManager: licensesManager,
+func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
+	thisCmd := &CreateCommand{
+		SoftlayerCommand: sl,
+		LicensesManager:  managers.NewLicensesManager(sl.Session),
 	}
-}
-
-func CreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "licenses",
-		Name:        "create",
-		Description: T("Order/Create License."),
-		Usage:       "${COMMAND_NAME} sl licenses create",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "key",
-				Usage: T("The VMware License Key. To get the required package you can use the command sl licenses create-options Package. E.g VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2  [required]"),
-			},
-			cli.StringFlag{
-				Name:  "datacenter",
-				Usage: T("Datacenter shortname  [required]"),
-			},
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use:   "create",
+		Short: T("Order/Create License."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVarP(&thisCmd.Key, "key", "", "", T("The VMware License Key. To get the required package you can use the command sl licenses create-options Package. E.g VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2  [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "", "", T("Datacenter shortname  [required]"))
+	
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateCommand) Run(c *cli.Context) error {
+func (cmd *CreateCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	if !c.IsSet("datacenter") || !c.IsSet("key") {
+	if cmd.Datacenter == "" || cmd.Key == "" {
 		return slErr.NewInvalidUsageError(T("This command requires two arguments."))
 	}
-	
+
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 
-	orderLicense, err := cmd.LicensesManager.CreateLicense(c.String("datacenter"), c.String("key"))
+	orderLicense, err := cmd.LicensesManager.CreateLicense(cmd.Datacenter, cmd.Key)
 	if err != nil {
-		return cli.NewExitError(T("Failed to create the license.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to create the license."), err.Error(), 2)
 	}
 	table.Add("Id", utils.FormatIntPointer(orderLicense.OrderId))
 	table.Add("Created", utils.FormatSLTimePointer(orderLicense.OrderDate))

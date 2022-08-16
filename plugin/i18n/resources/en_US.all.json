@@ -3120,8 +3120,8 @@
     "translation": "Failed to cancel item: {{.itemID}}.\n"
   },
   {
-    "id": "Failed to cancel license: {{.key}}.\n",
-    "translation": "Failed to cancel license: {{.key}}.\n"
+    "id": "Failed to cancel license: {{.key}}.",
+    "translation": "Failed to cancel license: {{.key}}."
   },
   {
     "id": "Failed to cancel load balancer {{.LBID}}.\n",
@@ -3200,8 +3200,8 @@
     "translation": "Failed to create subnet with {{.ID}}.\n"
   },
   {
-    "id": "Failed to create the license.\n",
-    "translation": "Failed to create the license.\n"
+    "id": "Failed to create the license.",
+    "translation": "Failed to create the license."
   },
   {
     "id": "Failed to create translation for IPSec with ID {{.ID}}.\n",
@@ -3872,8 +3872,8 @@
     "translation": "Failed to get zone ID from zone name: {{.Zone}}.\n"
   },
   {
-    "id": "Failed to licenses create options.\n",
-    "translation": "Failed to licenses create options.\n"
+    "id": "Failed to licenses create options.",
+    "translation": "Failed to licenses create options."
   },
   {
     "id": "Failed to list SSH keys on your account.\n",
@@ -7548,6 +7548,10 @@
     "translation": "Server order options for a given chassis"
   },
   {
+    "id": "Server order options for a given chassis.",
+    "translation": "Server order options for a given chassis."
+  },
+  {
     "id": "Server side timeout setting, in seconds",
     "translation": "Server side timeout setting, in seconds"
   },
@@ -8964,8 +8968,8 @@
     "translation": "Unable to find item with ID: {{.itemID}}.\n"
   },
   {
-    "id": "Unable to find license with key: {{.key}}.\n",
-    "translation": "Unable to find license with key: {{.key}}.\n"
+    "id": "Unable to find license with key: {{.key}}.",
+    "translation": "Unable to find license with key: {{.key}}."
   },
   {
     "id": "Unable to find location",

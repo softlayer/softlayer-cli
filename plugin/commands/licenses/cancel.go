@@ -3,54 +3,52 @@ package licenses
 import (
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CancelItemCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
+	Command         *cobra.Command
 	LicensesManager managers.LicensesManager
+	Immediate       bool
 }
 
-func NewCancelItemCommand(ui terminal.UI, licensesManager managers.LicensesManager) (cmd *CancelItemCommand) {
-	return &CancelItemCommand{
-		UI:              ui,
-		LicensesManager: licensesManager,
+func NewCancelItemCommand(sl *metadata.SoftlayerCommand) *CancelItemCommand {
+	thisCmd := &CancelItemCommand{
+		SoftlayerCommand: sl,
+		LicensesManager:  managers.NewLicensesManager(sl.Session),
 	}
-}
-
-func CancelItemMetaData() cli.Command {
-	return cli.Command{
-		Category:    "licenses",
-		Name:        "cancel",
-		Description: T("Cancel a license."),
-		Usage:       T(`${COMMAND_NAME} sl licenses cancel KEY`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "immediate",
-				Usage: T("Immediate cancellation."),
-			},
+	cobraCmd := &cobra.Command{
+		Use:   "cancel",
+		Short: T("Cancel a license."),
+		Long:  T(`EXAMPLE:
+${COMMAND_NAME} sl licenses cancel KEY`),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().BoolVar(&thisCmd.Immediate, "immediate", false, T("Immediate cancellation."))
+	
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CancelItemCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *CancelItemCommand) Run(args []string) error {
 
-	key := c.Args()[0]
+	key := args[0]
 
-	err := cmd.LicensesManager.CancelItem(key, c.Bool("immediate"))
+	err := cmd.LicensesManager.CancelItem(key, cmd.Immediate)
 	if err != nil {
 		if strings.Contains(err.Error(), slErr.SL_EXP_OBJ_NOT_FOUND) {
-			return cli.NewExitError(T("Unable to find license with key: {{.key}}.\n", map[string]interface{}{"key": key})+err.Error(), 0)
+			return slErr.NewAPIError(T("Unable to find license with key: {{.key}}.", map[string]interface{}{"key": key}), err.Error(), 0)
 		}
-		return cli.NewExitError(T("Failed to cancel license: {{.key}}.\n", map[string]interface{}{"key": key})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to cancel license: {{.key}}.", map[string]interface{}{"key": key}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("License: {{.key}} was cancelled.", map[string]interface{}{"key": key}))
