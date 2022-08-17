@@ -273,6 +273,22 @@ func ValidateColumns(sortby string, columns []string, defaultColumns []string, o
 	return columns, nil
 }
 
+// TODO: Once refactor is done, remove ValidateColumns and rename ValidateColumns2 to it.
+func ValidateColumns2(sortby string, columns []string, defaultColumns []string, optionalColumns, sortColumns []string) ([]string, error) {
+	if sortby != EMPTY_STRING && StringInSlice(sortby, sortColumns) == -1 {
+		return nil, bmxErr.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
+	}
+	allColumns := append(defaultColumns, optionalColumns...)
+	if exist, index := SliceInSlice(columns, allColumns); len(columns) > 0 && exist == false {
+		return nil, bmxErr.NewInvalidUsageError(T("--column {{.Column}} is not supported.", map[string]interface{}{"Column": columns[index]}))
+	}
+
+	if len(columns) == 0 {
+		return defaultColumns, nil
+	}
+	return columns, nil
+}
+
 func GetMask(maskMap map[string]string, columns []string, sortBy string) string {
 
 	if sortBy != EMPTY_STRING && StringInSlice(sortBy, columns) == -1 {

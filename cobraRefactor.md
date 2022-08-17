@@ -73,8 +73,8 @@ import "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 ```go
 type BandwidthPoolsCommand struct {
     *metadata.SoftlayerCommand
-    AccountManager managers.AccountManager
     Command *cobra.Command
+    AccountManager managers.AccountManager
     //Flag1 int
     //Flag2 string
 }

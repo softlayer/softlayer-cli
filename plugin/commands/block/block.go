@@ -19,6 +19,8 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 		RunE:  nil,
 	}
 	cobraCmd.AddCommand(NewAccessAuthorizeCommand(sl).Command)
+	cobraCmd.AddCommand(NewAccessPasswordCommand(sl).Command)
+	cobraCmd.AddCommand(NewAccessListCommand(sl).Command)
 	return cobraCmd
 }
 
@@ -31,9 +33,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		// "block-access-authorize": func(c *cli.Context) error {
 		// 	return NewAccessAuthorizeCommand(ui, storageManager, networkManager).Run(c)
 		// },
-		"block-access-list": func(c *cli.Context) error {
-			return NewAccessListCommand(ui, storageManager).Run(c)
-		},
+		// "block-access-list": func(c *cli.Context) error {
+		// 	return NewAccessListCommand(ui, storageManager).Run(c)
+		// },
 		// "block-access-password": func(c *cli.Context) error {
 		// 	return NewAccessPasswordCommand(ui, storageManager).Run(c)
 		// },

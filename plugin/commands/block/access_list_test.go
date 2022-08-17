@@ -10,44 +10,44 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-var _ = Describe("Access Authorize", func() {
-	var (
-		fakeUI             *terminal.FakeUI
-		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.AccessListCommand
-		cliCommand         cli.Command
-	)
-	BeforeEach(func() {
-		fakeUI = terminal.NewFakeUI()
+var _ = Describe("Access List Tests", func() {
+    var (
+        fakeUI              *terminal.FakeUI
+        cliCommand          *block.AccessListCommand
+        fakeSession         *session.Session
+        slCommand           *metadata.SoftlayerCommand
+        FakeStorageManager *testhelpers.FakeStorageManager
+    )
+    BeforeEach(func() {
+        fakeUI = terminal.NewFakeUI()
+        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewAccessListCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockAccessListMetaData().Name,
-			Description: block.BlockAccessListMetaData().Description,
-			Usage:       block.BlockAccessListMetaData().Usage,
-			Flags:       block.BlockAccessListMetaData().Flags,
-			Action:      cmd.Run,
-		}
-	})
+        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+        cliCommand = block.NewAccessListCommand(slCommand)
+        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+        cliCommand.StorageManager = FakeStorageManager
+    })
 
 	Describe("Access List", func() {
 		Context("Access list without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Access Authorize with wrong volume id", func() {
 			It("error resolving volume ID", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Volume ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 
@@ -114,7 +114,7 @@ var _ = Describe("Access Authorize", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"12345678"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilma.org"}))
@@ -140,7 +140,7 @@ var _ = Describe("Access Authorize", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vvvvvvvv"}))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--column", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--column", "id")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"12345678"}))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"wilma.org"}))
@@ -166,7 +166,7 @@ var _ = Describe("Access Authorize", func() {
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"vvvvvvvv"}))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--columns", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--column", "id")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"12345678"}))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"wilma.org"}))
@@ -192,7 +192,7 @@ var _ = Describe("Access Authorize", func() {
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"vvvvvvvv"}))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--column", "id", "--column", "username")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--column", "id", "--column", "username")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"12345678"}))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"wilma.org"}))
@@ -218,7 +218,7 @@ var _ = Describe("Access Authorize", func() {
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"vvvvvvvv"}))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--columns", "id", "--columns", "username")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--column", "id", "--column", "username")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"12345678"}))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"wilma.org"}))
@@ -244,7 +244,7 @@ var _ = Describe("Access Authorize", func() {
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"vvvvvvvv"}))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "id")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(MatchRegexp(`.*12345678.*\n.*12387654.*\n.*87612345.*\n.*87654321.*`))
 			})
@@ -255,7 +255,7 @@ var _ = Describe("Access Authorize", func() {
 				FakeStorageManager.GetVolumeAccessListReturns(datatypes.Network_Storage{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"OK"}))
 				Expect(strings.Contains(err.Error(), "Failed to get access list for volume 1234.")).To(BeTrue())
