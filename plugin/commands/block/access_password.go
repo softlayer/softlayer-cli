@@ -1,44 +1,43 @@
 package block
 
 import (
-	"strconv"
 	"fmt"
 	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"strconv"
 )
 
 type AccessPasswordCommand struct {
 	*metadata.SoftlayerCommand
-	Command *cobra.Command
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
 func NewAccessPasswordCommand(sl *metadata.SoftlayerCommand) *AccessPasswordCommand {
 	thisCmd := &AccessPasswordCommand{
-	  SoftlayerCommand: sl,
-	  StorageManager: managers.NewStorageManager(sl.Session),
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-	  Use: "access-password " + T("IDENTIFIER") + " " + T("PASSWORD"),
-	  Short: T("Changes a password for a volume's access"),
-	  Long: T(`${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD
+		Use:   "access-password " + T("IDENTIFIER") + " " + T("PASSWORD"),
+		Short: T("Changes a password for a volume's access"),
+		Long: T(`${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD
 	
 	ACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'`),
-	  Args: metadata.TwoArgs,
-	  RunE: func(cmd *cobra.Command, args []string) error {
-	      return thisCmd.Run(args)
-	  },
-	  DisableFlagsInUseLine: true,
+		Args: metadata.TwoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+		DisableFlagsInUseLine: true,
 	}
 
 	thisCmd.Command = cobraCmd
 
 	return thisCmd
 }
-
 
 func (cmd *AccessPasswordCommand) Run(args []string) error {
 

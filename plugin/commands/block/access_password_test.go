@@ -16,24 +16,23 @@ import (
 )
 
 var _ = Describe("Access Password", func() {
-    var (
-        fakeUI              *terminal.FakeUI
-        cliCommand          *block.AccessPasswordCommand
-        fakeSession         *session.Session
-        slCommand           *metadata.SoftlayerCommand
-        FakeStorageManager *testhelpers.FakeStorageManager
-
-    )
-    BeforeEach(func() {
-        fakeUI = terminal.NewFakeUI()
-        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+	var (
+		fakeUI             *terminal.FakeUI
+		cliCommand         *block.AccessPasswordCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
+		FakeStorageManager *testhelpers.FakeStorageManager
+	)
+	BeforeEach(func() {
+		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-        cliCommand = block.NewAccessPasswordCommand(slCommand)
-        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-        cliCommand.StorageManager = FakeStorageManager
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = block.NewAccessPasswordCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 
-    })
+	})
 
 	Describe("Access password", func() {
 		Context("Access password without hostId", func() {

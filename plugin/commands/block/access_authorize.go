@@ -14,33 +14,33 @@ import (
 
 type AccessAuthorizeCommand struct {
 	*metadata.SoftlayerCommand
-	Command *cobra.Command
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	NetworkManager managers.NetworkManager
-	Hardware_id []int
-	Virtual_id []int
-	Ip_address_id []int
-	Ip_address []string
+	Hardware_id    []int
+	Virtual_id     []int
+	Ip_address_id  []int
+	Ip_address     []string
 }
 
 func NewAccessAuthorizeCommand(sl *metadata.SoftlayerCommand) *AccessAuthorizeCommand {
 	thisCmd := &AccessAuthorizeCommand{
-	  SoftlayerCommand: sl,
-	  StorageManager: managers.NewStorageManager(sl.Session),
-	  NetworkManager: managers.NewNetworkManager(sl.Session),
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-	  Use: "access-authorize " + T("IDENTIFIER"),
-	  Short: T("Authorize hosts  to access a given volume"),
-	  Long: T(`${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]
+		Use:   "access-authorize " + T("IDENTIFIER"),
+		Short: T("Authorize hosts  to access a given volume"),
+		Long: T(`${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
    ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321
    This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.`),
-	  Args: metadata.OneArgs,
-	  RunE: func(cmd *cobra.Command, args []string) error {
-	      return thisCmd.Run(args)
-	  },
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
 	}
 
 	cobraCmd.Flags().IntSliceVarP(&thisCmd.Hardware_id, "hardware-id", "d", []int{}, T("The ID of one hardware server to authorize"))
@@ -51,7 +51,6 @@ EXAMPLE:
 
 	return thisCmd
 }
-
 
 func (cmd *AccessAuthorizeCommand) Run(args []string) error {
 

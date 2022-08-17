@@ -9,34 +9,34 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Access Authorize", func() {
-    var (
-        fakeUI              *terminal.FakeUI
-        cliCommand          *block.AccessAuthorizeCommand
-        fakeSession         *session.Session
-        slCommand           *metadata.SoftlayerCommand
-        FakeStorageManager *testhelpers.FakeStorageManager
-        fakeNetworkManager *testhelpers.FakeNetworkManager
-    )
-    BeforeEach(func() {
-        fakeUI = terminal.NewFakeUI()
-        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+	var (
+		fakeUI             *terminal.FakeUI
+		cliCommand         *block.AccessAuthorizeCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
+		FakeStorageManager *testhelpers.FakeStorageManager
+		fakeNetworkManager *testhelpers.FakeNetworkManager
+	)
+	BeforeEach(func() {
+		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-        cliCommand = block.NewAccessAuthorizeCommand(slCommand)
-        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-        cliCommand.StorageManager = FakeStorageManager
-        cliCommand.NetworkManager = fakeNetworkManager
-    })
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = block.NewAccessAuthorizeCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
+		cliCommand.NetworkManager = fakeNetworkManager
+	})
 
 	Describe("Access Authorize", func() {
 		Context("Access Authorize without volume id", func() {
