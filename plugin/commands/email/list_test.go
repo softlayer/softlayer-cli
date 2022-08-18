@@ -6,38 +6,34 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Email list Email", func() {
 	var (
 		fakeUI           *terminal.FakeUI
-		cmd              *email.ListCommand
-		cliCommand       cli.Command
+		cliCommand       *email.ListCommand
 		fakeSession      *session.Session
+		slCommand        *metadata.SoftlayerCommand
 		fakeEmailManager managers.EmailManager
 	)
 	BeforeEach(func() {
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeEmailManager = managers.NewEmailManager(fakeSession)
 		fakeUI = terminal.NewFakeUI()
-		cmd = email.NewListCommand(fakeUI, fakeEmailManager)
-		cliCommand = cli.Command{
-			Name:        email.ListMetaData().Name,
-			Description: email.ListMetaData().Description,
-			Usage:       email.ListMetaData().Usage,
-			Flags:       email.ListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = email.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.EmailManager = fakeEmailManager
 	})
 
 	Describe("Email list", func() {
 		Context("Email list, Invalid Usage", func() {
 			It("Set command with an invalid output option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -45,7 +41,7 @@ var _ = Describe("Email list Email", func() {
 
 		Context("Email list, correct use", func() {
 			It("return email list", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Name                Value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Email information   Id       Username             Description                           Vendor"))
@@ -57,7 +53,7 @@ var _ = Describe("Email list Email", func() {
 
 			})
 			It("return email email in format json", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output", "json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "Email information",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Id": "295324","`))

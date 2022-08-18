@@ -1,40 +1,42 @@
 package licenses
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type LicensesOptionsCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
+	Command         *cobra.Command
 	LicensesManager managers.LicensesManager
 }
 
-func NewLicensesOptionsCommand(ui terminal.UI, licensesManager managers.LicensesManager) (cmd *LicensesOptionsCommand) {
-	return &LicensesOptionsCommand{
-		UI:              ui,
-		LicensesManager: licensesManager,
+func NewLicensesOptionsCommand(sl *metadata.SoftlayerCommand) *LicensesOptionsCommand {
+	thisCmd := &LicensesOptionsCommand{
+		SoftlayerCommand: sl,
+		LicensesManager:  managers.NewLicensesManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "create-options",
+		Short: T("Server order options for a given chassis."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func LicensesCreateOptionsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "licenses",
-		Name:        "create-options",
-		Description: T("Server order options for a given chassis"),
-		Usage:       "${COMMAND_NAME} sl licenses create-options",
-		Flags:       []cli.Flag{},
-	}
-}
-
-func (cmd *LicensesOptionsCommand) Run(c *cli.Context) error {
+func (cmd *LicensesOptionsCommand) Run(args []string) error {
 	table := cmd.UI.Table([]string{T("Id"), T("Description"), T("KeyName"), T("Capacity"), T("RecurringFee")})
 	licenses, err := cmd.LicensesManager.CreateLicensesOptions()
 	if err != nil {
-		return cli.NewExitError(T("Failed to licenses create options.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to licenses create options."), err.Error(), 2)
 	}
 
 	for _, license := range licenses {
