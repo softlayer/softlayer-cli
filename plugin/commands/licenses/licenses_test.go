@@ -17,7 +17,7 @@ func TestManagers(t *testing.T) {
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
-var _ = Describe("Test licenses.GetCommandActionBindings()", func() {
+var _ = Describe("Test licenses commands", func() {
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
 	slMeta := metadata.NewSoftlayerCommand(fakeUI, fakeSession)
