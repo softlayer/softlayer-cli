@@ -25,6 +25,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewReplicaFailbackCommand(sl).Command)
 	cobraCmd.AddCommand(NewReplicaFailoverCommand(sl).Command)
 	cobraCmd.AddCommand(NewReplicaLocationsCommand(sl).Command)
+	cobraCmd.AddCommand(NewReplicaOrderCommand(sl).Command)
 	return cobraCmd
 }
 
@@ -53,9 +54,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		// "block-replica-locations": func(c *cli.Context) error {
 		// 	return NewReplicaLocationsCommand(ui, storageManager).Run(c)
 		// },
-		"block-replica-order": func(c *cli.Context) error {
-			return NewReplicaOrderCommand(ui, storageManager, context).Run(c)
-		},
+		// "block-replica-order": func(c *cli.Context) error {
+		// 	return NewReplicaOrderCommand(ui, storageManager, context).Run(c)
+		// },
 		"block-replica-partners": func(c *cli.Context) error {
 			return NewReplicaPartnersCommand(ui, storageManager).Run(c)
 		},
