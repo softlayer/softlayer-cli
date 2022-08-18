@@ -288,18 +288,6 @@
     "translation": "${COMMAND_NAME} sl dns zone-print ZONE\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns zone-print ibm.com\n   This command prints zone that is named ibm.com, and in BIND format."
   },
   {
-    "id": "${COMMAND_NAME} sl email detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl email detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl email edit",
-    "translation": "${COMMAND_NAME} sl email edit"
-  },
-  {
-    "id": "${COMMAND_NAME} sl email list",
-    "translation": "${COMMAND_NAME} sl email list"
-  },
-  {
     "id": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
     "translation": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume."
   },
