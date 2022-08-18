@@ -6,8 +6,9 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -15,39 +16,37 @@ import (
 )
 
 type ListCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	EmailManager managers.EmailManager
+	Command      *cobra.Command
 }
 
-func NewListCommand(ui terminal.UI, emailManager managers.EmailManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:           ui,
-		EmailManager: emailManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
+	thisCmd := &ListCommand{
+		SoftlayerCommand: sl,
+		EmailManager:     managers.NewEmailManager(sl.Session),
 	}
-}
 
-func ListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "email",
-		Name:        "list",
-		Description: T("Lists Email Delivery Service."),
-		Usage:       T(`${COMMAND_NAME} sl email list`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("Lists Email Delivery Service."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *ListCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := "mask[vendor,type]"
 	emailList, err := cmd.EmailManager.GetNetworkMessageDeliveryAccounts(mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Network Message Delivery Accounts.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Network Message Delivery Accounts."), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{
@@ -95,13 +94,13 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 
 		accountOverview, err := cmd.EmailManager.GetAccountOverview(*email.Id)
 		if err != nil {
-			return cli.NewExitError(T("Failed to get Account Overview.")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get Account Overview."), err.Error(), 2)
 		}
 		PrintAccountOverview(accountOverview, overviewTable, cmd.UI, outputFormat)
 
 		statistics, err := cmd.EmailManager.GetStatistics(*email.Id)
 		if err != nil {
-			return cli.NewExitError(T("Failed to get Statistics.")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get Statistics."), err.Error(), 2)
 		}
 		for _, statistic := range statistics {
 			PrintStatistics(statistic, statisticsTable, cmd.UI, outputFormat)
