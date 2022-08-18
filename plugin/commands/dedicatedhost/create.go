@@ -1,11 +1,10 @@
 package dedicatedhost
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -13,101 +12,81 @@ import (
 )
 
 type CreateCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	DedicatedHostManager managers.DedicatedHostManager
 	NetworkManager       managers.NetworkManager
-	Context              plugin.PluginContext
+	Command              *cobra.Command
+	Hostname             string
+	Domain               string
+	Datacenter           string
+	Size                 string
+	Billing              string
+	VlanPrivate          int
+	Test                 bool
+	Force                bool
 }
 
-func NewCreateCommand(ui terminal.UI, dedicatedHostManager managers.DedicatedHostManager, networkManager managers.NetworkManager, context plugin.PluginContext) (cmd *CreateCommand) {
-	return &CreateCommand{
-		UI:                   ui,
-		DedicatedHostManager: dedicatedHostManager,
-		NetworkManager:       networkManager,
-		Context:              context,
+func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
+	thisCmd := &CreateCommand{
+		SoftlayerCommand:     sl,
+		DedicatedHostManager: managers.NewDedicatedhostManager(sl.Session),
 	}
-}
-
-func DedicatedhostCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dedicatedhost",
-		Name:        "create",
-		Description: T("Create a dedicatedhost"),
-		Usage:       "${COMMAND_NAME} sl dedicatedhost create [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "H,hostname",
-				Usage: T("Host portion of the FQDN [required]"),
-			},
-			cli.StringFlag{
-				Name:  "D,domain",
-				Usage: T("Domain portion of the FQDN [required]"),
-			},
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Datacenter shortname [required]"),
-			},
-			cli.StringFlag{
-				Name:  "s,size",
-				Usage: T("Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB"),
-			},
-			cli.StringFlag{
-				Name:  "b,billing",
-				Usage: T("Billing rate. Default is: hourly. Options are: hourly, monthly"),
-			},
-			cli.StringFlag{
-				Name:  "v,vlan-private",
-				Usage: T("The ID of the private VLAN on which you want the dedicated host placed. See: '${COMMAND_NAME} sl vlan list' for reference"),
-			},
-			cli.BoolFlag{
-				Name:  "test",
-				Usage: T("Do not actually create the dedicatedhost"),
-			},
-			metadata.ForceFlag(),
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use:   "create",
+		Short: T("Create a dedicatedhost"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVar(&thisCmd.Hostname, "hostname", "", T("Host portion of the FQDN [required]"))
+	cobraCmd.Flags().StringVar(&thisCmd.Domain, "domain", "", T("Domain portion of the FQDN [required]"))
+	cobraCmd.Flags().StringVar(&thisCmd.Datacenter, "datacenter", "", T("Datacenter shortname [required]"))
+	cobraCmd.Flags().StringVar(&thisCmd.Size, "size", "", T("Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB"))
+	cobraCmd.Flags().StringVar(&thisCmd.Billing, "billing", "", T("Billing rate. Default is: hourly. Options are: hourly, monthly"))
+	cobraCmd.Flags().IntVar(&thisCmd.VlanPrivate, "vlan-private", 0, T("The ID of the private VLAN on which you want the dedicated host placed. See: '${COMMAND_NAME} sl vlan list' for reference"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Test, "test", false, T("Do not actually create the dedicatedhost"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Force, "force", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateCommand) Run(c *cli.Context) error {
+func (cmd *CreateCommand) Run(args []string) error {
 	size := managers.HOST_DEFAULT_SIZE
-	if c.IsSet("size") {
-		size = c.String("size")
+	if cmd.Size != "" {
+		size = cmd.Size
 	}
-	hostname := c.String("H")
+	hostname := cmd.Hostname
 	if hostname == "" {
-		return errors.NewMissingInputError("-H|--hostname")
+		return slErr.NewMissingInputError("--hostname")
 	}
-	domain := c.String("D")
+	domain := cmd.Domain
 	if domain == "" {
-		return errors.NewMissingInputError("-D|--domain")
+		return slErr.NewMissingInputError("--domain")
 	}
-	datacenter := c.String("d")
+	datacenter := cmd.Datacenter
 	if datacenter == "" {
-		return errors.NewMissingInputError("-d|--datacenter")
+		return slErr.NewMissingInputError("--datacenter")
 	}
 	billing := "hourly"
-	if c.IsSet("b") {
-		billing = c.String("b")
+	if cmd.Billing != "" {
+		billing = cmd.Billing
 		if billing != "hourly" && billing != "monthly" {
-			return errors.NewInvalidUsageError(T("[-b|--billing] has to be either hourly or monthly."))
+			return slErr.NewInvalidUsageError(T("[--billing] has to be either hourly or monthly."))
 		}
 	}
-	vlanId := c.Int("v")
+	vlanId := cmd.VlanPrivate
 	if vlanId == 0 {
-		return errors.NewMissingInputError("-v|--vlan-private")
+		return slErr.NewMissingInputError("--vlan-private")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	vlan, err := cmd.NetworkManager.GetVlan(vlanId, "mask[id,primaryRouter[id,datacenter]]")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get vlan {{.VlanId}}.\n", map[string]interface{}{"VlanId": vlanId})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get vlan {{.VlanId}}.", map[string]interface{}{"VlanId": vlanId}), err.Error(), 2)
 	}
-	if !c.IsSet("f") && !c.IsSet("force") && outputFormat != "JSON" && !c.IsSet("test") {
+	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 		if err != nil {
 			return cli.NewExitError(err.Error(), 1)
@@ -128,13 +107,13 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 
 	orderTemplate, err := cmd.DedicatedHostManager.GenerateOrderTemplate(size, hostname, domain, datacenter, billing, *vlan.PrimaryRouter.Id)
 	if err != nil {
-		return cli.NewExitError(T("Failed to generate the order template.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to generate the order template."), err.Error(), 2)
 	}
 
-	if c.IsSet("test") {
+	if cmd.Test {
 		orderReceipt, err := cmd.DedicatedHostManager.VerifyInstanceCreation(orderTemplate)
 		if err != nil {
-			return cli.NewExitError(T("Failed to verify virtual server creation.\n")+err.Error(), 2)
+			return slErr.NewAPIError(T("Failed to verify virtual server creation."), err.Error(), 2)
 		}
 		if outputFormat == "JSON" {
 			return utils.PrintPrettyJSON(cmd.UI, orderReceipt)
@@ -144,7 +123,7 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	} else {
 		orderReceipt, err := cmd.DedicatedHostManager.OrderInstance(orderTemplate)
 		if err != nil {
-			return cli.NewExitError(T("Failed to Order the dedicatedhost.\n")+err.Error(), 2)
+			return slErr.NewAPIError(T("Failed to Order the dedicatedhost."), err.Error(), 2)
 		}
 		if outputFormat == "JSON" {
 			return utils.PrintPrettyJSON(cmd.UI, orderReceipt)
