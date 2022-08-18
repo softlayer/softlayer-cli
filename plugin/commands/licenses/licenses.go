@@ -1,30 +1,22 @@
 package licenses
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	licensesManager := managers.NewLicensesManager(session)
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"licenses-create-options": func(c *cli.Context) error {
-			return NewLicensesOptionsCommand(ui, licensesManager).Run(c)
-		},
-		"licenses-create": func(c *cli.Context) error {
-			return NewCreateCommand(ui, licensesManager).Run(c)
-		},
-		"licenses-cancel": func(c *cli.Context) error {
-			return NewCancelItemCommand(ui, licensesManager).Run(c)
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "licenses",
+		Short: T("Classic infrastructure Licenses"),
+		RunE:  nil,
 	}
-
-	return CommandActionBindings
+	cobraCmd.AddCommand(NewLicensesOptionsCommand(sl).Command)
+	cobraCmd.AddCommand(NewCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewCancelItemCommand(sl).Command)
+	return cobraCmd
 }
 
 func LicensesNamespace() plugin.Namespace {
@@ -32,19 +24,5 @@ func LicensesNamespace() plugin.Namespace {
 		ParentName:  "sl",
 		Name:        "licenses",
 		Description: T("Classic infrastructure Licenses"),
-	}
-}
-
-func LicensesMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "licenses",
-		Description: T("Classic infrastructure Licenses"),
-		Usage:       "${COMMAND_NAME} sl licenses",
-		Subcommands: []cli.Command{
-			LicensesCreateOptionsMetaData(),
-			CreateMetaData(),
-			CancelItemMetaData(),
-		},
 	}
 }
