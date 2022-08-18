@@ -24,7 +24,7 @@ func NewCancelItemCommand(sl *metadata.SoftlayerCommand) *CancelItemCommand {
 		LicensesManager:  managers.NewLicensesManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "cancel",
+		Use:   "cancel " + T("IDENTIFIER"),
 		Short: T("Cancel a license."),
 		Long:  T(`EXAMPLE:
 ${COMMAND_NAME} sl licenses cancel KEY`),
