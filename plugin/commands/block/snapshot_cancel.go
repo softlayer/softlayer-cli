@@ -15,9 +15,9 @@ type SnapshotCancelCommand struct {
 	*metadata.SoftlayerCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
-	Reason	string
-	Immediate	bool
-	Force	bool
+	Reason         string
+	Immediate      bool
+	Force          bool
 }
 
 func NewSnapshotCancelCommand(sl *metadata.SoftlayerCommand) *SnapshotCancelCommand {
@@ -46,14 +46,13 @@ EXAMPLE:
 	return thisCmd
 }
 
-
 func (cmd *SnapshotCancelCommand) Run(args []string) error {
 
 	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	subs :=  map[string]interface{}{"ID": volumeID}
+	subs := map[string]interface{}{"ID": volumeID}
 	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will cancel the block volume snapshot space: {{.ID}} and cannot be undone. Continue?", subs))
 		if err != nil {

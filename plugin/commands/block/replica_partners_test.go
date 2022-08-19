@@ -8,8 +8,8 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -20,7 +20,7 @@ var _ = Describe("Replica partners", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cliCommand                *block.ReplicaPartnersCommand
+		cliCommand         *block.ReplicaPartnersCommand
 		fakeSession        *session.Session
 		slCommand          *metadata.SoftlayerCommand
 	)

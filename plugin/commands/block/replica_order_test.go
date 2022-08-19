@@ -18,7 +18,7 @@ var _ = Describe("Replica order", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cliCommand                *block.ReplicaOrderCommand
+		cliCommand         *block.ReplicaOrderCommand
 		fakeSession        *session.Session
 		slCommand          *metadata.SoftlayerCommand
 	)

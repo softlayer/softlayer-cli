@@ -18,18 +18,29 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 		Short: T("Classic infrastructure Block Storage"),
 		RunE:  nil,
 	}
+	// Access
 	cobraCmd.AddCommand(NewAccessAuthorizeCommand(sl).Command)
 	cobraCmd.AddCommand(NewAccessPasswordCommand(sl).Command)
 	cobraCmd.AddCommand(NewAccessListCommand(sl).Command)
 	cobraCmd.AddCommand(NewAccessRevokeCommand(sl).Command)
+	// Replica
 	cobraCmd.AddCommand(NewReplicaFailbackCommand(sl).Command)
 	cobraCmd.AddCommand(NewReplicaFailoverCommand(sl).Command)
 	cobraCmd.AddCommand(NewReplicaLocationsCommand(sl).Command)
 	cobraCmd.AddCommand(NewReplicaOrderCommand(sl).Command)
 	cobraCmd.AddCommand(NewReplicaPartnersCommand(sl).Command)
+	// Snapshot
 	cobraCmd.AddCommand(NewSnapshotCancelCommand(sl).Command)
 	cobraCmd.AddCommand(NewSnapshotSetNotificationCommand(sl).Command)
 	cobraCmd.AddCommand(NewSnapshotGetNotificationStatusCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotDeleteCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotDisableCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotEnableCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotListCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotOrderCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotRestoreCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotScheduleListCommand(sl).Command)
 	return cobraCmd
 }
 
@@ -38,30 +49,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 
-		"block-snapshot-create": func(c *cli.Context) error {
-			return NewSnapshotCreateCommand(ui, storageManager).Run(c)
-		},
-		"block-snapshot-delete": func(c *cli.Context) error {
-			return NewSnapshotDeleteCommand(ui, storageManager).Run(c)
-		},
-		"block-snapshot-disable": func(c *cli.Context) error {
-			return NewSnapshotDisableCommand(ui, storageManager).Run(c)
-		},
-		"block-snapshot-enable": func(c *cli.Context) error {
-			return NewSnapshotEnableCommand(ui, storageManager).Run(c)
-		},
-		"block-snapshot-list": func(c *cli.Context) error {
-			return NewSnapshotListCommand(ui, storageManager).Run(c)
-		},
-		"block-snapshot-order": func(c *cli.Context) error {
-			return NewSnapshotOrderCommand(ui, storageManager, context).Run(c)
-		},
-		"block-snapshot-restore": func(c *cli.Context) error {
-			return NewSnapshotRestoreCommand(ui, storageManager).Run(c)
-		},
-		"block-snapshot-schedule-list": func(c *cli.Context) error {
-			return NewSnapshotScheduleListCommand(ui, storageManager).Run(c)
-		},
 		"block-volume-cancel": func(c *cli.Context) error {
 			return NewVolumeCancelCommand(ui, storageManager).Run(c)
 		},

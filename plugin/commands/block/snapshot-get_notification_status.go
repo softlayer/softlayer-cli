@@ -25,8 +25,8 @@ func NewSnapshotGetNotificationStatusCommand(sl *metadata.SoftlayerCommand) *Sna
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-get-notification-status " + T("IDENTIFIER"),
-		Short:T("Get snapshots space usage threshold warning flag setting for a given volume."),
-		Args: metadata.OneArgs,
+		Short: T("Get snapshots space usage threshold warning flag setting for a given volume."),
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -35,7 +35,6 @@ func NewSnapshotGetNotificationStatusCommand(sl *metadata.SoftlayerCommand) *Sna
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
-
 
 func (cmd *SnapshotGetNotificationStatusCommand) Run(args []string) error {
 
@@ -56,7 +55,7 @@ func (cmd *SnapshotGetNotificationStatusCommand) Run(args []string) error {
 	}
 
 	if enabled == 0 {
-		cmd.UI.Print(T("Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",subs))
+		cmd.UI.Print(T("Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.", subs))
 	} else {
 		cmd.UI.Print(T("Enabled: Snapshots space usage threshold is enabled for volume '{{.ID}}'.", subs))
 	}

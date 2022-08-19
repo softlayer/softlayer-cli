@@ -15,16 +15,14 @@ import (
 
 type ReplicaOrderCommand struct {
 	*metadata.SoftlayerCommand
-	Command        *cobra.Command
-	StorageManager managers.StorageManager
+	Command          *cobra.Command
+	StorageManager   managers.StorageManager
 	SnapshotSchedule string
-	Datacenter	string
-	Tier	float64
-	Iops	int
-	OsType string
-	Force bool
-
-
+	Datacenter       string
+	Tier             float64
+	Iops             int
+	OsType           string
+	Force            bool
 }
 
 func NewReplicaOrderCommand(sl *metadata.SoftlayerCommand) *ReplicaOrderCommand {
@@ -35,7 +33,7 @@ func NewReplicaOrderCommand(sl *metadata.SoftlayerCommand) *ReplicaOrderCommand 
 	cobraCmd := &cobra.Command{
 		Use:   "replica-order " + T("IDENTIFIER"),
 		Short: T("Order a block storage replica volume"),
-		Long:  T(`${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
    ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX
@@ -54,7 +52,6 @@ EXAMPLE:
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
-
 
 func (cmd *ReplicaOrderCommand) Run(args []string) error {
 

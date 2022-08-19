@@ -39,7 +39,7 @@ EXAMPLE:
 	}
 }
 
-//refer to here about volume size and iops ranges: http://knowledgelayer.softlayer.com/learning/block-storage
+// refer to here about volume size and iops ranges: http://knowledgelayer.softlayer.com/learning/block-storage
 func (cmd *VolumeOptionsCommand) Run(c *cli.Context) error {
 	table := cmd.UI.Table([]string{"name", "value"})
 	locations, err := cmd.StorageManager.GetAllDatacenters()

@@ -3,7 +3,6 @@ package block
 import (
 	"strconv"
 
-
 	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -15,8 +14,8 @@ type SnapshotSetNotificationCommand struct {
 	*metadata.SoftlayerCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
-	Enable	bool
-	Disable	bool
+	Enable         bool
+	Disable        bool
 }
 
 func NewSnapshotSetNotificationCommand(sl *metadata.SoftlayerCommand) *SnapshotSetNotificationCommand {
@@ -42,7 +41,6 @@ EXAMPLE:
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
-
 
 func (cmd *SnapshotSetNotificationCommand) Run(args []string) error {
 
