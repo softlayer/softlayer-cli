@@ -89,7 +89,7 @@ func (cmd *PlacementGroupDeleteCommand) Run(args []string) error {
 	if !cmd.ForceFlag {
 		confirm, err := cmd.UI.Confirm(T("This will remove placement group: {{.ID}} and cannot be undone. Continue?", map[string]interface{}{"ID": placementGroupID}))
 		if err != nil {
-			return errors.NewInvalidUsageError(err.Error())
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
