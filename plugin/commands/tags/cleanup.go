@@ -1,35 +1,51 @@
 package tags
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-const DRY_RUN_FLAG = "dry-run"
-
 type CleanupCommand struct {
-	UI          terminal.UI
+	*metadata.SoftlayerCommand
 	TagsManager managers.TagsManager
+	Command     *cobra.Command
+	DryRun      bool
 }
 
-func NewCleanupCommand(ui terminal.UI, tagsManager managers.TagsManager) (cmd *CleanupCommand) {
-	return &CleanupCommand{
-		UI:          ui,
-		TagsManager: tagsManager,
+func NewCleanupCommand(sl *metadata.SoftlayerCommand) (cmd *CleanupCommand) {
+	thisCmd := &CleanupCommand{
+		SoftlayerCommand: sl,
+		TagsManager:      managers.NewTagsManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "cleanup",
+		Short: T("Removes all empty tags."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().BoolVar(&thisCmd.DryRun, "dry-run", false, T("Don't delete, just show what will be deleted."))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CleanupCommand) Run(c *cli.Context) error {
+func (cmd *CleanupCommand) Run(args []string) error {
 
 	unattachedTags, err := cmd.TagsManager.GetUnattachedTags("")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Unattached Tags.")+"\n"+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Unattached Tags."), err.Error(), 2)
 	}
 	for _, tag := range unattachedTags {
 		tag_replace := map[string]interface{}{"tag": *tag.Name}
-		if c.IsSet(DRY_RUN_FLAG) && c.Bool(DRY_RUN_FLAG) {
+		if cmd.DryRun {
 			cmd.UI.Print(T("(Dry Run) Removing Tag: {{.tag}}.", tag_replace))
 		} else {
 			success, err := cmd.TagsManager.DeleteTag(*tag.Name)
@@ -43,22 +59,4 @@ func (cmd *CleanupCommand) Run(c *cli.Context) error {
 	}
 	return nil
 
-}
-
-func TagsCleanupMetaData() cli.Command {
-	return cli.Command{
-		Category:    "tags",
-		Name:        "cleanup",
-		Description: T("Removes all empty tags."),
-		Usage: T(`${COMMAND_NAME} sl tags cleanup [OPTIONS]
-
-EXAMPLE:
-	${COMMAND_NAME} sl tags cleanup`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "dry-run",
-				Usage: T("Don't delete, just show what will be deleted."),
-			},
-		},
-	}
 }
