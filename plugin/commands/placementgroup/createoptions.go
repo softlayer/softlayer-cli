@@ -3,30 +3,44 @@ package placementgroup
 import (
 	"sort"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type PlacementGroupCreateOptionsCommand struct {
-	UI                terminal.UI
+	*metadata.SoftlayerCommand
 	PlaceGroupManager managers.PlaceGroupManager
+	Command           *cobra.Command
 }
 
-func NewPlacementGroupCreateOptionsCommand(ui terminal.UI, placeGroupManager managers.PlaceGroupManager) (cmd *PlacementGroupCreateOptionsCommand) {
-	return &PlacementGroupCreateOptionsCommand{
-		UI:                ui,
-		PlaceGroupManager: placeGroupManager,
+func NewPlacementGroupCreateOptionsCommand(sl *metadata.SoftlayerCommand) (cmd *PlacementGroupCreateOptionsCommand) {
+	thisCmd := &PlacementGroupCreateOptionsCommand{
+		SoftlayerCommand:  sl,
+		PlaceGroupManager: managers.NewPlaceGroupManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "create-options",
+		Short: T("List options for creating a placement group"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PlacementGroupCreateOptionsCommand) Run(c *cli.Context) error {
+func (cmd *PlacementGroupCreateOptionsCommand) Run(args []string) error {
 
 	routers, err := cmd.PlaceGroupManager.GetRouter(nil, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to list routers\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list routers"), err.Error(), 2)
 	}
 
 	cmd.UI.Print("Available Router:")
@@ -49,7 +63,7 @@ func (cmd *PlacementGroupCreateOptionsCommand) Run(c *cli.Context) error {
 
 	rules, err := cmd.PlaceGroupManager.GetRules()
 	if err != nil {
-		return cli.NewExitError(T("Failed to list rules\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list rules"), err.Error(), 2)
 	}
 	cmd.UI.Print("Rules:")
 	if len(rules) == 0 {
@@ -65,14 +79,4 @@ func (cmd *PlacementGroupCreateOptionsCommand) Run(c *cli.Context) error {
 	}
 
 	return nil
-}
-
-func PlacementGroupCreateOptionsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "placement-group",
-		Name:        "create-options",
-		Description: T("List options for creating a placement group"),
-		Usage:       "${COMMAND_NAME} sl placement-group create-options",
-		Flags:       []cli.Flag{},
-	}
 }

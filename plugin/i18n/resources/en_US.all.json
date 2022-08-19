@@ -3144,6 +3144,10 @@
     "translation": "Failed to create multi virtual server instances.\n"
   },
   {
+    "id": "Failed to create placement group",
+    "translation": "Failed to create placement group"
+  },
+  {
     "id": "Failed to create placement group\n",
     "translation": "Failed to create placement group\n"
   },
@@ -3656,8 +3660,8 @@
     "translation": "Failed to get permissions.\n"
   },
   {
-    "id": "Failed to get placement group: {{.ID}}.\n",
-    "translation": "Failed to get placement group: {{.ID}}.\n"
+    "id": "Failed to get placement group: {{.ID}}.",
+    "translation": "Failed to get placement group: {{.ID}}."
   },
   {
     "id": "Failed to get planned events.",
@@ -3892,8 +3896,8 @@
     "translation": "Failed to list packages.\n"
   },
   {
-    "id": "Failed to list placement groups\n",
-    "translation": "Failed to list placement groups\n"
+    "id": "Failed to list placement groups",
+    "translation": "Failed to list placement groups"
   },
   {
     "id": "Failed to list private images.",
@@ -3908,12 +3912,12 @@
     "translation": "Failed to list resource records under zone: {{.Zone}}.\n"
   },
   {
-    "id": "Failed to list routers\n",
-    "translation": "Failed to list routers\n"
+    "id": "Failed to list routers",
+    "translation": "Failed to list routers"
   },
   {
-    "id": "Failed to list rules\n",
-    "translation": "Failed to list rules\n"
+    "id": "Failed to list rules",
+    "translation": "Failed to list rules"
   },
   {
     "id": "Failed to list subnets on your account.\n",
@@ -4124,8 +4128,8 @@
     "translation": "Failed to remove network component {{.ComponentID}} from security group {{.GroupID}}.\n"
   },
   {
-    "id": "Failed to remove placement group: {{.ID}}.\n",
-    "translation": "Failed to remove placement group: {{.ID}}.\n"
+    "id": "Failed to remove placement group: {{.ID}}.",
+    "translation": "Failed to remove placement group: {{.ID}}."
   },
   {
     "id": "Failed to remove rule {{.RuleId}} in security group {{.GroupID}}.\n",

@@ -24,7 +24,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
@@ -109,12 +108,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl order
 	orderCommands := order.GetCommandActionBindings(context, ui, session)
 	for name, action := range orderCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl placement-group
-	placementgroupCommands := placementgroup.GetCommandActionBindings(context, ui, session)
-	for name, action := range placementgroupCommands {
 		CommandActionBindings[name] = action
 	}
 

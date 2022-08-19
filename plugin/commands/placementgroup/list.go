@@ -1,8 +1,8 @@
 package placementgroup
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -10,27 +10,37 @@ import (
 )
 
 type PlacementGroupListCommand struct {
-	UI                terminal.UI
+	*metadata.SoftlayerCommand
 	PlaceGroupManager managers.PlaceGroupManager
+	Command           *cobra.Command
 }
 
-func NewPlacementGroupListCommand(ui terminal.UI, placeGroupManager managers.PlaceGroupManager) (cmd *PlacementGroupListCommand) {
-	return &PlacementGroupListCommand{
-		UI:                ui,
-		PlaceGroupManager: placeGroupManager,
+func NewPlacementGroupListCommand(sl *metadata.SoftlayerCommand) (cmd *PlacementGroupListCommand) {
+	thisCmd := &PlacementGroupListCommand{
+		SoftlayerCommand:  sl,
+		PlaceGroupManager: managers.NewPlaceGroupManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List placement groups"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PlacementGroupListCommand) Run(c *cli.Context) error {
+func (cmd *PlacementGroupListCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	placementGroups, err := cmd.PlaceGroupManager.List("")
 	if err != nil {
-		return cli.NewExitError(T("Failed to list placement groups\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list placement groups"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -64,16 +74,4 @@ func (cmd *PlacementGroupListCommand) Run(c *cli.Context) error {
 	}
 
 	return nil
-}
-
-func PlacementGroupListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "placement-group",
-		Name:        "list",
-		Description: T("List placement groups"),
-		Usage:       "${COMMAND_NAME} sl placement-group list [--output FORMAT]",
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }
