@@ -3,9 +3,8 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,50 +13,46 @@ import (
 )
 
 type ReplicaLocationsCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewReplicaLocationsCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *ReplicaLocationsCommand) {
-	return &ReplicaLocationsCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewReplicaLocationsCommand(sl *metadata.SoftlayerCommand) *ReplicaLocationsCommand {
+	thisCmd := &ReplicaLocationsCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockReplicaLocationsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "replica-locations",
-		Description: T("List suitable replication datacenters for the given volume"),
-		Usage: T(`${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "replica-locations " + T("IDENTIFIER"),
+		Short: T("List suitable replication datacenters for the given volume"),
+		Long: T(`${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
    ${COMMAND_NAME} sl block replica-locations 12345678
    This command lists suitable replication data centers for block volume with ID 12345678.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ReplicaLocationsCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *ReplicaLocationsCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	datacenters, err := cmd.StorageManager.GetReplicationLocations(volumeID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get datacenters for volume {{.VolumeID}}.\n", map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get datacenters for volume {{.VolumeID}}.\n", map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {

@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -40,7 +40,7 @@ func (cmd *ListCommand) Run(args []string) error {
 
 	nasNetworkStorages, err := cmd.NasNetworkStorageManager.ListNasNetworkStorages("")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get NAS Network Storages.")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get NAS Network Storages."), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Id"), T("Datacenter"), T("Size"), T("Server")})

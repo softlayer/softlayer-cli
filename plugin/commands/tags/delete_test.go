@@ -6,8 +6,9 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -15,20 +16,17 @@ var _ = Describe("Tags Delete", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeTagsManager *testhelpers.FakeTagsManager
-		cmd             *tags.DeleteCommand
-		cliCommand      cli.Command
+		cliCommand      *tags.DeleteCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeTagsManager = new(testhelpers.FakeTagsManager)
-		cmd = tags.NewDeleteCommand(fakeUI, fakeTagsManager)
-		cliCommand = cli.Command{
-			Name:        tags.TagsDeleteMetaData().Name,
-			Description: tags.TagsDeleteMetaData().Description,
-			Usage:       tags.TagsDeleteMetaData().Usage,
-			Flags:       tags.TagsDeleteMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = tags.NewDeleteCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.TagsManager = fakeTagsManager
 	})
 	Describe("Tags Delete", func() {
 		//sl tags delete
@@ -37,7 +35,7 @@ var _ = Describe("Tags Delete", func() {
 				fakeTagsManager.DeleteTagReturns(true, nil)
 			})
 			It("Returns success", func() {
-				err := testhelpers.RunCommand(cliCommand, "testTag")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "testTag")
 				Expect(err).NotTo(HaveOccurred())
 				results := fakeUI.Outputs()
 				Expect(results).To(ContainSubstring("true"))
@@ -48,7 +46,7 @@ var _ = Describe("Tags Delete", func() {
 				fakeTagsManager.DeleteTagReturns(true, nil)
 			})
 			It("Returns success", func() {
-				err := testhelpers.RunCommand(cliCommand, "testTag", "--output", "JSON")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "testTag", "--output", "JSON")
 				Expect(err).NotTo(HaveOccurred())
 				results := fakeUI.Outputs()
 				Expect(results).To(ContainSubstring("true"))
@@ -59,14 +57,14 @@ var _ = Describe("Tags Delete", func() {
 				fakeTagsManager.DeleteTagReturns(false, errors.New("SoftLayer_Exception_ApiError"))
 			})
 			It("API Error", func() {
-				err := testhelpers.RunCommand(cliCommand, "testTag")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "testTag")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ApiError"))
 			})
 		})
 		Context("Tags Delete, No Arguments", func() {
 			It("Incorrect Usage", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage"))
 			})
