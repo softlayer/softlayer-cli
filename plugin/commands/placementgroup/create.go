@@ -1,9 +1,8 @@
 package placementgroup
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -12,36 +11,53 @@ import (
 )
 
 type PlacementGroupCreateCommand struct {
-	UI                terminal.UI
+	*metadata.SoftlayerCommand
 	PlaceGroupManager managers.PlaceGroupManager
+	Command           *cobra.Command
+	Name              string
+	BackendRouterId   int
+	RuleId            int
 }
 
-func NewPlacementGroupCreateCommand(ui terminal.UI, placeGroupManager managers.PlaceGroupManager) (cmd *PlacementGroupCreateCommand) {
-	return &PlacementGroupCreateCommand{
-		UI:                ui,
-		PlaceGroupManager: placeGroupManager,
+func NewPlacementGroupCreateCommand(sl *metadata.SoftlayerCommand) (cmd *PlacementGroupCreateCommand) {
+	thisCmd := &PlacementGroupCreateCommand{
+		SoftlayerCommand:  sl,
+		PlaceGroupManager: managers.NewPlaceGroupManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "create",
+		Short: T("Create a placement group"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("Name for this new placement group. [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.BackendRouterId, "backend-router-id", "b", 0, T("Backend router ID. [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.RuleId, "rule-id", "r", 0, T("The ID of the rule to govern this placement group. [required]"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PlacementGroupCreateCommand) Run(c *cli.Context) error {
-	name := c.String("n")
+func (cmd *PlacementGroupCreateCommand) Run(args []string) error {
+	name := cmd.Name
 	if name == "" {
 		return errors.NewMissingInputError("-n, --name")
 
 	}
-	backendRouter := c.Int("b")
+	backendRouter := cmd.BackendRouterId
 	if backendRouter == 0 {
 		return errors.NewMissingInputError("-b, --backend-router-id")
 	}
-	rule := c.Int("r")
+	rule := cmd.RuleId
 	if rule == 0 {
 		return errors.NewMissingInputError("-r, --rule-id")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	placementObject := datatypes.Virtual_PlacementGroup{
 		Name:            &name,
@@ -50,7 +66,7 @@ func (cmd *PlacementGroupCreateCommand) Run(c *cli.Context) error {
 	}
 	result, err := cmd.PlaceGroupManager.Create(&placementObject)
 	if err != nil {
-		return cli.NewExitError(T("Failed to create placement group\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to create placement group"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -60,28 +76,4 @@ func (cmd *PlacementGroupCreateCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}.", map[string]interface{}{"ID": result.Id, "Name": result.Name}))
 	return nil
-}
-
-func PlacementGroupCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "placement-group",
-		Name:        "create",
-		Description: T("Create a placement group"),
-		Usage:       "${COMMAND_NAME} sl placement-group create (--name NAME) (-b, --backend-router-id BACKENDROUTER) (-r, --rule-id RULE) [--output FORMAT]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "n,name",
-				Usage: T("Name for this new placement group. [required]"),
-			},
-			cli.IntFlag{
-				Name:  "b,backend-router-id",
-				Usage: T("Backend router ID. [required]"),
-			},
-			cli.IntFlag{
-				Name:  "r,rule-id",
-				Usage: T("The ID of the rule to govern this placement group. [required]"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }
