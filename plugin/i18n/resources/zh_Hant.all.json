@@ -200,6 +200,18 @@
     "translation": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   範例：\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  這個指令會列出磁區（其 ID 為 12345678）的 Snapshot 排程。"
   },
   {
+    "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是透過 ibmcloud sl block access-list 取得的 host_id<volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID 是透過 ibmcloud sl block access-list 取得的 host_id<volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是透過 ibmcloud sl block access-list 取得的 host_id<volume_id>"
+  },
+  {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
     "translation": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   這個指令會立即取消磁區（其 ID 為 12345678），而不會要求確認。"
   },
@@ -250,6 +262,10 @@
   {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n範例：\n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t這個指令會編輯磁區附註。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t這個指令會顯示使用者詳細資料。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\t這個指令會列出虛擬訪客。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn list",
+    "translation": "${COMMAND_NAME} sl cdn 清單"
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
@@ -588,6 +604,10 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS] \n \n 範例：\n ${COMMAND_NAME} sl object-storage credential-delete 123456 -- credential-id 654321"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS] \n \n 範例：\n ${COMMAND_NAME} sl object-storage credential-limit 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -704,6 +724,10 @@
     "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS] \n \n 範例：\n ${COMMAND_NAME} sl subnet edit 12345678 -- note myNote \n ${COMMAND_NAME} sl subnet edit 12345678 -- tags tag1"
   },
   {
+    "id": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote",
+    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS] \n \n 範例：\n ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 -- note myNote \n ${COMMAND_NAME} sl subnet edit-ip 12345678 -- note myNote"
+  },
+  {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
     "translation": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   這個指令會列出現行帳戶上的 IPv4 子網路，用來過濾的資料中心為 dal09、子網路類型為 PRIMARY，而網路空間為 PUBLIC。"
   },
@@ -714,6 +738,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
     "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   這個指令可讓您變更「帳戶擁有」子網路的路徑。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
+    "translation": "${COMMAND_NAME} sl tags cleanup [OPTIONS] \n \n 範例：\n ${COMMAND_NAME} sl tags cleanup"
   },
   {
     "id": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemoves \"tag\" from your account.\n",
@@ -952,6 +980,10 @@
     "translation": "'{{.Input}}' 是必要項目"
   },
   {
+    "id": "(Dry Run) Removing Tag: {{.tag}}.",
+    "translation": "（測試）移除標籤：{{.tag}}。"
+  },
+  {
     "id": "--billing can only be either hourly or monthly.",
     "translation": "--billing 只能是每小時或每月。"
   },
@@ -962,6 +994,10 @@
   {
     "id": "--columns {{.Column}} is not supported.",
     "translation": "不支援 --columns {{.Column}}。"
+  },
+  {
+    "id": "--note",
+    "translation": "--note"
   },
   {
     "id": "--server needs a port. {{.Server}} improperly formatted",
@@ -1412,6 +1448,10 @@
     "translation": "指派廣域 IP 給目標路由器或裝置"
   },
   {
+    "id": "Assign block storage subnets to the given host id.",
+    "translation": "將區塊儲存空間子網路指派給給定的主機 ID。"
+  },
+  {
     "id": "Assigned",
     "translation": "已指派"
   },
@@ -1844,6 +1884,10 @@
     "translation": "標準基礎架構 Block Storage"
   },
   {
+    "id": "Classic infrastructure CDN commands",
+    "translation": "標準基礎架構 CDN 指令"
+  },
+  {
     "id": "Classic infrastructure Compute images",
     "translation": "標準基礎架構運算映像檔"
   },
@@ -1950,6 +1994,10 @@
   {
     "id": "Closed:",
     "translation": "已關閉："
+  },
+  {
+    "id": "Cname",
+    "translation": "Cname"
   },
   {
     "id": "Code",
@@ -2278,6 +2326,10 @@
   {
     "id": "Creates a user",
     "translation": "建立使用者"
+  },
+  {
+    "id": "Credential limits for this IBM Cloud Object Storage account.",
+    "translation": "此 IBM Cloud Object Storage 帳戶的認證限制。"
   },
   {
     "id": "Credential: {{.credentialID}} was deleted.",
@@ -2626,6 +2678,10 @@
   {
     "id": "Don't actually create records",
     "translation": "不要真的建立記錄"
+  },
+  {
+    "id": "Don't delete, just show what will be deleted.",
+    "translation": "不要刪除，只要顯示將要刪除的內容。"
   },
   {
     "id": "Done",
@@ -3032,6 +3088,14 @@
     "translation": "無法指派廣域 IP {{.IpID}} 給目標 {{.Target}}。\n"
   },
   {
+    "id": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "無法將子網路 ID {{.subnetID}} 指派給容許的主機 ID：{{.accessID}}"
+  },
+  {
+    "id": "Failed to assign subnets.",
+    "translation": "無法指派子網路。"
+  },
+  {
     "id": "Failed to authorize host to volume {{.VolumeID}}.\n",
     "translation": "無法將主機授權給磁區 {{.VolumeID}}。\n"
   },
@@ -3204,6 +3268,10 @@
     "translation": "無法刪除 L7member {{.Member}}：{{.Error}}。\n"
   },
   {
+    "id": "Failed to delete Tag: {{.tag}}.",
+    "translation": "無法刪除標籤：{{.tag}}。"
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "無法刪除認證：{{.storageID}}。\n"
   },
@@ -3344,6 +3412,10 @@
     "translation": "無法取得頻寬儲存區。\n"
   },
   {
+    "id": "Failed to get CDN List. ",
+    "translation": "無法取得 CDN 清單。 "
+  },
+  {
     "id": "Failed to get Cloud Object Storages.\n",
     "translation": "無法取得「雲端物件儲存體」。\n"
   },
@@ -3428,6 +3500,14 @@
     "translation": "無法取得統計資料。"
   },
   {
+    "id": "Failed to get Subnet IP by address",
+    "translation": "未能依位址取得子網路 IP"
+  },
+  {
+    "id": "Failed to get Unattached Tags.",
+    "translation": "未能取得未附加的標籤。"
+  },
+  {
     "id": "Failed to get VLAN: {{.VLANID}}.\n",
     "translation": "無法取得 VLAN：{{.VLANID}}。\n"
   },
@@ -3462,6 +3542,10 @@
   {
     "id": "Failed to get components\n",
     "translation": "無法取得元件 \n"
+  },
+  {
+    "id": "Failed to get credential limit. ",
+    "translation": "無法取得認證限制。 "
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -4084,6 +4168,14 @@
     "translation": "無法移除安全群組 {{.GroupID}} 中的規則 {{.RuleId}}。\n"
   },
   {
+    "id": "Failed to remove subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "無法將子網路 ID {{.subnetID}} 移除至容許的主機 ID：{{.accessID}}"
+  },
+  {
+    "id": "Failed to remove subnets.",
+    "translation": "無法移除子網路。"
+  },
+  {
     "id": "Failed to remove translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "無法從 IPSec {{.ID}} 移除 ID 為 {{.TransID}} 的轉換。"
   },
@@ -4130,6 +4222,10 @@
   {
     "id": "Failed to set LUN ID for volume {{.VolumeID}}.\n",
     "translation": "無法設定磁區 {{.VolumeID}} 的 LUN ID。\n"
+  },
+  {
+    "id": "Failed to set note: {{.note}}.",
+    "translation": "無法設定附註：{{.note}}。"
   },
   {
     "id": "Failed to set note: {{.note}}.\n",
@@ -5004,6 +5100,14 @@
     "translation": "要新增至 root 使用者的 SSH 金鑰 ID，容許多次出現的項目"
   },
   {
+    "id": "IDs of the subnets to assign",
+    "translation": "要指派的子網路 ID"
+  },
+  {
+    "id": "IDs of the subnets to remove",
+    "translation": "要移除的子網路 ID"
+  },
+  {
     "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
     "translation": "INTEGER 磁碟大小（允許多次出現）[必要]"
   },
@@ -5428,6 +5532,10 @@
     "translation": "授權 {{.key}} 已取消。"
   },
   {
+    "id": "Limit",
+    "translation": "限制"
+  },
+  {
     "id": "List Dedicated Host Guests.",
     "translation": "列出專用主機訪客。"
   },
@@ -5484,6 +5592,10 @@
     "translation": "列出帳戶上的所有自動調整群組"
   },
   {
+    "id": "List all CDN accounts.",
+    "translation": "列出所有 CDN 帳戶。"
+  },
+  {
     "id": "List all active quotes on an account",
     "translation": "列出帳戶上所有作用中的報價"
   },
@@ -5538,6 +5650,10 @@
   {
     "id": "List block storage",
     "translation": "列出區塊儲存空間"
+  },
+  {
+    "id": "List block storage assigned subnets for the given host id.",
+    "translation": "列出為給定主機 ID 指派的區塊儲存空間子網路。"
   },
   {
     "id": "List block storage snapshots",
@@ -5934,6 +6050,10 @@
   {
     "id": "Network",
     "translation": "網路"
+  },
+  {
+    "id": "Network Identifier",
+    "translation": "網路 ID"
   },
   {
     "id": "Network Type",
@@ -6370,6 +6490,10 @@
   {
     "id": "Ordering package is not found",
     "translation": "找不到訂購套件"
+  },
+  {
+    "id": "Origin",
+    "translation": "原點"
   },
   {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
@@ -7044,6 +7168,10 @@
     "translation": "移除使用者對特定裝置的存取權"
   },
   {
+    "id": "Remove block storage subnets to the given host id.",
+    "translation": "移除給定主機 ID 的區塊儲存空間子網路。"
+  },
+  {
     "id": "Remove resource record from a zone",
     "translation": "移除區域中的資源記錄"
   },
@@ -7056,12 +7184,20 @@
     "translation": "已從 IPSec {{.ContextID}} 移除 {{.Type}} 子網路 #{{.ID}}。"
   },
   {
+    "id": "Removes all empty tags.",
+    "translation": "移除所有空白標籤。"
+  },
+  {
     "id": "Removes an empty tag from your account.",
     "translation": "從帳戶移除空的標籤。"
   },
   {
     "id": "Removes guests. (Only set --up or --down)",
     "translation": "移除訪客。 （僅設定 --up 或 --down）"
+  },
+  {
+    "id": "Removing Tag: {{.tag}}.",
+    "translation": "正在移除標籤：{{.tag}}。"
   },
   {
     "id": "Replicant Count",
@@ -7362,6 +7498,10 @@
   {
     "id": "Set the LUN ID on an existing block storage volume",
     "translation": "在現有的區塊儲存磁區上設定 LUN ID"
+  },
+  {
+    "id": "Set the note of the ipAddress.",
+    "translation": "設定 ipAddress 的附註。"
   },
   {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
@@ -7680,6 +7820,10 @@
     "translation": "順利登入？"
   },
   {
+    "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "已順利將子網路 ID {{.subnetID}} 指派給容許的主機 ID：{{.accessID}}"
+  },
+  {
     "id": "Successfully authorized storage: {{.PortableID}} was added.",
     "translation": "已順利授權儲存體：已新增 {{.PortableID}}。"
   },
@@ -7690,6 +7834,10 @@
   {
     "id": "Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}.",
     "translation": "已順利建立放置群組：ID：{{.ID}}，名稱：{{.Name}}。"
+  },
+  {
+    "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "已順利將子網路 ID {{.subnetID}} 移除至容許的主機 ID：{{.accessID}}"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
@@ -8716,6 +8864,10 @@
     "translation": "找不到此裝置的網路埠速度。"
   },
   {
+    "id": "Unable to find object with IP address: {{.address}}",
+    "translation": "找不到 IP 位址為 {{.address}} 的物件"
+  },
+  {
     "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
     "translation": "找不到 ID 為 {{.storageID}} 的物件儲存體。\n"
   },
@@ -8766,6 +8918,10 @@
   {
     "id": "Unassign a global IP from a target router or device",
     "translation": "取消指派目標路由器或裝置中的廣域 IP"
+  },
+  {
+    "id": "Unique Id",
+    "translation": "唯一 ID"
   },
   {
     "id": "Update ID",
