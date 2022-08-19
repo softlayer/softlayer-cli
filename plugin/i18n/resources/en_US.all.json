@@ -616,14 +616,6 @@
     "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456"
   },
   {
-    "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
-    "translation": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut"
-  },
-  {
-    "id": "${COMMAND_NAME} sl report datacenter-closures",
-    "translation": "${COMMAND_NAME} sl report datacenter-closures"
-  },
-  {
     "id": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.",
     "translation": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com."
   },
@@ -3180,6 +3172,10 @@
     "translation": "Failed to create multi virtual server instances.\n"
   },
   {
+    "id": "Failed to create placement group",
+    "translation": "Failed to create placement group"
+  },
+  {
     "id": "Failed to create placement group\n",
     "translation": "Failed to create placement group\n"
   },
@@ -3688,8 +3684,8 @@
     "translation": "Failed to get permissions.\n"
   },
   {
-    "id": "Failed to get placement group: {{.ID}}.\n",
-    "translation": "Failed to get placement group: {{.ID}}.\n"
+    "id": "Failed to get placement group: {{.ID}}.",
+    "translation": "Failed to get placement group: {{.ID}}."
   },
   {
     "id": "Failed to get planned events.",
@@ -3920,8 +3916,8 @@
     "translation": "Failed to list packages.\n"
   },
   {
-    "id": "Failed to list placement groups\n",
-    "translation": "Failed to list placement groups\n"
+    "id": "Failed to list placement groups",
+    "translation": "Failed to list placement groups"
   },
   {
     "id": "Failed to list private images.",
@@ -3936,12 +3932,12 @@
     "translation": "Failed to list resource records under zone: {{.Zone}}.\n"
   },
   {
-    "id": "Failed to list routers\n",
-    "translation": "Failed to list routers\n"
+    "id": "Failed to list routers",
+    "translation": "Failed to list routers"
   },
   {
-    "id": "Failed to list rules\n",
-    "translation": "Failed to list rules\n"
+    "id": "Failed to list rules",
+    "translation": "Failed to list rules"
   },
   {
     "id": "Failed to list subnets on your account.\n",
@@ -4152,8 +4148,8 @@
     "translation": "Failed to remove network component {{.ComponentID}} from security group {{.GroupID}}.\n"
   },
   {
-    "id": "Failed to remove placement group: {{.ID}}.\n",
-    "translation": "Failed to remove placement group: {{.ID}}.\n"
+    "id": "Failed to remove placement group: {{.ID}}.",
+    "translation": "Failed to remove placement group: {{.ID}}."
   },
   {
     "id": "Failed to remove rule {{.RuleId}} in security group {{.GroupID}}.\n",
@@ -7678,10 +7674,6 @@
   {
     "id": "Show only selected datacenter, use shortname (dal13) format",
     "translation": "Show only selected datacenter, use shortname (dal13) format"
-  },
-  {
-    "id": "Show only the bandwidth pool summary.",
-    "translation": "Show only the bandwidth pool summary."
   },
   {
     "id": "Show only the bandwidth summary for each hardware server ",
