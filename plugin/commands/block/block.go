@@ -26,6 +26,10 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewReplicaFailoverCommand(sl).Command)
 	cobraCmd.AddCommand(NewReplicaLocationsCommand(sl).Command)
 	cobraCmd.AddCommand(NewReplicaOrderCommand(sl).Command)
+	cobraCmd.AddCommand(NewReplicaPartnersCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotCancelCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotSetNotificationCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotGetNotificationStatusCommand(sl).Command)
 	return cobraCmd
 }
 
@@ -33,42 +37,7 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	storageManager := managers.NewStorageManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-		// "block-access-authorize": func(c *cli.Context) error {
-		// 	return NewAccessAuthorizeCommand(ui, storageManager, networkManager).Run(c)
-		// },
-		// "block-access-list": func(c *cli.Context) error {
-		// 	return NewAccessListCommand(ui, storageManager).Run(c)
-		// },
-		// "block-access-password": func(c *cli.Context) error {
-		// 	return NewAccessPasswordCommand(ui, storageManager).Run(c)
-		// },
-		// "block-access-revoke": func(c *cli.Context) error {
-		// 	return NewAccessRevokeCommand(ui, storageManager, networkManager).Run(c)
-		// },
-		// "block-replica-failback": func(c *cli.Context) error {
-		// 	return NewReplicaFailbackCommand(ui, storageManager).Run(c)
-		// },
-		// "block-replica-failover": func(c *cli.Context) error {
-		// 	return NewReplicaFailoverCommand(ui, storageManager).Run(c)
-		// },
-		// "block-replica-locations": func(c *cli.Context) error {
-		// 	return NewReplicaLocationsCommand(ui, storageManager).Run(c)
-		// },
-		// "block-replica-order": func(c *cli.Context) error {
-		// 	return NewReplicaOrderCommand(ui, storageManager, context).Run(c)
-		// },
-		"block-replica-partners": func(c *cli.Context) error {
-			return NewReplicaPartnersCommand(ui, storageManager).Run(c)
-		},
-		"block-snapshot-cancel": func(c *cli.Context) error {
-			return NewSnapshotCancelCommand(ui, storageManager).Run(c)
-		},
-		"block-snapshot-set-notification": func(c *cli.Context) error {
-			return NewSnapshotSetNotificationCommand(ui, storageManager).Run(c)
-		},
-		"block-snapshot-get-notification-status": func(c *cli.Context) error {
-			return NewSnapshotGetNotificationStatusCommand(ui, storageManager).Run(c)
-		},
+
 		"block-snapshot-create": func(c *cli.Context) error {
 			return NewSnapshotCreateCommand(ui, storageManager).Run(c)
 		},

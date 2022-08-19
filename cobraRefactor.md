@@ -282,6 +282,18 @@ var _ = Describe("Account Bandwidth-Pools", func() {
 })
 ```
 
+Useful Regex 
+
+```regex
+Expect\(strings.Contains\(err.Error\(\), \"(.*)\"\)\)\.To\(BeTrue\(\)\)
+Expect(err.Error()).To(ContainSubstring("\1"))
+```
+
+```
+RunCommand(cliCommand
+RunCobraCommand(cliCommand.Command
+```
+
 
 #### bandwidth_pools_details_test.go
 
