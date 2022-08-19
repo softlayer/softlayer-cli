@@ -89,6 +89,9 @@ func ExactArgs(n int) cobra.PositionalArgs {
 	}
 }
 
+// These ARGS exist so I can specify the proper translated error message. The default from spf13 doesn't allow for custom
+// error messages
+
 // Just one arg
 func OneArgs(cmd *cobra.Command, args []string) error {
 	if len(args) != 1 {
@@ -97,6 +100,13 @@ func OneArgs(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+// Just two arg
+func TwoArgs(cmd *cobra.Command, args []string) error {
+	if len(args) != 2 {
+		return fmt.Errorf(T("Incorrect Usage: This command requires two arguments."))
+	}
+	return nil
+}
 
 // ExactValidArgs returns an error if
 // there are not exactly N positional args OR

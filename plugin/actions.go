@@ -3,8 +3,6 @@ package plugin
 import (
 	"fmt"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
-
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
 
@@ -15,7 +13,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
@@ -53,12 +50,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl dns
 	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
 	for name, action := range dnsCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl dns
-	emailCommands := email.GetCommandActionBindings(context, ui, session)
-	for name, action := range emailCommands {
 		CommandActionBindings[name] = action
 	}
 
@@ -159,12 +150,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl security
 	securityCommands := security.GetCommandActionBindings(context, ui, session)
 	for name, action := range securityCommands {
-		CommandActionBindings[name] = action
-	}
-
-	//ibmcloud sl licenses
-	licenseCommands := licenses.GetCommandActionBindings(context, ui, session)
-	for name, action := range licenseCommands {
 		CommandActionBindings[name] = action
 	}
 
