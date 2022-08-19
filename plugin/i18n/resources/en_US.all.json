@@ -84,8 +84,8 @@
     "translation": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID."
   },
   {
-    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t",
-    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t"
+    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'",
+    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'"
   },
   {
     "id": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -526,10 +526,6 @@
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
-  },
-  {
-    "id": "${COMMAND_NAME} sl licenses cancel KEY",
-    "translation": "${COMMAND_NAME} sl licenses cancel KEY"
   },
   {
     "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
@@ -1424,6 +1420,10 @@
     "translation": "Authorize File, Block and Portable Storage to a Virtual Server"
   },
   {
+    "id": "Authorize hosts  to access a given volume",
+    "translation": "Authorize hosts  to access a given volume"
+  },
+  {
     "id": "Authorize hosts to access a given volume",
     "translation": "Authorize hosts to access a given volume"
   },
@@ -1972,6 +1972,10 @@
     "translation": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times"
   },
   {
+    "id": "Column to sort by",
+    "translation": "Column to sort by"
+  },
+  {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
     "translation": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]"
   },
@@ -1990,10 +1994,6 @@
   {
     "id": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by",
     "translation": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by"
-  },
-  {
-    "id": "Column to sort by, default:id.",
-    "translation": "Column to sort by, default:id."
   },
   {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
@@ -2646,6 +2646,10 @@
   {
     "id": "EXAMPLE:\n${COMMAND_NAME} sl dedicatedhost detail 1234567",
     "translation": "EXAMPLE:\n${COMMAND_NAME} sl dedicatedhost detail 1234567"
+  },
+  {
+    "id": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY",
+    "translation": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY"
   },
   {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
@@ -5312,6 +5316,10 @@
     "translation": "Incorrect Usage: This command requires one argument."
   },
   {
+    "id": "Incorrect Usage: This command requires two arguments.",
+    "translation": "Incorrect Usage: This command requires two arguments."
+  },
+  {
     "id": "Incorrect complex type: {{.Type}}",
     "translation": "Incorrect complex type: {{.Type}}"
   },
@@ -6592,6 +6600,10 @@
     "translation": "Owner"
   },
   {
+    "id": "PASSWORD",
+    "translation": "PASSWORD"
+  },
+  {
     "id": "PATH Read userdata from a file",
     "translation": "PATH Read userdata from a file"
   },
@@ -7114,6 +7126,10 @@
   {
     "id": "Quantity",
     "translation": "Quantity"
+  },
+  {
+    "id": "REPLICA_ID",
+    "translation": "REPLICA_ID"
   },
   {
     "id": "RPM Sensor",
