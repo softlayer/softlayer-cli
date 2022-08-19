@@ -7,10 +7,11 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -18,20 +19,17 @@ var _ = Describe("tags cleanup", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeTagsManager *testhelpers.FakeTagsManager
-		cmd             *tags.CleanupCommand
-		cliCommand      cli.Command
+		cliCommand      *tags.CleanupCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeTagsManager = new(testhelpers.FakeTagsManager)
-		cmd = tags.NewCleanupCommand(fakeUI, fakeTagsManager)
-		cliCommand = cli.Command{
-			Name:        tags.TagsCleanupMetaData().Name,
-			Description: tags.TagsCleanupMetaData().Description,
-			Usage:       tags.TagsCleanupMetaData().Usage,
-			Flags:       tags.TagsCleanupMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = tags.NewCleanupCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.TagsManager = fakeTagsManager
 	})
 
 	Describe("tags cleanup", func() {
@@ -41,7 +39,7 @@ var _ = Describe("tags cleanup", func() {
 				fakeTagsManager.GetUnattachedTagsReturns([]datatypes.Tag{}, errors.New("Failed to get Unattached Tags."))
 			})
 			It("Failed get Unattached Tags", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get Unattached Tags."))
 			})
@@ -57,7 +55,7 @@ var _ = Describe("tags cleanup", func() {
 				fakeTagsManager.DeleteTagReturns(false, errors.New("Failed to delete Tag"))
 			})
 			It("Failed get Unattached Tags", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Failed to delete Tag"))
 			})
@@ -73,7 +71,7 @@ var _ = Describe("tags cleanup", func() {
 				fakeTagsManager.GetUnattachedTagsReturns(fakerTags, nil)
 			})
 			It("Set command with --dry-run option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--dry-run")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--dry-run")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("(Dry Run) Removing Tag"))
 			})
@@ -90,7 +88,7 @@ var _ = Describe("tags cleanup", func() {
 				fakeTagsManager.DeleteTagReturns(true, nil)
 			})
 			It("Remove tag", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Removing Tag"))
 			})

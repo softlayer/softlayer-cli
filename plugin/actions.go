@@ -27,7 +27,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
@@ -85,12 +84,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl ipsec
 	ipsecCommands := ipsec.GetCommandActionBindings(context, ui, session)
 	for name, action := range ipsecCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl tags
-	tagsCommands := tags.GetCommandActionBindings(context, ui, session)
-	for name, action := range tagsCommands {
 		CommandActionBindings[name] = action
 	}
 

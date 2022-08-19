@@ -7,8 +7,9 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -16,20 +17,17 @@ var _ = Describe("Tags Detail", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeTagsManager *testhelpers.FakeTagsManager
-		cmd             *tags.DetailCommand
-		cliCommand      cli.Command
+		cliCommand      *tags.DetailCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeTagsManager = new(testhelpers.FakeTagsManager)
-		cmd = tags.NewDetailCommand(fakeUI, fakeTagsManager)
-		cliCommand = cli.Command{
-			Name:        tags.TagsDetailsMetaData().Name,
-			Description: tags.TagsDetailsMetaData().Description,
-			Usage:       tags.TagsDetailsMetaData().Usage,
-			Flags:       tags.TagsDetailsMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = tags.NewDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.TagsManager = fakeTagsManager
 		fakeTagsManager.GetTagByTagNameReturns(FakeTags, nil)
 		fakeTagsManager.GetTagReferencesReturns(FakeTagReference, nil)
 		fakeTagsManager.ReferenceLookupReturns("Hardware.Name")
@@ -38,7 +36,7 @@ var _ = Describe("Tags Detail", func() {
 		//sl tags list
 		Context("Tags Detail, success", func() {
 			It("Returns success", func() {
-				err := testhelpers.RunCommand(cliCommand, "testTag")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "testTag")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(len(results)).To(Equal(4))
@@ -48,7 +46,7 @@ var _ = Describe("Tags Detail", func() {
 		//sl tags list --output=JSON
 		Context("Tags Detail, success JSON", func() {
 			It("Returns JSON", func() {
-				err := testhelpers.RunCommand(cliCommand, "test1", "--output", "JSON")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "test1", "--output", "JSON")
 				Expect(err).NotTo(HaveOccurred())
 				results := fakeUI.Outputs()
 				Expect(results).To(ContainSubstring(`"ResourceName": "Hardware.Name"`))
@@ -57,7 +55,7 @@ var _ = Describe("Tags Detail", func() {
 		//sl tags list (no name)
 		Context("Tags Detail, No Arguments", func() {
 			It("Incorrect Usage", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage"))
 			})
@@ -68,7 +66,7 @@ var _ = Describe("Tags Detail", func() {
 				fakeTagsManager.GetTagByTagNameReturns(nil, errors.New("SoftLayer_Exception_ApiError"))
 			})
 			It("SLAPI error", func() {
-				err := testhelpers.RunCommand(cliCommand, "testTag")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "testTag")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ApiError"))
 			})

@@ -1,5 +1,9 @@
 [
   {
+    "id": "\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456",
+    "translation": "\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456"
+  },
+  {
     "id": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log get \n\t${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n\t${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
     "translation": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log get \n\t${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n\t${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
@@ -670,26 +674,6 @@
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
     "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets."
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
-    "translation": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemoves \"tag\" from your account.\n",
-    "translation": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemoves \"tag\" from your account.\n"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags detail [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags detail tag1\n\tShows all items that are tagged with 'tag1'\n",
-    "translation": "${COMMAND_NAME} sl tags detail [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags detail tag1\n\tShows all items that are tagged with 'tag1'\n"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags list [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags list\n\tShows all tags and a count of devices associated with that tag.\n\n\t${COMMAND_NAME} sl tags list -d\n\tShows all tags with devices, and some basic information about devices using this tag.\n",
-    "translation": "${COMMAND_NAME} sl tags list [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags list\n\tShows all tags and a count of devices associated with that tag.\n\n\t${COMMAND_NAME} sl tags list -d\n\tShows all tags with devices, and some basic information about devices using this tag.\n"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
-    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
   {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
@@ -3224,6 +3208,10 @@
     "translation": "Failed to delete L7member {{.Member}}: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete Tag",
+    "translation": "Failed to delete Tag"
+  },
+  {
     "id": "Failed to delete Tag: {{.tag}}.",
     "translation": "Failed to delete Tag: {{.tag}}."
   },
@@ -3740,6 +3728,10 @@
     "translation": "Failed to get summary."
   },
   {
+    "id": "Failed to get tag details",
+    "translation": "Failed to get tag details"
+  },
+  {
     "id": "Failed to get the email {{.emailID}}. ",
     "translation": "Failed to get the email {{.emailID}}. "
   },
@@ -4216,8 +4208,8 @@
     "translation": "Failed to set password for host {{.HostID}}.\n"
   },
   {
-    "id": "Failed to set tags.\n",
-    "translation": "Failed to set tags.\n"
+    "id": "Failed to set tags.",
+    "translation": "Failed to set tags."
   },
   {
     "id": "Failed to set tags: {{.tags}}.\n",
@@ -9486,6 +9478,10 @@
   {
     "id": "[-u|--userdata] is not allowed with [-F|--userfile].",
     "translation": "[-u|--userdata] is not allowed with [-F|--userfile]."
+  },
+  {
+    "id": "[TAG NAME]",
+    "translation": "[TAG NAME]"
   },
   {
     "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
