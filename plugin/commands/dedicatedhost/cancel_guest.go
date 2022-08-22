@@ -45,7 +45,7 @@ func (cmd *CancelCommand) Run(args []string) error {
 	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will cancel all virtual server instances in the dedicatedhost: {{.HostID}} and cannot be undone. Continue?", map[string]interface{}{"HostID": HostID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))

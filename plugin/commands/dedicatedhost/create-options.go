@@ -5,7 +5,6 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -50,7 +49,7 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 	var productPackage datatypes.Product_Package
 	productPackage, err := cmd.DedicatedHostManager.GetPackage()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get product package for hardware server.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get product package for hardware server."), err.Error(), 2)
 	}
 	if cmd.Datacenter == "" && cmd.Flavor == "" {
 		options := cmd.DedicatedHostManager.GetCreateOptions(productPackage)

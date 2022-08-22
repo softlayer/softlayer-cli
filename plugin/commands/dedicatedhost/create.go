@@ -89,7 +89,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
