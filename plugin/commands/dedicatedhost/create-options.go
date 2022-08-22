@@ -1,7 +1,6 @@
 package dedicatedhost
 
 import (
-	"fmt"
 	"sort"
 
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -84,15 +83,12 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 		flavorTable.Print()
 		cmd.UI.Print("")
 	} else {
-		fmt.Println("antes**********")
-		fmt.Println(cmd.Datacenter, cmd.Flavor)
 		if (cmd.Datacenter != "" && cmd.Flavor == "") || (cmd.Datacenter == "" && cmd.Flavor != "") {
-			fmt.Println("error mio")
 			return errors.NewMissingInputError("Both -d|--datacenter and -f|--flavor need to be passed as arguments e.g. ibmcloud sl dedicatedhost create-options -d ams01 -f 56_CORES_X_242_RAM_X_1_4_TB")
 		}
 		privateVlans, err := cmd.DedicatedHostManager.GetVlansOptions(cmd.Datacenter, cmd.Flavor, productPackage)
 		if err != nil {
-			return cli.NewExitError(T("Failed to get the vlans available for datacener: {{.DATACENTER}} and flavor: {{.FLAVOR}}.", map[string]interface{}{"DATACENTER": cmd.Datacenter, "FLAVOR": cmd.Flavor})+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get the vlans available for datacener: {{.DATACENTER}} and flavor: {{.FLAVOR}}.", map[string]interface{}{"DATACENTER": cmd.Datacenter, "FLAVOR": cmd.Flavor}), err.Error(), 2)
 		}
 		table := cmd.UI.Table([]string{T("Id"), T("Name"), T("PrimaryRouter Hostname")})
 		for _, vlans := range privateVlans {

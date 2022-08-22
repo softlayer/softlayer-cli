@@ -22,7 +22,7 @@ type ListGuestsCommand struct {
 	Hostname             string
 	Memory               int
 	Sortby               string
-	Column              []string
+	Column               []string
 }
 
 func NewListGuestsCommand(sl *metadata.SoftlayerCommand) *ListGuestsCommand {
@@ -31,7 +31,7 @@ func NewListGuestsCommand(sl *metadata.SoftlayerCommand) *ListGuestsCommand {
 		DedicatedHostManager: managers.NewDedicatedhostManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "list-guests",
+		Use:   "list-guests " + T("IDENTIFIER"),
 		Short: T("List Dedicated Host Guests."),
 		Long: T(`${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]
 
