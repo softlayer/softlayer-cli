@@ -1,38 +1,24 @@
 package dedicatedhost
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
-
+	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	dedicatedhostManager := managers.NewDedicatedhostManager(session)
-	networkManager := managers.NewNetworkManager(session)
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"dedicatedhost-list-guests": func(c *cli.Context) error {
-			return NewListGuestsCommand(ui, dedicatedhostManager).Run(c)
-		},
-		"dedicatedhost-create": func(c *cli.Context) error {
-			return NewCreateCommand(ui, dedicatedhostManager, networkManager, context).Run(c)
-		},
-		"dedicatedhost-detail": func(c *cli.Context) error {
-			return NewDetailCommand(ui, dedicatedhostManager).Run(c)
-		},
-		"dedicatedhost-cancel-guests": func(c *cli.Context) error {
-			return NewCancelCommand(ui, dedicatedhostManager).Run(c)
-		},
-		"dedicatedhost-create-options": func(c *cli.Context) error {
-			return NewCreateOptionsCommand(ui, dedicatedhostManager).Run(c)
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "dedicatedhost",
+		Short: T("Classic infrastructure Dedicatedhost"),
+		RunE:  nil,
 	}
-
-	return CommandActionBindings
+	cobraCmd.AddCommand(NewListGuestsCommand(sl).Command)
+	cobraCmd.AddCommand(NewCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewCancelCommand(sl).Command)
+	cobraCmd.AddCommand(NewCreateOptionsCommand(sl).Command)
+	return cobraCmd
 }
 
 func DedicatedhostNamespace() plugin.Namespace {
@@ -40,22 +26,5 @@ func DedicatedhostNamespace() plugin.Namespace {
 		ParentName:  "sl",
 		Name:        "dedicatedhost",
 		Description: T("Classic infrastructure Dedicatedhost"),
-	}
-}
-
-func DedicatedhostMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "dedicatedhost",
-		Description: T("Classic infrastructure Dedicatedhost"),
-		Usage:       "${COMMAND_NAME} sl dedicatedhost",
-		Subcommands: []cli.Command{
-			// DedicatedhostListMetaData(),
-			DedicatedhostListGuestsMetaData(),
-			DedicatedhostCreateMetaData(),
-			DedicatedhostDetailMetaData(),
-			DedicatedhostCancelGuestsMetaData(),
-			DedicatedhostCreateOptionsMetaData(),
-		},
 	}
 }

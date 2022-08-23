@@ -88,8 +88,8 @@
     "translation": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID."
   },
   {
-    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t",
-    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t"
+    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'",
+    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'"
   },
   {
     "id": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -244,16 +244,12 @@
     "translation": "${COMMAND_NAME} sl cdn list"
   },
   {
-    "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
-    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
+    "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl dedicatedhost create-options\n\n\tTo get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
+    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl dedicatedhost create-options\n\n\tTo get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
   },
   {
-    "id": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host."
-  },
-  {
-    "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account."
+    "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n\tThis command list all Dedicated Host guests in the Account.",
+    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n\tThis command list all Dedicated Host guests in the Account."
   },
   {
     "id": "${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns import ~/ibm.com.txt\n   This command imports zone and its resource records from file: ~/ibm.com.txt.",
@@ -534,10 +530,6 @@
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
-  },
-  {
-    "id": "${COMMAND_NAME} sl licenses cancel KEY",
-    "translation": "${COMMAND_NAME} sl licenses cancel KEY"
   },
   {
     "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
@@ -1412,6 +1404,10 @@
     "translation": "Authorize File, Block and Portable Storage to a Virtual Server"
   },
   {
+    "id": "Authorize hosts  to access a given volume",
+    "translation": "Authorize hosts  to access a given volume"
+  },
+  {
     "id": "Authorize hosts to access a given volume",
     "translation": "Authorize hosts to access a given volume"
   },
@@ -1952,12 +1948,16 @@
     "translation": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times"
   },
   {
-    "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]",
-    "translation": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]"
+    "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state].",
+    "translation": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]."
   },
   {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
     "translation": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times"
+  },
+  {
+    "id": "Column to sort by",
+    "translation": "Column to sort by"
   },
   {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
@@ -1966,10 +1966,6 @@
   {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
     "translation": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip"
-  },
-  {
-    "id": "Column to sort by, default:hostname",
-    "translation": "Column to sort by, default:hostname"
   },
   {
     "id": "Column to sort by, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by",
@@ -2632,6 +2628,14 @@
     "translation": "Duplicate Volume Properties"
   },
   {
+    "id": "EXAMPLE:\n${COMMAND_NAME} sl dedicatedhost detail 1234567",
+    "translation": "EXAMPLE:\n${COMMAND_NAME} sl dedicatedhost detail 1234567"
+  },
+  {
+    "id": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY",
+    "translation": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY"
+  },
+  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
     "translation": "Earliest date to retrieve events for [YYYY-MM-DD]."
   },
@@ -2956,8 +2960,8 @@
     "translation": "Failed to Edit emailAddress account: {{.emailID}}.\n"
   },
   {
-    "id": "Failed to Order the dedicatedhost.\n",
-    "translation": "Failed to Order the dedicatedhost.\n"
+    "id": "Failed to Order the dedicatedhost.",
+    "translation": "Failed to Order the dedicatedhost."
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -3056,8 +3060,8 @@
     "translation": "Failed to cancel VLAN {{.ID}}.\n"
   },
   {
-    "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.\n",
-    "translation": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.\n"
+    "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.",
+    "translation": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}."
   },
   {
     "id": "Failed to cancel block volume: {{.ID}}.\n",
@@ -3340,8 +3344,8 @@
     "translation": "Failed to find product package for this firewall."
   },
   {
-    "id": "Failed to generate the order template.\n",
-    "translation": "Failed to generate the order template.\n"
+    "id": "Failed to generate the order template.",
+    "translation": "Failed to generate the order template."
   },
   {
     "id": "Failed to get Account Overview.",
@@ -3524,8 +3528,8 @@
     "translation": "Failed to get dedicated hosts.\n"
   },
   {
-    "id": "Failed to get dedicatedhost instance: {{.HostID}}.\n",
-    "translation": "Failed to get dedicatedhost instance: {{.HostID}}.\n"
+    "id": "Failed to get dedicatedhost instance: {{.HostID}}.",
+    "translation": "Failed to get dedicatedhost instance: {{.HostID}}."
   },
   {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
@@ -3840,6 +3844,10 @@
     "translation": "Failed to get vlan primary router ID."
   },
   {
+    "id": "Failed to get vlan {{.VlanId}}.",
+    "translation": "Failed to get vlan {{.VlanId}}."
+  },
+  {
     "id": "Failed to get vlan {{.VlanId}}.\n",
     "translation": "Failed to get vlan {{.VlanId}}.\n"
   },
@@ -3924,8 +3932,8 @@
     "translation": "Failed to list subnets on your account.\n"
   },
   {
-    "id": "Failed to list the host guest on your account.\n",
-    "translation": "Failed to list the host guest on your account.\n"
+    "id": "Failed to list the host guest on your account.",
+    "translation": "Failed to list the host guest on your account."
   },
   {
     "id": "Failed to list users.\n",
@@ -4372,6 +4380,10 @@
     "translation": "Failed to verify this order.\n"
   },
   {
+    "id": "Failed to verify virtual server creation.",
+    "translation": "Failed to verify virtual server creation."
+  },
+  {
     "id": "Failed to verify virtual server creation.\n",
     "translation": "Failed to verify virtual server creation.\n"
   },
@@ -4484,8 +4496,8 @@
     "translation": "Filter by ID of the owner"
   },
   {
-    "id": "Filter by Memory capacity in megabytes",
-    "translation": "Filter by Memory capacity in megabytes"
+    "id": "Filter by Memory capacity in megabytes.",
+    "translation": "Filter by Memory capacity in megabytes."
   },
   {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
@@ -4520,8 +4532,16 @@
     "translation": "Filter by domain portion of the FQDN"
   },
   {
+    "id": "Filter by domain portion of the FQDN.",
+    "translation": "Filter by domain portion of the FQDN."
+  },
+  {
     "id": "Filter by host portion of the FQDN",
     "translation": "Filter by host portion of the FQDN"
+  },
+  {
+    "id": "Filter by host portion of the FQDN.",
+    "translation": "Filter by host portion of the FQDN."
   },
   {
     "id": "Filter by host record, such as www",
@@ -4588,16 +4608,16 @@
     "translation": "Filter by subnet type"
   },
   {
-    "id": "Filter by tags",
-    "translation": "Filter by tags"
-  },
-  {
     "id": "Filter by tags (multiple occurrence permitted)",
     "translation": "Filter by tags (multiple occurrence permitted)"
   },
   {
     "id": "Filter by tags, multiple occurrence allowed",
     "translation": "Filter by tags, multiple occurrence allowed"
+  },
+  {
+    "id": "Filter by tags.",
+    "translation": "Filter by tags."
   },
   {
     "id": "Filter by the ID of order that purchased the subnets",
@@ -5290,6 +5310,10 @@
   {
     "id": "Incorrect Usage: This command requires one argument.",
     "translation": "Incorrect Usage: This command requires one argument."
+  },
+  {
+    "id": "Incorrect Usage: This command requires two arguments.",
+    "translation": "Incorrect Usage: This command requires two arguments."
   },
   {
     "id": "Incorrect complex type: {{.Type}}",
@@ -6572,6 +6596,10 @@
     "translation": "Owner"
   },
   {
+    "id": "PASSWORD",
+    "translation": "PASSWORD"
+  },
+  {
     "id": "PATH Read userdata from a file",
     "translation": "PATH Read userdata from a file"
   },
@@ -7094,6 +7122,10 @@
   {
     "id": "Quantity",
     "translation": "Quantity"
+  },
+  {
+    "id": "REPLICA_ID",
+    "translation": "REPLICA_ID"
   },
   {
     "id": "RPM Sensor",
@@ -9350,6 +9382,10 @@
   {
     "id": "[--billing] billing rate must be either hourly or monthly.",
     "translation": "[--billing] billing rate must be either hourly or monthly."
+  },
+  {
+    "id": "[--billing] has to be either hourly or monthly.",
+    "translation": "[--billing] has to be either hourly or monthly."
   },
   {
     "id": "[--public] is not allowed with [--private].",
