@@ -1,13 +1,26 @@
 package firewall
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
+
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "firewall",
+		Short: T("Classic infrastructure Firewalls"),
+		RunE:  nil,
+	}
+	// cobraCmd.AddCommand(account.New<COMMAND>Command(ui, session))
+	cobraCmd.AddCommand(NewAddCommand(sl).Command)
+	cobraCmd.AddCommand(NewCancelCommand(sl).Command)
+	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewEditCommand(sl).Command)
+	cobraCmd.AddCommand(NewListCommand(sl).Command)
+	return cobraCmd
+}
 
 func FirewallNamespace() plugin.Namespace {
 	return plugin.Namespace{
@@ -15,44 +28,4 @@ func FirewallNamespace() plugin.Namespace {
 		Name:        "firewall",
 		Description: T("Classic infrastructure Firewalls"),
 	}
-}
-
-func FirewallMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "firewall",
-		Description: T("Classic infrastructure Firewalls"),
-		Usage:       "${COMMAND_NAME} sl firewall",
-		Subcommands: []cli.Command{
-			FirewallAddMetaData(),
-			FirewallCancelMetaData(),
-			FirewallDetailMetaData(),
-			FirewallEditMetaData(),
-			FirewallListMetaData(),
-		},
-	}
-}
-
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	firewallManager := managers.NewFirewallManager(session)
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"firewall-add": func(c *cli.Context) error {
-			return NewAddCommand(ui, firewallManager).Run(c)
-		},
-		"firewall-cancel": func(c *cli.Context) error {
-			return NewCancelCommand(ui, firewallManager).Run(c)
-		},
-		"firewall-detail": func(c *cli.Context) error {
-			return NewDetailCommand(ui, firewallManager).Run(c)
-		},
-		"firewall-edit": func(c *cli.Context) error {
-			return NewEditCommand(ui, firewallManager).Run(c)
-		},
-		"firewall-list": func(c *cli.Context) error {
-			return NewListCommand(ui, firewallManager).Run(c)
-		},
-	}
-
-	return CommandActionBindings
 }

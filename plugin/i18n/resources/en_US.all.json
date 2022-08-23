@@ -416,12 +416,8 @@
     "translation": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'"
   },
   {
-    "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
-  },
-  {
-    "id": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list",
-    "translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list"
+    "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
+    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
@@ -1700,8 +1696,8 @@
     "translation": "Cancels a billing item."
   },
   {
-    "id": "Cancels a firewall",
-    "translation": "Cancels a firewall"
+    "id": "Cancels a firewall.",
+    "translation": "Cancels a firewall."
   },
   {
     "id": "Cancels the server immediately (instead of on the billing anniversary)",
@@ -2184,8 +2180,8 @@
     "translation": "Create a new VLAN"
   },
   {
-    "id": "Create a new firewall",
-    "translation": "Create a new firewall"
+    "id": "Create a new firewall.",
+    "translation": "Create a new firewall."
   },
   {
     "id": "Create a placement group",
@@ -2444,8 +2440,8 @@
     "translation": "Detail a CDN Account."
   },
   {
-    "id": "Detail information about a firewall",
-    "translation": "Detail information about a firewall"
+    "id": "Detail information about a firewall.",
+    "translation": "Detail information about a firewall."
   },
   {
     "id": "Details of a specific event, and ability to acknowledge event.",
@@ -2504,8 +2500,8 @@
     "translation": "Disk sizes (multiple occurrence permitted)"
   },
   {
-    "id": "Display FortiGate username and FortiGate password to multi vlans",
-    "translation": "Display FortiGate username and FortiGate password to multi vlans"
+    "id": "Display FortiGate username and FortiGate password to multi vlans.",
+    "translation": "Display FortiGate username and FortiGate password to multi vlans."
   },
   {
     "id": "Display IPv4 IPs only",
@@ -2696,8 +2692,8 @@
     "translation": "Edit details of an image"
   },
   {
-    "id": "Edit firewall rules",
-    "translation": "Edit firewall rules"
+    "id": "Edit firewall rules.",
+    "translation": "Edit firewall rules."
   },
   {
     "id": "Edit hardware server details",
@@ -3136,8 +3132,8 @@
     "translation": "Failed to create dedicated host.\n"
   },
   {
-    "id": "Failed to create firewall.\n",
-    "translation": "Failed to create firewall.\n"
+    "id": "Failed to create firewall.",
+    "translation": "Failed to create firewall."
   },
   {
     "id": "Failed to create load balancer with name {{.Name}} on {{.Location}}.\n",
@@ -3516,12 +3512,12 @@
     "translation": "Failed to get datacenters for volume {{.VolumeID}}.\n"
   },
   {
-    "id": "Failed to get dedicated firewall rules for {{.FirewallID}}.\n",
-    "translation": "Failed to get dedicated firewall rules for {{.FirewallID}}.\n"
+    "id": "Failed to get dedicated firewall rules for {{.FirewallID}}.",
+    "translation": "Failed to get dedicated firewall rules for {{.FirewallID}}."
   },
   {
-    "id": "Failed to get dedicated firewall rules.\n",
-    "translation": "Failed to get dedicated firewall rules.\n"
+    "id": "Failed to get dedicated firewall rules.",
+    "translation": "Failed to get dedicated firewall rules."
   },
   {
     "id": "Failed to get dedicated hosts.\n",
@@ -3540,8 +3536,8 @@
     "translation": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n"
   },
   {
-    "id": "Failed to get firewalls on your account.\n",
-    "translation": "Failed to get firewalls on your account.\n"
+    "id": "Failed to get firewalls on your account.",
+    "translation": "Failed to get firewalls on your account."
   },
   {
     "id": "Failed to get hardware sensor data.\n",
@@ -3624,12 +3620,12 @@
     "translation": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}."
   },
   {
-    "id": "Failed to get multi vlan firewall.\n",
-    "translation": "Failed to get multi vlan firewall.\n"
+    "id": "Failed to get multi vlan firewall.",
+    "translation": "Failed to get multi vlan firewall."
   },
   {
-    "id": "Failed to get multi vlan firewalls on your account.\n",
-    "translation": "Failed to get multi vlan firewalls on your account.\n"
+    "id": "Failed to get multi vlan firewalls on your account.",
+    "translation": "Failed to get multi vlan firewalls on your account."
   },
   {
     "id": "Failed to get nas storage detail for the hardware server {{.ID}}.\n",
@@ -3656,8 +3652,8 @@
     "translation": "Failed to get orders."
   },
   {
-    "id": "Failed to get package for {{.Type}} firewall.\n",
-    "translation": "Failed to get package for {{.Type}} firewall.\n"
+    "id": "Failed to get package for {{.Type}} firewall.",
+    "translation": "Failed to get package for {{.Type}} firewall."
   },
   {
     "id": "Failed to get permissions.\n",
@@ -3716,8 +3712,8 @@
     "translation": "Failed to get standard firewall rules for {{.FirewallID}}.\n"
   },
   {
-    "id": "Failed to get standard firewall rules.\n",
-    "translation": "Failed to get standard firewall rules.\n"
+    "id": "Failed to get standard firewall rules.",
+    "translation": "Failed to get standard firewall rules."
   },
   {
     "id": "Failed to get subnet: {{.ID}}.\n",
@@ -3976,8 +3972,8 @@
     "translation": "Failed to open editor for component rules:  {{.FirewallID}}.\n"
   },
   {
-    "id": "Failed to open editor for vlan rules: {{.FirewallID}}.\n",
-    "translation": "Failed to open editor for vlan rules: {{.FirewallID}}.\n"
+    "id": "Failed to open editor for vlan rules: {{.FirewallID}}.",
+    "translation": "Failed to open editor for vlan rules: {{.FirewallID}}."
   },
   {
     "id": "Failed to order IPSec.Please try again later.\n",
@@ -4024,8 +4020,8 @@
     "translation": "Failed to parse file.\n"
   },
   {
-    "id": "Failed to parse firewall ID : {{.FirewallID}}.\n",
-    "translation": "Failed to parse firewall ID : {{.FirewallID}}.\n"
+    "id": "Failed to parse firewall ID : {{.FirewallID}}.",
+    "translation": "Failed to parse firewall ID : {{.FirewallID}}."
   },
   {
     "id": "Failed to parse version. \n",
@@ -5644,8 +5640,8 @@
     "translation": "List all devices the user has access and device access permissions."
   },
   {
-    "id": "List all firewalls on your account",
-    "translation": "List all firewalls on your account"
+    "id": "List all firewalls on your account.",
+    "translation": "List all firewalls on your account."
   },
   {
     "id": "List all global IPs on your account",
