@@ -46,6 +46,8 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewVolumeCountCommand(sl).Command)
 	cobraCmd.AddCommand(NewVolumeDetailCommand(sl).Command)
 	cobraCmd.AddCommand(NewVolumeDuplicateCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeListCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeLunCommand(sl).Command)
 
 	return cobraCmd
 }
@@ -55,12 +57,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 
-		"block-volume-list": func(c *cli.Context) error {
-			return NewVolumeListCommand(ui, storageManager).Run(c)
-		},
-		"block-volume-set-lun-id": func(c *cli.Context) error {
-			return NewVolumeLunCommand(ui, storageManager).Run(c)
-		},
 		"block-volume-order": func(c *cli.Context) error {
 			return NewVolumeOrderCommand(ui, storageManager, context).Run(c)
 		},

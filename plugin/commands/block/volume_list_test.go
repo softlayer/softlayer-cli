@@ -2,17 +2,17 @@ package block_test
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -20,58 +20,39 @@ var _ = Describe("Volume list", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.VolumeListCommand
-		cliCommand         cli.Command
+		cliCommand         *block.VolumeListCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewVolumeListCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockVolumeListMetaData().Name,
-			Description: block.BlockVolumeListMetaData().Description,
-			Usage:       block.BlockVolumeListMetaData().Usage,
-			Flags:       block.BlockVolumeListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = block.NewVolumeListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Volume list", func() {
 		Context("Volume list with wrong column", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--column", "abc")
 				Expect(err).To(HaveOccurred())
-				fmt.Println(err.Error())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --column abc is not supported.")).To(BeTrue())
-			})
-		})
-		Context("Volume list with wrong column", func() {
-			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--columns", "abc")
-				Expect(err).To(HaveOccurred())
-				fmt.Println(err.Error())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --columns abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --column abc is not supported."))
 			})
 		})
 		Context("Volume list with wrong columns", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--column", "id", "--column", "username", "--column", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--column", "id", "--column", "username", "--column", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --column abc is not supported.")).To(BeTrue())
-			})
-		})
-		Context("Volume list with wrong columns", func() {
-			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--columns", "id", "--columns", "username", "--columns", "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --columns abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --column abc is not supported."))
 			})
 		})
 		Context("Volume list with wrong sortby", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --sortby abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --sortby abc is not supported."))
 			})
 		})
 
@@ -80,10 +61,10 @@ var _ = Describe("Volume list", func() {
 				FakeStorageManager.ListVolumesReturns(nil, errors.New("Server Internal Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to list volumes on your account.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Server Internal Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to list volumes on your account."))
+				Expect(err.Error()).To(ContainSubstring("Server Internal Error"))
 			})
 		})
 
@@ -99,7 +80,7 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "id")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "123457")).To(BeTrue())
@@ -121,7 +102,7 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "username")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "username")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "hisvolume")).To(BeTrue())
@@ -149,7 +130,7 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "datacenter")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "datacenter")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "dal10")).To(BeTrue())
@@ -173,7 +154,7 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "storage_type")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "storage_type")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "enduration")).To(BeTrue())
@@ -193,7 +174,7 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "capacity_gb")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "capacity_gb")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "1000")).To(BeTrue())
@@ -213,7 +194,7 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "bytes_used", "--column", "bytes_used")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "bytes_used", "--column", "bytes_used")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "600")).To(BeTrue())
@@ -233,7 +214,7 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "ip_addr", "--column", "ip_addr")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "ip_addr", "--column", "ip_addr")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "6.7.8.9")).To(BeTrue())
@@ -253,7 +234,7 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "lunId")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "lunId")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "67")).To(BeTrue())
@@ -273,7 +254,7 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "active_transactions", "--column", "active_transactions")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "active_transactions", "--column", "active_transactions")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "1")).To(BeTrue())
@@ -309,19 +290,13 @@ var _ = Describe("Volume list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "created_by", "--column", "created_by")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "created_by", "--column", "created_by")
 				Expect(err).NotTo(HaveOccurred())
 				result := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(result[1], "Anne Clark")).To(BeTrue())
 				Expect(strings.Contains(result[2], "Bill Jones")).To(BeTrue())
 			})
-			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "created_by", "--columns", "created_by")
-				Expect(err).NotTo(HaveOccurred())
-				result := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(result[1], "Anne Clark")).To(BeTrue())
-				Expect(strings.Contains(result[2], "Bill Jones")).To(BeTrue())
-			})
+
 		})
 	})
 })
