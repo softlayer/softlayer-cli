@@ -29,9 +29,9 @@ func NewAddCommand(sl *metadata.SoftlayerCommand) (cmd *AddCommand) {
 	}
 
 	cobraCmd := &cobra.Command{
-		Use:   "add " + T("TargetID"),
+		Use:   "add " + T("IDENTIFIER"),
 		Short: T("Create a new firewall."),
-		Args:  metadata.NoArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
