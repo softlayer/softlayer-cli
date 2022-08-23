@@ -3,9 +3,8 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,51 +13,44 @@ import (
 )
 
 type SubnetsListCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewSubnetsListCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *SubnetsListCommand) {
-	return &SubnetsListCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewSubnetsListCommand(sl *metadata.SoftlayerCommand) *SubnetsListCommand {
+	thisCmd := &SubnetsListCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockSubnetsListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "subnets-list",
-		Description: T("List block storage assigned subnets for the given host id."),
-		Usage: T(`${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "subnets-list " + T("IDENTIFIER"),
+		Short: T("List block storage assigned subnets for the given host id."),
+		Long: T(`${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]
 
 EXAMPLE:
    ${COMMAND_NAME} sl block subnets-list 12345678 
    ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SubnetsListCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *SubnetsListCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	accessID, err := strconv.Atoi(c.Args()[0])
+	outputFormat := cmd.GetOutputFlag()
+	accessID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Access ID")
 	}
 
 	subnets, err := cmd.StorageManager.GetSubnetsInAcl(accessID, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get subnets.")+"\n"+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get subnets."), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Id"), T("Network Identifier"), T("CIDR")})

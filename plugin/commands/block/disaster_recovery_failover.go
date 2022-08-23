@@ -3,32 +3,29 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type DisasterRecoveryFailoverCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewDisasterRecoveryFailoverCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *DisasterRecoveryFailoverCommand) {
-	return &DisasterRecoveryFailoverCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewDisasterRecoveryFailoverCommand(sl *metadata.SoftlayerCommand) *DisasterRecoveryFailoverCommand {
+	thisCmd := &DisasterRecoveryFailoverCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockDisasterRecoveryFailoverMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "disaster-recovery-failover",
-		Description: T("Failover an inaccessible volume to its available replicant volume."),
-		Usage: T(`${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID
+	cobraCmd := &cobra.Command{
+		Use:   "disaster-recovery-failover " + T("IDENTIFIER") + " " + T("REPLICA_ID"),
+		Short: T("Failover an inaccessible volume to its available replicant volume."),
+		Long: T(`${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID
 
 If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately
 failover to an available replica in another location. This method does not allow for fail back via the API.
@@ -38,27 +35,31 @@ To test failover, use '${COMMAND_NAME} sl block replica-failover' instead.
 EXAMPLE:
 	${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321
 	This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.`),
+		Args: metadata.TwoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DisasterRecoveryFailoverCommand) Run(c *cli.Context) error {
-	if c.NArg() != 2 {
-		return errors.NewInvalidUsageError(T("This command requires two arguments."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *DisasterRecoveryFailoverCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	replicaID, err := strconv.Atoi(c.Args()[1])
+	replicaID, err := strconv.Atoi(args[1])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Replica ID")
 	}
 	err = cmd.StorageManager.DisasterRecoveryFailover(volumeID, replicaID)
+	subs := map[string]interface{}{"VolumeID": volumeID, "ReplicaID": replicaID}
 	if err != nil {
-		return cli.NewExitError(T("Failover operation could not be initiated for volume {{.VolumeID}}.\n", map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failover operation could not be initiated for volume {{.VolumeID}}.\n", subs), err.Error(), 2)
 	}
 	cmd.UI.Ok()
-	cmd.UI.Print(T("Failover of volume {{.VolumeID}} to replica {{.ReplicaID}} is now in progress.",
-		map[string]interface{}{"VolumeID": volumeID, "ReplicaID": replicaID}))
+	cmd.UI.Print(T("Failover of volume {{.VolumeID}} to replica {{.ReplicaID}} is now in progress.", subs))
 	return nil
 }

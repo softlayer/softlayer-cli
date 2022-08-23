@@ -8,7 +8,6 @@ import (
 	"github.com/urfave/cli"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
@@ -48,64 +47,44 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewVolumeDuplicateCommand(sl).Command)
 	cobraCmd.AddCommand(NewVolumeListCommand(sl).Command)
 	cobraCmd.AddCommand(NewVolumeLunCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeOrderCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeModifyCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeOptionsCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeLimitCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeRefreshCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeConvertCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeSetNoteCommand(sl).Command)
+	// Miscellaneous Commands
+	cobraCmd.AddCommand(NewObjectListCommand(sl).Command)
+	cobraCmd.AddCommand(NewDisasterRecoveryFailoverCommand(sl).Command)
+	cobraCmd.AddCommand(NewDuplicateConvertStatusCommand(sl).Command)
+
+	// Subnets
+	cobraCmd.AddCommand(NewSubnetsListCommand(sl).Command)
+	cobraCmd.AddCommand(NewSubnetsAssignCommand(sl).Command)
+	cobraCmd.AddCommand(NewSubnetsRemoveCommand(sl).Command)
 
 	return cobraCmd
 }
 
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	storageManager := managers.NewStorageManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 
-		"block-volume-order": func(c *cli.Context) error {
-			return NewVolumeOrderCommand(ui, storageManager, context).Run(c)
-		},
-		"block-volume-modify": func(c *cli.Context) error {
-			return NewVolumeModifyCommand(ui, storageManager, context).Run(c)
-		},
-		"block-volume-options": func(c *cli.Context) error {
-			return NewVolumeOptionsCommand(ui, storageManager).Run(c)
-		},
-		"block-volume-limits": func(c *cli.Context) error {
-			return NewVolumeLimitCommand(ui, storageManager).Run(c)
-		},
-		"block-volume-refresh": func(c *cli.Context) error {
-			return NewVolumeRefreshCommand(ui, storageManager).Run(c)
-		},
-		"block-volume-convert": func(c *cli.Context) error {
-			return NewVolumeConvertCommand(ui, storageManager).Run(c)
-		},
-		"block-object-list": func(c *cli.Context) error {
-			return NewObjectListCommand(ui, storageManager).Run(c)
-		},
-		"block-subnets-list": func(c *cli.Context) error {
-			return NewSubnetsListCommand(ui, storageManager).Run(c)
-		},
-		"block-subnets-assign": func(c *cli.Context) error {
-			return NewSubnetsAssignCommand(ui, storageManager).Run(c)
-		},
-		"block-subnets-remove": func(c *cli.Context) error {
-			return NewSubnetsRemoveCommand(ui, storageManager).Run(c)
-		},
-		"block-disaster-recovery-failover": func(c *cli.Context) error {
-			return NewDisasterRecoveryFailoverCommand(ui, storageManager).Run(c)
-		},
-		"block-volume-set-note": func(c *cli.Context) error {
-			return NewVolumeSetNoteCommand(ui, storageManager).Run(c)
-		},
-		"block-duplicate-convert-status": func(c *cli.Context) error {
-			return NewDuplicateConvertStatusCommand(ui, storageManager).Run(c)
-		},
+		// "block-duplicate-convert-status": func(c *cli.Context) error {
+		// 	return NewDuplicateConvertStatusCommand(ui, storageManager).Run(c)
+		// },
 		// Commands that are the same for file and block go here.
-		"file-disaster-recovery-failover": func(c *cli.Context) error {
-			return NewDisasterRecoveryFailoverCommand(ui, storageManager).Run(c)
-		},
-		"file-volume-set-note": func(c *cli.Context) error {
-			return NewVolumeSetNoteCommand(ui, storageManager).Run(c)
-		},
-		"file-duplicate-convert-status": func(c *cli.Context) error {
-			return NewDuplicateConvertStatusCommand(ui, storageManager).Run(c)
-		},
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MOVE THESE TO FILE TODO!!!!!!!
+		// "file-disaster-recovery-failover": func(c *cli.Context) error {
+		// 	return NewDisasterRecoveryFailoverCommand(ui, storageManager).Run(c)
+		// },
+		// "file-volume-set-note": func(c *cli.Context) error {
+		// 	return NewVolumeSetNoteCommand(ui, storageManager).Run(c)
+		// },
+		// "file-duplicate-convert-status": func(c *cli.Context) error {
+		// 	return NewDuplicateConvertStatusCommand(ui, storageManager).Run(c)
+		// },
 	}
 
 	return CommandActionBindings

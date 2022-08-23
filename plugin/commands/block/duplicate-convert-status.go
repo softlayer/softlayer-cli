@@ -3,9 +3,8 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,35 +13,41 @@ import (
 )
 
 type DuplicateConvertStatusCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewDuplicateConvertStatusCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *DuplicateConvertStatusCommand) {
-	return &DuplicateConvertStatusCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewDuplicateConvertStatusCommand(sl *metadata.SoftlayerCommand) *DuplicateConvertStatusCommand {
+	thisCmd := &DuplicateConvertStatusCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "duplicate-convert-status " + T("IDENTIFIER"),
+		Short: T("Get status for split or move completed percentage of a given block storage duplicate volume."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DuplicateConvertStatusCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *DuplicateConvertStatusCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	duplicateConversionStatus, err := cmd.StorageManager.GetDuplicateConversionStatus(volumeID, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
-			map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
+			map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Username"), T("Active Conversion Start Timestamp"), T("Completed Percentage")})
@@ -55,19 +60,4 @@ func (cmd *DuplicateConvertStatusCommand) Run(c *cli.Context) error {
 	utils.PrintTable(cmd.UI, table, outputFormat)
 
 	return nil
-}
-
-func BlockDuplicateConvertStatusMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "duplicate-convert-status",
-		Description: T("Get status for split or move completed percentage of a given block storage duplicate volume."),
-		Usage: T(`${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID
-
-EXAMPLE:
-   ${COMMAND_NAME} sl block duplicate-convert-status 12345678`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

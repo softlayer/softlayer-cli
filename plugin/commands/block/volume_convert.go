@@ -3,52 +3,47 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type VolumeConvertCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeConvertCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *VolumeConvertCommand) {
-	return &VolumeConvertCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewVolumeConvertCommand(sl *metadata.SoftlayerCommand) *VolumeConvertCommand {
+	thisCmd := &VolumeConvertCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "volume-convert " + T("IDENTIFIER"),
+		Short: T("Convert a dependent duplicate volume to an independent volume."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func BlockVolumeConvertMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "volume-convert",
-		Description: T("Convert a dependent duplicate volume to an independent volume."),
-		Usage: T(`${COMMAND_NAME} sl block volume-convert VOLUME_ID
+func (cmd *VolumeConvertCommand) Run(args []string) error {
 
-EXAMPLE:
-	${COMMAND_NAME} sl block volume-convert VOLUME_ID
-	Convert a dependent duplicate VOLUME_ID to an independent volume.`),
-	}
-}
-
-func (cmd *VolumeConvertCommand) Run(c *cli.Context) error {
-
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
 	err = cmd.StorageManager.VolumeConvert(volumeID)
 	if err != nil {
-		return cli.NewExitError(err.Error(), 1)
+		return err
 	}
 	cmd.UI.Ok()
 	return nil

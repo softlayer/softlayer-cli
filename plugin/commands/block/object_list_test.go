@@ -9,30 +9,29 @@ import (
 	. "github.com/onsi/gomega"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("block object-list", func() {
 	var (
 		fakeUI             *terminal.FakeUI
-		fakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.ObjectListCommand
-		cliCommand         cli.Command
+		FakeStorageManager *testhelpers.FakeStorageManager
+		cliCommand         *block.ObjectListCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewObjectListCommand(fakeUI, fakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockObjectListMetaData().Name,
-			Description: block.BlockObjectListMetaData().Description,
-			Usage:       block.BlockObjectListMetaData().Usage,
-			Flags:       block.BlockObjectListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		FakeStorageManager = new(testhelpers.FakeStorageManager)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = block.NewObjectListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("block object-list", func() {
@@ -40,7 +39,7 @@ var _ = Describe("block object-list", func() {
 		Context("Return error", func() {
 
 			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -48,10 +47,10 @@ var _ = Describe("block object-list", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeStorageManager.GetHubNetworkStorageReturns([]datatypes.Network_Storage{}, errors.New("Failed to get Cloud Object Storages."))
+				FakeStorageManager.GetHubNetworkStorageReturns([]datatypes.Network_Storage{}, errors.New("Failed to get Cloud Object Storages."))
 			})
 			It("Failed get Cloud Object Storages", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get Cloud Object Storages."))
 			})
@@ -73,10 +72,10 @@ var _ = Describe("block object-list", func() {
 						},
 					},
 				}
-				fakeStorageManager.GetHubNetworkStorageReturns(fakerCloudObjectStorages, nil)
+				FakeStorageManager.GetHubNetworkStorageReturns(fakerCloudObjectStorages, nil)
 			})
 			It("Return no error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-11-08T00:00:00Z"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123456"))
