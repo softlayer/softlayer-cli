@@ -44,38 +44,6 @@
     "translation": "# of Active Transactions"
   },
   {
-    "id": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222",
-    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456",
-    "translation": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale detail IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale detail 123456",
-    "translation": "${COMMAND_NAME} sl autoscale detail IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048",
-    "translation": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n   This command list all Autoscale Groups on current account.",
-    "translation": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n   This command list all Autoscale Groups on current account."
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31",
-    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to",
-    "translation": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas",
-    "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas"
-  },
-  {
     "id": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
     "translation": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume."
   },
@@ -88,8 +56,8 @@
     "translation": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID."
   },
   {
-    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t",
-    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t"
+    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'",
+    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'"
   },
   {
     "id": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -536,10 +504,6 @@
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
   },
   {
-    "id": "${COMMAND_NAME} sl licenses cancel KEY",
-    "translation": "${COMMAND_NAME} sl licenses cancel KEY"
-  },
-  {
     "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
     "translation": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources."
   },
@@ -932,10 +896,6 @@
     "translation": "--sortby {{.Column}} is not supported."
   },
   {
-    "id": "--to or --by is required",
-    "translation": "--to or --by is required"
-  },
-  {
     "id": "--url cannot be used with TCP checks.",
     "translation": "--url cannot be used with TCP checks."
   },
@@ -1296,20 +1256,12 @@
     "translation": "Adds an update to an existing ticket"
   },
   {
-    "id": "Adds guests. (Only set --up or --down) (default)",
-    "translation": "Adds guests. (Only set --up or --down) (default)"
-  },
-  {
     "id": "Advanced configuration flag",
     "translation": "Advanced configuration flag"
   },
   {
     "id": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.",
     "translation": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials."
-  },
-  {
-    "id": "All tags will be removed",
-    "translation": "All tags will be removed"
   },
   {
     "id": "Allocation",
@@ -1412,20 +1364,16 @@
     "translation": "Authorize File, Block and Portable Storage to a Virtual Server"
   },
   {
+    "id": "Authorize hosts  to access a given volume",
+    "translation": "Authorize hosts  to access a given volume"
+  },
+  {
     "id": "Authorize hosts to access a given volume",
     "translation": "Authorize hosts to access a given volume"
   },
   {
     "id": "Auto Scale Group was deleted successfully",
     "translation": "Auto Scale Group was deleted successfully"
-  },
-  {
-    "id": "Auto Scale Group was scaled successfully",
-    "translation": "Auto Scale Group was scaled successfully"
-  },
-  {
-    "id": "Autoscale Group {{.Id}} was updated",
-    "translation": "Autoscale Group {{.Id}} was updated"
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -2616,10 +2564,6 @@
     "translation": "Don't delete, just show what will be deleted."
   },
   {
-    "id": "Done",
-    "translation": "Done"
-  },
-  {
     "id": "Download SSL certificate and key files",
     "translation": "Download SSL certificate and key files"
   },
@@ -2632,12 +2576,12 @@
     "translation": "Duplicate Volume Properties"
   },
   {
-    "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
-    "translation": "Earliest date to retrieve events for [YYYY-MM-DD]."
+    "id": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY",
+    "translation": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY"
   },
   {
-    "id": "Earliest date to retrieve logs for [YYYY-MM-DD].",
-    "translation": "Earliest date to retrieve logs for [YYYY-MM-DD]."
+    "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
+    "translation": "Earliest date to retrieve events for [YYYY-MM-DD]."
   },
   {
     "id": "Edit SSL certificate",
@@ -2726,10 +2670,6 @@
   {
     "id": "Editor could not be ran: {{.Error}}.\n",
     "translation": "Editor could not be ran: {{.Error}}.\n"
-  },
-  {
-    "id": "Edits an Autoscale group.",
-    "translation": "Edits an Autoscale group."
   },
   {
     "id": "Either '--enable' or '--disable' is required.",
@@ -2856,10 +2796,6 @@
     "translation": "Endurance Tier Per IOPS"
   },
   {
-    "id": "Entry",
-    "translation": "Entry"
-  },
-  {
     "id": "Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n",
     "translation": "Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n"
   },
@@ -2942,10 +2878,6 @@
   {
     "id": "Failed due to error: ",
     "translation": "Failed due to error: "
-  },
-  {
-    "id": "Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n",
-    "translation": "Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n"
   },
   {
     "id": "Failed to Edit email account: {{.emailID}}.\n",
@@ -3120,10 +3052,6 @@
     "translation": "Failed to confirm the new LUN ID on volume {{.VolumeId}}."
   },
   {
-    "id": "Failed to create Auto Scale Group.\n",
-    "translation": "Failed to create Auto Scale Group.\n"
-  },
-  {
     "id": "Failed to create credential. ",
     "translation": "Failed to create credential. "
   },
@@ -3192,8 +3120,8 @@
     "translation": "Failed to decoded the note.\n"
   },
   {
-    "id": "Failed to delete AutoScale Group.\n",
-    "translation": "Failed to delete AutoScale Group.\n"
+    "id": "Failed to delete AutoScale Group.",
+    "translation": "Failed to delete AutoScale Group."
   },
   {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
@@ -3348,12 +3276,8 @@
     "translation": "Failed to get Account Overview."
   },
   {
-    "id": "Failed to get AutoScale group logs.\n",
-    "translation": "Failed to get AutoScale group logs.\n"
-  },
-  {
-    "id": "Failed to get AutoScale group.\n",
-    "translation": "Failed to get AutoScale group.\n"
+    "id": "Failed to get AutoScale group.",
+    "translation": "Failed to get AutoScale group."
   },
   {
     "id": "Failed to get Bandwidth Pool.",
@@ -3374,10 +3298,6 @@
   {
     "id": "Failed to get Cloud Object Storages.\n",
     "translation": "Failed to get Cloud Object Storages.\n"
-  },
-  {
-    "id": "Failed to get Datacenter {{.datacenter}}.\n",
-    "translation": "Failed to get Datacenter {{.datacenter}}.\n"
   },
   {
     "id": "Failed to get Event Log types.\n",
@@ -3804,10 +3724,6 @@
     "translation": "Failed to get virtual dedicated racks on your account.\n"
   },
   {
-    "id": "Failed to get virtual guest members.\n",
-    "translation": "Failed to get virtual guest members.\n"
-  },
-  {
     "id": "Failed to get virtual guests on your account.\n",
     "translation": "Failed to get virtual guests on your account.\n"
   },
@@ -4184,10 +4100,6 @@
     "translation": "Failed to save Quote.\n"
   },
   {
-    "id": "Failed to scale Auto Scale Group.",
-    "translation": "Failed to scale Auto Scale Group."
-  },
-  {
     "id": "Failed to set LUN ID for volume {{.VolumeID}}.\n",
     "translation": "Failed to set LUN ID for volume {{.VolumeID}}.\n"
   },
@@ -4262,10 +4174,6 @@
   {
     "id": "Failed to unmarshal template file: {{.File}}.\n",
     "translation": "Failed to unmarshal template file: {{.File}}.\n"
-  },
-  {
-    "id": "Failed to update Auto Scale Group.\n",
-    "translation": "Failed to update Auto Scale Group.\n"
   },
   {
     "id": "Failed to update IPSec {{.ContextID}}.\n",
@@ -5116,50 +5024,6 @@
     "translation": "IDs of the subnets to remove"
   },
   {
-    "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
-    "translation": "INTEGER Disk sizes (multiple occurrence permitted)  [required]"
-  },
-  {
-    "id": "INTEGER Number of CPUs for new guests (existing not effected)",
-    "translation": "INTEGER Number of CPUs for new guests (existing not effected)"
-  },
-  {
-    "id": "INTEGER Number of CPUs for new guests (existing not effected)  [required]",
-    "translation": "INTEGER Number of CPUs for new guests (existing not effected)  [required]"
-  },
-  {
-    "id": "INTEGER RAM in MB or GB for new guests (existing not effected)",
-    "translation": "INTEGER RAM in MB or GB for new guests (existing not effected)"
-  },
-  {
-    "id": "INTEGER RAM in MB or GB for new guests (existing not effected)  [required]",
-    "translation": "INTEGER RAM in MB or GB for new guests (existing not effected)  [required]"
-  },
-  {
-    "id": "INTEGER Set the maximum number of guests",
-    "translation": "INTEGER Set the maximum number of guests"
-  },
-  {
-    "id": "INTEGER Set the maximum number of guests  [required]",
-    "translation": "INTEGER Set the maximum number of guests  [required]"
-  },
-  {
-    "id": "INTEGER Set the minimum number of guests",
-    "translation": "INTEGER Set the minimum number of guests"
-  },
-  {
-    "id": "INTEGER Set the minimum number of guests  [required]",
-    "translation": "INTEGER Set the minimum number of guests  [required]"
-  },
-  {
-    "id": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]",
-    "translation": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]"
-  },
-  {
-    "id": "INTEGER The number of seconds this group will wait after lastActionDate before performing another action.  [required]",
-    "translation": "INTEGER The number of seconds this group will wait after lastActionDate before performing another action.  [required]"
-  },
-  {
     "id": "IOPS",
     "translation": "IOPS"
   },
@@ -5290,6 +5154,10 @@
   {
     "id": "Incorrect Usage: This command requires one argument.",
     "translation": "Incorrect Usage: This command requires one argument."
+  },
+  {
+    "id": "Incorrect Usage: This command requires two arguments.",
+    "translation": "Incorrect Usage: This command requires two arguments."
   },
   {
     "id": "Incorrect complex type: {{.Type}}",
@@ -6100,10 +5968,6 @@
     "translation": "New Size of file volume in GB. ***If no size is given, the original size of volume is used.***\n      Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n      Minimum: [the original size of the volume]"
   },
   {
-    "id": "New Tags: {{.Tags}}.",
-    "translation": "New Tags: {{.Tags}}."
-  },
-  {
     "id": "New notes for the key",
     "translation": "New notes for the key"
   },
@@ -6274,10 +6138,6 @@
   {
     "id": "Number of VSI instances this capacity reservation can support. [required]",
     "translation": "Number of VSI instances this capacity reservation can support. [required]"
-  },
-  {
-    "id": "Number of guests for the scale action.",
-    "translation": "Number of guests for the scale action."
   },
   {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
@@ -6496,10 +6356,6 @@
     "translation": "Order/Create License."
   },
   {
-    "id": "Order/Create a scale group.",
-    "translation": "Order/Create a scale group."
-  },
-  {
     "id": "Order/create a hardware server",
     "translation": "Order/create a hardware server"
   },
@@ -6572,8 +6428,8 @@
     "translation": "Owner"
   },
   {
-    "id": "PATH Read userdata from a file",
-    "translation": "PATH Read userdata from a file"
+    "id": "PASSWORD",
+    "translation": "PASSWORD"
   },
   {
     "id": "POD",
@@ -7096,6 +6952,10 @@
     "translation": "Quantity"
   },
   {
+    "id": "REPLICA_ID",
+    "translation": "REPLICA_ID"
+  },
+  {
     "id": "RPM Sensor",
     "translation": "RPM Sensor"
   },
@@ -7256,10 +7116,6 @@
     "translation": "Removes an empty tag from your account."
   },
   {
-    "id": "Removes guests. (Only set --up or --down)",
-    "translation": "Removes guests. (Only set --up or --down)"
-  },
-  {
     "id": "Removing Tag: {{.tag}}.",
     "translation": "Removing Tag: {{.tag}}."
   },
@@ -7342,10 +7198,6 @@
   {
     "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
     "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
-  },
-  {
-    "id": "Retrieve logs for an Autoscale group.",
-    "translation": "Retrieve logs for an Autoscale group."
   },
   {
     "id": "Return ALL invoices. There may be a lot of these. [default: False]",
@@ -7472,10 +7324,6 @@
     "translation": "Save a quote"
   },
   {
-    "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
-    "translation": "Scales an Autoscale group. Bypasses a scale group's cooldown period."
-  },
-  {
     "id": "Schedule",
     "translation": "Schedule"
   },
@@ -7594,10 +7442,6 @@
   {
     "id": "Sets username for this account.",
     "translation": "Sets username for this account."
-  },
-  {
-    "id": "Setting tags for {{.VirtualGuestHostname}}.",
-    "translation": "Setting tags for {{.VirtualGuestHostname}}."
   },
   {
     "id": "Short Name",
@@ -7968,58 +7812,6 @@
     "translation": "System reloading for virtual server instance: {{.VsId}} is in progress. Run '{{.CommandName}} sl vs ready {{.VsId}}' to check whether it is ready later on."
   },
   {
-    "id": "TEXT Collection of policies for this group. This can be empty.",
-    "translation": "TEXT Collection of policies for this group. This can be empty."
-  },
-  {
-    "id": "TEXT Datacenter shortname  [required]",
-    "translation": "TEXT Datacenter shortname  [required]"
-  },
-  {
-    "id": "TEXT Domain portion of the FQDN  [required]",
-    "translation": "TEXT Domain portion of the FQDN  [required]"
-  },
-  {
-    "id": "TEXT Host portion of the FQDN  [required]",
-    "translation": "TEXT Host portion of the FQDN  [required]"
-  },
-  {
-    "id": "TEXT OS install code. Tip: you can specify <OS>_LATEST  [required]",
-    "translation": "TEXT OS install code. Tip: you can specify <OS>_LATEST  [required]"
-  },
-  {
-    "id": "TEXT Post-install script to download",
-    "translation": "TEXT Post-install script to download"
-  },
-  {
-    "id": "TEXT SSH keys to add to the root user (multiple occurrence permitted)",
-    "translation": "TEXT SSH keys to add to the root user (multiple occurrence permitted)"
-  },
-  {
-    "id": "TEXT Scale group's name.",
-    "translation": "TEXT Scale group's name."
-  },
-  {
-    "id": "TEXT Scale group's name.  [required]",
-    "translation": "TEXT Scale group's name.  [required]"
-  },
-  {
-    "id": "TEXT The number to scale by. This number has different meanings based on type.",
-    "translation": "TEXT The number to scale by. This number has different meanings based on type."
-  },
-  {
-    "id": "TEXT The termination policy for the group(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [required]",
-    "translation": "TEXT The termination policy for the group(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [required]"
-  },
-  {
-    "id": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE).",
-    "translation": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE)."
-  },
-  {
-    "id": "TEXT User defined metadata string",
-    "translation": "TEXT User defined metadata string"
-  },
-  {
     "id": "TTL(Time-To-Live) in seconds, such as: 86400",
     "translation": "TTL(Time-To-Live) in seconds, such as: 86400"
   },
@@ -8036,20 +7828,12 @@
     "translation": "Tags"
   },
   {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "Tags all guests in an autoscale group."
-  },
-  {
     "id": "Tags for the image",
     "translation": "Tags for the image"
   },
   {
     "id": "Tags to add to the instance (multiple occurrence permitted)",
     "translation": "Tags to add to the instance (multiple occurrence permitted)"
-  },
-  {
-    "id": "Tags to set for each guest in this group. Existing tags are overwritten. An empty string will remove all tags.",
-    "translation": "Tags to set for each guest in this group. Existing tags are overwritten. An empty string will remove all tags."
   },
   {
     "id": "Tags to set or empty string to remove all",
@@ -9184,10 +8968,6 @@
     "translation": "Virtual Guest Member Template"
   },
   {
-    "id": "Virtual Guest Members",
-    "translation": "Virtual Guest Members"
-  },
-  {
     "id": "Virtual guest domain name not found.",
     "translation": "Virtual guest domain name not found."
   },
@@ -9294,14 +9074,6 @@
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
     "translation": "Whether or not this duplicate will be a dependent duplicate of the origin volume."
-  },
-  {
-    "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)"
-  },
-  {
-    "id": "Will add/remove the specified number of guests. (Only set --by or --to)",
-    "translation": "Will add/remove the specified number of guests. (Only set --by or --to)"
   },
   {
     "id": "Would you like to submit the rules. Continue?",
