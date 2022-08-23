@@ -1,9 +1,8 @@
 package dedicatedhost
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
@@ -13,30 +12,40 @@ import (
 )
 
 type CancelCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	DedicatedHostManager managers.DedicatedHostManager
+	Command              *cobra.Command
+	Force                bool
 }
 
-func NewCancelCommand(ui terminal.UI, dedicatedHostManager managers.DedicatedHostManager) (cmd *CancelCommand) {
-	return &CancelCommand{
-		UI:                   ui,
-		DedicatedHostManager: dedicatedHostManager,
+func NewCancelCommand(sl *metadata.SoftlayerCommand) *CancelCommand {
+	thisCmd := &CancelCommand{
+		SoftlayerCommand:     sl,
+		DedicatedHostManager: managers.NewDedicatedhostManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "cancel-guests",
+		Short: T("Cancel all virtual guests of the dedicated host immediately."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CancelCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	HostID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+func (cmd *CancelCommand) Run(args []string) error {
+	HostID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Host ID")
 	}
 
-	if !c.IsSet("f") && !c.IsSet("force") {
+	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will cancel all virtual server instances in the dedicatedhost: {{.HostID}} and cannot be undone. Continue?", map[string]interface{}{"HostID": HostID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -46,7 +55,7 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 
 	listGuest, err := cmd.DedicatedHostManager.CancelGuests(HostID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to cancel all guests in the dedicatedhost: {{.HostID}}.\n", map[string]interface{}{"HostID": HostID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to cancel all guests in the dedicatedhost: {{.HostID}}.", map[string]interface{}{"HostID": HostID}), err.Error(), 2)
 	}
 
 	if len(listGuest) > 0 {
@@ -59,16 +68,4 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 	}
 
 	return cli.NewExitError(T("There is not any guest into the dedicated host {{.ID}}.", map[string]interface{}{"ID": HostID}), 2)
-}
-
-func DedicatedhostCancelGuestsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dedicatedhost",
-		Name:        "cancel-guests",
-		Description: T("Cancel all virtual guests of the dedicated host immediately."),
-		Usage:       "${COMMAND_NAME} sl dedicatedhost cancel-guests IDENTIFIER [OPTIONS]",
-		Flags: []cli.Flag{
-			metadata.ForceFlag(),
-		},
-	}
 }
