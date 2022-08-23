@@ -6,9 +6,8 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -16,38 +15,46 @@ import (
 )
 
 type DetailCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	DedicatedHostManager managers.DedicatedHostManager
+	Command              *cobra.Command
+	Price                bool
+	Guests               bool
 }
 
-func NewDetailCommand(ui terminal.UI, dedicatedHostManager managers.DedicatedHostManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:                   ui,
-		DedicatedHostManager: dedicatedHostManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand:     sl,
+		DedicatedHostManager: managers.NewDedicatedhostManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("IDENTIFIER"),
+		Short: T("Get details for a dedicated host."),
+		Long: T(`EXAMPLE:
+${COMMAND_NAME} sl dedicatedhost detail 1234567`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVar(&thisCmd.Price, "price", false, T("Show associated prices"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Guests, "guests", false, T("Show guests on dedicated host"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError("This command requires one argument.")
-	}
-	hostID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+func (cmd *DetailCommand) Run(args []string) error {
+
+	hostID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
-		return slErrors.NewInvalidSoftlayerIdInputError("Host ID")
+		return slErr.NewInvalidSoftlayerIdInputError("Host ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	dedicatedhost, err := cmd.DedicatedHostManager.GetInstance(hostID, managers.DEDICATEDHOST_DETAIL_MASK)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get dedicatedhost instance: {{.HostID}}.\n", map[string]interface{}{"HostID": hostID})+err.Error(), 2)
-	}
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, dedicatedhost)
+		return slErr.NewAPIError(T("Failed to get dedicatedhost instance: {{.HostID}}.", map[string]interface{}{"HostID": hostID}), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -58,9 +65,11 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	table.Add(T("Disk Capacity"), utils.FormatIntPointer(dedicatedhost.DiskCapacity))
 	table.Add(T("Create Date"), utils.FormatSLTimePointer(dedicatedhost.CreateDate))
 	table.Add(T("Modify Date"), utils.FormatSLTimePointer(dedicatedhost.ModifyDate))
+
 	if dedicatedhost.BackendRouter != nil && dedicatedhost.BackendRouter.Id != nil {
 		table.Add(T("Router Id"), utils.FormatIntPointer(dedicatedhost.BackendRouter.Id))
 	}
+
 	if dedicatedhost.BackendRouter != nil && dedicatedhost.BackendRouter.Hostname != nil {
 		table.Add(T("Router Hostname"), utils.FormatStringPointer(dedicatedhost.BackendRouter.Hostname))
 	}
@@ -72,11 +81,12 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		dedicatedhost.BillingItem.OrderItem.Order.UserRecord.Username != nil {
 		table.Add(T("Owner"), utils.FormatStringPointer(dedicatedhost.BillingItem.OrderItem.Order.UserRecord.Username))
 	}
+
 	if dedicatedhost.Datacenter != nil && dedicatedhost.Datacenter.Name != nil {
 		table.Add(T("Datacenter"), utils.FormatStringPointer(dedicatedhost.Datacenter.Name))
 	}
 
-	if c.IsSet("price") {
+	if cmd.Price {
 		var sum datatypes.Float64
 		if dedicatedhost.BillingItem != nil && dedicatedhost.BillingItem.NextInvoiceTotalRecurringAmount != nil {
 			sum = *dedicatedhost.BillingItem.NextInvoiceTotalRecurringAmount
@@ -91,7 +101,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		table.Add(T("Price Rate"), fmt.Sprintf("%.2f", sum))
 	}
 
-	if c.IsSet("guests") {
+	if cmd.Guests {
 		if dedicatedhost.Guests != nil {
 			buf := new(bytes.Buffer)
 			guestTable := terminal.NewTable(buf, []string{T("Id"), T("Hostname"), T("Domain"), T("uuid")})
@@ -103,30 +113,6 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func DedicatedhostDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dedicatedhost",
-		Name:        "detail",
-		Description: T("Get details for a dedicated host."),
-		Usage: T(`${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl dedicatedhost detail 1234567
-   This command gets the details for a dedicated host.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "price",
-				Usage: T("Show associated prices"),
-			},
-			cli.BoolFlag{
-				Name:  "guests",
-				Usage: T("Show guests on dedicated host"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

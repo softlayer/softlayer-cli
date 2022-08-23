@@ -12,7 +12,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
@@ -42,12 +41,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl autoscale
 	autoScaleCommands := autoscale.GetCommandActionBindings(context, ui, session)
 	for name, action := range autoScaleCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl dedicatedhost
-	dedicatedhostCommands := dedicatedhost.GetCommandActionBindings(context, ui, session)
-	for name, action := range dedicatedhostCommands {
 		CommandActionBindings[name] = action
 	}
 
