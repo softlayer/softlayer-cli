@@ -11,7 +11,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
@@ -38,12 +37,6 @@ import (
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{}
-
-	// ibmcloud sl dedicatedhost
-	dedicatedhostCommands := dedicatedhost.GetCommandActionBindings(context, ui, session)
-	for name, action := range dedicatedhostCommands {
-		CommandActionBindings[name] = action
-	}
 
 	// ibmcloud sl dns
 	dnsCommands := dns.GetCommandActionBindings(context, ui, session)

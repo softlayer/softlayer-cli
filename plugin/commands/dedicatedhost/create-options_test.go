@@ -7,37 +7,36 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Dedicated host create options", func() {
 	var (
 		fakeUI                   *terminal.FakeUI
+		cliCommand               *dedicatedhost.CreateOptionsCommand
+		fakeSession              *session.Session
+		slCommand                *metadata.SoftlayerCommand
 		FakeDedicatedhostManager *testhelpers.FakeDedicatedHostManager
-		cmd                      *dedicatedhost.CreateOptionsCommand
-		cliCommand               cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = dedicatedhost.NewCreateOptionsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedHostManager)
-		cmd = dedicatedhost.NewCreateOptionsCommand(fakeUI, FakeDedicatedhostManager)
-		cliCommand = cli.Command{
-			Name:        dedicatedhost.DedicatedhostCreateOptionsMetaData().Name,
-			Description: dedicatedhost.DedicatedhostCreateOptionsMetaData().Description,
-			Usage:       dedicatedhost.DedicatedhostCreateOptionsMetaData().Usage,
-			Flags:       dedicatedhost.DedicatedhostCreateOptionsMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.DedicatedHostManager = FakeDedicatedhostManager
 	})
 
 	Describe("Dedicatedhost create options", func() {
 		Context("Dedicatedhost create options with datacenter but not a flavor", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-d", "ams01")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "ams01")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Both -d|--datacenter and -f|--flavor need to be passed as arguments e.g. ibmcloud sl dedicatedhost create-options -d ams01 -f 56_CORES_X_242_RAM_X_1_4_TB"))
 			})
@@ -45,7 +44,7 @@ var _ = Describe("Dedicated host create options", func() {
 
 		Context("Dedicatedhost create options with flavor but not a datacenter", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-f", "56_CORES_X_242_RAM_X_1_4_TB")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-f", "56_CORES_X_242_RAM_X_1_4_TB")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Both -d|--datacenter and -f|--flavor need to be passed as arguments e.g. ibmcloud sl dedicatedhost create-options -d ams01 -f 56_CORES_X_242_RAM_X_1_4_TB"))
 			})
@@ -56,7 +55,7 @@ var _ = Describe("Dedicated host create options", func() {
 				FakeDedicatedhostManager.GetVlansOptionsReturns(nil, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-d", "ams01", "-f", "56_CORES_X_242_RAM_X_1_4_TB")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "ams01", "-f", "56_CORES_X_242_RAM_X_1_4_TB")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the vlans available for datacener: ams01 and flavor: 56_CORES_X_242_RAM_X_1_4_TB."))
 			})
@@ -70,7 +69,7 @@ var _ = Describe("Dedicated host create options", func() {
 				})
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("56_CORES_X_242_RAM_X_1_4_TB"))
@@ -89,7 +88,7 @@ var _ = Describe("Dedicated host create options", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-d", "ams01", "-f", "56_CORES_X_242_RAM_X_1_4_TB")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "ams01", "-f", "56_CORES_X_242_RAM_X_1_4_TB")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("test"))
