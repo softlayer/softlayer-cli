@@ -3,9 +3,8 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,55 +13,48 @@ import (
 )
 
 type SnapshotCreateCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	Note           string
 }
 
-func NewSnapshotCreateCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *SnapshotCreateCommand) {
-	return &SnapshotCreateCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewSnapshotCreateCommand(sl *metadata.SoftlayerCommand) *SnapshotCreateCommand {
+	thisCmd := &SnapshotCreateCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockSnapshotCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "snapshot-create",
-		Description: T("Create a snapshot on a given volume"),
-		Usage: T(`${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "snapshot-create " + T("IDENTIFIER"),
+		Short: T("Create a snapshot on a given volume"),
+		Long: T(`${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]
 
 EXAMPLE:
    ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud
    This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "n,note",
-				Usage: T("Notes to set on the new snapshot"),
-			},
-			metadata.OutputFlag(),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVarP(&thisCmd.Note, "note", "n", "", T("Notes to set on the new snapshot"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SnapshotCreateCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *SnapshotCreateCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	snapshot, err := cmd.StorageManager.CreateSnapshot(volumeID, c.String("note"))
+	snapshot, err := cmd.StorageManager.CreateSnapshot(volumeID, cmd.Note)
 	if err != nil {
-		return cli.NewExitError(T("Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n",
-			map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n",
+			map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {

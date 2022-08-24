@@ -244,16 +244,12 @@
     "translation": "${COMMAND_NAME} sl cdn list"
   },
   {
-    "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
-    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
+    "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl dedicatedhost create-options\n\n\tTo get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
+    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl dedicatedhost create-options\n\n\tTo get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
   },
   {
-    "id": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host."
-  },
-  {
-    "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account."
+    "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n\tThis command list all Dedicated Host guests in the Account.",
+    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n\tThis command list all Dedicated Host guests in the Account."
   },
   {
     "id": "${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns import ~/ibm.com.txt\n   This command imports zone and its resource records from file: ~/ibm.com.txt.",
@@ -428,8 +424,12 @@
     "translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list"
   },
   {
-    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
-    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456."
+    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
+    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456."
+  },
+  {
+    "id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
@@ -1692,8 +1692,8 @@
     "translation": "Cancels a billing item."
   },
   {
-    "id": "Cancels a firewall",
-    "translation": "Cancels a firewall"
+    "id": "Cancels a firewall.",
+    "translation": "Cancels a firewall."
   },
   {
     "id": "Cancels the server immediately (instead of on the billing anniversary)",
@@ -1940,12 +1940,16 @@
     "translation": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times"
   },
   {
-    "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]",
-    "translation": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]"
+    "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state].",
+    "translation": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]."
   },
   {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
     "translation": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times"
+  },
+  {
+    "id": "Column to sort by",
+    "translation": "Column to sort by"
   },
   {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
@@ -1954,10 +1958,6 @@
   {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
     "translation": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip"
-  },
-  {
-    "id": "Column to sort by, default:hostname",
-    "translation": "Column to sort by, default:hostname"
   },
   {
     "id": "Column to sort by, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by",
@@ -2176,8 +2176,8 @@
     "translation": "Create a new VLAN"
   },
   {
-    "id": "Create a new firewall",
-    "translation": "Create a new firewall"
+    "id": "Create a new firewall.",
+    "translation": "Create a new firewall."
   },
   {
     "id": "Create a placement group",
@@ -2436,8 +2436,8 @@
     "translation": "Detail a CDN Account."
   },
   {
-    "id": "Detail information about a firewall",
-    "translation": "Detail information about a firewall"
+    "id": "Detail information about a firewall.",
+    "translation": "Detail information about a firewall."
   },
   {
     "id": "Details of a specific event, and ability to acknowledge event.",
@@ -2496,8 +2496,8 @@
     "translation": "Disk sizes (multiple occurrence permitted)"
   },
   {
-    "id": "Display FortiGate username and FortiGate password to multi vlans",
-    "translation": "Display FortiGate username and FortiGate password to multi vlans"
+    "id": "Display FortiGate username and FortiGate password to multi vlans.",
+    "translation": "Display FortiGate username and FortiGate password to multi vlans."
   },
   {
     "id": "Display IPv4 IPs only",
@@ -2620,10 +2620,6 @@
     "translation": "Duplicate Volume Properties"
   },
   {
-    "id": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY",
-    "translation": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY"
-  },
-  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
     "translation": "Earliest date to retrieve events for [YYYY-MM-DD]."
   },
@@ -2684,8 +2680,8 @@
     "translation": "Edit details of an image"
   },
   {
-    "id": "Edit firewall rules",
-    "translation": "Edit firewall rules"
+    "id": "Edit firewall rules.",
+    "translation": "Edit firewall rules."
   },
   {
     "id": "Edit hardware server details",
@@ -2948,8 +2944,8 @@
     "translation": "Failed to Edit emailAddress account: {{.emailID}}.\n"
   },
   {
-    "id": "Failed to Order the dedicatedhost.\n",
-    "translation": "Failed to Order the dedicatedhost.\n"
+    "id": "Failed to Order the dedicatedhost.",
+    "translation": "Failed to Order the dedicatedhost."
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -3048,8 +3044,8 @@
     "translation": "Failed to cancel VLAN {{.ID}}.\n"
   },
   {
-    "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.\n",
-    "translation": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.\n"
+    "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.",
+    "translation": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}."
   },
   {
     "id": "Failed to cancel block volume: {{.ID}}.\n",
@@ -3124,8 +3120,8 @@
     "translation": "Failed to create dedicated host.\n"
   },
   {
-    "id": "Failed to create firewall.\n",
-    "translation": "Failed to create firewall.\n"
+    "id": "Failed to create firewall.",
+    "translation": "Failed to create firewall."
   },
   {
     "id": "Failed to create load balancer with name {{.Name}} on {{.Location}}.\n",
@@ -3332,8 +3328,8 @@
     "translation": "Failed to find product package for this firewall."
   },
   {
-    "id": "Failed to generate the order template.\n",
-    "translation": "Failed to generate the order template.\n"
+    "id": "Failed to generate the order template.",
+    "translation": "Failed to generate the order template."
   },
   {
     "id": "Failed to get Account Overview.",
@@ -3504,20 +3500,20 @@
     "translation": "Failed to get datacenters for volume {{.VolumeID}}.\n"
   },
   {
-    "id": "Failed to get dedicated firewall rules for {{.FirewallID}}.\n",
-    "translation": "Failed to get dedicated firewall rules for {{.FirewallID}}.\n"
+    "id": "Failed to get dedicated firewall rules for {{.FirewallID}}.",
+    "translation": "Failed to get dedicated firewall rules for {{.FirewallID}}."
   },
   {
-    "id": "Failed to get dedicated firewall rules.\n",
-    "translation": "Failed to get dedicated firewall rules.\n"
+    "id": "Failed to get dedicated firewall rules.",
+    "translation": "Failed to get dedicated firewall rules."
   },
   {
     "id": "Failed to get dedicated hosts.\n",
     "translation": "Failed to get dedicated hosts.\n"
   },
   {
-    "id": "Failed to get dedicatedhost instance: {{.HostID}}.\n",
-    "translation": "Failed to get dedicatedhost instance: {{.HostID}}.\n"
+    "id": "Failed to get dedicatedhost instance: {{.HostID}}.",
+    "translation": "Failed to get dedicatedhost instance: {{.HostID}}."
   },
   {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
@@ -3528,8 +3524,8 @@
     "translation": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n"
   },
   {
-    "id": "Failed to get firewalls on your account.\n",
-    "translation": "Failed to get firewalls on your account.\n"
+    "id": "Failed to get firewalls on your account.",
+    "translation": "Failed to get firewalls on your account."
   },
   {
     "id": "Failed to get hardware sensor data.\n",
@@ -3612,12 +3608,12 @@
     "translation": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}."
   },
   {
-    "id": "Failed to get multi vlan firewall.\n",
-    "translation": "Failed to get multi vlan firewall.\n"
+    "id": "Failed to get multi vlan firewall.",
+    "translation": "Failed to get multi vlan firewall."
   },
   {
-    "id": "Failed to get multi vlan firewalls on your account.\n",
-    "translation": "Failed to get multi vlan firewalls on your account.\n"
+    "id": "Failed to get multi vlan firewalls on your account.",
+    "translation": "Failed to get multi vlan firewalls on your account."
   },
   {
     "id": "Failed to get nas storage detail for the hardware server {{.ID}}.\n",
@@ -3644,8 +3640,8 @@
     "translation": "Failed to get orders."
   },
   {
-    "id": "Failed to get package for {{.Type}} firewall.\n",
-    "translation": "Failed to get package for {{.Type}} firewall.\n"
+    "id": "Failed to get package for {{.Type}} firewall.",
+    "translation": "Failed to get package for {{.Type}} firewall."
   },
   {
     "id": "Failed to get permissions.\n",
@@ -3704,8 +3700,8 @@
     "translation": "Failed to get standard firewall rules for {{.FirewallID}}.\n"
   },
   {
-    "id": "Failed to get standard firewall rules.\n",
-    "translation": "Failed to get standard firewall rules.\n"
+    "id": "Failed to get standard firewall rules.",
+    "translation": "Failed to get standard firewall rules."
   },
   {
     "id": "Failed to get subnet: {{.ID}}.\n",
@@ -3832,6 +3828,10 @@
     "translation": "Failed to get vlan primary router ID."
   },
   {
+    "id": "Failed to get vlan {{.VlanId}}.",
+    "translation": "Failed to get vlan {{.VlanId}}."
+  },
+  {
     "id": "Failed to get vlan {{.VlanId}}.\n",
     "translation": "Failed to get vlan {{.VlanId}}.\n"
   },
@@ -3916,8 +3916,8 @@
     "translation": "Failed to list subnets on your account.\n"
   },
   {
-    "id": "Failed to list the host guest on your account.\n",
-    "translation": "Failed to list the host guest on your account.\n"
+    "id": "Failed to list the host guest on your account.",
+    "translation": "Failed to list the host guest on your account."
   },
   {
     "id": "Failed to list users.\n",
@@ -3960,8 +3960,8 @@
     "translation": "Failed to open editor for component rules:  {{.FirewallID}}.\n"
   },
   {
-    "id": "Failed to open editor for vlan rules: {{.FirewallID}}.\n",
-    "translation": "Failed to open editor for vlan rules: {{.FirewallID}}.\n"
+    "id": "Failed to open editor for vlan rules: {{.FirewallID}}.",
+    "translation": "Failed to open editor for vlan rules: {{.FirewallID}}."
   },
   {
     "id": "Failed to order IPSec.Please try again later.\n",
@@ -4008,8 +4008,8 @@
     "translation": "Failed to parse file.\n"
   },
   {
-    "id": "Failed to parse firewall ID : {{.FirewallID}}.\n",
-    "translation": "Failed to parse firewall ID : {{.FirewallID}}.\n"
+    "id": "Failed to parse firewall ID : {{.FirewallID}}.",
+    "translation": "Failed to parse firewall ID : {{.FirewallID}}."
   },
   {
     "id": "Failed to parse version. \n",
@@ -4364,6 +4364,10 @@
     "translation": "Failed to verify this order.\n"
   },
   {
+    "id": "Failed to verify virtual server creation.",
+    "translation": "Failed to verify virtual server creation."
+  },
+  {
     "id": "Failed to verify virtual server creation.\n",
     "translation": "Failed to verify virtual server creation.\n"
   },
@@ -4476,8 +4480,8 @@
     "translation": "Filter by ID of the owner"
   },
   {
-    "id": "Filter by Memory capacity in megabytes",
-    "translation": "Filter by Memory capacity in megabytes"
+    "id": "Filter by Memory capacity in megabytes.",
+    "translation": "Filter by Memory capacity in megabytes."
   },
   {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
@@ -4512,8 +4516,16 @@
     "translation": "Filter by domain portion of the FQDN"
   },
   {
+    "id": "Filter by domain portion of the FQDN.",
+    "translation": "Filter by domain portion of the FQDN."
+  },
+  {
     "id": "Filter by host portion of the FQDN",
     "translation": "Filter by host portion of the FQDN"
+  },
+  {
+    "id": "Filter by host portion of the FQDN.",
+    "translation": "Filter by host portion of the FQDN."
   },
   {
     "id": "Filter by host record, such as www",
@@ -4580,16 +4592,16 @@
     "translation": "Filter by subnet type"
   },
   {
-    "id": "Filter by tags",
-    "translation": "Filter by tags"
-  },
-  {
     "id": "Filter by tags (multiple occurrence permitted)",
     "translation": "Filter by tags (multiple occurrence permitted)"
   },
   {
     "id": "Filter by tags, multiple occurrence allowed",
     "translation": "Filter by tags, multiple occurrence allowed"
+  },
+  {
+    "id": "Filter by tags.",
+    "translation": "Filter by tags."
   },
   {
     "id": "Filter by the ID of order that purchased the subnets",
@@ -5620,8 +5632,8 @@
     "translation": "List all devices the user has access and device access permissions."
   },
   {
-    "id": "List all firewalls on your account",
-    "translation": "List all firewalls on your account"
+    "id": "List all firewalls on your account.",
+    "translation": "List all firewalls on your account."
   },
   {
     "id": "List all global IPs on your account.",
@@ -9358,6 +9370,10 @@
   {
     "id": "[--billing] billing rate must be either hourly or monthly.",
     "translation": "[--billing] billing rate must be either hourly or monthly."
+  },
+  {
+    "id": "[--billing] has to be either hourly or monthly.",
+    "translation": "[--billing] has to be either hourly or monthly."
   },
   {
     "id": "[--public] is not allowed with [--private].",

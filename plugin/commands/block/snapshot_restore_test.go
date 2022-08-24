@@ -2,65 +2,62 @@ package block_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 
+	"github.com/softlayer/softlayer-go/session"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Snapshot restore", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *block.SnapshotRestoreCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.SnapshotRestoreCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewSnapshotRestoreCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockSnapshotRestoreMetaData().Name,
-			Description: block.BlockSnapshotRestoreMetaData().Description,
-			Usage:       block.BlockSnapshotRestoreMetaData().Usage,
-			Flags:       block.BlockSnapshotRestoreMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = block.NewSnapshotRestoreCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Snapshot restore", func() {
 		Context("Snapshot restore without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires two arguments.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires two arguments."))
 			})
 		})
 		Context("Snapshot order without snapshot id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires two arguments.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires two arguments."))
 			})
 		})
 		Context("Snapshot order with wrong volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "123")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Volume ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 		Context("Snapshot order with wrong snapshot id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "123", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Snapshot ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Snapshot ID'. It must be a positive integer."))
 			})
 		})
 
@@ -69,10 +66,9 @@ var _ = Describe("Snapshot restore", func() {
 				FakeStorageManager.RestoreFromSnapshotReturns(nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "123", "456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "456")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Block volume 123 is being restored using snapshot 456."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Block volume 123 is being restored using snapshot 456."))
 			})
 		})
 
@@ -81,13 +77,11 @@ var _ = Describe("Snapshot restore", func() {
 				FakeStorageManager.RestoreFromSnapshotReturns(errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "123", "456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "456")
 				Expect(err).To(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{
-					"OK",
-				}))
-				Expect(strings.Contains(err.Error(), "Failed to restore volume 123 from snapshot 456.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("OK"))
+				Expect(err.Error()).To(ContainSubstring("Failed to restore volume 123 from snapshot 456."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 	})

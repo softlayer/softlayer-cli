@@ -2,67 +2,64 @@ package block_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 
+	"github.com/softlayer/softlayer-go/session"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Snapshot disable", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *block.SnapshotDisableCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.SnapshotDisableCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewSnapshotDisableCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockSnapshotDisableMetaData().Name,
-			Description: block.BlockSnapshotDisableMetaData().Description,
-			Usage:       block.BlockSnapshotDisableMetaData().Usage,
-			Flags:       block.BlockSnapshotDisableMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = block.NewSnapshotDisableCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
-
 	Describe("Snapshot disable", func() {
 		Context("Snapshot disable without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Snapshot disable with wrong volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Volume ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 
 		Context("Snapshot disable without -s", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY."))
 			})
 		})
 
 		Context("Snapshot disable with wrong -s", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "123", "-s", "MONTHLY")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "MONTHLY")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [--schedule-type] must be HOURLY, DAILY, or WEEKLY.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [--schedule-type] must be HOURLY, DAILY, or WEEKLY."))
 			})
 		})
 
@@ -71,10 +68,9 @@ var _ = Describe("Snapshot disable", func() {
 				FakeStorageManager.DisableSnapshotsReturns(nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "DAILY")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "DAILY")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"DAILY snapshots have been disabled for volume 1234."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("DAILY snapshots have been disabled for volume 1234."))
 			})
 		})
 
@@ -83,10 +79,10 @@ var _ = Describe("Snapshot disable", func() {
 				FakeStorageManager.DisableSnapshotsReturns(errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "DAILY")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "DAILY")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to disable DAILY snapshot for volume 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to disable DAILY snapshot for volume 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 	})

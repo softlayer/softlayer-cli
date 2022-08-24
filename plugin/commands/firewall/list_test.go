@@ -6,32 +6,31 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/softlayer/softlayer-go/session"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("firewall list", func() {
 	var (
 		fakeUI              *terminal.FakeUI
-		fakeFirewallManager *testhelpers.FakeFirewallManager
-		cmd                 *firewall.ListCommand
-		cliCommand          cli.Command
+		cliCommand          *firewall.ListCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
+		FakeFirewallManager *testhelpers.FakeFirewallManager
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeFirewallManager = new(testhelpers.FakeFirewallManager)
-		cmd = firewall.NewListCommand(fakeUI, fakeFirewallManager)
-		cliCommand = cli.Command{
-			Name:        firewall.FirewallListMetaData().Name,
-			Description: firewall.FirewallListMetaData().Description,
-			Usage:       firewall.FirewallListMetaData().Usage,
-			Flags:       firewall.FirewallListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = firewall.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		FakeFirewallManager = new(testhelpers.FakeFirewallManager)
+		cliCommand.FirewallManager = FakeFirewallManager
 	})
 
 	Describe("firewall list", func() {
@@ -39,7 +38,7 @@ var _ = Describe("firewall list", func() {
 		Context("Return error", func() {
 
 			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -47,10 +46,10 @@ var _ = Describe("firewall list", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeFirewallManager.GetFirewallsReturns([]datatypes.Network_Vlan{}, errors.New("Failed to get firewalls on your account"))
+				FakeFirewallManager.GetFirewallsReturns([]datatypes.Network_Vlan{}, errors.New("Failed to get firewalls on your account"))
 			})
 			It("Failed get firewalls", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get firewalls on your account"))
 			})
@@ -125,12 +124,12 @@ var _ = Describe("firewall list", func() {
 						},
 					},
 				}
-				fakeFirewallManager.GetFirewallsReturns(fakerVlans, nil)
-				fakeFirewallManager.GetMultiVlanFirewallsReturns(fakerMultiVlans, nil)
+				FakeFirewallManager.GetFirewallsReturns(fakerVlans, nil)
+				FakeFirewallManager.GetMultiVlanFirewallsReturns(fakerMultiVlans, nil)
 			})
 
 			It("get firewalls", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("vlan:111111"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("VLAN - dedicated"))
