@@ -136,20 +136,12 @@
     "translation": "${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678."
-  },
-  {
     "id": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
     "translation": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
     "translation": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume."
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
@@ -186,10 +178,6 @@
   {
     "id": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume.",
     "translation": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   This command shows details of volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   This command shows details of volume with ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
@@ -416,20 +404,12 @@
     "translation": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'"
   },
   {
-    "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
+    "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
+    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
-    "id": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list",
-    "translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
-    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678."
+    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
+    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456."
   },
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
@@ -2618,6 +2598,14 @@
   {
     "id": "Duplicate Volume Properties",
     "translation": "Duplicate Volume Properties"
+  },
+  {
+    "id": "EXAMPLE:\n${COMMAND_NAME} sl dedicatedhost detail 1234567",
+    "translation": "EXAMPLE:\n${COMMAND_NAME} sl dedicatedhost detail 1234567"
+  },
+  {
+    "id": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY",
+    "translation": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY"
   },
   {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
@@ -5524,6 +5512,10 @@
     "translation": "LUN Id"
   },
   {
+    "id": "LUN_ID",
+    "translation": "LUN_ID"
+  },
+  {
     "id": "Label",
     "translation": "Label"
   },
@@ -7430,6 +7422,10 @@
   {
     "id": "Running",
     "translation": "Running"
+  },
+  {
+    "id": "SNAPSHOT_ID",
+    "translation": "SNAPSHOT_ID"
   },
   {
     "id": "SSH Key ",
