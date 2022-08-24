@@ -20,12 +20,12 @@ var _ = Describe("block Volume Convert", func() {
 		FakeStorageManager *testhelpers.FakeStorageManager
 		cliCommand         *block.VolumeConvertCommand
 		fakeSession        *session.Session
-		slCommand          *metadata.SoftlayerCommand
+		slCommand          *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
 		cliCommand = block.NewVolumeConvertCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager

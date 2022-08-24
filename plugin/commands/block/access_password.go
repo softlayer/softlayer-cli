@@ -11,15 +11,15 @@ import (
 )
 
 type AccessPasswordCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewAccessPasswordCommand(sl *metadata.SoftlayerCommand) *AccessPasswordCommand {
+func NewAccessPasswordCommand(sl *metadata.SoftlayerStorageCommand) *AccessPasswordCommand {
 	thisCmd := &AccessPasswordCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "access-password " + T("IDENTIFIER") + " " + T("PASSWORD"),

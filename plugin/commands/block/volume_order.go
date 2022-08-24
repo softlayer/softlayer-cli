@@ -16,7 +16,7 @@ import (
 )
 
 type VolumeOrderCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	StorageType    string
@@ -30,10 +30,10 @@ type VolumeOrderCommand struct {
 	Force          bool
 }
 
-func NewVolumeOrderCommand(sl *metadata.SoftlayerCommand) *VolumeOrderCommand {
+func NewVolumeOrderCommand(sl *metadata.SoftlayerStorageCommand) *VolumeOrderCommand {
 	thisCmd := &VolumeOrderCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-order",

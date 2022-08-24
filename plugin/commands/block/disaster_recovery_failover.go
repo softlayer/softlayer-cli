@@ -12,15 +12,15 @@ import (
 )
 
 type DisasterRecoveryFailoverCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewDisasterRecoveryFailoverCommand(sl *metadata.SoftlayerCommand) *DisasterRecoveryFailoverCommand {
+func NewDisasterRecoveryFailoverCommand(sl *metadata.SoftlayerStorageCommand) *DisasterRecoveryFailoverCommand {
 	thisCmd := &DisasterRecoveryFailoverCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "disaster-recovery-failover " + T("IDENTIFIER") + " " + T("REPLICA_ID"),

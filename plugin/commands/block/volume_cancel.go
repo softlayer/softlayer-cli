@@ -13,7 +13,7 @@ import (
 )
 
 type VolumeCancelCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Reason         string
@@ -21,10 +21,10 @@ type VolumeCancelCommand struct {
 	Force          bool
 }
 
-func NewVolumeCancelCommand(sl *metadata.SoftlayerCommand) *VolumeCancelCommand {
+func NewVolumeCancelCommand(sl *metadata.SoftlayerStorageCommand) *VolumeCancelCommand {
 	thisCmd := &VolumeCancelCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-cancel " + T("IDENTIFIER"),

@@ -14,17 +14,17 @@ import (
 )
 
 type AccessListCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	UserColumn     []string
 	Sortby         string
 }
 
-func NewAccessListCommand(sl *metadata.SoftlayerCommand) *AccessListCommand {
+func NewAccessListCommand(sl *metadata.SoftlayerStorageCommand) *AccessListCommand {
 	thisCmd := &AccessListCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "access-list " + T("IDENTIFIER"),

@@ -13,15 +13,15 @@ import (
 )
 
 type SubnetsListCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewSubnetsListCommand(sl *metadata.SoftlayerCommand) *SubnetsListCommand {
+func NewSubnetsListCommand(sl *metadata.SoftlayerStorageCommand) *SubnetsListCommand {
 	thisCmd := &SubnetsListCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "subnets-list " + T("IDENTIFIER"),

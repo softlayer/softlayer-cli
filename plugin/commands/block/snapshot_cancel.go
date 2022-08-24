@@ -12,7 +12,7 @@ import (
 )
 
 type SnapshotCancelCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Reason         string
@@ -20,10 +20,10 @@ type SnapshotCancelCommand struct {
 	Force          bool
 }
 
-func NewSnapshotCancelCommand(sl *metadata.SoftlayerCommand) *SnapshotCancelCommand {
+func NewSnapshotCancelCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotCancelCommand {
 	thisCmd := &SnapshotCancelCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-cancel " + T("IDENTIFIER"),

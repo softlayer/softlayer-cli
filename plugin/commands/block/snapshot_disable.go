@@ -12,16 +12,16 @@ import (
 )
 
 type SnapshotDisableCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Schedule_type  string
 }
 
-func NewSnapshotDisableCommand(sl *metadata.SoftlayerCommand) *SnapshotDisableCommand {
+func NewSnapshotDisableCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotDisableCommand {
 	thisCmd := &SnapshotDisableCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-disable " + T("IDENTIFIER"),

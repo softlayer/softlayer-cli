@@ -14,16 +14,16 @@ import (
 )
 
 type SnapshotListCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	SortBy         string
 }
 
-func NewSnapshotListCommand(sl *metadata.SoftlayerCommand) *SnapshotListCommand {
+func NewSnapshotListCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotListCommand {
 	thisCmd := &SnapshotListCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-list " + T("IDENTIFIER"),

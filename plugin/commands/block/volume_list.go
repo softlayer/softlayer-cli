@@ -15,7 +15,7 @@ import (
 )
 
 type VolumeListCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Username       string
@@ -27,10 +27,10 @@ type VolumeListCommand struct {
 	UserColumns    []string
 }
 
-func NewVolumeListCommand(sl *metadata.SoftlayerCommand) *VolumeListCommand {
+func NewVolumeListCommand(sl *metadata.SoftlayerStorageCommand) *VolumeListCommand {
 	thisCmd := &VolumeListCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-list",

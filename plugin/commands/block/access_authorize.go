@@ -13,7 +13,7 @@ import (
 )
 
 type AccessAuthorizeCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	NetworkManager managers.NetworkManager
@@ -23,11 +23,11 @@ type AccessAuthorizeCommand struct {
 	Ip_address     []string
 }
 
-func NewAccessAuthorizeCommand(sl *metadata.SoftlayerCommand) *AccessAuthorizeCommand {
+func NewAccessAuthorizeCommand(sl *metadata.SoftlayerStorageCommand) *AccessAuthorizeCommand {
 	thisCmd := &AccessAuthorizeCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
-		NetworkManager:   managers.NewNetworkManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
+		NetworkManager:          managers.NewNetworkManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "access-authorize " + T("IDENTIFIER"),

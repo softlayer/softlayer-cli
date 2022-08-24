@@ -11,17 +11,17 @@ import (
 )
 
 type SnapshotSetNotificationCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Enable         bool
 	Disable        bool
 }
 
-func NewSnapshotSetNotificationCommand(sl *metadata.SoftlayerCommand) *SnapshotSetNotificationCommand {
+func NewSnapshotSetNotificationCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotSetNotificationCommand {
 	thisCmd := &SnapshotSetNotificationCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-set-notification " + T("IDENTIFIER"),

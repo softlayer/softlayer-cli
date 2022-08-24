@@ -13,16 +13,16 @@ import (
 )
 
 type SnapshotCreateCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Note           string
 }
 
-func NewSnapshotCreateCommand(sl *metadata.SoftlayerCommand) *SnapshotCreateCommand {
+func NewSnapshotCreateCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotCreateCommand {
 	thisCmd := &SnapshotCreateCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-create " + T("IDENTIFIER"),

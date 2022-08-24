@@ -22,7 +22,7 @@ var DAY_OF_WEEK = map[int]string{
 }
 
 type SnapshotEnableCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	ScheduleType   string
@@ -32,10 +32,10 @@ type SnapshotEnableCommand struct {
 	DayOfWeek      int
 }
 
-func NewSnapshotEnableCommand(sl *metadata.SoftlayerCommand) *SnapshotEnableCommand {
+func NewSnapshotEnableCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotEnableCommand {
 	thisCmd := &SnapshotEnableCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-enable " + T("IDENTIFIER"),

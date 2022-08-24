@@ -13,15 +13,15 @@ import (
 )
 
 type ReplicaPartnersCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewReplicaPartnersCommand(sl *metadata.SoftlayerCommand) *ReplicaPartnersCommand {
+func NewReplicaPartnersCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaPartnersCommand {
 	thisCmd := &ReplicaPartnersCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-partners " + T("IDENTIFIER"),

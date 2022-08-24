@@ -13,15 +13,15 @@ import (
 )
 
 type ReplicaLocationsCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewReplicaLocationsCommand(sl *metadata.SoftlayerCommand) *ReplicaLocationsCommand {
+func NewReplicaLocationsCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaLocationsCommand {
 	thisCmd := &ReplicaLocationsCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-locations " + T("IDENTIFIER"),

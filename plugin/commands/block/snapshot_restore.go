@@ -12,15 +12,15 @@ import (
 )
 
 type SnapshotRestoreCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewSnapshotRestoreCommand(sl *metadata.SoftlayerCommand) *SnapshotRestoreCommand {
+func NewSnapshotRestoreCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotRestoreCommand {
 	thisCmd := &SnapshotRestoreCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-restore " + T("IDENTIFIER") + " " + T("SNAPSHOT_ID"),

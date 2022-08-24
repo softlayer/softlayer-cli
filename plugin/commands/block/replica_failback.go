@@ -12,15 +12,15 @@ import (
 )
 
 type ReplicaFailbackCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewReplicaFailbackCommand(sl *metadata.SoftlayerCommand) *ReplicaFailbackCommand {
+func NewReplicaFailbackCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaFailbackCommand {
 	thisCmd := &ReplicaFailbackCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-failback " + T("IDENTIFIER"),

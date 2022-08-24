@@ -14,7 +14,7 @@ import (
 )
 
 type ReplicaOrderCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command          *cobra.Command
 	StorageManager   managers.StorageManager
 	SnapshotSchedule string
@@ -25,10 +25,10 @@ type ReplicaOrderCommand struct {
 	Force            bool
 }
 
-func NewReplicaOrderCommand(sl *metadata.SoftlayerCommand) *ReplicaOrderCommand {
+func NewReplicaOrderCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaOrderCommand {
 	thisCmd := &ReplicaOrderCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-order " + T("IDENTIFIER"),

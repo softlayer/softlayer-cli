@@ -1,93 +1,71 @@
 package block
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	StorageCommand := &metadata.SoftlayerStorageCommand{
+		SoftlayerCommand: sl,
+		StorageI18n:      map[string]interface{}{"storageType": "block"},
+	}
 	cobraCmd := &cobra.Command{
 		Use:   "block",
 		Short: T("Classic infrastructure Block Storage"),
 		RunE:  nil,
 	}
 	// Access
-	cobraCmd.AddCommand(NewAccessAuthorizeCommand(sl).Command)
-	cobraCmd.AddCommand(NewAccessPasswordCommand(sl).Command)
-	cobraCmd.AddCommand(NewAccessListCommand(sl).Command)
-	cobraCmd.AddCommand(NewAccessRevokeCommand(sl).Command)
+	cobraCmd.AddCommand(NewAccessAuthorizeCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewAccessPasswordCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewAccessListCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewAccessRevokeCommand(StorageCommand).Command)
 	// Replica
-	cobraCmd.AddCommand(NewReplicaFailbackCommand(sl).Command)
-	cobraCmd.AddCommand(NewReplicaFailoverCommand(sl).Command)
-	cobraCmd.AddCommand(NewReplicaLocationsCommand(sl).Command)
-	cobraCmd.AddCommand(NewReplicaOrderCommand(sl).Command)
-	cobraCmd.AddCommand(NewReplicaPartnersCommand(sl).Command)
+	cobraCmd.AddCommand(NewReplicaFailbackCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewReplicaFailoverCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewReplicaLocationsCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewReplicaOrderCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewReplicaPartnersCommand(StorageCommand).Command)
 	// Snapshot
-	cobraCmd.AddCommand(NewSnapshotCancelCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotSetNotificationCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotGetNotificationStatusCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotCreateCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotDeleteCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotDisableCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotEnableCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotListCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotOrderCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotRestoreCommand(sl).Command)
-	cobraCmd.AddCommand(NewSnapshotScheduleListCommand(sl).Command)
+	cobraCmd.AddCommand(NewSnapshotCancelCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotSetNotificationCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotGetNotificationStatusCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotCreateCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotDeleteCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotDisableCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotEnableCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotListCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotOrderCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotRestoreCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSnapshotScheduleListCommand(StorageCommand).Command)
 	// Volume
-	cobraCmd.AddCommand(NewVolumeCancelCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeCountCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeDetailCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeDuplicateCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeListCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeLunCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeOrderCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeModifyCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeOptionsCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeLimitCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeRefreshCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeConvertCommand(sl).Command)
-	cobraCmd.AddCommand(NewVolumeSetNoteCommand(sl).Command)
+	cobraCmd.AddCommand(NewVolumeCancelCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeCountCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeDetailCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeDuplicateCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeListCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeLunCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeOrderCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeModifyCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeOptionsCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeLimitCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeRefreshCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeConvertCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewVolumeSetNoteCommand(StorageCommand).Command)
 	// Miscellaneous Commands
-	cobraCmd.AddCommand(NewObjectListCommand(sl).Command)
-	cobraCmd.AddCommand(NewDisasterRecoveryFailoverCommand(sl).Command)
-	cobraCmd.AddCommand(NewDuplicateConvertStatusCommand(sl).Command)
+	cobraCmd.AddCommand(NewObjectListCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewDisasterRecoveryFailoverCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewDuplicateConvertStatusCommand(StorageCommand).Command)
 
 	// Subnets
-	cobraCmd.AddCommand(NewSubnetsListCommand(sl).Command)
-	cobraCmd.AddCommand(NewSubnetsAssignCommand(sl).Command)
-	cobraCmd.AddCommand(NewSubnetsRemoveCommand(sl).Command)
+	cobraCmd.AddCommand(NewSubnetsListCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSubnetsAssignCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewSubnetsRemoveCommand(StorageCommand).Command)
 
 	return cobraCmd
-}
-
-func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-
-		// "block-duplicate-convert-status": func(c *cli.Context) error {
-		// 	return NewDuplicateConvertStatusCommand(ui, storageManager).Run(c)
-		// },
-		// Commands that are the same for file and block go here.
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MOVE THESE TO FILE TODO!!!!!!!
-		// "file-disaster-recovery-failover": func(c *cli.Context) error {
-		// 	return NewDisasterRecoveryFailoverCommand(ui, storageManager).Run(c)
-		// },
-		// "file-volume-set-note": func(c *cli.Context) error {
-		// 	return NewVolumeSetNoteCommand(ui, storageManager).Run(c)
-		// },
-		// "file-duplicate-convert-status": func(c *cli.Context) error {
-		// 	return NewDuplicateConvertStatusCommand(ui, storageManager).Run(c)
-		// },
-	}
-
-	return CommandActionBindings
 }
 
 func BlockNamespace() plugin.Namespace {

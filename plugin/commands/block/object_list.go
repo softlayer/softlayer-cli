@@ -11,15 +11,15 @@ import (
 )
 
 type ObjectListCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewObjectListCommand(sl *metadata.SoftlayerCommand) (cmd *ObjectListCommand) {
+func NewObjectListCommand(sl *metadata.SoftlayerStorageCommand) (cmd *ObjectListCommand) {
 	thisCmd := &ObjectListCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-create",

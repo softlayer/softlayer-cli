@@ -13,16 +13,16 @@ import (
 )
 
 type VolumeSetNoteCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Note           string
 }
 
-func NewVolumeSetNoteCommand(sl *metadata.SoftlayerCommand) *VolumeSetNoteCommand {
+func NewVolumeSetNoteCommand(sl *metadata.SoftlayerStorageCommand) *VolumeSetNoteCommand {
 	thisCmd := &VolumeSetNoteCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-set-note " + T("IDENTIFIER"),

@@ -13,16 +13,16 @@ import (
 )
 
 type SubnetsAssignCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	SubnetIds      []int
 }
 
-func NewSubnetsAssignCommand(sl *metadata.SoftlayerCommand) *SubnetsAssignCommand {
+func NewSubnetsAssignCommand(sl *metadata.SoftlayerStorageCommand) *SubnetsAssignCommand {
 	thisCmd := &SubnetsAssignCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "subnets-assign " + T("IDENTIFIER"),

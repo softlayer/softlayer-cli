@@ -14,7 +14,7 @@ import (
 )
 
 type VolumeModifyCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	NewSize        int
@@ -23,10 +23,10 @@ type VolumeModifyCommand struct {
 	Force          bool
 }
 
-func NewVolumeModifyCommand(sl *metadata.SoftlayerCommand) *VolumeModifyCommand {
+func NewVolumeModifyCommand(sl *metadata.SoftlayerStorageCommand) *VolumeModifyCommand {
 	thisCmd := &VolumeModifyCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-modify " + T("IDENTIFIER"),

@@ -12,15 +12,15 @@ import (
 )
 
 type VolumeRefreshCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeRefreshCommand(sl *metadata.SoftlayerCommand) *VolumeRefreshCommand {
+func NewVolumeRefreshCommand(sl *metadata.SoftlayerStorageCommand) *VolumeRefreshCommand {
 	thisCmd := &VolumeRefreshCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-refresh " + T("IDENTIFIER") + " " + T("SNAPSHOT_ID"),

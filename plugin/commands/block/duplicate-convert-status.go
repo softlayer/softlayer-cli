@@ -13,15 +13,15 @@ import (
 )
 
 type DuplicateConvertStatusCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewDuplicateConvertStatusCommand(sl *metadata.SoftlayerCommand) *DuplicateConvertStatusCommand {
+func NewDuplicateConvertStatusCommand(sl *metadata.SoftlayerStorageCommand) *DuplicateConvertStatusCommand {
 	thisCmd := &DuplicateConvertStatusCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "duplicate-convert-status " + T("IDENTIFIER"),

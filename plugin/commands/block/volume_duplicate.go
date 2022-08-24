@@ -13,7 +13,7 @@ import (
 )
 
 type VolumeDuplicateCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command               *cobra.Command
 	StorageManager        managers.StorageManager
 	OriginSnapshotId      int
@@ -25,10 +25,10 @@ type VolumeDuplicateCommand struct {
 	Force                 bool
 }
 
-func NewVolumeDuplicateCommand(sl *metadata.SoftlayerCommand) *VolumeDuplicateCommand {
+func NewVolumeDuplicateCommand(sl *metadata.SoftlayerStorageCommand) *VolumeDuplicateCommand {
 	thisCmd := &VolumeDuplicateCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-duplicate " + T("IDENTIFIER"),

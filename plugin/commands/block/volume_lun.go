@@ -12,15 +12,15 @@ import (
 )
 
 type VolumeLunCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeLunCommand(sl *metadata.SoftlayerCommand) *VolumeLunCommand {
+func NewVolumeLunCommand(sl *metadata.SoftlayerStorageCommand) *VolumeLunCommand {
 	thisCmd := &VolumeLunCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-set-lun-id " + T("IDENTIFIER") + " " + T("LUN_ID"),

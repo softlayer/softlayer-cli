@@ -14,15 +14,15 @@ import (
 )
 
 type SnapshotScheduleListCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewSnapshotScheduleListCommand(sl *metadata.SoftlayerCommand) (cmd *SnapshotScheduleListCommand) {
+func NewSnapshotScheduleListCommand(sl *metadata.SoftlayerStorageCommand) (cmd *SnapshotScheduleListCommand) {
 	thisCmd := &SnapshotScheduleListCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-schedule-list " + T("IDENTIFIER"),

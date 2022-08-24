@@ -22,7 +22,7 @@ var _ = Describe("Access Revoke", func() {
 		fakeUI             *terminal.FakeUI
 		cliCommand         *block.AccessRevokeCommand
 		fakeSession        *session.Session
-		slCommand          *metadata.SoftlayerCommand
+		slCommand          *metadata.SoftlayerStorageCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
 		fakeNetworkManager *testhelpers.FakeNetworkManager
 	)
@@ -31,7 +31,7 @@ var _ = Describe("Access Revoke", func() {
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
 		cliCommand = block.NewAccessRevokeCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager

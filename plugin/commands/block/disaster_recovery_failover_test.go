@@ -19,12 +19,12 @@ var _ = Describe("Disaster Recovery Failover", func() {
 		FakeStorageManager *testhelpers.FakeStorageManager
 		cliCommand         *block.DisasterRecoveryFailoverCommand
 		fakeSession        *session.Session
-		slCommand          *metadata.SoftlayerCommand
+		slCommand          *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
 		cliCommand = block.NewDisasterRecoveryFailoverCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager

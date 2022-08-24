@@ -19,15 +19,15 @@ var (
 )
 
 type VolumeOptionsCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeOptionsCommand(sl *metadata.SoftlayerCommand) *VolumeOptionsCommand {
+func NewVolumeOptionsCommand(sl *metadata.SoftlayerStorageCommand) *VolumeOptionsCommand {
 	thisCmd := &VolumeOptionsCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-options",

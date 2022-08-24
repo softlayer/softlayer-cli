@@ -10,15 +10,15 @@ import (
 )
 
 type VolumeLimitCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeLimitCommand(sl *metadata.SoftlayerCommand) *VolumeLimitCommand {
+func NewVolumeLimitCommand(sl *metadata.SoftlayerStorageCommand) *VolumeLimitCommand {
 	thisCmd := &VolumeLimitCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-limits",

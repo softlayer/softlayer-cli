@@ -13,16 +13,16 @@ import (
 )
 
 type SubnetsRemoveCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	SubnetIds      []int
 }
 
-func NewSubnetsRemoveCommand(sl *metadata.SoftlayerCommand) *SubnetsRemoveCommand {
+func NewSubnetsRemoveCommand(sl *metadata.SoftlayerStorageCommand) *SubnetsRemoveCommand {
 	thisCmd := &SubnetsRemoveCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "subnets-remove " + T("IDENTIFIER"),

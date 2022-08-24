@@ -14,7 +14,7 @@ import (
 )
 
 type SnapshotOrderCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Size           int
@@ -24,10 +24,10 @@ type SnapshotOrderCommand struct {
 	Force          bool
 }
 
-func NewSnapshotOrderCommand(sl *metadata.SoftlayerCommand) *SnapshotOrderCommand {
+func NewSnapshotOrderCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotOrderCommand {
 	thisCmd := &SnapshotOrderCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-order " + T("IDENTIFIER"),

@@ -12,15 +12,15 @@ import (
 )
 
 type VolumeConvertCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeConvertCommand(sl *metadata.SoftlayerCommand) *VolumeConvertCommand {
+func NewVolumeConvertCommand(sl *metadata.SoftlayerStorageCommand) *VolumeConvertCommand {
 	thisCmd := &VolumeConvertCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-convert " + T("IDENTIFIER"),

@@ -12,7 +12,7 @@ import (
 )
 
 type AccessRevokeCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	NetworkManager managers.NetworkManager
@@ -22,11 +22,11 @@ type AccessRevokeCommand struct {
 	Ip_address     []string
 }
 
-func NewAccessRevokeCommand(sl *metadata.SoftlayerCommand) *AccessRevokeCommand {
+func NewAccessRevokeCommand(sl *metadata.SoftlayerStorageCommand) *AccessRevokeCommand {
 	thisCmd := &AccessRevokeCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
-		NetworkManager:   managers.NewNetworkManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
+		NetworkManager:          managers.NewNetworkManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "access-revoke " + T("IDENTIFIER"),
