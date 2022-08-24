@@ -17,7 +17,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
@@ -75,11 +74,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl image
-	imageCommands := image.GetCommandActionBindings(context, ui, session)
-	for name, action := range imageCommands {
-		CommandActionBindings[name] = action
-	}
 	// ibmcloud sl ipsec
 	ipsecCommands := ipsec.GetCommandActionBindings(context, ui, session)
 	for name, action := range ipsecCommands {
