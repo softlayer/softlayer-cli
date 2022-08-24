@@ -1,7 +1,6 @@
 package firewall
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -10,47 +9,46 @@ import (
 	"strconv"
 	"strings"
 
-	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 const DELIMITER = "=========================================\n"
 
 type EditCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	FirewallManager managers.FirewallManager
+	Command         *cobra.Command
 }
 
-func NewEditCommand(ui terminal.UI, firewallManager managers.FirewallManager) (cmd *EditCommand) {
-	return &EditCommand{
-		UI:              ui,
-		FirewallManager: firewallManager,
+func NewEditCommand(sl *metadata.SoftlayerCommand) (cmd *EditCommand) {
+	thisCmd := &EditCommand{
+		SoftlayerCommand: sl,
+		FirewallManager:  managers.NewFirewallManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "edit " + T("IDENTIFIER"),
+		Short: T("Edit firewall rules."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func FirewallEditMetaData() cli.Command {
-	return cli.Command{
-		Category:    "firewall",
-		Name:        "edit",
-		Description: T("Edit firewall rules"),
-		Usage:       "${COMMAND_NAME} sl firewall edit IDENTIFIER [OPTIONS]",
-	}
-}
-
-func (cmd *EditCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-
-	firewallType, firewallID, err := cmd.FirewallManager.ParseFirewallID(c.Args()[0])
+func (cmd *EditCommand) Run(args []string) error {
+	firewallType, firewallID, err := cmd.FirewallManager.ParseFirewallID(args[0])
 	if err != nil {
-		return cli.NewExitError(T("Failed to parse firewall ID : {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": c.Args()[0]})+err.Error(), 1)
+		return errors.NewAPIError(T("Failed to parse firewall ID : {{.FirewallID}}.", map[string]interface{}{"FirewallID": args[0]}), err.Error(), 1)
 	}
 
 	if firewallType == "multiVlan" {
@@ -66,17 +64,17 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 	if firewallType == "vlan" {
 		origRules, err := cmd.FirewallManager.GetDedicatedFirewallRules(firewallID)
 		if err != nil {
-			return cli.NewExitError(T("Failed to get dedicated firewall rules for {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID})+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get dedicated firewall rules for {{.FirewallID}}.", map[string]interface{}{"FirewallID": firewallID}), err.Error(), 2)
 		}
 		_, err = OpenEditorForVlanRules(origRules, file.Name())
 		if err != nil {
-			return cli.NewExitError(T("Failed to open editor for vlan rules: {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID})+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to open editor for vlan rules: {{.FirewallID}}.", map[string]interface{}{"FirewallID": firewallID}), err.Error(), 2)
 		}
 		b, err := ioutil.ReadFile(file.Name())
 		cmd.UI.Print(string(b))
 		confirm, err := cmd.UI.Confirm(T("Would you like to submit the rules. Continue?"))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			deleteTempFile(*file)
@@ -85,11 +83,11 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		}
 		editedRules, err := ParseVlanRulefile(string(b))
 		if err != nil {
-			return cli.NewExitError(T("Failed to parse vlan rule file.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to parse vlan rule file.\n"), err.Error(), 2)
 		}
 		_, err = cmd.FirewallManager.EditDedicatedFirewallRules(firewallID, editedRules)
 		if err != nil {
-			return cli.NewExitError(T("Failed to edit dedicated firewall rules.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to edit dedicated firewall rules.\n"), err.Error(), 2)
 		}
 		deleteTempFile(*file)
 		cmd.UI.Ok()
@@ -97,17 +95,17 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 	} else {
 		origRules, err := cmd.FirewallManager.GetStandardFirewallRules(firewallID)
 		if err != nil {
-			return cli.NewExitError(T("Failed to get standard firewall rules for {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID})+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get standard firewall rules for {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID}), err.Error(), 2)
 		}
 		_, err = OpenEditorForComponentRules(origRules, file.Name())
 		if err != nil {
-			return cli.NewExitError(T("Failed to open editor for component rules:  {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID})+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to open editor for component rules:  {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID}), err.Error(), 2)
 		}
 		b, err := ioutil.ReadFile(file.Name())
 		cmd.UI.Print(string(b))
 		confirm, err := cmd.UI.Confirm(T("Would you like to submit the rules. Continue?"))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			deleteTempFile(*file)
@@ -116,11 +114,11 @@ func (cmd *EditCommand) Run(c *cli.Context) error {
 		}
 		editedRules, err := ParseComponentRulefile(string(b))
 		if err != nil {
-			return cli.NewExitError(T("Failed to parse component rule file.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to parse component rule file.\n"), err.Error(), 2)
 		}
 		_, err = cmd.FirewallManager.EditStandardFirewallRules(firewallID, editedRules)
 		if err != nil {
-			return cli.NewExitError(T("Failed to edit standard firewall rules.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to edit standard firewall rules.\n"), err.Error(), 2)
 		}
 		deleteTempFile(*file)
 		cmd.UI.Ok()

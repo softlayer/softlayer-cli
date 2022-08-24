@@ -5,9 +5,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -15,63 +15,45 @@ import (
 )
 
 type VolumeListCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	Username       string
+	Datacenter     string
+	StorageType    string
+	Notes          string
+	Order          int
+	SortBy         string
+	UserColumns    []string
 }
 
-func NewVolumeListCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *VolumeListCommand) {
-	return &VolumeListCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewVolumeListCommand(sl *metadata.SoftlayerCommand) *VolumeListCommand {
+	thisCmd := &VolumeListCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockVolumeListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "volume-list",
-		Description: T("List block storage"),
-		Usage: T(`${COMMAND_NAME} sl block volume-list [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "volume-list",
+		Short: T("List block storage"),
+		Long: T(`${COMMAND_NAME} sl block volume-list [OPTIONS]
 
 EXAMPLE:
    ${COMMAND_NAME} sl block volume-list -d dal09 -t endurance --sortby capacity_gb
    This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "u,username",
-				Usage: T("Filter by volume username"),
-			},
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Filter by datacenter shortname"),
-			},
-			cli.StringFlag{
-				Name:  "t,storage-type",
-				Usage: T("Filter by type of storage volume, options are: performance,endurance"),
-			},
-			cli.StringFlag{
-				Name:  "n,notes",
-				Usage: T("Filter by notes"),
-			},
-			cli.IntFlag{
-				Name:  "o,order",
-				Usage: T("Filter by ID of the order that purchased the block storage"),
-			},
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by"),
-			},
-			cli.StringSliceFlag{
-				Name:  "column",
-				Usage: T("Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times"),
-			},
-			cli.StringSliceFlag{
-				Name:   "columns",
-				Hidden: true,
-			},
-			metadata.OutputFlag(),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVarP(&thisCmd.Username, "username", "u", "", T("Filter by volume username"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Filter by datacenter shortname"))
+	cobraCmd.Flags().StringVarP(&thisCmd.StorageType, "storage-type", "t", "", T("Filter by type of storage volume, options are: performance,endurance"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Notes, "notes", "n", "", T("Filter by notes"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Order, "order", "o", 0, T("Filter by ID of the order that purchased the block storage"))
+	cobraCmd.Flags().StringVar(&thisCmd.SortBy, "sortby", "id", T("Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by"))
+	cobraCmd.Flags().StringSliceVar(&thisCmd.UserColumns, "column", []string{}, T("Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 var maskMap = map[string]string{
@@ -90,38 +72,25 @@ var maskMap = map[string]string{
 	"notes":               "notes",
 }
 
-func (cmd *VolumeListCommand) Run(c *cli.Context) error {
-	sortby := c.String("sortby")
-	if sortby == "" {
-		sortby = "id"
-	}
-
-	var columns []string
-	if c.IsSet("column") {
-		columns = c.StringSlice("column")
-	} else if c.IsSet("columns") {
-		columns = c.StringSlice("columns")
-	}
+func (cmd *VolumeListCommand) Run(args []string) error {
+	sortby := cmd.SortBy
 
 	defaultColumns := []string{"id", "username", "datacenter", "storage_type", "capacity_gb", "bytes_used", "IOPs", "ip_addr", "lunId", "active_transactions", "rep_partner_count", "notes"}
 	optionalColumns := []string{"notes", "active_transactions", "created_by", "ip_addr"}
 	sortColumns := []string{"id", "username", "datacenter", "storage_type", "capacity_gb", "bytes_used", "ip_addr", "lunId", "active_transactions", "created_by"}
 
-	showColumns, err := utils.ValidateColumns(sortby, columns, defaultColumns, optionalColumns, sortColumns, c)
+	showColumns, err := utils.ValidateColumns2(sortby, cmd.UserColumns, defaultColumns, optionalColumns, sortColumns)
 	if err != nil {
 		return err
 	}
 
 	mask := utils.GetMask(maskMap, showColumns, sortby)
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	blockVolumes, err := cmd.StorageManager.ListVolumes("block", c.String("datacenter"), c.String("username"), c.String("storage-type"), c.String("notes"), c.Int("order"), mask)
+	blockVolumes, err := cmd.StorageManager.ListVolumes("block", cmd.Datacenter, cmd.Username, cmd.StorageType, cmd.Notes, cmd.Order, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list volumes on your account.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to list volumes on your account.\n"), err.Error(), 2)
 	}
 
 	if sortby == "id" || sortby == "ID" {
@@ -145,7 +114,7 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 	} else if sortby == "created_by" {
 		sort.Sort(utils.VolumeByCreatedBy(blockVolumes))
 	} else {
-		return errors.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
+		return slErr.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 
 	if outputFormat == "JSON" {
@@ -184,7 +153,7 @@ func (cmd *VolumeListCommand) Run(c *cli.Context) error {
 		if blockVolume.Notes != nil {
 			decodedValue, err := url.QueryUnescape(utils.FormatStringPointer(blockVolume.Notes))
 			if err != nil {
-				return cli.NewExitError(T("Failed to decoded the note.\n")+err.Error(), 2)
+				return slErr.NewAPIError(T("Failed to decoded the note.\n"), err.Error(), 2)
 			}
 			values["notes"] = decodedValue
 		} else {

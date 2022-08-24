@@ -4,83 +4,78 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type VolumeCancelCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	Reason         string
+	Immediate      bool
+	Force          bool
 }
 
-func NewVolumeCancelCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *VolumeCancelCommand) {
-	return &VolumeCancelCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewVolumeCancelCommand(sl *metadata.SoftlayerCommand) *VolumeCancelCommand {
+	thisCmd := &VolumeCancelCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockVolumeCancelMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "volume-cancel",
-		Description: T("Cancel an existing block storage volume"),
-		Usage: T(`${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "volume-cancel " + T("IDENTIFIER"),
+		Short: T("Cancel an existing block storage volume"),
+		Long: T(`${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]
 
 EXAMPLE:
    ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f 
    This command cancels volume with ID 12345678 immediately and without asking for confirmation.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "reason",
-				Usage: T("An optional reason for cancellation"),
-			},
-			cli.BoolFlag{
-				Name:  "immediate",
-				Usage: T("Cancel the block storage volume immediately instead of on the billing anniversary"),
-			},
-			metadata.ForceFlag(),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVar(&thisCmd.Reason, "reason", "", T("An optional reason for cancellation"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Immediate, "immediate", false, T("Cancel the block storage volume immediately instead of on the billing anniversary"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *VolumeCancelCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *VolumeCancelCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
+	subs := map[string]interface{}{"ID": volumeID, "VolumeId": volumeID}
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	if !c.IsSet("f") {
-		confirm, err := cmd.UI.Confirm(T("This will cancel the block volume: {{.ID}} and cannot be undone. Continue?", map[string]interface{}{"ID": volumeID}))
+	if !cmd.Force {
+		confirm, err := cmd.UI.Confirm(T("This will cancel the block volume: {{.ID}} and cannot be undone. Continue?", subs))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
 			return nil
 		}
 	}
-	immediate := c.IsSet("immediate")
-	err = cmd.StorageManager.CancelVolume("block", volumeID, c.String("reason"), immediate)
+
+	err = cmd.StorageManager.CancelVolume("block", volumeID, cmd.Reason, cmd.Immediate)
 	if err != nil {
-		if strings.Contains(err.Error(), slErrors.SL_EXP_OBJ_NOT_FOUND) {
-			return cli.NewExitError(T("Unable to find volume with ID {{.ID}}.\n", map[string]interface{}{"ID": volumeID})+err.Error(), 0)
+		if strings.Contains(err.Error(), slErr.SL_EXP_OBJ_NOT_FOUND) {
+			return slErr.NewAPIError(T("Unable to find volume with ID {{.ID}}.\n", subs), err.Error(), 0)
 		}
-		return cli.NewExitError(T("Failed to cancel block volume: {{.ID}}.\n", map[string]interface{}{"ID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to cancel block volume: {{.ID}}.\n", subs), err.Error(), 2)
 	}
 	cmd.UI.Ok()
-	if immediate {
-		cmd.UI.Print(T("Block volume {{.VolumeId}} has been marked for immediate cancellation.", map[string]interface{}{"VolumeId": volumeID}))
+	if cmd.Immediate {
+		cmd.UI.Print(T("Block volume {{.VolumeId}} has been marked for immediate cancellation.", subs))
 	} else {
-		cmd.UI.Print(T("Block volume {{.VolumeId}} has been marked for cancellation.", map[string]interface{}{"VolumeId": volumeID}))
+		cmd.UI.Print(T("Block volume {{.VolumeId}} has been marked for cancellation.", subs))
 	}
 	return nil
 }

@@ -13,7 +13,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
@@ -134,12 +133,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	//ibmcloud sl metadata
 	for name, action := range metadata.GetCommandActionBindings(context, ui, session) {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl firewall
-	firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
-	for name, action := range firewallCommands {
 		CommandActionBindings[name] = action
 	}
 
