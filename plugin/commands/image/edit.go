@@ -33,7 +33,7 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) (cmd *EditCommand) {
 		Long: T(`
 EXAMPLE: 
 	${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging
-	This command edits an image with ID 12345678 and set its name to "ubuntu16", note to "testing", and tag to "staging".`),
+	This command edits an image with ID 12345678 and set its name to 'ubuntu16', note to 'testing', and tag to 'staging'.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
