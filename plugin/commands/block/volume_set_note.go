@@ -27,10 +27,8 @@ func NewVolumeSetNoteCommand(sl *metadata.SoftlayerStorageCommand) *VolumeSetNot
 	cobraCmd := &cobra.Command{
 		Use:   "volume-set-note " + T("IDENTIFIER"),
 		Short: T("Set note for an existing block storage volume."),
-		Long: T(`${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID
-
-EXAMPLE:
-   ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'this is my note'`),
+		Long: T(`EXAMPLE:
+   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -53,7 +51,7 @@ func (cmd *VolumeSetNoteCommand) Run(args []string) error {
 
 	successful, err := cmd.StorageManager.VolumeSetNote(volumeID, cmd.Note)
 	if err != nil {
-		return slErr.NewAPIError(T("Error occurred while note was adding in block volume {{.VolumeID}}.\n",
+		return slErr.NewAPIError(T("Error occurred while adding note to volume: {{.VolumeID}}",
 			map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 

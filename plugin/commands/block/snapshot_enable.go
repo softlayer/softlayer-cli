@@ -40,11 +40,11 @@ func NewSnapshotEnableCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotEna
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-enable " + T("IDENTIFIER"),
 		Short: T("Enable snapshots for a given volume on the specified schedule"),
-		Long: T(`${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0
-   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.`),
+   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0
+   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -32,11 +32,11 @@ func NewSnapshotOrderCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotOrde
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-order " + T("IDENTIFIER"),
 		Short: T("Order snapshot space for a block storage volume"),
-		Long: T(`${COMMAND_NAME} sl block snapshot-order VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block snapshot-order 12345678 -s 1000 -t 4 
-   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.`),
+   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 
+   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

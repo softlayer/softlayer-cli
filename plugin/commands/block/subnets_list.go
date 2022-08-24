@@ -26,11 +26,11 @@ func NewSubnetsListCommand(sl *metadata.SoftlayerStorageCommand) *SubnetsListCom
 	cobraCmd := &cobra.Command{
 		Use:   "subnets-list " + T("IDENTIFIER"),
 		Short: T("List block storage assigned subnets for the given host id."),
-		Long: T(`${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block subnets-list 12345678 
-   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>`),
+   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 
+   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

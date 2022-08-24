@@ -27,12 +27,12 @@ func NewSubnetsRemoveCommand(sl *metadata.SoftlayerStorageCommand) *SubnetsRemov
 	cobraCmd := &cobra.Command{
 		Use:   "subnets-remove " + T("IDENTIFIER"),
 		Short: T("Remove block storage subnets to the given host id."),
-		Long: T(`${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222
-   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333
-   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>`),
+   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222
+   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333
+   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

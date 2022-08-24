@@ -32,11 +32,11 @@ func NewVolumeOptionsCommand(sl *metadata.SoftlayerStorageCommand) *VolumeOption
 	cobraCmd := &cobra.Command{
 		Use:   "volume-options",
 		Short: T("List all options for ordering a block storage"),
-		Long: T(`${COMMAND_NAME} sl block volume-options
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-options
 	
 EXAMPLE:
-   ${COMMAND_NAME} sl block volume-options
-   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.`),
+   ${COMMAND_NAME} sl {{.storageType}} volume-options
+   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.`, sl.StorageI18n),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

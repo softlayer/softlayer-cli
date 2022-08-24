@@ -25,16 +25,14 @@ func NewDisasterRecoveryFailoverCommand(sl *metadata.SoftlayerStorageCommand) *D
 	cobraCmd := &cobra.Command{
 		Use:   "disaster-recovery-failover " + T("IDENTIFIER") + " " + T("REPLICA_ID"),
 		Short: T("Failover an inaccessible volume to its available replicant volume."),
-		Long: T(`${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID
-
-If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately
+		Long: T(`If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately
 failover to an available replica in another location. This method does not allow for fail back via the API.
 To fail back to the original volume after using this method, open a support ticket.
-To test failover, use '${COMMAND_NAME} sl block replica-failover' instead.
+To test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.
 
 EXAMPLE:
-	${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321
-	This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.`),
+	${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321
+	This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.`, sl.StorageI18n),
 		Args: metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

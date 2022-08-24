@@ -32,11 +32,11 @@ func NewAccessAuthorizeCommand(sl *metadata.SoftlayerStorageCommand) *AccessAuth
 	cobraCmd := &cobra.Command{
 		Use:   "access-authorize " + T("IDENTIFIER"),
 		Short: T("Authorize hosts  to access a given volume"),
-		Long: T(`${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321
-   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.`),
+   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321
+   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

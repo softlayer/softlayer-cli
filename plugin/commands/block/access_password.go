@@ -24,9 +24,9 @@ func NewAccessPasswordCommand(sl *metadata.SoftlayerStorageCommand) *AccessPassw
 	cobraCmd := &cobra.Command{
 		Use:   "access-password " + T("IDENTIFIER") + " " + T("PASSWORD"),
 		Short: T("Changes a password for a volume's access"),
-		Long: T(`${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD
 	
-	ACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'`),
+	ACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'`, sl.StorageI18n),
 		Args: metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

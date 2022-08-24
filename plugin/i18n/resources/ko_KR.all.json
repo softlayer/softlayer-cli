@@ -108,156 +108,156 @@
     "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags '공백을 원하면 작은따옴표 또는 큰따옴표를 사용하십시오.'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 그렇지 않으면 쉼표를 사용하십시오."
   },
   {
-    "id": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\n예:\n${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}}  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}}  snapshot-set-notification VOLUME_ID\n\n예:\n${COMMAND_NAME} sl {{.storageType}} snapshot-set-notification --enable 1234567\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   이 명령은 ID 87654321인 가상 서버에 ID 12345678인 볼륨에 대한 액세스 권한을 부여합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   이 명령은 ID 87654321인 가상 서버에 ID 12345678인 볼륨에 대한 액세스 권한을 부여합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   이 명령은 ID 12345678인 볼륨에 액세스할 권한이 있는 모든 호스트를 나열하고 이를 ID별로 정렬합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   이 명령은 ID 12345678인 볼륨에 액세스할 권한이 있는 모든 호스트를 나열하고 이를 ID별로 정렬합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t",
-    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID는 '${COMMAND_NAME} sl block access-list'의 allowed_host_id임\n\t"
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'\n\t",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID는 '${COMMAND_NAME} sl {{.storageType}} access-list'의 allowed_host_id임\n\t"
   },
   {
-    "id": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   이 명령은 ID 12345678인 볼륨에 대해 ID 87654321인 가상 서버의 액세스 권한을 취소합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   이 명령은 ID 12345678인 볼륨에 대해 ID 87654321인 가상 서버의 액세스 권한을 취소합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl block replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\n재해 이벤트로 인해 볼륨(복제 있음)에 액세스할 수 없는 경우, 이 메소드를 사용하여\n다른 위치의 가용 복제본으로 즉시 장애 복구를 수행할 수 있습니다. 이 메소드는 API를 통한 장애 복구를 감안하지 않습니다. \n이 메소드 사용 후 원래 볼륨으로 장애를 복구하려면 지원 티켓을 개설하십시오. \n장애 복구를 테스트하려면 대신 '${COMMAND_NAME} sl block replica-failover'를 사용하십시오. \n\n예:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\t이 명령은 ID 12345678인 볼륨에서 ID 87654321인 복제본 볼륨으로 장애 복구 조치를 수행합니다."
+    "id": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "재해 이벤트로 인해 볼륨(복제 있음)에 액세스할 수 없는 경우, 이 메소드를 사용하여\n다른 위치의 가용 복제본으로 즉시 장애 복구를 수행할 수 있습니다. 이 메소드는 API를 통한 장애 복구를 감안하지 않습니다. \n이 메소드 사용 후 원래 볼륨으로 장애를 복구하려면 지원 티켓을 개설하십시오. \n장애 복구를 테스트하려면 대신 '${COMMAND_NAME} sl {{.storageType}} replica-failover'를 사용하십시오. \n\n예:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\t이 명령은 ID 12345678인 볼륨에서 ID 87654321인 복제본 볼륨으로 장애 복구 조치를 수행합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678"
+    "id": "${COMMAND_NAME} sl {{.storageType}} duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} duplicate-convert-status 12345678",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} duplicate-convert-status [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} duplicate-convert-status 12345678"
   },
   {
-    "id": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list",
-    "translation": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block object-list"
+    "id": "${COMMAND_NAME} sl {{.storageType}} object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} object-list",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} object-list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} object-list"
   },
   {
-    "id": "${COMMAND_NAME} sl block replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block replica-failback VOLUME_ID\n\t\t\n예:\n   ${COMMAND_NAME} sl block replica-failback 12345678\n   이 명령은 ID 12345678인 볼륨에 대해 장애 복구(failback) 조작을 수행합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   이 명령은 ID 12345678인 볼륨에 대해 장애 복구(failback) 조작을 수행합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block replica-failover VOLUME_ID REPLICA_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block replica-failover VOLUME_ID REPLICA_ID\n\t\t\n예:\n   ${COMMAND_NAME} sl block replica-failover 12345678 87654321\n   이 명령은 ID 87654321인 복제본 볼륨으로 ID 12345678인 볼륨의 장애 조치(failover) 조작을 수행합니다."
+    "id": "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   이 명령은 ID 87654321인 복제본 볼륨으로 ID 12345678인 볼륨의 장애 조치(failover) 조작을 수행합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl block replica-locations 12345678\n   이 명령은 ID가 12345678인 블록 볼륨에 대해 적합한 복제 데이터 센터를 나열합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   이 명령은 ID가 12345678인 블록 볼륨에 대해 적합한 복제 데이터 센터를 나열합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
-    "translation": "${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   이 명령은 매일 복제를 수행하고 dal09에 있으며 티어 레벨은 4, OS 유형은 Linux인 ID 12345678인 볼륨에 대한 복제본을 주문합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   이 명령은 매일 복제를 수행하고 dal09에 있으며 티어 레벨은 4, OS 유형은 Linux인 ID 12345678인 볼륨에 대한 복제본을 주문합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block replica-partners VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl block replica-partners 12345678\n   이 명령은 ID가 12345678인 블록 볼륨에 대한 기존 복제본 볼륨을 나열합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   이 명령은 ID가 12345678인 블록 볼륨에 대한 기존 복제본 볼륨을 나열합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl block snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl block snapshot-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 ID 12345678인 스냅샷을 즉시 취소합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 ID 12345678인 스냅샷을 즉시 취소합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
-    "translation": "${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud\n   이 명령은 snapshotforibmcloud로서 추가 참고가 있으며 ID가 12345678인 볼륨에 대한 스냅샷을 작성합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   이 명령은 snapshotforibmcloud로서 추가 참고가 있으며 ID가 12345678인 볼륨에 대한 스냅샷을 작성합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\n예:\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   이 명령은 ID가 12345678인 스냅샷을 삭제합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-delete SNAPSHOT_ID\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-delete 12345678 \n   이 명령은 ID가 12345678인 스냅샷을 삭제합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   이 명령은 ID 12345678인 볼륨에 대해 일별 스냅샷을 사용하지 않습니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   이 명령은 ID 12345678인 볼륨에 대해 일별 스냅샷을 사용하지 않습니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
-    "translation": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   이 명령은 ID 12345678인 볼륨에 대해 스냅샷을 사용합니다. 스냅샷은 매주 일요일 오후 2시에 작성되며 최대 5개의 스냅샷이 보관됩니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   이 명령은 ID 12345678인 볼륨에 대해 스냅샷을 사용합니다. 스냅샷은 매주 일요일 오후 2시에 작성되며 최대 5개의 스냅샷이 보관됩니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\n예:\n${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고 플래그 설정을 가져옵니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-get-notification-status VOLUME_ID\n\n예:\n${COMMAND_NAME} sl {{.storageType}} snapshot-get-notification-status VOLUME_ID\n지정된 볼륨의 스냅샷 공간 사용 임계값 경고 플래그 설정을 가져옵니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   이 명령은 ID 12345678인 볼륨의 모든 스냅샷을 나열하고 이를 ID별로 정렬합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   이 명령은 ID 12345678인 볼륨의 모든 스냅샷을 나열하고 이를 ID별로 정렬합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl block snapshot-order VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block snapshot-order 12345678 -s 1000 -t 4 \n   이 명령은 크기가 1000GB이고 티어 레벨이 GB당 4 IOPS이며 ID가 12345678인 볼륨에 대한 스냅샷 영역을 주문합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   이 명령은 크기가 1000GB이고 티어 레벨이 GB당 4 IOPS이며 ID가 12345678인 볼륨에 대한 스냅샷 영역을 주문합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\n예:\n   ${COMMAND_NAME} sl block snapshot-restore 12345678 87654321\n   이 명령은 ID 87654321인 스냅샷에서 ID 12345678인 볼륨을 복원합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   이 명령은 ID 87654321인 스냅샷에서 ID 12345678인 볼륨을 복원합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  This command list snapshot schedules for volume with ID 12345678",
-    "translation": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   예:\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  이 명령은 ID가 12345678인 볼륨의 스냅샷 스케줄을 나열합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} snapshot-schedule-list 12345678\n\t  This command list snapshot schedules for volume with ID 12345678",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   예:\n\t  ${COMMAND_NAME} sl {{.storageType}} snapshot-schedule-list 12345678\n\t  이 명령은 ID가 12345678인 볼륨의 스냅샷 스케줄을 나열합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID는 다음 명령으로 얻는 host_id임: ibmcloud sl block access-list <volume_id>"
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID는 다음 명령으로 얻는 host_id임: ibmcloud sl {{.storageType}} access-list <volume_id>"
   },
   {
-    "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID는 다음 명령으로 얻는 host_id임: ibmcloud sl block access-list <volume_id>"
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID는 다음 명령으로 얻는 host_id임: ibmcloud sl {{.storageType}} access-list <volume_id>"
   },
   {
-    "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID는 다음 명령으로 얻는 host_id임: ibmcloud sl block access-list <volume_id>"
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID는 다음 명령으로 얻는 host_id임: ibmcloud sl {{.storageType}} access-list <volume_id>"
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 ID 12345678인 볼륨을 즉시 취소합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 ID 12345678인 볼륨을 즉시 취소합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume.",
-    "translation": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\n예:\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\t종속 복제 VOLUME_ID를 독립 볼륨으로 변환합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-convert VOLUME_ID\n\n예:\n\t${COMMAND_NAME} sl {{.storageType}} volume-convert VOLUME_ID\n\t종속 복제 VOLUME_ID를 독립 볼륨으로 변환합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   This command shows details of volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   이 명령은 ID가 12345678인 볼륨의 세부사항을 표시합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-detail 12345678 \n   This command shows details of volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-detail VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-detail 12345678 \n   이 명령은 ID가 12345678인 볼륨의 세부사항을 표시합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block volume-duplicate 12345678 \n   이 명령은 ID 12345678인 볼륨을 복제하여 새 볼륨 주문을 표시합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   이 명령은 ID 12345678인 볼륨을 복제하여 새 볼륨 주문을 표시합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
-    "translation": "${COMMAND_NAME} sl block volume-limits [OPTIONS]\n\n예:\n\t${COMMAND_NAME} sl block volume-limits\n\t이 명령은 이 계정에 해당하는 데이터 센터당 스토리지 한계를 나열합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\n예:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\t이 명령은 이 계정에 해당하는 데이터 센터당 스토리지 한계를 나열합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
-    "translation": "${COMMAND_NAME} sl block volume-list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block volume-list -d dal09 -t endurance --sortby capacity_gb\n   이 명령은 dal09에 있는 현재 계정의 모든 endurance 볼륨을 나열하고 이를 용량별로 정렬합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   이 명령은 dal09에 있는 현재 계정의 모든 endurance 볼륨을 나열하고 이를 용량별로 정렬합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl block volume-modify VOLUME_ID [OPTIONS]\n\n   예:\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  이 명령은 볼륨 12345678을 크기가 1000GB이고 IOPS가 4000이 되도록 수정합니다.\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 500 --new-tier 4\n\t  이 명령은 볼륨 12345678을 크기가 500GB이고 티어 레벨이 GB당 4 IOPS가 되도록 수정합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   예:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  이 명령은 볼륨 12345678을 크기가 1000GB이고 IOPS가 4000이 되도록 수정합니다.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  이 명령은 볼륨 12345678을 크기가 500GB이고 티어 레벨이 GB당 4 IOPS가 되도록 수정합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
-    "translation": "${COMMAND_NAME} sl block volume-options\n\t\n예:\n   ${COMMAND_NAME} sl block volume-options\n   이 명령은 스토리지 유형, 볼륨 크기, OS 유형, IOPS, 티어 레벨, 데이터 센터 및 스냅샷 크기를 포함하여 블록 스토리지 볼륨 작성에 대한 모든 옵션을 나열합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   이 명령은 스토리지 유형, 볼륨 크기, OS 유형, IOPS, 티어 레벨, 데이터 센터 및 스냅샷 크기를 포함하여 블록 스토리지 볼륨 작성에 대한 모든 옵션을 나열합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl block volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl block volume-order [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   이 명령은 크기가 1000GB이고 IOPS가 4000이며 OS 유형이 LINUX인 dal09에 있는 performance 볼륨을 주문합니다.\n   ${COMMAND_NAME} sl block volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   이 명령은 크기가 500GB, 티어 레벨이 GB당 4 IOPS, OS 유형이 XEN이고 dal09에 있으며 추가 스냅샷 영역 크기가 500GB인 endurance 볼륨을 주문합니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   이 명령은 크기가 1000GB이고 IOPS가 4000이며 OS 유형이 LINUX인 dal09에 있는 performance 볼륨을 주문합니다.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   이 명령은 크기가 500GB, 티어 레벨이 GB당 4 IOPS, OS 유형이 XEN이고 dal09에 있으며 추가 스냅샷 영역 크기가 500GB인 endurance 볼륨을 주문합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
-    "translation": "${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\n예:\n\t${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\t복제 VOLUME_ID를 해당 상위 SNAPSHOT_ID의 스냅샷으로 새로 고칩니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n예:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\t복제 VOLUME_ID를 해당 상위 SNAPSHOT_ID의 스냅샷으로 새로 고칩니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl block volume-set-lun-id VOLUME_ID LUN_ID\n\n\tLUN ID만 호스트 권한 부여 프로세스 중에 영향을 줍니다. \n\t이 방법을 사용하기 전에 모든 호스트의 권한을 취소하도록 \n\t권장합니다(필수는 아님).\n\tVOLUME_ID - LUN ID를 설정할 볼륨 ID입니다.\n\tLUN_ID - 권장 범위는 0 - 255 사이의 정수입니다. 고급 사용자는\n\t0 - 4095 사이의 정수를 사용할 수 있습니다."
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tLUN ID만 호스트 권한 부여 프로세스 중에 영향을 줍니다. \n\t이 방법을 사용하기 전에 모든 호스트의 권한을 취소하도록 \n\t권장합니다(필수는 아님).\n\tVOLUME_ID - LUN ID를 설정할 볼륨 ID입니다.\n\tLUN_ID - 권장 범위는 0 - 255 사이의 정수입니다. 고급 사용자는\n\t0 - 4095 사이의 정수를 사용할 수 있습니다."
   },
   {
-    "id": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note '참고사항입니다.'"
+    "id": "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
+    "translation": "예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note '참고사항입니다.'"
   },
   {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
@@ -2928,7 +2928,7 @@
     "translation": "볼륨 {{.VolumeID}}에 대한 스냅샷을 작성하는 중에 오류가 발생했습니다. 볼륨이 장애 조치되지 않았거나 스냅샷을 작성할 수 없는 다른 상태인지 확인하십시오.\n"
   },
   {
-    "id": "Error occurred while note was adding in block volume {{.VolumeID}}.\n",
+    "id": "Error occurred while adding note to volume: {{.VolumeID}}.",
     "translation": "블록 볼륨 {{.VolumeID}}에 참고사항이 추가되는 동안 오류가 발생했습니다. \n"
   },
   {

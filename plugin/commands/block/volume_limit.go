@@ -23,11 +23,11 @@ func NewVolumeLimitCommand(sl *metadata.SoftlayerStorageCommand) *VolumeLimitCom
 	cobraCmd := &cobra.Command{
 		Use:   "volume-limits",
 		Short: T("Lists the storage limits per datacenter for this account."),
-		Long: T(`${COMMAND_NAME} sl block volume-limits [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl block volume-limits
-	This command lists the storage limits per datacenter for this account.`),
+	${COMMAND_NAME} sl {{.storageType}} volume-limits
+	This command lists the storage limits per datacenter for this account.`, sl.StorageI18n),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -31,13 +31,13 @@ func NewVolumeModifyCommand(sl *metadata.SoftlayerStorageCommand) *VolumeModifyC
 	cobraCmd := &cobra.Command{
 		Use:   "volume-modify " + T("IDENTIFIER"),
 		Short: T("Modify an existing block storage volume"),
-		Long: T(`${COMMAND_NAME} sl block volume-modify VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]
 
    EXAMPLE:
-	  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 1000 --new-iops 4000 
+	  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 
 	  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.
-	  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 500 --new-tier 4
-	  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.`),
+	  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4
+	  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

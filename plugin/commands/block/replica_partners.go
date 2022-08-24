@@ -26,11 +26,11 @@ func NewReplicaPartnersCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaPar
 	cobraCmd := &cobra.Command{
 		Use:   "replica-partners " + T("IDENTIFIER"),
 		Short: T("List existing replicant volumes for a block volume"),
-		Long: T(`${COMMAND_NAME} sl block replica-partners VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block replica-partners 12345678
-   This command lists existing replicant volumes for block volume with ID 12345678.`),
+   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678
+   This command lists existing replicant volumes for block volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

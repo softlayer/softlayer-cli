@@ -29,11 +29,11 @@ func NewAccessListCommand(sl *metadata.SoftlayerStorageCommand) *AccessListComma
 	cobraCmd := &cobra.Command{
 		Use:   "access-list " + T("IDENTIFIER"),
 		Short: T("List hosts that are authorized to access the volume"),
-		Long: T(`${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block access-list 12345678 --sortby id 
-   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.`),
+   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id 
+   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

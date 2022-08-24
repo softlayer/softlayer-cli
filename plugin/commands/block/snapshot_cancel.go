@@ -28,11 +28,11 @@ func NewSnapshotCancelCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotCan
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-cancel " + T("IDENTIFIER"),
 		Short: T("Cancel existing snapshot space for a given volume"),
-		Long: T(`${COMMAND_NAME} sl block snapshot-cancel SNAPSHOT_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block snapshot-cancel 12345678 --immediate -f 
-   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.`),
+   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f 
+   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

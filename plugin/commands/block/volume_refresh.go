@@ -25,11 +25,11 @@ func NewVolumeRefreshCommand(sl *metadata.SoftlayerStorageCommand) *VolumeRefres
 	cobraCmd := &cobra.Command{
 		Use:   "volume-refresh " + T("IDENTIFIER") + " " + T("SNAPSHOT_ID"),
 		Short: T("Refresh a duplicate volume with a snapshot from its parent."),
-		Long: T(`${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID
 
 EXAMPLE:
-	${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
-	Refresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.`),
+	${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID
+	Refresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.`, sl.StorageI18n),
 		Args: metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

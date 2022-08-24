@@ -1,12 +1,12 @@
 package file
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 func FileNamespace() plugin.Namespace {
@@ -17,77 +17,42 @@ func FileNamespace() plugin.Namespace {
 	}
 }
 
-func FileMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "file",
-		Description: T("Classic infrastructure File Storage"),
-		Usage:       "${COMMAND_NAME} sl file",
-		Subcommands: []cli.Command{
-			FileAccessAuthorizeMetaData(),
-			FileAccessListMetaData(),
-			FileAccessRevokeMetaData(),
-			FileReplicaFailbackMetaData(),
-			FileReplicaFailoverMetaData(),
-			FileReplicaLocationsMetaData(),
-			FileReplicaOrderMetaData(),
-			FileReplicaPartnersMetaData(),
-			FileSnapshotCancelMetaData(),
-			FileSnapshotCreateMetaData(),
-			FileSnapshotDisableMetaData(),
-			FileSnapshotEnableMetaData(),
-			FileSnapshotDeleteMetaData(),
-			FileSnapshotListMetaData(),
-			FileSnapshotOrderMetaData(),
-			FileSnapshotScheduleListMetaData(),
-			FileSnapshotRestoreMetaData(),
-			FileVolumeCancelMetaData(),
-			FileVolumeCountMetaData(),
-			FileVolumeListMetaData(),
-			FileVolumeDetailMetaData(),
-			FileVolumeDuplicateMetaData(),
-			FileVolumeModifyMetaData(),
-			FileVolumeOrderMetaData(),
-			FileVolumeOptionsMetaData(),
-			FileVolumeLimitsMetaData(),
-			FileVolumeRefreshMetaData(),
-			FileVolumeConvertMetaData(),
-			FileDisasterRecoveryFailoverMetaData(),
-			FileVolumeSnapshotSetNotificationMetaData(),
-			FileVolumeSnapshotGetNotificationStatusMetaData(),
-			FileVolumeSetNoteMetaData(),
-			FileDuplicateConvertStatusMetaData(),
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	StorageCommand := &metadata.SoftlayerStorageCommand{
+		SoftlayerCommand: sl,
+		StorageI18n:      map[string]interface{}{"storageType": "file"},
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "file",
+		Short: T("Classic infrastructure File Storage"),
+		RunE:  nil,
+	}
+	// Commands that are the same as their block version.
+
+	cobraCmd.AddCommand(block.NewDisasterRecoveryFailoverCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(block.NewVolumeSetNoteCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(block.NewDuplicateConvertStatusCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(block.NewAccessListCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(block.NewReplicaFailbackCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(block.NewReplicaFailoverCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(block.NewReplicaLocationsCommand(StorageCommand).Command)
+
+	// Unique File Commands
+	cobraCmd.AddCommand(NewAccessAuthorizeCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewAccessRevokeCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewReplicaOrderCommand(StorageCommand).Command)
+
+	return cobraCmd
 }
 
+/*
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	storageManager := managers.NewStorageManager(session)
 	networkManager := managers.NewNetworkManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
 		//file - 25
-		"file-access-authorize": func(c *cli.Context) error {
-			return NewAccessAuthorizeCommand(ui, storageManager, networkManager).Run(c)
-		},
-		"file-access-list": func(c *cli.Context) error {
-			return NewAccessListCommand(ui, storageManager).Run(c)
-		},
-		"file-access-revoke": func(c *cli.Context) error {
-			return NewAccessRevokeCommand(ui, storageManager, networkManager).Run(c)
-		},
-		"file-replica-failback": func(c *cli.Context) error {
-			return NewReplicaFailbackCommand(ui, storageManager).Run(c)
-		},
-		"file-replica-failover": func(c *cli.Context) error {
-			return NewReplicaFailoverCommand(ui, storageManager).Run(c)
-		},
-		"file-replica-locations": func(c *cli.Context) error {
-			return NewReplicaLocationsCommand(ui, storageManager).Run(c)
-		},
-		"file-replica-order": func(c *cli.Context) error {
-			return NewReplicaOrderCommand(ui, storageManager, context).Run(c)
-		},
+
 		"file-replica-partners": func(c *cli.Context) error {
 			return NewReplicaPartnersCommand(ui, storageManager).Run(c)
 		},
@@ -164,3 +129,5 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	return CommandActionBindings
 }
+
+*/

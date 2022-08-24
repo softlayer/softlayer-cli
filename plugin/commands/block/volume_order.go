@@ -38,13 +38,13 @@ func NewVolumeOrderCommand(sl *metadata.SoftlayerStorageCommand) *VolumeOrderCom
 	cobraCmd := &cobra.Command{
 		Use:   "volume-order",
 		Short: T("Order a block storage volume"),
-		Long: T(`${COMMAND_NAME} sl block volume-order [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09
+   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09
    This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.
-   ${COMMAND_NAME} sl block volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500
-   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.`),
+   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500
+   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.`, sl.StorageI18n),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

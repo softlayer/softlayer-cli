@@ -27,12 +27,7 @@ func NewSnapshotScheduleListCommand(sl *metadata.SoftlayerStorageCommand) (cmd *
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-schedule-list " + T("IDENTIFIER"),
 		Short: T("List snapshot schedules for a given volume"),
-		Long: T(`${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]
-
-   EXAMPLE:
-	  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678
-	  This command list snapshot schedules for volume with ID 12345678`),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

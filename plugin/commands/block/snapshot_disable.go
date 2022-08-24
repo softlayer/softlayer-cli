@@ -26,11 +26,11 @@ func NewSnapshotDisableCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotDi
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-disable " + T("IDENTIFIER"),
 		Short: T("Disable snapshots on the specified schedule for a given volume"),
-		Long: T(`${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY
-   This command disables daily snapshot for volume with ID 12345678.`),
+   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY
+   This command disables daily snapshot for volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

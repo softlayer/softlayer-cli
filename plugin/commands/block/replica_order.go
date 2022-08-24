@@ -33,11 +33,11 @@ func NewReplicaOrderCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaOrderC
 	cobraCmd := &cobra.Command{
 		Use:   "replica-order " + T("IDENTIFIER"),
 		Short: T("Order a block storage replica volume"),
-		Long: T(`${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX
-   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.`),
+   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX
+   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
