@@ -10,10 +10,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
@@ -54,18 +54,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl vlan
 	vlanCommands := vlan.GetCommandActionBindings(context, ui, session)
 	for name, action := range vlanCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl block
-	blockCommands := block.GetCommandAcionBindings(context, ui, session)
-	for name, action := range blockCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl file
-	fileCommands := file.GetCommandAcionBindings(context, ui, session)
-	for name, action := range fileCommands {
 		CommandActionBindings[name] = action
 	}
 
