@@ -88,8 +88,8 @@
     "translation": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID."
   },
   {
-    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t",
-    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t"
+    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'",
+    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'"
   },
   {
     "id": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -428,24 +428,12 @@
     "translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list"
   },
   {
-    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
-    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678."
+    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
+    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456."
   },
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
-    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
-    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device."
   },
   {
     "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
@@ -534,10 +522,6 @@
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
-  },
-  {
-    "id": "${COMMAND_NAME} sl licenses cancel KEY",
-    "translation": "${COMMAND_NAME} sl licenses cancel KEY"
   },
   {
     "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
@@ -1360,8 +1344,8 @@
     "translation": "Append parameters to web call"
   },
   {
-    "id": "Assign a global IP to a target router or device",
-    "translation": "Assign a global IP to a target router or device"
+    "id": "Assign a global IP to a target router or device.",
+    "translation": "Assign a global IP to a target router or device."
   },
   {
     "id": "Assign block storage subnets to the given host id.",
@@ -1410,6 +1394,10 @@
   {
     "id": "Authorize File, Block and Portable Storage to a Virtual Server",
     "translation": "Authorize File, Block and Portable Storage to a Virtual Server"
+  },
+  {
+    "id": "Authorize hosts  to access a given volume",
+    "translation": "Authorize hosts  to access a given volume"
   },
   {
     "id": "Authorize hosts to access a given volume",
@@ -1644,8 +1632,8 @@
     "translation": "Cancel a VLAN"
   },
   {
-    "id": "Cancel a global IP",
-    "translation": "Cancel a global IP"
+    "id": "Cancel a global IP.",
+    "translation": "Cancel a global IP."
   },
   {
     "id": "Cancel a hardware server",
@@ -2176,8 +2164,8 @@
     "translation": "Create a dedicatedhost"
   },
   {
-    "id": "Create a global IP",
-    "translation": "Create a global IP"
+    "id": "Create a global IP.",
+    "translation": "Create a global IP."
   },
   {
     "id": "Create a host for dedicated virtual servers",
@@ -2632,6 +2620,10 @@
     "translation": "Duplicate Volume Properties"
   },
   {
+    "id": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY",
+    "translation": "EXAMPLE:\n${COMMAND_NAME} sl licenses cancel KEY"
+  },
+  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
     "translation": "Earliest date to retrieve events for [YYYY-MM-DD]."
   },
@@ -2976,8 +2968,8 @@
     "translation": "Failed to add certificate.\n"
   },
   {
-    "id": "Failed to add global IP.\n",
-    "translation": "Failed to add global IP.\n"
+    "id": "Failed to add global IP.",
+    "translation": "Failed to add global IP."
   },
   {
     "id": "Failed to add l7 policy: {{.Error}}.\n",
@@ -3020,8 +3012,8 @@
     "translation": "Failed to add {{.Type}} subnet #{{.ID}} to IPSec {{.ContextID}}.\n"
   },
   {
-    "id": "Failed to assign global IP {{.IpID}} to target {{.Target}}.\n",
-    "translation": "Failed to assign global IP {{.IpID}} to target {{.Target}}.\n"
+    "id": "Failed to assign global IP {{.IpID}} to target {{.Target}}.",
+    "translation": "Failed to assign global IP {{.IpID}} to target {{.Target}}."
   },
   {
     "id": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -3072,8 +3064,8 @@
     "translation": "Failed to cancel firewall: {{.ID}}"
   },
   {
-    "id": "Failed to cancel global IP: {{.ID}}.\n",
-    "translation": "Failed to cancel global IP: {{.ID}}.\n"
+    "id": "Failed to cancel global IP: {{.ID}}.",
+    "translation": "Failed to cancel global IP: {{.ID}}."
   },
   {
     "id": "Failed to cancel hardware server: {{.ID}}.\n",
@@ -3880,8 +3872,8 @@
     "translation": "Failed to list dedicated hosts on your account.\n"
   },
   {
-    "id": "Failed to list global IPs on your account.\n",
-    "translation": "Failed to list global IPs on your account.\n"
+    "id": "Failed to list global IPs on your account.",
+    "translation": "Failed to list global IPs on your account."
   },
   {
     "id": "Failed to list items.\n",
@@ -4256,8 +4248,8 @@
     "translation": "Failed to toggle IPMI interface of hardware server '{{.ID}}'.\n"
   },
   {
-    "id": "Failed to unassign global IP {{.ID}}.\n",
-    "translation": "Failed to unassign global IP {{.ID}}.\n"
+    "id": "Failed to unassign global IP {{.ID}}.",
+    "translation": "Failed to unassign global IP {{.ID}}."
   },
   {
     "id": "Failed to unmarshal template file: {{.File}}.\n",
@@ -5104,6 +5096,10 @@
     "translation": "IDENTIFIER"
   },
   {
+    "id": "IDENTIFIER TARGET",
+    "translation": "IDENTIFIER TARGET"
+  },
+  {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
     "translation": "IDs of SSH key to add to the root user, multiple occurrence allowed"
   },
@@ -5290,6 +5286,10 @@
   {
     "id": "Incorrect Usage: This command requires one argument.",
     "translation": "Incorrect Usage: This command requires one argument."
+  },
+  {
+    "id": "Incorrect Usage: This command requires two arguments.",
+    "translation": "Incorrect Usage: This command requires two arguments."
   },
   {
     "id": "Incorrect complex type: {{.Type}}",
@@ -5624,8 +5624,8 @@
     "translation": "List all firewalls on your account"
   },
   {
-    "id": "List all global IPs on your account",
-    "translation": "List all global IPs on your account"
+    "id": "List all global IPs on your account.",
+    "translation": "List all global IPs on your account."
   },
   {
     "id": "List all images on your account",
@@ -6572,6 +6572,10 @@
     "translation": "Owner"
   },
   {
+    "id": "PASSWORD",
+    "translation": "PASSWORD"
+  },
+  {
     "id": "PATH Read userdata from a file",
     "translation": "PATH Read userdata from a file"
   },
@@ -7094,6 +7098,10 @@
   {
     "id": "Quantity",
     "translation": "Quantity"
+  },
+  {
+    "id": "REPLICA_ID",
+    "translation": "REPLICA_ID"
   },
   {
     "id": "RPM Sensor",
@@ -8920,8 +8928,8 @@
     "translation": "Unable to find firewall with ID: {{.ID}}"
   },
   {
-    "id": "Unable to find global IP with ID: {{.ID}}.\n",
-    "translation": "Unable to find global IP with ID: {{.ID}}.\n"
+    "id": "Unable to find global IP with ID: {{.ID}}.",
+    "translation": "Unable to find global IP with ID: {{.ID}}."
   },
   {
     "id": "Unable to find hardware server with ID: {{.ID}}.\n",
@@ -9004,8 +9012,8 @@
     "translation": "Unable to unmarshal template json: %s\n"
   },
   {
-    "id": "Unassign a global IP from a target router or device",
-    "translation": "Unassign a global IP from a target router or device"
+    "id": "Unassign a global IP from a target router or device.",
+    "translation": "Unassign a global IP from a target router or device."
   },
   {
     "id": "Unique Id",

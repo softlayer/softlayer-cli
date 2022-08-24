@@ -3,8 +3,8 @@ package globalip
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -12,37 +12,57 @@ import (
 )
 
 type CreateCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	V6             bool
+	Test           bool
+	Force          bool
 }
 
-func NewCreateCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *CreateCommand) {
-	return &CreateCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
+	thisCmd := &CreateCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "create",
+		Short: T("Create a global IP."),
+		Long: T(`${COMMAND_NAME} sl globalip create [OPTIONS]
+
+EXAMPLE:
+    ${COMMAND_NAME} sl globalip create --v6 
+	This command creates an IPv6 address.`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVar(&thisCmd.V6, "v6", false, T("Order an IPv6 IP address"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Test, "test", false, T("Test order"))
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateCommand) Run(c *cli.Context) error {
+func (cmd *CreateCommand) Run(args []string) error {
 	version := 4
-	if c.IsSet("v6") {
+	if cmd.V6 {
 		version = 6
 	}
 	testOrder := false
-	if c.IsSet("test") {
+	if cmd.Test {
 		testOrder = true
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	if testOrder == false {
-		if !c.IsSet("f") && !c.IsSet("force") && outputFormat != "JSON" {
+	if !testOrder {
+		if !cmd.Force {
 			confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 			if err != nil {
-				return cli.NewExitError(err.Error(), 1)
+				return err
 			}
 			if !confirm {
 				cmd.UI.Print(T("Aborted."))
@@ -53,7 +73,7 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 
 	orderReceipt, err := cmd.NetworkManager.AddGlobalIP(version, testOrder)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add global IP.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to add global IP."), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -87,29 +107,4 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func GlobalIpCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "globalip",
-		Name:        "create",
-		Description: T("Create a global IP"),
-		Usage: T(`${COMMAND_NAME} sl globalip create [OPTIONS]
-
-EXAMPLE:
-    ${COMMAND_NAME} sl globalip create --v6 
-	This command creates an IPv6 address.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "v6",
-				Usage: T("Order an IPv6 IP address"),
-			},
-			cli.BoolFlag{
-				Name:  "test",
-				Usage: T("Test order"),
-			},
-			metadata.ForceFlag(),
-			metadata.OutputFlag(),
-		},
-	}
 }
