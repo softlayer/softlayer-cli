@@ -40,7 +40,6 @@ EXAMPLE:
 	}
 	cobraCmd.Flags().BoolVar(&thisCmd.V6, "v6", false, T("Order an IPv6 IP address"))
 	cobraCmd.Flags().BoolVar(&thisCmd.Test, "test", false, T("Test order"))
-	thisCmd.Command = cobraCmd
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
