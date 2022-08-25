@@ -1,5 +1,17 @@
 [
   {
+    "id": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03",
+    "translation": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03"
+  },
+  {
+    "id": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n\tIDENTIFIER: ID of the image\n\tURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n\tAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
+    "translation": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n\tIDENTIFIER: ID of the image\n\tURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n\tAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
+  },
+  {
+    "id": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n\tNAME: The image name\n\tURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n\tAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
+    "translation": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n\tNAME: The image name\n\tURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n\tAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
+  },
+  {
     "id": "\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456",
     "translation": "\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456"
   },
@@ -10,6 +22,10 @@
   {
     "id": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log types",
     "translation": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log types"
+  },
+  {
+    "id": "\nEXAMPLE: \n\t${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n\tThis command edits an image with ID 12345678 and set its name to 'ubuntu16', note to 'testing', and tag to 'staging'.",
+    "translation": "\nEXAMPLE: \n\t${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n\tThis command edits an image with ID 12345678 and set its name to 'ubuntu16', note to 'testing', and tag to 'staging'."
   },
   {
     "id": "\nLUN name",
@@ -462,34 +478,6 @@
   {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
-    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image delete 12345678\n   This command deletes image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image delete 12345678\n   This command deletes image with ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image detail 12345678\n   This command gets details for image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image detail 12345678\n   This command gets details for image with ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\".",
-    "translation": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\"."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image list --public\n   This command list all public images on current account.",
-    "translation": "${COMMAND_NAME} sl image list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image list --public\n   This command list all public images on current account."
   },
   {
     "id": "${COMMAND_NAME} sl ipsec cancel CONTEXT_ID [OPTIONS]",
@@ -1134,6 +1122,10 @@
   {
     "id": "APIKEY",
     "translation": "APIKEY"
+  },
+  {
+    "id": "API_KEY",
+    "translation": "API_KEY"
   },
   {
     "id": "Aborted.",
@@ -2408,8 +2400,8 @@
     "translation": "Delete a zone"
   },
   {
-    "id": "Delete an image ",
-    "translation": "Delete an image "
+    "id": "Delete an image",
+    "translation": "Delete an image"
   },
   {
     "id": "Delete the credential of an Object Storage Account.",
@@ -3224,8 +3216,8 @@
     "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
   {
-    "id": "Failed to delete image: {{.ImageID}}.\n",
-    "translation": "Failed to delete image: {{.ImageID}}.\n"
+    "id": "Failed to delete image: {{.ImageID}}.",
+    "translation": "Failed to delete image: {{.ImageID}}."
   },
   {
     "id": "Failed to delete l7 policy: {{.Error}}.\n",
@@ -3564,12 +3556,12 @@
     "translation": "Failed to get hardware {{.ID}}.\n"
   },
   {
-    "id": "Failed to get image datacenters.\n",
-    "translation": "Failed to get image datacenters.\n"
+    "id": "Failed to get image datacenters.",
+    "translation": "Failed to get image datacenters."
   },
   {
-    "id": "Failed to get image: {{.ImageID}}.\n",
-    "translation": "Failed to get image: {{.ImageID}}.\n"
+    "id": "Failed to get image: {{.ImageID}}.",
+    "translation": "Failed to get image: {{.ImageID}}."
   },
   {
     "id": "Failed to get invoices.",
@@ -5312,6 +5304,10 @@
     "translation": "Incorrect Usage: This command requires one argument."
   },
   {
+    "id": "Incorrect Usage: This command requires three arguments.",
+    "translation": "Incorrect Usage: This command requires three arguments."
+  },
+  {
     "id": "Incorrect Usage: This command requires two arguments.",
     "translation": "Incorrect Usage: This command requires two arguments."
   },
@@ -6042,6 +6038,10 @@
   {
     "id": "Must specify [--cpu] when using [--private].",
     "translation": "Must specify [--cpu] when using [--private]."
+  },
+  {
+    "id": "NAME",
+    "translation": "NAME"
   },
   {
     "id": "NETWORK has to be either public or private.",
@@ -8616,10 +8616,6 @@
     "translation": "This command requires one identifier."
   },
   {
-    "id": "This command requires one indentifier, the option and the option arguments.",
-    "translation": "This command requires one indentifier, the option and the option arguments."
-  },
-  {
     "id": "This command requires one option.",
     "translation": "This command requires one option."
   },
@@ -8896,6 +8892,10 @@
     "translation": "Types"
   },
   {
+    "id": "URI",
+    "translation": "URI"
+  },
+  {
     "id": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]",
     "translation": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]"
   },
@@ -8964,8 +8964,8 @@
     "translation": "Unable to find health check with UUID of '{{.UUID}}' in load balancer {{.ID}}."
   },
   {
-    "id": "Unable to find image with ID {{.ImageID}}.\n",
-    "translation": "Unable to find image with ID {{.ImageID}}.\n"
+    "id": "Unable to find image with ID {{.ImageID}}.",
+    "translation": "Unable to find image with ID {{.ImageID}}."
   },
   {
     "id": "Unable to find item with ID: {{.itemID}}.\n",
