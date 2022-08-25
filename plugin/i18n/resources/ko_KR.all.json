@@ -81,11 +81,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456",
-    "translation": "${COMMAND_NAME} sl autoscale delete ID\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456"
+    "translation": "${COMMAND_NAME} sl autoscale delete ID\n\n예: \n   ${COMMAND_NAME} sl autoscale delete 123456"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale detail IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale detail 123456",
-    "translation": "${COMMAND_NAME} sl autoscale detail ID\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale detail 123456"
+    "translation": "${COMMAND_NAME} sl autoscale detail ID\n\n예: \n   ${COMMAND_NAME} sl autoscale detail 123456"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048",
@@ -93,7 +93,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n   This command list all Autoscale Groups on current account.",
-    "translation": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n 이 명령은 현재 계정의 모든 자동 스케일 그룹을 나열합니다."
+    "translation": "${COMMAND_NAME} sl autoscale list\n\n예: \n   ${COMMAND_NAME} sl autoscale list\n 이 명령은 현재 계정의 모든 자동 스케일 그룹을 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31",
@@ -261,7 +261,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
-    "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n예: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t이 명령을 실행하면 볼륨 노트를 편집합니다.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t이 명령을 실행하면 사용자 세부사항을 표시합니다.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests."
+    "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n예: \n${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n이 명령을 실행하면 볼륨 참고를 편집합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n이 명령을 실행하면 사용자 세부사항을 표시합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\nThis command list virtual guests."
   },
   {
     "id": "${COMMAND_NAME} sl cdn list",
@@ -269,15 +269,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
-    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   사용 가능한 개인용 vlan 목록을 확보하려면 다음 명령을 사용하십시오. ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
+    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   사용 가능한 개인용 vlan 목록을 확보하려면 다음 명령을 사용하십시오. ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n  이 명령은 전용 호스트의 세부사항을 가져옵니다."
+    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n  이 명령은 전용 호스트의 세부사항을 가져옵니다."
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n  이 명령은 계정의 모든 전용 호스트 게스트를 나열합니다."
+    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n  이 명령은 계정의 모든 전용 호스트 게스트를 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns import ~/ibm.com.txt\n   This command imports zone and its resource records from file: ~/ibm.com.txt.",
@@ -329,11 +329,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
-    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
+    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
   {
     "id": "${COMMAND_NAME} sl event-log types\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log types",
-    "translation": "${COMMAND_NAME} sl event-log types\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log types"
+    "translation": "${COMMAND_NAME} sl event-log types\n\n예: \n   ${COMMAND_NAME} sl event-log types"
   },
   {
     "id": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
@@ -585,11 +585,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456",
-    "translation": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456"
+    "translation": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl nas credentials 123456"
   },
   {
     "id": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list",
-    "translation": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list"
+    "translation": "${COMMAND_NAME} sl nas list\n\n예: \n   ${COMMAND_NAME} sl nas list"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
@@ -657,7 +657,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
-    "translation": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut"
+    "translation": "${COMMAND_NAME} sl report bandwidth\n\n예: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut"
   },
   {
     "id": "${COMMAND_NAME} sl report datacenter-closures",
@@ -709,7 +709,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n   This command allows you to remove the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n 이 명령을 사용하면 계정 소유 서브넷의 라우트를 제거할 수 있습니다."
+    "translation": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n 이 명령을 사용하면 계정 소유 서브넷의 라우트를 제거할 수 있습니다."
   },
   {
     "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
@@ -737,7 +737,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n 이 명령을 사용하면 계정 소유 서브넷의 라우트를 변경할 수 있습니다."
+    "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n 이 명령을 사용하면 계정 소유 서브넷의 라우트를 변경할 수 있습니다."
   },
   {
     "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
@@ -793,7 +793,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXAMPLE: \t\n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Remember to set the permissions and access for this new user.",
-    "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXAMPLE: \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n 이 신규 사용자의 권한 및 액세스를 설정하려면 기억해 두십시오."
+    "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\n예: \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n 이 신규 사용자의 권한 및 액세스를 설정하려면 기억해 두십시오."
   },
   {
     "id": "${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONS]\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl user delete userId\n   This command delete user with userId.",
@@ -809,11 +809,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654"
+    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\n예:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654"
+    "translation": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\n예:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -841,11 +841,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
-    "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   가상 서버에 파일, 블록 및 휴대용 스토리지 권한을 부여합니다."
+    "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\n예:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   가상 서버에 파일, 블록 및 휴대용 스토리지 권한을 부여합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n   This command billing lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n   이 명령은 ID가 12345678인 가상 서버 인스턴스에 대한 상세 정보를 나열합니다."
+    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \n예:\n   ${COMMAND_NAME} sl vs billing 12345678\n   이 명령은 ID가 12345678인 가상 서버 인스턴스에 대한 상세 정보를 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs cancel 12345678\n   This command cancels virtual server instance with ID of 12345678.",
@@ -853,19 +853,19 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\n이 명령은 이름이 myvsi이고, backendRouterId가 1234567, 특징 C1_2X2_1_YEAR_TERM이 있는 하나의 예약 용량 인스턴스와 두 개의 인스턴스를 주문합니다.\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\n이 명령은 실제로 주문하기 전에 위 옵션을 사용하는 주문이 유효한지 여부를 테스트합니다.\n\n경고: 예약 용량은 연도별 계약이므로 계약이 만료될 때까지 취소할 수 없습니다."
+    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\n예:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\n이 명령은 이름이 myvsi이고, backendRouterId가 1234567, 특징 C1_2X2_1_YEAR_TERM이 있는 하나의 예약 용량 인스턴스와 두 개의 인스턴스를 주문합니다.\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\n이 명령은 실제로 주문하기 전에 위 옵션을 사용하는 주문이 유효한지 여부를 테스트합니다.\n\n경고: 예약 용량은 연도별 계약이므로 계약이 만료될 때까지 취소할 수 없습니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-create-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n 이 명령은 예약 용량 그룹 인스턴스(예: cpu, 메모리, os, 디스크, 네트워크 속도 등) 작성을 위한 모든 옵션을 나열합니다"
+    "translation": "${COMMAND_NAME} sl vs capacity-create-options\n\n예:\n   ${COMMAND_NAME} sl vs options\n 이 명령은 예약 용량 그룹 인스턴스(예: cpu, 메모리, os, 디스크, 네트워크 속도 등) 작성을 위한 모든 옵션을 나열합니다"
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n ID가 12345678인 예약 용량 그룹 세부사항을 가져옵니다."
+    "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\n예:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n ID가 12345678인 예약 용량 그룹 세부사항을 가져옵니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups.",
-    "translation": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n 예약 용량 그룹을 나열합니다."
+    "translation": "${COMMAND_NAME} sl vs capacity-list\n\n예:\n   ${COMMAND_NAME} sl vs capacity-list\n 예약 용량 그룹을 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   This command captures virtual server instance with ID of 12345678 with all disks into an image named \"mycloud\" with note \"testing\".",
@@ -897,7 +897,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.",
-    "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n 마이그레이션이 필요한 VSI를 관리합니다. 전용 인스턴스를 한 전용 호스트에서 다른 전용 호스트로 마이그레이션할 수 있습니다."
+    "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n 마이그레이션이 필요한 VSI를 관리합니다. 전용 인스턴스를 한 전용 호스트에서 다른 전용 호스트로 마이그레이션할 수 있습니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs options [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a virtual server instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
@@ -909,19 +909,19 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \n이 명령은 이름이 myvsi이고, backendRouterId가 1234567이며, 규칙이 258369인 배치 그룹 인스턴스를 주문합니다."
+    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\n예:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \n이 명령은 이름이 myvsi이고, backendRouterId가 1234567이며, 규칙이 258369인 배치 그룹 인스턴스를 주문합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-create-options\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n    Get List options for creating a placement group.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create-options\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n 배치 그룹 작성을 위한 나열 옵션을 가져옵니다."
+    "translation": "${COMMAND_NAME} sl vs placementgroup-create-options\n예:\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n 배치 그룹 작성을 위한 나열 옵션을 가져옵니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Get placement Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n ID가 12345678이 배치 그룹 세부사항을 가져옵니다."
+    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\n예:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n ID가 12345678이 배치 그룹 세부사항을 가져옵니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n   This command lists all placement groups.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n 이 명령은 모든 배치 그룹을 나열합니다."
+    "translation": "${COMMAND_NAME} sl vs placementgroup-list\n\n예:\n   ${COMMAND_NAME} sl vs placementgroup-list\n 이 명령은 모든 배치 그룹을 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs power-off IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs power-off 12345678 --soft\n   This command performs a soft power off for virtual server instance with ID 12345678.",
@@ -953,7 +953,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Get storage details for a virtual server.",
-    "translation": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   가상 서버의 스토리지 세부사항을 가져옵니다."
+    "translation": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\n예:\n   ${COMMAND_NAME} sl vs storage 1234567\n   가상 서버의 스토리지 세부사항을 가져옵니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
@@ -1881,7 +1881,7 @@
   },
   {
     "id": "Classic infrastructure Block Storage",
-    "translation": "클래식 인프라 Block Storage"
+    "translation": "클래식 인프라 블록 스토리지"
   },
   {
     "id": "Classic infrastructure CDN commands",
@@ -1965,7 +1965,7 @@
   },
   {
     "id": "Classic infrastructure SSH Keys and SSL Certificates",
-    "translation": "클래식 인프라 SSH 키 및 SSL Certificates"
+    "translation": "클래식 인프라 SSH 키 및 SSL 인증서"
   },
   {
     "id": "Classic infrastructure Tag management",
@@ -1973,7 +1973,7 @@
   },
   {
     "id": "Classic infrastructure Virtual Servers",
-    "translation": "클래식 인프라 Virtual Server"
+    "translation": "클래식 인프라 가상 서버"
   },
   {
     "id": "Classic infrastructure hardware servers",
@@ -2241,7 +2241,7 @@
   },
   {
     "id": "Create a dedicated Virtual Server (Private Node)",
-    "translation": "전용 Virtual Server 작성(프라이빗 노드)"
+    "translation": "전용 가상 서버 작성(프라이빗 노드)"
   },
   {
     "id": "Create a dedicatedhost",
@@ -2285,7 +2285,7 @@
   },
   {
     "id": "Create a transient virtual server",
-    "translation": "임시 Virtual Server 작성"
+    "translation": "임시 가상 서버 작성"
   },
   {
     "id": "Create a zone",
@@ -2773,7 +2773,7 @@
   },
   {
     "id": "Edit note and tags of a subnet.",
-    "translation": "서브넷의 메모 및 태그를 편집합니다."
+    "translation": "서브넷의 참고 및 태그를 편집합니다."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -3249,7 +3249,7 @@
   },
   {
     "id": "Failed to decoded the note.\n",
-    "translation": "노트를 디코딩하는 데 실패했습니다. \n"
+    "translation": "참고를 디코딩하는 데 실패했습니다. \n"
   },
   {
     "id": "Failed to delete AutoScale Group.\n",
@@ -4229,7 +4229,7 @@
   },
   {
     "id": "Failed to set note: {{.note}}.\n",
-    "translation": "메모 설정 실패: {{.note}}.\n"
+    "translation": "참고 설정 실패: {{.note}}.\n"
   },
   {
     "id": "Failed to set password for host {{.HostID}}.\n",
@@ -4589,7 +4589,7 @@
   },
   {
     "id": "Filter by notes",
-    "translation": "노트별 필터링"
+    "translation": "참고별 필터링"
   },
   {
     "id": "Filter by number of CPU cores",
@@ -5653,7 +5653,7 @@
   },
   {
     "id": "List block storage assigned subnets for the given host id.",
-    "translation": "지정된 호스트 ID의, 블록 스토리지가 지정된 서브넷을 나열합니다."
+    "translation": "지정된 호스트 ID에 대해 블록 스토리지가 지정된 서브넷을 나열합니다."
   },
   {
     "id": "List block storage snapshots",
@@ -7021,7 +7021,7 @@
   },
   {
     "id": "Public notes related to a Storage volume  [required]",
-    "translation": "스토리지 볼륨과 관련된 공용 노트[필수]"
+    "translation": "스토리지 볼륨과 관련된 공용 참고[필수]"
   },
   {
     "id": "Public port speed, options are: 0,10,100,1000,10000",
@@ -7169,7 +7169,7 @@
   },
   {
     "id": "Remove block storage subnets to the given host id.",
-    "translation": "지정된 호스트 ID에서 블록 스토리지 서브넷을 제거합니다."
+    "translation": "지정된 호스트 ID에 대한 블록 스토리지 서브넷을 제거합니다."
   },
   {
     "id": "Remove resource record from a zone",
@@ -7805,7 +7805,7 @@
   },
   {
     "id": "Subnet notes",
-    "translation": "서브넷 노트"
+    "translation": "서브넷 참고"
   },
   {
     "id": "Subnet type to add. Options are: internal,remote,service[required]",
@@ -8221,7 +8221,7 @@
   },
   {
     "id": "The note ",
-    "translation": "메모입니다. "
+    "translation": "참고입니다. "
   },
   {
     "id": "The note of hardware server: {{.ID}} was updated.",
@@ -8497,7 +8497,7 @@
   },
   {
     "id": "This command requires one argument.",
-    "translation": "이 명령에는 1개의 인수가 필요합니다."
+    "translation": "이 명령에는 하나의 인수가 필요합니다."
   },
   {
     "id": "This command requires one identifier.",

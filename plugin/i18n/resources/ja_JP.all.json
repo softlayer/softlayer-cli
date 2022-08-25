@@ -77,7 +77,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222",
-    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
+    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\n例: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456",
@@ -97,7 +97,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31",
-    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
+    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\n例: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to",
@@ -201,15 +201,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID は、ibmcloud sl block access-list によって取得される host_id です。<volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID は、ibmcloud sl block access-list によって取得される host_id です。<volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID は ibmcloud sl block access-list によって取得される host_id です。<volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID は ibmcloud sl block access-list によって取得される host_id です。<volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID は ibmcloud sl block access-list によって取得される host_id です。<volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID は ibmcloud sl block access-list によって取得される host_id です。<volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
@@ -589,7 +589,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list",
-    "translation": "${COMMAND_NAME} sl nas list \n \nEXAMPLE: \n ${COMMAND_NAME} sl nas list"
+    "translation": "${COMMAND_NAME} sl nas list \n \n例: \n ${COMMAND_NAME} sl nas list"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
@@ -809,7 +809,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION] \n \n 例: \n ${COMMAND_NAME} sl user grant-access 123456 -- ハードウェア 987654"
+    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654",
@@ -853,11 +853,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired."
+    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\n例:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nこのコマンドは、名前が myvsi、backendRouterId 1234567、フレーバー C1_2X2_1_YEAR_TERM の予約済み容量インスタンスと 2 つのインスタンスを注文します。\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nこのコマンドは、実際に注文を出す前に、上記のオプションで注文が有効かどうかをテストします。\n\n警告: 予約済み容量は年間契約であり、契約が終了するまでキャンセルすることはできません。"
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-create-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create-options \n \n 例: \n ${COMMAND_NAME} sl vs options \n このコマンドは、予約済みキャパシティー・グループ・インスタンス、例えば、データ・センター、CPU、メモリー、OS、ディスク、ネットワーク速度などを作成するためのすべてのオプションをリストします。"
+    "translation": "${COMMAND_NAME} sl vs capacity-create-options \n \n 例: \n ${COMMAND_NAME} sl vs options \n このコマンドは、予約済み容量グループ・インスタンス、例えば、データ・センター、CPU、メモリー、OS、ディスク、ネットワーク速度などを作成するためのすべてのオプションをリストします。"
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
@@ -961,7 +961,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n時間フォーマットは、'2006-01-02'、'2006-01-02T15:04'、'2006-01-02T15:04-07:00' のいずれかです。'\n\n丸めや日付合わせの詳細により、この結果は制御ポータルでの結果とは若干異なる可能性があります。\n帯域幅は GB 単位で表示され、タイムゾーンが指定されていない場合は GMT+0 とみなされます。\n\n例:\n\n   ${COMMAND_NAME} sl {{.Command}} 帯域幅 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
@@ -1893,7 +1893,7 @@
   },
   {
     "id": "Classic infrastructure Dedicatedhost",
-    "translation": "クラシック・インフラストラクチャー Dedicatedhost"
+    "translation": "クラシック・インフラストラクチャー専用ホスト"
   },
   {
     "id": "Classic infrastructure Domain Name System",
@@ -2237,7 +2237,7 @@
   },
   {
     "id": "Create a Reserved Capacity instance.",
-    "translation": "予約済みキャパシティー・インスタンスを作成します。"
+    "translation": "予約済み容量インスタンスを作成します。"
   },
   {
     "id": "Create a dedicated Virtual Server (Private Node)",
@@ -2533,7 +2533,7 @@
   },
   {
     "id": "Devices",
-    "translation": "デバイス"
+    "translation": "装置"
   },
   {
     "id": "Direction",
@@ -3393,7 +3393,7 @@
   },
   {
     "id": "Failed to generate the order template.\n",
-    "translation": "オーダー・テンプレートの生成に失敗しました。\n"
+    "translation": "注文テンプレートの生成に失敗しました。\n"
   },
   {
     "id": "Failed to get Account Overview.",
@@ -3481,7 +3481,7 @@
   },
   {
     "id": "Failed to get Recalculated Order Container.\n",
-    "translation": "再計算されたオーダー・コンテナーを取得できませんでした。\n"
+    "translation": "再計算された注文コンテナーを取得できませんでした。\n"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -4517,7 +4517,7 @@
   },
   {
     "id": "Filter by Memory capacity in megabytes",
-    "translation": "メガバイト単位のメモリー容量によるフィルター"
+    "translation": "メガバイト単位のメモリー容量でフィルタリングします"
   },
   {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
@@ -4589,7 +4589,7 @@
   },
   {
     "id": "Filter by notes",
-    "translation": "メモによるフィルター"
+    "translation": "メモでフィルタリングします"
   },
   {
     "id": "Filter by number of CPU cores",
@@ -4641,7 +4641,7 @@
   },
   {
     "id": "Filter by the number of CPU cores",
-    "translation": "CPU コア数によるフィルター"
+    "translation": "CPU コア数でフィルタリングします"
   },
   {
     "id": "Filter by type of storage volume, options are: performance,endurance",
@@ -4773,7 +4773,7 @@
   },
   {
     "id": "Get Reserved Capacity Group details.",
-    "translation": "予約済みキャパシティー・グループの詳細を取得します。"
+    "translation": "予約済み容量グループの詳細を取得します。"
   },
   {
     "id": "Get bandwidth pool details.",
@@ -5009,7 +5009,7 @@
   },
   {
     "id": "Host order options for a given dedicated host.",
-    "translation": "指定された専用ホストのホスト・オーダー・オプション。"
+    "translation": "指定された専用ホストのホスト注文オプション。"
   },
   {
     "id": "Host portion of the FQDN",
@@ -5741,7 +5741,7 @@
   },
   {
     "id": "List options for creating Reserved Capacity Group instance",
-    "translation": "予約済みキャパシティー・グループ・インスタンスを作成するためのリスト・オプション"
+    "translation": "予約済み容量グループ・インスタンスを作成するためのリスト・オプション"
   },
   {
     "id": "List options for creating a placement group",
@@ -5813,7 +5813,7 @@
   },
   {
     "id": "Lists account orders.",
-    "translation": "アカウント・オーダーをリストします。"
+    "translation": "アカウントの注文をリストします。"
   },
   {
     "id": "Lists billing items with some other useful information.",
@@ -5845,7 +5845,7 @@
   },
   {
     "id": "Location/Region",
-    "translation": "場所/地域"
+    "translation": "ロケーション/地域"
   },
   {
     "id": "Long Name",
@@ -6049,7 +6049,7 @@
   },
   {
     "id": "Network",
-    "translation": "Network"
+    "translation": "ネットワーク"
   },
   {
     "id": "Network Identifier",
@@ -6405,7 +6405,7 @@
   },
   {
     "id": "Order ID: {{.OrderID}}",
-    "translation": "オーダー ID: {{.OrderID}}"
+    "translation": "注文 ID: {{.OrderID}}"
   },
   {
     "id": "Order IPv6 Addresses",
@@ -6481,11 +6481,11 @@
   },
   {
     "id": "Order/create a hardware server",
-    "translation": "ハードウェア・サーバーを発注/作成します"
+    "translation": "ハードウェア・サーバーを注文/作成します"
   },
   {
     "id": "Ordered By",
-    "translation": "順序"
+    "translation": "発注者"
   },
   {
     "id": "Ordering package is not found",
@@ -7449,7 +7449,7 @@
   },
   {
     "id": "Server order options for a given chassis",
-    "translation": "特定のシャーシのサーバー・オーダー・オプション"
+    "translation": "特定のシャーシのサーバー注文オプション"
   },
   {
     "id": "Server side timeout setting, in seconds",
@@ -7545,7 +7545,7 @@
   },
   {
     "id": "Show associated hardware components",
-    "translation": "関連ハードウェア・コンポーネントの表示"
+    "translation": "関連ハードウェア・コンポーネントを表示します"
   },
   {
     "id": "Show associated prices",
@@ -7565,7 +7565,7 @@
   },
   {
     "id": "Show guests on dedicated host",
-    "translation": "専用ホスト上のゲストの表示"
+    "translation": "専用ホスト上にゲストを表示します"
   },
   {
     "id": "Show login history of this user for the last 24 hours",
@@ -7597,7 +7597,7 @@
   },
   {
     "id": "Show passwords (check over your shoulder!)",
-    "translation": "パスワードを表示します (背後に注意してください)"
+    "translation": "パスワードを表示します (関係者以外への表示は推奨されません)"
   },
   {
     "id": "Show the users API key",
@@ -9873,7 +9873,7 @@
   },
   {
     "id": "subnets",
-    "translation": "subnets"
+    "translation": "サブネット"
   },
   {
     "id": "tags",

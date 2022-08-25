@@ -13,7 +13,7 @@
   },
   {
     "id": " Do not actually create the reserved capacity",
-    "translation": " Na verdade não crie a capacidade reservada"
+    "translation": " Não criar realmente a capacidade reservada"
   },
   {
     "id": " The server ID to associate with the security group",
@@ -109,7 +109,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n    ${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n     Ativa / desativa aviso de limite de uso de espaço de uso de espaço de captura instantânea para um determinado volume."
+    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n  ${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n  Ativa/desativa aviso de limite de uso de espaço de uso de espaço de captura instantânea para um determinado volume."
   },
   {
     "id": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
@@ -201,15 +201,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl block access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID é o host_id obtido por: ibmcloud sl block access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID é o host_id obtido por: ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl block access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
@@ -269,15 +269,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
-    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n  Para obter a lista de vlans privadas disponíveis use este comando: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
+    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n  Para obter a lista de vlans privadas disponíveis use este comando: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   Este comando obtém os detalhes para um host dedicado."
+    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   Este comando obtém os detalhes para um host dedicado."
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   Este comando lista todos os guests do host dedicado na conta."
+    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   Este comando lista todos os guests do host dedicado na conta."
   },
   {
     "id": "${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns import ~/ibm.com.txt\n   This command imports zone and its resource records from file: ~/ibm.com.txt.",
@@ -337,7 +337,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\nDesativa o aviso de limite de uso do espaço de uso de espaço de captura instantânea para um determinado volume."
+    "translation": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXEMPLO:\n     ${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n   Ativa/Desativa o aviso de limite de uso do espaço de uso de espaço de captura instantânea para um determinado volume."
   },
   {
     "id": "${COMMAND_NAME} sl file access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
@@ -357,7 +357,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678"
+    "translation": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXEMPLO:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678"
   },
   {
     "id": "${COMMAND_NAME} sl file replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
@@ -497,7 +497,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lista os guests virtuais em execução neste servidor."
+    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\nEXEMPLO:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lista os guests virtuais em execução neste servidor."
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -505,7 +505,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n Obter detalhes de armazenamento para um servidor de hardware."
+    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\nEXEMPLO:\n   ${COMMAND_NAME} sl hardware storage 1234567\n Obter detalhes de armazenamento para um servidor de hardware."
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
@@ -585,7 +585,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456",
-    "translation": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456"
+    "translation": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXEMPLO: \n   ${COMMAND_NAME} sl nas credentials 123456"
   },
   {
     "id": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list",
@@ -605,7 +605,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n${COMMAND_NAME} sl object-storage credential-limit 123456"
+    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExemplos:\n${COMMAND_NAME} sl object-storage credential-limit 123456"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
@@ -721,11 +721,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
-    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote",
-    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote"
+    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -737,7 +737,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Este comando permite mudar a rota de suas sub-redes de conta própria."
+    "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXEMPLO:\n    ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Este comando permite mudar a rota de suas sub-redes de conta própria."
   },
   {
     "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
@@ -809,7 +809,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654"
+    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654",
@@ -845,7 +845,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n   This command billing lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n Este comando billing lista informações detalhadas sobre a instância do servidor virtual com ID 12345678."
+    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXEMPLO:\n   ${COMMAND_NAME} sl vs billing 12345678\n Este comando billing lista informações detalhadas sobre a instância do servidor virtual com ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs cancel 12345678\n   This command cancels virtual server instance with ID of 12345678.",
@@ -909,19 +909,19 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nEste comando faz o pedido de uma instância do grupo Placement com nome é myvsi, backendRouterId 1234567 e regra 258369"
+    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXEMPLO:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nEste comando faz o pedido de uma instância do grupo Placement com nome é myvsi, backendRouterId 1234567 e regra 258369"
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-create-options\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n    Get List options for creating a placement group.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create-options \nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-create-options \n    Obter opções para criação de um grupo de posicionamento."
+    "translation": "${COMMAND_NAME} sl vs placementgroup-create-options \nEXEMPLO:\n   ${COMMAND_NAME} sl vs placementgroup-create-options \n    Obter opções para criação de um grupo de posicionamento."
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Get placement Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n   Obter detalhes do grupo de posicionamento com ID 12345678."
+    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXEMPLO:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n   Obter detalhes do grupo de posicionamento com ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n   This command lists all placement groups.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-list \n \nEXAMPLE:\n ${COMMAND_NAME} sl vs placementgroupgroup-list \n Este comando lista todos os grupos de posicionamento."
+    "translation": "${COMMAND_NAME} sl vs placementgroup-list \n \nEXEMPLO:\n ${COMMAND_NAME} sl vs placementgroupgroup-list \n Este comando lista todos os grupos de posicionamento."
   },
   {
     "id": "${COMMAND_NAME} sl vs power-off IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs power-off 12345678 --soft\n   This command performs a soft power off for virtual server instance with ID 12345678.",
@@ -953,7 +953,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Get storage details for a virtual server.",
-    "translation": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n   \nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Obter detalhes de armazenamento para um servidor virtual."
+    "translation": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n   \nEXEMPLO:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Obter detalhes de armazenamento para um servidor virtual."
   },
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
@@ -1869,15 +1869,15 @@
   },
   {
     "id": "Classic Infrastructure Reports",
-    "translation": "Relatórios de infraestrutura Classic"
+    "translation": "Relatórios de infraestrutura clássica"
   },
   {
     "id": "Classic infrastructure Account commands",
-    "translation": "Comandos da conta de infraestrutura Classic"
+    "translation": "Comandos da conta de infraestrutura clássica"
   },
   {
     "id": "Classic infrastructure Autoscale Group",
-    "translation": "Grupo Autoscale de infraestrutura Classic"
+    "translation": "Grupo Autoscale de infraestrutura clássica"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1953,7 +1953,7 @@
   },
   {
     "id": "Classic infrastructure Object Storage commands",
-    "translation": "Comandos clássicos Object Storage de infraestrutura"
+    "translation": "Comandos Object Storage de infraestrutura clássica"
   },
   {
     "id": "Classic infrastructure Orders",
@@ -2021,11 +2021,11 @@
   },
   {
     "id": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times",
-    "translation": "Coluna a ser exibida. A opções são:id, username, datacenter, storage_type, capacity_gb, bytes_used, IOPs, ip_addr, lunId, created_by, active_transactions, rep_partner_count, notes. Essa opção pode ser especificada várias vezes"
+    "translation": "Coluna a ser exibida. As opções são: id, username, datacenter, storage_type, capacity_gb, bytes_used, IOPs, ip_addr, lunId, created_by, active_transactions, rep_partner_count, notes. Essa opção pode ser especificada várias vezes"
   },
   {
     "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]",
-    "translation": "Coluna a ser exibida. [A opções são: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [padrão: id,hostname,domain,primary_ip,backend_ip,power_state]"
+    "translation": "Coluna a ser exibida. [As opções são: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [padrão: id,hostname,domain,primary_ip,backend_ip,power_state]"
   },
   {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
@@ -2641,7 +2641,7 @@
   },
   {
     "id": "Do not actually create the dedicatedhost",
-    "translation": "Na verdade não crie o host dedicado"
+    "translation": "Não criar realmente o host dedicado"
   },
   {
     "id": "Do not actually create the virtual server",
@@ -2857,7 +2857,7 @@
   },
   {
     "id": "Enables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "Ativa / desativa o aviso de limite de uso de espaço da captura instantânea para um determinado volume."
+    "translation": "Ativa/desativa o aviso de limite de uso de espaço da captura instantânea para um determinado volume."
   },
   {
     "id": "End",
@@ -5661,7 +5661,7 @@
   },
   {
     "id": "List cloud block storage.",
-    "translation": "Listar o Cloud Block Storage."
+    "translation": "Listar o armazenamento de blocos em nuvem."
   },
   {
     "id": "List datacenters a package can be ordered in",
@@ -5849,7 +5849,7 @@
   },
   {
     "id": "Long Name",
-    "translation": "Nome Completo"
+    "translation": "Nome completo"
   },
   {
     "id": "Mac addresses",
@@ -6041,7 +6041,7 @@
   },
   {
     "id": "Name of the load balancer L7 pool",
-    "translation": "Nome do conjunto balanceador de carga L7"
+    "translation": "Nome do conjunto de balanceador de carga L7"
   },
   {
     "id": "Netscaler",
@@ -6345,7 +6345,7 @@
   },
   {
     "id": "Only show the summary table.",
-    "translation": "Só mostrar a tabela de resumo."
+    "translation": "Mostrar somente a tabela de resumo."
   },
   {
     "id": "Only verify an order, dont actually create one",
@@ -6409,7 +6409,7 @@
   },
   {
     "id": "Order IPv6 Addresses",
-    "translation": "Pedir endereços IPv6"
+    "translation": "Realizar pedido de endereços IPv6"
   },
   {
     "id": "Order a IPSec VPN tunnel",
@@ -7517,7 +7517,7 @@
   },
   {
     "id": "Sets username for this account.",
-    "translation": "Configura nome de usuário para esta conta."
+    "translation": "Configura o nome de usuário para esta conta."
   },
   {
     "id": "Setting tags for {{.VirtualGuestHostname}}.",
@@ -8069,7 +8069,7 @@
   },
   {
     "id": "The VMware License Key. To get the required package you can use the command sl licenses create-options Package. E.g VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2  [required]",
-    "translation": "A chave de licença VMware. Para obter o pacote necessário pode-se usar o comando sl licenses create-options Package. Ex. VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [obrigatório]"
+    "translation": "A chave de licença VMware. Para obter o pacote necessário, pode-se usar o comando sl licenses create-options Package. Ex. VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [obrigatório]"
   },
   {
     "id": "The actual SSH key",
@@ -8765,7 +8765,7 @@
   },
   {
     "id": "Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required].",
-    "translation": "Digite valor em roteamento estático, por exemplo: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [obrigatório]."
+    "translation": "Valor de tipo em roteamento estático, por exemplo: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [obrigatório]."
   },
   {
     "id": "Types",

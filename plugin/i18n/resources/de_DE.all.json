@@ -81,11 +81,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456",
-    "translation": "${COMMAND_NAME} sl autoscale delete ID\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale delete 123456"
+    "translation": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale delete 123456"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale detail IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale detail 123456",
-    "translation": "${COMMAND_NAME} sl autoscale detail ID\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale detail 123456"
+    "translation": "${COMMAND_NAME} sl autoscale detail IDENTIFIER\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale detail 123456"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048",
@@ -97,15 +97,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31",
-    "translation": "${COMMAND_NAME} sl autoscale logs ID [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
+    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to",
-    "translation": "${COMMAND_NAME} sl autoscale scale ID [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to"
+    "translation": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to"
   },
   {
     "id": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas",
-    "translation": "${COMMAND_NAME} sl autoscale tag ID [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Verwenden Sie einfache oder doppelte Anführungszeichen, wenn Sie Leerzeichen setzen wollen'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Andernfalls einfach Kommas"
+    "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Verwenden Sie einfache oder doppelte Anführungszeichen, wenn Sie Leerzeichen setzen wollen'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Andernfalls einfach Kommas"
   },
   {
     "id": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
@@ -201,15 +201,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID ist die host_id erhalten von: ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID ist die host_id erhalten von: ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID ist die host_id erhalten von: ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
@@ -273,11 +273,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost detail ID [OPTIONEN] \n \nBEISPIEL:\n ${COMMAND_NAME} sl dedicatedhost detail 1234567\n Dieser Befehl ruft die Details für einen dedizierten Host ab."
+    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONEN] \n \nBEISPIEL:\n ${COMMAND_NAME} sl dedicatedhost detail 1234567\n Dieser Befehl ruft die Details für einen dedizierten Host ab."
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests [OPTIONEN] \n \nBEISPIEL:\n ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n Dieser Befehl listet alle dedizierten Hostgastmaschinen im Konto auf."
+    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONEN] \n \nBEISPIEL:\n ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n Dieser Befehl listet alle dedizierten Hostgastmaschinen im Konto auf."
   },
   {
     "id": "${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns import ~/ibm.com.txt\n   This command imports zone and its resource records from file: ~/ibm.com.txt.",
@@ -317,7 +317,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl email detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl email detail ID [OPTIONEN]"
+    "translation": "${COMMAND_NAME} sl email detail IDENTIFIER [OPTIONEN]"
   },
   {
     "id": "${COMMAND_NAME} sl email edit",
@@ -465,7 +465,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl firewall detail ID [OPTIONEN]\n\nBEISPIEL: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
+    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONEN]\n\nBEISPIEL: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
     "id": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list",
@@ -473,7 +473,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
-    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONEN]\n\nBEISPIEL:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tDieser Befehl ordnet eine IP-Adresse mit der ID 12345678 zu einem Zielgerät mit der IP-Adresse 9.111.123.456 zu."
+    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONEN]\n\nBEISPIEL:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\nDieser Befehl ordnet eine IP-Adresse mit der ID 12345678 zu einem Zielgerät mit der IP-Adresse 9.111.123.456 zu."
   },
   {
     "id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
@@ -493,11 +493,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
-    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONEN] ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n Autorisieren Sie die Datei und Block Storage für einen Hardware-Server."
+    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONEN] IDENTIFIER\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n Autorisieren Sie die Datei und Block Storage für einen Hardware-Server."
   },
   {
     "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONEN] ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware guests 1234567\n Listet die auf diesem Server ausgeführten virtuellen Gastmaschinen auf."
+    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONEN] IDENTIFIER\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware guests 1234567\n Listet die auf diesem Server ausgeführten virtuellen Gastmaschinen auf."
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -505,11 +505,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONEN] ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware storage 1234567\n Speicherdetails für einen Hardwareserver abrufen."
+    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONEN] IDENTIFIER\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware storage 1234567\n Speicherdetails für einen Hardwareserver abrufen."
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
-    "translation": "${COMMAND_NAME} sl image datacenter ID [OPTIONEN] \n\nBEISPIEL:\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 --remove sjc03\n Dieser Befehl fügt das Rechenzentrum eines Image hinzu bzw. entfernt es."
+    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONEN] \n\nBEISPIEL:\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 --remove sjc03\n Dieser Befehl fügt das Rechenzentrum eines Image hinzu bzw. entfernt es."
   },
   {
     "id": "${COMMAND_NAME} sl image delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image delete 12345678\n   This command deletes image with ID 12345678.",
@@ -585,7 +585,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456",
-    "translation": "${COMMAND_NAME} sl nas credentials ID [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl nas credentials 123456"
+    "translation": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl nas credentials 123456"
   },
   {
     "id": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list",
@@ -605,7 +605,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n${COMMAND_NAME} sl object-storage credential-limit 123456"
+    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONEN]\n\nBeispiele:\n${COMMAND_NAME} sl object-storage credential-limit 123456"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
@@ -709,7 +709,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n   This command allows you to remove the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet clear-route ID [OPTIONEN]\n\nBEISPIEL:\n ${COMMAND_NAME} sl subnet clear-route 12345678\n Mit diesem Befehl können Sie die Route Ihrer kontoeigenen Teilnetze entfernen."
+    "translation": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n ${COMMAND_NAME} sl subnet clear-route 12345678\n Mit diesem Befehl können Sie die Route Ihrer kontoeigenen Teilnetze entfernen."
   },
   {
     "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
@@ -725,7 +725,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote",
-    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote"
+    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
@@ -737,7 +737,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet route ID [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Dieser Befehl ermöglicht es Ihnen, die Route Ihrer kontoeigenen Teilnetze zu entfernen."
+    "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Dieser Befehl ermöglicht es Ihnen, die Route Ihrer kontoeigenen Teilnetze zu ändern."
   },
   {
     "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
@@ -797,7 +797,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONS]\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl user delete userId\n   This command delete user with userId.",
-    "translation": "${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONEN]\n\t\nBEISPIEL: \n   ${COMMAND_NAME} sl user delete userId\n   Dieser Befehl löscht den Benutzer mit der Benutzer-ID."
+    "translation": "${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl user delete userId\n   Dieser Befehl löscht den Benutzer mit der Benutzer-ID."
   },
   {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
@@ -813,7 +813,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user remove-access ID [OPTION]\n \nBEISPIEL:\n ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654"
+    "translation": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n \nBEISPIEL:\n ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -841,11 +841,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
-    "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONEN] ID\n\nBEISPIEL:\n ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n Datei, Block und portierbaren Speicher für einen virtuellen Server autorisieren."
+    "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONEN] IDENTIFIER\n\nBEISPIEL:\n ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n Datei, Block und portierbaren Speicher für einen virtuellen Server autorisieren."
   },
   {
     "id": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n   This command billing lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs billing ID [OPTIONEN] \nBEISPIEL:\n ${COMMAND_NAME} sl vs billing 12345678\n Dieser Befehl listet detaillierte Informationen zur virtuellen Serverinstanz mit der ID 12345678 auf."
+    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONEN] \nBEISPIEL:\n ${COMMAND_NAME} sl vs billing 12345678\n Dieser Befehl listet detaillierte Informationen zur virtuellen Serverinstanz mit der ID 12345678 auf."
   },
   {
     "id": "${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs cancel 12345678\n   This command cancels virtual server instance with ID of 12345678.",
@@ -917,7 +917,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Get placement Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-detail ID\nBEISPIEL:\n ${COMMAND_NAME} sl vs placementgroup-details 12345678\n Details zur Platzierungsgruppe mit der ID 12345678 abrufen."
+    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nBEISPIEL:\n ${COMMAND_NAME} sl vs placementgroup-details 12345678\n Details zur Platzierungsgruppe mit der ID 12345678 abrufen."
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n   This command lists all placement groups.",
@@ -953,7 +953,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Get storage details for a virtual server.",
-    "translation": "${COMMAND_NAME} sl vs storage [OPTIONEN] ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl vs storage 1234567\n Speicherdetails für einen virtuellen Server abrufen."
+    "translation": "${COMMAND_NAME} sl vs storage [OPTIONEN] IDENTIFIER\n   \nBEISPIEL:\n ${COMMAND_NAME} sl vs storage 1234567\n Speicherdetails für einen virtuellen Server abrufen."
   },
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
@@ -961,11 +961,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} Bandbreitenupgrade ID [OPTIONEN]\nZeitformate, die entweder '2006-01-02', '2006-01-02T15:04' oder '2006-01-02T15:04-07:00' sind \n\nAufgrund einiger Rundungs- und Datumsausrichtungsdetails können die Ergebnisse hier geringfügig von den Ergebnissen im Steuerportal abweichen.\nDie Bandbreite wird in GB aufgelistet. Wenn keine Zeitzone angegeben ist, wird GMT+0 angenommen.\n\nBeispiel:\n\n ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+    "translation": "${COMMAND_NAME} sl {{.Command}} Bandbreitenupgrade IDENTIFIER [OPTIONEN]\nZeitformate, die entweder '2006-01-02', '2006-01-02T15:04' oder '2006-01-02T15:04-07:00' sind \n\nAufgrund einiger Rundungs- und Datumsausrichtungsdetails können die Ergebnisse hier geringfügig von den Ergebnissen im Steuerportal abweichen.\nDie Bandbreite wird in GB aufgelistet. Wenn keine Zeitzone angegeben ist, wird GMT+0 angenommen.\n\nBeispiel:\n\n ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
-    "translation": "${COMMAND_NAME} sl {{.Command}} usage ID [OPTIONEN]\nVerwendungsinformationen eines virtuellen Servers \nBeispiel: \n ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
+    "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONEN]\nVerwendungsinformationen eines virtuellen Servers \nBeispiel: \n ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
   {
     "id": "${COMMAND_NAME} slcli account billing-items [OPTIONS]",
@@ -1773,7 +1773,7 @@
   },
   {
     "id": "Cancels a billing item.",
-    "translation": "Storniert eine Rechnungspositionen."
+    "translation": "Storniert eine Rechnungsposition."
   },
   {
     "id": "Cancels a firewall",
@@ -1869,7 +1869,7 @@
   },
   {
     "id": "Classic Infrastructure Reports",
-    "translation": "Klassische Infrastrukturberichte"
+    "translation": "Klassische Infrastruktur- Berichte"
   },
   {
     "id": "Classic infrastructure Account commands",
@@ -1893,7 +1893,7 @@
   },
   {
     "id": "Classic infrastructure Dedicatedhost",
-    "translation": "Dedicatedhost der klassischen Infrastruktur"
+    "translation": "Klassische Infrastruktur - Dezidierter Host"
   },
   {
     "id": "Classic infrastructure Domain Name System",
@@ -2521,7 +2521,7 @@
   },
   {
     "id": "Details of a specific event, and ability to acknowledge event.",
-    "translation": "Details zu einem bestimmten Ereignis und Fähigkeit, ein Ereignis zu bestätigen."
+    "translation": "Details zu einem bestimmten Ereignis und die Funktionalität, das Ereignis zu bestätigen."
   },
   {
     "id": "Device Name",
@@ -4865,7 +4865,7 @@
   },
   {
     "id": "Gets detailed information about a billing item.",
-    "translation": "Detaillierte Informationen zu einer Rechnungspositionen abrufen."
+    "translation": "Detaillierte Informationen zu einer Rechnungsposition abrufen."
   },
   {
     "id": "Grant access from a user to an specific device",
@@ -8497,7 +8497,7 @@
   },
   {
     "id": "This command requires one argument.",
-    "translation": "Für diesen Befehl ist 1 Argument erforderlich."
+    "translation": "Für diesen Befehl ist ein Argument erforderlich."
   },
   {
     "id": "This command requires one identifier.",

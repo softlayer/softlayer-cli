@@ -201,15 +201,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是透過 ibmcloud sl block access-list 取得的 host_id<volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是透過下項取得的 host_id：ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID 是透過 ibmcloud sl block access-list 取得的 host_id<volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID 是透過下項取得的 host_id：ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是透過 ibmcloud sl block access-list 取得的 host_id<volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是透過下項取得的 host_id：ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
@@ -1073,11 +1073,11 @@
   },
   {
     "id": "-e|--tier is required with endurance volume in IOPS/GB, options are: 0.25, 2, 4, 10.\nRun '{{.CommandName}} sl block volume-options' to check available options.",
-    "translation": "-e|--tier 必須與耐久性磁區搭配使用，以 IOPS/GB 為單位，選項包含：0.25、2、4、10。\n請執行 '{{.CommandName}} sl block volume-options'，以查看可用的選項。"
+    "translation": "-e|--tier 必須與耐久性磁區搭配使用，以 IOPS/GB 為單位，選項為：0.25、2、4、10。\n請執行 '{{.CommandName}} sl block volume-options'，以查看可用的選項。"
   },
   {
     "id": "-e|--tier is required with endurance volume in IOPS/GB, options are: 0.25, 2, 4, 10.\nRun '{{.CommandName}} sl file volume-options' to check available options.",
-    "translation": "-e|--tier 必須與耐久性磁區搭配使用，以 IOPS/GB 為單位，選項包含：0.25、2、4、10。\n請執行 '{{.CommandName}} sl file volume-options'，以查看可用的選項。"
+    "translation": "-e|--tier 必須與耐久性磁區搭配使用，以 IOPS/GB 為單位，選項為：0.25、2、4、10。\n請執行 '{{.CommandName}} sl file volume-options'，以查看可用的選項。"
   },
   {
     "id": "-f|--phase2-forward-secrecy must be either 0 or 1.",
@@ -1129,7 +1129,7 @@
   },
   {
     "id": "-o|--os-type is required, options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN.\nRun '{{.CommandName}} sl block volume-options' to check available options.",
-    "translation": "-o|--os-type 是必要項目，選項包含：HYPER_V、LINUX、VMWARE、WINDOWS_2008、WINDOWS_GPT、WINDOWS、XEN。\n請執行 '{{.CommandName}} sl block volume-options'，以查看可用的選項。"
+    "translation": "-o|--os-type 是必要項目，選項為：HYPER_V、LINUX、VMWARE、WINDOWS_2008、WINDOWS_GPT、WINDOWS、XEN。\n請執行 '{{.CommandName}} sl block volume-options'，以查看可用的選項。"
   },
   {
     "id": "-p|--protocal must be set when -M or -m is specified.",
@@ -1617,7 +1617,7 @@
   },
   {
     "id": "Billing rate. Default is: hourly. Options are: hourly, monthly",
-    "translation": "計費頻率。預設值為：hourly。選項包含：hourly、monthly"
+    "translation": "計費頻率。預設值為：hourly。選項為：hourly、monthly"
   },
   {
     "id": "Block volume {{.ID}} has been marked for immediate snapshot cancellation.",
@@ -2005,31 +2005,31 @@
   },
   {
     "id": "Column to display,  options are: id,hostname,domain,public_ip,private_ip,datacenter,status,guid,cpu,memory,os,ipmi_ip,created,created_by,tags. This option can be specified multiple times",
-    "translation": "要顯示的直欄，選項包含：id、hostname、domain、public_ip、private_ip、datacenter、status、guid、cpu、memory、os、ipmi_ip、created、created_by、tags。這個選項可以多次指定"
+    "translation": "要顯示的直欄，選項為：id、hostname、domain、public_ip、private_ip、datacenter、status、guid、cpu、memory、os、ipmi_ip、created、created_by、tags。這個選項可以多次指定"
   },
   {
     "id": "Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times",
-    "translation": "要顯示的直欄。 選項包含：id、hostname、domain、primary_ip、backend_ip。 這個選項可以多次指定"
+    "translation": "要顯示的直欄。 選項為：id、hostname、domain、primary_ip、backend_ip。 這個選項可以多次指定"
   },
   {
     "id": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times",
-    "translation": "要顯示的直欄。選項包含：id、hostname、domain、cpu、memory、public_ip、private_ip、datacenter、action、guid、power_state、created_by、tags。這個選項可以多次指定"
+    "translation": "要顯示的直欄。選項為：id、hostname、domain、cpu、memory、public_ip、private_ip、datacenter、action、guid、power_state、created_by、tags。這個選項可以多次指定"
   },
   {
     "id": "Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times",
-    "translation": "要顯示的直欄。選項包含：id、name、type、private_ip_address、source_subnet、host_iqn、username、password、allowed_host_id。這個選項可以多次指定"
+    "translation": "要顯示的直欄。選項為：id、name、type、private_ip_address、source_subnet、host_iqn、username、password、allowed_host_id。這個選項可以多次指定"
   },
   {
     "id": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times",
-    "translation": "要顯示的直欄。 選項包含：id、username、datacenter、storage_type、capacity_gb、bytes_used、IOPS、ip_addr、lunId、created_by、active_transactions、rep_partner_count、notes。 這個選項可以多次指定"
+    "translation": "要顯示的直欄。 選項為：id、username、datacenter、storage_type、capacity_gb、bytes_used、IOPS、ip_addr、lunId、created_by、active_transactions、rep_partner_count、notes。 這個選項可以多次指定"
   },
   {
     "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]",
-    "translation": "要顯示的直欄。 [選項包含：guid、cpu、memory、datacenter、primary_ip、backend_ip、created_by、power_state、tags] [預設值：id、hostname、domain、primary_ip、backend_ip、power_state]"
+    "translation": "要顯示的直欄。 [選項為：guid、cpu、memory、datacenter、primary_ip、backend_ip、created_by、power_state、tags] [預設值：id、hostname、domain、primary_ip、backend_ip、power_state]"
   },
   {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
-    "translation": "要顯示的直欄。 選項包含：id、username、email、displayName、2FA、classicAPIKey、status、hardwareCount、virtualGuestCount。 這個選項可以多次指定"
+    "translation": "要顯示的直欄。 選項為：id、username、email、displayName、2FA、classicAPIKey、status、hardwareCount、virtualGuestCount。 這個選項可以多次指定"
   },
   {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
@@ -2037,7 +2037,7 @@
   },
   {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
-    "translation": "直欄排序方式，預設值為：hostname，選項包含：id、hostname、domain、datacenter、cpu、memory、public_ip、private_ip"
+    "translation": "直欄排序方式，預設值為：hostname，選項為：id、hostname、domain、datacenter、cpu、memory、public_ip、private_ip"
   },
   {
     "id": "Column to sort by, default:hostname",
@@ -2045,7 +2045,7 @@
   },
   {
     "id": "Column to sort by, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by",
-    "translation": "直欄排序方式，預設值為：hostname，選項包含：id、guid、hostname、domain、public_ip、private_ip、cpu、memory、os、datacenter、status、ipmi_ip、created、created_by"
+    "translation": "直欄排序方式，預設值為：hostname，選項：id、guid、hostname、domain、public_ip、private_ip、cpu、memory、os、datacenter、status、ipmi_ip、created、created_by"
   },
   {
     "id": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,active_transactions,created_by,mount_addr",
@@ -5653,7 +5653,7 @@
   },
   {
     "id": "List block storage assigned subnets for the given host id.",
-    "translation": "列出為給定主機 ID 指派的區塊儲存空間子網路。"
+    "translation": "列出給定主機 ID 的區塊儲存空間指派的子網路。"
   },
   {
     "id": "List block storage snapshots",
@@ -6545,7 +6545,7 @@
   },
   {
     "id": "POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action",
-    "translation": "POOL_UUID、URL 或 HTTPS_PROTOCOL_UUID。 它僅適用於動作 REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
+    "translation": "POOL_UUID、URL 或 HTTPS_PROTOCOL_UUID。 它僅適用於 REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS 動作"
   },
   {
     "id": "PPTP VPN",
@@ -6889,7 +6889,7 @@
   },
   {
     "id": "Prints some various bits of information about an account.",
-    "translation": "列印關於帳戶的一些不同位元資訊。"
+    "translation": "列印有關帳戶的一些各種不同的資訊片段。"
   },
   {
     "id": "Priority",
