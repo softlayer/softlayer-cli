@@ -3,67 +3,63 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type SnapshotDisableCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	Schedule_type  string
 }
 
-func NewSnapshotDisableCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *SnapshotDisableCommand) {
-	return &SnapshotDisableCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewSnapshotDisableCommand(sl *metadata.SoftlayerCommand) *SnapshotDisableCommand {
+	thisCmd := &SnapshotDisableCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockSnapshotDisableMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "snapshot-disable",
-		Description: T("Disable snapshots on the specified schedule for a given volume"),
-		Usage: T(`${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "snapshot-disable " + T("IDENTIFIER"),
+		Short: T("Disable snapshots on the specified schedule for a given volume"),
+		Long: T(`${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]
 
 EXAMPLE:
    ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY
    This command disables daily snapshot for volume with ID 12345678.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "s,schedule-type",
-				Usage: T("Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY"),
-			},
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVarP(&thisCmd.Schedule_type, "schedule-type", "s", "", T("Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SnapshotDisableCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *SnapshotDisableCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	if !c.IsSet("schedule-type") {
-		return errors.NewInvalidUsageError(T("[--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY."))
+	if cmd.Schedule_type == "" {
+		return slErr.NewInvalidUsageError(T("[--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY."))
 	}
-	scheduleType := c.String("schedule-type")
+	scheduleType := cmd.Schedule_type
 	if scheduleType != "HOURLY" && scheduleType != "DAILY" && scheduleType != "WEEKLY" {
-		return errors.NewInvalidUsageError(T("[--schedule-type] must be HOURLY, DAILY, or WEEKLY."))
+		return slErr.NewInvalidUsageError(T("[--schedule-type] must be HOURLY, DAILY, or WEEKLY."))
 	}
 	err = cmd.StorageManager.DisableSnapshots(volumeID, scheduleType)
+	subs := map[string]interface{}{"ScheduleType": scheduleType, "VolumeID": volumeID}
 	if err != nil {
-		return cli.NewExitError(T("Failed to disable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n",
-			map[string]interface{}{"ScheduleType": scheduleType, "VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to disable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n", subs), err.Error(), 2)
 	}
 	cmd.UI.Ok()
-	cmd.UI.Print(T("{{.ScheduleType}} snapshots have been disabled for volume {{.VolumeID}}.",
-		map[string]interface{}{"ScheduleType": scheduleType, "VolumeID": volumeID}))
+	cmd.UI.Print(T("{{.ScheduleType}} snapshots have been disabled for volume {{.VolumeID}}.", subs))
 	return nil
 }

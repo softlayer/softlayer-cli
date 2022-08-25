@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -16,37 +16,44 @@ import (
 )
 
 type DetailCommand struct {
-	UI               terminal.UI
+	*metadata.SoftlayerCommand
 	AutoScaleManager managers.AutoScaleManager
 	SecurityManager  managers.SecurityManager
+	Command          *cobra.Command
 }
 
-func NewDetailCommand(ui terminal.UI, autoScaleManager managers.AutoScaleManager, securityManager managers.SecurityManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:               ui,
-		AutoScaleManager: autoScaleManager,
-		SecurityManager:  securityManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand: sl,
+		AutoScaleManager: managers.NewAutoScaleManager(sl.Session),
+		SecurityManager:  managers.NewSecurityManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("IDENTIFIER"),
+		Short: T("Get details of an Autoscale group."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *DetailCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	autoScaleGroupId, err := strconv.Atoi(c.Args()[0])
+	autoScaleGroupId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Autoscale Group ID")
 	}
 
 	autoScaleGroup, err := cmd.AutoScaleManager.GetScaleGroup(autoScaleGroupId, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get AutoScale group.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get AutoScale group."), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -89,7 +96,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		for _, sshKey := range virtualGuestMemberTemplate.SshKeys {
 			sshkeyData, err := cmd.SecurityManager.GetSSHKey(*sshKey.Id)
 			if err != nil {
-				return cli.NewExitError(T("Failed to get SSH key."), 2)
+				return errors.NewAPIError(T("Failed to get SSH key."), err.Error(), 2)
 			}
 			virtualGuestMemberTemplateTable.Add(T("SSH Key ")+strconv.Itoa(*sshKey.Id), utils.FormatStringPointer(sshkeyData.Label))
 		}
@@ -140,19 +147,4 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func AutoScaleDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "autoscale",
-		Name:        "detail",
-		Description: T("Get details of an Autoscale group."),
-		Usage: T(`${COMMAND_NAME} sl autoscale detail IDENTIFIER
-
-EXAMPLE: 
-   ${COMMAND_NAME} sl autoscale detail 123456`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

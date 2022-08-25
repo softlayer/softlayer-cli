@@ -200,6 +200,18 @@
     "translation": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   예:\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  이 명령은 ID가 12345678인 볼륨의 스냅샷 스케줄을 나열합니다."
   },
   {
+    "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID는 다음 명령으로 얻는 host_id임: ibmcloud sl block access-list <volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID는 다음 명령으로 얻는 host_id임: ibmcloud sl block access-list <volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID는 다음 명령으로 얻는 host_id임: ibmcloud sl block access-list <volume_id>"
+  },
+  {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
     "translation": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 ID 12345678인 볼륨을 즉시 취소합니다."
   },
@@ -250,6 +262,10 @@
   {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n예: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t이 명령을 실행하면 볼륨 노트를 편집합니다.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t이 명령을 실행하면 사용자 세부사항을 표시합니다.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests."
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn list",
+    "translation": "${COMMAND_NAME} sl cdn list"
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
@@ -588,6 +604,10 @@
     "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\n예:\n${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
   },
   {
+    "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
+    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\n예:\n${COMMAND_NAME} sl object-storage credential-limit 123456"
+  },
+  {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
   },
@@ -704,6 +724,10 @@
     "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
+    "id": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote",
+    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote"
+  },
+  {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
     "translation": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   이 명령은 현재 계정의 IPv4 서브넷을 나열하고, 데이터 센터별 필터는 dal09이며 서브넷 유형은 PRIMARY이며 네트워크 영역은 PUBLIC입니다."
   },
@@ -714,6 +738,10 @@
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
     "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n 이 명령을 사용하면 계정 소유 서브넷의 라우트를 변경할 수 있습니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
+    "translation": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\n예:\n${COMMAND_NAME} sl tags cleanup"
   },
   {
     "id": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemoves \"tag\" from your account.\n",
@@ -952,6 +980,10 @@
     "translation": "'{{.Input}}'은(는) 필수입니다."
   },
   {
+    "id": "(Dry Run) Removing Tag: {{.tag}}.",
+    "translation": "(시험 실행) 태그: {{.tag}}을(를) 제거합니다."
+  },
+  {
     "id": "--billing can only be either hourly or monthly.",
     "translation": "--billing은 hourly 또는 monthly 중 하나만 가능합니다."
   },
@@ -962,6 +994,10 @@
   {
     "id": "--columns {{.Column}} is not supported.",
     "translation": "--columns {{.Column}}은(는) 지원되지 않습니다."
+  },
+  {
+    "id": "--note",
+    "translation": "--note"
   },
   {
     "id": "--server needs a port. {{.Server}} improperly formatted",
@@ -1412,6 +1448,10 @@
     "translation": "대상 라우터 또는 디바이스에 글로벌 IP 지정"
   },
   {
+    "id": "Assign block storage subnets to the given host id.",
+    "translation": "지정된 호스트 ID에 블록 스토리지 서브넷을 지정합니다."
+  },
+  {
     "id": "Assigned",
     "translation": "지정됨"
   },
@@ -1844,6 +1884,10 @@
     "translation": "클래식 인프라 Block Storage"
   },
   {
+    "id": "Classic infrastructure CDN commands",
+    "translation": "클래식 인프라 CDN 명령"
+  },
+  {
     "id": "Classic infrastructure Compute images",
     "translation": "클래식 인프라 컴퓨팅 이미지"
   },
@@ -1950,6 +1994,10 @@
   {
     "id": "Closed:",
     "translation": "닫힘:"
+  },
+  {
+    "id": "Cname",
+    "translation": "CNAME"
   },
   {
     "id": "Code",
@@ -2278,6 +2326,10 @@
   {
     "id": "Creates a user",
     "translation": "사용자 작성"
+  },
+  {
+    "id": "Credential limits for this IBM Cloud Object Storage account.",
+    "translation": "이 IBM Cloud Object Storage 계정의 인증 정보 한계입니다."
   },
   {
     "id": "Credential: {{.credentialID}} was deleted.",
@@ -2626,6 +2678,10 @@
   {
     "id": "Don't actually create records",
     "translation": "실제로 레코드를 작성하지 않음"
+  },
+  {
+    "id": "Don't delete, just show what will be deleted.",
+    "translation": "삭제하지 말고, 삭제할 항목을 표시만 하십시오."
   },
   {
     "id": "Done",
@@ -3032,6 +3088,14 @@
     "translation": "글로벌 IP {{.IpID}}을(를) {{.Target}} 대상에 지정하는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "서브넷 ID: {{.subnetID}}을(를) 허용되는 호스트 ID: {{.accessID}}에 지정하는 데 실패함"
+  },
+  {
+    "id": "Failed to assign subnets.",
+    "translation": "서브넷을 지정하는 데 실패했습니다."
+  },
+  {
     "id": "Failed to authorize host to volume {{.VolumeID}}.\n",
     "translation": "호스트에 볼륨 {{.VolumeID}}에 대한 권한을 부여하는 데 실패했습니다.\n"
   },
@@ -3204,6 +3268,10 @@
     "translation": "L7 멤버 {{.Member}} 삭제 실패: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete Tag: {{.tag}}.",
+    "translation": "태그: {{.tag}}을(를) 삭제하는 데 실패했습니다."
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "인증 정보 삭제 실패: {{.storageID}}.\n"
   },
@@ -3344,6 +3412,10 @@
     "translation": "대역폭 풀을 가져오는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to get CDN List. ",
+    "translation": "CDN 목록을 가져오는 데 실패했습니다. "
+  },
+  {
     "id": "Failed to get Cloud Object Storages.\n",
     "translation": "Cloud Object Storage를 가져오는 데 실패했습니다.\n"
   },
@@ -3428,6 +3500,14 @@
     "translation": "통계를 가져오는 데 실패했습니다."
   },
   {
+    "id": "Failed to get Subnet IP by address",
+    "translation": "주소로 서브넷 IP를 가져오는 데 실패함"
+  },
+  {
+    "id": "Failed to get Unattached Tags.",
+    "translation": "연결되지 않은 태그를 가져오는 데 실패했습니다."
+  },
+  {
     "id": "Failed to get VLAN: {{.VLANID}}.\n",
     "translation": "VLAN 가져오기 실패: {{.VLANID}}.\n"
   },
@@ -3462,6 +3542,10 @@
   {
     "id": "Failed to get components\n",
     "translation": "구성요소를 가져오는 데 실패함 \n"
+  },
+  {
+    "id": "Failed to get credential limit. ",
+    "translation": "인증 정보 한계를 가져오는 데 실패했습니다. "
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -4084,6 +4168,14 @@
     "translation": "보안 그룹 {{.GroupID}}에서 규칙 {{.RuleId}}을(를) 제거하는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to remove subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "서브넷 ID: {{.subnetID}}을(를) 허용되는 호스트 ID: {{.accessID}}에서 제거하는 데 실패함"
+  },
+  {
+    "id": "Failed to remove subnets.",
+    "translation": "서브넷을 제거하는 데 실패했습니다."
+  },
+  {
     "id": "Failed to remove translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "{{.ID}} IPSec에서 {{.TransID}} ID의 변환을 제거하는 데 실패했습니다."
   },
@@ -4130,6 +4222,10 @@
   {
     "id": "Failed to set LUN ID for volume {{.VolumeID}}.\n",
     "translation": "볼륨 {{.VolumeID}}의 LUN ID를 설정하는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to set note: {{.note}}.",
+    "translation": "참고: {{.note}}을(를) 설정하는 데 실패했습니다."
   },
   {
     "id": "Failed to set note: {{.note}}.\n",
@@ -5004,6 +5100,14 @@
     "translation": "루트 사용자에게 추가할 SSH 키의 ID(다중 발생 허용)"
   },
   {
+    "id": "IDs of the subnets to assign",
+    "translation": "지정할 서브넷의 ID"
+  },
+  {
+    "id": "IDs of the subnets to remove",
+    "translation": "제거할 서브넷의 ID"
+  },
+  {
     "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
     "translation": "INTEGER 디스크 크기(다중 발생이 허용됨)[필수]"
   },
@@ -5428,6 +5532,10 @@
     "translation": "{{.key}} 라이센스가 취소되었습니다."
   },
   {
+    "id": "Limit",
+    "translation": "한계"
+  },
+  {
     "id": "List Dedicated Host Guests.",
     "translation": "전용 호스트 게스트를 나열합니다."
   },
@@ -5484,6 +5592,10 @@
     "translation": "계정에 대한 모든 자동 스케일 그룹 나열"
   },
   {
+    "id": "List all CDN accounts.",
+    "translation": "모든 CDN 계정을 나열합니다."
+  },
+  {
     "id": "List all active quotes on an account",
     "translation": "계정의 모든 활성 견적을 나열합니다."
   },
@@ -5538,6 +5650,10 @@
   {
     "id": "List block storage",
     "translation": "블록 스토리지 나열"
+  },
+  {
+    "id": "List block storage assigned subnets for the given host id.",
+    "translation": "지정된 호스트 ID의, 블록 스토리지가 지정된 서브넷을 나열합니다."
   },
   {
     "id": "List block storage snapshots",
@@ -5934,6 +6050,10 @@
   {
     "id": "Network",
     "translation": "네트워크"
+  },
+  {
+    "id": "Network Identifier",
+    "translation": "네트워크 ID"
   },
   {
     "id": "Network Type",
@@ -6370,6 +6490,10 @@
   {
     "id": "Ordering package is not found",
     "translation": "패키지 주문을 찾을 수 없음"
+  },
+  {
+    "id": "Origin",
+    "translation": "기점"
   },
   {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
@@ -7044,6 +7168,10 @@
     "translation": "특정 디바이스에 대한 사용자 액세스 제거"
   },
   {
+    "id": "Remove block storage subnets to the given host id.",
+    "translation": "지정된 호스트 ID에서 블록 스토리지 서브넷을 제거합니다."
+  },
+  {
     "id": "Remove resource record from a zone",
     "translation": "구역에서 리소스 레코드 제거"
   },
@@ -7056,12 +7184,20 @@
     "translation": "IPSec {{.ContextID}}에서 {{.Type}} 서브넷 #{{.ID}}을(를) 제거했습니다."
   },
   {
+    "id": "Removes all empty tags.",
+    "translation": "비어 있는 태그를 모두 제거합니다."
+  },
+  {
     "id": "Removes an empty tag from your account.",
     "translation": "계정에서 비어 있는 태그를 제거합니다."
   },
   {
     "id": "Removes guests. (Only set --up or --down)",
     "translation": "게스트를 제거합니다. (--up 또는 --down만 설정)"
+  },
+  {
+    "id": "Removing Tag: {{.tag}}.",
+    "translation": "태그: {{.tag}}을(를) 제거합니다."
   },
   {
     "id": "Replicant Count",
@@ -7362,6 +7498,10 @@
   {
     "id": "Set the LUN ID on an existing block storage volume",
     "translation": "기존 블록 스토리지 볼륨에 LUN ID를 설정합니다."
+  },
+  {
+    "id": "Set the note of the ipAddress.",
+    "translation": "ipAddress의 참고를 설정합니다."
   },
   {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
@@ -7680,6 +7820,10 @@
     "translation": "정상적으로 로그인되었습니까?"
   },
   {
+    "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "서브넷 ID: {{.subnetID}}을(를) 허용되는 호스트 ID: {{.accessID}}에 지정함"
+  },
+  {
     "id": "Successfully authorized storage: {{.PortableID}} was added.",
     "translation": "권한 부여된 {{.PortableID}} 스토리지가 추가되었습니다."
   },
@@ -7690,6 +7834,10 @@
   {
     "id": "Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}.",
     "translation": "다음과 같은 배치 그룹이 작성되었습니다. ID: {{.ID}}, Name: {{.Name}}."
+  },
+  {
+    "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "서브넷 ID: {{.subnetID}}을(를) 허용되는 호스트 ID: {{.accessID}}에서 제거함"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
@@ -8716,6 +8864,10 @@
     "translation": "이 디바이스에 대한 네트워크 포트 속도를 찾을 수 없습니다."
   },
   {
+    "id": "Unable to find object with IP address: {{.address}}",
+    "translation": "IP 주소: {{.address}}인 오브젝트를 찾을 수 없음"
+  },
+  {
     "id": "Unable to find object-storage with ID: {{.storageID}}.\n",
     "translation": "ID가 {{.storageID}}인 오브젝트 스토리지를 찾을 수 없습니다.\n"
   },
@@ -8766,6 +8918,10 @@
   {
     "id": "Unassign a global IP from a target router or device",
     "translation": "대상 라우터 또는 디바이스에서 글로벌 IP 지정 해제"
+  },
+  {
+    "id": "Unique Id",
+    "translation": "고유 ID"
   },
   {
     "id": "Update ID",

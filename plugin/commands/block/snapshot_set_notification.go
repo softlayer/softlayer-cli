@@ -3,72 +3,67 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type SnapshotSetNotificationCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	Enable         bool
+	Disable        bool
 }
 
-func NewSnapshotSetNotificationCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *SnapshotSetNotificationCommand) {
-	return &SnapshotSetNotificationCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewSnapshotSetNotificationCommand(sl *metadata.SoftlayerCommand) *SnapshotSetNotificationCommand {
+	thisCmd := &SnapshotSetNotificationCommand{
+		SoftlayerCommand: sl,
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockVolumeSnapshotSetNotificationMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "snapshot-set-notification",
-		Description: T("Enables/Disables snapshot space usage threshold warning for a given volume."),
-		Usage: T(`${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID
+	cobraCmd := &cobra.Command{
+		Use:   "snapshot-set-notification " + T("IDENTIFIER"),
+		Short: T("Enables/Disables snapshot space usage threshold warning for a given volume."),
+		Long: T(`${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID
 
 EXAMPLE:
 	${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567
 	Enables/Disables snapshot space usage threshold warning for a given volume.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "enable",
-				Usage: T("Enable snapshot notification."),
-			},
-			cli.BoolFlag{
-				Name:  "disable",
-				Usage: T("Disable snapshot notification."),
-			},
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().BoolVar(&thisCmd.Enable, "enable", false, T("Enable snapshot notification."))
+	cobraCmd.Flags().BoolVar(&thisCmd.Disable, "disable", false, T("Disable snapshot notification."))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SnapshotSetNotificationCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *SnapshotSetNotificationCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	if c.IsSet("enable") && c.IsSet("disable") {
-		return errors.NewExclusiveFlagsErrorWithDetails([]string{"--enable", "--disable"}, "")
+	if cmd.Enable && cmd.Disable {
+		return slErr.NewExclusiveFlagsErrorWithDetails([]string{"--enable", "--disable"}, "")
 	}
 
-	if !c.IsSet("enable") && !c.IsSet("disable") {
-		return errors.NewInvalidUsageError(T("Either '--enable' or '--disable' is required."))
+	if !cmd.Enable && !cmd.Disable {
+		return slErr.NewInvalidUsageError(T("Either '--enable' or '--disable' is required."))
 	}
 
-	enabled := !c.IsSet("disable")
+	enabled := !cmd.Disable
+	subs := map[string]interface{}{"ID": volumeID, "ENABLE": enabled}
 	if err = cmd.StorageManager.SetSnapshotNotification(volumeID, enabled); err != nil {
-		return cli.NewExitError(T("Failed to set the snapshort notification  for volume '{{.ID}}'.\n", map[string]interface{}{"ID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to set the snapshort notification  for volume '{{.ID}}'.\n", subs), err.Error(), 2)
 	}
 
 	cmd.UI.Ok()
-	cmd.UI.Print(T("Snapshots space usage threshold warning notification has been set to '{{.ENABLE}}' for volume '{{.ID}}'.", map[string]interface{}{"ID": volumeID, "ENABLE": enabled}))
+	cmd.UI.Print(T("Snapshots space usage threshold warning notification has been set to '{{.ENABLE}}' for volume '{{.ID}}'.", subs))
 	return nil
 }

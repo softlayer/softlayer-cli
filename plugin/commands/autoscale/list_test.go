@@ -7,38 +7,37 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("autoscale list", func() {
 	var (
 		fakeUI               *terminal.FakeUI
+		cliCommand           *autoscale.ListCommand
+		fakeSession          *session.Session
+		slCommand            *metadata.SoftlayerCommand
 		fakeAutoScaleManager *testhelpers.FakeAutoScaleManager
-		cmd                  *autoscale.ListCommand
-		cliCommand           cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeAutoScaleManager = new(testhelpers.FakeAutoScaleManager)
-		cmd = autoscale.NewListCommand(fakeUI, fakeAutoScaleManager)
-		cliCommand = cli.Command{
-			Name:        autoscale.AutoScaleListMetaData().Name,
-			Description: autoscale.AutoScaleListMetaData().Description,
-			Usage:       autoscale.AutoScaleListMetaData().Usage,
-			Flags:       autoscale.AutoScaleListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = autoscale.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.AutoScaleManager = fakeAutoScaleManager
 	})
 
 	Describe("autoscale list", func() {
 
 		Context("Return error", func() {
 			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -49,7 +48,7 @@ var _ = Describe("autoscale list", func() {
 				fakeAutoScaleManager.ListScaleGroupsReturns([]datatypes.Scale_Group{}, errors.New("Failed to get scale groups."))
 			})
 			It("Failed get scale groups", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get scale groups."))
 			})
@@ -72,7 +71,7 @@ var _ = Describe("autoscale list", func() {
 				fakeAutoScaleManager.ListScaleGroupsReturns(fakerScaleGroups, nil)
 			})
 			It("List scale groups", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("scalegroup1"))
