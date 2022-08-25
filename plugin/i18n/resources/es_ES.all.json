@@ -961,7 +961,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDebido a algunos detalles de redondeo y alineación de fechas, los resultados aquí pueden variar ligeramente de los resultados del portal de control.\nEl ancho de banda se lista en GB, si no se ha especificado ninguna zona horaria, se asume que es GMT+0.\n\nEjemplo::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nFormatos de hora '2006-01-02', '2006-01-02T15:04' o '2006-01-02T15:04-07:00'\n\nDebido a algunos detalles de redondeo y alineación de fechas, los resultados aquí pueden variar ligeramente de los resultados del portal de control.\nEl ancho de banda se lista en GB; si no se ha especificado ninguna zona horaria, se asume que es GMT+0.\n\nEjemplo::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
@@ -4777,7 +4777,7 @@
   },
   {
     "id": "Get bandwidth pool details.",
-    "translation": "Obtener detalles de agrupación de ancho de banda"
+    "translation": "Obtener detalles de agrupación de ancho de banda."
   },
   {
     "id": "Get billing details for a virtual server instance",
@@ -6269,7 +6269,7 @@
   },
   {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
-    "translation": "Número de segundos que se debe informar como un punto de datos. 300, 600, 1800, 3600 (valor predeterminado), 43200 o 86400 segundos"
+    "translation": "Número de segundos que se debe informar como un punto de datos. 300, 600, 1800, 3600 (valor predeterminado), 43200 u 86400 segundos"
   },
   {
     "id": "Number of snapshots to retain [required]",
@@ -6993,7 +6993,7 @@
   },
   {
     "id": "Public",
-    "translation": "Público"
+    "translation": "Pública"
   },
   {
     "id": "Public IP",
@@ -9653,7 +9653,7 @@
   },
   {
     "id": "lists bandwidth pools",
-    "translation": "lista agrupaciones de ancho de banda"
+    "translation": "Lista agrupaciones de ancho de banda."
   },
   {
     "id": "maximum_snapshots",

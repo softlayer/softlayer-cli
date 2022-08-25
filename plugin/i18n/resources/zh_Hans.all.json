@@ -209,7 +209,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nshii示例：\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是通过以下命令获取的 host_id：ibmcloud sl block access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是通过以下命令获取的 host_id：ibmcloud sl block access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
@@ -585,7 +585,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456",
-    "translation": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl nas credentials 123456"
+    "translation": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS] \n \n示例：\n ${COMMAND_NAME} sl nas credentials 123456"
   },
   {
     "id": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list",
@@ -809,11 +809,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION] \n \n 示例：\n ${COMMAND_NAME} sl user grant-access 123456 -- hardware 987654"
+    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\n示例：\n ${COMMAND_NAME} sl user grant-access 123456 -- hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION] \n \n 示例：\n ${COMMAND_NAME} sl user remove-access 123456 -- hardware 987654"
+    "translation": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n \n示例：\n ${COMMAND_NAME} sl user remove-access 123456 -- hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -845,7 +845,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n   This command billing lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \n 示例：\n  ${COMMAND_NAME} sl vs billing 12345678\n   此命令用于列示有关标识为 12345678 的虚拟服务器实例的详细信息。"
+    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \n 示例：\n  ${COMMAND_NAME} sl vs billing 12345678\n   此命令用于列出有关标识为 12345678 的虚拟服务器实例的详细信息。"
   },
   {
     "id": "${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs cancel 12345678\n   This command cancels virtual server instance with ID of 12345678.",
@@ -861,7 +861,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS] \n 示例：\n ${COMMAND_NAME} sl vs capacity-details 12345678\n 获取标识为 12345678 的保留容量组详细信息。"
+    "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS] \n示例：\n ${COMMAND_NAME} sl vs capacity-details 12345678\n 获取标识为 12345678 的保留容量组详细信息。"
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups.",
@@ -909,7 +909,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS] \n 示例：\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \n 此命令订购名为 myvsi、backendRouterId 1234567 和 rule 258369 的放置组实例"
+    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS] \n 示例：\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \n 此命令订购名为 myvsi、backendRouterId 为 1234567 以及规则为 258369 的放置组实例"
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-create-options\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n    Get List options for creating a placement group.",
@@ -917,7 +917,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Get placement Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER \n 示例：\n ${COMMAND_NAME} sl vs placementgroup-details 12345678\n 获取标识为 12345678 的放置组详细信息。"
+    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER \n示例：\n ${COMMAND_NAME} sl vs placementgroup-details 12345678\n 获取标识为 12345678 的放置组详细信息。"
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n   This command lists all placement groups.",
@@ -961,7 +961,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n 时间格式为 '2006-01-02'、'2006-01-02T15:04' 或 '2006-01-02T15:04-07:00'\n\n 由于某些舍入和日期对齐详细信息，此处的结果可能与控制门户中的结果略有不同。\n带宽以 GB 为单位，如果未指定时区，则采用 GMT+0。\n\n 示例：\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n 时间格式为 '2006-01-02'、'2006-01-02T15:04' 或 '2006-01-02T15:04-07:00'\n\n 由于某些舍入和日期对齐详细信息，此处的结果可能与控制门户中的结果略有不同。\n列出的带宽以 GB 为单位，如果未指定时区，则假定为 GMT+0。\n\n 示例：\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
@@ -1605,11 +1605,11 @@
   },
   {
     "id": "Billing item not found",
-    "translation": "找不到计费项目"
+    "translation": "找不到计费项"
   },
   {
     "id": "Billing rate [hourly|monthly], [default: hourly]",
-    "translation": "计费费率 [hourly|monthly]、[default: hourly]"
+    "translation": "计费费率 [hourly|monthly]，[缺省值：hourly]"
   },
   {
     "id": "Billing rate, either hourly or monthly, default is hourly if not specified",
@@ -1773,7 +1773,7 @@
   },
   {
     "id": "Cancels a billing item.",
-    "translation": "取消计费项目。"
+    "translation": "取消计费项。"
   },
   {
     "id": "Cancels a firewall",
@@ -2025,7 +2025,7 @@
   },
   {
     "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]",
-    "translation": "要显示的列。 [选项为：guid、cpu、memory、datacenter、primary_ip、backend_ip、created_by、power_state、tags] [缺省值：id、hostname、domain、primary_ip、backend_ip 或 power_state]"
+    "translation": "要显示的列。 [选项为：guid、cpu、memory、datacenter、primary_ip、backend_ip、created_by、power_state、tags] [缺省值：id、hostname、domain、primary_ip、backend_ip、power_state]"
   },
   {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
@@ -2613,7 +2613,7 @@
   },
   {
     "id": "Display metadata if present  [default: no-metadata]",
-    "translation": "显示元数据（如果存在）[缺省值 :no-metadata]"
+    "translation": "显示元数据（如果存在）[缺省值：no-metadata]"
   },
   {
     "id": "Display only closed tickets",
@@ -2641,7 +2641,7 @@
   },
   {
     "id": "Do not actually create the dedicatedhost",
-    "translation": "未实际创建专用主机"
+    "translation": "实际不创建专用主机"
   },
   {
     "id": "Do not actually create the virtual server",
@@ -3369,7 +3369,7 @@
   },
   {
     "id": "Failed to find billing item for firewall: {{.ID}}.",
-    "translation": "找不到防火墙 {{.ID}} 的计费项目。"
+    "translation": "找不到防火墙 {{.ID}} 的计费项。"
   },
   {
     "id": "Failed to find credentials of hardware server {{.ID}}.",
@@ -4517,7 +4517,7 @@
   },
   {
     "id": "Filter by Memory capacity in megabytes",
-    "translation": "按内存容量（以兆字节为单位）进行过滤"
+    "translation": "按内存容量（以兆字节为单位）过滤"
   },
   {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
@@ -4641,7 +4641,7 @@
   },
   {
     "id": "Filter by the number of CPU cores",
-    "translation": "按 CPU 核心数进行过滤"
+    "translation": "按 CPU 核心数过滤"
   },
   {
     "id": "Filter by type of storage volume, options are: performance,endurance",
@@ -6121,11 +6121,11 @@
   },
   {
     "id": "No billing item found for hardware {{.ID}}.",
-    "translation": "找不到硬件 {{.ID}} 的计费项目。"
+    "translation": "找不到硬件 {{.ID}} 的计费项。"
   },
   {
     "id": "No billing item is found to cancel.",
-    "translation": "找不到要取消的计费项目。"
+    "translation": "找不到要取消的计费项。"
   },
   {
     "id": "No data",
@@ -6269,7 +6269,7 @@
   },
   {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
-    "translation": "要报告为数据点的秒数。 300、600、1800、3600（缺省值）、43200 或 86400 秒"
+    "translation": "要报告为一个数据点的秒数。 300、600、1800、3600（缺省值）、43200 或 86400 秒"
   },
   {
     "id": "Number of snapshots to retain [required]",
@@ -6889,7 +6889,7 @@
   },
   {
     "id": "Prints some various bits of information about an account.",
-    "translation": "打印有关帐户的不同信息。"
+    "translation": "打印有关帐户的各种信息。"
   },
   {
     "id": "Priority",
@@ -7169,7 +7169,7 @@
   },
   {
     "id": "Remove block storage subnets to the given host id.",
-    "translation": "将块存储器子网从给定主机标识除去。"
+    "translation": "将块存储器子网从给定主机标识中除去。"
   },
   {
     "id": "Remove resource record from a zone",
@@ -8069,7 +8069,7 @@
   },
   {
     "id": "The VMware License Key. To get the required package you can use the command sl licenses create-options Package. E.g VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2  [required]",
-    "translation": "VMware 许可证密钥。 要获取必需的软件包，可以使用命令 sl licenses create-options Package。 例如 VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [必填]"
+    "translation": "VMware 许可证密钥。 要获取必需的软件包，可以使用命令 sl licenses create-options Package。 例如 VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [必需]"
   },
   {
     "id": "The actual SSH key",
@@ -8809,7 +8809,7 @@
   },
   {
     "id": "UUID of the protocol you want to edit.",
-    "translation": "要编辑协议的 UUID。"
+    "translation": "要编辑的协议的 UUID。"
   },
   {
     "id": "Unable to create {{.Type}} subnet.",
@@ -9905,7 +9905,7 @@
   },
   {
     "id": "type",
-    "translation": "type"
+    "translation": "类型"
   },
   {
     "id": "updated",

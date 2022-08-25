@@ -273,7 +273,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFICATIVO[OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host."
+    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFICATIVO[OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   Questo comando richiama i dettagli per un host dedicato."
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
@@ -497,7 +497,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPZIONI] IDENTIFICATIVO\n\nESEMPIO:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Elenca le Guest Virtuali in esecuzione su questo server."
+    "translation": "${COMMAND_NAME} sl hardware guests [OPZIONI] IDENTIFICATIVO\n\nESEMPIO:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Elenca i guest virtuali in esecuzione su questo server."
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -505,7 +505,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPZIONI] IDENTIFICATIVO\n\nESEMPIO:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Ottiene i dettagli sullo storage del server hardware."
+    "translation": "${COMMAND_NAME} sl hardware storage [OPZIONI] IDENTIFICATIVO\n\nESEMPIO:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Ottieni i dettagli sullo storage del server hardware."
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
@@ -737,7 +737,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet route IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Questo comando consente di cambiare l'instradamento delle sottoreti di proprietà dell'account."
+    "translation": "${COMMAND_NAME} sl subnet route IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Questo comando consente di modificare l'instradamento delle sottoreti di proprietà dell'account."
   },
   {
     "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
@@ -861,7 +861,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFICATIVO [OPZIONI]\nESEMPIO:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Ottiene i dettagli del Gruppo di Capacità Riservate con ID 12345678."
+    "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFICATIVO [OPZIONI]\nESEMPIO:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Ottieni i dettagli del Gruppo di Capacità Riservate con ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups.",
@@ -917,7 +917,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Get placement Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFICATIVO\nESEMPIO:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Ottiene i dettagli del Gruppo di posizionamento con ID 12345678."
+    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFICATIVO\nESEMPIO:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Ottieni i dettagli del Gruppo di posizionamento con ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n   This command lists all placement groups.",
@@ -953,7 +953,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Get storage details for a virtual server.",
-    "translation": "${COMMAND_NAME} sl vs storage [OPZIONI] IDENTIFICATIVO\n\nESEMPIO:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Ottiene i dettagli dello storage di un server virtuale."
+    "translation": "${COMMAND_NAME} sl vs storage [OPZIONI] IDENTIFICATIVO\n\nESEMPIO:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Ottieni i dettagli dello storage di un server virtuale."
   },
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
@@ -1449,7 +1449,7 @@
   },
   {
     "id": "Assign block storage subnets to the given host id.",
-    "translation": "Assegnare le sottoreti di archiviazione blocchi all'id host fornito."
+    "translation": "Assegna le sottoreti di archiviazione blocchi all'id host fornito."
   },
   {
     "id": "Assigned",
@@ -1773,7 +1773,7 @@
   },
   {
     "id": "Cancels a billing item.",
-    "translation": "Annullare un elemento di fatturazione."
+    "translation": "Annulla un elemento di fatturazione."
   },
   {
     "id": "Cancels a firewall",
@@ -1901,7 +1901,7 @@
   },
   {
     "id": "Classic infrastructure Email commands",
-    "translation": "Classici email dell'infrastruttura classica"
+    "translation": "Comandi email dell'infrastruttura classica"
   },
   {
     "id": "Classic infrastructure Event Log Group",
@@ -2041,7 +2041,7 @@
   },
   {
     "id": "Column to sort by, default:hostname",
-    "translation": "Colonna da ordinare in base a, valore predefinito: hostname"
+    "translation": "Colonna in base alla quale ordinare, valore predefinito: hostname"
   },
   {
     "id": "Column to sort by, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by",
@@ -2749,7 +2749,7 @@
   },
   {
     "id": "Edit details of an email delivery account.",
-    "translation": "Modificare i dettagli di un account di consegna email."
+    "translation": "Modifica i dettagli di un account di recapito email."
   },
   {
     "id": "Edit details of an image",
@@ -4517,7 +4517,7 @@
   },
   {
     "id": "Filter by Memory capacity in megabytes",
-    "translation": "Filtrare in base alla capacità di memoria in megabyte"
+    "translation": "Filtra in base alla capacità di memoria in megabyte"
   },
   {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
@@ -4669,7 +4669,7 @@
   },
   {
     "id": "Find details about the machine making these API calls.",
-    "translation": "Scoprire i dettagli sulla macchina che effettua queste chiamate API."
+    "translation": "Individua i dettagli della macchina che effettua queste chiamate API."
   },
   {
     "id": "Firewall",
@@ -4777,7 +4777,7 @@
   },
   {
     "id": "Get bandwidth pool details.",
-    "translation": "Ottenere i dettagli del pool di larghezza di banda."
+    "translation": "Ottieni i dettagli del pool di larghezza di banda."
   },
   {
     "id": "Get billing details for a virtual server instance",
@@ -4845,15 +4845,15 @@
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "Ottenere l'impostazione dell'indicatore di avviso della soglia di utilizzo dello spazio delle istantanee di un determinato volume."
+    "translation": "Ottieni l'impostazione dell'indicatore di avviso della soglia di utilizzo dello spazio delle istantanee di un determinato volume."
   },
   {
     "id": "Get status for split or move completed percentage of a given block storage duplicate volume.",
-    "translation": "Ottenere lo stato della percentuale di split o move completata di un determinato volume di duplicazione dello storage a blocchi."
+    "translation": "Ottieni lo stato della percentuale di split o move completata di un determinato volume di duplicazione dello storage a blocchi."
   },
   {
     "id": "Get status for split or move completed percentage of a given file storage duplicate volume.",
-    "translation": "Ottenere lo stato della percentuale di split o move completata di un determinato volume di duplicazione dello storage file ."
+    "translation": "Ottieni lo stato della percentuale di split o move completata di un determinato volume di duplicazione dello storage di file."
   },
   {
     "id": "Get storage details for a hardware server.",
@@ -5553,11 +5553,11 @@
   },
   {
     "id": "List NAS account credentials.",
-    "translation": "Elencare le credenziali dell'account NAS."
+    "translation": "Elenca le credenziali dell'account NAS."
   },
   {
     "id": "List NAS accounts.",
-    "translation": "Elencare gli account NAS."
+    "translation": "Elenca gli account NAS."
   },
   {
     "id": "List Object Storage accounts.",
@@ -5653,7 +5653,7 @@
   },
   {
     "id": "List block storage assigned subnets for the given host id.",
-    "translation": "Elencare le sottoreti assegnate all'archiviazione a blocchi per l'id host fornito."
+    "translation": "Elenca le sottoreti assegnate all'archiviazione a blocchi per l'id host fornito."
   },
   {
     "id": "List block storage snapshots",
@@ -5661,7 +5661,7 @@
   },
   {
     "id": "List cloud block storage.",
-    "translation": "Elencare l'archiviazione a blocchi cloud."
+    "translation": "Elenca l'archiviazione a blocchi cloud."
   },
   {
     "id": "List datacenters a package can be ordered in",
@@ -5809,7 +5809,7 @@
   },
   {
     "id": "Lists Email Delivery Service.",
-    "translation": "Elenca il servizio di distribuzione email."
+    "translation": "Elenca il servizio di recapito email."
   },
   {
     "id": "Lists account orders.",
@@ -7169,7 +7169,7 @@
   },
   {
     "id": "Remove block storage subnets to the given host id.",
-    "translation": "Rimuovere le sottoreti di archiviazione blocchi per l'id host fornito."
+    "translation": "Rimuovi le sottoreti di archiviazione blocchi per l'id host fornito."
   },
   {
     "id": "Remove resource record from a zone",
@@ -7265,7 +7265,7 @@
   },
   {
     "id": "Retrieve a server’s hardware state via its internal sensors.",
-    "translation": "Richiamare lo stato hardware di un server tramite i sensori interni."
+    "translation": "Richiama lo stato hardware di un server tramite i sensori interni."
   },
   {
     "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
@@ -7501,7 +7501,7 @@
   },
   {
     "id": "Set the note of the ipAddress.",
-    "translation": "Impostare la nota dell'indirizzo IP."
+    "translation": "Imposta la nota dell'indirizzo IP."
   },
   {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
@@ -8069,7 +8069,7 @@
   },
   {
     "id": "The VMware License Key. To get the required package you can use the command sl licenses create-options Package. E.g VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2  [required]",
-    "translation": "La chiave di licenza VMware. Per ottenere il pacage richiesto è possibile utilizzare il comando sl licenses create-options Package. Ad es. VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [obbligatorio]"
+    "translation": "La chiave di licenza VMware. Per ottenere il pacchetto richiesto è possibile utilizzare il comando sl licenses create-options Package. Ad es. VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [obbligatorio]"
   },
   {
     "id": "The actual SSH key",
