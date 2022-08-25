@@ -36,7 +36,7 @@ func NewVolumeOptionsCommand(sl *metadata.SoftlayerStorageCommand) *VolumeOption
 	
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} volume-options
-   This command lists all options for creating a file storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.`, sl.StorageI18n),
+   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.`, sl.StorageI18n),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -79,7 +79,7 @@ func (cmd *VolumeOptionsCommand) Run(args []string) error {
 	snapshotTable.Add(volumeSizes[10], "0,5,10,20,40,60,80,100,150,200,250,300,350,400,450,500,600,700,1000,2000,4000")
 	snapshotTable.Print()
 	table.Add(T("Snapshot Size (GB)"), buf.String())
-	table.Add(T("Note:"), T("IOPs limit above 6000 available in select data centers, refer to:http://knowledgelayer.softlayer.com/articles/new-ibm-file-and-file-storage-location-and-features"))
+	table.Add(T("Note:"), T("IOPs limit above 6000 available in select data centers, refer to:http://knowledgelayer.softlayer.com/articles/new-ibm-block-and-file-storage-location-and-features"))
 	table.Print()
 	return nil
 }
