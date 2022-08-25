@@ -39,6 +39,7 @@ EXAMPLE:
 		},
 	}
 	cobraCmd.Flags().IntSliceVar(&thisCmd.SubnetIds, "subnet-id", []int{}, T("IDs of the subnets to remove"))
+	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("subnet-id")
 	thisCmd.Command = cobraCmd
 	return thisCmd

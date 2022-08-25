@@ -35,6 +35,7 @@ func NewVolumeSetNoteCommand(sl *metadata.SoftlayerStorageCommand) *VolumeSetNot
 		},
 	}
 	cobraCmd.Flags().StringVarP(&thisCmd.Note, "note", "n", "", T("Public notes related to a Storage volume  [required]"))
+	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("note")
 	thisCmd.Command = cobraCmd
 	return thisCmd
