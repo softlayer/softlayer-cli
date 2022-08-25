@@ -116,6 +116,7 @@ then
 
 
     # UNCOMMENT this line if you want to see what needs to be translated.
+    # It will likely have an entry for every language though.
     # UNTRANSLATED=${UNTRANSLATED%,}
     # UNTRANSLATED=`printf "%s\n]" "${UNTRANSLATED}"`
     # UNTRANSLATED=`echo "$UNTRANSLATED" | sed -E 's/\t/\\\t/g'`
@@ -125,5 +126,5 @@ then
 
     exit $EXIT_CODE
 else
-    printf "\032[0;31m Everything looks good to me.\032[0m\n"
+    printf "\033[0;32mEverything looks good to me.\033[0m\n"
 fi

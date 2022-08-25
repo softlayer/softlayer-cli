@@ -9,12 +9,9 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
-
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
@@ -38,12 +35,6 @@ import (
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{}
-
-	// ibmcloud sl autoscale
-	autoScaleCommands := autoscale.GetCommandActionBindings(context, ui, session)
-	for name, action := range autoScaleCommands {
-		CommandActionBindings[name] = action
-	}
 
 	// ibmcloud sl dns
 	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
@@ -129,12 +120,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	//ibmcloud sl metadata
 	for name, action := range metadata.GetCommandActionBindings(context, ui, session) {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl firewall
-	firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
-	for name, action := range firewallCommands {
 		CommandActionBindings[name] = action
 	}
 
