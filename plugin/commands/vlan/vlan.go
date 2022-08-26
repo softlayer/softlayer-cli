@@ -1,42 +1,26 @@
 package vlan
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-
-	networkManager := managers.NewNetworkManager(session)
-	context = plugin.InitPluginContext("softlayer")
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"vlan-cancel": func(c *cli.Context) error {
-			return NewCancelCommand(ui, networkManager).Run(c)
-		},
-		"vlan-create": func(c *cli.Context) error {
-			return NewCreateCommand(ui, networkManager, context).Run(c)
-		},
-		"vlan-detail": func(c *cli.Context) error {
-			return NewDetailCommand(ui, networkManager).Run(c)
-		},
-		"vlan-edit": func(c *cli.Context) error {
-			return NewEditCommand(ui, networkManager).Run(c)
-		},
-		"vlan-list": func(c *cli.Context) error {
-			return NewListCommand(ui, networkManager).Run(c)
-		},
-		"vlan-options": func(c *cli.Context) error {
-			return NewOptionsCommand(ui, networkManager).Run(c)
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "vlan",
+		Short: T("Classic infrastructure Network VLANs"),
+		RunE:  nil,
 	}
-
-	return CommandActionBindings
+	cobraCmd.AddCommand(NewCancelCommand(sl).Command)
+	cobraCmd.AddCommand(NewCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewEditCommand(sl).Command)
+	cobraCmd.AddCommand(NewListCommand(sl).Command)
+	cobraCmd.AddCommand(NewOptionsCommand(sl).Command)
+	return cobraCmd
 }
 
 func VlanNamespace() plugin.Namespace {
@@ -44,22 +28,5 @@ func VlanNamespace() plugin.Namespace {
 		ParentName:  "sl",
 		Name:        "vlan",
 		Description: T("Classic infrastructure Network VLANs"),
-	}
-}
-
-func VlanMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "vlan",
-		Description: T("Classic infrastructure Network VLANs"),
-		Usage:       "${COMMAND_NAME} sl vlan",
-		Subcommands: []cli.Command{
-			VlanCreateMetaData(),
-			VlanCancelMetaData(),
-			VlanDetailMetaData(),
-			VlanEditMetaData(),
-			VlanListMetaData(),
-			VlanOptionsMetaData(),
-		},
 	}
 }

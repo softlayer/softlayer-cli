@@ -310,6 +310,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(licenses.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(firewall.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(dedicatedhost.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(vlan.SetupCobraCommands(slCommand))
 
 
 	return cobraCmd

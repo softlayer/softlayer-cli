@@ -1,4 +1,16 @@
 [
-    {"id": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty",
-     "translation": "{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty"}
+
+    {"id": "Create a new VLAN.", "translation": "Create a new VLAN."},
+    {"id": "Get details about a VLAN.", "translation": "Get details about a VLAN."},
+    {"id": "LUN_ID", "translation": "LUN_ID"},
+    {"id": "List all the options for creating VLAN.", "translation": "List all the options for creating VLAN."},
+    {"id": "SNAPSHOT_ID", "translation": "SNAPSHOT_ID"},
+    {"id": "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n\tThis command shows details of vlan with ID 12345678, and not list virtual server or hardware server.", "translation": "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n\tThis command shows details of vlan with ID 12345678, and not list virtual server or hardware server."},
+    {"id": "Cancel a VLAN.", "translation": "Cancel a VLAN."},
+    {"id": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n\tThis command updates vlan with ID 12345678 and gives it a new name "myvlan-rename".", "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n\tThis command updates vlan with ID 12345678 and gives it a new name "myvlan-rename"."},
+    {"id": "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n\tThis command creates a public vlan located in datacenter dal09 named "myvlan".\n\t${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n\tThis command creates a vlan on router bcr01a.dal09 named "myvlan".", "translation": "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n\tThis command creates a public vlan located in datacenter dal09 named "myvlan".\n\t${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n\tThis command creates a vlan on router bcr01a.dal09 named "myvlan"."},
+    {"id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan cancel 12345678 -f\n\tThis command cancels vlan with ID 12345678 without asking for confirmation.", "translation": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan cancel 12345678 -f\n\tThis command cancels vlan with ID 12345678 without asking for confirmation."},
+    {"id": "Edit the details about a VLAN.", "translation": "Edit the details about a VLAN."},
+    {"id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n\tThis commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n\t\nNote: In field Pod, if add (*) indicated that closed soon", "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n\t${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n\tThis commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n\t\nNote: In field Pod, if add (*) indicated that closed soon"},
+    {"id": "List all the VLANs on your account.", "translation": "List all the VLANs on your account."}
 ]
