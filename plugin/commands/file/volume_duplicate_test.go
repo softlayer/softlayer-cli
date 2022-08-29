@@ -2,17 +2,16 @@ package file_test
 
 import (
 	"errors"
-	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -31,36 +30,32 @@ var FakeOrderReceipt = datatypes.Container_Product_Order_Receipt{
 var _ = Describe("Volume duplicate", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *file.VolumeDuplicateCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *file.VolumeDuplicateCommand
-		cliCommand         cli.Command
-		context            plugin.PluginContext
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		context = plugin.InitPluginContext("softlayer")
-		cmd = file.NewVolumeDuplicateCommand(fakeUI, FakeStorageManager, context)
-		cliCommand = cli.Command{
-			Name:        file.FileVolumeDuplicateMetaData().Name,
-			Description: file.FileVolumeDuplicateMetaData().Description,
-			Usage:       file.FileVolumeDuplicateMetaData().Usage,
-			Flags:       file.FileVolumeDuplicateMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "file")
+		cliCommand = file.NewVolumeDuplicateCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Volume duplicate", func() {
 		Context("Volume duplicate without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Bad volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "ZZZ")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "ZZZ")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Volume ID"))
 			})
@@ -70,7 +65,7 @@ var _ = Describe("Volume duplicate", func() {
 				FakeStorageManager.OrderDuplicateVolumeReturns(FakeOrderReceipt, nil)
 			})
 			It("No snapshot size ordered", func() {
-				err := testhelpers.RunCommand(cliCommand, "12345", "--duplicate-snapshot-size", "0", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345", "--duplicate-snapshot-size", "0", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				results := fakeUI.Outputs()
 				calledWith := FakeStorageManager.OrderDuplicateVolumeArgsForCall(0)
@@ -83,7 +78,7 @@ var _ = Describe("Volume duplicate", func() {
 				FakeStorageManager.OrderDuplicateVolumeReturns(FakeOrderReceipt, nil)
 			})
 			It("No snapshot size ordered", func() {
-				err := testhelpers.RunCommand(cliCommand, "12345", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				results := fakeUI.Outputs()
 				calledWith := FakeStorageManager.OrderDuplicateVolumeArgsForCall(0)
@@ -96,7 +91,7 @@ var _ = Describe("Volume duplicate", func() {
 				FakeStorageManager.OrderDuplicateVolumeReturns(FakeOrderReceipt, errors.New("SoftLayer_Exception_ApiError"))
 			})
 			It("Print Error Output", func() {
-				err := testhelpers.RunCommand(cliCommand, "12345", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345", "-f")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ApiError"))
 			})

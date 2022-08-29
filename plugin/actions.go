@@ -3,40 +3,26 @@ package plugin
 import (
 	"fmt"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
-
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/urfave/cli"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/eventlog"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/tags"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
@@ -50,63 +36,15 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{}
 
-	// ibmcloud sl account
-	accountCommands := account.GetCommandActionBindings(context, ui, session)
-	for name, action := range accountCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl autoscale
-	autoScaleCommands := autoscale.GetCommandActionBindings(context, ui, session)
-	for name, action := range autoScaleCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl dedicatedhost
-	dedicatedhostCommands := dedicatedhost.GetCommandActionBindings(context, ui, session)
-	for name, action := range dedicatedhostCommands {
-		CommandActionBindings[name] = action
-	}
-
 	// ibmcloud sl dns
 	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
 	for name, action := range dnsCommands {
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl dns
-	emailCommands := email.GetCommandActionBindings(context, ui, session)
-	for name, action := range emailCommands {
-		CommandActionBindings[name] = action
-	}
-
 	// ibmcloud sl vlan
 	vlanCommands := vlan.GetCommandActionBindings(context, ui, session)
 	for name, action := range vlanCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl block
-	blockCommands := block.GetCommandAcionBindings(context, ui, session)
-	for name, action := range blockCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl callapi
-	callapiCommands := callapi.GetCommandActionBindings(context, ui, session)
-	for name, action := range callapiCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl event-log
-	eventLogCommands := eventlog.GetCommandActionBindings(context, ui, session)
-	for name, action := range eventLogCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl file
-	fileCommands := file.GetCommandAcionBindings(context, ui, session)
-	for name, action := range fileCommands {
 		CommandActionBindings[name] = action
 	}
 
@@ -127,21 +65,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl tags
-	tagsCommands := tags.GetCommandActionBindings(context, ui, session)
-	for name, action := range tagsCommands {
-		CommandActionBindings[name] = action
-	}
-
 	// ibmcloud sl loadbal
 	loadbalCommands := loadbal.GetCommandActionBindings(context, ui, session)
 	for name, action := range loadbalCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl nas
-	nasCommands := nas.GetCommandActionBindings(context, ui, session)
-	for name, action := range nasCommands {
 		CommandActionBindings[name] = action
 	}
 
@@ -154,12 +80,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl order
 	orderCommands := order.GetCommandActionBindings(context, ui, session)
 	for name, action := range orderCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl placement-group
-	placementgroupCommands := placementgroup.GetCommandActionBindings(context, ui, session)
-	for name, action := range placementgroupCommands {
 		CommandActionBindings[name] = action
 	}
 
@@ -198,25 +118,8 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	//ibmcloud sl licenses
-	licenseCommands := licenses.GetCommandActionBindings(context, ui, session)
-	for name, action := range licenseCommands {
-		CommandActionBindings[name] = action
-	}
-
-	//ibmcloud sl reports
-	for name, action := range reports.GetCommandActionBindings(context, ui, session) {
-		CommandActionBindings[name] = action
-	}
-
 	//ibmcloud sl metadata
 	for name, action := range metadata.GetCommandActionBindings(context, ui, session) {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl firewall
-	firewallCommands := firewall.GetCommandActionBindings(context, ui, session)
-	for name, action := range firewallCommands {
 		CommandActionBindings[name] = action
 	}
 

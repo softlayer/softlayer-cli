@@ -2,16 +2,14 @@ package block_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
-
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -19,19 +17,17 @@ var _ = Describe("Volume Limits", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.VolumeLimitCommand
-		cliCommand         cli.Command
+		cliCommand         *block.VolumeLimitCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewVolumeLimitCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockVolumeLimitsMetaData().Name,
-			Description: block.BlockVolumeLimitsMetaData().Description,
-			Usage:       block.BlockVolumeLimitsMetaData().Usage,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
+		cliCommand = block.NewVolumeLimitCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Volume Limits", func() {
@@ -49,14 +45,11 @@ var _ = Describe("Volume Limits", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Datacenter"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"MaximumAvailableCount"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"ProvisionedCount"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Global"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"100"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"200"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Datacenter"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("MaximumAvailableCount"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("100"))
 			})
 		})
 		Context("Testing Volume Limits Error", func() {
@@ -64,10 +57,10 @@ var _ = Describe("Volume Limits", func() {
 				FakeStorageManager.GetVolumeCountLimitsReturns(nil, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("OK"))
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 	})

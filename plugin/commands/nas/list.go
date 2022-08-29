@@ -3,9 +3,9 @@ package nas
 import (
 	"fmt"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -13,26 +13,34 @@ import (
 )
 
 type ListCommand struct {
-	UI                       terminal.UI
+	*metadata.SoftlayerCommand
 	NasNetworkStorageManager managers.NasNetworkStorageManager
+	Command                  *cobra.Command
 }
 
-func NewListCommand(ui terminal.UI, nasNetworkStorageManager managers.NasNetworkStorageManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:                       ui,
-		NasNetworkStorageManager: nasNetworkStorageManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
+	thisCmd := &ListCommand{
+		SoftlayerCommand:         sl,
+		NasNetworkStorageManager: managers.NewNasNetworkStorageManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List NAS accounts."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *ListCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
 	nasNetworkStorages, err := cmd.NasNetworkStorageManager.ListNasNetworkStorages("")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get NAS Network Storages.")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get NAS Network Storages."), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Id"), T("Datacenter"), T("Size"), T("Server")})
@@ -51,19 +59,4 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func NasListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "nas",
-		Name:        "list",
-		Description: T("List NAS accounts."),
-		Usage: T(`${COMMAND_NAME} sl nas list
-
-EXAMPLE: 
-   ${COMMAND_NAME} sl nas list`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

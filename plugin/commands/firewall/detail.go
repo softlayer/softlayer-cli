@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,60 +14,52 @@ import (
 )
 
 type DetailCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	FirewallManager managers.FirewallManager
+	Command         *cobra.Command
+	Credentials     bool
 }
 
-func NewDetailCommand(ui terminal.UI, firewallManager managers.FirewallManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:              ui,
-		FirewallManager: firewallManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand: sl,
+		FirewallManager:  managers.NewFirewallManager(sl.Session),
 	}
-}
 
-func FirewallDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "firewall",
-		Name:        "detail",
-		Description: T("Detail information about a firewall"),
-		Usage: T(`${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]
-		
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("IDENTIFIER"),
+		Short: T("Detail information about a firewall."),
+		Long: T(`${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]
+
 EXAMPLE: 
 ${COMMAND_NAME} sl firewall detail vs:12345
 ${COMMAND_NAME} sl firewall detail server:234567
 ${COMMAND_NAME} sl firewall detail vlan:345678
 ${COMMAND_NAME} sl firewall detail multiVlan:456789`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "credentials",
-				Usage: T("Display FortiGate username and FortiGate password to multi vlans"),
-			},
-			metadata.OutputFlag(),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().BoolVar(&thisCmd.Credentials, "credentials", false,
+		T("Display FortiGate username and FortiGate password to multi vlans."))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
+func (cmd *DetailCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	firewallType, firewallID, err := cmd.FirewallManager.ParseFirewallID(args[0])
 	if err != nil {
-		return err
-	}
-
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-
-	firewallType, firewallID, err := cmd.FirewallManager.ParseFirewallID(c.Args()[0])
-	if err != nil {
-		return cli.NewExitError(T("Failed to parse firewall ID : {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": c.Args()[0]})+err.Error(), 1)
+		return errors.NewAPIError(T("Failed to parse firewall ID : {{.FirewallID}}.", map[string]interface{}{"FirewallID": args[0]}), err.Error(), 1)
 	}
 
 	var table terminal.Table
 	if firewallType == "multiVlan" {
 		firewall, err := cmd.FirewallManager.GetMultiVlanFirewall(firewallID, "")
 		if err != nil {
-			return cli.NewExitError(T("Failed to get multi vlan firewall.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get multi vlan firewall."), err.Error(), 2)
 		}
 		table = cmd.UI.Table([]string{T("Name"), T("Value")})
 		table.Add(T("Name"), utils.FormatStringPointer(firewall.NetworkGateway.Name))
@@ -79,7 +71,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		table.Add(T("Private VLAN"), utils.FormatIntPointer(firewall.NetworkGateway.PrivateVlan.VlanNumber))
 		table.Add(T("Type"), utils.FormatStringPointer(firewall.FirewallType))
 
-		if c.IsSet("credentials") && c.Bool("credentials") {
+		if cmd.Credentials {
 			table.Add(T("FortiGate username"), utils.FormatStringPointer(firewall.ManagementCredentials.Username))
 			table.Add(T("FortiGate password"), utils.FormatStringPointer(firewall.ManagementCredentials.Password))
 		}
@@ -106,7 +98,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		if firewallType == "vlan" {
 			firewallRules, err := cmd.FirewallManager.GetDedicatedFirewallRules(firewallID)
 			if err != nil {
-				return cli.NewExitError(T("Failed to get dedicated firewall rules.\n")+err.Error(), 2)
+				return errors.NewAPIError(T("Failed to get dedicated firewall rules."), err.Error(), 2)
 			}
 			for _, rule := range firewallRules {
 				table.Add(utils.FormatIntPointer(rule.OrderValue),
@@ -120,7 +112,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		} else {
 			firewallRules, err := cmd.FirewallManager.GetStandardFirewallRules(firewallID)
 			if err != nil {
-				return cli.NewExitError(T("Failed to get standard firewall rules.\n")+err.Error(), 2)
+				return errors.NewAPIError(T("Failed to get standard firewall rules."), err.Error(), 2)
 			}
 			for _, rule := range firewallRules {
 				table.Add(utils.FormatIntPointer(rule.OrderValue),

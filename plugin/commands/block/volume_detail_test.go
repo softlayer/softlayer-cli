@@ -2,17 +2,18 @@ package block_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -20,35 +21,32 @@ var _ = Describe("Volume detail", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.VolumeDetailCommand
-		cliCommand         cli.Command
+		cliCommand         *block.VolumeDetailCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewVolumeDetailCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockVolumeDetailMetaData().Name,
-			Description: block.BlockVolumeDetailMetaData().Description,
-			Usage:       block.BlockVolumeDetailMetaData().Usage,
-			Flags:       block.BlockVolumeDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
+		cliCommand = block.NewVolumeDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Volume detail", func() {
 		Context("Volume detail without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Volume detail with wrong volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Volume ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 
@@ -57,10 +55,10 @@ var _ = Describe("Volume detail", func() {
 				FakeStorageManager.GetVolumeDetailsReturns(datatypes.Network_Storage{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get details of volume 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get details of volume 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -115,7 +113,7 @@ var _ = Describe("Volume detail", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"myvolume"}))

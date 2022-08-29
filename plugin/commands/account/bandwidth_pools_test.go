@@ -7,10 +7,9 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-
 	"github.com/softlayer/softlayer-go/session"
 
-	"github.com/urfave/cli"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
@@ -18,33 +17,28 @@ import (
 var _ = Describe("Account Bandwidth-Pools", func() {
 	var (
 		fakeUI			*terminal.FakeUI
-		cmd				*account.BandwidthPoolsCommand
-		cliCommand		cli.Command
+		cliCommand		*account.BandwidthPoolsCommand
 		fakeSession   	*session.Session
+		slCommand		*metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		cmd = account.NewBandwidthPoolsCommand(fakeUI, fakeSession)
-		cliCommand = cli.Command{
-			Name:	account.BandwidthPoolsMetaData().Name,
-			Description: account.BandwidthPoolsMetaData().Description,
-			Usage:	account.BandwidthPoolsMetaData().Usage,
-			Flags:	account.BandwidthPoolsMetaData().Flags,
-			Action:	cmd.Run,
-		}
+		slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = account.NewBandwidthPoolsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})
 
 	Describe("Bandwidth-Pools Testing", func() {
 		Context("Happy Path", func() {
 			It("Runs without issue", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				outputs := fakeUI.Outputs()
 				Expect(outputs).To(ContainSubstring("3361 GB      7.13 GB         7.70 GB"))
 			})
 			It("Outputs JSON", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=JSON")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=JSON")
 				Expect(err).NotTo(HaveOccurred())
 				outputs := fakeUI.Outputs()
 				Expect(outputs).To(ContainSubstring("\"amountIn\": 7.54252,"))

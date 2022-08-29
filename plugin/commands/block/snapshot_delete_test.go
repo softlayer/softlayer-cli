@@ -2,51 +2,48 @@ package block_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 
+	"github.com/softlayer/softlayer-go/session"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Snapshot Delete", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *block.SnapshotDeleteCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.SnapshotDeleteCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewSnapshotDeleteCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockSnapshotDeleteMetaData().Name,
-			Description: block.BlockSnapshotDeleteMetaData().Description,
-			Usage:       block.BlockSnapshotDeleteMetaData().Usage,
-			Flags:       block.BlockSnapshotDeleteMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
+		cliCommand = block.NewSnapshotDeleteCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Snapshot delete", func() {
 		Context("Snapshot delete without snapshot id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Snapshot delete with wrong snapshot id", func() {
 			It("error resolving snapshot ID", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Snapshot ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Snapshot ID'. It must be a positive integer."))
 			})
 		})
 
@@ -55,10 +52,9 @@ var _ = Describe("Snapshot Delete", func() {
 				FakeStorageManager.DeleteSnapshotReturns(nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Snapshot 1234 was deleted."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Snapshot 1234 was deleted."))
 			})
 		})
 
@@ -67,10 +63,10 @@ var _ = Describe("Snapshot Delete", func() {
 				FakeStorageManager.DeleteSnapshotReturns(errors.New("SoftLayer_Exception_ObjectNotFound"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Unable to find snapshot with ID 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "SoftLayer_Exception_ObjectNotFound")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Unable to find snapshot with ID 1234."))
+				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ObjectNotFound"))
 			})
 		})
 
@@ -79,10 +75,10 @@ var _ = Describe("Snapshot Delete", func() {
 				FakeStorageManager.DeleteSnapshotReturns(errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to delete snapshot 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to delete snapshot 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 	})

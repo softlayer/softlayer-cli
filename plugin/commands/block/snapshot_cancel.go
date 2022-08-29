@@ -3,9 +3,8 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,70 +12,68 @@ import (
 )
 
 type SnapshotCancelCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	Reason         string
+	Immediate      bool
+	Force          bool
 }
 
-func NewSnapshotCancelCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *SnapshotCancelCommand) {
-	return &SnapshotCancelCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewSnapshotCancelCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotCancelCommand {
+	thisCmd := &SnapshotCancelCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockSnapshotCancelMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "snapshot-cancel",
-		Description: T("Cancel existing snapshot space for a given volume"),
-		Usage: T(`${COMMAND_NAME} sl block snapshot-cancel SNAPSHOT_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "snapshot-cancel " + T("IDENTIFIER"),
+		Short: T("Cancel existing snapshot space for a given volume"),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block snapshot-cancel 12345678 --immediate -f 
-   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "reason",
-				Usage: T("An optional reason for cancellation"),
-			},
-			cli.BoolFlag{
-				Name:  "immediate",
-				Usage: T("Cancel the snapshot space immediately instead of on the billing anniversary"),
-			},
-			metadata.ForceFlag(),
+   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f 
+   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.`, sl.StorageI18n),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Reason, "reason", "", T("An optional reason for cancellation"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Immediate, "immediate", false, T("Cancel the snapshot space immediately instead of on the billing anniversary"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SnapshotCancelCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *SnapshotCancelCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	if !c.IsSet("f") && !c.IsSet("force") {
-		confirm, err := cmd.UI.Confirm(T("This will cancel the block volume snapshot space: {{.ID}} and cannot be undone. Continue?", map[string]interface{}{"ID": volumeID}))
+	subs := map[string]interface{}{"ID": volumeID}
+	if !cmd.Force {
+		confirm, err := cmd.UI.Confirm(T("This will cancel the block volume snapshot space: {{.ID}} and cannot be undone. Continue?", subs))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
 			return nil
 		}
 	}
-	immediate := c.IsSet("immediate")
-	err = cmd.StorageManager.CancelSnapshotSpace("block", volumeID, c.String("reason"), immediate)
+
+	err = cmd.StorageManager.CancelSnapshotSpace("block", volumeID, cmd.Reason, cmd.Immediate)
 	if err != nil {
-		return cli.NewExitError(T("Failed to cancel snapshot space for volume {{.ID}}.\n", map[string]interface{}{"ID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to cancel snapshot space for volume {{.ID}}.\n", subs), err.Error(), 2)
 	}
 
 	cmd.UI.Ok()
-	if immediate {
-		cmd.UI.Print(T("Block volume {{.ID}} has been marked for immediate snapshot cancellation.", map[string]interface{}{"ID": volumeID}))
+	if cmd.Immediate {
+		cmd.UI.Print(T("Block volume {{.ID}} has been marked for immediate snapshot cancellation.", subs))
 	} else {
-		cmd.UI.Print(T("Block volume {{.ID}} has been marked for snapshot cancellation.", map[string]interface{}{"ID": volumeID}))
+		cmd.UI.Print(T("Block volume {{.ID}} has been marked for snapshot cancellation.", subs))
 	}
 	return nil
 }

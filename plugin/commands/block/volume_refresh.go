@@ -3,55 +3,56 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type VolumeRefreshCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeRefreshCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *VolumeRefreshCommand) {
-	return &VolumeRefreshCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewVolumeRefreshCommand(sl *metadata.SoftlayerStorageCommand) *VolumeRefreshCommand {
+	thisCmd := &VolumeRefreshCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockVolumeRefreshMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "volume-refresh",
-		Description: T("Refresh a duplicate volume with a snapshot from its parent."),
-		Usage: T(`${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
+	cobraCmd := &cobra.Command{
+		Use:   "volume-refresh " + T("IDENTIFIER") + " " + T("SNAPSHOT_ID"),
+		Short: T("Refresh a duplicate volume with a snapshot from its parent."),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID
 
 EXAMPLE:
-	${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
-	Refresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.`),
+	${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID
+	Refresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.`, sl.StorageI18n),
+		Args: metadata.TwoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *VolumeRefreshCommand) Run(c *cli.Context) error {
-	if c.NArg() != 2 {
-		return errors.NewInvalidUsageError(T("This command requires two arguments."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *VolumeRefreshCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	snapshotId, err := strconv.Atoi(c.Args()[1])
+	snapshotId, err := strconv.Atoi(args[1])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Snapshot ID")
 	}
 
 	err = cmd.StorageManager.VolumeRefresh(volumeID, snapshotId)
 	if err != nil {
-		return cli.NewExitError(err.Error(), 1)
+		return err
 	}
 	cmd.UI.Ok()
 	return nil

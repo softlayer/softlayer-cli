@@ -6,48 +6,44 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type SummaryCommand struct {
-	UI             terminal.UI
-	AccountManager managers.AccountManager
+    *metadata.SoftlayerCommand
+    AccountManager managers.AccountManager
+    Command *cobra.Command
 }
 
-func NewSummaryCommand(ui terminal.UI, accountManager managers.AccountManager) (cmd *SummaryCommand) {
-	return &SummaryCommand{
-		UI:             ui,
-		AccountManager: accountManager,
-	}
+func NewSummaryCommand(sl *metadata.SoftlayerCommand) *SummaryCommand {
+    thisCmd := &SummaryCommand{
+        SoftlayerCommand: sl,
+        AccountManager: managers.NewAccountManager(sl.Session),
+    }
+    cobraCmd := &cobra.Command{
+        Use: "summary",
+        Short: T("Prints some various bits of information about an account."),
+        Args: metadata.NoArgs,
+        RunE: func(cmd *cobra.Command, args []string) error {
+            return thisCmd.Run(args)
+        },
+    }
+    thisCmd.Command = cobraCmd
+    return thisCmd
 }
 
-func SummaryMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "summary",
-		Description: T("Prints some various bits of information about an account."),
-		Usage:       T(`${COMMAND_NAME} sl account summary [OPTIONS]`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
-}
-
-func (cmd *SummaryCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
+func (cmd *SummaryCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 	mask := "mask[nextInvoiceTotalAmount,pendingInvoice[invoiceTotalAmount],blockDeviceTemplateGroupCount,dedicatedHostCount,domainCount,hardwareCount,networkStorageCount,openTicketCount,networkVlanCount,subnetCount,userCount,virtualGuestCount]"
 	account, err := cmd.AccountManager.GetSummary(mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get summary.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get summary."), err.Error(), 2)
 	}
 	PrintSummary(account, cmd.UI, outputFormat)
 

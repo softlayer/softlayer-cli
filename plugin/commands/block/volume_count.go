@@ -4,44 +4,43 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type VolumeCountCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	Datacenter     string
 }
 
-func NewVolumeCountCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *VolumeCountCommand) {
-	return &VolumeCountCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewVolumeCountCommand(sl *metadata.SoftlayerStorageCommand) (cmd *VolumeCountCommand) {
+	thisCmd := &VolumeCountCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockVolumeCountMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "volume-count",
-		Description: T("List number of block storage volumes per datacenter"),
-		Usage:       "${COMMAND_NAME} sl block volume-count [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Filter by datacenter shortname"),
-			},
+	cobraCmd := &cobra.Command{
+		Use:   "volume-count",
+		Short: T("List number of block storage volumes per datacenter"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Filter by datacenter shortname"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *VolumeCountCommand) Run(c *cli.Context) error {
+func (cmd *VolumeCountCommand) Run(args []string) error {
 	mask := "mask[id,serviceResource.datacenter.name]"
-	volumes, err := cmd.StorageManager.ListVolumes(managers.VOLUME_TYPE_BLOCK, c.String("d"), "", "", "", 0, mask)
+	volumes, err := cmd.StorageManager.ListVolumes(managers.VOLUME_TYPE_BLOCK, cmd.Datacenter, "", "", "", 0, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list volumes on your account.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to list volumes on your account.\n"), err.Error(), 2)
 	}
 	result := make(map[string]int)
 	for _, v := range volumes {

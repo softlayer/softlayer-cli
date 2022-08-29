@@ -6,38 +6,30 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 
-	"github.com/urfave/cli"
+	
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Account list BillingItems", func() {
 	var (
-		fakeUI      *terminal.FakeUI
-		cmd         *account.BillingItemsCommand
-		cliCommand  cli.Command
-		fakeSession *session.Session
-		fakeAccountManager managers.AccountManager
+		fakeUI			*terminal.FakeUI
+		cliCommand		*account.BillingItemsCommand
+		fakeSession   	*session.Session
+		slCommand		*metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		fakeAccountManager = managers.NewAccountManager(fakeSession)
 		fakeUI = terminal.NewFakeUI()
-		cmd = account.NewBillingItemsCommand(fakeUI, fakeAccountManager)
-		cliCommand = cli.Command{
-			Name:        account.BillingItemsMetaData().Name,
-			Description: account.BillingItemsMetaData().Description,
-			Usage:       account.BillingItemsMetaData().Usage,
-			Flags:       account.BillingItemsMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = account.NewBillingItemsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})
-
 	Describe("Account events", func() {
 		Context("Account events, Invalid Usage", func() {
 			It("Set command with an invalid output option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -45,7 +37,7 @@ var _ = Describe("Account list BillingItems", func() {
 
 		Context("Account events, correct use", func() {
 			It("return account events", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Billing Items"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Id          Create Date            Cost   Category Code             Ordered By   Description                                             Notes"))
@@ -54,7 +46,7 @@ var _ = Describe("Account list BillingItems", func() {
 
 			})
 			It("return account events in format json", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output", "json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`Billing Items`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Id": "81336973",`))

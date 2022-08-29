@@ -1,8 +1,7 @@
 package placementgroup
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -10,21 +9,41 @@ import (
 )
 
 type PlacementGroupDeleteCommand struct {
-	UI                terminal.UI
+	*metadata.SoftlayerCommand
 	PlaceGroupManager managers.PlaceGroupManager
-	VMManager         managers.VirtualServerManager
+	Command           *cobra.Command
+	Id                int
+	ForceFlag         bool
 }
 
-func NewPlacementGroupDeleteCommand(ui terminal.UI, placeGroupManager managers.PlaceGroupManager, vmManager managers.VirtualServerManager) (cmd *PlacementGroupDeleteCommand) {
-	return &PlacementGroupDeleteCommand{
-		UI:                ui,
-		PlaceGroupManager: placeGroupManager,
-		VMManager:         vmManager,
+func NewPlacementGroupDeleteCommand(sl *metadata.SoftlayerCommand) (cmd *PlacementGroupDeleteCommand) {
+	thisCmd := &PlacementGroupDeleteCommand{
+		SoftlayerCommand:  sl,
+		PlaceGroupManager: managers.NewPlaceGroupManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "delete",
+		Short: T("Delete a placement group"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().IntVar(&thisCmd.Id, "id", 0, T("ID for the placement group. [required]"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
+	//cli.BoolFlag{   # tmp disable this option. because the placement can't be deleted if the VSI status is delete pending.
+	//	Name:  "purge",
+	//	Usage: T("Delete all guests in this placement group. The group itself can be deleted once all VMs are fully reclaimed"),
+	//},
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PlacementGroupDeleteCommand) Run(c *cli.Context) error {
-	placementGroupID := c.Int("id")
+func (cmd *PlacementGroupDeleteCommand) Run(args []string) error {
+	placementGroupID := cmd.Id
 	if placementGroupID == 0 {
 		return errors.NewMissingInputError("--id")
 	}
@@ -67,10 +86,10 @@ func (cmd *PlacementGroupDeleteCommand) Run(c *cli.Context) error {
 	//	}
 	//}
 
-	if !c.IsSet("f") {
+	if !cmd.ForceFlag {
 		confirm, err := cmd.UI.Confirm(T("This will remove placement group: {{.ID}} and cannot be undone. Continue?", map[string]interface{}{"ID": placementGroupID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -80,30 +99,10 @@ func (cmd *PlacementGroupDeleteCommand) Run(c *cli.Context) error {
 
 	_, err := cmd.PlaceGroupManager.Delete(placementGroupID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to remove placement group: {{.ID}}.\n", map[string]interface{}{"ID": placementGroupID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to remove placement group: {{.ID}}.", map[string]interface{}{"ID": placementGroupID}), err.Error(), 2)
 	}
 
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Placement group {{.ID}} was removed.", map[string]interface{}{"ID": placementGroupID}))
 	return nil
-}
-
-func PlacementGroupDeleteMetaData() cli.Command {
-	return cli.Command{
-		Category:    "placement-group",
-		Name:        "delete",
-		Description: T("Delete a placement group"),
-		Usage:       "${COMMAND_NAME} sl placement-group delete (--id PLACEMENTGROUP_ID) [-f, --force]",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "id",
-				Usage: T("ID for the placement group. [required]"),
-			},
-			//cli.BoolFlag{   # tmp disable this option. because the placement can't be deleted if the VSI status is delete pending.
-			//	Name:  "purge",
-			//	Usage: T("Delete all guests in this placement group. The group itself can be deleted once all VMs are fully reclaimed"),
-			//},
-			metadata.ForceFlag(),
-		},
-	}
 }

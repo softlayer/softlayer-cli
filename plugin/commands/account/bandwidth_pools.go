@@ -2,10 +2,8 @@ package account
 
 import (
 	"fmt"
-	"github.com/softlayer/softlayer-go/session"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,40 +12,36 @@ import (
 )
 
 type BandwidthPoolsCommand struct {
-	UI      terminal.UI
-	Session *session.Session
+	*metadata.SoftlayerCommand
+	AccountManager managers.AccountManager
+	Command *cobra.Command
 }
 
-func NewBandwidthPoolsCommand(ui terminal.UI, session *session.Session) (cmd *BandwidthPoolsCommand) {
-	return &BandwidthPoolsCommand{
-		UI:      ui,
-		Session: session,
+func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsCommand {
+	thisCmd := &BandwidthPoolsCommand{
+		SoftlayerCommand: sl,
+		AccountManager: managers.NewAccountManager(sl.Session),
 	}
-}
-
-func BandwidthPoolsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "bandwidth-pools",
-		Description: T("lists bandwidth pools"),
-		Usage:       T(`${COMMAND_NAME} sl account bandwidth-pools`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use: "bandwidth-pools",
+		Short: T("lists bandwidth pools"),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *BandwidthPoolsCommand) Run(c *cli.Context) error {
-	accountManager := managers.NewAccountManager(cmd.Session)
-	pools, err := accountManager.GetBandwidthPools()
+func (cmd *BandwidthPoolsCommand) Run(args []string) error {
+	pools, err := cmd.AccountManager.GetBandwidthPools()
 	if err != nil {
 		return err
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
+
 	if outputFormat == "JSON" {
 		return utils.PrintPrettyJSON(cmd.UI, pools)
 	}
@@ -72,7 +66,7 @@ func (cmd *BandwidthPoolsCommand) Run(c *cli.Context) error {
 		if pool.TotalBandwidthAllocated != nil {
 			allocation = fmt.Sprintf("%d GB", uint(*pool.TotalBandwidthAllocated))
 		}
-		serverCount, _ := accountManager.GetBandwidthPoolServers(*pool.Id)
+		serverCount, _ := cmd.AccountManager.GetBandwidthPoolServers(*pool.Id)
 		table.Add(
 			utils.FormatIntPointer(pool.Id),
 			utils.FormatStringPointer(pool.Name),

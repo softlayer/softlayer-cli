@@ -11,7 +11,11 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	"github.com/urfave/cli"
+
+	"github.com/softlayer/softlayer-go/session"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/client"
 	slError "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -36,7 +40,8 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
-	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
+
+	//	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
@@ -52,31 +57,22 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
-var (
-	COMMAND_HELP_TEMPLATE = T("NAME:") + `
-{{.Name}} - {{.Usage}}{{with .ShortName}}
-` + T("ALIAS:") + `
-   {{.}}{{end}}
-
-` + T("USAGE:") + `
-   {{.Description}}
-{{with .Flags}}
-` + T("OPTIONS:") + `
-{{range .}}   {{.}}
-{{end}}{{end}}
-`
-)
+var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} {{.Use}}{{else}}{{.Use}}{{end}}` +
+	`{{if .HasAvailableFlags}} [` + T("OPTIONS") + `] {{end}}
+{{.Long}}`
 
 func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
 		Name:       version.PLUGIN_SOFTLAYER,
 		Namespaces: Namespaces(),
-		Commands:   GetPluginCommands(getCLITopCommands()),
+		// TODO change this to convert cobra commands to pluginCommands... maybe see if another plugin does this already???
+		Commands: cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
 	}
 }
 
 type SoftlayerPlugin struct {
-	ui terminal.UI
+	ui      terminal.UI
+	session *session.Session
 }
 
 func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
@@ -86,51 +82,33 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 			os.Exit(1)
 		}
 	}()
+
 	trace.Logger = trace.NewLogger(context.Trace())
 	terminal.UserAskedForColors = context.ColorEnabled()
 	terminal.InitColorSupport()
 	sl.ui = terminal.NewStdUI()
+	sl.session, _ = client.NewSoftlayerClientSessionFromConfig(context)
 	// initCustomizedHelp(context)
-	cli.CommandHelpTemplate = COMMAND_HELP_TEMPLATE
 
-	app := cli.NewApp()
-	app.Name = context.CLIName() + "sl "
-	app.Usage = T(version.PLUGIN_SOFTLAYER_USAGE)
-	app.Version = version.PLUGIN_VERSION
+	cobraCommand := getTopCobraCommand(sl.ui, sl.session)
+	// cobraCommand.SetHelpTemplate(COMMAND_HELP_TEMPLATE)
+	// cobraCommand.SetUsageTemplate(USEAGE_TEMPLATE)
 
-	for _, cmd := range getCLITopCommands() {
-		cliCommand := cli.Command{
-			Category:    cmd.Category,
-			Name:        cmd.Name,
-			Description: cmd.Description,
-			Usage:       strings.Replace(cmd.Usage, "${COMMAND_NAME}", context.CLIName(), -1),
-			Flags:       cmd.Flags,
-		}
-		if len(cmd.Subcommands) == 0 {
-			action := GetCommandAction(context, sl.ui)
-			if action != nil {
-				cliCommand.Action = action
-			}
-		} else {
-			for _, subCmd := range cmd.Subcommands {
-				cliCommand.Subcommands = append(cliCommand.Subcommands,
-					cli.Command{
-						Category:    subCmd.Category,
-						Name:        subCmd.Name,
-						Description: subCmd.Description,
-						Usage:       strings.Replace(subCmd.Usage, "${COMMAND_NAME}", context.CLIName(), -1),
-						Flags:       subCmd.Flags,
-						Action:      GetCommandAction(context, sl.ui),
-					})
-			}
-		}
-		app.Commands = append(app.Commands, cliCommand)
+	// When the command comes in from the ibmcloud-cli it has `sl` in the Namespace, which we need to remove
+	args = append(strings.Split(context.CommandNamespace(), " "), args...)
+	if args[0] == "sl" || args[0] == "" {
+		args = args[1:]
 	}
-	err := app.Run(append(strings.Split(context.CommandNamespace(), " "), args...))
-	if err != nil {
-		sl.ui.Failed(err.Error())
-		os.Exit(1)
+	// Gives Cobra the args we were given
+	cobraCommand.SetArgs(args)
+	// fmt.Printf("ARgs: %v\n", args)
+	cobraErr := cobraCommand.Execute()
+	if cobraErr != nil {
+		fmt.Printf("Cobra Error:\n %v", cobraErr)
+	} else {
+		return
 	}
+
 }
 
 func GetCommandAction(pluginContext plugin.PluginContext, ui terminal.UI) func(cliContext *cli.Context) error {
@@ -222,6 +200,7 @@ func Namespaces() []plugin.Namespace {
 	}
 }
 
+/*
 func getCLITopCommands() []cli.Command {
 	return []cli.Command{
 		autoscale.AutoScaleMetaData(),
@@ -249,11 +228,90 @@ func getCLITopCommands() []cli.Command {
 		objectstorage.ObjectStorageMetaData(),
 		order.OrderMetaData(),
 		user.UserMetaData(),
-		callapi.CallAPIMetadata(),
+		// callapi.CallAPIMetadata(),
 		tags.TagsMetaData(),
 		dedicatedhost.DedicatedhostMetaData(),
 		virtual.VSMetaData(),
 		account.AccountMetaData(),
 		reports.ReportsMetaData(),
 	}
+}
+*/
+func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag {
+	var pluginFlags []plugin.Flag
+	flagSet.VisitAll(func(pflag *pflag.Flag) {
+		thisFlag := plugin.Flag{
+			Name:        pflag.Name,
+			Description: pflag.Usage,
+			HasValue:    false,
+			Hidden:      false,
+		}
+		pluginFlags = append(pluginFlags, thisFlag)
+	})
+	// TODO, see if its possible to have global values added like VisitAll?
+	// outputFlag := plugin.Flag{
+	// 	Name: "output",
+	// 	Description: "--output=JSON for json output.",
+	// 	HasValue: false,
+	// 	Hidden: false,
+	// }
+	// pluginFlags = append(pluginFlags, outputFlag)
+	return pluginFlags
+}
+
+func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Command {
+	var pluginCommands []plugin.Command
+	// Custom Usage to ibmcloud CLI prints out a nice messages for us
+	topCommand.SetUsageTemplate(USEAGE_TEMPLATE)
+	for _, cliCmd := range topCommand.Commands() {
+		if len(cliCmd.Commands()) > 0 {
+			pluginCommands = append(pluginCommands, cobraToCLIMeta(cliCmd, namespace+" "+cliCmd.Use)...)
+		} else {
+			thisCmd := plugin.Command{
+				Namespace:   namespace,
+				Name:        cliCmd.Name(),
+				Description: cliCmd.Short,
+				Usage:       cliCmd.UsageString(),
+				Flags:       cobraFlagToPlugin(cliCmd.Flags()),
+			}
+			pluginCommands = append(pluginCommands, thisCmd)
+		}
+	}
+
+	// for _, cmd := range pluginCommands {
+	// 	fmt.Printf("%v %v\n", cmd.Namespace, cmd.Name)
+	// }
+	return pluginCommands
+}
+
+func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command {
+
+	slCommand := metadata.NewSoftlayerCommand(ui, session)
+	cobraCmd := &cobra.Command{
+		Use:   "sl",
+		Short: T("Manage Classic infrastructure services"),
+		Long:  T("Manage Classic infrastructure services"),
+		RunE:  nil,
+	}
+
+	// Persistent Flags
+	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", "--output=JSON for json output.")
+	// Commands
+	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
+	cobraCmd.AddCommand(autoscale.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(account.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(email.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(reports.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(eventlog.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(nas.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(placementgroup.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(tags.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(block.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(file.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(licenses.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(firewall.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(dedicatedhost.SetupCobraCommands(slCommand))
+
+
+	return cobraCmd
 }
