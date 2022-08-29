@@ -8,36 +8,35 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Image import", func() {
 	var (
 		fakeUI           *terminal.FakeUI
+		cliCommand       *image.ImportCommand
+		fakeSession      *session.Session
+		slCommand        *metadata.SoftlayerCommand
 		fakeImageManager *testhelpers.FakeImageManager
-		cmd              *image.ImportCommand
-		cliCommand       cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeImageManager = new(testhelpers.FakeImageManager)
-		cmd = image.NewImportCommand(fakeUI, fakeImageManager)
-		cliCommand = cli.Command{
-			Name:        image.ImageImportMetaData().Name,
-			Description: image.ImageImportMetaData().Description,
-			Usage:       image.ImageImportMetaData().Usage,
-			Flags:       image.ImageImportMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = image.NewImportCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.ImageManager = fakeImageManager
 	})
 
 	Describe("Image import", func() {
 		Context("Image import without three arguments", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "myimage")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires three arguments."))
 			})
@@ -48,7 +47,7 @@ var _ = Describe("Image import", func() {
 				fakeImageManager.ImportImageReturns(datatypes.Virtual_Guest_Block_Device_Template_Group{}, errors.New("SoftLayer_Exception_Public: Template configuration uri specified an invalid network storage service resource protocol. (HTTP 500)"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "myimage", "swift://SLOS123456-10@dal05/OS/testImage4f.iso", "PI-ABCDE-abcde1234567890abcdefgrty1234567890")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "myimage", "swift://SLOS123456-10@dal05/OS/testImage4f.iso", "PI-ABCDE-abcde1234567890abcdefgrty1234567890")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_Public: Template configuration uri specified an invalid network storage service resource protocol. (HTTP 500)"))
 			})
@@ -96,7 +95,7 @@ var _ = Describe("Image import", func() {
 				fakeImageManager.ImportImageReturns(fakeImage, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "myimage", "swift://SLOS123456-10@dal05/OS/testImage4f.iso", "PI-ABCDE-abcde1234567890abcdefgrty1234567890")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "myimage", "swift://SLOS123456-10@dal05/OS/testImage4f.iso", "PI-ABCDE-abcde1234567890abcdefgrty1234567890")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("myimage"))

@@ -4,9 +4,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,62 +13,81 @@ import (
 )
 
 type DatacenterCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	ImageManager managers.ImageManager
+	Command      *cobra.Command
+	Add          string
+	Remove       string
 }
 
-func NewDatacenterCommand(ui terminal.UI, imageManager managers.ImageManager) (cmd *DatacenterCommand) {
-	return &DatacenterCommand{
-		UI:           ui,
-		ImageManager: imageManager,
+func NewDatacenterCommand(sl *metadata.SoftlayerCommand) (cmd *DatacenterCommand) {
+	thisCmd := &DatacenterCommand{
+		SoftlayerCommand: sl,
+		ImageManager:     managers.NewImageManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "datacenter " + T("IDENTIFIER"),
+		Short: T("Add/Remove datacenter of an image."),
+		Long: T(`
+EXAMPLE:
+	${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Add, "add", "", T("To add Datacenter"))
+	cobraCmd.Flags().StringVar(&thisCmd.Remove, "remove", "", T("Datacenter to remove"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
-func (cmd *DatacenterCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 && (c.String("add") == "" || c.String("remove") == "") {
-		return slErr.NewInvalidUsageError(T("This command requires one indentifier, the option and the option arguments."))
-	}
-	if !c.IsSet("add") && !c.IsSet("remove") {
+
+func (cmd *DatacenterCommand) Run(args []string) error {
+	if cmd.Add == "" && cmd.Remove == "" {
 		return slErr.NewInvalidUsageError(T("This command requires --add or --remove option."))
 	}
 
-	imageID, err := strconv.Atoi(c.Args()[0])
+	imageID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Image ID")
 	}
 
 	storageLocations, err := cmd.ImageManager.GetDatacenters(imageID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get image datacenters.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get image datacenters."), err.Error(), 2)
 	}
 
-	if c.IsSet("add") {
-		datacenter := buildLocation(c.String("add"), storageLocations)
+	if cmd.Add != "" {
+		datacenter := buildLocation(cmd.Add, storageLocations)
 		if datacenter[0].Id != nil {
 			_, err = cmd.ImageManager.AddLocation(imageID, datacenter)
 			if err != nil {
 				return err
 			}
 			cmd.UI.Ok()
-			i18nsubs := map[string]interface{}{"imageId": imageID, "datacenter": c.String("add"), "action": "added"}
+			i18nsubs := map[string]interface{}{"imageId": imageID, "datacenter": cmd.Add, "action": "added"}
 			cmd.UI.Print(T("{{.imageId}} was {{.action}} from datacenter {{.datacenter}}", i18nsubs))
 
 		} else {
-			return slErr.NewInvalidUsageError(T("{{.datacenter}} is invalid", map[string]interface{}{"datacenter": c.String("add")}))
+			return slErr.NewInvalidUsageError(T("{{.datacenter}} is invalid", map[string]interface{}{"datacenter": cmd.Add}))
 		}
 	}
-	if c.IsSet("remove") {
-		datacenter := buildLocation(c.String("remove"), storageLocations)
+	if cmd.Remove != "" {
+		datacenter := buildLocation(cmd.Remove, storageLocations)
 		if datacenter[0].Id != nil {
 			_, err = cmd.ImageManager.DeleteLocation(imageID, datacenter)
 			if err != nil {
 				return err
 			}
 			cmd.UI.Ok()
-			i18nsubs := map[string]interface{}{"imageId": imageID, "datacenter": c.String("remove"), "action": "removed"}
+			i18nsubs := map[string]interface{}{"imageId": imageID, "datacenter": cmd.Remove, "action": "removed"}
 			cmd.UI.Print(T("{{.imageId}} was {{.action}} from datacenter {{.datacenter}}", i18nsubs))
 
 		} else {
-			return slErr.NewInvalidUsageError(T("{{.datacenter}} is invalid", map[string]interface{}{"datacenter": c.String("remove")}))
+			return slErr.NewInvalidUsageError(T("{{.datacenter}} is invalid", map[string]interface{}{"datacenter": cmd.Remove}))
 		}
 
 	}
@@ -93,28 +111,4 @@ func buildLocation(location string, storageLocations []datatypes.Location) []dat
 	datacenter = append(datacenter, locations)
 	return datacenter
 
-}
-
-func ImageDatacenterMetaData() cli.Command {
-	return cli.Command{
-		Category:    "image",
-		Name:        "datacenter",
-		Description: T("Add/Remove datacenter of an image."),
-		Usage: T(`${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] 
-
-EXAMPLE:
-	${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03
-	This command Add/Remove datacenter of an image.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "add",
-				Usage: T("To add Datacenter"),
-			},
-			cli.StringFlag{
-				Name:  "remove",
-				Usage: T("Datacenter to remove"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }
