@@ -34,6 +34,20 @@ func NewSoftlayerCommand(ui terminal.UI, session *session.Session) *SoftlayerCom
 		OutputFlag: &CobraOutputFlag{""},
 	}
 }
+
+type SoftlayerStorageCommand struct {
+	*SoftlayerCommand
+	StorageI18n map[string]interface{}
+}
+
+func NewSoftlayerStorageCommand(ui terminal.UI, session *session.Session, storageType string) *SoftlayerStorageCommand {
+	return &SoftlayerStorageCommand{
+		SoftlayerCommand: NewSoftlayerCommand(ui, session),
+		StorageI18n: map[string]interface{}{"storageType": storageType},
+	}
+}
+
+
 func (slcmd *SoftlayerCommand) GetOutputFlag() string {
 	return slcmd.OutputFlag.String()
 }

@@ -15,7 +15,7 @@ import (
 )
 
 type VolumeListCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Username       string
@@ -27,19 +27,19 @@ type VolumeListCommand struct {
 	UserColumns    []string
 }
 
-func NewVolumeListCommand(sl *metadata.SoftlayerCommand) *VolumeListCommand {
+func NewVolumeListCommand(sl *metadata.SoftlayerStorageCommand) *VolumeListCommand {
 	thisCmd := &VolumeListCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-list",
 		Short: T("List block storage"),
-		Long: T(`${COMMAND_NAME} sl block volume-list [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block volume-list -d dal09 -t endurance --sortby capacity_gb
-   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.`),
+   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb
+   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.`, sl.StorageI18n),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

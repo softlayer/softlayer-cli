@@ -2,19 +2,17 @@ package file_test
 
 import (
 	"errors"
-	"fmt"
-	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -22,64 +20,58 @@ var _ = Describe("Snapshot order", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *file.SnapshotOrderCommand
-		cliCommand         cli.Command
-		context            plugin.PluginContext
+		cliCommand         *file.SnapshotOrderCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		context = plugin.InitPluginContext("softlayer")
-		cmd = file.NewSnapshotOrderCommand(fakeUI, FakeStorageManager, context)
-		cliCommand = cli.Command{
-			Name:        file.FileSnapshotOrderMetaData().Name,
-			Description: file.FileSnapshotOrderMetaData().Description,
-			Usage:       file.FileSnapshotOrderMetaData().Usage,
-			Flags:       file.FileSnapshotOrderMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "file")
+		cliCommand = file.NewSnapshotOrderCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Snapshot order", func() {
 		Context("Snapshot order without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Snapshot order with wrong volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Volume ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 
 		Context("Snapshot order without -s", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-s|--size] is required.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to get available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-s|--size] is required."))
+				Expect(err.Error()).To(ContainSubstring("sl file volume-options' to get available options."))
 			})
 		})
 
 		Context("Snapshot order with wrong tier", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "100", "-t", "0.3")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "100", "-t", "0.3")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-t|--tier] is optional, options are: 0.25,2,4,10.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-t|--tier] is optional, options are: 0.25,2,4,10."))
 			})
 		})
 
 		Context("Snapshot order with -f and not continue", func() {
 			It("return no error", func() {
 				fakeUI.Inputs("No")
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "100", "-t", "0.25")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "100", "-t", "0.25")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"This action will incur charges on your account. Continue?"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Aborted"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("This action will incur charges on your account. Continue?"))
 			})
 		})
 
@@ -100,10 +92,9 @@ var _ = Describe("Snapshot order", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "100", "-t", "0.25", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "100", "-t", "0.25", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Order 123456 was placed."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
 			})
 		})
 
@@ -124,10 +115,9 @@ var _ = Describe("Snapshot order", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "100", "-t", "0.25", "-u", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "100", "-t", "0.25", "-u", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Order 123456 was placed."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
 			})
 		})
 
@@ -136,10 +126,10 @@ var _ = Describe("Snapshot order", func() {
 				FakeStorageManager.OrderSnapshotSpaceReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Internal Server Error"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "100", "-t", "0.25", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "100", "-t", "0.25", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to order snapshot space for volume 1234.Please verify your options and try again.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to order snapshot space for volume 1234.Please verify your options and try again."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 	})

@@ -2,114 +2,101 @@ package file_test
 
 import (
 	"errors"
-	"fmt"
-	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Volume order", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *file.VolumeOrderCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *file.VolumeOrderCommand
-		cliCommand         cli.Command
-		context            plugin.PluginContext
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		context = plugin.InitPluginContext("softlayer")
-		cmd = file.NewVolumeOrderCommand(fakeUI, FakeStorageManager, context)
-		cliCommand = cli.Command{
-			Name:        file.FileVolumeOrderMetaData().Name,
-			Description: file.FileVolumeOrderMetaData().Description,
-			Usage:       file.FileVolumeOrderMetaData().Usage,
-			Flags:       file.FileVolumeOrderMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "file")
+		cliCommand = file.NewVolumeOrderCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Volume order", func() {
 		Context("Volume order without -t", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -t|--storage-type is required, must be either performance or endurance.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -t|--storage-type is required, must be either performance or endurance."))
+				Expect(err.Error()).To(ContainSubstring("sl file volume-options' to check available options."))
 			})
 		})
 
 		Context("Volume order with wrong -t", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -t|--storage-type is required, must be either performance or endurance.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -t|--storage-type is required, must be either performance or endurance."))
 			})
 		})
 
 		Context("Volume order without -s", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "performance")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "performance")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -s|--size is required, must be a positive integer.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -s|--size is required, must be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("sl file volume-options' to check available options."))
 			})
 		})
 
 		Context("Volume order without -d", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "performance", "-s", "1000")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "performance", "-s", "1000")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -d|--datacenter is required.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -d|--datacenter is required."))
 			})
 		})
 
 		Context("Volume order without iops for performance", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "performance", "-s", "1000", "-d", "tok02")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "performance", "-s", "1000", "-d", "tok02")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -i|--iops is required with performance volume.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -i|--iops is required with performance volume."))
 			})
 		})
 
 		Context("Volume order with wrong iops for performance", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "345")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "345")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -i|--iops must be a multiple of 100.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -i|--iops must be a multiple of 100."))
 			})
 		})
 
 		Context("Volume order with wrong iops for performance", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "20")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "20")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -i|--iops must be between 100 and 6000, inclusive.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -i|--iops must be between 100 and 6000, inclusive."))
 			})
 		})
 
 		Context("Volume order with wrong iops for performance", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "10000")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "10000")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -i|--iops must be between 100 and 6000, inclusive.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -i|--iops must be between 100 and 6000, inclusive."))
 			})
 		})
 
@@ -118,20 +105,19 @@ var _ = Describe("Volume order", func() {
 				FakeStorageManager.OrderVolumeReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "6000", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "6000", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to order file volume.Please verify your options and try again.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to order file volume.Please verify your options and try again."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
 		Context("Volume order with correct parameters for performance but not continue", func() {
 			It("return no error", func() {
 				fakeUI.Inputs("No")
-				err := testhelpers.RunCommand(cliCommand, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "6000")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "performance", "-s", "1000", "-d", "tok02", "-i", "6000")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"This action will incur charges on your account. Continue?"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Aborted."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("This action will incur charges on your account. Continue?"))
 			})
 		})
 
@@ -152,59 +138,49 @@ var _ = Describe("Volume order", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "performance", "-s", "1000", "-d", "tok02", "--iops", "4000", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "performance", "-s", "1000", "-d", "tok02", "--iops", "4000", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Order 12345678 was placed."}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Item1 description"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Item2 description"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{fmt.Sprintf("You may run '%s sl file volume-list --order 12345678' to find this file volume after it is ready.", cmd.Context.CLIName())}))
+
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 12345678 was placed."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("sl file volume-list --order 12345678'"))
 			})
 			It("return no with monthly billing option", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f", "-b", "monthly")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f", "-b", "monthly")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Order 12345678 was placed."}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Item1 description"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Item2 description"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{fmt.Sprintf("You may run '%s sl file volume-list --order 12345678' to find this file volume after it is ready.", cmd.Context.CLIName())}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 12345678 was placed."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("sl file volume-list --order 12345678'"))
 			})
 			It("return no with monthly billing option", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f", "-b", "hourly")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f", "-b", "hourly")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Order 12345678 was placed."}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Item1 description"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Item2 description"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{fmt.Sprintf("You may run '%s sl file volume-list --order 12345678' to find this file volume after it is ready.", cmd.Context.CLIName())}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 12345678 was placed."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("sl file volume-list --order 12345678'"))
 			})
 		})
 
 		Context("Volume order without tier for endurance", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "endurance", "-s", "1000", "-d", "tok02")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "endurance", "-s", "1000", "-d", "tok02")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -e|--tier is required with endurance volume in IOPS/GB, options are: 0.25, 2, 4, 10.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -e|--tier is required with endurance volume in IOPS/GB, options are: 0.25, 2, 4, 10."))
 			})
 		})
 
 		Context("Volume order with wrong tier for endurance", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.5")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.5")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: -e|--tier is required with endurance volume in IOPS/GB, options are: 0.25, 2, 4, 10.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -e|--tier is required with endurance volume in IOPS/GB, options are: 0.25, 2, 4, 10."))
+				Expect(err.Error()).To(ContainSubstring("sl file volume-options' to check available options."))
 			})
 		})
 
 		Context("Volume order with correct parameters for endurance but not continue", func() {
 			It("return no error", func() {
 				fakeUI.Inputs("No")
-				err := testhelpers.RunCommand(cliCommand, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"This action will incur charges on your account. Continue?"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Aborted."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("This action will incur charges on your account. Continue?"))
 			})
 		})
 
@@ -213,18 +189,18 @@ var _ = Describe("Volume order", func() {
 				FakeStorageManager.OrderVolumeReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to order file volume.Please verify your options and try again.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to order file volume.Please verify your options and try again."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 		Context("Volume order with wrong billing option", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f", "-b", "worngoption")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f", "-b", "worngoption")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstrings([]string{"Incorrect Usage: -b|--billing can only be either hourly or monthly."}))
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl file volume-options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -b|--billing can only be either hourly or monthly."))
+				Expect(err.Error()).To(ContainSubstring("sl file volume-options' to check available options."))
 			})
 
 		})
@@ -245,13 +221,9 @@ var _ = Describe("Volume order", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "endurance", "-s", "1000", "-d", "tok02", "-e", "0.25", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Order 12345678 was placed."}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Item1 description"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Item2 description"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{fmt.Sprintf("You may run '%s sl file volume-list --order 12345678' to find this file volume after it is ready.", cmd.Context.CLIName())}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 12345678 was placed."))
 			})
 		})
 	})

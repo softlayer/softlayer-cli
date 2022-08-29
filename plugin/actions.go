@@ -9,13 +9,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
@@ -42,29 +39,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl block
-	blockCommands := block.GetCommandAcionBindings(context, ui, session)
-	for name, action := range blockCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl file
-	fileCommands := file.GetCommandAcionBindings(context, ui, session)
-	for name, action := range fileCommands {
-		CommandActionBindings[name] = action
-	}
-
 	// ibmcloud sl hardware
 	hardwareCommands := hardware.GetCommandActionBindings(context, ui, session)
 	for name, action := range hardwareCommands {
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl image
-	imageCommands := image.GetCommandActionBindings(context, ui, session)
-	for name, action := range imageCommands {
-		CommandActionBindings[name] = action
-	}
 	// ibmcloud sl ipsec
 	ipsecCommands := ipsec.GetCommandActionBindings(context, ui, session)
 	for name, action := range ipsecCommands {
@@ -86,12 +66,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl order
 	orderCommands := order.GetCommandActionBindings(context, ui, session)
 	for name, action := range orderCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl globalip
-	globalipCommands := globalip.GetCommandActionBindings(context, ui, session)
-	for name, action := range globalipCommands {
 		CommandActionBindings[name] = action
 	}
 

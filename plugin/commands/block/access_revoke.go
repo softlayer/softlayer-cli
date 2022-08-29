@@ -12,7 +12,7 @@ import (
 )
 
 type AccessRevokeCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	NetworkManager managers.NetworkManager
@@ -22,20 +22,20 @@ type AccessRevokeCommand struct {
 	Ip_address     []string
 }
 
-func NewAccessRevokeCommand(sl *metadata.SoftlayerCommand) *AccessRevokeCommand {
+func NewAccessRevokeCommand(sl *metadata.SoftlayerStorageCommand) *AccessRevokeCommand {
 	thisCmd := &AccessRevokeCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
-		NetworkManager:   managers.NewNetworkManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
+		NetworkManager:          managers.NewNetworkManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "access-revoke " + T("IDENTIFIER"),
 		Short: T("Revoke authorization for hosts that are accessing a specific volume"),
-		Long: T(`${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321
-   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.`),
+   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321
+   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

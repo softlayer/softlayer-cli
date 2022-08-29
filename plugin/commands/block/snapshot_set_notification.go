@@ -11,27 +11,22 @@ import (
 )
 
 type SnapshotSetNotificationCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Enable         bool
 	Disable        bool
 }
 
-func NewSnapshotSetNotificationCommand(sl *metadata.SoftlayerCommand) *SnapshotSetNotificationCommand {
+func NewSnapshotSetNotificationCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotSetNotificationCommand {
 	thisCmd := &SnapshotSetNotificationCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-set-notification " + T("IDENTIFIER"),
 		Short: T("Enables/Disables snapshot space usage threshold warning for a given volume."),
-		Long: T(`${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID
-
-EXAMPLE:
-	${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567
-	Enables/Disables snapshot space usage threshold warning for a given volume.`),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

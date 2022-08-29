@@ -12,27 +12,27 @@ import (
 )
 
 type VolumeLunCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeLunCommand(sl *metadata.SoftlayerCommand) *VolumeLunCommand {
+func NewVolumeLunCommand(sl *metadata.SoftlayerStorageCommand) *VolumeLunCommand {
 	thisCmd := &VolumeLunCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-set-lun-id " + T("IDENTIFIER") + " " + T("LUN_ID"),
 		Short: T("Set the LUN ID on an existing block storage volume"),
-		Long: T(`${COMMAND_NAME} sl block volume-set-lun-id VOLUME_ID LUN_ID
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID
 
 	The LUN ID only takes effect during the Host Authorization process. It is
 	recommended (but not necessary) to de-authorize all hosts before using
 	this method.
 	VOLUME_ID - the volume ID on which to set the LUN ID
 	LUN_ID - recommended range is an integer between 0 and 255. Advanced users
-	can use an integer between 0 and 4095`),
+	can use an integer between 0 and 4095`, sl.StorageI18n),
 		Args: metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

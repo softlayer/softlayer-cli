@@ -3,6 +3,7 @@ package metadata
 import (
 	"fmt"
 	"strings"
+
 	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
@@ -14,7 +15,7 @@ import (
 func NoArgs(cmd *cobra.Command, args []string) error {
 	if len(args) > 0 {
 		subs := map[string]interface{}{
-			"Arg": args[0],
+			"Arg":     args[0],
 			"Command": cmd.CommandPath(),
 		}
 		return fmt.Errorf(T("unknown command {{.Arg}} for {{.Command}}", subs))
@@ -35,10 +36,10 @@ func OnlyValidArgs(cmd *cobra.Command, args []string) error {
 		for _, v := range args {
 			if !stringInSlice(v, validArgs) {
 				subs := map[string]interface{}{
-					"Arg": v,
+					"Arg":  v,
 					"Path": cmd.CommandPath(),
 				}
-				return fmt.Errorf(T("invalid argument {{.Arg}} for {{.Path}}",subs))
+				return fmt.Errorf(T("invalid argument {{.Arg}} for {{.Path}}", subs))
 			}
 		}
 	}
@@ -56,7 +57,7 @@ func MinimumNArgs(n int) cobra.PositionalArgs {
 		if len(args) < n {
 			subs := map[string]interface{}{
 				"Limit": n,
-				"Args": len(args),
+				"Args":  len(args),
 			}
 			return fmt.Errorf(T("requires at least {{.Limit}} arg(s), only received {{.Args}}", subs))
 		}
@@ -70,7 +71,7 @@ func MaximumNArgs(n int) cobra.PositionalArgs {
 		if len(args) > n {
 			subs := map[string]interface{}{
 				"Limit": n,
-				"Args": len(args),
+				"Args":  len(args),
 			}
 			return fmt.Errorf(T("accepts at most {{.Limit}} arg(s), received {{.Args}}", subs))
 		}
@@ -82,7 +83,7 @@ func MaximumNArgs(n int) cobra.PositionalArgs {
 func ExactArgs(n int) cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {
 		if len(args) != n {
-			subs := map[string]interface{}{"Limit": n,"Args": len(args)}
+			subs := map[string]interface{}{"Limit": n, "Args": len(args)}
 			return fmt.Errorf(T("accepts {{.Limit}} arg(s), received {{.Args}}", subs))
 		}
 		return nil
@@ -108,6 +109,14 @@ func TwoArgs(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+// Just three arg
+func ThreeArgs(cmd *cobra.Command, args []string) error {
+	if len(args) != 3 {
+		return fmt.Errorf(T("Incorrect Usage: This command requires three arguments."))
+	}
+	return nil
+}
+
 // ExactValidArgs returns an error if
 // there are not exactly N positional args OR
 // there are any positional args that are not in the `ValidArgs` field of `Command`
@@ -125,8 +134,8 @@ func RangeArgs(min int, max int) cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {
 		if len(args) < min || len(args) > max {
 			subs := map[string]interface{}{
-				"Min": min,
-				"Max": max,
+				"Min":  min,
+				"Max":  max,
 				"Args": len(args),
 			}
 			return fmt.Errorf(T("accepts between {{.Min}} and {{.Max}} arg(s), received {{.Args}}", subs))

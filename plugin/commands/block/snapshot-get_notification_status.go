@@ -13,15 +13,15 @@ import (
 )
 
 type SnapshotGetNotificationStatusCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewSnapshotGetNotificationStatusCommand(sl *metadata.SoftlayerCommand) *SnapshotGetNotificationStatusCommand {
+func NewSnapshotGetNotificationStatusCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotGetNotificationStatusCommand {
 	thisCmd := &SnapshotGetNotificationStatusCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-get-notification-status " + T("IDENTIFIER"),

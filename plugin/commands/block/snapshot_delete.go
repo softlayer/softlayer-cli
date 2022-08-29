@@ -13,15 +13,15 @@ import (
 )
 
 type SnapshotDeleteCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewSnapshotDeleteCommand(sl *metadata.SoftlayerCommand) *SnapshotDeleteCommand {
+func NewSnapshotDeleteCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotDeleteCommand {
 	thisCmd := &SnapshotDeleteCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-delete " + T("IDENTIFIER"),
