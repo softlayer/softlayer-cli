@@ -13,7 +13,7 @@ import (
 )
 
 type VolumeDuplicateCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command               *cobra.Command
 	StorageManager        managers.StorageManager
 	OriginSnapshotId      int
@@ -25,19 +25,19 @@ type VolumeDuplicateCommand struct {
 	Force                 bool
 }
 
-func NewVolumeDuplicateCommand(sl *metadata.SoftlayerCommand) *VolumeDuplicateCommand {
+func NewVolumeDuplicateCommand(sl *metadata.SoftlayerStorageCommand) *VolumeDuplicateCommand {
 	thisCmd := &VolumeDuplicateCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-duplicate " + T("IDENTIFIER"),
 		Short: T("Order a block volume by duplicating an existing volume"),
-		Long: T(`${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block volume-duplicate 12345678 
-   This command shows order a new volume by duplicating the volume with ID 12345678.`),
+   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 
+   This command shows order a new volume by duplicating the volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

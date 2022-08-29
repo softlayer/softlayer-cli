@@ -8,8 +8,9 @@ import (
 	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -18,51 +19,41 @@ import (
 )
 
 type VolumeDetailCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeDetailCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *VolumeDetailCommand) {
-	return &VolumeDetailCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewVolumeDetailCommand(sl *metadata.SoftlayerStorageCommand) *VolumeDetailCommand {
+	thisCmd := &VolumeDetailCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func FileVolumeDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "file",
-		Name:        "volume-detail",
-		Description: T("Display details for a specified volume"),
-		Usage: T(`${COMMAND_NAME} sl file volume-detail VOLUME_ID [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl file volume-detail 12345678 
-   This command shows details of volume with ID 12345678.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use:   "volume-detail " + T("IDENTIFIER"),
+		Short: T("Display details for a specified volume"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *VolumeDetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *VolumeDetailCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	fileVolume, err := cmd.StorageManager.GetVolumeDetails("file", volumeID, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get details of volume {{.VolumeID}}.\n",
-			map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get details of volume {{.VolumeID}}.\n",
+			map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -142,7 +133,7 @@ func (cmd *VolumeDetailCommand) Run(c *cli.Context) error {
 	}
 	decodedValue, err := url.QueryUnescape(utils.FormatStringPointer(fileVolume.Notes))
 	if err != nil {
-		return cli.NewExitError(T("Failed to decoded the note.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to decoded the note.\n"), err.Error(), 2)
 	}
 	table.Add(T("Notes"), decodedValue)
 	table.Print()

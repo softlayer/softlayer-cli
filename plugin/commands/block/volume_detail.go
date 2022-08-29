@@ -19,15 +19,15 @@ import (
 )
 
 type VolumeDetailCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeDetailCommand(sl *metadata.SoftlayerCommand) *VolumeDetailCommand {
+func NewVolumeDetailCommand(sl *metadata.SoftlayerStorageCommand) *VolumeDetailCommand {
 	thisCmd := &VolumeDetailCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-detail " + T("IDENTIFIER"),

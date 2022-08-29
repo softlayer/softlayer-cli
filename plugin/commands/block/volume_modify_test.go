@@ -1,24 +1,37 @@
 package block_test
 
 import (
-	"errors"
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
+	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("block Volume Convert", func() {
+var orderReceipt = datatypes.Container_Product_Order_Receipt{
+	OrderId: sl.Int(998877),
+	PlacedOrder: &datatypes.Billing_Order{
+		Items: []datatypes.Billing_Order_Item{
+			datatypes.Billing_Order_Item{
+				Description: sl.String("Test Item 1"),
+			},
+			datatypes.Billing_Order_Item{
+				Description: sl.String("Another Test Item"),
+			},
+		},
+	},
+}
+var _ = Describe("Volume Modify", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cliCommand         *block.VolumeConvertCommand
+		cliCommand         *block.VolumeModifyCommand
 		fakeSession        *session.Session
 		slCommand          *metadata.SoftlayerStorageCommand
 	)
@@ -26,45 +39,34 @@ var _ = Describe("block Volume Convert", func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
-		cliCommand = block.NewVolumeConvertCommand(slCommand)
+		cliCommand = block.NewVolumeModifyCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
 	})
 
-	Describe("block Volume Convert", func() {
-		Context("No Arguments Error", func() {
+	Describe("sl block volume-modify", func() {
+		Context("No Id", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
-		Context("Bad VolumeId", func() {
-			It("error resolving volume ID", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
-			})
-		})
-		Context("Proper Usage", func() {
-			BeforeEach(func() {
-				FakeStorageManager.VolumeConvertReturns(nil)
-			})
-			It("return no error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
-				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-			})
-		})
-
-		Context("Proper Usage, but API error", func() {
-			BeforeEach(func() {
-				FakeStorageManager.VolumeConvertReturns(errors.New("Fake Internal Server Error"))
-			})
+		Context("Bad Id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "Abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Fake Internal Server Error"))
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'"))
+			})
+		})
+		Context("Happy Path", func() {
+			BeforeEach(func() {
+				FakeStorageManager.OrderModifiedVolumeReturns(orderReceipt, nil)
+			})
+			It("Success", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--new-size", "500", "-f")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 998877 was placed successfully!."))
 			})
 		})
 	})

@@ -32,50 +32,6 @@
     "translation": "Nº de transações ativas"
   },
   {
-    "id": "${COMMAND_NAME} sl account bandwidth-pools",
-    "translation": "${COMMAND_NAME} sl account bandwidth-pools"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456",
-    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n     ${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account cancel-item IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl account cancel-item IDENTIFIER"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account event-detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account event-detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account events",
-    "translation": "${COMMAND_NAME} sl account events"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account invoice-detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account invoice-detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account invoices [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account invoices [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account item-detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account item-detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account licenses [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account licenses [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account orders [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account orders [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account summary [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account summary [OPTIONS]"
-  },
-  {
     "id": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222",
     "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
   },
@@ -108,176 +64,12 @@
     "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas"
   },
   {
-    "id": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n    ${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n     Ativa / desativa aviso de limite de uso de espaço de uso de espaço de captura instantânea para um determinado volume."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   Esse comando autoriza o servidor virtual com o ID 87654321 a acessar o volume com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   Esse comando lista todos os hosts que estão autorizados a acessar o volume com o ID 12345678 e os classifica por ID."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t",
-    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID é o allowed_host_id de '${COMMAND_NAME} sl block access-list'\n\t"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   Esse comando revoga o acesso do servidor virtual com o ID 87654321 para o volume com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl block replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nSe um volume (com replicação) se tornar inacessível devido a um evento de desastre, será possível usar este método para executar\nfailover imediatamente em uma réplica disponível em outro local. Esse método não permite failback via API.\nPara efetuar failback para o volume original após o uso desse método, abra um chamado de suporte.\nPara testar o failover, use '${COMMAND_NAME} sl block replica-failover' em vez disso.\n\nEXEMPLO:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tEste comando executa a operação de failover para o volume com ID 12345678 para o volume de réplica com o ID 87654321."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list",
-    "translation": "${COMMAND_NAME} sl block object-list [OPTIONS]\n               \nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block replica-failback VOLUME_ID\n\t\t\nEXEMPLO:\n   ${COMMAND_NAME} sl block replica-failback 12345678\n   Esse comando executa a operação de failback para o volume com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-failover VOLUME_ID REPLICA_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block replica-failover VOLUME_ID REPLICA_ID\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl block replica-failover 12345678 87654321\n   Esse comando executa a operação de failover para o volume com o ID 12345678 para o volume de réplica com o ID 87654321."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n   ${COMMAND_NAME} sl block replica-locations 12345678\n   Esse comando lista data centers de replicação adequados para o volume de bloco com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
-    "translation": "${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   Esse comando pede uma réplica para o volume com o ID 12345678, que executa a replicação DAILY, está localizado em dal09, possui nível de camada 4 e o tipo de SO é Linux."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl block replica-partners 12345678\n   Esse comando lista os volumes replicantes existentes para o volume de bloco com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl block snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl block snapshot-cancel 12345678 --immediate -f \n   Esse comando cancela a captura instantânea com o ID 12345678 imediatamente sem solicitar confirmação."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
-    "translation": "${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud\n   Esse comando cria uma captura instantânea para o volume com o ID 12345678 e com uma nota adicional como snapshotforibmcloud."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\nEXEMPLO:\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   Esse comando exclui a captura instantânea com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   Esse comando desativa a captura instantânea diária para o volume com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
-    "translation": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   Esse comando ativa a captura instantânea para o volume com o ID 12345678 e a captura instantânea é obtida semanalmente todos os sábados às 2h e até 5 capturas instantâneas ficam retidas."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n Obter configuração da sinalização de aviso do limite de uso do espaço de capturas instantâneas para um determinado volume."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   Esse comando lista todas as capturas instantâneas do volume com o ID 12345678 e as classifica por ID."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl block snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-order 12345678 -s 1000 -t 4 \n   Esse comando organiza o espaço da captura instantânea para o volume com ID 12345678. O tamanho é 1.000 GB, o nível de camada é de 4 IOPS por GB."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXEMPLO:\n ${COMMAND_NAME} sl block snapshot-restore 12345678 87654321\n Esse comando restaura o volume com o ID 12345678 da captura instantânea com o ID 87654321."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  This command list snapshot schedules for volume with ID 12345678",
-    "translation": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   EXEMPLO:\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  Este comando lista cronogramas de captura instantânea para o volume com ID 12345678"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl block access-list <volume_id>"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID é o host_id obtido por: ibmcloud sl block access-list <volume_id>"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl block access-list <volume_id>"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n Esse comando cancela o volume com o ID 12345678 imediatamente e sem solicitar confirmação."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume.",
-    "translation": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\nEXEMPLO:\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\tConverta uma duplicata de VOLUME_ID dependente em um volume independente."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   This command shows details of volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   Este comando mostra detalhes de volume com ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl block volume-duplicate 12345678 \n   Esse comando mostra o pedido de um novo volume duplicando o volume com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
-    "translation": "${COMMAND_NAME} sl block volume-limits [OPTIONS]\n\nEXEMPLO:\n\t${COMMAND_NAME} sl block volume-limits\n\tEste comando lista os limites de armazenamento por data center para esta conta."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
-    "translation": "${COMMAND_NAME} sl block volume-list [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl block volume-list -d dal09 -t endurance --sortby capacity_gb\n   Esse comando lista todos os volumes de resistência na conta atual que estão localizados em dal09 e os classifica por capacidade."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl block volume-modify VOLUME_ID [OPTIONS]\n\n   EXEMPLO:\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  Esse comando modifica um volume 12345678, cujo tamanho é 1000 GB e o IOPS é 4000.\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 500 --new-tier 4\n\t  Esse comando modifica um volume 12345678, cujo tamanho é 500 GB e o nível de camada é 4 IOPS por GB."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
-    "translation": "${COMMAND_NAME} sl block volume-options\n\t\nEXEMPLO:\n   ${COMMAND_NAME} sl block volume-options\n Esse comando lista todas as opções para criar um volume de armazenamento de bloco, incluindo o tipo de armazenamento, o tamanho do volume, o tipo de SO, o IOPS, o nível de camada, o data center e o tamanho da captura instantânea."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl block volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl block volume-order [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl block volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   Esse comando pede um volume de desempenho em que o tamanho é 1.000 GB, o IOPS é 4.000, o tipo de SO é LINUX e está localizado em dal09.\n   ${COMMAND_NAME} sl block volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n Esse comando pede um volume de resistência cujo tamanho é 500 GB, o nível de camada é 4 IOPS por GB, o tipo de SO é XEN, está localizado em dal09 e o tamanho do espaço de captura instantânea adicional é 500 GB."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
-    "translation": "${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXEMPLO:\n\t${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\tAtualize um VOLUME_ID duplicado com uma captura instantânea de seu SNAPSHOT_ID pai."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl block volume-set-lun-id VOLUME_ID LUN_ID\n\n\tO ID de LUN entra em vigor apenas durante o processo de autorização do host. É\n\t recomendado (mas não necessário) cancelar a autorização de todos os hosts antes de usar\n\tesse método.\n\tVOLUME_ID - o ID do volume no qual configurar o ID do LUN\n\tLUN_ID - o intervalo recomendado é um número inteiro entre 0 e 255. Os usuários avançados\n\tpodem usar um número inteiro entre 0 e 4095"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID \n \nEXAMPLE:\n ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'esta é a minha nota'"
-  },
-  {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXEMPLO: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tEsse comando edita notas de um volume.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tEsse comando mostra um detalhe do usuário.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tEsse comando lista guests virtuais."
   },
   {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
-    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n  Para obter a lista de vlans privadas disponíveis use este comando: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"
-  },
-  {
-    "id": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   Este comando obtém os detalhes para um host dedicado."
-  },
-  {
-    "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   Este comando lista todos os guests do host dedicado na conta."
   },
   {
     "id": "${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns import ~/ibm.com.txt\n   This command imports zone and its resource records from file: ~/ibm.com.txt.",
@@ -316,152 +108,8 @@
     "translation": "${COMMAND_NAME} sl dns zone-print ZONE\n\nEXEMPLO:\n   ${COMMAND_NAME} sl dns zone-print ibm.com\n   Este comando imprime uma zona que é denominada ibm.com no formato BIND."
   },
   {
-    "id": "${COMMAND_NAME} sl email detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl email detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl email edit",
-    "translation": "${COMMAND_NAME} sl email edit"
-  },
-  {
-    "id": "${COMMAND_NAME} sl email list",
-    "translation": "${COMMAND_NAME} sl email list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
-    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
-  },
-  {
-    "id": "${COMMAND_NAME} sl event-log types\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log types",
-    "translation": "${COMMAND_NAME} sl event-log types\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log types"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\nDesativa o aviso de limite de uso do espaço de uso de espaço de captura instantânea para um determinado volume."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl file access-authorize 12345678 --virtual-id 87654321\n   Esse comando autoriza o servidor virtual com o ID 87654321 a acessar o volume com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl file access-list VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl file access-list 12345678 --sortby id \n   Esse comando lista todos os hosts que estão autorizados a acessar o volume com o ID 12345678 e os classifica por ID."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl file access-revoke 12345678 --virtual-id 87654321\n   Esse comando revoga o acesso do servidor virtual com o ID 87654321 ao volume com o ID 12345678."
-  },
-  {
     "id": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl file replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
     "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nSe um volume (com replicação) se tornar inacessível devido a um evento de desastre, será possível usar este método para executar\nfailover imediatamente em uma réplica disponível em outro local. Esse método não permite failback via API.\nPara efetuar failback para o volume original após o uso desse método, abra um chamado de suporte.\nPara testar o failover, use '${COMMAND_NAME} sl file replica-failover' em vez disso.\n\nEXEMPLO:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tEste comando executa a operação de failover para o volume com ID 12345678 para o volume de réplica com o ID 87654321."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file replica-failback VOLUME_ID\n\t\t\nEXEMPLO:\n   ${COMMAND_NAME} sl file replica-failback 12345678\n   Esse comando executa a operação de failback para o volume com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-failover VOLUME_ID REPLICA_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file replica-failover VOLUME_ID REPLICA_ID\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl file replica-failover 12345678 87654321\n   Esse comando executa a operação de failover para o volume com o ID 12345678 para o volume de réplica com o ID 87654321."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-locations 12345678\n   This command lists suitable replication data centers for file volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n   ${COMMAND_NAME} sl file replica-locations 12345678\n   Este comando lista data centers de replicação adequados para o volume de arquivo com ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-order 12345678 -s DAILY -d dal09 --tier 4 \n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4.",
-    "translation": "${COMMAND_NAME} sl file replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl file replica-order 12345678 -s DAILY -d dal09 --tier 4 \n   Esse comando pede uma réplica para o volume com o ID 12345678, que executa a replicação DAILY, está localizado em dal09 e o nível de camada é 4."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-partners 12345678\n   This command lists existing replicant volumes for file volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl file replica-partners 12345678\n   Esse comando lista os volumes replicantes existentes para o volume de arquivo com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl file snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl file snapshot-cancel 12345678 --immediate -f \n   Esse comando cancela a captura instantânea com o ID 12345678 imediatamente sem solicitar confirmação."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
-    "translation": "${COMMAND_NAME} sl file snapshot-create VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl file snapshot-create 12345678 --note snapshotforibmcloud\n   Esse comando cria uma captura instantânea para o volume com o ID 12345678 e com uma nota adicional como snapshotforibmcloud."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file snapshot-delete SNAPSHOT_ID\n\nEXEMPLO:\n   ${COMMAND_NAME} sl file snapshot-delete 12345678 \n   Esse comando exclui a captura instantânea com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file snapshot-disable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl file snapshot-disable 12345678 -s DAILY\n   Esse comando desativa a captura instantânea diária para o volume com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
-    "translation": "${COMMAND_NAME} sl file snapshot-enable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl file snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   Esse comando ativa a captura instantânea para o volume com o ID 12345678 e a captura instantânea é obtida semanalmente todos os sábados às 2h e até 5 capturas instantâneas ficam retidas."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n Obtem a configuração de sinalização de aviso do limite de uso de espaço de capturas instantâneas para um determinado volume."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl file snapshot-list VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl file snapshot-list 12345678 --sortby id \n   Esse comando lista todas as capturas instantâneas do volume com o ID 12345678 e as classifica por ID."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-order 12345678 -s 1000 -t 4 \n   This commands order snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl file snapshot-order VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl file snapshot-order 12345678 -s 1000 -t 4 \n   Esse comando pede um espaço de captura instantânea para o volume com o ID 12345678, o tamanho é 1.000 GB e o nível de camada é 4 IOPS por GB."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXEMPLO:\n ${COMMAND_NAME} sl file snapshot-restore 12345678 87654321\n Esse comando restaura o volume com o ID 12345678 da captura instantânea com o ID 87654321."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-schedule-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-schedule-list 12345678\n   This command list snapshot schedules for volume with ID 12345678",
-    "translation": "${COMMAND_NAME} sl file snapshot-schedule-list VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl file snapshot-schedule-list 12345678\n   Este comando lista cronogramas de captura instantânea para o volume com ID 12345678"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl file volume-cancel VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl file volume-cancel 12345678 --immediate -f \n Esse comando cancela o volume com o ID 12345678 imediatamente e sem solicitar confirmação."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume.",
-    "translation": "${COMMAND_NAME} sl file volume-convert VOLUME_ID\n\nEXEMPLO:\n\t${COMMAND_NAME} sl file volume-convert VOLUME_ID\n\tConverta uma duplicata de VOLUME_ID dependente em um volume independente."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-detail 12345678 \n   This command shows details of volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file volume-detail VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl file volume-detail 12345678 \n   Este comando mostra detalhes de volume com ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file volume-duplicate VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl file volume-duplicate 12345678 \n   Esse comando mostra o pedido de um novo volume duplicando o volume com o ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
-    "translation": "${COMMAND_NAME} sl file volume-limits [OPTIONS]\n\nEXEMPLO:\n\t${COMMAND_NAME} sl file volume-limits\n\tEste comando lista os limites de armazenamento por data center para esta conta."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
-    "translation": "${COMMAND_NAME} sl file volume-list [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl file volume-list -d dal09 -t endurance --sortby capacity_gb\n   Esse comando lista todos os volumes de resistência na conta atual que estão localizados em dal09 e os classifica por capacidade."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl file volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl file volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl file volume-modify VOLUME_ID [OPTIONS]\n\n   EXEMPLO:\n\t  ${COMMAND_NAME} sl file volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  Esse comando modifica um volume 12345678, cujo tamanho é 1000 GB e o IOPS é 4000.\n\t  ${COMMAND_NAME} sl file volume-modify 12345678 --new-size 500 --new-tier 4\n\t  Esse comando modifica um volume 12345678, cujo tamanho é 500 GB e o nível de camada é 4 IOPS por GB."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.",
-    "translation": "${COMMAND_NAME} sl file volume-options\n\t\nEXEMPLO:\n   ${COMMAND_NAME} sl file volume-options\n Esse comando lista todas as opções para criar um volume de armazenamento de bloco, incluindo o tipo de armazenamento, o tamanho do volume, o IOPS, o nível de camada, o data center e o tamanho da captura instantânea."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-order --storage-type performance --size 1000 --iops 4000  -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, located at dal09.\n   ${COMMAND_NAME} sl file volume-order --storage-type endurance --size 500 --tier 4 -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB,located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl file volume-order [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl file volume-order --storage-type performance --size 1000 --iops 4000 -d dal09\n   Esse comando pede um volume de desempenho em que o tamanho é 1.000 GB, o IOPS é 4.000 e está localizado em dal09.\n   ${COMMAND_NAME} sl file volume-order --storage-type endurance --size 500 --tier 4 -d dal09 --snapshot-size 500\n   Esse comando pede um volume de resistência cujo tamanho é 500 GB, o nível de camada é 4 IOPS por GB, está localizado em dal09 e o tamanho do espaço de captura instantânea adicional é 500 GB."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
-    "translation": "${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXEMPLO:\n\t${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\tAtualize um VOLUME_ID duplicado com uma captura instantânea de seu SNAPSHOT_ID pai."
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'esta é a minha nota'"
   },
   {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
@@ -576,20 +224,8 @@
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Atualizar propriedades de contexto do túnel.\n\n  As atualizações são feitas atomicamente, portanto, todas são aceitas ou nenhuma.\n\n  Os valores de vida da chave devem estar no intervalo de 120 a 172.800.\n\n  O Perfect Forward Secrecry fase 2 deve estar no intervalo de 0 a 1.\n\n  Será necessário fazer uma solicitação de configuração separada para realizar mudanças em\n dispositivos de rede."
   },
   {
-    "id": "${COMMAND_NAME} sl licenses cancel KEY",
-    "translation": "${COMMAND_NAME} sl licenses cancel KEY"
-  },
-  {
     "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
     "translation": "${COMMAND_NAME} sl metadata [OPTIONS]\n\n.. csv-table:: Opções: \n-backend_ip \n-backend_mac \n-datacenter \n-datacenter_id \n-frontend_mac \n-id \n-ip \n-network \n-provision_state \n-tags \n-user_data \n \n Exemplos: \n ${COMMAND_NAME} sl metadata backend_ip \n${COMMAND_NAME} sl metadata network\n\n Estes comandos só funcionam em dispositivos na rede backend SoftLayer. Isso permite a autodescoberta para recursos recém-provisionados."
-  },
-  {
-    "id": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456",
-    "translation": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list",
-    "translation": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
@@ -654,14 +290,6 @@
   {
     "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
     "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl order quote-save 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
-    "translation": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut"
-  },
-  {
-    "id": "${COMMAND_NAME} sl report datacenter-closures",
-    "translation": "${COMMAND_NAME} sl report datacenter-closures"
   },
   {
     "id": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.",
@@ -740,26 +368,6 @@
     "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Este comando permite mudar a rota de suas sub-redes de conta própria."
   },
   {
-    "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
-    "translation": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl tags cleanup"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemoves \"tag\" from your account.\n",
-    "translation": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXEMPLO:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemove \"tag\" da sua conta.\n"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags detail [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags detail tag1\n\tShows all items that are tagged with 'tag1'\n",
-    "translation": "${COMMAND_NAME} sl tags detail [TAG NAME]\n\nEXEMPLO:\n\t${COMMAND_NAME} sl tags detail tag1\n\tMostra todos os itens que são marcados com 'tag1'\n"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags list [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags list\n\tShows all tags and a count of devices associated with that tag.\n\n\t${COMMAND_NAME} sl tags list -d\n\tShows all tags with devices, and some basic information about devices using this tag.\n",
-    "translation": "${COMMAND_NAME} sl tags list [OPTIONS]\n\nEXEMPLO:\n\t${COMMAND_NAME} sl tags list\n\tMostra todas as tags e uma contagem de dispositivos associados a cada tag.\n\n\t${COMMAND_NAME} sl tags list -d\n\tMostra todas as tags e os dispositivos, além de algumas informações básicas sobre os dispositivos que usam cada tag.\n"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
-    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
-  },
-  {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
     "translation": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXEMPLO:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 "
   },
@@ -830,10 +438,6 @@
   {
     "id": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   This command updates vlan with ID 12345678 and gives it a new name \"myvlan-rename\".",
     "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXEMPLO:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   Esse comando atualiza a VLAN com o ID 12345678 e fornece a ela um novo nome \"myvlan-rename\"."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXEMPLO:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Esse comando lista todas as VLANs na conta atual filtrando por data center igual a dal09 e as classifica pelo número da VLAN."
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -968,8 +572,112 @@
     "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\n Informações de uso de um servidor virtual.\nExemplo:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
   {
-    "id": "${COMMAND_NAME} slcli account billing-items [OPTIONS]",
-    "translation": "${COMMAND_NAME} slcli account billing-items [OPTIONS]"
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   Esse comando autoriza o servidor virtual com o ID 87654321 a acessar o volume com o ID 12345678."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   Esse comando lista todos os hosts que estão autorizados a acessar o volume com o ID 12345678 e os classifica por ID."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   Esse comando revoga o acesso do servidor virtual com o ID 87654321 para o volume com o ID 12345678."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   Esse comando executa a operação de failback para o volume com o ID 12345678."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   Esse comando lista data centers de replicação adequados para o volume de bloco com o ID 12345678."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   Esse comando pede uma réplica para o volume com o ID 12345678, que executa a replicação DAILY, está localizado em dal09, possui nível de camada 4 e o tipo de SO é Linux."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   Esse comando lista os volumes replicantes existentes para o volume de bloco com o ID 12345678."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   Esse comando cancela a captura instantânea com o ID 12345678 imediatamente sem solicitar confirmação."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   Esse comando cria uma captura instantânea para o volume com o ID 12345678 e com uma nota adicional como snapshotforibmcloud."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   Esse comando desativa a captura instantânea diária para o volume com o ID 12345678."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   Esse comando ativa a captura instantânea para o volume com o ID 12345678 e a captura instantânea é obtida semanalmente todos os sábados às 2h e até 5 capturas instantâneas ficam retidas."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   Esse comando lista todas as capturas instantâneas do volume com o ID 12345678 e as classifica por ID."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   Esse comando organiza o espaço da captura instantânea para o volume com ID 12345678. O tamanho é 1.000 GB, o nível de camada é de 4 IOPS por GB."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n Esse comando restaura o volume com o ID 12345678 da captura instantânea com o ID 87654321."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl {{.storageType}} access-list <volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID é o host_id obtido por: ibmcloud sl {{.storageType}} access-list <volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl {{.storageType}} access-list <volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n Esse comando cancela o volume com o ID 12345678 imediatamente e sem solicitar confirmação."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   Esse comando mostra o pedido de um novo volume duplicando o volume com o ID 12345678."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXEMPLO:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\tEste comando lista os limites de armazenamento por data center para esta conta."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   Esse comando lista todos os volumes de resistência na conta atual que estão localizados em dal09 e os classifica por capacidade."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXEMPLO:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  Esse comando modifica um volume 12345678, cujo tamanho é 1000 GB e o IOPS é 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  Esse comando modifica um volume 12345678, cujo tamanho é 500 GB e o nível de camada é 4 IOPS por GB."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n Esse comando lista todas as opções para criar um volume de armazenamento de bloco, incluindo o tipo de armazenamento, o tamanho do volume, o tipo de SO, o IOPS, o nível de camada, o data center e o tamanho da captura instantânea."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.",
+    "translation": "${COMMAND_NAME} sl file volume-options\n\t\nEXEMPLO:\n   ${COMMAND_NAME} sl file volume-options\n Esse comando lista todas as opções para criar um volume de armazenamento de bloco, incluindo o tipo de armazenamento, o tamanho do volume, o IOPS, o nível de camada, o data center e o tamanho da captura instantânea."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   Esse comando pede um volume de desempenho em que o tamanho é 1.000 GB, o IOPS é 4.000, o tipo de SO é LINUX e está localizado em dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n Esse comando pede um volume de resistência cujo tamanho é 500 GB, o nível de camada é 4 IOPS por GB, o tipo de SO é XEN, está localizado em dal09 e o tamanho do espaço de captura instantânea adicional é 500 GB."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXEMPLO:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tAtualize um VOLUME_ID duplicado com uma captura instantânea de seu SNAPSHOT_ID pai."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tO ID de LUN entra em vigor apenas durante o processo de autorização do host. É\n\t recomendado (mas não necessário) cancelar a autorização de todos os hosts antes de usar\n\tesse método.\n\tVOLUME_ID - o ID do volume no qual configurar o ID do LUN\n\tLUN_ID - o intervalo recomendado é um número inteiro entre 0 e 255. Os usuários avançados\n\tpodem usar um número inteiro entre 0 e 4095"
   },
   {
     "id": "%s is not a valid permission",
@@ -1220,10 +928,6 @@
     "translation": "Uma palavra (ou sequência) que é usada para filtrar pré-configurações"
   },
   {
-    "id": "ALIAS:",
-    "translation": "ALIAS:"
-  },
-  {
     "id": "APIKEY",
     "translation": "APIKEY"
   },
@@ -1408,10 +1112,6 @@
     "translation": "Um ID de uma sub-rede a ser autorizada"
   },
   {
-    "id": "An ID of one subnet to revoke",
-    "translation": "Um ID de uma sub-rede a ser revogada"
-  },
-  {
     "id": "An IP address to authorize",
     "translation": "Um endereço IP a ser autorizado"
   },
@@ -1494,10 +1194,6 @@
   {
     "id": "Authorize File, Block and Portable Storage to a Virtual Server",
     "translation": "Autorizar arquivo, bloco e armazenamento portátil a um servidor virtual"
-  },
-  {
-    "id": "Authorize hosts to access a given volume",
-    "translation": "Autorizar hosts a acessar um determinado volume"
   },
   {
     "id": "Auto Scale Group was deleted successfully",
@@ -2024,10 +1720,6 @@
     "translation": "Coluna a ser exibida. A opções são:id, username, datacenter, storage_type, capacity_gb, bytes_used, IOPs, ip_addr, lunId, created_by, active_transactions, rep_partner_count, notes. Essa opção pode ser especificada várias vezes"
   },
   {
-    "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]",
-    "translation": "Coluna a ser exibida. [A opções são: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [padrão: id,hostname,domain,primary_ip,backend_ip,power_state]"
-  },
-  {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
     "translation": "Coluna a ser exibida. opções são: id,username,email,displayName,2FA,classicAPIKey,status, hardwareCount, virtualGuestCount. Essa opção pode ser especificada várias vezes"
   },
@@ -2040,16 +1732,8 @@
     "translation": "Coluna pela qual classificar, o padrão é: hostname, as opções são: id, hostname, domain, datacenter, cpu, memory, public_ip, private_ip"
   },
   {
-    "id": "Column to sort by, default:hostname",
-    "translation": "Coluna pela qual classificar, padrão:hostname"
-  },
-  {
     "id": "Column to sort by, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by",
     "translation": "Coluna para classificar por, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by"
-  },
-  {
-    "id": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,active_transactions,created_by,mount_addr",
-    "translation": "Coluna para classificar por, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,active_transactions,created_by,mount_addr"
   },
   {
     "id": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by",
@@ -2700,6 +2384,14 @@
     "translation": "Propriedades de volume duplicado"
   },
   {
+    "id": "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "EXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   Esse comando executa a operação de failover para o volume com o ID 12345678 para o volume de réplica com o ID 87654321."
+  },
+  {
+    "id": "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID \n \nEXAMPLE:\n ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'esta é a minha nota'"
+  },
+  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
     "translation": "Primeira data para recuperar eventos para [YYYY-MM-DD]."
   },
@@ -2928,10 +2620,6 @@
     "translation": "Ocorreu um erro ao criar captura instantânea para o volume {{.VolumeID}}. Certifique-se de que não tenha ocorrido failover do volume ou de que ele esteja em outro estado que evite a obtenção de capturas instantâneas.\n"
   },
   {
-    "id": "Error occurred while note was adding in block volume {{.VolumeID}}.\n",
-    "translation": "Ocorreu um erro enquanto a nota estava incluindo no volume de bloco {{.VolumeID}}.\n"
-  },
-  {
     "id": "Error: {{.Error}}",
     "translation": "Erro: {{.Error}}"
   },
@@ -2992,10 +2680,6 @@
     "translation": "Causar failback de um volume de bloco por meio da réplica"
   },
   {
-    "id": "Failback a file volume from replica",
-    "translation": "Causar failback de um volume de arquivo por meio da réplica"
-  },
-  {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
     "translation": "O failback do volume {{.VolumeID}} está agora em andamento."
   },
@@ -3018,10 +2702,6 @@
   {
     "id": "Failed to Edit emailAddress account: {{.emailID}}.\n",
     "translation": "Falha ao editar conta emailAddress: {{.emailID}}.\n"
-  },
-  {
-    "id": "Failed to Order the dedicatedhost.\n",
-    "translation": "Falha ao fazer o pedido de host dedicado.\n"
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -3120,10 +2800,6 @@
     "translation": "Falha ao cancelar VLAN {{.ID}}.\n"
   },
   {
-    "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.\n",
-    "translation": "Falha ao cancelar todos os guests no host dedicado: {{.HostID}}. \n"
-  },
-  {
     "id": "Failed to cancel block volume: {{.ID}}.\n",
     "translation": "Falha ao cancelar volume de bloco: {{.ID}}.\n"
   },
@@ -3146,10 +2822,6 @@
   {
     "id": "Failed to cancel item: {{.itemID}}.\n",
     "translation": "Falha ao cancelar o item: {{.itemID}}.\n"
-  },
-  {
-    "id": "Failed to cancel license: {{.key}}.\n",
-    "translation": "Falha ao cancelar a licença: {{.key}}.\n"
   },
   {
     "id": "Failed to cancel load balancer {{.LBID}}.\n",
@@ -3226,10 +2898,6 @@
   {
     "id": "Failed to create subnet with {{.ID}}.\n",
     "translation": "Falha ao criar sub-rede com {{.ID}}.\n"
-  },
-  {
-    "id": "Failed to create the license.\n",
-    "translation": "Falha ao criar a licença.\n"
   },
   {
     "id": "Failed to create translation for IPSec with ID {{.ID}}.\n",
@@ -3390,10 +3058,6 @@
   {
     "id": "Failed to find product package for this firewall.",
     "translation": "Falha ao localizar pacote do produto para esse firewall."
-  },
-  {
-    "id": "Failed to generate the order template.\n",
-    "translation": "Falha ao gerar o modelo de pedido.\n"
   },
   {
     "id": "Failed to get Account Overview.",
@@ -3564,10 +3228,6 @@
     "translation": "Falha ao obter hosts dedicados.\n"
   },
   {
-    "id": "Failed to get dedicatedhost instance: {{.HostID}}.\n",
-    "translation": "Falha ao obter a instância de host dedicado: {{.HostID}}.\n"
-  },
-  {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
     "translation": "Falha ao obter detalhes do volume {{.VolumeID}}.\n"
   },
@@ -3698,10 +3358,6 @@
   {
     "id": "Failed to get permissions.\n",
     "translation": "Falha ao obter permissões.\n"
-  },
-  {
-    "id": "Failed to get placement group: {{.ID}}.\n",
-    "translation": "Falha ao obter o grupo de posicionamento: {{.ID}}.\n"
   },
   {
     "id": "Failed to get planned events.",
@@ -3884,10 +3540,6 @@
     "translation": "Falha ao obter ID de zona do nome da zona: {{.Zone}}.\n"
   },
   {
-    "id": "Failed to licenses create options.\n",
-    "translation": "Falha em opções de criação de licença.\n"
-  },
-  {
     "id": "Failed to list SSH keys on your account.\n",
     "translation": "Falha ao listar chaves SSH em sua conta.\n"
   },
@@ -3932,10 +3584,6 @@
     "translation": "Falha ao listar pacotes.\n"
   },
   {
-    "id": "Failed to list placement groups\n",
-    "translation": "Falha ao listar grupos de posicionamento\n"
-  },
-  {
     "id": "Failed to list private images.",
     "translation": "Falha ao listar imagens privadas."
   },
@@ -3948,20 +3596,8 @@
     "translation": "Falha ao listar registros de recurso na zona: {{.Zone}}.\n"
   },
   {
-    "id": "Failed to list routers\n",
-    "translation": "Falha ao listar roteadores\n"
-  },
-  {
-    "id": "Failed to list rules\n",
-    "translation": "Falha ao listar regras\n"
-  },
-  {
     "id": "Failed to list subnets on your account.\n",
     "translation": "Falha ao listar sub-redes em sua conta.\n"
-  },
-  {
-    "id": "Failed to list the host guest on your account.\n",
-    "translation": "Falha ao listar o guest de host em sua conta.\n"
   },
   {
     "id": "Failed to list users.\n",
@@ -4160,10 +3796,6 @@
     "translation": "Falha ao remover o componente de rede {{.ComponentID}} do grupo de segurança {{.GroupID}}.\n"
   },
   {
-    "id": "Failed to remove placement group: {{.ID}}.\n",
-    "translation": "Falha ao remover o grupo de posicionamento: {{.ID}}.\n"
-  },
-  {
     "id": "Failed to remove rule {{.RuleId}} in security group {{.GroupID}}.\n",
     "translation": "Falha ao remover a regra {{.RuleId}} no grupo de segurança {{.GroupID}}.\n"
   },
@@ -4234,10 +3866,6 @@
   {
     "id": "Failed to set password for host {{.HostID}}.\n",
     "translation": "Falha ao configurar a senha para o host {{.HostID}}.\n"
-  },
-  {
-    "id": "Failed to set tags.\n",
-    "translation": "Falha ao configurar as tags. \n"
   },
   {
     "id": "Failed to set tags: {{.tags}}.\n",
@@ -4440,10 +4068,6 @@
     "translation": "Fazer failover de um volume de bloco no volume de réplica especificado"
   },
   {
-    "id": "Failover a file volume to the given replica volume",
-    "translation": "Causar failover de um volume de arquivo no volume de réplica especificado"
-  },
-  {
     "id": "Failover an inaccessible volume to its available replicant volume.",
     "translation": "Executar failover de um volume inacessível para o seu volume replicado disponível."
   },
@@ -4480,10 +4104,6 @@
     "translation": "O volume de arquivo {{.VolumeId}} foi marcado para cancelamento imediato."
   },
   {
-    "id": "File volume {{.VolumeId}} is being restored using snapshot {{.SnapshotId}}.",
-    "translation": "O volume de arquivo {{.VolumeId}} está sendo restaurado usando a captura instantânea {{.SnapshotId}}."
-  },
-  {
     "id": "Filter by ID of the order that purchased the IPSec",
     "translation": "Filtrar por ID do pedido que comprou o IPSec"
   },
@@ -4514,10 +4134,6 @@
   {
     "id": "Filter by ID of the owner",
     "translation": "Filtrar pelo ID do proprietário"
-  },
-  {
-    "id": "Filter by Memory capacity in megabytes",
-    "translation": "Filtrar por capacidade de Memória em megabytes"
   },
   {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
@@ -4618,10 +4234,6 @@
   {
     "id": "Filter by subnet type",
     "translation": "Filtrar pelo tipo de sub-rede"
-  },
-  {
-    "id": "Filter by tags",
-    "translation": "Filtrar por tags"
   },
   {
     "id": "Filter by tags (multiple occurrence permitted)",
@@ -4850,10 +4462,6 @@
   {
     "id": "Get status for split or move completed percentage of a given block storage duplicate volume.",
     "translation": "Obter status para divisão ou porcentagem concluída de movimentação de um determinado volume duplicado de armazenamento de bloco."
-  },
-  {
-    "id": "Get status for split or move completed percentage of a given file storage duplicate volume.",
-    "translation": "Obter status para divisão ou porcentagem concluída de movimentação de um determinado volume duplicado de armazenamento de arquivos."
   },
   {
     "id": "Get storage details for a hardware server.",
@@ -5088,10 +4696,6 @@
     "translation": "ID de uma captura instantânea do volume de origem para usar para duplicação"
   },
   {
-    "id": "ID of an original volume snapshot to use for duplication",
-    "translation": "ID de uma captura instantânea do volume original para usar para duplicação"
-  },
-  {
     "id": "ID of the object being tagged  [required]",
     "translation": "ID do objeto em que está sendo colocadas as tags [obrigatório]"
   },
@@ -5214,6 +4818,10 @@
   {
     "id": "Id",
     "translation": "ID"
+  },
+  {
+    "id": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "Se um volume (com replicação) se tornar inacessível devido a um evento de desastre, será possível usar este método para executar\nfailover imediatamente em uma réplica disponível em outro local. Esse método não permite failback via API.\nPara efetuar failback para o volume original após o uso desse método, abra um chamado de suporte.\nPara testar o failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' em vez disso.\n\nEXEMPLO:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tEste comando executa a operação de failover para o volume com ID 12345678 para o volume de réplica com o ID 87654321."
   },
   {
     "id": "If specified, will only show what the quote will order, will NOT place an order [default: False]",
@@ -5680,16 +5288,8 @@
     "translation": "Listar volumes replicantes existentes para um volume de bloco"
   },
   {
-    "id": "List existing replicant volumes for a file volume",
-    "translation": "Listar volumes replicantes existentes para um volume de arquivo"
-  },
-  {
     "id": "List file storage",
     "translation": "Listar armazenamento de arquivo"
-  },
-  {
-    "id": "List file storage snapshots",
-    "translation": "Listar capturas instantâneas do armazenamento de arquivo"
   },
   {
     "id": "List hardware server credentials",
@@ -6004,10 +5604,6 @@
     "translation": "Deve-se especificar [--cpu] ao usar [--private]."
   },
   {
-    "id": "NAME:",
-    "translation": "NOME:"
-  },
-  {
     "id": "NETWORK has to be either public or private.",
     "translation": "NETWORK tem de ser público ou privado."
   },
@@ -6284,10 +5880,6 @@
     "translation": "Número de atualizações"
   },
   {
-    "id": "OPTIONS:",
-    "translation": "OPÇÕES:"
-  },
-  {
     "id": "OS",
     "translation": "SO"
   },
@@ -6330,10 +5922,6 @@
   {
     "id": "One of -d | --hardware-id, -v | --virtual-id, -i | --ip-address-id and -p | --ip-address must be specified.",
     "translation": "Um de -d | --hardware-id, -v | --virtual-id, -i | --ip-address-id e -p | --ip-address deve ser especificado."
-  },
-  {
-    "id": "One of -d | --hardware-id, -v | --virtual-id, -i | --ip-address-id, -p | --ip-address and -s | --subnet-id must be specified.",
-    "translation": "Um de -d | --hardware-id, -v | --virtual-id, -i | --ip-address-id, -p | --ip-address and -s | --subnet-id deve ser especificado."
   },
   {
     "id": "Ongoing Transactions",
@@ -6392,10 +5980,6 @@
     "translation": "Parâmetro opcional para pedir espaço de captura instantânea junto ao armazenamento de bloco de resistência; especifica o tamanho (em GB) de espaço de captura instantânea a ser pedido"
   },
   {
-    "id": "Optional parameter for ordering snapshot space along with the volume",
-    "translation": "Parâmetro opcional para pedir espaço de captura instantânea junto ao volume"
-  },
-  {
     "id": "Options for --sortby are: id,name,description,created",
     "translation": "As opções para --sortby são: id, name, description, created"
   },
@@ -6426,10 +6010,6 @@
   {
     "id": "Order a block volume by duplicating an existing volume",
     "translation": "Pedir um volume de bloco duplicando um volume existente"
-  },
-  {
-    "id": "Order a file storage replica volume",
-    "translation": "Pedir um volume de réplica de armazenamento de arquivo"
   },
   {
     "id": "Order a file storage volume",
@@ -6626,10 +6206,6 @@
   {
     "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]",
     "translation": "IOPs do armazenamento de desempenho, entre 100 e 6.000 em múltiplos de 100 [necessário para o desempenho de tipo de armazenamento]"
-  },
-  {
-    "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100,if no IOPS value is specified, the IOPS value of the original volume will be used",
-    "translation": "IOPs do armazenamento de desempenho, entre 100 e 6.000 em múltiplos de 100; se nenhum valor IOPS for especificado, o valor IOPS do volume original será usado"
   },
   {
     "id": "Permanently removes an SSH key",
@@ -7248,10 +6824,6 @@
     "translation": "Restaurar volume de bloco usando uma captura instantânea especificada"
   },
   {
-    "id": "Restore file volume using a given snapshot",
-    "translation": "Restaurar volume de arquivo usando uma captura instantânea especificada"
-  },
-  {
     "id": "Result limit",
     "translation": "Limite de resultados"
   },
@@ -7480,10 +7052,6 @@
     "translation": "Configurar nota para um volume de armazenamento de bloco existente."
   },
   {
-    "id": "Set note for an existing file storage volume.",
-    "translation": "Configurar nota para um volume de armazenamento de arquivos existente."
-  },
-  {
     "id": "Set note successfully",
     "translation": "Configurar nota com sucesso"
   },
@@ -7582,10 +7150,6 @@
   {
     "id": "Show only selected datacenter, use shortname (dal13) format",
     "translation": "Mostrar somente o data center selecionado e usar o formato de nome abreviado (dal13)"
-  },
-  {
-    "id": "Show only the bandwidth pool summary.",
-    "translation": "Mostrar apenas o resumo do conjunto de largura de banda."
   },
   {
     "id": "Show only the bandwidth summary for each hardware server ",
@@ -8324,10 +7888,6 @@
     "translation": "O tamanho do espaço de captura instantânea a ser pedido para a duplicata; se nenhum tamanho de espaço de captura instantânea for especificado, o tamanho de espaço de captura instantânea do volume de origem será usado"
   },
   {
-    "id": "The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the original volume will be used",
-    "translation": "O tamanho do espaço de captura instantânea a ser pedido para a duplicata; se nenhum tamanho de espaço de captura instantânea for especificado, o tamanho de espaço de captura instantânea do volume original será usado"
-  },
-  {
     "id": "The snapshot space for this volume is set for cancellation; unable to order replicant volume.",
     "translation": "O espaço de captura instantânea para esse volume está configurado para cancelamento; não é possível pedir volume replicante."
   },
@@ -8486,10 +8046,6 @@
   {
     "id": "This command requires four arguments.",
     "translation": "Esse comando requer quatro argumentos."
-  },
-  {
-    "id": "This command requires note flag.",
-    "translation": "Este comando requer sinalização de nota."
   },
   {
     "id": "This command requires notification names as arguments and options flags.",
@@ -8772,10 +8328,6 @@
     "translation": "Tipos"
   },
   {
-    "id": "USAGE:",
-    "translation": "USO:"
-  },
-  {
     "id": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]",
     "translation": "UTC Offset para procurar com datas. +/-Formato HHMM [padrão: -0000]"
   },
@@ -8850,10 +8402,6 @@
   {
     "id": "Unable to find item with ID: {{.itemID}}.\n",
     "translation": "Não é possível localizar item com o ID: {{.itemID}}.\n"
-  },
-  {
-    "id": "Unable to find license with key: {{.key}}.\n",
-    "translation": "Não é possível localizar licença com a chave: {{.key}}.\n"
   },
   {
     "id": "Unable to find location",
@@ -9282,10 +8830,6 @@
   {
     "id": "[-d|--datacenter] is required.\n Run '{{.CommandName}} sl block volume-options' to get available options.",
     "translation": "[-d|--datacenter] é necessário.\n Execute '{{.CommandName}} sl block volume-options' para obter as opções disponíveis."
-  },
-  {
-    "id": "[-d|--datacenter] is required.\n Run '{{.CommandName}} sl file volume-options' to get available options.",
-    "translation": "[-d|--datacenter] é necessário.\n Execute '{{.CommandName}} sl file volume-options' para obter as opções disponíveis."
   },
   {
     "id": "[-d|--day-of-week] value must be between 0 and 6.",
@@ -9810,10 +9354,6 @@
   {
     "id": "public_ip",
     "translation": "public_ip"
-  },
-  {
-    "id": "public_ips",
-    "translation": "public_ips"
   },
   {
     "id": "ready",

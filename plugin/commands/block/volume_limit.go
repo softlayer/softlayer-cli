@@ -1,8 +1,8 @@
 package block
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -10,43 +10,40 @@ import (
 )
 
 type VolumeLimitCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeLimitCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *VolumeLimitCommand) {
-	return &VolumeLimitCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewVolumeLimitCommand(sl *metadata.SoftlayerStorageCommand) *VolumeLimitCommand {
+	thisCmd := &VolumeLimitCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockVolumeLimitsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "volume-limits",
-		Description: T("Lists the storage limits per datacenter for this account."),
-		Usage: T(`${COMMAND_NAME} sl block volume-limits [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "volume-limits",
+		Short: T("Lists the storage limits per datacenter for this account."),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl block volume-limits
-	This command lists the storage limits per datacenter for this account.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+	${COMMAND_NAME} sl {{.storageType}} volume-limits
+	This command lists the storage limits per datacenter for this account.`, sl.StorageI18n),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *VolumeLimitCommand) Run(c *cli.Context) error {
+func (cmd *VolumeLimitCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	volumeLimits, err := cmd.StorageManager.GetVolumeCountLimits()
 	if err != nil {
-		return cli.NewExitError(err.Error(), 1)
+		return err
 	}
 
 	if outputFormat == "JSON" {

@@ -12,16 +12,16 @@ import (
 )
 
 type VolumeCountCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Datacenter     string
 }
 
-func NewVolumeCountCommand(sl *metadata.SoftlayerCommand) (cmd *VolumeCountCommand) {
+func NewVolumeCountCommand(sl *metadata.SoftlayerStorageCommand) (cmd *VolumeCountCommand) {
 	thisCmd := &VolumeCountCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-count",

@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -16,105 +14,89 @@ import (
 )
 
 type SnapshotOrderCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
-	Context        plugin.PluginContext
+	Size           int
+	Tier           float64
+	Iops           int
+	Upgrade        bool
+	Force          bool
 }
 
-func NewSnapshotOrderCommand(ui terminal.UI, storageManager managers.StorageManager, context plugin.PluginContext) (cmd *SnapshotOrderCommand) {
-	return &SnapshotOrderCommand{
-		UI:             ui,
-		StorageManager: storageManager,
-		Context:        context,
+func NewSnapshotOrderCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotOrderCommand {
+	thisCmd := &SnapshotOrderCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func FileSnapshotOrderMetaData() cli.Command {
-	return cli.Command{
-		Category:    "file",
-		Name:        "snapshot-order",
-		Description: T("Order snapshot space for a file storage volume"),
-		Usage: T(`${COMMAND_NAME} sl file snapshot-order VOLUME_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "snapshot-order " + T("IDENTIFIER"),
+		Short: T("Order snapshot space for a file storage volume"),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl file snapshot-order 12345678 -s 1000 -t 4 
-   This commands order snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.`),
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "s,size",
-				Usage: T("Size of snapshot space to create in GB  [required]"),
-			},
-			cli.Float64Flag{
-				Name:  "t,tier",
-				Usage: T("Endurance Storage Tier (IOPS per GB) of the file volume for which space is ordered [optional], options are: 0.25,2,4,10"),
-			},
-			cli.IntFlag{
-				Name:  "i,iops",
-				Usage: T("Performance Storage IOPs, between 100 and 6000 in multiples of 100"),
-			},
-			cli.BoolFlag{
-				Name:  "u,upgrade",
-				Usage: T("Flag to indicate that the order is an upgrade"),
-			},
-			metadata.ForceFlag(),
-			metadata.OutputFlag(),
+   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 
+   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.`, sl.StorageI18n),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().IntVarP(&thisCmd.Size, "size", "s", 0, T("Size of snapshot space to create in GB  [required]"))
+	cobraCmd.Flags().Float64VarP(&thisCmd.Tier, "tier", "t", 0, T("Endurance Storage Tier (IOPS per GB) of the file volume for which space is ordered [optional], options are: 0.25,2,4,10"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Iops, "iops", "i", 0, T("Performance Storage IOPs, between 100 and 6000 in multiples of 100"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Upgrade, "upgrade", "u", false, T("Flag to indicate that the order is an upgrade"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SnapshotOrderCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *SnapshotOrderCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	if !c.IsSet("s") {
-		return errors.NewInvalidUsageError(T("[-s|--size] is required.\nRun '{{.CommandName}} sl file volume-options' to get available options.",
-			map[string]interface{}{"CommandName": cmd.Context.CLIName()}))
+	subs := map[string]interface{}{"CommandName": "ibmcloud"}
+	if cmd.Size == 0 {
+		return slErr.NewInvalidUsageError(T("[-s|--size] is required.\nRun '{{.CommandName}} sl file volume-options' to get available options.", subs))
 	}
-	size := c.Int("s")
+	size := cmd.Size
 
-	tier := float64(0.0)
-	if c.IsSet("t") {
-		tier := c.Float64("t")
+	tier := cmd.Tier
+	if tier > 0 {
 		if tier != 0 && tier != 0.25 && tier != 2 && tier != 4 && tier != 10 {
-			return errors.NewInvalidUsageError(T("[-t|--tier] is optional, options are: 0.25,2,4,10."))
+			return slErr.NewInvalidUsageError(T("[-t|--tier] is optional, options are: 0.25,2,4,10."))
 		}
 	}
-	iops := 0
-	if c.IsSet("i") {
-		iops = c.Int("i")
+	iops := cmd.Iops
+	if iops > 0 {
 		if iops < 100 || iops > 6000 {
-			return errors.NewInvalidUsageError(T("-i|--iops must be between 100 and 6000, inclusive.\nRun '{{.CommandName}} sl file volume-options' to check available options.",
-				map[string]interface{}{"CommandName": cmd.Context.CLIName()}))
+			return slErr.NewInvalidUsageError(T("-i|--iops must be between 100 and 6000, inclusive.\nRun '{{.CommandName}} sl file volume-options' to check available options.", subs))
+
 		}
 		if iops%100 != 0 {
-			return errors.NewInvalidUsageError(T("-i|--iops must be a multiple of 100.\nRun '{{.CommandName}} sl file volume-options' to check available options.",
-				map[string]interface{}{"CommandName": cmd.Context.CLIName()}))
+			return slErr.NewInvalidUsageError(T("-i|--iops must be a multiple of 100.\nRun '{{.CommandName}} sl file volume-options' to check available options.", subs))
+
 		}
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	if !c.IsSet("f") && outputFormat != "JSON" {
+	if !cmd.Force && outputFormat != "JSON" {
 		confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
 			return nil
 		}
 	}
-	orderReceipt, err := cmd.StorageManager.OrderSnapshotSpace("file", volumeID, size, tier, iops, c.Bool("u"))
+	orderReceipt, err := cmd.StorageManager.OrderSnapshotSpace("file", volumeID, size, tier, iops, cmd.Upgrade)
 	if err != nil {
-		return cli.NewExitError(T("Failed to order snapshot space for volume {{.VolumeID}}.Please verify your options and try again.\n",
-			map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to order snapshot space for volume {{.VolumeID}}.Please verify your options and try again.\n",
+			map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -124,10 +106,8 @@ func (cmd *SnapshotOrderCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Order {{.OrderID}} was placed.", map[string]interface{}{"OrderID": *orderReceipt.OrderId}))
 	for _, item := range orderReceipt.PlacedOrder.Items {
-		if item.Description != nil {
-			cmd.UI.Print(fmt.Sprintf(" > %s", *item.Description))
-			cmd.UI.Print("")
-		}
+		cmd.UI.Print(fmt.Sprintf(" > %s", *item.Description))
+		cmd.UI.Print("")
 	}
 	return nil
 }

@@ -22,7 +22,7 @@ var _ = Describe("Access Authorize", func() {
 		fakeUI             *terminal.FakeUI
 		cliCommand         *block.AccessAuthorizeCommand
 		fakeSession        *session.Session
-		slCommand          *metadata.SoftlayerCommand
+		slCommand          *metadata.SoftlayerStorageCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
 		fakeNetworkManager *testhelpers.FakeNetworkManager
 	)
@@ -31,7 +31,7 @@ var _ = Describe("Access Authorize", func() {
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
 		cliCommand = block.NewAccessAuthorizeCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
