@@ -3,9 +3,8 @@ package order
 import (
 	"sort"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,35 +13,46 @@ import (
 )
 
 type ItemListCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	OrderManager managers.OrderManager
+	Command      *cobra.Command
+	Keyword      string
+	Category     string
 }
 
-func NewItemListCommand(ui terminal.UI, orderManager managers.OrderManager) (cmd *ItemListCommand) {
-	return &ItemListCommand{
-		UI:           ui,
-		OrderManager: orderManager,
+func NewItemListCommand(sl *metadata.SoftlayerCommand) (cmd *ItemListCommand) {
+	thisCmd := &ItemListCommand{
+		SoftlayerCommand: sl,
+		OrderManager:     managers.NewOrderManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "item-list " + T("PACKAGE_KEYNAME"),
+		Short: T("List package items that are used for ordering"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Keyword, "keyword", "", T("A word (or string) that is used to filter item names"))
+	cobraCmd.Flags().StringVar(&thisCmd.Category, "category", "", T("Category code that is used to filter items"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ItemListCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *ItemListCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	packageKeyname := args[0]
 
-	packageKeyname := c.Args()[0]
-
-	keyword := c.String("keyword")
-	category := c.String("category")
+	keyword := cmd.Keyword
+	category := cmd.Category
 
 	items, err := cmd.OrderManager.ListItems(packageKeyname, keyword, category)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list items.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list items."), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -87,28 +97,4 @@ func (cmd *ItemListCommand) Print(items []datatypes.Product_Item) {
 		}
 	}
 	table.Print()
-}
-
-func OrderItemListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "order",
-		Name:        "item-list",
-		Description: T("List package items that are used for ordering"),
-		Usage: T(`${COMMAND_NAME} sl order item-list [OPTIONS] PACKAGE_KEYNAME
-	
-EXAMPLE: 
-   ${COMMAND_NAME} sl order item-list CLOUD_SERVER
-   This command lists all items in the VSI package.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "keyword",
-				Usage: T("A word (or string) that is used to filter item names"),
-			},
-			cli.StringFlag{
-				Name:  "category",
-				Usage: T("Category code that is used to filter items"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

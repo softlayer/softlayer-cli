@@ -1,10 +1,10 @@
 package order
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -12,30 +12,45 @@ import (
 )
 
 type PackageListCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	OrderManager managers.OrderManager
+	Command      *cobra.Command
+	Keyword      string
+	PackageType  string
 }
 
-func NewPackageListCommand(ui terminal.UI, orderManager managers.OrderManager) (cmd *PackageListCommand) {
-	return &PackageListCommand{
-		UI:           ui,
-		OrderManager: orderManager,
+func NewPackageListCommand(sl *metadata.SoftlayerCommand) (cmd *PackageListCommand) {
+	thisCmd := &PackageListCommand{
+		SoftlayerCommand: sl,
+		OrderManager:     managers.NewOrderManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "package-list",
+		Short: T("List packages that can be ordered with the placeOrder API"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Keyword, "keyword", "", T("A word (or string) that is used to filter package names"))
+	cobraCmd.Flags().StringVar(&thisCmd.PackageType, "package-type", "", T("The keyname for the type of package. For example, BARE_METAL_CPU"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PackageListCommand) Run(c *cli.Context) error {
+func (cmd *PackageListCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	keyword := c.String("keyword")
-	packageType := c.String("package-type")
+	keyword := cmd.Keyword
+	packageType := cmd.PackageType
 
 	packages, err := cmd.OrderManager.ListPackage(keyword, packageType)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list packages.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list packages."), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -56,28 +71,4 @@ func (cmd *PackageListCommand) Print(packages []datatypes.Product_Package) {
 			utils.FormatStringPointer(pac.Type.KeyName))
 	}
 	table.Print()
-}
-
-func OrderPackageListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "order",
-		Name:        "package-list",
-		Description: T("List packages that can be ordered with the placeOrder API"),
-		Usage: T(`${COMMAND_NAME} sl order package-list [OPTIONS]
-		
-EXAMPLE: 
-   ${COMMAND_NAME} sl order package-list
-   This command list out all packages for ordering.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "keyword",
-				Usage: T("A word (or string) that is used to filter package names"),
-			},
-			cli.StringFlag{
-				Name:  "package-type ",
-				Usage: T("The keyname for the type of package. For example, BARE_METAL_CPU"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }
