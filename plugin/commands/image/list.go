@@ -1,9 +1,8 @@
 package image
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -12,15 +11,35 @@ import (
 )
 
 type ListCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	ImageManager managers.ImageManager
+	Command      *cobra.Command
+	Name         string
+	Public       bool
+	Private      bool
 }
 
-func NewListCommand(ui terminal.UI, imageManager managers.ImageManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:           ui,
-		ImageManager: imageManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
+	thisCmd := &ListCommand{
+		SoftlayerCommand: sl,
+		ImageManager:     managers.NewImageManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List all images on your account"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Name, "name", "", T("Filter on image name"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Public, "public", false, T("Display only public images"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Private, "private", false, T("Display only private images"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 type Image struct {
@@ -28,38 +47,35 @@ type Image struct {
 	datatypes.Virtual_Guest_Block_Device_Template_Group
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
+func (cmd *ListCommand) Run(args []string) error {
 	var publicImages, privateImages []datatypes.Virtual_Guest_Block_Device_Template_Group
 	var err error
 	mask := "mask[id,name,accountId,imageType.name]"
 
-	if c.IsSet("public") && c.IsSet("private") {
+	if cmd.Public && cmd.Private {
 		return bmxErr.NewInvalidUsageError(T("[--public] is not allowed with [--private]."))
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	if c.IsSet("public") && !c.IsSet("private") {
-		publicImages, err = cmd.ImageManager.ListPublicImages(c.String("name"), mask)
+	if cmd.Public && !cmd.Private {
+		publicImages, err = cmd.ImageManager.ListPublicImages(cmd.Name, mask)
 		if err != nil {
-			return cli.NewExitError(T("Failed to list public images.")+err.Error(), 2)
+			return bmxErr.NewAPIError(T("Failed to list public images."), err.Error(), 2)
 		}
-	} else if c.IsSet("private") && !c.IsSet("public") {
-		privateImages, err = cmd.ImageManager.ListPrivateImages(c.String("name"), mask)
+	} else if cmd.Private && !cmd.Public {
+		privateImages, err = cmd.ImageManager.ListPrivateImages(cmd.Name, mask)
 		if err != nil {
-			return cli.NewExitError(T("Failed to list private images.")+err.Error(), 2)
+			return bmxErr.NewAPIError(T("Failed to list private images."), err.Error(), 2)
 		}
 	} else {
-		publicImages, err = cmd.ImageManager.ListPublicImages(c.String("name"), mask)
+		publicImages, err = cmd.ImageManager.ListPublicImages(cmd.Name, mask)
 		if err != nil {
-			return cli.NewExitError(T("Failed to list public images.")+err.Error(), 2)
+			return bmxErr.NewAPIError(T("Failed to list public images."), err.Error(), 2)
 		}
-		privateImages, err = cmd.ImageManager.ListPrivateImages(c.String("name"), mask)
+		privateImages, err = cmd.ImageManager.ListPrivateImages(cmd.Name, mask)
 		if err != nil {
-			return cli.NewExitError(T("Failed to list private images.")+err.Error(), 2)
+			return bmxErr.NewAPIError(T("Failed to list private images."), err.Error(), 2)
 		}
 	}
 
@@ -95,32 +111,4 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func ImageListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "image",
-		Name:        "list",
-		Description: T("List all images on your account"),
-		Usage: T(`${COMMAND_NAME} sl image list [OPTIONS]
-
-EXAMPLE: 
-   ${COMMAND_NAME} sl image list --public
-   This command list all public images on current account.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "name",
-				Usage: T("Filter on image name"),
-			},
-			cli.BoolFlag{
-				Name:  "public",
-				Usage: T("Display only public images"),
-			},
-			cli.BoolFlag{
-				Name:  "private",
-				Usage: T("Display only private images"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

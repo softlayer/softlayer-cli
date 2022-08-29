@@ -1,5 +1,17 @@
 [
   {
+    "id": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03",
+    "translation": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03"
+  },
+  {
+    "id": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n\tIDENTIFIER: ID of the image\n\tURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n\tAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
+    "translation": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n\tIDENTIFIER: ID of the image\n\tURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n\tAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
+  },
+  {
+    "id": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n\tNAME: The image name\n\tURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n\tAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
+    "translation": "\nEXAMPLE:\n\t${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n\tNAME: The image name\n\tURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n\tAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
+  },
+  {
     "id": "\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456",
     "translation": "\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456"
   },
@@ -10,6 +22,10 @@
   {
     "id": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log types",
     "translation": "\nEXAMPLE: \n\t${COMMAND_NAME} sl event-log types"
+  },
+  {
+    "id": "\nEXAMPLE: \n\t${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n\tThis command edits an image with ID 12345678 and set its name to 'ubuntu16', note to 'testing', and tag to 'staging'.",
+    "translation": "\nEXAMPLE: \n\t${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n\tThis command edits an image with ID 12345678 and set its name to 'ubuntu16', note to 'testing', and tag to 'staging'."
   },
   {
     "id": "\nLUN name",
@@ -136,20 +152,12 @@
     "translation": "${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud."
   },
   {
-    "id": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678."
-  },
-  {
     "id": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
     "translation": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
     "translation": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume."
   },
   {
     "id": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
@@ -186,10 +194,6 @@
   {
     "id": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume.",
     "translation": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume."
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   This command shows details of volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   This command shows details of volume with ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
@@ -412,24 +416,12 @@
     "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
-    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
-    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678."
+    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
+    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456."
   },
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
-    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
-    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device."
   },
   {
     "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
@@ -450,34 +442,6 @@
   {
     "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
-    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image delete 12345678\n   This command deletes image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image delete 12345678\n   This command deletes image with ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image detail 12345678\n   This command gets details for image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image detail 12345678\n   This command gets details for image with ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\".",
-    "translation": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\"."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image list --public\n   This command list all public images on current account.",
-    "translation": "${COMMAND_NAME} sl image list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image list --public\n   This command list all public images on current account."
   },
   {
     "id": "${COMMAND_NAME} sl ipsec cancel CONTEXT_ID [OPTIONS]",
@@ -1232,6 +1196,10 @@
     "translation": "APIKEY"
   },
   {
+    "id": "API_KEY",
+    "translation": "API_KEY"
+  },
+  {
     "id": "Aborted.",
     "translation": "Aborted."
   },
@@ -1436,8 +1404,8 @@
     "translation": "Append parameters to web call"
   },
   {
-    "id": "Assign a global IP to a target router or device",
-    "translation": "Assign a global IP to a target router or device"
+    "id": "Assign a global IP to a target router or device.",
+    "translation": "Assign a global IP to a target router or device."
   },
   {
     "id": "Assign block storage subnets to the given host id.",
@@ -1712,8 +1680,8 @@
     "translation": "Cancel a VLAN"
   },
   {
-    "id": "Cancel a global IP",
-    "translation": "Cancel a global IP"
+    "id": "Cancel a global IP.",
+    "translation": "Cancel a global IP."
   },
   {
     "id": "Cancel a hardware server",
@@ -2240,8 +2208,8 @@
     "translation": "Create a dedicatedhost"
   },
   {
-    "id": "Create a global IP",
-    "translation": "Create a global IP"
+    "id": "Create a global IP.",
+    "translation": "Create a global IP."
   },
   {
     "id": "Create a host for dedicated virtual servers",
@@ -2476,8 +2444,8 @@
     "translation": "Delete a zone"
   },
   {
-    "id": "Delete an image ",
-    "translation": "Delete an image "
+    "id": "Delete an image",
+    "translation": "Delete an image"
   },
   {
     "id": "Delete the credential of an Object Storage Account.",
@@ -3040,8 +3008,8 @@
     "translation": "Failed to add certificate.\n"
   },
   {
-    "id": "Failed to add global IP.\n",
-    "translation": "Failed to add global IP.\n"
+    "id": "Failed to add global IP.",
+    "translation": "Failed to add global IP."
   },
   {
     "id": "Failed to add l7 policy: {{.Error}}.\n",
@@ -3084,8 +3052,8 @@
     "translation": "Failed to add {{.Type}} subnet #{{.ID}} to IPSec {{.ContextID}}.\n"
   },
   {
-    "id": "Failed to assign global IP {{.IpID}} to target {{.Target}}.\n",
-    "translation": "Failed to assign global IP {{.IpID}} to target {{.Target}}.\n"
+    "id": "Failed to assign global IP {{.IpID}} to target {{.Target}}.",
+    "translation": "Failed to assign global IP {{.IpID}} to target {{.Target}}."
   },
   {
     "id": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -3136,8 +3104,8 @@
     "translation": "Failed to cancel firewall: {{.ID}}"
   },
   {
-    "id": "Failed to cancel global IP: {{.ID}}.\n",
-    "translation": "Failed to cancel global IP: {{.ID}}.\n"
+    "id": "Failed to cancel global IP: {{.ID}}.",
+    "translation": "Failed to cancel global IP: {{.ID}}."
   },
   {
     "id": "Failed to cancel hardware server: {{.ID}}.\n",
@@ -3280,8 +3248,8 @@
     "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
   {
-    "id": "Failed to delete image: {{.ImageID}}.\n",
-    "translation": "Failed to delete image: {{.ImageID}}.\n"
+    "id": "Failed to delete image: {{.ImageID}}.",
+    "translation": "Failed to delete image: {{.ImageID}}."
   },
   {
     "id": "Failed to delete l7 policy: {{.Error}}.\n",
@@ -3612,12 +3580,12 @@
     "translation": "Failed to get hardware {{.ID}}.\n"
   },
   {
-    "id": "Failed to get image datacenters.\n",
-    "translation": "Failed to get image datacenters.\n"
+    "id": "Failed to get image datacenters.",
+    "translation": "Failed to get image datacenters."
   },
   {
-    "id": "Failed to get image: {{.ImageID}}.\n",
-    "translation": "Failed to get image: {{.ImageID}}.\n"
+    "id": "Failed to get image: {{.ImageID}}.",
+    "translation": "Failed to get image: {{.ImageID}}."
   },
   {
     "id": "Failed to get invoices.",
@@ -3932,8 +3900,8 @@
     "translation": "Failed to list dedicated hosts on your account.\n"
   },
   {
-    "id": "Failed to list global IPs on your account.\n",
-    "translation": "Failed to list global IPs on your account.\n"
+    "id": "Failed to list global IPs on your account.",
+    "translation": "Failed to list global IPs on your account."
   },
   {
     "id": "Failed to list items.\n",
@@ -4304,8 +4272,8 @@
     "translation": "Failed to toggle IPMI interface of hardware server '{{.ID}}'.\n"
   },
   {
-    "id": "Failed to unassign global IP {{.ID}}.\n",
-    "translation": "Failed to unassign global IP {{.ID}}.\n"
+    "id": "Failed to unassign global IP {{.ID}}.",
+    "translation": "Failed to unassign global IP {{.ID}}."
   },
   {
     "id": "Failed to unmarshal template file: {{.File}}.\n",
@@ -5144,6 +5112,10 @@
     "translation": "IDENTIFIER"
   },
   {
+    "id": "IDENTIFIER TARGET",
+    "translation": "IDENTIFIER TARGET"
+  },
+  {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
     "translation": "IDs of SSH key to add to the root user, multiple occurrence allowed"
   },
@@ -5290,6 +5262,10 @@
   {
     "id": "Incorrect Usage: This command requires one argument.",
     "translation": "Incorrect Usage: This command requires one argument."
+  },
+  {
+    "id": "Incorrect Usage: This command requires three arguments.",
+    "translation": "Incorrect Usage: This command requires three arguments."
   },
   {
     "id": "Incorrect Usage: This command requires two arguments.",
@@ -5632,8 +5608,8 @@
     "translation": "List all firewalls on your account."
   },
   {
-    "id": "List all global IPs on your account",
-    "translation": "List all global IPs on your account"
+    "id": "List all global IPs on your account.",
+    "translation": "List all global IPs on your account."
   },
   {
     "id": "List all images on your account",
@@ -6018,6 +5994,10 @@
   {
     "id": "Must specify [--cpu] when using [--private].",
     "translation": "Must specify [--cpu] when using [--private]."
+  },
+  {
+    "id": "NAME",
+    "translation": "NAME"
   },
   {
     "id": "NETWORK has to be either public or private.",
@@ -8480,10 +8460,6 @@
     "translation": "This command requires one identifier."
   },
   {
-    "id": "This command requires one indentifier, the option and the option arguments.",
-    "translation": "This command requires one indentifier, the option and the option arguments."
-  },
-  {
     "id": "This command requires one option.",
     "translation": "This command requires one option."
   },
@@ -8760,6 +8736,10 @@
     "translation": "Types"
   },
   {
+    "id": "URI",
+    "translation": "URI"
+  },
+  {
     "id": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]",
     "translation": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]"
   },
@@ -8816,8 +8796,8 @@
     "translation": "Unable to find firewall with ID: {{.ID}}"
   },
   {
-    "id": "Unable to find global IP with ID: {{.ID}}.\n",
-    "translation": "Unable to find global IP with ID: {{.ID}}.\n"
+    "id": "Unable to find global IP with ID: {{.ID}}.",
+    "translation": "Unable to find global IP with ID: {{.ID}}."
   },
   {
     "id": "Unable to find hardware server with ID: {{.ID}}.\n",
@@ -8828,8 +8808,8 @@
     "translation": "Unable to find health check with UUID of '{{.UUID}}' in load balancer {{.ID}}."
   },
   {
-    "id": "Unable to find image with ID {{.ImageID}}.\n",
-    "translation": "Unable to find image with ID {{.ImageID}}.\n"
+    "id": "Unable to find image with ID {{.ImageID}}.",
+    "translation": "Unable to find image with ID {{.ImageID}}."
   },
   {
     "id": "Unable to find item with ID: {{.itemID}}.\n",
@@ -8900,8 +8880,8 @@
     "translation": "Unable to unmarshal template json: %s\n"
   },
   {
-    "id": "Unassign a global IP from a target router or device",
-    "translation": "Unassign a global IP from a target router or device"
+    "id": "Unassign a global IP from a target router or device.",
+    "translation": "Unassign a global IP from a target router or device."
   },
   {
     "id": "Unique Id",

@@ -12,9 +12,7 @@ import (
 	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
@@ -54,11 +52,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl image
-	imageCommands := image.GetCommandActionBindings(context, ui, session)
-	for name, action := range imageCommands {
-		CommandActionBindings[name] = action
-	}
 	// ibmcloud sl ipsec
 	ipsecCommands := ipsec.GetCommandActionBindings(context, ui, session)
 	for name, action := range ipsecCommands {
@@ -80,12 +73,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl order
 	orderCommands := order.GetCommandActionBindings(context, ui, session)
 	for name, action := range orderCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl globalip
-	globalipCommands := globalip.GetCommandActionBindings(context, ui, session)
-	for name, action := range globalipCommands {
 		CommandActionBindings[name] = action
 	}
 
