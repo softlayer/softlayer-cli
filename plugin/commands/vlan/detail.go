@@ -7,7 +7,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -15,38 +15,48 @@ import (
 )
 
 type DetailCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	Vs             bool
+	Hardware       bool
 }
 
-func NewDetailCommand(ui terminal.UI, networkManager managers.NetworkManager) *DetailCommand {
-	return &DetailCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("IDENTIFIER"),
+		Short: T("Get details about a VLAN."),
+		Long: T(`${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+	${COMMAND_NAME} sl vlan detail 12345678	--no-vs --no-hardware
+	This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVar(&thisCmd.Vs, "no-vs", false, T("Hide virtual server listing"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Hardware, "no-hardware", false, T("Hide hardware listing"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	id, err := utils.ResolveVlanId(c.Args()[0])
+func (cmd *DetailCommand) Run(args []string) error {
+	id, err := utils.ResolveVlanId(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("VLAN ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	vlan, err := cmd.NetworkManager.GetVlan(id, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get VLAN: {{.VLANID}}.\n", map[string]interface{}{"VLANID": id})+err.Error(), 2)
-	}
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, vlan)
+		return errors.NewAPIError(T("Failed to get VLAN: {{.VLANID}}.\n", map[string]interface{}{"VLANID": id}), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -80,7 +90,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		table.Add(T("subnets"), buf.String())
 	}
 
-	if !c.IsSet("no-vs") {
+	if !cmd.Vs {
 		vs := vlan.VirtualGuests
 		if len(vs) == 0 {
 			table.Add(T("virtual servers"), T("none"))
@@ -98,7 +108,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if !c.IsSet("no-hardware") {
+	if !cmd.Hardware {
 		hw := vlan.Hardware
 		if len(hw) == 0 {
 			table.Add(T("hardware"), T("none"))
@@ -115,31 +125,6 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 			table.Add(T("hardware"), buf.String())
 		}
 	}
-
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func VlanDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vlan",
-		Name:        "detail",
-		Description: T("Get details about a VLAN"),
-		Usage: T(`${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl vlan detail 12345678	--no-vs --no-hardware
-   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "no-vs",
-				Usage: T("Hide virtual server listing"),
-			},
-			cli.BoolFlag{
-				Name:  "no-hardware",
-				Usage: T("Hide hardware listing"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

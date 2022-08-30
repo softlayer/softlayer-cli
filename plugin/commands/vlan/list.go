@@ -4,9 +4,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -17,35 +16,60 @@ import (
 )
 
 type ListCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	Sortby         string
+	Datacenter     string
+	Number         int
+	Name           string
+	Order          int
 }
 
-func NewListCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
+	thisCmd := &ListCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "vlan",
+		Short: T("List all the VLANs on your account."),
+		Long: T(`${COMMAND_NAME} sl vlan list [OPTIONS]
+	
+EXAMPLE:
+	${COMMAND_NAME} sl vlan list -d dal09 --sortby number
+	This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.
+	
+Note: In field Pod, if add (*) indicated that closed soon`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "", T("Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Filter by datacenter shortname"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Number, "number", "n", 0, T("Filter by VLAN number"))
+	cobraCmd.Flags().StringVar(&thisCmd.Name, "name", "", T("Filter by VLAN name"))
+	cobraCmd.Flags().IntVar(&thisCmd.Order, "order", 0, T("Filter by ID of the order that purchased the VLAN"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *ListCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	vlans, err := cmd.NetworkManager.ListVlans(c.String("d"), c.Int("n"), c.String("name"), c.Int("order"), "")
+	vlans, err := cmd.NetworkManager.ListVlans(cmd.Datacenter, cmd.Number, cmd.Name, cmd.Order, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to list VLANs on your account.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list VLANs on your account.\n"), err.Error(), 2)
 	}
 
 	mask := ""
 	pods, err := cmd.NetworkManager.GetPods(mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Pods.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Pods.\n"), err.Error(), 2)
 	}
 
-	sortby := c.String("sortby")
+	sortby := cmd.Sortby
 	if sortby == "id" || sortby == "ID" {
 		sort.Sort(utils.VlanById(vlans))
 	} else if sortby == "number" {
@@ -98,8 +122,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 			utils.TagRefsToString(vlan.TagReferences),
 		)
 	}
-
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
 }
 
@@ -125,42 +148,4 @@ func getPodWithClosedAnnouncement(vlan datatypes.Network_Vlan, pods []datatypes.
 		}
 	}
 	return ""
-}
-
-func VlanListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vlan",
-		Name:        "list",
-		Description: T("List all the VLANs on your account"),
-		Usage: T(`${COMMAND_NAME} sl vlan list [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number
-   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.
- 
-Note: In field Pod, if add (*) indicated that closed soon`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips"),
-			},
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Filter by datacenter shortname"),
-			},
-			cli.IntFlag{
-				Name:  "n,number",
-				Usage: T("Filter by VLAN number"),
-			},
-			cli.StringFlag{
-				Name:  "name",
-				Usage: T("Filter by VLAN name"),
-			},
-			cli.IntFlag{
-				Name:  "order",
-				Usage: T("Filter by ID of the order that purchased the VLAN"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

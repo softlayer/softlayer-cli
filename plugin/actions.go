@@ -22,7 +22,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -35,12 +34,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl dns
 	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
 	for name, action := range dnsCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl vlan
-	vlanCommands := vlan.GetCommandActionBindings(context, ui, session)
-	for name, action := range vlanCommands {
 		CommandActionBindings[name] = action
 	}
 

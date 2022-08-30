@@ -6,29 +6,42 @@ import (
 	"sync"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type OptionsCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
 }
 
-func NewOptionsCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *OptionsCommand) {
-	return &OptionsCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewOptionsCommand(sl *metadata.SoftlayerCommand) *OptionsCommand {
+	thisCmd := &OptionsCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "options",
+		Short: T("List all the options for creating VLAN."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *OptionsCommand) Run(c *cli.Context) error {
+func (cmd *OptionsCommand) Run(args []string) error {
 	table := cmd.UI.Table([]string{T("name"), T("value")})
 	datacenters, err := cmd.NetworkManager.ListDatacenters()
 	if err != nil {
-		return cli.NewExitError(T("Failed to list datacenters.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list datacenters.\n"), err.Error(), 2)
 	}
 	var datacenternames []string
 	buf := new(bytes.Buffer)
@@ -58,17 +71,4 @@ func (cmd *OptionsCommand) Run(c *cli.Context) error {
 	table.Add(T("routers"), buf.String())
 	table.Print()
 	return nil
-}
-
-func VlanOptionsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vlan",
-		Name:        "options",
-		Description: T("List all the options for creating VLAN"),
-		Usage: T(`${COMMAND_NAME} sl vlan options
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vlan options
-   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.`),
-	}
 }
