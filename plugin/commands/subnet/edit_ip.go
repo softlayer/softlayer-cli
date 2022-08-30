@@ -3,42 +3,58 @@ package subnet
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type EditIpCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	Note           string
 }
 
-func NewEditIpCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *EditIpCommand) {
-	return &EditIpCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewEditIpCommand(sl *metadata.SoftlayerCommand) *EditIpCommand {
+	thisCmd := &EditIpCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "edit-ip " + T("IDENTIFIER"),
+		Short: T("Set the note of the ipAddress."),
+		Long: T(`${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]
+
+		EXAMPLE:
+		   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote
+		   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.Note, "note", "", T("The note"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *EditIpCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *EditIpCommand) Run(args []string) error {
 
-	if !c.IsSet("note") {
+	if cmd.Note == "" {
 		return errors.NewMissingInputError(T("--note"))
 	}
 
-	subnetIpAddressID, err := strconv.Atoi(c.Args()[0])
+	subnetIpAddressID, err := strconv.Atoi(args[0])
 	if err != nil {
-		ipAddress := c.Args()[0]
+		ipAddress := args[0]
 		subnetIpAddress, err := cmd.NetworkManager.GetIpByAddress(ipAddress)
 		if err != nil {
-			return cli.NewExitError(T("Failed to get Subnet IP by address")+"\n"+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get Subnet IP by address")+"\n", err.Error(), 2)
 		}
 		if subnetIpAddress.Id == nil {
 			address := map[string]interface{}{"address": ipAddress}
@@ -47,37 +63,18 @@ func (cmd *EditIpCommand) Run(c *cli.Context) error {
 		subnetIpAddressID = *subnetIpAddress.Id
 	}
 
-	note := c.String("note")
+	note := cmd.Note
 	subnetIpAddressTemplate := datatypes.Network_Subnet_IpAddress{
 		Note: sl.String(note),
 	}
 	response, err := cmd.NetworkManager.EditSubnetIpAddress(subnetIpAddressID, subnetIpAddressTemplate)
 	if err != nil {
 		note := map[string]interface{}{"note": note}
-		return cli.NewExitError(T("Failed to set note: {{.note}}.", note)+"\n"+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to set note: {{.note}}.", note)+"\n", err.Error(), 2)
 	}
 	if response {
 		cmd.UI.Ok()
 		cmd.UI.Print(T("Set note successfully"))
 	}
 	return nil
-}
-
-func SubnetEditIpMetaData() cli.Command {
-	return cli.Command{
-		Category:    "subnet",
-		Name:        "edit-ip",
-		Description: T("Set the note of the ipAddress."),
-		Usage: T(`${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote
-   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "note",
-				Usage: T("The note "),
-			},
-		},
-	}
 }
