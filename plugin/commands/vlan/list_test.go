@@ -9,30 +9,29 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VLAN List", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *vlan.ListCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *vlan.ListCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = vlan.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = vlan.NewListCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        vlan.VlanListMetaData().Name,
-			Description: vlan.VlanListMetaData().Description,
-			Usage:       vlan.VlanListMetaData().Usage,
-			Flags:       vlan.VlanListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("VLAN list", func() {
@@ -41,18 +40,18 @@ var _ = Describe("VLAN List", func() {
 				fakeNetworkManager.ListVlansReturns([]datatypes.Network_Vlan{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to list VLANs on your account.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to list VLANs on your account."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 			It("return error", func() {
 				fakeNetworkManager.ListVlansReturns([]datatypes.Network_Vlan{}, nil)
 				fakeNetworkManager.GetPodsReturns([]datatypes.Network_Pod{}, errors.New("Internal Server Error"))
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get Pods.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get Pods."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -61,9 +60,9 @@ var _ = Describe("VLAN List", func() {
 				fakeNetworkManager.ListVlansReturns([]datatypes.Network_Vlan{}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "abcd")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "abcd")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --sortby abcd is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --sortby abcd is not supported."))
 			})
 		})
 
@@ -72,7 +71,7 @@ var _ = Describe("VLAN List", func() {
 				fakeNetworkManager.ListVlansReturns([]datatypes.Network_Vlan{}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{""}))
 			})
@@ -170,71 +169,71 @@ var _ = Describe("VLAN List", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "id")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "123456")).To(BeTrue())
-				Expect(strings.Contains(results[2], "123458")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("123456"))
+				Expect(results[2]).To(ContainSubstring("123458"))
 			})
 
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "number")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "number")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "73")).To(BeTrue())
-				Expect(strings.Contains(results[2], "100")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("73"))
+				Expect(results[2]).To(ContainSubstring("100"))
 			})
 
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "name")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "name")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "Anne")).To(BeTrue())
-				Expect(strings.Contains(results[2], "Bill")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("Anne"))
+				Expect(results[2]).To(ContainSubstring("Bill"))
 			})
 
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "firewall")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "firewall")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "No")).To(BeTrue())
-				Expect(strings.Contains(results[2], "Yes")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("No"))
+				Expect(results[2]).To(ContainSubstring("Yes"))
 			})
 
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "datacenter")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "datacenter")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "dal05")).To(BeTrue())
-				Expect(strings.Contains(results[2], "dal06")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("dal05"))
+				Expect(results[2]).To(ContainSubstring("dal06"))
 			})
 
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "hardware")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "hardware")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "5")).To(BeTrue())
-				Expect(strings.Contains(results[2], "30")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("5"))
+				Expect(results[2]).To(ContainSubstring("30"))
 			})
 
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "virtual_servers")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "virtual_servers")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "6")).To(BeTrue())
-				Expect(strings.Contains(results[2], "40")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("6"))
+				Expect(results[2]).To(ContainSubstring("40"))
 			})
 
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "public_ips")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "public_ips")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "7")).To(BeTrue())
-				Expect(strings.Contains(results[2], "50")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("7"))
+				Expect(results[2]).To(ContainSubstring("50"))
 			})
 
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output", "json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
