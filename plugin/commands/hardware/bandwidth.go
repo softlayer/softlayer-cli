@@ -83,7 +83,7 @@ func HardwareBandwidthMetaData() cli.Command {
 		Category:    "hardware",
 		Name:        "bandwidth",
 		Description: T("Bandwidth data over date range."),
-		Usage: T(`${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]
+		Usage: T(`${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]
 Time formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'
 
 Due to some rounding and date alignment details, results here might be slightly different than results in the control portal.
