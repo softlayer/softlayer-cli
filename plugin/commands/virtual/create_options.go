@@ -101,7 +101,7 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 	}
 	sort.Strings(sortedDisks)
 	for _, key := range sortedDisks {
-		diskTable.Add(disks[key],key)
+		diskTable.Add(disks[key], key)
 	}
 	diskTable.Print()
 	cmd.UI.Print("")

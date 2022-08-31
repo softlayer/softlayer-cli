@@ -15,10 +15,10 @@ import (
 
 var _ = Describe("vs billing", func() {
 	var (
-		fakeUI              *terminal.FakeUI
+		fakeUI             *terminal.FakeUI
 		fakeVirtualManager *testhelpers.FakeVirtualServerManager
-		cmd                 *virtual.BillingCommand
-		cliCommand          cli.Command
+		cmd                *virtual.BillingCommand
+		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
@@ -65,21 +65,20 @@ var _ = Describe("vs billing", func() {
 			created, _ := time.Parse(time.RFC3339, "2021-08-30T00:00:00Z")
 			BeforeEach(func() {
 				fakeVirtualManager.GetInstanceReturns(datatypes.Virtual_Guest{
-						Id: sl.Int(1234),
-						ProvisionDate: sl.Time(created),
-						BillingItem: &datatypes.Billing_Item_Virtual_Guest{
-							Billing_Item: datatypes.Billing_Item{
-								Id: sl.Int(1234567),
-								RecurringFee:                    sl.Float(1000.00),
-								NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
-								Children: []datatypes.Billing_Item{
-									datatypes.Billing_Item{
-										NextInvoiceTotalRecurringAmount: sl.Float(0.00),
-									},
+					Id:            sl.Int(1234),
+					ProvisionDate: sl.Time(created),
+					BillingItem: &datatypes.Billing_Item_Virtual_Guest{
+						Billing_Item: datatypes.Billing_Item{
+							Id:                              sl.Int(1234567),
+							RecurringFee:                    sl.Float(1000.00),
+							NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
+							Children: []datatypes.Billing_Item{
+								datatypes.Billing_Item{
+									NextInvoiceTotalRecurringAmount: sl.Float(0.00),
 								},
 							},
 						},
-
+					},
 				}, nil)
 			})
 			It("return table", func() {
@@ -93,5 +92,3 @@ var _ = Describe("vs billing", func() {
 		})
 	})
 })
-
-

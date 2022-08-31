@@ -56,9 +56,9 @@ func (cmd *BillingCommand) Run(c *cli.Context) error {
 	table.Add(T("Provisioning Date"), utils.FormatSLTimePointer(virtualGuest.ProvisionDate))
 
 	buf := new(bytes.Buffer)
-	tablePrices := terminal.NewTable(buf, []string{T("Item"),T("Recurring Fee")})
+	tablePrices := terminal.NewTable(buf, []string{T("Item"), T("Recurring Fee")})
 	for _, item := range virtualGuest.BillingItem.Children {
-		tablePrices.Add(utils.FormatStringPointer(item.Description),fmt.Sprintf("%.2f", *item.NextInvoiceTotalRecurringAmount))
+		tablePrices.Add(utils.FormatStringPointer(item.Description), fmt.Sprintf("%.2f", *item.NextInvoiceTotalRecurringAmount))
 	}
 	tablePrices.Print()
 	table.Add(T("Prices"), buf.String())

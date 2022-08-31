@@ -13,11 +13,11 @@ import (
 
 var _ = Describe("VS capacity create", func() {
 	var (
-		fakeUI           *terminal.FakeUI
-		fakeVSManager    *testhelpers.FakeVirtualServerManager
-		cmd              *virtual.CapacityCreateCommand
-		cliCommand       cli.Command
-		context          plugin.PluginContext
+		fakeUI        *terminal.FakeUI
+		fakeVSManager *testhelpers.FakeVirtualServerManager
+		cmd           *virtual.CapacityCreateCommand
+		cliCommand    cli.Command
+		context       plugin.PluginContext
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()

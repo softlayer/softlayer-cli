@@ -197,7 +197,7 @@ var _ = Describe("VS create", func() {
 		Context("VS create with --export succeed", func() {
 			BeforeEach(func() {
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, nil)
-				
+
 			})
 			It("return no error", func() {
 				tmpFile, tmpErr := ioutil.TempFile(os.TempDir(), "create_tests-")

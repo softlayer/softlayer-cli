@@ -1,12 +1,10 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -17,6 +15,18 @@ func VSNamespace() plugin.Namespace {
 	}
 }
 
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "vs",
+		Short: T("Classic infrastructure Virtual Servers"),
+		Long:  "${COMMAND_NAME} sl vs",
+		RunE:  nil,
+	}
+	cobraCmd.AddCommand(NewAuthorizeStorageCommand(sl).Command)
+	return cobraCmd
+}
+
+/*
 func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 	virtualServerManager := managers.NewVirtualServerManager(session)
 	imageManager := managers.NewImageManager(session)
@@ -24,9 +34,7 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 	dnsManager := managers.NewDNSManager(session)
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"vs-authorize-storage": func(c *cli.Context) error {
-			return NewAuthorizeStorageCommand(ui, virtualServerManager).Run(c)
-		},
+
 		"vs-cancel": func(c *cli.Context) error {
 			return NewCancelCommand(ui, virtualServerManager).Run(c)
 		},
@@ -134,48 +142,4 @@ func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, sess
 	return CommandActionBindings
 }
 
-func VSMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "vs",
-		Description: T("Classic infrastructure Virtual Servers"),
-		Usage:       "${COMMAND_NAME} sl vs",
-		Subcommands: []cli.Command{
-			VSCancelMetaData(),
-			VSCaptureMetaData(),
-			VSCreateHostMetaData(),
-			VSCreateMetaData(),
-			VSCreateOptionsMetaData(),
-			VSCredentialsMetaData(),
-			VSDetailMetaData(),
-			VSCapacityDetailMetaData(),
-			VSDNSSyncMetaData(),
-			VSEditMetaData(),
-			VSListHostMetaData(),
-			VSListMetaData(),
-			VSMigrateMetaData(),
-			VSPauseMetaData(),
-			VSPowerOffMetaData(),
-			VSPowerOnMetaData(),
-			VSReadyMetaData(),
-			VSRebootMetaData(),
-			VSReloadMetaData(),
-			VSRescueMetaData(),
-			VSResumeMetaData(),
-			VSUpgradeMetaData(),
-			VSAuthorizeStorageMetaData(),
-			VSBandwidthMetaData(),
-			VSStorageMetaData(),
-			VSCapacityListMetaData(),
-			VSCapacityCreateOptionsMetadata(),
-			VSCapacityCreateMetaData(),
-			VSPlacementGroupCreateMetaData(),
-			VSBillingMetaData(),
-			VSUsageMetaData(),
-			VSPlacementGroupListMetadata(),
-			VSPlacementGroupDetailMetaData(),
-			VSPlacementGroupCreateOptionsMetaData(),
-			VSMonitoringListMetaData(),
-		},
-	}
-}
+*/

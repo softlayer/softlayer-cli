@@ -1,9 +1,8 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -12,35 +11,56 @@ import (
 )
 
 type AuthorizeStorageCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
+	Username             string
+	PortableId           int
 }
 
-func NewAuthorizeStorageCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *AuthorizeStorageCommand) {
-	return &AuthorizeStorageCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewAuthorizeStorageCommand(sl *metadata.SoftlayerCommand) (cmd *AuthorizeStorageCommand) {
+	thisCmd := &AuthorizeStorageCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "authorize-storage " + T("IDENTIFIER"),
+		Short: T("Authorize File, Block and Portable Storage to a Virtual Server"),
+		Long: T(`${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567
+   Authorize File, Block and Portable Storage to a Virtual Server.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().StringVarP(&thisCmd.Username, "username-storage", "u", "", T("The storage username to be added to the virtual server."))
+	cobraCmd.Flags().IntVarP(&thisCmd.PortableId, "portable-id", "p", 0, T("The portable storage id to be added to the virtual server"))
+	return thisCmd
 }
 
-func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	vsID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+func (cmd *AuthorizeStorageCommand) Run(args []string) error {
+
+	vsID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
+	outputFormat := cmd.GetOutputFlag()
+	subs := map[string]interface{}{
+		"Storage":    cmd.Username,
+		"Error":      "",
+		"PortableID": cmd.PortableId,
 	}
 
-	if c.IsSet("u") {
-		storageResult, err := cmd.VirtualServerManager.AuthorizeStorage(vsID, c.String("username-storage"))
+	if cmd.Username != "" {
+		storageResult, err := cmd.VirtualServerManager.AuthorizeStorage(vsID, cmd.Username)
 		if err != nil {
-			return cli.NewExitError(T("Failed to authorize storage to the virtual server instance: {{.Storage}}.\n{{.Error}}",
-				map[string]interface{}{"Storage": c.String("username-storage"), "Error": err.Error()}), 2)
+			subs["Error"] = err.Error()
+			// TODO: Remove this error bit from the T() string
+			return slErrors.NewAPIError(T("Failed to authorize storage to the virtual server instance: {{.Storage}}.\n{{.Error}}", subs), err.Error(), 2)
 		}
 
 		if outputFormat == "JSON" {
@@ -48,15 +68,15 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 		}
 
 		cmd.UI.Ok()
-		cmd.UI.Print(T("Successfully authorized storage: {{.Storage}} was added.",
-			map[string]interface{}{"Storage": c.String("username-storage")}))
+		cmd.UI.Print(T("Successfully authorized storage: {{.Storage}} was added.", subs))
 	}
 
-	if c.IsSet("portable-id") {
-		portableResult, err := cmd.VirtualServerManager.AttachPortableStorage(vsID, c.Int("portable-id"))
+	if cmd.PortableId != 0 {
+		portableResult, err := cmd.VirtualServerManager.AttachPortableStorage(vsID, cmd.PortableId)
 		if err != nil {
-			return cli.NewExitError(T("Failed to authorize portable storage to the virtual server instance: {{.PortableID}}.\n{{.Error}}",
-				map[string]interface{}{"PortableID": c.Int("portable-id"), "Error": err.Error()}), 2)
+			subs["Error"] = err.Error()
+			// TODO: Remove this error bit from the T() string
+			return slErrors.NewAPIError(T("Failed to authorize portable storage to the virtual server instance: {{.PortableID}}.\n{{.Error}}", subs), err.Error(), 2)
 		}
 
 		if outputFormat == "JSON" {
@@ -64,37 +84,11 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 		}
 
 		cmd.UI.Ok()
-		cmd.UI.Print(T("Successfully authorized storage: {{.PortableID}} was added.",
-			map[string]interface{}{"PortableID": c.Int("portable-id")}))
+		cmd.UI.Print(T("Successfully authorized storage: {{.PortableID}} was added.", subs))
 		table := cmd.UI.Table([]string{T("id"), T("CreateDate")})
 		table.Add(utils.FormatIntPointer(portableResult.Id), utils.FormatSLTimePointer(portableResult.CreateDate))
 		table.Print()
 	}
 
 	return nil
-}
-
-
-func VSAuthorizeStorageMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "authorize-storage",
-		Description: T("Authorize File, Block and Portable Storage to a Virtual Server"),
-		Usage: T(`${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER
-
-EXAMPLE:
-   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567
-   Authorize File, Block and Portable Storage to a Virtual Server.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "u, username-storage",
-				Usage: T("The storage username to be added to the virtual server."),
-			},
-			cli.IntFlag{
-				Name:  "p, portable-id",
-				Usage: T("The portable storage id to be added to the virtual server"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

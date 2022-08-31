@@ -49,20 +49,20 @@ var _ = Describe("VS capacity-detail", func() {
 		Context("VS capacity detail successfull", func() {
 			BeforeEach(func() {
 				fakeVSManager.GetCapacityDetailReturns(datatypes.Virtual_ReservedCapacityGroup{
-						Id:   sl.Int(123456),
-						Name: sl.String("test"),
-						Instances: []datatypes.Virtual_ReservedCapacityGroup_Instance{
-							datatypes.Virtual_ReservedCapacityGroup_Instance{
-								Id: sl.Int(1234567),
-								Guest: &datatypes.Virtual_Guest{
-									Hostname:                sl.String("unitest"),
-									Domain:                  sl.String("techsupport"),
-									PrimaryIpAddress:        sl.String("168.192.0.12"),
-									PrimaryBackendIpAddress: sl.String("192.168.1.2"),
-								},
-							}, {},
-						},
-					}, nil)
+					Id:   sl.Int(123456),
+					Name: sl.String("test"),
+					Instances: []datatypes.Virtual_ReservedCapacityGroup_Instance{
+						datatypes.Virtual_ReservedCapacityGroup_Instance{
+							Id: sl.Int(1234567),
+							Guest: &datatypes.Virtual_Guest{
+								Hostname:                sl.String("unitest"),
+								Domain:                  sl.String("techsupport"),
+								PrimaryIpAddress:        sl.String("168.192.0.12"),
+								PrimaryBackendIpAddress: sl.String("192.168.1.2"),
+							},
+						}, {},
+					},
+				}, nil)
 			})
 			It("return successfully", func() {
 				err := testhelpers.RunCommand(cliCommand, "123456")

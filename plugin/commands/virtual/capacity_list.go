@@ -39,12 +39,12 @@ func (cmd *CapacityListCommand) Run(c *cli.Context) error {
 		available := utils.FormatUIntPointer(capacity.AvailableInstanceCount)
 
 		billingDescription := utils.EMPTY_STRING
-		if capacity.Instances[0].BillingItem != nil{
+		if capacity.Instances[0].BillingItem != nil {
 			billingDescription = utils.FormatStringPointer(capacity.Instances[0].BillingItem.Description)
 		}
 		table.Add(utils.FormatIntPointer(capacity.Id),
 			utils.FormatStringPointer(capacity.Name),
-			fmt.Sprintf("%s%s",available, " available"),
+			fmt.Sprintf("%s%s", available, " available"),
 			billingDescription,
 			utils.FormatStringPointer(capacity.BackendRouter.Hostname),
 			utils.FormatSLTimePointer(capacity.CreateDate))

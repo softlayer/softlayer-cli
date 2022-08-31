@@ -65,16 +65,16 @@ func (cmd *CapacityDetailCommand) Run(c *cli.Context) error {
 	mainTable := cmd.UI.Table([]string{T("detail")})
 	mainTable.Add(utils.FormatStringPointer(capacity.Name))
 	buf := new(bytes.Buffer)
-	table := terminal.NewTable(buf,utils.GetColumnHeader(showColumns))
+	table := terminal.NewTable(buf, utils.GetColumnHeader(showColumns))
 	for _, instance := range capacity.Instances {
 		values := make(map[string]string)
-		if instance.Guest != nil{
+		if instance.Guest != nil {
 			values["id"] = utils.FormatIntPointer(instance.Id)
 			values["hostname"] = utils.FormatStringPointer(instance.Guest.Hostname)
 			values["domain"] = utils.FormatStringPointer(instance.Guest.Domain)
 			values["primary_id"] = utils.FormatStringPointer(instance.Guest.PrimaryIpAddress)
 			values["backend_id"] = utils.FormatStringPointer(instance.Guest.PrimaryBackendIpAddress)
-		}else{
+		} else {
 			values["id"] = utils.EMPTY_VALUE
 			values["hostname"] = utils.EMPTY_VALUE
 			values["domain"] = utils.EMPTY_VALUE
