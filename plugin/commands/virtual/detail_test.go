@@ -16,6 +16,82 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
+var created, _ = time.Parse(time.RFC3339, "2016-12-25T00:00:00Z")
+var modified, _ = time.Parse(time.RFC3339, "2017-01-01T00:00:00Z")
+var lastTransaction, _ = time.Parse(time.RFC3339, "2017-02-01T00:00:00Z")
+
+var VirtualGuestReturn = datatypes.Virtual_Guest{
+	Id:                       sl.Int(1234),
+	GlobalIdentifier:         sl.String("rthtoshfkthr"),
+	Hostname:                 sl.String("vs-abc"),
+	Domain:                   sl.String("wilma.com"),
+	FullyQualifiedDomainName: sl.String("vs-abc.wilma.com"),
+	Status:                   &datatypes.Virtual_Guest_Status{Name: sl.String("Provisioning")},
+	PowerState:               &datatypes.Virtual_Guest_Power_State{Name: sl.String("PowerOn")},
+	ActiveTransaction: &datatypes.Provisioning_Version1_Transaction{
+		TransactionStatus: &datatypes.Provisioning_Version1_Transaction_Status{Name: sl.String("Provisioning")},
+	},
+	Datacenter: &datatypes.Location{Name: sl.String("dal10")},
+	OperatingSystem: &datatypes.Software_Component_OperatingSystem{
+		Software_Component: datatypes.Software_Component{
+			SoftwareLicense: &datatypes.Software_License{
+				SoftwareDescription: &datatypes.Software_Description{
+					Name:    sl.String("CentOS"),
+					Version: sl.String("6.0"),
+				},
+			},
+			Passwords: []datatypes.Software_Component_Password{
+				datatypes.Software_Component_Password{
+					Username: sl.String("root"),
+					Password: sl.String("password4root"),
+				},
+			},
+		},
+	},
+	MaxCpu:                       sl.Int(8),
+	MaxMemory:                    sl.Int(4096),
+	PrimaryIpAddress:             sl.String("9.9.9.9"),
+	PrimaryBackendIpAddress:      sl.String("1.1.1.1"),
+	PrivateNetworkOnlyFlag:       sl.Bool(false),
+	DedicatedAccountHostOnlyFlag: sl.Bool(false),
+	CreateDate:                   sl.Time(created),
+	ModifyDate:                   sl.Time(modified),
+	BillingItem: &datatypes.Billing_Item_Virtual_Guest{
+		Billing_Item: datatypes.Billing_Item{
+			OrderItem: &datatypes.Billing_Order_Item{
+				Order: &datatypes.Billing_Order{
+					UserRecord: &datatypes.User_Customer{Username: sl.String("wilmawang")},
+				},
+				Preset: &datatypes.Product_Package_Preset{KeyName: sl.String("C1_2X2X25")},
+			},
+			RecurringFee:                    sl.Float(1000.00),
+			NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
+		},
+	},
+	Notes: sl.String("mynotes"),
+	TagReferences: []datatypes.Tag_Reference{
+		datatypes.Tag_Reference{
+			Tag: &datatypes.Tag{Name: sl.String("tag1")},
+		},
+		datatypes.Tag_Reference{
+			Tag: &datatypes.Tag{Name: sl.String("tag2")},
+		},
+	},
+	NetworkVlans: []datatypes.Network_Vlan{
+		datatypes.Network_Vlan{
+			Id:           sl.Int(678),
+			VlanNumber:   sl.Int(50),
+			NetworkSpace: sl.String("PRIMARY"),
+		},
+	},
+	TransientGuestFlag: sl.Bool(false),
+	LastTransaction: &datatypes.Provisioning_Version1_Transaction{
+		TransactionGroup: &datatypes.Provisioning_Version1_Transaction_Group{Name: sl.String("Service Setup")},
+		ModifyDate:       sl.Time(lastTransaction),
+	},
+	HourlyBillingFlag: sl.Bool(true),
+}
+
 var _ = Describe("VS detail", func() {
 	var (
 		fakeUI        *terminal.FakeUI
@@ -77,100 +153,9 @@ var _ = Describe("VS detail", func() {
 		})
 
 		Context("VS detail with correct VS ID ", func() {
-			created, _ := time.Parse(time.RFC3339, "2016-12-25T00:00:00Z")
-			modified, _ := time.Parse(time.RFC3339, "2017-01-01T00:00:00Z")
-			lastTransaction, _ := time.Parse(time.RFC3339, "2017-02-01T00:00:00Z")
+
 			BeforeEach(func() {
-				fakeVSManager.GetInstanceReturns(
-					datatypes.Virtual_Guest{
-						Id:                       sl.Int(1234),
-						GlobalIdentifier:         sl.String("rthtoshfkthr"),
-						Hostname:                 sl.String("vs-abc"),
-						Domain:                   sl.String("wilma.com"),
-						FullyQualifiedDomainName: sl.String("vs-abc.wilma.com"),
-						Status: &datatypes.Virtual_Guest_Status{
-							Name: sl.String("Provisioning"),
-						},
-						PowerState: &datatypes.Virtual_Guest_Power_State{
-							Name: sl.String("PowerOn"),
-						},
-						ActiveTransaction: &datatypes.Provisioning_Version1_Transaction{
-							TransactionStatus: &datatypes.Provisioning_Version1_Transaction_Status{
-								Name: sl.String("Provisioning"),
-							},
-						},
-						Datacenter: &datatypes.Location{
-							Name: sl.String("dal10"),
-						},
-						OperatingSystem: &datatypes.Software_Component_OperatingSystem{
-							Software_Component: datatypes.Software_Component{
-								SoftwareLicense: &datatypes.Software_License{
-									SoftwareDescription: &datatypes.Software_Description{
-										Name:    sl.String("CentOS"),
-										Version: sl.String("6.0"),
-									},
-								},
-								Passwords: []datatypes.Software_Component_Password{
-									datatypes.Software_Component_Password{
-										Username: sl.String("root"),
-										Password: sl.String("password4root"),
-									},
-								},
-							},
-						},
-						MaxCpu:                       sl.Int(8),
-						MaxMemory:                    sl.Int(4096),
-						PrimaryIpAddress:             sl.String("9.9.9.9"),
-						PrimaryBackendIpAddress:      sl.String("1.1.1.1"),
-						PrivateNetworkOnlyFlag:       sl.Bool(false),
-						DedicatedAccountHostOnlyFlag: sl.Bool(false),
-						CreateDate:                   sl.Time(created),
-						ModifyDate:                   sl.Time(modified),
-						BillingItem: &datatypes.Billing_Item_Virtual_Guest{
-							Billing_Item: datatypes.Billing_Item{
-								OrderItem: &datatypes.Billing_Order_Item{
-									Order: &datatypes.Billing_Order{
-										UserRecord: &datatypes.User_Customer{
-											Username: sl.String("wilmawang"),
-										},
-									},
-									Preset: &datatypes.Product_Package_Preset{
-										KeyName: sl.String("C1_2X2X25"),
-									},
-								},
-								RecurringFee:                    sl.Float(1000.00),
-								NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
-							},
-						},
-						Notes: sl.String("mynotes"),
-						TagReferences: []datatypes.Tag_Reference{
-							datatypes.Tag_Reference{
-								Tag: &datatypes.Tag{
-									Name: sl.String("tag1"),
-								},
-							},
-							datatypes.Tag_Reference{
-								Tag: &datatypes.Tag{
-									Name: sl.String("tag2"),
-								},
-							},
-						},
-						NetworkVlans: []datatypes.Network_Vlan{
-							datatypes.Network_Vlan{
-								Id:           sl.Int(678),
-								VlanNumber:   sl.Int(50),
-								NetworkSpace: sl.String("PRIMARY"),
-							},
-						},
-						TransientGuestFlag: sl.Bool(false),
-						LastTransaction: &datatypes.Provisioning_Version1_Transaction{
-							TransactionGroup: &datatypes.Provisioning_Version1_Transaction_Group{
-								Name: sl.String("Service Setup"),
-							},
-							ModifyDate: sl.Time(lastTransaction),
-						},
-						HourlyBillingFlag: sl.Bool(true),
-					}, nil)
+				fakeVSManager.GetInstanceReturns(VirtualGuestReturn, nil)
 				fakeVSManager.GetLocalDisksReturns(
 					[]datatypes.Virtual_Guest_Block_Device{
 						datatypes.Virtual_Guest_Block_Device{
@@ -257,6 +242,30 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"root"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"password4root"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1000.00"}))
+			})
+		})
+		Context("Github issues #252 ", func() {
+
+			BeforeEach(func() {
+				VirtualGuestReturn.BillingItem = nil
+				fakeVSManager.GetInstanceReturns(VirtualGuestReturn, nil)
+				fakeVSManager.GetLocalDisksReturns(
+					[]datatypes.Virtual_Guest_Block_Device{
+						datatypes.Virtual_Guest_Block_Device{
+							DiskImage: &datatypes.Virtual_Disk_Image{
+								Description: sl.String("123456789-SWAP"),
+								Capacity:    sl.Int(2),
+								Units:       sl.String("GB"),
+							},
+							MountType: sl.String("Disk"),
+							Device:    sl.String("1"),
+						},
+					}, nil)
+			})
+			It("return no error", func() {
+				err := testhelpers.RunCommand(cliCommand, "1234", "--passwords", "--price")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("price rate           0.00"))
 			})
 		})
 	})
