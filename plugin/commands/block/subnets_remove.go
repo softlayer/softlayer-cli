@@ -3,63 +3,60 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type SubnetsRemoveCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	SubnetIds      []int
 }
 
-func NewSubnetsRemoveCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *SubnetsRemoveCommand) {
-	return &SubnetsRemoveCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewSubnetsRemoveCommand(sl *metadata.SoftlayerStorageCommand) *SubnetsRemoveCommand {
+	thisCmd := &SubnetsRemoveCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockSubnetsRemoveMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "subnets-remove",
-		Description: T("Remove block storage subnets to the given host id."),
-		Usage: T(`${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "subnets-remove " + T("IDENTIFIER"),
+		Short: T("Remove block storage subnets to the given host id."),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222
-   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333
-   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>`),
-		Flags: []cli.Flag{
-			cli.IntSliceFlag{
-				Name:     "subnet-id",
-				Usage:    T("IDs of the subnets to remove"),
-				Required: true,
-			},
+   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222
+   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333
+   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>`, sl.StorageI18n),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().IntSliceVar(&thisCmd.SubnetIds, "subnet-id", []int{}, T("IDs of the subnets to remove"))
+	//#nosec G104 -- This is a false positive
+	cobraCmd.MarkFlagRequired("subnet-id")
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SubnetsRemoveCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *SubnetsRemoveCommand) Run(args []string) error {
 
-	accessID, err := strconv.Atoi(c.Args()[0])
+	accessID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Access ID")
 	}
 
-	subnetsToRemove := c.IntSlice("subnet-id")
+	subnetsToRemove := cmd.SubnetIds
 
 	subnetsResponse, err := cmd.StorageManager.RemoveSubnetsFromAcl(accessID, subnetsToRemove)
 	if err != nil {
-		return cli.NewExitError(T("Failed to remove subnets.")+"\n"+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to remove subnets."), err.Error(), 2)
 	}
 
 	for _, subnet := range subnetsToRemove {

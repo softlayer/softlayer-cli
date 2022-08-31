@@ -8,7 +8,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -18,28 +18,46 @@ import (
 )
 
 type DetailCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	NoVs           bool
+	NoHardware     bool
+	NoIp           bool
+	NoTag          bool
 }
 
-func NewDetailCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("IDENTIFIER"),
+		Short: T("Get details of a subnet."),
+		Long: T(`${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+	${COMMAND_NAME} sl subnet detail 12345678 
+	This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVar(&thisCmd.NoVs, "no-vs", false, T("Hide virtual server listing"))
+	cobraCmd.Flags().BoolVar(&thisCmd.NoHardware, "no-hardware", false, T("Hide hardware listing"))
+	cobraCmd.Flags().BoolVar(&thisCmd.NoIp, "no-ip", false, T("Hide IP address listing"))
+	cobraCmd.Flags().BoolVar(&thisCmd.NoTag, "no-Tag", false, T("Hide Tag listing"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *DetailCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	subnetID, err := utils.ResolveSubnetId(c.Args()[0])
+	subnetID, err := utils.ResolveSubnetId(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Subnet ID")
 	}
@@ -47,11 +65,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	mask := "ipAddresses[id, ipAddress,note], datacenter, virtualGuests, hardware,networkVlan[networkSpace], tagReferences"
 	subnet, err := cmd.NetworkManager.GetSubnet(subnetID, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get subnet: {{.ID}}.\n", map[string]interface{}{"ID": subnetID})+err.Error(), 2)
-	}
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, subnet)
+		return errors.NewAPIError(T("Failed to get subnet: {{.ID}}.\n", map[string]interface{}{"ID": subnetID}), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -70,7 +84,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		table.Add(T("datacenter"), utils.FormatStringPointer(subnet.Datacenter.Name))
 	}
 	table.Add(T("usable ips"), strconv.FormatFloat(float64(sl.Get(subnet.UsableIpAddressCount).(datatypes.Float64)), 'f', 0, 64))
-	if !c.IsSet("no-ip") {
+	if !cmd.NoIp {
 		if subnet.IpAddresses == nil || len(subnet.IpAddresses) == 0 {
 			table.Add(T("IP address"), T("none"))
 		} else {
@@ -85,7 +99,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if !c.IsSet("no-vs") {
+	if !cmd.NoVs {
 		if subnet.VirtualGuests == nil || len(subnet.VirtualGuests) == 0 {
 			table.Add(T("virtual guests"), T("none"))
 		} else {
@@ -101,7 +115,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 			table.Add(T("virtual guests"), buf.String())
 		}
 	}
-	if !c.IsSet("no-hardware") {
+	if !cmd.NoHardware {
 		if subnet.Hardware == nil || len(subnet.Hardware) == 0 {
 			table.Add(T("hardware"), T("none"))
 		} else {
@@ -118,7 +132,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if !c.IsSet("no-Tag") {
+	if !cmd.NoTag {
 		if subnet.TagReferences == nil || len(subnet.TagReferences) == 0 {
 			table.Add(T("Tag"), T("none"))
 		} else {
@@ -131,36 +145,6 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 			table.Add(T("Tag"), buf.String())
 		}
 	}
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func SubnetDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "subnet",
-		Name:        "detail",
-		Description: T("Get details of a subnet"),
-		Usage: T(`${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl subnet detail 12345678 
-   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "no-vs",
-				Usage: T("Hide virtual server listing"),
-			},
-			cli.BoolFlag{
-				Name:  "no-hardware",
-				Usage: T("Hide hardware listing"),
-			}, cli.BoolFlag{
-				Name:  "no-ip",
-				Usage: T("Hide IP address listing"),
-			}, cli.BoolFlag{
-				Name:  "no-Tag",
-				Usage: T("Hide Tag listing"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

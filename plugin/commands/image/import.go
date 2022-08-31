@@ -1,63 +1,93 @@
 package image
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type ImportCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	ImageManager managers.ImageManager
+	Command      *cobra.Command
+	Note         string
+	OsCode       string
+	RootKeyCrn   string
+	WrappedDek   string
+	CloudInit    bool
+	Byol         bool
+	IsEncrypted  bool
 }
 
-func NewImportCommand(ui terminal.UI, imageManager managers.ImageManager) (cmd *ImportCommand) {
-	return &ImportCommand{
-		UI:           ui,
-		ImageManager: imageManager,
+func NewImportCommand(sl *metadata.SoftlayerCommand) (cmd *ImportCommand) {
+	thisCmd := &ImportCommand{
+		SoftlayerCommand: sl,
+		ImageManager:     managers.NewImageManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "import " + T("NAME") + " " + T("URI") + " " + T("API_KEY"),
+		Short: T("Import an image from an object storage"),
+		Long: T(`
+EXAMPLE:
+	${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]
+	NAME: The image name
+	URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>
+	API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.`),
+		Args: metadata.ThreeArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Note, "note", "", T("The note to be applied to the imported template"))
+	cobraCmd.Flags().StringVar(&thisCmd.OsCode, "os-code", "", T("The referenceCode of the operating system software description for the imported VHD, ISO, or RAW image"))
+	cobraCmd.Flags().StringVar(&thisCmd.RootKeyCrn, "root-key-crn", "", T("CRN of the root key in your KMS instance"))
+	cobraCmd.Flags().StringVar(&thisCmd.WrappedDek, "wrapped-dek", "", T("Wrapped Data Encryption Key provided by IBM KeyProtect. For more info see: https://console.bluemix.net/docs/services/key-protect/wrap-keys.html#wrap-keys"))
+	cobraCmd.Flags().BoolVar(&thisCmd.CloudInit, "cloud-init", false, T("Specifies if image is cloud-init"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Byol, "byol", false, T("Specifies if image is bring your own license"))
+	cobraCmd.Flags().BoolVar(&thisCmd.IsEncrypted, "is-encrypted", false, T("Specifies if image is encrypted"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ImportCommand) Run(c *cli.Context) error {
-	if c.NArg() != 3 {
-		return errors.NewInvalidUsageError(T("This command requires three arguments."))
-	}
-	name := c.Args()[0]
-	uri := c.Args()[1]
-	ibmApiKey := c.Args()[2]
+func (cmd *ImportCommand) Run(args []string) error {
+	name := args[0]
+	uri := args[1]
+	ibmApiKey := args[2]
 
 	var note *string
 	var osCode *string
 	var rootKeyCrn *string
 	var wrapperDek *string
 
-	if c.IsSet("note") {
-		noteString := c.String("note")
+	if cmd.Note != "" {
+		noteString := cmd.Note
 		note = &noteString
 	}
 
-	if c.IsSet("os-code") {
-		osCodeString := c.String("os-code")
+	if cmd.OsCode != "" {
+		osCodeString := cmd.OsCode
 		osCode = &osCodeString
 	}
 
-	if c.IsSet("root-key-crn") {
-		rootKeyCrnString := c.String("root-key-crn")
+	if cmd.RootKeyCrn != "" {
+		rootKeyCrnString := cmd.RootKeyCrn
 		rootKeyCrn = &rootKeyCrnString
 	}
 
-	if c.IsSet("wrapped-dek") {
-		wrapperDekString := c.String("wrapped-dek")
+	if cmd.WrappedDek != "" {
+		wrapperDekString := cmd.WrappedDek
 		wrapperDek = &wrapperDekString
 	}
 
-	cloudInit := c.Bool("cloud-init")
-	byol := c.Bool("byol")
-	isEncrypted := c.Bool("is-encrypted")
+	cloudInit := cmd.CloudInit
+	byol := cmd.Byol
+	isEncrypted := cmd.IsEncrypted
 
 	config := datatypes.Container_Virtual_Guest_Block_Device_Template_Configuration{
 		Name:                         &name,
@@ -85,43 +115,4 @@ func (cmd *ImportCommand) Run(c *cli.Context) error {
 	table.Add(T("GUID"), utils.FormatStringPointer(resp.GlobalIdentifier))
 	table.Print()
 	return nil
-}
-
-func ImageImportMetaData() cli.Command {
-	return cli.Command{
-		Category:    "image",
-		Name:        "import",
-		Description: T("Import an image from an object storage"),
-		Usage:       T("${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "note",
-				Usage: T("The note to be applied to the imported template"),
-			},
-			cli.StringFlag{
-				Name:  "os-code",
-				Usage: T("The referenceCode of the operating system software description for the imported VHD, ISO, or RAW image"),
-			},
-			cli.StringFlag{
-				Name:  "root-key-crn",
-				Usage: T("CRN of the root key in your KMS instance"),
-			},
-			cli.StringFlag{
-				Name:  "wrapped-dek",
-				Usage: T("Wrapped Data Encryption Key provided by IBM KeyProtect. For more info see: https://console.bluemix.net/docs/services/key-protect/wrap-keys.html#wrap-keys"),
-			},
-			cli.BoolFlag{
-				Name:  "cloud-init",
-				Usage: T("Specifies if image is cloud-init"),
-			},
-			cli.BoolFlag{
-				Name:  "byol",
-				Usage: T("Specifies if image is bring your own license"),
-			},
-			cli.BoolFlag{
-				Name:  "is-encrypted",
-				Usage: T("Specifies if image is encrypted"),
-			},
-		},
-	}
 }

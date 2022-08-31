@@ -13,7 +13,7 @@ import (
 )
 
 type VolumeCancelCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Reason         string
@@ -21,19 +21,19 @@ type VolumeCancelCommand struct {
 	Force          bool
 }
 
-func NewVolumeCancelCommand(sl *metadata.SoftlayerCommand) *VolumeCancelCommand {
+func NewVolumeCancelCommand(sl *metadata.SoftlayerStorageCommand) *VolumeCancelCommand {
 	thisCmd := &VolumeCancelCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "volume-cancel " + T("IDENTIFIER"),
 		Short: T("Cancel an existing block storage volume"),
-		Long: T(`${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f 
-   This command cancels volume with ID 12345678 immediately and without asking for confirmation.`),
+   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f 
+   This command cancels volume with ID 12345678 immediately and without asking for confirmation.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

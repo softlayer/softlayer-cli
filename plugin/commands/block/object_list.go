@@ -1,8 +1,9 @@
 package block
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -10,26 +11,33 @@ import (
 )
 
 type ObjectListCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewObjectListCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *ObjectListCommand) {
-	return &ObjectListCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewObjectListCommand(sl *metadata.SoftlayerStorageCommand) (cmd *ObjectListCommand) {
+	thisCmd := &ObjectListCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "snapshot-create",
+		Short: T("List cloud block storage."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
-
-func (cmd *ObjectListCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *ObjectListCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
 	cloudObjectStorages, err := cmd.StorageManager.GetHubNetworkStorage("")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Cloud Object Storages.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get Cloud Object Storages.\n"), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Id"), T("Account name"), T("Description"), T("Create Date"), T("Type")})
@@ -45,19 +53,4 @@ func (cmd *ObjectListCommand) Run(c *cli.Context) error {
 
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func BlockObjectListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "object-list",
-		Description: T("List cloud block storage."),
-		Usage: T(`${COMMAND_NAME} sl block object-list [OPTIONS]
-		
-EXAMPLE:
-   ${COMMAND_NAME} sl block object-list`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

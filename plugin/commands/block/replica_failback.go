@@ -12,24 +12,24 @@ import (
 )
 
 type ReplicaFailbackCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewReplicaFailbackCommand(sl *metadata.SoftlayerCommand) *ReplicaFailbackCommand {
+func NewReplicaFailbackCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaFailbackCommand {
 	thisCmd := &ReplicaFailbackCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-failback " + T("IDENTIFIER"),
 		Short: T("Failback a block volume from replica"),
-		Long: T(`${COMMAND_NAME} sl block replica-failback VOLUME_ID
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block replica-failback 12345678
-   This command performs failback operation for volume with ID 12345678.`),
+   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678
+   This command performs failback operation for volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

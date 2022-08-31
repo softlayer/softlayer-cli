@@ -2,52 +2,50 @@ package subnet_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Subnet detail", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *subnet.DetailCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *subnet.DetailCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = subnet.NewDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = subnet.NewDetailCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        subnet.SubnetDetailMetaData().Name,
-			Description: subnet.SubnetDetailMetaData().Description,
-			Usage:       subnet.SubnetDetailMetaData().Usage,
-			Flags:       subnet.SubnetDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("Subnet detail", func() {
 		Context("Subnet detail without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Subnet detail with wrong subnet id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Subnet ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Subnet ID'. It must be a positive integer."))
 			})
 		})
 
@@ -56,10 +54,10 @@ var _ = Describe("Subnet detail", func() {
 				fakeNetworkManager.GetSubnetReturns(datatypes.Network_Subnet{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get subnet: 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get subnet: 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -107,7 +105,7 @@ var _ = Describe("Subnet detail", func() {
 				}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.9/10"}))
@@ -128,7 +126,7 @@ var _ = Describe("Subnet detail", func() {
 			})
 
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--no-vs")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--no-vs")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.9/10"}))
@@ -149,7 +147,7 @@ var _ = Describe("Subnet detail", func() {
 			})
 
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--no-hardware")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--no-hardware")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.9/10"}))

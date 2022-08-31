@@ -4,10 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -16,79 +13,60 @@ import (
 )
 
 type VolumeDuplicateCommand struct {
-	UI             terminal.UI
-	StorageManager managers.StorageManager
-	Context        plugin.PluginContext
+	*metadata.SoftlayerStorageCommand
+	Command               *cobra.Command
+	StorageManager        managers.StorageManager
+	OriginSnapshotId      int
+	DuplicateSize         int
+	DuplicateIops         int
+	DuplicateTier         float64
+	DuplicateSnapshotSize int
+	DependentDuplicate    bool
+	Force                 bool
 }
 
-func NewVolumeDuplicateCommand(ui terminal.UI, storageManager managers.StorageManager, context plugin.PluginContext) (cmd *VolumeDuplicateCommand) {
-	return &VolumeDuplicateCommand{
-		UI:             ui,
-		StorageManager: storageManager,
-		Context:        context,
+func NewVolumeDuplicateCommand(sl *metadata.SoftlayerStorageCommand) *VolumeDuplicateCommand {
+	thisCmd := &VolumeDuplicateCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func FileVolumeDuplicateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "file",
-		Name:        "volume-duplicate",
-		Description: T("Order a file volume by duplicating an existing volume"),
-		Usage: T(`${COMMAND_NAME} sl file volume-duplicate VOLUME_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "volume-duplicate " + T("IDENTIFIER"),
+		Short: T("Order a file volume by duplicating an existing volume"),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl file volume-duplicate 12345678 
-   This command shows order a new volume by duplicating the volume with ID 12345678.`),
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "o,origin-snapshot-id",
-				Usage: T("ID of an original volume snapshot to use for duplication"),
-			},
-			cli.IntFlag{
-				Name:  "s,duplicate-size",
-				Usage: T("Size of duplicate file volume in GB, if no size is specified, the size of the original volume will be used"),
-			},
-			cli.IntFlag{
-				Name:  "i,duplicate-iops",
-				Usage: T("Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used"),
-			},
-			cli.Float64Flag{
-				Name:  "t,duplicate-tier",
-				Usage: T("Endurance Storage Tier, if no tier is specified, the tier of the original volume will be used"),
-			},
-			cli.IntFlag{
-				Name:  "n,duplicate-snapshot-size",
-				Usage: T("The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the original volume will be used"),
-				Value: -1,
-			},
-			cli.BoolFlag{
-				Name:  "d,dependent-duplicate",
-				Usage: T("Whether or not this duplicate will be a dependent duplicate of the origin volume."),
-			},
-			metadata.ForceFlag(),
-			metadata.OutputFlag(),
+   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 
+   This command shows order a new volume by duplicating the volume with ID 12345678.`, sl.StorageI18n),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().IntVarP(&thisCmd.OriginSnapshotId, "origin-snapshot-id", "o", 0, T("ID of an origin volume snapshot to use for duplication"))
+	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateSize, "duplicate-size", "s", 0, T("Size of duplicate file volume in GB, if no size is specified, the size of the original volume will be used"))
+	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateIops, "duplicate-iops", "i", 0, T("Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used"))
+	cobraCmd.Flags().Float64VarP(&thisCmd.DuplicateTier, "duplicate-tier", "t", 0, T("Endurance Storage Tier, if no tier is specified, the tier of the original volume will be used"))
+	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateSnapshotSize, "duplicate-snapshot-size", "n", -1, T("The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the origin volume will be used"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.DependentDuplicate, "dependent-duplicate", "d", false, T("Whether or not this duplicate will be a dependent duplicate of the origin volume."))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *VolumeDuplicateCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *VolumeDuplicateCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	if !c.IsSet("f") && outputFormat != "JSON" {
+	if !cmd.Force && outputFormat != "JSON" {
 		confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -98,16 +76,16 @@ func (cmd *VolumeDuplicateCommand) Run(c *cli.Context) error {
 	config := managers.DuplicateOrderConfig{
 		VolumeType:            "file",
 		OriginalVolumeId:      volumeID,
-		OriginalSnapshotId:    c.Int("o"),
-		DuplicateSize:         c.Int("s"),
-		DuplicateIops:         c.Int("i"),
-		DuplicateTier:         c.Float64("t"),
-		DuplicateSnapshotSize: c.Int("n"),
-		DependentDuplicate:    c.Bool("d"),
+		OriginalSnapshotId:    cmd.OriginSnapshotId,
+		DuplicateSize:         cmd.DuplicateSize,
+		DuplicateIops:         cmd.DuplicateIops,
+		DuplicateTier:         cmd.DuplicateTier,
+		DuplicateSnapshotSize: cmd.DuplicateSnapshotSize,
+		DependentDuplicate:    cmd.DependentDuplicate,
 	}
 	orderReceipt, err := cmd.StorageManager.OrderDuplicateVolume(config)
 	if err != nil {
-		return cli.NewExitError(T("Failed to order duplicate volume from {{.VolumeID}}.Please verify your options and try again.\n", map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to order duplicate volume from {{.VolumeID}}.Please verify your options and try again.\n", map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -123,6 +101,6 @@ func (cmd *VolumeDuplicateCommand) Run(c *cli.Context) error {
 		}
 	}
 	cmd.UI.Print(T("You may run '{{.CommandName}} sl file volume-list --order {{.OrderID}}' to find this file volume after it is ready.",
-		map[string]interface{}{"OrderID": *orderReceipt.OrderId, "CommandName": cmd.Context.CLIName()}))
+		map[string]interface{}{"OrderID": *orderReceipt.OrderId, "CommandName": "ibmcloud"}))
 	return nil
 }

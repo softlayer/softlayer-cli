@@ -14,7 +14,7 @@ import (
 )
 
 type ReplicaOrderCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command          *cobra.Command
 	StorageManager   managers.StorageManager
 	SnapshotSchedule string
@@ -25,19 +25,19 @@ type ReplicaOrderCommand struct {
 	Force            bool
 }
 
-func NewReplicaOrderCommand(sl *metadata.SoftlayerCommand) *ReplicaOrderCommand {
+func NewReplicaOrderCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaOrderCommand {
 	thisCmd := &ReplicaOrderCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-order " + T("IDENTIFIER"),
 		Short: T("Order a block storage replica volume"),
-		Long: T(`${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX
-   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.`),
+   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX
+   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

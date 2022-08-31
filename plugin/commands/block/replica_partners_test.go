@@ -22,12 +22,12 @@ var _ = Describe("Replica partners", func() {
 		FakeStorageManager *testhelpers.FakeStorageManager
 		cliCommand         *block.ReplicaPartnersCommand
 		fakeSession        *session.Session
-		slCommand          *metadata.SoftlayerCommand
+		slCommand          *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
 		cliCommand = block.NewReplicaPartnersCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager

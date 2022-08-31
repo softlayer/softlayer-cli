@@ -13,24 +13,24 @@ import (
 )
 
 type ReplicaLocationsCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewReplicaLocationsCommand(sl *metadata.SoftlayerCommand) *ReplicaLocationsCommand {
+func NewReplicaLocationsCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaLocationsCommand {
 	thisCmd := &ReplicaLocationsCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-locations " + T("IDENTIFIER"),
 		Short: T("List suitable replication datacenters for the given volume"),
-		Long: T(`${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block replica-locations 12345678
-   This command lists suitable replication data centers for block volume with ID 12345678.`),
+   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678
+   This command lists suitable replication data centers for block volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

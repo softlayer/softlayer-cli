@@ -3,10 +3,14 @@ package block
 import (
 	"bytes"
 
+	"github.com/spf13/cobra"
+
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+
+	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -15,36 +19,39 @@ var (
 )
 
 type VolumeOptionsCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewVolumeOptionsCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *VolumeOptionsCommand) {
-	return &VolumeOptionsCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewVolumeOptionsCommand(sl *metadata.SoftlayerStorageCommand) *VolumeOptionsCommand {
+	thisCmd := &VolumeOptionsCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockVolumeOptionsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "volume-options",
-		Description: T("List all options for ordering a block storage"),
-		Usage: T(`${COMMAND_NAME} sl block volume-options
+	cobraCmd := &cobra.Command{
+		Use:   "volume-options",
+		Short: T("List all options for ordering a block storage"),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-options
 	
 EXAMPLE:
-   ${COMMAND_NAME} sl block volume-options
-   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.`),
+   ${COMMAND_NAME} sl {{.storageType}} volume-options
+   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.`, sl.StorageI18n),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
 	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-// refer to here about volume size and iops ranges: http://knowledgelayer.softlayer.com/learning/block-storage
-func (cmd *VolumeOptionsCommand) Run(c *cli.Context) error {
+func (cmd *VolumeOptionsCommand) Run(args []string) error {
 	table := cmd.UI.Table([]string{"name", "value"})
 	locations, err := cmd.StorageManager.GetAllDatacenters()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get all datacenters.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get all datacenters.\n"), err.Error(), 2)
 	}
 	table.Add(T("Storage Type"), "performance,endurance")
 	table.Add(T("Size (GB)"), utils.StringSliceToString(volumeSizes))

@@ -9,24 +9,18 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -42,35 +36,12 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl vlan
-	vlanCommands := vlan.GetCommandActionBindings(context, ui, session)
-	for name, action := range vlanCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl block
-	blockCommands := block.GetCommandAcionBindings(context, ui, session)
-	for name, action := range blockCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl file
-	fileCommands := file.GetCommandAcionBindings(context, ui, session)
-	for name, action := range fileCommands {
-		CommandActionBindings[name] = action
-	}
-
 	// ibmcloud sl hardware
 	hardwareCommands := hardware.GetCommandActionBindings(context, ui, session)
 	for name, action := range hardwareCommands {
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl image
-	imageCommands := image.GetCommandActionBindings(context, ui, session)
-	for name, action := range imageCommands {
-		CommandActionBindings[name] = action
-	}
 	// ibmcloud sl ipsec
 	ipsecCommands := ipsec.GetCommandActionBindings(context, ui, session)
 	for name, action := range ipsecCommands {
@@ -86,18 +57,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl vs
 	vsCommands := virtual.GetCommandActionBindings(context, ui, session)
 	for name, action := range vsCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl globalip
-	globalipCommands := globalip.GetCommandActionBindings(context, ui, session)
-	for name, action := range globalipCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl subnet
-	subnetCommands := subnet.GetCommandActionBindings(context, ui, session)
-	for name, action := range subnetCommands {
 		CommandActionBindings[name] = action
 	}
 

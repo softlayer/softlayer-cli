@@ -18,14 +18,14 @@ var _ = Describe("Snapshot Cancel", func() {
 		fakeUI             *terminal.FakeUI
 		cliCommand         *block.SnapshotCancelCommand
 		fakeSession        *session.Session
-		slCommand          *metadata.SoftlayerCommand
+		slCommand          *metadata.SoftlayerStorageCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
 		cliCommand = block.NewSnapshotCancelCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager

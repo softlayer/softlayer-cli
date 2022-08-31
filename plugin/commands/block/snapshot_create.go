@@ -13,25 +13,25 @@ import (
 )
 
 type SnapshotCreateCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Note           string
 }
 
-func NewSnapshotCreateCommand(sl *metadata.SoftlayerCommand) *SnapshotCreateCommand {
+func NewSnapshotCreateCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotCreateCommand {
 	thisCmd := &SnapshotCreateCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-create " + T("IDENTIFIER"),
 		Short: T("Create a snapshot on a given volume"),
-		Long: T(`${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud
-   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.`),
+   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud
+   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

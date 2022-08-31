@@ -13,24 +13,24 @@ import (
 )
 
 type ReplicaPartnersCommand struct {
-	*metadata.SoftlayerCommand
+	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 }
 
-func NewReplicaPartnersCommand(sl *metadata.SoftlayerCommand) *ReplicaPartnersCommand {
+func NewReplicaPartnersCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaPartnersCommand {
 	thisCmd := &ReplicaPartnersCommand{
-		SoftlayerCommand: sl,
-		StorageManager:   managers.NewStorageManager(sl.Session),
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-partners " + T("IDENTIFIER"),
 		Short: T("List existing replicant volumes for a block volume"),
-		Long: T(`${COMMAND_NAME} sl block replica-partners VOLUME_ID [OPTIONS]
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block replica-partners 12345678
-   This command lists existing replicant volumes for block volume with ID 12345678.`),
+   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678
+   This command lists existing replicant volumes for block volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
