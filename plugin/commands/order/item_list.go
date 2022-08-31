@@ -52,7 +52,7 @@ func (cmd *ItemListCommand) Run(args []string) error {
 
 	items, err := cmd.OrderManager.ListItems(packageKeyname, keyword, category)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to list items."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list items.\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {

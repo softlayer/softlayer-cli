@@ -43,7 +43,7 @@ func (cmd *PackageLocationCommand) Run(args []string) error {
 
 	locations, err := cmd.OrderManager.PackageLocation(packageKeyname)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to list package locations."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list package locations.\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {

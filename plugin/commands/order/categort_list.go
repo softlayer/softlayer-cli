@@ -49,7 +49,7 @@ func (cmd *CategoryListCommand) Run(args []string) error {
 
 	categories, err := cmd.OrderManager.ListCategories(packageKeyname)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to list categories."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list categories.\n"), err.Error(), 2)
 	}
 	var CategoriesRequired []datatypes.Product_Package_Order_Configuration
 	if cmd.Required {

@@ -50,7 +50,7 @@ func (cmd *PackageListCommand) Run(args []string) error {
 
 	packages, err := cmd.OrderManager.ListPackage(keyword, packageType)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to list packages."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list packages.\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
