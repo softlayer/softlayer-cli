@@ -9,43 +9,42 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Record add", func() {
 	var (
 		fakeUI         *terminal.FakeUI
+		cliCommand     *dns.RecordAddCommand
+		fakeSession    *session.Session
+		slCommand      *metadata.SoftlayerCommand
 		fakeDNSManager *testhelpers.FakeDNSManager
-		cmd            *dns.RecordAddCommand
-		cliCommand     cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = dns.NewRecordAddCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
-		cmd = dns.NewRecordAddCommand(fakeUI, fakeDNSManager)
-		cliCommand = cli.Command{
-			Name:        dns.DnsRecordAddMetaData().Name,
-			Description: dns.DnsRecordAddMetaData().Description,
-			Usage:       dns.DnsRecordAddMetaData().Usage,
-			Flags:       dns.DnsRecordAddMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.DNSManager = fakeDNSManager
 	})
 
 	Describe("Record add", func() {
 		Context("Record add with not enough parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires four arguments.")).To(BeTrue())
 			})
 		})
 		Context("Record add with not enough parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires four arguments.")).To(BeTrue())
 			})
@@ -56,7 +55,7 @@ var _ = Describe("Record add", func() {
 				fakeDNSManager.GetZoneIdFromNameReturns(0, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc.com", "ftp", "a", "127.0.0.1")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "ftp", "a", "127.0.0.1")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to get zone ID from zone name: abc.com.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -69,13 +68,13 @@ var _ = Describe("Record add", func() {
 				fakeDNSManager.CreateResourceRecordReturns(datatypes.Dns_Domain_ResourceRecord{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc.com", "ftp", "a", "127.0.0.1")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "ftp", "a", "127.0.0.1")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to create resource record under zone abc.com: type=a, record=ftp, data=127.0.0.1, ttl=7200.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc.com", "ftp", "a", "127.0.0.1", "--ttl", "3600")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "ftp", "a", "127.0.0.1", "--ttl", "3600")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to create resource record under zone abc.com: type=a, record=ftp, data=127.0.0.1, ttl=3600.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -94,7 +93,7 @@ var _ = Describe("Record add", func() {
 				}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc.com", "ftp", "a", "127.0.0.1")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "ftp", "a", "127.0.0.1")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Created resource record under zone abc.com: ID=1234, type=a, record=ftp, data=127.0.0.1, ttl=7200."}))
@@ -112,7 +111,7 @@ var _ = Describe("Record add", func() {
 				}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc.com", "ftp", "a", "127.0.0.1", "--ttl", "3600")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "ftp", "a", "127.0.0.1", "--ttl", "3600")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Created resource record under zone abc.com: ID=1234, type=a, record=ftp, data=127.0.0.1, ttl=3600."}))
