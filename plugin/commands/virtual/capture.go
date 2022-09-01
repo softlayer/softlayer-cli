@@ -3,10 +3,9 @@ package virtual
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -14,38 +13,54 @@ import (
 )
 
 type CaptureCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
+	Name string
+	All	bool
+	Note	string
 }
 
-func NewCaptureCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *CaptureCommand) {
-	return &CaptureCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewCaptureCommand(sl *metadata.SoftlayerCommand) (cmd *CaptureCommand) {
+	thisCmd := &CaptureCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "capture " + T("IDENTIFIER"),
+		Short: T("Capture virtual server instance into an image"),
+		Long: T(`${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing
+   This command captures virtual server instance with ID of 12345678 with all disks into an image named "mycloud" with note "testing".`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("Name of the image [required]"))
+	cobraCmd.Flags().BoolVar(&thisCmd.All, "all", false, T("Capture all disks that belong to the virtual server"))
+	cobraCmd.Flags().StringVar(&thisCmd.Note, "notes", "", T("Add a note to be associated with the image"))
+	return thisCmd
 }
+func (cmd *CaptureCommand) Run(args []string) error {
 
-func (cmd *CaptureCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	vsID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+	vsID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Virtual server ID")
+		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
-	if !c.IsSet("name") {
-		return errors.NewMissingInputError("-n|--name")
+	if cmd.Name == "" {
+		return slErrors.NewMissingInputError("-n|--name")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	txn, err := cmd.VirtualServerManager.CaptureImage(vsID, c.String("name"), c.String("note"), c.Bool("all"))
+	txn, err := cmd.VirtualServerManager.CaptureImage(vsID, cmd.Name, cmd.Note, cmd.All)
 	if err != nil {
-		return cli.NewExitError(T("Failed to capture image for virtual server instance: {{.VsID}}.\n",
-			map[string]interface{}{"VsID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to capture image for virtual server instance: {{.VsID}}.\n",
+			map[string]interface{}{"VsID": vsID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -61,35 +76,8 @@ func (cmd *CaptureCommand) Run(c *cli.Context) error {
 	}
 	table.Add(T("transaction"), transaction)
 	table.Add(T("transaction_id"), utils.FormatIntPointer(txn.Id))
-	table.Add(T("all_disks"), strconv.FormatBool(c.Bool("all")))
+	table.Add(T("all_disks"), strconv.FormatBool(cmd.All))
 	table.Print()
 	return nil
 }
 
-func VSCaptureMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "capture",
-		Description: T("Capture virtual server instance into an image"),
-		Usage: T(`${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing
-   This command captures virtual server instance with ID of 12345678 with all disks into an image named "mycloud" with note "testing".`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "n,name",
-				Usage: T("Name of the image [required]"),
-			},
-			cli.BoolFlag{
-				Name:  "all",
-				Usage: T("Capture all disks that belong to the virtual server"),
-			},
-			cli.StringFlag{
-				Name:  "note",
-				Usage: T("Add a note to be associated with the image"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
-}

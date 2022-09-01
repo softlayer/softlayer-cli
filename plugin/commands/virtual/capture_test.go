@@ -2,61 +2,61 @@ package virtual_test
 
 import (
 	"errors"
-	"strings"
 	"time"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VS capture", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.CaptureCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cmd           *virtual.CaptureCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = virtual.NewCaptureCommand(fakeUI, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        virtual.VSCaptureMetaData().Name,
-			Description: virtual.VSCaptureMetaData().Description,
-			Usage:       virtual.VSCaptureMetaData().Usage,
-			Flags:       virtual.VSCaptureMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewCaptureCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
 
 	Describe("VS capture", func() {
 		Context("VS capture without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("VS capture with wrong VS ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Virtual server ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Virtual server ID'. It must be a positive integer."))
 			})
 		})
 
 		Context("VS capture without --name", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: '-n|--name' is required")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '-n|--name' is required"))
 			})
 		})
 
@@ -65,10 +65,10 @@ var _ = Describe("VS capture", func() {
 				fakeVSManager.CaptureImageReturns(datatypes.Provisioning_Version1_Transaction{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-n", "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to capture image for virtual server instance: 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to capture image for virtual server instance: 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -85,7 +85,7 @@ var _ = Describe("VS capture", func() {
 				}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-n", "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-30T00:00:00Z"}))
@@ -94,7 +94,7 @@ var _ = Describe("VS capture", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"false"}))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-n", "myimage", "--all")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage", "--all")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-30T00:00:00Z"}))

@@ -3,79 +3,209 @@ package virtual
 import (
 	"encoding/json"
 	"errors"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"io/ioutil"
 	"strconv"
 	"time"
+	"fmt"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+	"github.com/spf13/cobra"
+
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
-	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+
+
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type CreateCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
+	Command              *cobra.Command
 	VirtualServerManager managers.VirtualServerManager
 	ImageManager         managers.ImageManager
-	Context              plugin.PluginContext
+
+	Dedicated	bool
+	Private	bool
+	San	bool
+	Test	bool
+	Transient	bool
+	Force	bool
+	Disk	[]int
+	Key	[]int
+	PriSecGroup	[]int
+	PubSecGroup	[]int
+	HostId	int
+	Image	int
+	Like	int
+	PlacementGroup	int
+	Quantity	int
+	SubnetPrivate	int
+	SubnetPublic	int
+	VlanPrivate	int
+	VlanPublic	int
+	Wait	int
+	CPU	int
+	Memory	int
+	Network	int
+	Tag	[]string
+	Billing	string
+	BootMode	string
+	Export	string
+	Flavor	string
+	Datacenter	string
+	Domain	string
+	Hostname	string
+	Os	string
+	PostInstall	string
+	Template	string
+	Userdata	string
+	Userfile	string
+
+
 }
 
-func NewCreateCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager, imageManager managers.ImageManager, context plugin.PluginContext) (cmd *CreateCommand) {
-	return &CreateCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
-		ImageManager:         imageManager,
-		Context:              context,
+func NewCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CreateCommand) {
+	thisCmd := &CreateCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
+		ImageManager: managers.NewImageManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "create",
+		Short: T("Create virtual server instance"),
+		Long: T(`${COMMAND_NAME} sl vs create [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413
+	This command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,
+	operation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.
+	${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test
+	This command tests whether the order is valid with above options before the order is actually placed.
+	${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt
+	This command exports above options to a file: myvsi.txt under user home directory for later use.`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().BoolVar(&thisCmd.Dedicated, "dedicated", false, T("Create a dedicated Virtual Server (Private Node)"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Private, "private", false, T("Forces the virtual server to only have access the private network"))
+	cobraCmd.Flags().BoolVar(&thisCmd.San, "san", false, T("Use SAN storage instead of local disk"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Test, "test", false, T("Do not actually create the virtual server"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Transient, "transient", false, T("Create a transient virtual server"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	cobraCmd.Flags().IntSliceVar(&thisCmd.Disk, "disk", []int{}, T("Disk sizes (multiple occurrence permitted)"))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Key, "key", "k", []int{}, T("The IDs of the SSH keys to add to the root user (multiple occurrence permitted)"))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.PriSecGroup, "private-security-group", "s", []int{}, T("Security group ID to associate with the private interface (multiple occurrence permitted)"))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.PubSecGroup, "public-security-group", "S", []int{}, T("Security group ID to associate with the public interface (multiple occurrence permitted)"))
+	cobraCmd.Flags().IntVar(&thisCmd.HostId, "host-id", 0, T("Host Id to provision a Dedicated Virtual Server onto"))
+	cobraCmd.Flags().IntVar(&thisCmd.Image, "image", 0, T("Image ID. See: '${COMMAND_NAME} sl image list' for reference"))
+	cobraCmd.Flags().IntVar(&thisCmd.Like, "like", 0, T("Use the configuration from an existing virtual server"))
+	cobraCmd.Flags().IntVar(&thisCmd.PlacementGroup, "placement-group-id", 0, T("Placement Group Id to order this guest on."))
+	cobraCmd.Flags().IntVar(&thisCmd.Quantity, "quantity", 1, T("The quantity of virtual server be created. It should be greater or equal to 1. This value defaults to 1."))
+	cobraCmd.Flags().IntVar(&thisCmd.SubnetPrivate, "subnet-private", 0, T("The ID of the private SUBNET on which you want the virtual server placed"))
+	cobraCmd.Flags().IntVar(&thisCmd.SubnetPublic, "subnet-public", 0, T("The ID of the public SUBNET on which you want the virtual server placed"))
+	cobraCmd.Flags().IntVar(&thisCmd.VlanPrivate, "vlan-private", 0, T("The ID of the private VLAN on which you want the virtual server placed"))
+	cobraCmd.Flags().IntVar(&thisCmd.VlanPublic, "vlan-public", 0, T("The ID of the public VLAN on which you want the virtual server placed"))
+	cobraCmd.Flags().IntVar(&thisCmd.Wait, "wait", 0, T("Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity"))
+	cobraCmd.Flags().IntVarP(&thisCmd.CPU, "cpu", "c", 0, T("Number of CPU cores [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Memory, "memory", "m", 0, T("Memory in megabytes [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Network, "network", "n", 0, T("Network port speed in Mbps"))
+	cobraCmd.Flags().StringSliceVarP(&thisCmd.Tag, "tag", "g", []string{}, T("Tags to add to the instance (multiple occurrence permitted)"))
+	cobraCmd.Flags().StringVar(&thisCmd.Billing, "billing", "hourly", T("Billing rate. Default is: hourly. Options are: hourly, monthly"))
+	cobraCmd.Flags().StringVar(&thisCmd.BootMode, "boot-mode",  "", T("Specify the mode to boot the OS in. Supported modes are HVM and PV."))
+	cobraCmd.Flags().StringVar(&thisCmd.Export, "export", "", T("Exports options to a template file"))
+	cobraCmd.Flags().StringVar(&thisCmd.Flavor, "flavor", "", T("Public Virtual Server flavor key name"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Datacenter shortname [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Domain, "domain", "D", "", T("Domain portion of the FQDN [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Host portion of the FQDN [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Os, "os", "o", "", T("OS install code. Tip: you can specify <OS>_LATEST"))
+	cobraCmd.Flags().StringVarP(&thisCmd.PostInstall, "postinstall", "i", "", T("Post-install script to download"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Template, "template",  "t", "", T("A template file that defaults the command-line options"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Userdata, "userdata",  "u", "", T("User defined metadata string"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Userfile, "userfile",  "F", "", T("Read userdata from file"))
+	return thisCmd
 }
 
-func (cmd *CreateCommand) Run(c *cli.Context) error {
+func (cmd *CreateCommand) CheckRequiredOptions() bool {
+	if cmd.Hostname == "" {
+		return false
+	} else if cmd.Domain == "" {
+		return false
+	} else if cmd.Datacenter == "" {
+		return false
+	} else if cmd.Os == "" && cmd.Image == 0 {
+		return false
+	}
+	return true
+}
+
+func (cmd *CreateCommand) Run(args []string) error {
 	virtualGuest := datatypes.Virtual_Guest{}
 	var err error
-	if c.NumFlags() == 0 {
+	params, err := cmd.verifyParams()
+	if err != nil {
+		return err
+	}
+	if !cmd.CheckRequiredOptions() {
 		confirm, err := cmd.UI.Confirm(T("Please make sure you know all the creation options by running command: '{{.CommandName}} sl vs options'. Continue?",
-			map[string]interface{}{"CommandName": cmd.Context.CLIName()}))
+			map[string]interface{}{"CommandName": "ibmcloud"}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
 			return nil
 		}
-		params := make(map[string]interface{})
-		params["hostname"], _ = cmd.UI.Ask(T("Hostname: "))
-		params["domain"], _ = cmd.UI.Ask(T("Domain: "))
-		inputCpu, _ := cmd.UI.Ask(T("Cpu: "))
-		cpu, err := strconv.Atoi(inputCpu)
-		if err != nil {
-			return slErrors.NewInvalidSoftlayerIdInputError("CPU")
-		}
-		params["cpu"] = cpu
-		inputMemory, _ := cmd.UI.Ask(T("Memory: "))
-		memory, err := strconv.Atoi(inputMemory)
-		if err != nil {
-			return slErrors.NewInvalidSoftlayerIdInputError("Memory")
-		}
-		params["memory"] = memory
-		params["datacenter"], _ = cmd.UI.Ask(T("Datacenter: "))
-		params["os"], _ = cmd.UI.Ask(T("Operating System Code: "))
 
+		if params["hostname"] == "" {
+			params := make(map[string]interface{})
+			params["hostname"], _ = cmd.UI.Ask(T("Hostname: "))
+			// return slErrors.NewMissingInputError("[-H|--hostname]")
+		}
+		
+		if params["domain"] == "" {
+			params["domain"], _ = cmd.UI.Ask(T("Domain: "))
+		}
+
+		if params["cpu"] == 0 && params["flavor"] == "" {
+			inputCpu, _ := cmd.UI.Ask(T("Cpu: "))
+			cpu, err := strconv.Atoi(inputCpu)
+			if err != nil {
+				return slErrors.NewInvalidSoftlayerIdInputError("CPU")
+			}
+			params["cpu"] = cpu
+		}
+
+		if params["memory"] == 0 && params["flavor"] == "" {
+			inputMemory, _ := cmd.UI.Ask(T("Memory: "))
+			memory, err := strconv.Atoi(inputMemory)
+			if err != nil {
+				return slErrors.NewInvalidSoftlayerIdInputError("Memory")
+			}
+			if memory <= 0 {
+				return slErrors.NewInvalidUsageError(T("either [-m|--memory] or [--flavor] is required."))
+			}
+			params["memory"] = memory			
+		}
+
+		if params["datacenter"] == "" {
+			params["datacenter"], _ = cmd.UI.Ask(T("Datacenter: "))
+		}
+		
+		if params["os"] == "" {
+			params["os"], _ = cmd.UI.Ask(T("Operating System Code: "))
+		}
+		
 		_, err = cmd.VirtualServerManager.GenerateInstanceCreationTemplate(&virtualGuest, params)
 		if err != nil {
 			return err
 		}
 	} else {
 		//create virtual server with customized parameters
-		params, err := verifyParams(cmd.ImageManager, c)
-		if err != nil {
-			return err
-		}
 		_, err = cmd.VirtualServerManager.GenerateInstanceCreationTemplate(&virtualGuest, params)
 		if err != nil {
 			return err
@@ -83,17 +213,17 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	}
 
 	//do export
-	if c.IsSet("export") {
+	if cmd.Export != "" {
 		content, err := json.Marshal(virtualGuest)
 		if err != nil {
-			return cli.NewExitError(T("Failed to marshal virtual server template.\n")+err.Error(), 1)
+			return slErrors.NewAPIError(T("Failed to marshal virtual server template.\n"), err.Error(), 1)
 		}
-		export := c.String("export")
+		export := cmd.Export
 		// #nosec G306: write on customer machine
 		err = ioutil.WriteFile(export, content, 0644)
 		if err != nil {
-			return cli.NewExitError(T("Failed to write virtual server template file to: {{.Template}}.",
-				map[string]interface{}{"Template": export})+err.Error(), 1)
+			return slErrors.NewAPIError(T("Failed to write virtual server template file to: {{.Template}}.",
+				map[string]interface{}{"Template": export}), err.Error(), 1)
 		}
 		cmd.UI.Ok()
 		cmd.UI.Print(T("Virtual server template is exported to: {{.Template}}.", map[string]interface{}{"Template": export}))
@@ -101,25 +231,25 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	}
 
 	//do test
-	if c.IsSet("test") {
+	if cmd.Test {
 		_, err := cmd.VirtualServerManager.VerifyInstanceCreation(virtualGuest)
 		if err != nil {
-			return cli.NewExitError(T("Failed to verify virtual server creation.\n")+err.Error(), 2)
+			return slErrors.NewAPIError(T("Failed to verify virtual server creation.\n"), err.Error(), 2)
 		}
 		cmd.UI.Ok()
 		cmd.UI.Print(T("The order is correct."))
 		return nil
 	}
 
-	quantity := c.Int("quantity")
+	quantity := cmd.Quantity
 	if quantity <= 0 {
-		return bxErr.NewInvalidUsageError(T("The value of option '--quantity' should be greater or equal to 1."))
+		return slErrors.NewInvalidUsageError(T("The value of option '--quantity' should be greater or equal to 1."))
 	}
 
-	if !c.IsSet("f") && !c.IsSet("force") {
+	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -129,13 +259,13 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 
 	var multiErrors []error
 
-	if c.IsSet("u") || c.IsSet("F") {
+	if cmd.Userdata != "" || cmd.Userfile != "" {
 		var userData string
-		if c.IsSet("u") {
-			userData = c.String("u")
+		if cmd.Userdata != "" {
+			userData = cmd.Userdata
 		}
-		if c.IsSet("F") {
-			userfile := c.String("F")
+		if cmd.Userfile != "" {
+			userfile := cmd.Userfile
 			content, err := ioutil.ReadFile(userfile) // #nosec
 			if err != nil {
 				newError := errors.New(T("Failed to read user data from file: {{.File}}.", map[string]interface{}{"File": userfile}))
@@ -150,17 +280,17 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	if quantity > 1 {
 		virtualGuests, err = cmd.CreateMutliVSIWithSameConfig(virtualGuest, quantity)
 		if err != nil {
-			return cli.NewExitError(T("Failed to create multi virtual server instances.\n")+err.Error(), 2)
+			return slErrors.NewAPIError(T("Failed to create multi virtual server instances.\n"), err.Error(), 2)
 		}
 	} else {
 		virtualGuest, err = cmd.VirtualServerManager.CreateInstance(&virtualGuest)
 		if err != nil {
-			return cli.NewExitError(T("Failed to create virtual server instance.\n")+err.Error(), 2)
+			return slErrors.NewAPIError(T("Failed to create virtual server instance.\n"), err.Error(), 2)
 		}
 		virtualGuests = append(virtualGuests, virtualGuest)
 	}
-	if c.IsSet("tag") || c.IsSet("g") {
-		tagString := utils.StringSliceToString(c.StringSlice("tag"))
+	if len(cmd.Tag) > 0 {
+		tagString := utils.StringSliceToString(cmd.Tag)
 		for _, vs := range virtualGuests {
 			err := cmd.VirtualServerManager.SetTags(*vs.Id, tagString)
 			if err != nil {
@@ -171,13 +301,17 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	}
 
 	if len(virtualGuests) == 1 {
-		cmd.printVirtualGuest(virtualGuests[0], c, &multiErrors)
+		cmd.printVirtualGuest(virtualGuests[0], &multiErrors)
 	} else {
 		cmd.printVirtualGuests(virtualGuests)
 	}
 
 	if len(multiErrors) > 0 {
-		return cli.NewExitError(cli.NewMultiError(multiErrors...).Error(), 2)
+		errorString := ""
+		for _, theError := range multiErrors {
+			errorString = fmt.Sprintf("%v\n%v", errorString, theError.Error())
+		}
+		return errors.New(errorString)
 	}
 	return nil
 }
@@ -195,11 +329,12 @@ func (cmd *CreateCommand) CreateMutliVSIWithSameConfig(virtualGuest datatypes.Vi
 	}
 	virtualGuests, err := cmd.VirtualServerManager.CreateInstances(virtualGuests)
 	if err != nil {
-		return []datatypes.Virtual_Guest{}, cli.NewExitError(T("Failed to create multi virtual server instances.\n")+err.Error(), 2)
+		return []datatypes.Virtual_Guest{}, slErrors.NewAPIError(T("Failed to create multi virtual server instances.\n"), err.Error(), 2)
 	}
 	return virtualGuests, nil
 }
-func (cmd *CreateCommand) printVirtualGuest(virtualGuest datatypes.Virtual_Guest, c *cli.Context, multiErrors *[]error) {
+
+func (cmd *CreateCommand) printVirtualGuest(virtualGuest datatypes.Virtual_Guest, multiErrors *[]error) {
 	table := cmd.UI.Table([]string{T("name"), T("value")})
 	table.Add(T("ID"), utils.FormatIntPointer(virtualGuest.Id))
 	table.Add(T("FQDN"), utils.FormatStringPointer(virtualGuest.FullyQualifiedDomainName))
@@ -208,8 +343,8 @@ func (cmd *CreateCommand) printVirtualGuest(virtualGuest datatypes.Virtual_Guest
 	table.Add(T("Placement Group ID"), utils.FormatIntPointer(virtualGuest.PlacementGroupId))
 
 	//do wait
-	if c.IsSet("wait") {
-		until := time.Now().Add(time.Duration(c.Int("wait")) * time.Second)
+	if cmd.Wait > 0 {
+		until := time.Now().Add(time.Duration(cmd.Wait) * time.Second)
 		ready, _, err := cmd.VirtualServerManager.InstanceIsReady(*virtualGuest.Id, until)
 		if err != nil {
 			table.Add(T("ready"), "-")
@@ -230,65 +365,67 @@ func (cmd *CreateCommand) printVirtualGuests(virtualGuests []datatypes.Virtual_G
 	table.Print()
 }
 
-func verifyParams(imageManager managers.ImageManager, c *cli.Context) (map[string]interface{}, error) {
+func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 	params := make(map[string]interface{})
-	if c.IsSet("flavor") {
-		if c.IsSet("c") {
-			return nil, bxErr.NewExclusiveFlagsError("[-c|--cpu]", "[--flavor]")
+	
+	if cmd.Flavor != "" {
+		if cmd.CPU != 0 {
+			fmt.Printf("Returning an error....\n")
+			return nil, slErrors.NewExclusiveFlagsError("[-c|--cpu]", "[--flavor]")
 		}
-		if c.IsSet("m") {
-			return nil, bxErr.NewExclusiveFlagsError("[-m|--memory]", "[--flavor]")
+		if cmd.Memory != 0 {
+			return nil, slErrors.NewExclusiveFlagsError("[-m|--memory]", "[--flavor]")
 		}
-		if c.IsSet("dedicated") {
-			return nil, bxErr.NewExclusiveFlagsError("[--dedicated]", "[--flavor]")
+		if cmd.Dedicated {
+			return nil, slErrors.NewExclusiveFlagsError("[--dedicated]", "[--flavor]")
 		}
-		if c.IsSet("host-id") {
-			return nil, bxErr.NewExclusiveFlagsError("[--host-id]", "[--flavor]")
+		if cmd.HostId != 0 {
+			return nil, slErrors.NewExclusiveFlagsError("[--host-id]", "[--flavor]")
 		}
-		params["flavor"] = c.String("flavor")
+		params["flavor"] = cmd.Flavor
 	}
-	if c.IsSet("o") && c.IsSet("image") {
-		return nil, bxErr.NewExclusiveFlagsError("[-o|--os]", "[--image]")
-	}
-
-	if c.IsSet("u") && c.IsSet("F") {
-		return nil, bxErr.NewExclusiveFlagsError("[-u|--userdata]", "[-F|--userfile]")
+	if cmd.Os != "" && cmd.Image != 0 {
+		return nil, slErrors.NewExclusiveFlagsError("[-o|--os]", "[--image]")
 	}
 
-	if c.IsSet("t") {
-		params["template"] = c.String("t")
+	if cmd.Userdata != "" && cmd.Userfile != "" {
+		return nil, slErrors.NewExclusiveFlagsError("[-u|--userdata]", "[-F|--userfile]")
 	}
 
-	if c.IsSet("like") {
-		params["like"] = c.Int("like")
+	if cmd.Template != "" {
+		params["template"] = cmd.Template
 	}
 
-	if c.IsSet("H") {
-		params["hostname"] = c.String("H")
+	if cmd.Like != 0 {
+		params["like"] = cmd.Like
 	}
 
-	if c.IsSet("D") {
-		params["domain"] = c.String("D")
+	if cmd.Hostname != "" {
+		params["hostname"] = cmd.Hostname
 	}
 
-	if c.IsSet("c") {
-		params["cpu"] = c.Int("c")
+	if cmd.Domain != "" {
+		params["domain"] = cmd.Domain
 	}
 
-	if c.IsSet("m") {
-		params["memory"] = c.Int("m")
+	if cmd.CPU != 0 {
+		params["cpu"] = cmd.CPU
 	}
 
-	if c.IsSet("d") {
-		params["datacenter"] = c.String("d")
+	if cmd.Memory != 0 {
+		params["memory"] = cmd.Memory
 	}
 
-	if c.IsSet("o") {
-		params["os"] = c.String("o")
+	if cmd.Datacenter != "" {
+		params["datacenter"] = cmd.Datacenter
 	}
 
-	if c.IsSet("image") {
-		image, err := imageManager.GetImage(c.Int("image"))
+	if cmd.Os != "" {
+		params["os"] = cmd.Os
+	}
+
+	if cmd.Image != 0 {
+		image, err := cmd.ImageManager.GetImage(cmd.Image)
 		if err != nil {
 			return nil, err
 		}
@@ -297,261 +434,94 @@ func verifyParams(imageManager managers.ImageManager, c *cli.Context) (map[strin
 		}
 	}
 
-	if !c.IsSet("billing") {
+
+	billing := cmd.Billing
+	if billing == "hourly" {
 		params["billing"] = true
+	} else if billing == "monthly" {
+		params["billing"] = false
 	} else {
-		billing := c.String("billing")
-		if billing == "hourly" {
-			params["billing"] = true
-		} else if billing == "monthly" {
-			params["billing"] = false
-		} else {
-			return nil, bxErr.NewInvalidUsageError(T("[--billing] billing rate must be either hourly or monthly."))
-		}
+		return nil, slErrors.NewInvalidUsageError(T("[--billing] billing rate must be either hourly or monthly."))
 	}
 
-	if c.IsSet("dedicated") {
-		params["dedicated"] = true
-	} else {
-		params["dedicated"] = false
-	}
 
-	if c.IsSet("host-id") {
-		params["host-id"] = c.Int("host-id")
+	params["dedicated"] = cmd.Dedicated
+
+
+	if cmd.HostId != 0 {
+		params["host-id"] = cmd.HostId
 		params["dedicated"] = true
 	}
 
-	if c.IsSet("private") {
-		params["private"] = true
-	} else {
-		params["private"] = false
-	}
+	params["private"] = cmd.Private
 
-	if c.IsSet("san") {
+
+	if cmd.San {
 		params["san"] = true
 	}
 
-	if c.IsSet("i") {
-		params["i"] = c.String("i")
+	if cmd.PostInstall != "" {
+		params["i"] = cmd.PostInstall
 	}
 
-	if c.IsSet("key") || c.IsSet("k") {
-		params["sshkeys"] = c.IntSlice("k")
+	if len(cmd.Key) > 0 {
+		params["sshkeys"] = cmd.Key
 	}
 
-	if c.IsSet("disk") {
-		params["disks"] = c.IntSlice("disk")
+	if len(cmd.Disk) > 0  {
+		params["disks"] = cmd.Disk
 	}
 
-	if c.IsSet("n") {
-		params["network"] = c.Int("n")
+	if cmd.Network > 0 {
+		params["network"] = cmd.Network
 	}
 
-	if c.IsSet("vlan-public") {
-		params["vlan-public"] = c.Int("vlan-public")
+	if cmd.VlanPublic != 0 {
+		params["vlan-public"] =cmd.VlanPublic
 	}
 
-	if c.IsSet("vlan-private") {
-		params["vlan-private"] = c.Int("vlan-private")
+	if cmd.VlanPrivate != 0 {
+		params["vlan-private"] = cmd.VlanPrivate
 	}
 
-	if c.IsSet("subnet-public") {
-		if !c.IsSet("vlan-public") {
-			return nil, bxErr.NewMissingInputError("--vlan-public")
+	if cmd.SubnetPublic != 0 {
+		if cmd.VlanPublic == 0  {
+			return nil, slErrors.NewMissingInputError("--vlan-public")
 		}
-		params["subnet-public"] = c.Int("subnet-public")
+		params["subnet-public"] = cmd.SubnetPublic
 	}
 
-	if c.IsSet("subnet-private") {
-		if !c.IsSet("vlan-private") {
-			return nil, bxErr.NewMissingInputError("--vlan-private")
+	if cmd.SubnetPrivate != 0 {
+		if cmd.VlanPrivate == 0 {
+			return nil, slErrors.NewMissingInputError("--vlan-private")
 		}
-		params["subnet-private"] = c.Int("subnet-private")
+		params["subnet-private"] = cmd.SubnetPrivate
 	}
 
-	if c.IsSet("S") || c.IsSet("public-security-group") {
-		params["public-security-group"] = c.IntSlice("public-security-group")
+	if len(cmd.PubSecGroup) > 0 {
+		fmt.Printf("PubSecGroup(%v): %v\n", cmd.Domain, cmd.PubSecGroup)
+		params["public-security-group"] = cmd.PubSecGroup
 	}
 
-	if c.IsSet("s") || c.IsSet("private-security-group") {
-		params["private-security-group"] = c.IntSlice("private-security-group")
+	if len(cmd.PriSecGroup) > 0 {
+		fmt.Printf("PriSecGroup: %v\n", cmd.PriSecGroup)
+		params["private-security-group"] = cmd.PriSecGroup
 	}
 
-	if c.IsSet("boot-mode") {
-		if c.String("boot-mode") != "HVM" && c.String("boot-mode") != "PV" {
-			return nil, bxErr.NewInvalidUsageError("--boot-mode should be HVM | PV")
+	if cmd.BootMode != "" {
+		if cmd.BootMode != "HVM" && cmd.BootMode != "PV" {
+			return nil, slErrors.NewInvalidUsageError("--boot-mode should be HVM | PV")
 		}
-		params["boot-mode"] = c.String("boot-mode")
+		params["boot-mode"] = cmd.BootMode
 	}
 
-	if c.IsSet("transient") {
-		params["transient"] = c.Bool("transient")
+	if cmd.Transient {
+		params["transient"] = cmd.Transient
 	}
 
-	if c.IsSet("placement-group-id") {
-		params["placement-group-id"] = c.Int("placement-group-id")
+	if cmd.PlacementGroup != 0 {
+		params["placement-group-id"] = cmd.PlacementGroup
 	}
 	return params, nil
 }
 
-func VSCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "create",
-		Description: T("Create virtual server instance"),
-		Usage: T(`${COMMAND_NAME} sl vs create [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413
-	This command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,
-	operation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.
-	${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test
-	This command tests whether the order is valid with above options before the order is actually placed.
-	${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt
-	This command exports above options to a file: myvsi.txt under user home directory for later use.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "H,hostname",
-				Usage: T("Host portion of the FQDN [required]"),
-			},
-			cli.StringFlag{
-				Name:  "D,domain",
-				Usage: T("Domain portion of the FQDN [required]"),
-			},
-			cli.IntFlag{
-				Name:  "c,cpu",
-				Usage: T("Number of CPU cores [required]"),
-			},
-			cli.IntFlag{
-				Name:  "m,memory",
-				Usage: T("Memory in megabytes [required]"),
-			},
-			cli.StringFlag{
-				Name:  "flavor",
-				Usage: T("Public Virtual Server flavor key name"),
-			},
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Datacenter shortname [required]"),
-			},
-			cli.StringFlag{
-				Name:  "o,os",
-				Usage: T("OS install code. Tip: you can specify <OS>_LATEST"),
-			},
-			cli.IntFlag{
-				Name:  "image",
-				Usage: T("Image ID. See: '${COMMAND_NAME} sl image list' for reference"),
-			},
-			cli.StringFlag{
-				Name:  "billing",
-				Usage: T("Billing rate. Default is: hourly. Options are: hourly, monthly"),
-			},
-			cli.BoolFlag{
-				Name:  "dedicated",
-				Usage: T("Create a dedicated Virtual Server (Private Node)"),
-			},
-			cli.IntFlag{
-				Name:  "host-id",
-				Usage: T("Host Id to provision a Dedicated Virtual Server onto"),
-			},
-			cli.BoolFlag{
-				Name:  "san",
-				Usage: T("Use SAN storage instead of local disk"),
-			},
-			cli.BoolFlag{
-				Name:  "test",
-				Usage: T("Do not actually create the virtual server"),
-			},
-			cli.StringFlag{
-				Name:  "export",
-				Usage: T("Exports options to a template file"),
-			},
-			cli.StringFlag{
-				Name:  "i,postinstall",
-				Usage: T("Post-install script to download"),
-			},
-			cli.IntSliceFlag{
-				Name:  "k,key",
-				Usage: T("The IDs of the SSH keys to add to the root user (multiple occurrence permitted)"),
-			},
-			cli.IntSliceFlag{
-				Name:  "disk",
-				Usage: T("Disk sizes (multiple occurrence permitted)"),
-			},
-			cli.BoolFlag{
-				Name:  "private",
-				Usage: T("Forces the virtual server to only have access the private network"),
-			},
-			cli.StringFlag{
-				Name:  "like",
-				Usage: T("Use the configuration from an existing virtual server"),
-			},
-			cli.IntFlag{
-				Name:  "n,network",
-				Usage: T("Network port speed in Mbps"),
-			},
-			cli.StringSliceFlag{
-				Name:  "g,tag",
-				Usage: T("Tags to add to the instance (multiple occurrence permitted)"),
-			},
-			cli.StringFlag{
-				Name:  "t,template",
-				Usage: T("A template file that defaults the command-line options"),
-			},
-			cli.StringFlag{
-				Name:  "u,userdata",
-				Usage: T("User defined metadata string"),
-			},
-			cli.StringFlag{
-				Name:  "F,userfile",
-				Usage: T("Read userdata from file"),
-			},
-			cli.StringFlag{
-				Name:  "vlan-public",
-				Usage: T("The ID of the public VLAN on which you want the virtual server placed"),
-			},
-			cli.StringFlag{
-				Name:  "vlan-private",
-				Usage: T("The ID of the private VLAN on which you want the virtual server placed"),
-			},
-			cli.IntSliceFlag{
-				Name:  "S,public-security-group",
-				Usage: T("Security group ID to associate with the public interface (multiple occurrence permitted)"),
-			},
-			cli.IntSliceFlag{
-				Name:  "s,private-security-group",
-				Usage: T("Security group ID to associate with the private interface (multiple occurrence permitted)"),
-			},
-			cli.IntFlag{
-				Name:  "wait",
-				Usage: T("Wait until the virtual server is finished provisioning for up to X seconds before returning. It's not compatible with option --quantity"),
-			},
-			cli.IntFlag{
-				Name:  "placement-group-id",
-				Usage: T("Placement Group Id to order this guest on."),
-			},
-			cli.StringFlag{
-				Name:  "boot-mode",
-				Usage: T("Specify the mode to boot the OS in. Supported modes are HVM and PV."),
-			},
-			cli.IntFlag{
-				Name:  "subnet-public",
-				Usage: T("The ID of the public SUBNET on which you want the virtual server placed"),
-			},
-			cli.IntFlag{
-				Name:  "subnet-private",
-				Usage: T("The ID of the private SUBNET on which you want the virtual server placed"),
-			},
-			cli.BoolFlag{
-				Name:  "transient",
-				Usage: T("Create a transient virtual server"),
-			},
-			cli.IntFlag{
-				Name:  "quantity",
-				Usage: T("The quantity of virtual server be created. It should be greater or equal to 1. This value defaults to 1."),
-				Value: 1,
-			},
-			metadata.ForceFlag(),
-		},
-	}
-}

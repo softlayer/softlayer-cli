@@ -3,9 +3,10 @@ package virtual
 import (
 	"bytes"
 	"fmt"
+	"github.com/spf13/cobra"
+
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,34 +15,40 @@ import (
 )
 
 type BillingCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
 }
 
-func NewBillingCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *BillingCommand) {
-	return &BillingCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewBillingCommand(sl *metadata.SoftlayerCommand) (cmd *BillingCommand) {
+	thisCmd := &BillingCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "billing " + T("IDENTIFIER"),
+		Short: T("Get billing details for a virtual server instance"),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *BillingCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError("This command requires one argument.")
-	}
-	vsID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+func (cmd *BillingCommand) Run(args []string) error {
+
+	vsID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	virtualGuest, err := cmd.VirtualServerManager.GetInstance(vsID, managers.INSTANCE_DETAIL_MASK)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get virtual server instance: {{.VsID}}.\n", map[string]interface{}{"VsID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get virtual server instance: {{.VsID}}.\n", map[string]interface{}{"VsID": vsID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -64,19 +71,4 @@ func (cmd *BillingCommand) Run(c *cli.Context) error {
 	table.Add(T("Prices"), buf.String())
 	table.Print()
 	return nil
-}
-
-func VSBillingMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "billing",
-		Description: T("Get billing details for a virtual server instance"),
-		Usage: T(`${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] 
-EXAMPLE:
-   ${COMMAND_NAME} sl vs billing 12345678
-   This command billing lists detailed information about virtual server instance with ID 12345678.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }
