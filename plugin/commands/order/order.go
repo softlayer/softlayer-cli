@@ -20,12 +20,12 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewPackageListCommand(sl).Command)
 	cobraCmd.AddCommand(NewPackageLocationCommand(sl).Command)
 	cobraCmd.AddCommand(NewPlaceCommand(sl).Command)
-	//cobraCmd.AddCommand(NewPlaceQuoteCommand(sl).Command)
-	//cobraCmd.AddCommand(NewPresetListCommand(sl).Command)
-	//cobraCmd.AddCommand(NewQuoteListCommand(sl).Command)
-	//cobraCmd.AddCommand(NewQuoteDetailCommand(sl).Command)
-	//cobraCmd.AddCommand(NewQuoteSaveCommand(sl).Command)
-	//cobraCmd.AddCommand(NewQuoteCommand(sl).Command)
+	cobraCmd.AddCommand(NewPlaceQuoteCommand(sl).Command)
+	cobraCmd.AddCommand(NewPresetListCommand(sl).Command)
+	cobraCmd.AddCommand(NewQuoteListCommand(sl).Command)
+	cobraCmd.AddCommand(NewQuoteDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewQuoteSaveCommand(sl).Command)
+	cobraCmd.AddCommand(NewQuoteCommand(sl).Command)
 	return cobraCmd
 }
 
