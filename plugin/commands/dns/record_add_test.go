@@ -2,7 +2,6 @@ package dns_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -39,14 +38,14 @@ var _ = Describe("Record add", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires four arguments.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires four arguments."))
 			})
 		})
 		Context("Record add with not enough parameters", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires four arguments.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires four arguments."))
 			})
 		})
 
@@ -57,8 +56,8 @@ var _ = Describe("Record add", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "ftp", "a", "127.0.0.1")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get zone ID from zone name: abc.com.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get zone ID from zone name: abc.com."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -70,14 +69,14 @@ var _ = Describe("Record add", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "ftp", "a", "127.0.0.1")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to create resource record under zone abc.com: type=a, record=ftp, data=127.0.0.1, ttl=7200.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to create resource record under zone abc.com: type=a, record=ftp, data=127.0.0.1, ttl=7200."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "ftp", "a", "127.0.0.1", "--ttl", "3600")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to create resource record under zone abc.com: type=a, record=ftp, data=127.0.0.1, ttl=3600.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to create resource record under zone abc.com: type=a, record=ftp, data=127.0.0.1, ttl=3600."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
