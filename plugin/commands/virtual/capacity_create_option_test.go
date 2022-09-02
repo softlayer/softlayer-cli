@@ -2,10 +2,10 @@ package virtual_test
 
 import (
 	"errors"
-	"strings"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"strings"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
@@ -13,7 +13,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-
 )
 
 var _ = Describe("VS capacity create options", func() {

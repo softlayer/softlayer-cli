@@ -1,37 +1,46 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"sort"
+
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
-	"sort"
 )
 
 type CreateOptionsCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
 }
 
-func NewCreateOptionsCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *CreateOptionsCommand) {
-	return &CreateOptionsCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewCreateOptionsCommand(sl *metadata.SoftlayerCommand) (cmd *CreateOptionsCommand) {
+	thisCmd := &CreateOptionsCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "options",
+		Short: T("List options for creating virtual server instance"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *CreateOptionsCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
 	//createOptions, err := cmd.VirtualServerManager.GetCreateOptions("PUBLIC_CLOUD_SERVER", "dal13")
 	createOptions, err := cmd.VirtualServerManager.GetCreateOptions("PUBLIC_CLOUD_SERVER", "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get virtual server creation options.\n")+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get virtual server creation options.\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -121,20 +130,4 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 	cmd.UI.Print("")
 
 	return nil
-}
-
-func VSCreateOptionsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "options",
-		Description: T("List options for creating virtual server instance"),
-		Usage: T(`${COMMAND_NAME} sl vs options [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vs options
-   This command lists all the options for creating a virtual server instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

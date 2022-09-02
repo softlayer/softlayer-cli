@@ -19,8 +19,8 @@ type CapacityDetailCommand struct {
 	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
 	Command              *cobra.Command
-	Column []string
-	SortBy string
+	Column               []string
+	SortBy               string
 }
 
 func NewCapacityDetailCommand(sl *metadata.SoftlayerCommand) (cmd *CapacityDetailCommand) {
@@ -31,7 +31,7 @@ func NewCapacityDetailCommand(sl *metadata.SoftlayerCommand) (cmd *CapacityDetai
 	cobraCmd := &cobra.Command{
 		Use:   "capacity-detail " + T("IDENTIFIER"),
 		Short: T("Get Reserved Capacity Group details."),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

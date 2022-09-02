@@ -1,14 +1,14 @@
 package virtual_test
 
 import (
-	"time"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -55,11 +55,11 @@ var _ = Describe("VS capacity create", func() {
 				created, _ := time.Parse(time.RFC3339, "2017-11-08T00:00:00Z")
 				fakeVSManager.GenerateInstanceCapacityCreationTemplateReturns(
 					datatypes.Container_Product_Order_Receipt{
-						OrderDate: sl.Time(created),
-						OrderId: sl.Int(991122),
-						PlacedOrder: &datatypes.Billing_Order{Status: sl.String("OkGood")},
+						OrderDate:    sl.Time(created),
+						OrderId:      sl.Int(991122),
+						PlacedOrder:  &datatypes.Billing_Order{Status: sl.String("OkGood")},
 						OrderDetails: &datatypes.Container_Product_Order{PostTaxRecurringHourly: sl.Float(99.11)},
-					}, 
+					},
 					nil,
 				)
 			})

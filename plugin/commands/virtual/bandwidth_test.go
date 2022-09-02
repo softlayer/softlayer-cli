@@ -1,14 +1,13 @@
 package virtual_test
 
 import (
-	"time"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
-
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"

@@ -16,9 +16,9 @@ type CaptureCommand struct {
 	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
 	Command              *cobra.Command
-	Name string
-	All	bool
-	Note	string
+	Name                 string
+	All                  bool
+	Note                 string
 }
 
 func NewCaptureCommand(sl *metadata.SoftlayerCommand) (cmd *CaptureCommand) {
@@ -80,4 +80,3 @@ func (cmd *CaptureCommand) Run(args []string) error {
 	table.Print()
 	return nil
 }
-

@@ -15,7 +15,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-	
 )
 
 var _ = Describe("vs billing", func() {

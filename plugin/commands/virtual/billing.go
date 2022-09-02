@@ -28,7 +28,7 @@ func NewBillingCommand(sl *metadata.SoftlayerCommand) (cmd *BillingCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "billing " + T("IDENTIFIER"),
 		Short: T("Get billing details for a virtual server instance"),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

@@ -6,8 +6,8 @@ import (
 	. "github.com/onsi/gomega"
 
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"

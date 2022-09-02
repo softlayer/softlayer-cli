@@ -16,7 +16,7 @@ type CancelCommand struct {
 	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
 	Command              *cobra.Command
-	Force          bool
+	Force                bool
 }
 
 func NewCancelCommand(sl *metadata.SoftlayerCommand) (cmd *CancelCommand) {
@@ -27,7 +27,7 @@ func NewCancelCommand(sl *metadata.SoftlayerCommand) (cmd *CancelCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "cancel " + T("IDENTIFIER"),
 		Short: T("Cancel virtual server instance"),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -66,4 +66,3 @@ func (cmd *CancelCommand) Run(args []string) error {
 	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was cancelled.", subs))
 	return nil
 }
-

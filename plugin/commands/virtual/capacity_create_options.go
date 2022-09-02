@@ -25,7 +25,7 @@ func NewCapacityCreateOptionsCommand(sl *metadata.SoftlayerCommand) (cmd *Capaci
 	cobraCmd := &cobra.Command{
 		Use:   "capacity-create-options",
 		Short: T("List options for creating Reserved Capacity Group instance"),
-		Args: metadata.NoArgs,
+		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -70,7 +70,7 @@ func (cmd *CapacityCreateOptionsCommand) Run(args []string) error {
 	return nil
 }
 
-//Finds the price with the default locationGroupId
+// Finds the price with the default locationGroupId
 func getPrices(prices []datatypes.Product_Item_Price) string {
 	itemPrices := ""
 	for _, price := range prices {

@@ -5,25 +5,25 @@ import (
 	"sort"
 	"time"
 
-	"github.com/spf13/cobra"
-	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"	
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type BandwidthCommand struct {
 	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
 	Command              *cobra.Command
-	Start	string
-	End	string
-	Rollup	int
-	Quite	bool
+	Start                string
+	End                  string
+	Rollup               int
+	Quite                bool
 }
 
 type SummaryDataType struct {
@@ -199,4 +199,3 @@ func BuildOutputTable(trackingData []datatypes.Metric_Tracking_Object_Data, ui t
 	return summaryTable, bandwidthTable
 
 }
-

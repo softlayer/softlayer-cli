@@ -13,19 +13,19 @@ import (
 
 type CapacityListCommand struct {
 	*metadata.SoftlayerCommand
-	Command        *cobra.Command
+	Command              *cobra.Command
 	VirtualServerManager managers.VirtualServerManager
 }
 
 func NewCapacityListCommand(sl *metadata.SoftlayerCommand) (cmd *CapacityListCommand) {
 	thisCmd := &CapacityListCommand{
-		SoftlayerCommand: sl,
+		SoftlayerCommand:     sl,
 		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "capacity-list",
 		Short: T("List Reserved Capacity groups."),
-		Args: metadata.NoArgs,
+		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -57,4 +57,3 @@ func (cmd *CapacityListCommand) Run(args []string) error {
 	table.Print()
 	return nil
 }
-

@@ -14,12 +14,12 @@ type CapacityCreateCommand struct {
 	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
 	Command              *cobra.Command
-	Name	string
-	BackendRouterId	int
-	Instances	int
-	Flavor	string
-	Test	bool
-	Force	bool
+	Name                 string
+	BackendRouterId      int
+	Instances            int
+	Flavor               string
+	Test                 bool
+	Force                bool
 }
 
 func NewCapacityCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CapacityCreateCommand) {
@@ -122,7 +122,7 @@ func (cmd *CapacityCreateCommand) verifyCapacityParams() (map[string]interface{}
 	if cmd.BackendRouterId != 0 {
 		params["backendRouterId"] = cmd.BackendRouterId
 	}
-	if cmd.Instances != 0  {
+	if cmd.Instances != 0 {
 		params["quantity"] = cmd.Instances
 	}
 	if cmd.Name != "" {
@@ -134,4 +134,3 @@ func (cmd *CapacityCreateCommand) verifyCapacityParams() (map[string]interface{}
 
 	return params, nil
 }
-

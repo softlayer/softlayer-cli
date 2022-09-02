@@ -3,15 +3,14 @@ package virtual
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"strconv"
 	"time"
-	"fmt"
 
 	"github.com/spf13/cobra"
 
 	"github.com/softlayer/softlayer-go/datatypes"
-
 
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -26,51 +25,49 @@ type CreateCommand struct {
 	VirtualServerManager managers.VirtualServerManager
 	ImageManager         managers.ImageManager
 
-	Dedicated	bool
-	Private	bool
-	San	bool
-	Test	bool
-	Transient	bool
-	Force	bool
-	Disk	[]int
-	Key	[]int
-	PriSecGroup	[]int
-	PubSecGroup	[]int
-	HostId	int
-	Image	int
-	Like	int
-	PlacementGroup	int
-	Quantity	int
-	SubnetPrivate	int
-	SubnetPublic	int
-	VlanPrivate	int
-	VlanPublic	int
-	Wait	int
-	CPU	int
-	Memory	int
-	Network	int
-	Tag	[]string
-	Billing	string
-	BootMode	string
-	Export	string
-	Flavor	string
-	Datacenter	string
-	Domain	string
-	Hostname	string
-	Os	string
-	PostInstall	string
-	Template	string
-	Userdata	string
-	Userfile	string
-
-
+	Dedicated      bool
+	Private        bool
+	San            bool
+	Test           bool
+	Transient      bool
+	Force          bool
+	Disk           []int
+	Key            []int
+	PriSecGroup    []int
+	PubSecGroup    []int
+	HostId         int
+	Image          int
+	Like           int
+	PlacementGroup int
+	Quantity       int
+	SubnetPrivate  int
+	SubnetPublic   int
+	VlanPrivate    int
+	VlanPublic     int
+	Wait           int
+	CPU            int
+	Memory         int
+	Network        int
+	Tag            []string
+	Billing        string
+	BootMode       string
+	Export         string
+	Flavor         string
+	Datacenter     string
+	Domain         string
+	Hostname       string
+	Os             string
+	PostInstall    string
+	Template       string
+	Userdata       string
+	Userfile       string
 }
 
 func NewCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CreateCommand) {
 	thisCmd := &CreateCommand{
 		SoftlayerCommand:     sl,
 		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
-		ImageManager: managers.NewImageManager(sl.Session),
+		ImageManager:         managers.NewImageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "create",
@@ -116,7 +113,7 @@ EXAMPLE:
 	cobraCmd.Flags().IntVarP(&thisCmd.Network, "network", "n", 0, T("Network port speed in Mbps"))
 	cobraCmd.Flags().StringSliceVarP(&thisCmd.Tag, "tag", "g", []string{}, T("Tags to add to the instance (multiple occurrence permitted)"))
 	cobraCmd.Flags().StringVar(&thisCmd.Billing, "billing", "hourly", T("Billing rate. Default is: hourly. Options are: hourly, monthly"))
-	cobraCmd.Flags().StringVar(&thisCmd.BootMode, "boot-mode",  "", T("Specify the mode to boot the OS in. Supported modes are HVM and PV."))
+	cobraCmd.Flags().StringVar(&thisCmd.BootMode, "boot-mode", "", T("Specify the mode to boot the OS in. Supported modes are HVM and PV."))
 	cobraCmd.Flags().StringVar(&thisCmd.Export, "export", "", T("Exports options to a template file"))
 	cobraCmd.Flags().StringVar(&thisCmd.Flavor, "flavor", "", T("Public Virtual Server flavor key name"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Datacenter shortname [required]"))
@@ -124,9 +121,9 @@ EXAMPLE:
 	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Host portion of the FQDN [required]"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Os, "os", "o", "", T("OS install code. Tip: you can specify <OS>_LATEST"))
 	cobraCmd.Flags().StringVarP(&thisCmd.PostInstall, "postinstall", "i", "", T("Post-install script to download"))
-	cobraCmd.Flags().StringVarP(&thisCmd.Template, "template",  "t", "", T("A template file that defaults the command-line options"))
-	cobraCmd.Flags().StringVarP(&thisCmd.Userdata, "userdata",  "u", "", T("User defined metadata string"))
-	cobraCmd.Flags().StringVarP(&thisCmd.Userfile, "userfile",  "F", "", T("Read userdata from file"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Template, "template", "t", "", T("A template file that defaults the command-line options"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Userdata, "userdata", "u", "", T("User defined metadata string"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Userfile, "userfile", "F", "", T("Read userdata from file"))
 	return thisCmd
 }
 
@@ -166,7 +163,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 			params["hostname"], _ = cmd.UI.Ask(T("Hostname: "))
 			// return slErrors.NewMissingInputError("[-H|--hostname]")
 		}
-		
+
 		if params["domain"] == "" {
 			params["domain"], _ = cmd.UI.Ask(T("Domain: "))
 		}
@@ -189,17 +186,17 @@ func (cmd *CreateCommand) Run(args []string) error {
 			if memory <= 0 {
 				return slErrors.NewInvalidUsageError(T("either [-m|--memory] or [--flavor] is required."))
 			}
-			params["memory"] = memory			
+			params["memory"] = memory
 		}
 
 		if params["datacenter"] == "" {
 			params["datacenter"], _ = cmd.UI.Ask(T("Datacenter: "))
 		}
-		
+
 		if params["os"] == "" {
 			params["os"], _ = cmd.UI.Ask(T("Operating System Code: "))
 		}
-		
+
 		_, err = cmd.VirtualServerManager.GenerateInstanceCreationTemplate(&virtualGuest, params)
 		if err != nil {
 			return err
@@ -367,7 +364,7 @@ func (cmd *CreateCommand) printVirtualGuests(virtualGuests []datatypes.Virtual_G
 
 func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 	params := make(map[string]interface{})
-	
+
 	if cmd.Flavor != "" {
 		if cmd.CPU != 0 {
 			fmt.Printf("Returning an error....\n")
@@ -434,7 +431,6 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 		}
 	}
 
-
 	billing := cmd.Billing
 	if billing == "hourly" {
 		params["billing"] = true
@@ -444,9 +440,7 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 		return nil, slErrors.NewInvalidUsageError(T("[--billing] billing rate must be either hourly or monthly."))
 	}
 
-
 	params["dedicated"] = cmd.Dedicated
-
 
 	if cmd.HostId != 0 {
 		params["host-id"] = cmd.HostId
@@ -454,7 +448,6 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 	}
 
 	params["private"] = cmd.Private
-
 
 	if cmd.San {
 		params["san"] = true
@@ -468,7 +461,7 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 		params["sshkeys"] = cmd.Key
 	}
 
-	if len(cmd.Disk) > 0  {
+	if len(cmd.Disk) > 0 {
 		params["disks"] = cmd.Disk
 	}
 
@@ -477,7 +470,7 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 	}
 
 	if cmd.VlanPublic != 0 {
-		params["vlan-public"] =cmd.VlanPublic
+		params["vlan-public"] = cmd.VlanPublic
 	}
 
 	if cmd.VlanPrivate != 0 {
@@ -485,7 +478,7 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 	}
 
 	if cmd.SubnetPublic != 0 {
-		if cmd.VlanPublic == 0  {
+		if cmd.VlanPublic == 0 {
 			return nil, slErrors.NewMissingInputError("--vlan-public")
 		}
 		params["subnet-public"] = cmd.SubnetPublic
@@ -524,4 +517,3 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 	}
 	return params, nil
 }
-
