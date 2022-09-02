@@ -1,56 +1,32 @@
 package order
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	orderManager := managers.NewOrderManager(session)
-	imageManager := managers.NewImageManager(session)
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"order-category-list": func(c *cli.Context) error {
-			return NewCategoryListCommand(ui, orderManager).Run(c)
-		},
-		"order-item-list": func(c *cli.Context) error {
-			return NewItemListCommand(ui, orderManager).Run(c)
-		},
-		"order-package-list": func(c *cli.Context) error {
-			return NewPackageListCommand(ui, orderManager).Run(c)
-		},
-		"order-package-locations": func(c *cli.Context) error {
-			return NewPackageLocationCommand(ui, orderManager).Run(c)
-		},
-		"order-place": func(c *cli.Context) error {
-			return NewPlaceCommand(ui, orderManager, context).Run(c)
-		},
-		"order-place-quote": func(c *cli.Context) error {
-			return NewPlaceQuoteCommand(ui, orderManager, context).Run(c)
-		},
-		"order-preset-list": func(c *cli.Context) error {
-			return NewPresetListCommand(ui, orderManager).Run(c)
-		},
-		"order-quote-list": func(c *cli.Context) error {
-			return NewQuoteListCommand(ui, orderManager).Run(c)
-		},
-		"order-quote-detail": func(c *cli.Context) error {
-			return NewQuoteDetailCommand(ui, orderManager).Run(c)
-		},
-		"order-quote-save": func(c *cli.Context) error {
-			return NewQuoteSaveCommand(ui, orderManager).Run(c)
-		},
-		"order-quote": func(c *cli.Context) error {
-			return NewQuoteCommand(ui, orderManager, imageManager).Run(c)
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "order",
+		Short: T("Classic infrastructure Orders"),
+		RunE:  nil,
 	}
 
-	return CommandActionBindings
+	cobraCmd.AddCommand(NewCategoryListCommand(sl).Command)
+	cobraCmd.AddCommand(NewItemListCommand(sl).Command)
+	cobraCmd.AddCommand(NewPackageListCommand(sl).Command)
+	cobraCmd.AddCommand(NewPackageLocationCommand(sl).Command)
+	cobraCmd.AddCommand(NewPlaceCommand(sl).Command)
+	//cobraCmd.AddCommand(NewPlaceQuoteCommand(sl).Command)
+	//cobraCmd.AddCommand(NewPresetListCommand(sl).Command)
+	//cobraCmd.AddCommand(NewQuoteListCommand(sl).Command)
+	//cobraCmd.AddCommand(NewQuoteDetailCommand(sl).Command)
+	//cobraCmd.AddCommand(NewQuoteSaveCommand(sl).Command)
+	//cobraCmd.AddCommand(NewQuoteCommand(sl).Command)
+	return cobraCmd
 }
 
 func OrderNamespace() plugin.Namespace {
@@ -58,27 +34,5 @@ func OrderNamespace() plugin.Namespace {
 		ParentName:  "sl",
 		Name:        "order",
 		Description: T("Classic infrastructure Orders"),
-	}
-}
-
-func OrderMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "order",
-		Usage:       "${COMMAND_NAME} sl order",
-		Description: T("Classic infrastructure Orders"),
-		Subcommands: []cli.Command{
-			OrderCategoryListMetaData(),
-			OrderItemListMetaData(),
-			OrderPackageListMetaData(),
-			OrderPackageLocaionMetaData(),
-			OrderPlaceMetaData(),
-			OrderPlaceQuoteMetaData(),
-			OrderPresetListMetaData(),
-			OrderQuoteListMetaData(),
-			OrderQuoteDetailMetaData(),
-			OrderQuoteSaveMetaData(),
-			OrderQuoteMetaData(),
-		},
 	}
 }
