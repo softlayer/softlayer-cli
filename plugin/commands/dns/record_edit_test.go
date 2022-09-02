@@ -2,7 +2,6 @@ package dns_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -39,7 +38,7 @@ var _ = Describe("Record edit", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Record edit with wrong zone name", func() {
@@ -49,8 +48,8 @@ var _ = Describe("Record edit", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get zone ID from zone name: abc.com.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get zone ID from zone name: abc.com."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -61,8 +60,8 @@ var _ = Describe("Record edit", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to list resource records under zone: abc.com.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to list resource records under zone: abc.com."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -82,8 +81,8 @@ var _ = Describe("Record edit", func() {
 			It("return  error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "--data", "127.0.0.2")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to update resource record 1234 under zone abc.com.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to update resource record 1234 under zone abc.com."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -110,9 +109,9 @@ var _ = Describe("Record edit", func() {
 			It("return  error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com", "--data", "127.0.0.2")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to update resource record 1234 under zone abc.com.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Failed to update resource record 5678 under zone abc.com.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to update resource record 1234 under zone abc.com."))
+				Expect(err.Error()).To(ContainSubstring("Failed to update resource record 5678 under zone abc.com."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
