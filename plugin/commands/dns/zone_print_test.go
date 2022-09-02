@@ -5,38 +5,37 @@ import (
 	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
+	"github.com/softlayer/softlayer-go/session"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Zone print", func() {
 	var (
 		fakeUI         *terminal.FakeUI
+		cliCommand     *dns.ZonePrintCommand
+		fakeSession    *session.Session
+		slCommand      *metadata.SoftlayerCommand
 		fakeDNSManager *testhelpers.FakeDNSManager
-		cmd            *dns.ZonePrintCommand
-		cliCommand     cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = dns.NewZonePrintCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
-		cmd = dns.NewZonePrintCommand(fakeUI, fakeDNSManager)
-		cliCommand = cli.Command{
-			Name:        dns.DnsZonePrintMetaData().Name,
-			Description: dns.DnsZonePrintMetaData().Description,
-			Usage:       dns.DnsZonePrintMetaData().Usage,
-			Flags:       dns.DnsZonePrintMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.DNSManager = fakeDNSManager
 	})
 
 	Describe("Zone print", func() {
 		Context("zone print without zone name", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
 			})
@@ -46,7 +45,7 @@ var _ = Describe("Zone print", func() {
 				fakeDNSManager.GetZoneIdFromNameReturns(0, errors.New("Unable to find zone abc."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to get zone ID from zone name: abc.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Unable to find zone abc.")).To(BeTrue())
@@ -58,7 +57,7 @@ var _ = Describe("Zone print", func() {
 				fakeDNSManager.DumpZoneReturns("", errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to dump content for zone: abc.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -92,7 +91,7 @@ www                    86400    IN A     127.0.0.1
 `, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "$ORIGIN dal06.bluemix.ibmcsf.net.")).To(BeTrue())

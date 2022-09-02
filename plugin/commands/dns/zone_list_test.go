@@ -9,30 +9,29 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Zone list", func() {
 	var (
 		fakeUI         *terminal.FakeUI
+		cliCommand     *dns.ZoneListCommand
+		fakeSession    *session.Session
+		slCommand      *metadata.SoftlayerCommand
 		fakeDNSManager *testhelpers.FakeDNSManager
-		cmd            *dns.ZoneListCommand
-		cliCommand     cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = dns.NewZoneListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
-		cmd = dns.NewZoneListCommand(fakeUI, fakeDNSManager)
-		cliCommand = cli.Command{
-			Name:        dns.DnsZoneListMetaData().Name,
-			Description: dns.DnsZoneListMetaData().Description,
-			Usage:       dns.DnsZoneListMetaData().Usage,
-			Flags:       dns.DnsZoneListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.DNSManager = fakeDNSManager
 	})
 
 	Describe("Zone list", func() {
@@ -41,7 +40,7 @@ var _ = Describe("Zone list", func() {
 				fakeDNSManager.ListZonesReturns([]datatypes.Dns_Domain{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to list zones on your account.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -75,7 +74,7 @@ var _ = Describe("Zone list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				//TODO ID column is colored, unable to verify as a simple string
