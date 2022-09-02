@@ -8,8 +8,9 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
@@ -19,20 +20,18 @@ var _ = Describe("Create", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeUserManager *testhelpers.FakeUserManager
-		cmd             *user.CreateCommand
-		cliCommand      cli.Command
+		cliCommand      *user.CreateCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeUserManager = new(testhelpers.FakeUserManager)
-		cmd = user.NewCreateCommand(fakeUI, fakeUserManager)
-		cliCommand = cli.Command{
-			Name:        user.UserCreateMetaData().Name,
-			Description: user.UserCreateMetaData().Description,
-			Usage:       user.UserCreateMetaData().Usage,
-			Flags:       user.UserCreateMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = user.NewCreateCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.UserManager = fakeUserManager
 
 		testUser := datatypes.User_Customer{
 			Id:       sl.Int(6666),
@@ -44,7 +43,7 @@ var _ = Describe("Create", func() {
 	Describe("user create", func() {
 		Context("user create with not enough parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
 			})
@@ -53,7 +52,7 @@ var _ = Describe("Create", func() {
 		Context("create user with fail confirmation", func() {
 			It("return error", func() {
 				fakeUI.Inputs("123456")
-				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord")
 				Expect(err).To(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("You are about to create the following user: createdUser@email.com. Do you wish to continue?"))
 				Expect(err.Error()).To(ContainSubstring("input must be 'y', 'n', 'yes' or 'no'"))
@@ -63,7 +62,7 @@ var _ = Describe("Create", func() {
 		Context("create user with No confirmation", func() {
 			It("return error", func() {
 				fakeUI.Inputs("No")
-				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("You are about to create the following user: createdUser@email.com. Do you wish to continue?"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
@@ -73,7 +72,7 @@ var _ = Describe("Create", func() {
 		Context("User Create error", func() {
 			It("return error", func() {
 				fakeUserManager.CreateUserReturns(datatypes.User_Customer{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to add user."))
 			})
@@ -81,7 +80,7 @@ var _ = Describe("Create", func() {
 
 		Context("Basic User Create usage", func() {
 			It("Create a user", func() {
-				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Username   createdUser"))
@@ -93,7 +92,7 @@ var _ = Describe("Create", func() {
 		Context("User Create", func() {
 			It("Create a user", func() {
 				fakeUI.Inputs("Y")
-				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("You are about to create the following user: createdUser@email.com. Do you wish to continue?"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
@@ -106,7 +105,7 @@ var _ = Describe("Create", func() {
 		Context("User Create from user", func() {
 			It("Create a user", func() {
 				fakeUI.Inputs("Y")
-				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--from-user", "456", "--password", "MyPassWord", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--from-user", "456", "--password", "MyPassWord", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Username   createdUser"))
@@ -117,7 +116,7 @@ var _ = Describe("Create", func() {
 
 		Context("User Create from wrong template", func() {
 			It("Create a user", func() {
-				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f", "--template", ``)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f", "--template", ``)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Unable to unmarshal template json: unexpected end of JSON input"))
 			})
@@ -133,7 +132,7 @@ var _ = Describe("Create", func() {
 					LastName:  sl.String("Testerson"),
 				}
 				fakeUserManager.CreateUserReturns(testUser, nil)
-				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f", "--template", `{"firstName": "Test", "lastName": "Testerson"}`)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "MyPassWord", "-f", "--template", `{"firstName": "Test", "lastName": "Testerson"}`)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Username   createdUser"))
@@ -145,7 +144,7 @@ var _ = Describe("Create", func() {
 
 		Context("User Create with generated password", func() {
 			It("Create a user", func() {
-				err := testhelpers.RunCommand(cliCommand, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "generate", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "generate", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(verifyPassword(fakeUI.Outputs())).Should(BeTrue())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))

@@ -19,7 +19,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -69,11 +68,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl securitygroup
 	securitygroupCommands := securitygroup.GetCommandActionBindings(context, ui, session)
 	for name, action := range securitygroupCommands {
-		CommandActionBindings[name] = action
-	}
-
-	userCommands := user.GetCommandActionBindings(context, ui, session)
-	for name, action := range userCommands {
 		CommandActionBindings[name] = action
 	}
 
