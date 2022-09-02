@@ -7,10 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -20,30 +18,57 @@ import (
 )
 
 type PlaceCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	OrderManager managers.OrderManager
-	Context      plugin.PluginContext
+	Command      *cobra.Command
+	Preset       string
+	Verify       bool
+	Quantity     int
+	Billing      string
+	ComplexType  string
+	Extras       string
+	ForceFlag    bool
 }
 
-func NewPlaceCommand(ui terminal.UI, orderManager managers.OrderManager, context plugin.PluginContext) (cmd *PlaceCommand) {
-	return &PlaceCommand{
-		UI:           ui,
-		OrderManager: orderManager,
-		Context:      context,
+func NewPlaceCommand(sl *metadata.SoftlayerCommand) (cmd *PlaceCommand) {
+	thisCmd := &PlaceCommand{
+		SoftlayerCommand: sl,
+		OrderManager:     managers.NewOrderManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "place " + T("PACKAGE_KEYNAME") + " " + T("LOCATION") + " " + T("ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4..."),
+		Short: T("Place or verify an order"),
+		Long: T(`	
+EXAMPLE: 
+	${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{"virtualGuests": [{"hostname": "test", "domain": "softlayer.com"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest
+	This command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13`),
+		Args: metadata.ThreeArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Preset, "preset", "", T("The order preset (if required by the package)"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Verify, "verify", false, T("Flag denoting whether to verify the order, or not place it"))
+	cobraCmd.Flags().IntVar(&thisCmd.Quantity, "quantity", 0, T("The quantity of the item being ordered. This value defaults to 1"))
+	cobraCmd.Flags().StringVar(&thisCmd.Billing, "billing", "", T("Billing rate [hourly|monthly], [default: hourly]"))
+	cobraCmd.Flags().StringVar(&thisCmd.ComplexType, "complex-type", "", T("The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'"))
+	cobraCmd.Flags().StringVar(&thisCmd.Extras, "extras", "", T("JSON string that denotes extra data needs to be sent with the order"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PlaceCommand) Run(c *cli.Context) error {
-	if c.NArg() != 3 {
-		return errors.NewInvalidUsageError(T("This command requires three arguments."))
-	}
-	packageKeyname := c.Args()[0]
-	location := c.Args()[1]
-	orderItems := strings.Split(c.Args()[2], ",")
+func (cmd *PlaceCommand) Run(args []string) error {
+	packageKeyname := args[0]
+	location := args[1]
+	orderItems := strings.Split(args[2], ",")
 
-	preset := c.String("preset")
+	preset := cmd.Preset
 
-	billingFlag := c.String("billing")
+	billingFlag := cmd.Billing
 	billing := true
 	if billingFlag != "" {
 		billingFlag = strings.ToLower(billingFlag)
@@ -54,35 +79,32 @@ func (cmd *PlaceCommand) Run(c *cli.Context) error {
 	}
 
 	var extrasStruct interface{}
-	complexType := c.String("complex-type")
+	complexType := cmd.ComplexType
 	if _, ok := TYPEMAP[complexType]; ok {
 		extrasStruct = TYPEMAP[complexType]
 	} else {
 		return errors.NewInvalidUsageError(T("Incorrect complex type: {{.Type}}", map[string]interface{}{"Type": complexType}))
 	}
-	quantity := c.Int("quantity")
+	quantity := cmd.Quantity
 
-	extras := c.String("extras")
+	extras := cmd.Extras
 	if strings.HasPrefix(extras, "@") {
 		extrasbytes, err := ioutil.ReadFile(strings.TrimPrefix(extras, "@"))
 		if err != nil {
-			return cli.NewExitError(fmt.Sprintf("%s %s: %s", T("failed reading file"), extras, err), 1)
+			return errors.NewInvalidUsageError(fmt.Sprintf("%s %s: %s", T("failed reading file"), extras, err))
 		}
 		extras = string(extrasbytes)
 	}
 	if extras != "" {
 		err := json.Unmarshal([]byte(extras), &extrasStruct)
 		if err != nil {
-			return cli.NewExitError(fmt.Sprintf(T("Unable to unmarshal extras json: %s\n"), err.Error()), 1)
+			return errors.NewInvalidUsageError(fmt.Sprintf(T("Unable to unmarshal extras json: %s\n"), err.Error()))
 		}
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	if c.Bool("verify") {
+	if cmd.Verify {
 		orderPlace, err := cmd.OrderManager.VerifyPlaceOrder(packageKeyname, location, orderItems, complexType, billing, preset, extrasStruct, quantity)
 		if err != nil {
 			return err
@@ -92,10 +114,10 @@ func (cmd *PlaceCommand) Run(c *cli.Context) error {
 		}
 		cmd.PrintOrderVerify(orderPlace, billingFlag)
 	} else {
-		if !c.IsSet("f") && outputFormat != "JSON" {
+		if !cmd.ForceFlag && outputFormat != "JSON" {
 			confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 			if err != nil {
-				return cli.NewExitError(err.Error(), 1)
+				return errors.NewAPIError("", err.Error(), 1)
 			}
 			if !confirm {
 				cmd.UI.Print(T("Aborted."))
@@ -142,45 +164,4 @@ func (cmd *PlaceCommand) PrintOrder(orderPlace datatypes.Container_Product_Order
 	table.Add("Created", utils.FormatSLTimePointer(orderPlace.OrderDate))
 	table.Add("Status", utils.FormatStringPointer(orderPlace.PlacedOrder.Status))
 	table.Print()
-}
-
-func OrderPlaceMetaData() cli.Command {
-	return cli.Command{
-		Category:    "order",
-		Name:        "place",
-		Description: T("Place or verify an order"),
-		Usage: T(`${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]
-	
-	EXAMPLE: 
-	${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{"virtualGuests": [{"hostname": "test", "domain": "softlayer.com"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest
-	This command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "preset",
-				Usage: T("The order preset (if required by the package)"),
-			},
-			cli.BoolFlag{
-				Name:  "verify",
-				Usage: T("Flag denoting whether to verify the order, or not place it"),
-			},
-			cli.IntFlag{
-				Name:  "quantity",
-				Usage: T("The quantity of the item being ordered. This value defaults to 1"),
-			},
-			cli.StringFlag{
-				Name:  "billing",
-				Usage: T("Billing rate [hourly|monthly], [default: hourly]"),
-			},
-			cli.StringFlag{
-				Name:  "complex-type",
-				Usage: T("The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'"),
-			},
-			cli.StringFlag{
-				Name:  "extras",
-				Usage: T("JSON string that denotes extra data needs to be sent with the order"),
-			},
-			metadata.ForceFlag(),
-			metadata.OutputFlag(),
-		},
-	}
 }
