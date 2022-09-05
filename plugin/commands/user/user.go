@@ -20,12 +20,12 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewDetailsCommand(sl).Command)
 	cobraCmd.AddCommand(NewPermissionsCommand(sl).Command)
 	cobraCmd.AddCommand(NewEditCommand(sl).Command)
-	//cobraCmd.AddCommand(NewEditPermissionCommand(sl).Command)
-	//cobraCmd.AddCommand(NewNotificationsCommand(sl).Command)
-	//cobraCmd.AddCommand(NewEditNotificationsCommand(sl).Command)
-	//cobraCmd.AddCommand(NewGrantAccessCommand(sl).Command)
-	//cobraCmd.AddCommand(NewRemoveAccessCommand(sl).Command)
-	//cobraCmd.AddCommand(NewDeviceAccessCommand(sl).Command)
+	cobraCmd.AddCommand(NewEditPermissionCommand(sl).Command)
+	cobraCmd.AddCommand(NewNotificationsCommand(sl).Command)
+	cobraCmd.AddCommand(NewEditNotificationsCommand(sl).Command)
+	cobraCmd.AddCommand(NewGrantAccessCommand(sl).Command)
+	cobraCmd.AddCommand(NewRemoveAccessCommand(sl).Command)
+	cobraCmd.AddCommand(NewDeviceAccessCommand(sl).Command)
 	return cobraCmd
 }
 
