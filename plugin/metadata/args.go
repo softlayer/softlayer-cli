@@ -117,6 +117,14 @@ func ThreeArgs(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+// Just four arg
+func FourArgs(cmd *cobra.Command, args []string) error {
+	if len(args) != 4 {
+		return fmt.Errorf(T("Incorrect Usage: This command requires four arguments."))
+	}
+	return nil
+}
+
 // ExactValidArgs returns an error if
 // there are not exactly N positional args OR
 // there are any positional args that are not in the `ValidArgs` field of `Command`

@@ -306,6 +306,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(eventlog.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(user.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(nas.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(dns.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(order.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(placementgroup.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(tags.SetupCobraCommands(slCommand))
@@ -316,6 +317,8 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(dedicatedhost.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(globalip.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(vlan.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(virtual.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(subnet.SetupCobraCommands(slCommand))
 
 	return cobraCmd
 }

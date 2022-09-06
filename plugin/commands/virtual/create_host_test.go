@@ -2,77 +2,72 @@ package virtual_test
 
 import (
 	"errors"
-	"fmt"
-
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
-	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
-
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VS create host", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *virtual.CreateHostCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		fakeVSManager      *testhelpers.FakeVirtualServerManager
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *virtual.CreateHostCommand
-		cliCommand         cli.Command
-		context            plugin.PluginContext
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		context = plugin.InitPluginContext("softlayer")
-		cmd = virtual.NewCreateHostCommand(fakeUI, fakeVSManager, fakeNetworkManager, context)
-		cliCommand = cli.Command{
-			Name:        virtual.VSCreateHostMetaData().Name,
-			Description: virtual.VSCreateHostMetaData().Description,
-			Usage:       virtual.VSCreateHostMetaData().Usage,
-			Flags:       virtual.VSCreateHostMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewCreateHostCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("Create host", func() {
 		Context("Create host without hostname", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '-H|--hostname' is required"))
 			})
 		})
 		Context("Create host without domain", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "test")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '-D|--domain' is required"))
 			})
 		})
 		Context("Create host without datacenter", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '-d|--datacenter' is required"))
 			})
 		})
 		Context("Create host without vlan", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '-v|--vlan-private' is required"))
 			})
 		})
 		Context("Create host with wrong billing", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "dbd")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "dbd")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-b|--billing] has to be either hourly or monthly."))
 			})
@@ -82,7 +77,7 @@ var _ = Describe("VS create host", func() {
 				fakeNetworkManager.GetVlanReturns(datatypes.Network_Vlan{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get vlan 123."))
 			})
@@ -93,7 +88,7 @@ var _ = Describe("VS create host", func() {
 			})
 			It("return error", func() {
 				fakeUI.Inputs("No")
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("This action will incur charges on your account. Continue?"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
@@ -116,7 +111,7 @@ var _ = Describe("VS create host", func() {
 			})
 			It("return error", func() {
 				fakeUI.Inputs("Yes")
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to create dedicated host."))
 			})
@@ -138,7 +133,7 @@ var _ = Describe("VS create host", func() {
 			})
 			It("return error", func() {
 				fakeUI.Inputs("Yes")
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get vlan primary router ID."))
 			})
@@ -160,30 +155,26 @@ var _ = Describe("VS create host", func() {
 			})
 			It("return order", func() {
 				fakeUI.Inputs("Yes")
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("The order 345678 was placed."))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{fmt.Sprintf("You may run '%s sl vs host-list --order 345678' to find this dedicated host after it is ready.", cmd.Context.CLIName())}))
 			})
 			It("return order", func() {
 				fakeUI.Inputs("Yes")
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "monthly", "-v", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "monthly", "-v", "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("The order 345678 was placed."))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{fmt.Sprintf("You may run '%s sl vs host-list --order 345678' to find this dedicated host after it is ready.", cmd.Context.CLIName())}))
 			})
 			It("return order", func() {
 				fakeUI.Inputs("Yes")
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "monthly", "-v", "123", "-s", "56_CORES_X_242_RAM_X_1_4_TB")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "monthly", "-v", "123", "-s", "56_CORES_X_242_RAM_X_1_4_TB")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("The order 345678 was placed."))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{fmt.Sprintf("You may run '%s sl vs host-list --order 345678' to find this dedicated host after it is ready.", cmd.Context.CLIName())}))
 			})
 			It("return order", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "test", "-D", "softlayer.com", "-d", "dal09", "-b", "hourly", "-v", "123", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("The order 345678 was placed."))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{fmt.Sprintf("You may run '%s sl vs host-list --order 345678' to find this dedicated host after it is ready.", cmd.Context.CLIName())}))
 			})
 		})
 	})

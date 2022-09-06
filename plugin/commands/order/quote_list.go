@@ -1,8 +1,8 @@
 package order
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -10,27 +10,37 @@ import (
 )
 
 type QuoteListCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	OrderManager managers.OrderManager
+	Command      *cobra.Command
 }
 
-func NewQuoteListCommand(ui terminal.UI, orderManager managers.OrderManager) (cmd *QuoteListCommand) {
-	return &QuoteListCommand{
-		UI:           ui,
-		OrderManager: orderManager,
+func NewQuoteListCommand(sl *metadata.SoftlayerCommand) (cmd *QuoteListCommand) {
+	thisCmd := &QuoteListCommand{
+		SoftlayerCommand: sl,
+		OrderManager:     managers.NewOrderManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "quote-list",
+		Short: T("List all active quotes on an account"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *QuoteListCommand) Run(c *cli.Context) error {
+func (cmd *QuoteListCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	quotes, err := cmd.OrderManager.GetActiveQuotes("")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Quotes.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Quotes.\n"), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Id"), T("Name"), T("Created"), T("Expiration"), T("Status"), T("Package Name"), T("Package Id")})
@@ -47,19 +57,4 @@ func (cmd *QuoteListCommand) Run(c *cli.Context) error {
 	}
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func OrderQuoteListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "order",
-		Name:        "quote-list",
-		Description: T("List all active quotes on an account"),
-		Usage: T(`${COMMAND_NAME} sl order quote-list [OPTIONS]
-
-   EXAMPLE: 
-	  ${COMMAND_NAME} sl order quote-list`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

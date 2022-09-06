@@ -6,42 +6,40 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("DNS Import", func() {
-
 	var (
 		fakeUI         *terminal.FakeUI
+		cliCommand     *dns.ImportCommand
+		fakeSession    *session.Session
+		slCommand      *metadata.SoftlayerCommand
 		fakeDNSManager *testhelpers.FakeDNSManager
-		cmd            *dns.ImportCommand
-		cliCommand     cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = dns.NewImportCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
-		cmd = dns.NewImportCommand(fakeUI, fakeDNSManager)
-		cliCommand = cli.Command{
-			Name:        dns.DnsImportMetaData().Name,
-			Description: dns.DnsImportMetaData().Description,
-			Usage:       dns.DnsImportMetaData().Usage,
-			Flags:       dns.DnsImportMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.DNSManager = fakeDNSManager
 	})
 
 	Describe("DNS import", func() {
 		Context("DNS import without file", func() {
 			It("without any argument", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 
 			It("with an inexist file", func() {
-				err := testhelpers.RunCommand(cliCommand, "not-exist.txt")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "not-exist.txt")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to read file: not-exist.txt."))
 			})
@@ -53,7 +51,7 @@ var _ = Describe("DNS Import", func() {
 
 			It("send a empty file", func() {
 				file, _ := os.Create(dirFile)
-				err := testhelpers.RunCommand(cliCommand, file.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, file.Name())
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to parse file."))
 				Expect(err.Error()).To(ContainSubstring("Unable to parse zone from BIND file."))
@@ -63,7 +61,7 @@ var _ = Describe("DNS Import", func() {
 			It("no send a TTL in the file", func() {
 				file, _ := os.Create(dirFile)
 				file.WriteString(content)
-				err := testhelpers.RunCommand(cliCommand, file.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, file.Name())
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to parse file."))
 				Expect(err.Error()).To(ContainSubstring("dns: not a TTL: \"$ORIGIN\" at line: 1:7"))
@@ -93,7 +91,7 @@ www                    86400    IN A     127.0.0.1
 			It("send a good file with --dry-run argument", func() {
 				file, _ := os.Create(dirFile)
 				file.WriteString(content_)
-				err := testhelpers.RunCommand(cliCommand, file.Name(), "--dry-run")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, file.Name(), "--dry-run")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 			})
@@ -112,7 +110,7 @@ $TTL 900
 			It("send a good file", func() {
 				file, _ := os.Create(dirFile)
 				file.WriteString(content__)
-				err := testhelpers.RunCommand(cliCommand, file.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, file.Name())
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Zone  was created."))
 			})

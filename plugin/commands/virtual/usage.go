@@ -79,23 +79,23 @@ func (cmd *UsageCommand) Run(c *cli.Context) error {
 		return utils.PrintPrettyJSON(cmd.UI, vsUsage)
 	}
 
-	tableAverage := cmd.UI.Table([]string{ T("Average")})
-	tableUsage := cmd.UI.Table([]string{ T("Counter"),T("Date"),T("Type")})
+	tableAverage := cmd.UI.Table([]string{T("Average")})
+	tableUsage := cmd.UI.Table([]string{T("Counter"), T("Date"), T("Type")})
 	count := 0
 	counter := 0.0
 	for _, data := range vsUsage {
 		usageCounter := 0.0
 		if strings.ToUpper(c.String("valid-data")) == "MEMORY-USAGE" {
-			usageCounter = float64(*data.Counter)/2.00*30.00
-		}else {
+			usageCounter = float64(*data.Counter) / 2.00 * 30.00
+		} else {
 			usageCounter = float64(*data.Counter)
 		}
-		tableUsage.Add(fmt.Sprintf("%.2f", usageCounter),utils.FormatSLTimePointer(data.DateTime),utils.FormatStringPointer(data.Type))
-		count = count +1
+		tableUsage.Add(fmt.Sprintf("%.2f", usageCounter), utils.FormatSLTimePointer(data.DateTime), utils.FormatStringPointer(data.Type))
+		count = count + 1
 		counter = counter + usageCounter
 
 	}
-	average := counter/float64(count)
+	average := counter / float64(count)
 	tableAverage.Add(fmt.Sprintf("%.2f", average))
 
 	tableAverage.Print()
@@ -114,18 +114,18 @@ Example:
    ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0`, map[string]interface{}{"Command": "vs"}),
 		Flags: []cli.Flag{
 			cli.StringFlag{
-				Name:  "s,start",
-				Usage: T("Start Date e.g. 2019-3-4 (yyyy-MM-dd)  [required]"),
+				Name:     "s,start",
+				Usage:    T("Start Date e.g. 2019-3-4 (yyyy-MM-dd)  [required]"),
 				Required: true,
 			},
 			cli.StringFlag{
-				Name:  "e,end",
-				Usage: T("End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]"),
+				Name:     "e,end",
+				Usage:    T("End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]"),
 				Required: true,
 			},
 			cli.StringFlag{
-				Name:  "t,valid-data",
-				Usage: T("Metric_Data_Type keyName e.g. CPU0, CPU1, MEMORY_USAGE, etc.  [required]"),
+				Name:     "t,valid-data",
+				Usage:    T("Metric_Data_Type keyName e.g. CPU0, CPU1, MEMORY_USAGE, etc.  [required]"),
 				Required: true,
 			},
 			cli.IntFlag{
