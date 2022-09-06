@@ -48,7 +48,7 @@ This command creates a public subnet with 16 IPv4 addresses and places it on vla
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().BoolVarP(&thisCmd.Ipv6, "ipv6", "v", false, T("Order IPv6 Addresses"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Ipv6, "ipv6", "6", false, T("Order IPv6 Addresses"))
 	cobraCmd.Flags().BoolVar(&thisCmd.Test, "test", false, T("Do not order the subnet; just get a quote"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
 	thisCmd.Command = cobraCmd

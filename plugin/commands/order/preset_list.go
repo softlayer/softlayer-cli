@@ -1,11 +1,8 @@
 package order
 
 import (
-	"fmt"
-
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,33 +11,43 @@ import (
 )
 
 type PresetListCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	OrderManager managers.OrderManager
+	Command      *cobra.Command
+	Keyword      string
 }
 
-func NewPresetListCommand(ui terminal.UI, orderManager managers.OrderManager) (cmd *PresetListCommand) {
-	return &PresetListCommand{
-		UI:           ui,
-		OrderManager: orderManager,
+func NewPresetListCommand(sl *metadata.SoftlayerCommand) (cmd *PresetListCommand) {
+	thisCmd := &PresetListCommand{
+		SoftlayerCommand: sl,
+		OrderManager:     managers.NewOrderManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "preset-list",
+		Short: T("List package presets"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Keyword, "keyword", "", T("A word (or string) used to filter presets"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PresetListCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	packageKeyname := c.Args()[0]
+func (cmd *PresetListCommand) Run(args []string) error {
+	packageKeyname := args[0]
 
-	keyword := c.String("keyword")
+	keyword := cmd.Keyword
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	presets, err := cmd.OrderManager.ListPreset(packageKeyname, keyword)
 	if err != nil {
-		return cli.NewExitError(T(fmt.Sprintf("Failed to list presets: %s\n", err.Error())), 2)
+		return errors.NewAPIError(T("Failed to list presets"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -60,24 +67,4 @@ func (cmd *PresetListCommand) Print(presets []datatypes.Product_Package_Preset) 
 			utils.FormatStringPointer(preset.Description))
 	}
 	table.Print()
-}
-
-func OrderPresetListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "order",
-		Name:        "preset-list",
-		Description: T("List package presets"),
-		Usage: T(`${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME
-
-   EXAMPLE: 
-	  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER
-	  This command lists the presets for Bare Metal servers.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "keyword",
-				Usage: T("A word (or string) used to filter presets"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

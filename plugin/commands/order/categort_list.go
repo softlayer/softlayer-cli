@@ -1,9 +1,8 @@
 package order
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -13,34 +12,47 @@ import (
 )
 
 type CategoryListCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	OrderManager managers.OrderManager
+	Command      *cobra.Command
+	Required     bool
 }
 
-func NewCategoryListCommand(ui terminal.UI, orderManager managers.OrderManager) (cmd *CategoryListCommand) {
-	return &CategoryListCommand{
-		UI:           ui,
-		OrderManager: orderManager,
+func NewCategoryListCommand(sl *metadata.SoftlayerCommand) (cmd *CategoryListCommand) {
+	thisCmd := &CategoryListCommand{
+		SoftlayerCommand: sl,
+		OrderManager:     managers.NewOrderManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "category-list " + T("PACKAGE_KEYNAME"),
+		Short: T("List the categories of a package"),
+		Long: T(`
+EXAMPLE: 
+	${COMMAND_NAME} sl order category-list BARE_METAL_SERVER --required`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().BoolVar(&thisCmd.Required, "required", false, T("List only the required categories for the package"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CategoryListCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	packageKeyname := c.Args()[0]
+func (cmd *CategoryListCommand) Run(args []string) error {
+	packageKeyname := args[0]
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	categories, err := cmd.OrderManager.ListCategories(packageKeyname)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list categories.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list categories.\n"), err.Error(), 2)
 	}
 	var CategoriesRequired []datatypes.Product_Package_Order_Configuration
-	if c.Bool("required") {
+	if cmd.Required {
 		for _, cat := range categories {
 			if *cat.IsRequired != 0 {
 				CategoriesRequired = append(CategoriesRequired, cat)
@@ -72,24 +84,4 @@ func (cmd *CategoryListCommand) Print(categories []datatypes.Product_Package_Ord
 			isRequired)
 	}
 	table.Print()
-}
-
-func OrderCategoryListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "order",
-		Name:        "category-list",
-		Description: T("List the categories of a package"),
-		Usage: T(`${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME
-	
-EXAMPLE: 
-   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER
-   This command lists the categories of Bare Metal servers.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "required",
-				Usage: T("List only the required categories for the package"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

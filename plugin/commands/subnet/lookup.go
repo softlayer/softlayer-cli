@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,35 +14,41 @@ import (
 )
 
 type LookupCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
 }
 
-func NewLookupCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *LookupCommand) {
-	return &LookupCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewLookupCommand(sl *metadata.SoftlayerCommand) *LookupCommand {
+	thisCmd := &LookupCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "lookup " + T("IDENTIFIER"),
+		Short: T("Find an IP address and display its subnet and device information."),
+		Long: T(`${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]
+	
+EXAMPLE:
+	${COMMAND_NAME} sl subnet lookup 9.125.235.255
+	This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *LookupCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *LookupCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	ipAddress := c.Args()[0]
+	ipAddress := args[0]
 	ipAddressRecord, err := cmd.NetworkManager.IPLookup(ipAddress)
 	if err != nil {
-		return cli.NewExitError(T("Failed to lookup IP address: {{.IPAddress}}.\n", map[string]interface{}{"IPAddress": ipAddress})+err.Error(), 2)
-	}
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, ipAddressRecord)
+		return errors.NewAPIError(T("Failed to lookup IP address: {{.IPAddress}}.\n", map[string]interface{}{"IPAddress": ipAddress}), err.Error(), 2)
 	}
 
 	if ipAddressRecord.Id == nil {
@@ -86,22 +92,6 @@ func (cmd *LookupCommand) Run(c *cli.Context) error {
 		deviceTable.Print()
 		table.Add(T("device"), buf.String())
 	}
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func SubnetLookupMetaData() cli.Command {
-	return cli.Command{
-		Category:    "subnet",
-		Name:        "lookup",
-		Description: T("Find an IP address and display its subnet and device information"),
-		Usage: T(`${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl subnet lookup 9.125.235.255
-   This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }
