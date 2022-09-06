@@ -2,45 +2,43 @@ package subnet_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Subnet lookup", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *subnet.LookupCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *subnet.LookupCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = subnet.NewLookupCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = subnet.NewLookupCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        subnet.SubnetLookupMetaData().Name,
-			Description: subnet.SubnetLookupMetaData().Description,
-			Usage:       subnet.SubnetLookupMetaData().Usage,
-			Flags:       subnet.SubnetLookupMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("Subnet lookup", func() {
 		Context("Subnet lookup without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Subnet detail with correct ipaddress but server fails", func() {
@@ -48,10 +46,10 @@ var _ = Describe("Subnet lookup", func() {
 				fakeNetworkManager.IPLookupReturns(datatypes.Network_Subnet_IpAddress{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1.2.3.4")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1.2.3.4")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to lookup IP address: 1.2.3.4.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to lookup IP address: 1.2.3.4."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -60,7 +58,7 @@ var _ = Describe("Subnet lookup", func() {
 				fakeNetworkManager.IPLookupReturns(datatypes.Network_Subnet_IpAddress{}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1.2.3.4")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1.2.3.4")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"IP address 1.2.3.4 is not found."}))
 			})
@@ -97,7 +95,7 @@ var _ = Describe("Subnet lookup", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1.2.3.4")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1.2.3.4")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.8"}))

@@ -51,15 +51,14 @@ var _ = Describe("VS usage", func() {
 				created, _ := time.Parse(time.RFC3339, "2016-12-25T00:00:00Z")
 				fakeVSManager.GetSummaryUsageReturns([]datatypes.Metric_Tracking_Object_Data{
 					datatypes.Metric_Tracking_Object_Data{
-						Counter: sl.Float(.053),
-						Type: sl.String("CPU0"),
+						Counter:  sl.Float(.053),
+						Type:     sl.String("CPU0"),
 						DateTime: sl.Time(created),
-						},
-
+					},
 				}, nil)
 			})
 			It("return successfully", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "-s", "2015-10-02", "-e", "2016-12-31", "-t" ,"cpu0")
+				err := testhelpers.RunCommand(cliCommand, "123456", "-s", "2015-10-02", "-e", "2016-12-31", "-t", "cpu0")
 				Expect(err).NotTo(HaveOccurred())
 			})
 		})

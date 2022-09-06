@@ -43,7 +43,7 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CreateCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "create " + T("USERNAME"),
 		Short: T("Creates a user"),
-		Long: T(`
+		Long: T(`${COMMAND_NAME} sl user create USERNAME [OPTIONS] 
 EXAMPLE: 	
 	${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{"firstName": "Test", "lastName": "Testerson"}'
 	Remember to set the permissions and access for this new user.`),
@@ -103,7 +103,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 	if !cmd.ForceFlag {
 		confirm, err := cmd.UI.Confirm(T("You are about to create the following user: {{.UserName}}. Do you wish to continue?", map[string]interface{}{"UserName": userName}))
 		if err != nil {
-			return errors.NewAPIError("", err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))

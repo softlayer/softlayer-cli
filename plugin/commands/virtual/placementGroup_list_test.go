@@ -34,7 +34,7 @@ var _ = Describe("VS capacity-list", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring(  "flag provided but not defined: -column"))
+				Expect(err.Error()).To(ContainSubstring("flag provided but not defined: -column"))
 			})
 		})
 	})
@@ -46,7 +46,7 @@ var _ = Describe("VS capacity-list", func() {
 			It("return error", func() {
 				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring( "flag provided but not defined: -column"))
+				Expect(err.Error()).To(ContainSubstring("flag provided but not defined: -column"))
 			})
 		})
 	})

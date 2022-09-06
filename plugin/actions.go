@@ -10,7 +10,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
@@ -19,7 +18,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -28,12 +27,6 @@ import (
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{}
-
-	// ibmcloud sl dns
-	dnsCommands := dns.GetCommandActionBindings(context, ui, session)
-	for name, action := range dnsCommands {
-		CommandActionBindings[name] = action
-	}
 
 	// ibmcloud sl hardware
 	hardwareCommands := hardware.GetCommandActionBindings(context, ui, session)
@@ -53,11 +46,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl vs
-	vsCommands := virtual.GetCommandActionBindings(context, ui, session)
-	for name, action := range vsCommands {
-		CommandActionBindings[name] = action
-	}
 
 	// ibmcloud sl ticket
 	ticketCommands := ticket.GetCommandActionBindings(context, ui, session)

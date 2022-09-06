@@ -1,12 +1,10 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 func VSNamespace() plugin.Namespace {
@@ -17,165 +15,47 @@ func VSNamespace() plugin.Namespace {
 	}
 }
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	virtualServerManager := managers.NewVirtualServerManager(session)
-	imageManager := managers.NewImageManager(session)
-	networkManager := managers.NewNetworkManager(session)
-	dnsManager := managers.NewDNSManager(session)
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"vs-authorize-storage": func(c *cli.Context) error {
-			return NewAuthorizeStorageCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-cancel": func(c *cli.Context) error {
-			return NewCancelCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-capture": func(c *cli.Context) error {
-			return NewCaptureCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-create": func(c *cli.Context) error {
-			return NewCreateCommand(ui, virtualServerManager, imageManager, context).Run(c)
-		},
-		"vs-host-create": func(c *cli.Context) error {
-			return NewCreateHostCommand(ui, virtualServerManager, networkManager, context).Run(c)
-		},
-		"vs-options": func(c *cli.Context) error {
-			return NewCreateOptionsCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-credentials": func(c *cli.Context) error {
-			return NewCredentialsCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-detail": func(c *cli.Context) error {
-			return NewDetailCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-dns-sync": func(c *cli.Context) error {
-			return NewDnsSyncCommand(ui, virtualServerManager, dnsManager).Run(c)
-		},
-		"vs-edit": func(c *cli.Context) error {
-			return NewEditCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-list": func(c *cli.Context) error {
-			return NewListCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-host-list": func(c *cli.Context) error {
-			return NewListHostCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-migrate": func(c *cli.Context) error {
-			return NewMigrageCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-pause": func(c *cli.Context) error {
-			return NewPauseCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-power-off": func(c *cli.Context) error {
-			return NewPowerOffCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-power-on": func(c *cli.Context) error {
-			return NewPowerOnCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-ready": func(c *cli.Context) error {
-			return NewReadyCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-billing": func(c *cli.Context) error {
-			return NewBillingCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-reboot": func(c *cli.Context) error {
-			return NewRebootCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-reload": func(c *cli.Context) error {
-			return NewReloadCommand(ui, virtualServerManager, context).Run(c)
-		},
-		"vs-rescue": func(c *cli.Context) error {
-			return NewRescueCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-resume": func(c *cli.Context) error {
-			return NewResumeCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-upgrade": func(c *cli.Context) error {
-			return NewUpgradeCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-capacity-create-options": func(c *cli.Context) error {
-			return NewCapacityCreateOptiosCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-capacity-detail": func(c *cli.Context) error {
-			return NewCapacityDetailCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-bandwidth": func(c *cli.Context) error {
-			return NewBandwidthCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-storage": func(c *cli.Context) error {
-			return NewStorageCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-placementgroup-list": func(c *cli.Context) error {
-			return NewPlacementGroupListCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-placementgroup-create-options": func(c *cli.Context) error {
-			return NewPlacementGruopCreateOptionsCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-placementgroup-create": func(c *cli.Context) error {
-			return NewVSPlacementGroupCreateCommand(ui, virtualServerManager, context).Run(c)
-		},
-		"vs-capacity-list": func(c *cli.Context) error {
-			return NewCapacityListCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-capacity-create": func(c *cli.Context) error {
-			return NewCapacityCreateCommand(ui, virtualServerManager, context).Run(c)
-		},
-		"vs-usage": func(c *cli.Context) error {
-			return NewUsageCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-placementgroup-details": func(c *cli.Context) error {
-			return NewPlacementGroupDetailsCommand(ui, virtualServerManager).Run(c)
-		},
-		"vs-monitoring-list": func(c *cli.Context) error {
-			return NewMonitoringListCommand(ui, virtualServerManager).Run(c)
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "vs",
+		Short: T("Classic infrastructure Virtual Servers"),
+		Long:  "${COMMAND_NAME} sl vs",
+		RunE:  nil,
 	}
-
-	return CommandActionBindings
-}
-
-func VSMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "vs",
-		Description: T("Classic infrastructure Virtual Servers"),
-		Usage:       "${COMMAND_NAME} sl vs",
-		Subcommands: []cli.Command{
-			VSCancelMetaData(),
-			VSCaptureMetaData(),
-			VSCreateHostMetaData(),
-			VSCreateMetaData(),
-			VSCreateOptionsMetaData(),
-			VSCredentialsMetaData(),
-			VSDetailMetaData(),
-			VSCapacityDetailMetaData(),
-			VSDNSSyncMetaData(),
-			VSEditMetaData(),
-			VSListHostMetaData(),
-			VSListMetaData(),
-			VSMigrateMetaData(),
-			VSPauseMetaData(),
-			VSPowerOffMetaData(),
-			VSPowerOnMetaData(),
-			VSReadyMetaData(),
-			VSRebootMetaData(),
-			VSReloadMetaData(),
-			VSRescueMetaData(),
-			VSResumeMetaData(),
-			VSUpgradeMetaData(),
-			VSAuthorizeStorageMetaData(),
-			VSBandwidthMetaData(),
-			VSStorageMetaData(),
-			VSCapacityListMetaData(),
-			VSCapacityCreateOptionsMetadata(),
-			VSCapacityCreateMetaData(),
-			VSPlacementGroupCreateMetaData(),
-			VSBillingMetaData(),
-			VSUsageMetaData(),
-			VSPlacementGroupListMetadata(),
-			VSPlacementGroupDetailMetaData(),
-			VSPlacementGroupCreateOptionsMetaData(),
-			VSMonitoringListMetaData(),
-		},
-	}
+	cobraCmd.AddCommand(NewAuthorizeStorageCommand(sl).Command)
+	cobraCmd.AddCommand(NewBandwidthCommand(sl).Command)
+	cobraCmd.AddCommand(NewBillingCommand(sl).Command)
+	cobraCmd.AddCommand(NewCancelCommand(sl).Command)
+	cobraCmd.AddCommand(NewCapacityCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewCapacityCreateOptionsCommand(sl).Command)
+	cobraCmd.AddCommand(NewCapacityDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewCapacityListCommand(sl).Command)
+	cobraCmd.AddCommand(NewCaptureCommand(sl).Command)
+	cobraCmd.AddCommand(NewCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewCreateHostCommand(sl).Command)
+	cobraCmd.AddCommand(NewCreateOptionsCommand(sl).Command)
+	cobraCmd.AddCommand(NewCredentialsCommand(sl).Command)
+	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewDnsSyncCommand(sl).Command)
+	// cobraCmd.AddCommand(NewEditCommand(sl).Command)
+	// cobraCmd.AddCommand(NewListCommand(sl).Command)
+	// cobraCmd.AddCommand(NewListHostCommand(sl).Command)
+	// cobraCmd.AddCommand(NewMigrageCommand(sl).Command)
+	// cobraCmd.AddCommand(NewMonitoringListCommand(sl).Command)
+	// cobraCmd.AddCommand(NewPauseCommand(sl).Command)
+	// cobraCmd.AddCommand(NewPlacementGroupDetailsCommand(sl).Command)
+	// cobraCmd.AddCommand(NewPlacementGroupListCommand(sl).Command)
+	// cobraCmd.AddCommand(NewPlacementGruopCreateOptionsCommand(sl).Command)
+	// cobraCmd.AddCommand(NewPowerOffCommand(sl).Command)
+	// cobraCmd.AddCommand(NewPowerOnCommand(sl).Command)
+	// cobraCmd.AddCommand(NewReadyCommand(sl).Command)
+	// cobraCmd.AddCommand(NewRebootCommand(sl).Command)
+	// cobraCmd.AddCommand(NewReloadCommand(sl).Command)
+	// cobraCmd.AddCommand(NewRescueCommand(sl).Command)
+	// cobraCmd.AddCommand(NewResumeCommand(sl).Command)
+	// cobraCmd.AddCommand(NewStorageCommand(sl).Command)
+	// cobraCmd.AddCommand(NewUpgradeCommand(sl).Command)
+	// cobraCmd.AddCommand(NewUsageCommand(sl).Command)
+	// cobraCmd.AddCommand(NewVSPlacementGroupCreateCommand(sl).Command)
+	return cobraCmd
 }

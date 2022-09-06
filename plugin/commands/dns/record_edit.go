@@ -1,12 +1,11 @@
 package dns
 
 import (
-	"errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/sl"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,29 +13,53 @@ import (
 )
 
 type RecordEditCommand struct {
-	UI         terminal.UI
+	*metadata.SoftlayerCommand
 	DNSManager managers.DNSManager
+	Command    *cobra.Command
+	ByRecord   string
+	ById       int
+	Data       string
+	Ttl        int
 }
 
-func NewRecordEditCommand(ui terminal.UI, dnsManager managers.DNSManager) (cmd *RecordEditCommand) {
-	return &RecordEditCommand{
-		UI:         ui,
-		DNSManager: dnsManager,
+func NewRecordEditCommand(sl *metadata.SoftlayerCommand) *RecordEditCommand {
+	thisCmd := &RecordEditCommand{
+		SoftlayerCommand: sl,
+		DNSManager:       managers.NewDNSManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "record-edit " + T("ZONE"),
+		Short: T("Update resource records in a zone."),
+		Long: T(`${COMMAND_NAME} sl dns record-edit ZONE [OPTIONS]
+	
+EXAMPLE:
+	${COMMAND_NAME} sl dns record-edit ibm.com --by-id 12345678 --data 127.0.0.2 --ttl 3600
+	This command edits records under the zone: ibm.com, whose ID is 12345678, and sets its data to "127.0.0.2" and ttl to 3600.
+	${COMMAND_NAME} sl dns record-edit ibm.com --by-record kibana --ttl 3600
+	This command edits records under the zone: ibm.com, whose host is "kibana", and sets their ttl all to 3600.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.ByRecord, "by-record", "", T("Edit by host record, such as www"))
+	cobraCmd.Flags().IntVar(&thisCmd.ById, "by-id", 0, T("Edit a single record by its ID"))
+	cobraCmd.Flags().StringVar(&thisCmd.Data, "data", "", T("Record data, such as an IP address"))
+	cobraCmd.Flags().IntVar(&thisCmd.Ttl, "ttl", 0, T("TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *RecordEditCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	zone := c.Args()[0]
+func (cmd *RecordEditCommand) Run(args []string) error {
+
+	zone := args[0]
 	zoneID, err := cmd.DNSManager.GetZoneIdFromName(zone)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get zone ID from zone name: {{.Zone}}.\n", map[string]interface{}{"Zone": zone})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get zone ID from zone name: {{.Zone}}.\n", map[string]interface{}{"Zone": zone}), err.Error(), 2)
 	}
-	records, err := cmd.DNSManager.ListResourceRecords(zoneID, "", c.String("by-record"), "", 0, "")
+	records, err := cmd.DNSManager.ListResourceRecords(zoneID, "", cmd.ByRecord, "", 0, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to list resource records under zone: {{.Zone}}.\n", map[string]interface{}{"Zone": zone})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list resource records under zone: {{.Zone}}.\n", map[string]interface{}{"Zone": zone}), err.Error(), 2)
 	}
 
 	if len(records) == 0 {
@@ -46,16 +69,16 @@ func (cmd *RecordEditCommand) Run(c *cli.Context) error {
 
 	var multiErrors []error
 	for _, record := range records {
-		if c.IsSet("by-id") {
-			if record.Id != nil && c.Int("by-id") != *record.Id {
+		if cmd.ById != 0 {
+			if record.Id != nil && cmd.ById != *record.Id {
 				continue
 			}
 		}
-		if c.IsSet("data") {
-			record.Data = sl.String(c.String("data"))
+		if cmd.Data != "" {
+			record.Data = sl.String(cmd.Data)
 		}
-		if c.IsSet("ttl") {
-			record.Ttl = sl.Int(c.Int("ttl"))
+		if cmd.Ttl != 0 {
+			record.Ttl = sl.Int(cmd.Ttl)
 		}
 		err = cmd.DNSManager.EditResourceRecord(record)
 		if err != nil {
@@ -72,37 +95,4 @@ func (cmd *RecordEditCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(cli.NewMultiError(multiErrors...).Error(), 2)
 	}
 	return nil
-}
-
-func DnsRecordEditMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dns",
-		Name:        "record-edit",
-		Description: T("Update resource records in a zone"),
-		Usage: T(`${COMMAND_NAME} sl dns record-edit ZONE [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl dns record-edit ibm.com --by-id 12345678 --data 127.0.0.2 --ttl 3600
-   This command edits records under the zone: ibm.com, whose ID is 12345678, and sets its data to "127.0.0.2" and ttl to 3600.
-   ${COMMAND_NAME} sl dns record-edit ibm.com --by-record kibana --ttl 3600
-   This command edits records under the zone: ibm.com, whose host is "kibana", and sets their ttl all to 3600.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "by-record",
-				Usage: T("Edit by host record, such as www"),
-			},
-			cli.IntFlag{
-				Name:  "by-id",
-				Usage: T("Edit a single record by its ID"),
-			},
-			cli.StringFlag{
-				Name:  "data",
-				Usage: T("Record data, such as an IP address"),
-			},
-			cli.IntFlag{
-				Name:  "ttl",
-				Usage: T("TTL(Time-To-Live) in seconds, such as: 86400"),
-			},
-		},
-	}
 }

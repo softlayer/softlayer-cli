@@ -10,9 +10,10 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -21,46 +22,45 @@ var _ = Describe("order quote", func() {
 		fakeUI           *terminal.FakeUI
 		fakeOrderManager *testhelpers.FakeOrderManager
 		fakeImageManager *testhelpers.FakeImageManager
-		cmd              *order.QuoteCommand
-		cliCommand       cli.Command
+		cliCommand       *order.QuoteCommand
+		fakeSession      *session.Session
+		slCommand        *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeOrderManager = new(testhelpers.FakeOrderManager)
 		fakeImageManager = new(testhelpers.FakeImageManager)
-		cmd = order.NewQuoteCommand(fakeUI, fakeOrderManager, fakeImageManager)
-		cliCommand = cli.Command{
-			Name:        order.OrderQuoteMetaData().Name,
-			Description: order.OrderQuoteMetaData().Description,
-			Usage:       order.OrderQuoteMetaData().Usage,
-			Flags:       order.OrderQuoteMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = order.NewQuoteCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.OrderManager = fakeOrderManager
+		cliCommand.ImageManager = fakeImageManager
 	})
 
 	Describe("order quote", func() {
 
 		Context("Return error", func() {
 			It("Set command without Id", func() {
-				err := testhelpers.RunCommand(cliCommand, "--fqdn=testquote.test.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--fqdn=testquote.test.com")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 
 			It("Set command with an invalid Id", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcde", "--fqdn=testquote.test.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcde", "--fqdn=testquote.test.com")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Quote ID'. It must be a positive integer."))
 			})
 
 			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--fqdn=testquote.test.com", "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--fqdn=testquote.test.com", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
 
 			It("Set --userdata and --userfile", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--fqdn=testquote.test.com", "--userdata=Userdata", "--userfile=tmp/userfile.txt")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--fqdn=testquote.test.com", "--userdata=Userdata", "--userfile=tmp/userfile.txt")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '[--userdata]', '[--userfile]' are exclusive."))
 			})
@@ -72,7 +72,7 @@ var _ = Describe("order quote", func() {
 			})
 
 			It("Failed get Quote", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--fqdn=testquote.test.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--fqdn=testquote.test.com")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get Quote."))
 			})
@@ -86,7 +86,7 @@ var _ = Describe("order quote", func() {
 			})
 
 			It("Failed get Recalculated Order Container", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--fqdn=testquote.test.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--fqdn=testquote.test.com")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get Recalculated Order Container."))
 			})
@@ -101,7 +101,7 @@ var _ = Describe("order quote", func() {
 			})
 
 			It("--fqdn option has invalid format", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--verify", "--fqdn=testquote")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--verify", "--fqdn=testquote")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("is not following <hostname>.<domain.name.tld> --fqdn option format"))
 			})
@@ -117,7 +117,7 @@ var _ = Describe("order quote", func() {
 			})
 
 			It("Failed get image", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--verify", "--fqdn=testquote.test.com", "--image=111111")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--verify", "--fqdn=testquote.test.com", "--image=111111")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get Image."))
 			})
@@ -145,7 +145,7 @@ var _ = Describe("order quote", func() {
 			})
 
 			It("Failed verify quote", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--verify", "--fqdn=testquote.test.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--verify", "--fqdn=testquote.test.com")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to verify Quote."))
 			})
@@ -177,7 +177,7 @@ var _ = Describe("order quote", func() {
 			})
 
 			It("Failed order quote", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--fqdn=testquote.test.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--fqdn=testquote.test.com")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to order Quote."))
 			})
@@ -218,7 +218,7 @@ var _ = Describe("order quote", func() {
 			})
 
 			It("Verify quote", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--fqdn=testquote.test.com", "--verify", "--quantity=1", "--postinstall=https://mypostinstallscript.com", "--userdata=Myuserdata")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--fqdn=testquote.test.com", "--verify", "--quantity=1", "--postinstall=https://mypostinstallscript.com", "--userdata=Myuserdata")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("INTEL_INTEL_XEON_8260_2_4_1U"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Dual Intel Xeon Platinum 8260 (48 Cores, 2.4 GHz)"))
@@ -260,7 +260,7 @@ var _ = Describe("order quote", func() {
 			})
 
 			It("Order quote", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--fqdn=testquote.test.com", "--key=111111", "--image=222222", "--complex-type=SoftLayer_Container_Product_Order_Hardware_Server")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--fqdn=testquote.test.com", "--key=111111", "--image=222222", "--complex-type=SoftLayer_Container_Product_Order_Hardware_Server")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("333333"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-25T00:00:00Z"))

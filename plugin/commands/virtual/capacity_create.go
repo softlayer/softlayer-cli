@@ -1,67 +1,91 @@
 package virtual
 
 import (
-"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-"github.com/softlayer/softlayer-go/datatypes"
-"github.com/urfave/cli"
-. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
+
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type CapacityCreateCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
-	ImageManager         managers.ImageManager
-	Context              plugin.PluginContext
+	Command              *cobra.Command
+	Name                 string
+	BackendRouterId      int
+	Instances            int
+	Flavor               string
+	Test                 bool
+	Force                bool
 }
 
-func NewCapacityCreateCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager, context plugin.PluginContext) (cmd *CapacityCreateCommand) {
-	return &CapacityCreateCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
-		Context:              context,
+func NewCapacityCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CapacityCreateCommand) {
+	thisCmd := &CapacityCreateCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
-}
+	cobraCmd := &cobra.Command{
+		Use:   "capacity-create",
+		Short: T("Create a Reserved Capacity instance."),
+		Long: T(`${COMMAND_NAME} sl vs capacity-create [OPTIONS]
+EXAMPLE:
+${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2
+This command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,
+${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test
+This command tests whether the order is valid with above options before the order is actually placed.
 
-func (cmd *CapacityCreateCommand) Run(c *cli.Context) error {
+WARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("Name for your new reserved capacity  [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.BackendRouterId, "backendRouterId", "b", 0, T("BackendRouterId, create-options has a list of valid ids to use. [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Instances, "instances", "i", 0, T("Number of VSI instances this capacity reservation can support. [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Flavor, "flavor", "l", "", T(" Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Test, "test", false, T(" Do not actually create the reserved capacity"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	return thisCmd
+}
+func (cmd *CapacityCreateCommand) Run(args []string) error {
+	var params map[string]interface{}
+	var err error
 	capacity_create := datatypes.Container_Product_Order_Virtual_ReservedCapacity{}
-	if c.NumFlags() == 0 {
+	if cmd.Name == "" || cmd.BackendRouterId == 0 || cmd.Instances == 0 || cmd.Flavor == "" {
 		confirm, err := cmd.UI.Confirm(T("Please make sure you know all the creation options by running command: '{{.CommandName}} sl vs options'. Continue?",
-			map[string]interface{}{"CommandName": cmd.Context.CLIName()}))
+			map[string]interface{}{"CommandName": "ibmcloud"}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
 			return nil
 		}
-		params := make(map[string]interface{})
+		params = make(map[string]interface{})
 		params["backendRouterId"], _ = cmd.UI.Ask(T("backendRouterId: "))
 		params["flavor"], _ = cmd.UI.Ask(T("flavor: "))
 		params["quantity"], _ = cmd.UI.Ask(T("instances: "))
+		params["test"] = cmd.Test
 		//params["complexType"] = T("SoftLayer_Container_Product_Order_Virtual_ReservedCapacity")
 		params["hourly"] = true
-
-		orderReceipt, err := cmd.VirtualServerManager.GenerateInstanceCapacityCreationTemplate(&capacity_create, params)
-		if err != nil {
-			return err
-		}
-		createTable(cmd, orderReceipt, c.IsSet("test"))
 	} else {
 		//create virtual reservedCapacity server with customized parameters
-		params, err := verifyCapacityParams(c)
+		params, err = cmd.verifyCapacityParams()
 		if err != nil {
 			return err
 		}
-		orderReceipt, err := cmd.VirtualServerManager.GenerateInstanceCapacityCreationTemplate(&capacity_create, params)
-		if err != nil {
-			return err
-		}
-		createTable(cmd, orderReceipt, c.IsSet("test"))
 	}
+
+	orderReceipt, err := cmd.VirtualServerManager.GenerateInstanceCapacityCreationTemplate(&capacity_create, params)
+	if err != nil {
+		return err
+	}
+	createTable(cmd, orderReceipt, cmd.Test)
 
 	return nil
 }
@@ -90,62 +114,23 @@ func createTable(cmd *CapacityCreateCommand, receipt interface{}, set bool) {
 	}
 }
 
-func verifyCapacityParams(c *cli.Context) (map[string]interface{}, error) {
+func (cmd *CapacityCreateCommand) verifyCapacityParams() (map[string]interface{}, error) {
 	params := make(map[string]interface{})
-	if c.IsSet("flavor") || (c.IsSet("fl")) {
-		params["flavor"] = c.String("flavor")
+	if cmd.Flavor != "" {
+		params["flavor"] = cmd.Flavor
 	}
-	if c.IsSet("b") {
-		params["backendRouterId"] = c.Int("b")
+	if cmd.BackendRouterId != 0 {
+		params["backendRouterId"] = cmd.BackendRouterId
 	}
-	if c.IsSet("i") {
-		params["quantity"] = c.Int("i")
+	if cmd.Instances != 0 {
+		params["quantity"] = cmd.Instances
 	}
-	if c.IsSet("n") {
-		params["name"] = c.String("n")
+	if cmd.Name != "" {
+		params["name"] = cmd.Name
 	}
-	if c.IsSet("test") {
-		params["test"] = c.Bool("test")
+	if cmd.Test {
+		params["test"] = cmd.Test
 	}
 
 	return params, nil
-}
-
-func VSCapacityCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "capacity-create",
-		Description: T("Create a Reserved Capacity instance."),
-		Usage: T(`${COMMAND_NAME} sl vs capacity-create [OPTIONS]
-EXAMPLE:
-${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2
-This command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,
-${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test
-This command tests whether the order is valid with above options before the order is actually placed.
-
-WARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "n,name",
-				Usage: T("Name for your new reserved capacity  [required]"),
-			},
-			cli.IntFlag{
-				Name:  "b,backendRouterId",
-				Usage: T("BackendRouterId, create-options has a list of valid ids to use. [required]"),
-			},
-			cli.IntFlag{
-				Name:  "i,instances",
-				Usage: T("Number of VSI instances this capacity reservation can support. [required]"),
-			},
-			cli.StringFlag{
-				Name:  "fl,flavor",
-				Usage: T(" Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]"),
-			},
-			cli.BoolFlag{
-				Name:  "test",
-				Usage: T(" Do not actually create the reserved capacity"),
-			},
-			metadata.ForceFlag(),
-		},
-	}
 }

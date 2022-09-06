@@ -28,13 +28,13 @@ func (cmd *PlacementGroupCreateOptionsCommand) Run(c *cli.Context) error {
 		return slErrors.NewInvalidUsageError("Internal error.")
 	}
 	tableRegion := cmd.UI.Table([]string{T("Datacenter"), T("Hostname"), T("BackendRouterId")})
-	for _, datacenter := range datacenters{
+	for _, datacenter := range datacenters {
 		routers, err := cmd.VirtualServerManager.GetAvailablePlacementRouters(utils.IntPointertoInt(datacenter.Id))
 		if err != nil {
 			return slErrors.NewInvalidUsageError("Internal error.")
 		}
-		for _, routerAvalaible := range routers{
-			tableRegion.Add(utils.FormatStringPointer(datacenter.LongName),utils.FormatStringPointer(routerAvalaible.Hostname),utils.FormatIntPointer(routerAvalaible.Id))
+		for _, routerAvalaible := range routers {
+			tableRegion.Add(utils.FormatStringPointer(datacenter.LongName), utils.FormatStringPointer(routerAvalaible.Hostname), utils.FormatIntPointer(routerAvalaible.Id))
 		}
 	}
 
@@ -43,8 +43,8 @@ func (cmd *PlacementGroupCreateOptionsCommand) Run(c *cli.Context) error {
 		return slErrors.NewInvalidUsageError("Internal error.")
 	}
 	tableRules := cmd.UI.Table([]string{T("Id"), T("Rule")})
-	for _, rule := range rules{
-			tableRules.Add(utils.FormatIntPointer(rule.Id),utils.FormatStringPointer(rule.KeyName))
+	for _, rule := range rules {
+		tableRules.Add(utils.FormatIntPointer(rule.Id), utils.FormatStringPointer(rule.KeyName))
 
 	}
 	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)

@@ -63,6 +63,7 @@ var _ = Describe("I18NTests", func() {
 					Expect(translator("Recurring Price")).To(Equal(xlationMap[language]))
 				})
 				It("Testing " + language + " everything", func() {
+					// If these fails as untranslated, try running ./bin/generate-i18n-resources.sh
 					regex, _ := regexp.Compile("{{.([[:alnum:]])*}}")
 					coreConfig.SetLocale(language)
 					translator := i18n.Init(coreConfig)
