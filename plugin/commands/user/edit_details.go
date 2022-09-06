@@ -30,7 +30,7 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) (cmd *EditCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "detail-edit " + T("USER_ID"),
 		Short: T("Edit a user's details"),
-		Long: T(`
+		Long: T(`${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]
 EXAMPLE: 
 	${COMMAND_NAME} sl user detail-edit USER_ID --template '{"firstName": "Test", "lastName": "Testerson"}'
 	This command edit a users details.`),
