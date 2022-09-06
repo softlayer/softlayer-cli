@@ -1,45 +1,54 @@
 package virtual
 
 import (
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
 
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type CancelCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
+	Force                bool
 }
 
-func NewCancelCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *CancelCommand) {
-	return &CancelCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewCancelCommand(sl *metadata.SoftlayerCommand) (cmd *CancelCommand) {
+	thisCmd := &CancelCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "cancel " + T("IDENTIFIER"),
+		Short: T("Cancel virtual server instance"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	return thisCmd
 }
 
-func (cmd *CancelCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	VsID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+func (cmd *CancelCommand) Run(args []string) error {
+
+	VsID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Virtual server ID")
+		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
 
-	if !c.IsSet("f") && !c.IsSet("force") {
-		confirm, err := cmd.UI.Confirm(T("This will cancel the virtual server instance: {{.VsID}} and cannot be undone. Continue?", map[string]interface{}{"VsID": VsID}))
+	subs := map[string]interface{}{"VsID": VsID, "VsId": VsID}
+	if !cmd.Force {
+		confirm, err := cmd.UI.Confirm(T("This will cancel the virtual server instance: {{.VsID}} and cannot be undone. Continue?", subs))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -49,27 +58,11 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 	err = cmd.VirtualServerManager.CancelInstance(VsID)
 	if err != nil {
 		if strings.Contains(err.Error(), slErrors.SL_EXP_OBJ_NOT_FOUND) {
-			return cli.NewExitError(T("Unable to find virtual server instance with ID: {{.VsID}}.\n", map[string]interface{}{"VsID": VsID})+err.Error(), 0)
+			return slErrors.NewAPIError(T("Unable to find virtual server instance with ID: {{.VsID}}.\n", subs), err.Error(), 0)
 		}
-		return cli.NewExitError(T("Failed to cancel virtual server instance: {{.VsID}}.\n", map[string]interface{}{"VsID": VsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to cancel virtual server instance: {{.VsID}}.\n", subs), err.Error(), 2)
 	}
 	cmd.UI.Ok()
-	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was cancelled.", map[string]interface{}{"VsId": VsID}))
+	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was cancelled.", subs))
 	return nil
-}
-
-func VSCancelMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "cancel",
-		Description: T("Cancel virtual server instance"),
-		Usage: T(`${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vs cancel 12345678
-   This command cancels virtual server instance with ID of 12345678.`),
-		Flags: []cli.Flag{
-			metadata.ForceFlag(),
-		},
-	}
 }

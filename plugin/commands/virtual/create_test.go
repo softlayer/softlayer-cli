@@ -7,150 +7,150 @@ import (
 	"strings"
 	"time"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VS create", func() {
 	var (
-		fakeUI           *terminal.FakeUI
-		fakeVSManager    *testhelpers.FakeVirtualServerManager
-		fakeImageManager *testhelpers.FakeImageManager
-		cmd              *virtual.CreateCommand
-		cliCommand       cli.Command
-		context          plugin.PluginContext
+		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.CreateCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
+		fakeVSManager *testhelpers.FakeVirtualServerManager
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		fakeImageManager = new(testhelpers.FakeImageManager)
-		context = plugin.InitPluginContext("softlayer")
-		cmd = virtual.NewCreateCommand(fakeUI, fakeVSManager, fakeImageManager, context)
-		cliCommand = cli.Command{
-			Name:        virtual.VSCreateMetaData().Name,
-			Description: virtual.VSCreateMetaData().Description,
-			Usage:       virtual.VSCreateMetaData().Usage,
-			Flags:       virtual.VSCreateMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewCreateCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
 
 	Describe("VS create", func() {
 		Context("VS create with incorrect parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--flavor", "C1_1X1X100", "-c", "1")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--flavor", "C1_1X1X100", "-c", "1")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: '[-c|--cpu]', '[--flavor]' are exclusive.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '[-c|--cpu]', '[--flavor]' are exclusive."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--flavor", "C1_1X1X100", "-m", "1024")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--flavor", "C1_1X1X100", "-m", "1024")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: '[-m|--memory]', '[--flavor]' are exclusive.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '[-m|--memory]', '[--flavor]' are exclusive."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--flavor", "C1_1X1X100", "--dedicated")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--flavor", "C1_1X1X100", "--dedicated")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: '[--dedicated]', '[--flavor]' are exclusive.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '[--dedicated]', '[--flavor]' are exclusive."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--flavor", "C1_1X1X100", "--host-id", "12345")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--flavor", "C1_1X1X100", "--host-id", "12345")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: '[--host-id]', '[--flavor]' are exclusive.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '[--host-id]', '[--flavor]' are exclusive."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-o", "CENTOS", "--image", "111")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-o", "CENTOS", "--image", "111")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: '[-o|--os]', '[--image]' are exclusive.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '[-o|--os]', '[--image]' are exclusive."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--billing", "yearly")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--billing", "yearly")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [--billing] billing rate must be either hourly or monthly.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [--billing] billing rate must be either hourly or monthly."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-u", "CENTOS", "-F", "/tmp/file")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-u", "CENTOS", "-F", "/tmp/file")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: '[-u|--userdata]', '[-F|--userfile]' are exclusive.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '[-u|--userdata]', '[-F|--userfile]' are exclusive."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			BeforeEach(func() {
+				fakeUI.Inputs("yes", "")
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, errors.New("Incorrect Usage: [-H|--hostname] is required."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-o", "CENTOS")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-o", "CENTOS")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-H|--hostname] is required.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-H|--hostname]"))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			BeforeEach(func() {
+				fakeUI.Inputs("yes", "")
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, errors.New("Incorrect Usage: [-D|--domain] is required."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-D|--domain] is required.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-D|--domain]"))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			BeforeEach(func() {
+				fakeUI.Inputs("yes", "")
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, errors.New("Incorrect Usage: [-c|--cpu] is required and must be positive integer."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-c|--cpu] is required and must be positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-c|--cpu] is required and must be positive integer."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			BeforeEach(func() {
+				fakeUI.Inputs("yes", "")
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, errors.New("Incorrect Usage: [-m|--memory] is required and must be positive integer."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-m|--memory] is required and must be positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-m|--memory] is required and must be positive integer."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			BeforeEach(func() {
+				fakeUI.Inputs("yes", "")
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, errors.New("Incorrect Usage: [--datacenter] is required."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [--datacenter] is required.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [--datacenter] is required."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
 			BeforeEach(func() {
+				fakeUI.Inputs("yes", "")
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, errors.New("Incorrect Usage: either [-o|--os] or [--image] is required."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: either [-o|--os] or [--image] is required.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: either [-o|--os] or [--image] is required."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
@@ -158,9 +158,9 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, errors.New("Incorrect Usage: Template file: /abc/def/tmplate does not exist."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--template", "/abc/def/tmplate")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--template", "/abc/def/tmplate")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: Template file: /abc/def/tmplate does not exist.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Template file: /abc/def/tmplate does not exist."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
@@ -168,9 +168,9 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, errors.New("Incorrect Usage: Local disk number cannot excceed two."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "disk", "100", "disk", "100", "disk", "100")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--disk", "100", "--disk", "100", "--disk", "100")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: Local disk number cannot excceed two.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Local disk number cannot excceed two."))
 			})
 		})
 		Context("VS create with incorrect parameters", func() {
@@ -178,9 +178,9 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, errors.New("Incorrect Usage: San disk number cannot excceed five."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--san", "disk", "100", "disk", "100", "disk", "100", "disk", "100", "disk", "100", "disk", "100")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--san", "--disk", "100", "--disk", "100", "--disk", "100", "--disk", "100", "--disk", "100", "--disk", "100")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: San disk number cannot excceed five.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: San disk number cannot excceed five."))
 			})
 		})
 
@@ -189,15 +189,15 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--export", "/root/template")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--export", "/root/template")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to write virtual server template file to: /root/template.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to write virtual server template file to: /root/template."))
 			})
 		})
 		Context("VS create with --export succeed", func() {
 			BeforeEach(func() {
 				fakeVSManager.GenerateInstanceCreationTemplateReturns(&datatypes.Virtual_Guest{}, nil)
-				
+
 			})
 			It("return no error", func() {
 				tmpFile, tmpErr := ioutil.TempFile(os.TempDir(), "create_tests-")
@@ -206,10 +206,10 @@ var _ = Describe("VS create", func() {
 				}
 				fileName := tmpFile.Name()
 				defer os.Remove(fileName)
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--export", fileName)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--export", fileName)
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Virtual server template is exported to: " + fileName + "."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Virtual server template is exported to: " + fileName + "."))
 			})
 		})
 
@@ -219,10 +219,10 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.VerifyInstanceCreationReturns(datatypes.Container_Product_Order{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--test")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--test")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to verify virtual server creation.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to verify virtual server creation."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 		Context("VS create with --test succeed", func() {
@@ -231,10 +231,10 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.VerifyInstanceCreationReturns(datatypes.Container_Product_Order{}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--test")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--test")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The order is correct."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("The order is correct."))
 			})
 		})
 		Context("Check for -s and -S from #3489", func() {
@@ -243,24 +243,17 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.VerifyInstanceCreationReturns(datatypes.Container_Product_Order{}, nil)
 			})
 			It("Make sure -S sets public-security-group", func() {
-				err1 := testhelpers.RunCommand(cliCommand, "--hostname", "vs111abc", "-D", "wilma.com", "--flavor", "C1_1X1X100", "--datacenter", "dal10", "-o", "CENTOS", "-S", "9999", "--test")
-				err2 := testhelpers.RunCommand(cliCommand, "--hostname", "vs111abc", "-D", "wilma.com", "--flavor", "C1_1X1X100", "--datacenter", "dal10", "-o", "CENTOS", "--public-security-group", "9999", "--test")
+				err1 := testhelpers.RunCobraCommand(cliCommand.Command, "--hostname", "vs111abc", "-D", "wilma1.com", "--flavor", "C1_1X1X100", "--datacenter", "dal10", "-o", "CENTOS", "-S", "9999", "--test")
 				Expect(err1).NotTo(HaveOccurred())
-				Expect(err2).NotTo(HaveOccurred())
 				_, call1 := fakeVSManager.GenerateInstanceCreationTemplateArgsForCall(0)
-				_, call2 := fakeVSManager.GenerateInstanceCreationTemplateArgsForCall(1)
 				Expect(call1["public-security-group"]).To(Equal([]int{9999}))
-				Expect(call2["public-security-group"]).To(Equal([]int{9999}))
+
 			})
 			It("Make sure -s sets private-security-group", func() {
-				err1 := testhelpers.RunCommand(cliCommand, "--hostname", "vs111abc", "-D", "wilma.com", "--flavor", "C1_1X1X100", "--datacenter", "dal10", "-o", "CENTOS", "-s", "9999", "--test")
-				err2 := testhelpers.RunCommand(cliCommand, "--hostname", "vs111abc", "-D", "wilma.com", "--flavor", "C1_1X1X100", "--datacenter", "dal10", "-o", "CENTOS", "--private-security-group", "9999", "--test")
+				err1 := testhelpers.RunCobraCommand(cliCommand.Command, "--hostname", "vs111abc", "-D", "wilma.com", "--flavor", "C1_1X1X100", "--datacenter", "dal10", "-o", "CENTOS", "-s", "9999", "--test")
 				Expect(err1).NotTo(HaveOccurred())
-				Expect(err2).NotTo(HaveOccurred())
 				_, call1 := fakeVSManager.GenerateInstanceCreationTemplateArgsForCall(0)
-				_, call2 := fakeVSManager.GenerateInstanceCreationTemplateArgsForCall(1)
 				Expect(call1["private-security-group"]).To(Equal([]int{9999}))
-				Expect(call2["private-security-group"]).To(Equal([]int{9999}))
 			})
 		})
 
@@ -271,10 +264,10 @@ var _ = Describe("VS create", func() {
 			})
 			It("return error", func() {
 				fakeUI.Inputs("No")
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"This action will incur charges on your account. Continue?"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Aborted."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("This action will incur charges on your account. Continue?"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
 			})
 		})
 
@@ -285,10 +278,10 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.CreateInstanceReturns(datatypes.Virtual_Guest{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to create virtual server instance.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to create virtual server instance."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -305,12 +298,12 @@ var _ = Describe("VS create", func() {
 				}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vs-abc.wilma.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2017-01-03T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dhtyengodyhebt"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("vs-abc.wilma.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-01-03T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dhtyengodyhebt"))
 			})
 		})
 
@@ -328,12 +321,12 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.SetTagsReturns(errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f", "--tag", "mytag")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f", "--tag", "mytag")
 				Expect(err).To(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vs-abc.wilma.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2017-01-03T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dhtyengodyhebt"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("vs-abc.wilma.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-01-03T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dhtyengodyhebt"))
 				Expect(strings.Contains(err.Error(), "Failed to update the tag of virtual server instance: 1234."))
 				Expect(strings.Contains(err.Error(), "Internal Server Error"))
 			})
@@ -353,12 +346,12 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.InstanceIsReadyReturns(false, "", errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f", "--wait", "1")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f", "--wait", "1")
 				Expect(err).To(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vs-abc.wilma.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2017-01-03T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dhtyengodyhebt"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("vs-abc.wilma.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-01-03T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dhtyengodyhebt"))
 				Expect(strings.Contains(err.Error(), "Failed to get ready status of virtual server instance: 1234."))
 				Expect(strings.Contains(err.Error(), "Internal Server Error"))
 			})
@@ -378,21 +371,21 @@ var _ = Describe("VS create", func() {
 				fakeVSManager.InstanceIsReadyReturns(true, "", nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f", "--wait", "1")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "-f", "--wait", "1")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vs-abc.wilma.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2017-01-03T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dhtyengodyhebt"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"true"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("vs-abc.wilma.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-01-03T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dhtyengodyhebt"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("true"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-H", "vs-abc", "-D", "wilma.com", "--flavor", "M1_1X8X100", "--datacenter", "dal10", "-o", "CENTOS", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "--flavor", "M1_1X8X100", "--datacenter", "dal10", "-o", "CENTOS", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vs-abc.wilma.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2017-01-03T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dhtyengodyhebt"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("vs-abc.wilma.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-01-03T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dhtyengodyhebt"))
 			})
 		})
 	})

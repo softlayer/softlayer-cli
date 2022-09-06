@@ -1,9 +1,9 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+
+	"github.com/spf13/cobra"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -11,26 +11,37 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-type CapacityCreateOptiosCommand struct {
-	UI                   terminal.UI
+type CapacityCreateOptionsCommand struct {
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
 }
 
-func NewCapacityCreateOptiosCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *CapacityCreateOptiosCommand) {
-	return &CapacityCreateOptiosCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewCapacityCreateOptionsCommand(sl *metadata.SoftlayerCommand) (cmd *CapacityCreateOptionsCommand) {
+	thisCmd := &CapacityCreateOptionsCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "capacity-create-options",
+		Short: T("List options for creating Reserved Capacity Group instance"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CapacityCreateOptiosCommand) Run(c *cli.Context) error {
+func (cmd *CapacityCreateOptionsCommand) Run(args []string) error {
 	datacenters, _ := cmd.VirtualServerManager.GetRouters("RESERVED_CAPACITY")
 	pods, err := cmd.VirtualServerManager.GetPods()
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+	outputFormat := cmd.GetOutputFlag()
 	tableRegion := cmd.UI.Table([]string{T("Location"), T("POD"), T("BackendRouterId")})
-	for _, datacenter := range datacenters{
-		for _, pod := range pods{
-			if (utils.FormatStringPointer(datacenter.Location.Location.Name) == utils.FormatStringPointer(pod.DatacenterName)){
+	for _, datacenter := range datacenters {
+		for _, pod := range pods {
+			if utils.FormatStringPointer(datacenter.Location.Location.Name) == utils.FormatStringPointer(pod.DatacenterName) {
 				tableRegion.Add(utils.FormatStringPointer(datacenter.Keyname),
 					utils.FormatStringPointer(pod.BackendRouterName),
 					utils.FormatIntPointer(pod.BackendRouterId))
@@ -43,16 +54,15 @@ func (cmd *CapacityCreateOptiosCommand) Run(c *cli.Context) error {
 	if outputFormat == "JSON" {
 		return utils.PrintPrettyJSONList(cmd.UI, capacityCreateOptions)
 	}
-	tableItems := cmd.UI.Table([]string{T("KeyName"), T("Description"),
-		T("term"),T("Default Hourly Price Per Instance")})
-	items,err := cmd.VirtualServerManager.GetCapacityCreateOptions("RESERVED_CAPACITY")
+	tableItems := cmd.UI.Table([]string{T("KeyName"), T("Description"), T("term"), T("Default Hourly Price Per Instance")})
+	items, err := cmd.VirtualServerManager.GetCapacityCreateOptions("RESERVED_CAPACITY")
 	if err != nil {
 		return slErrors.NewInvalidUsageError("Internal error.")
 	}
-	for _, item:=range items{
+	for _, item := range items {
 		tableItems.Add(utils.FormatStringPointer(item.KeyName),
 			utils.FormatStringPointer(item.Description),
-			utils.FormatSLFloatPointerToFloat(item.Capacity),getPrices(item.Prices))
+			utils.FormatSLFloatPointerToFloat(item.Capacity), getPrices(item.Prices))
 	}
 
 	tableItems.Print()
@@ -60,29 +70,13 @@ func (cmd *CapacityCreateOptiosCommand) Run(c *cli.Context) error {
 	return nil
 }
 
-//Finds the price with the default locationGroupId
+// Finds the price with the default locationGroupId
 func getPrices(prices []datatypes.Product_Item_Price) string {
-	itemPrices:= ""
-	for _, price := range prices{
-		if price.LocationGroupId == nil{
+	itemPrices := ""
+	for _, price := range prices {
+		if price.LocationGroupId == nil {
 			itemPrices = utils.FormatSLFloatPointerToFloat(price.HourlyRecurringFee)
 		}
 	}
 	return itemPrices
-}
-
-func VSCapacityCreateOptionsMetadata() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "capacity-create-options",
-		Description: T("List options for creating Reserved Capacity Group instance"),
-		Usage: T(`${COMMAND_NAME} sl vs capacity-create-options
-
-EXAMPLE:
-   ${COMMAND_NAME} sl vs options
-   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

@@ -294,6 +294,19 @@ RunCommand(cliCommand
 RunCobraCommand(cliCommand.Command
 ```
 
+```
+cobraCmd\.Flags\(\)\.([a-zA-Z]*)Var(P)?\(\&thisCmd\.([a-zA-Z]*)$
+\t\3\t\1
+
+# Converts 
+# cobraCmd.Flags().BoolVar(&thisCmd.Dedicated -> \tDedicated\tBool
+# useful when takign a lot of command options and converting them to golang struct properties
+```
+
+```
+ContainSubstrings\(\[\]string\{\"(.*)\"\}\)
+ContainSubstring(\"\1\")
+```
 
 #### bandwidth_pools_details_test.go
 
