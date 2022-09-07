@@ -7,30 +7,30 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VS list", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.ListHostCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cmd           *virtual.ListHostCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = virtual.NewListHostCommand(fakeUI, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        virtual.VSListHostMetaData().Name,
-			Description: virtual.VSListHostMetaData().Description,
-			Usage:       virtual.VSListHostMetaData().Usage,
-			Flags:       virtual.VSListHostMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewListHostCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
 
 	Describe("list host", func() {
@@ -39,7 +39,7 @@ var _ = Describe("VS list", func() {
 				fakeVSManager.ListDedicatedHostReturns([]datatypes.Virtual_DedicatedHost{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to list dedicated hosts on your account."))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
@@ -50,7 +50,7 @@ var _ = Describe("VS list", func() {
 				fakeVSManager.ListDedicatedHostReturns([]datatypes.Virtual_DedicatedHost{}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("No dedicated hosts are found."))
 			})
@@ -96,7 +96,7 @@ var _ = Describe("VS list", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
@@ -106,7 +106,7 @@ var _ = Describe("VS list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1/242"))
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "-n", "wilma-test")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-n", "wilma-test")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
@@ -116,7 +116,7 @@ var _ = Describe("VS list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1/242"))
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "-d", "wdc07")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "wdc07")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
@@ -126,7 +126,7 @@ var _ = Describe("VS list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1/242"))
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "--owner", "278444_wangjunl@cn.ibm.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--owner", "278444_wangjunl@cn.ibm.com")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
@@ -136,7 +136,7 @@ var _ = Describe("VS list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1/242"))
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "--order", "1234567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--order", "1234567")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
