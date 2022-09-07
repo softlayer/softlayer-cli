@@ -264,6 +264,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONEN]\n\nBEISPIEL: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tMit diesem Befehl werden Datenträgerinformationen bearbeitet.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tDieser Befehl zeigt ein Benutzerdetail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tMit diesem Befehl werden virtuelle Gastsysteme aufgelistet."
   },
   {
+    "id": "${COMMAND_NAME} sl cdn detail",
+    "translation": "${COMMAND_NAME} sl cdn detail"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn edit",
+    "translation": "${COMMAND_NAME} sl cdn edit"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
   },
@@ -498,6 +506,10 @@
   {
     "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONEN] IDENTIFIER\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware guests 1234567\n Listet die auf diesem Server ausgeführten virtuellen Gastmaschinen auf."
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware ID [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -832,8 +844,8 @@
     "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONEN]\n\t\nBEISPIEL:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   Dieser Befehl aktualisiert das VLAN mit der ID 12345678 und benennt es in \"myvlan-rename\" um."
   },
   {
-    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONEN]\n\t\nBEISPIEL:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Dieser Befehl listet alle VLANs für das aktuelle Konto, gefiltert nach Rechenzentrum gleich dal09, und sortiert sie nach VLAN-Nummer."
+    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONEN]\n \nBEISPIEL:\n ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n Dieser Befehl listet alle Vlans des aktuellen Kontos auf, filtert nach Rechenzentrum gleich dal09 und sortiert sie nach VLAN-Nummer.\n \nHinweis: Wenn \"add (*)\" im Feld \"Pod\" angegeben wurde, gibt dies an, dass"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -1592,6 +1604,10 @@
     "translation": "Bandbreitenbericht für jeden Pool/Server."
   },
   {
+    "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
+    "translation": "Bandbreite, Treffer und Verhältnis, die bald geschlossen wurden, über die Anzahl der vergangenen Tage im Protokoll gezählt wurden. 89 ist das Maximum."
+  },
+  {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
     "translation": "Basisbenutzer, der als Vorlage für die Erstellung dieses Benutzers verwendet werden soll. Die Standardeinstellung ist die Verwendung des Benutzers, der diesen Befehl ausführt. In '--template' bereitgestellte Angaben setzen diese Vorlage außer Kraft."
   },
@@ -1678,6 +1694,14 @@
   {
     "id": "CRN of the root key in your KMS instance",
     "translation": "CRN des Rootschlüssels in der KMS-Instanz"
+  },
+  {
+    "id": "Cache key optimization",
+    "translation": "Cacheschlüssel-Optimierung"
+  },
+  {
+    "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
+    "translation": "Cacheschlüsseloptimierung. Die folgenden Optionen sind gültig: \"include-all\", \"ignore-all\", \"include-specified\", \"ignore-specified\". Wenn Sie \"'include-specified\" oder \"ignore-specified\" auswählen, fügen Sie die Option \"cache-description\" hinzu."
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -1869,7 +1893,7 @@
   },
   {
     "id": "Classic Infrastructure Reports",
-    "translation": "Klassische Infrastruktur- Berichte"
+    "translation": "Klassische Infrastruktur - Berichte"
   },
   {
     "id": "Classic infrastructure Account commands",
@@ -2516,6 +2540,10 @@
     "translation": "Zuordnung von Geräten zu einem Ticket aufheben"
   },
   {
+    "id": "Detail a CDN Account.",
+    "translation": "Details eines CDN-Kontos aufführen."
+  },
+  {
     "id": "Detail information about a firewall",
     "translation": "Detailinformationen zu einer Firewall"
   },
@@ -2710,6 +2738,10 @@
   {
     "id": "Edit SSL certificate",
     "translation": "SSL-Zertifikat bearbeiten"
+  },
+  {
+    "id": "Edit a CDN Account.",
+    "translation": "Bearbeiten Sie ein CDN-Konto."
   },
   {
     "id": "Edit a L7 policy",
@@ -3320,6 +3352,10 @@
     "translation": "Erstellen eines Speicherauszugs für Zone {{.Zone}} fehlgeschlagen.\n"
   },
   {
+    "id": "Failed to edit CDN. ",
+    "translation": "Bearbeiten von CDN fehlgeschlagen. "
+  },
+  {
     "id": "Failed to edit SSH key: {{.ID}}.\n",
     "translation": "Bearbeiten des SSH-Schlüssels {{.ID}} fehlgeschlagen.\n"
   },
@@ -3412,8 +3448,16 @@
     "translation": "Abrufen des Bandbreitenpools fehlgeschlagen. \n"
   },
   {
+    "id": "Failed to get CDN Detail. ",
+    "translation": "CDN-Details konnten nicht abgerufen werden. "
+  },
+  {
     "id": "Failed to get CDN List. ",
     "translation": "CDN-Liste konnte nicht abgerufen werden. "
+  },
+  {
+    "id": "Failed to get CDN Metrics. ",
+    "translation": "CDN-Metriken konnten nicht abgerufen werden. "
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -3470,6 +3514,10 @@
   {
     "id": "Failed to get Network Message Delivery Accounts.",
     "translation": "Abrufen von Zustellungskonten für Netznachrichten fehlgeschlagen."
+  },
+  {
+    "id": "Failed to get Pods.\n",
+    "translation": "Abrufen der Pods fehlgeschlagen.\n"
   },
   {
     "id": "Failed to get Quote.\n",
@@ -4140,6 +4188,10 @@
     "translation": "Warmstart der virtuellen Serverinstanz {{.VsID}} fehlgeschlagen.\n"
   },
   {
+    "id": "Failed to reflash firmware.",
+    "translation": "Erneutes Flash-Update für Firmware fehlgeschlagen."
+  },
+  {
     "id": "Failed to reload operating system for hardware server: {{.ID}}.\n",
     "translation": "Erneutes Laden des Betriebssystems für den Hardware-Server {{.ID}} fehlgeschlagen.\n"
   },
@@ -4748,8 +4800,16 @@
     "translation": "Front-End-Protokoll [Standardeinstellung: HTTP]"
   },
   {
+    "id": "Fully qualified name",
+    "translation": "Vollständig qualifizierter Name"
+  },
+  {
     "id": "GUID",
     "translation": "GUID"
+  },
+  {
+    "id": "Gateway/Firewall",
+    "translation": "Gateway/Firewall"
   },
   {
     "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
@@ -4892,6 +4952,14 @@
     "translation": "HARDWARE"
   },
   {
+    "id": "HTTP port.",
+    "translation": "HTTP-Port."
+  },
+  {
+    "id": "HTTPS port.",
+    "translation": "HTTPS-Port."
+  },
+  {
     "id": "Hardware",
     "translation": "Hardware"
   },
@@ -4934,6 +5002,10 @@
   {
     "id": "Hardware size[required]",
     "translation": "Hardwaregröße [erforderlich]"
+  },
+  {
+    "id": "Header",
+    "translation": "Header"
   },
   {
     "id": "Health check UUID to modify [required]",
@@ -4992,6 +5064,10 @@
     "translation": "Option für hoch verfügbare Firewall"
   },
   {
+    "id": "Hit Radio",
+    "translation": "Trefferverhältnis"
+  },
+  {
     "id": "Host ID",
     "translation": "Host-ID"
   },
@@ -5002,6 +5078,10 @@
   {
     "id": "Host Name",
     "translation": "Hostname"
+  },
+  {
+    "id": "Host header.",
+    "translation": "Host-Header."
   },
   {
     "id": "Host name",
@@ -5054,6 +5134,14 @@
   {
     "id": "How many results to get in one api call. [default: 50]",
     "translation": "Gibt an, wie viele Ergebnisse in einem API-Aufruf abgerufen werden sollen. [Standardwert: 50]"
+  },
+  {
+    "id": "Http Port",
+    "translation": "HTTP-Port"
+  },
+  {
+    "id": "Https Port",
+    "translation": "HTTPS-Port"
   },
   {
     "id": "IAM token is required. Use '{{.Command}}' to log in.",
@@ -5254,6 +5342,10 @@
   {
     "id": "Import an image from an object storage",
     "translation": "Image aus einem Objektspeicher importieren"
+  },
+  {
+    "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
+    "translation": "Wenn Sie in der Option \"cache\" die Option \"include-specified\" oder \"ignore-specified\" auswählen, fügen Sie mit dieser Option auch eine Beschreibung hinzu. Beispiel: --cache include-specified --cache-description Beschreibung."
   },
   {
     "id": "Inbound Usage",
@@ -6380,8 +6472,16 @@
     "translation": "Betriebssystem"
   },
   {
+    "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
+    "translation": "Bei \"Optimieren für, \"Allgemeine Webbereitstellung\", \"Optimierung für große Dateien\", \"Optimierung für Video on demand\" wird die Option \"Beschleunigung dynamischer Inhalte\" nicht hinzugefügt, da diese eine spezielle Konfiguration hat."
+  },
+  {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",
     "translation": "Option [--flavor] und die Optionen [--cpu], [--memory] und [--private] schließen sich aus."
+  },
+  {
+    "id": "Option respect-headers just accept '0' or '1'",
+    "translation": "Die Option \"respect-headers\" akzeptiert nur \"0\" oder \"1\""
   },
   {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
@@ -6496,6 +6596,22 @@
     "translation": "Ursprung"
   },
   {
+    "id": "Origin Type",
+    "translation": "Ursprungstyp"
+  },
+  {
+    "id": "Origin server address",
+    "translation": "Adresse des Ursprungsservers"
+  },
+  {
+    "id": "Origin server address.",
+    "translation": "Adresse des Ursprungsservers."
+  },
+  {
+    "id": "Origin type",
+    "translation": "Ursprungstyp"
+  },
+  {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
     "translation": "Der Ursprungsdatenträger verfügt nicht über einen gültigen Speichertyp (mit geeignetem keyName, um den Datenträger als Performance- oder Endurance-Datenträger auszuweisen)"
   },
@@ -6588,6 +6704,10 @@
     "translation": "Kennwort, das für diesen Benutzer festzulegen ist. Wenn kein Kennwort angegeben wird, erhält der Benutzer eine E-Mail, um ein Kennwort zu generieren, das nach 24 Stunden abläuft. Die Option '-p generate' zum Generieren eines Kennworts angeben. Kennwörter müssen aus mindestens 8 Zeichen bestehen, wobei Groß- und Kleinschreibung, mindestens eine Nummer und ein Symbol verwendet werden müssen."
   },
   {
+    "id": "Path",
+    "translation": "Pfad"
+  },
+  {
     "id": "Pause an active virtual server instance",
     "translation": "Aktive virtuelle Serverinstanz anhalten"
   },
@@ -6610,6 +6730,10 @@
   {
     "id": "Perform a soft shutdown",
     "translation": "Normalen Systemabschluss durchführen"
+  },
+  {
+    "id": "Performance Configuration",
+    "translation": "Leistungskonfiguration"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
@@ -6760,6 +6884,10 @@
     "translation": "Befehl '{{.CommandName}} login' ausführen, um sich bei IBM Cloud anzumelden."
   },
   {
+    "id": "Pod",
+    "translation": "Pod"
+  },
+  {
     "id": "Policies",
     "translation": "Richtlinien"
   },
@@ -6830,6 +6958,10 @@
   {
     "id": "Power on a virtual server instance",
     "translation": "Virtuelle Serverinstanz einschalten"
+  },
+  {
+    "id": "Premium",
+    "translation": "Premium"
   },
   {
     "id": "Preset {{.Preset}} does not exist in package {{.Package}}",
@@ -6984,6 +7116,10 @@
     "translation": "Protokoll {{.ProtocolID}} entfernt"
   },
   {
+    "id": "Provider",
+    "translation": "Provider"
+  },
+  {
     "id": "Provisioned",
     "translation": "Bereitgestellt"
   },
@@ -7014,6 +7150,10 @@
   {
     "id": "Public Virtual Server flavor key name",
     "translation": "Schlüsselname für die Version des öffentlichen virtuellen Servers"
+  },
+  {
+    "id": "Public ips",
+    "translation": "Öffentliche IPs"
   },
   {
     "id": "Public network interface speed must be in: 0, 10, 100, 1000, 10000 (Mbps).",
@@ -7098,6 +7238,10 @@
   {
     "id": "Redirect",
     "translation": "Weiterleiten"
+  },
+  {
+    "id": "Reflash server firmware.",
+    "translation": "Erneutes Flash-Update der Server-Firmware durchführen."
   },
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
@@ -7242,6 +7386,14 @@
   {
     "id": "Resource record {{.ID}} was removed.",
     "translation": "Ressourcendatensatz {{.ID}} wurde entfernt."
+  },
+  {
+    "id": "Respect Headers",
+    "translation": "Header beibehalten"
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "Header berücksichtigen. Der Wert \"1\" ist \"Ein\" und \"0\" ist \"Aus\"."
   },
   {
     "id": "Restore block volume using a given snapshot",
@@ -7840,6 +7992,10 @@
     "translation": "Teilnetz-ID {{.subnetID}} für zulässige Host-ID {{.accessID}} wurde erfolgreich entfernt"
   },
   {
+    "id": "Successfully device firmware reflashed",
+    "translation": "Für die Einheitenfirmware wurde erfolgreich ein erneutes Flash-Update durchgeführt."
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "Anforderung zum Aktivieren/Inaktivieren der IPMI-Schnittstelle des Hardware-Servers '{{.ID}}' erfolgreich gesendet."
   },
@@ -7954,6 +8110,10 @@
   {
     "id": "Tag",
     "translation": "Tag"
+  },
+  {
+    "id": "Tags",
+    "translation": "Tags"
   },
   {
     "id": "Tags all guests in an autoscale group.",
@@ -8660,6 +8820,10 @@
     "translation": "Mit diesem Vorgang wird der Hardware-Server {{.ID}} abgeschaltet. Soll der Vorgang fortgesetzt werden?"
   },
   {
+    "id": "This will power off the server with id {{.hardwareID}} and reflash device firmware. Continue?",
+    "translation": "Dadurch wird der Server mit der ID {{.hardwareID}} ausgeschaltet und für die Einheitenfirmware ein erneutes Flash-Update durchgeführt. Continue?"
+  },
+  {
     "id": "This will power off virtual server instance: {{.VsId}}. Continue?",
     "translation": "Mit diesem Vorgang wird die virtuelle Serverinstanz {{.VsId}} ausgeschaltet. Soll der Vorgang fortgesetzt werden?"
   },
@@ -8734,6 +8898,14 @@
   {
     "id": "Total",
     "translation": "Gesamt"
+  },
+  {
+    "id": "Total bandwidth",
+    "translation": "Gesamtbandbreite"
+  },
+  {
+    "id": "Total hits",
+    "translation": "Gesamtzahl der Treffer"
   },
   {
     "id": "Total monthly cost",
@@ -8924,6 +9096,10 @@
     "translation": "Eindeutige ID"
   },
   {
+    "id": "Unique id",
+    "translation": "Eindeutige ID"
+  },
+  {
     "id": "Update ID",
     "translation": "Aktualisierungs-ID"
   },
@@ -9060,6 +9236,10 @@
     "translation": "Anbieter"
   },
   {
+    "id": "Vendor Name",
+    "translation": "Anbietername"
+  },
+  {
     "id": "View a quote",
     "translation": "Angebot anzeigen"
   },
@@ -9146,6 +9326,10 @@
   {
     "id": "Virtual server template is exported to: {{.Template}}.",
     "translation": "Die Vorlage eines virtuellen Servers wird nach {{.Template}} exportiert."
+  },
+  {
+    "id": "Virtual servers",
+    "translation": "Virtuelle Server"
   },
   {
     "id": "Vlan",
@@ -9394,6 +9578,14 @@
   {
     "id": "broadcast",
     "translation": "Übertragung"
+  },
+  {
+    "id": "cache-description is only used with the cache option",
+    "translation": "\"cache-description\" wird nur mit der Option \"cache\" verwendet."
+  },
+  {
+    "id": "cache-description option must be used ",
+    "translation": "Die Option \"cache-description\" muss verwendet werden. "
   },
   {
     "id": "capacity",
@@ -9810,10 +10002,6 @@
   {
     "id": "public_ip",
     "translation": "public_ip"
-  },
-  {
-    "id": "public_ips",
-    "translation": "public_ips"
   },
   {
     "id": "ready",

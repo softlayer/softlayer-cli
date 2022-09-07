@@ -264,6 +264,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n示例：\n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t此命令编辑卷注释。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t此命令显示用户详细信息。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\t此命令列出虚拟访客。"
   },
   {
+    "id": "${COMMAND_NAME} sl cdn detail",
+    "translation": "${COMMAND_NAME} sl cdn detail"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn edit",
+    "translation": "${COMMAND_NAME} sl cdn edit"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
   },
@@ -498,6 +506,10 @@
   {
     "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\n示例：\n  ${COMMAND_NAME} sl hardware guests 1234567\n   列出在此服务器上运行的虚拟访客。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -832,8 +844,8 @@
     "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   此命令更新标识为 12345678 的 VLAN，并给予其新名称“myvlan-rename”。"
   },
   {
-    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   此命令列出当前帐户的所有 VLAN，依据其过滤的数据中心为 dal09，并按 VLAN 编号对其排序。"
+    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   此命令列示当前帐户上按 datacenter 等于 dal09 进行过滤的所有 vlan，并按 vlan 编号对其进行排序。\n \n注：在字段 Pod 中，如果添加 (*)，则指示即将关闭"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -961,7 +973,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n 时间格式为 '2006-01-02'、'2006-01-02T15:04' 或 '2006-01-02T15:04-07:00'\n\n 由于某些舍入和日期对齐详细信息，此处的结果可能与控制门户中的结果略有不同。\n列出的带宽以 GB 为单位，如果未指定时区，则假定为 GMT+0。\n\n 示例：\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n时间格式为 '2006-01-02'、'2006-01-02T15:04' 或 '2006-01-02T15:04-07:00'\n\n由于某些舍入和日期对齐详细信息，此处的结果可能与控制门户中的结果略有不同。\n列出的带宽以 GB 为单位，如果未指定时区，则假定为 GMT+0。\n\n示例：\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
@@ -1592,6 +1604,10 @@
     "translation": "每个池/服务器的带宽报告。"
   },
   {
+    "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
+    "translation": "前几天历史记录中盘点的带宽、命中数和比率。 89 是最大值。"
+  },
+  {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
     "translation": "要用作创建此用户的模板的基本用户。缺省情况下，使用正在运行此命令的用户。--template 中提供的信息会取代此模板"
   },
@@ -1678,6 +1694,14 @@
   {
     "id": "CRN of the root key in your KMS instance",
     "translation": "KMS 实例中根密钥的 CRN"
+  },
+  {
+    "id": "Cache key optimization",
+    "translation": "高速缓存密钥优化"
+  },
+  {
+    "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
+    "translation": "高速缓存密钥优化。 以下是可选择的有效选项：“include-all”、“ignore-all”、“include-specified”和“ignore-specified”。 如果选择“include-specified”或“ignore-specified”，请添加到选项 cache-description。"
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -2516,6 +2540,10 @@
     "translation": "断开设备与凭单的连接"
   },
   {
+    "id": "Detail a CDN Account.",
+    "translation": "详细描述 CDN 帐户。"
+  },
+  {
     "id": "Detail information about a firewall",
     "translation": "有关防火墙的详细信息"
   },
@@ -2710,6 +2738,10 @@
   {
     "id": "Edit SSL certificate",
     "translation": "编辑 SSL 证书"
+  },
+  {
+    "id": "Edit a CDN Account.",
+    "translation": "编辑 CDN 帐户。"
   },
   {
     "id": "Edit a L7 policy",
@@ -3320,6 +3352,10 @@
     "translation": "未能转储专区 {{.Zone}} 的内容。\n"
   },
   {
+    "id": "Failed to edit CDN. ",
+    "translation": "未能编辑 CDN。 "
+  },
+  {
     "id": "Failed to edit SSH key: {{.ID}}.\n",
     "translation": "未能编辑 SSH 密钥：{{.ID}}。\n"
   },
@@ -3412,8 +3448,16 @@
     "translation": "未能获取带宽池。\n"
   },
   {
+    "id": "Failed to get CDN Detail. ",
+    "translation": "未能获取 CDN 详细信息。 "
+  },
+  {
     "id": "Failed to get CDN List. ",
     "translation": "未能获取 CDN 列表。 "
+  },
+  {
+    "id": "Failed to get CDN Metrics. ",
+    "translation": "未能获取 CDN 度量。 "
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -3470,6 +3514,10 @@
   {
     "id": "Failed to get Network Message Delivery Accounts.",
     "translation": "未能获取网络消息传递帐户。"
+  },
+  {
+    "id": "Failed to get Pods.\n",
+    "translation": "未能获取 Pod。\n"
   },
   {
     "id": "Failed to get Quote.\n",
@@ -4140,6 +4188,10 @@
     "translation": "未能重新引导虚拟服务器实例：{{.VsID}}。\n"
   },
   {
+    "id": "Failed to reflash firmware.",
+    "translation": "未能重刷固件。"
+  },
+  {
     "id": "Failed to reload operating system for hardware server: {{.ID}}.\n",
     "translation": "未能为硬件服务器 {{.ID}} 重新装入操作系统。\n"
   },
@@ -4748,8 +4800,16 @@
     "translation": "前端协议 [缺省值：HTTP]"
   },
   {
+    "id": "Fully qualified name",
+    "translation": "标准名称"
+  },
+  {
     "id": "GUID",
     "translation": "GUID"
+  },
+  {
+    "id": "Gateway/Firewall",
+    "translation": "网关/防火墙"
   },
   {
     "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
@@ -4892,6 +4952,14 @@
     "translation": "HARDWARE"
   },
   {
+    "id": "HTTP port.",
+    "translation": "HTTP 端口。"
+  },
+  {
+    "id": "HTTPS port.",
+    "translation": "HTTPS 端口。"
+  },
+  {
     "id": "Hardware",
     "translation": "硬件"
   },
@@ -4934,6 +5002,10 @@
   {
     "id": "Hardware size[required]",
     "translation": "硬件大小 [必需]"
+  },
+  {
+    "id": "Header",
+    "translation": "头"
   },
   {
     "id": "Health check UUID to modify [required]",
@@ -4992,6 +5064,10 @@
     "translation": "高可用性防火墙选项"
   },
   {
+    "id": "Hit Radio",
+    "translation": "点击无线电"
+  },
+  {
     "id": "Host ID",
     "translation": "主机标识"
   },
@@ -5002,6 +5078,10 @@
   {
     "id": "Host Name",
     "translation": "主机名"
+  },
+  {
+    "id": "Host header.",
+    "translation": "主机头。"
   },
   {
     "id": "Host name",
@@ -5054,6 +5134,14 @@
   {
     "id": "How many results to get in one api call. [default: 50]",
     "translation": "要在一个 API 调用中获取的结果数。[缺省值：50]"
+  },
+  {
+    "id": "Http Port",
+    "translation": "HTTP 端口"
+  },
+  {
+    "id": "Https Port",
+    "translation": "HTTPS 端口"
   },
   {
     "id": "IAM token is required. Use '{{.Command}}' to log in.",
@@ -5254,6 +5342,10 @@
   {
     "id": "Import an image from an object storage",
     "translation": "从对象存储器导入映像"
+  },
+  {
+    "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
+    "translation": "在 cache 选项中，如果选择“include-specified”或“ignore-specified”，请也使用此选项来添加描述，例如，--cache include-specified --cache-description description。"
   },
   {
     "id": "Inbound Usage",
@@ -6380,8 +6472,16 @@
     "translation": "操作系统"
   },
   {
+    "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
+    "translation": "优化，针对“常规 Web 交付”、“大型文件优化”、“视频随需应变优化”，未添加“动态内容加速”选项，因为此选项具有特殊配置。"
+  },
+  {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",
     "translation": "[--flavor] 选项与 [--cpu]、[--memory] 和 [--private] 互斥。"
+  },
+  {
+    "id": "Option respect-headers just accept '0' or '1'",
+    "translation": "选项 respect-headers 仅接受“0”或“1”"
   },
   {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
@@ -6496,6 +6596,22 @@
     "translation": "源"
   },
   {
+    "id": "Origin Type",
+    "translation": "源类型"
+  },
+  {
+    "id": "Origin server address",
+    "translation": "源服务器地址"
+  },
+  {
+    "id": "Origin server address.",
+    "translation": "源服务器地址。"
+  },
+  {
+    "id": "Origin type",
+    "translation": "源类型"
+  },
+  {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
     "translation": "源卷没有有效的存储类型（带有相应的 keyName，用于指示该卷是 PERFORMANCE 还是 ENDURANCE 卷）"
   },
@@ -6588,6 +6704,10 @@
     "translation": "要为此用户设置的密码。如果未提供密码，系统会向用户发送一封电子邮件以生成密码，此密码将在 24 小时后到期。指定“-p generate”选项，为您生成密码。密码需要 8 个以上的字符，包含大写和小写字母，以及数字和符号"
   },
   {
+    "id": "Path",
+    "translation": "路径"
+  },
+  {
     "id": "Pause an active virtual server instance",
     "translation": "暂停活动虚拟服务器实例"
   },
@@ -6610,6 +6730,10 @@
   {
     "id": "Perform a soft shutdown",
     "translation": "执行软关闭"
+  },
+  {
+    "id": "Performance Configuration",
+    "translation": "性能配置"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
@@ -6760,6 +6884,10 @@
     "translation": "请运行命令“{{.CommandName}} login”以登录到 IBM Cloud。"
   },
   {
+    "id": "Pod",
+    "translation": "Pod"
+  },
+  {
     "id": "Policies",
     "translation": "策略"
   },
@@ -6830,6 +6958,10 @@
   {
     "id": "Power on a virtual server instance",
     "translation": "打开虚拟服务器实例的电源"
+  },
+  {
+    "id": "Premium",
+    "translation": "高级"
   },
   {
     "id": "Preset {{.Preset}} does not exist in package {{.Package}}",
@@ -6984,6 +7116,10 @@
     "translation": "已除去协议 {{.ProtocolID}}"
   },
   {
+    "id": "Provider",
+    "translation": "提供商"
+  },
+  {
     "id": "Provisioned",
     "translation": "已供应"
   },
@@ -7014,6 +7150,10 @@
   {
     "id": "Public Virtual Server flavor key name",
     "translation": "公共虚拟服务器类型模板键名"
+  },
+  {
+    "id": "Public ips",
+    "translation": "公共 IP"
   },
   {
     "id": "Public network interface speed must be in: 0, 10, 100, 1000, 10000 (Mbps).",
@@ -7098,6 +7238,10 @@
   {
     "id": "Redirect",
     "translation": "重定向"
+  },
+  {
+    "id": "Reflash server firmware.",
+    "translation": "重刷服务器固件。"
   },
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
@@ -7242,6 +7386,14 @@
   {
     "id": "Resource record {{.ID}} was removed.",
     "translation": "资源记录 {{.ID}} 已除去。"
+  },
+  {
+    "id": "Respect Headers",
+    "translation": "遵守头"
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "尊重头。 值 1 为“开”，值 0 为“关”。"
   },
   {
     "id": "Restore block volume using a given snapshot",
@@ -7840,6 +7992,10 @@
     "translation": "已成功将子网标识 {{.subnetID}} 从允许的主机标识 {{.accessID}} 除去"
   },
   {
+    "id": "Successfully device firmware reflashed",
+    "translation": "已成功重刷设备固件"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "已成功发送切换硬件服务器“{{.ID}}”IPMI 接口的请求。"
   },
@@ -7953,6 +8109,10 @@
   },
   {
     "id": "Tag",
+    "translation": "标记"
+  },
+  {
+    "id": "Tags",
     "translation": "标记"
   },
   {
@@ -8660,6 +8820,10 @@
     "translation": "这将关闭硬件服务器 {{.ID}} 的电源。要继续吗？"
   },
   {
+    "id": "This will power off the server with id {{.hardwareID}} and reflash device firmware. Continue?",
+    "translation": "这将关闭标识为 {{.hardwareID}} 的服务器的电源，并重刷设备固件。 继续吗？"
+  },
+  {
     "id": "This will power off virtual server instance: {{.VsId}}. Continue?",
     "translation": "这将关闭虚拟服务器实例 {{.VsId}} 的电源。要继续吗？"
   },
@@ -8734,6 +8898,14 @@
   {
     "id": "Total",
     "translation": "总计"
+  },
+  {
+    "id": "Total bandwidth",
+    "translation": "总带宽"
+  },
+  {
+    "id": "Total hits",
+    "translation": "总点击数"
   },
   {
     "id": "Total monthly cost",
@@ -8924,6 +9096,10 @@
     "translation": "唯一标识"
   },
   {
+    "id": "Unique id",
+    "translation": "唯一标识"
+  },
+  {
     "id": "Update ID",
     "translation": "更新标识"
   },
@@ -9060,6 +9236,10 @@
     "translation": "供应商"
   },
   {
+    "id": "Vendor Name",
+    "translation": "供应商名称"
+  },
+  {
     "id": "View a quote",
     "translation": "查看报价"
   },
@@ -9146,6 +9326,10 @@
   {
     "id": "Virtual server template is exported to: {{.Template}}.",
     "translation": "虚拟服务器模板已导出到：{{.Template}}。"
+  },
+  {
+    "id": "Virtual servers",
+    "translation": "虚拟服务器"
   },
   {
     "id": "Vlan",
@@ -9394,6 +9578,14 @@
   {
     "id": "broadcast",
     "translation": "broadcast"
+  },
+  {
+    "id": "cache-description is only used with the cache option",
+    "translation": "cache-description 仅与 cache 选项配合使用"
+  },
+  {
+    "id": "cache-description option must be used ",
+    "translation": "必须使用 cache-description 选项 "
   },
   {
     "id": "capacity",
@@ -9810,10 +10002,6 @@
   {
     "id": "public_ip",
     "translation": "public_ip"
-  },
-  {
-    "id": "public_ips",
-    "translation": "public_ips"
   },
   {
     "id": "ready",

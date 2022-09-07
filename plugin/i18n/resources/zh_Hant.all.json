@@ -264,6 +264,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n範例：\n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t這個指令會編輯磁區附註。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t這個指令會顯示使用者詳細資料。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\t這個指令會列出虛擬訪客。"
   },
   {
+    "id": "${COMMAND_NAME} sl cdn detail",
+    "translation": "${COMMAND_NAME} sl cdn detail"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn edit",
+    "translation": "${COMMAND_NAME} sl cdn edit"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn 清單"
   },
@@ -498,6 +506,10 @@
   {
     "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl hardware guests 1234567\n   列出在此伺服器上執行的虛擬訪客。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -832,8 +844,8 @@
     "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\n範例：\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   這個指令會更新 VLAN（其 ID 為 12345678），並為其指定新名稱 \"myvlan-rename\"。"
   },
   {
-    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\n範例：\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   這個指令會列出現行帳戶上的所有 VLAN，用來過濾的資料中心為 dal09，並依 VLAN 號碼排序。"
+    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n 範例：\n ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n此指令會列出現行帳戶上的所有 vlan，依 datacenter 等於 dal09 過濾並按 vlan 號碼排序。\n \n附註：在欄位 Pod 中，如果新增 (*)，則指出即將關閉"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -1592,6 +1604,10 @@
     "translation": "每個儲存區/伺服器的頻寬報告。"
   },
   {
+    "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
+    "translation": "頻寬、命中數、在歷程天數之前計算的比例。 89 是上限。"
+  },
+  {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
     "translation": "要用來作為建立這個使用者之範本的基礎使用者。預設值為使用正在執行這個指令的使用者。提供於 --template 的資訊會取代此範本"
   },
@@ -1678,6 +1694,14 @@
   {
     "id": "CRN of the root key in your KMS instance",
     "translation": "您 KMS 實例中，根金鑰的 CRN"
+  },
+  {
+    "id": "Cache key optimization",
+    "translation": "快取金鑰最佳化"
+  },
+  {
+    "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
+    "translation": "快取金鑰最佳化。 這些是要選擇的有效選項：'include-all'、'ignore-all'、'include-specified'、'ignore-specified'。 如果您選取 'include-specified' 或 'ignore-specified'，請新增至選項 cache-description。"
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -2516,6 +2540,10 @@
     "translation": "從問題單分離裝置"
   },
   {
+    "id": "Detail a CDN Account.",
+    "translation": "詳述 CDN 帳戶。"
+  },
+  {
     "id": "Detail information about a firewall",
     "translation": "防火牆的詳細資訊"
   },
@@ -2710,6 +2738,10 @@
   {
     "id": "Edit SSL certificate",
     "translation": "編輯 SSL 憑證"
+  },
+  {
+    "id": "Edit a CDN Account.",
+    "translation": "編輯 CDN 帳戶。"
   },
   {
     "id": "Edit a L7 policy",
@@ -3320,6 +3352,10 @@
     "translation": "無法為區域 {{.Zone}} 傾出內容。\n"
   },
   {
+    "id": "Failed to edit CDN. ",
+    "translation": "無法編輯 CDN。 "
+  },
+  {
     "id": "Failed to edit SSH key: {{.ID}}.\n",
     "translation": "無法編輯 SSH 金鑰：{{.ID}}。\n"
   },
@@ -3412,8 +3448,16 @@
     "translation": "無法取得頻寬儲存區。\n"
   },
   {
+    "id": "Failed to get CDN Detail. ",
+    "translation": "無法取得 CDN 詳細資料。 "
+  },
+  {
     "id": "Failed to get CDN List. ",
     "translation": "無法取得 CDN 清單。 "
+  },
+  {
+    "id": "Failed to get CDN Metrics. ",
+    "translation": "無法取得 CDN 度量值。 "
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -3470,6 +3514,10 @@
   {
     "id": "Failed to get Network Message Delivery Accounts.",
     "translation": "無法取得網路訊息遞送帳戶。"
+  },
+  {
+    "id": "Failed to get Pods.\n",
+    "translation": "無法取得 Pod。\n"
   },
   {
     "id": "Failed to get Quote.\n",
@@ -4140,6 +4188,10 @@
     "translation": "無法重新啟動虛擬伺服器實例：{{.VsID}}。\n"
   },
   {
+    "id": "Failed to reflash firmware.",
+    "translation": "無法再更新韌體。"
+  },
+  {
     "id": "Failed to reload operating system for hardware server: {{.ID}}.\n",
     "translation": "無法重新載入硬體伺服器 {{.ID}} 的作業系統。\n"
   },
@@ -4748,8 +4800,16 @@
     "translation": "前端通訊協定 [預設：HTTP]"
   },
   {
+    "id": "Fully qualified name",
+    "translation": "完整名稱"
+  },
+  {
     "id": "GUID",
     "translation": "GUID"
+  },
+  {
+    "id": "Gateway/Firewall",
+    "translation": "閘道/防火牆"
   },
   {
     "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
@@ -4892,6 +4952,14 @@
     "translation": "硬體"
   },
   {
+    "id": "HTTP port.",
+    "translation": "HTTP 埠。"
+  },
+  {
+    "id": "HTTPS port.",
+    "translation": "HTTP 埠。"
+  },
+  {
     "id": "Hardware",
     "translation": "硬體"
   },
@@ -4934,6 +5002,10 @@
   {
     "id": "Hardware size[required]",
     "translation": "硬體大小[必要]"
+  },
+  {
+    "id": "Header",
+    "translation": "標頭"
   },
   {
     "id": "Health check UUID to modify [required]",
@@ -4992,6 +5064,10 @@
     "translation": "高可用性防火牆選項"
   },
   {
+    "id": "Hit Radio",
+    "translation": "點選圓鈕"
+  },
+  {
     "id": "Host ID",
     "translation": "主機 ID"
   },
@@ -5002,6 +5078,10 @@
   {
     "id": "Host Name",
     "translation": "主機名稱"
+  },
+  {
+    "id": "Host header.",
+    "translation": "主機標頭。"
   },
   {
     "id": "Host name",
@@ -5054,6 +5134,14 @@
   {
     "id": "How many results to get in one api call. [default: 50]",
     "translation": "在一個 API 呼叫中要取得多少個結果。[預設值：50]"
+  },
+  {
+    "id": "Http Port",
+    "translation": "HTTP 埠"
+  },
+  {
+    "id": "Https Port",
+    "translation": "HTTPS 埠"
   },
   {
     "id": "IAM token is required. Use '{{.Command}}' to log in.",
@@ -5254,6 +5342,10 @@
   {
     "id": "Import an image from an object storage",
     "translation": "從物件儲存空間匯入映像檔"
+  },
+  {
+    "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
+    "translation": "在快取選項中，如果您選取 'include-specified' 或 'ignorespecified'，也請使用此選項來新增說明，例如 --cache include-specified --cache-description 說明。"
   },
   {
     "id": "Inbound Usage",
@@ -6380,8 +6472,16 @@
     "translation": "作業系統"
   },
   {
+    "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
+    "translation": "針對「一般 Web 遞送」、「大型檔案最佳化」、「隨需應變視訊最佳化」進行最佳化，不會新增「動態內容加速」選項，因為這具有特殊配置。"
+  },
+  {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",
     "translation": "選項 [--flavor] 與 [--cpu]、[--memory]、[--private] 不能同時使用。"
+  },
+  {
+    "id": "Option respect-headers just accept '0' or '1'",
+    "translation": "選項 respect-headers 只接受 '0' 或 '1'"
   },
   {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
@@ -6496,6 +6596,22 @@
     "translation": "原點"
   },
   {
+    "id": "Origin Type",
+    "translation": "原始類型"
+  },
+  {
+    "id": "Origin server address",
+    "translation": "原點伺服器位址"
+  },
+  {
+    "id": "Origin server address.",
+    "translation": "原始伺服器位址。"
+  },
+  {
+    "id": "Origin type",
+    "translation": "原始類型"
+  },
+  {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
     "translation": "原始磁區沒有有效的儲存空間類型（具有適當的 keyName 以指出磁區是 PERFORMANCE 或 ENDURANCE 磁區）"
   },
@@ -6588,6 +6704,10 @@
     "translation": "要為這個使用者設定的密碼。如果未提供密碼，將會傳送電子郵件給使用者以便產生一個密碼，並在 24 小時內到期。請指定 '-p generate' 選項以便為您產生密碼。密碼需要 8 個以上的字元，包含大寫和小寫、一個數字以及一個符號"
   },
   {
+    "id": "Path",
+    "translation": "路徑"
+  },
+  {
     "id": "Pause an active virtual server instance",
     "translation": "暫停作用中的虛擬伺服器實例"
   },
@@ -6610,6 +6730,10 @@
   {
     "id": "Perform a soft shutdown",
     "translation": "執行正常關機"
+  },
+  {
+    "id": "Performance Configuration",
+    "translation": "效能配置"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
@@ -6760,6 +6884,10 @@
     "translation": "請執行指令 '{{.CommandName}} login' 來登入 IBM Cloud。"
   },
   {
+    "id": "Pod",
+    "translation": "Pod"
+  },
+  {
     "id": "Policies",
     "translation": "原則"
   },
@@ -6830,6 +6958,10 @@
   {
     "id": "Power on a virtual server instance",
     "translation": "啟動虛擬伺服器實例"
+  },
+  {
+    "id": "Premium",
+    "translation": "高階"
   },
   {
     "id": "Preset {{.Preset}} does not exist in package {{.Package}}",
@@ -6984,6 +7116,10 @@
     "translation": "已移除通訊協定 {{.ProtocolID}}"
   },
   {
+    "id": "Provider",
+    "translation": "提供者"
+  },
+  {
     "id": "Provisioned",
     "translation": "佈建"
   },
@@ -7014,6 +7150,10 @@
   {
     "id": "Public Virtual Server flavor key name",
     "translation": "「公用虛擬伺服器」特性金鑰名稱"
+  },
+  {
+    "id": "Public ips",
+    "translation": "公用 IP"
   },
   {
     "id": "Public network interface speed must be in: 0, 10, 100, 1000, 10000 (Mbps).",
@@ -7098,6 +7238,10 @@
   {
     "id": "Redirect",
     "translation": "重新導向"
+  },
+  {
+    "id": "Reflash server firmware.",
+    "translation": "再更新伺服器韌體。"
   },
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
@@ -7242,6 +7386,14 @@
   {
     "id": "Resource record {{.ID}} was removed.",
     "translation": "已移除資源記錄 {{.ID}}。"
+  },
+  {
+    "id": "Respect Headers",
+    "translation": "遵循標頭"
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "遵循標頭。 值 1 是「開啟」，而 0 是「關閉」。"
   },
   {
     "id": "Restore block volume using a given snapshot",
@@ -7840,6 +7992,10 @@
     "translation": "已順利將子網路 ID {{.subnetID}} 移除至容許的主機 ID：{{.accessID}}"
   },
   {
+    "id": "Successfully device firmware reflashed",
+    "translation": "已順利再更新裝置韌體"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "已順利傳送要求，以切換硬體伺服器 '{{.ID}}' 的 IPMI 介面。"
   },
@@ -7953,6 +8109,10 @@
   },
   {
     "id": "Tag",
+    "translation": "標籤"
+  },
+  {
+    "id": "Tags",
     "translation": "標籤"
   },
   {
@@ -8660,6 +8820,10 @@
     "translation": "這會關閉硬體伺服器 {{.ID}}。是否繼續？"
   },
   {
+    "id": "This will power off the server with id {{.hardwareID}} and reflash device firmware. Continue?",
+    "translation": "這會關閉 ID 為 {{.hardwareID}} 的伺服器電源，並再更新裝置韌體。 是否繼續？"
+  },
+  {
     "id": "This will power off virtual server instance: {{.VsId}}. Continue?",
     "translation": "這會關閉虛擬伺服器實例：{{.VsId}}。是否繼續？"
   },
@@ -8734,6 +8898,14 @@
   {
     "id": "Total",
     "translation": "總計"
+  },
+  {
+    "id": "Total bandwidth",
+    "translation": "總頻寬"
+  },
+  {
+    "id": "Total hits",
+    "translation": "命中總數"
   },
   {
     "id": "Total monthly cost",
@@ -8924,6 +9096,10 @@
     "translation": "唯一 ID"
   },
   {
+    "id": "Unique id",
+    "translation": "唯一 ID"
+  },
+  {
     "id": "Update ID",
     "translation": "更新 ID"
   },
@@ -9060,6 +9236,10 @@
     "translation": "供應商"
   },
   {
+    "id": "Vendor Name",
+    "translation": "供應商名稱"
+  },
+  {
     "id": "View a quote",
     "translation": "檢視報價"
   },
@@ -9146,6 +9326,10 @@
   {
     "id": "Virtual server template is exported to: {{.Template}}.",
     "translation": "虛擬伺服器範本已匯出至 {{.Template}}。"
+  },
+  {
+    "id": "Virtual servers",
+    "translation": "虛擬伺服器"
   },
   {
     "id": "Vlan",
@@ -9394,6 +9578,14 @@
   {
     "id": "broadcast",
     "translation": "broadcast"
+  },
+  {
+    "id": "cache-description is only used with the cache option",
+    "translation": "cache-description 只與 cache 選項搭配使用"
+  },
+  {
+    "id": "cache-description option must be used ",
+    "translation": "必須使用 cache-description 選項 "
   },
   {
     "id": "capacity",
@@ -9810,10 +10002,6 @@
   {
     "id": "public_ip",
     "translation": "public_ip"
-  },
-  {
-    "id": "public_ips",
-    "translation": "public_ips"
   },
   {
     "id": "ready",

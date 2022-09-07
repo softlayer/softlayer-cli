@@ -264,6 +264,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n예: \n${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n이 명령을 실행하면 볼륨 참고를 편집합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n이 명령을 실행하면 사용자 세부사항을 표시합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\nThis command list virtual guests."
   },
   {
+    "id": "${COMMAND_NAME} sl cdn detail",
+    "translation": "${COMMAND_NAME} sl cdn detail"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn edit",
+    "translation": "${COMMAND_NAME} sl cdn edit"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
   },
@@ -498,6 +506,10 @@
   {
     "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] ID\n\n예:\n ${COMMAND_NAME} sl hardware guests 1234567\n 이 서버에서 실행 중인 가상 게스트를 나열합니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -832,8 +844,8 @@
     "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   이 명령은 ID 12345678인 VLAN을 업데이트하고 새 이름 \"myvlan-rename\"을 이에 지정합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   이 명령은 dal09와 동일한 데이터 센터로 필터링하여 현재 계정의 모든 VLAN을 나열하고 VLAN 번호별로 이를 정렬합니다."
+    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   이 명령은 dal09와 동일한 데이터 센터로 필터링하여 현재 계정의 모든 VLAN을 나열하고 VLAN 번호별로 이를 정렬합니다.\n \n참고: 팟(Pod) 필드에 (*)를 추가하는 경우 곧 닫힘을 나타냅니다."
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -1592,6 +1604,10 @@
     "translation": "모든 풀/서버에 대한 대역폭 보고서입니다."
   },
   {
+    "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
+    "translation": "대역폭, 히트 수, 비율은 히스토리 일 수 동안 계수됩니다. 89가 최대값입니다."
+  },
+  {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
     "translation": "이 사용자를 작성하는 데 템플리트로 사용할 기본 사용자입니다. 기본값은 이 명령을 실행 중인 사용자를 사용하는 것입니다. --template에 제공된 정보가 이 템플리트를 대체합니다."
   },
@@ -1678,6 +1694,14 @@
   {
     "id": "CRN of the root key in your KMS instance",
     "translation": "KMS 인스턴스에 있는 루트 키의 CRN"
+  },
+  {
+    "id": "Cache key optimization",
+    "translation": "캐시 키 최적화"
+  },
+  {
+    "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
+    "translation": "캐시 키 최적화. 선택할 수 있는 유효한 옵션은 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'입니다. 'include-specified' 또는 'ignore-specified'를 선택하는 경우 cache-description 옵션에 추가하십시오."
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -1897,7 +1921,7 @@
   },
   {
     "id": "Classic infrastructure Domain Name System",
-    "translation": "클래식 인프라 Domain Name System"
+    "translation": "클래식 인프라 도메인 이름 시스템"
   },
   {
     "id": "Classic infrastructure Email commands",
@@ -1909,7 +1933,7 @@
   },
   {
     "id": "Classic infrastructure File Storage",
-    "translation": "클래식 인프라 File Storage"
+    "translation": "클래식 인프라 파일 스토리지"
   },
   {
     "id": "Classic infrastructure Firewalls",
@@ -2516,6 +2540,10 @@
     "translation": "티켓에서 디바이스 분리"
   },
   {
+    "id": "Detail a CDN Account.",
+    "translation": "CDN 계정의 세부사항을 표시합니다."
+  },
+  {
     "id": "Detail information about a firewall",
     "translation": "방화벽에 대한 자세한 정보"
   },
@@ -2710,6 +2738,10 @@
   {
     "id": "Edit SSL certificate",
     "translation": "SSL 인증서 편집"
+  },
+  {
+    "id": "Edit a CDN Account.",
+    "translation": "CDN 계정을 편집합니다."
   },
   {
     "id": "Edit a L7 policy",
@@ -3320,6 +3352,10 @@
     "translation": "구역에 대한 컨텐츠 덤프 실패: {{.Zone}}.\n"
   },
   {
+    "id": "Failed to edit CDN. ",
+    "translation": "CDN을 편집하는 데 실패했습니다. "
+  },
+  {
     "id": "Failed to edit SSH key: {{.ID}}.\n",
     "translation": "SSH 키 편집 실패: {{.ID}}.\n"
   },
@@ -3412,8 +3448,16 @@
     "translation": "대역폭 풀을 가져오는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to get CDN Detail. ",
+    "translation": "CDN 세부사항을 가져오는 데 실패했습니다. "
+  },
+  {
     "id": "Failed to get CDN List. ",
     "translation": "CDN 목록을 가져오는 데 실패했습니다. "
+  },
+  {
+    "id": "Failed to get CDN Metrics. ",
+    "translation": "CDN 메트릭을 가져오는 데 실패했습니다. "
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -3470,6 +3514,10 @@
   {
     "id": "Failed to get Network Message Delivery Accounts.",
     "translation": "네트워크 메시지 전달 계정을 가져오는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to get Pods.\n",
+    "translation": "팟(Pod)을 가져오는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to get Quote.\n",
@@ -4140,6 +4188,10 @@
     "translation": "가상 서버 인스턴스 다시 부팅 실패: {{.VsID}}.\n"
   },
   {
+    "id": "Failed to reflash firmware.",
+    "translation": "펌웨어를 리플래시하는 데 실패했습니다."
+  },
+  {
     "id": "Failed to reload operating system for hardware server: {{.ID}}.\n",
     "translation": "하드웨어 서버 {{.ID}}의 운영 체제를 다시 로드하는 데 실패했습니다.\n"
   },
@@ -4748,8 +4800,16 @@
     "translation": "백엔드 프로토콜[기본값: HTTP]"
   },
   {
+    "id": "Fully qualified name",
+    "translation": "완전한 이름"
+  },
+  {
     "id": "GUID",
     "translation": "GUID"
+  },
+  {
+    "id": "Gateway/Firewall",
+    "translation": "게이트웨이/방화벽"
   },
   {
     "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
@@ -4892,6 +4952,14 @@
     "translation": "하드웨어"
   },
   {
+    "id": "HTTP port.",
+    "translation": "HTTP 포트입니다."
+  },
+  {
+    "id": "HTTPS port.",
+    "translation": "HTTPS 포트입니다."
+  },
+  {
     "id": "Hardware",
     "translation": "하드웨어"
   },
@@ -4934,6 +5002,10 @@
   {
     "id": "Hardware size[required]",
     "translation": "하드웨어 크기[필수]"
+  },
+  {
+    "id": "Header",
+    "translation": "헤더"
   },
   {
     "id": "Health check UUID to modify [required]",
@@ -4992,6 +5064,10 @@
     "translation": "고가용성 방화벽 옵션"
   },
   {
+    "id": "Hit Radio",
+    "translation": "히트 비율"
+  },
+  {
     "id": "Host ID",
     "translation": "호스트 ID"
   },
@@ -5002,6 +5078,10 @@
   {
     "id": "Host Name",
     "translation": "호스트 이름"
+  },
+  {
+    "id": "Host header.",
+    "translation": "호스트 헤더입니다."
   },
   {
     "id": "Host name",
@@ -5054,6 +5134,14 @@
   {
     "id": "How many results to get in one api call. [default: 50]",
     "translation": "한 번의 api 호출로 확보하는 결과는 몇 개입니까?[기본값: 50]"
+  },
+  {
+    "id": "Http Port",
+    "translation": "HTTP 포트"
+  },
+  {
+    "id": "Https Port",
+    "translation": "HTTPS 포트"
   },
   {
     "id": "IAM token is required. Use '{{.Command}}' to log in.",
@@ -5254,6 +5342,10 @@
   {
     "id": "Import an image from an object storage",
     "translation": "오브젝트 스토리지에서 이미지 가져오기"
+  },
+  {
+    "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
+    "translation": "cache 옵션에서 'include-specified' 또는 'ignore-specified'를 선택하는 경우 이 옵션을 사용하여 설명도 추가하십시오(예: --cache include-specified --cache-description description)."
   },
   {
     "id": "Inbound Usage",
@@ -6380,8 +6472,16 @@
     "translation": "운영 체제"
   },
   {
+    "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
+    "translation": "'일반 웹 전달', '대형 파일 최적화', 'VoD(Video on Demand) 최적화'에 대한 최적화입니다. 여기에는 특수 구성이 있으므로 동적 컨텐츠 가속화 옵션이 추가됩니다."
+  },
+  {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",
     "translation": "[--flavor] 선택사항은 [--cpu], [--memory] 및 [--private]과 별개입니다."
+  },
+  {
+    "id": "Option respect-headers just accept '0' or '1'",
+    "translation": "respect-headers 옵션에는 '0' 또는 '1'만 허용됩니다."
   },
   {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
@@ -6496,6 +6596,22 @@
     "translation": "기점"
   },
   {
+    "id": "Origin Type",
+    "translation": "원본 유형"
+  },
+  {
+    "id": "Origin server address",
+    "translation": "원본 서버 주소"
+  },
+  {
+    "id": "Origin server address.",
+    "translation": "원본 서버 주소입니다."
+  },
+  {
+    "id": "Origin type",
+    "translation": "원본 유형"
+  },
+  {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
     "translation": "원본 볼륨에 올바른 스토리지 유형(볼륨이 PERFORMANCE 또는 ENDURANCE 볼륨임을 표시하는 적절한 keyName 사용)이 없음"
   },
@@ -6588,6 +6704,10 @@
     "translation": "이 사용자에 대해 설정할 비밀번호입니다. 비밀번호가 제공되지 않으면 24시간 내에 만기되는 비밀번호를 생성하도록 사용자에게 이메일을 보냅니다. '-p generate' 옵션을 지정하여 사용자의 비밀번호를 생성하십시오. 비밀번호에는 8자 이상의 문자, 대문자와 소문자, 숫자와 기호가 필요합니다."
   },
   {
+    "id": "Path",
+    "translation": "경로"
+  },
+  {
     "id": "Pause an active virtual server instance",
     "translation": "활성 가상 서버 인스턴스 일시정지"
   },
@@ -6610,6 +6730,10 @@
   {
     "id": "Perform a soft shutdown",
     "translation": "소프트 시스템 종료 수행"
+  },
+  {
+    "id": "Performance Configuration",
+    "translation": "성능 구성"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
@@ -6760,6 +6884,10 @@
     "translation": "'{{.CommandName}} login' 명령을 실행하여 IBM Cloud에 로그인하십시오."
   },
   {
+    "id": "Pod",
+    "translation": "팟(Pod)"
+  },
+  {
     "id": "Policies",
     "translation": "정책"
   },
@@ -6830,6 +6958,10 @@
   {
     "id": "Power on a virtual server instance",
     "translation": "가상 서버 인스턴스 전원 켜기"
+  },
+  {
+    "id": "Premium",
+    "translation": "Premium"
   },
   {
     "id": "Preset {{.Preset}} does not exist in package {{.Package}}",
@@ -6984,6 +7116,10 @@
     "translation": "{{.ProtocolID}} 프로토콜이 제거됨"
   },
   {
+    "id": "Provider",
+    "translation": "제공자"
+  },
+  {
     "id": "Provisioned",
     "translation": "프로비저닝됨"
   },
@@ -7014,6 +7150,10 @@
   {
     "id": "Public Virtual Server flavor key name",
     "translation": "공용 Virtual Server 특성 키 이름"
+  },
+  {
+    "id": "Public ips",
+    "translation": "공인 IP"
   },
   {
     "id": "Public network interface speed must be in: 0, 10, 100, 1000, 10000 (Mbps).",
@@ -7098,6 +7238,10 @@
   {
     "id": "Redirect",
     "translation": "경로 재지정"
+  },
+  {
+    "id": "Reflash server firmware.",
+    "translation": "서버 펌웨어를 리플래시합니다."
   },
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
@@ -7242,6 +7386,14 @@
   {
     "id": "Resource record {{.ID}} was removed.",
     "translation": "{{.ID}} 리소스 레코드가 제거되었습니다."
+  },
+  {
+    "id": "Respect Headers",
+    "translation": "헤더 준수"
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "헤더를 준수합니다. 값 1은 설정이고 0은 해제입니다."
   },
   {
     "id": "Restore block volume using a given snapshot",
@@ -7840,6 +7992,10 @@
     "translation": "서브넷 ID: {{.subnetID}}을(를) 허용되는 호스트 ID: {{.accessID}}에서 제거함"
   },
   {
+    "id": "Successfully device firmware reflashed",
+    "translation": "디바이스 펌웨어가 리플래시됨"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "하드웨어 서버 '{{.ID}}'의 IPMI 인터페이스를 토글하기 위해 요청을 전송했습니다."
   },
@@ -7953,6 +8109,10 @@
   },
   {
     "id": "Tag",
+    "translation": "태그"
+  },
+  {
+    "id": "Tags",
     "translation": "태그"
   },
   {
@@ -8660,6 +8820,10 @@
     "translation": "이 작업은 하드웨어 서버 {{.ID}}의 전원을 끕니다. 계속하시겠습니까?"
   },
   {
+    "id": "This will power off the server with id {{.hardwareID}} and reflash device firmware. Continue?",
+    "translation": "이렇게 하면 ID가 {{.hardwareID}}인 서버의 전원이 꺼지고 디바이스 펌웨어가 리플래시됩니다. 계속하시겠습니까?"
+  },
+  {
     "id": "This will power off virtual server instance: {{.VsId}}. Continue?",
     "translation": "이 작업은 {{.VsId}} 가상 서버 인스턴스의 전원을 끕니다. 계속하시겠습니까?"
   },
@@ -8734,6 +8898,14 @@
   {
     "id": "Total",
     "translation": "총계"
+  },
+  {
+    "id": "Total bandwidth",
+    "translation": "총 대역폭"
+  },
+  {
+    "id": "Total hits",
+    "translation": "히트 총계"
   },
   {
     "id": "Total monthly cost",
@@ -8924,6 +9096,10 @@
     "translation": "고유 ID"
   },
   {
+    "id": "Unique id",
+    "translation": "고유 ID"
+  },
+  {
     "id": "Update ID",
     "translation": "업데이트 ID"
   },
@@ -9060,6 +9236,10 @@
     "translation": "공급업체"
   },
   {
+    "id": "Vendor Name",
+    "translation": "공급업체 이름"
+  },
+  {
     "id": "View a quote",
     "translation": "견적 보기"
   },
@@ -9146,6 +9326,10 @@
   {
     "id": "Virtual server template is exported to: {{.Template}}.",
     "translation": "가상 서버 템플리트를 {{.Template}}(으)로 내보냈습니다."
+  },
+  {
+    "id": "Virtual servers",
+    "translation": "가상 서버"
   },
   {
     "id": "Vlan",
@@ -9394,6 +9578,14 @@
   {
     "id": "broadcast",
     "translation": "브로드캐스트"
+  },
+  {
+    "id": "cache-description is only used with the cache option",
+    "translation": "cache-description은 cache 옵션에만 사용됨"
+  },
+  {
+    "id": "cache-description option must be used ",
+    "translation": "cache-description 옵션이 사용되어야 함 "
   },
   {
     "id": "capacity",
@@ -9810,10 +10002,6 @@
   {
     "id": "public_ip",
     "translation": "public_ip"
-  },
-  {
-    "id": "public_ips",
-    "translation": "public_ips"
   },
   {
     "id": "ready",

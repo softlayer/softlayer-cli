@@ -264,6 +264,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n例: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tこのコマンドは、ボリューム・メモを編集します。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tこのコマンドは、ユーザーの詳細を表示します。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tこのコマンドは、仮想ゲストをリストします。"
   },
   {
+    "id": "${COMMAND_NAME} sl cdn detail",
+    "translation": "${COMMAND_NAME} sl cdn detail"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn edit",
+    "translation": "${COMMAND_NAME} sl cdn edit"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME}SL CDN リスト"
   },
@@ -498,6 +506,10 @@
   {
     "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
     "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware guests 1234567\n このサーバー上で稼働している仮想ゲストをリストします。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n 例: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -832,8 +844,8 @@
     "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\n例:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   このコマンドは、ID 12345678 の vlan を更新し、新しい名前「myvlan-rename」を付けます。"
   },
   {
-    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\n例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   このコマンドは、データ・センターが dal09 であるという基準でフィルター操作して、現行アカウントのすべての vlan をリストし、それらを vlan 番号順にソートします。"
+    "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n 例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウント・フィルターのすべての VLAN を dal09 に等しいデータ・センターでリストし、それらを vlan 番号でソートします。\n \n注: フィールド Pod では、(*) を追加し間もなく閉じることが示されている場合、"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -961,7 +973,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n時間フォーマットは、'2006-01-02'、'2006-01-02T15:04'、'2006-01-02T15:04-07:00' のいずれかです。'\n\n丸めや日付合わせの詳細により、この結果は制御ポータルでの結果とは若干異なる可能性があります。\n帯域幅は GB 単位で表示され、タイムゾーンが指定されていない場合は GMT+0 とみなされます。\n\n例:\n\n   ${COMMAND_NAME} sl {{.Command}} 帯域幅 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n時間フォーマットは、'2006-01-02'、'2006-01-02T15:04'、'2006-01-02T15:04-07:00' のいずれかです。'\n\n丸めや日付合わせの詳細により、この結果は制御ポータルでの結果とは若干異なる可能性があります。\n帯域幅は GB 単位で表示され、タイムゾーンが指定されていない場合は GMT+0 とみなされます。\n\n例:\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
@@ -1581,7 +1593,7 @@
   },
   {
     "id": "Bandwidth",
-    "translation": "処理能力"
+    "translation": "帯域幅"
   },
   {
     "id": "Bandwidth data over date range.",
@@ -1590,6 +1602,10 @@
   {
     "id": "Bandwidth report for every pool/server.",
     "translation": "すべてのプール/サーバーの帯域幅レポート。"
+  },
+  {
+    "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
+    "translation": "帯域幅、ヒット、比率は、数日前の履歴にカウントされます。 89 が最大値です。"
   },
   {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
@@ -1678,6 +1694,14 @@
   {
     "id": "CRN of the root key in your KMS instance",
     "translation": "KMS インスタンスのルート・キーの CRN。"
+  },
+  {
+    "id": "Cache key optimization",
+    "translation": "キャッシュ・キー最適化"
+  },
+  {
+    "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
+    "translation": "キャッシュ・キーの最適化。 選択できる有効なオプションは、「include-all」、「ignore-all」、「include-specified」、「ignore-specified」です。 「include-specified」または「ignore-specified」を選択した場合は、オプション cache-description に追加してください。"
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -2177,7 +2201,7 @@
   },
   {
     "id": "Could not find valid price for bandwidth option",
-    "translation": "処理能力オプションの適切な価格が見つかりませんでした。"
+    "translation": "帯域幅オプションの適切な価格が見つかりませんでした。"
   },
   {
     "id": "Could not find valid price for dedicated host with size= {{.KeyName}}",
@@ -2516,6 +2540,10 @@
     "translation": "チケットからデバイスを切り離します"
   },
   {
+    "id": "Detail a CDN Account.",
+    "translation": "CDN アカウントの詳細を表示します。"
+  },
+  {
     "id": "Detail information about a firewall",
     "translation": "ファイアウォールについての詳細情報"
   },
@@ -2710,6 +2738,10 @@
   {
     "id": "Edit SSL certificate",
     "translation": "SSL Certificates を編集します"
+  },
+  {
+    "id": "Edit a CDN Account.",
+    "translation": "CDN アカウントを編集します。"
   },
   {
     "id": "Edit a L7 policy",
@@ -3320,6 +3352,10 @@
     "translation": "ゾーン: {{.Zone}} のコンテンツをダンプできませんでした。\n"
   },
   {
+    "id": "Failed to edit CDN. ",
+    "translation": "CDN の編集に失敗しました。 "
+  },
+  {
     "id": "Failed to edit SSH key: {{.ID}}.\n",
     "translation": "SSH 鍵: {{.ID}} の編集に失敗しました。\n"
   },
@@ -3412,8 +3448,16 @@
     "translation": "帯域幅プールの取得に失敗しました。\n"
   },
   {
+    "id": "Failed to get CDN Detail. ",
+    "translation": "CDN 詳細の取得に失敗しました。 "
+  },
+  {
     "id": "Failed to get CDN List. ",
     "translation": "CDN リストの取得に失敗しました。 "
+  },
+  {
+    "id": "Failed to get CDN Metrics. ",
+    "translation": "CDN メトリックの取得に失敗しました。 "
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -3470,6 +3514,10 @@
   {
     "id": "Failed to get Network Message Delivery Accounts.",
     "translation": "ネットワーク・メッセージ配信アカウントの取得に失敗しました。"
+  },
+  {
+    "id": "Failed to get Pods.\n",
+    "translation": "ポッドの取得に失敗しました。\n"
   },
   {
     "id": "Failed to get Quote.\n",
@@ -4140,6 +4188,10 @@
     "translation": "Virtual Server インスタンス: {{.VsID}} のリブートに失敗しました。\n"
   },
   {
+    "id": "Failed to reflash firmware.",
+    "translation": "ファームウェアの再フラッシュに失敗しました。"
+  },
+  {
     "id": "Failed to reload operating system for hardware server: {{.ID}}.\n",
     "translation": "ハードウェア・サーバー: {{.ID}} のオペレーティング・システムの再ロードに失敗しました。\n"
   },
@@ -4748,8 +4800,16 @@
     "translation": "フロントエンド・プロトコル [デフォルト: HTTP]"
   },
   {
+    "id": "Fully qualified name",
+    "translation": "完全修飾名"
+  },
+  {
     "id": "GUID",
     "translation": "GUID"
+  },
+  {
+    "id": "Gateway/Firewall",
+    "translation": "ゲートウェイ/ファイアウォール"
   },
   {
     "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
@@ -4892,6 +4952,14 @@
     "translation": "HARDWARE"
   },
   {
+    "id": "HTTP port.",
+    "translation": "HTTP ポート。"
+  },
+  {
+    "id": "HTTPS port.",
+    "translation": "HTTPS ポート。"
+  },
+  {
     "id": "Hardware",
     "translation": "ハードウェア"
   },
@@ -4934,6 +5002,10 @@
   {
     "id": "Hardware size[required]",
     "translation": "ハードウェア・サイズ [必須]"
+  },
+  {
+    "id": "Header",
+    "translation": "ヘッダー"
   },
   {
     "id": "Health check UUID to modify [required]",
@@ -4992,6 +5064,10 @@
     "translation": "高可用性ファイアウォール・オプション"
   },
   {
+    "id": "Hit Radio",
+    "translation": "ヒット・ラジオ"
+  },
+  {
     "id": "Host ID",
     "translation": "ホスト ID"
   },
@@ -5002,6 +5078,10 @@
   {
     "id": "Host Name",
     "translation": "ホスト名"
+  },
+  {
+    "id": "Host header.",
+    "translation": "ホスト・ヘッダー。"
   },
   {
     "id": "Host name",
@@ -5054,6 +5134,14 @@
   {
     "id": "How many results to get in one api call. [default: 50]",
     "translation": "1 回の API 呼び出しで取得する結果の数。 [デフォルト: 50]"
+  },
+  {
+    "id": "Http Port",
+    "translation": "HTTP ポート"
+  },
+  {
+    "id": "Https Port",
+    "translation": "HTTPS ポート"
   },
   {
     "id": "IAM token is required. Use '{{.Command}}' to log in.",
@@ -5254,6 +5342,10 @@
   {
     "id": "Import an image from an object storage",
     "translation": "Object Storage からイメージをインポートします"
+  },
+  {
+    "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
+    "translation": "キャッシュ・オプションで「include-specified」または「ignore-specified」を選択した場合は、このオプションを使用して説明も追加してください (例: --cache include-specified --cache-description)。"
   },
   {
     "id": "Inbound Usage",
@@ -6380,8 +6472,16 @@
     "translation": "オペレーティング・システム"
   },
   {
+    "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
+    "translation": "「一般的な Web 配信」、「ラージ・ファイルの最適化」、「ビデオ・オンデマンド最適化」のための最適化。これには特別な構成があるため、動的コンテンツの高速化オプションは追加されません。"
+  },
+  {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",
     "translation": "オプション [--flavor] 、は [--cpu]、 [--memory] および [--private] と同時に指定することはできません。"
+  },
+  {
+    "id": "Option respect-headers just accept '0' or '1'",
+    "translation": "オプション respect-headers は「0」または「1」のみを受け入れます"
   },
   {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
@@ -6496,6 +6596,22 @@
     "translation": "起点"
   },
   {
+    "id": "Origin Type",
+    "translation": "起点タイプ"
+  },
+  {
+    "id": "Origin server address",
+    "translation": "オリジン・サーバー・アドレス"
+  },
+  {
+    "id": "Origin server address.",
+    "translation": "起点サーバー・アドレス。"
+  },
+  {
+    "id": "Origin type",
+    "translation": "起点タイプ"
+  },
+  {
     "id": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)",
     "translation": "元のボリュームのストレージ・タイプが無効です (ボリュームを識別するための適切な keyName は、PERFORMANCE ボリュームまたは ENDURANCE ボリュームです)"
   },
@@ -6588,6 +6704,10 @@
     "translation": "このユーザーに設定するパスワード。 パスワードが指定されていない場合は、パスワード生成のための E メールがユーザーに送信されます。このパスワードは 24 時間で有効期限が切れます。 '-p generate' オプションを指定すると、パスワードが生成されます。 パスワードは 8 文字以上で、英字の大文字と小文字、数字、記号で構成する必要があります"
   },
   {
+    "id": "Path",
+    "translation": "パス"
+  },
+  {
     "id": "Pause an active virtual server instance",
     "translation": "アクティブな Virtual Server インスタンスを一時停止します"
   },
@@ -6610,6 +6730,10 @@
   {
     "id": "Perform a soft shutdown",
     "translation": "ソフト・シャットダウンを実行します"
+  },
+  {
+    "id": "Performance Configuration",
+    "translation": "パフォーマンス構成"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
@@ -6760,6 +6884,10 @@
     "translation": "コマンド '{{.CommandName}} login' を実行して、IBM Cloud にログインしてください。"
   },
   {
+    "id": "Pod",
+    "translation": "ポッド"
+  },
+  {
     "id": "Policies",
     "translation": "ポリシー"
   },
@@ -6830,6 +6958,10 @@
   {
     "id": "Power on a virtual server instance",
     "translation": "Virtual Server インスタンスを電源オンします"
+  },
+  {
+    "id": "Premium",
+    "translation": "プレミアム"
   },
   {
     "id": "Preset {{.Preset}} does not exist in package {{.Package}}",
@@ -6984,6 +7116,10 @@
     "translation": "プロトコル {{.ProtocolID}} が削除されました"
   },
   {
+    "id": "Provider",
+    "translation": "プロバイダー"
+  },
+  {
     "id": "Provisioned",
     "translation": "プロビジョン済み"
   },
@@ -7014,6 +7150,10 @@
   {
     "id": "Public Virtual Server flavor key name",
     "translation": "パブリック Virtual Server フレーバー・キー名"
+  },
+  {
+    "id": "Public ips",
+    "translation": "パブリック IP"
   },
   {
     "id": "Public network interface speed must be in: 0, 10, 100, 1000, 10000 (Mbps).",
@@ -7098,6 +7238,10 @@
   {
     "id": "Redirect",
     "translation": "リダイレクト"
+  },
+  {
+    "id": "Reflash server firmware.",
+    "translation": "サーバー・ファームウェアを再フラッシュします。"
   },
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
@@ -7242,6 +7386,14 @@
   {
     "id": "Resource record {{.ID}} was removed.",
     "translation": "リソース・レコード {{.ID}} は削除されました。"
+  },
+  {
+    "id": "Respect Headers",
+    "translation": "ヘッダーを尊重 (Respect Headers)"
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "ヘッダーを尊重します。 値 1 はオン、0 はオフです。"
   },
   {
     "id": "Restore block volume using a given snapshot",
@@ -7737,7 +7889,7 @@
   },
   {
     "id": "Start date for bandwdith reporting",
-    "translation": "bandwdith レポートの開始日"
+    "translation": "帯域幅レポートの開始日"
   },
   {
     "id": "Started to reload operating system for hardware server: {{.ID}}.",
@@ -7838,6 +7990,10 @@
   {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "サブネット ID {{.subnetID}}を許可されたホスト ID {{.accessID}}に正常に削除しました"
+  },
+  {
+    "id": "Successfully device firmware reflashed",
+    "translation": "デバイス・ファームウェアが正常に再フラッシュされました"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
@@ -7953,6 +8109,10 @@
   },
   {
     "id": "Tag",
+    "translation": "タグ"
+  },
+  {
+    "id": "Tags",
     "translation": "タグ"
   },
   {
@@ -8660,6 +8820,10 @@
     "translation": "これを行うと、ハードウェア・サーバー: {{.ID}} は電源オフされます。 続行しますか?"
   },
   {
+    "id": "This will power off the server with id {{.hardwareID}} and reflash device firmware. Continue?",
+    "translation": "これにより、ID {{.hardwareID}}および再フラッシュ・デバイス・ファームウェアを持つサーバーの電源がオフになります。 Continue?"
+  },
+  {
     "id": "This will power off virtual server instance: {{.VsId}}. Continue?",
     "translation": "これを行うと、 Virtual Server インスタンス: {{.VsId}} は電源オフされます。 続行しますか?"
   },
@@ -8734,6 +8898,14 @@
   {
     "id": "Total",
     "translation": "合計"
+  },
+  {
+    "id": "Total bandwidth",
+    "translation": "合計帯域幅"
+  },
+  {
+    "id": "Total hits",
+    "translation": "合計ヒット数"
   },
   {
     "id": "Total monthly cost",
@@ -8924,6 +9096,10 @@
     "translation": "固有ID"
   },
   {
+    "id": "Unique id",
+    "translation": "固有ID"
+  },
+  {
     "id": "Update ID",
     "translation": "ID を更新します"
   },
@@ -9060,6 +9236,10 @@
     "translation": "ベンダー"
   },
   {
+    "id": "Vendor Name",
+    "translation": "ベンダー名"
+  },
+  {
     "id": "View a quote",
     "translation": "見積もりの表示"
   },
@@ -9146,6 +9326,10 @@
   {
     "id": "Virtual server template is exported to: {{.Template}}.",
     "translation": "Virtual Server テンプレートは {{.Template}} にエクスポートされました。"
+  },
+  {
+    "id": "Virtual servers",
+    "translation": "仮想サーバー"
   },
   {
     "id": "Vlan",
@@ -9394,6 +9578,14 @@
   {
     "id": "broadcast",
     "translation": "broadcast"
+  },
+  {
+    "id": "cache-description is only used with the cache option",
+    "translation": "cache-description は、cache オプションを指定した場合にのみ使用されます。"
+  },
+  {
+    "id": "cache-description option must be used ",
+    "translation": "cache-description オプションを使用する必要があります "
   },
   {
     "id": "capacity",
@@ -9810,10 +10002,6 @@
   {
     "id": "public_ip",
     "translation": "public_ip"
-  },
-  {
-    "id": "public_ips",
-    "translation": "public_ips"
   },
   {
     "id": "ready",
