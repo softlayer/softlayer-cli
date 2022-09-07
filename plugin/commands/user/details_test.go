@@ -9,10 +9,11 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -20,20 +21,18 @@ var _ = Describe("Detail", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeUserManager *testhelpers.FakeUserManager
-		cmd             *user.DetailsCommand
-		cliCommand      cli.Command
+		cliCommand      *user.DetailsCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeUserManager = new(testhelpers.FakeUserManager)
-		cmd = user.NewDetailsCommand(fakeUI, fakeUserManager)
-		cliCommand = cli.Command{
-			Name:        user.UserDetailMetaData().Name,
-			Description: user.UserDetailMetaData().Description,
-			Usage:       user.UserDetailMetaData().Usage,
-			Flags:       user.UserDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = user.NewDetailsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.UserManager = fakeUserManager
 
 		created, _ := time.Parse(time.RFC3339, "2017-11-08T00:00:00Z")
 
@@ -170,7 +169,7 @@ var _ = Describe("Detail", func() {
 	Describe("user detail", func() {
 		Context("user detail with not enough parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
@@ -178,7 +177,7 @@ var _ = Describe("Detail", func() {
 
 		Context("user detail with letters like parameter", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcd")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcd")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: User ID should be a number."))
 			})
@@ -187,7 +186,7 @@ var _ = Describe("Detail", func() {
 		Context("user detail error", func() {
 			It("return error", func() {
 				fakeUserManager.GetUserReturns(datatypes.User_Customer{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "5555")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to show user detail."))
 			})
@@ -196,7 +195,7 @@ var _ = Describe("Detail", func() {
 		Context("user detail error with permissions", func() {
 			It("return error", func() {
 				fakeUserManager.GetUserPermissionsReturns([]datatypes.User_Customer_CustomerPermission_Permission{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "5555", "--permissions")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--permissions")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to show user permissions."))
 			})
@@ -205,7 +204,7 @@ var _ = Describe("Detail", func() {
 		Context("user detail error with logins", func() {
 			It("return error", func() {
 				fakeUserManager.GetLoginsReturns([]datatypes.User_Customer_Access_Authentication{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "5555", "--logins")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--logins")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to show login history."))
 			})
@@ -214,7 +213,7 @@ var _ = Describe("Detail", func() {
 		Context("user detail error with events", func() {
 			It("return error", func() {
 				fakeUserManager.GetEventsReturns([]datatypes.Event_Log{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "5555", "--events")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--events")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to show event log."))
 			})
@@ -222,7 +221,7 @@ var _ = Describe("Detail", func() {
 
 		Context("user detail with correct id", func() {
 			It("return a user", func() {
-				err := testhelpers.RunCommand(cliCommand, "5555")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name                value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID                  5555"))
@@ -245,7 +244,7 @@ var _ = Describe("Detail", func() {
 
 		Context("user detail with correct id and apikey", func() {
 			It("return a user with apikey", func() {
-				err := testhelpers.RunCommand(cliCommand, "5555", "--keys")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--keys")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name                value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID                  5555"))
@@ -269,7 +268,7 @@ var _ = Describe("Detail", func() {
 
 		Context("user detail with correct id and permissions", func() {
 			It("return a user with permissions", func() {
-				err := testhelpers.RunCommand(cliCommand, "5555", "--permissions")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--permissions")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name                value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID                  5555"))
@@ -296,7 +295,7 @@ var _ = Describe("Detail", func() {
 
 		Context("user detail with correct id and hardware", func() {
 			It("return a user with hardware", func() {
-				err := testhelpers.RunCommand(cliCommand, "5555", "--hardware")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--hardware")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name                value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID                  5555"))
@@ -325,7 +324,7 @@ var _ = Describe("Detail", func() {
 
 		Context("user detail with correct id and virtual", func() {
 			It("return a user with virtual", func() {
-				err := testhelpers.RunCommand(cliCommand, "5555", "--virtual")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--virtual")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name                value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID                  5555"))
@@ -352,7 +351,7 @@ var _ = Describe("Detail", func() {
 		Context("user detail with correct id and logins", func() {
 			It("return a user with logins", func() {
 				fmt.Println("**")
-				err := testhelpers.RunCommand(cliCommand, "5555", "--logins")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--logins")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name                value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID                  5555"))
@@ -379,7 +378,7 @@ var _ = Describe("Detail", func() {
 		Context("user detail with correct id and events", func() {
 			It("return a user with events", func() {
 				fmt.Println("**")
-				err := testhelpers.RunCommand(cliCommand, "5555", "--events")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--events")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name                value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID                  5555"))

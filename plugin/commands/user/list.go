@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -14,15 +14,31 @@ const (
 )
 
 type ListCommand struct {
-	UI          terminal.UI
+	*metadata.SoftlayerCommand
 	UserManager managers.UserManager
+	Command     *cobra.Command
+	Column      []string
 }
 
-func NewListCommand(ui terminal.UI, userManager managers.UserManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:          ui,
-		UserManager: userManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
+	thisCmd := &ListCommand{
+		SoftlayerCommand: sl,
+		UserManager:      managers.NewUserManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List Users"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringSliceVar(&thisCmd.Column, "column", []string{}, T("Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 var maskMap = map[string]string{
@@ -37,33 +53,25 @@ var maskMap = map[string]string{
 	"classicAPIKey":     "apiAuthenticationKeyCount",
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
+func (cmd *ListCommand) Run(args []string) error {
 
-	var columns []string
-	if c.IsSet("column") {
-		columns = c.StringSlice("column")
-	} else if c.IsSet("columns") {
-		columns = c.StringSlice("columns")
-	}
+	columns := cmd.Column
 
 	defaultColumns := []string{"id", "username", "email", "displayName", "2FA", "classicAPIKey"}
 	optionalColumns := []string{"status", "hardwareCount", "virtualGuestCount"}
 
-	showColumns, err := utils.ValidateColumns("", columns, defaultColumns, optionalColumns, []string{}, c)
+	showColumns, err := utils.ValidateColumns2("", columns, defaultColumns, optionalColumns, []string{})
 	if err != nil {
 		return err
 	}
 
 	mask := utils.GetMask(maskMap, showColumns, "")
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	users, err := cmd.UserManager.ListUsers(mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list users.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list users.\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -99,24 +107,4 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func UserListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "user",
-		Name:        "list",
-		Description: T("List Users"),
-		Usage:       "${COMMAND_NAME} sl user list [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.StringSliceFlag{
-				Name:  "column",
-				Usage: T("Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times"),
-			},
-			cli.StringSliceFlag{
-				Name:   "columns",
-				Hidden: true,
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }
