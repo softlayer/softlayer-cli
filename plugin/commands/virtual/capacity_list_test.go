@@ -5,36 +5,36 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VS capacity-list", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.CapacityListCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cmd           *virtual.CapacityListCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = virtual.NewCapacityListCommand(fakeUI, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        virtual.VSCapacityListMetaData().Name,
-			Description: virtual.VSCapacityListMetaData().Description,
-			Usage:       virtual.VSCapacityListMetaData().Usage,
-			Flags:       virtual.VSCapacityListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewCapacityListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
 	Describe("VS capacity-list", func() {
 		Context("VS capacity-list with wrong parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--column", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring(  "flag provided but not defined: -column"))
+				Expect(err.Error()).To(ContainSubstring("unknown flag: --column"))
 			})
 		})
 	})
@@ -44,16 +44,16 @@ var _ = Describe("VS capacity-list", func() {
 				fakeVSManager.CapacityListReturns(nil, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--column", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring( "flag provided but not defined: -column"))
+				Expect(err.Error()).To(ContainSubstring("unknown flag: --column"))
 			})
 		})
 	})
 	Describe("VS capacity-list", func() {
 		Context("VS capacity-list no error", func() {
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 			})
 		})

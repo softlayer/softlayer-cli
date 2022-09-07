@@ -135,8 +135,8 @@ func (cmd *StorageCommand) Run(c *cli.Context) error {
 	return nil
 }
 
-//Returns the virtual server local disk type.
-//param disks: virtual server local disks.
+// Returns the virtual server local disk type.
+// param disks: virtual server local disks.
 func (cmd *StorageCommand) getLocalType(disk datatypes.Virtual_Guest_Block_Device) string {
 	diskType := "System"
 	swapType := disk.DiskImage.Description

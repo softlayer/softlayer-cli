@@ -50,7 +50,6 @@ var _ = Describe("VS placementgroup-detail", func() {
 					fakeVSManager.GetPlacementGroupDetailReturns(datatypes.Virtual_PlacementGroup{
 						Id:   sl.Int(123456),
 						Name: sl.String("test"),
-
 					}, nil)
 
 				})

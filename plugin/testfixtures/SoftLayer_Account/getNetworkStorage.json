@@ -1,0 +1,36 @@
+[
+  {
+    "accountId": 307608,
+    "capacityGb": null,
+    "createDate": "2020-10-08T11:45:20-06:00",
+    "guestId": null,
+    "hardwareId": null,
+    "hostId": null,
+    "id": 176367162,
+    "nasType": "HUB",
+    "notes": null,
+    "password": null,
+    "serviceProviderId": 1,
+    "serviceResourceName": "Cleversafe - US Region",
+    "storageTypeId": "24",
+    "upgradableFlag": true,
+    "username": "SL02SL11111111-11"
+  },
+  {
+    "accountId": 307608,
+    "capacityGb": 20,
+    "createDate": "2015-09-18T07:23:26-06:00",
+    "guestId": null,
+    "hardwareId": null,
+    "hostId": null,
+    "id": 6548079,
+    "nasType": "ISCSI",
+    "notes": "Set%20not%20through%20cloud.ibm.com",
+    "password": "",
+    "serviceProviderId": 1,
+    "serviceResourceName": "PerfStor Aggr aggr_staasams0101_pc01",
+    "storageTypeId": "7",
+    "upgradableFlag": true,
+    "username": "SL02SL111"
+  }
+]
