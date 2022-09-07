@@ -7,10 +7,11 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -18,20 +19,18 @@ var _ = Describe("User Notifications", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeUserManager *testhelpers.FakeUserManager
-		cmd             *user.NotificationsCommand
-		cliCommand      cli.Command
+		cliCommand      *user.NotificationsCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeUserManager = new(testhelpers.FakeUserManager)
-		cmd = user.NewNotificationsCommand(fakeUI, fakeUserManager)
-		cliCommand = cli.Command{
-			Name:        user.UserNotificationsMetaData().Name,
-			Description: user.UserNotificationsMetaData().Description,
-			Usage:       user.UserNotificationsMetaData().Usage,
-			Flags:       user.UserNotificationsMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = user.NewNotificationsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.UserManager = fakeUserManager
 	})
 
 	Describe("user list ", func() {
@@ -41,7 +40,7 @@ var _ = Describe("User Notifications", func() {
 				fakeUserManager.GetAllNotificationsReturns([]datatypes.Email_Subscription{}, errors.New("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
 			It("An invalid output id is set", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -68,7 +67,7 @@ var _ = Describe("User Notifications", func() {
 			})
 
 			It("list notifications", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order Being Reviewed"))
@@ -81,7 +80,7 @@ var _ = Describe("User Notifications", func() {
 			})
 
 			It("list notifications in json format", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output", "json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"id": 1`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"name": "Order Being Reviewed"`))
