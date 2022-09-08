@@ -3,38 +3,50 @@ package dns
 import (
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type ZonePrintCommand struct {
-	UI         terminal.UI
+	*metadata.SoftlayerCommand
 	DNSManager managers.DNSManager
+	Command    *cobra.Command
 }
 
-func NewZonePrintCommand(ui terminal.UI, dnsManager managers.DNSManager) (cmd *ZonePrintCommand) {
-	return &ZonePrintCommand{
-		UI:         ui,
-		DNSManager: dnsManager,
+func NewZonePrintCommand(sl *metadata.SoftlayerCommand) *ZonePrintCommand {
+	thisCmd := &ZonePrintCommand{
+		SoftlayerCommand: sl,
+		DNSManager:       managers.NewDNSManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "zone-print " + T("ZONE"),
+		Short: T("zone-print."),
+		Long: T(`${COMMAND_NAME} sl dns zone-print ZONE
+
+EXAMPLE:
+	${COMMAND_NAME} sl dns zone-print ibm.com
+	This command prints zone that is named ibm.com, and in BIND format.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ZonePrintCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-
-	zoneName := c.Args()[0]
+func (cmd *ZonePrintCommand) Run(args []string) error {
+	zoneName := args[0]
 	zoneID, err := cmd.DNSManager.GetZoneIdFromName(zoneName)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get zone ID from zone name: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get zone ID from zone name: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName}), err.Error(), 2)
 	}
 	fileContent, err := cmd.DNSManager.DumpZone(zoneID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to dump content for zone: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to dump content for zone: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName}), err.Error(), 2)
 	}
 	//TODO need to test on other platforms about line break
 	lines := strings.Split(fileContent, "\\n")
@@ -42,17 +54,4 @@ func (cmd *ZonePrintCommand) Run(c *cli.Context) error {
 		cmd.UI.Print(strings.Trim(line, "\""))
 	}
 	return nil
-}
-
-func DnsZonePrintMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dns",
-		Name:        "zone-print",
-		Description: T("Print zone and resource records in BIND format"),
-		Usage: T(`${COMMAND_NAME} sl dns zone-print ZONE
-
-EXAMPLE:
-   ${COMMAND_NAME} sl dns zone-print ibm.com
-   This command prints zone that is named ibm.com, and in BIND format.`),
-	}
 }

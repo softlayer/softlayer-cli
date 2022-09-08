@@ -1,58 +1,32 @@
 package user
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	userManager := managers.NewUserManager(session)
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-
-		"user-create": func(c *cli.Context) error {
-			return NewCreateCommand(ui, userManager).Run(c)
-		},
-		"user-list": func(c *cli.Context) error {
-			return NewListCommand(ui, userManager).Run(c)
-		},
-		"user-delete": func(c *cli.Context) error {
-			return NewDeleteCommand(ui, userManager).Run(c)
-		},
-		"user-detail": func(c *cli.Context) error {
-			return NewDetailsCommand(ui, userManager).Run(c)
-		},
-		"user-permissions": func(c *cli.Context) error {
-			return NewPermissionsCommand(ui, userManager).Run(c)
-		},
-		"user-detail-edit": func(c *cli.Context) error {
-			return NewEditCommand(ui, userManager).Run(c)
-		},
-		"user-permission-edit": func(c *cli.Context) error {
-			return NewEditPermissionCommand(ui, userManager).Run(c)
-		},
-		"user-notifications": func(c *cli.Context) error {
-			return NewNotificationsCommand(ui, userManager).Run(c)
-		},
-		"user-edit-notifications": func(c *cli.Context) error {
-			return NewEditNotificationsCommand(ui, userManager).Run(c)
-		},
-		"user-grant-access": func(c *cli.Context) error {
-			return NewGrantAccessCommand(ui, userManager).Run(c)
-		},
-		"user-remove-access": func(c *cli.Context) error {
-			return NewRemoveAccessCommand(ui, userManager).Run(c)
-		},
-		"user-device-access": func(c *cli.Context) error {
-			return NewDeviceAccessCommand(ui, userManager).Run(c)
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "user",
+		Short: T("Classic infrastructure Manage Users"),
+		RunE:  nil,
 	}
-	return CommandActionBindings
 
+	cobraCmd.AddCommand(NewCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewListCommand(sl).Command)
+	cobraCmd.AddCommand(NewDeleteCommand(sl).Command)
+	cobraCmd.AddCommand(NewDetailsCommand(sl).Command)
+	cobraCmd.AddCommand(NewPermissionsCommand(sl).Command)
+	cobraCmd.AddCommand(NewEditCommand(sl).Command)
+	cobraCmd.AddCommand(NewEditPermissionCommand(sl).Command)
+	cobraCmd.AddCommand(NewNotificationsCommand(sl).Command)
+	cobraCmd.AddCommand(NewEditNotificationsCommand(sl).Command)
+	cobraCmd.AddCommand(NewGrantAccessCommand(sl).Command)
+	cobraCmd.AddCommand(NewRemoveAccessCommand(sl).Command)
+	cobraCmd.AddCommand(NewDeviceAccessCommand(sl).Command)
+	return cobraCmd
 }
 
 func UserNamespace() plugin.Namespace {
@@ -60,28 +34,5 @@ func UserNamespace() plugin.Namespace {
 		ParentName:  "sl",
 		Name:        "user",
 		Description: T("Classic infrastructure Manage Users"),
-	}
-}
-
-func UserMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "user",
-		Usage:       "${COMMAND_NAME} sl user",
-		Description: T("Classic infrastructure Manage Users"),
-		Subcommands: []cli.Command{
-			UserCreateMetaData(),
-			UserDeleteMataData(),
-			UserDetailMetaData(),
-			UserEditMetaData(),
-			UserEditPermissionMetaData(),
-			UserListMetaData(),
-			UserPermissionsMetaData(),
-			UserNotificationsMetaData(),
-			UserEditNotificationsMetaData(),
-			UserGrantAccessMataData(),
-			UserRemoveAccessMataData(),
-			UserDeviceAccessMetaData(),
-		},
 	}
 }

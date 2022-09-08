@@ -3,48 +3,64 @@ package user
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type GrantAccessCommand struct {
-	UI          terminal.UI
+	*metadata.SoftlayerCommand
 	UserManager managers.UserManager
+	Command     *cobra.Command
+	Hardware    string
+	Virtual     string
+	Dedicated   string
 }
 
-func NewGrantAccessCommand(ui terminal.UI, userManager managers.UserManager) (cmd *GrantAccessCommand) {
-	return &GrantAccessCommand{
-		UI:          ui,
-		UserManager: userManager,
+func NewGrantAccessCommand(sl *metadata.SoftlayerCommand) (cmd *GrantAccessCommand) {
+	thisCmd := &GrantAccessCommand{
+		SoftlayerCommand: sl,
+		UserManager:      managers.NewUserManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "grant-access " + T("IDENTIFIER"),
+		Short: T("Grant access from a user to an specific device"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Hardware, "hardware", "", T("Hardware ID"))
+	cobraCmd.Flags().StringVar(&thisCmd.Virtual, "virtual", "", T("Virtual Guest ID"))
+	cobraCmd.Flags().StringVar(&thisCmd.Dedicated, "dedicated", "", T("Dedicated Host ID"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one identifier."))
-	}
-
-	if !c.IsSet("hardware") && !c.IsSet("virtual") && !c.IsSet("dedicated") {
+func (cmd *GrantAccessCommand) Run(args []string) error {
+	if cmd.Hardware == "" && cmd.Virtual == "" && cmd.Dedicated == "" {
 		return errors.NewInvalidUsageError(T("This command requires one option."))
 	}
 
-	userId, err := strconv.Atoi(c.Args()[0])
+	userId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return errors.NewInvalidUsageError(T("User ID should be a number."))
 	}
 
-	if c.IsSet("hardware") {
-		hardwareId, err := strconv.Atoi(c.String("hardware"))
+	if cmd.Hardware != "" {
+		hardwareId, err := strconv.Atoi(cmd.Hardware)
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Hardware ID should be a number."))
 		} else {
 			i18nsubs := map[string]interface{}{"userId": userId, "objectId": hardwareId}
 			response, err := cmd.UserManager.AddHardwareAccess(userId, hardwareId)
 			if err != nil {
-				return cli.NewExitError(T("Failed to update access.\n")+err.Error(), 2)
+				return errors.NewAPIError(T("Failed to update access.\n"), err.Error(), 2)
 			}
 			if response {
 				cmd.UI.Ok()
@@ -53,15 +69,15 @@ func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if c.IsSet("dedicated") {
-		dedicatedHostId, err := strconv.Atoi(c.String("dedicated"))
+	if cmd.Dedicated != "" {
+		dedicatedHostId, err := strconv.Atoi(cmd.Dedicated)
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Dedicated host ID should be a number."))
 		} else {
 			i18nsubs := map[string]interface{}{"userId": userId, "objectId": dedicatedHostId}
 			response, err := cmd.UserManager.AddDedicatedHostAccess(userId, dedicatedHostId)
 			if err != nil {
-				return cli.NewExitError(T("Failed to update access.\n")+err.Error(), 2)
+				return errors.NewAPIError(T("Failed to update access.\n"), err.Error(), 2)
 			}
 			if response {
 				cmd.UI.Ok()
@@ -70,15 +86,15 @@ func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if c.IsSet("virtual") {
-		virtualId, err := strconv.Atoi(c.String("virtual"))
+	if cmd.Virtual != "" {
+		virtualId, err := strconv.Atoi(cmd.Virtual)
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Virtual server ID should be a number."))
 		} else {
 			i18nsubs := map[string]interface{}{"userId": userId, "objectId": virtualId}
 			response, err := cmd.UserManager.AddVirtualGuestAccess(userId, virtualId)
 			if err != nil {
-				return cli.NewExitError(T("Failed to update access.\n")+err.Error(), 2)
+				return errors.NewAPIError(T("Failed to update access.\n"), err.Error(), 2)
 			}
 			if response {
 				cmd.UI.Ok()
@@ -89,30 +105,4 @@ func (cmd *GrantAccessCommand) Run(c *cli.Context) error {
 
 	return nil
 
-}
-
-func UserGrantAccessMataData() cli.Command {
-	return cli.Command{
-		Category:    "user",
-		Name:        "grant-access",
-		Description: T("Grant access from a user to an specific device"),
-		Usage: T(`${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "hardware",
-				Usage: T("Hardware ID"),
-			},
-			cli.StringFlag{
-				Name:  "virtual",
-				Usage: T("Virtual Guest ID"),
-			},
-			cli.StringFlag{
-				Name:  "dedicated",
-				Usage: T("Dedicated Host ID"),
-			},
-		},
-	}
 }

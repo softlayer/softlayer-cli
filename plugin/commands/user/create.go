@@ -15,7 +15,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -23,60 +23,87 @@ import (
 )
 
 type CreateCommand struct {
-	UI          terminal.UI
+	*metadata.SoftlayerCommand
 	UserManager managers.UserManager
+	Command     *cobra.Command
+	Email       string
+	Password    string
+	FromUser    int
+	Template    string
+	VpnPassword string
+	ForceFlag   bool
 }
 
-func NewCreateCommand(ui terminal.UI, userManager managers.UserManager) (cmd *CreateCommand) {
-	return &CreateCommand{
-		UI:          ui,
-		UserManager: userManager,
+func NewCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CreateCommand) {
+	thisCmd := &CreateCommand{
+		SoftlayerCommand: sl,
+		UserManager:      managers.NewUserManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "create " + T("USERNAME"),
+		Short: T("Creates a user"),
+		Long: T(`${COMMAND_NAME} sl user create USERNAME [OPTIONS] 
+EXAMPLE: 	
+	${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{"firstName": "Test", "lastName": "Testerson"}'
+	Remember to set the permissions and access for this new user.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Email, "email", "", T("Email address for this user. Required for creation"))
+	cobraCmd.Flags().StringVar(&thisCmd.Password, "password", "", T("Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol"))
+	cobraCmd.Flags().IntVar(&thisCmd.FromUser, "from-user", 0, T("Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template"))
+	cobraCmd.Flags().StringVar(&thisCmd.Template, "template", " ", T("A json string describing https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/"))
+	cobraCmd.Flags().StringVar(&thisCmd.VpnPassword, "vpn-password", "", T("VPN password to set for this user."))
+	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	userName := c.Args()[0]
+func (cmd *CreateCommand) Run(args []string) error {
+	userName := args[0]
 
-	fromUserId := c.Int("from-user")
+	fromUserId := cmd.FromUser
 
 	var userTemplate datatypes.User_Customer
 	var err error
-	if !c.IsSet("from-user") {
+	if fromUserId == 0 {
 		userTemplate, err = cmd.UserManager.GetCurrentUser()
 	} else {
 		userTemplate, err = cmd.UserManager.GetUser(fromUserId, "mask[id,firstName,lastName,email,companyName,address1,city,country,postalCode,state,userStatusId,timezoneId]")
 	}
 
-	if c.IsSet("template") {
+	if cmd.Template != " " {
 		var templateStruct datatypes.User_Customer
-		template := c.String("template")
+		template := cmd.Template
 		err := json.Unmarshal([]byte(template), &templateStruct)
 		if err != nil {
-			return cli.NewExitError(fmt.Sprintf(T("Unable to unmarshal template json: %s\n"), err.Error()), 1)
+			return errors.NewInvalidUsageError(fmt.Sprintf(T("Unable to unmarshal template json: %s\n"), err.Error()))
 		}
 		StructAssignment(&userTemplate, &templateStruct)
 	}
 
 	userTemplate.Username = &userName
 
-	password := c.String("password")
+	password := cmd.Password
 	if password == "generate" {
 		password = string(GeneratePassword(23, 4))
 	}
 
-	vpnPassword := c.String("vpn-password")
+	vpnPassword := cmd.VpnPassword
 
-	emailAddress := c.String("email")
+	emailAddress := cmd.Email
 
 	userTemplate.Email = &emailAddress
 
-	if !c.IsSet("f") && !c.IsSet("force") {
+	if !cmd.ForceFlag {
 		confirm, err := cmd.UI.Confirm(T("You are about to create the following user: {{.UserName}}. Do you wish to continue?", map[string]interface{}{"UserName": userName}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -90,14 +117,14 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 		if err.(sl.Error).Exception == "SoftLayer_Exception_User_Customer_DelegateIamIdInvitationToPaas" {
 			cmd.UI.Print(err.(sl.Error).Message)
 		} else {
-			return cli.NewExitError(T("Failed to add user.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to add user.\n"), err.Error(), 2)
 		}
 
 	case nil:
 		printUser(result, password, cmd.UI)
 
 	default:
-		return cli.NewExitError(T("Failed to add user.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to add user.\n"), err.Error(), 2)
 	}
 	return nil
 }
@@ -168,41 +195,5 @@ func StructAssignment(A, B interface{}) { //a =b
 				av.Field(k).Set(tmp.Addr())
 			}
 		}
-	}
-}
-
-func UserCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "user",
-		Name:        "create",
-		Description: T("Creates a user"),
-		Usage: T(`${COMMAND_NAME} sl user create USERNAME [OPTIONS] 
-
-EXAMPLE: 	
-    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{"firstName": "Test", "lastName": "Testerson"}'
-    Remember to set the permissions and access for this new user.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "email",
-				Usage: T("Email address for this user. Required for creation"),
-			},
-			cli.StringFlag{
-				Name:  "password",
-				Usage: T("Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol"),
-			},
-			cli.IntFlag{
-				Name:  "from-user",
-				Usage: T("Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template"),
-			},
-			cli.StringFlag{
-				Name:  "template",
-				Usage: T("A json string describing https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/"),
-			},
-			cli.StringFlag{
-				Name:  "vpn-password",
-				Usage: T("VPN password to set for this user."),
-			},
-			metadata.ForceFlag(),
-		},
 	}
 }

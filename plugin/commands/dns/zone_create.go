@@ -1,8 +1,7 @@
 package dns
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -11,31 +10,41 @@ import (
 )
 
 type ZoneCreateCommand struct {
-	UI         terminal.UI
+	*metadata.SoftlayerCommand
 	DNSManager managers.DNSManager
+	Command    *cobra.Command
 }
 
-func NewZoneCreateCommand(ui terminal.UI, dnsManager managers.DNSManager) (cmd *ZoneCreateCommand) {
-	return &ZoneCreateCommand{
-		UI:         ui,
-		DNSManager: dnsManager,
+func NewZoneCreateCommand(sl *metadata.SoftlayerCommand) *ZoneCreateCommand {
+	thisCmd := &ZoneCreateCommand{
+		SoftlayerCommand: sl,
+		DNSManager:       managers.NewDNSManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "zone-create " + T("ZONE"),
+		Short: T("Create a zone."),
+		Long: T(`${COMMAND_NAME} sl dns zone-create ZONE [OPTIONS]
+
+EXAMPLE:
+	${COMMAND_NAME} sl dns zone-create ibm.com 
+	This command creates a zone that is named ibm.com.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ZoneCreateCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	zoneName := c.Args()[0]
+func (cmd *ZoneCreateCommand) Run(args []string) error {
+	zoneName := args[0]
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	resp, err := cmd.DNSManager.CreateZone(zoneName)
 	if err != nil {
-		return cli.NewExitError(T("Failed to create zone: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to create zone: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -45,20 +54,4 @@ func (cmd *ZoneCreateCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Zone {{.Zone}} was created.", map[string]interface{}{"Zone": zoneName}))
 	return nil
-}
-
-func DnsZoneCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dns",
-		Name:        "zone-create",
-		Description: T("Create a zone"),
-		Usage: T(`${COMMAND_NAME} sl dns zone-create ZONE [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl dns zone-create ibm.com 
-   This command creates a zone that is named ibm.com.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

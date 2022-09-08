@@ -18,7 +18,10 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewRecordEditCommand(sl).Command)
 	cobraCmd.AddCommand(NewRecordListCommand(sl).Command)
 	cobraCmd.AddCommand(NewRecordRemoveCommand(sl).Command)
-
+	cobraCmd.AddCommand(NewZoneCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewZoneDeleteCommand(sl).Command)
+	cobraCmd.AddCommand(NewZoneListCommand(sl).Command)
+	cobraCmd.AddCommand(NewZonePrintCommand(sl).Command)
 	return cobraCmd
 }
 
