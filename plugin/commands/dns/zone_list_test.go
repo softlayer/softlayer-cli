@@ -9,30 +9,29 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Zone list", func() {
 	var (
 		fakeUI         *terminal.FakeUI
+		cliCommand     *dns.ZoneListCommand
+		fakeSession    *session.Session
+		slCommand      *metadata.SoftlayerCommand
 		fakeDNSManager *testhelpers.FakeDNSManager
-		cmd            *dns.ZoneListCommand
-		cliCommand     cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = dns.NewZoneListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
-		cmd = dns.NewZoneListCommand(fakeUI, fakeDNSManager)
-		cliCommand = cli.Command{
-			Name:        dns.DnsZoneListMetaData().Name,
-			Description: dns.DnsZoneListMetaData().Description,
-			Usage:       dns.DnsZoneListMetaData().Usage,
-			Flags:       dns.DnsZoneListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.DNSManager = fakeDNSManager
 	})
 
 	Describe("Zone list", func() {
@@ -41,10 +40,10 @@ var _ = Describe("Zone list", func() {
 				fakeDNSManager.ListZonesReturns([]datatypes.Dns_Domain{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to list zones on your account.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to list zones on your account."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -75,16 +74,16 @@ var _ = Describe("Zone list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				//TODO ID column is colored, unable to verify as a simple string
-				Expect(strings.Contains(results[1], "1745153")).To(BeTrue())
-				Expect(strings.Contains(results[1], "bcr01.dal06.bluemix.ibmcsf.net   2014111108   2014-11-12T04:45:17Z")).To(BeTrue())
-				Expect(strings.Contains(results[2], "1745158")).To(BeTrue())
-				Expect(strings.Contains(results[2], "bluemix.ibmcsf.net               2016101304   2016-10-13T09:25:07Z")).To(BeTrue())
-				Expect(strings.Contains(results[3], "1745152")).To(BeTrue())
-				Expect(strings.Contains(results[3], "dal06.bluemix.ibmcsf.net         2014121600   2014-12-16T14:31:16Z")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("1745153"))
+				Expect(results[1]).To(ContainSubstring("bcr01.dal06.bluemix.ibmcsf.net   2014111108   2014-11-12T04:45:17Z"))
+				Expect(results[2]).To(ContainSubstring("1745158"))
+				Expect(results[2]).To(ContainSubstring("bluemix.ibmcsf.net               2016101304   2016-10-13T09:25:07Z"))
+				Expect(results[3]).To(ContainSubstring("1745152"))
+				Expect(results[3]).To(ContainSubstring("dal06.bluemix.ibmcsf.net         2014121600   2014-12-16T14:31:16Z"))
 			})
 		})
 	})

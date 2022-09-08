@@ -7,10 +7,11 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -18,32 +19,30 @@ var _ = Describe("Device access", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeUserManager *testhelpers.FakeUserManager
-		cmd             *user.DeviceAccessCommand
-		cliCommand      cli.Command
+		cliCommand      *user.DeviceAccessCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeUserManager = new(testhelpers.FakeUserManager)
-		cmd = user.NewDeviceAccessCommand(fakeUI, fakeUserManager)
-		cliCommand = cli.Command{
-			Name:        user.UserDeviceAccessMetaData().Name,
-			Description: user.UserDeviceAccessMetaData().Description,
-			Usage:       user.UserDeviceAccessMetaData().Usage,
-			Flags:       user.UserDeviceAccessMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = user.NewDeviceAccessCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.UserManager = fakeUserManager
 	})
 
 	Describe("user device-access", func() {
 		Context("Return error", func() {
 			It("Set command without identifier", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 
 			It("Set command with an invalid identifier", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcd")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcd")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: User ID should be a number."))
 			})
@@ -54,7 +53,7 @@ var _ = Describe("Device access", func() {
 				fakeUserManager.GetUserAllowDevicesPermissionsReturns([]datatypes.User_Customer_CustomerPermission_Permission{}, errors.New("Internal Server Error"))
 			})
 			It("failed get permissions", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get user permissions."))
 			})
@@ -65,7 +64,7 @@ var _ = Describe("Device access", func() {
 				fakeUserManager.GetDedicatedHostsReturns([]datatypes.Virtual_DedicatedHost{}, errors.New("Internal Server Error"))
 			})
 			It("failed get dedicated hosts", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get dedicated hosts."))
 			})
@@ -76,7 +75,7 @@ var _ = Describe("Device access", func() {
 				fakeUserManager.GetHardwareReturns([]datatypes.Hardware{}, errors.New("Internal Server Error"))
 			})
 			It("failed get bare metal servers", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get bare metal servers."))
 			})
@@ -87,7 +86,7 @@ var _ = Describe("Device access", func() {
 				fakeUserManager.GetVirtualGuestsReturns([]datatypes.Virtual_Guest{}, errors.New("Internal Server Error"))
 			})
 			It("failed get virtual servers", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get virtual servers."))
 			})
@@ -132,7 +131,7 @@ var _ = Describe("Device access", func() {
 				fakeUserManager.GetVirtualGuestsReturns(fakerVirtualGuests, nil)
 			})
 			It("Set command with a valid user", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123456"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ACCESS_ALL_GUEST"))
@@ -155,7 +154,7 @@ var _ = Describe("Device access", func() {
 
 		Context("Return no error", func() {
 			It("User set does not have devices and permissions", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123456"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("-"))

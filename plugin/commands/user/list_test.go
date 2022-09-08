@@ -7,31 +7,30 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("Edit Detail", func() {
+var _ = Describe("User List", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeUserManager *testhelpers.FakeUserManager
-		cmd             *user.ListCommand
-		cliCommand      cli.Command
+		cliCommand      *user.ListCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeUserManager = new(testhelpers.FakeUserManager)
-		cmd = user.NewListCommand(fakeUI, fakeUserManager)
-		cliCommand = cli.Command{
-			Name:        user.UserListMetaData().Name,
-			Description: user.UserListMetaData().Description,
-			Usage:       user.UserListMetaData().Usage,
-			Flags:       user.UserListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = user.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.UserManager = fakeUserManager
 
 		testListUser := []datatypes.User_Customer{
 			datatypes.User_Customer{
@@ -60,7 +59,7 @@ var _ = Describe("Edit Detail", func() {
 	Describe("user list ", func() {
 		Context("user list with unknown column", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--column", "noExist")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--column", "noExist")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --column noExist is not supported."))
 			})
@@ -69,7 +68,7 @@ var _ = Describe("Edit Detail", func() {
 		Context("user list fatal error", func() {
 			It("return error", func() {
 				fakeUserManager.ListUsersReturns([]datatypes.User_Customer{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to list users."))
 			})
@@ -77,7 +76,7 @@ var _ = Describe("Edit Detail", func() {
 
 		Context("user list", func() {
 			It("return users list", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("id     username     email             displayName      2FA   classicAPIKey"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("5555   ATestUser    user2@email.com   DisplayedName    yes   yes"))
@@ -87,18 +86,7 @@ var _ = Describe("Edit Detail", func() {
 
 		Context("user list with column", func() {
 			It("return users list", func() {
-				err := testhelpers.RunCommand(cliCommand, "--column", "username")
-				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("username"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("ATestUser"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("ATestUser2"))
-			})
-		})
-
-		// Columns does not exist
-		Context("user list with columns", func() {
-			It("return users list", func() {
-				err := testhelpers.RunCommand(cliCommand, "--columns", "username")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--column", "username")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("username"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ATestUser"))
@@ -108,7 +96,7 @@ var _ = Describe("Edit Detail", func() {
 
 		Context("user list in format json", func() {
 			It("return users list", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output", "json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"apiAuthenticationKeyCount": 123456,`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"displayName": "DisplayedName",`))

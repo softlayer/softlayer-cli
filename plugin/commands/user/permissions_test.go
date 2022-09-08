@@ -7,31 +7,30 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("Edit Detail", func() {
+var _ = Describe("User Permissions", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeUserManager *testhelpers.FakeUserManager
-		cmd             *user.PermissionsCommand
-		cliCommand      cli.Command
+		cliCommand      *user.PermissionsCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeUserManager = new(testhelpers.FakeUserManager)
-		cmd = user.NewPermissionsCommand(fakeUI, fakeUserManager)
-		cliCommand = cli.Command{
-			Name:        user.UserPermissionsMetaData().Name,
-			Description: user.UserPermissionsMetaData().Description,
-			Usage:       user.UserPermissionsMetaData().Usage,
-			Flags:       user.UserPermissionsMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = user.NewPermissionsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.UserManager = fakeUserManager
 		testUser := datatypes.User_Customer{
 			Roles: []datatypes.User_Permission_Role{
 				datatypes.User_Permission_Role{
@@ -64,7 +63,7 @@ var _ = Describe("Edit Detail", func() {
 	Describe("user permissions ", func() {
 		Context("user permissions", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
 			})
@@ -72,7 +71,7 @@ var _ = Describe("Edit Detail", func() {
 
 		Context("user permissions with letters like parameter", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("User ID should be a number."))
 			})
@@ -81,7 +80,7 @@ var _ = Describe("Edit Detail", func() {
 		Context("user permissions error user", func() {
 			It("return error", func() {
 				fakeUserManager.GetUserReturns(datatypes.User_Customer{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get user."))
 			})
@@ -90,7 +89,7 @@ var _ = Describe("Edit Detail", func() {
 		Context("user permissions error", func() {
 			It("return error", func() {
 				fakeUserManager.GetAllPermissionReturns([]datatypes.User_Customer_CustomerPermission_Permission{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get permissions."))
 			})
@@ -98,7 +97,7 @@ var _ = Describe("Edit Detail", func() {
 
 		Context("user permissions", func() {
 			It("return user permissions", func() {
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID    Role Name   Description"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123   role name   description"))
@@ -113,7 +112,7 @@ var _ = Describe("Edit Detail", func() {
 				fakeUserManager.GetUserReturns(datatypes.User_Customer{
 					IsMasterUserFlag: sl.Bool(true),
 				}, nil)
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("This account is the Master User and has all permissions enabled"))
 			})
