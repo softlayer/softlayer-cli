@@ -18,10 +18,10 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewDetachDeviceTicketCommand(sl).Command)
 	cobraCmd.AddCommand(NewDetailTicketCommand(sl).Command)
 	cobraCmd.AddCommand(NewListTicketCommand(sl).Command)
-	// cobraCmd.AddCommand(NewSubjectsTicketCommand(sl).Command)
-	// cobraCmd.AddCommand(NewSummaryTicketCommand(sl).Command)
-	// cobraCmd.AddCommand(NewUpdateTicketCommand(sl).Command)
-	// cobraCmd.AddCommand(NewUploadFileTicketCommand(sl).Command)
+	cobraCmd.AddCommand(NewSubjectsTicketCommand(sl).Command)
+	cobraCmd.AddCommand(NewSummaryTicketCommand(sl).Command)
+	cobraCmd.AddCommand(NewUpdateTicketCommand(sl).Command)
+	cobraCmd.AddCommand(NewUploadFileTicketCommand(sl).Command)
 	return cobraCmd
 }
 
