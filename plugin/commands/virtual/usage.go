@@ -51,6 +51,7 @@ Example:
 	// the docs say these are required, but the code gives them a default value... so going to leave unrequired.
 	// cobraCmd.MarkFlagRequired("start")
 	// cobraCmd.MarkFlagRequired("end")
+	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("valid-data")
 	return thisCmd
 }
