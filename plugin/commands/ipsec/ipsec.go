@@ -20,12 +20,12 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewOrderCommand(sl).Command)
 	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
 	cobraCmd.AddCommand(NewListCommand(sl).Command)
-	//cobraCmd.AddCommand(NewAddSubnetCommand(sl).Command)
-	//cobraCmd.AddCommand(NewRemoveSubnetCommand(sl).Command)
-	//cobraCmd.AddCommand(NewAddTranslationCommand(sl).Command)
-	//cobraCmd.AddCommand(NewRemoveTranslationCommand(sl).Command)
-	//cobraCmd.AddCommand(NewUpdateTranslationCommand(sl).Command)
-	//cobraCmd.AddCommand(NewUpdateCommand(sl).Command)
+	cobraCmd.AddCommand(NewAddSubnetCommand(sl).Command)
+	cobraCmd.AddCommand(NewRemoveSubnetCommand(sl).Command)
+	cobraCmd.AddCommand(NewAddTranslationCommand(sl).Command)
+	cobraCmd.AddCommand(NewRemoveTranslationCommand(sl).Command)
+	cobraCmd.AddCommand(NewUpdateTranslationCommand(sl).Command)
+	cobraCmd.AddCommand(NewUpdateCommand(sl).Command)
 	return cobraCmd
 }
 
