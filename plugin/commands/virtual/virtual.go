@@ -51,12 +51,12 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewPowerOnCommand(sl).Command)
 	cobraCmd.AddCommand(NewReadyCommand(sl).Command)
 	cobraCmd.AddCommand(NewRebootCommand(sl).Command)
-	// cobraCmd.AddCommand(NewReloadCommand(sl).Command)
-	// cobraCmd.AddCommand(NewRescueCommand(sl).Command)
-	// cobraCmd.AddCommand(NewResumeCommand(sl).Command)
-	// cobraCmd.AddCommand(NewStorageCommand(sl).Command)
-	// cobraCmd.AddCommand(NewUpgradeCommand(sl).Command)
-	// cobraCmd.AddCommand(NewUsageCommand(sl).Command)
+	cobraCmd.AddCommand(NewReloadCommand(sl).Command)
+	cobraCmd.AddCommand(NewRescueCommand(sl).Command)
+	cobraCmd.AddCommand(NewResumeCommand(sl).Command)
+	cobraCmd.AddCommand(NewStorageCommand(sl).Command)
+	cobraCmd.AddCommand(NewUpgradeCommand(sl).Command)
+	cobraCmd.AddCommand(NewUsageCommand(sl).Command)
 
 	return cobraCmd
 }
