@@ -15,7 +15,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
 
@@ -46,7 +45,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-
 	// ibmcloud sl ticket
 	ticketCommands := ticket.GetCommandActionBindings(context, ui, session)
 	for name, action := range ticketCommands {
@@ -56,12 +54,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl securitygroup
 	securitygroupCommands := securitygroup.GetCommandActionBindings(context, ui, session)
 	for name, action := range securitygroupCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl security
-	securityCommands := security.GetCommandActionBindings(context, ui, session)
-	for name, action := range securityCommands {
 		CommandActionBindings[name] = action
 	}
 

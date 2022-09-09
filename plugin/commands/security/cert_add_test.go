@@ -8,37 +8,35 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Certificate add", func() {
 	var (
 		fakeUI              *terminal.FakeUI
+		cliCommand          *security.CertAddCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 		fakeSecurityManager *testhelpers.FakeSecurityManager
-		cmd                 *security.CertAddCommand
-		cliCommand          cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = security.NewCertAddCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeSecurityManager = new(testhelpers.FakeSecurityManager)
-		cmd = security.NewCertAddCommand(fakeUI, fakeSecurityManager)
-
-		cliCommand = cli.Command{
-			Name:        security.SecuritySSLCertAddMetaData().Name,
-			Description: security.SecuritySSLCertAddMetaData().Description,
-			Usage:       security.SecuritySSLCertAddMetaData().Usage,
-			Flags:       security.SecuritySSLCertAddMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.SecurityManager = fakeSecurityManager
 	})
 
 	Describe("Certificate add", func() {
 		Context("Certificate add without crt", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--crt' is required"))
 			})
@@ -46,7 +44,7 @@ var _ = Describe("Certificate add", func() {
 		Context("Certificate add without key", func() {
 			It("return error", func() {
 				file, _ := os.Create("wilma.org.crt")
-				err := testhelpers.RunCommand(cliCommand, "--crt", file.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--crt", file.Name())
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--key' is required"))
 			})
@@ -58,7 +56,7 @@ var _ = Describe("Certificate add", func() {
 			It("return error", func() {
 				crtFile, _ := os.Create("wilma.org.crt")
 				keyFile, _ := os.Create("wilma.org.key")
-				err := testhelpers.RunCommand(cliCommand, "--crt", crtFile.Name(), "--key", keyFile.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--crt", crtFile.Name(), "--key", keyFile.Name())
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to add certificate."))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
@@ -75,13 +73,13 @@ var _ = Describe("Certificate add", func() {
 
 			})
 			It("Success minimum options", func() {
-				err := testhelpers.RunCommand(cliCommand, "--crt", crtFile.Name(), "--key", keyFile.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--crt", crtFile.Name(), "--key", keyFile.Name())
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("SSL certificate for wilma.org was added."))
 			})
 			It("Success all options", func() {
-				err := testhelpers.RunCommand(cliCommand, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--icc",
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--icc",
 					keyFile.Name(), "--csr", keyFile.Name(), "--notes", "testNotes")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
@@ -90,28 +88,28 @@ var _ = Describe("Certificate add", func() {
 				Expect(*argsForCall.Notes).To(Equal("testNotes"))
 			})
 			It("Success JSON output", func() {
-				err := testhelpers.RunCommand(cliCommand, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--output", "JSON")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--output", "JSON")
 				Expect(err).NotTo(HaveOccurred())
 
 				Expect(fakeUI.Outputs()).To(ContainSubstring("\"commonName\": \"wilma.org\""))
 			})
 			It("Handle Bad file CRT", func() {
-				err := testhelpers.RunCommand(cliCommand, "--crt", "./1fakeFile", "--key", keyFile.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--crt", "./1fakeFile", "--key", keyFile.Name())
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to read certificate file"))
 			})
 			It("Handle Bad file KEY", func() {
-				err := testhelpers.RunCommand(cliCommand, "--crt", crtFile.Name(), "--key", "fakeKeyFile")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--crt", crtFile.Name(), "--key", "fakeKeyFile")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to read private key file"))
 			})
 			It("Handle Bad file ICC", func() {
-				err := testhelpers.RunCommand(cliCommand, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--icc", "fakeFile")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--icc", "fakeFile")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to read intermediate certificate file"))
 			})
 			It("Handle Bad file CSR", func() {
-				err := testhelpers.RunCommand(cliCommand, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--csr", "fakeFile")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--crt", crtFile.Name(), "--key", keyFile.Name(), "--csr", "fakeFile")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to read certificate signing request file"))
 			})
@@ -122,7 +120,7 @@ var _ = Describe("Certificate add", func() {
 		})
 		Context("Check bad output format", func() {
 			It("Error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output", "text")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output", "text")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format"))
 			})
