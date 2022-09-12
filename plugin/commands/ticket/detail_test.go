@@ -8,31 +8,29 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("ticket detail", func() {
 	var (
 		fakeUI            *terminal.FakeUI
+		cliCommand        *ticket.DetailTicketCommand
+		fakeSession       *session.Session
+		slCommand         *metadata.SoftlayerCommand
 		fakeTicketManager *testhelpers.FakeTicketManager
-		fakeUserManager   *testhelpers.FakeUserManager
-		cmd               *ticket.DetailTicketCommand
-		cliCommand        cli.Command
 	)
 	BeforeEach(func() {
-		fakeTicketManager = new(testhelpers.FakeTicketManager)
 		fakeUI = terminal.NewFakeUI()
-		cmd = ticket.NewDetailTicketCommand(fakeUI, fakeTicketManager, fakeUserManager)
-		cliCommand = cli.Command{
-			Name:        ticket.TicketDetailMetaData().Name,
-			Description: ticket.TicketDetailMetaData().Description,
-			Usage:       ticket.TicketDetailMetaData().Usage,
-			Flags:       ticket.TicketDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = ticket.NewDetailTicketCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		fakeTicketManager = new(testhelpers.FakeTicketManager)
+		cliCommand.TicketManager = fakeTicketManager
 	})
 
 	Describe("Ticket detail", func() {
@@ -41,7 +39,7 @@ var _ = Describe("ticket detail", func() {
 				fakeTicketManager.GetTicketReturns(datatypes.Ticket{}, errors.New("This command requires one argument."))
 			})
 			It("Argument is not set", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
 			})
@@ -52,7 +50,7 @@ var _ = Describe("ticket detail", func() {
 				fakeTicketManager.GetTicketReturns(datatypes.Ticket{}, errors.New("The ticket id must be a positive non-zero number."))
 			})
 			It("Invalid ticket id is set", func() {
-				err := testhelpers.RunCommand(cliCommand, "0")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "0")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("The ticket id must be a positive non-zero number."))
 			})
@@ -63,7 +61,7 @@ var _ = Describe("ticket detail", func() {
 				fakeTicketManager.GetTicketReturns(datatypes.Ticket{}, errors.New("SoftLayer_Exception_ObjectNotFound: Unable to find object with id of '123'. (HTTP 404)"))
 			})
 			It("Ticket id that does not exist is set", func() {
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ObjectNotFound: Unable to find object with id of '123'. (HTTP 404)"))
 			})
@@ -74,7 +72,7 @@ var _ = Describe("ticket detail", func() {
 				fakeTicketManager.GetTicketReturns(datatypes.Ticket{}, errors.New("SoftLayer_Exception_ObjectNotFound: Unable to find object with id of '123'. (HTTP 404)"))
 			})
 			It("Ticket id that does not exist is set", func() {
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ObjectNotFound: Unable to find object with id of '123'. (HTTP 404)"))
 			})
@@ -85,7 +83,7 @@ var _ = Describe("ticket detail", func() {
 				fakeTicketManager.GetAllUpdatesReturns([]datatypes.Ticket_Update{}, errors.New("SoftLayer_Exception_ObjectNotFound: Unable to find object with id of '123'. (HTTP 404)"))
 			})
 			It("Ticket id that does not exist is set", func() {
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ObjectNotFound: Unable to find object with id of '123'. (HTTP 404)"))
 			})
@@ -115,7 +113,7 @@ var _ = Describe("ticket detail", func() {
 			})
 
 			It("Get ticket with one update", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123456"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("My title"))
@@ -148,7 +146,7 @@ var _ = Describe("ticket detail", func() {
 			})
 
 			It("Get ticket with two updates", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--count=2")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--count=2")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-29T00:00:00Z"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
