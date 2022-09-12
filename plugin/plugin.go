@@ -41,7 +41,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 
-	//	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/meta"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
@@ -321,6 +321,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(vlan.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(virtual.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(subnet.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(meta.NewMetaCommand(slCommand).Command) // single use command.
 
 	return cobraCmd
 }
