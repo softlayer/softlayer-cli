@@ -287,6 +287,9 @@ Useful Regex
 ```regex
 Expect\(strings.Contains\(err.Error\(\), \"(.*)\"\)\)\.To\(BeTrue\(\)\)
 Expect(err.Error()).To(ContainSubstring("\1"))
+
+Expect\(strings\.Contains\(results\[([[:digit:]])\], \"([[:print:]]*)\"\)\)\.To\(BeTrue\(\)\)
+Expect(results[\1]).To(ContainSubstring("\2"))
 ```
 
 ```
