@@ -3,57 +3,58 @@ package ipsec
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type ConfigCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	IPSECManager managers.IPSECManager
+	Command      *cobra.Command
 }
 
-func NewConfigCommand(ui terminal.UI, ipsecManager managers.IPSECManager) (cmd *ConfigCommand) {
-	return &ConfigCommand{
-		UI:           ui,
-		IPSECManager: ipsecManager,
+func NewConfigCommand(sl *metadata.SoftlayerCommand) (cmd *ConfigCommand) {
+	thisCmd := &ConfigCommand{
+		SoftlayerCommand: sl,
+		IPSECManager:     managers.NewIPSECManager(sl.Session),
 	}
-}
 
-func (cmd *ConfigCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	args0 := c.Args()[0]
-	contextId, err := strconv.Atoi(args0)
-	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Context ID")
-	}
-	err = cmd.IPSECManager.ApplyConfiguration(contextId)
-	if err != nil {
-		return cli.NewExitError(T("Failed to enqueue configuration request for IPSec {{.ContextID}}.\n", map[string]interface{}{"ContextID": contextId})+err.Error(), 2)
-	}
-	cmd.UI.Ok()
-	cmd.UI.Print(T("Configuration request received for IPSec {{.ContextID}}.", map[string]interface{}{"ContextID": contextId}))
-	return nil
-}
-
-func IpsecConfigMetaData() cli.Command {
-	return cli.Command{
-		Category:    "ipsec",
-		Name:        "config",
-		Description: T("Request configuration of a tunnel context"),
-		Usage: T(`${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "config " + T("CONTEXT_ID"),
+		Short: T("Request configuration of a tunnel context"),
+		Long: T(`${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]
 
   Request configuration of a tunnel context.
 
   This action will update the advancedConfigurationFlag on the context
   instance and further modifications against the context will be prevented
   until all changes can be propagated to network devices.`),
-		Flags: []cli.Flag{},
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
 	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
+}
+
+func (cmd *ConfigCommand) Run(args []string) error {
+	args0 := args[0]
+	contextId, err := strconv.Atoi(args0)
+	if err != nil {
+		return slErr.NewInvalidSoftlayerIdInputError("Context ID")
+	}
+	err = cmd.IPSECManager.ApplyConfiguration(contextId)
+	if err != nil {
+		return errors.NewAPIError(T("Failed to enqueue configuration request for IPSec {{.ContextID}}.\n", map[string]interface{}{"ContextID": contextId}), err.Error(), 2)
+	}
+	cmd.UI.Ok()
+	cmd.UI.Print(T("Configuration request received for IPSec {{.ContextID}}.", map[string]interface{}{"ContextID": contextId}))
+	return nil
 }
