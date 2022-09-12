@@ -18,11 +18,11 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewCertEditCommand(sl).Command)
 	cobraCmd.AddCommand(NewCertListCommand(sl).Command)
 	cobraCmd.AddCommand(NewCertRemoveCommand(sl).Command)
-	// cobraCmd.AddCommand(NewKeyAddCommand(sl).Command)
-	// cobraCmd.AddCommand(NewKeyEditCommand(sl).Command)
-	// cobraCmd.AddCommand(NewKeyListCommand(sl).Command)
-	// cobraCmd.AddCommand(NewKeyPrintCommand(sl).Command)
-	// cobraCmd.AddCommand(NewKeyRemoveCommand(sl).Command)
+	cobraCmd.AddCommand(NewKeyAddCommand(sl).Command)
+	cobraCmd.AddCommand(NewKeyEditCommand(sl).Command)
+	cobraCmd.AddCommand(NewKeyListCommand(sl).Command)
+	cobraCmd.AddCommand(NewKeyPrintCommand(sl).Command)
+	cobraCmd.AddCommand(NewKeyRemoveCommand(sl).Command)
 	return cobraCmd
 }
 

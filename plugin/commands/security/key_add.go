@@ -3,8 +3,7 @@ package security
 import (
 	"io/ioutil"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,47 +12,62 @@ import (
 )
 
 type KeyAddCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	SecurityManager managers.SecurityManager
+	Command         *cobra.Command
+	File            string
+	Key             string
+	Note            string
 }
 
-func NewKeyAddCommand(ui terminal.UI, securityManager managers.SecurityManager) (cmd *KeyAddCommand) {
-	return &KeyAddCommand{
-		UI:              ui,
-		SecurityManager: securityManager,
+func NewKeyAddCommand(sl *metadata.SoftlayerCommand) *KeyAddCommand {
+	thisCmd := &KeyAddCommand{
+		SoftlayerCommand: sl,
+		SecurityManager:  managers.NewSecurityManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "sshkey-add " + T("LABEL"),
+		Short: T("Add a new SSH key."),
+		Long: T(`${COMMAND_NAME} sl security sshkey-add LABEL [OPTIONS]
+	
+EXAMPLE:
+	${COMMAND_NAME} sl security sshkey-add my_sshkey -f ~/.ssh/id_rsa.pub --note mykey
+	This command adds an SSH key from file ~/.ssh/id_rsa.pub with a note "mykey".`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVarP(&thisCmd.File, "in-file", "f", "", T("The id_rsa.pub file to import for this key"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Key, "key", "k", "", T("The actual SSH key"))
+	cobraCmd.Flags().StringVar(&thisCmd.Note, "note", "", T("Extra note to be associated with the key"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *KeyAddCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *KeyAddCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	if !c.IsSet("k") && !c.IsSet("f") {
+	if cmd.Key == "" && cmd.File == "" {
 		return errors.NewInvalidUsageError(T("either [-k] or [-f|--in-file] is required."))
 	}
-	if c.IsSet("k") && c.IsSet("f") {
+	if cmd.Key != "" && cmd.File != "" {
 		return errors.NewInvalidUsageError(T("[-k] is not allowed with [-f|--in-file]."))
 	}
 	var keyText string
-	if c.IsSet("k") {
-		keyText = c.String("k")
+	if cmd.Key != "" {
+		keyText = cmd.Key
 	} else {
-		keyFile := c.String("f")
+		keyFile := cmd.File
 		contents, err := ioutil.ReadFile(keyFile) // #nosec
 		if err != nil {
-			return cli.NewExitError(T("Failed to read SSH key from file: {{.File}}.\n", map[string]interface{}{"File": keyFile})+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to read SSH key from file: {{.File}}.\n", map[string]interface{}{"File": keyFile}), err.Error(), 2)
 		}
 		keyText = string(contents)
 	}
-	key, err := cmd.SecurityManager.AddSSHKey(keyText, c.Args()[0], c.String("note"))
+	key, err := cmd.SecurityManager.AddSSHKey(keyText, args[0], cmd.Note)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add SSH key.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to add SSH key.\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -63,32 +77,4 @@ func (cmd *KeyAddCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("SSH key was added: ") + utils.StringPointertoString(key.Fingerprint))
 	return nil
-}
-
-func SecuritySSHKeyAddMetaData() cli.Command {
-	return cli.Command{
-		Category:    "security",
-		Name:        "sshkey-add",
-		Description: T("Add a new SSH key"),
-		Usage: T(`${COMMAND_NAME} sl security sshkey-add LABEL [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl security sshkey-add my_sshkey -f ~/.ssh/id_rsa.pub --note mykey
-   This command adds an SSH key from file ~/.ssh/id_rsa.pub with a note "mykey".`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "f,in-file",
-				Usage: T("The id_rsa.pub file to import for this key"),
-			},
-			cli.StringFlag{
-				Name:  "k,key",
-				Usage: T("The actual SSH key"),
-			},
-			cli.StringFlag{
-				Name:  "note",
-				Usage: T("Extra note to be associated with the key"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }
