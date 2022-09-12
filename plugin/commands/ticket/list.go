@@ -3,40 +3,51 @@ package ticket
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type ListTicketCommand struct {
-	UI            terminal.UI
+	*metadata.SoftlayerCommand
 	TicketManager managers.TicketManager
+	Command       *cobra.Command
+	Open          bool
+	Closed        bool
 }
 
-func NewListTicketCommand(ui terminal.UI, ticketManager managers.TicketManager) (cmd *ListTicketCommand) {
-	return &ListTicketCommand{
-		UI:            ui,
-		TicketManager: ticketManager,
+func NewListTicketCommand(sl *metadata.SoftlayerCommand) *ListTicketCommand {
+	thisCmd := &ListTicketCommand{
+		SoftlayerCommand: sl,
+		TicketManager:    managers.NewTicketManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List tickets."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVar(&thisCmd.Open, "open", false, T("Display only open tickets"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Closed, "closed", false, T("Display only closed tickets"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ListTicketCommand) Run(c *cli.Context) error {
-	if c.NArg() != 0 {
-		return errors.NewInvalidUsageError(T("This command requires zero arguments."))
-	}
-
+func (cmd *ListTicketCommand) Run(args []string) error {
 	var err error
 	var tickets, ticketsOpen, ticketsClose []datatypes.Ticket
 
-	if c.Bool("open") && c.Bool("closed") {
+	if cmd.Open && cmd.Closed {
 		ticketsOpen, err = cmd.TicketManager.ListOpenTickets()
 		ticketsClose, err = cmd.TicketManager.ListCloseTickets()
 		tickets = append(ticketsOpen, ticketsClose...)
-	} else if !c.Bool("open") && c.Bool("closed") {
+	} else if !cmd.Open && cmd.Closed {
 		tickets, err = cmd.TicketManager.ListCloseTickets()
 	} else {
 		tickets, err = cmd.TicketManager.ListOpenTickets()
@@ -73,27 +84,6 @@ func (cmd *ListTicketCommand) Run(c *cli.Context) error {
 
 		table.Add(row...)
 	}
-
 	table.Print()
 	return nil
-
-}
-
-func TicketListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "ticket",
-		Name:        "list",
-		Description: T("List tickets"),
-		Usage:       T("${COMMAND_NAME} sl ticket list [OPTIONS]"),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "open",
-				Usage: T("Display only open tickets"),
-			},
-			cli.BoolFlag{
-				Name:  "closed",
-				Usage: T("Display only closed tickets"),
-			},
-		},
-	}
 }
