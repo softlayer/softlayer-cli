@@ -7,40 +7,36 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("end to end test", func() {
 	var (
-		fakeSLSession      *session.Session
+		fakeSession        *session.Session
 		fakeNetworkManager managers.NetworkManager
 		fakeUI             *terminal.FakeUI
-		cmd                *securitygroup.InterfaceListCommand
-		cliCommand         cli.Command
+		cliCommand         *securitygroup.InterfaceListCommand
+		slCommand          *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
-		fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
-		fakeNetworkManager = managers.NewNetworkManager(fakeSLSession)
 		fakeUI = terminal.NewFakeUI()
-		cmd = securitygroup.NewInterfaceListCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        securitygroup.SecurityGroupInterfaceListMetaData().Name,
-			Description: securitygroup.SecurityGroupInterfaceListMetaData().Description,
-			Usage:       securitygroup.SecurityGroupInterfaceListMetaData().Usage,
-			Flags:       securitygroup.SecurityGroupInterfaceListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeNetworkManager = managers.NewNetworkManager(fakeSession)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = securitygroup.NewInterfaceListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	It("return no error", func() {
-		err := testhelpers.RunCommand(cliCommand, "1234")
+		err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 		Expect(err).NotTo(HaveOccurred())
 		results := strings.Split(fakeUI.Outputs(), "\n")
 		Expect(strings.Contains(results[1], "smsgwmongos-app-02-dal13.smsgwmongo.prd")).To(BeTrue())
@@ -59,40 +55,38 @@ var _ = Describe("Securitygroup interface list", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *securitygroup.InterfaceListCommand
-		cliCommand         cli.Command
+		cliCommand         *securitygroup.InterfaceListCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = securitygroup.NewInterfaceListCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        securitygroup.SecurityGroupInterfaceListMetaData().Name,
-			Description: securitygroup.SecurityGroupInterfaceListMetaData().Description,
-			Usage:       securitygroup.SecurityGroupInterfaceListMetaData().Usage,
-			Flags:       securitygroup.SecurityGroupInterfaceListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = securitygroup.NewInterfaceListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("Securitygroup interface list", func() {
 		Context("interface list without groupid", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("interface list with wrong group id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Security group ID'. It must be a positive integer."))
 			})
 		})
 		Context("interface list with wrong sortby", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --sortby abc is not supported."))
 			})
@@ -102,7 +96,7 @@ var _ = Describe("Securitygroup interface list", func() {
 				fakeNetworkManager.GetSecurityGroupReturns(datatypes.Network_SecurityGroup{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get security group 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -115,7 +109,7 @@ var _ = Describe("Securitygroup interface list", func() {
 				}, nil)
 			})
 			It("return not found", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("No interfaces are binded to security group 1234."))
 			})
@@ -153,28 +147,28 @@ var _ = Describe("Securitygroup interface list", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "12345678")).To(BeTrue())
 				Expect(strings.Contains(results[2], "87654321")).To(BeTrue())
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "id")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "12345678")).To(BeTrue())
 				Expect(strings.Contains(results[2], "87654321")).To(BeTrue())
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "virtualServerId")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "virtualServerId")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "36671787")).To(BeTrue())
 				Expect(strings.Contains(results[2], "36671788")).To(BeTrue())
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "hostname")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "hostname")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "bluemix-cli-analytics")).To(BeTrue())
@@ -235,7 +229,7 @@ var _ = Describe("Securitygroup interface list", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "12345678")).To(BeTrue())
@@ -246,7 +240,7 @@ var _ = Describe("Securitygroup interface list", func() {
 				Expect(strings.Contains(results[4], "88654321")).To(BeTrue())
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "id")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "12345678")).To(BeTrue())
@@ -257,7 +251,7 @@ var _ = Describe("Securitygroup interface list", func() {
 				Expect(strings.Contains(results[4], "88654321")).To(BeTrue())
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "virtualServerId")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "virtualServerId")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "36671787")).To(BeTrue())
@@ -268,7 +262,7 @@ var _ = Describe("Securitygroup interface list", func() {
 				Expect(strings.Contains(results[4], "36671790")).To(BeTrue())
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "hostname")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "hostname")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "bluemix-cli-analytics")).To(BeTrue())
@@ -309,28 +303,28 @@ var _ = Describe("Securitygroup interface list", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "12345678")).To(BeTrue())
 				Expect(strings.Contains(results[2], "87654321")).To(BeTrue())
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "id")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "12345678")).To(BeTrue())
 				Expect(strings.Contains(results[2], "87654321")).To(BeTrue())
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "virtualServerId")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "virtualServerId")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "36671787")).To(BeTrue())
 				Expect(strings.Contains(results[2], "36671790")).To(BeTrue())
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--sortby", "hostname")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "hostname")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "bluemix-cli-analytics")).To(BeTrue())
@@ -370,7 +364,7 @@ var _ = Describe("Securitygroup interface list", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "12345678")).To(BeTrue())

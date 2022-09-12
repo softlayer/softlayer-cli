@@ -10,36 +10,32 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("end to end test", func() {
 	var (
-		fakeSLSession      *session.Session
+		fakeSession        *session.Session
 		fakeNetworkManager managers.NetworkManager
 		fakeUI             *terminal.FakeUI
-		cmd                *securitygroup.DetailCommand
-		cliCommand         cli.Command
+		cliCommand         *securitygroup.DetailCommand
+		slCommand          *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
-		fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
-		fakeNetworkManager = managers.NewNetworkManager(fakeSLSession)
 		fakeUI = terminal.NewFakeUI()
-		cmd = securitygroup.NewDetailCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        securitygroup.SecurityGroupDetailMetaData().Name,
-			Description: securitygroup.SecurityGroupDetailMetaData().Description,
-			Usage:       securitygroup.SecurityGroupDetailMetaData().Usage,
-			Flags:       securitygroup.SecurityGroupDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeNetworkManager = managers.NewNetworkManager(fakeSession)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = securitygroup.NewDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	It("return no error", func() {
-		err := testhelpers.RunCommand(cliCommand, "1234")
+		err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 		Expect(err).NotTo(HaveOccurred())
 		results := strings.Split(fakeUI.Outputs(), "\n")
 		Expect(strings.Contains(results[9], "smsgwmongos-app-02-dal13.smsgwmongo.prd")).To(BeTrue())
@@ -59,33 +55,31 @@ var _ = Describe("Securitygroup detail", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *securitygroup.DetailCommand
-		cliCommand         cli.Command
+		cliCommand         *securitygroup.DetailCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = securitygroup.NewDetailCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        securitygroup.SecurityGroupDetailMetaData().Name,
-			Description: securitygroup.SecurityGroupDetailMetaData().Description,
-			Usage:       securitygroup.SecurityGroupDetailMetaData().Usage,
-			Flags:       securitygroup.SecurityGroupDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = securitygroup.NewDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("Securitygroup detail", func() {
 		Context("detail without groupid", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("detail with wrong group id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Security group ID'. It must be a positive integer."))
 			})
@@ -95,7 +89,7 @@ var _ = Describe("Securitygroup detail", func() {
 				fakeNetworkManager.GetSecurityGroupReturns(datatypes.Network_SecurityGroup{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get security group 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -152,7 +146,7 @@ var _ = Describe("Securitygroup detail", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "45507")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "45507")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("45507"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("allow_ssh"))
@@ -215,7 +209,7 @@ var _ = Describe("Securitygroup detail", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[7], "36671787")).To(BeTrue())
@@ -262,7 +256,7 @@ var _ = Describe("Securitygroup detail", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[7], "36671787")).To(BeTrue())
@@ -302,7 +296,7 @@ var _ = Describe("Securitygroup detail", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[8], "36671790")).To(BeTrue())

@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -15,34 +15,41 @@ import (
 )
 
 type DetailCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
 }
 
-func NewDetailCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("SECURITYGROUP_ID"),
+		Short: T("Get details about a security group"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	groupID, err := strconv.Atoi(c.Args()[0])
+func (cmd *DetailCommand) Run(args []string) error {
+	groupID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Security group ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	group, err := cmd.NetworkManager.GetSecurityGroup(groupID, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get security group {{.ID}}.\n", map[string]interface{}{"ID": groupID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get security group {{.ID}}.\n", map[string]interface{}{"ID": groupID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -98,16 +105,4 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	table.Add(T("Servers"), buf.String())
 	table.Print()
 	return nil
-}
-
-func SecurityGroupDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "securitygroup",
-		Name:        "detail",
-		Description: T("Get details about a security group"),
-		Usage:       "${COMMAND_NAME} sl securitygroup detail SECURITYGROUP_ID [OPTIONS]",
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }
