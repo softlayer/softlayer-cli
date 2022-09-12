@@ -3,9 +3,9 @@ package virtual
 import (
 	"sort"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -13,15 +13,65 @@ import (
 )
 
 type ListCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
+	Domain               string
+	Hostname             string
+	Datacenter           string
+	PublicIp             string
+	PrivateIp            string
+	Owner                string
+	Sortby               string
+	Cpu                  int
+	Memory               int
+	Network              int
+	Order                int
+	Hourly               bool
+	Monthly              bool
+	Tag                  []string
+	UserColumns          []string
 }
 
-func NewListCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
+	thisCmd := &ListCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List virtual server instances on your account"),
+		Long: T(`${COMMAND_NAME} sl vs list [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs list --domain ibm.com --hourly --sortby memory
+   This command lists all hourly-billing virtual server instances on current account filtering domain equals to "ibm.com" and sort them by memory.`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().StringVarP(&thisCmd.Domain, "domain", "D", "", T("Filter by domain portion of the FQDN"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Filter by host portion of the FQDN"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Filter by datacenter shortname"))
+	cobraCmd.Flags().StringVarP(&thisCmd.PublicIp, "public-ip", "P", "", T("Filter by public IP address"))
+	cobraCmd.Flags().StringVarP(&thisCmd.PrivateIp, "private-ip", "p", "", T("Filter by private IP address"))
+	cobraCmd.Flags().StringVar(&thisCmd.Owner, "owner", "", T("Filtered by Id of user who owns the instances"))
+	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "hostname", T("Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip"))
+
+	cobraCmd.Flags().IntVarP(&thisCmd.Cpu, "cpu", "c", 0, T("Filter by number of CPU cores"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Memory, "memory", "m", 0, T("Filter by memory in megabytes"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Network, "network", "n", 0, T("Filter by network port speed in Mbps"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Order, "order", "o", 0, T("Filter by ID of the order which purchased this instance"))
+
+	cobraCmd.Flags().BoolVar(&thisCmd.Hourly, "hourly", false, T("Show only hourly instances"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Monthly, "monthly", false, T("Show only monthly instances"))
+
+	cobraCmd.Flags().StringSliceVarP(&thisCmd.Tag, "tag", "g", []string{}, T("Filter by tags (multiple occurrence permitted)"))
+	cobraCmd.Flags().StringSliceVar(&thisCmd.UserColumns, "column", []string{}, T("Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times"))
+
+	return thisCmd
 }
 
 var maskMap = map[string]string{
@@ -40,42 +90,34 @@ var maskMap = map[string]string{
 	"tags":        "tagReferences",
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
+func (cmd *ListCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	sortby := c.String("sortby")
-	if sortby == "" {
-		sortby = "hostname"
-	}
-	var columns []string
-	if c.IsSet("column") {
-		columns = c.StringSlice("column")
-	} else if c.IsSet("columns") {
-		columns = c.StringSlice("columns")
-	}
+	sortby := cmd.Sortby
 
 	defaultColumns := []string{"id", "hostname", "domain", "cpu", "memory", "public_ip", "private_ip", "datacenter", "action"}
 	optionalColumns := []string{"guid", "power_state", "created_by", "tags"}
 	sortColumns := []string{"id", "hostname", "domain", "cpu", "memory", "public_ip", "private_ip", "datacenter"}
 
-	showColumns, err := utils.ValidateColumns(sortby, columns, defaultColumns, optionalColumns, sortColumns, c)
+	showColumns, err := utils.ValidateColumns2(sortby, cmd.UserColumns, defaultColumns, optionalColumns, sortColumns)
 	if err != nil {
 		return err
 	}
 
 	mask := utils.GetMask(maskMap, showColumns, sortby)
 
-	if c.IsSet("hourly") && c.IsSet("monthly") {
-		return bmxErr.NewExclusiveFlagsError("[--hourly]", "[--monthly]")
+	if cmd.Hourly && cmd.Monthly {
+		return slErrors.NewExclusiveFlagsError("[--hourly]", "[--monthly]")
 	}
 
-	vms, err := cmd.VirtualServerManager.ListInstances(c.IsSet("hourly"), c.IsSet("monthly"), c.String("D"), c.String("H"), c.String("d"), c.String("public-ip"), c.String("private-ip"), c.String("owner"), c.Int("c"), c.Int("m"), c.Int("n"), c.Int("o"), c.StringSlice("tag"), mask)
+	vms, err := cmd.VirtualServerManager.ListInstances(
+		cmd.Hourly, cmd.Monthly, cmd.Domain, cmd.Hostname, cmd.Datacenter, cmd.PublicIp, cmd.PrivateIp, cmd.Owner,
+		cmd.Cpu, cmd.Memory, cmd.Network, cmd.Order, cmd.Tag, mask,
+	)
+
 	if err != nil {
-		return cli.NewExitError(T("Failed to list virtual server instances on your account.\n")+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to list virtual server instances on your account.\n"), err.Error(), 2)
 	}
 
 	if sortby == "" || sortby == "hostname" {
@@ -95,7 +137,7 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	} else if sortby == "private_ip" {
 		sort.Sort(utils.VirtualGuestByBackendIp(vms))
 	} else {
-		return bmxErr.NewInvalidUsageError(T("--sortby '{{.Column}}' is not supported.", map[string]interface{}{"Column": sortby}))
+		return slErrors.NewInvalidUsageError(T("--sortby '{{.Column}}' is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 
 	if outputFormat == "JSON" {
@@ -136,84 +178,4 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	table.Print()
 
 	return nil
-}
-
-func VSListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "list",
-		Description: T("List virtual server instances on your account"),
-		Usage: T(`${COMMAND_NAME} sl vs list [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl vs list --domain ibm.com --hourly --sortby memory
-   This command lists all hourly-billing virtual server instances on current account filtering domain equals to "ibm.com" and sort them by memory.`),
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "c,cpu",
-				Usage: T("Filter by number of CPU cores"),
-			},
-			cli.StringFlag{
-				Name:  "D,domain",
-				Usage: T("Filter by domain portion of the FQDN"),
-			},
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Filter by datacenter shortname"),
-			},
-			cli.StringFlag{
-				Name:  "H,hostname",
-				Usage: T("Filter by host portion of the FQDN"),
-			},
-			cli.IntFlag{
-				Name:  "m,memory",
-				Usage: T("Filter by memory in megabytes"),
-			},
-			cli.IntFlag{
-				Name:  "n,network",
-				Usage: T("Filter by network port speed in Mbps"),
-			},
-			cli.StringFlag{
-				Name:  "P,public-ip",
-				Usage: T("Filter by public IP address"),
-			},
-			cli.StringFlag{
-				Name:  "p,private-ip",
-				Usage: T("Filter by private IP address"),
-			},
-			cli.BoolFlag{
-				Name:  "hourly",
-				Usage: T("Show only hourly instances"),
-			},
-			cli.BoolFlag{
-				Name:  "monthly",
-				Usage: T("Show only monthly instances"),
-			},
-			cli.StringSliceFlag{
-				Name:  "g,tag",
-				Usage: T("Filter by tags (multiple occurrence permitted)"),
-			},
-			cli.IntFlag{
-				Name:  "o,order",
-				Usage: T("Filter by ID of the order which purchased this instance"),
-			},
-			cli.StringFlag{
-				Name:  "owner",
-				Usage: T("Filtered by Id of user who owns the instances"),
-			},
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip"),
-			},
-			cli.StringSliceFlag{
-				Name:  "column",
-				Usage: T("Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times"),
-			},
-			cli.StringSliceFlag{
-				Name:   "columns",
-				Hidden: true,
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

@@ -11,13 +11,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ticket"
-
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -33,21 +30,9 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 		CommandActionBindings[name] = action
 	}
 
-	// ibmcloud sl ipsec
-	ipsecCommands := ipsec.GetCommandActionBindings(context, ui, session)
-	for name, action := range ipsecCommands {
-		CommandActionBindings[name] = action
-	}
-
 	// ibmcloud sl loadbal
 	loadbalCommands := loadbal.GetCommandActionBindings(context, ui, session)
 	for name, action := range loadbalCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl ticket
-	ticketCommands := ticket.GetCommandActionBindings(context, ui, session)
-	for name, action := range ticketCommands {
 		CommandActionBindings[name] = action
 	}
 

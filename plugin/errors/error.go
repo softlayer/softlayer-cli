@@ -2,6 +2,7 @@ package errors
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -17,6 +18,14 @@ func Error_Not_Login(context plugin.PluginContext) error {
 }
 
 func New(errorString string) error {
+	return errors.New(errorString)
+}
+
+func CollapseErrors(multiErrors []error) error {
+	errorString := ""
+	for _, theError := range multiErrors {
+		errorString = fmt.Sprintf("%v\n%v", errorString, theError.Error())
+	}
 	return errors.New(errorString)
 }
 
