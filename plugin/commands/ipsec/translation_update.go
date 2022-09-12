@@ -3,8 +3,7 @@ package ipsec
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -14,41 +13,61 @@ import (
 )
 
 type UpdateTranslationCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	IPSECManager managers.IPSECManager
+	Command      *cobra.Command
+	StaticIp     string
+	RemoteIp     string
+	Note         string
 }
 
-func NewUpdateTranslationCommand(ui terminal.UI, ipsecManager managers.IPSECManager) (cmd *UpdateTranslationCommand) {
-	return &UpdateTranslationCommand{
-		UI:           ui,
-		IPSECManager: ipsecManager,
+func NewUpdateTranslationCommand(sl *metadata.SoftlayerCommand) (cmd *UpdateTranslationCommand) {
+	thisCmd := &UpdateTranslationCommand{
+		SoftlayerCommand: sl,
+		IPSECManager:     managers.NewIPSECManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "translation-update " + T("CONTEXT_ID") + " " + T("TRANSLATION_ID"),
+		Short: T("Update an address translation for an IPSec"),
+		Long: T(`${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [OPTIONS]
+
+  Update an address translation for an IPSEC tunnel context.
+
+  A separate configuration request should be made to realize changes on
+  network devices.`),
+		Args: metadata.TwoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVarP(&thisCmd.StaticIp, "static-ip", "s", "", T("Static IP address[required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.RemoteIp, "remote-ip", "r", "", T("Remote IP address[required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Note, "note", "n", "", T("Note"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *UpdateTranslationCommand) Run(c *cli.Context) error {
-	if c.NArg() != 2 {
-		return errors.NewInvalidUsageError(T("This command requires two arguments."))
-	}
-	args0 := c.Args()[0]
+func (cmd *UpdateTranslationCommand) Run(args []string) error {
+	args0 := args[0]
 	contextId, err := strconv.Atoi(args0)
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Context ID")
 	}
-	args1 := c.Args()[1]
+	args1 := args[1]
 	translationId, err := strconv.Atoi(args1)
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Translation ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	resp, err := cmd.IPSECManager.UpdateTranslation(contextId, translationId, c.String("s"), c.String("r"), c.String("n"))
+	resp, err := cmd.IPSECManager.UpdateTranslation(contextId, translationId, cmd.StaticIp, cmd.RemoteIp, cmd.Note)
 	if err != nil {
-		return cli.NewExitError(T("Failed to update translation with ID {{.TransID}} in IPSec {{.ID}}.",
-			map[string]interface{}{"TransID": translationId, "ID": contextId})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to update translation with ID {{.TransID}} in IPSec {{.ID}}.",
+			map[string]interface{}{"TransID": translationId, "ID": contextId}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -59,33 +78,4 @@ func (cmd *UpdateTranslationCommand) Run(c *cli.Context) error {
 	cmd.UI.Print(T("Updated translation with ID {{.TransID}} in IPSec {{.ID}}.",
 		map[string]interface{}{"TransID": translationId, "ID": contextId}))
 	return nil
-}
-
-func IpsecTransUpdataMetaData() cli.Command {
-	return cli.Command{
-		Category:    "ipsec",
-		Name:        "translation-update",
-		Description: T("Update an address translation for an IPSec"),
-		Usage: T(`${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [OPTIONS]
-
-  Update an address translation for an IPSEC tunnel context.
-
-  A separate configuration request should be made to realize changes on
-  network devices.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "s,static-ip",
-				Usage: T("Static IP address[required]"),
-			},
-			cli.StringFlag{
-				Name:  "r,remote-ip",
-				Usage: T("Remote IP address[required]"),
-			},
-			cli.StringFlag{
-				Name:  "n,note",
-				Usage: T("Note"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }
