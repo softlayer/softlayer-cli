@@ -1,9 +1,8 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -12,34 +11,50 @@ import (
 )
 
 type PowerOffCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
+	Hard                 bool
+	Soft                 bool
+	Force                bool
 }
 
-func NewPowerOffCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *PowerOffCommand) {
-	return &PowerOffCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewPowerOffCommand(sl *metadata.SoftlayerCommand) (cmd *PowerOffCommand) {
+	thisCmd := &PowerOffCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "power-off " + T("IDENTIFIER"),
+		Short: T("Power off an active virtual server instance"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().BoolVar(&thisCmd.Hard, "hard", false, T("Perform a hard shutdown"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Soft, "soft", false, T("Perform a soft shutdown"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	return thisCmd
 }
 
-func (cmd *PowerOffCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	vsID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+func (cmd *PowerOffCommand) Run(args []string) error {
+
+	vsID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
 
-	if c.IsSet("hard") && c.IsSet("soft") {
-		return bmxErr.NewExclusiveFlagsError("--hard", "--soft")
+	if cmd.Hard && cmd.Soft {
+		return slErrors.NewExclusiveFlagsError("--hard", "--soft")
 	}
 
-	if !c.IsSet("f") && !c.IsSet("force") {
-		confirm, err := cmd.UI.Confirm(T("This will power off virtual server instance: {{.VsId}}. Continue?", map[string]interface{}{"VsId": vsID}))
+	subs := map[string]interface{}{"VsId": vsID, "VsID": vsID}
+	if !cmd.Force {
+		confirm, err := cmd.UI.Confirm(T("This will power off virtual server instance: {{.VsId}}. Continue?", subs))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -47,35 +62,11 @@ func (cmd *PowerOffCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	err = cmd.VirtualServerManager.PowerOffInstance(vsID, c.IsSet("soft"), c.IsSet("hard"))
+	err = cmd.VirtualServerManager.PowerOffInstance(vsID, cmd.Soft, cmd.Hard)
 	if err != nil {
-		return cli.NewExitError(T("Failed to power off virtual server instance: {{.VsID}}.\n", map[string]interface{}{"VsID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to power off virtual server instance: {{.VsID}}.\n", subs), err.Error(), 2)
 	}
 	cmd.UI.Ok()
-	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was power off.", map[string]interface{}{"VsId": vsID}))
+	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was power off.", subs))
 	return nil
-}
-
-func VSPowerOffMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "power-off",
-		Description: T("Power off an active virtual server instance"),
-		Usage: T(`${COMMAND_NAME} sl vs power-off IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl vs power-off 12345678 --soft
-   This command performs a soft power off for virtual server instance with ID 12345678.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "hard",
-				Usage: T("Perform a hard shutdown"),
-			},
-			cli.BoolFlag{
-				Name:  "soft",
-				Usage: T("Perform a soft shutdown"),
-			},
-			metadata.ForceFlag(),
-		},
-	}
 }

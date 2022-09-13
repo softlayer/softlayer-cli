@@ -3,10 +3,11 @@ package virtual
 import (
 	"fmt"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/spf13/cobra"
+
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
-	"github.com/urfave/cli"
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -14,28 +15,48 @@ import (
 )
 
 type MigrateCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
+	Guest                int
+	Host                 int
+	All                  bool
 }
 
-func NewMigrageCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *MigrateCommand) {
-	return &MigrateCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewMigrateCommand(sl *metadata.SoftlayerCommand) (cmd *MigrateCommand) {
+	thisCmd := &MigrateCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "migrate",
+		Short: T("Manage VSIs that require migration"),
+		Long: T(`${COMMAND_NAME} sl vs migrate [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl vs migrate --guest 1234567
+   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().IntVarP(&thisCmd.Guest, "guest", "g", 0, T("Guest ID to immediately migrate."))
+	cobraCmd.Flags().IntVarP(&thisCmd.Host, "host", "H", 0, T("Dedicated Host ID to migrate to. Only works on guests that are already on a dedicated host."))
+	cobraCmd.Flags().BoolVarP(&thisCmd.All, "all", "a", false, T("Migrate ALL guests that require migration immediately."))
+	return thisCmd
 }
 
-func (cmd *MigrateCommand) Run(c *cli.Context) error {
+func (cmd *MigrateCommand) Run(args []string) error {
 	filters := filter.New()
 	vsList := []datatypes.Virtual_Guest{}
 	objMask := "mask[id, hostname, domain, datacenter, pendingMigrationFlag, powerState, primaryIpAddress,primaryBackendIpAddress, dedicatedHost]"
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	if !c.IsSet("g") && !c.IsSet("a") && !c.IsSet("host") {
+	// No options, just show what is going to be migrated
+	if cmd.Guest == 0 && !cmd.All && cmd.Host == 0 {
 		vsPendignMigateList := getMigrationServerList(objMask, nil, cmd)
 		for _, pendingMigrationsVs := range vsPendignMigateList {
 			if *pendingMigrationsVs.PendingMigrationFlag {
@@ -56,16 +77,16 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 		showsServerPendingMigration(vsList, cmd, "vs")
 		showsServerPendingMigration(dedicatedMigrateList, cmd, "dedicated")
 	} else {
-		if c.IsSet("all") {
+		if cmd.All {
 			guestMigration := getMigrationServerList(objMask, nil, cmd)
 			if len(guestMigration) == 0 {
-				return cli.NewExitError(T("No guests require migration at this time.\n"), 2)
+				return slErrors.New(T("No guests require migration at this time.\n"))
 			}
 			for _, guest := range guestMigration {
 				if *guest.PendingMigrationFlag {
 					result, err := cmd.VirtualServerManager.MigrateInstance(*guest.Id)
 					if err != nil {
-						return cli.NewExitError(T("Failed to migrate the virtual server instance.\n")+err.Error(), 2)
+						return slErrors.NewAPIError(T("Failed to migrate the virtual server instance.\n"), err.Error(), 2)
 					}
 
 					cmd.UI.Ok()
@@ -73,21 +94,21 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 				}
 			}
 		}
-		if c.IsSet("host") {
-			if !c.IsSet("guest") {
-				return cli.NewExitError(T("Please add the '--guest' id too.\n"), 2)
+		if cmd.Host != 0 {
+			if cmd.Guest == 0 {
+				return slErrors.New(T("Please add the '--guest' id too.\n"))
 			}
-			err := cmd.VirtualServerManager.MigrateDedicatedHost(c.Int("guest"), c.Int("host"))
+			err := cmd.VirtualServerManager.MigrateDedicatedHost(cmd.Guest, cmd.Host)
 			if err != nil {
-				return cli.NewExitError(T("Failed to migrate the dedicated host instance.\n")+err.Error(), 2)
+				return slErrors.NewAPIError(T("Failed to migrate the dedicated host instance.\n"), err.Error(), 2)
 			}
 
-			cmd.UI.Print(T("The dedicated host is migrating: {{.HostId}}.", map[string]interface{}{"HostId": c.Int("host")}))
+			cmd.UI.Print(T("The dedicated host is migrating: {{.HostId}}.", map[string]interface{}{"HostId": cmd.Host}))
 		}
-		if c.IsSet("guest") {
-			result, err := cmd.VirtualServerManager.MigrateInstance(c.Int("guest"))
+		if cmd.Guest != 0 {
+			result, err := cmd.VirtualServerManager.MigrateInstance(cmd.Guest)
 			if err != nil {
-				return cli.NewExitError(T("Failed to migrate the virtual server instance.\n")+err.Error(), 2)
+				return slErrors.NewAPIError(T("Failed to migrate the virtual server instance.\n"), err.Error(), 2)
 			}
 			if outputFormat == "JSON" {
 				return utils.PrintPrettyJSON(cmd.UI, result)
@@ -106,7 +127,7 @@ func (cmd *MigrateCommand) Run(c *cli.Context) error {
 func getMigrationServerList(mask string, filter filter.Filters, cmd *MigrateCommand) []datatypes.Virtual_Guest {
 	migrationServerList, err := cmd.VirtualServerManager.GetInstances(mask, filter)
 	if err != nil {
-		cli.NewExitError(T("Failed to retrieve the virtual server instances.\n")+err.Error(), 2)
+		slErrors.NewAPIError(T("Failed to retrieve the virtual server instances.\n"), err.Error(), 2)
 	}
 	return migrationServerList
 }
@@ -133,33 +154,5 @@ func showsServerPendingMigration(vsList []datatypes.Virtual_Guest, cmd *MigrateC
 				utils.FormatIntPointer(vm.DedicatedHost.Id))
 		}
 		table.Print()
-	}
-}
-
-func VSMigrateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "migrate",
-		Description: T("Manage VSIs that require migration"),
-		Usage: T(`${COMMAND_NAME} sl vs migrate [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vs migrate --guest 1234567
-   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.`),
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "g, guest",
-				Usage: T("Guest ID to immediately migrate."),
-			},
-			cli.BoolFlag{
-				Name:  "a, all",
-				Usage: T("Migrate ALL guests that require migration immediately."),
-			},
-			cli.IntFlag{
-				Name:  "H, host",
-				Usage: T("Dedicated Host ID to migrate to. Only works on guests that are already on a dedicated host."),
-			},
-			metadata.OutputFlag(),
-		},
 	}
 }

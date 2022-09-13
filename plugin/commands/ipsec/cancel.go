@@ -3,8 +3,7 @@ package ipsec
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -14,61 +13,58 @@ import (
 )
 
 type CancelCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	IPSECManager managers.IPSECManager
+	Command      *cobra.Command
+	Immediate    bool
+	Reason       string
+	ForceFlag    bool
 }
 
-func NewCancelCommand(ui terminal.UI, ipsecManager managers.IPSECManager) (cmd *CancelCommand) {
-	return &CancelCommand{
-		UI:           ui,
-		IPSECManager: ipsecManager,
+func NewCancelCommand(sl *metadata.SoftlayerCommand) (cmd *CancelCommand) {
+	thisCmd := &CancelCommand{
+		SoftlayerCommand: sl,
+		IPSECManager:     managers.NewIPSECManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "cancel " + T("CONTEXT_ID"),
+		Short: T("Cancel a IPSec VPN tunnel context"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().BoolVar(&thisCmd.Immediate, "immediate", false, T("Cancel the IPSec immediately instead of on the billing anniversary"))
+	cobraCmd.Flags().StringVar(&thisCmd.Reason, "reason", "", T("An optional reason for cancellation"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CancelCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	args0 := c.Args()[0]
+func (cmd *CancelCommand) Run(args []string) error {
+	args0 := args[0]
 	contextId, err := strconv.Atoi(args0)
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Context ID")
 	}
-	if !c.IsSet("f") {
+	if !cmd.ForceFlag {
 		confirm, err := cmd.UI.Confirm(T("This will cancel the IPSec: {{.ContextID}} and cannot be undone. Continue?", map[string]interface{}{"ContextID": contextId}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
 			return nil
 		}
 	}
-	err = cmd.IPSECManager.CancelTunnelContext(contextId, c.Bool("immediate"), c.String("reason"))
+	err = cmd.IPSECManager.CancelTunnelContext(contextId, cmd.Immediate, cmd.Reason)
 	if err != nil {
-		return cli.NewExitError(T("Failed to cancel IPSec {{.ContextID}}.\n", map[string]interface{}{"ContextID": contextId})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to cancel IPSec {{.ContextID}}.\n", map[string]interface{}{"ContextID": contextId}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("IPSec {{.ContextID}} is cancelled.", map[string]interface{}{"ContextID": contextId}))
 	return nil
-}
-
-func IpsecCancelMetaData() cli.Command {
-	return cli.Command{
-		Category:    "ipsec",
-		Name:        "cancel",
-		Description: T("Cancel a IPSec VPN tunnel context"),
-		Usage:       T(`${COMMAND_NAME} sl ipsec cancel CONTEXT_ID [OPTIONS]`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "immediate",
-				Usage: T("Cancel the IPSec immediately instead of on the billing anniversary"),
-			},
-			cli.StringFlag{
-				Name:  "reason",
-				Usage: T("An optional reason for cancellation"),
-			},
-			metadata.ForceFlag(),
-		},
-	}
 }

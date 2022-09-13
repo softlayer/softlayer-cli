@@ -8,8 +8,9 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -17,32 +18,30 @@ var _ = Describe("IPSec cancel", func() {
 	var (
 		fakeUI           *terminal.FakeUI
 		fakeIPSecManager *testhelpers.FakeIPSECManager
-		cmd              *ipsec.CancelCommand
-		cliCommand       cli.Command
+		cliCommand       *ipsec.CancelCommand
+		fakeSession      *session.Session
+		slCommand        *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeIPSecManager = new(testhelpers.FakeIPSECManager)
-		cmd = ipsec.NewCancelCommand(fakeUI, fakeIPSecManager)
-		cliCommand = cli.Command{
-			Name:        ipsec.IpsecCancelMetaData().Name,
-			Description: ipsec.IpsecCancelMetaData().Description,
-			Usage:       ipsec.IpsecCancelMetaData().Usage,
-			Flags:       ipsec.IpsecCancelMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = ipsec.NewCancelCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.IPSECManager = fakeIPSecManager
 	})
 
 	Context("cancel without contextID", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
 			Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
 		})
 	})
 	Context("cancel with wrong context id", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "abc")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 			Expect(err).To(HaveOccurred())
 			Expect(strings.Contains(err.Error(), "Invalid input for 'Context ID'. It must be a positive integer.")).To(BeTrue())
 		})
@@ -50,7 +49,7 @@ var _ = Describe("IPSec cancel", func() {
 	Context("cancel without confirmation", func() {
 		It("return aborted", func() {
 			fakeUI.Inputs("No")
-			err := testhelpers.RunCommand(cliCommand, "1234")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"This will cancel the IPSec: 1234 and cannot be undone. Continue?"}))
 		})
@@ -60,7 +59,7 @@ var _ = Describe("IPSec cancel", func() {
 			fakeIPSecManager.CancelTunnelContextReturns(errors.New("Internal server error"))
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "1234", "-f")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 			Expect(err).To(HaveOccurred())
 			Expect(strings.Contains(err.Error(), "Failed to cancel IPSec 1234.")).To(BeTrue())
 			Expect(strings.Contains(err.Error(), "Internal server error")).To(BeTrue())
@@ -71,7 +70,7 @@ var _ = Describe("IPSec cancel", func() {
 			fakeIPSecManager.ApplyConfigurationReturns(nil)
 		})
 		It("return no error", func() {
-			err := testhelpers.RunCommand(cliCommand, "1234", "-f")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"IPSec 1234 is cancelled."}))

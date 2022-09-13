@@ -304,11 +304,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 	}
 
 	if len(multiErrors) > 0 {
-		errorString := ""
-		for _, theError := range multiErrors {
-			errorString = fmt.Sprintf("%v\n%v", errorString, theError.Error())
-		}
-		return errors.New(errorString)
+		return slErrors.CollapseErrors(multiErrors)
 	}
 	return nil
 }

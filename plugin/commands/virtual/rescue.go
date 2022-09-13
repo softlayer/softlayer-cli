@@ -1,9 +1,8 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -12,30 +11,41 @@ import (
 )
 
 type RescueCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
+	Force                bool
 }
 
-func NewRescueCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *RescueCommand) {
-	return &RescueCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewRescueCommand(sl *metadata.SoftlayerCommand) (cmd *RescueCommand) {
+	thisCmd := &RescueCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "rescue " + T("IDENTIFIER"),
+		Short: T("Reboot a virtual server instance into a rescue image"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	return thisCmd
 }
 
-func (cmd *RescueCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	vsID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+func (cmd *RescueCommand) Run(args []string) error {
+
+	vsID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
-
-	if !c.IsSet("f") && !c.IsSet("force") {
-		confirm, err := cmd.UI.Confirm(T("This will reboot virtual server instance: {{.VsId}}. Continue?", map[string]interface{}{"VsId": vsID}))
+	subs := map[string]interface{}{"VsId": vsID, "VsID": vsID}
+	if !cmd.Force {
+		confirm, err := cmd.UI.Confirm(T("This will reboot virtual server instance: {{.VsId}}. Continue?", subs))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -44,25 +54,9 @@ func (cmd *RescueCommand) Run(c *cli.Context) error {
 	}
 	err = cmd.VirtualServerManager.RescueInstance(vsID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to rescue virtual server instance: {{.VsID}}.\n", map[string]interface{}{"VsID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to rescue virtual server instance: {{.VsID}}.\n", subs), err.Error(), 2)
 	}
 	cmd.UI.Ok()
-	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was rebooted.", map[string]interface{}{"VsId": vsID}))
+	cmd.UI.Print(T("Virtual server instance: {{.VsId}} was rebooted.", subs))
 	return nil
-}
-
-func VSRescueMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "rescue",
-		Description: T("Reboot a virtual server instance into a rescue image"),
-		Usage: T(`${COMMAND_NAME} sl vs rescue IDENTIFIER [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vs rescue 12345678
-   This command reboots virtual server instance with ID 12345678 into a rescue image.`),
-		Flags: []cli.Flag{
-			metadata.ForceFlag(),
-		},
-	}
 }

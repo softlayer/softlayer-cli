@@ -3,30 +3,38 @@ package ticket
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type SubjectsTicketCommand struct {
-	UI            terminal.UI
+	*metadata.SoftlayerCommand
 	TicketManager managers.TicketManager
+	Command       *cobra.Command
 }
 
-func NewSubjectsTicketCommand(ui terminal.UI, ticketManager managers.TicketManager) (cmd *SubjectsTicketCommand) {
-	return &SubjectsTicketCommand{
-		UI:            ui,
-		TicketManager: ticketManager,
+func NewSubjectsTicketCommand(sl *metadata.SoftlayerCommand) *SubjectsTicketCommand {
+	thisCmd := &SubjectsTicketCommand{
+		SoftlayerCommand: sl,
+		TicketManager:    managers.NewTicketManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "subjects",
+		Short: T("List Subject IDs for ticket creation."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SubjectsTicketCommand) Run(c *cli.Context) error {
-	if c.NArg() != 0 {
-		return errors.NewInvalidUsageError(T("This command uses 0 arguments"))
-	}
+func (cmd *SubjectsTicketCommand) Run(args []string) error {
 
 	subjects, err := cmd.TicketManager.GetSubjects()
 
@@ -52,19 +60,5 @@ func (cmd *SubjectsTicketCommand) Run(c *cli.Context) error {
 		}
 		table.Print()
 		return nil
-	}
-
-}
-
-func TicketSubjectsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "ticket",
-		Name:        "subjects",
-		Description: T("List Subject IDs for ticket creation"),
-		Usage: T(`${COMMAND_NAME} sl ticket subjects
-  
-EXAMPLE:
-  ${COMMAND_NAME} sl ticket subjects
-  `),
 	}
 }

@@ -7,49 +7,48 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
-
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VS monitoring list", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.MonitoringListCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cmd           *virtual.MonitoringListCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = virtual.NewMonitoringListCommand(fakeUI, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        virtual.VSMonitoringListMetaData().Name,
-			Description: virtual.VSMonitoringListMetaData().Description,
-			Usage:       virtual.VSMonitoringListMetaData().Usage,
-			Flags:       virtual.VSMonitoringListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewMonitoringListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
 
 	Describe("VS monitoring list", func() {
 		Context("Return error", func() {
 			It("Set command without id", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 
 			It("Set command with an invalid id", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Virtual server ID'. It must be a positive integer."))
 			})
 
 			It("Set command with an invalid output format", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -60,7 +59,7 @@ var _ = Describe("VS monitoring list", func() {
 				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{}, errors.New("Internal Server Error"))
 			})
 			It("Command fails to get VS", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get virtual server"))
 			})
@@ -93,7 +92,7 @@ var _ = Describe("VS monitoring list", func() {
 				fakeVSManager.GetInstanceReturns(fakerVS, nil)
 			})
 			It("Set command with correct virtual server id", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("domain.com"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("9.9.9.9"))
