@@ -1,81 +1,55 @@
-package metadata
+package meta
 
 import (
 	"fmt"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
-
+	"github.com/spf13/cobra"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	metadataManager := managers.NewMetadataManager(session)
 
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"sl-metadata": func(c *cli.Context) error {
-			return NewMetadataCommand(ui, metadataManager).Run(c)
+
+type MetaCommand struct {
+	*metadata.SoftlayerCommand
+	Manager managers.MetadataManager
+	Command              *cobra.Command
+}
+
+func NewMetaCommand(sl *metadata.SoftlayerCommand) *MetaCommand {
+	thisCmd := &MetaCommand{
+		SoftlayerCommand:     sl,
+		Manager: managers.NewMetadataManager(sl.Session),
+	}
+	validOptions := availableMetadataOptions()
+	cobraCmd := &cobra.Command{
+		Use:   "metadata " + T("ARGUMENT"),
+		Short: T("Find details about the machine making these API calls."),
+		Long: T("ARGUMENT Choices: " + strings.Join(validOptions, ", ")),
+		Args:  cobra.MatchAll(metadata.OneArgs, cobra.OnlyValidArgs),
+		ValidArgs: validOptions,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
-	return CommandActionBindings
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-type MetadataCommand struct {
-	UI              terminal.UI
-	MetadataManager managers.MetadataManager
-}
 
-func NewMetadataCommand(ui terminal.UI, metadataManager managers.MetadataManager) (cmd *MetadataCommand) {
-	return &MetadataCommand{
-		UI:              ui,
-		MetadataManager: metadataManager,
-	}
-}
 
-func MetadataMetadata() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "metadata",
-		Description: T("Find details about the machine making these API calls."),
-		Usage: T(`${COMMAND_NAME} sl metadata [OPTIONS]
-		
-	.. csv-table:: Choices: 
-		- backend_ip
-		- backend_mac
-		- datacenter
-		- datacenter_id
-		- fqdn
-		- frontend_mac
-		- id
-		- ip
-		- network
-		- provision_state
-		- tags
-		- user_data
-		
-		Examples:
-					${COMMAND_NAME} sl metadata backend_ip
-					${COMMAND_NAME} sl metadata network
+func (cmd *MetaCommand) Run(args []string) error {
 
-	These commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.`),
-	}
-}
-
-func (cmd *MetadataCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-
-	option := c.Args()[0]
+	option := args[0]
 	if utils.StringInSlice(option, availableMetadataOptions()) == -1 {
-		return errors.NewInvalidUsageError(T("This option is not available."))
+		return slErrors.NewInvalidUsageError(T("This option is not available."))
 	}
 
 	var options sl.Options
@@ -92,7 +66,7 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 				parameter = ""
 			}
 
-			response, err := cmd.MetadataManager.CallAPIService("SoftLayer_Resource_Metadata", network, options, parameter)
+			response, err := cmd.Manager.CallAPIService("SoftLayer_Resource_Metadata", network, options, parameter)
 			if err != nil {
 				return err
 			}
@@ -110,7 +84,7 @@ func (cmd *MetadataCommand) Run(c *cli.Context) error {
 	}
 
 	request := availableMetadataRequests()[option]
-	response, err := cmd.MetadataManager.CallAPIService("SoftLayer_Resource_Metadata", request, options, "")
+	response, err := cmd.Manager.CallAPIService("SoftLayer_Resource_Metadata", request, options, "")
 	if err != nil {
 		return err
 	}
