@@ -3,8 +3,7 @@ package security
 import (
 	"sort"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,36 +12,53 @@ import (
 )
 
 type CertListCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	SecurityManager managers.SecurityManager
+	Command         *cobra.Command
+	Status          string
+	SortBy          string
 }
 
-func NewCertListCommand(ui terminal.UI, securityManager managers.SecurityManager) (cmd *CertListCommand) {
-	return &CertListCommand{
-		UI:              ui,
-		SecurityManager: securityManager,
+func NewCertListCommand(sl *metadata.SoftlayerCommand) *CertListCommand {
+	thisCmd := &CertListCommand{
+		SoftlayerCommand: sl,
+		SecurityManager:  managers.NewSecurityManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "cert-list",
+		Short: T("List SSL certificates on your account."),
+		Long: T(`${COMMAND_NAME} sl security cert-list [OPTIONS]
+
+EXAMPLE:
+	${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire
+	This command lists all valid certificates on current account and sort them by validity days.`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.Status, "status", "", T("Show certificates with this status, default is: all, options are: all,valid,expired"))
+	cobraCmd.Flags().StringVar(&thisCmd.SortBy, "sortby", "", T("Column to sort by. Options are: id,common_name,days_until_expire,note"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CertListCommand) Run(c *cli.Context) error {
-	status := c.String("status")
+func (cmd *CertListCommand) Run(args []string) error {
+	status := cmd.Status
 	if status != "" && status != "all" && status != "valid" && status != "expired" {
 		return errors.NewInvalidUsageError(T("[--status] must be either all, valid or expired."))
 	}
-	sortby := c.String("sortby")
+	sortby := cmd.SortBy
 	if sortby != "" && sortby != "id" && sortby != "ID" && sortby != "common_name" && sortby != "days_until_expire" && sortby != "note" {
 		return errors.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.",
 			map[string]interface{}{"Column": sortby}))
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	certs, err := cmd.SecurityManager.ListCertificates(status)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list SSL certificates on your account.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list SSL certificates on your account.\n"), err.Error(), 2)
 	}
 
 	if sortby == "id" || sortby == "ID" {
@@ -55,10 +71,6 @@ func (cmd *CertListCommand) Run(c *cli.Context) error {
 		sort.Sort(utils.CertByNotes(certs))
 	}
 
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, certs)
-	}
-
 	table := cmd.UI.Table([]string{T("ID"), T("common_name"), T("days_until_expire"), T("note")})
 	for _, cert := range certs {
 		table.Add(utils.FormatIntPointer(cert.Id),
@@ -66,30 +78,6 @@ func (cmd *CertListCommand) Run(c *cli.Context) error {
 			utils.FormatIntPointer(cert.ValidityDays),
 			utils.FormatStringPointer(cert.Notes))
 	}
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func SecuritySSLCertListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "security",
-		Name:        "cert-list",
-		Description: T("List SSL certificates on your account"),
-		Usage: T(`${COMMAND_NAME} sl security cert-list [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire
-   This command lists all valid certificates on current account and sort them by validity days.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "status",
-				Usage: T("Show certificates with this status, default is: all, options are: all,valid,expired"),
-			},
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by. Options are: id,common_name,days_until_expire,note"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }
