@@ -311,6 +311,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(order.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(security.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(ticket.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(security.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(placementgroup.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(securitygroup.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(tags.SetupCobraCommands(slCommand))
