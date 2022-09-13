@@ -3,8 +3,7 @@ package securitygroup
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -13,34 +12,47 @@ import (
 )
 
 type RuleRemoveCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	ForceFlag      bool
 }
 
-func NewRuleRemoveCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *RuleRemoveCommand) {
-	return &RuleRemoveCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewRuleRemoveCommand(sl *metadata.SoftlayerCommand) (cmd *RuleRemoveCommand) {
+	thisCmd := &RuleRemoveCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "rule-remove " + T("SECURITYGROUP_ID") + " " + T("RULE_ID"),
+		Short: T("Remove a rule from a security group"),
+		Args:  metadata.TwoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *RuleRemoveCommand) Run(c *cli.Context) error {
-	if c.NArg() != 2 {
-		return errors.NewInvalidUsageError(T("This command requires two arguments."))
-	}
-	groupID, err := strconv.Atoi(c.Args()[0])
+func (cmd *RuleRemoveCommand) Run(args []string) error {
+	groupID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Security group ID")
 	}
-	ruleID, err := strconv.Atoi(c.Args()[1])
+	ruleID, err := strconv.Atoi(args[1])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Security group rule ID")
 	}
-	if !c.IsSet("f") {
+	if !cmd.ForceFlag {
 		confirm, err := cmd.UI.Confirm(T("This will remove rule {{.RuleId}} in security group {{.GroupId}} and cannot be undone. Continue?",
 			map[string]interface{}{"RuleId": ruleID, "GroupId": groupID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -49,22 +61,10 @@ func (cmd *RuleRemoveCommand) Run(c *cli.Context) error {
 	}
 	err = cmd.NetworkManager.RemoveSecurityGroupRule(groupID, ruleID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to remove rule {{.RuleId}} in security group {{.GroupID}}.\n",
-			map[string]interface{}{"RuleId": ruleID, "GroupID": groupID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to remove rule {{.RuleId}} in security group {{.GroupID}}.\n",
+			map[string]interface{}{"RuleId": ruleID, "GroupID": groupID}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Rule {{.RuleId}} in security group {{.GroupID}} is removed.", map[string]interface{}{"RuleId": ruleID, "GroupID": groupID}))
 	return nil
-}
-
-func SecurityGroupRuleRemoveMetaData() cli.Command {
-	return cli.Command{
-		Category:    "securitygroup",
-		Name:        "rule-remove",
-		Description: T("Remove a rule from a security group"),
-		Usage:       "${COMMAND_NAME} sl securitygroup rule-remove SECURITYGROUP_ID RULE_ID [OPTIONS]",
-		Flags: []cli.Flag{
-			metadata.ForceFlag(),
-		},
-	}
 }
