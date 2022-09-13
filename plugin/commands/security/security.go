@@ -23,6 +23,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewKeyListCommand(sl).Command)
 	cobraCmd.AddCommand(NewKeyPrintCommand(sl).Command)
 	cobraCmd.AddCommand(NewKeyRemoveCommand(sl).Command)
+
 	return cobraCmd
 }
 

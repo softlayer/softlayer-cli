@@ -7,9 +7,10 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -17,20 +18,18 @@ var _ = Describe("Securitygroup create", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *securitygroup.CreateCommand
-		cliCommand         cli.Command
+		cliCommand         *securitygroup.CreateCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = securitygroup.NewCreateCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        securitygroup.SecurityGroupCreateMetaData().Name,
-			Description: securitygroup.SecurityGroupCreateMetaData().Description,
-			Usage:       securitygroup.SecurityGroupCreateMetaData().Usage,
-			Flags:       securitygroup.SecurityGroupCreateMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = securitygroup.NewCreateCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("Securitygroup create", func() {
@@ -39,7 +38,7 @@ var _ = Describe("Securitygroup create", func() {
 				fakeNetworkManager.CreateSecurityGroupReturns(datatypes.Network_SecurityGroup{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-n", "test")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-n", "test")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to create security group with name test."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -53,7 +52,7 @@ var _ = Describe("Securitygroup create", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "-n", "test")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-n", "test")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("test"))
@@ -68,7 +67,7 @@ var _ = Describe("Securitygroup create", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "-n", "test", "-d", "test-desc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-n", "test", "-d", "test-desc")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("test"))
