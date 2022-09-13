@@ -2,48 +2,46 @@ package loadbal_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer cancel", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.CancelCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.CancelCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewCancelCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewCancelCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalCancelMetadata().Name,
-			Description: loadbal.LoadbalCancelMetadata().Description,
-			Usage:       loadbal.LoadbalCancelMetadata().Usage,
-			Flags:       loadbal.LoadbalCancelMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
 	})
 
 	Context("cancel without loadbalID", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
-			Expect(strings.Contains(err.Error(), "Incorrect Usage: '--id' is required")).To(BeTrue())
+			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 		})
 	})
 	Context("cancel without confirmation", func() {
 		It("return aborted", func() {
 			fakeUI.Inputs("No")
-			err := testhelpers.RunCommand(cliCommand, "--id", "1234")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"This will cancel the load balancer: 1234 and cannot be undone. Continue?"}))
 		})
@@ -51,7 +49,7 @@ var _ = Describe("Load balancer cancel", func() {
 	Context("cancel with confirmation error", func() {
 		It("return error", func() {
 			fakeUI.Inputs("123456")
-			err := testhelpers.RunCommand(cliCommand, "--id", "1234")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 			Expect(err).To(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("This will cancel the load balancer: 1234 and cannot be undone. Continue?"))
 			Expect(err.Error()).To(ContainSubstring("input must be 'y', 'n', 'yes' or 'no'"))
@@ -62,10 +60,10 @@ var _ = Describe("Load balancer cancel", func() {
 			fakeLBManager.CancelLoadBalancerReturns(true, errors.New("Internal server error"))
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "1234", "-f")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 			Expect(err).To(HaveOccurred())
-			Expect(strings.Contains(err.Error(), "Failed to cancel load balancer 1234.")).To(BeTrue())
-			Expect(strings.Contains(err.Error(), "Internal server error")).To(BeTrue())
+			Expect(err.Error()).To(ContainSubstring("Failed to cancel load balancer 1234."))
+			Expect(err.Error()).To(ContainSubstring("Internal server error"))
 		})
 	})
 	Context("cancel with correct load balancer ID", func() {
@@ -73,7 +71,7 @@ var _ = Describe("Load balancer cancel", func() {
 			fakeLBManager.CancelLoadBalancerReturns(true, nil)
 		})
 		It("return no error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "1234", "-f")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Load balancer 1234 is cancelled."}))
@@ -84,7 +82,7 @@ var _ = Describe("Load balancer cancel", func() {
 			fakeLBManager.GetLoadBalancerUUIDReturns("", errors.New("Internal server error"))
 		})
 		It("return no error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "1234", "-f")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Failed to get load balancer: Internal server error."))
 		})

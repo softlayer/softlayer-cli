@@ -8,31 +8,30 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer health", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.HealthChecksCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.HealthChecksCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewHealthChecksCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewHealthChecksCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalHealthMetadata().Name,
-			Description: loadbal.LoadbalHealthMetadata().Description,
-			Usage:       loadbal.LoadbalHealthMetadata().Usage,
-			Flags:       loadbal.LoadbalHealthMetadata().Flags,
-			Action:      cmd.Run,
-		}
-		
+		cliCommand.LoadBalancerManager = fakeLBManager
+
 		modifyDateTest, _ := time.Parse(time.RFC3339, "2022-02-01T00:00:00Z")
 		fakeLBManager.GetLoadBalancerReturns(datatypes.Network_LBaaS_LoadBalancer{
 			Listeners: []datatypes.Network_LBaaS_Listener{
@@ -113,35 +112,35 @@ var _ = Describe("Load balancer health", func() {
 	})
 	Context("health without --lb-id", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--lb-id' is required"))
+			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 		})
 	})
 	Context("health without --health-uuid", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--lb-id", "123456")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--health-uuid' is required"))
 		})
 	})
 	Context("health without --health-uuid", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--lb-id", "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: At least one of these flags is required :-i, --interval, -r, --retry, -t, --timeout,  -u, --url,"))
 		})
 	})
 	Context("health with Unknow --health-uuid", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--lb-id", "1111", "--health-uuid", "abcde", "-i", "10")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1111", "--health-uuid", "abcde", "-i", "10")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Unable to find health check with UUID of 'abcde' in load balancer 1111."))
 		})
 	})
 	Context("health with exist ID, --health-uuid, interval, retry, timeout and url", func() {
 		It("return no error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--lb-id", "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6", "-i", "5", "-r", "2", "-t", "100", "-u", "/")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6", "-i", "5", "-r", "2", "-t", "100", "-u", "/")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Name            Value"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("ID              123456"))
@@ -168,7 +167,7 @@ var _ = Describe("Load balancer health", func() {
 				errors.New("Internal server error"))
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--lb-id", "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6", "-i", "5")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6", "-i", "5")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Failed to get load balancer: Internal server error."))
 		})
@@ -179,9 +178,10 @@ var _ = Describe("Load balancer health", func() {
 				errors.New("Internal server error"))
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--lb-id", "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6", "-i", "5")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6", "-i", "5")
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("Failed to update health check: Internal server error"))
+			Expect(err.Error()).To(ContainSubstring("Failed to update health check"))
+			Expect(err.Error()).To(ContainSubstring("Internal server error"))
 		})
 	})
 	Context("health with protocol like a TCP", func() {
@@ -200,7 +200,7 @@ var _ = Describe("Load balancer health", func() {
 			}, nil)
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--lb-id", "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6", "-u", "HTTP")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--health-uuid", "3f1111fe-c666-4ca4-9ded-6c66d6c6aef6", "-u", "HTTP")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("--url cannot be used with TCP checks."))
 		})

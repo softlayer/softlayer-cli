@@ -2,37 +2,36 @@ package loadbal_test
 
 import (
 	"errors"
-	"strings"
 	"time"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer detail", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.DetailCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.DetailCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewDetailCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalDetailMetadata().Name,
-			Description: loadbal.LoadbalDetailMetadata().Description,
-			Usage:       loadbal.LoadbalDetailMetadata().Usage,
-			Flags:       loadbal.LoadbalDetailMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
+
 		modifyDateTest, _ := time.Parse(time.RFC3339, "2022-02-01T00:00:00Z")
 		fakeLBManager.GetLoadBalancerReturns(
 			datatypes.Network_LBaaS_LoadBalancer{
@@ -103,16 +102,16 @@ var _ = Describe("Load balancer detail", func() {
 	})
 	Context("detail without loadbalID", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
-			Expect(strings.Contains(err.Error(), "'--id' is required")).To(BeTrue())
+			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 		})
 	})
 	Context("detail with wrong loadbalID", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "abc")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 			Expect(err).To(HaveOccurred())
-			Expect(strings.Contains(err.Error(), "invalid value")).To(BeTrue())
+			Expect(err.Error()).To(ContainSubstring("Invalid input for 'LoadBalancer ID'. It must be a positive integer."))
 		})
 	})
 	Context("detail with server fails", func() {
@@ -121,15 +120,15 @@ var _ = Describe("Load balancer detail", func() {
 				errors.New("Internal server error"))
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "1234")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 			Expect(err).To(HaveOccurred())
-			Expect(strings.Contains(err.Error(), "Failed to get load balancer with ID 1234.")).To(BeTrue())
-			Expect(strings.Contains(err.Error(), "Internal server error")).To(BeTrue())
+			Expect(err.Error()).To(ContainSubstring("Failed to get load balancer with ID 1234."))
+			Expect(err.Error()).To(ContainSubstring("Internal server error"))
 		})
 	})
 	Context("detail with loadbal ID", func() {
 		It("return loadbalancer", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "123456")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Name            Value"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("ID              123456"))
@@ -157,7 +156,7 @@ var _ = Describe("Load balancer detail", func() {
 			}, nil)
 		})
 		It("return loadbalancer", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "123456")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Type            Public to Private"))
 		})
@@ -169,7 +168,7 @@ var _ = Describe("Load balancer detail", func() {
 			}, nil)
 		})
 		It("return loadbalancer", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "123456")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Type            Public to Public"))
 		})
@@ -181,7 +180,7 @@ var _ = Describe("Load balancer detail", func() {
 			}, nil)
 		})
 		It("return Not Founds", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "987654")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "987654")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Protocols:      Not Found"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Members:        Not Found"))

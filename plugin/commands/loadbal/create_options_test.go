@@ -8,32 +8,32 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer create options", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *loadbal.OptionsCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		fakeLBManager      *testhelpers.FakeLoadBalancerManager
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *loadbal.OptionsCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewOptionsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
+		cliCommand.LoadBalancerManager = fakeLBManager
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = loadbal.NewOptionsCommand(fakeUI, fakeLBManager, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalOrderOptionsMetadata().Name,
-			Description: loadbal.LoadbalOrderOptionsMetadata().Description,
-			Usage:       loadbal.LoadbalOrderOptionsMetadata().Usage,
-			Flags:       loadbal.LoadbalOrderOptionsMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.NetworkManager = fakeNetworkManager
 
 		fakeLBManager.CreateLoadBalancerOptionsReturns([]datatypes.Product_Package{
 			datatypes.Product_Package{
@@ -57,9 +57,7 @@ var _ = Describe("Load balancer create options", func() {
 									},
 								},
 							},
-
 						},
-
 					},
 				},
 				Items: []datatypes.Product_Item{
@@ -67,7 +65,7 @@ var _ = Describe("Load balancer create options", func() {
 						KeyName: sl.String("KEY_NAME_PRICE_1"),
 						Prices: []datatypes.Product_Item_Price{
 							datatypes.Product_Item_Price{
-								LocationGroupId: sl.Int(123456),
+								LocationGroupId:    sl.Int(123456),
 								HourlyRecurringFee: sl.Float(1.2),
 							},
 						},
@@ -76,7 +74,7 @@ var _ = Describe("Load balancer create options", func() {
 						KeyName: sl.String("KEY_NAME_PRICE_2"),
 						Prices: []datatypes.Product_Item_Price{
 							datatypes.Product_Item_Price{
-								LocationGroupId: sl.Int(1234567),
+								LocationGroupId:    sl.Int(1234567),
 								HourlyRecurringFee: sl.Float(1.2),
 							},
 							datatypes.Product_Item_Price{
@@ -87,39 +85,39 @@ var _ = Describe("Load balancer create options", func() {
 				},
 			},
 		}, nil)
-		
+
 		fakeNetworkManager.ListSubnetsReturns([]datatypes.Network_Subnet{
 			datatypes.Network_Subnet{
-				SubnetType: sl.String("PRIMARY"),
+				SubnetType:        sl.String("PRIMARY"),
 				NetworkIdentifier: sl.String("10.10.10.10"),
-				Cidr: sl.Int(12),
+				Cidr:              sl.Int(12),
 				NetworkVlan: &datatypes.Network_Vlan{
 					VlanNumber: sl.Int(456),
 				},
 				PodName: sl.String("test.pod01"),
-				Id: sl.Int(789),
+				Id:      sl.Int(789),
 			},
 			datatypes.Network_Subnet{
-				SubnetType: sl.String("ADDITIONAL_PRIMARY"),
+				SubnetType:        sl.String("ADDITIONAL_PRIMARY"),
 				NetworkIdentifier: sl.String("20.20.20.20"),
-				Cidr: sl.Int(13),
+				Cidr:              sl.Int(13),
 				NetworkVlan: &datatypes.Network_Vlan{
 					VlanNumber: sl.Int(457),
 				},
 				PodName: sl.String("test.pod02"),
-				Id: sl.Int(781),
+				Id:      sl.Int(781),
 			},
 			datatypes.Network_Subnet{
-				SubnetType: sl.String("NOT_EXIST"),
+				SubnetType:        sl.String("NOT_EXIST"),
 				NetworkIdentifier: sl.String("30.30.30.30"),
-				Cidr: sl.Int(14),
+				Cidr:              sl.Int(14),
 				NetworkVlan: &datatypes.Network_Vlan{
 					VlanNumber: sl.Int(458),
 				},
 				PodName: sl.String("test.pod03"),
-				Id: sl.Int(782),
+				Id:      sl.Int(782),
 			},
-		},nil)
+		}, nil)
 	})
 
 	Context("create options returns error", func() {
@@ -127,7 +125,7 @@ var _ = Describe("Load balancer create options", func() {
 			fakeLBManager.CreateLoadBalancerOptionsReturns(nil, errors.New("Internal server error"))
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
 			Expect(strings.Contains(err.Error(), "Failed to get load balancer product packages.")).To(BeTrue())
 			Expect(strings.Contains(err.Error(), "Internal server error")).To(BeTrue())
@@ -135,7 +133,7 @@ var _ = Describe("Load balancer create options", func() {
 	})
 	Context("create options", func() {
 		It("return no error", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Datacenter          keyName"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("REGION_KEY_NAME_1   loc01"))
@@ -144,7 +142,7 @@ var _ = Describe("Load balancer create options", func() {
 	})
 	Context("create options with flag -d", func() {
 		It("return no error", func() {
-			err := testhelpers.RunCommand(cliCommand, "-d", "loc02")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "loc02")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Prices:                          Private Subnets"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Key Name           Cost          ID    Subnet           Vlan"))
@@ -154,10 +152,10 @@ var _ = Describe("Load balancer create options", func() {
 	})
 	Context("create options with 0 subnets", func() {
 		BeforeEach(func() {
-			fakeNetworkManager.ListSubnetsReturns([]datatypes.Network_Subnet{},nil)
+			fakeNetworkManager.ListSubnetsReturns([]datatypes.Network_Subnet{}, nil)
 		})
 		It("return no error", func() {
-			err := testhelpers.RunCommand(cliCommand, "-d", "loc02")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "loc02")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Prices:                          Private Subnets"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Key Name           Cost          Not Found"))
@@ -167,10 +165,10 @@ var _ = Describe("Load balancer create options", func() {
 	})
 	Context("create options return subnet error", func() {
 		BeforeEach(func() {
-			fakeNetworkManager.ListSubnetsReturns([]datatypes.Network_Subnet{},errors.New("Internal server error"))
+			fakeNetworkManager.ListSubnetsReturns([]datatypes.Network_Subnet{}, errors.New("Internal server error"))
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "-d", "loc02")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "loc02")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Prices:           Private Subnets"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Private Subnets   Failed to get subnets.Internal server error"))
@@ -207,7 +205,7 @@ var _ = Describe("Load balancer create options", func() {
 			}, nil)
 		})
 		It("return no error", func() {
-			err := testhelpers.RunCommand(cliCommand, "-d", "loc02")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "loc02")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("-----------------------------"))
 		})
