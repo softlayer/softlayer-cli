@@ -7,9 +7,10 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -18,55 +19,54 @@ var _ = Describe("Securitygroup interface remove", func() {
 		fakeUI             *terminal.FakeUI
 		fakeNetworkManager *testhelpers.FakeNetworkManager
 		fakeVSManager      *testhelpers.FakeVirtualServerManager
-		cmd                *securitygroup.InterfaceRemoveCommand
-		cliCommand         cli.Command
+		cliCommand         *securitygroup.InterfaceRemoveCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = securitygroup.NewInterfaceRemoveCommand(fakeUI, fakeNetworkManager, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        securitygroup.SecurityGroupInterfaceRemoveMetaData().Name,
-			Description: securitygroup.SecurityGroupInterfaceRemoveMetaData().Description,
-			Usage:       securitygroup.SecurityGroupInterfaceRemoveMetaData().Usage,
-			Flags:       securitygroup.SecurityGroupInterfaceRemoveMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = securitygroup.NewInterfaceRemoveCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.NetworkManager = fakeNetworkManager
+		cliCommand.VSManager = fakeVSManager
 	})
 
 	Describe("Securitygroup interface remove", func() {
 		Context("interface remove without groupid", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("interface remove without componentid", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Must set either -n|--network-component or both -s|--server and -i|--interface"))
 			})
 		})
 		Context("interface remove with componentid and serverid", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-n", "2345", "-s", "3456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "2345", "-s", "3456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Must set either -n|--network-component or both -s|--server and -i|--interface"))
 			})
 		})
 		Context("interface remove with componentid and interface", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-n", "2345", "-i", "abdf")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "2345", "-i", "abdf")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Must set either -n|--network-component or both -s|--server and -i|--interface"))
 			})
 		})
 		Context("interface remove with serverid and wronginterface", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "2345", "-i", "abdf")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "2345", "-i", "abdf")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -i|--interface must be either public or private"))
 			})
@@ -76,7 +76,7 @@ var _ = Describe("Securitygroup interface remove", func() {
 				fakeNetworkManager.DetachSecurityGroupComponentReturns(errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-n", "4567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "4567")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to remove network component 4567 from security group 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -87,7 +87,7 @@ var _ = Describe("Securitygroup interface remove", func() {
 				fakeNetworkManager.DetachSecurityGroupComponentReturns(nil)
 			})
 			It("return succeed", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-n", "4567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "4567")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Network component 4567 is removed from security group 1234."))
@@ -98,12 +98,12 @@ var _ = Describe("Securitygroup interface remove", func() {
 				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "4321", "-i", "public")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "public")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "4321", "-i", "private")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "private")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
@@ -133,12 +133,12 @@ var _ = Describe("Securitygroup interface remove", func() {
 				}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "4321", "-i", "public")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "public")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Instance 4321 has 2 public interface."))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "4321", "-i", "private")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "private")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Instance 4321 has 2 private interface."))
 			})
@@ -161,13 +161,13 @@ var _ = Describe("Securitygroup interface remove", func() {
 				fakeNetworkManager.DetachSecurityGroupComponentReturns(errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "4321", "-i", "public")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "public")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to remove network component 4567 from security group 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "4321", "-i", "private")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "private")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to remove network component 4568 from security group 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -191,13 +191,13 @@ var _ = Describe("Securitygroup interface remove", func() {
 				fakeNetworkManager.AttachSecurityGroupComponentReturns(nil)
 			})
 			It("return succeed", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "4321", "-i", "public")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "public")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Network component 4567 is removed from security group 1234."))
 			})
 			It("return succeed", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "4321", "-i", "private")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "private")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Network component 4568 is removed from security group 1234."))

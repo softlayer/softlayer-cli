@@ -20,12 +20,12 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewEditCommand(sl).Command)
 	cobraCmd.AddCommand(NewInterfaceAddCommand(sl).Command)
 	cobraCmd.AddCommand(NewInterfaceListCommand(sl).Command)
-	//cobraCmd.AddCommand(NewInterfaceRemoveCommand(sl).Command)
-	//cobraCmd.AddCommand(NewListCommand(sl).Command)
-	//cobraCmd.AddCommand(NewRuleAddCommand(sl).Command)
-	//cobraCmd.AddCommand(NewRuleEditCommand(sl).Command)
-	//cobraCmd.AddCommand(NewRuleListCommand(sl).Command)
-	//cobraCmd.AddCommand(NewRuleRemoveCommand(sl).Command)
+	cobraCmd.AddCommand(NewInterfaceRemoveCommand(sl).Command)
+	cobraCmd.AddCommand(NewListCommand(sl).Command)
+	cobraCmd.AddCommand(NewRuleAddCommand(sl).Command)
+	cobraCmd.AddCommand(NewRuleEditCommand(sl).Command)
+	cobraCmd.AddCommand(NewRuleListCommand(sl).Command)
+	cobraCmd.AddCommand(NewRuleRemoveCommand(sl).Command)
 	return cobraCmd
 }
 
