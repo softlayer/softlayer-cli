@@ -1,7 +1,6 @@
 package security
 
 import (
-	"errors"
 	"io/ioutil"
 	"strconv"
 
@@ -9,44 +8,52 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 type CertDownloadCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	SecurityManager managers.SecurityManager
+	Command         *cobra.Command
 }
 
-func NewCertDownloadCommand(ui terminal.UI, securityManager managers.SecurityManager) (cmd *CertDownloadCommand) {
-	return &CertDownloadCommand{
-		UI:              ui,
-		SecurityManager: securityManager,
+func NewCertDownloadCommand(sl *metadata.SoftlayerCommand) *CertDownloadCommand {
+	thisCmd := &CertDownloadCommand{
+		SoftlayerCommand: sl,
+		SecurityManager:  managers.NewSecurityManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "cert-download " + T("IDENTIFIER"),
+		Short: T("Download SSL certificate and key files."),
+		Long: T(`${COMMAND_NAME} sl security cert-download IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+	${COMMAND_NAME} sl security cert-download 12345678
+	This command downloads four files to current directory for certificate with ID 12345678. The four files are: certificate file, certificate signing request file, intermediate certificate file and private key file.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CertDownloadCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *CertDownloadCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	certID, err := strconv.Atoi(c.Args()[0])
+	certID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("SSL certificate ID")
 	}
 	cert, err := cmd.SecurityManager.GetCertificate(certID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get SSL certificate: {{.ID}}.\n",
-			map[string]interface{}{"ID": certID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get SSL certificate: {{.ID}}.\n",
+			map[string]interface{}{"ID": certID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -111,20 +118,4 @@ func (cmd *CertDownloadCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("SSL certificate files are downloaded."))
 	return nil
-}
-
-func SecuritySSLCertDownloadMetaData() cli.Command {
-	return cli.Command{
-		Category:    "security",
-		Name:        "cert-download",
-		Description: T("Download SSL certificate and key files"),
-		Usage: T(`${COMMAND_NAME} sl security cert-download IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl security cert-download 12345678
-   This command downloads four files to current directory for certificate with ID 12345678. The four files are: certificate file, certificate signing request file, intermediate certificate file and private key file.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

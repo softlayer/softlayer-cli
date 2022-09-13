@@ -13,7 +13,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -39,12 +38,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl securitygroup
 	securitygroupCommands := securitygroup.GetCommandActionBindings(context, ui, session)
 	for name, action := range securitygroupCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl security
-	securityCommands := security.GetCommandActionBindings(context, ui, session)
-	for name, action := range securityCommands {
 		CommandActionBindings[name] = action
 	}
 
