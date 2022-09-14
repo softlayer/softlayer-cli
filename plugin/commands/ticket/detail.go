@@ -34,8 +34,8 @@ func NewDetailTicketCommand(sl *metadata.SoftlayerCommand) *DetailTicketCommand 
 		Long: T(`${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]
   
 EXAMPLE:
-	${COMMAND_NAME} sl ticket detail 767676
-	${COMMAND_NAME} sl ticket detail 767676 --count 10`),
+  ${COMMAND_NAME} sl ticket detail 767676
+  ${COMMAND_NAME} sl ticket detail 767676 --count 10`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

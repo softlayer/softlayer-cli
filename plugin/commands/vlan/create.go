@@ -31,10 +31,10 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
 		Long: T(`${COMMAND_NAME} sl vlan create [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan
-	This command creates a public vlan located in datacenter dal09 named "myvlan".
-	${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan
-	This command creates a vlan on router bcr01a.dal09 named "myvlan".`),
+   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan
+   This command creates a public vlan located in datacenter dal09 named "myvlan".
+   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan
+   This command creates a vlan on router bcr01a.dal09 named "myvlan".`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

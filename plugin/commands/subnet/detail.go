@@ -38,8 +38,8 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
 		Long: T(`${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl subnet detail 12345678 
-	This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.`),
+   ${COMMAND_NAME} sl subnet detail 12345678 
+   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -27,8 +27,8 @@ func NewRecordAddCommand(sl *metadata.SoftlayerCommand) *RecordAddCommand {
 		Long: T(`${COMMAND_NAME} sl dns record-add ZONE RECORD TYPE DATA [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl dns record-add ibm.com ftp A 127.0.0.1 --ttl 86400
-	This command adds an A record to zone: ibm.com, its host is "ftp", data is "127.0.0.1" and ttl is 86400 seconds.`),
+   ${COMMAND_NAME} sl dns record-add ibm.com ftp A 127.0.0.1 --ttl 86400
+   This command adds an A record to zone: ibm.com, its host is "ftp", data is "127.0.0.1" and ttl is 86400 seconds.`),
 		Args: metadata.FourArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

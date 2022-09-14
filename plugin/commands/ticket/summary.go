@@ -25,7 +25,7 @@ func NewSummaryTicketCommand(sl *metadata.SoftlayerCommand) *SummaryTicketComman
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "summary",
-		Short: T("Summary info about tickets."),
+		Short: T("Summary info about tickets"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

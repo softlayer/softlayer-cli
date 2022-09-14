@@ -29,8 +29,8 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) *EditCommand {
 		Long: T(`${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename
-	This command updates vlan with ID 12345678 and gives it a new name "myvlan-rename".`),
+   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename
+   This command updates vlan with ID 12345678 and gives it a new name "myvlan-rename".`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

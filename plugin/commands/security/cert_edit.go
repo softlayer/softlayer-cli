@@ -37,8 +37,8 @@ func NewCertEditCommand(sl *metadata.SoftlayerCommand) *CertEditCommand {
 		Long: T(`${COMMAND_NAME} sl security cert-edit IDENTIFIER [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl security cert-edit 12345678 --key ~/ibm.com.key 
-	This command edits certificate with ID 12345678 and updates its private key with file: ~/ibm.com.key.`),
+   ${COMMAND_NAME} sl security cert-edit 12345678 --key ~/ibm.com.key 
+   This command edits certificate with ID 12345678 and updates its private key with file: ~/ibm.com.key.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

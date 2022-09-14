@@ -31,8 +31,8 @@ func NewCertRemoveCommand(sl *metadata.SoftlayerCommand) *CertRemoveCommand {
 		Long: T(`${COMMAND_NAME} sl security cert-remove IDENTIFIER [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl security cert-remove 12345678 
-	This command removes certificate with ID 12345678.`),
+   ${COMMAND_NAME} sl security cert-remove 12345678 
+   This command removes certificate with ID 12345678.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

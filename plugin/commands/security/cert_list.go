@@ -30,8 +30,8 @@ func NewCertListCommand(sl *metadata.SoftlayerCommand) *CertListCommand {
 		Long: T(`${COMMAND_NAME} sl security cert-list [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire
-	This command lists all valid certificates on current account and sort them by validity days.`),
+   ${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire
+   This command lists all valid certificates on current account and sort them by validity days.`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

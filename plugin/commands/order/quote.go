@@ -42,7 +42,8 @@ func NewQuoteCommand(sl *metadata.SoftlayerCommand) (cmd *QuoteCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "quote " + T("IDENTIFIER"),
 		Short: T("View and Order a quote"),
-		Long: T(`
+		Long: T(`${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]
+
 EXAMPLE: 
 	${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata
 	${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server`),
@@ -84,12 +85,12 @@ func (cmd *QuoteCommand) Run(args []string) error {
 
 	quote, err := cmd.OrderManager.GetQuote(quoteId, "")
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get Quote"), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Quote.\n"), err.Error(), 2)
 	}
 
 	recalculatedOrderContainer, err := cmd.OrderManager.GetRecalculatedOrderContainer(quoteId)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get Recalculated Order Container"), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Recalculated Order Container.\n"), err.Error(), 2)
 	}
 
 	extra, err := setArguments(cmd, recalculatedOrderContainer)
@@ -212,7 +213,7 @@ func setArguments(cmd *QuoteCommand, recalculatedOrderContainer datatypes.Contai
 	if cmd.Image != 0 {
 		image, err := cmd.ImageManager.GetImage(cmd.Image)
 		if err != nil {
-			return datatypes.Container_Product_Order{}, errors.NewAPIError(T("Failed to get Image"), err.Error(), 2)
+			return datatypes.Container_Product_Order{}, errors.NewAPIError(T("Failed to get Image.\n"), err.Error(), 2)
 		}
 		recalculatedOrderContainer.ImageTemplateGlobalIdentifier = image.GlobalIdentifier
 	}

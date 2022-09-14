@@ -32,8 +32,8 @@ func NewRecordListCommand(sl *metadata.SoftlayerCommand) *RecordListCommand {
 		Long: T(`${COMMAND_NAME} sl dns record-list ZONE [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl dns record-list ibm.com --record elasticsearch --type A --ttl 900
-	This command lists all A records under the zone: ibm.com, and filters by host is elasticsearch and ttl is 900 seconds.`),
+   ${COMMAND_NAME} sl dns record-list ibm.com --record elasticsearch --type A --ttl 900
+   This command lists all A records under the zone: ibm.com, and filters by host is elasticsearch and ttl is 900 seconds.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -33,10 +33,10 @@ func NewRecordEditCommand(sl *metadata.SoftlayerCommand) *RecordEditCommand {
 		Long: T(`${COMMAND_NAME} sl dns record-edit ZONE [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl dns record-edit ibm.com --by-id 12345678 --data 127.0.0.2 --ttl 3600
-	This command edits records under the zone: ibm.com, whose ID is 12345678, and sets its data to "127.0.0.2" and ttl to 3600.
-	${COMMAND_NAME} sl dns record-edit ibm.com --by-record kibana --ttl 3600
-	This command edits records under the zone: ibm.com, whose host is "kibana", and sets their ttl all to 3600.`),
+   ${COMMAND_NAME} sl dns record-edit ibm.com --by-id 12345678 --data 127.0.0.2 --ttl 3600
+   This command edits records under the zone: ibm.com, whose ID is 12345678, and sets its data to "127.0.0.2" and ttl to 3600.
+   ${COMMAND_NAME} sl dns record-edit ibm.com --by-record kibana --ttl 3600
+   This command edits records under the zone: ibm.com, whose host is "kibana", and sets their ttl all to 3600.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

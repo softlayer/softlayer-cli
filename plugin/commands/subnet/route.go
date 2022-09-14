@@ -31,8 +31,8 @@ func NewRouteCommand(sl *metadata.SoftlayerCommand) *RouteCommand {
 		Long: T(`${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678
-	This command allows you to change the route of your Account Owned subnets.`),
+   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678
+   This command allows you to change the route of your Account Owned subnets.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

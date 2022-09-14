@@ -33,8 +33,8 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
 		Long: T(`${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl vlan detail 12345678	--no-vs --no-hardware
-	This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.`),
+   ${COMMAND_NAME} sl vlan detail 12345678	--no-vs --no-hardware
+   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

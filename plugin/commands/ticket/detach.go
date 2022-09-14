@@ -30,8 +30,8 @@ func NewDetachDeviceTicketCommand(sl *metadata.SoftlayerCommand) *DetachDeviceTi
 		Long: T(`${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]
   
 EXAMPLE:
-	${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654
-	${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567`),
+  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654
+  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

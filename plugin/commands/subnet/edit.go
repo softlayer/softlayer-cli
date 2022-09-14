@@ -27,9 +27,9 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) *EditCommand {
 		Short: T("Set the note of the ipAddress."),
 		Long: T(`${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]
 
-		EXAMPLE:
-		   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote
-		   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1`),
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote
+   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

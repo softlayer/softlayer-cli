@@ -27,9 +27,11 @@ func NewCategoryListCommand(sl *metadata.SoftlayerCommand) (cmd *CategoryListCom
 	cobraCmd := &cobra.Command{
 		Use:   "category-list " + T("PACKAGE_KEYNAME"),
 		Short: T("List the categories of a package"),
-		Long: T(`
+		Long: T(`${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME
+	
 EXAMPLE: 
-	${COMMAND_NAME} sl order category-list BARE_METAL_SERVER --required`),
+   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER
+   This command lists the categories of Bare Metal servers.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

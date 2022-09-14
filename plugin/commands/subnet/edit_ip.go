@@ -30,9 +30,9 @@ func NewEditIpCommand(sl *metadata.SoftlayerCommand) *EditIpCommand {
 		Short: T("Set the note of the ipAddress."),
 		Long: T(`${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]
 
-		EXAMPLE:
-		   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote
-		   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote.`),
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote
+   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

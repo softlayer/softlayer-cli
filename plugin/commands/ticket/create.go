@@ -37,11 +37,11 @@ func NewCreateStandardTicketCommand(sl *metadata.SoftlayerCommand) *CreateStanda
 		Long: T(`${COMMAND_NAME} sl ticket create [OPTIONS]
 
 EXAMPLE: 	
-	${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --body "This is an example ticket. Please disregard."
-	${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --body "This is an example ticket. Please disregard." --attachment 8675654 --attachment-type hardware --rootpwd passw0rd
-	${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --body "This is an example ticket. Please disregard." --attachment 1234567 --attachment-type virtual --rootpwd passw0rd
-	${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --attachment 8675654 --rootpwd passw0rd
-	${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522`),
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --body "This is an example ticket. Please disregard."
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --body "This is an example ticket. Please disregard." --attachment 8675654 --attachment-type hardware --rootpwd passw0rd
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --body "This is an example ticket. Please disregard." --attachment 1234567 --attachment-type virtual --rootpwd passw0rd
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522 --attachment 8675654 --rootpwd passw0rd
+    ${COMMAND_NAME} sl ticket create --title "Example title" --subject-id 1522`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -37,8 +37,8 @@ func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
 		Long: T(`${COMMAND_NAME} sl subnet list [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4
-	This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.`),
+   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4
+   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

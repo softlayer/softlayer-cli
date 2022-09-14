@@ -28,8 +28,8 @@ func NewZoneDeleteCommand(sl *metadata.SoftlayerCommand) *ZoneDeleteCommand {
 		Long: T(`${COMMAND_NAME} sl dns zone-delete ZONE
 
 EXAMPLE:
-	${COMMAND_NAME} sl dns zone-delete ibm.com 
-	This command deletes a zone that is named ibm.com.`),
+   ${COMMAND_NAME} sl dns zone-delete ibm.com 
+   This command deletes a zone that is named ibm.com.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

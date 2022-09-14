@@ -29,8 +29,8 @@ func NewKeyListCommand(sl *metadata.SoftlayerCommand) *KeyListCommand {
 		Long: T(`${COMMAND_NAME} sl security sshkey-list [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl security sshkey-list --sortby label
-	This command lists all SSH keys on current account and sorts them by label.`),
+   ${COMMAND_NAME} sl security sshkey-list --sortby label
+   This command lists all SSH keys on current account and sorts them by label.`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
