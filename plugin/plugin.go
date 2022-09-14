@@ -41,7 +41,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 
-	//	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/meta"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
@@ -309,8 +309,11 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(nas.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(dns.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(order.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(security.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(ticket.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(security.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(placementgroup.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(securitygroup.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(tags.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(block.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(loadbal.SetupCobraCommands(slCommand))
@@ -322,6 +325,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(vlan.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(virtual.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(subnet.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(meta.NewMetaCommand(slCommand).Command) // single use command.
 
 	return cobraCmd
 }

@@ -3,102 +3,88 @@ package securitygroup
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type RuleEditCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	RemoteIp       string
+	RemoteGroup    int
+	Direction      string
+	EtherType      string
+	PortMax        int
+	PortMin        int
+	protocol       string
 }
 
-func NewRuleEditCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *RuleEditCommand) {
-	return &RuleEditCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewRuleEditCommand(sl *metadata.SoftlayerCommand) (cmd *RuleEditCommand) {
+	thisCmd := &RuleEditCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "rule-edit " + T("SECURITYGROUP_ID") + " " + T("RULE_ID"),
+		Short: T("Edit a security group rule in a security group"),
+		Args:  metadata.TwoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVarP(&thisCmd.RemoteIp, "remote-ip", "r", "", T("The remote IP/CIDR to enforce"))
+	cobraCmd.Flags().IntVarP(&thisCmd.RemoteGroup, "remote-group", "s", 0, T("The ID of the remote security group to enforce"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Direction, "direction", "d", "", T("The direction of traffic to enforce (ingress or egress), required"))
+	cobraCmd.Flags().StringVarP(&thisCmd.EtherType, "ether-type", "e", "", T("The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified"))
+	cobraCmd.Flags().IntVarP(&thisCmd.PortMax, "port-max", "M", 0, T("The upper port bound to enforce"))
+	cobraCmd.Flags().IntVarP(&thisCmd.PortMin, "port-min", "m", 0, T("The lower port bound to enforce"))
+	cobraCmd.Flags().StringVarP(&thisCmd.protocol, "protocol", "p", "", T("The protocol (icmp, tcp, udp) to enforce"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *RuleEditCommand) Run(c *cli.Context) error {
-	if c.NArg() != 2 {
-		return errors.NewInvalidUsageError(T("This command requires two arguments."))
-	}
-	groupID, err := strconv.Atoi(c.Args()[0])
+func (cmd *RuleEditCommand) Run(args []string) error {
+	groupID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Security group ID")
 	}
-	ruleID, err := strconv.Atoi(c.Args()[1])
+	ruleID, err := strconv.Atoi(args[1])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Security group rule ID")
 	}
 
-	if c.IsSet("d") {
-		direction := c.String("d")
+	if cmd.Direction != "" {
+		direction := cmd.Direction
 		if direction != "egress" && direction != "ingress" {
 			return errors.NewInvalidUsageError(T("-d|--direction has to be either egress or ingress."))
 		}
 	}
-	if c.IsSet("e") {
-		etherType := c.String("e")
+	if cmd.EtherType != "" {
+		etherType := cmd.EtherType
 		if etherType != "IPv4" && etherType != "IPv6" {
 			return errors.NewInvalidUsageError(T("-e|--ether-type has to be either IPv4 or IPv6."))
 		}
 	}
-	if c.IsSet("p") {
-		protocol := c.String("p")
+	if cmd.protocol != "" {
+		protocol := cmd.protocol
 		if protocol != "icmp" && protocol != "tcp" && protocol != "udp" {
 			return errors.NewInvalidUsageError(T("Options for -p|--protocol are: icmp,tcp,udp"))
 		}
 	}
-	err = cmd.NetworkManager.EditSecurityGroupRule(groupID, ruleID, c.String("r"), c.Int("s"), c.String("d"), c.String("e"), c.Int("M"), c.Int("m"), c.String("p"))
+	err = cmd.NetworkManager.EditSecurityGroupRule(groupID, ruleID, cmd.RemoteIp, cmd.RemoteGroup, cmd.Direction, cmd.EtherType, cmd.PortMax, cmd.PortMin, cmd.protocol)
 	if err != nil {
-		return cli.NewExitError(T("Failed to edit rule {{.RuleId}} in security group {{.GroupID}}.\n",
-			map[string]interface{}{"RuleId": ruleID, "GroupID": groupID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to edit rule {{.RuleId}} in security group {{.GroupID}}.\n",
+			map[string]interface{}{"RuleId": ruleID, "GroupID": groupID}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Rule {{.RuleId}} in security group {{.GroupID}} is updated.", map[string]interface{}{"RuleId": ruleID, "GroupID": groupID}))
 	return nil
-}
-
-func SecurityGroupRuleEditMetaData() cli.Command {
-	return cli.Command{
-		Category:    "securitygroup",
-		Name:        "rule-edit",
-		Description: T("Edit a security group rule in a security group"),
-		Usage:       "${COMMAND_NAME} sl securitygroup rule-edit SECURITYGROUP_ID RULE_ID [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "r,remote-ip",
-				Usage: T("The remote IP/CIDR to enforce"),
-			},
-			cli.IntFlag{
-				Name:  "s,remote-group",
-				Usage: T("The ID of the remote security group to enforce"),
-			},
-			cli.StringFlag{
-				Name:  "d,direction",
-				Usage: T("The direction of traffic to enforce (ingress or egress), required"),
-			},
-			cli.StringFlag{
-				Name:  "e,ether-type",
-				Usage: T("The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified"),
-			},
-			cli.IntFlag{
-				Name:  "M,port-max",
-				Usage: T("The upper port bound to enforce"),
-			},
-			cli.IntFlag{
-				Name:  "m,port-min",
-				Usage: T("The lower port bound to enforce"),
-			},
-			cli.StringFlag{
-				Name:  "p,protocol",
-				Usage: T("The protocol (icmp, tcp, udp) to enforce"),
-			},
-		},
-	}
 }

@@ -4,8 +4,7 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -15,39 +14,49 @@ import (
 )
 
 type InterfaceListCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	Sortby         string
 }
 
-func NewInterfaceListCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *InterfaceListCommand) {
-	return &InterfaceListCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewInterfaceListCommand(sl *metadata.SoftlayerCommand) (cmd *InterfaceListCommand) {
+	thisCmd := &InterfaceListCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "interface-list " + T("SECURITYGROUP_ID"),
+		Short: T("List interfaces associated with security group"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "", T("Column to sort by. Options are: id,virtualServerId,hostname"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *InterfaceListCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	groupID, err := strconv.Atoi(c.Args()[0])
+func (cmd *InterfaceListCommand) Run(args []string) error {
+	groupID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Security group ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	sortColumns := []string{"id", "virtualServerId", "hostname"}
-	sortby := c.String("sortby")
+	sortby := cmd.Sortby
 	if sortby != "" && utils.StringInSlice(sortby, sortColumns) == -1 {
 		return errors.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 	securityGroup, err := cmd.NetworkManager.GetSecurityGroup(groupID, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get security group {{.GroupID}}.\n", map[string]interface{}{"GroupID": groupID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get security group {{.GroupID}}.\n", map[string]interface{}{"GroupID": groupID}), err.Error(), 2)
 	}
 
 	bindings := securityGroup.NetworkComponentBindings
@@ -97,20 +106,4 @@ func (cmd *InterfaceListCommand) Run(c *cli.Context) error {
 	}
 	serverTable.Print()
 	return nil
-}
-
-func SecurityGroupInterfaceListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "securitygroup",
-		Name:        "interface-list",
-		Description: T("List interfaces associated with security group"),
-		Usage:       "${COMMAND_NAME} sl securitygroup interface-list SECURITYGROUP_ID [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by. Options are: id,virtualServerId,hostname"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

@@ -11,10 +11,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -27,23 +24,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	// ibmcloud sl hardware
 	hardwareCommands := hardware.GetCommandActionBindings(context, ui, session)
 	for name, action := range hardwareCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl securitygroup
-	securitygroupCommands := securitygroup.GetCommandActionBindings(context, ui, session)
-	for name, action := range securitygroupCommands {
-		CommandActionBindings[name] = action
-	}
-
-	// ibmcloud sl security
-	securityCommands := security.GetCommandActionBindings(context, ui, session)
-	for name, action := range securityCommands {
-		CommandActionBindings[name] = action
-	}
-
-	//ibmcloud sl metadata
-	for name, action := range metadata.GetCommandActionBindings(context, ui, session) {
 		CommandActionBindings[name] = action
 	}
 

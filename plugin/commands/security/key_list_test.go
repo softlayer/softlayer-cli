@@ -8,30 +8,29 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Key List", func() {
 	var (
 		fakeUI              *terminal.FakeUI
+		cliCommand          *security.KeyListCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 		fakeSecurityManager *testhelpers.FakeSecurityManager
-		cmd                 *security.KeyListCommand
-		cliCommand          cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = security.NewKeyListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeSecurityManager = new(testhelpers.FakeSecurityManager)
-		cmd = security.NewKeyListCommand(fakeUI, fakeSecurityManager)
-		cliCommand = cli.Command{
-			Name:        security.SecuritySSHKeyListMetaData().Name,
-			Description: security.SecuritySSHKeyListMetaData().Description,
-			Usage:       security.SecuritySSHKeyListMetaData().Usage,
-			Flags:       security.SecuritySSHKeyListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.SecurityManager = fakeSecurityManager
 	})
 
 	Describe("Key list", func() {
@@ -40,18 +39,18 @@ var _ = Describe("Key List", func() {
 				fakeSecurityManager.ListSSHKeysReturns([]datatypes.Security_Ssh_Key{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to list SSH keys on your account.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to list SSH keys on your account."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
 		Context("Key list with wrong sortby", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --sortby abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --sortby abc is not supported."))
 			})
 		})
 
@@ -73,32 +72,32 @@ var _ = Describe("Key List", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "id")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "110")).To(BeTrue())
-				Expect(strings.Contains(results[2], "123")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("110"))
+				Expect(results[2]).To(ContainSubstring("123"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "label")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "label")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "mon")).To(BeTrue())
-				Expect(strings.Contains(results[2], "nom")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("mon"))
+				Expect(results[2]).To(ContainSubstring("nom"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "fingerprint")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "fingerprint")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "25:2a:e1:97:57:e4:d2:7c:ed:e0:57:85:eb:e9:c2:a8")).To(BeTrue())
-				Expect(strings.Contains(results[2], "92:e1:82:20:c4:f4:c3:1c:ca:57:ce:5f:10:5b:93:31")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("25:2a:e1:97:57:e4:d2:7c:ed:e0:57:85:eb:e9:c2:a8"))
+				Expect(results[2]).To(ContainSubstring("92:e1:82:20:c4:f4:c3:1c:ca:57:ce:5f:10:5b:93:31"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "note")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "note")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "Armer")).To(BeTrue())
-				Expect(strings.Contains(results[2], "Docker")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("Armer"))
+				Expect(results[2]).To(ContainSubstring("Docker"))
 			})
 		})
 	})
