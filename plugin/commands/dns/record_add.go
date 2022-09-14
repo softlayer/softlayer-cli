@@ -23,7 +23,7 @@ func NewRecordAddCommand(sl *metadata.SoftlayerCommand) *RecordAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "record-add " + T("ZONE") + " " + T("RECORD") + " " + T("TYPE") + " " + T("DATA"),
-		Short: T("Add resource record in a zone."),
+		Short: T("Add resource record in a zone"),
 		Long: T(`${COMMAND_NAME} sl dns record-add ZONE RECORD TYPE DATA [OPTIONS]
 
 EXAMPLE:

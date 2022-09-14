@@ -24,7 +24,7 @@ func NewUpdateTicketCommand(sl *metadata.SoftlayerCommand) *UpdateTicketCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "update " + T("TICKETID"),
-		Short: T("Adds an update to an existing ticket."),
+		Short: T("Adds an update to an existing ticket"),
 		Long: T(`${COMMAND_NAME} sl ticket update TICKETID ["CONTENTS"] 
   
 	If the second argument is not specified on a non-Windows machine, it will attempt to use either the value stored in the EDITOR environmental variable, or find either nano, vim, or emacs in that order.

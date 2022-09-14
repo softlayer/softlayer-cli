@@ -28,7 +28,7 @@ func NewCertDownloadCommand(sl *metadata.SoftlayerCommand) *CertDownloadCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cert-download " + T("IDENTIFIER"),
-		Short: T("Download SSL certificate and key files."),
+		Short: T("Download SSL certificate and key files"),
 		Long: T(`${COMMAND_NAME} sl security cert-download IDENTIFIER [OPTIONS]
 
 EXAMPLE:

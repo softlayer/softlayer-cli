@@ -30,7 +30,7 @@ func NewDetailTicketCommand(sl *metadata.SoftlayerCommand) *DetailTicketCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "detail",
-		Short: T("Get details for a ticket."),
+		Short: T("Get details for a ticket"),
 		Long: T(`${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]
   
 EXAMPLE:

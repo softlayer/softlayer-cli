@@ -25,7 +25,7 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) *EditCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "edit " + T("IDENTIFIER"),
-		Short: T("Edit the details about a VLAN."),
+		Short: T("Edit the details about a VLAN"),
 		Long: T(`${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]
 	
 EXAMPLE:

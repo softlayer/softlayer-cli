@@ -27,7 +27,7 @@ func NewCertRemoveCommand(sl *metadata.SoftlayerCommand) *CertRemoveCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cert-remove " + T("IDENTIFIER"),
-		Short: T("Remove SSL certificate."),
+		Short: T("Remove SSL certificate"),
 		Long: T(`${COMMAND_NAME} sl security cert-remove IDENTIFIER [OPTIONS]
 
 EXAMPLE:

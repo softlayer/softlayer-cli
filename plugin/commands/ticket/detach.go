@@ -26,7 +26,7 @@ func NewDetachDeviceTicketCommand(sl *metadata.SoftlayerCommand) *DetachDeviceTi
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "detach",
-		Short: T("Detach devices from a ticket."),
+		Short: T("Detach devices from a ticket"),
 		Long: T(`${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]
   
 EXAMPLE:

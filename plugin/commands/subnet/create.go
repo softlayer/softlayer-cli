@@ -28,7 +28,7 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "create",
-		Short: T("Add a new subnet to your account."),
+		Short: T("Add a new subnet to your account"),
 		Long: T(`${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]
 	
 Add a new subnet to your account. Valid quantities vary by type.

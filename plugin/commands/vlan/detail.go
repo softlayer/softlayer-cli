@@ -29,7 +29,7 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "detail " + T("IDENTIFIER"),
-		Short: T("Get details about a VLAN."),
+		Short: T("Get details about a VLAN"),
 		Long: T(`${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]
 
 EXAMPLE:

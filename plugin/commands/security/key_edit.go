@@ -26,7 +26,7 @@ func NewKeyEditCommand(sl *metadata.SoftlayerCommand) *KeyEditCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "sshkey-edit " + T("IDENTIFIER"),
-		Short: T("Edit an SSH key."),
+		Short: T("Edit an SSH key"),
 		Long: T(`${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [OPTIONS]
 	
 EXAMPLE:

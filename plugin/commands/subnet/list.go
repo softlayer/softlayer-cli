@@ -33,7 +33,7 @@ func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "list",
-		Short: T("List all subnets on your account."),
+		Short: T("List all subnets on your account"),
 		Long: T(`${COMMAND_NAME} sl subnet list [OPTIONS]
 
 EXAMPLE:
@@ -46,7 +46,7 @@ EXAMPLE:
 	}
 	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "", T("Column to sort by. Options are: id,identifier,type,network_space,datacenter,vlan_id,IPs,hardware,vs"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Filter by datacenter shortname"))
-	cobraCmd.Flags().StringVar(&thisCmd.Identifier, "identifier", "", T(""))
+	cobraCmd.Flags().StringVar(&thisCmd.Identifier, "identifier", "", T("Filter by Subnet networkIdentifier property"))
 	cobraCmd.Flags().StringVarP(&thisCmd.SubnetType, "subnet-type", "t", "", T("Filter by subnet type"))
 	cobraCmd.Flags().StringVar(&thisCmd.NetworkSpace, "network-space", "", T("Filter by network space"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Ipv4, "ipv4", "4", false, T("Display IPv4 subnets only"))

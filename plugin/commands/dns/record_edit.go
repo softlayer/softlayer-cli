@@ -29,7 +29,7 @@ func NewRecordEditCommand(sl *metadata.SoftlayerCommand) *RecordEditCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "record-edit " + T("ZONE"),
-		Short: T("Update resource records in a zone."),
+		Short: T("Update resource records in a zone"),
 		Long: T(`${COMMAND_NAME} sl dns record-edit ZONE [OPTIONS]
 	
 EXAMPLE:

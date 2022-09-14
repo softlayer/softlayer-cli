@@ -34,7 +34,7 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "detail " + T("IDENTIFIER"),
-		Short: T("Get details of a subnet."),
+		Short: T("Get details of a subnet"),
 		Long: T(`${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]
 
 EXAMPLE:

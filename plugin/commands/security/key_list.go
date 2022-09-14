@@ -25,7 +25,7 @@ func NewKeyListCommand(sl *metadata.SoftlayerCommand) *KeyListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "sshkey-list",
-		Short: T("List SSH keys on your account."),
+		Short: T("List SSH keys on your account"),
 		Long: T(`${COMMAND_NAME} sl security sshkey-list [OPTIONS]
 
 EXAMPLE:

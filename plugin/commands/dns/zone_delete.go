@@ -24,7 +24,7 @@ func NewZoneDeleteCommand(sl *metadata.SoftlayerCommand) *ZoneDeleteCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "zone-delete " + T("ZONE"),
-		Short: T("Delete a zone."),
+		Short: T("Delete a zone"),
 		Long: T(`${COMMAND_NAME} sl dns zone-delete ZONE
 
 EXAMPLE:

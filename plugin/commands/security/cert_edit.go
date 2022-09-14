@@ -33,7 +33,7 @@ func NewCertEditCommand(sl *metadata.SoftlayerCommand) *CertEditCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cert-edit " + T("IDENTIFIER"),
-		Short: T("Edit SSL certificate."),
+		Short: T("Edit SSL certificate"),
 		Long: T(`${COMMAND_NAME} sl security cert-edit IDENTIFIER [OPTIONS]
 
 EXAMPLE:

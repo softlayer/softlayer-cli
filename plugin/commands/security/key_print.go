@@ -27,7 +27,7 @@ func NewKeyPrintCommand(sl *metadata.SoftlayerCommand) *KeyPrintCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "sshkey-print",
-		Short: T("Prints out an SSH key to the screen."),
+		Short: T("Prints out an SSH key to the screen"),
 		Long: T(`${COMMAND_NAME} sl security sshkey-print IDENTIFIER [OPTIONS]
 	
 EXAMPLE:

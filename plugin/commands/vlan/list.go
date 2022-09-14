@@ -33,7 +33,7 @@ func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "vlan",
-		Short: T("List all the VLANs on your account."),
+		Short: T("List all the VLANs on your account"),
 		Long: T(`${COMMAND_NAME} sl vlan list [OPTIONS]
 	
 EXAMPLE:

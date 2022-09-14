@@ -27,7 +27,7 @@ func NewOptionsCommand(sl *metadata.SoftlayerCommand) *OptionsCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "options",
-		Short: T("List all the options for creating VLAN."),
+		Short: T("List all the options for creating VLAN"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -28,7 +28,7 @@ func NewRecordListCommand(sl *metadata.SoftlayerCommand) *RecordListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "record-list " + T("ZONE"),
-		Short: T("List all the resource records in a zone."),
+		Short: T("List all the resource records in a zone"),
 		Long: T(`${COMMAND_NAME} sl dns record-list ZONE [OPTIONS]
 	
 EXAMPLE:

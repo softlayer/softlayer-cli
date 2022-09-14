@@ -27,7 +27,7 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "create",
-		Short: T("Create a new VLAN."),
+		Short: T("Create a new VLAN"),
 		Long: T(`${COMMAND_NAME} sl vlan create [OPTIONS]
 	
 EXAMPLE:

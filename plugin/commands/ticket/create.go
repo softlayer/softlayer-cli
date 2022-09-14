@@ -33,7 +33,7 @@ func NewCreateStandardTicketCommand(sl *metadata.SoftlayerCommand) *CreateStanda
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "create",
-		Short: T("Create a support ticket."),
+		Short: T("Create a support ticket"),
 		Long: T(`${COMMAND_NAME} sl ticket create [OPTIONS]
 
 EXAMPLE: 	

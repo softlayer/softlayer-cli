@@ -32,7 +32,7 @@ func NewCertAddCommand(sl *metadata.SoftlayerCommand) *CertAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cert-add",
-		Short: T("Add and upload SSL certificate details."),
+		Short: T("Add and upload SSL certificate details"),
 		Long: T(`${COMMAND_NAME} sl security cert-add [OPTIONS]
 	
 EXAMPLE:

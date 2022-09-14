@@ -26,7 +26,7 @@ func NewCertListCommand(sl *metadata.SoftlayerCommand) *CertListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cert-list",
-		Short: T("List SSL certificates on your account."),
+		Short: T("List SSL certificates on your account"),
 		Long: T(`${COMMAND_NAME} sl security cert-list [OPTIONS]
 
 EXAMPLE:

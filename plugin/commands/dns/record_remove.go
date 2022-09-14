@@ -25,7 +25,7 @@ func NewRecordRemoveCommand(sl *metadata.SoftlayerCommand) *RecordRemoveCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "record-remove " + T("RECORD_ID"),
-		Short: T("Remove resource record from a zone."),
+		Short: T("Remove resource record from a zone"),
 		Long: T(`${COMMAND_NAME} sl dns record-remove RECORD_ID
 	
 EXAMPLE:

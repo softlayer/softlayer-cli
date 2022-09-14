@@ -26,7 +26,7 @@ func NewCancelCommand(sl *metadata.SoftlayerCommand) *CancelCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cancel " + T("IDENTIFIER"),
-		Short: T("Cancel a subnet."),
+		Short: T("Cancel a subnet"),
 		Long: T(`${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONS]
 
 EXAMPLE:

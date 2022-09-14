@@ -38,7 +38,7 @@ EXAMPLE:
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().StringVarP(&thisCmd.TypeId, "type-id", "i", "", T("An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.TypeId, "type-id", "i", "", T("An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required]."))
 	cobraCmd.Flags().StringVarP(&thisCmd.Type, "type", "t", "", T("Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required]."))
 	thisCmd.Command = cobraCmd
 	return thisCmd

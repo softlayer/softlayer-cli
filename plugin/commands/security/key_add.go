@@ -27,7 +27,7 @@ func NewKeyAddCommand(sl *metadata.SoftlayerCommand) *KeyAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "sshkey-add " + T("LABEL"),
-		Short: T("Add a new SSH key."),
+		Short: T("Add a new SSH key"),
 		Long: T(`${COMMAND_NAME} sl security sshkey-add LABEL [OPTIONS]
 	
 EXAMPLE:

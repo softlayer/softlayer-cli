@@ -57,12 +57,12 @@ var _ = Describe("order quote-detail", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeOrderManager.GetQuoteReturns(datatypes.Billing_Order_Quote{}, errors.New("Failed to get Quote."))
+				fakeOrderManager.GetQuoteReturns(datatypes.Billing_Order_Quote{}, errors.New("Failed to get Quote"))
 			})
 			It("Failed get Quotes", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get Quote."))
+				Expect(err.Error()).To(ContainSubstring("Failed to get Quote"))
 			})
 		})
 

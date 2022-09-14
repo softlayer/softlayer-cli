@@ -84,12 +84,12 @@ func (cmd *QuoteCommand) Run(args []string) error {
 
 	quote, err := cmd.OrderManager.GetQuote(quoteId, "")
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get Quote."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Quote"), err.Error(), 2)
 	}
 
 	recalculatedOrderContainer, err := cmd.OrderManager.GetRecalculatedOrderContainer(quoteId)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get Recalculated Order Container."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Recalculated Order Container"), err.Error(), 2)
 	}
 
 	extra, err := setArguments(cmd, recalculatedOrderContainer)
@@ -212,7 +212,7 @@ func setArguments(cmd *QuoteCommand, recalculatedOrderContainer datatypes.Contai
 	if cmd.Image != 0 {
 		image, err := cmd.ImageManager.GetImage(cmd.Image)
 		if err != nil {
-			return datatypes.Container_Product_Order{}, errors.NewAPIError(T("Failed to get Image."), err.Error(), 2)
+			return datatypes.Container_Product_Order{}, errors.NewAPIError(T("Failed to get Image"), err.Error(), 2)
 		}
 		recalculatedOrderContainer.ImageTemplateGlobalIdentifier = image.GlobalIdentifier
 	}
