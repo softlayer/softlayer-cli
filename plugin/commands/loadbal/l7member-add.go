@@ -1,42 +1,61 @@
 package loadbal
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type L7MembersAddCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	PoolUuid            string
+	Address             string
+	Port                int
 }
 
-func NewL7MembersAddCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *L7MembersAddCommand) {
-	return &L7MembersAddCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewL7MembersAddCommand(sl *metadata.SoftlayerCommand) *L7MembersAddCommand {
+	thisCmd := &L7MembersAddCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "l7member-add",
+		Short: T("Add a new L7 pool member."),
+		Long:  T("${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.PoolUuid, "pool-uuid", "", T("UUID for the load balancer pool [required]"))
+	cobraCmd.Flags().StringVar(&thisCmd.Address, "address", "", T("Backend servers IP address. [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Port, "port", "t", 0, T("Backend servers port. [required]"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *L7MembersAddCommand) Run(c *cli.Context) error {
-	poolUUID := c.String("pool-uuid")
+func (cmd *L7MembersAddCommand) Run(args []string) error {
+	poolUUID := cmd.PoolUuid
 	if poolUUID == "" {
 		return errors.NewMissingInputError("--pool-uuid")
 	}
 
 	toAdd := datatypes.Network_LBaaS_L7Member{}
 
-	ip := c.String("address")
+	ip := cmd.Address
 	if ip == "" {
 		return errors.NewMissingInputError("--address")
 	}
 	toAdd.Address = &ip
 
-	port := c.Int("port")
+	port := cmd.Port
 	if port == 0 {
 		return errors.NewMissingInputError("--port")
 	}
@@ -50,27 +69,4 @@ func (cmd *L7MembersAddCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 Member {{.MemberID}} added in pool {{.Pool}}", map[string]interface{}{"MemberID": ip, "Pool": poolUUID}))
 	return nil
-}
-
-func LoadbalL7MemberAddMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "l7member-add",
-		Description: T("Add a new L7 pool member"),
-		Usage:       "${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "pool-uuid",
-				Usage: T("UUID for the load balancer pool [required]"),
-			},
-			cli.StringFlag{
-				Name:  "address",
-				Usage: T("Backend servers IP address. [required]"),
-			},
-			cli.IntFlag{
-				Name:  "port",
-				Usage: T("Backend servers port. [required]"),
-			},
-		},
-	}
 }

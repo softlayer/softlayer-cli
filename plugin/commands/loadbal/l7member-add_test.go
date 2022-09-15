@@ -7,48 +7,47 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer cancel", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.L7MembersAddCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.L7MembersAddCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewL7MembersAddCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewL7MembersAddCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalL7MemberAddMetadata().Name,
-			Description: loadbal.LoadbalL7MemberAddMetadata().Description,
-			Usage:       loadbal.LoadbalL7MemberAddMetadata().Usage,
-			Flags:       loadbal.LoadbalL7MemberAddMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
 	})
 
 	Context("member add without pool-uuid", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--pool-uuid' is required"))
 		})
 	})
 	Context("member add without address", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--pool-uuid", "abc123")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool-uuid", "abc123")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--address' is required"))
 		})
 	})
 	Context("member add without port", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--pool-uuid", "abc123", "--address", "address")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool-uuid", "abc123", "--address", "address")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--port' is required"))
 		})
@@ -58,14 +57,14 @@ var _ = Describe("Load balancer cancel", func() {
 			fakeLBManager.AddL7MemberReturns(datatypes.Network_LBaaS_LoadBalancer{}, errors.New("Internal server error"))
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--pool-uuid", "abc123", "--address", "address", "--port", "123")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool-uuid", "abc123", "--address", "address", "--port", "123")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Failed to add L7 member: Internal server error."))
 		})
 	})
 	Context("member add Ok", func() {
 		It("return no error", func() {
-			err := testhelpers.RunCommand(cliCommand, "--pool-uuid", "abc123", "--address", "address pool", "--port", "123")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool-uuid", "abc123", "--address", "address pool", "--port", "123")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("L7 Member address pool added in pool abc123"))
