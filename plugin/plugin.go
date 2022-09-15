@@ -316,6 +316,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(securitygroup.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(tags.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(block.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(loadbal.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(file.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(licenses.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(firewall.SetupCobraCommands(slCommand))
