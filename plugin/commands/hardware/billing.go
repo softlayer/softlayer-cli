@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -16,36 +16,43 @@ import (
 )
 
 type BillingCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
 }
 
-func NewBillingCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *BillingCommand) {
-	return &BillingCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewBillingCommand(sl *metadata.SoftlayerCommand) (cmd *BillingCommand) {
+	thisCmd := &BillingCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "billing " + T("IDENTIFIER"),
+		Short: T("Get billing for a hardware device."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *BillingCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	hardwareID, err := strconv.Atoi(c.Args()[0])
+func (cmd *BillingCommand) Run(args []string) error {
+	hardwareID, err := strconv.Atoi(args[0])
 
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Hardware server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := "mask[id,billingItem[id,recurringFee,nextInvoiceTotalRecurringAmount,provisionTransaction[createDate],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount]]]"
 	hardware, err := cmd.HardwareManager.GetHardware(hardwareID, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -72,16 +79,4 @@ func (cmd *BillingCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func HardwareBillingMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "billing",
-		Description: T("Get billing for a hardware device."),
-		Usage:       "${COMMAND_NAME} sl hardware billing [OPTIONS] IDENTIFIER",
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

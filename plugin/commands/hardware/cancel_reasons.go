@@ -1,25 +1,38 @@
 package hardware
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CancelReasonsCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
 }
 
-func NewCancelReasonsCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *CancelReasonsCommand) {
-	return &CancelReasonsCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewCancelReasonsCommand(sl *metadata.SoftlayerCommand) (cmd *CancelReasonsCommand) {
+	thisCmd := &CancelReasonsCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "cancel-reasons",
+		Short: T("Display a list of cancellation reasons"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CancelReasonsCommand) Run(c *cli.Context) error {
+func (cmd *CancelReasonsCommand) Run(args []string) error {
 	reasons := cmd.HardwareManager.GetCancellationReasons()
 	table := cmd.UI.Table([]string{T("Code"), T("Reason")})
 	for key, value := range reasons {
@@ -27,13 +40,4 @@ func (cmd *CancelReasonsCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func HardwareCancelReasonsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "cancel-reasons",
-		Description: T("Display a list of cancellation reasons"),
-		Usage:       "${COMMAND_NAME} sl hardware cancel-reasons",
-	}
 }
