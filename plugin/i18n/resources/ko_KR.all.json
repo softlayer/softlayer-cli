@@ -32,38 +32,6 @@
     "translation": "활성 트랜잭션 수"
   },
   {
-    "id": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222",
-    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456",
-    "translation": "${COMMAND_NAME} sl autoscale delete ID\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale detail IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale detail 123456",
-    "translation": "${COMMAND_NAME} sl autoscale detail ID\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048",
-    "translation": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n   This command list all Autoscale Groups on current account.",
-    "translation": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n 이 명령은 현재 계정의 모든 자동 스케일 그룹을 나열합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31",
-    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to",
-    "translation": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas",
-    "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags '공백을 원하면 작은따옴표 또는 큰따옴표를 사용하십시오.'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 그렇지 않으면 쉼표를 사용하십시오."
-  },
-  {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n예: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t이 명령을 실행하면 볼륨 노트를 편집합니다.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t이 명령을 실행하면 사용자 세부사항을 표시합니다.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests."
   },
@@ -112,32 +80,8 @@
     "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\n재해 이벤트로 인해 볼륨(복제 있음)에 액세스할 수 없는 경우, 이 메소드를 사용하여\n다른 위치의 가용 복제본으로 즉시 장애 복구를 수행할 수 있습니다. 이 메소드는 API를 통한 장애 복구를 감안하지 않습니다. \n이 메소드 사용 후 원래 볼륨으로 장애를 복구하려면 지원 티켓을 개설하십시오. \n장애 복구를 테스트하려면 대신 '${COMMAND_NAME} sl file replica-failover'를 사용하십시오. \n\n예:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\t이 명령은 ID 12345678인 볼륨에서 ID 87654321인 복제본 볼륨으로 장애 복구 조치를 수행합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\n예: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
-  },
-  {
-    "id": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list",
-    "translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl firewall list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
-    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\n예:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\t이 명령은 ID가 12345678인 IP 주소를 해당 IP 주소가 9.111.123.456인 대상 디바이스에 지정합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\n예:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\t이 명령은 ID 12345678인 IP 주소를 취소합니다."
-  },
-  {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n예:\n    ${COMMAND_NAME} sl globalip create --v6 \n\t이 명령은 주소를 작성합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
-    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\n예:\n    ${COMMAND_NAME} sl globalip list --v4 \n\t이 명령은 현재 계정의 모든 IPv4 주소를 나열합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
-    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\n예:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\t이 명령은 대상 디바이스에서 ID가 12345678인 IP 주소의 지정을 해제합니다."
   },
   {
     "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
@@ -156,48 +100,12 @@
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] ID\n\n예:\n   ${COMMAND_NAME} sl hardware storage 1234567\n 하드웨어 서버의 스토리지 세부사항을 가져옵니다."
   },
   {
-    "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
-    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\n예:\n${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n이 명령은 이미지의 데이터 센터를 추가/제거합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image delete 12345678\n   This command deletes image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image delete IDENTIFIER\n\n예:\n   ${COMMAND_NAME} sl image delete 12345678\n   이 명령은 ID 12345678인 이미지를 삭제합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image detail 12345678\n   This command gets details for image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl image detail 12345678\n   이 명령은 ID가 12345678인 이미지의 세부사항을 가져옵니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\".",
-    "translation": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   이 명령은 ID가 12345678인 이미지를 편집하고 이름을 \"ubuntu16\"으로, 참조를 \"testing\"으로, 태그를 \"staging\"으로 설정합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: 이미지의 ID\n  URI: 다음 형식의, 오브젝트 스토리지 오브젝트(.vhd/.iso 파일)에 대한 URI: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: IBM Cloud Object Storage 인스턴스에 대한 액세스 권한이 있는 IBM Cloud API 키입니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: 이미지 이름\n  URI: 다음 형식의, 오브젝트 스토리지 오브젝트(.vhd/.iso 파일)에 대한 URI: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: IBM Cloud Object Storage 인스턴스에 대한 액세스 권한이 있는 IBM Cloud API 키입니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image list --public\n   This command list all public images on current account.",
-    "translation": "${COMMAND_NAME} sl image list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl image list --public\n   이 명령은 현재 계정의 모든 공용 이미지를 나열합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl ipsec cancel CONTEXT_ID [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl ipsec cancel CONTEXT_ID [OPTIONS]"
-  },
-  {
     "id": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  Request configuration of a tunnel context.\n\n  This action will update the advancedConfigurationFlag on the context\n  instance and further modifications against the context will be prevented\n  until all changes can be propagated to network devices.",
     "translation": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  터널 컨텍스트의 구성을 요청합니다.\n\n  이 조치는 컨텍스트 인스턴스의 advancedConfigurationFlag를\n  업데이트하며, 모든 변경사항을 네트워크 디바이스로 전파할 수 있게 될 때까지\n  컨텍스트에 대한 추가 수정이 차단됩니다."
   },
   {
     "id": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  List IPSEC VPN tunnel context details.\n\n  Additional resources can be joined using multiple instances of the include\n  option, for which the following choices are available.\n\n  at: address translations\n  is: internal subnets\n  rs: remote subnets\n  sr: statically routed subnets\n  ss: service subnets",
     "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  IPSEC VPN 터널 컨텍스트 세부사항을 나열합니다.\n\n  포함 옵션의 여러 인스턴스를 사용하여 추가 리소스를 결합할 수 있으며\n   이를 위해 다음 선택사항이 사용 가능합니다.\n\n  at: 주소 변환\n  is: 내부 서브넷\n  rs: 원격 서브넷\n  sr: 정적으로 라우팅된 서브넷\n  ss: 서비스 서브넷"
-  },
-  {
-    "id": "${COMMAND_NAME} sl ipsec order [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl ipsec order [OPTIONS]"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  Add a subnet to an IPSEC tunnel context.\n\n  A subnet id may be specified to link to the existing tunnel context.\n\n  Otherwise, a network identifier in CIDR notation should be specified,\n  indicating that a subnet resource should first be created before\n  associating it with the tunnel context. Note that this is only supported\n  for remote subnets, which are also deleted upon failure to attach to a\n  context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
@@ -222,10 +130,6 @@
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  터널 컨텍스트 특성을 업데이트합니다.\n\n  업데이트가 원자적으로 이루어지므로 모두 허용되거나 어떤 것도 허용되지 않습니다.\n\n  키 수명 값은 120 - 172800 범위에 있어야 합니다.\n\n  단계(Phase) 2 PFS(Perfect Forward Secrecy)가 0 -1 범위에 있어야 합니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
-    "translation": "${COMMAND_NAME} sl metadata [OPTIONS]\n\n.. csv-table:: 선택사항: \n- backend_ip\n- backend_mac\n- datacenter\n- datacenter_id\n- fqdn\n- frontend_mac\n- id\n- ip\n- network\n- provision_state\n- tags\n- user_data\n\n예:\n${COMMAND_NAME} sl metadata backend_ip\n${COMMAND_NAME} sl metadata network\n\n이러한 명령은 백엔드 SoftLayer 네트워크의 디바이스에서만 작동합니다. 이를 통해 새로 프로비저닝된 리소스를 자체 감지할 수 있습니다."
   },
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
@@ -256,40 +160,12 @@
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n예: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   이 명령은 Bare Metal 서버의 카테고리를 나열합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl order item-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order item-list CLOUD_SERVER\n   This command lists all items in the VSI package.",
-    "translation": "${COMMAND_NAME} sl order item-list [OPTIONS] PACKAGE_KEYNAME\n\t\n예: \n   ${COMMAND_NAME} sl order item-list CLOUD_SERVER\n   이 명령은 VSI 패키지의 모든 항목을 나열합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl order package-list [OPTIONS]\n\t\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order package-list\n   This command list out all packages for ordering.",
-    "translation": "${COMMAND_NAME} sl order package-list [OPTIONS]\n\t\t\n예: \n   ${COMMAND_NAME} sl order package-list\n   이 명령은 주문을 위해 모든 패키지를 나열합니다."
-  },
-  {
     "id": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\tEXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
     "translation": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\t예: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\t이 명령은 dal13에 4개의 CPU, 16GB RAM, 100GB SAN 디스크, Ubuntu 16.04, 1Gbps 공용 및 사설 업링크가 있는 시간별 VSI를 주문합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
-    "translation": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    예: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    이 명령은 데이터 센터 dal13에서 4개의 CPU, 16GB RAM, 100GB SAN 디스크, Ubuntu 16.04, 1Gbps 공용 및 사설 업링크가 있는 VSI에 대한 견적서를 처리합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  This command lists the presets for Bare Metal servers.",
-    "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   예: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  이 명령은 Bare Metal 서버의 사전 설정을 나열합니다."
-  },
-  {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
     "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\n예: \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
-    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\n예: \n${COMMAND_NAME} sl order quote-detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
-    "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   예: \n  ${COMMAND_NAME} sl order quote-list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
-    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\n예: \n${COMMAND_NAME} sl order quote-save 123456"
   },
   {
     "id": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.",
@@ -384,14 +260,6 @@
     "translation": "${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]\n  \n예:\n  ${COMMAND_NAME} sl ticket detail 767676\n  ${COMMAND_NAME} sl ticket detail 767676 --count 10"
   },
   {
-    "id": "${COMMAND_NAME} sl ticket list [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl ticket list[OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl ticket subjects\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket subjects\n  ",
-    "translation": "${COMMAND_NAME} sl ticket subjects\n  \n예:\n  ${COMMAND_NAME} sl ticket subjects\n  "
-  },
-  {
     "id": "${COMMAND_NAME} sl ticket update TICKETID [\"CONTENTS\"] \n  \n    If the second argument is not specified on a non-Windows machine, it will attempt to use either the value stored in the EDITOR environmental variable, or find either nano, vim, or emacs in that order.\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket update 767676 \"A problem has been detected.\"\n  ${COMMAND_NAME} sl ticket update 767667",
     "translation": "${COMMAND_NAME} sl ticket update TICKETID [\"CONTENTS\"] \n  \n    Windows가 아닌 시스템에서 두 번째 인수가 지정되지 않으면 EDITOR 환경 변수에 저장된 값을 사용하거나 nano, vim 또는 emacs를 이 순서대로 찾으려고 시도합니다.\n  \n예:\n  ${COMMAND_NAME} sl ticket update 767676 \"문제점이 발견되었습니다.\"\n  ${COMMAND_NAME} sl ticket update 767667"
   },
@@ -404,24 +272,12 @@
     "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXAMPLE: \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n 이 신규 사용자의 권한 및 액세스를 설정하려면 기억해 두십시오."
   },
   {
-    "id": "${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONS]\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl user delete userId\n   This command delete user with userId.",
-    "translation": "${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONS]\n\t\n예: \n   ${COMMAND_NAME} sl user delete userId\n   이 명령은 해당 userId의 사용자를 삭제합니다."
-  },
-  {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
     "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\n예: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    이 명령은 사용자 세부사항을 편집합니다."
   },
   {
     "id": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'",
     "translation": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n알림 이름은 인용 부호로 묶어야 합니다. 예:\nslcli user edit-notifications --enable '주문 승인됨'\nslcli user edit-notifications --enable '주문 승인됨' --enable  '재로드 완료'"
-  },
-  {
-    "id": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654"
-  },
-  {
-    "id": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -440,36 +296,12 @@
     "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   이 명령은 ID 12345678인 VLAN을 업데이트하고 새 이름 \"myvlan-rename\"을 이에 지정합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\n예:\n   ${COMMAND_NAME} sl vlan options\n   이 명령은 VLAN 작성에 대한 모든 옵션을 나열합니다(예: VLAN 유형, 데이터 센터, 서브넷 크기, 라우터 등)."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   가상 서버에 파일, 블록 및 휴대용 스토리지 권한을 부여합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n   This command billing lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n   이 명령은 ID가 12345678인 가상 서버 인스턴스에 대한 상세 정보를 나열합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs cancel 12345678\n   This command cancels virtual server instance with ID of 12345678.",
-    "translation": "${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs cancel 12345678\n   이 명령은 ID가 12345678인 가상 서버 인스턴스를 취소합니다."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.",
     "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\n이 명령은 이름이 myvsi이고, backendRouterId가 1234567, 특징 C1_2X2_1_YEAR_TERM이 있는 하나의 예약 용량 인스턴스와 두 개의 인스턴스를 주문합니다.\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\n이 명령은 실제로 주문하기 전에 위 옵션을 사용하는 주문이 유효한지 여부를 테스트합니다.\n\n경고: 예약 용량은 연도별 계약이므로 계약이 만료될 때까지 취소할 수 없습니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs capacity-create-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n 이 명령은 예약 용량 그룹 인스턴스(예: cpu, 메모리, os, 디스크, 네트워크 속도 등) 작성을 위한 모든 옵션을 나열합니다"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n ID가 12345678인 예약 용량 그룹 세부사항을 가져옵니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups.",
-    "translation": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n 예약 용량 그룹을 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   This command captures virtual server instance with ID of 12345678 with all disks into an image named \"mycloud\" with note \"testing\".",
@@ -478,14 +310,6 @@
   {
     "id": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\tThis command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,\n\toperation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\tThis command tests whether the order is valid with above options before the order is actually placed.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\tThis command exports above options to a file: myvsi.txt under user home directory for later use.",
     "translation": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\t이 명령은 호스트 이름이 myvsi이고 도메인이 ibm.com이며 4개의 cpu 코어, 4096M 메모리를 포함하고 dal10 데이터 센터에 있으며 \n\t운영 체제가 UBUNTU 16 64비트이고 2개 디스크(1개는 100G, 다른 하나는 1000G)가 있으며 ID 413인 공용 VLAN에 있는 가상 서버 인스턴스를 주문합니다.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\t이 명령은 실제로 주문하기 전에 위의 옵션으로 주문이 올바른지 여부를 테스트합니다.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\t이 명령은 나중에 사용하기 위해 사용자 홈 디렉토리에 있는 myvsi.txt 파일로 상기 옵션을 내보냅니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs credentials IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs credentials 12345678\n   This command lists all username and password pairs of virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs credentials IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs credentials 12345678\n   이 명령은 ID 12345678인 가상 서버 인스턴스의 모든 사용자 이름과 비밀번호 쌍을 나열합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs detail IDENTIFIER [OPTIONS] \n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs details 12345678\n   This command lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs detail IDENTIFIER [OPTIONS] \n\t\n예:\n   ${COMMAND_NAME} sl vs details 12345678\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대한 자세한 정보를 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs dns-sync IDENTIFIER [OPTIONS]\n   Note: If you don't specify any arguments, it will attempt to update both the A\n   and PTR records. If you don't want to update both records, you may use the\n   -a or --ptr arguments to limit the records updated.\n \nEXAMPLE:\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --a-record --ttl 3600\n   This command synchronizes A record(IP V4 address) of virtual server instance with ID 12345678 to DNS server and sets ttl of this A record to 3600.\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --aaaa-record --ptr\n   This command synchronizes both AAAA record(IP V6 address) and PTR record of virtual server instance with ID 12345678 to DNS server.",
@@ -504,60 +328,16 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n 마이그레이션이 필요한 VSI를 관리합니다. 전용 인스턴스를 한 전용 호스트에서 다른 전용 호스트로 마이그레이션할 수 있습니다."
   },
   {
-    "id": "${COMMAND_NAME} sl vs options [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a virtual server instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
-    "translation": "${COMMAND_NAME} sl vs options [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs options\n   이 명령은 가상 서버 인스턴스 작성에 대한 모든 옵션을 나열합니다(예: 데이터 센터, CPU, 메모리, OS, 디스크, 네트워크 속도 등)."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs pause IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs pause 12345678 -f\n   This command pauses virtual server instance with ID 12345678 without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl vs pause IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs pause 12345678 -f\n   이 명령은 확인 요청 없이 ID 12345678인 가상 서버 인스턴스를 일시정지합니다."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
     "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \n이 명령은 이름이 myvsi이고, backendRouterId가 1234567이며, 규칙이 258369인 배치 그룹 인스턴스를 주문합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-create-options\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n    Get List options for creating a placement group.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create-options\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n 배치 그룹 작성을 위한 나열 옵션을 가져옵니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Get placement Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n ID가 12345678이 배치 그룹 세부사항을 가져옵니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n   This command lists all placement groups.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n 이 명령은 모든 배치 그룹을 나열합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs power-off IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs power-off 12345678 --soft\n   This command performs a soft power off for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs power-off IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs power-off 12345678 --soft\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 소프트 전원 끄기를 수행합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs power-on IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs power-on 12345678\n   This command performs a power on for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs power-on IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs power-on 12345678\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 전원 켜기를 수행합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
     "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   이 명령은 계속해서 사용할 준비가 되었는지 확인하기 위해 ID 12345678인 가상 서버 인스턴스 상태를 확인하고 최대 30초 동안 대기합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl vs reboot IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reboot 12345678 --hard\n   This command performs a hard reboot for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs reboot IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs reboot 12345678 --hard\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 하드 재부팅을 수행합니다."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs reload 12345678\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 현재 운영 체제를 다시 로드합니다.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 ID 1234인 이미지에서 운영 체제를 다시 로드합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs rescue IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs rescue 12345678\n   This command reboots virtual server instance with ID 12345678 into a rescue image.",
-    "translation": "${COMMAND_NAME} sl vs rescue IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs rescue 12345678\n   이 명령은 복구 이미지로 ID 12345678인 가상 서버 인스턴스를 다시 부팅합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs resume IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs resume 12345678\n   This command resumes virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs resume IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs resume 12345678\n   이 명령은 ID 12345678인 가상 서버 인스턴스를 재개합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Get storage details for a virtual server.",
-    "translation": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   가상 서버의 스토리지 세부사항을 가져옵니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
@@ -718,10 +498,6 @@
   {
     "id": "--sortby {{.Column}} is not supported.",
     "translation": "--sortby {{.Column}}은(는) 지원되지 않습니다."
-  },
-  {
-    "id": "--to or --by is required",
-    "translation": "--to 또는 --by는 필수임"
   },
   {
     "id": "--url cannot be used with TCP checks.",
@@ -1084,20 +860,12 @@
     "translation": "기존 티켓에 업데이트 추가"
   },
   {
-    "id": "Adds guests. (Only set --up or --down) (default)",
-    "translation": "게스트를 추가합니다. (--up 또는 --down만 설정)(기본값)"
-  },
-  {
     "id": "Advanced configuration flag",
     "translation": "고급 구성 플래그"
   },
   {
     "id": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.",
     "translation": "모든 다중 vlan 규칙은 제공된 신임 정보를 사용하여 FortiGate 대시보드를 통해 관리해야 합니다."
-  },
-  {
-    "id": "All tags will be removed",
-    "translation": "모든 태그가 제거됩니다."
   },
   {
     "id": "Allocation",
@@ -1142,10 +910,6 @@
   {
     "id": "Append parameters to web call",
     "translation": "웹 호출에 매개변수 추가"
-  },
-  {
-    "id": "Assign a global IP to a target router or device",
-    "translation": "대상 라우터 또는 디바이스에 글로벌 IP 지정"
   },
   {
     "id": "Assign block storage subnets to the given host id.",
@@ -1198,14 +962,6 @@
   {
     "id": "Auto Scale Group was deleted successfully",
     "translation": "자동 스케일 그룹이 삭제됨"
-  },
-  {
-    "id": "Auto Scale Group was scaled successfully",
-    "translation": "자동 스케일 그룹이 확장됨"
-  },
-  {
-    "id": "Autoscale Group {{.Id}} was updated",
-    "translation": "자동 스케일 그룹 {{.Id}}이(가) 업데이트됨"
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1412,10 +1168,6 @@
     "translation": "VLAN 취소"
   },
   {
-    "id": "Cancel a global IP",
-    "translation": "글로벌 IP 취소"
-  },
-  {
     "id": "Cancel a hardware server",
     "translation": "하드웨어 서버 취소"
   },
@@ -1470,10 +1222,6 @@
   {
     "id": "Cancels a billing item.",
     "translation": "비용 청구 항목을 취소합니다."
-  },
-  {
-    "id": "Cancels a firewall",
-    "translation": "방화벽 취소"
   },
   {
     "id": "Cancels the server immediately (instead of on the billing anniversary)",
@@ -1932,10 +1680,6 @@
     "translation": "전용 호스트 작성"
   },
   {
-    "id": "Create a global IP",
-    "translation": "글로벌 IP 작성"
-  },
-  {
     "id": "Create a host for dedicated virtual servers",
     "translation": "전용 가상 서버용 호스트 작성"
   },
@@ -1944,16 +1688,8 @@
     "translation": "새 VLAN 작성"
   },
   {
-    "id": "Create a new firewall",
-    "translation": "새 방화벽 작성"
-  },
-  {
     "id": "Create a placement group",
     "translation": "배치 그룹 작성"
-  },
-  {
-    "id": "Create a placement group.",
-    "translation": "배치 그룹을 작성합니다."
   },
   {
     "id": "Create a security group",
@@ -2168,10 +1904,6 @@
     "translation": "구역 삭제"
   },
   {
-    "id": "Delete an image ",
-    "translation": "이미지 삭제 "
-  },
-  {
     "id": "Delete the credential of an Object Storage Account.",
     "translation": "Object Storage 계정의 인증 정보를 삭제합니다."
   },
@@ -2198,10 +1930,6 @@
   {
     "id": "Detach devices from a ticket",
     "translation": "티켓에서 디바이스 분리"
-  },
-  {
-    "id": "Detail information about a firewall",
-    "translation": "방화벽에 대한 자세한 정보"
   },
   {
     "id": "Details of a specific event, and ability to acknowledge event.",
@@ -2258,10 +1986,6 @@
   {
     "id": "Disk sizes (multiple occurrence permitted)",
     "translation": "디스크 크기(다중 발생 허용)"
-  },
-  {
-    "id": "Display FortiGate username and FortiGate password to multi vlans",
-    "translation": "다중 vlan에 FortiGate 사용자 이름 및 FortiGate 비밀번호를 표시합니다."
   },
   {
     "id": "Display IPv4 IPs only",
@@ -2368,10 +2092,6 @@
     "translation": "삭제하지 말고, 삭제할 항목을 표시만 하십시오."
   },
   {
-    "id": "Done",
-    "translation": "완료"
-  },
-  {
     "id": "Download SSL certificate and key files",
     "translation": "SSL 인증서 및 키 파일 다운로드"
   },
@@ -2394,10 +2114,6 @@
   {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
     "translation": "[YYYY-MM-DD]에 대한 이벤트를 검색하는 가장 빠른 날짜입니다."
-  },
-  {
-    "id": "Earliest date to retrieve logs for [YYYY-MM-DD].",
-    "translation": "[YYYY-MM-DD]에 대한 로그를 검색하는 가장 빠른 날짜입니다."
   },
   {
     "id": "Edit SSL certificate",
@@ -2448,10 +2164,6 @@
     "translation": "이미지의 세부사항 편집"
   },
   {
-    "id": "Edit firewall rules",
-    "translation": "방화벽 규칙 편집"
-  },
-  {
     "id": "Edit hardware server details",
     "translation": "하드웨어 서버 세부사항 편집"
   },
@@ -2462,10 +2174,6 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "로드 밸런서 프로토콜 편집"
-  },
-  {
-    "id": "Edit note and tags of a subnet.",
-    "translation": "서브넷의 메모 및 태그를 편집합니다."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -2482,10 +2190,6 @@
   {
     "id": "Editor could not be ran: {{.Error}}.\n",
     "translation": "편집기를 실행할 수 없음: {{.Error}}.\n"
-  },
-  {
-    "id": "Edits an Autoscale group.",
-    "translation": "자동 스케일 그룹을 편집합니다."
   },
   {
     "id": "Either '--enable' or '--disable' is required.",
@@ -2612,10 +2316,6 @@
     "translation": "IOPS당 Endurance 티어"
   },
   {
-    "id": "Entry",
-    "translation": "항목"
-  },
-  {
     "id": "Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n",
     "translation": "볼륨 {{.VolumeID}}에 대한 스냅샷을 작성하는 중에 오류가 발생했습니다. 볼륨이 장애 조치되지 않았거나 스냅샷을 작성할 수 없는 다른 상태인지 확인하십시오.\n"
   },
@@ -2692,10 +2392,6 @@
     "translation": "오류 때문에 실패: "
   },
   {
-    "id": "Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n",
-    "translation": "가상 게스트 {{.VirtualGuestHostname}}에 대한 태그를 설정하지 못했습니다. \n"
-  },
-  {
     "id": "Failed to Edit email account: {{.emailID}}.\n",
     "translation": "이메일 계정 {{.emailID}} 편집에 실패했습니다. \n"
   },
@@ -2718,10 +2414,6 @@
   {
     "id": "Failed to add certificate.\n",
     "translation": "인증서를 추가하는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to add global IP.\n",
-    "translation": "글로벌 IP를 추가하는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to add l7 policy: {{.Error}}.\n",
@@ -2762,10 +2454,6 @@
   {
     "id": "Failed to add {{.Type}} subnet #{{.ID}} to IPSec {{.ContextID}}.\n",
     "translation": "IPSec {{.ContextID}}에 {{.Type}} 서브넷 #{{.ID}}을(를) 추가하는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to assign global IP {{.IpID}} to target {{.Target}}.\n",
-    "translation": "글로벌 IP {{.IpID}}을(를) {{.Target}} 대상에 지정하는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -2812,10 +2500,6 @@
     "translation": "방화벽 취소 실패: {{.ID}}"
   },
   {
-    "id": "Failed to cancel global IP: {{.ID}}.\n",
-    "translation": "글로벌 IP 취소 실패: {{.ID}}.\n"
-  },
-  {
     "id": "Failed to cancel hardware server: {{.ID}}.\n",
     "translation": "하드웨어 서버 {{.ID}}을(를) 취소하는 데 실패했습니다.\n"
   },
@@ -2856,20 +2540,12 @@
     "translation": "볼륨 {{.VolumeId}}에서 새 LUN ID를 확인하는 데 실패했습니다."
   },
   {
-    "id": "Failed to create Auto Scale Group.\n",
-    "translation": "자동 스케일 그룹을 작성하는 데 실패했습니다. \n"
-  },
-  {
     "id": "Failed to create credential. ",
     "translation": "인증 정보를 작성하는 데 실패했습니다. "
   },
   {
     "id": "Failed to create dedicated host.\n",
     "translation": "전용 호스트를 작성하는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to create firewall.\n",
-    "translation": "방화벽을 작성하는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to create load balancer with name {{.Name}} on {{.Location}}.\n",
@@ -2920,10 +2596,6 @@
     "translation": "노트를 디코딩하는 데 실패했습니다. \n"
   },
   {
-    "id": "Failed to delete AutoScale Group.\n",
-    "translation": "자동 스케일 그룹을 삭제하는 데 실패했습니다. \n"
-  },
-  {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "L7 풀 {{.L7PoolID}} 삭제 실패: {{.Error}}.\n"
   },
@@ -2942,10 +2614,6 @@
   {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "인증 정보 삭제 실패: {{.storageID}}.\n"
-  },
-  {
-    "id": "Failed to delete image: {{.ImageID}}.\n",
-    "translation": "이미지 삭제 실패: {{.ImageID}}.\n"
   },
   {
     "id": "Failed to delete l7 policy: {{.Error}}.\n",
@@ -3064,14 +2732,6 @@
     "translation": "계정 개요를 가져오는 데 실패했습니다."
   },
   {
-    "id": "Failed to get AutoScale group logs.\n",
-    "translation": "자동 스케일 그룹 로그를 가져오는 데 실패했습니다. \n"
-  },
-  {
-    "id": "Failed to get AutoScale group.\n",
-    "translation": "자동 스케일 그룹을 가져오는 데 실패했습니다. \n"
-  },
-  {
     "id": "Failed to get Bandwidth Pool.",
     "translation": "대역폭 풀을 가져오는 데 실패했습니다.\n"
   },
@@ -3082,10 +2742,6 @@
   {
     "id": "Failed to get Cloud Object Storages.\n",
     "translation": "Cloud Object Storage를 가져오는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to get Datacenter {{.datacenter}}.\n",
-    "translation": "데이터 센터 {{.datacenter}}을(를) 가져오는 데 실패했습니니다. \n"
   },
   {
     "id": "Failed to get Event Log types.\n",
@@ -3216,14 +2872,6 @@
     "translation": "{{.VolumeID}} 볼륨의 데이터 센터를 가져오는 데 실패했습니다.\n"
   },
   {
-    "id": "Failed to get dedicated firewall rules for {{.FirewallID}}.\n",
-    "translation": "{{.FirewallID}}에 대한 전용 방화벽 규칙을 가져오는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to get dedicated firewall rules.\n",
-    "translation": "전용 방화벽 규칙을 가져오는 데 실패했습니다.\n"
-  },
-  {
     "id": "Failed to get dedicated hosts.\n",
     "translation": "전용 호스트를 가져오는 데 실패했습니다. \n"
   },
@@ -3234,10 +2882,6 @@
   {
     "id": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
     "translation": "볼륨 {{.VolumeID}}의 중복 변환 상태를 가져오는 데 실패했습니다. \n"
-  },
-  {
-    "id": "Failed to get firewalls on your account.\n",
-    "translation": "계정에서 방화벽을 가져오는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to get hardware sensor data.\n",
@@ -3258,14 +2902,6 @@
   {
     "id": "Failed to get hardware {{.ID}}.\n",
     "translation": "하드웨어 {{.ID}}을(를) 가져오는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to get image datacenters.\n",
-    "translation": "이미지 데이터 센터를 가져오는 데 실패했습니다. \n"
-  },
-  {
-    "id": "Failed to get image: {{.ImageID}}.\n",
-    "translation": "이미지 가져오기 실패: {{.ImageID}}.\n"
   },
   {
     "id": "Failed to get invoices.",
@@ -3320,14 +2956,6 @@
     "translation": "ID가 {{.MetricTrackingObjectId}}인 오브젝트의 메트릭 추적 요약을 가져오는 데 실패했습니다."
   },
   {
-    "id": "Failed to get multi vlan firewall.\n",
-    "translation": "다중 vlan 방화벽을 가져오는 데 실패했습니다. \n"
-  },
-  {
-    "id": "Failed to get multi vlan firewalls on your account.\n",
-    "translation": "계정에서의 다중 vlan 방화벽을 가져오는 데 실패했습니다. \n"
-  },
-  {
     "id": "Failed to get nas storage detail for the hardware server {{.ID}}.\n",
     "translation": "하드웨어 서버 {{.ID}}에 대한 nas 스토리지 세부사항을 가져오는 데 실패했습니다. \n"
   },
@@ -3350,10 +2978,6 @@
   {
     "id": "Failed to get orders.",
     "translation": "주문을 받는 데 실패했습니다."
-  },
-  {
-    "id": "Failed to get package for {{.Type}} firewall.\n",
-    "translation": "{{.Type}} 방화벽에 대한 패키지를 가져오는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to get permissions.\n",
@@ -3406,10 +3030,6 @@
   {
     "id": "Failed to get standard firewall rules for {{.FirewallID}}.\n",
     "translation": "{{.FirewallID}}에 대한 표준 방화벽 규칙을 가져오는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to get standard firewall rules.\n",
-    "translation": "표준 방화벽 규칙을 가져오는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to get subnet: {{.ID}}.\n",
@@ -3496,10 +3116,6 @@
     "translation": "계정의 가상 전용 랙을 가져오는 데 실패했습니다. \n"
   },
   {
-    "id": "Failed to get virtual guest members.\n",
-    "translation": "가상 게스트 멤버를 가져오는 데 실패했습니다. \n"
-  },
-  {
     "id": "Failed to get virtual guests on your account.\n",
     "translation": "계정에 대한 가상 게스트를 가져오는 데 실패했습니다. \n"
   },
@@ -3566,10 +3182,6 @@
   {
     "id": "Failed to list dedicated hosts on your account.\n",
     "translation": "계정의 전용 호스트를 나열하는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to list global IPs on your account.\n",
-    "translation": "계정의 글로벌 IP를 나열하는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to list items.\n",
@@ -3640,10 +3252,6 @@
     "translation": "컴포넌트 규칙에 대한 편집기 열기 실패:  {{.FirewallID}}.\n"
   },
   {
-    "id": "Failed to open editor for vlan rules: {{.FirewallID}}.\n",
-    "translation": "VLAN 규칙에 대한 편집기 열기 실패: {{.FirewallID}}.\n"
-  },
-  {
     "id": "Failed to order IPSec.Please try again later.\n",
     "translation": "IPSec을 주문하는 데 실패했습니다. 나중에 다시 시도하십시오.\n"
   },
@@ -3686,10 +3294,6 @@
   {
     "id": "Failed to parse file.\n",
     "translation": "파일을 구문 분석하는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to parse firewall ID : {{.FirewallID}}.\n",
-    "translation": "방화벽 ID 구문 분석 실패: {{.FirewallID}}.\n"
   },
   {
     "id": "Failed to parse version. \n",
@@ -3848,10 +3452,6 @@
     "translation": "견적을 저장하는 데 실패했습니다.\n"
   },
   {
-    "id": "Failed to scale Auto Scale Group.",
-    "translation": "자동 스케일 그룹을 확장하는 데 실패했습니다."
-  },
-  {
     "id": "Failed to set LUN ID for volume {{.VolumeID}}.\n",
     "translation": "볼륨 {{.VolumeID}}의 LUN ID를 설정하는 데 실패했습니다.\n"
   },
@@ -3916,16 +3516,8 @@
     "translation": "하드웨어 서버 '{{.ID}}'의 IPMI 인터페이스를 토글하는 데 실패했습니다.\n"
   },
   {
-    "id": "Failed to unassign global IP {{.ID}}.\n",
-    "translation": "글로벌 IP {{.ID}}을(를) 지정 해제하는 데 실패했습니다.\n"
-  },
-  {
     "id": "Failed to unmarshal template file: {{.File}}.\n",
     "translation": "템플리트 파일 {{.File}}을(를) 역마샬링하는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to update Auto Scale Group.\n",
-    "translation": "자동 스케일 그룹을 업데이트하는 데 실패했습니다. \n"
   },
   {
     "id": "Failed to update IPSec {{.ContextID}}.\n",
@@ -3946,10 +3538,6 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "l7 풀 업데이트 실패: {{.Error}}.\n"
-  },
-  {
-    "id": "Failed to update permissions: %s",
-    "translation": "권한을 업데이트하는 데 실패: %s"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -4136,10 +3724,6 @@
     "translation": "소유자 ID별 필터링"
   },
   {
-    "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
-    "translation": "TTL(Time-To-Live)별 필터링(초), 예: 86400"
-  },
-  {
     "id": "Filter by VLAN name",
     "translation": "VLAN 이름별 필터링"
   },
@@ -4190,10 +3774,6 @@
   {
     "id": "Filter by name of the dedicated host",
     "translation": "전용 호스트의 이름별 필터링"
-  },
-  {
-    "id": "Filter by network identifier",
-    "translation": "네트워크 ID별 필터링"
   },
   {
     "id": "Filter by network port speed in Mbps",
@@ -4452,10 +4032,6 @@
     "translation": "로드 밸런서 세부사항 가져오기"
   },
   {
-    "id": "Get placement Group details.",
-    "translation": "배치 그룹 세부사항을 가져옵니다."
-  },
-  {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
     "translation": "지정된 볼륨에 대한 스냅샷 공간 사용 임계값 경고 플래그 설정을 가져옵니다."
   },
@@ -4628,10 +4204,6 @@
     "translation": "FQDN의 호스트 부분 [필수]"
   },
   {
-    "id": "Host portion of the FQDN. example: server",
-    "translation": "FQDN의 호스트 부분. 예: server"
-  },
-  {
     "id": "Host portion of the FQDN[required]",
     "translation": "FQDN의 호스트 부분[필수]"
   },
@@ -4710,50 +4282,6 @@
   {
     "id": "IDs of the subnets to remove",
     "translation": "제거할 서브넷의 ID"
-  },
-  {
-    "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
-    "translation": "INTEGER 디스크 크기(다중 발생이 허용됨)[필수]"
-  },
-  {
-    "id": "INTEGER Number of CPUs for new guests (existing not effected)",
-    "translation": "INTEGER 새 게스트에 대한 CPU 수(기존 게스트는 영향을 주지 않음)"
-  },
-  {
-    "id": "INTEGER Number of CPUs for new guests (existing not effected)  [required]",
-    "translation": "INTEGER 새 게스트에 대한 CPU 수(기존 게스트는 영향을 주지 않음)[필수]"
-  },
-  {
-    "id": "INTEGER RAM in MB or GB for new guests (existing not effected)",
-    "translation": "INTEGER 새 게스트의 RAM(MB 또는 GB 단위)(기존 게스트는 영향을 주지 않음)"
-  },
-  {
-    "id": "INTEGER RAM in MB or GB for new guests (existing not effected)  [required]",
-    "translation": "INTEGER 새 게스트의 RAM(MB 또는 GB 단위)(기존 게스트는 영향을 주지 않음)[필수]"
-  },
-  {
-    "id": "INTEGER Set the maximum number of guests",
-    "translation": "INTEGER 최대 게스트 수를 설정합니다."
-  },
-  {
-    "id": "INTEGER Set the maximum number of guests  [required]",
-    "translation": "INTEGER 최대 게스트 수를 설정합니다.[필수]"
-  },
-  {
-    "id": "INTEGER Set the minimum number of guests",
-    "translation": "INTEGER 최소 게스트 수를 설정합니다."
-  },
-  {
-    "id": "INTEGER Set the minimum number of guests  [required]",
-    "translation": "INTEGER 최소 게스트 수를 설정합니다.[필수]"
-  },
-  {
-    "id": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]",
-    "translation": "INTEGER 이 스케일링 그룹이 지정되는 지역 그룹의 식별자입니다. [필수]"
-  },
-  {
-    "id": "INTEGER The number of seconds this group will wait after lastActionDate before performing another action.  [required]",
-    "translation": "INTEGER lastActionDate 이후에 다른 조치를 수행하기 전에 이 그룹이 대기하는 시간(초)입니다. [필수]"
   },
   {
     "id": "IOPS",
@@ -5210,14 +4738,6 @@
   {
     "id": "List all devices the user has access and device access permissions.",
     "translation": "사용자에게 액세스 권한 및 장치 액세스 권한이 있는 모든 디바이스를 나열합니다."
-  },
-  {
-    "id": "List all firewalls on your account",
-    "translation": "계정의 모든 방화벽 나열"
-  },
-  {
-    "id": "List all global IPs on your account",
-    "translation": "계정의 모든 글로벌 IP 나열"
   },
   {
     "id": "List all images on your account",
@@ -5684,10 +5204,6 @@
     "translation": "파일 볼륨의 새 크기(GB). ***크기가 지정되지 않으면 볼륨의 원본 크기가 사용됩니다.***\n가능한 크기: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n최소값: [볼륨의 원본 크기]"
   },
   {
-    "id": "New Tags: {{.Tags}}.",
-    "translation": "새 태그: {{.Tags}}."
-  },
-  {
     "id": "New notes for the key",
     "translation": "키에 대한 새 참고"
   },
@@ -5858,10 +5374,6 @@
   {
     "id": "Number of VSI instances this capacity reservation can support. [required]",
     "translation": "이 용량 예약이 지원할 수 있는 VSI 인스턴스 수. [필수]"
-  },
-  {
-    "id": "Number of guests for the scale action.",
-    "translation": "스케일 조치에 대한 게스트 수입니다."
   },
   {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
@@ -6056,10 +5568,6 @@
     "translation": "라이센스를 주문/작성합니다."
   },
   {
-    "id": "Order/Create a scale group.",
-    "translation": "스케일 그룹을 주문/작성합니다."
-  },
-  {
     "id": "Order/create a hardware server",
     "translation": "하드웨어 서버 주문/작성"
   },
@@ -6114,10 +5622,6 @@
   {
     "id": "Owner",
     "translation": "소유자"
-  },
-  {
-    "id": "PATH Read userdata from a file",
-    "translation": "PATH 파일에서 사용자 데이터 읽기"
   },
   {
     "id": "POD",
@@ -6456,10 +5960,6 @@
     "translation": "기본 라우터 호스트 이름"
   },
   {
-    "id": "Print zone and resource records in BIND format",
-    "translation": "BIND 형식으로 구역 및 리소스 레코드 인쇄"
-  },
-  {
     "id": "Prints out an SSH key to the screen",
     "translation": "화면에 SSH 키 인쇄"
   },
@@ -6768,10 +6268,6 @@
     "translation": "계정에서 비어 있는 태그를 제거합니다."
   },
   {
-    "id": "Removes guests. (Only set --up or --down)",
-    "translation": "게스트를 제거합니다. (--up 또는 --down만 설정)"
-  },
-  {
     "id": "Removing Tag: {{.tag}}.",
     "translation": "태그: {{.tag}}을(를) 제거합니다."
   },
@@ -6842,10 +6338,6 @@
   {
     "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
     "translation": "AWS 서명을 생성하는 데 사용되는 인증 정보를 검색합니다. 최대 2개입니다."
-  },
-  {
-    "id": "Retrieve logs for an Autoscale group.",
-    "translation": "자동 스케일 그룹에 대한 로그를 검색합니다."
   },
   {
     "id": "Return ALL invoices. There may be a lot of these. [default: False]",
@@ -6972,10 +6464,6 @@
     "translation": "견적 저장"
   },
   {
-    "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
-    "translation": "자동 스케일 그룹을 확장합니다. 스케일 그룹의 쿨 다운 기간을 생략합니다."
-  },
-  {
     "id": "Schedule",
     "translation": "스케줄"
   },
@@ -7086,10 +6574,6 @@
   {
     "id": "Sets username for this account.",
     "translation": "이 계정의 사용자 이름을 설정합니다."
-  },
-  {
-    "id": "Setting tags for {{.VirtualGuestHostname}}.",
-    "translation": "{{.VirtualGuestHostname}}에 대한 태그를 설정합니다."
   },
   {
     "id": "Short Name",
@@ -7456,62 +6940,6 @@
     "translation": "{{.VsId}} 가상 서버 인스턴스를 위해 시스템을 다시 로드 중입니다. '{{.CommandName}} sl vs ready {{.VsId}}'을(를) 실행하여 나중에 준비되는지 여부를 확인하십시오."
   },
   {
-    "id": "TEXT Collection of policies for this group. This can be empty.",
-    "translation": "TEXT 이 그룹에 대한 정책의 콜렉션입니다. 비어 있을 수 있습니다."
-  },
-  {
-    "id": "TEXT Datacenter shortname  [required]",
-    "translation": "TEXT 데이터 센터 축약명[필수]"
-  },
-  {
-    "id": "TEXT Domain portion of the FQDN  [required]",
-    "translation": "TEXT FQDN의 도메인 부분[필수]"
-  },
-  {
-    "id": "TEXT Host portion of the FQDN  [required]",
-    "translation": "TEXT FQDN의 호스트 부분[필수]"
-  },
-  {
-    "id": "TEXT OS install code. Tip: you can specify <OS>_LATEST  [required]",
-    "translation": "TEXT OS 설치 코드. 팁: <OS>_LATEST를 지정할 수 있음[필수]"
-  },
-  {
-    "id": "TEXT Post-install script to download",
-    "translation": "TEXT 다운로드할 사후 설치 스크립트"
-  },
-  {
-    "id": "TEXT SSH keys to add to the root user (multiple occurrence permitted)",
-    "translation": "TEXT 루트 사용자에게 추가할 SSH 키(다중 발생이 허용됨)"
-  },
-  {
-    "id": "TEXT Scale group's name.",
-    "translation": "TEXT 스케일 그룹의 이름입니다."
-  },
-  {
-    "id": "TEXT Scale group's name.  [required]",
-    "translation": "TEXT 스케일 그룹의 이름입니다.[필수]"
-  },
-  {
-    "id": "TEXT The number to scale by. This number has different meanings based on type.",
-    "translation": "TEXT 확장 규모 숫자입니다. 이 숫자는 유형에 따라 다른 의미를 갖습니다."
-  },
-  {
-    "id": "TEXT The termination policy for the group(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [required]",
-    "translation": "TEXT 그룹의 종료 정책입니다(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3). [필수]"
-  },
-  {
-    "id": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE).",
-    "translation": "TEXT 수행할 스케일 유형입니다(ABSOLUTE, PERCENT, RELATIVE)."
-  },
-  {
-    "id": "TEXT User defined metadata string",
-    "translation": "TEXT 사용자 정의 메타데이터 문자열"
-  },
-  {
-    "id": "TTL(Time-To-Live) in seconds, such as: 86400",
-    "translation": "TTL(Time-To-Live)(초), 예: 86400"
-  },
-  {
     "id": "TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200",
     "translation": "TTL(Time-To-Live)(초), 예를 들면 86400입니다. 기본값은 7200입니다."
   },
@@ -7520,20 +6948,12 @@
     "translation": "태그"
   },
   {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "자동 스케일 그룹에 있는 모든 게스트를 태그 지정합니다."
-  },
-  {
     "id": "Tags for the image",
     "translation": "이미지에 대한 태그"
   },
   {
     "id": "Tags to add to the instance (multiple occurrence permitted)",
     "translation": "인스턴스에 추가할 태그(다중 발생 허용)"
-  },
-  {
-    "id": "Tags to set for each guest in this group. Existing tags are overwritten. An empty string will remove all tags.",
-    "translation": "이 그룹의 각 게스트에 대해 설정할 태그입니다. 기존 태그를 겹쳐씁니다. 빈 문자열이 모든 태그를 제거합니다."
   },
   {
     "id": "Tags to set or empty string to remove all",
@@ -8044,24 +7464,12 @@
     "translation": "이 명령에는 -- add 또는 --remove 옵션이 필요합니다."
   },
   {
-    "id": "This command requires four arguments.",
-    "translation": "이 명령에는 4개의 인수가 필요합니다."
-  },
-  {
     "id": "This command requires notification names as arguments and options flags.",
     "translation": "이 명령은 인수 및 옵션 플래그로서 알림 이름이 필요합니다."
   },
   {
     "id": "This command requires one argument.",
     "translation": "이 명령에는 1개의 인수가 필요합니다."
-  },
-  {
-    "id": "This command requires one identifier.",
-    "translation": "이 명령에는 하나의 식별자가 필요합니다."
-  },
-  {
-    "id": "This command requires one indentifier, the option and the option arguments.",
-    "translation": "이 명령에는 하나의 식별자, 옵션 및 옵션 인수가 필요합니다."
   },
   {
     "id": "This command requires one option.",
@@ -8076,20 +7484,8 @@
     "translation": "이 명령에는 --title 옵션이 필요합니다."
   },
   {
-    "id": "This command requires three arguments.",
-    "translation": "이 명령에는 3개의 인수가 필요합니다."
-  },
-  {
     "id": "This command requires two arguments.",
     "translation": "이 명령에는 2개의 인수가 필요합니다."
-  },
-  {
-    "id": "This command requires zero arguments.",
-    "translation": "이 명령에는 0개의 인수가 필요합니다."
-  },
-  {
-    "id": "This command uses 0 arguments",
-    "translation": "이 명령은 0개의 인수를 사용합니다."
   },
   {
     "id": "This interface allows you to change the route of your Account Owned subnets.",
@@ -8384,20 +7780,12 @@
     "translation": "ID가 {{.ID}}인 방화벽을 찾을 수 없습니다."
   },
   {
-    "id": "Unable to find global IP with ID: {{.ID}}.\n",
-    "translation": "ID가 {{.ID}}인 글로벌 IP를 찾을 수 없습니다.\n"
-  },
-  {
     "id": "Unable to find hardware server with ID: {{.ID}}.\n",
     "translation": "ID가 {{.ID}}인 하드웨어 서버를 찾을 수 없습니다.\n"
   },
   {
     "id": "Unable to find health check with UUID of '{{.UUID}}' in load balancer {{.ID}}.",
     "translation": "로드 밸런서 {{.ID}}에서 UUID가 '{{.UUID}}'인 상태 검사를 찾을 수 없습니다."
-  },
-  {
-    "id": "Unable to find image with ID {{.ImageID}}.\n",
-    "translation": "ID가 {{.ImageID}}인 이미지를 찾을 수 없습니다.\n"
   },
   {
     "id": "Unable to find item with ID: {{.itemID}}.\n",
@@ -8462,10 +7850,6 @@
   {
     "id": "Unable to unmarshal template json: %s\n",
     "translation": "템플리트 json을 역마샬링할 수 없음: %s\n"
-  },
-  {
-    "id": "Unassign a global IP from a target router or device",
-    "translation": "대상 라우터 또는 디바이스에서 글로벌 IP 지정 해제"
   },
   {
     "id": "Unique Id",
@@ -8636,10 +8020,6 @@
     "translation": "가상 게스트 멤버 템플리트"
   },
   {
-    "id": "Virtual Guest Members",
-    "translation": "가상 게스트 멤버"
-  },
-  {
     "id": "Virtual guest domain name not found.",
     "translation": "가상 게스트 도메인 이름을 찾을 수 없습니다."
   },
@@ -8742,14 +8122,6 @@
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
     "translation": "이 복제가 원본 볼륨의 종속 복제인지 여부입니다."
-  },
-  {
-    "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "지정된 수로 그룹의 게스트 수를 가져오기 위해 여러 게스트를 추가/제거합니다. (--by 또는 --to만 설정)"
-  },
-  {
-    "id": "Will add/remove the specified number of guests. (Only set --by or --to)",
-    "translation": "지정된 게스트 수를 추가/제거합니다. (--by 또는 --to만 설정)"
   },
   {
     "id": "Would you like to submit the rules. Continue?",

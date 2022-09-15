@@ -32,38 +32,6 @@
     "translation": "Nombre de transactions actives"
   },
   {
-    "id": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222",
-    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456",
-    "translation": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXEMPLE : \n   ${COMMAND_NAME} sl autoscale delete 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale detail IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale detail 123456",
-    "translation": "${COMMAND_NAME} sl autoscale detail IDENTIFIER\n\nEXEMPLE : \n   ${COMMAND_NAME} sl autoscale detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048",
-    "translation": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n   This command list all Autoscale Groups on current account.",
-    "translation": "${COMMAND_NAME} sl autoscale list \n \nEXEMPLE : \n ${COMMAND_NAME} sl autoscale list \n Cette commande répertorie tous les groupes d'échelle automatique sur le compte en cours."
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31",
-    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to",
-    "translation": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas",
-    "translation": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas"
-  },
-  {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHODE [OPTIONS]\n\nEXEMPLE : \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tCette commande édite les remarques sur un volume.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tCette commande affiche les détails d'un utilisateur.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tCette commande répertorie les hôtes virtuels."
   },
@@ -112,32 +80,8 @@
     "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nSi un volume (avec réplication) devient inaccessible en raison d'un sinistre, cette méthode peut être utilisée pour basculer\nrapidement vers une réplique disponible dans un autre emplacement. Cette méthode ne permet pas de reprendre par restauration via l'API.\nPour reprendre par restauration le volume d'origine après avoir utilisé cette méthode, ouvrez un  ticket de demande de service.\nPour tester le basculement, utilisez la commande '${COMMAND_NAME} sl file replica-failover' à la place.\n\nEXEMPLE :\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tCette commande effectue l'opération de reprise en ligne pour le volume avec l'ID 12345678 vers le volume de réplique avec l'ID 87654321."
   },
   {
-    "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXEMPLE : \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
-  },
-  {
-    "id": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list",
-    "translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl firewall list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
-    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFICATEUR CIBBLE [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tCette commande affecte l'adresse IP dont l'ID est 12345678 à un périphérique cible dont l'adresse IP est 9.111.123.456."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl globalip cancel IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n  ${COMMAND_NAME} sl globalip cancel 12345678\n\tCette commande annule l'adresse IP avec l'ID 12345678."
-  },
-  {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip create --v6 \n\tCette commande crée une adresse IPv6."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
-    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip list --v4 \n\tCette commande répertorie toutes les adresses IPv4 sur le compte en cours."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
-    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tCette commande annule l'affectation de l'adresse IP dont l'ID est 12345678 sur le périphérique cible."
   },
   {
     "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
@@ -156,48 +100,12 @@
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\nEXEMPLE :\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Obtenir les détails de stockage d'un serveur matériel."
   },
   {
-    "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
-    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [ OPTIONS ] \n \nEXEMPLE :\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 -- remove sjc03\n Cette commande ajoute/supprime le centre de données d'une image."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image delete 12345678\n   This command deletes image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image delete IDENTIFICATEUR\n\nEXEMPLE : \n   ${COMMAND_NAME} sl image delete 12345678\n   Cette commande supprime l'image avec l'ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image detail 12345678\n   This command gets details for image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image detail IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl image detail 12345678\n   Cette commande obtient des détails sur l'image dont l'ID est 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\".",
-    "translation": "${COMMAND_NAME} sl image edit IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   Cette commande édite une image dont l'ID est 12345678 et affecte à son nom la valeur \"ubuntu16\", à la note la valeur \"testing\" et à l'étiquette la valeur \"staging\"."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image export URI IDENTIFICATEUR CLE_API\n  IDENTIFICATEUR : ID de l'image\n  URI : URI d'un objet de stockage d'objets (fichiers .vhd/.iso au format : cos://<regionName>/<bucketName>/<objectPath>\n  CLE_API : Clé d'API IBM Cloud avec accès à l'instance IBM Cloud Object Storage."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image import NOM URI CLE_API [--note REMARQUE] [--os-code CODE_SE] [--root-key-crn CRN_CLE_RACINE] [--wrapper-dek DEK_ENCAPSULEE] [--cloud-init] [--byol] [--is-encrypted]\n  NOM : Nom de l'image\n  URI : URI d'un objet de stockage d'objets (fichier .vhd/.iso) au format : cos://<regionName>/<bucketName>/<objectPath>\n  CLE-API : Clé d'API IBM Cloud avec accès à l'instance IBM Cloud Object Storage."
-  },
-  {
-    "id": "${COMMAND_NAME} sl image list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image list --public\n   This command list all public images on current account.",
-    "translation": "${COMMAND_NAME} sl image list [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME}   sl image list --public\n   Cette commande répertorie toutes les images publiques sur le compte en cours."
-  },
-  {
-    "id": "${COMMAND_NAME} sl ipsec cancel CONTEXT_ID [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl ipsec cancel ID_CONTEXTE [OPTIONS]"
-  },
-  {
     "id": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  Request configuration of a tunnel context.\n\n  This action will update the advancedConfigurationFlag on the context\n  instance and further modifications against the context will be prevented\n  until all changes can be propagated to network devices.",
     "translation": "${COMMAND_NAME} sl ipsec config ID_CONTEXTE [OPTIONS]\n\n  Demander la configuration d'un contexte de tunnel.\n\n  Cette action met à jour l'indicateur de configuration avancée dans l'instance\n de contexte ; toute autre modification dans le contexte est empêchée\n  jusqu'à ce que tous les changements puissent être propagés aux périphériques réseau."
   },
   {
     "id": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  List IPSEC VPN tunnel context details.\n\n  Additional resources can be joined using multiple instances of the include\n  option, for which the following choices are available.\n\n  at: address translations\n  is: internal subnets\n  rs: remote subnets\n  sr: statically routed subnets\n  ss: service subnets",
     "translation": "${COMMAND_NAME} sl ipsec detail ID_CONTEXTE [OPTIONS]\n\n  Répertorier les détails du contexte de tunnel VPN IPSEC.\n\n  Des ressources supplémentaires peuvent être jointes à l'aide de plusieurs instances de l'option include,\n  pour laquelle les choix ci-après sont disponibles.\n\n  at : conversions d'adresse\n  is : sous-réseaux internes\n  rs : sous-réseaux distants\n  sr : sous-réseaux routés statiquement\n  ss : sous-réseaux de service"
-  },
-  {
-    "id": "${COMMAND_NAME} sl ipsec order [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl ipsec order [OPTIONS]"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  Add a subnet to an IPSEC tunnel context.\n\n  A subnet id may be specified to link to the existing tunnel context.\n\n  Otherwise, a network identifier in CIDR notation should be specified,\n  indicating that a subnet resource should first be created before\n  associating it with the tunnel context. Note that this is only supported\n  for remote subnets, which are also deleted upon failure to attach to a\n  context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
@@ -222,10 +130,6 @@
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
     "translation": "${COMMAND_NAME} sl ipsec update ID_CONTEXTE [OPTIONS]\n\n Mettre à jour les propriétés d'un contexte de tunnel.\n\n Les mises à jour sont effectuées de façon atomique : toutes sont acceptées ou aucune ne l'est.\n\n Les valeurs de durée de vie de clé doivent être comprises entre 120 et 172800.\n\n La confidentialité de transmission parfaite phase 2 doit être comprise entre 0 et 1.\n\nUne demande de configuration distincte doit être effectuée pour apporter des changements sur\ndes périphériques réseau."
-  },
-  {
-    "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
-    "translation": "${COMMAND_NAME} sl metadata [OPTIONS]\n\n.. csv-table:: Choix : \n- backend_ip\n- backend_mac\n- datacenter\n- datacenter_id\n- fqdn\n- frontend_mac\n- id\n- ip\n- network\n- provision_state\n- tags\n- user_data\n\nExemples :\n${COMMAND_NAME} sl metadata backend_ip\n${COMMAND_NAME} sl metadata network\n\nCes commandes ne fonctionnent que sur les appareils du réseau backend SoftLayer. Cela permet une détection automatique des ressources récemment mises à disposition."
   },
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
@@ -256,40 +160,12 @@
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] NOM_CLE_PACKAGE\n\t\nEXEMPLE : \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   Cette commande répertorie les catégories de serveurs Bare Metal."
   },
   {
-    "id": "${COMMAND_NAME} sl order item-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order item-list CLOUD_SERVER\n   This command lists all items in the VSI package.",
-    "translation": "${COMMAND_NAME} sl order item-list [OPTIONS] NOM_CLE_PACKAGE\n\t\nEXEMPLE : \n   ${COMMAND_NAME} sl order item-list SERVEUR_CLOUD\n   Cette commande répertorie tous les éléments du package VSI."
-  },
-  {
-    "id": "${COMMAND_NAME} sl order package-list [OPTIONS]\n\t\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order package-list\n   This command list out all packages for ordering.",
-    "translation": "${COMMAND_NAME} sl order package-list [OPTIONS]\n\t\t\nEXEMPLE : \n   ${COMMAND_NAME} sl order package-list\n   Cette commande répertorie tous les packages pour la commande."
-  },
-  {
     "id": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\tEXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
     "translation": "${COMMAND_NAME} sl order place NOM_CLE_PACKAGE EMPLACEMENT ELEMENT_COMMANDE1,ELEMENT_COMMANDE2,ELEMENT_COMMANDE3,ELEMENT_COMMANDE4... [OPTIONS]\n\t\n\tEXEMPLE : \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tCette commande commande une instance de serveur virtuel horaire avec 4 UC, 16 Go de mémoire RAM, un disque SAN de 100 Go, Ubuntu 16.04 et une liaison montante publique et privée de 1 Gbit/s sur dal13"
   },
   {
-    "id": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
-    "translation": "${COMMAND_NAME} sl order place-quote NOM_CLE_PACKAGE EMPLACEMENT ELEMENT_COMMANDE1,ELEMENT_COMMANDE2,ELEMENT_COMMANDE3,ELEMENT_COMMANDE4... [OPTIONS]\n\n    EXEMPLE : \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    Cette commande réalise un devis pour une instance de serveur virtuel avec 4 UC, 16 Go de mémoire RAM, un disque SAN de 100 Go, Ubuntu 16.04 et une liaison montante publique et privée de 1 Gbit/s dans le centre de données dal13"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  This command lists the presets for Bare Metal servers.",
-    "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] NOM_CLE_PACKAGE\n\n   EXEMPLE : \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  Cette commande répertorie les préréglages pour les serveurs Bare Metal."
-  },
-  {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
     "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXEMPLE : \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
-    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXEMPLE : \n${COMMAND_NAME} sl order quote-detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
-    "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXEMPLE : \n  ${COMMAND_NAME} sl order quote-list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
-    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXEMPLE : \n${COMMAND_NAME} sl order quote-save 123456"
   },
   {
     "id": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.",
@@ -384,14 +260,6 @@
     "translation": "${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]\n  \nEXEMPLE :\n  ${COMMAND_NAME} sl ticket detail 767676\n  ${COMMAND_NAME} sl ticket detail 767676 --count 10"
   },
   {
-    "id": "${COMMAND_NAME} sl ticket list [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl ticket list[OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl ticket subjects\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket subjects\n  ",
-    "translation": "${COMMAND_NAME} sl ticket subjects\n  \nEXEMPLE :\n  ${COMMAND_NAME} sl ticket subjects\n  "
-  },
-  {
     "id": "${COMMAND_NAME} sl ticket update TICKETID [\"CONTENTS\"] \n  \n    If the second argument is not specified on a non-Windows machine, it will attempt to use either the value stored in the EDITOR environmental variable, or find either nano, vim, or emacs in that order.\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket update 767676 \"A problem has been detected.\"\n  ${COMMAND_NAME} sl ticket update 767667",
     "translation": "${COMMAND_NAME} sl ticket update TICKETID [\"CONTENTS\"] \n  \n    Si le second argument n'est pas indiqué sur une machine non Windows, le système tente d'utiliser la valeur stockée dans la variable d'environnement EDITOR ou de trouver nano, vim ou emacs dans cet ordre.\n  \nEXEMPLE :\n  ${COMMAND_NAME} sl ticket update 767676 \"A problem has been detected.\"\n  ${COMMAND_NAME} sl ticket update 767667"
   },
@@ -404,24 +272,12 @@
     "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXEMPLE : \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n   N'oubliez pas de définir les autorisations et les accès de ce nouvel utilisateur."
   },
   {
-    "id": "${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONS]\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl user delete userId\n   This command delete user with userId.",
-    "translation": "${COMMAND_NAME} sl user delete IDENTIFICATEUR [OPTIONS]\n\t\nEXEMPLE : \n   ${COMMAND_NAME} sl user delete userId\n   Cette commande supprime l'utilisateur associé à l'ID utilisateur spécifié."
-  },
-  {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
     "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE : \n    ${COMMAND_NAME} sl user detail-edit ID_UTILISATEUR --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Cette commande édite les détails d'un utilisateur."
   },
   {
     "id": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'",
     "translation": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\nLes noms de notification doivent être placés entre guillemets. Examples:\nslcli user edit-notifications --enable 'Order Approved'\nslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'"
-  },
-  {
-    "id": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\nEXEMPLE :\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654"
-  },
-  {
-    "id": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\nEXEMPLE :\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -440,36 +296,12 @@
     "translation": "${COMMAND_NAME} sl vlan edit IDENTIFICATEUR [OPTIONS]\n\t\nEXEMPLE :\n   ${COMMAND_NAME}  sl vlan edit 12345678 -n myvlan-rename\n   Cette commande met à jour le VLAN avec l'ID 12345678 et lui donne un nouveau nom \"myvlan-rename\"."
   },
   {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\nEXEMPLE :\n   ${COMMAND_NAME}   sl vlan options\n   Cette commande répertorie toutes les options de création d'un VLAN, comme le type, les centres de données, la taille de sous-réseau, les routeurs, etc."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXEMPLE :\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Autoriser le stockage de fichiers, par blocs et portable sur un serveur virtuel."
   },
   {
-    "id": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n   This command billing lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXEMPLE :\n   ${COMMAND_NAME} sl vs billing 12345678\n   Cette commande affiche des informations détaillées sur l'instance de serveur virtuel dont l'ID est 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs cancel 12345678\n   This command cancels virtual server instance with ID of 12345678.",
-    "translation": "${COMMAND_NAME} sl vs cancel IDENTIFICATEUR [OPTIONS]\n\t\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs cancel 12345678\n   Cette commande annule l'instance de serveur virtuel avec l'ID 12345678."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.",
     "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXEMPLE :\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nCette commande commande une instance Capacité réservée dont le nom est myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nCette commande vérifie que la commande est valide avec les options ci-dessus avant que la commande soit effectivement placée.\n\nAVERTISSEMENT : la capacité réservée s'inscrit dans le cadre d'un contrat annuel non annulable jusqu'à l'expiration du contrat."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs capacity-create-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create-options\n\nEXEMPLE :\n   ${COMMAND_NAME} sl vs options\n   Cette commande répertorie toutes les options de création d'une instance de Groupe de capacité réservée, par exemple, centres de données, cpu, mémoire, système d'exploitation, disque, vitesse du réseau, etc."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXEMPLE :\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Obtenir les détails du groupe de capacité réservée avec l'ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups.",
-    "translation": "${COMMAND_NAME} sl vs capacity-list\n\nEXEMPLE :\n   ${COMMAND_NAME} sl vs capacity-list\n   Liste des groupes de capacité réservée."
   },
   {
     "id": "${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   This command captures virtual server instance with ID of 12345678 with all disks into an image named \"mycloud\" with note \"testing\".",
@@ -478,14 +310,6 @@
   {
     "id": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\tThis command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,\n\toperation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\tThis command tests whether the order is valid with above options before the order is actually placed.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\tThis command exports above options to a file: myvsi.txt under user home directory for later use.",
     "translation": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\nEXEMPLE :\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\tCette commande commande une instance de serveur virtuel avec le nom d'hôte myvsi, le domaine ibm.com, 4 coeurs d'UC, 4096 Mo de mémoire, situé dans le centre de données dal10,\n\tsystème d'exploitation UBUNTU 16 64 bits, 2 disques (un de 100 Go et l'autre de 1000 Go) situé sur le VLAN public avec l'ID 413.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\tCette commande teste la validité de la commande par rapport aux options ci-dessus avant de l'émettre.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\tCette commande exporte les options ci-dessus dans un fichier myvsi.txt dans le répertoire personnel de l'utilisateur en vue d'une utilisation ultérieure."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs credentials IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs credentials 12345678\n   This command lists all username and password pairs of virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs credentials IDENTIFICATEUR [OPTIONS]\n\t\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs credentials 12345678\n   Cette commande répertorie toutes les paires nom d'utilisateur/mot de passe de l'instance de serveur virtuel avec l'ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs detail IDENTIFIER [OPTIONS] \n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs details 12345678\n   This command lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs detail IDENTIFICATEUR [OPTIONS] \n\t\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs details 12345678\n   Cette commande répertorie les informations détaillées relatives à l'instance de serveur virtuel avec l'ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl vs dns-sync IDENTIFIER [OPTIONS]\n   Note: If you don't specify any arguments, it will attempt to update both the A\n   and PTR records. If you don't want to update both records, you may use the\n   -a or --ptr arguments to limit the records updated.\n \nEXAMPLE:\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --a-record --ttl 3600\n   This command synchronizes A record(IP V4 address) of virtual server instance with ID 12345678 to DNS server and sets ttl of this A record to 3600.\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --aaaa-record --ptr\n   This command synchronizes both AAAA record(IP V6 address) and PTR record of virtual server instance with ID 12345678 to DNS server.",
@@ -504,60 +328,16 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Gérer les VSI qui requièrent une migration. Possibilité de migrer une instance dédiée d'un hôte dédié vers un autre hôte dédié également."
   },
   {
-    "id": "${COMMAND_NAME} sl vs options [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a virtual server instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
-    "translation": "${COMMAND_NAME} sl vs options [OPTIONS]\n\t\nEXEMPLE :\n   ${COMMAND_NAME}   sl vs options\n   Cette commande répertorie toutes les options de création d'une instance de serveur virtuel, comme les centres de données, l'unité centrale, le système d'exploitation, le disque, la vitesse réseau, etc."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs pause IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs pause 12345678 -f\n   This command pauses virtual server instance with ID 12345678 without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl vs pause IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs pause 12345678 -f\n   Cette commande met en pause l'instance de serveur virtuel avec l'ID 12345678 sans demander confirmation."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
     "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXEMPLE :\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nCette commande COMMANDE une instance de groupe de placement avec le nom myvsi, backendRouterId 1234567 et la règle 258369"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-create-options\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n    Get List options for creating a placement group.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create-options\nEXEMPLE :\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n    Obtenir les options de liste pour la création d'un groupe de placement."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Get placement Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXEMPLE :\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Obtenir les détails du groupe de placement avec l'ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n   This command lists all placement groups.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXEMPLE :\n   ${COMMAND_NAME} sl vs placementgroup-list\n   Cette commande répertorie tous les groupes de placement."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs power-off IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs power-off 12345678 --soft\n   This command performs a soft power off for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs power-off IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs power-off 12345678 --soft\n   Cette commande effectue une mise hors tension graduelle de l'instance de serveur virtuel avec l'ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs power-on IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs power-on 12345678\n   This command performs a power on for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs power-on IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs power-on 12345678\n   Cette commande effectue une mise sous tension de l'instance de serveur virtuel avec l'ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
     "translation": "${COMMAND_NAME} sl vs ready IDENTIFICATEUR [OPTIONS]\n\t\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs ready 12345678 --wait 30\n   Cette commande vérifie l'état de l'instance de serveur virtuel avec l'ID 12345678 pour savoir si elle est prête à être utilisée en continu et patiente pendant 30 secondes."
   },
   {
-    "id": "${COMMAND_NAME} sl vs reboot IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reboot 12345678 --hard\n   This command performs a hard reboot for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs reboot IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs reboot 12345678 --hard\n   Cette commande effectue un réamorçage immédiat de l'instance de serveur virtuel avec l'ID 12345678."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs reload 12345678\n   Cette commande recharge le système d'exploitation en cours pour l'instance de serveur virtuel avec l'ID 12345678.\n   ${COMMAND_NAME}  sl vs reload 12345678 --image 1234\n   Cette commande recharge le système d'exploitation à partir de l'image avec l'ID 1234 pour l'instance de serveur virtuel avec l'ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs rescue IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs rescue 12345678\n   This command reboots virtual server instance with ID 12345678 into a rescue image.",
-    "translation": "${COMMAND_NAME} sl vs rescue IDENTIFICATEUR [OPTIONS]\n\t\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs rescue 12345678\n   Cette commande réamorce l'instance de serveur virtuel avec l'ID 12345678 dans une image de secours."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs resume IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs resume 12345678\n   This command resumes virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs resume IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs resume 12345678\n   Cette commande assure la reprise de l'instance de serveur virtuel avec l'ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Get storage details for a virtual server.",
-    "translation": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\nEXEMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Obtenir les détails de stockage d'un serveur virtuel."
   },
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
@@ -718,10 +498,6 @@
   {
     "id": "--sortby {{.Column}} is not supported.",
     "translation": "--sortby {{.Column}} n'est pas pris en charge."
-  },
-  {
-    "id": "--to or --by is required",
-    "translation": "--to ou --by est requis"
   },
   {
     "id": "--url cannot be used with TCP checks.",
@@ -1084,20 +860,12 @@
     "translation": "Ajoute une mise à jour à un ticket existant"
   },
   {
-    "id": "Adds guests. (Only set --up or --down) (default)",
-    "translation": "Ajoute des invités. (Définir uniquement --up ou --down) (par défaut)"
-  },
-  {
     "id": "Advanced configuration flag",
     "translation": "Indicateur de configuration avancée"
   },
   {
     "id": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.",
     "translation": "Toutes les règles multi-vlans doivent être gérées via le tableau de bord FortiGate à l'aide des données d'identification fournies."
-  },
-  {
-    "id": "All tags will be removed",
-    "translation": "Toutes les balises seront supprimées"
   },
   {
     "id": "Allocation",
@@ -1142,10 +910,6 @@
   {
     "id": "Append parameters to web call",
     "translation": "Ajouter des paramètres à l'appel Web"
-  },
-  {
-    "id": "Assign a global IP to a target router or device",
-    "translation": "Affecter une adresse IP globale à un routeur ou un périphérique cible"
   },
   {
     "id": "Assign block storage subnets to the given host id.",
@@ -1198,14 +962,6 @@
   {
     "id": "Auto Scale Group was deleted successfully",
     "translation": "Le groupe AutoScale a été supprimé"
-  },
-  {
-    "id": "Auto Scale Group was scaled successfully",
-    "translation": "Le groupe AutoScale a été mis à l'échelle"
-  },
-  {
-    "id": "Autoscale Group {{.Id}} was updated",
-    "translation": "Le groupe AutoScale {{.Id}} a été mis à jour"
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1412,10 +1168,6 @@
     "translation": "Annuler un réseau local virtuel"
   },
   {
-    "id": "Cancel a global IP",
-    "translation": "Annuler une adresse IP globale"
-  },
-  {
     "id": "Cancel a hardware server",
     "translation": "Annuler un serveur matériel"
   },
@@ -1470,10 +1222,6 @@
   {
     "id": "Cancels a billing item.",
     "translation": "Annule un élément de facturation."
-  },
-  {
-    "id": "Cancels a firewall",
-    "translation": "Annule un pare-feu"
   },
   {
     "id": "Cancels the server immediately (instead of on the billing anniversary)",
@@ -1932,10 +1680,6 @@
     "translation": "Créer un hôte dédié"
   },
   {
-    "id": "Create a global IP",
-    "translation": "Créer une adresse IP globale"
-  },
-  {
     "id": "Create a host for dedicated virtual servers",
     "translation": "Créer un hôte pour les serveurs virtuels dédiés"
   },
@@ -1944,16 +1688,8 @@
     "translation": "Créer un nouveau réseau local virtuel"
   },
   {
-    "id": "Create a new firewall",
-    "translation": "Créer un nouveau pare-feu"
-  },
-  {
     "id": "Create a placement group",
     "translation": "Créer un groupe de placement"
-  },
-  {
-    "id": "Create a placement group.",
-    "translation": "Créer un groupe de placement."
   },
   {
     "id": "Create a security group",
@@ -2168,10 +1904,6 @@
     "translation": "Supprimer une zone"
   },
   {
-    "id": "Delete an image ",
-    "translation": "Supprimer une image "
-  },
-  {
     "id": "Delete the credential of an Object Storage Account.",
     "translation": "Supprimer les données d'identification d'un compte Object Storage."
   },
@@ -2198,10 +1930,6 @@
   {
     "id": "Detach devices from a ticket",
     "translation": "Déconnecter les périphériques d'un ticket"
-  },
-  {
-    "id": "Detail information about a firewall",
-    "translation": "Informations détaillées sur un pare-feu"
   },
   {
     "id": "Details of a specific event, and ability to acknowledge event.",
@@ -2258,10 +1986,6 @@
   {
     "id": "Disk sizes (multiple occurrence permitted)",
     "translation": "Tailles de disque (plusieurs occurrences autorisées)"
-  },
-  {
-    "id": "Display FortiGate username and FortiGate password to multi vlans",
-    "translation": "Afficher le nom d'utilisateur FortiGate et le mot de passe FortiGate sur plusieurs vlans"
   },
   {
     "id": "Display IPv4 IPs only",
@@ -2368,10 +2092,6 @@
     "translation": "Ne pas supprimer, montrer ce qui va être supprimé."
   },
   {
-    "id": "Done",
-    "translation": "Done"
-  },
-  {
     "id": "Download SSL certificate and key files",
     "translation": "Télécharger le certificat SSL et les fichiers de clés"
   },
@@ -2394,10 +2114,6 @@
   {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
     "translation": "Date la plus ancienne pour récupérer les événements pour [AAAA-MM-JJ]."
-  },
-  {
-    "id": "Earliest date to retrieve logs for [YYYY-MM-DD].",
-    "translation": "Date la plus ancienne dont les journaux doivent être récupérés [AAAA-MM-JJ ]."
   },
   {
     "id": "Edit SSL certificate",
@@ -2448,10 +2164,6 @@
     "translation": "Editer les détails d'une image"
   },
   {
-    "id": "Edit firewall rules",
-    "translation": "Editer les règles de pare-feu"
-  },
-  {
     "id": "Edit hardware server details",
     "translation": "Editer les détails du serveur matériel"
   },
@@ -2462,10 +2174,6 @@
   {
     "id": "Edit load balancer protocol",
     "translation": "Editer le protocole de l'équilibreur de charge"
-  },
-  {
-    "id": "Edit note and tags of a subnet.",
-    "translation": "Editer la note et les balises d'un sous-réseau."
   },
   {
     "id": "Edit the details about a VLAN",
@@ -2482,10 +2190,6 @@
   {
     "id": "Editor could not be ran: {{.Error}}.\n",
     "translation": "L'éditeur n'a pas pu être exécuté : {{.Error}}.\n"
-  },
-  {
-    "id": "Edits an Autoscale group.",
-    "translation": "Edite un groupe AutoScale."
   },
   {
     "id": "Either '--enable' or '--disable' is required.",
@@ -2612,10 +2316,6 @@
     "translation": "Niveau d'endurance par IOPS"
   },
   {
-    "id": "Entry",
-    "translation": "Entrée"
-  },
-  {
     "id": "Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n",
     "translation": "Une erreur s'est produite lors de la création de l'image instantanée du volume {{.VolumeID}}. Vérifiez que le volume n'a pas basculé ou qu'il ne se trouve pas dans un état qui empêche la prise d'images instantanées.\n"
   },
@@ -2692,10 +2392,6 @@
     "translation": "Echec dû à une erreur : "
   },
   {
-    "id": "Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n",
-    "translation": "Echec de la définition des balises pour l'invité virtuel {{.VirtualGuestHostname}}. \n"
-  },
-  {
     "id": "Failed to Edit email account: {{.emailID}}.\n",
     "translation": "Echec de la modification du compte de messagerie: {{.emailID}}. \n"
   },
@@ -2718,10 +2414,6 @@
   {
     "id": "Failed to add certificate.\n",
     "translation": "Echec de l'ajout du certificat.\n"
-  },
-  {
-    "id": "Failed to add global IP.\n",
-    "translation": "Echec de l'ajout de l'adresse IP globale.\n"
   },
   {
     "id": "Failed to add l7 policy: {{.Error}}.\n",
@@ -2762,10 +2454,6 @@
   {
     "id": "Failed to add {{.Type}} subnet #{{.ID}} to IPSec {{.ContextID}}.\n",
     "translation": "Echec de l'ajout du sous-réseau {{.Type}} n° {{.ID}} à l'IPSec {{.ContextID}}.\n"
-  },
-  {
-    "id": "Failed to assign global IP {{.IpID}} to target {{.Target}}.\n",
-    "translation": "Echec de l'affectation de l'adresse IP globale {{.IpID}} à la cible {{.Target}}.\n"
   },
   {
     "id": "Failed to assign subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -2812,10 +2500,6 @@
     "translation": "Echec de l'annulation du pare-feu : {{.ID}}"
   },
   {
-    "id": "Failed to cancel global IP: {{.ID}}.\n",
-    "translation": "Echec de l'annulation de l'adresse IP globale : {{.ID}}.\n"
-  },
-  {
     "id": "Failed to cancel hardware server: {{.ID}}.\n",
     "translation": "Echec d'annulation du serveur matériel {{.ID}}.\n"
   },
@@ -2856,20 +2540,12 @@
     "translation": "Echec de confirmation du nouvel ID LUN sur le volume {{.VolumeId}}."
   },
   {
-    "id": "Failed to create Auto Scale Group.\n",
-    "translation": "Impossible de créer le groupe de mise )à l'échelle automatique. \n"
-  },
-  {
     "id": "Failed to create credential. ",
     "translation": "La création des données d'identification a échoué. "
   },
   {
     "id": "Failed to create dedicated host.\n",
     "translation": "Echec de la création de l'hôte dédié.\n"
-  },
-  {
-    "id": "Failed to create firewall.\n",
-    "translation": "Echec de la création du pare-feu.\n"
   },
   {
     "id": "Failed to create load balancer with name {{.Name}} on {{.Location}}.\n",
@@ -2920,10 +2596,6 @@
     "translation": "Impossible de décoder la note. \n"
   },
   {
-    "id": "Failed to delete AutoScale Group.\n",
-    "translation": "Echec de la suppression du groupe AutoScale. \n"
-  },
-  {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "Echec de la suppression du pool L7 {{.L7PoolID}} : {{.Error}}.\n"
   },
@@ -2942,10 +2614,6 @@
   {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "La suppression des données d'identification {{.storageID}} a échoué.\n"
-  },
-  {
-    "id": "Failed to delete image: {{.ImageID}}.\n",
-    "translation": "Echec de la suppression de l'image : {{.ImageID}}.\n"
   },
   {
     "id": "Failed to delete l7 policy: {{.Error}}.\n",
@@ -3064,14 +2732,6 @@
     "translation": "Impossible d'obtenir la présentation du compte."
   },
   {
-    "id": "Failed to get AutoScale group logs.\n",
-    "translation": "Echec de l'obtention des journaux du groupe AutoScale. \n"
-  },
-  {
-    "id": "Failed to get AutoScale group.\n",
-    "translation": "Impossible d'obtenir le groupe AutoScale. \n"
-  },
-  {
     "id": "Failed to get Bandwidth Pool.",
     "translation": "L'obtention du pool de bande passante a échoué.\n"
   },
@@ -3082,10 +2742,6 @@
   {
     "id": "Failed to get Cloud Object Storages.\n",
     "translation": "L'obtention de Cloud Object Storage a échoué.\n"
-  },
-  {
-    "id": "Failed to get Datacenter {{.datacenter}}.\n",
-    "translation": "Impossible d'obtenir le centre de données {{.datacenter}}. \n"
   },
   {
     "id": "Failed to get Event Log types.\n",
@@ -3216,14 +2872,6 @@
     "translation": "Echec de l'obtention de centres de données pour le volume {{.VolumeID}}.\n"
   },
   {
-    "id": "Failed to get dedicated firewall rules for {{.FirewallID}}.\n",
-    "translation": "Echec de l'obtention des règles de pare-feu dédiées pour {{.FirewallID}}.\n"
-  },
-  {
-    "id": "Failed to get dedicated firewall rules.\n",
-    "translation": "Echec de l'obtention des règles de pare-feu dédiées.\n"
-  },
-  {
     "id": "Failed to get dedicated hosts.\n",
     "translation": "Impossible d'obtenir les hôtes dédiés. \n"
   },
@@ -3234,10 +2882,6 @@
   {
     "id": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
     "translation": "Impossible d'obtenir le statut de conversion en double du volume {{.VolumeID}}. \n"
-  },
-  {
-    "id": "Failed to get firewalls on your account.\n",
-    "translation": "Echec de l'obtention des pare-feux sur votre compte.\n"
   },
   {
     "id": "Failed to get hardware sensor data.\n",
@@ -3258,14 +2902,6 @@
   {
     "id": "Failed to get hardware {{.ID}}.\n",
     "translation": "Echec de l'obtention du matériel {{.ID}}.\n"
-  },
-  {
-    "id": "Failed to get image datacenters.\n",
-    "translation": "Impossible d'obtenir les centres de donnéess.\n"
-  },
-  {
-    "id": "Failed to get image: {{.ImageID}}.\n",
-    "translation": "Echec de l'obtention de l'image : {{.ImageID}}.\n"
   },
   {
     "id": "Failed to get invoices.",
@@ -3320,14 +2956,6 @@
     "translation": "Impossible d'obtenir le récapitulatif de suivi des mesures de l'objet avec l'ID {{.MetricTrackingObjectId}}."
   },
   {
-    "id": "Failed to get multi vlan firewall.\n",
-    "translation": "Impossible d'obtenir le pare-feu multi-vlan. \n"
-  },
-  {
-    "id": "Failed to get multi vlan firewalls on your account.\n",
-    "translation": "Echec de l'obtention des pare-feu multi-vlan sur votre compte. \n"
-  },
-  {
     "id": "Failed to get nas storage detail for the hardware server {{.ID}}.\n",
     "translation": "Impossible d'obtenir les détails de stockage nas du serveur matériel {{.ID}}. \n"
   },
@@ -3350,10 +2978,6 @@
   {
     "id": "Failed to get orders.",
     "translation": "Echec de l'obtention des commandes."
-  },
-  {
-    "id": "Failed to get package for {{.Type}} firewall.\n",
-    "translation": "Echec de l'obtention du package du pare-feu {{.Type}}.\n"
   },
   {
     "id": "Failed to get permissions.\n",
@@ -3406,10 +3030,6 @@
   {
     "id": "Failed to get standard firewall rules for {{.FirewallID}}.\n",
     "translation": "Echec de l'obtention des règles de pare-feu standard pour {{.FirewallID}}.\n"
-  },
-  {
-    "id": "Failed to get standard firewall rules.\n",
-    "translation": "Echec de l'obtention des règles de pare-feu standard.\n"
   },
   {
     "id": "Failed to get subnet: {{.ID}}.\n",
@@ -3496,10 +3116,6 @@
     "translation": "Impossible d'obtenir des armoires dédiées virtuelles sur votre compte. \n"
   },
   {
-    "id": "Failed to get virtual guest members.\n",
-    "translation": "Impossible d'obtenir les membres invités virtuels. \n"
-  },
-  {
     "id": "Failed to get virtual guests on your account.\n",
     "translation": "Echec de l'obtention des invités virtuels sur votre compte. \n"
   },
@@ -3566,10 +3182,6 @@
   {
     "id": "Failed to list dedicated hosts on your account.\n",
     "translation": "Echec de l'établissement de la liste des hôtes dédiés sur votre compte.\n"
-  },
-  {
-    "id": "Failed to list global IPs on your account.\n",
-    "translation": "Echec de l'établissement de la liste des adresses IP globales sur votre compte.\n"
   },
   {
     "id": "Failed to list items.\n",
@@ -3640,10 +3252,6 @@
     "translation": "Echec lors de l'ouverture de l'éditeur des règles de composant : {{.FirewallID}}.\n"
   },
   {
-    "id": "Failed to open editor for vlan rules: {{.FirewallID}}.\n",
-    "translation": "Echec lors de l'ouverture de l'éditeur des règles du réseau local virtuel : {{.FirewallID}}.\n"
-  },
-  {
     "id": "Failed to order IPSec.Please try again later.\n",
     "translation": "Echec de la commande d'IPSec. Réessayez ultérieurement.\n"
   },
@@ -3686,10 +3294,6 @@
   {
     "id": "Failed to parse file.\n",
     "translation": "Echec de l'analyse du fichier.\n"
-  },
-  {
-    "id": "Failed to parse firewall ID : {{.FirewallID}}.\n",
-    "translation": "Echec de l'analyse de l'ID de pare-feu : {{.FirewallID}}.\n"
   },
   {
     "id": "Failed to parse version. \n",
@@ -3848,10 +3452,6 @@
     "translation": "La sauvegarde du devis a échoué.\n"
   },
   {
-    "id": "Failed to scale Auto Scale Group.",
-    "translation": "Echec de la mise à l'échelle du groupe AutoScale."
-  },
-  {
     "id": "Failed to set LUN ID for volume {{.VolumeID}}.\n",
     "translation": "Echec de la définition de l'ID LUN pour le volume {{.VolumeID}}.\n"
   },
@@ -3916,16 +3516,8 @@
     "translation": "Echec du basculement de l'interface IPMI du serveur matériel '{{.ID}}'.\n"
   },
   {
-    "id": "Failed to unassign global IP {{.ID}}.\n",
-    "translation": "Echec de l'annulation de l'affectation de l'adresse IP globale {{.ID}}.\n"
-  },
-  {
     "id": "Failed to unmarshal template file: {{.File}}.\n",
     "translation": "Echec de la désorganisation du fichier modèle : {{.File}}.\n"
-  },
-  {
-    "id": "Failed to update Auto Scale Group.\n",
-    "translation": "Echec de la mise à jour du groupe AutoScale. \n"
   },
   {
     "id": "Failed to update IPSec {{.ContextID}}.\n",
@@ -3946,10 +3538,6 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "Echec de la mise à jour du pool l7 : {{.Error}}.\n"
-  },
-  {
-    "id": "Failed to update permissions: %s",
-    "translation": "Echec de la mise à jour des droits : %s"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -4136,10 +3724,6 @@
     "translation": "Filtrer par ID de propriétaire"
   },
   {
-    "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
-    "translation": "Filtrer par durée de vie en secondes, par exemple, 86400"
-  },
-  {
     "id": "Filter by VLAN name",
     "translation": "Filtrer par nom de réseau local virtuel"
   },
@@ -4190,10 +3774,6 @@
   {
     "id": "Filter by name of the dedicated host",
     "translation": "Filtrer par nom de l'hôte dédié"
-  },
-  {
-    "id": "Filter by network identifier",
-    "translation": "Filtrer par identificateur de réseau"
   },
   {
     "id": "Filter by network port speed in Mbps",
@@ -4452,10 +4032,6 @@
     "translation": "Obtenir les détails de l'équilibreur de charge"
   },
   {
-    "id": "Get placement Group details.",
-    "translation": "Obtenir les détails d'un groupe de placement."
-  },
-  {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
     "translation": "Obtenir des images instantanées d'avertissement de seuil d'utilisation de l'espace pour un volume donné."
   },
@@ -4628,10 +4204,6 @@
     "translation": "Portion hôte du nom de domaine complet [obligatoire]"
   },
   {
-    "id": "Host portion of the FQDN. example: server",
-    "translation": "Portion hôte du nom de domaine complet. Exemple : server"
-  },
-  {
     "id": "Host portion of the FQDN[required]",
     "translation": "Portion hôte du nom de domaine complet [obligatoire]"
   },
@@ -4710,50 +4282,6 @@
   {
     "id": "IDs of the subnets to remove",
     "translation": "ID des sous-réseaux à supprimer"
-  },
-  {
-    "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
-    "translation": "ENTIER Tailles des disques (les occurrences multiples sont autorisées) [obligatoire]."
-  },
-  {
-    "id": "INTEGER Number of CPUs for new guests (existing not effected)",
-    "translation": "ENTIER Nombre de CPU pour les nouveaux invités (les existants ne sont pas affectés)"
-  },
-  {
-    "id": "INTEGER Number of CPUs for new guests (existing not effected)  [required]",
-    "translation": "ENTIER Nombre de CPU pour les nouveaux invités (les existants ne sont pas concernés) [obligatoire]."
-  },
-  {
-    "id": "INTEGER RAM in MB or GB for new guests (existing not effected)",
-    "translation": "ENTIER RAM en Mo ou Go pour les nouveaux invités (les existants ne sont pas affectés)"
-  },
-  {
-    "id": "INTEGER RAM in MB or GB for new guests (existing not effected)  [required]",
-    "translation": "ENTIER RAM en Mo ou Go pour les nouveaux clients (les clients existants ne sont pas affectés) [obligatoire]."
-  },
-  {
-    "id": "INTEGER Set the maximum number of guests",
-    "translation": "ENTIER Définition du nombre maximal d'invités"
-  },
-  {
-    "id": "INTEGER Set the maximum number of guests  [required]",
-    "translation": "ENTIER Définition du nombre maximum d'invités [requis]"
-  },
-  {
-    "id": "INTEGER Set the minimum number of guests",
-    "translation": "ENTIER Définir le nombre minimum d'invités"
-  },
-  {
-    "id": "INTEGER Set the minimum number of guests  [required]",
-    "translation": "ENTIER Définir le nombre minimum d'invités [requis]"
-  },
-  {
-    "id": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]",
-    "translation": "ENTIER Identificateur du groupe régional auquel ce groupe AutoScale est affecté.  [requis]"
-  },
-  {
-    "id": "INTEGER The number of seconds this group will wait after lastActionDate before performing another action.  [required]",
-    "translation": "ENTIER Durée d'attente en secondes par le groupe de la fin de lastActionDate avant d'effectuer une autre action.  [requis]"
   },
   {
     "id": "IOPS",
@@ -5210,14 +4738,6 @@
   {
     "id": "List all devices the user has access and device access permissions.",
     "translation": "Afficher la liste de tous les périphériques auxquels l'utilisateur a accès et des autorisations d'accès aux périphériques."
-  },
-  {
-    "id": "List all firewalls on your account",
-    "translation": "Afficher la liste de tous les pare-feux sur votre compte"
-  },
-  {
-    "id": "List all global IPs on your account",
-    "translation": "Afficher la liste de toutes les adresses IP globales sur votre compte"
   },
   {
     "id": "List all images on your account",
@@ -5684,10 +5204,6 @@
     "translation": "Nouvelle taille du volume de fichiers en Go. ***Si aucune taille n'est indiquée, la taille d'origine du volume est utilisée.***\nTailles possibles : [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\nMinimum : [taille d'origine du volume]"
   },
   {
-    "id": "New Tags: {{.Tags}}.",
-    "translation": "Nouvelles balises : {{.Tags}}."
-  },
-  {
     "id": "New notes for the key",
     "translation": "Nouvelles notes pour la clé"
   },
@@ -5858,10 +5374,6 @@
   {
     "id": "Number of VSI instances this capacity reservation can support. [required]",
     "translation": "Nombre d'instances VSI que cette réservation de capacité peut prendre en charge. [obligatoire]"
-  },
-  {
-    "id": "Number of guests for the scale action.",
-    "translation": "Nombre d'invités pour l'action d'échelle."
   },
   {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
@@ -6056,10 +5568,6 @@
     "translation": "Commande/Créer une licence."
   },
   {
-    "id": "Order/Create a scale group.",
-    "translation": "Commande/Créer un groupe d'échelle."
-  },
-  {
     "id": "Order/create a hardware server",
     "translation": "Commander/créer un serveur matériel"
   },
@@ -6114,10 +5622,6 @@
   {
     "id": "Owner",
     "translation": "Propriétaire"
-  },
-  {
-    "id": "PATH Read userdata from a file",
-    "translation": "CHEMIN Lire les données utilisateur d'un fichier"
   },
   {
     "id": "POD",
@@ -6456,10 +5960,6 @@
     "translation": "Nom d'hôte PrimaryRouter"
   },
   {
-    "id": "Print zone and resource records in BIND format",
-    "translation": "Imprimer les enregistrements de ressource et de zone au format BIND"
-  },
-  {
     "id": "Prints out an SSH key to the screen",
     "translation": "Imprime une clé SSH à l'écran"
   },
@@ -6768,10 +6268,6 @@
     "translation": "Retire une étiquette vide de votre compte."
   },
   {
-    "id": "Removes guests. (Only set --up or --down)",
-    "translation": "Supprime les invités. (Définir uniquement --up ou --down)"
-  },
-  {
     "id": "Removing Tag: {{.tag}}.",
     "translation": "Suppression de la balise : {{.tag}}."
   },
@@ -6842,10 +6338,6 @@
   {
     "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
     "translation": "Extraire les données d'identification utilisées pour générer une signature AWS. Maximum 2."
-  },
-  {
-    "id": "Retrieve logs for an Autoscale group.",
-    "translation": "Extraire les journaux d'un groupe Autoscale."
   },
   {
     "id": "Return ALL invoices. There may be a lot of these. [default: False]",
@@ -6972,10 +6464,6 @@
     "translation": "Enregistrer un devis"
   },
   {
-    "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
-    "translation": "Met à l'échelle un groupe Autoscale Ignorer le délai du groupe d'échelle."
-  },
-  {
     "id": "Schedule",
     "translation": "Planification"
   },
@@ -7086,10 +6574,6 @@
   {
     "id": "Sets username for this account.",
     "translation": "Définit le nom d'utilisateur pour ce compte."
-  },
-  {
-    "id": "Setting tags for {{.VirtualGuestHostname}}.",
-    "translation": "Définition des balises pour {{.VirtualGuestHostname}}."
   },
   {
     "id": "Short Name",
@@ -7456,62 +6940,6 @@
     "translation": "Le rechargement du système pour l'instance de serveur virtuel {{.VsId}} est en cours. Exécutez '{{.CommandName}} sl vs ready {{.VsId}}' ultérieurement pour vérifier si le rechargement est terminé."
   },
   {
-    "id": "TEXT Collection of policies for this group. This can be empty.",
-    "translation": "TEXTE Collecte des politiques de ce groupe. Peut être vide."
-  },
-  {
-    "id": "TEXT Datacenter shortname  [required]",
-    "translation": "TEXTE Nom abrégé de centre de données [obligatoire]"
-  },
-  {
-    "id": "TEXT Domain portion of the FQDN  [required]",
-    "translation": "TEXTE Partie du nom de domaine complet [requis]"
-  },
-  {
-    "id": "TEXT Host portion of the FQDN  [required]",
-    "translation": "TEXTE Partie hôte du nom e domaine complet distinctif [requis]"
-  },
-  {
-    "id": "TEXT OS install code. Tip: you can specify <OS>_LATEST  [required]",
-    "translation": "TEXTE Code d'installation du système d'exploitation. Astuce : vous pouvez indiquer <OS>_LATEST [requis]"
-  },
-  {
-    "id": "TEXT Post-install script to download",
-    "translation": "TEXTE Script de post-installation à télécharger"
-  },
-  {
-    "id": "TEXT SSH keys to add to the root user (multiple occurrence permitted)",
-    "translation": "Touches SSH TEXT à ajouter au superutilisateur (occurrences multiples autorisées)"
-  },
-  {
-    "id": "TEXT Scale group's name.",
-    "translation": "TEXTE Nom du groupe d'échelle."
-  },
-  {
-    "id": "TEXT Scale group's name.  [required]",
-    "translation": "TEXTE Nom du groupe d'échelle.  [requis]"
-  },
-  {
-    "id": "TEXT The number to scale by. This number has different meanings based on type.",
-    "translation": "TEXTE Nombre en fonction duquel effectuer la mise à l'échelle. Ce nombre a des significations différentes selon le type."
-  },
-  {
-    "id": "TEXT The termination policy for the group(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [required]",
-    "translation": "TEXTE Règle de résiliation du groupe (CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [requis]"
-  },
-  {
-    "id": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE).",
-    "translation": "TEXTE Type d'échelle à effectuer (ABSOLUTE, PERCENT, RELATIVE)."
-  },
-  {
-    "id": "TEXT User defined metadata string",
-    "translation": "TEXTE Chaîne de métadonnées définie par l'utilisateur"
-  },
-  {
-    "id": "TTL(Time-To-Live) in seconds, such as: 86400",
-    "translation": "Durée de vie en secondes, par exemple, 86400"
-  },
-  {
     "id": "TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200",
     "translation": "Durée de vie en secondes, par exemple, 86400. Valeur par défaut : 7200"
   },
@@ -7520,20 +6948,12 @@
     "translation": "Etiquette"
   },
   {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "Balise tous les invités d'un groupe Auto Scale."
-  },
-  {
     "id": "Tags for the image",
     "translation": "Etiquettes de l'image"
   },
   {
     "id": "Tags to add to the instance (multiple occurrence permitted)",
     "translation": "Etiquettes à ajouter à l'instance (plusieurs occurrences autorisées)"
-  },
-  {
-    "id": "Tags to set for each guest in this group. Existing tags are overwritten. An empty string will remove all tags.",
-    "translation": "Balises à définir pour chaque invité de ce groupe. Les balises existantes sont remplacées. Une chaîne vide supprime toutes les balises."
   },
   {
     "id": "Tags to set or empty string to remove all",
@@ -8044,24 +7464,12 @@
     "translation": "Cette commande requiert l'option --add ou --remove."
   },
   {
-    "id": "This command requires four arguments.",
-    "translation": "Cette commande requiert quatre arguments."
-  },
-  {
     "id": "This command requires notification names as arguments and options flags.",
     "translation": "Cette commande requiert des noms de notification comme des arguments et des indicateurs d'option."
   },
   {
     "id": "This command requires one argument.",
     "translation": "Cette commande requiert un argument."
-  },
-  {
-    "id": "This command requires one identifier.",
-    "translation": "Cette commande requiert un identificateur."
-  },
-  {
-    "id": "This command requires one indentifier, the option and the option arguments.",
-    "translation": "Cette commande requiert un identificateur, l'option et les arguments de l'option."
   },
   {
     "id": "This command requires one option.",
@@ -8076,20 +7484,8 @@
     "translation": "Cette commande requiert l'option --title."
   },
   {
-    "id": "This command requires three arguments.",
-    "translation": "Cette commande requiert trois arguments."
-  },
-  {
     "id": "This command requires two arguments.",
     "translation": "Cette commande requiert deux arguments."
-  },
-  {
-    "id": "This command requires zero arguments.",
-    "translation": "Cette commande ne requiert aucun argument."
-  },
-  {
-    "id": "This command uses 0 arguments",
-    "translation": "Cette commande n'utilise aucun argument"
   },
   {
     "id": "This interface allows you to change the route of your Account Owned subnets.",
@@ -8384,20 +7780,12 @@
     "translation": "Impossible de trouver le pare-feu avec l'ID : {{.ID}}"
   },
   {
-    "id": "Unable to find global IP with ID: {{.ID}}.\n",
-    "translation": "Impossible de trouver l'adresse IP globale avec l'ID : {{.ID}}.\n"
-  },
-  {
     "id": "Unable to find hardware server with ID: {{.ID}}.\n",
     "translation": "Impossible de trouver le serveur matériel avec l'ID {{.ID}}.\n"
   },
   {
     "id": "Unable to find health check with UUID of '{{.UUID}}' in load balancer {{.ID}}.",
     "translation": "Impossible de trouver le diagnostic d'intégrité avec l'UUID '{{.UUID}}' dans l'équilibreur de charge {{.ID}}."
-  },
-  {
-    "id": "Unable to find image with ID {{.ImageID}}.\n",
-    "translation": "Impossible de trouver l'image avec l'ID {{.ImageID}}.\n"
   },
   {
     "id": "Unable to find item with ID: {{.itemID}}.\n",
@@ -8462,10 +7850,6 @@
   {
     "id": "Unable to unmarshal template json: %s\n",
     "translation": "Impossible de désordonnancer le JSON modèle : %s\n"
-  },
-  {
-    "id": "Unassign a global IP from a target router or device",
-    "translation": "Annuler l'affectation d'une adresse IP globale à partir d'un routeur ou d'un périphérique cible"
   },
   {
     "id": "Unique Id",
@@ -8636,10 +8020,6 @@
     "translation": "Modèle de membre invité virtuel"
   },
   {
-    "id": "Virtual Guest Members",
-    "translation": "Membres invités virtuels"
-  },
-  {
     "id": "Virtual guest domain name not found.",
     "translation": "Nom de domaine invité virtuel introuvable."
   },
@@ -8742,14 +8122,6 @@
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
     "translation": "Indique si ce doublon sera ou non un doublon dépendant du volume d'origine."
-  },
-  {
-    "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "Ajouter/supprimer un nombre d'invités pour obtenir le nombre d'invités du groupe au nombre spécifié. (Définir uniquement --by ou --to)"
-  },
-  {
-    "id": "Will add/remove the specified number of guests. (Only set --by or --to)",
-    "translation": "Ajouter/supprimer le nombre spécifié d'invités. (Définir uniquement --by ou --to)"
   },
   {
     "id": "Would you like to submit the rules. Continue?",
