@@ -8,9 +8,10 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -18,26 +19,24 @@ var _ = Describe("hardware billing", func() {
 	var (
 		fakeUI              *terminal.FakeUI
 		fakeHardwareManager *testhelpers.FakeHardwareServerManager
-		cmd                 *hardware.BillingCommand
-		cliCommand          cli.Command
+		cliCommand          *hardware.BillingCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
-		cmd = hardware.NewBillingCommand(fakeUI, fakeHardwareManager)
-		cliCommand = cli.Command{
-			Name:        hardware.HardwareBillingMetaData().Name,
-			Description: hardware.HardwareBillingMetaData().Description,
-			Usage:       hardware.HardwareBillingMetaData().Usage,
-			Flags:       hardware.HardwareBillingMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = hardware.NewBillingCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.HardwareManager = fakeHardwareManager
 	})
 
 	Describe("hardware billing", func() {
 		Context("hardware billing without id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
@@ -45,7 +44,7 @@ var _ = Describe("hardware billing", func() {
 
 		Context("hardware billing with wrong id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcd")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcd")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Hardware server ID'. It must be a positive integer."))
 			})
@@ -56,7 +55,7 @@ var _ = Describe("hardware billing", func() {
 				fakeHardwareManager.GetHardwareReturns(datatypes.Hardware_Server{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get hardware server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -90,7 +89,7 @@ var _ = Describe("hardware billing", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00"))

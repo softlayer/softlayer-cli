@@ -10,7 +10,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -20,12 +20,6 @@ import (
 func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{}
-
-	// ibmcloud sl hardware
-	hardwareCommands := hardware.GetCommandActionBindings(context, ui, session)
-	for name, action := range hardwareCommands {
-		CommandActionBindings[name] = action
-	}
 
 	//ibmcloud sl object-storage
 	objectstorageCommands := objectstorage.GetCommandActionBindings(context, ui, session)
