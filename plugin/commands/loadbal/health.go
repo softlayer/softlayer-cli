@@ -2,41 +2,64 @@ package loadbal
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
 
 type HealthChecksCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	HealthUuid          string
+	Interval            int
+	Retry               int
+	Timeout             int
+	Url                 string
 }
 
-func NewHealthChecksCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *HealthChecksCommand) {
-	return &HealthChecksCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewHealthChecksCommand(sl *metadata.SoftlayerCommand) *HealthChecksCommand {
+	thisCmd := &HealthChecksCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "health-edit " + T("IDENTIFIER"),
+		Short: T("Edit load balancer health check."),
+		Long:  T("${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.HealthUuid, "health-uuid", "", T("Health check UUID to modify [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Interval, "interval", "i", 0, T("Seconds between checks. [2-60]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Retry, "retry", "r", 0, T("Number of times before marking as DOWN. [1-10]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Timeout, "timeout", "t", 0, T("Seconds to wait for a connection. [1-59]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Url, "url", "u", "", T("Url path for HTTP/HTTPS checks"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *HealthChecksCommand) Run(c *cli.Context) error {
-	loadbalID := c.Int("lb-id")
-	if loadbalID == 0 {
-		return errors.NewMissingInputError("--lb-id")
+func (cmd *HealthChecksCommand) Run(args []string) error {
+	loadbalID, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.NewInvalidSoftlayerIdInputError("LoadBalancer ID")
 	}
-
-	healthUUID := c.String("health-uuid")
+	healthUUID := cmd.HealthUuid
 	if healthUUID == "" {
 		return errors.NewMissingInputError("--health-uuid")
 	}
 
-	if !c.IsSet("i") && !c.IsSet("r") && !c.IsSet("t") && !c.IsSet("u") {
+	if cmd.Interval == 0 && cmd.Retry == 0 && cmd.Timeout == 0 && cmd.Url == "" {
 		return errors.NewInvalidUsageError(fmt.Sprintf("%s :%s, %s, %s, %s,", T("At least one of these flags is required"), "-i, --interval", "-r, --retry", "-t, --timeout", " -u, --url"))
 	}
 
@@ -76,69 +99,34 @@ func (cmd *HealthChecksCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Unable to find health check with UUID of '{{.UUID}}' in load balancer {{.ID}}.", map[string]interface{}{"UUID": healthUUID, "ID": loadbalID}), 2)
 	}
 
-	if c.IsSet("u") && healthCheck.BackendProtocol != nil && *healthCheck.BackendProtocol == "TCP" {
+	if cmd.Url != "" && healthCheck.BackendProtocol != nil && *healthCheck.BackendProtocol == "TCP" {
 		return cli.NewExitError(T("--url cannot be used with TCP checks."), 2)
 	}
 
-	interval := c.Int("i")
-	if c.IsSet("i") {
+	interval := cmd.Interval
+	if cmd.Interval != 0 {
 		healthCheck.Interval = &interval
 	}
 
-	retry := c.Int("r")
-	if c.IsSet("r") {
+	retry := cmd.Retry
+	if cmd.Retry != 0 {
 		healthCheck.MaxRetries = &retry
 	}
 
-	timeout := c.Int("t")
-	if c.IsSet("t") {
+	timeout := cmd.Timeout
+	if cmd.Timeout != 0 {
 		healthCheck.Timeout = &timeout
 	}
 
-	url := c.String("u")
-	if c.IsSet("u") {
+	url := cmd.Url
+	if cmd.Url != "" {
 		healthCheck.UrlPath = &url
 	}
 
 	updatedLoadbalancer, err := cmd.LoadBalancerManager.UpdateLBHealthMonitors(loadbalancer.Uuid, []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration{healthCheck})
 	if err != nil {
-		return cli.NewExitError(T("Failed to update health check: ")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to update health check: "), err.Error(), 2)
 	}
 	PrintLoadbalancer(updatedLoadbalancer, cmd.UI)
 	return nil
-}
-
-func LoadbalHealthMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "health-edit",
-		Description: T("Edit load balancer health check"),
-		Usage:       "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "lb-id",
-				Usage: T("ID for the load balancer [required]"),
-			},
-			cli.StringFlag{
-				Name:  "health-uuid",
-				Usage: T("Health check UUID to modify [required]"),
-			},
-			cli.IntFlag{
-				Name:  "i,interval",
-				Usage: T("Seconds between checks. [2-60]"),
-			},
-			cli.IntFlag{
-				Name:  "r,retry",
-				Usage: T("Number of times before marking as DOWN. [1-10]"),
-			},
-			cli.IntFlag{
-				Name:  "t,timeout",
-				Usage: T("Seconds to wait for a connection. [1-59]"),
-			},
-			cli.StringFlag{
-				Name:  "u,url",
-				Usage: T("Url path for HTTP/HTTPS checks"),
-			},
-		},
-	}
 }

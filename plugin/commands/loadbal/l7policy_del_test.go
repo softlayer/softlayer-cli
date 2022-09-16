@@ -7,35 +7,34 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer add policies", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.L7PolicyDeleteCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.L7PolicyDeleteCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewL7PolicyDeleteCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewL7PolicyDeleteCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalL7PolicyDeleteMetadata().Name,
-			Description: loadbal.LoadbalL7PolicyDeleteMetadata().Description,
-			Usage:       loadbal.LoadbalL7PolicyDeleteMetadata().Usage,
-			Flags:       loadbal.LoadbalL7PolicyDeleteMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
 	})
 
 	Context("policy del without policy-id", func() {
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--policy-id' is required"))
 		})
@@ -43,7 +42,7 @@ var _ = Describe("Load balancer add policies", func() {
 	Context("policy del with No as confirmation", func() {
 		It("return error", func() {
 			fakeUI.Inputs("No")
-			err := testhelpers.RunCommand(cliCommand, "--policy-id", "123")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--policy-id", "123")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("This will cancel the load balancer policy: 123 and cannot be undone. Continue?"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
@@ -52,7 +51,7 @@ var _ = Describe("Load balancer add policies", func() {
 	Context("policy del with confirmation error", func() {
 		It("return error", func() {
 			fakeUI.Inputs("123456")
-			err := testhelpers.RunCommand(cliCommand, "--policy-id", "123")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--policy-id", "123")
 			Expect(err).To(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("This will cancel the load balancer policy: 123 and cannot be undone. Continue?"))
 			Expect(err.Error()).To(ContainSubstring("input must be 'y', 'n', 'yes' or 'no'"))
@@ -61,7 +60,7 @@ var _ = Describe("Load balancer add policies", func() {
 	Context("policy del with confirmation error", func() {
 		It("return error", func() {
 			fakeUI.Inputs("Yes")
-			err := testhelpers.RunCommand(cliCommand, "--policy-id", "123")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--policy-id", "123")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("This will cancel the load balancer policy: 123 and cannot be undone. Continue?"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
@@ -74,7 +73,7 @@ var _ = Describe("Load balancer add policies", func() {
 		})
 		It("return error", func() {
 			fakeUI.Inputs("Yes")
-			err := testhelpers.RunCommand(cliCommand, "--policy-id", "123")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--policy-id", "123")
 			Expect(err).To(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("This will cancel the load balancer policy: 123 and cannot be undone. Continue?"))
 			Expect(err.Error()).To(ContainSubstring("Failed to delete l7 policy: Internal server error."))
