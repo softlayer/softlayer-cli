@@ -29,6 +29,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewL7PoolDelCommand(sl).Command)
 	cobraCmd.AddCommand(NewL7PoolDetailCommand(sl).Command)
 	cobraCmd.AddCommand(NewL7PoolEditCommand(sl).Command)
+	
 	// cobraCmd.AddCommand(NewMembersAddCommand(sl).Command)
 	// cobraCmd.AddCommand(NewMembersDelCommand(sl).Command)
 	// cobraCmd.AddCommand(NewL7RuleAddCommand(sl).Command)
