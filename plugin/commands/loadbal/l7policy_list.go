@@ -3,28 +3,44 @@ package loadbal
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type L7PolicyListCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	ProtocolId          int
 }
 
-func NewL7PolicyListCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *L7PolicyListCommand) {
-	return &L7PolicyListCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewL7PolicyListCommand(sl *metadata.SoftlayerCommand) *L7PolicyListCommand {
+	thisCmd := &L7PolicyListCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "l7policies",
+		Short: T("List L7 policies."),
+		Long:  T("${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().IntVar(&thisCmd.ProtocolId, "protocol-id", 0, T("ID for the load balancer protocol [required]"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *L7PolicyListCommand) Run(c *cli.Context) error {
-	protocolID := c.Int("protocol-id")
+func (cmd *L7PolicyListCommand) Run(args []string) error {
+	protocolID := cmd.ProtocolId
 	if protocolID == 0 {
 		return errors.NewMissingInputError("--protocol-id")
 	}
@@ -78,20 +94,5 @@ func PrintPolicies(l7Policies []datatypes.Network_LBaaS_L7Policy, cmdUI terminal
 			}
 		}
 		table.Print()
-	}
-}
-
-func LoadbalL7PolicyListMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "l7policies",
-		Description: T("List L7 policies"),
-		Usage:       "${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "protocol-id",
-				Usage: T("ID for the load balancer protocol [required]"),
-			},
-		},
 	}
 }
