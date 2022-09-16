@@ -3,8 +3,7 @@ package hardware
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -14,35 +13,46 @@ import (
 )
 
 type AuthorizeStorageCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
+	UsernameStorage string
 }
 
-func NewAuthorizeStorageCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *AuthorizeStorageCommand) {
-	return &AuthorizeStorageCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewAuthorizeStorageCommand(sl *metadata.SoftlayerCommand) (cmd *AuthorizeStorageCommand) {
+	thisCmd := &AuthorizeStorageCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+
+	cobraCmd := &cobra.Command{
+		Use:   "authorize-storage " + T("IDENTIFIER"),
+		Short: T("Authorize File and Block Storage to a Hardware Server"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVarP(&thisCmd.UsernameStorage, "username-storage", "u", "", T("The storage username to be added to the hardware server."))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument"))
-	}
-	hardwareId, err := strconv.Atoi(c.Args()[0])
+func (cmd *AuthorizeStorageCommand) Run(args []string) error {
+	hardwareId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Hardware server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	storageResult, err := cmd.HardwareManager.AuthorizeStorage(hardwareId, c.String("username-storage"))
+	storageResult, err := cmd.HardwareManager.AuthorizeStorage(hardwareId, cmd.UsernameStorage)
 	if err != nil {
-		return cli.NewExitError(T("Failed to authorize storage to the hardware server instance: {{.Storage}}.\n{{.Error}}",
-			map[string]interface{}{"Storage": c.String("username-storage"), "Error": err.Error()}), 2)
+		return errors.NewInvalidUsageError(T("Failed to authorize storage to the hardware server instance: {{.Storage}}.\n{{.Error}}",
+			map[string]interface{}{"Storage": cmd.UsernameStorage, "Error": err.Error()}))
 	}
 
 	if outputFormat == "JSON" {
@@ -51,27 +61,7 @@ func (cmd *AuthorizeStorageCommand) Run(c *cli.Context) error {
 
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Successfully authorized storage: {{.Storage}} was added.",
-		map[string]interface{}{"Storage": c.String("username-storage")}))
+		map[string]interface{}{"Storage": cmd.UsernameStorage}))
 
 	return nil
-}
-
-func HardwareAuthorizeStorageMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "authorize-storage",
-		Description: T("Authorize File and Block Storage to a Hardware Server"),
-		Usage: T(`${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567
-   Authorize File and Block Storage to a Hardware Server.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "u, username-storage",
-				Usage: T("The storage username to be added to the hardware server."),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

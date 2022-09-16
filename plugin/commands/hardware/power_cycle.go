@@ -3,9 +3,8 @@ package hardware
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,30 +12,43 @@ import (
 )
 
 type PowerCycleCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
+	ForceFlag       bool
 }
 
-func NewPowerCycleCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *PowerCycleCommand) {
-	return &PowerCycleCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewPowerCycleCommand(sl *metadata.SoftlayerCommand) (cmd *PowerCycleCommand) {
+	thisCmd := &PowerCycleCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "power-cycle " + T("IDENTIFIER"),
+		Short: T("Power cycle a server"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PowerCycleCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument"))
-	}
-	hardwareId, err := strconv.Atoi(c.Args()[0])
+func (cmd *PowerCycleCommand) Run(args []string) error {
+	hardwareId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Hardware server ID")
 	}
 
-	if !c.IsSet("f") && !c.IsSet("force") {
+	if !cmd.ForceFlag {
 		confirm, err := cmd.UI.Confirm(T("This will power cycle hardware server: {{.ID}}. Continue?", map[string]interface{}{"ID": hardwareId}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -46,21 +58,9 @@ func (cmd *PowerCycleCommand) Run(c *cli.Context) error {
 
 	err = cmd.HardwareManager.PowerCycle(hardwareId)
 	if err != nil {
-		return cli.NewExitError(T("Failed to power cycle hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to power cycle hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Hardware server: {{.ID}} was power cycle.", map[string]interface{}{"ID": hardwareId}))
 	return nil
-}
-
-func HardwarePowerCycleMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "power-cycle",
-		Description: T("Power cycle a server"),
-		Usage:       "${COMMAND_NAME} sl hardware power-cycle IDENTIFIER [OPTIONS]",
-		Flags: []cli.Flag{
-			metadata.ForceFlag(),
-		},
-	}
 }

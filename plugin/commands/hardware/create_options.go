@@ -3,28 +3,42 @@ package hardware
 import (
 	"sort"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type CreateOptionsCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
 }
 
-func NewCreateOptionsCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *CreateOptionsCommand) {
-	return &CreateOptionsCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewCreateOptionsCommand(sl *metadata.SoftlayerCommand) (cmd *CreateOptionsCommand) {
+	thisCmd := &CreateOptionsCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "create-options",
+		Short: T("Server order options for a given chassis"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
+func (cmd *CreateOptionsCommand) Run(args []string) error {
 	productPackage, err := cmd.HardwareManager.GetPackage()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get product package for hardware server.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get product package for hardware server."), err.Error(), 2)
 	}
 	options := cmd.HardwareManager.GetCreateOptions(productPackage)
 	//datacenters
@@ -97,13 +111,4 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 	extraTable.Print()
 	cmd.UI.Print("")
 	return nil
-}
-
-func HardwareCreateOptionsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "create-options",
-		Description: T("Server order options for a given chassis"),
-		Usage:       "${COMMAND_NAME} sl hardware create-options",
-	}
 }
