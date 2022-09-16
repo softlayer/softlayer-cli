@@ -3,8 +3,8 @@ package hardware
 import (
 	"sort"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,15 +13,55 @@ import (
 )
 
 type ListCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
+	Cpu             int
+	Domain          string
+	Hostname        string
+	Datacenter      string
+	Memory          int
+	Network         int
+	Tag             []string
+	PublicIp        string
+	PrivateIp       string
+	Order           int
+	Owner           string
+	Sortby          string
+	Column          []string
 }
 
-func NewListCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
+	thisCmd := &ListCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List hardware servers"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().IntVarP(&thisCmd.Cpu, "cpu", "c", 0, T("Filter by number of CPU cores"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Domain, "domain", "D", "", T("Filter by domain"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Filter by hostname"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Filter by datacenter"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Memory, "memory", "m", 0, T("Filter by memory in gigabytes"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Network, "network", "n", 0, T("Filter by network port speed in Mbps"))
+	cobraCmd.Flags().StringSliceVarP(&thisCmd.Tag, "tag", "g", []string{}, T("Filter by tags, multiple occurrence allowed"))
+	cobraCmd.Flags().StringVarP(&thisCmd.PublicIp, "public-ip", "p", "", T("Filter by public IP address"))
+	cobraCmd.Flags().StringVarP(&thisCmd.PrivateIp, "private-ip", "v", "", T("Filter by private IP address"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Order, "order", "o", 0, T("Filter by ID of the order which purchased hardware server"))
+	cobraCmd.Flags().StringVar(&thisCmd.Owner, "owner", "", T("Filter by ID of the owner"))
+	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "", T("Column to sort by, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by"))
+	cobraCmd.Flags().StringSliceVar(&thisCmd.Column, "column", []string{}, T("Column to display,  options are: id,hostname,domain,public_ip,private_ip,datacenter,status,guid,cpu,memory,os,ipmi_ip,created,created_by,tags. This option can be specified multiple times"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 var maskMap = map[string]string{
@@ -42,39 +82,31 @@ var maskMap = map[string]string{
 	"tags":       "tagReferences",
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
+func (cmd *ListCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	sortby := c.String("sortby")
+	sortby := cmd.Sortby
 	if sortby == "" {
 		sortby = "hostname"
 	}
 
-	var columns []string
-	if c.IsSet("column") {
-		columns = c.StringSlice("column")
-	} else if c.IsSet("columns") {
-		columns = c.StringSlice("columns")
-	}
+	columns := cmd.Column
 
 	defaultColumns := []string{"id", "hostname", "domain", "public_ip", "private_ip", "datacenter", "status"}
 	optionalColumns := []string{"guid", "cpu", "memory", "os", "ipmi_ip", "created", "created_by", "tags"}
 	sortColumns := []string{"id", "guid", "hostname", "domain", "public_ip", "private_ip", "cpu", "memory", "os", "datacenter", "status", "ipmi_ip", "created", "created_by"}
 
-	showColumns, err := utils.ValidateColumns(sortby, columns, defaultColumns, optionalColumns, sortColumns, c)
+	showColumns, err := utils.ValidateColumns2(sortby, columns, defaultColumns, optionalColumns, sortColumns)
 	if err != nil {
 		return err
 	}
 
 	mask := utils.GetMask(maskMap, showColumns, sortby)
 
-	hws, err := cmd.HardwareManager.ListHardware(c.StringSlice("g"), c.Int("c"), c.Int("m"), c.String("H"), c.String("D"), c.String("d"), c.Int("n"), c.String("p"), c.String("v"), c.String("owner"), c.Int("o"), mask)
+	hws, err := cmd.HardwareManager.ListHardware(cmd.Tag, cmd.Cpu, cmd.Memory, cmd.Hostname, cmd.Domain, cmd.Datacenter, cmd.Network, cmd.PublicIp, cmd.PrivateIp, cmd.Owner, cmd.Order, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get hardware servers on your account.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get hardware servers on your account.\n"), err.Error(), 2)
 	}
 
 	if sortby == "" || sortby == "hostname" {
@@ -148,72 +180,4 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func HardwareListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "list",
-		Description: T("List hardware servers"),
-		Usage:       "${COMMAND_NAME} sl hardware list [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "c,cpu",
-				Usage: T("Filter by number of CPU cores"),
-			},
-			cli.StringFlag{
-				Name:  "D,domain",
-				Usage: T("Filter by domain"),
-			},
-			cli.StringFlag{
-				Name:  "H,hostname",
-				Usage: T("Filter by hostname"),
-			},
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Filter by datacenter"),
-			},
-			cli.IntFlag{
-				Name:  "m,memory",
-				Usage: T("Filter by memory in gigabytes"),
-			},
-			cli.IntFlag{
-				Name:  "n,network",
-				Usage: T("Filter by network port speed in Mbps"),
-			},
-			cli.StringSliceFlag{
-				Name:  "g,tag",
-				Usage: T("Filter by tags, multiple occurrence allowed"),
-			},
-			cli.StringFlag{
-				Name:  "p,public-ip",
-				Usage: T("Filter by public IP address"),
-			},
-			cli.StringFlag{
-				Name:  "v,private-ip",
-				Usage: T("Filter by private IP address"),
-			},
-			cli.IntFlag{
-				Name:  "o,order",
-				Usage: T("Filter by ID of the order which purchased hardware server"),
-			},
-			cli.StringFlag{
-				Name:  "owner",
-				Usage: T("Filter by ID of the owner"),
-			},
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by"),
-			},
-			cli.StringSliceFlag{
-				Name:  "column",
-				Usage: T("Column to display,  options are: id,hostname,domain,public_ip,private_ip,datacenter,status,guid,cpu,memory,os,ipmi_ip,created,created_by,tags. This option can be specified multiple times"),
-			},
-			cli.StringSliceFlag{
-				Name:   "columns",
-				Hidden: true,
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }
