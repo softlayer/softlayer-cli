@@ -47,7 +47,7 @@ func DetailMetaData() cli.Command {
 
 func (cmd *DetailCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument."))
+		return slErr.NewInvalidUsageError(T("This command requires one argument"))
 	}
 
 	cdnId, err := strconv.Atoi(c.Args()[0])

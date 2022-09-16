@@ -26,7 +26,7 @@ func NewReflashFirmwareCommand(ui terminal.UI, hardwareManager managers.Hardware
 
 func (cmd *ReflashFirmwareCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
+		return errors.NewInvalidUsageError(T("This command requires one argument"))
 	}
 
 	hardwareId, err := strconv.Atoi(c.Args()[0])

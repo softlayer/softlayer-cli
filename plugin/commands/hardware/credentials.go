@@ -27,7 +27,7 @@ func NewCredentialsCommand(ui terminal.UI, hardwareManager managers.HardwareServ
 
 func (cmd *CredentialsCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
+		return errors.NewInvalidUsageError(T("This command requires one argument"))
 	}
 	hardwareID, err := strconv.Atoi(c.Args()[0])
 	if err != nil {

@@ -33,12 +33,12 @@ var _ = Describe("ticket detach", func() {
 	Describe("Ticket detach", func() {
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeTicketManager.RemoveDeviceFromTicketReturns(errors.New("This command requires one argument."))
+				fakeTicketManager.RemoveDeviceFromTicketReturns(errors.New("This command requires one argument"))
 			})
 			It("Argument is not set", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("This command requires one argument"))
 			})
 		})
 

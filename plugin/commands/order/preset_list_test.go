@@ -35,12 +35,12 @@ var _ = Describe("Order preset-list", func() {
 	Describe("Order preset-list", func() {
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeOrderManager.ListPresetReturns([]datatypes.Product_Package_Preset{}, errors.New("This command requires one argument."))
+				fakeOrderManager.ListPresetReturns([]datatypes.Product_Package_Preset{}, errors.New("This command requires one argument"))
 			})
 			It("Argument is not set", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("This command requires one argument"))
 			})
 		})
 

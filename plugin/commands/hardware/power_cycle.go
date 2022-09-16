@@ -26,7 +26,7 @@ func NewPowerCycleCommand(ui terminal.UI, hardwareManager managers.HardwareServe
 
 func (cmd *PowerCycleCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
+		return bmxErr.NewInvalidUsageError(T("This command requires one argument"))
 	}
 	hardwareId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {

@@ -40,7 +40,7 @@ var _ = Describe("firewall detail", func() {
 			It("Set without ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("This command requires one argument"))
 			})
 
 			It("Set invalid output", func() {

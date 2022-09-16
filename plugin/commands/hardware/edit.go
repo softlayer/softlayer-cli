@@ -29,7 +29,7 @@ func NewEditCommand(ui terminal.UI, hardwareManager managers.HardwareServerManag
 
 func (cmd *EditCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
+		return bmxErr.NewInvalidUsageError(T("This command requires one argument"))
 	}
 	hardwareId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {

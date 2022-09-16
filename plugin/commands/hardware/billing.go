@@ -29,7 +29,7 @@ func NewBillingCommand(ui terminal.UI, hardwareManager managers.HardwareServerMa
 
 func (cmd *BillingCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
+		return errors.NewInvalidUsageError(T("This command requires one argument"))
 	}
 	hardwareID, err := strconv.Atoi(c.Args()[0])
 

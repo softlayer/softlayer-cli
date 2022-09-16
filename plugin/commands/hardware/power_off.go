@@ -26,7 +26,7 @@ func NewPowerOffCommand(ui terminal.UI, hardwareManager managers.HardwareServerM
 
 func (cmd *PowerOffCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
+		return errors.NewInvalidUsageError(T("This command requires one argument"))
 	}
 	hardwareId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {

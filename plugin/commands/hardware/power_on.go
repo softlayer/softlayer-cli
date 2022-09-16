@@ -25,7 +25,7 @@ func NewPowerOnCommand(ui terminal.UI, hardwareManager managers.HardwareServerMa
 
 func (cmd *PowerOnCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
+		return errors.NewInvalidUsageError(T("This command requires one argument"))
 	}
 	hardwareId, err := strconv.Atoi(c.Args()[0])
 	if err != nil {

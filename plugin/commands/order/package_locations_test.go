@@ -35,12 +35,12 @@ var _ = Describe("Order package-locations", func() {
 	Describe("Order package-locations", func() {
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeOrderManager.PackageLocationReturns([]datatypes.Location_Region{}, errors.New("This command requires one argument."))
+				fakeOrderManager.PackageLocationReturns([]datatypes.Location_Region{}, errors.New("This command requires one argument"))
 			})
 			It("Argument is not set", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("This command requires one argument"))
 			})
 		})
 

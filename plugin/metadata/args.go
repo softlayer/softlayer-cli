@@ -105,7 +105,7 @@ func OneArgs(cmd *cobra.Command, args []string) error {
 // Just two arg
 func TwoArgs(cmd *cobra.Command, args []string) error {
 	if len(args) != 2 {
-		return fmt.Errorf("%s: %s", T("Incorrect Usage"), T("This command requires two argument."))
+		return fmt.Errorf("%s: %s", T("Incorrect Usage"), T("This command requires two arguments."))
 	}
 	return nil
 }
@@ -113,7 +113,7 @@ func TwoArgs(cmd *cobra.Command, args []string) error {
 // Just three arg
 func ThreeArgs(cmd *cobra.Command, args []string) error {
 	if len(args) != 3 {
-		return fmt.Errorf("%s: %s", T("Incorrect Usage"), T("This command requires three argument."))
+		return fmt.Errorf("%s: %s", T("Incorrect Usage"), T("This command requires three arguments."))
 	}
 	return nil
 }
@@ -121,7 +121,7 @@ func ThreeArgs(cmd *cobra.Command, args []string) error {
 // Just four arg
 func FourArgs(cmd *cobra.Command, args []string) error {
 	if len(args) != 4 {
-		return fmt.Errorf("%s: %s", T("Incorrect Usage"),T("This command requires four argument."))
+		return fmt.Errorf("%s: %s", T("Incorrect Usage"),T("This command requires four arguments."))
 	}
 	return nil
 }
