@@ -24,7 +24,7 @@ func NewPlacementGroupDetailsCommand(sl *metadata.SoftlayerCommand) (cmd *Placem
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "placementgroup-detail " + T("IDENTIFIER"),
-		Short: T("Authorize File, Block and Portable Storage to a Virtual Server"),
+		Short: T("Get placement Group details."),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

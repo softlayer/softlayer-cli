@@ -30,7 +30,7 @@ func NewAddCommand(sl *metadata.SoftlayerCommand) (cmd *AddCommand) {
 
 	cobraCmd := &cobra.Command{
 		Use:   "add " + T("IDENTIFIER"),
-		Short: T("Create a new firewall."),
+		Short: T("Create a new firewall"),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -63,7 +63,7 @@ func (cmd *AddCommand) Run(args []string) error {
 		packages, err = cmd.FirewallManager.GetStandardPackage(target, false)
 	}
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get package for {{.Type}} firewall.", map[string]interface{}{"Type": firewallType}), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get package for {{.Type}} firewall.\n", map[string]interface{}{"Type": firewallType}), err.Error(), 2)
 	}
 	if len(packages) == 0 {
 		return cli.NewExitError(T("Failed to find package for firewall."), 2)
@@ -91,7 +91,7 @@ func (cmd *AddCommand) Run(args []string) error {
 		orderReciept, err = cmd.FirewallManager.AddStandardFirewall(target, false)
 	}
 	if err != nil {
-		return errors.NewAPIError(T("Failed to create firewall."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to create firewall.\n"), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Order {{.ID}} was placed to create a firewall.", map[string]interface{}{"ID": *orderReciept.OrderId}))

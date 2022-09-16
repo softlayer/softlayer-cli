@@ -57,7 +57,7 @@ func (cmd *DatacenterCommand) Run(args []string) error {
 
 	storageLocations, err := cmd.ImageManager.GetDatacenters(imageID)
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get image datacenters."), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get image datacenters.\n"), err.Error(), 2)
 	}
 
 	if cmd.Add != "" {

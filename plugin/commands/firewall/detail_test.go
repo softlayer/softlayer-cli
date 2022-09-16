@@ -65,7 +65,7 @@ var _ = Describe("firewall detail", func() {
 		Context("Return error", func() {
 			BeforeEach(func() {
 				FakeFirewallManager.ParseFirewallIDReturns("vlan", 123456, nil)
-				FakeFirewallManager.GetDedicatedFirewallRulesReturns([]datatypes.Network_Vlan_Firewall_Rule{}, errors.New("Failed to get dedicated firewall rules."))
+				FakeFirewallManager.GetDedicatedFirewallRulesReturns([]datatypes.Network_Vlan_Firewall_Rule{}, errors.New("Failed to get dedicated firewall rules.\n"))
 			})
 			It("Failed get vlan firewall", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "vlan:123456")

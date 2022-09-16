@@ -26,7 +26,7 @@ func NewCancelCommand(sl *metadata.SoftlayerCommand) (cmd *CancelCommand) {
 
 	cobraCmd := &cobra.Command{
 		Use:   "cancel " + T("IDENTIFIER"),
-		Short: T("Cancels a firewall."),
+		Short: T("Cancels a firewall"),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -41,7 +41,7 @@ func (cmd *CancelCommand) Run(args []string) error {
 
 	firewallType, firewallID, err := cmd.FirewallManager.ParseFirewallID(args[0])
 	if err != nil {
-		return errors.NewAPIError(T("Failed to parse firewall ID : {{.FirewallID}}.", map[string]interface{}{"FirewallID": args[0]}), err.Error(), 1)
+		return errors.NewAPIError(T("Failed to parse firewall ID : {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": args[0]}), err.Error(), 1)
 	}
 
 	if !cmd.Force {

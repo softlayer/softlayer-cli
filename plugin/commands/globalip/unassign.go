@@ -23,7 +23,7 @@ func NewUnassignCommand(sl *metadata.SoftlayerCommand) *UnassignCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "unassign " + T("IDENTIFIER"),
-		Short: T("Unassign a global IP from a target router or device."),
+		Short: T("Unassign a global IP from a target router or device"),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -44,7 +44,7 @@ func (cmd *UnassignCommand) Run(args []string) error {
 
 	resp, err := cmd.NetworkManager.UnassignGlobalIP(globalIPID)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to unassign global IP {{.ID}}.", map[string]interface{}{"ID": globalIPID}), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to unassign global IP {{.ID}}.\n", map[string]interface{}{"ID": globalIPID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {

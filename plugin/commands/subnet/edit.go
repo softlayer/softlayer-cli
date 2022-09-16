@@ -24,7 +24,7 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) *EditCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "edit " + T("IDENTIFIER"),
-		Short: T("Set the note of the ipAddress."),
+		Short: T("Edit note and tags of a subnet."),
 		Long: T(`${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]
 
 EXAMPLE:

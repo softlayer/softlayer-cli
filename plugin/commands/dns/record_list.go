@@ -41,7 +41,7 @@ EXAMPLE:
 	}
 	cobraCmd.Flags().StringVar(&thisCmd.Data, "data", "", T("Filter by record data, such as an IP address"))
 	cobraCmd.Flags().StringVar(&thisCmd.Record, "record", "", T("Filter by host record, such as www"))
-	cobraCmd.Flags().IntVar(&thisCmd.Ttl, "ttl", 0, T("TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200"))
+	cobraCmd.Flags().IntVar(&thisCmd.Ttl, "ttl", 0, T("Filter by TTL(Time-To-Live) in seconds, such as 86400"))
 	cobraCmd.Flags().StringVar(&thisCmd.Type, "type", "", T("Filter by record type, such as A or CNAME"))
 	thisCmd.Command = cobraCmd
 	return thisCmd

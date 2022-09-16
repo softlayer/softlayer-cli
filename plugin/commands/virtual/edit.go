@@ -47,7 +47,7 @@ EXAMPLE:
 	}
 	thisCmd.Command = cobraCmd
 	cobraCmd.Flags().StringVarP(&thisCmd.Domain, "domain", "D", "", T("Domain portion of the FQDN"))
-	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Domain portion of the FQDN"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Host portion of the FQDN. example: server"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Userdata, "userdata", "u", "", T("User defined metadata string"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Userfile, "userfile", "F", "", T("Read userdata from file"))
 	cobraCmd.Flags().StringSliceVarP(&thisCmd.Tag, "tag", "g", []string{}, T("Tags to set or empty string to remove all"))

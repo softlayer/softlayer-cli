@@ -27,7 +27,7 @@ func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "list",
-		Short: T("List all global IPs on your account."),
+		Short: T("List all global IPs on your account"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -57,7 +57,7 @@ func (cmd *ListCommand) Run(args []string) error {
 
 	ips, err := cmd.NetworkManager.ListGlobalIPs(version, cmd.Order)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to list global IPs on your account."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list global IPs on your account.\n"), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("ID"), T("ip"), T("assigned"), T("target")})

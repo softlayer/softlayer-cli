@@ -48,7 +48,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	image, err := cmd.ImageManager.GetImage(imageID)
 	if err != nil {
-		return bmxErr.NewAPIError(T("Failed to get image: {{.ImageID}}.", map[string]interface{}{"ImageID": imageID}), err.Error(), 2)
+		return bmxErr.NewAPIError(T("Failed to get image: {{.ImageID}}.\n", map[string]interface{}{"ImageID": imageID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
