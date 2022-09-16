@@ -27,7 +27,7 @@ func NewCancelCommand(sl *metadata.SoftlayerCommand) *CancelCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cancel " + T("IDENTIFIER"),
-		Short: T("Cancel a global IP."),
+		Short: T("Cancel a global IP"),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -58,9 +58,9 @@ func (cmd *CancelCommand) Run(args []string) error {
 	err = cmd.NetworkManager.CancelGlobalIP(globalIPID)
 	if err != nil {
 		if strings.Contains(err.Error(), slErrors.SL_EXP_OBJ_NOT_FOUND) {
-			return errors.NewAPIError(T("Unable to find global IP with ID: {{.ID}}.", map[string]interface{}{"ID": globalIPID}), err.Error(), 0)
+			return errors.NewAPIError(T("Unable to find global IP with ID: {{.ID}}.\n", map[string]interface{}{"ID": globalIPID}), err.Error(), 0)
 		}
-		return errors.NewAPIError(T("Failed to cancel global IP: {{.ID}}.", map[string]interface{}{"ID": globalIPID}), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to cancel global IP: {{.ID}}.\n", map[string]interface{}{"ID": globalIPID}), err.Error(), 2)
 
 	}
 

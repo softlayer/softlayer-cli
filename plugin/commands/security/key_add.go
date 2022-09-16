@@ -27,12 +27,12 @@ func NewKeyAddCommand(sl *metadata.SoftlayerCommand) *KeyAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "sshkey-add " + T("LABEL"),
-		Short: T("Add a new SSH key."),
+		Short: T("Add a new SSH key"),
 		Long: T(`${COMMAND_NAME} sl security sshkey-add LABEL [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl security sshkey-add my_sshkey -f ~/.ssh/id_rsa.pub --note mykey
-	This command adds an SSH key from file ~/.ssh/id_rsa.pub with a note "mykey".`),
+   ${COMMAND_NAME} sl security sshkey-add my_sshkey -f ~/.ssh/id_rsa.pub --note mykey
+   This command adds an SSH key from file ~/.ssh/id_rsa.pub with a note "mykey".`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

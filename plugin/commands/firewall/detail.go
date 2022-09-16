@@ -28,9 +28,9 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
 
 	cobraCmd := &cobra.Command{
 		Use:   "detail " + T("IDENTIFIER"),
-		Short: T("Detail information about a firewall."),
+		Short: T("Detail information about a firewall"),
 		Long: T(`${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]
-
+		
 EXAMPLE: 
 ${COMMAND_NAME} sl firewall detail vs:12345
 ${COMMAND_NAME} sl firewall detail server:234567
@@ -42,7 +42,7 @@ ${COMMAND_NAME} sl firewall detail multiVlan:456789`),
 		},
 	}
 	cobraCmd.Flags().BoolVar(&thisCmd.Credentials, "credentials", false,
-		T("Display FortiGate username and FortiGate password to multi vlans."))
+		T("Display FortiGate username and FortiGate password to multi vlans"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
@@ -52,14 +52,14 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	firewallType, firewallID, err := cmd.FirewallManager.ParseFirewallID(args[0])
 	if err != nil {
-		return errors.NewAPIError(T("Failed to parse firewall ID : {{.FirewallID}}.", map[string]interface{}{"FirewallID": args[0]}), err.Error(), 1)
+		return errors.NewAPIError(T("Failed to parse firewall ID : {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": args[0]}), err.Error(), 1)
 	}
 
 	var table terminal.Table
 	if firewallType == "multiVlan" {
 		firewall, err := cmd.FirewallManager.GetMultiVlanFirewall(firewallID, "")
 		if err != nil {
-			return errors.NewAPIError(T("Failed to get multi vlan firewall."), err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get multi vlan firewall.\n"), err.Error(), 2)
 		}
 		table = cmd.UI.Table([]string{T("Name"), T("Value")})
 		table.Add(T("Name"), utils.FormatStringPointer(firewall.NetworkGateway.Name))
@@ -98,7 +98,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 		if firewallType == "vlan" {
 			firewallRules, err := cmd.FirewallManager.GetDedicatedFirewallRules(firewallID)
 			if err != nil {
-				return errors.NewAPIError(T("Failed to get dedicated firewall rules."), err.Error(), 2)
+				return errors.NewAPIError(T("Failed to get dedicated firewall rules.\n"), err.Error(), 2)
 			}
 			for _, rule := range firewallRules {
 				table.Add(utils.FormatIntPointer(rule.OrderValue),
@@ -112,7 +112,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 		} else {
 			firewallRules, err := cmd.FirewallManager.GetStandardFirewallRules(firewallID)
 			if err != nil {
-				return errors.NewAPIError(T("Failed to get standard firewall rules."), err.Error(), 2)
+				return errors.NewAPIError(T("Failed to get standard firewall rules.\n"), err.Error(), 2)
 			}
 			for _, rule := range firewallRules {
 				table.Add(utils.FormatIntPointer(rule.OrderValue),

@@ -36,8 +36,8 @@ func NewListGuestsCommand(sl *metadata.SoftlayerCommand) *ListGuestsCommand {
 		Long: T(`${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567
-	This command list all Dedicated Host guests in the Account.`),
+   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567
+   This command list all Dedicated Host guests in the Account.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -22,12 +22,12 @@ func NewZoneListCommand(sl *metadata.SoftlayerCommand) *ZoneListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "zone-list",
-		Short: T("List all zones on your account."),
+		Short: T("List all zones on your account"),
 		Long: T(`${COMMAND_NAME} sl dns zone-list [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl dns zone-list
-	This command lists all zones under current account.`),
+   ${COMMAND_NAME} sl dns zone-list
+   This command lists all zones under current account.`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

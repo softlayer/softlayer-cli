@@ -32,12 +32,12 @@ func NewCertAddCommand(sl *metadata.SoftlayerCommand) *CertAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cert-add",
-		Short: T("Add and upload SSL certificate details."),
+		Short: T("Add and upload SSL certificate details"),
 		Long: T(`${COMMAND_NAME} sl security cert-add [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key 
-	This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.`),
+   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key 
+   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

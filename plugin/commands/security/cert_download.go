@@ -28,12 +28,12 @@ func NewCertDownloadCommand(sl *metadata.SoftlayerCommand) *CertDownloadCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cert-download " + T("IDENTIFIER"),
-		Short: T("Download SSL certificate and key files."),
+		Short: T("Download SSL certificate and key files"),
 		Long: T(`${COMMAND_NAME} sl security cert-download IDENTIFIER [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl security cert-download 12345678
-	This command downloads four files to current directory for certificate with ID 12345678. The four files are: certificate file, certificate signing request file, intermediate certificate file and private key file.`),
+   ${COMMAND_NAME} sl security cert-download 12345678
+   This command downloads four files to current directory for certificate with ID 12345678. The four files are: certificate file, certificate signing request file, intermediate certificate file and private key file.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -22,12 +22,12 @@ func NewZoneCreateCommand(sl *metadata.SoftlayerCommand) *ZoneCreateCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "zone-create " + T("ZONE"),
-		Short: T("Create a zone."),
+		Short: T("Create a zone"),
 		Long: T(`${COMMAND_NAME} sl dns zone-create ZONE [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl dns zone-create ibm.com 
-	This command creates a zone that is named ibm.com.`),
+   ${COMMAND_NAME} sl dns zone-create ibm.com 
+   This command creates a zone that is named ibm.com.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

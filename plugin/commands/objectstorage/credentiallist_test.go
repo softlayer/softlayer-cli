@@ -39,7 +39,7 @@ var _ = Describe("Object Storage list Object Storages", func() {
 			It("Set command without id", func() {
 				err := testhelpers.RunCommand(cliCommand)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("This command requires one argument"))
 			})
 			It("Set command with id like letters", func() {
 				err := testhelpers.RunCommand(cliCommand, "abc")

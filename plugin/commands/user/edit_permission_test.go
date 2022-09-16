@@ -36,7 +36,7 @@ var _ = Describe("Edit Permission", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 
@@ -61,7 +61,7 @@ var _ = Describe("Edit Permission", func() {
 				fakeUserManager.AddPermissionReturns(false, errors.New("Internal server error"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--permission", "PERMISSION")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to update permissions\nInternal server error"))
+				Expect(err.Error()).To(ContainSubstring("Failed to update permissions: PERMISSION"))
 			})
 		})
 

@@ -38,7 +38,7 @@ var _ = Describe("Certificate download", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Certificate download with wrong cert ID", func() {

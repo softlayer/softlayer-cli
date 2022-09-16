@@ -29,8 +29,8 @@ func NewClearRouteCommand(sl *metadata.SoftlayerCommand) *ClearRouteCommand {
 		Long: T(`${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl subnet clear-route 12345678
-	This command allows you to remove the route of your Account Owned subnets.`),
+   ${COMMAND_NAME} sl subnet clear-route 12345678
+   This command allows you to remove the route of your Account Owned subnets.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

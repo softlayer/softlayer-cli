@@ -26,12 +26,12 @@ func NewCancelCommand(sl *metadata.SoftlayerCommand) *CancelCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cancel " + T("IDENTIFIER"),
-		Short: T("Cancel a VLAN."),
+		Short: T("Cancel a VLAN"),
 		Long: T(`${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl vlan cancel 12345678 -f
-	This command cancels vlan with ID 12345678 without asking for confirmation.`),
+   ${COMMAND_NAME} sl vlan cancel 12345678 -f
+   This command cancels vlan with ID 12345678 without asking for confirmation.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

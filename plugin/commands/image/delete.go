@@ -27,7 +27,7 @@ func NewDeleteCommand(sl *metadata.SoftlayerCommand) (cmd *DeleteCommand) {
 
 	cobraCmd := &cobra.Command{
 		Use:   "delete " + T("IDENTIFIER"),
-		Short: T("Delete an image"),
+		Short: T("Delete an image "),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -47,9 +47,9 @@ func (cmd *DeleteCommand) Run(args []string) error {
 	err = cmd.ImageManager.DeleteImage(imageID)
 	if err != nil {
 		if strings.Contains(err.Error(), slErrors.SL_EXP_OBJ_NOT_FOUND) {
-			return bmxErr.NewAPIError(T("Unable to find image with ID {{.ImageID}}.", map[string]interface{}{"ImageID": imageID}), err.Error(), 0)
+			return bmxErr.NewAPIError(T("Unable to find image with ID {{.ImageID}}.\n", map[string]interface{}{"ImageID": imageID}), err.Error(), 0)
 		}
-		return bmxErr.NewAPIError(T("Failed to delete image: {{.ImageID}}.", map[string]interface{}{"ImageID": imageID}), err.Error(), 2)
+		return bmxErr.NewAPIError(T("Failed to delete image: {{.ImageID}}.\n", map[string]interface{}{"ImageID": imageID}), err.Error(), 2)
 
 	}
 	cmd.UI.Ok()

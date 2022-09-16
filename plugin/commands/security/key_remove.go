@@ -26,12 +26,12 @@ func NewKeyRemoveCommand(sl *metadata.SoftlayerCommand) *KeyRemoveCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "sshkey-remove " + T("IDENTIFIER"),
-		Short: T("Permanently removes an SSH key."),
+		Short: T("Permanently removes an SSH key"),
 		Long: T(`${COMMAND_NAME} sl security sshkey-remove IDENTIFIER [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl security sshkey-remove 12345678 -f 
-	This command removes the SSH key with ID 12345678 without asking for confirmation.`),
+   ${COMMAND_NAME} sl security sshkey-remove 12345678 -f 
+   This command removes the SSH key with ID 12345678 without asking for confirmation.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

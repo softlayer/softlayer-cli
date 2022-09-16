@@ -27,12 +27,12 @@ func NewAttachDeviceTicketCommand(sl *metadata.SoftlayerCommand) *AttachDeviceTi
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "attach",
-		Short: T("Attach devices to ticket."),
+		Short: T("Attach devices to ticket"),
 		Long: T(`${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]
   
 EXAMPLE:
-	${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 
-	${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567`),
+  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 
+  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 `),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -36,7 +36,7 @@ var _ = Describe("Licenses list Cancel Item", func() {
 			It("Set command without any datacenter and keyName", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring(`This command requires one argument.`))
+				Expect(err.Error()).To(ContainSubstring(`This command requires one argument`))
 			})
 		})
 

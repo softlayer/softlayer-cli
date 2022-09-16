@@ -22,11 +22,11 @@ func NewAssignCommand(sl *metadata.SoftlayerCommand) *AssignCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "assign " + T("IDENTIFIER TARGET"),
-		Short: T("Assign a global IP to a target router or device."),
+		Short: T("Assign a global IP to a target router or device"),
 		Long: T(`${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456
+    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456
 	This command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.`),
 		Args: metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -48,7 +48,7 @@ func (cmd *AssignCommand) Run(args []string) error {
 	targetIPAddress := args[1]
 	resp, err := cmd.NetworkManager.AssignGlobalIP(globalIPID, targetIPAddress)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to assign global IP {{.IpID}} to target {{.Target}}.",
+		return errors.NewAPIError(T("Failed to assign global IP {{.IpID}} to target {{.Target}}.\n",
 			map[string]interface{}{"IpID": globalIPID, "Target": targetIPAddress}), err.Error(), 2)
 
 	}

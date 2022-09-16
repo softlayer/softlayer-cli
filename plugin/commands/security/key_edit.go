@@ -26,12 +26,12 @@ func NewKeyEditCommand(sl *metadata.SoftlayerCommand) *KeyEditCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "sshkey-edit " + T("IDENTIFIER"),
-		Short: T("Edit an SSH key."),
+		Short: T("Edit an SSH key"),
 		Long: T(`${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl security sshkey-edit 12345678 --label IBMCloud --note testing
-	This command updates the SSH key with ID 12345678 and sets label to "IBMCloud" and note to "testing".`),
+   ${COMMAND_NAME} sl security sshkey-edit 12345678 --label IBMCloud --note testing
+   This command updates the SSH key with ID 12345678 and sets label to "IBMCloud" and note to "testing".`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

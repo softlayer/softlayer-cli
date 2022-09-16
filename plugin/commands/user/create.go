@@ -44,9 +44,10 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CreateCommand) {
 		Use:   "create " + T("USERNAME"),
 		Short: T("Creates a user"),
 		Long: T(`${COMMAND_NAME} sl user create USERNAME [OPTIONS] 
+
 EXAMPLE: 	
-	${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{"firstName": "Test", "lastName": "Testerson"}'
-	Remember to set the permissions and access for this new user.`),
+    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{"firstName": "Test", "lastName": "Testerson"}'
+    Remember to set the permissions and access for this new user.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

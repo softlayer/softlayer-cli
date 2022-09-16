@@ -43,7 +43,7 @@ var _ = Describe("Access Authorize", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Access Authorize with wrong volume id", func() {

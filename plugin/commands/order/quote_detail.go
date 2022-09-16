@@ -48,7 +48,7 @@ func (cmd *QuoteDetailCommand) Run(args []string) error {
 
 	quote, err := cmd.OrderManager.GetQuote(quoteId, "")
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get Quote.\n"), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Quote\n"), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})

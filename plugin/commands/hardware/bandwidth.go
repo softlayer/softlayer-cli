@@ -28,7 +28,7 @@ func NewBandwidthCommand(ui terminal.UI, manager managers.HardwareServerManager)
 
 func (cmd *BandwidthCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
+		return errors.NewInvalidUsageError(T("This command requires one argument"))
 	}
 	VsID, err := utils.ResolveVirtualGuestId(c.Args()[0])
 	if err != nil {

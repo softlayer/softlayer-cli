@@ -31,12 +31,10 @@ func NewImportCommand(sl *metadata.SoftlayerCommand) (cmd *ImportCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "import " + T("NAME") + " " + T("URI") + " " + T("API_KEY"),
 		Short: T("Import an image from an object storage"),
-		Long: T(`
-EXAMPLE:
-	${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]
-	NAME: The image name
-	URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>
-	API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.`),
+		Long: T(`${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]
+  NAME: The image name
+  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>
+  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.`),
 		Args: metadata.ThreeArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

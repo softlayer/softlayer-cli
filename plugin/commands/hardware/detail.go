@@ -30,6 +30,7 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
+
 	cobraCmd := &cobra.Command{
 		Use:   "detail " + T("IDENTIFIER"),
 		Short: T("Get details for a hardware server"),

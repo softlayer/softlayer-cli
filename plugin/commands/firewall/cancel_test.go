@@ -36,7 +36,7 @@ var _ = Describe("firewall cancel", func() {
 			It("Set without ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("This command requires one argument"))
 			})
 			It("Set invalid ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--force")

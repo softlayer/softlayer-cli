@@ -25,7 +25,7 @@ func NewUploadFileTicketCommand(sl *metadata.SoftlayerCommand) *UploadFileTicket
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "upload " + T("TICKETID") + " " + T("FILEPATH"),
-		Short: T("Adds an attachment to an existing ticket."),
+		Short: T("Adds an attachment to an existing ticket"),
 		Long: T(`${COMMAND_NAME} sl ticket upload TICKETID FILEPATH
   
 EXAMPLE:

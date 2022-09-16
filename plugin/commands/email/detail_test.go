@@ -35,7 +35,7 @@ var _ = Describe("Email list Detail", func() {
 			It("Set command without id", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 			It("Set command with id like letters", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")

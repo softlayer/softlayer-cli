@@ -24,6 +24,7 @@ func NewPowerOnCommand(sl *metadata.SoftlayerCommand) (cmd *PowerOnCommand) {
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
+
 	cobraCmd := &cobra.Command{
 		Use:   "power-on " + T("IDENTIFIER"),
 		Short: T("Power on a server"),

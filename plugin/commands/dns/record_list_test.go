@@ -38,7 +38,7 @@ var _ = Describe("Record list", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Record list with wrong zone name", func() {
@@ -165,8 +165,8 @@ var _ = Describe("Record list", func() {
 				Expect(results[8]).To(ContainSubstring("mail      A      86400   127.0.0.1"))
 				Expect(results[9]).To(ContainSubstring("50585310"))
 				Expect(results[9]).To(ContainSubstring("webmail   A      86400   127.0.0.1"))
-				Expect(results[10]).To(ContainSubstring( "50585311"))
-				Expect(results[10]).To(ContainSubstring( "www       A      86400   127.0.0.1"))
+				Expect(results[10]).To(ContainSubstring("50585311"))
+				Expect(results[10]).To(ContainSubstring("www       A      86400   127.0.0.1"))
 			})
 		})
 	})

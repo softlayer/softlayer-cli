@@ -24,7 +24,7 @@ func NewSubjectsTicketCommand(sl *metadata.SoftlayerCommand) *SubjectsTicketComm
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "subjects",
-		Short: T("List Subject IDs for ticket creation."),
+		Short: T("List Subject IDs for ticket creation"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

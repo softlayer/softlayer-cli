@@ -31,9 +31,9 @@ func NewCreateOptionsCommand(sl *metadata.SoftlayerCommand) *CreateOptionsComman
 		Long: T(`${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl dedicatedhost create-options
+   ${COMMAND_NAME} sl dedicatedhost create-options
 
-	To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB`),
+   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

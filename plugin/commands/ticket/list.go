@@ -27,7 +27,7 @@ func NewListTicketCommand(sl *metadata.SoftlayerCommand) *ListTicketCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "list",
-		Short: T("List tickets."),
+		Short: T("List tickets"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -26,7 +26,7 @@ func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
 
 	cobraCmd := &cobra.Command{
 		Use:   "list",
-		Short: T("List all firewalls on your account."),
+		Short: T("List all firewalls on your account"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -43,11 +43,11 @@ func (cmd *ListCommand) Run(args []string) error {
 	table := cmd.UI.Table([]string{T("Firewall ID"), T("Type"), T("Features"), T("Server/Vlan Id")})
 	fwvlans, err := cmd.FirewallManager.GetFirewalls()
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get firewalls on your account."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get firewalls on your account.\n"), err.Error(), 2)
 	}
 	multiVlanFirewalls, err := cmd.FirewallManager.GetMultiVlanFirewalls("")
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get multi vlan firewalls on your account."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get multi vlan firewalls on your account.\n"), err.Error(), 2)
 	}
 
 	//dedicated firewalls

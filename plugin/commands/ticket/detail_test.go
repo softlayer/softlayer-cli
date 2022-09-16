@@ -36,12 +36,12 @@ var _ = Describe("ticket detail", func() {
 	Describe("Ticket detail", func() {
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeTicketManager.GetTicketReturns(datatypes.Ticket{}, errors.New("This command requires one argument."))
+				fakeTicketManager.GetTicketReturns(datatypes.Ticket{}, errors.New("This command requires one argument"))
 			})
 			It("Argument is not set", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("This command requires one argument"))
 			})
 		})
 

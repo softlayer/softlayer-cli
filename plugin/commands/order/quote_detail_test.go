@@ -39,7 +39,7 @@ var _ = Describe("order quote-detail", func() {
 			It("Set command without Id", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 
 			It("Set command with an invalid Id", func() {
@@ -57,12 +57,12 @@ var _ = Describe("order quote-detail", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeOrderManager.GetQuoteReturns(datatypes.Billing_Order_Quote{}, errors.New("Failed to get Quote."))
+				fakeOrderManager.GetQuoteReturns(datatypes.Billing_Order_Quote{}, errors.New("Failed to get Quote"))
 			})
 			It("Failed get Quotes", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get Quote."))
+				Expect(err.Error()).To(ContainSubstring("Failed to get Quote"))
 			})
 		})
 

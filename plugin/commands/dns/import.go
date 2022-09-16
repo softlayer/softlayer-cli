@@ -32,12 +32,12 @@ func NewImportCommand(sl *metadata.SoftlayerCommand) *ImportCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "import " + T("ZONEFILE"),
-		Short: T("Import a zone based off a BIND zone file."),
+		Short: T("Import a zone based off a BIND zone file"),
 		Long: T(`${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl dns import ~/ibm.com.txt
-	This command imports zone and its resource records from file: ~/ibm.com.txt.`),
+   ${COMMAND_NAME} sl dns import ~/ibm.com.txt
+   This command imports zone and its resource records from file: ~/ibm.com.txt.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -24,6 +24,7 @@ func NewCredentialsCommand(sl *metadata.SoftlayerCommand) (cmd *CredentialsComma
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
+
 	cobraCmd := &cobra.Command{
 		Use:   "credentials " + T("IDENTIFIER"),
 		Short: T("List hardware server credentials"),

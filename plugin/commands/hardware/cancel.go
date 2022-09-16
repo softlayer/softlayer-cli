@@ -30,6 +30,7 @@ func NewCancelCommand(sl *metadata.SoftlayerCommand) (cmd *CancelCommand) {
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
+
 	cobraCmd := &cobra.Command{
 		Use:   "cancel " + T("IDENTIFIER"),
 		Short: T("Cancel a hardware server"),

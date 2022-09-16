@@ -44,7 +44,7 @@ Examples:
 
 func (cmd *CredentialDeleteCommand) Run(c *cli.Context) error {
 	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument."))
+		return slErr.NewInvalidUsageError(T("This command requires one argument"))
 	}
 
 	storageID, err := strconv.Atoi(c.Args()[0])

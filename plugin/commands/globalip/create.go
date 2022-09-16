@@ -27,7 +27,7 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "create",
-		Short: T("Create a global IP."),
+		Short: T("Create a global IP"),
 		Long: T(`${COMMAND_NAME} sl globalip create [OPTIONS]
 
 EXAMPLE:
@@ -72,7 +72,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 
 	orderReceipt, err := cmd.NetworkManager.AddGlobalIP(version, testOrder)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to add global IP."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to add global IP.\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {

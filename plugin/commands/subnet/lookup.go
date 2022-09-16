@@ -26,12 +26,12 @@ func NewLookupCommand(sl *metadata.SoftlayerCommand) *LookupCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "lookup " + T("IDENTIFIER"),
-		Short: T("Find an IP address and display its subnet and device information."),
+		Short: T("Find an IP address and display its subnet and device information"),
 		Long: T(`${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl subnet lookup 9.125.235.255
-	This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.`),
+   ${COMMAND_NAME} sl subnet lookup 9.125.235.255
+   This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

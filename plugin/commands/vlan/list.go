@@ -33,13 +33,13 @@ func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "vlan",
-		Short: T("List all the VLANs on your account."),
+		Short: T("List all the VLANs on your account"),
 		Long: T(`${COMMAND_NAME} sl vlan list [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl vlan list -d dal09 --sortby number
-	This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.
-	
+   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number
+   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.
+ 
 Note: In field Pod, if add (*) indicated that closed soon`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

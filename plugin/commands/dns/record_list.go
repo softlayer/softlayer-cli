@@ -28,12 +28,12 @@ func NewRecordListCommand(sl *metadata.SoftlayerCommand) *RecordListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "record-list " + T("ZONE"),
-		Short: T("List all the resource records in a zone."),
+		Short: T("List all the resource records in a zone"),
 		Long: T(`${COMMAND_NAME} sl dns record-list ZONE [OPTIONS]
 	
 EXAMPLE:
-	${COMMAND_NAME} sl dns record-list ibm.com --record elasticsearch --type A --ttl 900
-	This command lists all A records under the zone: ibm.com, and filters by host is elasticsearch and ttl is 900 seconds.`),
+   ${COMMAND_NAME} sl dns record-list ibm.com --record elasticsearch --type A --ttl 900
+   This command lists all A records under the zone: ibm.com, and filters by host is elasticsearch and ttl is 900 seconds.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -41,7 +41,7 @@ EXAMPLE:
 	}
 	cobraCmd.Flags().StringVar(&thisCmd.Data, "data", "", T("Filter by record data, such as an IP address"))
 	cobraCmd.Flags().StringVar(&thisCmd.Record, "record", "", T("Filter by host record, such as www"))
-	cobraCmd.Flags().IntVar(&thisCmd.Ttl, "ttl", 0, T("TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200"))
+	cobraCmd.Flags().IntVar(&thisCmd.Ttl, "ttl", 0, T("Filter by TTL(Time-To-Live) in seconds, such as 86400"))
 	cobraCmd.Flags().StringVar(&thisCmd.Type, "type", "", T("Filter by record type, such as A or CNAME"))
 	thisCmd.Command = cobraCmd
 	return thisCmd

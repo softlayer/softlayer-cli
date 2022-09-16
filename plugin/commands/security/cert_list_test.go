@@ -57,7 +57,7 @@ var _ = Describe("Certiticate List", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to list SSL certificates on your account."))
+				Expect(err.Error()).To(ContainSubstring("Failed to list SSL certificates on your account"))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})

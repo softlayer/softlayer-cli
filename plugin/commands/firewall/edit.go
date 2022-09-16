@@ -34,7 +34,7 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) (cmd *EditCommand) {
 
 	cobraCmd := &cobra.Command{
 		Use:   "edit " + T("IDENTIFIER"),
-		Short: T("Edit firewall rules."),
+		Short: T("Edit firewall rules"),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -48,7 +48,7 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) (cmd *EditCommand) {
 func (cmd *EditCommand) Run(args []string) error {
 	firewallType, firewallID, err := cmd.FirewallManager.ParseFirewallID(args[0])
 	if err != nil {
-		return errors.NewAPIError(T("Failed to parse firewall ID : {{.FirewallID}}.", map[string]interface{}{"FirewallID": args[0]}), err.Error(), 1)
+		return errors.NewAPIError(T("Failed to parse firewall ID : {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": args[0]}), err.Error(), 1)
 	}
 
 	if firewallType == "multiVlan" {
@@ -64,11 +64,11 @@ func (cmd *EditCommand) Run(args []string) error {
 	if firewallType == "vlan" {
 		origRules, err := cmd.FirewallManager.GetDedicatedFirewallRules(firewallID)
 		if err != nil {
-			return errors.NewAPIError(T("Failed to get dedicated firewall rules for {{.FirewallID}}.", map[string]interface{}{"FirewallID": firewallID}), err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get dedicated firewall rules for {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID}), err.Error(), 2)
 		}
 		_, err = OpenEditorForVlanRules(origRules, file.Name())
 		if err != nil {
-			return errors.NewAPIError(T("Failed to open editor for vlan rules: {{.FirewallID}}.", map[string]interface{}{"FirewallID": firewallID}), err.Error(), 2)
+			return errors.NewAPIError(T("Failed to open editor for vlan rules: {{.FirewallID}}.\n", map[string]interface{}{"FirewallID": firewallID}), err.Error(), 2)
 		}
 		b, err := ioutil.ReadFile(file.Name())
 		cmd.UI.Print(string(b))

@@ -81,7 +81,7 @@ func (cmd *EditPermissionCommand) Run(args []string) error {
 	}
 
 	if err != nil {
-		return errors.NewAPIError("Failed to update permissions", err.Error(), 1)
+		return errors.NewAPIError(fmt.Sprintf(T("Failed to update permissions: %s"), strings.Join(permissionKeynames, ",")), err.Error(), 1)
 	}
 	cmd.UI.Print(fmt.Sprintf(T("Permissions updated successfully: %s"), strings.Join(permissionKeynames, ",")))
 	return nil

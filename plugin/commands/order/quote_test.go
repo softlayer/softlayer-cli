@@ -44,7 +44,7 @@ var _ = Describe("order quote", func() {
 			It("Set command without Id", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--fqdn=testquote.test.com")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 
 			It("Set command with an invalid Id", func() {
@@ -68,13 +68,13 @@ var _ = Describe("order quote", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeOrderManager.GetQuoteReturns(datatypes.Billing_Order_Quote{}, errors.New("Failed to get Quote."))
+				fakeOrderManager.GetQuoteReturns(datatypes.Billing_Order_Quote{}, errors.New("Failed to get Quote"))
 			})
 
 			It("Failed get Quote", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--fqdn=testquote.test.com")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get Quote."))
+				Expect(err.Error()).To(ContainSubstring("Failed to get Quote"))
 			})
 		})
 
@@ -82,13 +82,13 @@ var _ = Describe("order quote", func() {
 			BeforeEach(func() {
 				fakerQuote := datatypes.Billing_Order_Quote{}
 				fakeOrderManager.GetQuoteReturns(fakerQuote, nil)
-				fakeOrderManager.GetRecalculatedOrderContainerReturns(datatypes.Container_Product_Order{}, errors.New("Failed to get Recalculated Order Container."))
+				fakeOrderManager.GetRecalculatedOrderContainerReturns(datatypes.Container_Product_Order{}, errors.New("Failed to get Recalculated Order Container"))
 			})
 
 			It("Failed get Recalculated Order Container", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--fqdn=testquote.test.com")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get Recalculated Order Container."))
+				Expect(err.Error()).To(ContainSubstring("Failed to get Recalculated Order Container"))
 			})
 		})
 
@@ -113,13 +113,13 @@ var _ = Describe("order quote", func() {
 				fakerRecalculatedOrderContainer := datatypes.Container_Product_Order{}
 				fakeOrderManager.GetQuoteReturns(fakerQuote, nil)
 				fakeOrderManager.GetRecalculatedOrderContainerReturns(fakerRecalculatedOrderContainer, nil)
-				fakeImageManager.GetImageReturns(datatypes.Virtual_Guest_Block_Device_Template_Group{}, errors.New("Failed to get Image."))
+				fakeImageManager.GetImageReturns(datatypes.Virtual_Guest_Block_Device_Template_Group{}, errors.New("Failed to get Image"))
 			})
 
 			It("Failed get image", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--verify", "--fqdn=testquote.test.com", "--image=111111")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get Image."))
+				Expect(err.Error()).To(ContainSubstring("Failed to get Image"))
 			})
 		})
 
