@@ -36,11 +36,12 @@ func NewGetCommand(sl *metadata.SoftlayerCommand) (cmd *GetCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "get",
 		Short: T("Get Event Logs"),
-		Long: T(`
+		Long: T(`${COMMAND_NAME} sl event-log get [OPTIONS]
+
 EXAMPLE: 
-	${COMMAND_NAME} sl event-log get 
-	${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata
-	${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31`),
+   ${COMMAND_NAME} sl event-log get 
+   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata
+   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

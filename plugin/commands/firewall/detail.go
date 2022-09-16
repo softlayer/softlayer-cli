@@ -30,7 +30,7 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
 		Use:   "detail " + T("IDENTIFIER"),
 		Short: T("Detail information about a firewall"),
 		Long: T(`${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]
-
+		
 EXAMPLE: 
 ${COMMAND_NAME} sl firewall detail vs:12345
 ${COMMAND_NAME} sl firewall detail server:234567

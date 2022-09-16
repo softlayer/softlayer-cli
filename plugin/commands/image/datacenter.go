@@ -29,9 +29,11 @@ func NewDatacenterCommand(sl *metadata.SoftlayerCommand) (cmd *DatacenterCommand
 	cobraCmd := &cobra.Command{
 		Use:   "datacenter " + T("IDENTIFIER"),
 		Short: T("Add/Remove datacenter of an image."),
-		Long: T(`
+		Long: T(`${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] 
+
 EXAMPLE:
-	${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03`),
+	${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03
+	This command Add/Remove datacenter of an image.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

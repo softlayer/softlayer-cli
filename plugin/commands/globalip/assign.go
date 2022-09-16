@@ -26,7 +26,7 @@ func NewAssignCommand(sl *metadata.SoftlayerCommand) *AssignCommand {
 		Long: T(`${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]
 
 EXAMPLE:
-	${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456
+    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456
 	This command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.`),
 		Args: metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -26,8 +26,6 @@ func NewCancelItemCommand(sl *metadata.SoftlayerCommand) *CancelItemCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "cancel " + T("IDENTIFIER"),
 		Short: T("Cancel a license."),
-		Long:  T(`EXAMPLE:
-${COMMAND_NAME} sl licenses cancel KEY`),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

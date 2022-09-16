@@ -27,12 +27,10 @@ func NewExportCommand(sl *metadata.SoftlayerCommand) (cmd *ExportCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "export " + T("IDENTIFIER") + " " + T("URI") + " " + T("API_KEY"),
 		Short: T("Export an image to an object storage"),
-		Long: T(`
-EXAMPLE:
-	${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY
-	IDENTIFIER: ID of the image
-	URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>
-	API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.`),
+		Long: T(`"${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY
+  IDENTIFIER: ID of the image
+  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>
+  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.`),
 		Args: metadata.ThreeArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -26,9 +26,11 @@ func NewSetCommand(sl *metadata.SoftlayerCommand) (cmd *SetCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "set",
 		Short: T("Set Tags."),
-		Long: T(`
+		Long: T(`${COMMAND_NAME} sl tags set [OPTIONS]
+
 EXAMPLE:
-	${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456`),
+	${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456
+`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

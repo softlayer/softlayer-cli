@@ -23,7 +23,7 @@ func NewZonePrintCommand(sl *metadata.SoftlayerCommand) *ZonePrintCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "zone-print " + T("ZONE"),
-		Short: T("zone-print"),
+		Short: T("Print zone and resource records in BIND format"),
 		Long: T(`${COMMAND_NAME} sl dns zone-print ZONE
 
 EXAMPLE:
