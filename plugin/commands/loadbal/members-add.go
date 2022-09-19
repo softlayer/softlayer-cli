@@ -1,34 +1,51 @@
 package loadbal
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type MembersAddCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	Id                  int
+	Ip                  string
 }
 
-func NewMembersAddCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *MembersAddCommand) {
-	return &MembersAddCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewMembersAddCommand(sl *metadata.SoftlayerCommand) *MembersAddCommand {
+	thisCmd := &MembersAddCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "member-add",
+		Short: T("Add a new load balancer member."),
+		Long:  T("${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().IntVar(&thisCmd.Id, "id", 0, T("ID for the load balancer [required]"))
+	cobraCmd.Flags().StringVar(&thisCmd.Ip, "ip", "", T("Private IP of the new member [required]"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *MembersAddCommand) Run(c *cli.Context) error {
-	loadbalID := c.Int("id")
+func (cmd *MembersAddCommand) Run(args []string) error {
+	loadbalID := cmd.Id
 	if loadbalID == 0 {
 		return errors.NewMissingInputError("--id")
 	}
 
-	if !c.IsSet("ip") {
+	if cmd.Ip == "" {
 		return errors.NewMissingInputError("--ip")
 	}
 
@@ -37,7 +54,7 @@ func (cmd *MembersAddCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}), 2)
 	}
 
-	ip := c.String("ip")
+	ip := cmd.Ip
 	toAdd := datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo{
 		PrivateIpAddress: &ip,
 	}
@@ -50,23 +67,4 @@ func (cmd *MembersAddCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Say(T("Member {{.MemberID}} added", map[string]interface{}{"MemberID": ip}))
 	return nil
-}
-
-func LoadbalMemberAddMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "member-add",
-		Description: T("Add a new load balancer member"),
-		Usage:       "${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "id",
-				Usage: T("ID for the load balancer [required]"),
-			},
-			cli.StringFlag{
-				Name:  "ip",
-				Usage: T("Private IP of the new member [required]"),
-			},
-		},
-	}
 }

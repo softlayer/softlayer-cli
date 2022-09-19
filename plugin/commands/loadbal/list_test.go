@@ -9,30 +9,29 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer list", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.ListCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.ListCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewListCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalListMetadata().Name,
-			Description: loadbal.LoadbalListMetadata().Description,
-			Usage:       loadbal.LoadbalListMetadata().Usage,
-			Flags:       loadbal.LoadbalListMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
 	})
 
 	Context("list with server fails", func() {
@@ -40,7 +39,7 @@ var _ = Describe("Load balancer list", func() {
 			fakeLBManager.GetLoadBalancersReturns(nil, errors.New("Internal server error"))
 		})
 		It("return error", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
 			Expect(strings.Contains(err.Error(), "Failed to get load balancers on your account.")).To(BeTrue())
 			Expect(strings.Contains(err.Error(), "Internal server error")).To(BeTrue())
@@ -51,7 +50,7 @@ var _ = Describe("Load balancer list", func() {
 			fakeLBManager.GetLoadBalancersReturns(nil, nil)
 		})
 		It("return no load balancer", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"No load balancer was found."}))
 		})
@@ -71,7 +70,7 @@ var _ = Describe("Load balancer list", func() {
 			}, nil)
 		})
 		It("return loadbalancer", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"13162"}))
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"address"}))
@@ -97,7 +96,7 @@ var _ = Describe("Load balancer list", func() {
 			}, nil)
 		})
 		It("return loadbalancer", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"13162"}))
 			Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"address"}))
@@ -125,7 +124,7 @@ var _ = Describe("Load balancer list", func() {
 			}, nil)
 		})
 		It("return loadbalancer", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("ID      Name   Address   Type                 Location   Create Date   Status"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("13162   -      address   Private to Private   dal05      -             -/-"))
@@ -151,7 +150,7 @@ var _ = Describe("Load balancer list", func() {
 			}, nil)
 		})
 		It("return loadbalancer", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("ID      Name   Address   Type               Location   Create Date   Status"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("13162   -      address   Public to Public   dal05      -             -/-"))

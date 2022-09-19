@@ -3,35 +3,60 @@ package loadbal
 import (
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type L7RuleAddCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	PolicyUuid          string
+	Type                string
+	CompareType         string
+	Value               string
+	Key                 string
+	Invert              int
 }
 
-func NewL7RuleAddCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *L7RuleAddCommand) {
-	return &L7RuleAddCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewL7RuleAddCommand(sl *metadata.SoftlayerCommand) *L7RuleAddCommand {
+	thisCmd := &L7RuleAddCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "l7rule-add",
+		Short: T("Add a new L7 rule."),
+		Long:  T("${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.PolicyUuid, "policy-uuid", "", T("UUID for the load balancer policy [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Type, "type", "t", "", T("Rule type: HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH. [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.CompareType, "compare-type", "c", "", T("Compare type: EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS. [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Value, "value", "v", "", T("Compared Value [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Key, "key", "k", "", T("Key name. It's only available in HEADER or COOKIE type"))
+	cobraCmd.Flags().IntVar(&thisCmd.Invert, "invert", 0, T("Invert rule: 0 | 1."))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *L7RuleAddCommand) Run(c *cli.Context) error {
-	policyUUID := c.String("policy-uuid")
+func (cmd *L7RuleAddCommand) Run(args []string) error {
+	policyUUID := cmd.PolicyUuid
 	if policyUUID == "" {
 		return errors.NewMissingInputError("--policy-uuid")
 	}
 
-	policyType := c.String("t")
+	policyType := cmd.Type
 	if policyType == "" {
 		return bxErr.NewMissingInputError("-t, --type")
 	}
@@ -39,7 +64,7 @@ func (cmd *L7RuleAddCommand) Run(c *cli.Context) error {
 		return bxErr.NewInvalidUsageError(T("The value of option -t, --type should be HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH."))
 	}
 
-	compareType := c.String("c")
+	compareType := cmd.CompareType
 	if compareType == "" {
 		return bxErr.NewMissingInputError("-c, --compare-type")
 	}
@@ -47,18 +72,18 @@ func (cmd *L7RuleAddCommand) Run(c *cli.Context) error {
 		return bxErr.NewInvalidUsageError(T("The value of option -c, --compare-type should be EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS."))
 	}
 
-	value := c.String("v")
+	value := cmd.Value
 	if value == "" {
 		return bxErr.NewMissingInputError("-v, --value")
 	}
 
-	key := c.String("k")
+	key := cmd.Key
 
 	if key != "" && (strings.ToUpper(policyType) != "HEADER" && strings.ToUpper(policyType) != "COOKIE") {
 		return bxErr.NewInvalidUsageError(T("-k, --key is only available in HEADER or COOKIE type."))
 	}
 
-	invert := c.Int("invert")
+	invert := cmd.Invert
 
 	rule := datatypes.Network_LBaaS_L7Rule{
 		Type:           &policyType,
@@ -66,7 +91,7 @@ func (cmd *L7RuleAddCommand) Run(c *cli.Context) error {
 		Value:          &value,
 		Invert:         &invert,
 	}
-	if c.IsSet("k") {
+	if cmd.Key != "" {
 		rule.Key = &key
 	}
 
@@ -78,39 +103,4 @@ func (cmd *L7RuleAddCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 rule added"))
 	return nil
-}
-
-func LoadbalL7RuleAddMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "l7rule-add",
-		Description: T("Add a new L7 rule"),
-		Usage:       "${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "policy-uuid",
-				Usage: T("UUID for the load balancer policy [required]"),
-			},
-			cli.StringFlag{
-				Name:  "t,type",
-				Usage: T("Rule type: HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH. [required]"),
-			},
-			cli.StringFlag{
-				Name:  "c,compare-type",
-				Usage: T("Compare type: EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS. [required]"),
-			},
-			cli.StringFlag{
-				Name:  "v,value",
-				Usage: T("Compared Value [required]"),
-			},
-			cli.StringFlag{
-				Name:  "k,key",
-				Usage: T("Key name. It's only available in HEADER or COOKIE type"),
-			},
-			cli.IntFlag{
-				Name:  "invert",
-				Usage: T("Invert rule: 0 | 1."),
-			},
-		},
-	}
 }
