@@ -8,49 +8,46 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Hardware bandwidth", func() {
 	var (
-		fakeUI        *terminal.FakeUI
-		fakeManager   *testhelpers.FakeHardwareServerManager
-		cmd           *hardware.BandwidthCommand
-		cliCommand    cli.Command
-		fakeTransport *testhelpers.FakeTransportHandler
-		fakeSession   *session.Session
+		fakeUI              *terminal.FakeUI
+		fakeHardwareManager *testhelpers.FakeHardwareServerManager
+		cliCommand          *hardware.BandwidthCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
+		fakeTransport       *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeManager = new(testhelpers.FakeHardwareServerManager)
+		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		bleg := []string{}
 		fakeSession = testhelpers.NewFakeSoftlayerSession(bleg)
 		fakeTransport = new(testhelpers.FakeTransportHandler)
-		cmd = hardware.NewBandwidthCommand(fakeUI, fakeManager)
-		cliCommand = cli.Command{
-			Name:        hardware.HardwareBandwidthMetaData().Name,
-			Description: hardware.HardwareBandwidthMetaData().Description,
-			Usage:       hardware.HardwareBandwidthMetaData().Usage,
-			Flags:       hardware.HardwareBandwidthMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = hardware.NewBandwidthCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.HardwareManager = fakeHardwareManager
 	})
 
 	Describe("Hardware bandwidth", func() {
 		Context("Argument Checking", func() {
 			It("Error on missing ID", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 			It("Rollup specified", func() {
 				testTime := "2021-08-01"
-				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime, "-r", "300")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime, "-r", "300")
 				Expect(err).NotTo(HaveOccurred())
 				// Expect(fakeUI.Outputs()).To(ContainSubstring("2021-08-10"))
-				arg1, arg2, arg3, arg4 := fakeManager.GetBandwidthDataArgsForCall(0)
+				arg1, arg2, arg3, arg4 := fakeHardwareManager.GetBandwidthDataArgsForCall(0)
 				Expect(arg1).To(Equal(123456))
 				Expect(arg2.Format("2006-01-02")).To(Equal(testTime))
 				Expect(arg3.Format("2006-01-02")).To(Equal(testTime))
@@ -60,10 +57,10 @@ var _ = Describe("Hardware bandwidth", func() {
 		Context("DateTime parsing checks", func() {
 			It("2006-01-02 Parsing works properly", func() {
 				testTime := "2021-08-01"
-				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime)
 				Expect(err).NotTo(HaveOccurred())
 				// Expect(fakeUI.Outputs()).To(ContainSubstring("2021-08-10"))
-				arg1, arg2, arg3, arg4 := fakeManager.GetBandwidthDataArgsForCall(0)
+				arg1, arg2, arg3, arg4 := fakeHardwareManager.GetBandwidthDataArgsForCall(0)
 				Expect(arg1).To(Equal(123456))
 				Expect(arg2.Format("2006-01-02")).To(Equal(testTime))
 				Expect(arg3.Format("2006-01-02")).To(Equal(testTime))
@@ -71,9 +68,9 @@ var _ = Describe("Hardware bandwidth", func() {
 			})
 			It("2006-01-02T15:04 Parsing works properly", func() {
 				testTime := "2021-01-02T00:01"
-				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime)
 				Expect(err).NotTo(HaveOccurred())
-				arg1, arg2, arg3, arg4 := fakeManager.GetBandwidthDataArgsForCall(0)
+				arg1, arg2, arg3, arg4 := fakeHardwareManager.GetBandwidthDataArgsForCall(0)
 				Expect(arg1).To(Equal(123456))
 				Expect(arg2.Format("2006-01-02T15:04")).To(Equal(testTime))
 				Expect(arg3.Format("2006-01-02T15:04")).To(Equal(testTime))
@@ -81,9 +78,9 @@ var _ = Describe("Hardware bandwidth", func() {
 			})
 			It("2006-01-02T15:04:05-07:00 Parsing works properly", func() {
 				testTime := "2021-01-02T00:01-05:00"
-				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime)
 				Expect(err).NotTo(HaveOccurred())
-				arg1, arg2, arg3, arg4 := fakeManager.GetBandwidthDataArgsForCall(0)
+				arg1, arg2, arg3, arg4 := fakeHardwareManager.GetBandwidthDataArgsForCall(0)
 				Expect(arg1).To(Equal(123456))
 				Expect(arg2.Format("2006-01-02T15:04-07:00")).To(Equal(testTime))
 				Expect(arg3.Format("2006-01-02T15:04-07:00")).To(Equal(testTime))
@@ -92,9 +89,9 @@ var _ = Describe("Hardware bandwidth", func() {
 			It("No time specified works properly", func() {
 				testTime := time.Now()
 				format := "2006-01-02T15:04-07:00"
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).NotTo(HaveOccurred())
-				arg1, arg2, arg3, arg4 := fakeManager.GetBandwidthDataArgsForCall(0)
+				arg1, arg2, arg3, arg4 := fakeHardwareManager.GetBandwidthDataArgsForCall(0)
 				Expect(arg1).To(Equal(123456))
 				// Time has microsecond precision, so need to make sure we drop that part of when checking
 				Expect(arg2.Format(format)).To(Equal(testTime.Format(format)))
@@ -103,10 +100,10 @@ var _ = Describe("Hardware bandwidth", func() {
 			})
 			It("Bad Time", func() {
 				testTime := "2021/01/03 00:01-05:00"
-				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", "2021-01-02")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", "2021-01-02")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid start date: parsing time"))
-				err = testhelpers.RunCommand(cliCommand, "123456", "-s", "2021-01-02", "-e", testTime)
+				err = testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", "2021-01-02", "-e", testTime)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid end date: parsing time"))
 			})
@@ -121,8 +118,8 @@ var _ = Describe("Hardware bandwidth", func() {
 				testTime = "2021-08-01"
 			})
 			It("Default output", func() {
-				fakeManager.GetBandwidthDataReturns(returnData, nil)
-				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime)
+				fakeHardwareManager.GetBandwidthDataReturns(returnData, nil)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime)
 				Expect(err).NotTo(HaveOccurred())
 				outputs := fakeUI.Outputs()
 				Expect(outputs).To(ContainSubstring("Pub In    0.0032   0.2689         0.0016   2021-07-31 23:00"))
@@ -130,8 +127,8 @@ var _ = Describe("Hardware bandwidth", func() {
 
 			})
 			It("Quiet output", func() {
-				fakeManager.GetBandwidthDataReturns(returnData, nil)
-				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime, "-q")
+				fakeHardwareManager.GetBandwidthDataReturns(returnData, nil)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime, "-q")
 				Expect(err).NotTo(HaveOccurred())
 				outputs := fakeUI.Outputs()
 				Expect(outputs).To(ContainSubstring("Pub In    0.0032   0.2689         0.0016   2021-07-31 23:00"))
@@ -139,8 +136,8 @@ var _ = Describe("Hardware bandwidth", func() {
 
 			})
 			It("Empty Response", func() {
-				fakeManager.GetBandwidthDataReturns([]datatypes.Metric_Tracking_Object_Data{}, nil)
-				err := testhelpers.RunCommand(cliCommand, "123456", "-s", testTime, "-e", testTime)
+				fakeHardwareManager.GetBandwidthDataReturns([]datatypes.Metric_Tracking_Object_Data{}, nil)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("No data"))
 

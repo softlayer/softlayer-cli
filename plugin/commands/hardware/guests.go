@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -15,34 +14,41 @@ import (
 )
 
 type GuestsCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
 }
 
-func NewGuestsCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *GuestsCommand) {
-	return &GuestsCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewGuestsCommand(sl *metadata.SoftlayerCommand) (cmd *GuestsCommand) {
+	thisCmd := &GuestsCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "guests " + T("IDENTIFIER"),
+		Short: T("Lists the Virtual Guests running on this server."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *GuestsCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument"))
-	}
-	hardwareId, err := strconv.Atoi(c.Args()[0])
+func (cmd *GuestsCommand) Run(args []string) error {
+	hardwareId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Hardware server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	hardwareGuestsResult, err := cmd.HardwareManager.GetHardwareGuests(hardwareId)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the guests instances for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareId})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get the guests instances for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -64,20 +70,4 @@ func (cmd *GuestsCommand) Run(c *cli.Context) error {
 	tableHardwareGuest.Print()
 
 	return nil
-}
-
-func HardwareGuestsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "guests",
-		Description: T("Lists the Virtual Guests running on this server."),
-		Usage: T(`${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl hardware guests 1234567
-   Lists the Virtual Guests running on this server.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

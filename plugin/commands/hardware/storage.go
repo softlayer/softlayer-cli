@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -15,49 +14,56 @@ import (
 )
 
 type StorageCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
 }
 
-func NewStorageCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *StorageCommand) {
-	return &StorageCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewStorageCommand(sl *metadata.SoftlayerCommand) (cmd *StorageCommand) {
+	thisCmd := &StorageCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "storage " + T("IDENTIFIER"),
+		Short: T("Get storage details for a hardware server."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *StorageCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument"))
-	}
-	hardwareID, err := strconv.Atoi(c.Args()[0])
+func (cmd *StorageCommand) Run(args []string) error {
+	hardwareID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Hardware server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	iscsiStorageData, err := cmd.HardwareManager.GetStorageDetails(hardwareID, "ISCSI")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get iscsi storage detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get iscsi storage detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID}), err.Error(), 2)
 	}
 
 	nasStorageData, err := cmd.HardwareManager.GetStorageDetails(hardwareID, "NAS")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get nas storage detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get nas storage detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID}), err.Error(), 2)
 	}
 
 	storageCredentials, err := cmd.HardwareManager.GetStorageCredentials(hardwareID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the storage credential detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get the storage credential detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID}), err.Error(), 2)
 	}
 
 	hardDrives, err := cmd.HardwareManager.GetHardDrives(hardwareID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the hard drives detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get the hard drives detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID}), err.Error(), 2)
 	}
 
 	var storageDetailList []interface{}
@@ -116,20 +122,4 @@ func (cmd *StorageCommand) Run(c *cli.Context) error {
 	tableHardDrives.Print()
 
 	return nil
-}
-
-func HardwareStorageMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "storage",
-		Description: T("Get storage details for a hardware server."),
-		Usage: T(`${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl hardware storage 1234567
-   Get storage details for a hardware server.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }
