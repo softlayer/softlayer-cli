@@ -346,6 +346,13 @@
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
     "translation": "${COMMAND_NAME} sl vlan list [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Questi comandi elencano tutte le vlan nell'account corrente filtrando per data center uguale a dal09, e le ordinano per numero vlan.\n \nNota: nel campo Pod, l'aggiunta di (*) indica che verrà presto chiuso"
+
+
+  },
+  {
+    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
+    "translation": "${COMMAND_NAME} sl vlan options\n\t\nESEMPIO:\n   ${COMMAND_NAME} sl vlan options\n   Questo comando elenca tutte le opzioni per la creazione di una vlan, ad es. il tipo di vlan, i datacenter, la dimensione della sottorete, i router, ecc."
+
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
@@ -2886,6 +2893,13 @@
   {
     "id": "Failed to get CDN Metrics. ",
     "translation": "Impossibile ottenere le metriche CDN. "
+
+
+  },
+  {
+    "id": "Failed to get Cloud Object Storages.\n",
+    "translation": "Impossibile ottenere Cloud Object Storage.\n"
+
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -6682,6 +6696,17 @@
   {
     "id": "Respect Headers",
     "translation": "Respect Headers"
+
+
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "Rispettare le intestazioni. Il valore 1 è attivo e 0 è disattivo."
+  },
+  {
+    "id": "Restore block volume using a given snapshot",
+    "translation": "Ripristina il volume dei blocchi utilizzando un'istantanea fornita"
+
   },
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
@@ -6946,6 +6971,13 @@
   {
     "id": "Sets username for this account.",
     "translation": "Imposta il nome utente di questo account."
+
+
+  },
+  {
+    "id": "Setting tags for {{.VirtualGuestHostname}}.",
+    "translation": "Impostazione dei tag per {{.VirtualGuestHostname}}."
+
   },
   {
     "id": "Short Name",
@@ -7264,6 +7296,10 @@
     "translation": "Id sottorete rimosso correttamente: {{.subnetID}} per l'id host consentito: {{.accessID}}"
   },
   {
+    "id": "Successfully device firmware reflashed",
+    "translation": "Reflash del firmware del dispositivo eseguito correttamente"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "Richiesta inviata correttamente per attivare l'interfaccia IPMI del server hardware '{{.ID}}'."
   },
@@ -7326,6 +7362,13 @@
   {
     "id": "Tags",
     "translation": "Tag"
+
+
+  },
+  {
+    "id": "Tags all guests in an autoscale group.",
+    "translation": "Applica tag a tutti i guest in un gruppo di ridimensionamento automatico."
+
   },
   {
     "id": "Tags for the image",

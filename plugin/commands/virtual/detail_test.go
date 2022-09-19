@@ -20,26 +20,20 @@ import (
 var created, _ = time.Parse(time.RFC3339, "2016-12-25T00:00:00Z")
 var modified, _ = time.Parse(time.RFC3339, "2017-01-01T00:00:00Z")
 var lastTransaction, _ = time.Parse(time.RFC3339, "2017-02-01T00:00:00Z")
+
 var GetInstanceReturn = datatypes.Virtual_Guest{
+
 	Id:                       sl.Int(1234),
 	GlobalIdentifier:         sl.String("rthtoshfkthr"),
 	Hostname:                 sl.String("vs-abc"),
 	Domain:                   sl.String("wilma.com"),
 	FullyQualifiedDomainName: sl.String("vs-abc.wilma.com"),
-	Status: &datatypes.Virtual_Guest_Status{
-		Name: sl.String("Provisioning"),
-	},
-	PowerState: &datatypes.Virtual_Guest_Power_State{
-		Name: sl.String("PowerOn"),
-	},
+	Status:                   &datatypes.Virtual_Guest_Status{Name: sl.String("Provisioning")},
+	PowerState:               &datatypes.Virtual_Guest_Power_State{Name: sl.String("PowerOn")},
 	ActiveTransaction: &datatypes.Provisioning_Version1_Transaction{
-		TransactionStatus: &datatypes.Provisioning_Version1_Transaction_Status{
-			Name: sl.String("Provisioning"),
-		},
+		TransactionStatus: &datatypes.Provisioning_Version1_Transaction_Status{Name: sl.String("Provisioning")},
 	},
-	Datacenter: &datatypes.Location{
-		Name: sl.String("dal10"),
-	},
+	Datacenter: &datatypes.Location{Name: sl.String("dal10")},
 	OperatingSystem: &datatypes.Software_Component_OperatingSystem{
 		Software_Component: datatypes.Software_Component{
 			SoftwareLicense: &datatypes.Software_License{
@@ -68,13 +62,9 @@ var GetInstanceReturn = datatypes.Virtual_Guest{
 		Billing_Item: datatypes.Billing_Item{
 			OrderItem: &datatypes.Billing_Order_Item{
 				Order: &datatypes.Billing_Order{
-					UserRecord: &datatypes.User_Customer{
-						Username: sl.String("wilmawang"),
-					},
+					UserRecord: &datatypes.User_Customer{Username: sl.String("wilmawang")},
 				},
-				Preset: &datatypes.Product_Package_Preset{
-					KeyName: sl.String("C1_2X2X25"),
-				},
+				Preset: &datatypes.Product_Package_Preset{KeyName: sl.String("C1_2X2X25")},
 			},
 			RecurringFee:                    sl.Float(1000.00),
 			NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
@@ -83,14 +73,10 @@ var GetInstanceReturn = datatypes.Virtual_Guest{
 	Notes: sl.String("mynotes"),
 	TagReferences: []datatypes.Tag_Reference{
 		datatypes.Tag_Reference{
-			Tag: &datatypes.Tag{
-				Name: sl.String("tag1"),
-			},
+			Tag: &datatypes.Tag{Name: sl.String("tag1")},
 		},
 		datatypes.Tag_Reference{
-			Tag: &datatypes.Tag{
-				Name: sl.String("tag2"),
-			},
+			Tag: &datatypes.Tag{Name: sl.String("tag2")},
 		},
 	},
 	NetworkVlans: []datatypes.Network_Vlan{
@@ -102,13 +88,12 @@ var GetInstanceReturn = datatypes.Virtual_Guest{
 	},
 	TransientGuestFlag: sl.Bool(false),
 	LastTransaction: &datatypes.Provisioning_Version1_Transaction{
-		TransactionGroup: &datatypes.Provisioning_Version1_Transaction_Group{
-			Name: sl.String("Service Setup"),
-		},
-		ModifyDate: sl.Time(lastTransaction),
+		TransactionGroup: &datatypes.Provisioning_Version1_Transaction_Group{Name: sl.String("Service Setup")},
+		ModifyDate:       sl.Time(lastTransaction),
 	},
 	HourlyBillingFlag: sl.Bool(true),
 }
+
 
 var BlockDeviceReturns = []datatypes.Virtual_Guest_Block_Device{
 	datatypes.Virtual_Guest_Block_Device{
@@ -121,6 +106,7 @@ var BlockDeviceReturns = []datatypes.Virtual_Guest_Block_Device{
 		Device:    sl.String("1"),
 	},
 }
+
 
 var _ = Describe("VS detail", func() {
 	var (
@@ -219,6 +205,19 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("root"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("password4root"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00"))
+			})
+		})
+		Context("Github issues #252 ", func() {
+
+			BeforeEach(func() {
+				GetInstanceReturn.BillingItem = nil
+				fakeVSManager.GetInstanceReturns(GetInstanceReturn, nil)
+				fakeVSManager.GetLocalDisksReturns(BlockDeviceReturns, nil)
+			})
+			It("return no error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--passwords", "--price")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("price rate           0.00"))
 			})
 		})
 	})

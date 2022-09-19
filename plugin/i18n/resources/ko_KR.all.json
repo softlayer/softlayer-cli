@@ -346,6 +346,13 @@
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   이 명령은 dal09와 동일한 데이터 센터로 필터링하여 현재 계정의 모든 VLAN을 나열하고 VLAN 번호별로 이를 정렬합니다.\n \n참고: 팟(Pod) 필드에 (*)를 추가하는 경우 곧 닫힘을 나타냅니다."
+
+
+  },
+  {
+    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
+    "translation": "${COMMAND_NAME} sl vlan options\n\t\n예:\n   ${COMMAND_NAME} sl vlan options\n   이 명령은 VLAN 작성에 대한 모든 옵션을 나열합니다(예: VLAN 유형, 데이터 센터, 서브넷 크기, 라우터 등)."
+
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
@@ -2886,6 +2893,13 @@
   {
     "id": "Failed to get CDN Metrics. ",
     "translation": "CDN 메트릭을 가져오는 데 실패했습니다. "
+
+
+  },
+  {
+    "id": "Failed to get Cloud Object Storages.\n",
+    "translation": "Cloud Object Storage를 가져오는 데 실패했습니다.\n"
+
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -6682,6 +6696,17 @@
   {
     "id": "Respect Headers",
     "translation": "헤더 준수"
+
+
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "헤더를 준수합니다. 값 1은 설정이고 0은 해제입니다."
+  },
+  {
+    "id": "Restore block volume using a given snapshot",
+    "translation": "지정된 스냅샷을 사용하여 블록 볼륨 복원"
+
   },
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
@@ -7264,6 +7289,10 @@
     "translation": "서브넷 ID: {{.subnetID}}을(를) 허용되는 호스트 ID: {{.accessID}}에서 제거함"
   },
   {
+    "id": "Successfully device firmware reflashed",
+    "translation": "디바이스 펌웨어가 리플래시됨"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "하드웨어 서버 '{{.ID}}'의 IPMI 인터페이스를 토글하기 위해 요청을 전송했습니다."
   },
@@ -7326,6 +7355,13 @@
   {
     "id": "Tags",
     "translation": "태그"
+
+
+  },
+  {
+    "id": "Tags all guests in an autoscale group.",
+    "translation": "자동 스케일 그룹에 있는 모든 게스트를 태그 지정합니다."
+
   },
   {
     "id": "Tags for the image",

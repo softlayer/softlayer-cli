@@ -348,6 +348,10 @@
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONEN]\n \nBEISPIEL:\n ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n Dieser Befehl listet alle Vlans des aktuellen Kontos auf, filtert nach Rechenzentrum gleich dal09 und sortiert sie nach VLAN-Nummer.\n \nHinweis: Wenn \"add (*)\" im Feld \"Pod\" angegeben wurde, gibt dies an, dass"
   },
   {
+    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
+    "translation": "${COMMAND_NAME} sl vlan options\n\t\nBEISPIEL:\n   ${COMMAND_NAME} sl vlan options\n   Dieser Befehl listet alle Optionen für die VLAN-Erstellung auf, z. B. VLAN-Typ, Rechenzentren, Teilnetzgröße, Router usw."
+  },
+  {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONEN] IDENTIFIER\n\nBEISPIEL:\n ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n Datei, Block und portierbaren Speicher für einen virtuellen Server autorisieren."
   },
@@ -2886,6 +2890,10 @@
   {
     "id": "Failed to get CDN Metrics. ",
     "translation": "CDN-Metriken konnten nicht abgerufen werden. "
+  },
+  {
+    "id": "Failed to get Cloud Object Storages.\n",
+    "translation": "Abrufen von Cloud Object Storages fehlgeschlagen. \n"
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -6692,6 +6700,14 @@
     "translation": "Blockdatenträger mithilfe eines bestimmten Snapshots wiederherstellen"
   },
   {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "Header berücksichtigen. Der Wert \"1\" ist \"Ein\" und \"0\" ist \"Aus\"."
+  },
+  {
+    "id": "Restore block volume using a given snapshot",
+    "translation": "Blockdatenträger mithilfe eines bestimmten Snapshots wiederherstellen"
+  },
+  {
     "id": "Result limit",
     "translation": "Ergebnisbegrenzung"
   },
@@ -7264,6 +7280,10 @@
     "translation": "Teilnetz-ID {{.subnetID}} für zulässige Host-ID {{.accessID}} wurde erfolgreich entfernt"
   },
   {
+    "id": "Successfully device firmware reflashed",
+    "translation": "Für die Einheitenfirmware wurde erfolgreich ein erneutes Flash-Update durchgeführt."
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "Anforderung zum Aktivieren/Inaktivieren der IPMI-Schnittstelle des Hardware-Servers '{{.ID}}' erfolgreich gesendet."
   },
@@ -7326,6 +7346,10 @@
   {
     "id": "Tags",
     "translation": "Tags"
+  },
+  {
+    "id": "Tags all guests in an autoscale group.",
+    "translation": "Kennzeichnet alle Gäste in einer Autoskalierungsgruppe."
   },
   {
     "id": "Tags for the image",
