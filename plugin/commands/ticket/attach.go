@@ -7,7 +7,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )
@@ -65,7 +65,7 @@ func (cmd *AttachDeviceTicketCommand) Run(args []string) error {
 	}
 
 	if err != nil {
-		return cli.NewExitError(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}), 2)
+		return err
 	} else {
 		cmd.UI.Ok()
 		return nil

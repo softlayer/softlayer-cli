@@ -2,7 +2,7 @@ package dedicatedhost
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -97,12 +97,12 @@ func (cmd *CreateCommand) Run(args []string) error {
 		}
 	}
 	if vlan.PrimaryRouter == nil || vlan.PrimaryRouter.Id == nil {
-		return cli.NewExitError(T("Failed to get vlan primary router ID."), 2)
+		return slErr.New(T("Failed to get vlan primary router ID."))
 	}
 
 	vlanDatacenter := vlan.PrimaryRouter.Datacenter.Name
 	if *vlanDatacenter != datacenter {
-		return cli.NewExitError(T("The vlan is located at: {{.VLAN}}, Please add a valid private vlan according the datacenter selected.", map[string]interface{}{"VLAN": *vlanDatacenter}), 2)
+		return slErr.New(T("The vlan is located at: {{.VLAN}}, Please add a valid private vlan according the datacenter selected.", map[string]interface{}{"VLAN": *vlanDatacenter}))
 	}
 
 	orderTemplate, err := cmd.DedicatedHostManager.GenerateOrderTemplate(size, hostname, domain, datacenter, billing, *vlan.PrimaryRouter.Id)

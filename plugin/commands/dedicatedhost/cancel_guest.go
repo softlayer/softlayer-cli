@@ -2,7 +2,7 @@ package dedicatedhost
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
@@ -67,5 +67,5 @@ func (cmd *CancelCommand) Run(args []string) error {
 		return nil
 	}
 
-	return cli.NewExitError(T("There is not any guest into the dedicated host {{.ID}}.", map[string]interface{}{"ID": HostID}), 2)
+	return slErr.New(T("There is not any guest into the dedicated host {{.ID}}.", map[string]interface{}{"ID": HostID}))
 }

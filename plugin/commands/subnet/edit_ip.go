@@ -6,7 +6,7 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -58,7 +58,7 @@ func (cmd *EditIpCommand) Run(args []string) error {
 		}
 		if subnetIpAddress.Id == nil {
 			address := map[string]interface{}{"address": ipAddress}
-			return cli.NewExitError(T("Unable to find object with IP address: {{.address}}", address), 2)
+			return errors.New(T("Unable to find object with IP address: {{.address}}", address))
 		}
 		subnetIpAddressID = *subnetIpAddress.Id
 	}

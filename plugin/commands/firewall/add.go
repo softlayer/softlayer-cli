@@ -5,7 +5,7 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -66,7 +66,7 @@ func (cmd *AddCommand) Run(args []string) error {
 		return errors.NewAPIError(T("Failed to get package for {{.Type}} firewall.\n", map[string]interface{}{"Type": firewallType}), err.Error(), 2)
 	}
 	if len(packages) == 0 {
-		return cli.NewExitError(T("Failed to find package for firewall."), 2)
+		return errors.New(T("Failed to find package for firewall."))
 	}
 
 	cmd.UI.Print(fmt.Sprintf("Product: %s", *packages[0].Description))

@@ -4,8 +4,7 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -50,7 +49,7 @@ func (cmd *KeyRemoveCommand) Run(args []string) error {
 	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will remove SSH key: {{.ID}} and cannot be undone. Continue?", map[string]interface{}{"ID": keyID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -59,7 +58,7 @@ func (cmd *KeyRemoveCommand) Run(args []string) error {
 	}
 	err = cmd.SecurityManager.DeleteSSHKey(keyID)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to remove SSH key: {{.ID}}.\n", map[string]interface{}{"ID": keyID}), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to remove SSH key: {{.ID}}.\n", map[string]interface{}{"ID": keyID}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("SSH key {{.ID}} was removed.", map[string]interface{}{"ID": keyID}))

@@ -6,7 +6,7 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -54,11 +54,11 @@ func (cmd *DetailTicketCommand) Run(args []string) error {
 
 	ticket, err := cmd.TicketManager.GetTicket(ticketid)
 	if err != nil {
-		return cli.NewExitError(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}))
 	}
 	ticketUpdates, err := cmd.TicketManager.GetAllUpdates(ticketid)
 	if err != nil {
-		return cli.NewExitError(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}))
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -96,7 +96,7 @@ func (cmd *DetailTicketCommand) Run(args []string) error {
 		if editor_type == "USER" && update.EditorId != nil {
 			user, err := cmd.UserManager.GetUser(*update.EditorId, "mask[firstName,lastName]")
 			if err != nil {
-				return cli.NewExitError(T("Error: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}), 2)
+				return errors.New(T("Error: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 			} else {
 				editor_name = utils.FormatStringPointer(user.FirstName) + " " + utils.FormatStringPointer(user.LastName)
 			}

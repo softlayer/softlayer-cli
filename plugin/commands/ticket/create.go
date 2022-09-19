@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -108,7 +108,7 @@ func (cmd *CreateStandardTicketCommand) Run(args []string) error {
 		}
 
 		if cmd.RootPwd == "" {
-			return cli.NewExitError(T("Root password must be provided with rootpwd flag if attachment is set."), 1)
+			return errors.New(T("Root password must be provided with rootpwd flag if attachment is set."))
 		}
 		id := cmd.Attachment
 		ticketArgs.AttachmentId = &id
@@ -118,7 +118,7 @@ func (cmd *CreateStandardTicketCommand) Run(args []string) error {
 
 	ticket_id, err := cmd.TicketManager.CreateStandardTicket(&ticketArgs)
 	if err != nil {
-		return cli.NewExitError(T("Ticket could not be created: {{.Error}}.", map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Ticket could not be created: {{.Error}}.", map[string]interface{}{"Error": err.Error()}))
 	}
 
 	cmd.UI.Print(T("Ticket ID: {{.TicketID}}.", map[string]interface{}{"TicketID": *ticket_id}))

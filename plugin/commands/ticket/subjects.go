@@ -4,8 +4,9 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -39,7 +40,7 @@ func (cmd *SubjectsTicketCommand) Run(args []string) error {
 	subjects, err := cmd.TicketManager.GetSubjects()
 
 	if err != nil {
-		return cli.NewExitError(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}))
 	} else {
 		columnsList := []string{T("ID"), T("Subject")}
 		table := cmd.UI.Table(utils.GetColumnHeader(columnsList))

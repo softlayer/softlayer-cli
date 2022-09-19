@@ -3,11 +3,10 @@ package security
 import (
 	"strconv"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -51,7 +50,7 @@ func (cmd *CertRemoveCommand) Run(args []string) error {
 	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will remove SSL certificate: {{.ID}} and cannot be undone. Continue?", map[string]interface{}{"ID": certID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -60,7 +59,7 @@ func (cmd *CertRemoveCommand) Run(args []string) error {
 	}
 	err = cmd.SecurityManager.RemoveCertificate(certID)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to remove SSL certificate: {{.ID}}.\n", map[string]interface{}{"ID": certID}), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to remove SSL certificate: {{.ID}}.\n", map[string]interface{}{"ID": certID}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("SSL certificate {{.ID}} was removed.", map[string]interface{}{"ID": certID}))
