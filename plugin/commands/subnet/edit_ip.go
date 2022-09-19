@@ -58,7 +58,7 @@ func (cmd *EditIpCommand) Run(args []string) error {
 		}
 		if subnetIpAddress.Id == nil {
 			address := map[string]interface{}{"address": ipAddress}
-			return cli.NewExitError(T("Unable to find object with IP address: {{.address}}", address), 2)
+			return errors.New(T("Unable to find object with IP address: {{.address}}", address))
 		}
 		subnetIpAddressID = *subnetIpAddress.Id
 	}
