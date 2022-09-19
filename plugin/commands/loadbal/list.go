@@ -3,30 +3,43 @@ package loadbal
 import (
 	"fmt"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type ListCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
 }
 
-func NewListCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
+	thisCmd := &ListCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List active load balancers."),
+		Long:  T("${COMMAND_NAME} sl loadbal list"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
+func (cmd *ListCommand) Run(args []string) error {
 	loadbalancers, err := cmd.LoadBalancerManager.GetLoadBalancers()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get load balancers on your account.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get load balancers on your account."), err.Error(), 2)
 	}
 	if len(loadbalancers) == 0 {
 		cmd.UI.Print(T("No load balancer was found."))
@@ -57,14 +70,4 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		table.Print()
 	}
 	return nil
-}
-
-func LoadbalListMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "list",
-		Description: T("List active load balancers"),
-		Usage:       "${COMMAND_NAME} sl loadbal list",
-		Flags:       []cli.Flag{},
-	}
 }

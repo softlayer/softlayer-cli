@@ -7,41 +7,40 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer edit policies", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.MembersAddCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.MembersAddCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewMembersAddCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewMembersAddCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalMemberAddMetadata().Name,
-			Description: loadbal.LoadbalMemberAddMetadata().Description,
-			Usage:       loadbal.LoadbalMemberAddMetadata().Usage,
-			Flags:       loadbal.LoadbalMemberAddMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
 	})
 
 	Describe("members add", func() {
 		Context("members add, missing arguments error", func() {
 			It("id is required", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--id' is required"))
 			})
 			It("ip is required", func() {
-				err := testhelpers.RunCommand(cliCommand, "--id", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--ip' is required"))
 			})
@@ -49,7 +48,7 @@ var _ = Describe("Load balancer edit policies", func() {
 
 		Context("members added", func() {
 			It("with all attributes", func() {
-				err := testhelpers.RunCommand(cliCommand, "--id", "123", "--ip", "10.10.10.10")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "123", "--ip", "10.10.10.10")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Member 10.10.10.10 added"))
@@ -59,13 +58,13 @@ var _ = Describe("Load balancer edit policies", func() {
 		Context("errors", func() {
 			It("Failed to get load balancer", func() {
 				fakeLBManager.GetLoadBalancerUUIDReturns("123", errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "--id", "123", "--ip", "10.10.10.10")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "123", "--ip", "10.10.10.10")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get load balancer: Internal server error"))
 			})
 			It("Failed to add load balancer member", func() {
 				fakeLBManager.AddLoadBalancerMemberReturns(datatypes.Network_LBaaS_LoadBalancer{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "--id", "123", "--ip", "10.10.10.10")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "123", "--ip", "10.10.10.10")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to add load balancer member: Internal server error."))
 			})
