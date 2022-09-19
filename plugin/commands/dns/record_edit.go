@@ -6,7 +6,7 @@ import (
 
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -92,7 +92,7 @@ func (cmd *RecordEditCommand) Run(args []string) error {
 		}
 	}
 	if len(multiErrors) > 0 {
-		return cli.NewExitError(cli.NewMultiError(multiErrors...).Error(), 2)
+		return errors.CollapseErrors(multiErrors)
 	}
 	return nil
 }

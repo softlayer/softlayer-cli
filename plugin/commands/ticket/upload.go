@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -52,7 +52,7 @@ func (cmd *UploadFileTicketCommand) Run(args []string) error {
 	err = cmd.TicketManager.AttachFileToTicket(ticketId, name, file_path)
 
 	if err != nil {
-		return cli.NewExitError(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}))
 	} else {
 		cmd.UI.Ok()
 		return nil

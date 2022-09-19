@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -61,7 +61,7 @@ func (cmd *UpdateTicketCommand) Run(args []string) error {
 
 	err = cmd.TicketManager.AddUpdate(ticketid, content)
 	if err != nil {
-		return cli.NewExitError(T("Update could not be added: {{.Error}}\n", map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Update could not be added: {{.Error}}\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	return nil

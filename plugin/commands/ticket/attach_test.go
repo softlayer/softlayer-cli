@@ -3,7 +3,6 @@ package ticket_test
 import (
 	"errors"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -59,7 +58,7 @@ var _ = Describe("ticket attach", func() {
 				fakeTicketManager.AttachDeviceToTicketReturns(errors.New("API ERROR"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "76767699", "--hardware=111111")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstrings([]string{"Error: API ERROR"}))
+				Expect(err.Error()).To(ContainSubstring("API ERROR"))
 			})
 
 			It("return error 5", func() {

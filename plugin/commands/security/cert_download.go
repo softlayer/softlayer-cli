@@ -4,12 +4,11 @@ import (
 	"io/ioutil"
 	"strconv"
 
-	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -48,7 +47,7 @@ func (cmd *CertDownloadCommand) Run(args []string) error {
 
 	certID, err := strconv.Atoi(args[0])
 	if err != nil {
-		return slErrors.NewInvalidSoftlayerIdInputError("SSL certificate ID")
+		return errors.NewInvalidSoftlayerIdInputError("SSL certificate ID")
 	}
 	cert, err := cmd.SecurityManager.GetCertificate(certID)
 	if err != nil {
@@ -113,7 +112,7 @@ func (cmd *CertDownloadCommand) Run(args []string) error {
 		}
 	}
 	if len(multiErrors) > 0 {
-		return cli.NewExitError(cli.NewMultiError(multiErrors...).Error(), 2)
+		return errors.CollapseErrors(multiErrors)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("SSL certificate files are downloaded."))

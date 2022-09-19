@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -50,7 +50,7 @@ func (cmd *CancelCommand) Run(args []string) error {
 	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will cancel the VLAN: {{.ID}} and cannot be undone. Continue?", map[string]interface{}{"ID": vlanID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -63,7 +63,7 @@ func (cmd *CancelCommand) Run(args []string) error {
 		for _, reason := range reasons {
 			cmd.UI.Print(reason)
 		}
-		return cli.NewExitError(T("Failed to cancel VLAN {{.ID}}.\n", map[string]interface{}{"ID": vlanID}), 2)
+		return errors.New(T("Failed to cancel VLAN {{.ID}}.\n", map[string]interface{}{"ID": vlanID}))
 
 	}
 	err = cmd.NetworkManager.CancelVLAN(vlanID)
