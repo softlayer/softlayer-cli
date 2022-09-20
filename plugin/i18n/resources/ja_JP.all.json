@@ -346,6 +346,13 @@
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n 例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウント・フィルターのすべての VLAN を dal09 に等しいデータ・センターでリストし、それらを vlan 番号でソートします。\n \n注: フィールド Pod では、(*) を追加し間もなく閉じることが示されている場合、"
+
+
+  },
+  {
+    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
+    "translation": "${COMMAND_NAME} sl vlan options\n\t\n例:\n   ${COMMAND_NAME} sl vlan options\n   このコマンドは、vlan の作成に関するすべてのオプション (例えば、vlan タイプ、データ・センター、サブネット・サイズ、ルーターなど) をリストします。"
+
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
@@ -396,6 +403,13 @@
     "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t注: クラシック・インフラストラクチャー・サービスは、アップグレード要求が行われると、インスタンスを自動的にリブートします。\n  \t インスタンスは、アップグレード・トランザクションが完了するまで停止されます。\n  \tただし、ネットワークにはリブートは不要です。\n\n例:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   このコマンドは、ID 12345678 の Virtual Server インスタンスをアップグレードし、CPU コアの数を 8 に、メモリーを 8192 M に、ネットワーク・ポート速度を 1000 Mbps に設定します。"
   },
   {
+
+
+    "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n時間フォーマットは、'2006-01-02'、'2006-01-02T15:04'、'2006-01-02T15:04-07:00' のいずれかです。'\n\n丸めや日付合わせの詳細により、この結果は制御ポータルでの結果とは若干異なる可能性があります。\n帯域幅は GB 単位で表示され、タイムゾーンが指定されていない場合は GMT+0 とみなされます。\n\n例:\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+  },
+  {
+
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
     "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS] \n 仮想サーバーの使用法情報。\n 例: \n ${COMMAND_NAME} sl {{.Command}} usage 1234 -- start 2006-01-02 -- end 2006-01-02 -- valid-data cpu0"
   },
@@ -2886,6 +2900,13 @@
   {
     "id": "Failed to get CDN Metrics. ",
     "translation": "CDN メトリックの取得に失敗しました。 "
+
+
+  },
+  {
+    "id": "Failed to get Cloud Object Storages.\n",
+    "translation": "Cloud Object Storage の取得に失敗しました。\n"
+
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -6682,6 +6703,17 @@
   {
     "id": "Respect Headers",
     "translation": "ヘッダーを尊重 (Respect Headers)"
+
+
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "ヘッダーを尊重します。 値 1 はオン、0 はオフです。"
+  },
+  {
+    "id": "Restore block volume using a given snapshot",
+    "translation": "指定されたスナップショットを使用してブロック・ボリュームをリストアします"
+
   },
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
@@ -7264,6 +7296,10 @@
     "translation": "サブネット ID {{.subnetID}}を許可されたホスト ID {{.accessID}}に正常に削除しました"
   },
   {
+    "id": "Successfully device firmware reflashed",
+    "translation": "デバイス・ファームウェアが正常に再フラッシュされました"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "ハードウェア・サーバー '{{.ID}}' の IPMI インターフェースの切り替えの要求を正常に送信しました。"
   },
@@ -7326,6 +7362,13 @@
   {
     "id": "Tags",
     "translation": "タグ"
+
+
+  },
+  {
+    "id": "Tags all guests in an autoscale group.",
+    "translation": "オート・スケール・グループ内のすべてのゲストにタグを付けます。"
+
   },
   {
     "id": "Tags for the image",

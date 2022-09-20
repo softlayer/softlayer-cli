@@ -346,6 +346,13 @@
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   此命令列示当前帐户上按 datacenter 等于 dal09 进行过滤的所有 vlan，并按 vlan 编号对其进行排序。\n \n注：在字段 Pod 中，如果添加 (*)，则指示即将关闭"
+
+
+  },
+  {
+    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
+    "translation": "${COMMAND_NAME} sl vlan options\n\t\n示例：\n   ${COMMAND_NAME} sl vlan options\n   此命令列出用于创建 VLAN 的所有选项，例如 VLAN 类型、数据中心、子网大小、路由器等。"
+
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
@@ -396,6 +403,13 @@
     "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t注：一旦发出升级请求后，经典基础架构服务会自动重新引导\n  \t实例。此实例在升级事务完成之前会一直停止。\n  \t但是，对于网络，无需重新引导。\n\n示例：\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   此命令升级标识为 12345678 的虚拟服务器实例，并将 CPU 核心数设置为 8，内存设置为 8192M，网络端口速度设置为 1000 Mbps。"
   },
   {
+
+
+    "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n时间格式为 '2006-01-02'、'2006-01-02T15:04' 或 '2006-01-02T15:04-07:00'\n\n由于某些舍入和日期对齐详细信息，此处的结果可能与控制门户中的结果略有不同。\n列出的带宽以 GB 为单位，如果未指定时区，则假定为 GMT+0。\n\n示例：\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+  },
+  {
+
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
     "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\n 虚拟服务器的用法信息。\n示例：\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
@@ -2886,6 +2900,13 @@
   {
     "id": "Failed to get CDN Metrics. ",
     "translation": "未能获取 CDN 度量。 "
+
+
+  },
+  {
+    "id": "Failed to get Cloud Object Storages.\n",
+    "translation": "未能获取 Cloud Object Storage。\n"
+
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -6682,6 +6703,17 @@
   {
     "id": "Respect Headers",
     "translation": "遵守头"
+
+
+  },
+  {
+    "id": "Respect headers. The value 1 is On and 0 is Off.",
+    "translation": "尊重头。 值 1 为“开”，值 0 为“关”。"
+  },
+  {
+    "id": "Restore block volume using a given snapshot",
+    "translation": "使用给定快照复原块卷"
+
   },
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
@@ -7264,6 +7296,10 @@
     "translation": "已成功将子网标识 {{.subnetID}} 从允许的主机标识 {{.accessID}} 除去"
   },
   {
+    "id": "Successfully device firmware reflashed",
+    "translation": "已成功重刷设备固件"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "已成功发送切换硬件服务器“{{.ID}}”IPMI 接口的请求。"
   },
@@ -7326,6 +7362,13 @@
   {
     "id": "Tags",
     "translation": "标记"
+
+
+  },
+  {
+    "id": "Tags all guests in an autoscale group.",
+    "translation": "标记自动缩放组中的所有访客。"
+
   },
   {
     "id": "Tags for the image",
