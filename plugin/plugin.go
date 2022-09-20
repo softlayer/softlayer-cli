@@ -244,24 +244,45 @@ func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag {
 		if pflag.Shorthand != "" {
 			flagName = pflag.Shorthand + "," + pflag.Name
 		}
-		// TODO Add default to description
+		flagDesc := pflag.Usage
+		if !defaultIsZeroValue(pflag) {
+			flagDesc = fmt.Sprintf("%s (%s: %s)", pflag.Usage, T("Default"), pflag.DefValue)
+		}
+		hasValue := true
+		if reflect.TypeOf(pflag.Value).String() == "*pflag.boolValue" {
+			hasValue = false
+		}
 		thisFlag := plugin.Flag{
 			Name:        flagName,
-			Description: pflag.Usage,
-			HasValue:    false,
-			Hidden:      false,
+			Description: flagDesc,
+			HasValue:    hasValue,
+			Hidden:      pflag.Hidden,
 		}
 		pluginFlags = append(pluginFlags, thisFlag)
 	})
-	// TODO, see if its possible to have global values added like VisitAll?
-	// outputFlag := plugin.Flag{
-	// 	Name: "output",
-	// 	Description: "--output=JSON for json output.",
-	// 	HasValue: false,
-	// 	Hidden: false,
-	// }
-	// pluginFlags = append(pluginFlags, outputFlag)
 	return pluginFlags
+}
+
+// Copied from https://github.com/spf13/pflag/blob/master/flag.go#L538 
+// Because its a private function for some reason.
+func defaultIsZeroValue(f *pflag.Flag) bool {
+	switch f.DefValue {
+		case "false":
+			return true
+		case "0", "0s":
+			return true
+		case "<nil>":
+			return true
+		case "":
+			return true
+		case "[]":
+			return true
+		// Used when 0 is a value users can input
+		case "-1":
+			return true
+		default:
+			return false
+	}
 }
 
 func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Command {
