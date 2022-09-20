@@ -26,7 +26,7 @@ func NewProtocolDeleteCommand(sl *metadata.SoftlayerCommand) *ProtocolDeleteComm
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "protocol-delete",
-		Short: T("Delete a protocol."),
+		Short: T("Delete a protocol"),
 		Long:  T("${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

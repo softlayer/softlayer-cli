@@ -58,7 +58,7 @@ import (
 )
 
 var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} {{.Use}}{{else}}{{.Use}}{{end}}` +
-	`{{if .HasAvailableFlags}} [` + T("OPTIONS") + `] {{end}}
+	`{{if .HasLocalFlags}} [` + T("OPTIONS") + `] {{end}}
 {{.Long}}`
 
 func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
@@ -240,8 +240,13 @@ func getCLITopCommands() []cli.Command {
 func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag {
 	var pluginFlags []plugin.Flag
 	flagSet.VisitAll(func(pflag *pflag.Flag) {
+		flagName := pflag.Name
+		if pflag.Shorthand != "" {
+			flagName = pflag.Shorthand + "," + pflag.Name
+		}
+		// TODO Add default to description
 		thisFlag := plugin.Flag{
-			Name:        pflag.Name,
+			Name:        flagName,
 			Description: pflag.Usage,
 			HasValue:    false,
 			Hidden:      false,
@@ -295,7 +300,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	}
 
 	// Persistent Flags
-	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", "--output=JSON for json output.")
+	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", T("Specify output format, only JSON is supported now."))
 	// Commands
 	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
 	cobraCmd.AddCommand(autoscale.SetupCobraCommands(slCommand))

@@ -32,7 +32,7 @@ func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
 		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "vlan",
+		Use:   "list",
 		Short: T("List all the VLANs on your account"),
 		Long: T(`${COMMAND_NAME} sl vlan list [OPTIONS]
 	

@@ -46,7 +46,7 @@ EXAMPLE:
 	thisCmd.Command = cobraCmd
 	cobraCmd.Flags().IntVarP(&thisCmd.Cpu, "cpu", "c", 0, T("Number of CPU cores"))
 	cobraCmd.Flags().BoolVar(&thisCmd.Private, "private", false, T("CPU core will be on a dedicated host server"))
-	cobraCmd.Flags().IntVarP(&thisCmd.Memory, "memory", "n", 0, T("Memory in megabytes"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Memory, "memory", "m", 0, T("Memory in megabytes"))
 	// -1 as default since 0 is a valid value here
 	cobraCmd.Flags().IntVar(&thisCmd.Network, "network", -1, T("Network port speed in Mbps"))
 	cobraCmd.Flags().StringVar(&thisCmd.Flavor, "flavor", "", T("Flavor key name"))

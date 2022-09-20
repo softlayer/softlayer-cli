@@ -92,10 +92,6 @@
     "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
   {
-    "id": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl file replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\n如果磁區（具有抄寫）因為災難事件而變成無法存取，可以使用此方法來立即\n失效接手到另一個位置中可用的抄本。此方法不允許透過 API 進行失效回復。\n若要在使用此方法後失效回復到原始磁區，請開立支援問題單。\n若要測試失效接手，請改用 '${COMMAND_NAME} sl file replica-failover'。\n\n範例：\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\t這個指令會針對 ID 為 12345678 的磁區執行失效接手作業，作業目標是 ID 為 87654321 的抄本磁區。"
-  },
-  {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
     "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\n範例：\n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
@@ -106,26 +102,6 @@
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n範例：\n    ${COMMAND_NAME} sl globalip create --v6 \n\t這個指令會建立 IPv6 位址。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
-    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n  授權檔案及 Block Storage 至硬體伺服器。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl hardware guests 1234567\n   列出在此伺服器上執行的虛擬訪客。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\n 範例：\n   ${COMMAND_NAME} sl hardware sensor 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl hardware storage 1234567\n   取得硬體伺服器的儲存體詳細資料。"
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
@@ -346,13 +322,10 @@
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n 範例：\n ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n此指令會列出現行帳戶上的所有 vlan，依 datacenter 等於 dal09 過濾並按 vlan 號碼排序。\n \n附註：在欄位 Pod 中，如果新增 (*)，則指出即將關閉"
-
-
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
     "translation": "${COMMAND_NAME} sl vlan options\n\t\n範例：\n   ${COMMAND_NAME} sl vlan options\n   這個指令會列出用來建立 VLAN 的所有選項，例如 VLAN 類型、資料中心、子網路大小、路由器等等。"
-
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
@@ -1063,20 +1036,8 @@
     "translation": "BackendRouterId、create-options 具有要使用的有效 ID 清單。[必要]"
   },
   {
-    "id": "Balancing Method: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR, default: ROUNDROBIN",
-    "translation": "平衡方法：ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR，預設：ROUNDROBIN"
-  },
-  {
     "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]",
     "translation": "平衡方法：[ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Default: ROUNDROBIN",
-    "translation": "平衡方法：[ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]。預設：ROUNDROBIN"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [default: ROUNDROBIN]",
-    "translation": "平衡方法：[ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]。[預設：ROUNDROBIN]"
   },
   {
     "id": "Bandwidth",
@@ -2893,13 +2854,6 @@
   {
     "id": "Failed to get CDN Metrics. ",
     "translation": "無法取得 CDN 度量值。 "
-
-
-  },
-  {
-    "id": "Failed to get Cloud Object Storages.\n",
-    "translation": "無法取得「雲端物件儲存體」。\n"
-
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -4202,12 +4156,12 @@
     "translation": "FriendlyName"
   },
   {
-    "id": "Frontend port [default: 80]",
+    "id": "Frontend port",
     "translation": "前端埠 [預設：80]"
   },
   {
-    "id": "Frontend protocol [default: HTTP]",
-    "translation": "前端通訊協定 [預設：HTTP]"
+    "id": "Frontend protocol",
+    "translation": "前端通訊協定"
   },
   {
     "id": "Fully qualified name",
@@ -4422,32 +4376,16 @@
     "translation": "檢查之間的性能檢查間隔時間"
   },
   {
-    "id": "Health check interval between checks. [default: 5]",
-    "translation": "檢查之間的性能檢查間隔時間。[預設：5]"
-  },
-  {
     "id": "Health check number of times before marking as DOWN",
     "translation": "標示為 DOWN 之前的性能檢查次數"
-  },
-  {
-    "id": "Health check number of times before marking as DOWN. [default: 2]",
-    "translation": "標示為 DOWN 之前的性能檢查次數。[預設：2]"
   },
   {
     "id": "Health check path",
     "translation": "性能檢查路徑"
   },
   {
-    "id": "Health check path.  [default: /]",
-    "translation": "性能檢查路徑。[預設：/]"
-  },
-  {
     "id": "Health check timeout",
     "translation": "性能檢查逾時"
-  },
-  {
-    "id": "Health check timeout. [default: 2]",
-    "translation": "性能檢查逾時。[預設：2]"
   },
   {
     "id": "Hide IP address listing",
@@ -4760,10 +4698,6 @@
   {
     "id": "Internal peer IP address",
     "translation": "內部對等節點 IP 位址"
-  },
-  {
-    "id": "Internet side port. Default: 80",
-    "translation": "網際網路端的埠。預設：80"
   },
   {
     "id": "Invalid --sortBy option.",
@@ -6382,7 +6316,7 @@
     "translation": "專用埠速度，選項包含：0、10、100、1000、10000"
   },
   {
-    "id": "Private side port. Default: 80",
+    "id": "Private side port",
     "translation": "專用端的埠。預設：80"
   },
   {
@@ -6408,10 +6342,6 @@
   {
     "id": "Protocol type to use for incoming connections",
     "translation": "用於送入連線的通訊協定類型"
-  },
-  {
-    "id": "Protocol type to use for incoming connections. [default: HTTP]",
-    "translation": "用於送入連線的通訊協定類型。[預設：HTTP]"
   },
   {
     "id": "Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP",
@@ -6696,17 +6626,6 @@
   {
     "id": "Respect Headers",
     "translation": "遵循標頭"
-
-
-  },
-  {
-    "id": "Respect headers. The value 1 is On and 0 is Off.",
-    "translation": "遵循標頭。 值 1 是「開啟」，而 0 是「關閉」。"
-  },
-  {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "使用給定的 Snapshot 還原區塊磁區"
-
   },
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
@@ -7289,10 +7208,6 @@
     "translation": "已順利將子網路 ID {{.subnetID}} 移除至容許的主機 ID：{{.accessID}}"
   },
   {
-    "id": "Successfully device firmware reflashed",
-    "translation": "已順利再更新裝置韌體"
-  },
-  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "已順利傳送要求，以切換硬體伺服器 '{{.ID}}' 的 IPMI 介面。"
   },
@@ -7355,13 +7270,10 @@
   {
     "id": "Tags",
     "translation": "標籤"
-
-
   },
   {
     "id": "Tags all guests in an autoscale group.",
     "translation": "標記自動調整群組中的所有訪客。"
-
   },
   {
     "id": "Tags for the image",
