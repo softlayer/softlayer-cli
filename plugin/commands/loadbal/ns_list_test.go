@@ -8,31 +8,30 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer edit policies", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.NetscalerListCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.NetscalerListCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewNetscalerListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewNetscalerListCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalNsListMetadata().Name,
-			Description: loadbal.LoadbalNsListMetadata().Description,
-			Usage:       loadbal.LoadbalNsListMetadata().Usage,
-			Flags:       loadbal.LoadbalNsListMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
 
 		createdDate, _ := time.Parse(time.RFC3339, "2016-12-29T00:00:00Z")
 		fakeLBManager.GetADCsReturns([]datatypes.Network_Application_Delivery_Controller{
@@ -66,7 +65,7 @@ var _ = Describe("Load balancer edit policies", func() {
 	Describe("ns list", func() {
 		Context("ns details, Invalid Usage", func() {
 			It("Set command with an invalid output option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -74,7 +73,7 @@ var _ = Describe("Load balancer edit policies", func() {
 
 		Context("ns list", func() {
 			It("list all netscalers", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID     Location   Name               Description               IP Address    Management IP   Bandwidth   Create Date"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123    dal01      Netscaler Name     Description Netscaler     10.10.10.10   20.20.20.20     2.000000    2016-12-29T00:00:00Z"))
@@ -82,31 +81,33 @@ var _ = Describe("Load balancer edit policies", func() {
 			})
 
 			It("list all netscalers in output json", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=json")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"createDate": "2016-12-29T00:00:00Z",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"datacenter": {`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"longName": "dal01"`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`},`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"description": "Description Netscaler",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"id": 123,`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"managementIpAddress": "20.20.20.20",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"name": "Netscaler Name",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"outboundPublicBandwidthUsage": 2,`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"primaryIpAddress": "10.10.10.10"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"ID": "123",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Location": "dal01",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "Netscaler Name",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Description": "Description Netscaler",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"IP Address": "10.10.10.10",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Create Date": "2016-12-29T00:00:00Z"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`]`))
+				
 			})
 		})
 
 		Context("errors", func() {
 			It("Failed to get netscalers on your account.", func() {
 				fakeLBManager.GetADCsReturns([]datatypes.Network_Application_Delivery_Controller{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get netscalers on your account.Internal server error"))
+				Expect(err.Error()).To(ContainSubstring("Failed to get netscalers on your account"))
+				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
 			It("Failed to get netscalers on your account.", func() {
 				fakeLBManager.GetADCsReturns([]datatypes.Network_Application_Delivery_Controller{}, nil)
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("No netscalers was found."))
 			})

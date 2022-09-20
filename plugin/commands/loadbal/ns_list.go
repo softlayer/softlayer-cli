@@ -1,9 +1,9 @@
 package loadbal
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -11,29 +11,37 @@ import (
 )
 
 type NetscalerListCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
 }
 
-func NewNetscalerListCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *NetscalerListCommand) {
-	return &NetscalerListCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewNetscalerListCommand(sl *metadata.SoftlayerCommand) *NetscalerListCommand {
+	thisCmd := &NetscalerListCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "ns-list",
+		Short: T("List netscalers."),
+		Long:  T("${COMMAND_NAME} sl loadbal netscalers"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *NetscalerListCommand) Run(c *cli.Context) error {
+func (cmd *NetscalerListCommand) Run(args []string) error {
 	netscalers, err := cmd.LoadBalancerManager.GetADCs()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get netscalers on your account.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get netscalers on your account."), err.Error(), 2)
 	}
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, netscalers)
-	}
+
+	outputFormat := cmd.GetOutputFlag()
+
 	if len(netscalers) == 0 {
 		cmd.UI.Say(T("No netscalers was found."))
 	} else {
@@ -54,19 +62,7 @@ func (cmd *NetscalerListCommand) Run(c *cli.Context) error {
 				utils.FormatSLTimePointer(ns.CreateDate),
 			)
 		}
-		table.Print()
+		utils.PrintTable(cmd.UI, table, outputFormat)
 	}
 	return nil
-}
-
-func LoadbalNsListMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "ns-list",
-		Description: T("List netscalers"),
-		Usage:       "${COMMAND_NAME} sl loadbal netscalers",
-		Flags:       []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

@@ -6,47 +6,46 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 )
 
 var _ = Describe("LoadBal_protocol-add_Test", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.ProtocolAddCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.ProtocolAddCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewProtocolAddCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewProtocolAddCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalProtocolAddMetadata().Name,
-			Description: loadbal.LoadbalProtocolAddMetadata().Description,
-			Usage:       loadbal.LoadbalProtocolAddMetadata().Usage,
-			Flags:       loadbal.LoadbalProtocolAddMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
 	})
 
 	Context("CLI Usage Errors", func() {
 		It("Error No Id", func() {
-			err := testhelpers.RunCommand(cliCommand)
+			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--id' is required"))
 		})
 		It("Error unable to find Id", func() {
 			fakeLBManager.GetLoadBalancerUUIDReturns("-", errors.New("SoftLayer_Exception_ApiError"))
-			err := testhelpers.RunCommand(cliCommand, "--id", "12345")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Failed to get load balancer: SoftLayer_Exception_ApiError"))
 		})
 		It("Error bad stick option", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--sticky", "bad_option")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--sticky", "bad_option")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Value of option '--sticky' should be cookie or source-ip"))
 		})
@@ -56,7 +55,7 @@ var _ = Describe("LoadBal_protocol-add_Test", func() {
 			fakeLBManager.GetLoadBalancerUUIDReturns("aaa-bbb-111", nil)
 		})
 		It("All Options", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--front-protocol", "HTTP",
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--front-protocol", "HTTP",
 				"--back-protocol", "HTTPS", "--front-port", "99", "--back-port", "81", "-m", "TEST", "--sticky", "source-ip",
 				"-c", "500", "--client-timeout", "100", "--server-timeout", "200",
 			)
@@ -76,7 +75,7 @@ var _ = Describe("LoadBal_protocol-add_Test", func() {
 			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 		})
 		It("No Options", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "12345")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345")
 			Expect(err).NotTo(HaveOccurred())
 			lbUUID, argsForCall := fakeLBManager.AddLoadBalancerListenerArgsForCall(0)
 			Expect(*lbUUID).To(Equal("aaa-bbb-111"))
@@ -89,7 +88,7 @@ var _ = Describe("LoadBal_protocol-add_Test", func() {
 			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 		})
 		It("with sticky as cookie", func() {
-			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--sticky", "cookie")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--sticky", "cookie")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Protocol added"))
@@ -98,7 +97,7 @@ var _ = Describe("LoadBal_protocol-add_Test", func() {
 	Context("API Error", func() {
 		It("Handles API Error", func() {
 			fakeLBManager.AddLoadBalancerListenerReturns(datatypes.Network_LBaaS_LoadBalancer{}, errors.New("SL_API_ERROR"))
-			err := testhelpers.RunCommand(cliCommand, "--id", "12345", "--server-timeout", "100")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--server-timeout", "100")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("SL_API_ERROR"))
 		})
