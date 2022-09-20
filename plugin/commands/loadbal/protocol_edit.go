@@ -3,31 +3,66 @@ package loadbal
 import (
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type ProtocolEditCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	Id                  int
+	ProtocolUuid        string
+	FrontProtocol       string
+	BackProtocol        string
+	FrontPort           int
+	BackPort            int
+	Method              string
+	Connections         int
+	Sticky              string
+	ClientTimeout       int
+	ServerTimeout       int
 }
 
-func NewProtocolEditCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *ProtocolEditCommand) {
-	return &ProtocolEditCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewProtocolEditCommand(sl *metadata.SoftlayerCommand) *ProtocolEditCommand {
+	thisCmd := &ProtocolEditCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "protocol-edit",
+		Short: T("Edit load balancer protocol."),
+		Long:  T("${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().IntVar(&thisCmd.Id, "id", 0, T("ID for the load balancer [required]"))
+	cobraCmd.Flags().StringVar(&thisCmd.ProtocolUuid, "protocol-uuid", "", T("UUID of the protocol you want to edit"))
+	cobraCmd.Flags().StringVar(&thisCmd.FrontProtocol, "front-protocol", "HTTP", T("Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]"))
+	cobraCmd.Flags().StringVar(&thisCmd.BackProtocol, "back-protocol", "", T("Protocol type to use when connecting to backend servers: [HTTP|HTTPS|TCP]. Defaults to whatever --front-protocol is"))
+	cobraCmd.Flags().IntVar(&thisCmd.FrontPort, "front-port", 80, T("Internet side port"))
+	cobraCmd.Flags().IntVar(&thisCmd.BackPort, "back-port", 80, T("Private side port"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Method, "method", "m", "ROUNDROBIN", T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Connections, "connections", "c", 0, T("Maximum number of connections to allow"))
+	cobraCmd.Flags().StringVar(&thisCmd.Sticky, "sticky", "", T("Use 'cookie' or 'source-ip' to stick"))
+	cobraCmd.Flags().IntVar(&thisCmd.ClientTimeout, "client-timeout", 0, T("Client side timeout setting, in seconds"))
+	cobraCmd.Flags().IntVar(&thisCmd.ServerTimeout, "server-timeout", 0, T("Server side timeout setting, in seconds"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ProtocolEditCommand) Run(c *cli.Context) error {
+func (cmd *ProtocolEditCommand) Run(args []string) error {
 	protocolConfiguration := datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration{}
 
-	loadbalID := c.Int("id")
+	loadbalID := cmd.Id
 	if loadbalID == 0 {
 		return errors.NewMissingInputError("--id")
 	}
@@ -37,60 +72,60 @@ func (cmd *ProtocolEditCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}), 2)
 	}
 
-	protoUUID := c.String("protocol-uuid")
+	protoUUID := cmd.ProtocolUuid
 	if protoUUID == "" {
 		return errors.NewMissingInputError("--protocol-uuid")
 	}
 	protocolConfiguration.ListenerUuid = &protoUUID
 
-	if c.IsSet("front-protocol") {
-		frontProtocol := c.String("front-protocol")
+	if cmd.FrontProtocol != "" {
+		frontProtocol := cmd.FrontProtocol
 		protocolConfiguration.FrontendProtocol = &frontProtocol
 	}
 
-	if c.IsSet("back-protocol") {
-		backProtocol := c.String("back-protocol")
+	if cmd.BackProtocol != "" {
+		backProtocol := cmd.BackProtocol
 		protocolConfiguration.BackendProtocol = &backProtocol
 	}
 
-	if c.IsSet("front-port") {
-		frontPort := c.Int("front-port")
+	if cmd.FrontPort != 0 {
+		frontPort := cmd.FrontPort
 		protocolConfiguration.FrontendPort = &frontPort
 	}
 
-	if c.IsSet("back-port") {
-		backPort := c.Int("back-port")
+	if cmd.BackPort != 0 {
+		backPort := cmd.BackPort
 		protocolConfiguration.BackendPort = &backPort
 	}
 
-	if c.IsSet("m") {
-		method := c.String("m")
+	if cmd.Method != "" {
+		method := cmd.Method
 		protocolConfiguration.LoadBalancingMethod = &method
 	}
 
-	if c.IsSet("client-timeout") {
-		cTimeout := c.Int("client-timeout")
+	if cmd.ClientTimeout != 0 {
+		cTimeout := cmd.ClientTimeout
 		protocolConfiguration.ClientTimeout = &cTimeout
 	}
 
-	if c.IsSet("server-timeout") {
-		sTimeout := c.Int("server-timeout")
+	if cmd.ServerTimeout != 0 {
+		sTimeout := cmd.ServerTimeout
 		protocolConfiguration.ServerTimeout = &sTimeout
 	}
 
 	var sessionType string
-	if strings.ToLower(c.String("sticky")) == "cookie" {
+	if strings.ToLower(cmd.Sticky) == "cookie" {
 		sessionType = "HTTP_COOKIE"
 		protocolConfiguration.SessionType = &sessionType
-	} else if strings.ToLower(c.String("sticky")) == "source-ip" {
+	} else if strings.ToLower(cmd.Sticky) == "source-ip" {
 		sessionType = "SOURCE_IP"
 		protocolConfiguration.SessionType = &sessionType
-	} else if c.String("sticky") != "" {
+	} else if cmd.Sticky != "" {
 		return errors.NewInvalidUsageError(T("Value of option '--sticky' should be cookie or source-ip"))
 	}
 
-	if c.IsSet("c") {
-		connections := c.Int("c")
+	if cmd.Connections != 0 {
+		connections := cmd.Connections
 		protocolConfiguration.MaxConn = &connections
 	}
 
@@ -102,59 +137,4 @@ func (cmd *ProtocolEditCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Say(T("Protocol edited"))
 	return nil
-}
-
-func LoadbalProtocolEditMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "protocol-edit",
-		Description: T("Edit load balancer protocol"),
-		Usage:       "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "id",
-				Usage: T("ID for the load balancer [required]"),
-			},
-			cli.StringFlag{
-				Name:  "protocol-uuid",
-				Usage: T("UUID of the protocol you want to edit."),
-			},
-			cli.StringFlag{
-				Name:  "front-protocol",
-				Usage: T("Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP"),
-			},
-			cli.StringFlag{
-				Name:  "back-protocol",
-				Usage: T("Protocol type to use when connecting to backend servers: [HTTP|HTTPS|TCP]. Defaults to whatever --front-protocol is"),
-			},
-			cli.IntFlag{
-				Name:  "front-port",
-				Usage: T("Internet side port. Default: 80"),
-			},
-			cli.IntFlag{
-				Name:  "back-port",
-				Usage: T("Private side port. Default: 80"),
-			},
-			cli.StringFlag{
-				Name:  "m, method",
-				Usage: T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Default: ROUNDROBIN"),
-			},
-			cli.IntFlag{
-				Name:  "c, connections",
-				Usage: T("Maximum number of connections to allow"),
-			},
-			cli.StringFlag{
-				Name:  "sticky",
-				Usage: T("Use 'cookie' or 'source-ip' to stick"),
-			},
-			cli.IntFlag{
-				Name:  "client-timeout",
-				Usage: T("Client side timeout setting, in seconds"),
-			},
-			cli.IntFlag{
-				Name:  "server-timeout",
-				Usage: T("Server side timeout setting, in seconds"),
-			},
-		},
-	}
 }
