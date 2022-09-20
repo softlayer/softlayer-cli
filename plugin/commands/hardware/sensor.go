@@ -3,8 +3,7 @@ package hardware
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -14,43 +13,50 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-const discreteOption = "discrete"
-
 type SensorCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
+	Discrete        bool
 }
 
-func NewSensorCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *SensorCommand) {
-	return &SensorCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewSensorCommand(sl *metadata.SoftlayerCommand) (cmd *SensorCommand) {
+	thisCmd := &SensorCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "sensor " + T("IDENTIFIER"),
+		Short: T("Retrieve a server’s hardware state via its internal sensors."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().BoolVar(&thisCmd.Discrete, "discrete", false, T("Show discrete units associated hardware sensor"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SensorCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument"))
-	}
+func (cmd *SensorCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	hardwareId, err := strconv.Atoi(c.Args()[0])
+	hardwareId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Hardware ID")
 	}
 
 	displayDiscrateTable := false
-	if c.IsSet(discreteOption) && c.Bool(discreteOption) {
+	if cmd.Discrete {
 		displayDiscrateTable = true
 	}
 
 	sensorsData, err := cmd.HardwareManager.GetSensorData(hardwareId, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get hardware sensor data.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get hardware sensor data.\n"), err.Error(), 2)
 	}
 
 	temperatureTable := cmd.UI.Table([]string{T("Temperature (°C) Sensor"), T("Status"), T("Reading"), T("Critical Min"), T("Min"), T("Max"), T("Critical Max")})
@@ -131,23 +137,4 @@ func (cmd *SensorCommand) Run(c *cli.Context) error {
 		utils.PrintTable(cmd.UI, discreteTable, outputFormat)
 	}
 	return nil
-}
-
-func HardwareSensorMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "sensor",
-		Description: T("Retrieve a server’s hardware state via its internal sensors."),
-		Usage: T(`${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]
-
-EXAMPLE: 
-   ${COMMAND_NAME} sl hardware sensor 123456`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "discrete",
-				Usage: T("Show discrete units associated hardware sensor"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

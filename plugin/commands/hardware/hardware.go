@@ -31,15 +31,14 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewRebootCommand(sl).Command)
 	cobraCmd.AddCommand(NewReloadCommand(sl).Command)
 	cobraCmd.AddCommand(NewRescueCommand(sl).Command)
-	//These will be resolved in part 3
-	//cobraCmd.AddCommand(NewUpdateFirmwareCommand(sl).Command)
-	//cobraCmd.AddCommand(NewToggleIPMICommand(sl).Command)
-	//cobraCmd.AddCommand(NewBandwidthCommand(sl).Command)
-	//cobraCmd.AddCommand(NewStorageCommand(sl).Command)
-	//cobraCmd.AddCommand(NewGuestsCommand(sl).Command)
-	//cobraCmd.AddCommand(NewMonitoringListCommand(sl).Command)
-	//cobraCmd.AddCommand(NewSensorCommand(sl).Command)
-	//cobraCmd.AddCommand(NewReflashFirmwareCommand(sl).Command)
+	cobraCmd.AddCommand(NewUpdateFirmwareCommand(sl).Command)
+	cobraCmd.AddCommand(NewToggleIPMICommand(sl).Command)
+	cobraCmd.AddCommand(NewBandwidthCommand(sl).Command)
+	cobraCmd.AddCommand(NewStorageCommand(sl).Command)
+	cobraCmd.AddCommand(NewGuestsCommand(sl).Command)
+	cobraCmd.AddCommand(NewMonitoringListCommand(sl).Command)
+	cobraCmd.AddCommand(NewSensorCommand(sl).Command)
+	cobraCmd.AddCommand(NewReflashFirmwareCommand(sl).Command)
 	return cobraCmd
 }
 
