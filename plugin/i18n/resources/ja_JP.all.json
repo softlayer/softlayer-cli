@@ -509,7 +509,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n 例: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n例: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -845,7 +845,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n 例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウント・フィルターのすべての VLAN を dal09 に等しいデータ・センターでリストし、それらを vlan 番号でソートします。\n \n注: フィールド Pod では、(*) を追加し間もなく閉じることが示されている場合、"
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウントのすべての VLAN を dal09 に等しいデータ・センターでフィルタリングしてリストし、それらを VLAN 番号でソートします。\n \n注: フィールド Pod で (*) が追加されている場合は、間もなくクローズされることを示しています。"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -1605,7 +1605,7 @@
   },
   {
     "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
-    "translation": "帯域幅、ヒット、比率は、数日前の履歴にカウントされます。 89 が最大値です。"
+    "translation": "帯域幅、ヒット数、比率が、数日前の履歴でカウントされます。 89 が最大値です。"
   },
   {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
@@ -1701,7 +1701,7 @@
   },
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
-    "translation": "キャッシュ・キーの最適化。 選択できる有効なオプションは、「include-all」、「ignore-all」、「include-specified」、「ignore-specified」です。 「include-specified」または「ignore-specified」を選択した場合は、オプション cache-description に追加してください。"
+    "translation": "キャッシュ・キーの最適化。 選択できる有効なオプションは、「include-all」、「ignore-all」、「include-specified」、「ignore-specified」です。 「include-specified」または「ignore-specified」を選択する場合は、オプション cache-description に追加してください。"
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -6473,7 +6473,7 @@
   },
   {
     "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
-    "translation": "「一般的な Web 配信」、「ラージ・ファイルの最適化」、「ビデオ・オンデマンド最適化」のための最適化。これには特別な構成があるため、動的コンテンツの高速化オプションは追加されません。"
+    "translation": "「一般的な Web 配信」、「ラージ・ファイルの最適化」、「ビデオ・オンデマンドの最適化」のための最適化。これには特別な構成があるため、動的コンテンツの高速化オプションは追加されません。"
   },
   {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",

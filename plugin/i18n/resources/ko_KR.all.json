@@ -509,7 +509,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -845,7 +845,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   이 명령은 dal09와 동일한 데이터 센터로 필터링하여 현재 계정의 모든 VLAN을 나열하고 VLAN 번호별로 이를 정렬합니다.\n \n참고: 팟(Pod) 필드에 (*)를 추가하는 경우 곧 닫힘을 나타냅니다."
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   이 명령은 dal09와 동일한 데이터 센터로 필터링하여 현재 계정의 모든 VLAN을 나열하고 VLAN 번호별로 이를 정렬합니다.\n \n참고: 팟(Pod) 필드에 (*)를 추가하는 경우 곧 닫힘을 나타냅니다."
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
