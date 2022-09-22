@@ -40,7 +40,7 @@ var _ = Describe("hardware notifications", func() {
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
-		Context("hardware detail with wrong hardware ID", func() {
+		Context("hardware notifications with wrong hardware ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
@@ -59,7 +59,7 @@ var _ = Describe("hardware notifications", func() {
 			})
 		})
 
-		Context("VS detail with correct VS ID ", func() {
+		Context("hardware notifications with correct hardware ID ", func() {
 			BeforeEach(func() {
 				fakerUserCustomerNotifications := []datatypes.User_Customer_Notification_Hardware{
 					datatypes.User_Customer_Notification_Hardware{
