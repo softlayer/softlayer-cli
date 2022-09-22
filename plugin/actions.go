@@ -9,7 +9,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -24,12 +23,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 	//ibmcloud sl object-storage
 	objectstorageCommands := objectstorage.GetCommandActionBindings(context, ui, session)
 	for name, action := range objectstorageCommands {
-		CommandActionBindings[name] = action
-	}
-
-	//ibmcloud sl cdn
-	cdnCommands := cdn.GetCommandActionBindings(context, ui, session)
-	for name, action := range cdnCommands {
 		CommandActionBindings[name] = action
 	}
 
