@@ -3,7 +3,6 @@ package i18n
 import (
 	"path/filepath"
 	"strings"
-	"fmt"
 
 	"github.com/Xuanwo/go-locale"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
