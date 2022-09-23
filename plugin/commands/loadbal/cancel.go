@@ -25,7 +25,7 @@ func NewCancelCommand(sl *metadata.SoftlayerCommand) *CancelCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "cancel " + T("IDENTIFIER"),
-		Short: T("Cancel an existing load balancer."),
+		Short: T("Cancel an existing load balancer"),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

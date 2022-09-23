@@ -38,7 +38,7 @@ EXAMPLE:
 		},
 	}
 	thisCmd.Command = cobraCmd
-	cobraCmd.Flags().IntVar(&thisCmd.Wait, "hard", 30, T("Wait until the virtual server is finished provisioning for up to X seconds before returning"))
+	cobraCmd.Flags().IntVar(&thisCmd.Wait, "wait", 30, T("Wait until the virtual server is finished provisioning for up to X seconds before returning"))
 	return thisCmd
 }
 

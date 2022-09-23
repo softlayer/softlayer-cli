@@ -26,7 +26,7 @@ func NewL7RuleDelCommand(sl *metadata.SoftlayerCommand) *L7RuleDelCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7rule-delete",
-		Short: T("Delete a L7 rule."),
+		Short: T("Delete a L7 rule"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

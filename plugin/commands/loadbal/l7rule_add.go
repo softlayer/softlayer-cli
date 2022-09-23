@@ -33,7 +33,7 @@ func NewL7RuleAddCommand(sl *metadata.SoftlayerCommand) *L7RuleAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7rule-add",
-		Short: T("Add a new L7 rule."),
+		Short: T("Add a new L7 rule"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -27,7 +27,7 @@ func NewPlacementGroupCreateCommand(sl *metadata.SoftlayerCommand) (cmd *Placeme
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "placementgroup-create",
-		Short: T("Authorize File, Block and Portable Storage to a Virtual Server"),
+		Short: T("Create a placement group"),
 		Long: T(`${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]
 EXAMPLE:
 ${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 

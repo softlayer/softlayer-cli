@@ -23,7 +23,7 @@ func NewNetscalerListCommand(sl *metadata.SoftlayerCommand) *NetscalerListComman
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "ns-list",
-		Short: T("List netscalers."),
+		Short: T("List netscalers"),
 		Long:  T("${COMMAND_NAME} sl loadbal netscalers"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

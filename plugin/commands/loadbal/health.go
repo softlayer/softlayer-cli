@@ -33,7 +33,7 @@ func NewHealthChecksCommand(sl *metadata.SoftlayerCommand) *HealthChecksCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "health-edit " + T("IDENTIFIER"),
-		Short: T("Edit load balancer health check."),
+		Short: T("Edit load balancer health check"),
 		Long:  T("${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

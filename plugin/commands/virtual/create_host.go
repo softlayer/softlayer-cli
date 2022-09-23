@@ -43,7 +43,7 @@ func NewCreateHostCommand(sl *metadata.SoftlayerCommand) (cmd *CreateHostCommand
 	cobraCmd.Flags().StringVarP(&thisCmd.Domain, "domain", "D", "", T("Domain portion of the FQDN [required]"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Host portion of the FQDN [required]"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Billing, "billing", "b", "hourly", T("Billing rate. Default is: hourly. Options are: hourly, monthly"))
-	cobraCmd.Flags().IntVarP(&thisCmd.VlanPrivate, "vlan-private", "v", 0, T("The ID of the private VLAN on which you want the virtual server placed"))
+	cobraCmd.Flags().IntVarP(&thisCmd.VlanPrivate, "vlan-private", "v", 0, T("The ID of the private VLAN on which you want the dedicated host placed. See: '${COMMAND_NAME} sl vlan list' for reference"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Size, "size", "s", "", T("Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
 

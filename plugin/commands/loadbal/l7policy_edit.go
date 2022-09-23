@@ -33,7 +33,7 @@ func NewL7PolicyEditCommand(sl *metadata.SoftlayerCommand) *L7PolicyEditCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7policy-edit",
-		Short: T("Edit a L7 policy."),
+		Short: T("Edit a L7 policy"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
