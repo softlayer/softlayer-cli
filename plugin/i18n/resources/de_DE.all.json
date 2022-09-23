@@ -481,11 +481,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
-    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONEN]\n\nBEISPIEL:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\nDieser Befehl ordnet eine IP-Adresse mit der ID 12345678 zu einem Zielgerät mit der IP-Adresse 9.111.123.456 zu."
+    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONEN]\n\nBEISPIEL:\n  ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\nDieser Befehl ordnet eine IP-Adresse mit der ID 12345678 zu einem Zielgerät mit der IP-Adresse 9.111.123.456 zu."
   },
   {
     "id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tDieser Befehl bricht die IP-Adresse mit der ID 12345678 ab."
+    "translation": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n    ${COMMAND_NAME} sl globalip cancel 12345678\nDieser Befehl bricht die IP-Adresse mit der ID 12345678 ab."
   },
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
@@ -509,7 +509,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware ID [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
   },
   {
     "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
@@ -845,7 +845,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONEN]\n \nBEISPIEL:\n ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n Dieser Befehl listet alle Vlans des aktuellen Kontos auf, filtert nach Rechenzentrum gleich dal09 und sortiert sie nach VLAN-Nummer.\n \nHinweis: Wenn \"add (*)\" im Feld \"Pod\" angegeben wurde, gibt dies an, dass"
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONEN]\n \nBEISPIEL:\n ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n Dieser Befehl listet alle Vlans des aktuellen Kontos auf, filtert nach Rechenzentrum gleich dal09 und sortiert sie nach VLAN-Nummer.\n \nHinweis: Wenn \"add (*)\" im Feld \"Pod\" angegeben wurde, gibt dies an, dass bald eine Schliessung ansteht"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -6473,7 +6473,7 @@
   },
   {
     "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
-    "translation": "Bei \"Optimieren für, \"Allgemeine Webbereitstellung\", \"Optimierung für große Dateien\", \"Optimierung für Video on demand\" wird die Option \"Beschleunigung dynamischer Inhalte\" nicht hinzugefügt, da diese eine spezielle Konfiguration hat."
+    "translation": "Bei \"Optimieren für\", \"Allgemeine Webbereitstellung\", \"Optimierung für große Dateien\", \"Optimierung für Video on demand\" wird die Option \"Beschleunigung dynamischer Inhalte\" nicht hinzugefügt, da diese eine spezielle Konfiguration hat."
   },
   {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",
