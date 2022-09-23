@@ -4,8 +4,9 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,50 +15,43 @@ import (
 )
 
 type CredentialLimitCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	ObjectStorageManager managers.ObjectStorageManager
+	Command              *cobra.Command
 }
 
-func NewCredentialLimitCommand(ui terminal.UI, objectStorageManager managers.ObjectStorageManager) (cmd *CredentialLimitCommand) {
-	return &CredentialLimitCommand{
-		UI:                   ui,
-		ObjectStorageManager: objectStorageManager,
+func NewCredentialLimitCommand(sl *metadata.SoftlayerCommand) *CredentialLimitCommand {
+	thisCmd := &CredentialLimitCommand{
+		SoftlayerCommand:     sl,
+		ObjectStorageManager: managers.NewObjectStorageManager(sl.Session),
 	}
-}
-
-func CredentialLimitMetaData() cli.Command {
-	return cli.Command{
-		Category:    "object-storage",
-		Name:        "credential-limit",
-		Description: T("Credential limits for this IBM Cloud Object Storage account."),
-		Usage: T(`${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "credential-limit",
+		Short: T("Credential limits for this IBM Cloud Object Storage account."),
+		Long: T(`${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]
 
 Examples:
 	${COMMAND_NAME} sl object-storage credential-limit 123456`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CredentialLimitCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument"))
-	}
-
-	storageID, err := strconv.Atoi(c.Args()[0])
+func (cmd *CredentialLimitCommand) Run(args []string) error {
+	storageID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Storage ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	credentialLimit, err := cmd.ObjectStorageManager.LimitCredential(storageID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get credential limit. ")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get credential limit. "), err.Error(), 2)
 	}
 	PrintCredentialLimit(credentialLimit, cmd.UI, outputFormat)
 	return nil
