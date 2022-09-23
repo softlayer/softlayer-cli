@@ -13,7 +13,6 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 		Short: T("Classic infrastructure Firewalls"),
 		RunE:  nil,
 	}
-	// cobraCmd.AddCommand(account.New<COMMAND>Command(ui, session))
 	cobraCmd.AddCommand(NewAddCommand(sl).Command)
 	cobraCmd.AddCommand(NewCancelCommand(sl).Command)
 	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
