@@ -91,10 +91,13 @@ var _ = Describe("I18NTests", func() {
 				It("LANGUAGE=" + envLang, func() {
 					os.Setenv("LANGUAGE", envLang)
 					translator := i18n.Init(coreConfig)
+					locale := i18n.DetectLocal()
+					Expect(locale).To(Equal(language))
 					Expect(translator("Recurring Price")).To(Equal(xlationMap[language]))
 				})
 			}
 		})
+
 		AfterEach(func() {
 			defer os.Setenv("LANGUAGE", oldLang)	
 		})

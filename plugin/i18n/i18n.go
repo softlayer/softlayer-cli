@@ -49,7 +49,7 @@ func Init(coreConfig core_config.Repository) goi18n.TranslateFunc {
 func initWithLocale(locale string) goi18n.TranslateFunc {
 	err := loadFromAsset(locale)
 	if err != nil {
-		panic(err)
+		locale = DEFAULT_LOCALE
 	}
 	return goi18n.MustTfunc(locale)
 }
@@ -65,14 +65,14 @@ func loadFromAsset(locale string) (err error) {
 	return
 }
 
-// Tries to determine the system locale
+// Tries to determine the system locale, when local isn't set, default to en_US
 func DetectLocal() string {
     tag, err := locale.Detect()
     if err != nil {
-        panic(err)
+        return DEFAULT_LOCALE
     }
     // tag is en-US, needs to be en_US
-    locale := strings.Replace(fmt.Sprintf("%v", tag), "-", "_", 1)
+    locale := strings.Replace(tag.String(), "-", "_", 1)
     return locale
 }
 
