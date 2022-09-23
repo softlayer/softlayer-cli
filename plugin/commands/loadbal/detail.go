@@ -28,7 +28,7 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "detail " + T("IDENTIFIER"),
-		Short: T("Get load balancer details."),
+		Short: T("Get load balancer details"),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

@@ -1,33 +1,52 @@
 package loadbal
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/spf13/cobra"
 	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type MembersDelCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	LbId                int
+	MemberUuid          string
+	Force               bool
 }
 
-func NewMembersDelCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *MembersDelCommand) {
-	return &MembersDelCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewMembersDelCommand(sl *metadata.SoftlayerCommand) *MembersDelCommand {
+	thisCmd := &MembersDelCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "member-delete",
+		Short: T("Remove a load balancer member"),
+		Long:  T("${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().IntVar(&thisCmd.LbId, "lb-id", 0, T("ID for the load balancer [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.MemberUuid, "member-uuid", "m", "", T("Member UUID [required]"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *MembersDelCommand) Run(c *cli.Context) error {
-	loadbalID := c.Int("lb-id")
+func (cmd *MembersDelCommand) Run(args []string) error {
+	loadbalID := cmd.LbId
 	if loadbalID == 0 {
 		return errors.NewMissingInputError("--lb-id")
 	}
 
-	memberUUID := c.String("m")
+	memberUUID := cmd.MemberUuid
 	if memberUUID == "" {
 		return errors.NewMissingInputError("-m, --member-uuid")
 	}
@@ -37,7 +56,7 @@ func (cmd *MembersDelCommand) Run(c *cli.Context) error {
 		return cli.NewExitError(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}), 2)
 	}
 
-	if !c.IsSet("f") {
+	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will delete the load balancer member: {{.MemberID}} and cannot be undone. Continue?", map[string]interface{}{"MemberID": memberUUID}))
 		if err != nil {
 			return cli.NewExitError(err.Error(), 1)
@@ -56,23 +75,4 @@ func (cmd *MembersDelCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Say(T("Member {{.MemberID}} removed", map[string]interface{}{"MemberID": memberUUID}))
 	return nil
-}
-
-func LoadbalMemberDelMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "member-delete",
-		Description: T("Remove a load balancer member"),
-		Usage:       "${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "lb-id",
-				Usage: T("ID for the load balancer [required]"),
-			},
-			cli.StringFlag{
-				Name:  "m,member-uuid",
-				Usage: T("Member UUID [required]"),
-			},
-		},
-	}
 }

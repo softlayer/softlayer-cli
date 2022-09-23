@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -16,39 +16,40 @@ import (
 )
 
 type NetscalerDetailCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
 }
 
-func NewNetscalerDetailCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *NetscalerDetailCommand) {
-	return &NetscalerDetailCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewNetscalerDetailCommand(sl *metadata.SoftlayerCommand) *NetscalerDetailCommand {
+	thisCmd := &NetscalerDetailCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "ns-detail " + T("IDENTIFIER"),
+		Short: T("Get Netscaler details."),
+		Long:  T("${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError("Netscaler ID is required.")
-	}
-
-	netscalerID, err := strconv.Atoi(c.Args()[0])
+func (cmd *NetscalerDetailCommand) Run(args []string) error {
+	netscalerID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return errors.NewInvalidUsageError(T("The netscaler ID has to be a positive integer."))
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	ns, err := cmd.LoadBalancerManager.GetADC(netscalerID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get netscaler {{.ID}} on your account.", map[string]interface{}{"ID": netscalerID})+err.Error(), 2)
-	}
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, ns)
+		return errors.NewAPIError(T("Failed to get netscaler {{.ID}} on your account.", map[string]interface{}{"ID": netscalerID}), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -97,18 +98,6 @@ func (cmd *NetscalerDetailCommand) Run(c *cli.Context) error {
 	tblVlan.Print()
 	table.Add("Vlans", bufVlan.String())
 
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func LoadbalNetscalerDetailMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "ns-detail",
-		Description: T("Get Netscaler details."),
-		Usage:       "${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER",
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

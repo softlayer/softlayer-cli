@@ -22,7 +22,7 @@ func NewObjectListCommand(sl *metadata.SoftlayerStorageCommand) (cmd *ObjectList
 		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "snapshot-create",
+		Use:   "object-list",
 		Short: T("List cloud block storage."),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

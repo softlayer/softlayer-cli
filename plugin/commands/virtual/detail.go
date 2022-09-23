@@ -248,14 +248,15 @@ func (cmd *DetailCommand) Run(args []string) error {
 		var sum datatypes.Float64
 		if virtualGuest.BillingItem != nil && virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount != nil {
 			sum = *virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
+			for _, item := range virtualGuest.BillingItem.Children {
+				if item.NextInvoiceTotalRecurringAmount != nil {
+					sum += *item.NextInvoiceTotalRecurringAmount
+				}
+			}
 		} else {
 			sum = 0.0
 		}
-		for _, item := range virtualGuest.BillingItem.Children {
-			if item.NextInvoiceTotalRecurringAmount != nil {
-				sum += *item.NextInvoiceTotalRecurringAmount
-			}
-		}
+
 		table.Add(T("price rate"), fmt.Sprintf("%.2f", sum))
 	}
 

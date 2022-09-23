@@ -25,7 +25,7 @@ func NewL7PolicyDeleteCommand(sl *metadata.SoftlayerCommand) *L7PolicyDeleteComm
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7policy-delete",
-		Short: T("Delete a L7 policy."),
+		Short: T("Delete a L7 policy"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7policy-delete (--policy-id POLICY_ID) [-f, --force]"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

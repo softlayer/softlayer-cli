@@ -25,7 +25,7 @@ func NewL7PoolDelCommand(sl *metadata.SoftlayerCommand) *L7PoolDelCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7pool-delete",
-		Short: T("Delete a L7 pool."),
+		Short: T("Delete a L7 pool"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

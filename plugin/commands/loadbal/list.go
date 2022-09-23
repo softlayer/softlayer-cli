@@ -25,7 +25,7 @@ func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "list",
-		Short: T("List active load balancers."),
+		Short: T("List active load balancers"),
 		Long:  T("${COMMAND_NAME} sl loadbal list"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

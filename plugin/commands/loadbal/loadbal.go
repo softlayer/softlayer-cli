@@ -34,14 +34,12 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewL7RuleListCommand(sl).Command)
 	cobraCmd.AddCommand(NewListCommand(sl).Command)
 	cobraCmd.AddCommand(NewMembersAddCommand(sl).Command)
-	// cobraCmd.AddCommand(NewMembersDelCommand(sl).Command)
-	// cobraCmd.AddCommand(NewMembersAddCommand(sl).Command)
-	// cobraCmd.AddCommand(NewMembersDelCommand(sl).Command)
-	// cobraCmd.AddCommand(NewProtocolAddCommand(sl).Command)
-	// cobraCmd.AddCommand(NewProtocolDeleteCommand(sl).Command)
-	// cobraCmd.AddCommand(NewProtocolEditCommand(sl).Command)
-	// cobraCmd.AddCommand(NewNetscalerDetailCommand(sl).Command)
-	// cobraCmd.AddCommand(NewNetscalerListCommand(sl).Command)
+	cobraCmd.AddCommand(NewMembersDelCommand(sl).Command)
+	cobraCmd.AddCommand(NewNetscalerDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewNetscalerListCommand(sl).Command)
+	cobraCmd.AddCommand(NewProtocolEditCommand(sl).Command)
+	cobraCmd.AddCommand(NewProtocolAddCommand(sl).Command)
+	cobraCmd.AddCommand(NewProtocolDeleteCommand(sl).Command)
 	return cobraCmd
 }
 

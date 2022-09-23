@@ -7,9 +7,10 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -17,26 +18,24 @@ var _ = Describe("hardware storage", func() {
 	var (
 		fakeUI              *terminal.FakeUI
 		fakeHardwareManager *testhelpers.FakeHardwareServerManager
-		cmd                 *hardware.StorageCommand
-		cliCommand          cli.Command
+		cliCommand          *hardware.StorageCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
-		cmd = hardware.NewStorageCommand(fakeUI, fakeHardwareManager)
-		cliCommand = cli.Command{
-			Name:        hardware.HardwareStorageMetaData().Name,
-			Description: hardware.HardwareStorageMetaData().Description,
-			Usage:       hardware.HardwareStorageMetaData().Usage,
-			Flags:       hardware.HardwareStorageMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = hardware.NewStorageCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.HardwareManager = fakeHardwareManager
 	})
 
 	Describe("hardware storage", func() {
 		Context("hardware storage without id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
@@ -44,7 +43,7 @@ var _ = Describe("hardware storage", func() {
 
 		Context("hardware storage with wrong id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcd")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcd")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Hardware server ID'. It must be a positive integer."))
 			})
@@ -55,7 +54,7 @@ var _ = Describe("hardware storage", func() {
 				fakeHardwareManager.GetStorageDetailsReturns([]datatypes.Network_Storage{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get iscsi storage detail for the hardware server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -67,7 +66,7 @@ var _ = Describe("hardware storage", func() {
 				fakeHardwareManager.GetStorageCredentialsReturns(datatypes.Network_Storage_Allowed_Host{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the storage credential detail for the hardware server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -79,7 +78,7 @@ var _ = Describe("hardware storage", func() {
 				fakeHardwareManager.GetHardDrivesReturns([]datatypes.Hardware_Component{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the hard drives detail for the hardware server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -106,7 +105,7 @@ var _ = Describe("hardware storage", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("SL02SEL1234567-20"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("16000"))
@@ -127,7 +126,7 @@ var _ = Describe("hardware storage", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("SL02SU1234567-H1"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("fMnY59hjkhkj"))
@@ -155,7 +154,7 @@ var _ = Describe("hardware storage", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Hard Drive"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("GB"))

@@ -33,8 +33,8 @@ func NewRebootCommand(sl *metadata.SoftlayerCommand) (cmd *RebootCommand) {
 		},
 	}
 	thisCmd.Command = cobraCmd
-	cobraCmd.Flags().BoolVar(&thisCmd.Hard, "hard", false, T("Perform a hard shutdown"))
-	cobraCmd.Flags().BoolVar(&thisCmd.Soft, "soft", false, T("Perform a soft shutdown"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Hard, "hard", false, T("Perform a hard reboot"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Soft, "soft", false, T("Perform a soft reboot"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
 	return thisCmd
 }

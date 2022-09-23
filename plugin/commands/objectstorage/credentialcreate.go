@@ -4,10 +4,11 @@ import (
 	"strconv"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -16,51 +17,45 @@ import (
 )
 
 type CredentialCreateCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	ObjectStorageManager managers.ObjectStorageManager
+	Command              *cobra.Command
 }
 
-func NewCredentialCreateCommand(ui terminal.UI, objectStorageManager managers.ObjectStorageManager) (cmd *CredentialCreateCommand) {
-	return &CredentialCreateCommand{
-		UI:                   ui,
-		ObjectStorageManager: objectStorageManager,
+func NewCredentialCreateCommand(sl *metadata.SoftlayerCommand) *CredentialCreateCommand {
+	thisCmd := &CredentialCreateCommand{
+		SoftlayerCommand:     sl,
+		ObjectStorageManager: managers.NewObjectStorageManager(sl.Session),
 	}
-}
-
-func CredentialCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "object-storage",
-		Name:        "credential-create",
-		Description: T("Create credentials for an IBM Cloud Object Storage Account."),
-		Usage: T(`${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "credential-create",
+		Short: T("Create credentials for an IBM Cloud Object Storage Account."),
+		Long: T(`${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]
 
 Examples:
 	${COMMAND_NAME} sl object-storage credential-create 123456`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CredentialCreateCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument"))
-	}
+func (cmd *CredentialCreateCommand) Run(args []string) error {
 
-	StorageID, err := strconv.Atoi(c.Args()[0])
+	StorageID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Storage ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := ""
 	credentialCreate, err := cmd.ObjectStorageManager.CreateCredential(StorageID, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to create credential. ")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to create credential. "), err.Error(), 2)
 	}
 	PrintCredentialCreated(credentialCreate, cmd.UI, outputFormat)
 	return nil

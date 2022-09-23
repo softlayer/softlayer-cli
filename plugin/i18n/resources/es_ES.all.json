@@ -92,10 +92,6 @@
     "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEJEMPLO: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
   {
-    "id": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl file replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nSi un volumen (con réplica) deja de estar accesible debido a un suceso de desastre, se puede utilizar este método para realizar inmediatamente\nla migración tras error a una réplica disponible en otra ubicación. Este método no permite el restablecimiento mediante la API.\nPara restablecer al volumen original después de utilizar este método, abra una incidencia de soporte.\nPara probar la migración tras error, utilice en su lugar '${COMMAND_NAME} sl file replica-failover'.\n\nEJEMPLO:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tEste manato realiza una operación de migración tras error para el volumen con el ID 12345678 al volumen de réplica con el ID 87654321."
-  },
-  {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
     "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEJEMPLO: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
@@ -106,26 +102,6 @@
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEJEMPLO:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tEste mandato crea una dirección IPv6."
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
-    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\nEJEMPLO:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Autorizar almacenamiento de archivos y en bloque en un Servidor de hardware."
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\nEJEMPLO:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lista los Invitados virtuales que se ejecutan en este servidor."
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEJEMPLO: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFICADOR [OPCIONES]\n\nEJEMPLO: \n   ${COMMAND_NAME} sl hardware sensor 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\nEJEMPLO:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Obtener los detalles de almacenamiento de un servidor de hardware."
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
@@ -346,6 +322,10 @@
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS] \n \nEJEMPLO:\n ${COMMAND_NAME} sl vlan list -d dal09 -- sortby number \n Este mandato lista todos los vlans en la cuenta actual filtrados por centro de datos iguales a dal09 y los ordena por número de vlan. \n \nNota: en el campo Pod, si se añade (*) se indica que se cerró pronto"
+  },
+  {
+    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
+    "translation": "${COMMAND_NAME} sl vlan options\n\t\nEJEMPLO:\n   ${COMMAND_NAME} sl vlan options\n   Este mandato lista todas las opciones para crear una vlan, por ejemplo, tipo de vlan, centros de datos, tamaño de subred, direccionadores, etc."
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
@@ -1056,20 +1036,8 @@
     "translation": "BackendRouterId, create-options tiene una lista de ID válidos a utilizar. [obligatorio]"
   },
   {
-    "id": "Balancing Method: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR, default: ROUNDROBIN",
-    "translation": "Método de equilibrio: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR, valor predeterminado: ROUNDROBIN"
-  },
-  {
     "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]",
     "translation": "Método de equilibrio: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Default: ROUNDROBIN",
-    "translation": "Método de equilibrio: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Valor predeterminado: ROUNDROBIN"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [default: ROUNDROBIN]",
-    "translation": "Método de equilibrio: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [valor predeterminado: ROUNDROBIN]"
   },
   {
     "id": "Bandwidth",
@@ -4188,12 +4156,12 @@
     "translation": "FriendlyName"
   },
   {
-    "id": "Frontend port [default: 80]",
-    "translation": "Puerto frontal [valor predeterminado: 80]"
+    "id": "Frontend ",
+    "translation": "Protocolo frontal"
   },
   {
-    "id": "Frontend protocol [default: HTTP]",
-    "translation": "Protocolo frontal [valor predeterminado: HTTP]"
+    "id": "Frontend port",
+    "translation": "Puerto frontal [valor predeterminado: 80]"
   },
   {
     "id": "Fully qualified name",
@@ -4408,32 +4376,16 @@
     "translation": "Intervalo de comprobación de estado entre comprobaciones"
   },
   {
-    "id": "Health check interval between checks. [default: 5]",
-    "translation": "Intervalo de comprobación de estado entre comprobaciones. [valor predeterminado: 5]"
-  },
-  {
     "id": "Health check number of times before marking as DOWN",
     "translation": "Número de veces de comprobación de estado antes de marcarla como DOWN"
-  },
-  {
-    "id": "Health check number of times before marking as DOWN. [default: 2]",
-    "translation": "Número de veces de comprobación de estado antes de marcarla como DOWN. [valor predeterminado: 2]"
   },
   {
     "id": "Health check path",
     "translation": "Vía de acceso de comprobación de estado"
   },
   {
-    "id": "Health check path.  [default: /]",
-    "translation": "Vía de acceso de comprobación de estado.  [valor predeterminado: /]"
-  },
-  {
     "id": "Health check timeout",
     "translation": "Tiempo de espera de comprobación de estado"
-  },
-  {
-    "id": "Health check timeout. [default: 2]",
-    "translation": "Tiempo de espera de comprobación de estado. [valor predeterminado: 2]"
   },
   {
     "id": "Hide IP address listing",
@@ -4746,10 +4698,6 @@
   {
     "id": "Internal peer IP address",
     "translation": "Dirección IP igual interna"
-  },
-  {
-    "id": "Internet side port. Default: 80",
-    "translation": "Puerto del lado de Internet. Valor predeterminado: 80"
   },
   {
     "id": "Invalid --sortBy option.",
@@ -6368,7 +6316,7 @@
     "translation": "Velocidad de puerto privado, las opciones son: 0,10,100,1000,10000"
   },
   {
-    "id": "Private side port. Default: 80",
+    "id": "Private side port",
     "translation": "Puerto del lado privado. Valor predeterminado: 80"
   },
   {
@@ -6394,10 +6342,6 @@
   {
     "id": "Protocol type to use for incoming connections",
     "translation": "Tipo de protocolo para utilizar para conexiones entrantes"
-  },
-  {
-    "id": "Protocol type to use for incoming connections. [default: HTTP]",
-    "translation": "Tipo de protocolo para utilizar para conexiones entrantes. [valor predeterminado: HTTP]"
   },
   {
     "id": "Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP",
@@ -7326,6 +7270,10 @@
   {
     "id": "Tags",
     "translation": "Etiquetas"
+  },
+  {
+    "id": "Tags all guests in an autoscale group.",
+    "translation": "Etiqueta todos los invitados de un grupo de escalado automático."
   },
   {
     "id": "Tags for the image",

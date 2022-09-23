@@ -10,7 +10,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -20,11 +19,6 @@ func GetCommandAcionBindings(context plugin.PluginContext, ui terminal.UI, sessi
 
 	CommandActionBindings := map[string]func(c *cli.Context) error{}
 
-	//ibmcloud sl object-storage
-	objectstorageCommands := objectstorage.GetCommandActionBindings(context, ui, session)
-	for name, action := range objectstorageCommands {
-		CommandActionBindings[name] = action
-	}
 
 	actionWithPreCheck := make(map[string]func(c *cli.Context) error)
 
