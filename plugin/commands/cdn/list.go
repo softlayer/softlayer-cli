@@ -2,10 +2,11 @@ package cdn
 
 import (
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -13,38 +14,35 @@ import (
 )
 
 type ListCommand struct {
-	UI         terminal.UI
+	*metadata.SoftlayerCommand
 	CdnManager managers.CdnManager
+	Command    *cobra.Command
 }
 
-func NewListCommand(ui terminal.UI, cdnManager managers.CdnManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:         ui,
-		CdnManager: cdnManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
+	thisCmd := &ListCommand{
+		SoftlayerCommand: sl,
+		CdnManager:       managers.NewCdnManager(sl.Session),
 	}
-}
-
-func ListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "cdn",
-		Name:        "list",
-		Description: T("List all CDN accounts."),
-		Usage:       T(`${COMMAND_NAME} sl cdn list`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List all CDN accounts."),
+		Long:  T("${COMMAND_NAME} sl cdn list"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *ListCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
 	cdnList, err := cmd.CdnManager.GetNetworkCdnMarketplaceConfigurationMapping()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get CDN List. ")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get CDN List. "), err.Error(), 2)
 	}
 
 	PrintNetworkCdnMarketplaceConfigurationMapping(cdnList, cmd.UI, outputFormat)
