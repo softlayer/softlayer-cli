@@ -39,14 +39,14 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().StringVar(&thisCmd.Hostname, "hostname", "", T("Host portion of the FQDN [required]"))
-	cobraCmd.Flags().StringVar(&thisCmd.Domain, "domain", "", T("Domain portion of the FQDN [required]"))
-	cobraCmd.Flags().StringVar(&thisCmd.Datacenter, "datacenter", "", T("Datacenter shortname [required]"))
-	cobraCmd.Flags().StringVar(&thisCmd.Size, "size", "", T("Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB"))
-	cobraCmd.Flags().StringVar(&thisCmd.Billing, "billing", "", T("Billing rate. Default is: hourly. Options are: hourly, monthly"))
-	cobraCmd.Flags().IntVar(&thisCmd.VlanPrivate, "vlan-private", 0, T("The ID of the private VLAN on which you want the dedicated host placed. See: '${COMMAND_NAME} sl vlan list' for reference"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Host portion of the FQDN [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Domain, "domain", "D", "", T("Domain portion of the FQDN [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Datacenter shortname [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Size, "size", "s", "", T("Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Billing, "billing", "b", "", T("Billing rate. Default is: hourly. Options are: hourly, monthly"))
+	cobraCmd.Flags().IntVarP(&thisCmd.VlanPrivate, "vlan-private", "v", 0, T("The ID of the private VLAN on which you want the dedicated host placed. See: '${COMMAND_NAME} sl vlan list' for reference"))
 	cobraCmd.Flags().BoolVar(&thisCmd.Test, "test", false, T("Do not actually create the dedicatedhost"))
-	cobraCmd.Flags().BoolVar(&thisCmd.Force, "force", false, T("Force operation without confirmation"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }

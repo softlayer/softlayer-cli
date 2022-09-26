@@ -26,7 +26,7 @@ func NewMembersAddCommand(sl *metadata.SoftlayerCommand) *MembersAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "member-add",
-		Short: T("Add a new load balancer member."),
+		Short: T("Add a new load balancer member"),
 		Long:  T("${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

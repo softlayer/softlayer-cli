@@ -31,7 +31,7 @@ func NewOptionsCommand(sl *metadata.SoftlayerCommand) *OptionsCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "order-options",
-		Short: T("List options for order a load balancer."),
+		Short: T("List options for order a load balancer"),
 		Long:  T("${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

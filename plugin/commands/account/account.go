@@ -11,11 +11,10 @@ import (
 
 func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd := &cobra.Command{
-		Use: "account",
+		Use:   "account",
 		Short: T("Classic infrastructure Account commands"),
-		RunE: nil,
+		RunE:  nil,
 	}
-	// cobraCmd.AddCommand(account.New<COMMAND>Command(ui, session))
 	cobraCmd.AddCommand(NewBandwidthPoolsCommand(sl).Command)
 	cobraCmd.AddCommand(NewBandwidthPoolsDetailCommand(sl).Command)
 	cobraCmd.AddCommand(NewBillingItemsCommand(sl).Command)
@@ -28,7 +27,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewLicensesCommand(sl).Command)
 	cobraCmd.AddCommand(NewOrdersCommand(sl).Command)
 	cobraCmd.AddCommand(NewSummaryCommand(sl).Command)
-	return cobraCmd	
+	return cobraCmd
 }
 
 func AccountNamespace() plugin.Namespace {

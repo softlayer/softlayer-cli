@@ -26,7 +26,7 @@ func NewL7MembersDelCommand(sl *metadata.SoftlayerCommand) *L7MembersDelCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7member-delete",
-		Short: T("Remove a load balancer member."),
+		Short: T("Remove a load balancer member"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -40,7 +40,7 @@ func NewL7PolicyAddCommand(sl *metadata.SoftlayerCommand) *L7PolicyAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7policy-add",
-		Short: T("Add a new L7 policy."),
+		Short: T("Add a new L7 policy"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
