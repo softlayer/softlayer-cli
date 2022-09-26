@@ -4,7 +4,6 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -47,7 +46,7 @@ func (cmd *NotificationsCommand) Run(args []string) error {
 
 	userCustomers, err := cmd.HardwareManager.GetUserCustomerNotificationsByHardwareId(hardwareId, "")
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get User Customer Notifications."), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get User Customer Notifications."), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Last Name"), T("First Name"), T("Email"), T("User ID")})
