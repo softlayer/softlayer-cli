@@ -25,6 +25,7 @@ var availableCommands = []string{
 	"access-revoke",
 	"disaster-recovery-failover",
 	"duplicate-convert-status",
+	"object-list",
 	"replica-failback",
 	"replica-failover",
 	"replica-locations",
