@@ -827,7 +827,8 @@ func (hw hardwareServerManager) GetUserCustomerNotificationsByHardwareId(id int,
 }
 
 //Create a user hardware notification entry
-//int id: The hardware server identifier.
+//int hardwareId: The hardware server identifier.
+//int userId: The user identifier.
 func (hw hardwareServerManager) CreateUserCustomerNotification(hardwareId int, userId int) (datatypes.User_Customer_Notification_Hardware, error) {
 	userCustomerNotificationTemplate := datatypes.User_Customer_Notification_Hardware{
 		HardwareId: sl.Int(hardwareId),
