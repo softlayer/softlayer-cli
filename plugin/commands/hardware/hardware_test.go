@@ -18,6 +18,7 @@ func TestManagers(t *testing.T) {
 }
 
 var availableCommands = []string{
+	"add-notification",
 	"authorize-storage",
 	"bandwidth",
 	"billing",
@@ -35,6 +36,7 @@ var availableCommands = []string{
 	"power-off",
 	"power-on",
 	"reboot",
+	"notifications",
 	"reflash-firmware",
 	"reload",
 	"rescue",
