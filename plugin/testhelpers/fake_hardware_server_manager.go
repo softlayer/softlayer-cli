@@ -51,6 +51,19 @@ type FakeHardwareServerManager struct {
 		result1 bool
 		result2 error
 	}
+	CreateUserCustomerNotificationStub        func(datatypes.User_Customer_Notification_Hardware) (datatypes.User_Customer_Notification_Hardware, error)
+	createUserCustomerNotificationMutex       sync.RWMutex
+	createUserCustomerNotificationArgsForCall []struct {
+		arg1 datatypes.User_Customer_Notification_Hardware
+	}
+	createUserCustomerNotificationReturns struct {
+		result1 datatypes.User_Customer_Notification_Hardware
+		result2 error
+	}
+	createUserCustomerNotificationReturnsOnCall map[int]struct {
+		result1 datatypes.User_Customer_Notification_Hardware
+		result2 error
+	}
 	EditStub        func(int, string, string, string, string, string, int, int) ([]bool, []string)
 	editMutex       sync.RWMutex
 	editArgsForCall []struct {
@@ -663,6 +676,70 @@ func (fake *FakeHardwareServerManager) CreateFirmwareReflashTransactionReturnsOn
 	}
 	fake.createFirmwareReflashTransactionReturnsOnCall[i] = struct {
 		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotification(arg1 datatypes.User_Customer_Notification_Hardware) (datatypes.User_Customer_Notification_Hardware, error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	ret, specificReturn := fake.createUserCustomerNotificationReturnsOnCall[len(fake.createUserCustomerNotificationArgsForCall)]
+	fake.createUserCustomerNotificationArgsForCall = append(fake.createUserCustomerNotificationArgsForCall, struct {
+		arg1 datatypes.User_Customer_Notification_Hardware
+	}{arg1})
+	stub := fake.CreateUserCustomerNotificationStub
+	fakeReturns := fake.createUserCustomerNotificationReturns
+	fake.recordInvocation("CreateUserCustomerNotification", []interface{}{arg1})
+	fake.createUserCustomerNotificationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationCallCount() int {
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
+	return len(fake.createUserCustomerNotificationArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationCalls(stub func(datatypes.User_Customer_Notification_Hardware) (datatypes.User_Customer_Notification_Hardware, error)) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = stub
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationArgsForCall(i int) datatypes.User_Customer_Notification_Hardware {
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
+	argsForCall := fake.createUserCustomerNotificationArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationReturns(result1 datatypes.User_Customer_Notification_Hardware, result2 error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = nil
+	fake.createUserCustomerNotificationReturns = struct {
+		result1 datatypes.User_Customer_Notification_Hardware
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationReturnsOnCall(i int, result1 datatypes.User_Customer_Notification_Hardware, result2 error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = nil
+	if fake.createUserCustomerNotificationReturnsOnCall == nil {
+		fake.createUserCustomerNotificationReturnsOnCall = make(map[int]struct {
+			result1 datatypes.User_Customer_Notification_Hardware
+			result2 error
+		})
+	}
+	fake.createUserCustomerNotificationReturnsOnCall[i] = struct {
+		result1 datatypes.User_Customer_Notification_Hardware
 		result2 error
 	}{result1, result2}
 }
@@ -2636,6 +2713,8 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.cancelHardwareMutex.RUnlock()
 	fake.createFirmwareReflashTransactionMutex.RLock()
 	defer fake.createFirmwareReflashTransactionMutex.RUnlock()
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
 	fake.editMutex.RLock()
 	defer fake.editMutex.RUnlock()
 	fake.generateCreateTemplateMutex.RLock()
