@@ -70,7 +70,7 @@ type HardwareServerManager interface {
 	GetSensorData(id int, mask string) ([]datatypes.Container_RemoteManagement_SensorReading, error)
 	CreateFirmwareReflashTransaction(id int) (bool, error)
 	GetUserCustomerNotificationsByHardwareId(id int, mask string) ([]datatypes.User_Customer_Notification_Hardware, error)
-	CreateUserCustomerNotification(userCustomerNotificationTemplate datatypes.User_Customer_Notification_Hardware) (datatypes.User_Customer_Notification_Hardware, error)
+	CreateUserCustomerNotification(hardwareId int, userId int) (datatypes.User_Customer_Notification_Hardware, error)
 }
 
 type hardwareServerManager struct {
@@ -828,8 +828,11 @@ func (hw hardwareServerManager) GetUserCustomerNotificationsByHardwareId(id int,
 
 //Create a user hardware notification entry
 //int id: The hardware server identifier.
-//string mask: Object mask.
-func (hw hardwareServerManager) CreateUserCustomerNotification(userCustomerNotificationTemplate datatypes.User_Customer_Notification_Hardware) (datatypes.User_Customer_Notification_Hardware, error) {
+func (hw hardwareServerManager) CreateUserCustomerNotification(hardwareId int, userId int) (datatypes.User_Customer_Notification_Hardware, error) {
+	userCustomerNotificationTemplate := datatypes.User_Customer_Notification_Hardware{
+		HardwareId: sl.Int(hardwareId),
+		UserId:     sl.Int(userId),
+	}
 	userCustomerNotificationHardwareService := services.GetUserCustomerNotificationHardwareService(hw.Session)
 	return userCustomerNotificationHardwareService.CreateObject(&userCustomerNotificationTemplate)
 }

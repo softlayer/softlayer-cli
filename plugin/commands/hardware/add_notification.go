@@ -3,8 +3,6 @@ package hardware
 import (
 	"strconv"
 
-	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -54,11 +52,8 @@ func (cmd *AddNotificationCommand) Run(args []string) error {
 
 	table := cmd.UI.Table([]string{T("Id"), T("Hostmane"), T("Username"), T("Email"), T("FirstName"), T("LastName")})
 	for _, userId := range userIds {
-		userCustomerNotificationTemplate := datatypes.User_Customer_Notification_Hardware{
-			HardwareId: sl.Int(hardwareId),
-			UserId:     sl.Int(userId),
-		}
-		UserCustomerNotification, err := cmd.HardwareManager.CreateUserCustomerNotification(userCustomerNotificationTemplate)
+
+		UserCustomerNotification, err := cmd.HardwareManager.CreateUserCustomerNotification(hardwareId, userId)
 		if err != nil {
 			userIdMap := map[string]interface{}{"userID": userId}
 			cmd.UI.Failed(T("Failed to create User Customer Notification with user ID: {{.userID}}."+"\n"+err.Error(), userIdMap))
