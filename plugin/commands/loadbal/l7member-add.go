@@ -27,7 +27,7 @@ func NewL7MembersAddCommand(sl *metadata.SoftlayerCommand) *L7MembersAddCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7member-add",
-		Short: T("Add a new L7 pool member."),
+		Short: T("Add a new L7 pool member"),
 		Long:  T("${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -92,10 +92,6 @@
     "translation": "${COMMAND_NAME} sl event-log get [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
   {
-    "id": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl file replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nWenn der Zugriff auf einen Datenträger (mit Replikation) aufgrund eines Ausfalls nicht mehr möglich ist, kann mithilfe dieser Methode ein sofortiger \nFailover auf einen verfügbaren Replikatdatenträger an einem anderen Standort durchgeführt werden. Diese Methode lässt keinen Failback über die API zu. \nFür einen Failback auf den ursprünglichen Datenträger nach der Verwendung dieser Methode öffnen Sie ein Support-Ticket. \nZum Testen des Failovers verwenden Sie stattdessen '${COMMAND_NAME} sl file replica-failover'. \n\nBEISPIEL:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tMit diesem Befehl wird eine Failover-Operation für den Datenträger mit der ID 12345678 auf den Replikatdatenträger mit der ID 87654321 durchgeführt."
-  },
-  {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
     "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONEN]\n\nBEISPIEL: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
@@ -106,26 +102,6 @@
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONEN]\n\nBEISPIEL:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tDieser Befehl erstellt eine IPv6-Adresse."
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
-    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONEN] IDENTIFIER\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n Autorisieren Sie die Datei und Block Storage für einen Hardware-Server."
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONEN] IDENTIFIER\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware guests 1234567\n Listet die auf diesem Server ausgeführten virtuellen Gastmaschinen auf."
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware ID [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONEN]\n\nBEISPIEL: \n   ${COMMAND_NAME} sl hardware sensor 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONEN] IDENTIFIER\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware storage 1234567\n Speicherdetails für einen Hardwareserver abrufen."
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
@@ -1060,20 +1036,8 @@
     "translation": "BackendRouterId, create-options hat eine Liste gültiger zu verwendender IDs. [erforderlich]"
   },
   {
-    "id": "Balancing Method: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR, default: ROUNDROBIN",
-    "translation": "Ausgleichsmethode: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR, Standardeinstellung: ROUNDROBIN"
-  },
-  {
     "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]",
     "translation": "Ausgleichsmethode: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Default: ROUNDROBIN",
-    "translation": "Ausgleichsmethode: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Standardeinstellung: ROUNDROBIN"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [default: ROUNDROBIN]",
-    "translation": "Ausgleichsmethode: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [Standardeinstellung: ROUNDROBIN]"
   },
   {
     "id": "Bandwidth",
@@ -2896,10 +2860,6 @@
     "translation": "Abrufen von Cloud Object Storages fehlgeschlagen. \n"
   },
   {
-    "id": "Failed to get Cloud Object Storages.\n",
-    "translation": "Abrufen von Cloud Object Storages fehlgeschlagen. \n"
-  },
-  {
     "id": "Failed to get Event Log types.\n",
     "translation": "Ereignisprotokolltypen konnten nicht abgerufen werden.\n"
   },
@@ -4196,12 +4156,12 @@
     "translation": "FriendlyName"
   },
   {
-    "id": "Frontend port [default: 80]",
+    "id": "Frontend port",
     "translation": "Front-End-Port [Standardeinstellung: 80]"
   },
   {
-    "id": "Frontend protocol [default: HTTP]",
-    "translation": "Front-End-Protokoll [Standardeinstellung: HTTP]"
+    "id": "Frontend protocol",
+    "translation": "Front-End-Protokoll"
   },
   {
     "id": "Fully qualified name",
@@ -4416,32 +4376,16 @@
     "translation": "Statusprüfungsintervall zwischen Prüfungsvorgängen"
   },
   {
-    "id": "Health check interval between checks. [default: 5]",
-    "translation": "Statusprüfungsintervall zwischen Prüfungsvorgängen. [Standardeinstellung: 5]"
-  },
-  {
     "id": "Health check number of times before marking as DOWN",
     "translation": "Anzahl der Statusprüfungsvorgänge vor der Kennzeichnung als INAKTIV"
-  },
-  {
-    "id": "Health check number of times before marking as DOWN. [default: 2]",
-    "translation": "Anzahl der Statusprüfungsvorgänge vor der Kennzeichnung als INAKTIV. [Standardeinstellung: 2]"
   },
   {
     "id": "Health check path",
     "translation": "Pfad für die Statusprüfung"
   },
   {
-    "id": "Health check path.  [default: /]",
-    "translation": "Pfad für die Statusprüfung.  [Standardeinstellung: /]"
-  },
-  {
     "id": "Health check timeout",
     "translation": "Zeitlimit für die Statusprüfung"
-  },
-  {
-    "id": "Health check timeout. [default: 2]",
-    "translation": "Zeitlimit für die Statusprüfung. [Standardeinstellung: 2]"
   },
   {
     "id": "Hide IP address listing",
@@ -4754,10 +4698,6 @@
   {
     "id": "Internal peer IP address",
     "translation": "Interne Peer-IP-Adresse"
-  },
-  {
-    "id": "Internet side port. Default: 80",
-    "translation": "Internetseitiger Port. Standardeinstellung: 80"
   },
   {
     "id": "Invalid --sortBy option.",
@@ -6376,7 +6316,7 @@
     "translation": "Übertragungsgeschwindigkeit des privaten Ports; Optionen: 0, 10, 100, 1000, 10000"
   },
   {
-    "id": "Private side port. Default: 80",
+    "id": "Private side port",
     "translation": "Privater Port: Standardeinstellung: 80"
   },
   {
@@ -6402,10 +6342,6 @@
   {
     "id": "Protocol type to use for incoming connections",
     "translation": "Für eingehende Verbindungen zu verwendender Protokolltyp"
-  },
-  {
-    "id": "Protocol type to use for incoming connections. [default: HTTP]",
-    "translation": "Für eingehende Verbindungen zu verwendender Protokolltyp. [Standardeinstellung: HTTP]"
   },
   {
     "id": "Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP",
@@ -6690,14 +6626,6 @@
   {
     "id": "Respect Headers",
     "translation": "Header beibehalten"
-  },
-  {
-    "id": "Respect headers. The value 1 is On and 0 is Off.",
-    "translation": "Header berücksichtigen. Der Wert \"1\" ist \"Ein\" und \"0\" ist \"Aus\"."
-  },
-  {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "Blockdatenträger mithilfe eines bestimmten Snapshots wiederherstellen"
   },
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
@@ -7278,10 +7206,6 @@
   {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "Teilnetz-ID {{.subnetID}} für zulässige Host-ID {{.accessID}} wurde erfolgreich entfernt"
-  },
-  {
-    "id": "Successfully device firmware reflashed",
-    "translation": "Für die Einheitenfirmware wurde erfolgreich ein erneutes Flash-Update durchgeführt."
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",

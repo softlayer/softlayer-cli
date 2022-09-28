@@ -92,10 +92,6 @@
     "translation": "${COMMAND_NAME} sl event-log get [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl event-log get \n ${COMMAND_NAME} sl event-log get -- limit 5 -- obj-id 123456 -- obj-event Create --metadata \n ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-031"
   },
   {
-    "id": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl file replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\n災害の発生によりボリューム (レプリケーションが有効になっている) にアクセスできなくなった場合は、この方法によって、別の場所にある使用可能なレプリカに即時に\nフェイルオーバーすることができます。この方法では、API によるフェイルバックは行えません。\nこの方法を使用してから元のボリュームにフェイルバックするには、サポート・チケットを開いてください。\nフェイルオーバーをテストするには、代わりに '${COMMAND_NAME} sl file replica-failover' を使用します。\n\n例:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tこのコマンドは、ID 87654321 のレプリカ・ボリュームへの ID 12345678 のボリュームのフェイルオーバー操作を実行します。"
-  },
-  {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
     "translation": "${COMMAND_NAME} sl ファイアウォールの詳細 IDENTIFIER [OPTIONS] \n \n 例: \n${COMMAND_NAME} sl ファイアウォールの詳細 vs:12345\n${COMMAND_NAME} sl ファイアウォールの詳細 server:234567\n${COMMAND_NAME} sl ファイアウォールの詳細 vlan:345678\n${COMMAND_NAME} sl ファイアウォールの詳細 multiVlan:456789"
   },
@@ -106,26 +102,6 @@
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n例:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tこのコマンドは、IPv6 アドレスを作成します。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
-    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware authorize-storage -- username-storage SL01SL30-37 1234567\n ファイルと Block Storage をハードウェア・サーバーに許可します。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware guests 1234567\n このサーバー上で稼働している仮想ゲストをリストします。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n 例: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\n例: \n   ${COMMAND_NAME} sl hardware sensor 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware storage 1234567\n ハードウェア・サーバーのストレージ詳細を取得します。"
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
@@ -346,13 +322,10 @@
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n 例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウント・フィルターのすべての VLAN を dal09 に等しいデータ・センターでリストし、それらを vlan 番号でソートします。\n \n注: フィールド Pod では、(*) を追加し間もなく閉じることが示されている場合、"
-
-
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
     "translation": "${COMMAND_NAME} sl vlan options\n\t\n例:\n   ${COMMAND_NAME} sl vlan options\n   このコマンドは、vlan の作成に関するすべてのオプション (例えば、vlan タイプ、データ・センター、サブネット・サイズ、ルーターなど) をリストします。"
-
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
@@ -403,13 +376,10 @@
     "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t注: クラシック・インフラストラクチャー・サービスは、アップグレード要求が行われると、インスタンスを自動的にリブートします。\n  \t インスタンスは、アップグレード・トランザクションが完了するまで停止されます。\n  \tただし、ネットワークにはリブートは不要です。\n\n例:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   このコマンドは、ID 12345678 の Virtual Server インスタンスをアップグレードし、CPU コアの数を 8 に、メモリーを 8192 M に、ネットワーク・ポート速度を 1000 Mbps に設定します。"
   },
   {
-
-
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
     "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n時間フォーマットは、'2006-01-02'、'2006-01-02T15:04'、'2006-01-02T15:04-07:00' のいずれかです。'\n\n丸めや日付合わせの詳細により、この結果は制御ポータルでの結果とは若干異なる可能性があります。\n帯域幅は GB 単位で表示され、タイムゾーンが指定されていない場合は GMT+0 とみなされます。\n\n例:\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
-
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
     "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS] \n 仮想サーバーの使用法情報。\n 例: \n ${COMMAND_NAME} sl {{.Command}} usage 1234 -- start 2006-01-02 -- end 2006-01-02 -- valid-data cpu0"
   },
@@ -1070,20 +1040,8 @@
     "translation": "BackendRouterId、create-options には、使用する有効な ID のリストがあります。 [必須]"
   },
   {
-    "id": "Balancing Method: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR, default: ROUNDROBIN",
-    "translation": "バランシング方式: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR、デフォルト: ROUNDROBIN"
-  },
-  {
     "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]",
     "translation": "バランシング方式: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Default: ROUNDROBIN",
-    "translation": "バランシング方式: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]。 デフォルト: ROUNDROBIN"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [default: ROUNDROBIN]",
-    "translation": "バランシング方式: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]。 [デフォルト: ROUNDROBIN]"
   },
   {
     "id": "Bandwidth",
@@ -2900,13 +2858,6 @@
   {
     "id": "Failed to get CDN Metrics. ",
     "translation": "CDN メトリックの取得に失敗しました。 "
-
-
-  },
-  {
-    "id": "Failed to get Cloud Object Storages.\n",
-    "translation": "Cloud Object Storage の取得に失敗しました。\n"
-
   },
   {
     "id": "Failed to get Cloud Object Storages.\n",
@@ -4209,12 +4160,12 @@
     "translation": "FriendlyName"
   },
   {
-    "id": "Frontend port [default: 80]",
+    "id": "Frontend port",
     "translation": "フロントエンド・ポート [デフォルト: 80]"
   },
   {
-    "id": "Frontend protocol [default: HTTP]",
-    "translation": "フロントエンド・プロトコル [デフォルト: HTTP]"
+    "id": "Frontend protocol",
+    "translation": "フロントエンド・プロトコル"
   },
   {
     "id": "Fully qualified name",
@@ -4429,32 +4380,16 @@
     "translation": "チェック間のヘルス・チェック間隔"
   },
   {
-    "id": "Health check interval between checks. [default: 5]",
-    "translation": "チェック間のヘルス・チェック間隔。 [デフォルト: 5]"
-  },
-  {
     "id": "Health check number of times before marking as DOWN",
     "translation": "DOWN としてマークする前のヘルス・チェックの回数"
-  },
-  {
-    "id": "Health check number of times before marking as DOWN. [default: 2]",
-    "translation": "DOWN としてマークする前のヘルス・チェックの回数。 [デフォルト: 2]"
   },
   {
     "id": "Health check path",
     "translation": "ヘルス・チェック・パス"
   },
   {
-    "id": "Health check path.  [default: /]",
-    "translation": "ヘルス・チェック・パス。  [デフォルト: /]"
-  },
-  {
     "id": "Health check timeout",
     "translation": "ヘルス・チェック・タイムアウト"
-  },
-  {
-    "id": "Health check timeout. [default: 2]",
-    "translation": "ヘルス・チェック・タイムアウト。 [デフォルト: 2]"
   },
   {
     "id": "Hide IP address listing",
@@ -4767,10 +4702,6 @@
   {
     "id": "Internal peer IP address",
     "translation": "内部ピア IP アドレス"
-  },
-  {
-    "id": "Internet side port. Default: 80",
-    "translation": "インターネット・サイド・ポート。 デフォルト: 80"
   },
   {
     "id": "Invalid --sortBy option.",
@@ -6389,7 +6320,7 @@
     "translation": "プライベート・ポート速度。オプションは、0、10、100、1000、10000 です"
   },
   {
-    "id": "Private side port. Default: 80",
+    "id": "Private side port",
     "translation": "プライベート・サイド・ポート。 デフォルト: 80"
   },
   {
@@ -6415,10 +6346,6 @@
   {
     "id": "Protocol type to use for incoming connections",
     "translation": "着信接続で使用するプロトコル・タイプ"
-  },
-  {
-    "id": "Protocol type to use for incoming connections. [default: HTTP]",
-    "translation": "着信接続で使用するプロトコル・タイプ。 [デフォルト: HTTP]"
   },
   {
     "id": "Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP",
@@ -6703,17 +6630,6 @@
   {
     "id": "Respect Headers",
     "translation": "ヘッダーを尊重 (Respect Headers)"
-
-
-  },
-  {
-    "id": "Respect headers. The value 1 is On and 0 is Off.",
-    "translation": "ヘッダーを尊重します。 値 1 はオン、0 はオフです。"
-  },
-  {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "指定されたスナップショットを使用してブロック・ボリュームをリストアします"
-
   },
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
@@ -7296,10 +7212,6 @@
     "translation": "サブネット ID {{.subnetID}}を許可されたホスト ID {{.accessID}}に正常に削除しました"
   },
   {
-    "id": "Successfully device firmware reflashed",
-    "translation": "デバイス・ファームウェアが正常に再フラッシュされました"
-  },
-  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "ハードウェア・サーバー '{{.ID}}' の IPMI インターフェースの切り替えの要求を正常に送信しました。"
   },
@@ -7362,13 +7274,10 @@
   {
     "id": "Tags",
     "translation": "タグ"
-
-
   },
   {
     "id": "Tags all guests in an autoscale group.",
     "translation": "オート・スケール・グループ内のすべてのゲストにタグを付けます。"
-
   },
   {
     "id": "Tags for the image",

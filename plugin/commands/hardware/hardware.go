@@ -39,6 +39,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewMonitoringListCommand(sl).Command)
 	cobraCmd.AddCommand(NewSensorCommand(sl).Command)
 	cobraCmd.AddCommand(NewReflashFirmwareCommand(sl).Command)
+	cobraCmd.AddCommand(NewNotificationsCommand(sl).Command)
 	return cobraCmd
 }
 

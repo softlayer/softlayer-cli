@@ -42,7 +42,7 @@ EXAMPLE:
 	thisCmd.Command = cobraCmd
 	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("Name of the image [required]"))
 	cobraCmd.Flags().BoolVar(&thisCmd.All, "all", false, T("Capture all disks that belong to the virtual server"))
-	cobraCmd.Flags().StringVar(&thisCmd.Note, "notes", "", T("Add a note to be associated with the image"))
+	cobraCmd.Flags().StringVar(&thisCmd.Note, "note", "", T("Add a note to be associated with the image"))
 	return thisCmd
 }
 func (cmd *CaptureCommand) Run(args []string) error {

@@ -42,7 +42,7 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "order",
-		Short: T("Order a load balancer."),
+		Short: T("Order a load balancer"),
 		Long:  T("${COMMAND_NAME} sl loadbal order (-n, --name NAME) (-d, --datacenter DATACENTER) (-t, --type PublicToPrivate | PrivateToPrivate | PublicToPublic ) [-l, --label LABEL] [ -s, --subnet SUBNET_ID] [--frontend-protocol PROTOCOL] [--frontend-port PORT] [--backend-protocol PROTOCOL] [--backend-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--use-public-subnet] [--verify]"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -57,8 +57,8 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
 	cobraCmd.Flags().StringVar(&thisCmd.FrontendProtocol, "frontend-protocol", "HTTP", T("Frontend protocol"))
 	cobraCmd.Flags().IntVar(&thisCmd.FrontendPort, "frontend-port", 80, T("Frontend port"))
 	cobraCmd.Flags().StringVar(&thisCmd.BackendProtocol, "backend-protocol", "HTTP", T("Backend protocol [default: HTTP]"))
-	cobraCmd.Flags().IntVar(&thisCmd.BackendPort, "backend-port", 80, T("Backend port"))
-	cobraCmd.Flags().StringVarP(&thisCmd.Method, "method", "m", "ROUNDROBIN", T("Balancing Method: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR"))
+	cobraCmd.Flags().IntVar(&thisCmd.BackendPort, "backend-port", 80, T("Backend port [default: 80]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Method, "method", "m", "ROUNDROBIN", T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"))
 	cobraCmd.Flags().IntVarP(&thisCmd.Connections, "connections", "c", 0, T("Maximum number of connections to allow"))
 	cobraCmd.Flags().StringVar(&thisCmd.Sticky, "sticky", "", T("Use 'cookie' or 'source-ip' to stick"))
 	cobraCmd.Flags().BoolVar(&thisCmd.UsePublicSubnet, "use-public-subnet", false, T("If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type."))

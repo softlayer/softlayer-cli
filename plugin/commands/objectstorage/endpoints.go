@@ -5,8 +5,9 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -21,49 +22,41 @@ type EndpointData struct {
 	PublicPrivate  string
 	Legacy         string
 }
-
 type EndpointsCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	ObjectStorageManager managers.ObjectStorageManager
+	Command              *cobra.Command
 }
 
-func NewEndpointsCommand(ui terminal.UI, objectStorageManager managers.ObjectStorageManager) (cmd *EndpointsCommand) {
-	return &EndpointsCommand{
-		UI:                   ui,
-		ObjectStorageManager: objectStorageManager,
+func NewEndpointsCommand(sl *metadata.SoftlayerCommand) *EndpointsCommand {
+	thisCmd := &EndpointsCommand{
+		SoftlayerCommand:     sl,
+		ObjectStorageManager: managers.NewObjectStorageManager(sl.Session),
 	}
-}
-
-func EndpointsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "object-storage",
-		Name:        "endpoints",
-		Description: T("List object storage endpoints."),
-		Usage:       T(`${COMMAND_NAME} sl object-storage endpoints IDENTIFIER`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use:   "endpoints",
+		Short: T("List object storage endpoints."),
+		Long:  T(`${COMMAND_NAME} sl object-storage endpoints IDENTIFIER`),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *EndpointsCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument"))
-	}
-
-	HubNetworkStorageID, err := strconv.Atoi(c.Args()[0])
+func (cmd *EndpointsCommand) Run(args []string) error {
+	HubNetworkStorageID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Invoice ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	endpoints, err := cmd.ObjectStorageManager.GetEndpoints(HubNetworkStorageID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get list object storage endpoints.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get list object storage endpoints."), err.Error(), 2)
 	}
 	PrintEndpoints(endpoints, cmd.UI, outputFormat)
 	return nil

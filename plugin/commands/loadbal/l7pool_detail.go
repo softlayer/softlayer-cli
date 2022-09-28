@@ -29,7 +29,7 @@ func NewL7PoolDetailCommand(sl *metadata.SoftlayerCommand) *L7PoolDetailCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7pool-detail",
-		Short: T("Show L7 pool details."),
+		Short: T("Show L7 pool details"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

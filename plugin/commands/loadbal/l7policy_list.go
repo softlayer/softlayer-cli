@@ -27,7 +27,7 @@ func NewL7PolicyListCommand(sl *metadata.SoftlayerCommand) *L7PolicyListCommand 
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7policies",
-		Short: T("List L7 policies."),
+		Short: T("List L7 policies"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {

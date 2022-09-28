@@ -36,7 +36,7 @@ func NewProtocolAddCommand(sl *metadata.SoftlayerCommand) *ProtocolAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "protocol-add",
-		Short: T("Add a new load balancer protocol."),
+		Short: T("Add a new load balancer protocol"),
 		Long:  T("${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -44,7 +44,7 @@ func NewProtocolAddCommand(sl *metadata.SoftlayerCommand) *ProtocolAddCommand {
 		},
 	}
 	cobraCmd.Flags().IntVar(&thisCmd.Id, "id", 0, T("ID for the load balancer [required]"))
-	cobraCmd.Flags().StringVar(&thisCmd.FrontProtocol, "front-protocol", "HTTP", T("Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]"))
+	cobraCmd.Flags().StringVar(&thisCmd.FrontProtocol, "front-protocol", "HTTP", T("Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP"))
 	cobraCmd.Flags().StringVar(&thisCmd.BackProtocol, "back-protocol", "", T("Protocol type to use when connecting to backend servers: [HTTP|HTTPS|TCP]. Defaults to whatever --front-protocol is"))
 	cobraCmd.Flags().IntVar(&thisCmd.FrontPort, "front-port", 80, T("Internet side port"))
 	cobraCmd.Flags().IntVar(&thisCmd.BackPort, "back-port", 80, T("Private side port"))

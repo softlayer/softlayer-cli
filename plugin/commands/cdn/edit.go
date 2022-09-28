@@ -4,10 +4,11 @@ import (
 	"strconv"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -16,114 +17,91 @@ import (
 )
 
 type EditCommand struct {
-	UI         terminal.UI
-	CdnManager managers.CdnManager
+	*metadata.SoftlayerCommand
+	CdnManager               managers.CdnManager
+	Command                  *cobra.Command
+	Header                   string
+	HttpPort                 int
+	HttpsPort                int
+	Origin                   string
+	RespectHeaders           string
+	Cache                    string
+	CacheDescription         string
+	PerformanceConfiguration string
 }
 
-func NewEditCommand(ui terminal.UI, cdnManager managers.CdnManager) (cmd *EditCommand) {
-	return &EditCommand{
-		UI:         ui,
-		CdnManager: cdnManager,
+func NewEditCommand(sl *metadata.SoftlayerCommand) *EditCommand {
+	thisCmd := &EditCommand{
+		SoftlayerCommand: sl,
+		CdnManager:       managers.NewCdnManager(sl.Session),
 	}
-}
-
-func EditMetaData() cli.Command {
-	return cli.Command{
-		Category:    "cdn",
-		Name:        "edit",
-		Description: T("Edit a CDN Account."),
-		Usage:       T(`${COMMAND_NAME} sl cdn edit`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "header",
-				Usage: T("Host header."),
-			},
-			cli.IntFlag{
-				Name:  "http-port",
-				Usage: T("HTTP port."),
-			},
-			cli.IntFlag{
-				Name:  "https-port",
-				Usage: T("HTTPS port."),
-			},
-			cli.StringFlag{
-				Name:  "origin",
-				Usage: T("Origin server address."),
-			},
-			cli.StringFlag{
-				Name:  "respect-headers",
-				Usage: T("Respect headers. The value 1 is On and 0 is Off."),
-			},
-			cli.StringFlag{
-				Name:  "cache",
-				Usage: T("Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description."),
-			},
-			cli.StringFlag{
-				Name:  "cache-description",
-				Usage: T("In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description."),
-			},
-			cli.StringFlag{
-				Name:  "performance-configuration",
-				Usage: T("Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration."),
-			},
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use:   "edit",
+		Short: T("Edit a CDN Account."),
+		Long:  T("${COMMAND_NAME} sl cdn edit"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVar(&thisCmd.Header, "header", "", T("Host header."))
+	cobraCmd.Flags().IntVar(&thisCmd.HttpPort, "http-port", 0, T("HTTP port."))
+	cobraCmd.Flags().IntVar(&thisCmd.HttpsPort, "https-port", 0, T("HTTPS port."))
+	cobraCmd.Flags().StringVar(&thisCmd.Origin, "origin", "", T("Origin server address."))
+	cobraCmd.Flags().StringVar(&thisCmd.RespectHeaders, "respect-headers", "", T("Respect headers. The value 1 is On and 0 is Off."))
+	cobraCmd.Flags().StringVar(&thisCmd.Cache, "cache", "", T("Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description."))
+	cobraCmd.Flags().StringVar(&thisCmd.CacheDescription, "cache-description", "", T("In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description."))
+	cobraCmd.Flags().StringVar(&thisCmd.PerformanceConfiguration, "performance-configuration", "", T("Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration."))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *EditCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument"))
-	}
-
-	cdnId, err := strconv.Atoi(c.Args()[0])
+func (cmd *EditCommand) Run(args []string) error {
+	cdnId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("cdn ID")
 	}
 
-	if !c.IsSet("header") && !c.IsSet("http-port") && !c.IsSet("https-port") && !c.IsSet("origin") && !c.IsSet("respect-headers") && !c.IsSet("cache") && !c.IsSet("performance-configuration") {
+	if cmd.Header == "" && cmd.HttpPort == 0 && cmd.HttpsPort == 0 && cmd.Origin == "" && cmd.RespectHeaders == "" && cmd.Cache == "" && cmd.PerformanceConfiguration == "" {
 		return slErr.NewInvalidUsageError(T("Please pass at least one of the flags."))
 	}
 
-	if c.IsSet("respect-headers") {
-		if c.String("respect-headers") != "0" && c.String("respect-headers") != "1" {
+	if cmd.RespectHeaders != "" {
+		if cmd.RespectHeaders != "0" && cmd.RespectHeaders != "1" {
 			return slErr.NewInvalidUsageError(T("Option respect-headers just accept '0' or '1'"))
 		}
 	}
 
-	if c.IsSet("cache") {
+	if cmd.Cache != "" {
 		allowCache := []string{"include-all", "ignore-all", "include-specified", "ignore-specified"}
-		if !utils.WordInList(allowCache, c.String("cache")) {
+		if !utils.WordInList(allowCache, cmd.Cache) {
 			return slErr.NewInvalidUsageError(T("Option cache just accept: " + utils.ArrayStringToString(allowCache)))
 		}
-		if c.String("cache") == "include-specified" || c.String("cache") == "ignore-specified" {
-			if !c.IsSet("cache-description") {
+		if cmd.Cache == "include-specified" || cmd.Cache == "ignore-specified" {
+			if cmd.CacheDescription == "" {
 				return slErr.NewInvalidUsageError(T("cache-description option must be used "))
 			}
 		}
 	}
 
-	if c.IsSet("cache-description") {
-		if !c.IsSet("cache") {
+	if cmd.CacheDescription != "" {
+		if cmd.Cache == "" {
 			return slErr.NewInvalidUsageError(T("cache-description is only used with the cache option"))
 		}
 	}
 
-	if c.IsSet("performance-configuration") {
+	if cmd.PerformanceConfiguration != "" {
 		allowPerformanceConfiguration := []string{"General web delivery", "Large file optimization", "Video on demand optimization"}
-		if !utils.WordInList(allowPerformanceConfiguration, c.String("performance-configuration")) {
+		if !utils.WordInList(allowPerformanceConfiguration, cmd.PerformanceConfiguration) {
 			return slErr.NewInvalidUsageError(T("Option performance-configuration just accept: " + utils.ArrayStringToString(allowPerformanceConfiguration)))
 		}
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	cdnEdited, err := cmd.CdnManager.EditCDN(cdnId, c.String("header"), c.Int("http-port"), c.Int("https-port"), c.String("origin"), c.String("respect-headers"), c.String("cache"), c.String("cache-description"), c.String("performance-configuration"))
+	cdnEdited, err := cmd.CdnManager.EditCDN(cdnId, cmd.Header, cmd.HttpPort, cmd.HttpsPort, cmd.Origin, cmd.RespectHeaders, cmd.Cache, cmd.Cache, cmd.PerformanceConfiguration)
 	if err != nil {
-		return cli.NewExitError(T("Failed to edit CDN. ")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to edit CDN. "), err.Error(), 2)
 	}
 
 	PrintEditedCDN(cdnEdited, cmd.UI, outputFormat)

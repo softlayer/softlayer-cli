@@ -1,14 +1,13 @@
 package cdn_test
 
 import (
-	"reflect"
-
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 
 	"testing"
 )
@@ -19,74 +18,49 @@ func TestManagers(t *testing.T) {
 }
 
 var availableCommands = []string{
-	"cdn-list",
-	"cdn-detail",
-	"cdn-edit",
+	"detail",
+	"edit",
+	"list",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
-var _ = Describe("Test cdn.GetCommandActionBindings()", func() {
-	var (
-		context plugin.PluginContext
-	)
+var _ = Describe("Test cdn commands", func() {
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
-	context = plugin.InitPluginContext("softlayer")
-	commands := cdn.GetCommandActionBindings(context, fakeUI, fakeSession)
-
-	Context("Test Actions", func() {
-		for _, cmdName := range availableCommands {
-			//necessary to ensure the correct value is passed to the closure
-			cmdName := cmdName
-			It("ibmcloud sl "+cmdName, func() {
-				command, exists := commands[cmdName]
-				Expect(exists).To(BeTrue(), cmdName+" not found")
-				// Checks to make sure we actually have a function here.
-				// Test the actual function works in the specific commands test file.
-				Expect(reflect.ValueOf(command).Kind().String()).To(Equal("func"))
-				context := testhelpers.GetCliContext(cmdName)
-				err := command(context)
-				// some commands work without arguments
-				if err == nil {
-					Expect(err).NotTo(HaveOccurred())
-				} else {
-					Expect(err).To(HaveOccurred())
-				}
-			})
-		}
-	})
+	slMeta := metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 
 	Context("New commands testable", func() {
-		for cmdName, _ := range commands {
-			//necessary to ensure the correct value is passed to the closure
-			cmdName := cmdName
-			It("availableCommands["+cmdName+"]", func() {
-				found := false
-				for _, value := range availableCommands {
-					if value == cmdName {
-						found = true
-						break
-					}
+		commands := cdn.SetupCobraCommands(slMeta)
+		
+		var arrayCommands = []string{}
+		for _, command := range commands.Commands() {
+			commandName := command.Name()
+			arrayCommands = append(arrayCommands, commandName)
+			It("available commands "+commands.Name(), func() {
+				available := false
+				if utils.StringInSlice(commandName, availableCommands) != -1 {
+					available = true
 				}
-				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in cdn.go")
+				Expect(available).To(BeTrue(), commandName+" not found in array available Commands")
+			})
+		}
+		for _, command := range availableCommands {
+			commandName := command
+			It("ibmcloud sl "+commands.Name(), func() {
+				available := false
+				if utils.StringInSlice(commandName, arrayCommands) != -1 {
+					available = true
+				}
+				Expect(available).To(BeTrue(), commandName+" not found in ibmcloud sl "+commands.Name())
 			})
 		}
 	})
 
-	Context("Cdn Namespace", func() {
-		It("Cdn Name Space", func() {
+	Context("Network Attached Storage Namespace", func() {
+		It("Network Attached Storage Name Space", func() {
 			Expect(cdn.CdnNamespace().ParentName).To(ContainSubstring("sl"))
 			Expect(cdn.CdnNamespace().Name).To(ContainSubstring("cdn"))
-			Expect(cdn.CdnNamespace().Description).To(ContainSubstring("Classic infrastructure CDN"))
-		})
-	})
-
-	Context("Cdn MetaData", func() {
-		It("Cdn MetaData", func() {
-			Expect(cdn.CdnMetaData().Category).To(ContainSubstring("sl"))
-			Expect(cdn.CdnMetaData().Name).To(ContainSubstring("cdn"))
-			Expect(cdn.CdnMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl cdn"))
-			Expect(cdn.CdnMetaData().Description).To(ContainSubstring("Classic infrastructure CDN"))
+			Expect(cdn.CdnNamespace().Description).To(ContainSubstring("Classic infrastructure CDN commands"))
 		})
 	})
 })

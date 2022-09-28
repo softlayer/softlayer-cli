@@ -1,40 +1,26 @@
 package objectstorage
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-
-	objectStorageManager := managers.NewObjectStorageManager(session)
-
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"object-storage-accounts": func(c *cli.Context) error {
-			return NewAccountsCommand(ui, objectStorageManager).Run(c)
-		},
-		"object-storage-endpoints": func(c *cli.Context) error {
-			return NewEndpointsCommand(ui, objectStorageManager).Run(c)
-		},
-		"object-storage-credential-list": func(c *cli.Context) error {
-			return NewCredentialListCommand(ui, objectStorageManager).Run(c)
-		},
-		"object-storage-credential-create": func(c *cli.Context) error {
-			return NewCredentialCreateCommand(ui, objectStorageManager).Run(c)
-		},
-		"object-storage-credential-delete": func(c *cli.Context) error {
-			return NewCredentialDeleteCommand(ui, objectStorageManager).Run(c)
-		},
-		"object-storage-credential-limit": func(c *cli.Context) error {
-			return NewCredentialLimitCommand(ui, objectStorageManager).Run(c)
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "object-storage",
+		Short: T("Classic infrastructure Object Storage commands"),
+		RunE:  nil,
 	}
-	return CommandActionBindings
+	cobraCmd.AddCommand(NewAccountsCommand(sl).Command)
+	cobraCmd.AddCommand(NewCredentialCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewCredentialDeleteCommand(sl).Command)
+	cobraCmd.AddCommand(NewCredentialLimitCommand(sl).Command)
+	cobraCmd.AddCommand(NewCredentialListCommand(sl).Command)
+	cobraCmd.AddCommand(NewEndpointsCommand(sl).Command)
+	return cobraCmd
 }
 
 func ObjectStorageNamespace() plugin.Namespace {
@@ -42,22 +28,5 @@ func ObjectStorageNamespace() plugin.Namespace {
 		ParentName:  "sl",
 		Name:        "object-storage",
 		Description: T("Classic infrastructure Object Storage commands"),
-	}
-}
-
-func ObjectStorageMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "object-storage",
-		Description: T("Classic infrastructure Object Storage commands"),
-		Usage:       "${COMMAND_NAME} sl object-storage",
-		Subcommands: []cli.Command{
-			AccountsMetaData(),
-			EndpointsMetaData(),
-			CredentialListMetaData(),
-			CredentialCreateMetaData(),
-			CredentialDeleteMetaData(),
-			CredentialLimitMetaData(),
-		},
 	}
 }

@@ -38,7 +38,7 @@ func NewL7PoolAddCommand(sl *metadata.SoftlayerCommand) *L7PoolAddCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "l7pool-add",
-		Short: T("Add a new L7 pool."),
+		Short: T("Add a new L7 pool"),
 		Long:  T("${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -47,7 +47,7 @@ func NewL7PoolAddCommand(sl *metadata.SoftlayerCommand) *L7PoolAddCommand {
 	}
 	cobraCmd.Flags().IntVar(&thisCmd.Id, "id", 0, T("ID for the load balancer [required]"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("Name for this L7 pool. [required]"))
-	cobraCmd.Flags().StringVarP(&thisCmd.Method, "method", "m", "ROUNDROBIN", T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]."))
+	cobraCmd.Flags().StringVarP(&thisCmd.Method, "method", "m", "ROUNDROBIN", T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Protocol, "protocol", "p", "HTTP", T("Protocol type to use for incoming connections"))
 	cobraCmd.Flags().StringSliceVarP(&thisCmd.Server, "server", "s", []string{}, T("Backend servers that are part of this pool. Format: BACKEND_IP:PORT. eg. 10.0.0.1:80 (multiple occurrence permitted)"))
 	cobraCmd.Flags().StringVar(&thisCmd.HealthPath, "health-path", "/", T("Health check path"))
