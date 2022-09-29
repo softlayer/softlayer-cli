@@ -123,6 +123,20 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Virtual_Guest
 		result2 error
 	}
+	CreateUserCustomerNotificationStub        func(int, int) (datatypes.User_Customer_Notification_Virtual_Guest, error)
+	createUserCustomerNotificationMutex       sync.RWMutex
+	createUserCustomerNotificationArgsForCall []struct {
+		arg1 int
+		arg2 int
+	}
+	createUserCustomerNotificationReturns struct {
+		result1 datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}
+	createUserCustomerNotificationReturnsOnCall map[int]struct {
+		result1 datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}
 	EditInstanceStub        func(int, string, string, string, string, *int, *int) ([]bool, []string)
 	editInstanceMutex       sync.RWMutex
 	editInstanceArgsForCall []struct {
@@ -1225,6 +1239,71 @@ func (fake *FakeVirtualServerManager) CreateInstancesReturnsOnCall(i int, result
 	}
 	fake.createInstancesReturnsOnCall[i] = struct {
 		result1 []datatypes.Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotification(arg1 int, arg2 int) (datatypes.User_Customer_Notification_Virtual_Guest, error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	ret, specificReturn := fake.createUserCustomerNotificationReturnsOnCall[len(fake.createUserCustomerNotificationArgsForCall)]
+	fake.createUserCustomerNotificationArgsForCall = append(fake.createUserCustomerNotificationArgsForCall, struct {
+		arg1 int
+		arg2 int
+	}{arg1, arg2})
+	stub := fake.CreateUserCustomerNotificationStub
+	fakeReturns := fake.createUserCustomerNotificationReturns
+	fake.recordInvocation("CreateUserCustomerNotification", []interface{}{arg1, arg2})
+	fake.createUserCustomerNotificationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationCallCount() int {
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
+	return len(fake.createUserCustomerNotificationArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationCalls(stub func(int, int) (datatypes.User_Customer_Notification_Virtual_Guest, error)) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = stub
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationArgsForCall(i int) (int, int) {
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
+	argsForCall := fake.createUserCustomerNotificationArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationReturns(result1 datatypes.User_Customer_Notification_Virtual_Guest, result2 error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = nil
+	fake.createUserCustomerNotificationReturns = struct {
+		result1 datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationReturnsOnCall(i int, result1 datatypes.User_Customer_Notification_Virtual_Guest, result2 error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = nil
+	if fake.createUserCustomerNotificationReturnsOnCall == nil {
+		fake.createUserCustomerNotificationReturnsOnCall = make(map[int]struct {
+			result1 datatypes.User_Customer_Notification_Virtual_Guest
+			result2 error
+		})
+	}
+	fake.createUserCustomerNotificationReturnsOnCall[i] = struct {
+		result1 datatypes.User_Customer_Notification_Virtual_Guest
 		result2 error
 	}{result1, result2}
 }
@@ -3952,6 +4031,8 @@ func (fake *FakeVirtualServerManager) Invocations() map[string][][]interface{} {
 	defer fake.createInstanceMutex.RUnlock()
 	fake.createInstancesMutex.RLock()
 	defer fake.createInstancesMutex.RUnlock()
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
 	fake.editInstanceMutex.RLock()
 	defer fake.editInstanceMutex.RUnlock()
 	fake.generateInstanceCapacityCreationTemplateMutex.RLock()
