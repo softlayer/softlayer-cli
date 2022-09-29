@@ -109,6 +109,7 @@ type VirtualServerManager interface {
 	GetDatacenters() ([]datatypes.Location, error)
 	GetAvailablePlacementRouters(id int) ([]datatypes.Hardware, error)
 	GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error)
+	GetUserCustomerNotificationsByVirtualGuestId(id int, mask string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error)
 }
 
 type virtualServerManager struct {
@@ -1494,4 +1495,15 @@ func (vs virtualServerManager) GetRules() ([]datatypes.Virtual_PlacementGroup_Ru
 func (vs virtualServerManager) PlacementCreate(templateObject *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error) {
 	placementService := services.GetVirtualPlacementGroupService(vs.Session)
 	return placementService.CreateObject(templateObject)
+}
+
+//Return all virtual guest notifications associated with the passed hardware ID
+//int id: The virtual guest identifier.
+//string mask: Object mask.
+func (hw virtualServerManager) GetUserCustomerNotificationsByVirtualGuestId(id int, mask string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error) {
+	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(hw.Session)
+	if mask == "" {
+		mask = "mask[guestId,userId,user[firstName,lastName,email,username]]"
+	}
+	return userCustomerNotificationVirtualGuestService.Mask(mask).FindByGuestId(&id)
 }

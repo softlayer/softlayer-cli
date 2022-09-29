@@ -37,6 +37,7 @@ var availableCommands = []string{
 	"list",
 	"migrate",
 	"monitoring-list",
+	"notifications",
 	"options",
 	"pause",
 	"placementgroup-create",
@@ -86,7 +87,7 @@ var _ = Describe("Test Virtual Commands", func() {
 			})
 		}
 	})
-	
+
 	Context("Virtual Namespace", func() {
 		It("Virtual Namespace Exists", func() {
 			Expect(virtual.VSNamespace().ParentName).To(ContainSubstring("sl"))
