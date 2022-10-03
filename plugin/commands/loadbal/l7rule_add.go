@@ -5,10 +5,9 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -58,29 +57,29 @@ func (cmd *L7RuleAddCommand) Run(args []string) error {
 
 	policyType := cmd.Type
 	if policyType == "" {
-		return bxErr.NewMissingInputError("-t, --type")
+		return errors.NewMissingInputError("-t, --type")
 	}
 	if strings.ToUpper(policyType) != "HOST_NAME" && strings.ToUpper(policyType) != "FILE_TYPE" && strings.ToUpper(policyType) != "HEADER" && strings.ToUpper(policyType) != "COOKIE" && strings.ToUpper(policyType) != "PATH" {
-		return bxErr.NewInvalidUsageError(T("The value of option -t, --type should be HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH."))
+		return errors.NewInvalidUsageError(T("The value of option -t, --type should be HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH."))
 	}
 
 	compareType := cmd.CompareType
 	if compareType == "" {
-		return bxErr.NewMissingInputError("-c, --compare-type")
+		return errors.NewMissingInputError("-c, --compare-type")
 	}
 	if strings.ToUpper(compareType) != "EQUAL_TO" && strings.ToUpper(compareType) != "ENDS_WITH" && strings.ToUpper(compareType) != "STARTS_WITH" && strings.ToUpper(compareType) != "REGEX" && strings.ToUpper(compareType) != "CONTAINS" {
-		return bxErr.NewInvalidUsageError(T("The value of option -c, --compare-type should be EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS."))
+		return errors.NewInvalidUsageError(T("The value of option -c, --compare-type should be EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS."))
 	}
 
 	value := cmd.Value
 	if value == "" {
-		return bxErr.NewMissingInputError("-v, --value")
+		return errors.NewMissingInputError("-v, --value")
 	}
 
 	key := cmd.Key
 
 	if key != "" && (strings.ToUpper(policyType) != "HEADER" && strings.ToUpper(policyType) != "COOKIE") {
-		return bxErr.NewInvalidUsageError(T("-k, --key is only available in HEADER or COOKIE type."))
+		return errors.NewInvalidUsageError(T("-k, --key is only available in HEADER or COOKIE type."))
 	}
 
 	invert := cmd.Invert
@@ -97,8 +96,7 @@ func (cmd *L7RuleAddCommand) Run(args []string) error {
 
 	_, err := cmd.LoadBalancerManager.AddL7Rule(&policyUUID, rule)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add l7 rule: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to add l7 rule: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 rule added"))

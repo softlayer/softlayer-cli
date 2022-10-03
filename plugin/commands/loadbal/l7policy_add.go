@@ -5,10 +5,8 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -65,30 +63,30 @@ func (cmd *L7PolicyAddCommand) Run(args []string) error {
 
 	name := cmd.Name
 	if utils.IsEmptyString(name) {
-		return bxErr.NewMissingInputError("-n, --name")
+		return errors.NewMissingInputError("-n, --name")
 	}
 
 	action := cmd.Action
 	if utils.IsEmptyString(action) {
-		return bxErr.NewMissingInputError("-a, --action")
+		return errors.NewMissingInputError("-a, --action")
 	}
 	actionUpperCase := strings.ToUpper(action)
 
 	if !IsValidAction(actionUpperCase) {
-		return bxErr.NewInvalidUsageError(
+		return errors.NewInvalidUsageError(
 			T("-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
 
 	redirect := cmd.Redirect
 	if !utils.IsEmptyString(redirect) && actionUpperCase == REJECT {
-		return bxErr.NewInvalidUsageError(
+		return errors.NewInvalidUsageError(
 			T("-r, --redirect is only available with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
 
 	if IsValidAction(actionUpperCase) && utils.IsEmptyString(redirect) && actionUpperCase != REJECT {
-		return bxErr.NewInvalidUsageError(
+		return errors.NewInvalidUsageError(
 			T("-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
@@ -117,8 +115,7 @@ func (cmd *L7PolicyAddCommand) Run(args []string) error {
 
 	_, err := cmd.LoadBalancerManager.AddL7Policy(&policyUUID, policyRule)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add l7 policy: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to add l7 policy: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 policy added"))

@@ -2,7 +2,6 @@ package loadbal
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -54,7 +53,7 @@ func (cmd *L7MembersDelCommand) Run(args []string) error {
 	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will delete the load balancer L7 member: {{.MemberID}} and cannot be undone. Continue?", map[string]interface{}{"MemberID": memberUUID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Say(T("Aborted."))
@@ -64,8 +63,8 @@ func (cmd *L7MembersDelCommand) Run(args []string) error {
 
 	_, err := cmd.LoadBalancerManager.DeleteL7Member(&L7POOL_UUID, memberUUID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to delete L7member {{.Member}}: {{.Error}}.\n",
-			map[string]interface{}{"Member": memberUUID, "Error": err.Error()}), 2)
+		return errors.New(T("Failed to delete L7member {{.Member}}: {{.Error}}.\n",
+			map[string]interface{}{"Member": memberUUID, "Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("Member {{.MemberID}} removed from {{.L7POOL}}", map[string]interface{}{"MemberID": memberUUID, "L7POOL": L7POOL_UUID}))

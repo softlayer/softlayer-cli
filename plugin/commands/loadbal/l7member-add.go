@@ -3,7 +3,6 @@ package loadbal
 import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -63,8 +62,7 @@ func (cmd *L7MembersAddCommand) Run(args []string) error {
 
 	_, err := cmd.LoadBalancerManager.AddL7Member(&poolUUID, []datatypes.Network_LBaaS_L7Member{toAdd})
 	if err != nil {
-		return cli.NewExitError(T("Failed to add L7 member: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to add L7 member: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 Member {{.MemberID}} added in pool {{.Pool}}", map[string]interface{}{"MemberID": ip, "Pool": poolUUID}))

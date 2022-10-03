@@ -7,7 +7,6 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
@@ -65,7 +64,7 @@ func (cmd *HealthChecksCommand) Run(args []string) error {
 
 	loadbalancer, err := cmd.LoadBalancerManager.GetLoadBalancer(loadbalID, "uuid,healthMonitors,listeners[uuid,defaultPool[healthMonitor]]")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}), 2)
+		return errors.New(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}))
 	}
 
 	var healthCheck datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration
@@ -96,11 +95,11 @@ func (cmd *HealthChecksCommand) Run(args []string) error {
 	}
 
 	if find == false {
-		return cli.NewExitError(T("Unable to find health check with UUID of '{{.UUID}}' in load balancer {{.ID}}.", map[string]interface{}{"UUID": healthUUID, "ID": loadbalID}), 2)
+		return errors.New(T("Unable to find health check with UUID of '{{.UUID}}' in load balancer {{.ID}}.", map[string]interface{}{"UUID": healthUUID, "ID": loadbalID}))
 	}
 
 	if cmd.Url != "" && healthCheck.BackendProtocol != nil && *healthCheck.BackendProtocol == "TCP" {
-		return cli.NewExitError(T("--url cannot be used with TCP checks."), 2)
+		return errors.New(T("--url cannot be used with TCP checks."))
 	}
 
 	interval := cmd.Interval

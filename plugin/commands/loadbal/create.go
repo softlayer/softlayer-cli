@@ -5,7 +5,6 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -137,7 +136,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 	if !cmd.Force && !cmd.Verify {
 		confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -180,8 +179,8 @@ func (cmd *CreateCommand) Run(args []string) error {
 	if cmd.Verify {
 		orderReceipt, err := cmd.LoadBalancerManager.CreateLoadBalancerVerify(dataCenter, name, lbTypeRequest, label, protocols, subnet, cmd.UsePublicSubnet)
 		if err != nil {
-			return cli.NewExitError(T("Failed to verify load balancer with name {{.Name}} on {{.Location}}.\n",
-				map[string]interface{}{"Name": name, "Location": dataCenter})+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to verify load balancer with name {{.Name}} on {{.Location}}.\n",
+				map[string]interface{}{"Name": name, "Location": dataCenter}), err.Error(), 2)
 		}
 		cmd.UI.Ok()
 		table := cmd.UI.Table([]string{T("Item"), T("Cost")})
@@ -197,8 +196,8 @@ func (cmd *CreateCommand) Run(args []string) error {
 	}
 	orderReceipt, err := cmd.LoadBalancerManager.CreateLoadBalancer(dataCenter, name, lbTypeRequest, label, protocols, subnet, cmd.UsePublicSubnet)
 	if err != nil {
-		return cli.NewExitError(T("Failed to create load balancer with name {{.Name}} on {{.Location}}.\n",
-			map[string]interface{}{"Name": name, "Location": dataCenter})+err.Error(), 2)
+		return  errors.NewAPIError(T("Failed to create load balancer with name {{.Name}} on {{.Location}}.\n",
+			map[string]interface{}{"Name": name, "Location": dataCenter}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("Order ID: {{.OrderID}}", map[string]interface{}{"OrderID": *orderReceipt.OrderId}))

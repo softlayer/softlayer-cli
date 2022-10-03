@@ -13,12 +13,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
-	"github.com/urfave/cli"
 
 	"github.com/softlayer/softlayer-go/session"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/client"
-	slError "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
@@ -111,59 +109,6 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 
 }
 
-func GetCommandAction(pluginContext plugin.PluginContext, ui terminal.UI) func(cliContext *cli.Context) error {
-	return func(cliContext *cli.Context) error {
-		command := cliContext.Command
-
-		session, err := client.NewSoftlayerClientSessionFromConfig(pluginContext)
-		if err != nil {
-			return slError.Error_Not_Login(pluginContext)
-		}
-		actionMaps := GetCommandAcionBindings(pluginContext, ui, session)
-		return actionMaps[command.Category+"-"+command.Name](cliContext)
-	}
-}
-
-func GetPluginCommands(cliCommands []cli.Command) []plugin.Command {
-	var pluginCommands []plugin.Command
-	for _, cliCmd := range cliCommands {
-		if len(cliCmd.Subcommands) > 0 {
-			for _, subCmd := range cliCmd.Subcommands {
-				subPluginCmd := plugin.Command{
-					Namespace:   metadata.SoftlayerNamespace().Name + " " + subCmd.Category,
-					Name:        subCmd.Name,
-					Description: subCmd.Description,
-					Usage:       subCmd.Usage,
-					Flags:       convertToPluginFlags(subCmd.Flags),
-				}
-				pluginCommands = append(pluginCommands, subPluginCmd)
-			}
-		} else {
-			pluginCommand := plugin.Command{
-				Namespace:   metadata.SoftlayerNamespace().Name,
-				Name:        cliCmd.Name,
-				Description: cliCmd.Description,
-				Usage:       cliCmd.Usage,
-				Flags:       convertToPluginFlags(cliCmd.Flags),
-			}
-			pluginCommands = append(pluginCommands, pluginCommand)
-		}
-	}
-	return pluginCommands
-}
-
-func convertToPluginFlags(flags []cli.Flag) []plugin.Flag {
-	var ret []plugin.Flag
-	for _, f := range flags {
-		ret = append(ret, plugin.Flag{
-			Name:        reflect.ValueOf(f).FieldByName("Name").String(),
-			Description: reflect.ValueOf(f).FieldByName("Usage").String(),
-			HasValue:    reflect.TypeOf(f).String() != "cli.BoolFlag",
-			Hidden:      reflect.ValueOf(f).FieldByName("Hidden").Bool(),
-		})
-	}
-	return ret
-}
 
 func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
@@ -200,43 +145,6 @@ func Namespaces() []plugin.Namespace {
 	}
 }
 
-/*
-func getCLITopCommands() []cli.Command {
-	return []cli.Command{
-		autoscale.AutoScaleMetaData(),
-		block.BlockMetaData(),
-		file.FileMetaData(),
-		cdn.CdnMetaData(),
-		dns.DnsMetaData(),
-		eventlog.EventLogMetaData(),
-		firewall.FirewallMetaData(),
-		email.EmailMetaData(),
-		globalip.GlobalIpMetaData(),
-		hardware.HardwareMetaData(),
-		image.ImageMetaData(),
-		ipsec.IpsecMetaData(),
-		licenses.LicensesMetaData(),
-		loadbal.LoadbalMetaData(),
-		commandMetadata.MetadataMetadata(),
-		nas.NasNetworkStorageMetaData(),
-		security.SecurityMetaData(),
-		securitygroup.SecurityGroupMetaData(),
-		subnet.SubnetMetaData(),
-		ticket.TicketMetaData(),
-		vlan.VlanMetaData(),
-		placementgroup.PlacementGroupMetaData(),
-		objectstorage.ObjectStorageMetaData(),
-		order.OrderMetaData(),
-		user.UserMetaData(),
-		// callapi.CallAPIMetadata(),
-		tags.TagsMetaData(),
-		dedicatedhost.DedicatedhostMetaData(),
-		virtual.VSMetaData(),
-		account.AccountMetaData(),
-		reports.ReportsMetaData(),
-	}
-}
-*/
 func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag {
 	var pluginFlags []plugin.Flag
 	flagSet.VisitAll(func(pflag *pflag.Flag) {

@@ -3,7 +3,6 @@ package loadbal
 import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -51,7 +50,7 @@ func (cmd *MembersAddCommand) Run(args []string) error {
 
 	loadbalancerUUID, err := cmd.LoadBalancerManager.GetLoadBalancerUUID(loadbalID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}), 2)
+		return errors.New(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}))
 	}
 
 	ip := cmd.Ip
@@ -61,8 +60,7 @@ func (cmd *MembersAddCommand) Run(args []string) error {
 
 	_, err = cmd.LoadBalancerManager.AddLoadBalancerMember(&loadbalancerUUID, []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo{toAdd})
 	if err != nil {
-		return cli.NewExitError(T("Failed to add load balancer member: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to add load balancer member: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("Member {{.MemberID}} added", map[string]interface{}{"MemberID": ip}))

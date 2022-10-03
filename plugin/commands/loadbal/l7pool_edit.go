@@ -5,10 +5,9 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
+
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -87,7 +86,7 @@ func (cmd *L7PoolEditCommand) Run(args []string) error {
 		servers := cmd.Server
 		members, err = parseServer(servers)
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		l7Pool.L7Members = members
 	}
@@ -122,13 +121,12 @@ func (cmd *L7PoolEditCommand) Run(args []string) error {
 			Type: &sessionAffinityType,
 		}
 	} else if cmd.Sticky != "" {
-		return bxErr.NewInvalidUsageError(T("Value of option '--sticky' should be cookie or source-ip"))
+		return errors.NewInvalidUsageError(T("Value of option '--sticky' should be cookie or source-ip"))
 	}
 
 	_, err = cmd.LoadBalancerManager.UpdateLoadBalancerL7Pool(&poolUUID, &l7Pool, &l7health, sessionAffinity)
 	if err != nil {
-		return cli.NewExitError(T("Failed to update l7 pool: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to update l7 pool: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 pool updated"))

@@ -7,7 +7,6 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -106,13 +105,13 @@ func (cmd *L7PoolAddCommand) Run(args []string) error {
 		servers := cmd.Server
 		members, err = parseServer(servers)
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 	}
 
 	loadbalancerUUID, err := cmd.LoadBalancerManager.GetLoadBalancerUUID(loadbalID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}), 2)
+		return errors.New(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}))
 	}
 
 	l7Pool := datatypes.Network_LBaaS_L7Pool{
@@ -145,8 +144,7 @@ func (cmd *L7PoolAddCommand) Run(args []string) error {
 
 	_, err = cmd.LoadBalancerManager.AddLoadBalancerL7Pool(&loadbalancerUUID, &l7Pool, members, &l7health, sessionAffinity)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add load balancer l7 pool: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to add load balancer l7 pool: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 pool added"))

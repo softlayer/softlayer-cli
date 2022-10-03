@@ -6,7 +6,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -49,26 +48,26 @@ func (cmd *L7PoolDetailCommand) Run(args []string) error {
 
 	l7pool, err := cmd.LoadBalancerManager.GetLoadBalancerL7Pool(l7PoolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
-			map[string]interface{}{"L7PoolID": l7PoolID, "Error": err.Error()}), 2)
+		return errors.New(T("Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
+			map[string]interface{}{"L7PoolID": l7PoolID, "Error": err.Error()}))
 	}
 
 	l7SessionAffinity, err := cmd.LoadBalancerManager.GetL7SessionAffinity(l7PoolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get L7 Pool Session Affinity: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get L7 Pool Session Affinity: {{.Error}}.\n",
+			map[string]interface{}{"Error": err.Error()}))
 	}
 
 	l7HealthMonitor, err := cmd.LoadBalancerManager.GetL7HealthMonitor(l7PoolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get L7 Health Monitor: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get L7 Health Monitor: {{.Error}}.\n",
+			map[string]interface{}{"Error": err.Error()}))
 	}
 
 	l7Members, err := cmd.LoadBalancerManager.ListL7Members(l7PoolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get L7 Members: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get L7 Members: {{.Error}}.\n",
+			map[string]interface{}{"Error": err.Error()}))
 	}
 
 	printL7Pool(l7pool, l7Members, l7HealthMonitor, l7SessionAffinity, cmd.UI)

@@ -2,7 +2,6 @@ package loadbal
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -47,7 +46,7 @@ func (cmd *L7PoolDelCommand) Run(args []string) error {
 	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will delete the load balancer L7 pool: {{.PoolID}} and cannot be undone. Continue?", map[string]interface{}{"PoolID": l7PoolID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Say(T("Aborted."))
@@ -57,8 +56,8 @@ func (cmd *L7PoolDelCommand) Run(args []string) error {
 
 	_, err := cmd.LoadBalancerManager.DeleteLoadBalancerL7Pool(l7PoolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
-			map[string]interface{}{"L7PoolID": l7PoolID, "Error": err.Error()}), 2)
+		return errors.New(T("Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
+			map[string]interface{}{"L7PoolID": l7PoolID, "Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7Pool {{.L7PoolID}} removed", map[string]interface{}{"L7PoolID": l7PoolID}))

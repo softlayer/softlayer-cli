@@ -5,8 +5,6 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/urfave/cli"
-
 
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -20,6 +18,12 @@ var (
 )
 
 const OutputJSON = "JSON"
+
+var SupportedOutputFormat = []string{
+       OutputJSON,
+       //define supported output format here in UPPER case...
+}
+
 
 type SoftlayerCommand struct {
 	UI terminal.UI
@@ -59,48 +63,6 @@ func SoftlayerNamespace() plugin.Namespace {
 		Description: T("Manage Classic infrastructure services"),
 	}
 }
-
-
-func ForceFlag() cli.BoolFlag {
-	return cli.BoolFlag{
-		Name:  "f,force",
-		Usage: T("Force operation without confirmation"),
-	}
-}
-
-func OutputFlag() cli.StringFlag {
-	return cli.StringFlag{
-		Name:  "output",
-		Usage: T("Specify output format, only JSON is supported now."),
-	}
-}
-
-var SupportedOutputFormat = []string{
-	OutputJSON,
-	//define supported output format here in UPPER case...
-}
-
-func CheckOutputFormat(context *cli.Context, ui terminal.UI) (string, error) {
-	if context.IsSet(OutputFlagName) {
-		for _, r := range SupportedOutputFormat {
-			if r == strings.ToUpper(context.String(OutputFlagName)) {
-				return r, nil
-			}
-		}
-		return "", errors.NewInvalidUsageError(T("Invalid output format, only JSON is supported now."))
-	}
-	return "", nil
-}
-
-// QuietFlag is the general `-q, --quiet` flag definition
-func QuietFlag() cli.BoolFlag {
-	return cli.BoolFlag{
-		Name:  "q, quiet",
-		Usage: T("Suppress verbose output"),
-	}
-}
-
-
 
 // A custom flag type so we can do type checking like expected.
 // Basically this just calls strings.ToUpper on --output

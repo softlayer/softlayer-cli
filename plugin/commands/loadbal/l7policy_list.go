@@ -4,7 +4,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -47,8 +46,7 @@ func (cmd *L7PolicyListCommand) Run(args []string) error {
 
 	l7Policies, err := cmd.LoadBalancerManager.GetL7Policies(protocolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get l7 policies: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get l7 policies: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	PrintPolicies(l7Policies, cmd.UI)
 

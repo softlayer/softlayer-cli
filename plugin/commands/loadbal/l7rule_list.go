@@ -2,9 +2,8 @@ package loadbal
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
-	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -40,13 +39,12 @@ func NewL7RuleListCommand(sl *metadata.SoftlayerCommand) *L7RuleListCommand {
 func (cmd *L7RuleListCommand) Run(args []string) error {
 	policyid := cmd.PolicyId
 	if policyid == 0 {
-		return bxErr.NewMissingInputError("--policy-id")
+		return errors.NewMissingInputError("--policy-id")
 	}
 
 	l7Rules, err := cmd.LoadBalancerManager.ListL7Rule(policyid)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get l7 rules: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get l7 rules: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 
 	if len(l7Rules) == 0 {

@@ -5,10 +5,8 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -58,8 +56,7 @@ func (cmd *L7PolicyEditCommand) Run(args []string) error {
 
 	currentPolicy, err := cmd.LoadBalancerManager.GetL7Policy(policyId)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get l7 policy: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get l7 policy: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 
 	name := cmd.Name
@@ -71,7 +68,7 @@ func (cmd *L7PolicyEditCommand) Run(args []string) error {
 	actionToUpdate := strings.ToUpper(action)
 
 	if !utils.IsEmptyString(actionToUpdate) && !IsValidAction(actionToUpdate) {
-		return bxErr.NewInvalidUsageError(
+		return errors.NewInvalidUsageError(
 			T("-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
@@ -82,13 +79,13 @@ func (cmd *L7PolicyEditCommand) Run(args []string) error {
 
 	redirect := cmd.Redirect
 	if !utils.IsEmptyString(redirect) && utils.FormatStringPointer(currentPolicy.Action) == REJECT {
-		return bxErr.NewInvalidUsageError(
+		return errors.NewInvalidUsageError(
 			T("-r, --redirect is only available with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
 
 	if IsValidAction(actionToUpdate) && utils.IsEmptyString(redirect) && actionToUpdate != REJECT {
-		return bxErr.NewInvalidUsageError(
+		return errors.NewInvalidUsageError(
 			T("-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
@@ -108,8 +105,7 @@ func (cmd *L7PolicyEditCommand) Run(args []string) error {
 
 	_, err = cmd.LoadBalancerManager.EditL7Policy(policyId, &currentPolicy)
 	if err != nil {
-		return cli.NewExitError(T("Failed to edit l7 policy: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to edit l7 policy: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 
 	cmd.UI.Ok()
@@ -117,8 +113,7 @@ func (cmd *L7PolicyEditCommand) Run(args []string) error {
 
 	policyEdited, err := cmd.LoadBalancerManager.GetL7Policy(policyId)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get l7 policy detail: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get l7 policy detail: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	PrintPolicies([]datatypes.Network_LBaaS_L7Policy{policyEdited}, cmd.UI)
 	return nil

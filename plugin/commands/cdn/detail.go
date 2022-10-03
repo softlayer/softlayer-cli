@@ -8,7 +8,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -65,7 +64,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	cdnMetrics, err := cmd.CdnManager.GetUsageMetrics(cdnId, history, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get CDN Metrics. ")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get CDN Metrics. "), err.Error(), 2)
 	}
 
 	PrintDetailCDN(cdnDetail, cdnMetrics, cmd.UI, outputFormat)
