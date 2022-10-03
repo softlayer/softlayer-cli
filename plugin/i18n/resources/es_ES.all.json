@@ -321,7 +321,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS] \n \nEJEMPLO:\n ${COMMAND_NAME} sl vlan list -d dal09 -- sortby number \n Este mandato lista todos los vlans en la cuenta actual filtrados por centro de datos iguales a dal09 y los ordena por número de vlan. \n \nNota: en el campo Pod, si se añade (*) se indica que se cerró pronto"
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS] \n \nEJEMPLO:\n ${COMMAND_NAME} sl vlan list -d dal09 -- sortby number \n Este mandato lista todos los vlans en la cuenta actual filtrados por centro de datos igual a dal09 y los ordena por número de vlan. \n \nNota: en el campo Pod, si se añade (*) se indica que se cerró pronto"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -1053,7 +1053,7 @@
   },
   {
     "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
-    "translation": "Ancho de banda, proporción y aciertos contados según el número de días de historial transcurridos. 89 es el máximo."
+    "translation": "Ancho de banda, aciertos, proporción; se cuentan según el número de días de historial transcurridos. El máximo es 89."
   },
   {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
@@ -1149,7 +1149,7 @@
   },
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
-    "translation": "Optimización de clave de memoria caché. Estas son las opciones válidas para elegir: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. Si selecciona 'include-specified' o 'ignore-specified', añada a la opción cache-description."
+    "translation": "Optimización de clave de memoria caché. Estas son las opciones válidas a elegir: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. Si selecciona 'include-specified' o 'ignore-specified', añada un valor en la opción cache-description."
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -2165,7 +2165,7 @@
   },
   {
     "id": "Edit a CDN Account.",
-    "translation": "Editar una cuenta de CDN."
+    "translation": "Editar una cuenta CDN."
   },
   {
     "id": "Edit a L7 policy",
@@ -4753,7 +4753,7 @@
   },
   {
     "id": "Invalid output format, only JSON is supported now.",
-    "translation": "Formato de salida no válido, actualmente solo se da soporte a JSON."
+    "translation": "Formato de salida no válido, actualmente solo se admite JSON."
   },
   {
     "id": "Invalid storage type",
@@ -7077,7 +7077,7 @@
   },
   {
     "id": "Specify output format, only JSON is supported now.",
-    "translation": "Especifique el formato de salida, actualmente solo se da soporte a JSON."
+    "translation": "Especifique el formato de salida, actualmente solo se admite JSON."
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",

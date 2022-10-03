@@ -321,7 +321,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Questi comandi elencano tutte le vlan nell'account corrente filtrando per data center uguale a dal09, e le ordinano per numero vlan.\n \nNota: nel campo Pod, l'aggiunta di (*) indica che verrà presto chiuso"
+    "translation": "${COMMAND_NAME} sl vlan list [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Questi comandi elencano tutte le vlan nell'account corrente utilizzando il filtro per data center uguale a dal09, e le ordinano in base al numero vlan.\n \nNota: nel campo Pod, l'aggiunta di (*) indica che verrà presto chiuso"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -1053,7 +1053,7 @@
   },
   {
     "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
-    "translation": "Larghezza di banda, riscontri, rapporto calcolati sul numero di giorni precedenti di cronologia. 89 è il massimo."
+    "translation": "Larghezza di banda, riscontri e rapporti calcolati sul numero di giorni precedenti di cronologia. Il valore massimo è 89."
   },
   {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
@@ -3949,7 +3949,7 @@
   },
   {
     "id": "Filter by VLAN number",
-    "translation": "Filtra in base a numero VLAN"
+    "translation": "Filtra in base al numero VLAN"
   },
   {
     "id": "Filter by datacenter",

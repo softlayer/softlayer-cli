@@ -104,6 +104,35 @@
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip create --v6 \n\t此命令创建 IPv6 地址。"
   },
   {
+
+    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
+    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip list --v4 \n\t此命令列出当前帐户的所有 IPv4 地址。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
+    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\t此命令对目标设备取消分配标识为 12345678 的 IP 地址。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
+    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl hardware authorize-storage -- username-storage SL01SL30-37 1234567\n 将文件和块存储器授权给硬件服务器。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
+    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\n示例：\n  ${COMMAND_NAME} sl hardware guests 1234567\n   列出在此服务器上运行的虚拟访客。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
+    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl hardware storage 1234567\n 获取硬件服务器的存储器详细信息。"
+  },
+  {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
     "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 -- remove sjc03\n 此命令添加/除去映像的数据中心。"
   },
@@ -3893,7 +3922,7 @@
   },
   {
     "id": "Features",
-    "translation": "功能"
+    "translation": "功能部件"
   },
   {
     "id": "File volume {{.ID}} has been marked for immediate snapshot cancellation.",

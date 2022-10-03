@@ -104,6 +104,34 @@
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n例:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tこのコマンドは、IPv6 アドレスを作成します。"
   },
   {
+    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
+    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\n例:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tこのコマンドは、現行アカウントのすべての IPv4 アドレスをリストします。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
+    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\n例:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tこのコマンドは、ID 12345678 の IP アドレスをターゲット・デバイスから割り当て解除します。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
+    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware authorize-storage -- username-storage SL01SL30-37 1234567\n ファイルと Block Storage をハードウェア・サーバーに許可します。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
+    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware guests 1234567\n このサーバー上で稼働している仮想ゲストをリストします。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n例: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\n例: \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
+    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware storage 1234567\n ハードウェア・サーバーのストレージ詳細を取得します。"
+  },
+  {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
     "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 -- remove sjc03\n このコマンドは、イメージのデータ・センターを追加/削除します。"
   },
@@ -321,7 +349,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n 例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウント・フィルターのすべての VLAN を dal09 に等しいデータ・センターでリストし、それらを vlan 番号でソートします。\n \n注: フィールド Pod では、(*) を追加し間もなく閉じることが示されている場合、"
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウントのすべての VLAN を dal09 に等しいデータ・センターでフィルタリングしてリストし、それらを VLAN 番号でソートします。\n \n注: フィールド Pod で (*) が追加されている場合は、間もなくクローズされることを示しています。"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -1057,7 +1085,7 @@
   },
   {
     "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
-    "translation": "帯域幅、ヒット、比率は、数日前の履歴にカウントされます。 89 が最大値です。"
+    "translation": "帯域幅、ヒット数、比率が、数日前の履歴でカウントされます。 89 が最大値です。"
   },
   {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
@@ -1153,7 +1181,7 @@
   },
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
-    "translation": "キャッシュ・キーの最適化。 選択できる有効なオプションは、「include-all」、「ignore-all」、「include-specified」、「ignore-specified」です。 「include-specified」または「ignore-specified」を選択した場合は、オプション cache-description に追加してください。"
+    "translation": "キャッシュ・キーの最適化。 選択できる有効なオプションは、「include-all」、「ignore-all」、「include-specified」、「ignore-specified」です。 「include-specified」または「ignore-specified」を選択する場合は、オプション cache-description に追加してください。"
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -5741,7 +5769,7 @@
   },
   {
     "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
-    "translation": "「一般的な Web 配信」、「ラージ・ファイルの最適化」、「ビデオ・オンデマンド最適化」のための最適化。これには特別な構成があるため、動的コンテンツの高速化オプションは追加されません。"
+    "translation": "「一般的な Web 配信」、「ラージ・ファイルの最適化」、「ビデオ・オンデマンドの最適化」のための最適化。これには特別な構成があるため、動的コンテンツの高速化オプションは追加されません。"
   },
   {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",

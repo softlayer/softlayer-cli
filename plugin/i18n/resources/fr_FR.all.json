@@ -104,6 +104,34 @@
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip create --v6 \n\tCette commande crée une adresse IPv6."
   },
   {
+    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
+    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip list --v4 \n\tCette commande répertorie toutes les adresses IPv4 sur le compte en cours."
+  },
+  {
+    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
+    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tCette commande annule l'affectation de l'adresse IP dont l'ID est 12345678 sur le périphérique cible."
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
+    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFICATEUR\n\nEXEMPLE :\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authoriser un fichier et le stockage par blocs sur un serveur matériel."
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
+    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFICATEUR\n\nEXEMPLE :\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Répertorie les invités virtuels s'exécutant sur ce serveur."
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
+    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
+    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl hardware sensor 123456"
+  },
+  {
+    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
+    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFICATEUR\n\nEXEMPLE :\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Obtenir les détails de stockage pour un serveur matériel."
+  },
+  {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
     "translation": "${COMMAND_NAME} sl image datacenter IDENTIFICATEUR [ OPTIONS ] \n \nEXEMPLE :\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 -- remove sjc03\n Cette commande ajoute/supprime le centre de données d'une image."
   },
@@ -321,7 +349,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n  Cette commande répertorie tous les réseaux locaux virtuels sur le compte en cours avec un filtrage par centre de données égal à dal09 et les trie par numéro de réseau local virtuel.\n \nRemarque : dans la zone Pod, si add (*) indiquait une fermeture imminente"
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby numéro\n  Cette commande répertorie tous les réseaux locaux virtuels sur le compte en cours avec un filtrage par centre de données égal à dal09 et les trie par numéro de réseau local virtuel.\n \nRemarque : dans la zone Pod, un astérisque (*) indique une fermeture imminente"
   },
   {
     "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
@@ -1053,7 +1081,7 @@
   },
   {
     "id": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.",
-    "translation": "Le taux d'accès à la bande passante est comptabilisé sur le nombre historique de jours écoulés. 89 est la valeur maximale."
+    "translation": "Bande passante, accès, rapport comptabilisés sur le nombre historique de jours écoulés. La valeur maximale est 89."
   },
   {
     "id": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template",
@@ -1149,7 +1177,7 @@
   },
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
-    "translation": "Optimisation des clés de cache. Les options valides sont les suivantes : 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. Si vous sélectionnez 'include-specified' ou 'ignore-specified', ajoutez-la à l'option cache-description."
+    "translation": "Optimisation des clés de cache. Les options valides sont les suivantes : 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. Si vous sélectionnez la valeur 'include-specified' ou 'ignore-specified', ajoutez-la à l'option cache-description."
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -1973,7 +2001,7 @@
   },
   {
     "id": "Detail a CDN Account.",
-    "translation": "Permet d'afficher les détails d'un compte CDN."
+    "translation": "Afficher les détails d'un compte CDN."
   },
   {
     "id": "Detail information about a firewall",
@@ -2165,7 +2193,7 @@
   },
   {
     "id": "Edit a CDN Account.",
-    "translation": "Modifiez un compte CDN."
+    "translation": "Editer un compte CDN."
   },
   {
     "id": "Edit a L7 policy",
@@ -2249,7 +2277,7 @@
   },
   {
     "id": "Either '--enable' or '--disable' is required.",
-    "translation": "'--enable' ou '--disable' est obligatoire."
+    "translation": "'--enable' ou '--disable' est requis."
   },
   {
     "id": "Either -n, --name or -d, --description is required to edit security group.",
@@ -2269,7 +2297,7 @@
   },
   {
     "id": "Email address for this user. Required for creation",
-    "translation": "Adresse électronique de cet utilisateur. Obligatoire pour la création."
+    "translation": "Adresse électronique de cet utilisateur. Requis pour la création."
   },
   {
     "id": "Email address {{.emailID}} was updated.",
@@ -2341,7 +2369,7 @@
   },
   {
     "id": "Endurance Storage Tier (IOP per GB) [required for storage-type endurance], options are: 0.25,2,4,10",
-    "translation": "Niveau de stockage Endurance (E-S par Go) [obligatoire pour le type de stockage endurance], options : 0.25,2,4,10"
+    "translation": "Niveau de stockage Endurance (E-S par Go) [requis pour le type de stockage endurance], options : 0.25,2,4,10"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is 0.25, new IOPS/GB for the volume must also be 0.25. If original IOPS/GB for the volume is greater than 0.25, new IOPS/GB for the volume must also be greater than 0.25.]",
@@ -4489,7 +4517,7 @@
   },
   {
     "id": "IAM token is required. Use '{{.Command}}' to log in.",
-    "translation": "Jeton IAM obligatoire. Utilisez '{{.Command}}' pour vous connecter."
+    "translation": "Le jeton IAM est requis. Utilisez '{{.Command}}' pour vous connecter."
   },
   {
     "id": "ID",
@@ -4977,7 +5005,7 @@
   },
   {
     "id": "List all CDN accounts.",
-    "translation": "Permet de répertorier tous les comptes CDN."
+    "translation": "Répertorier tous les comptes CDN."
   },
   {
     "id": "List all active quotes on an account",
@@ -5293,7 +5321,7 @@
   },
   {
     "id": "Memory in megabytes [required]",
-    "translation": "Mémoire en mégaoctets [obligatoire]"
+    "translation": "Mémoire en mégaoctets [requis]"
   },
   {
     "id": "Memory: ",
@@ -5401,7 +5429,7 @@
   },
   {
     "id": "Name for your new reserved capacity  [required]",
-    "translation": "Nom de votre nouvelle capacité réservée [obligatoire]"
+    "translation": "Nom de votre nouvelle capacité réservée [requis]"
   },
   {
     "id": "Name of the image",
@@ -5409,7 +5437,7 @@
   },
   {
     "id": "Name of the image [required]",
-    "translation": "Nom de l'image [obligatoire]"
+    "translation": "Nom de l'image [requis]"
   },
   {
     "id": "Name of the load balancer L7 pool",
@@ -5577,7 +5605,7 @@
   },
   {
     "id": "None",
-    "translation": "Aucun(e)"
+    "translation": "Néant"
   },
   {
     "id": "Not Found",
@@ -5625,11 +5653,11 @@
   },
   {
     "id": "Number of CPU cores [required]",
-    "translation": "Nombre de coeurs d'UC [obligatoire]"
+    "translation": "Nombre de coeurs d'UC [requis]"
   },
   {
     "id": "Number of VSI instances this capacity reservation can support. [required]",
-    "translation": "Nombre d'instances VSI que cette réservation de capacité peut prendre en charge. [obligatoire]"
+    "translation": "Nombre d'instances VSI que cette réservation de capacité peut prendre en charge [requis]"
   },
   {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
@@ -5637,7 +5665,7 @@
   },
   {
     "id": "Number of snapshots to retain [required]",
-    "translation": "Nombre d'images instantanées à conserver [obligatoire]"
+    "translation": "Nombre d'images instantanées à conserver [requis]"
   },
   {
     "id": "Number of times before marking as DOWN. [1-10]",
@@ -5661,7 +5689,7 @@
   },
   {
     "id": "OS install code[required]",
-    "translation": "Code d'installation du système d'exploitation [obligatoire]"
+    "translation": "Code d'installation du système d'exploitation [requis]"
   },
   {
     "id": "OS version",
@@ -5729,7 +5757,7 @@
   },
   {
     "id": "Operating System [required], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
-    "translation": "Système d'exploitation [obligatoire], options : HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN"
+    "translation": "Système d'exploitation [requis] ; les options sont HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN"
   },
   {
     "id": "Operating system",
@@ -5737,7 +5765,7 @@
   },
   {
     "id": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.",
-    "translation": "Optimisez pour 'General web delivery', 'Large file optimization', 'Video on demand optimization', l'option Dynamic content acceleration n'est pas ajoutée car elle possède une configuration particulière."
+    "translation": "Optimisation pour 'General web delivery', 'Large file optimization', 'Video on demand optimization' ; l'option 'Dynamic content acceleration' n'est pas ajoutée car elle possède une configuration particulière."
   },
   {
     "id": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].",
@@ -5997,7 +6025,7 @@
   },
   {
     "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]",
-    "translation": "IOPS du stockage de type performance, compris entre 100 et 6000 en multiples de 100 [obligatoire pour un stockage de type performance]"
+    "translation": "IOPS du stockage de type performance, compris entre 100 et 6000 en multiples de 100 [requis pour un stockage de type performance]"
   },
   {
     "id": "Permanently removes an SSH key",
@@ -6169,7 +6197,7 @@
   },
   {
     "id": "Port speed[required]",
-    "translation": "Vitesse de port [obligatoire]"
+    "translation": "Vitesse de port [requis]"
   },
   {
     "id": "Post Install",
@@ -6301,7 +6329,7 @@
   },
   {
     "id": "Private key not found",
-    "translation": "Clé privée introuvable"
+    "translation": "Clé introuvable"
   },
   {
     "id": "Private network interface speed must be in: 0, 10, 100, 1000, 10000 (Mbps).",
@@ -6401,7 +6429,7 @@
   },
   {
     "id": "Public notes related to a Storage volume  [required]",
-    "translation": "Notes publiques relatives à un volume de stockage [obligatoire]"
+    "translation": "Notes publiques relatives à un volume de stockage [requis]"
   },
   {
     "id": "Public port speed, options are: 0,10,100,1000,10000",
@@ -6481,7 +6509,7 @@
   },
   {
     "id": "Reflash server firmware.",
-    "translation": "Recapturez le microprogramme de serveur."
+    "translation": "Recapturer le microprogramme de serveur."
   },
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
@@ -6517,7 +6545,7 @@
   },
   {
     "id": "Remote IP address[required]",
-    "translation": "Adresse IP distante [obligatoire]"
+    "translation": "Adresse IP distante [requis]"
   },
   {
     "id": "Remote Subnets",
@@ -6629,7 +6657,7 @@
   },
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
-    "translation": "Respectez les en-têtes. La valeur 1 correspond à On et 0 à Off."
+    "translation": "Respecter les en-têtes. La valeur 1 correspond à Activé et 0 à Désactivé."
   },
   {
     "id": "Restore block volume using a given snapshot",
@@ -6897,11 +6925,11 @@
   },
   {
     "id": "Short name of the datacenter for the IPSec. For example, dal09[required]",
-    "translation": "Nom abrégé du centre de données pour l'IPSEC. Par exemple, dal09 [obligatoire]"
+    "translation": "Nom abrégé du centre de données pour l'IPSEC. Par exemple, dal09 [requis]"
   },
   {
     "id": "Short name of the datacenter for the replica. For example, dal09 [required]",
-    "translation": "Nom abrégé du centre de données de la réplique. Par exemple, dal09 [obligatoire]"
+    "translation": "Nom abrégé du centre de données de la réplique. Par exemple, dal09 [requis]"
   },
   {
     "id": "Show L7 pool details",
@@ -6997,11 +7025,11 @@
   },
   {
     "id": "Size of snapshot space to create in GB  [required]",
-    "translation": "Taille de l'espace d'image instantanée à créer en Go [obligatoire]"
+    "translation": "Taille de l'espace d'image instantanée à créer en Go [requis]"
   },
   {
     "id": "Size of storage volume in GB [required]",
-    "translation": "Taille du volume de stockage en Go [obligatoire]"
+    "translation": "Taille du volume de stockage en Go [requis]"
   },
   {
     "id": "Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB",
@@ -7021,11 +7049,11 @@
   },
   {
     "id": "Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY",
-    "translation": "Planification d'image instantanée [obligatoire], options : HOURLY,DAILY,WEEKLY"
+    "translation": "Planification d'image instantanée [requis] ; les options sont HOURLY,DAILY,WEEKLY"
   },
   {
     "id": "Snapshot schedule to use for replication. Options are: HOURLY,DAILY,WEEKLY [required]",
-    "translation": "Planification d'image instantanée à utiliser pour la réplication. Options : HOURLY,DAILY,WEEKLY [obligatoire]"
+    "translation": "Planification d'image instantanée à utiliser pour la réplication. Options : HOURLY,DAILY,WEEKLY [requis]"
   },
   {
     "id": "Snapshot space not found for original volume, origin snapshot space is needed for duplication",
@@ -7129,7 +7157,7 @@
   },
   {
     "id": "Static IP address[required]",
-    "translation": "Adresse IP statique [obligatoire]"
+    "translation": "Adresse IP statique [requis]"
   },
   {
     "id": "Static Subnets",
@@ -7405,7 +7433,7 @@
   },
   {
     "id": "The direction of traffic to enforce (ingress or egress), required",
-    "translation": "Sens du trafic à imposer (entrant ou sortant), obligatoire"
+    "translation": "Sens du trafic à imposer (entrant ou sortant), requis"
   },
   {
     "id": "The domain of hardware server: {{.ID}} was updated.",
@@ -8537,7 +8565,7 @@
   },
   {
     "id": "[--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY.",
-    "translation": "[--schedule-type] est obligatoire, options : HOURLY, DAILY, WEEKLY."
+    "translation": "[--schedule-type] est requis ; les options sont HOURLY, DAILY, WEEKLY."
   },
   {
     "id": "[--schedule-type] must be HOURLY, DAILY, or WEEKLY.",
@@ -8557,11 +8585,15 @@
   },
   {
     "id": "[-d|--datacenter] and [-t|--vlan-type] are required.\nRun '{{.CommandName}} sl vlan options' to check available options.",
-    "translation": "[-d|--datacenter] et [-t|--vlan-type] sont obligatoires.\nExécutez '{{.CommandName}} sl vlan options' pour consulter les options disponibles."
+    "translation": "[-d|--datacenter] et [-t|--vlan-type] sont requis.\nExécutez '{{.CommandName}} sl vlan options' pour consulter les options disponibles."
   },
   {
     "id": "[-d|--datacenter] is required.\n Run '{{.CommandName}} sl block volume-options' to get available options.",
-    "translation": "[-d|--datacenter] est obligatoire.\n Exécutez '{{.CommandName}} sl block volume-options' pour obtenir les options disponibles."
+    "translation": "[-d|--datacenter] est requis.\n Exécutez '{{.CommandName}} sl block volume-options' pour obtenir les options disponibles."
+  },
+  {
+    "id": "[-d|--datacenter] is required.\n Run '{{.CommandName}} sl file volume-options' to get available options.",
+    "translation": "[-d|--datacenter] est requis.\n Exécutez {{.CommandName}} sl file volume-options' pour obtenir les options disponibles."
   },
   {
     "id": "[-d|--day-of-week] value must be between 0 and 6.",
@@ -8589,7 +8621,7 @@
   },
   {
     "id": "[-s|--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY.",
-    "translation": "[-s|--schedule-type] est obligatoire, options : HOURLY, DAILY, WEEKLY."
+    "translation": "[-s|--schedule-type] est requis ; les options sont HOURLY, DAILY, WEEKLY."
   },
   {
     "id": "[-s|--schedule-type] must be HOURLY, DAILY, or WEEKLY.",
@@ -8597,15 +8629,15 @@
   },
   {
     "id": "[-s|--size] is required.\nRun '{{.CommandName}} sl block volume-options' to get available options.",
-    "translation": "[-s|--size] est obligatoire.\n Exécutez '{{.CommandName}} sl block volume-options' pour obtenir les options disponibles."
+    "translation": "[-s|--size] est requis.\n Exécutez '{{.CommandName}} sl block volume-options' pour obtenir les options disponibles."
   },
   {
     "id": "[-s|--size] is required.\nRun '{{.CommandName}} sl file volume-options' to get available options.",
-    "translation": "[-s|--size] est obligatoire.\n Exécutez {{.CommandName}} sl file volume-options' pour obtenir les options disponibles."
+    "translation": "[-s|--size] est requis.\n Exécutez {{.CommandName}} sl file volume-options' pour obtenir les options disponibles."
   },
   {
     "id": "[-s|--snapshot-schedule] is required, options are: HOURLY, DAILY, WEEKLY.",
-    "translation": "[-s|--snapshot-schedule] est obligatoire, options : HOURLY, DAILY, WEEKLY."
+    "translation": "[-s|--snapshot-schedule] est requis ; les options sont HOURLY, DAILY, WEEKLY."
   },
   {
     "id": "[-t/--type] is required.",
@@ -8617,7 +8649,7 @@
   },
   {
     "id": "[-t|--vlan-type] is required, must be either public or private.\nRun '{{.CommandName}} sl vlan options' to check available options.",
-    "translation": "[-t|--vlan-type] est obligatoire, doit avoir pour valeur public ou private.\nExécutez '{{.CommandName}} sl vlan options' pour consulter les options disponibles."
+    "translation": "[-t|--vlan-type] est requis et doit avoir pour valeur public ou private.\nExécutez '{{.CommandName}} sl vlan options' pour consulter les options disponibles."
   },
   {
     "id": "[-u|--userdata] is not allowed with [-F|--userfile].",
@@ -8809,19 +8841,19 @@
   },
   {
     "id": "either [-c|--cpu] or [--flavor] is required.",
-    "translation": "[-c|--cpu] ou [--flavor] est obligatoire."
+    "translation": "[-c|--cpu] ou [--flavor] est requis."
   },
   {
     "id": "either [-k] or [-f|--in-file] is required.",
-    "translation": "[-k] ou [-f|--in-file] est obligatoire."
+    "translation": "[-k] ou [-f|--in-file] est requis."
   },
   {
     "id": "either [-m|--memory] or [--flavor] is required.",
-    "translation": "[-m|--memory] ou [--flavor] est obligatoire."
+    "translation": "[-m|--memory] ou [--flavor] est requis."
   },
   {
     "id": "either [-o|--os] or [--image] is required.",
-    "translation": "[-o|--os] ou [--image] est obligatoire."
+    "translation": "[-o|--os] ou [--image] est requis."
   },
   {
     "id": "either the hardware or virtual flag must be set.",
@@ -8977,7 +9009,7 @@
   },
   {
     "id": "none",
-    "translation": "aucun"
+    "translation": "néant"
   },
   {
     "id": "note",
