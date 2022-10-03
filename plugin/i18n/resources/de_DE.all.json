@@ -136,7 +136,6 @@
     "translation": "${COMMAND_NAME} sl hardware storage [OPTIONEN] IDENTIFIER\n \nBEISPIEL:\n ${COMMAND_NAME} sl hardware storage 1234567\n Speicherdetails für einen Hardwareserver abrufen."
   },
   {
->>>>>>> f8a0578ec7263d5a44539b09a99635337ca075b8
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
     "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONEN] \n\nBEISPIEL:\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 --remove sjc03\n Dieser Befehl fügt das Rechenzentrum eines Image hinzu bzw. entfernt es."
   },

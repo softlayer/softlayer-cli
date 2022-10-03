@@ -665,6 +665,39 @@ EXAMPLE:
 	${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{"virtualGuests":{"hostname":{"operation":"cli-test"}}}'
 	This command list virtual guests.
 ==============================================================
+sl cdn detail
+	Flag: history: Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum. (Default: 30)
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Detail a CDN Account.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl cdn detail [OPTIONS] 
+${COMMAND_NAME} sl cdn detail
+==============================================================
+sl cdn edit
+	Flag: cache: Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.
+	Flag: cache-description: In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.
+	Flag: header: Host header.
+	Flag: http-port: HTTP port.
+	Flag: https-port: HTTPS port.
+	Flag: origin: Origin server address.
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: performance-configuration: Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.
+	Flag: respect-headers: Respect headers. The value 1 is On and 0 is Off.
+	--------------------------------
+	Description: Edit a CDN Account.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl cdn edit [OPTIONS] 
+${COMMAND_NAME} sl cdn edit
+==============================================================
+sl cdn list
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: List all CDN accounts.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl cdn list
+${COMMAND_NAME} sl cdn list
+==============================================================
 sl dedicatedhost cancel-guests
 	Flag: f,force: Force operation without confirmation
 	Flag: output: Specify output format, only JSON is supported now.
@@ -1459,6 +1492,15 @@ sl globalip unassign
 	Usage: ${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS] 
 
 ==============================================================
+sl hardware add-notification
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: users: User ID to be notified on monitoring failure, multiple occurrence allowed
+	--------------------------------
+	Description: Create a user hardware notification entry.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl hardware add-notification IDENTIFIER [OPTIONS] 
+
+==============================================================
 sl hardware authorize-storage
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: u,username-storage: The storage username to be added to the hardware server.
@@ -1616,6 +1658,14 @@ sl hardware monitoring-list
 	Description: Get details for a hardware monitors device.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl hardware monitoring-list IDENTIFIER
+
+==============================================================
+sl hardware notifications
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Shows who gets notified when the server has a monitoring issues.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl hardware notifications IDENTIFIER
 
 ==============================================================
 sl hardware power-cycle
@@ -2351,6 +2401,64 @@ sl nas list
 	Usage: ${COMMAND_NAME} sl nas list
 
 ==============================================================
+sl object-storage accounts
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: List Object Storage accounts.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl object-storage accounts
+${COMMAND_NAME} sl object-storage accounts
+==============================================================
+sl object-storage credential-create
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Create credentials for an IBM Cloud Object Storage Account.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl object-storage credential-create
+${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]
+
+Examples:
+	${COMMAND_NAME} sl object-storage credential-create 123456
+==============================================================
+sl object-storage credential-delete
+	Flag: credential-id: This is the credential id associated with the volume. [Required]
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Delete the credential of an Object Storage Account.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl object-storage credential-delete [OPTIONS] 
+${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]
+
+Examples:
+	${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321
+==============================================================
+sl object-storage credential-limit
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Credential limits for this IBM Cloud Object Storage account.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl object-storage credential-limit
+${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]
+
+Examples:
+	${COMMAND_NAME} sl object-storage credential-limit 123456
+==============================================================
+sl object-storage credential-list
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Retrieve credentials used for generating an AWS signature. Max of 2.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl object-storage credential-list
+${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]
+==============================================================
+sl object-storage endpoints
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: List object storage endpoints.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl object-storage endpoints
+${COMMAND_NAME} sl object-storage endpoints IDENTIFIER
+==============================================================
 sl order category-list
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: required: List only the required categories for the package
@@ -2570,23 +2678,6 @@ EXAMPLE:
    ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key 
    This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.
 ==============================================================
-sl security cert-add
-	Flag: crt: Certificate file
-	Flag: csr: Certificate Signing Request file
-	Flag: icc: Intermediate Certificate file
-	Flag: key: Private Key file
-	Flag: notes: Additional notes
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Add and upload SSL certificate details
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security cert-add [OPTIONS] 
-${COMMAND_NAME} sl security cert-add [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key 
-   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.
-==============================================================
 sl security cert-download
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
@@ -2598,35 +2689,6 @@ ${COMMAND_NAME} sl security cert-download IDENTIFIER [OPTIONS]
 EXAMPLE:
    ${COMMAND_NAME} sl security cert-download 12345678
    This command downloads four files to current directory for certificate with ID 12345678. The four files are: certificate file, certificate signing request file, intermediate certificate file and private key file.
-==============================================================
-sl security cert-download
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Download SSL certificate and key files
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security cert-download IDENTIFIER
-${COMMAND_NAME} sl security cert-download IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl security cert-download 12345678
-   This command downloads four files to current directory for certificate with ID 12345678. The four files are: certificate file, certificate signing request file, intermediate certificate file and private key file.
-==============================================================
-sl security cert-edit
-	Flag: crt: Certificate file
-	Flag: csr: Certificate Signing Request file
-	Flag: icc: Intermediate Certificate file
-	Flag: key: Private Key file
-	Flag: notes: Additional notes
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Edit SSL certificate
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security cert-edit IDENTIFIER [OPTIONS] 
-${COMMAND_NAME} sl security cert-edit IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl security cert-edit 12345678 --key ~/ibm.com.key 
-   This command edits certificate with ID 12345678 and updates its private key with file: ~/ibm.com.key.
 ==============================================================
 sl security cert-edit
 	Flag: crt: Certificate file
@@ -2659,20 +2721,6 @@ EXAMPLE:
    ${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire
    This command lists all valid certificates on current account and sort them by validity days.
 ==============================================================
-sl security cert-list
-	Flag: output: Specify output format, only JSON is supported now.
-	Flag: sortby: Column to sort by. Options are: id,common_name,days_until_expire,note
-	Flag: status: Show certificates with this status, default is: all, options are: all,valid,expired
-	--------------------------------
-	Description: List SSL certificates on your account
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security cert-list [OPTIONS] 
-${COMMAND_NAME} sl security cert-list [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire
-   This command lists all valid certificates on current account and sort them by validity days.
-==============================================================
 sl security cert-remove
 	Flag: f,force: Force operation without confirmation
 	Flag: output: Specify output format, only JSON is supported now.
@@ -2685,34 +2733,6 @@ ${COMMAND_NAME} sl security cert-remove IDENTIFIER [OPTIONS]
 EXAMPLE:
    ${COMMAND_NAME} sl security cert-remove 12345678 
    This command removes certificate with ID 12345678.
-==============================================================
-sl security cert-remove
-	Flag: f,force: Force operation without confirmation
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Remove SSL certificate
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security cert-remove IDENTIFIER [OPTIONS] 
-${COMMAND_NAME} sl security cert-remove IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl security cert-remove 12345678 
-   This command removes certificate with ID 12345678.
-==============================================================
-sl security sshkey-add
-	Flag: f,in-file: The id_rsa.pub file to import for this key
-	Flag: k,key: The actual SSH key
-	Flag: note: Extra note to be associated with the key
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Add a new SSH key
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security sshkey-add LABEL [OPTIONS] 
-${COMMAND_NAME} sl security sshkey-add LABEL [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl security sshkey-add my_sshkey -f ~/.ssh/id_rsa.pub --note mykey
-   This command adds an SSH key from file ~/.ssh/id_rsa.pub with a note "mykey".
 ==============================================================
 sl security sshkey-add
 	Flag: f,in-file: The id_rsa.pub file to import for this key
@@ -2743,33 +2763,6 @@ EXAMPLE:
    ${COMMAND_NAME} sl security sshkey-edit 12345678 --label IBMCloud --note testing
    This command updates the SSH key with ID 12345678 and sets label to "IBMCloud" and note to "testing".
 ==============================================================
-sl security sshkey-edit
-	Flag: label: The new label for the key
-	Flag: note: New notes for the key
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Edit an SSH key
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [OPTIONS] 
-${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl security sshkey-edit 12345678 --label IBMCloud --note testing
-   This command updates the SSH key with ID 12345678 and sets label to "IBMCloud" and note to "testing".
-==============================================================
-sl security sshkey-list
-	Flag: output: Specify output format, only JSON is supported now.
-	Flag: sortby: Column to sort by. Options are: id,label,fingerprint,note
-	--------------------------------
-	Description: List SSH keys on your account
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security sshkey-list [OPTIONS] 
-${COMMAND_NAME} sl security sshkey-list [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl security sshkey-list --sortby label
-   This command lists all SSH keys on current account and sorts them by label.
-==============================================================
 sl security sshkey-list
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: sortby: Column to sort by. Options are: id,label,fingerprint,note
@@ -2795,32 +2788,6 @@ ${COMMAND_NAME} sl security sshkey-print IDENTIFIER [OPTIONS]
 EXAMPLE:
    ${COMMAND_NAME} sl security sshkey-print 12345678 -f ~/mykey.pub
    This command shows the ID, label and notes of SSH key with ID 12345678 and write the public key to file: ~/mykey.pub.
-==============================================================
-sl security sshkey-print
-	Flag: f,out-file: The public SSH key will be written to this file
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Prints out an SSH key to the screen
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security sshkey-print [OPTIONS] 
-${COMMAND_NAME} sl security sshkey-print IDENTIFIER [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl security sshkey-print 12345678 -f ~/mykey.pub
-   This command shows the ID, label and notes of SSH key with ID 12345678 and write the public key to file: ~/mykey.pub.
-==============================================================
-sl security sshkey-remove
-	Flag: f,force: Force operation without confirmation
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Permanently removes an SSH key
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl security sshkey-remove IDENTIFIER [OPTIONS] 
-${COMMAND_NAME} sl security sshkey-remove IDENTIFIER [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl security sshkey-remove 12345678 -f 
-   This command removes the SSH key with ID 12345678 without asking for confirmation.
 ==============================================================
 sl security sshkey-remove
 	Flag: f,force: Force operation without confirmation
@@ -3482,6 +3449,15 @@ sl vlan options
 	Usage: ${COMMAND_NAME} sl vlan options
 
 ==============================================================
+sl vs add-notification
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: users: User ID to be notified on monitoring failure, multiple occurrence allowed
+	--------------------------------
+	Description: Create a user virtual notification entry.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl vs add-notification IDENTIFIER [OPTIONS] 
+
+==============================================================
 sl vs authorize-storage
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: p,portable-id: The portable storage id to be added to the virtual server
@@ -3720,7 +3696,7 @@ sl vs host-create
 	Flag: f,force: Force operation without confirmation
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: s,size: Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB
-	Flag: v,vlan-private: The ID of the private VLAN on which you want the virtual server placed
+	Flag: v,vlan-private: The ID of the private VLAN on which you want the dedicated host placed. See: '${COMMAND_NAME} sl vlan list' for reference
 	--------------------------------
 	Description: Create a host for dedicated virtual servers
 	--------------------------------
@@ -3787,6 +3763,14 @@ sl vs monitoring-list
 	Description: Get details for a vsi monitors device.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl vs monitoring-list IDENTIFIER
+
+==============================================================
+sl vs notifications
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Shows who gets notified when the server virtual instance has a monitoring issues
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl vs notifications IDENTIFIER
 
 ==============================================================
 sl vs options
