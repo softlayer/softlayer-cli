@@ -3,52 +3,50 @@ package security_test
 import (
 	"errors"
 	"os"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Key print", func() {
 	var (
 		fakeUI              *terminal.FakeUI
+		cliCommand          *security.KeyPrintCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 		fakeSecurityManager *testhelpers.FakeSecurityManager
-		cmd                 *security.KeyPrintCommand
-		cliCommand          cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = security.NewKeyPrintCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeSecurityManager = new(testhelpers.FakeSecurityManager)
-		cmd = security.NewKeyPrintCommand(fakeUI, fakeSecurityManager)
-		cliCommand = cli.Command{
-			Name:        security.SecuritySSHKeyPrintMetaData().Name,
-			Description: security.SecuritySSHKeyPrintMetaData().Description,
-			Usage:       security.SecuritySSHKeyPrintMetaData().Usage,
-			Flags:       security.SecuritySSHKeyPrintMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.SecurityManager = fakeSecurityManager
 	})
 
 	Describe("Key print", func() {
 		Context("Key print without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Key print with wrong key ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'SSH Key ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'SSH Key ID'. It must be a positive integer."))
 			})
 		})
 		Context("Key print but server API call fails", func() {
@@ -56,10 +54,10 @@ var _ = Describe("Key print", func() {
 				fakeSecurityManager.GetSSHKeyReturns(datatypes.Security_Ssh_Key{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get SSH Key 1234")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get SSH Key 1234"))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 		Context("Key print", func() {
@@ -72,7 +70,7 @@ var _ = Describe("Key print", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"label"}))
@@ -83,7 +81,7 @@ var _ = Describe("Key print", func() {
 				if os.Getenv("OS") == "Windows_NT" {
 					Skip("Test doesn't work in windows.")
 				}
-				err := testhelpers.RunCommand(cliCommand, "1234", "-f", "/tmp/key")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f", "/tmp/key")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"label"}))
@@ -91,9 +89,9 @@ var _ = Describe("Key print", func() {
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"ssh-rsa djghtbtmfhgentongwfrdnglkhsdye"}))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-f", "/root/key")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f", "/root/key")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to write SSH key to file: /root/key.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to write SSH key to file: /root/key."))
 			})
 		})
 	})

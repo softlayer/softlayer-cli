@@ -1,13 +1,11 @@
 package eventlog
 
 import (
-	"strconv"
 	"time"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/filter"
-	"github.com/urfave/cli"
-
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -16,83 +14,93 @@ import (
 )
 
 type GetCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	EventLogManager managers.EventLogManager
+	Command         *cobra.Command
+	DateMin         string
+	DateMax         string
+	ObjEvent        string
+	ObjId           string
+	ObjType         string
+	UtcOffset       string
+	Metadata        bool
+	Limit           int
 }
 
-func NewGetCommand(ui terminal.UI, eventLogManagerManager managers.EventLogManager) (cmd *GetCommand) {
-	return &GetCommand{
-		UI:              ui,
-		EventLogManager: eventLogManagerManager,
+func NewGetCommand(sl *metadata.SoftlayerCommand) (cmd *GetCommand) {
+	thisCmd := &GetCommand{
+		SoftlayerCommand: sl,
+		EventLogManager:  managers.NewEventLogManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "get",
+		Short: T("Get Event Logs"),
+		Long: T(`${COMMAND_NAME} sl event-log get [OPTIONS]
+
+EXAMPLE: 
+   ${COMMAND_NAME} sl event-log get 
+   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata
+   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVarP(&thisCmd.DateMin, "date-min", "d", "", T("The earliest date we want to search for event logs [YYYY-MM-DD]."))
+	cobraCmd.Flags().StringVarP(&thisCmd.DateMax, "date-max", "D", "", T("The latest date we want to search for event logs [YYYY-MM-DD]."))
+	cobraCmd.Flags().StringVarP(&thisCmd.ObjEvent, "obj-event", "e", "", T("The event we want to get event logs for"))
+	cobraCmd.Flags().StringVarP(&thisCmd.ObjId, "obj-id", "i", "", T("The id of the object we want to get event logs for"))
+	cobraCmd.Flags().StringVarP(&thisCmd.ObjType, "obj-type", "t", "", T("The type of the object we want to get event logs for"))
+	cobraCmd.Flags().StringVarP(&thisCmd.UtcOffset, "utc-offset", "z", "", T("UTC Offset for searching with dates. +/-HHMM format  [default: -0000]"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Metadata, "metadata", false, T("Display metadata if present  [default: no-metadata]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Limit, "limit", "l", 50, T("Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *GetCommand) Run(c *cli.Context) error {
+func (cmd *GetCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	limit := 50
-	if c.IsSet("limit") {
-		limit, err = strconv.Atoi(c.String("limit"))
-		if err != nil {
-			return errors.NewInvalidSoftlayerIdInputError("limit")
-		}
-	}
+	limit := cmd.Limit
 
-	dateMin := ""
-	if c.IsSet("date-min") {
-		date := c.String("date-min")
-		time, err := time.Parse(time.RFC3339, date+"T00:00:00Z")
+	dateMin := cmd.DateMin
+	if dateMin != "" {
+		time, err := time.Parse(time.RFC3339, dateMin+"T00:00:00Z")
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Invalid format date to --date-min."))
 		}
 		dateMin = time.Format("2006-01-02T15:04:05")
 	}
 
-	dateMax := ""
-	if c.IsSet("date-max") {
-		date := c.String("date-max")
-		time, err := time.Parse(time.RFC3339, date+"T00:00:00Z")
+	dateMax := cmd.DateMax
+	if dateMax != "" {
+		time, err := time.Parse(time.RFC3339, dateMax+"T00:00:00Z")
 		if err != nil {
 			return errors.NewInvalidUsageError(T("Invalid format date to --date-max."))
 		}
 		dateMax = time.Format("2006-01-02T15:04:05")
 	}
 
-	objEvent := ""
-	if c.IsSet("obj-event") {
-		objEvent = c.String("obj-event")
-	}
+	objEvent := cmd.ObjEvent
 
-	objId := ""
-	if c.IsSet("obj-id") {
-		objId = c.String("obj-id")
-	}
+	objId := cmd.ObjId
 
-	objType := ""
-	if c.IsSet("obj-type") {
-		objType = c.String("obj-type")
-	}
+	objType := cmd.ObjType
 
-	utcOffset := ""
-	if c.IsSet("utc-offset") {
-		utcOffset = c.String("utc-offset")
-	}
+	utcOffset := cmd.UtcOffset
 
-	metadata := false
-	if c.IsSet("metadata") {
-		metadata = c.Bool("metadata")
-	}
+	metadata := cmd.Metadata
 
 	filter := buildFilter(dateMin, dateMax, objEvent, objId, objType, utcOffset)
 
 	mask := "mask[eventName,label,objectName,eventCreateDate,userId,userType,objectId,metaData,user[username]]"
 	logs, err := cmd.EventLogManager.GetEventLogs(mask, filter, limit)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Event Logs.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Event Logs.\n"), err.Error(), 2)
 	}
 	if logs[0].EventName != nil {
 		var table terminal.Table
@@ -170,53 +178,4 @@ func setUtcOffset(date string, utcOffset string) string {
 		date = date + ".000000" + utcOffset[:3] + ":" + utcOffset[3:]
 	}
 	return date
-}
-
-func EventLogGetMetaData() cli.Command {
-	return cli.Command{
-		Category:    "event-log",
-		Name:        "get",
-		Description: T("Get Event Logs"),
-		Usage: T(`${COMMAND_NAME} sl event-log get [OPTIONS]
-
-EXAMPLE: 
-   ${COMMAND_NAME} sl event-log get 
-   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata
-   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "d,date-min",
-				Usage: T("The earliest date we want to search for event logs [YYYY-MM-DD]."),
-			},
-			cli.StringFlag{
-				Name:  "D,date-max",
-				Usage: T("The latest date we want to search for event logs [YYYY-MM-DD]."),
-			},
-			cli.StringFlag{
-				Name:  "e,obj-event",
-				Usage: T("The event we want to get event logs for"),
-			},
-			cli.StringFlag{
-				Name:  "i,obj-id",
-				Usage: T("The id of the object we want to get event logs for"),
-			},
-			cli.StringFlag{
-				Name:  "t,obj-type",
-				Usage: T("The type of the object we want to get event logs for"),
-			},
-			cli.StringFlag{
-				Name:  "z,utc-offset",
-				Usage: T("UTC Offset for searching with dates. +/-HHMM format  [default: -0000]"),
-			},
-			cli.BoolFlag{
-				Name:  "metadata",
-				Usage: T("Display metadata if present  [default: no-metadata]"),
-			},
-			cli.StringFlag{
-				Name:  "l,limit",
-				Usage: T("Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

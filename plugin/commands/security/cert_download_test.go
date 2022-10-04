@@ -8,43 +8,42 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Certificate download", func() {
 	var (
 		fakeUI              *terminal.FakeUI
+		cliCommand          *security.CertDownloadCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 		fakeSecurityManager *testhelpers.FakeSecurityManager
-		cmd                 *security.CertDownloadCommand
-		cliCommand          cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = security.NewCertDownloadCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeSecurityManager = new(testhelpers.FakeSecurityManager)
-		cmd = security.NewCertDownloadCommand(fakeUI, fakeSecurityManager)
-		cliCommand = cli.Command{
-			Name:        security.SecuritySSLCertDownloadMetaData().Name,
-			Description: security.SecuritySSLCertDownloadMetaData().Description,
-			Usage:       security.SecuritySSLCertDownloadMetaData().Usage,
-			Flags:       security.SecuritySSLCertDownloadMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.SecurityManager = fakeSecurityManager
 	})
 
 	Describe("Certificate download", func() {
 		Context("Certificate download without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Certificate download with wrong cert ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'SSL certificate ID'. It must be a positive integer."))
 			})
@@ -54,7 +53,7 @@ var _ = Describe("Certificate download", func() {
 				fakeSecurityManager.GetCertificateReturns(datatypes.Security_Certificate{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get SSL certificate: 1234"))
 			})
@@ -64,7 +63,7 @@ var _ = Describe("Certificate download", func() {
 				fakeSecurityManager.GetCertificateReturns(datatypes.Security_Certificate{}, nil)
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Certificate not found"))
 				Expect(err.Error()).To(ContainSubstring("Private key not found"))
@@ -84,18 +83,18 @@ var _ = Describe("Certificate download", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("SSL certificate files are downloaded."))
 			})
 			It("Output JSON", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--output", "JSON")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--output", "JSON")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("\"commonName\": \"wilma.org\""))
 			})
 			It("Handle unable to write file", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--output", "JSON")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--output", "JSON")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("\"commonName\": \"wilma.org\""))
 			})
@@ -112,7 +111,7 @@ var _ = Describe("Certificate download", func() {
 				}, nil)
 			})
 			It("Handle unable to write file", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to write certificate to file"))
 				Expect(err.Error()).To(ContainSubstring("Failed to write private key to file"))
@@ -128,7 +127,7 @@ var _ = Describe("Certificate download", func() {
 		})
 		Context("Check bad output format", func() {
 			It("Error", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--output", "text")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--output", "text")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format"))
 			})

@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -16,102 +14,86 @@ import (
 )
 
 type ReplicaOrderCommand struct {
-	UI             terminal.UI
-	StorageManager managers.StorageManager
-	Context        plugin.PluginContext
+	*metadata.SoftlayerStorageCommand
+	Command          *cobra.Command
+	StorageManager   managers.StorageManager
+	SnapshotSchedule string
+	Datacenter       string
+	Tier             float64
+	Iops             int
+	Force            bool
 }
 
-func NewReplicaOrderCommand(ui terminal.UI, storageManager managers.StorageManager, context plugin.PluginContext) (cmd *ReplicaOrderCommand) {
-	return &ReplicaOrderCommand{
-		UI:             ui,
-		StorageManager: storageManager,
-		Context:        context,
+func NewReplicaOrderCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaOrderCommand {
+	thisCmd := &ReplicaOrderCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func FileReplicaOrderMetaData() cli.Command {
-	return cli.Command{
-		Category:    "file",
-		Name:        "replica-order",
-		Description: T("Order a file storage replica volume"),
-		Usage: T(`${COMMAND_NAME} sl file replica-order VOLUME_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "replica-order " + T("IDENTIFIER"),
+		Short: T("Order a block storage replica volume"),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl file replica-order 12345678 -s DAILY -d dal09 --tier 4 
-   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "s,snapshot-schedule",
-				Usage: T("Snapshot schedule to use for replication. Options are: HOURLY,DAILY,WEEKLY [required]"),
-			},
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Short name of the datacenter for the replica. For example, dal09 [required]"),
-			},
-			cli.Float64Flag{
-				Name:  "t,tier",
-				Usage: T("Endurance Storage Tier (IOPS per GB) of the primary volume for which a replica is ordered [optional], options are: 0.25,2,4,10,if no tier is specified, the tier of the original volume will be used"),
-			},
-			cli.IntFlag{
-				Name:  "i,iops",
-				Usage: T("Performance Storage IOPs, between 100 and 6000 in multiples of 100,if no IOPS value is specified, the IOPS value of the original volume will be used"),
-			},
-			metadata.ForceFlag(),
-			metadata.OutputFlag(),
+   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX
+   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.`, sl.StorageI18n),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVarP(&thisCmd.SnapshotSchedule, "snapshot-schedule", "s", "", T("Snapshot schedule to use for replication. Options are: HOURLY,DAILY,WEEKLY [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Short name of the datacenter for the replica. For example, dal09 [required]"))
+	cobraCmd.Flags().Float64VarP(&thisCmd.Tier, "tier", "t", 0, T("Endurance Storage Tier (IOPS per GB) of the primary volume for which a replica is ordered [optional], options are: 0.25,2,4,10,if no tier is specified, the tier of the original volume will be used"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Iops, "iops", "i", 0, ("Performance Storage IOPs, between 100 and 6000 in multiples of 100,if no IOPS value is specified, the IOPS value of the original volume will be used"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ReplicaOrderCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *ReplicaOrderCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return errors.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	snapshotSchedule := c.String("s")
-	if snapshotSchedule == "" {
-		return errors.NewInvalidUsageError(T("[-s|--snapshot-schedule] is required, options are: HOURLY, DAILY, WEEKLY."))
-	}
-	if snapshotSchedule != "HOURLY" && snapshotSchedule != "DAILY" && snapshotSchedule != "WEEKLY" {
+	snapshotSchedule := cmd.SnapshotSchedule
+	if snapshotSchedule == "" || (snapshotSchedule != "HOURLY" && snapshotSchedule != "DAILY" && snapshotSchedule != "WEEKLY") {
 		return errors.NewInvalidUsageError(T("[-s|--snapshot-schedule] is required, options are: HOURLY, DAILY, WEEKLY."))
 	}
 
-	datacenter := c.String("d")
+	datacenter := cmd.Datacenter
 	if datacenter == "" {
-		return errors.NewInvalidUsageError(T("[-d|--datacenter] is required.\n Run '{{.CommandName}} sl file volume-options' to get available options.",
-			map[string]interface{}{"CommandName": cmd.Context.CLIName()}))
+		// Need a better way to get command_name
+		return errors.NewInvalidUsageError(T("[-d|--datacenter] is required.\n Run '{{.CommandName}} sl block volume-options' to get available options.",
+			map[string]interface{}{"CommandName": "${COMMAND_NAME}"}))
 	}
 
-	tier := c.Float64("t")
-	if tier != 0 {
+	tier := cmd.Tier
+	if tier > 0 {
 		if tier != 0.25 && tier != 2 && tier != 4 && tier != 10 {
 			return errors.NewInvalidUsageError(T("[-t|--tier] is optional, options are: 0.25,2,4,10."))
 		}
 	}
-	iops := c.Int("i")
+	iops := cmd.Iops
 	if iops != 0 {
 		if iops < 100 || iops > 6000 {
-			return errors.NewInvalidUsageError(T("-i|--iops must be between 100 and 6000, inclusive.\nRun '{{.CommandName}} sl file volume-options' to check available options.",
-				map[string]interface{}{"CommandName": cmd.Context.CLIName()}))
+			return errors.NewInvalidUsageError(T("-i|--iops must be between 100 and 6000, inclusive.\nRun '{{.CommandName}} sl block volume-options' to check available options.",
+				map[string]interface{}{"CommandName": "${COMMAND_NAME}"}))
 		}
 		if iops%100 != 0 {
-			return errors.NewInvalidUsageError(T("-i|--iops must be a multiple of 100.\nRun '{{.CommandName}} sl file volume-options' to check available options.",
-				map[string]interface{}{"CommandName": cmd.Context.CLIName()}))
+			return errors.NewInvalidUsageError(T("-i|--iops must be a multiple of 100.\nRun '{{.CommandName}} sl block volume-options' to check available options.",
+				map[string]interface{}{"CommandName": "${COMMAND_NAME}"}))
 		}
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	if !c.IsSet("f") && outputFormat != "JSON" {
+	if !cmd.Force && outputFormat != "JSON" {
 		confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -121,7 +103,7 @@ func (cmd *ReplicaOrderCommand) Run(c *cli.Context) error {
 
 	orderReceipt, err := cmd.StorageManager.OrderReplicantVolume("file", volumeID, snapshotSchedule, datacenter, tier, iops, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to order replicant for volume {{.VolumeID}}.Please verify your options and try again.\n", map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to order replicant for volume {{.VolumeID}}.Please verify your options and try again.\n", map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {

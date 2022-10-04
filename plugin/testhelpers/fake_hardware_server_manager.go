@@ -51,6 +51,20 @@ type FakeHardwareServerManager struct {
 		result1 bool
 		result2 error
 	}
+	CreateUserCustomerNotificationStub        func(int, int) (datatypes.User_Customer_Notification_Hardware, error)
+	createUserCustomerNotificationMutex       sync.RWMutex
+	createUserCustomerNotificationArgsForCall []struct {
+		arg1 int
+		arg2 int
+	}
+	createUserCustomerNotificationReturns struct {
+		result1 datatypes.User_Customer_Notification_Hardware
+		result2 error
+	}
+	createUserCustomerNotificationReturnsOnCall map[int]struct {
+		result1 datatypes.User_Customer_Notification_Hardware
+		result2 error
+	}
 	EditStub        func(int, string, string, string, string, string, int, int) ([]bool, []string)
 	editMutex       sync.RWMutex
 	editArgsForCall []struct {
@@ -305,6 +319,20 @@ type FakeHardwareServerManager struct {
 	}
 	getStorageDetailsReturnsOnCall map[int]struct {
 		result1 []datatypes.Network_Storage
+		result2 error
+	}
+	GetUserCustomerNotificationsByHardwareIdStub        func(int, string) ([]datatypes.User_Customer_Notification_Hardware, error)
+	getUserCustomerNotificationsByHardwareIdMutex       sync.RWMutex
+	getUserCustomerNotificationsByHardwareIdArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getUserCustomerNotificationsByHardwareIdReturns struct {
+		result1 []datatypes.User_Customer_Notification_Hardware
+		result2 error
+	}
+	getUserCustomerNotificationsByHardwareIdReturnsOnCall map[int]struct {
+		result1 []datatypes.User_Customer_Notification_Hardware
 		result2 error
 	}
 	ListHardwareStub        func([]string, int, int, string, string, string, int, string, string, string, int, string) ([]datatypes.Hardware_Server, error)
@@ -649,6 +677,71 @@ func (fake *FakeHardwareServerManager) CreateFirmwareReflashTransactionReturnsOn
 	}
 	fake.createFirmwareReflashTransactionReturnsOnCall[i] = struct {
 		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotification(arg1 int, arg2 int) (datatypes.User_Customer_Notification_Hardware, error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	ret, specificReturn := fake.createUserCustomerNotificationReturnsOnCall[len(fake.createUserCustomerNotificationArgsForCall)]
+	fake.createUserCustomerNotificationArgsForCall = append(fake.createUserCustomerNotificationArgsForCall, struct {
+		arg1 int
+		arg2 int
+	}{arg1, arg2})
+	stub := fake.CreateUserCustomerNotificationStub
+	fakeReturns := fake.createUserCustomerNotificationReturns
+	fake.recordInvocation("CreateUserCustomerNotification", []interface{}{arg1, arg2})
+	fake.createUserCustomerNotificationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationCallCount() int {
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
+	return len(fake.createUserCustomerNotificationArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationCalls(stub func(int, int) (datatypes.User_Customer_Notification_Hardware, error)) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = stub
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationArgsForCall(i int) (int, int) {
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
+	argsForCall := fake.createUserCustomerNotificationArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationReturns(result1 datatypes.User_Customer_Notification_Hardware, result2 error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = nil
+	fake.createUserCustomerNotificationReturns = struct {
+		result1 datatypes.User_Customer_Notification_Hardware
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) CreateUserCustomerNotificationReturnsOnCall(i int, result1 datatypes.User_Customer_Notification_Hardware, result2 error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = nil
+	if fake.createUserCustomerNotificationReturnsOnCall == nil {
+		fake.createUserCustomerNotificationReturnsOnCall = make(map[int]struct {
+			result1 datatypes.User_Customer_Notification_Hardware
+			result2 error
+		})
+	}
+	fake.createUserCustomerNotificationReturnsOnCall[i] = struct {
+		result1 datatypes.User_Customer_Notification_Hardware
 		result2 error
 	}{result1, result2}
 }
@@ -1836,6 +1929,71 @@ func (fake *FakeHardwareServerManager) GetStorageDetailsReturnsOnCall(i int, res
 	}{result1, result2}
 }
 
+func (fake *FakeHardwareServerManager) GetUserCustomerNotificationsByHardwareId(arg1 int, arg2 string) ([]datatypes.User_Customer_Notification_Hardware, error) {
+	fake.getUserCustomerNotificationsByHardwareIdMutex.Lock()
+	ret, specificReturn := fake.getUserCustomerNotificationsByHardwareIdReturnsOnCall[len(fake.getUserCustomerNotificationsByHardwareIdArgsForCall)]
+	fake.getUserCustomerNotificationsByHardwareIdArgsForCall = append(fake.getUserCustomerNotificationsByHardwareIdArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetUserCustomerNotificationsByHardwareIdStub
+	fakeReturns := fake.getUserCustomerNotificationsByHardwareIdReturns
+	fake.recordInvocation("GetUserCustomerNotificationsByHardwareId", []interface{}{arg1, arg2})
+	fake.getUserCustomerNotificationsByHardwareIdMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) GetUserCustomerNotificationsByHardwareIdCallCount() int {
+	fake.getUserCustomerNotificationsByHardwareIdMutex.RLock()
+	defer fake.getUserCustomerNotificationsByHardwareIdMutex.RUnlock()
+	return len(fake.getUserCustomerNotificationsByHardwareIdArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) GetUserCustomerNotificationsByHardwareIdCalls(stub func(int, string) ([]datatypes.User_Customer_Notification_Hardware, error)) {
+	fake.getUserCustomerNotificationsByHardwareIdMutex.Lock()
+	defer fake.getUserCustomerNotificationsByHardwareIdMutex.Unlock()
+	fake.GetUserCustomerNotificationsByHardwareIdStub = stub
+}
+
+func (fake *FakeHardwareServerManager) GetUserCustomerNotificationsByHardwareIdArgsForCall(i int) (int, string) {
+	fake.getUserCustomerNotificationsByHardwareIdMutex.RLock()
+	defer fake.getUserCustomerNotificationsByHardwareIdMutex.RUnlock()
+	argsForCall := fake.getUserCustomerNotificationsByHardwareIdArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeHardwareServerManager) GetUserCustomerNotificationsByHardwareIdReturns(result1 []datatypes.User_Customer_Notification_Hardware, result2 error) {
+	fake.getUserCustomerNotificationsByHardwareIdMutex.Lock()
+	defer fake.getUserCustomerNotificationsByHardwareIdMutex.Unlock()
+	fake.GetUserCustomerNotificationsByHardwareIdStub = nil
+	fake.getUserCustomerNotificationsByHardwareIdReturns = struct {
+		result1 []datatypes.User_Customer_Notification_Hardware
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) GetUserCustomerNotificationsByHardwareIdReturnsOnCall(i int, result1 []datatypes.User_Customer_Notification_Hardware, result2 error) {
+	fake.getUserCustomerNotificationsByHardwareIdMutex.Lock()
+	defer fake.getUserCustomerNotificationsByHardwareIdMutex.Unlock()
+	fake.GetUserCustomerNotificationsByHardwareIdStub = nil
+	if fake.getUserCustomerNotificationsByHardwareIdReturnsOnCall == nil {
+		fake.getUserCustomerNotificationsByHardwareIdReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.User_Customer_Notification_Hardware
+			result2 error
+		})
+	}
+	fake.getUserCustomerNotificationsByHardwareIdReturnsOnCall[i] = struct {
+		result1 []datatypes.User_Customer_Notification_Hardware
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeHardwareServerManager) ListHardware(arg1 []string, arg2 int, arg3 int, arg4 string, arg5 string, arg6 string, arg7 int, arg8 string, arg9 string, arg10 string, arg11 int, arg12 string) ([]datatypes.Hardware_Server, error) {
 	var arg1Copy []string
 	if arg1 != nil {
@@ -2557,6 +2715,8 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.cancelHardwareMutex.RUnlock()
 	fake.createFirmwareReflashTransactionMutex.RLock()
 	defer fake.createFirmwareReflashTransactionMutex.RUnlock()
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
 	fake.editMutex.RLock()
 	defer fake.editMutex.RUnlock()
 	fake.generateCreateTemplateMutex.RLock()
@@ -2593,6 +2753,8 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.getStorageCredentialsMutex.RUnlock()
 	fake.getStorageDetailsMutex.RLock()
 	defer fake.getStorageDetailsMutex.RUnlock()
+	fake.getUserCustomerNotificationsByHardwareIdMutex.RLock()
+	defer fake.getUserCustomerNotificationsByHardwareIdMutex.RUnlock()
 	fake.listHardwareMutex.RLock()
 	defer fake.listHardwareMutex.RUnlock()
 	fake.placeOrderMutex.RLock()

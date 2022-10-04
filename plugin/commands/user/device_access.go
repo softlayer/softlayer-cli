@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,51 +14,57 @@ import (
 )
 
 type DeviceAccessCommand struct {
-	UI          terminal.UI
+	*metadata.SoftlayerCommand
 	UserManager managers.UserManager
+	Command     *cobra.Command
 }
 
-func NewDeviceAccessCommand(ui terminal.UI, userManager managers.UserManager) (cmd *DeviceAccessCommand) {
-	return &DeviceAccessCommand{
-		UI:          ui,
-		UserManager: userManager,
+func NewDeviceAccessCommand(sl *metadata.SoftlayerCommand) (cmd *DeviceAccessCommand) {
+	thisCmd := &DeviceAccessCommand{
+		SoftlayerCommand: sl,
+		UserManager:      managers.NewUserManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "device-access " + T("IDENTIFIER"),
+		Short: T("List all devices the user has access and device access permissions."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DeviceAccessCommand) Run(c *cli.Context) error {
-
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	userId := c.Args()[0]
+func (cmd *DeviceAccessCommand) Run(args []string) error {
+	userId := args[0]
 	id, err := strconv.Atoi(userId)
 	if err != nil {
 		return errors.NewInvalidUsageError(T("User ID should be a number."))
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	userpermissions, err := cmd.UserManager.GetUserAllowDevicesPermissions(id)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get user permissions.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get user permissions.\n"), err.Error(), 2)
 	}
 
 	dedicatedHosts, err := cmd.UserManager.GetDedicatedHosts(id, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get dedicated hosts.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get dedicated hosts.\n"), err.Error(), 2)
 	}
 
 	hardwares, err := cmd.UserManager.GetHardware(id, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get bare metal servers.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get bare metal servers.\n"), err.Error(), 2)
 	}
 
 	virtualGuests, err := cmd.UserManager.GetVirtualGuests(id, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get virtual servers.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get virtual servers.\n"), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -157,16 +163,4 @@ func (cmd *DeviceAccessCommand) Run(c *cli.Context) error {
 		table.Print()
 	}
 	return nil
-}
-
-func UserDeviceAccessMetaData() cli.Command {
-	return cli.Command{
-		Category:    "user",
-		Name:        "device-access",
-		Description: T("List all devices the user has access and device access permissions."),
-		Usage:       "${COMMAND_NAME} sl user device-access IDENTIFIER",
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

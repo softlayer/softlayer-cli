@@ -9,43 +9,42 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Dedicated host detail", func() {
 	var (
 		fakeUI                   *terminal.FakeUI
+		cliCommand               *dedicatedhost.DetailCommand
+		fakeSession              *session.Session
+		slCommand                *metadata.SoftlayerCommand
 		FakeDedicatedhostManager *testhelpers.FakeDedicatedHostManager
-		cmd                      *dedicatedhost.DetailCommand
-		cliCommand               cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = dedicatedhost.NewDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedHostManager)
-		cmd = dedicatedhost.NewDetailCommand(fakeUI, FakeDedicatedhostManager)
-		cliCommand = cli.Command{
-			Name:        dedicatedhost.DedicatedhostDetailMetaData().Name,
-			Description: dedicatedhost.DedicatedhostDetailMetaData().Description,
-			Usage:       dedicatedhost.DedicatedhostDetailMetaData().Usage,
-			Flags:       dedicatedhost.DedicatedhostDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.DedicatedHostManager = FakeDedicatedhostManager
 	})
 
 	Describe("Dedicatedhost detail", func() {
 		Context("Dedicatedhost detail without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Dedicatedhost detail with wrong VS ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Host ID'. It must be a positive integer."))
 			})
@@ -56,7 +55,7 @@ var _ = Describe("Dedicated host detail", func() {
 				FakeDedicatedhostManager.GetInstanceReturns(datatypes.Virtual_DedicatedHost{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get dedicatedhost instance: 1234.\n"))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
@@ -110,7 +109,7 @@ var _ = Describe("Dedicated host detail", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dedicatedhost"}))
@@ -124,7 +123,7 @@ var _ = Describe("Dedicated host detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilmawang"}))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--guests", "--price")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--guests", "--price")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dedicatedhost"}))

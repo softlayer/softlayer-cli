@@ -6,25 +6,41 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type OptionsCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
 	NetworkManager      managers.NetworkManager
+	Command             *cobra.Command
+	Datacenter          string
 }
 
-func NewOptionsCommand(ui terminal.UI, lbManager managers.LoadBalancerManager, networkManager managers.NetworkManager) (cmd *OptionsCommand) {
-	return &OptionsCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
-		NetworkManager:      networkManager,
+func NewOptionsCommand(sl *metadata.SoftlayerCommand) *OptionsCommand {
+	thisCmd := &OptionsCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
+		NetworkManager:      managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "order-options",
+		Short: T("List options for order a load balancer"),
+		Long:  T("${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Show only selected datacenter, use shortname (dal13) format"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 type Price struct {
@@ -33,21 +49,21 @@ type Price struct {
 	RegionPrice  *datatypes.Float64
 }
 
-func (cmd *OptionsCommand) Run(c *cli.Context) error {
+func (cmd *OptionsCommand) Run(args []string) error {
 	pkgs, err := cmd.LoadBalancerManager.CreateLoadBalancerOptions()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get load balancer product packages.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get load balancer product packages."), err.Error(), 2)
 	}
 	cmd.UI.Say("")
 	iterNumber := 0
-	if c.IsSet("d") {
+	if cmd.Datacenter != "" {
 		for _, region := range pkgs[len(pkgs)-1].Regions {
 
 			var dcName string
 			if region.Location != nil && region.Location.Location != nil && region.Location.Location.Name != nil {
 				dcName = *region.Location.Location.Name
 			}
-			if c.IsSet("d") && dcName != c.String("d") {
+			if cmd.Datacenter != "" && dcName != cmd.Datacenter {
 				continue
 			}
 			iterNumber = iterNumber + 1
@@ -138,19 +154,4 @@ func findItemInList(item *int, list []int) bool {
 		}
 	}
 	return false
-}
-
-func LoadbalOrderOptionsMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "order-options",
-		Description: T("List options for order a load balancer"),
-		Usage:       "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Show only selected datacenter, use shortname (dal13) format"),
-			},
-		},
-	}
 }

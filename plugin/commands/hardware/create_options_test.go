@@ -4,9 +4,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -14,20 +15,18 @@ var _ = Describe("hardware create options", func() {
 	var (
 		fakeUI              *terminal.FakeUI
 		fakeHardwareManager *testhelpers.FakeHardwareServerManager
-		cmd                 *hardware.CreateOptionsCommand
-		cliCommand          cli.Command
+		cliCommand          *hardware.CreateOptionsCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
-		cmd = hardware.NewCreateOptionsCommand(fakeUI, fakeHardwareManager)
-		cliCommand = cli.Command{
-			Name:        hardware.HardwareCreateOptionsMetaData().Name,
-			Description: hardware.HardwareCreateOptionsMetaData().Description,
-			Usage:       hardware.HardwareCreateOptionsMetaData().Usage,
-			Flags:       hardware.HardwareCreateOptionsMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = hardware.NewCreateOptionsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.HardwareManager = fakeHardwareManager
 	})
 
 	Describe("hardware create options", func() {
@@ -42,7 +41,7 @@ var _ = Describe("hardware create options", func() {
 				})
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("D2620_128GB_2X1T_SATA_RAID_1xM60_GPU"))

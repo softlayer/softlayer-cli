@@ -1,8 +1,8 @@
 package securitygroup
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -10,27 +10,42 @@ import (
 )
 
 type CreateCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	Name           string
+	Description    string
 }
 
-func NewCreateCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *CreateCommand) {
-	return &CreateCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CreateCommand) {
+	thisCmd := &CreateCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "create",
+		Short: T("Create a security group"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("The name of the security group"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Description, "description", "d", "", T("The description of the security group"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *CreateCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	group, err := cmd.NetworkManager.CreateSecurityGroup(c.String("n"), c.String("d"))
+	group, err := cmd.NetworkManager.CreateSecurityGroup(cmd.Name, cmd.Description)
 	if err != nil {
-		return cli.NewExitError(T("Failed to create security group with name {{.Name}}.\n",
-			map[string]interface{}{"Name": c.String("n")})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to create security group with name {{.Name}}.\n",
+			map[string]interface{}{"Name": cmd.Name}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -43,24 +58,4 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	table.Add(T("Created"), utils.FormatSLTimePointer(group.CreateDate))
 	table.Print()
 	return nil
-}
-
-func SecurityGroupCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "securitygroup",
-		Name:        "create",
-		Description: T("Create a security group"),
-		Usage:       "${COMMAND_NAME} sl securitygroup create [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "n,name",
-				Usage: T("The name of the security group"),
-			},
-			cli.StringFlag{
-				Name:  "d,description",
-				Usage: T("The description of the security group"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

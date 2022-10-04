@@ -8,9 +8,10 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -18,25 +19,23 @@ var _ = Describe("Delete", func() {
 	var (
 		fakeUI          *terminal.FakeUI
 		fakeUserManager *testhelpers.FakeUserManager
-		cmd             *user.DeleteCommand
-		cliCommand      cli.Command
+		cliCommand      *user.DeleteCommand
+		fakeSession     *session.Session
+		slCommand       *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeUserManager = new(testhelpers.FakeUserManager)
-		cmd = user.NewDeleteCommand(fakeUI, fakeUserManager)
-		cliCommand = cli.Command{
-			Name:        user.UserDeleteMataData().Name,
-			Description: user.UserDeleteMataData().Description,
-			Usage:       user.UserDeleteMataData().Usage,
-			Flags:       user.UserDeleteMataData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = user.NewDeleteCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.UserManager = fakeUserManager
 	})
 	Describe("user delete", func() {
 		Context("user delete with not enough parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
 			})
@@ -44,7 +43,7 @@ var _ = Describe("Delete", func() {
 
 		Context("user delete with letters like parameter", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcd")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcd")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: User ID should be a number.")).To(BeTrue())
 			})
@@ -54,7 +53,7 @@ var _ = Describe("Delete", func() {
 			It("return aborted", func() {
 				fakeUI.Inputs("")
 				id_user := "123"
-				err := testhelpers.RunCommand(cliCommand, id_user)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, id_user)
 				Expect(err).NotTo(HaveOccurred())
 				response := fmt.Sprintf("This will delete the user: %s and cannot be undone. Continue?", id_user)
 				Expect(fakeUI.Outputs()).To(ContainSubstring(response))
@@ -66,7 +65,7 @@ var _ = Describe("Delete", func() {
 			It("return error", func() {
 				fakeUI.Inputs("123456")
 				id_user := "123"
-				err := testhelpers.RunCommand(cliCommand, id_user)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, id_user)
 				Expect(err).To(HaveOccurred())
 				response := fmt.Sprintf("This will delete the user: %s and cannot be undone. Continue?", id_user)
 				Expect(fakeUI.Outputs()).To(ContainSubstring(response))
@@ -78,7 +77,7 @@ var _ = Describe("Delete", func() {
 			It("return error", func() {
 				fakeUserManager.EditUserReturns(false, errors.New("Internal server error"))
 				fakeUI.Inputs("y")
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to delete user."))
 			})
@@ -88,7 +87,7 @@ var _ = Describe("Delete", func() {
 			It("return Ok", func() {
 				fakeUI.Inputs("y")
 				id_user := "123"
-				err := testhelpers.RunCommand(cliCommand, id_user)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, id_user)
 				Expect(err).NotTo(HaveOccurred())
 				response := fmt.Sprintf("This will delete the user: %s and cannot be undone. Continue?", id_user)
 				Expect(fakeUI.Outputs()).To(ContainSubstring(response))
@@ -100,7 +99,7 @@ var _ = Describe("Delete", func() {
 			It("return Ok", func() {
 				fakeUI.Inputs("y")
 				id_user := "123"
-				err := testhelpers.RunCommand(cliCommand, id_user, "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, id_user, "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 			})

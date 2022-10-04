@@ -5,10 +5,11 @@ import (
 	"strconv"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -17,63 +18,53 @@ import (
 )
 
 type DetailCommand struct {
-	UI         terminal.UI
+	*metadata.SoftlayerCommand
 	CdnManager managers.CdnManager
+	Command    *cobra.Command
+	History    int
 }
 
-func NewDetailCommand(ui terminal.UI, cdnManager managers.CdnManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:         ui,
-		CdnManager: cdnManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand: sl,
+		CdnManager:       managers.NewCdnManager(sl.Session),
 	}
-}
-
-func DetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "cdn",
-		Name:        "detail",
-		Description: T("Detail a CDN Account."),
-		Usage:       T(`${COMMAND_NAME} sl cdn detail`),
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "history",
-				Usage: T("Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum."),
-				Value: 30,
-			},
-			metadata.OutputFlag(),
+	cobraCmd := &cobra.Command{
+		Use:   "detail",
+		Short: T("Detail a CDN Account."),
+		Long:  T("${COMMAND_NAME} sl cdn detail"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().IntVar(&thisCmd.History, "history", 30, T("Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum."))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-
-	cdnId, err := strconv.Atoi(c.Args()[0])
+func (cmd *DetailCommand) Run(args []string) error {
+	cdnId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("cdn ID")
 	}
 
-	history := c.Int("history")
+	history := cmd.History
 	if history <= 0 || history > 89 {
 		return slErr.NewInvalidUsageError("history")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := ""
 	cdnDetail, err := cmd.CdnManager.GetDetailCDN(cdnId, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get CDN Detail. ")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get CDN Detail. "), err.Error(), 2)
 	}
 
 	cdnMetrics, err := cmd.CdnManager.GetUsageMetrics(cdnId, history, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get CDN Metrics. ")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get CDN Metrics. "), err.Error(), 2)
 	}
 
 	PrintDetailCDN(cdnDetail, cdnMetrics, cmd.UI, outputFormat)

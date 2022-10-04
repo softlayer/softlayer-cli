@@ -7,31 +7,30 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer edit policies", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.L7RuleListCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.L7RuleListCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewL7RuleListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewL7RuleListCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalL7RuleListMetadata().Name,
-			Description: loadbal.LoadbalL7RuleListMetadata().Description,
-			Usage:       loadbal.LoadbalL7RuleListMetadata().Usage,
-			Flags:       loadbal.LoadbalL7RuleListMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
 
 		fakeLBManager.ListL7RuleReturns([]datatypes.Network_LBaaS_L7Rule{
 			datatypes.Network_LBaaS_L7Rule{
@@ -58,7 +57,7 @@ var _ = Describe("Load balancer edit policies", func() {
 	Describe("l7 rule list", func() {
 		Context("l7 rule list, missing arguments error", func() {
 			It("policy-id is required", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--policy-id' is required"))
 			})
@@ -66,7 +65,7 @@ var _ = Describe("Load balancer edit policies", func() {
 
 		Context("l7 rule list", func() {
 			It("with all attributes", func() {
-				err := testhelpers.RunCommand(cliCommand, "--policy-id", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--policy-id", "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID     UUID      Type    Compare Type      Value    Key         Invert"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123    abc123    Type    ComparisonType    value    abcd1234    5"))
@@ -77,13 +76,13 @@ var _ = Describe("Load balancer edit policies", func() {
 		Context("errors", func() {
 			It("Failed to list l7 rule", func() {
 				fakeLBManager.ListL7RuleReturns([]datatypes.Network_LBaaS_L7Rule{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "--policy-id", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--policy-id", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get l7 rules: Internal server error"))
 			})
 			It("No l7 rules was found", func() {
 				fakeLBManager.ListL7RuleReturns([]datatypes.Network_LBaaS_L7Rule{}, nil)
-				err := testhelpers.RunCommand(cliCommand, "--policy-id", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--policy-id", "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("No l7 rules was found"))
 			})

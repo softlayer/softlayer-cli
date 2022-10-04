@@ -1,30 +1,24 @@
 package email
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-func GetCommandActionBindings(context plugin.PluginContext, ui terminal.UI, session *session.Session) map[string]func(c *cli.Context) error {
-	emailManager := managers.NewEmailManager(session)
-	CommandActionBindings := map[string]func(c *cli.Context) error{
-		"email-list": func(c *cli.Context) error {
-			return NewListCommand(ui, emailManager).Run(c)
-		},
-		"email-detail": func(c *cli.Context) error {
-			return NewDetailCommand(ui, emailManager).Run(c)
-		},
-		"email-edit": func(c *cli.Context) error {
-			return NewEditCommand(ui, emailManager).Run(c)
-		},
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+	cobraCmd := &cobra.Command{
+		Use:   "email",
+		Short: T("Classic infrastructure Email commands"),
+		RunE:  nil,
 	}
 
-	return CommandActionBindings
+	cobraCmd.AddCommand(NewListCommand(sl).Command)
+	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
+	cobraCmd.AddCommand(NewEditCommand(sl).Command)
+	return cobraCmd
 }
 
 func EmailNamespace() plugin.Namespace {
@@ -32,19 +26,5 @@ func EmailNamespace() plugin.Namespace {
 		ParentName:  "sl",
 		Name:        "email",
 		Description: T("Classic infrastructure Email commands"),
-	}
-}
-
-func EmailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "sl",
-		Name:        "email",
-		Description: T("Classic infrastructure Email commands"),
-		Usage:       "${COMMAND_NAME} sl email",
-		Subcommands: []cli.Command{
-			ListMetaData(),
-			DetailMetaData(),
-			EditMetaData(),
-		},
 	}
 }

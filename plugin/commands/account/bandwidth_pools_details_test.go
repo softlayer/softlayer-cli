@@ -8,50 +8,51 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
+
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("account bandwidth_pools_details", func() {
 	var (
-		fakeUI             *terminal.FakeUI
-		fakeAccountManager *testhelpers.FakeAccountManager
-		cmd                *account.BandwidthPoolsDetailCommand
-		cliCommand         cli.Command
+		fakeUI				*terminal.FakeUI
+		cliCommand			*account.BandwidthPoolsDetailCommand
+		fakeSession   		*session.Session
+		slCommand			*metadata.SoftlayerCommand
+		fakeAccountManager 	*testhelpers.FakeAccountManager
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeAccountManager = new(testhelpers.FakeAccountManager)
-		cmd = account.NewBandwidthPoolsDetailCommand(fakeUI, fakeAccountManager)
-		cliCommand = cli.Command{
-			Name:        account.BandwidthPoolsDetailMetaData().Name,
-			Description: account.BandwidthPoolsDetailMetaData().Description,
-			Usage:       account.BandwidthPoolsDetailMetaData().Usage,
-			Flags:       account.BandwidthPoolsDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = account.NewBandwidthPoolsDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.AccountManager = fakeAccountManager
 	})
 
 	Describe("account bandwidth_pools_details", func() {
 
 		Context("Return error", func() {
 			It("Set command without Id", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 
 			It("Set command with an invalid Id", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcde")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcde")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Bandwidth Pool ID'. It must be a positive integer."))
 			})
 
 			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -62,7 +63,7 @@ var _ = Describe("account bandwidth_pools_details", func() {
 				fakeAccountManager.GetBandwidthPoolDetailReturns(datatypes.Network_Bandwidth_Version1_Allotment{}, errors.New("Failed to get Bandwidth Pool."))
 			})
 			It("Failed Bandwidth Pool", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get Bandwidth Pool."))
 			})
@@ -123,7 +124,7 @@ var _ = Describe("account bandwidth_pools_details", func() {
 				fakeAccountManager.GetBandwidthPoolDetailReturns(fakerBandwidthPool, nil)
 			})
 			It("Get Bandwidth Pool with devices", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-11-08T00:00:00Z"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123456"))
@@ -171,7 +172,7 @@ var _ = Describe("account bandwidth_pools_details", func() {
 				fakeAccountManager.GetBandwidthPoolDetailReturns(fakerBandwidthPool, nil)
 			})
 			It("Get Bandwidth Pool with devices", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-11-08T00:00:00Z"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("123456"))

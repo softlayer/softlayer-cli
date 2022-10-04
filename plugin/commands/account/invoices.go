@@ -1,75 +1,51 @@
 package account
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type InvoicesCommand struct {
-	UI             terminal.UI
-	AccountManager managers.AccountManager
+    *metadata.SoftlayerCommand
+    AccountManager managers.AccountManager
+    Command *cobra.Command
+    Limit	int
+    Closed	bool
+    All		bool
 }
 
-func NewInvoicesCommand(ui terminal.UI, accountManager managers.AccountManager) (cmd *InvoicesCommand) {
-	return &InvoicesCommand{
-		UI:             ui,
-		AccountManager: accountManager,
-	}
+func NewInvoicesCommand(sl *metadata.SoftlayerCommand) *InvoicesCommand {
+    thisCmd := &InvoicesCommand{
+        SoftlayerCommand: sl,
+        AccountManager: managers.NewAccountManager(sl.Session),
+    }
+    cobraCmd := &cobra.Command{
+        Use: "invoices",  
+        Short: T("List invoices"),
+        Args: metadata.NoArgs,
+        RunE: func(cmd *cobra.Command, args []string) error {
+            return thisCmd.Run(args)
+        },
+    }
+    cobraCmd.Flags().IntVar(&thisCmd.Limit, "limit", 50, T("How many invoices to get back. [default: 50]"))
+    cobraCmd.Flags().BoolVar(&thisCmd.Closed, "closed", false, T("Include invoices with a CLOSED status. [default: False]"))
+    cobraCmd.Flags().BoolVar(&thisCmd.All, "all", false, T("Return ALL invoices. There may be a lot of these. [default: False]"))
+    thisCmd.Command = cobraCmd
+    return thisCmd
 }
 
-func InvoicesMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "invoices",
-		Description: T("List invoices"),
-		Usage:       T(`${COMMAND_NAME} sl account invoices [OPTIONS]`),
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "limit",
-				Usage: T("How many invoices to get back. [default: 50]"),
-			},
-			cli.BoolFlag{
-				Name:  "closed",
-				Usage: T("Include invoices with a CLOSED status. [default: False]"),
-			},
-			cli.BoolFlag{
-				Name:  "all",
-				Usage: T("Return ALL invoices. There may be a lot of these. [default: False]"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
-}
 
-func (cmd *InvoicesCommand) Run(c *cli.Context) error {
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
+func (cmd *InvoicesCommand) Run(args []string) error  {
+	outputFormat := cmd.GetOutputFlag()
+
+	invoices, err := cmd.AccountManager.GetInvoices(cmd.Limit, cmd.Closed, cmd.All)
 	if err != nil {
-		return err
-	}
-
-	limit := 50
-	if c.IsSet("limit") {
-		limit = c.Int("limit")
-	}
-
-	closed := false
-	if c.IsSet("closed") {
-		closed = true
-	}
-
-	all := false
-	if c.IsSet("all") {
-		all = true
-	}
-
-	invoices, err := cmd.AccountManager.GetInvoices(limit, closed, all)
-	if err != nil {
-		return cli.NewExitError(T("Failed to get invoices.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get invoices."), err.Error(), 2)
 	}
 	table := cmd.UI.Table([]string{
 		T("Id"),

@@ -109,6 +109,8 @@ type VirtualServerManager interface {
 	GetDatacenters() ([]datatypes.Location, error)
 	GetAvailablePlacementRouters(id int) ([]datatypes.Hardware, error)
 	GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error)
+	GetUserCustomerNotificationsByVirtualGuestId(id int, mask string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error)
+	CreateUserCustomerNotification(virtualServerId int, userId int) (datatypes.User_Customer_Notification_Virtual_Guest, error)
 }
 
 type virtualServerManager struct {
@@ -1494,4 +1496,28 @@ func (vs virtualServerManager) GetRules() ([]datatypes.Virtual_PlacementGroup_Ru
 func (vs virtualServerManager) PlacementCreate(templateObject *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error) {
 	placementService := services.GetVirtualPlacementGroupService(vs.Session)
 	return placementService.CreateObject(templateObject)
+}
+
+//Return all virtual guest notifications associated with the passed hardware ID
+//int id: The virtual guest identifier.
+//string mask: Object mask.
+func (vs virtualServerManager) GetUserCustomerNotificationsByVirtualGuestId(id int, mask string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error) {
+	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(vs.Session)
+	if mask == "" {
+		mask = "mask[guestId,userId,user[firstName,lastName,email,username]]"
+	}
+	return userCustomerNotificationVirtualGuestService.Mask(mask).FindByGuestId(&id)
+}
+
+//Create a user virtual server notification entry
+//int virtualServerId: The vietual server identifier.
+//int userId: The user identifier.
+func (vs virtualServerManager) CreateUserCustomerNotification(virtualServerId int, userId int) (datatypes.User_Customer_Notification_Virtual_Guest, error) {
+	userCustomerNotificationTemplate := datatypes.User_Customer_Notification_Virtual_Guest{
+		GuestId: sl.Int(virtualServerId),
+		UserId:  sl.Int(userId),
+	}
+	mask := "mask[user]"
+	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(vs.Session)
+	return userCustomerNotificationVirtualGuestService.Mask(mask).CreateObject(&userCustomerNotificationTemplate)
 }

@@ -6,9 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -16,90 +14,132 @@ import (
 )
 
 type CreateCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
-	Context         plugin.PluginContext
+	Command         *cobra.Command
+	Hostname        string
+	Domain          string
+	Size            string
+	Os              string
+	Datacenter      string
+	PortSpeed       int
+	Billing         string
+	PostInstall     string
+	Key             []int
+	NoPublic        bool
+	Extra           []string
+	Test            bool
+	Template        string
+	Export          string
+	ForceFlag       bool
 }
 
-func NewCreateCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager, context plugin.PluginContext) (cmd *CreateCommand) {
-	return &CreateCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
-		Context:         context,
+func NewCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CreateCommand) {
+	thisCmd := &CreateCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "create",
+		Short: T("Order/create a hardware server"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Host portion of the FQDN[required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Domain, "domain", "D", "", T("Domain portion of the FQDN[required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Size, "size", "s", "", T("Hardware size[required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Os, "os", "o", "", T("OS install code[required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Datacenter shortname[required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.PortSpeed, "port-speed", "p", 0, T("Port speed[required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Billing, "billing", "b", "", T("Billing rate, either hourly or monthly, default is hourly if not specified"))
+	cobraCmd.Flags().StringVarP(&thisCmd.PostInstall, "post-install", "i", "", T("Post-install script to download"))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Key, "key", "k", []int{}, T("SSH keys to add to the root user, multiple occurrence allowed"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.NoPublic, "no-public", "n", false, T("Private network only"))
+	cobraCmd.Flags().StringSliceVarP(&thisCmd.Extra, "extra", "e", []string{}, T("Extra options, multiple occurrence allowed"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Test, "test", "t", false, T("Do not actually create the virtual server"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Template, "template", "m", "", T("A template file that defaults the command-line options"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Export, "export", "x", "", T("Exports options to a template file"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateCommand) Run(c *cli.Context) error {
+func (cmd *CreateCommand) Run(args []string) error {
 	params := make(map[string]interface{})
-	if c.IsSet("m") {
-		templateFile := c.String("m")
+	if cmd.Template != "" {
+		templateFile := cmd.Template
 		if _, err := os.Stat(templateFile); os.IsNotExist(err) {
 			return errors.NewInvalidUsageError(T("Template file: {{.Location}} does not exist.",
 				map[string]interface{}{"Location": templateFile}))
 		}
 		content, err := ioutil.ReadFile(templateFile) // #nosec
 		if err != nil {
-			return cli.NewExitError(T("Failed to read template file: {{.File}}.\n", map[string]interface{}{"File": templateFile})+err.Error(), 1)
+			return errors.NewInvalidUsageError(T("Failed to read template file: {{.File}}.\n", map[string]interface{}{"File": templateFile}) + err.Error())
 		}
 		err = json.Unmarshal(content, &params)
 		if err != nil {
-			return cli.NewExitError(T("Failed to unmarshal template file: {{.File}}.\n", map[string]interface{}{"File": templateFile})+err.Error(), 1)
+			return errors.NewInvalidUsageError(T("Failed to unmarshal template file: {{.File}}.\n", map[string]interface{}{"File": templateFile}) + err.Error())
 		}
 	} else {
-		if !c.IsSet("s") {
+		if cmd.Size == "" {
 			return errors.NewMissingInputError("-s|--size")
 		}
-		params["size"] = c.String("s")
-		if !c.IsSet("H") {
+		params["size"] = cmd.Size
+		if cmd.Hostname == "" {
 			return errors.NewMissingInputError("-H|--hostname")
 		}
-		params["hostname"] = c.String("H")
-		if !c.IsSet("D") {
+		params["hostname"] = cmd.Hostname
+		if cmd.Domain == "" {
 			return errors.NewMissingInputError("-D|--domain")
 		}
-		params["domain"] = c.String("D")
-		if !c.IsSet("o") {
+		params["domain"] = cmd.Domain
+		if cmd.Os == "" {
 			return errors.NewMissingInputError("-o|--os")
 		}
-		params["osName"] = c.String("o")
-		if !c.IsSet("d") {
+		params["osName"] = cmd.Os
+		if cmd.Datacenter == "" {
 			return errors.NewMissingInputError("-d|--datacenter")
 		}
-		params["datacenter"] = c.String("d")
-		if !c.IsSet("p") {
+		params["datacenter"] = cmd.Datacenter
+		if cmd.PortSpeed == 0 {
 			return errors.NewMissingInputError("-p|--port-speed")
 		}
-		params["portSpeed"] = c.Int("p")
+		params["portSpeed"] = cmd.PortSpeed
 
 		params["billing"] = "hourly"
-		if c.IsSet("b") {
-			params["billing"] = c.String("b")
+		if cmd.Billing != "" {
+			params["billing"] = cmd.Billing
 			if params["billing"] != "hourly" && params["billing"] != "monthly" {
 				return errors.NewInvalidUsageError(T("-b|--billing has to be either hourly or monthly."))
 			}
 		}
 		params["noPublic"] = false
-		if c.IsSet("n") {
+		if cmd.NoPublic {
 			params["noPublic"] = true
 		}
-		params["postInstallURL"] = c.String("i")
-		params["ssheKeys"] = c.IntSlice("k")
-		params["extras"] = c.StringSlice("e")
+		params["postInstallURL"] = cmd.PostInstall
+		params["ssheKeys"] = cmd.Key
+		params["extras"] = cmd.Extra
 	}
 
 	productPackage, err := cmd.HardwareManager.GetPackage()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get product package for hardware server.\n"+err.Error()), 2)
+		return errors.NewAPIError(T("Failed to get product package for hardware server.\n"), err.Error(), 2)
 	}
 	orderTemplate, err := cmd.HardwareManager.GenerateCreateTemplate(productPackage, params)
 	if err != nil {
 		return err
 	}
 
-	if c.IsSet("test") {
+	if cmd.Test {
 		result, err := cmd.HardwareManager.VerifyOrder(orderTemplate)
 		if err != nil {
-			return cli.NewExitError(T("Failed to verify this order.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to verify this order.\n"), err.Error(), 2)
 		}
 		table := cmd.UI.Table([]string{T("item"), T("cost")})
 		total := 0.0
@@ -114,26 +154,26 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 		table.Print()
 		cmd.UI.Print(T("Prices reflected here are retail and do not take account level discounts and are not guaranteed."))
 		return nil
-	} else if c.IsSet("export") {
+	} else if cmd.Export != "" {
 		content, err := json.Marshal(params)
 		if err != nil {
-			return cli.NewExitError(T("Failed to marshal hardware server template.\n")+err.Error(), 1)
+			return errors.NewAPIError(T("Failed to marshal hardware server template.\n"), err.Error(), 1)
 		}
-		export := c.String("export")
+		export := cmd.Export
 		// #nosec G306: write on customer machine
 		err = ioutil.WriteFile(export, content, 0644)
 		if err != nil {
-			return cli.NewExitError(T("Failed to write hardware server template file to: {{.Template}}.\n",
-				map[string]interface{}{"Template": export})+err.Error(), 1)
+			return errors.NewAPIError(T("Failed to write hardware server template file to: {{.Template}}.\n",
+				map[string]interface{}{"Template": export}), err.Error(), 1)
 		}
 		cmd.UI.Ok()
 		cmd.UI.Print(T("Hardware server template is exported to: {{.Template}}.", map[string]interface{}{"Template": export}))
 		return nil
 	} else {
-		if !c.IsSet("f") && !c.IsSet("force") {
+		if !cmd.ForceFlag {
 			confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 			if err != nil {
-				return cli.NewExitError(err.Error(), 1)
+				return err
 			}
 			if !confirm {
 				cmd.UI.Print(T("Aborted."))
@@ -142,7 +182,7 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 		}
 		orderReceipt, err := cmd.HardwareManager.PlaceOrder(orderTemplate)
 		if err != nil {
-			return cli.NewExitError(T("Failed to place this order.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to place this order.\n"), err.Error(), 2)
 		}
 		cmd.UI.Ok()
 		cmd.UI.Print(T("Order {{.OrderID}} was placed.", map[string]interface{}{"OrderID": *orderReceipt.OrderId}))
@@ -160,76 +200,7 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 			table.Add(T("Total monthly cost"), fmt.Sprintf("%.2f", total))
 		}
 		cmd.UI.Print(T("Run '{{.CommandName}} sl hardware list --order {{.OrderID}}' to find this hardware server after it is ready.",
-			map[string]interface{}{"OrderID": *orderReceipt.OrderId, "CommandName": cmd.Context.CLIName()}))
+			map[string]interface{}{"OrderID": *orderReceipt.OrderId, "CommandName": "ibmcloud"}))
 		return nil
-	}
-}
-
-func HardwareCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "create",
-		Description: T("Order/create a hardware server"),
-		Usage: `${COMMAND_NAME} sl hardware create [OPTIONS] 
-	See '${COMMAND_NAME} sl hardware create-options' for valid options.`,
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "H,hostname",
-				Usage: T("Host portion of the FQDN[required]"),
-			},
-			cli.StringFlag{
-				Name:  "D,domain",
-				Usage: T("Domain portion of the FQDN[required]"),
-			},
-			cli.StringFlag{
-				Name:  "s,size",
-				Usage: T("Hardware size[required]"),
-			},
-			cli.StringFlag{
-				Name:  "o,os",
-				Usage: T("OS install code[required]"),
-			},
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Datacenter shortname[required]"),
-			},
-			cli.IntFlag{
-				Name:  "p,port-speed",
-				Usage: T("Port speed[required]"),
-			},
-			cli.StringFlag{
-				Name:  "b,billing",
-				Usage: T("Billing rate, either hourly or monthly, default is hourly if not specified"),
-			},
-			cli.StringFlag{
-				Name:  "i,post-install",
-				Usage: T("Post-install script to download"),
-			},
-			cli.IntSliceFlag{
-				Name:  "k,key",
-				Usage: T("SSH keys to add to the root user, multiple occurrence allowed"),
-			},
-			cli.BoolFlag{
-				Name:  "n,no-public",
-				Usage: T("Private network only"),
-			},
-			cli.StringSliceFlag{
-				Name:  "e,extra",
-				Usage: T("Extra options, multiple occurrence allowed"),
-			},
-			cli.BoolFlag{
-				Name:  "t,test",
-				Usage: T("Do not actually create the virtual server"),
-			},
-			cli.StringFlag{
-				Name:  "m,template",
-				Usage: T("A template file that defaults the command-line options"),
-			},
-			cli.StringFlag{
-				Name:  "x,export",
-				Usage: T("Exports options to a template file"),
-			},
-			metadata.ForceFlag(),
-		},
 	}
 }

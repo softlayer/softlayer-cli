@@ -3,31 +3,41 @@ package user
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type PermissionsCommand struct {
-	UI          terminal.UI
+	*metadata.SoftlayerCommand
 	UserManager managers.UserManager
+	Command     *cobra.Command
 }
 
-func NewPermissionsCommand(ui terminal.UI, userManager managers.UserManager) (cmd *PermissionsCommand) {
-	return &PermissionsCommand{
-		UI:          ui,
-		UserManager: userManager,
+func NewPermissionsCommand(sl *metadata.SoftlayerCommand) (cmd *PermissionsCommand) {
+	thisCmd := &PermissionsCommand{
+		SoftlayerCommand: sl,
+		UserManager:      managers.NewUserManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "permissions " + T("USER_ID"),
+		Short: T("View user permissions"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PermissionsCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	userId := c.Args()[0]
+func (cmd *PermissionsCommand) Run(args []string) error {
+	userId := args[0]
 	id, err := strconv.Atoi(userId)
 	if err != nil {
 		return errors.NewInvalidUsageError(T("User ID should be a number."))
@@ -36,12 +46,12 @@ func (cmd *PermissionsCommand) Run(c *cli.Context) error {
 	object_mask := "mask[id, permissions, isMasterUserFlag, roles]"
 	user, err := cmd.UserManager.GetUser(id, object_mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get user.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get user.\n"), err.Error(), 2)
 	}
 
 	allPermission, err := cmd.UserManager.GetAllPermission()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get permissions.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get permissions.\n"), err.Error(), 2)
 	}
 
 	if user.IsMasterUserFlag != nil && *user.IsMasterUserFlag {
@@ -73,14 +83,4 @@ func (cmd *PermissionsCommand) Run(c *cli.Context) error {
 	}
 	tablePermission.Print()
 	return nil
-}
-
-func UserPermissionsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "user",
-		Name:        "permissions",
-		Description: T("View user permissions"),
-		Usage:       "${COMMAND_NAME} sl user permissions IDENTIFIER",
-		Flags:       []cli.Flag{},
-	}
 }

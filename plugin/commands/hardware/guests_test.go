@@ -8,9 +8,10 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -18,33 +19,31 @@ var _ = Describe("Hardware Server Guests", func() {
 	var (
 		fakeUI              *terminal.FakeUI
 		fakeHardwareManager *testhelpers.FakeHardwareServerManager
-		cmd                 *hardware.GuestsCommand
-		cliCommand          cli.Command
+		cliCommand          *hardware.GuestsCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
-		cmd = hardware.NewGuestsCommand(fakeUI, fakeHardwareManager)
-		cliCommand = cli.Command{
-			Name:        hardware.HardwareGuestsMetaData().Name,
-			Description: hardware.HardwareGuestsMetaData().Description,
-			Usage:       hardware.HardwareGuestsMetaData().Usage,
-			Flags:       hardware.HardwareGuestsMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = hardware.NewGuestsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.HardwareManager = fakeHardwareManager
 	})
 
 	Describe("Hardware Server Guests", func() {
 		Context("Guests without HW ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Guests with wrong VS ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Hardware server ID'. It must be a positive integer."))
 			})
@@ -55,7 +54,7 @@ var _ = Describe("Hardware Server Guests", func() {
 				fakeHardwareManager.GetHardwareGuestsReturns([]datatypes.Virtual_Guest{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the guests instances for the hardware server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -83,7 +82,7 @@ var _ = Describe("Hardware Server Guests", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("TestHostname"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1"))

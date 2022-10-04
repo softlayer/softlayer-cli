@@ -7,42 +7,41 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Image edit", func() {
 	var (
 		fakeUI           *terminal.FakeUI
+		cliCommand       *image.EditCommand
+		fakeSession      *session.Session
+		slCommand        *metadata.SoftlayerCommand
 		fakeImageManager *testhelpers.FakeImageManager
-		cmd              *image.EditCommand
-		cliCommand       cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeImageManager = new(testhelpers.FakeImageManager)
-		cmd = image.NewEditCommand(fakeUI, fakeImageManager)
-		cliCommand = cli.Command{
-			Name:        image.ImageEditMetaData().Name,
-			Description: image.ImageEditMetaData().Description,
-			Usage:       image.ImageEditMetaData().Usage,
-			Flags:       image.ImageEditMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = image.NewEditCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.ImageManager = fakeImageManager
 	})
 
 	Describe("Image edit", func() {
 		Context("ISCSI cancel without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
 			})
 		})
 		Context("Image edit with wrong image id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Invalid input for 'Image ID'. It must be a positive integer.")).To(BeTrue())
 			})
@@ -53,7 +52,7 @@ var _ = Describe("Image edit", func() {
 				fakeImageManager.EditImageReturns([]bool{true}, []string{"The name of the image 1234 is updated."})
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--name", "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--name", "myimage")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The name of the image 1234 is updated."}))
@@ -65,7 +64,7 @@ var _ = Describe("Image edit", func() {
 				fakeImageManager.EditImageReturns([]bool{false}, []string{"Failed to update the image 1234."})
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--name", "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--name", "myimage")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Failed to update the image 1234."}))
@@ -77,7 +76,7 @@ var _ = Describe("Image edit", func() {
 				fakeImageManager.EditImageReturns([]bool{true}, []string{"The note of the image 1234 is updated."})
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--note", "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--note", "myimage")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The note of the image 1234 is updated."}))
@@ -89,7 +88,7 @@ var _ = Describe("Image edit", func() {
 				fakeImageManager.EditImageReturns([]bool{false}, []string{"Failed to update the image 1234."})
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--note", "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--note", "myimage")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Failed to update the image 1234."}))
@@ -101,7 +100,7 @@ var _ = Describe("Image edit", func() {
 				fakeImageManager.EditImageReturns([]bool{true}, []string{"The tag of the image 1234 is updated."})
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--tag", "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--tag", "myimage")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The tag of the image 1234 is updated."}))
@@ -113,7 +112,7 @@ var _ = Describe("Image edit", func() {
 				fakeImageManager.EditImageReturns([]bool{false}, []string{"Failed to update the image 1234."})
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--tag", "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--tag", "myimage")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Failed to update the image 1234."}))

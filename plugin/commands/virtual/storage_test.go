@@ -7,44 +7,44 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("virtual storage", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.StorageCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cmd           *virtual.StorageCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = virtual.NewStorageCommand(fakeUI, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        virtual.VSStorageMetaData().Name,
-			Description: virtual.VSStorageMetaData().Description,
-			Usage:       virtual.VSStorageMetaData().Usage,
-			Flags:       virtual.VSStorageMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewStorageCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
 
 	Describe("virtual storage", func() {
 		Context("virtual storage without id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 
 		Context("virtual storage with wrong id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcd")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcd")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Virtual server ID'. It must be a positive integer."))
 			})
@@ -55,7 +55,7 @@ var _ = Describe("virtual storage", func() {
 				fakeVSManager.GetStorageDetailsReturns([]datatypes.Network_Storage{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get iscsi storage detail for the virtual server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -67,7 +67,7 @@ var _ = Describe("virtual storage", func() {
 				fakeVSManager.GetStorageCredentialsReturns(datatypes.Network_Storage_Allowed_Host{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the storage credential detail for the virtual server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -79,7 +79,7 @@ var _ = Describe("virtual storage", func() {
 				fakeVSManager.GetPortableStorageReturns([]datatypes.Virtual_Disk_Image{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the portable storage detail for the virtual server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -91,7 +91,7 @@ var _ = Describe("virtual storage", func() {
 				fakeVSManager.GetLocalDisksReturns([]datatypes.Virtual_Guest_Block_Device{}, errors.New("Internal server error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the local disks detail for the virtual server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
@@ -118,7 +118,7 @@ var _ = Describe("virtual storage", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("SL02SEL1234567-20"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("16000"))
@@ -139,7 +139,7 @@ var _ = Describe("virtual storage", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("SL02SU1234567-H1"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("fMnY59hjkhkj"))
@@ -164,7 +164,7 @@ var _ = Describe("virtual storage", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Test Description"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("16000"))
@@ -187,7 +187,7 @@ var _ = Describe("virtual storage", func() {
 				}, nil)
 			})
 			It("return table", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Disk"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1"))

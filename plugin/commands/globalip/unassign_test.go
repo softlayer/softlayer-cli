@@ -8,42 +8,41 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("GlobalIP unassign", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *globalip.UnassignCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *globalip.UnassignCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = globalip.NewUnassignCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = globalip.NewUnassignCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        globalip.GlobalIpUnassignMetaData().Name,
-			Description: globalip.GlobalIpUnassignMetaData().Description,
-			Usage:       globalip.GlobalIpUnassignMetaData().Usage,
-			Flags:       globalip.GlobalIpUnassignMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("GlobalIP unassign", func() {
 		Context("GlobalIP unassign without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
 			})
 		})
 		Context("GlobalIP unassign with wrong IP ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Invalid input for 'Globalip ID'. It must be a positive integer.")).To(BeTrue())
 			})
@@ -54,7 +53,7 @@ var _ = Describe("GlobalIP unassign", func() {
 				fakeNetworkManager.UnassignGlobalIPReturns(false, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to unassign global IP 1234.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -66,7 +65,7 @@ var _ = Describe("GlobalIP unassign", func() {
 				fakeNetworkManager.UnassignGlobalIPReturns(true, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The transaction to unroute a global IP address is created, routes will be updated in one or two minutes."}))

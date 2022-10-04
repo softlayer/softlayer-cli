@@ -5,14 +5,15 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -20,7 +21,8 @@ var created, _ = time.Parse(time.RFC3339, "2016-12-25T00:00:00Z")
 var modified, _ = time.Parse(time.RFC3339, "2017-01-01T00:00:00Z")
 var lastTransaction, _ = time.Parse(time.RFC3339, "2017-02-01T00:00:00Z")
 
-var VirtualGuestReturn = datatypes.Virtual_Guest{
+var GetInstanceReturn = datatypes.Virtual_Guest{
+
 	Id:                       sl.Int(1234),
 	GlobalIdentifier:         sl.String("rthtoshfkthr"),
 	Hostname:                 sl.String("vs-abc"),
@@ -92,39 +94,50 @@ var VirtualGuestReturn = datatypes.Virtual_Guest{
 	HourlyBillingFlag: sl.Bool(true),
 }
 
+
+var BlockDeviceReturns = []datatypes.Virtual_Guest_Block_Device{
+	datatypes.Virtual_Guest_Block_Device{
+		DiskImage: &datatypes.Virtual_Disk_Image{
+			Description: sl.String("123456789-SWAP"),
+			Capacity:    sl.Int(2),
+			Units:       sl.String("GB"),
+		},
+		MountType: sl.String("Disk"),
+		Device:    sl.String("1"),
+	},
+}
+
+
 var _ = Describe("VS detail", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.DetailCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cmd           *virtual.DetailCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = virtual.NewDetailCommand(fakeUI, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        virtual.VSDetailMetaData().Name,
-			Description: virtual.VSDetailMetaData().Description,
-			Usage:       virtual.VSDetailMetaData().Usage,
-			Flags:       virtual.VSDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
-
 	Describe("VS detail", func() {
 		Context("VS detail without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("VS detail with wrong VS ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Virtual server ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Virtual server ID'. It must be a positive integer."))
 			})
 		})
 
@@ -134,7 +147,7 @@ var _ = Describe("VS detail", func() {
 				fakeVSManager.GetLocalDisksReturns([]datatypes.Virtual_Guest_Block_Device{}, errors.New("Failed to get the local disks detail for the virtual server"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the local disks detail for the virtual server"))
 			})
@@ -145,7 +158,7 @@ var _ = Describe("VS detail", func() {
 				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to get virtual server instance: 1234.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -155,115 +168,54 @@ var _ = Describe("VS detail", func() {
 		Context("VS detail with correct VS ID ", func() {
 
 			BeforeEach(func() {
-				fakeVSManager.GetInstanceReturns(VirtualGuestReturn, nil)
-				fakeVSManager.GetLocalDisksReturns(
-					[]datatypes.Virtual_Guest_Block_Device{
-						datatypes.Virtual_Guest_Block_Device{
-							DiskImage: &datatypes.Virtual_Disk_Image{
-								Description: sl.String("123456789-SWAP"),
-								Capacity:    sl.Int(2),
-								Units:       sl.String("GB"),
-							},
-							MountType: sl.String("Disk"),
-							Device:    sl.String("1"),
-						},
-					}, nil)
+				fakeVSManager.GetInstanceReturns(GetInstanceReturn, nil)
+				fakeVSManager.GetLocalDisksReturns(BlockDeviceReturns, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"rthtoshfkthr"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vs-abc"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilma.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vs-abc.wilma.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Provisioning"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"PowerOn"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dal10"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"CentOS"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"6.0"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"8"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"4096"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Swap"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Disk"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2 GB"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.9"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1.1.1.1"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"false"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-25T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2017-01-01T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Service Setup (2017-02-01T00:00:00Z)"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Hourly"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"C1_2X2X25"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilmawang"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"mynotes"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"tag1,tag2"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"678"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"50"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"PRIMARY"}))
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"root"}))
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"password4root"}))
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"1000.00"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("rthtoshfkthr"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("vs-abc.wilma.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Provisioning"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("PowerOn"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1.1.1.1"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("false"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-25T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-01-01T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Service Setup (2017-02-01T00:00:00Z)"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Hourly"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("C1_2X2X25"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("PRIMARY"))
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("root"))
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("password4root"))
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("1000.00"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--passwords", "--price")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--passwords", "--price")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"rthtoshfkthr"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vs-abc"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilma.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"vs-abc.wilma.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Provisioning"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"PowerOn"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dal10"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"CentOS"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"6.0"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"8"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"4096"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Swap"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Disk"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2 GB"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.9"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1.1.1.1"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"false"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-25T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2017-01-01T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Service Setup (2017-02-01T00:00:00Z)"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Hourly"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"C1_2X2X25"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilmawang"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"mynotes"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"tag1,tag2"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"678"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"50"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"PRIMARY"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"root"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"password4root"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1000.00"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("rthtoshfkthr"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("vs-abc"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("vs-abc.wilma.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Provisioning"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("PRIMARY"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("root"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("password4root"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00"))
 			})
 		})
 		Context("Github issues #252 ", func() {
 
 			BeforeEach(func() {
-				VirtualGuestReturn.BillingItem = nil
-				fakeVSManager.GetInstanceReturns(VirtualGuestReturn, nil)
-				fakeVSManager.GetLocalDisksReturns(
-					[]datatypes.Virtual_Guest_Block_Device{
-						datatypes.Virtual_Guest_Block_Device{
-							DiskImage: &datatypes.Virtual_Disk_Image{
-								Description: sl.String("123456789-SWAP"),
-								Capacity:    sl.Int(2),
-								Units:       sl.String("GB"),
-							},
-							MountType: sl.String("Disk"),
-							Device:    sl.String("1"),
-						},
-					}, nil)
+				GetInstanceReturn.BillingItem = nil
+				fakeVSManager.GetInstanceReturns(GetInstanceReturn, nil)
+				fakeVSManager.GetLocalDisksReturns(BlockDeviceReturns, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--passwords", "--price")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--passwords", "--price")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("price rate           0.00"))
 			})

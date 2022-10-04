@@ -3,8 +3,7 @@ package subnet
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -14,52 +13,77 @@ import (
 )
 
 type CreateCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	Ipv6           bool
+	Test           bool
+	Force          bool
 }
 
-func NewCreateCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *CreateCommand) {
-	return &CreateCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
+	thisCmd := &CreateCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "create",
+		Short: T("Add a new subnet to your account"),
+		Long: T(`${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]
+	
+	Add a new subnet to your account. Valid quantities vary by type.
+	
+	Type    - Valid Quantities (IPv4)
+  	public  - 4, 8, 16, 32
+  	private - 4, 8, 16, 32, 64
+
+  	Type    - Valid Quantities (IPv6)
+	public  - 64
+
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet create public 16 567 
+   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.`),
+		Args: metadata.ThreeArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVarP(&thisCmd.Ipv6, "ipv6", "6", false, T("Order IPv6 Addresses"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Test, "test", false, T("Do not order the subnet; just get a quote"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateCommand) Run(c *cli.Context) error {
-	if c.NArg() != 3 {
-		return errors.NewInvalidUsageError(T("This command requires three arguments."))
-	}
-	network := c.Args()[0]
+func (cmd *CreateCommand) Run(args []string) error {
+	network := args[0]
 	if network != "public" && network != "private" {
 		return errors.NewInvalidUsageError(T("NETWORK has to be either public or private."))
 	}
-	quantity, err := strconv.Atoi(c.Args()[1])
+	quantity, err := strconv.Atoi(args[1])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("QUANTITY")
 	}
-	vlanID, err := utils.ResolveVlanId(c.Args()[2])
+	vlanID, err := utils.ResolveVlanId(args[2])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("VLAN ID")
 	}
 	version := 4
-	if c.IsSet("v6") {
+	if cmd.Ipv6 {
 		version = 6
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	testOrder := false
-	if c.IsSet("test") {
+	if cmd.Test {
 		testOrder = true
 	}
 	if testOrder == false {
-		if !c.IsSet("f") && !c.IsSet("force") && outputFormat != "JSON" {
+		if !cmd.Force {
 			confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?"))
 			if err != nil {
-				return cli.NewExitError(err.Error(), 1)
+				return err
 			}
 			if !confirm {
 				cmd.UI.Print(T("Aborted."))
@@ -70,7 +94,7 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 
 	orderReceipt, err := cmd.NetworkManager.AddSubnet(network, quantity, vlanID, version, testOrder)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add subnet.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to add subnet.\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -101,38 +125,4 @@ func (cmd *CreateCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func SubnetCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "subnet",
-		Name:        "create",
-		Description: T("Add a new subnet to your account"),
-		Usage: T(`${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]
-	
-	Add a new subnet to your account. Valid quantities vary by type.
-	
-	Type    - Valid Quantities (IPv4)
-  	public  - 4, 8, 16, 32
-  	private - 4, 8, 16, 32, 64
-
-  	Type    - Valid Quantities (IPv6)
-	public  - 64
-
-EXAMPLE:
-   ${COMMAND_NAME} sl subnet create public 16 567 
-   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "v6,ipv6",
-				Usage: T("Order IPv6 Addresses"),
-			},
-			cli.BoolFlag{
-				Name:  "test",
-				Usage: T("Do not order the subnet; just get a quote"),
-			},
-			metadata.ForceFlag(),
-			metadata.OutputFlag(),
-		},
-	}
 }

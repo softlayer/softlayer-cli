@@ -8,38 +8,37 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Record list", func() {
 	var (
 		fakeUI         *terminal.FakeUI
+		cliCommand     *dns.RecordListCommand
+		fakeSession    *session.Session
+		slCommand      *metadata.SoftlayerCommand
 		fakeDNSManager *testhelpers.FakeDNSManager
-		cmd            *dns.RecordListCommand
-		cliCommand     cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = dns.NewRecordListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeDNSManager = new(testhelpers.FakeDNSManager)
-		cmd = dns.NewRecordListCommand(fakeUI, fakeDNSManager)
-		cliCommand = cli.Command{
-			Name:        dns.DnsRecordListMetaData().Name,
-			Description: dns.DnsRecordListMetaData().Description,
-			Usage:       dns.DnsRecordListMetaData().Usage,
-			Flags:       dns.DnsRecordListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.DNSManager = fakeDNSManager
 	})
 
 	Describe("Record list", func() {
 		Context("Record list without zone name", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Record list with wrong zone name", func() {
@@ -47,10 +46,10 @@ var _ = Describe("Record list", func() {
 				fakeDNSManager.GetZoneIdFromNameReturns(0, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get zone ID from zone name: abc.com.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get zone ID from zone name: abc.com."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -60,10 +59,10 @@ var _ = Describe("Record list", func() {
 				fakeDNSManager.ListResourceRecordsReturns([]datatypes.Dns_Domain_ResourceRecord{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to list resource records under zone: abc.com")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to list resource records under zone: abc.com"))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 
 			})
 		})
@@ -145,29 +144,29 @@ var _ = Describe("Record list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "50585314")).To(BeTrue())
-				Expect(strings.Contains(results[1], "txt       TXT    900     bcr01.dal06.bluemix.ibmcsf.net")).To(BeTrue())
-				Expect(strings.Contains(results[2], "50585306")).To(BeTrue())
-				Expect(strings.Contains(results[2], "@         SOA    900     ns1.softlayer.com.")).To(BeTrue())
-				Expect(strings.Contains(results[3], "50585307")).To(BeTrue())
-				Expect(strings.Contains(results[3], "@         NS     900     ns1.softlayer.com.")).To(BeTrue())
-				Expect(strings.Contains(results[4], "50585308")).To(BeTrue())
-				Expect(strings.Contains(results[4], "@         NS     900     ns2.softlayer.com.")).To(BeTrue())
-				Expect(strings.Contains(results[5], "50585313")).To(BeTrue())
-				Expect(strings.Contains(results[5], "@         MX     900     mail.dal06.bluemix.ibmcsf.net.")).To(BeTrue())
-				Expect(strings.Contains(results[6], "50585305")).To(BeTrue())
-				Expect(strings.Contains(results[6], "@         A      900     127.0.0.1")).To(BeTrue())
-				Expect(strings.Contains(results[7], "50585312")).To(BeTrue())
-				Expect(strings.Contains(results[7], "ftp       A      86400   127.0.0.1")).To(BeTrue())
-				Expect(strings.Contains(results[8], "50585309")).To(BeTrue())
-				Expect(strings.Contains(results[8], "mail      A      86400   127.0.0.1")).To(BeTrue())
-				Expect(strings.Contains(results[9], "50585310")).To(BeTrue())
-				Expect(strings.Contains(results[9], "webmail   A      86400   127.0.0.1")).To(BeTrue())
-				Expect(strings.Contains(results[10], "50585311")).To(BeTrue())
-				Expect(strings.Contains(results[10], "www       A      86400   127.0.0.1")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("50585314"))
+				Expect(results[1]).To(ContainSubstring("txt       TXT    900     bcr01.dal06.bluemix.ibmcsf.net"))
+				Expect(results[2]).To(ContainSubstring("50585306"))
+				Expect(results[2]).To(ContainSubstring("@         SOA    900     ns1.softlayer.com."))
+				Expect(results[3]).To(ContainSubstring("50585307"))
+				Expect(results[3]).To(ContainSubstring("@         NS     900     ns1.softlayer.com."))
+				Expect(results[4]).To(ContainSubstring("50585308"))
+				Expect(results[4]).To(ContainSubstring("@         NS     900     ns2.softlayer.com."))
+				Expect(results[5]).To(ContainSubstring("50585313"))
+				Expect(results[5]).To(ContainSubstring("@         MX     900     mail.dal06.bluemix.ibmcsf.net."))
+				Expect(results[6]).To(ContainSubstring("50585305"))
+				Expect(results[6]).To(ContainSubstring("@         A      900     127.0.0.1"))
+				Expect(results[7]).To(ContainSubstring("50585312"))
+				Expect(results[7]).To(ContainSubstring("ftp       A      86400   127.0.0.1"))
+				Expect(results[8]).To(ContainSubstring("50585309"))
+				Expect(results[8]).To(ContainSubstring("mail      A      86400   127.0.0.1"))
+				Expect(results[9]).To(ContainSubstring("50585310"))
+				Expect(results[9]).To(ContainSubstring("webmail   A      86400   127.0.0.1"))
+				Expect(results[10]).To(ContainSubstring("50585311"))
+				Expect(results[10]).To(ContainSubstring("www       A      86400   127.0.0.1"))
 			})
 		})
 	})

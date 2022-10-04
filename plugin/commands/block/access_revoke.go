@@ -3,9 +3,8 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,72 +12,63 @@ import (
 )
 
 type AccessRevokeCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	NetworkManager managers.NetworkManager
+	Hardware_id    []int
+	Virtual_id     []int
+	Ip_address_id  []int
+	Ip_address     []string
 }
 
-func NewAccessRevokeCommand(ui terminal.UI, storageManager managers.StorageManager, networkManager managers.NetworkManager) (cmd *AccessRevokeCommand) {
-	return &AccessRevokeCommand{
-		UI:             ui,
-		StorageManager: storageManager,
-		NetworkManager: networkManager,
+func NewAccessRevokeCommand(sl *metadata.SoftlayerStorageCommand) *AccessRevokeCommand {
+	thisCmd := &AccessRevokeCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
+		NetworkManager:          managers.NewNetworkManager(sl.Session),
 	}
-}
-
-func BlockAccessRevokeMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "access-revoke",
-		Description: T("Revoke authorization for hosts that are accessing a specific volume"),
-		Usage: T(`${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "access-revoke " + T("IDENTIFIER"),
+		Short: T("Revoke authorization for hosts that are accessing a specific volume"),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
-   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321
-   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.`),
-		Flags: []cli.Flag{
-			cli.IntSliceFlag{
-				Name:  "d,hardware-id",
-				Usage: T("The ID of one hardware server to revoke"),
-			},
-			cli.IntSliceFlag{
-				Name:  "v,virtual-id",
-				Usage: T("The ID of one virtual server to revoke"),
-			},
-			cli.IntSliceFlag{
-				Name:  "i,ip-address-id",
-				Usage: T("The ID of one IP address to revoke"),
-			},
-			cli.StringSliceFlag{
-				Name:  "p,ip-address",
-				Usage: T("An IP address to revoke"),
-			},
-			metadata.OutputFlag(),
+   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321
+   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.`, sl.StorageI18n),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Hardware_id, "hardware-id", "d", []int{}, T("The ID of one hardware server to revoke"))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Virtual_id, "virtual-id", "v", []int{}, T("The ID of one virtual server to revoke"))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Ip_address_id, "ip-address-id", "i", []int{}, T("The ID of one IP address to revoke"))
+	cobraCmd.Flags().StringSliceVarP(&thisCmd.Ip_address, "ip-address", "p", []string{}, T("An IP address to revoke"))
+	thisCmd.Command = cobraCmd
+
+	return thisCmd
 }
 
-func (cmd *AccessRevokeCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *AccessRevokeCommand) Run(args []string) error {
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	if !c.IsSet("d") && !c.IsSet("v") && !c.IsSet("i") && !c.IsSet("p") && !c.IsSet("hardware-id") && !c.IsSet("virtual-id") && !c.IsSet("ip-address-id") && !c.IsSet("ip-address") {
-		return errors.NewInvalidUsageError(T("One of -d | --hardware-id, -v | --virtual-id, -i | --ip-address-id and -p | --ip-address must be specified."))
+	if len(cmd.Hardware_id) == 0 && len(cmd.Virtual_id) == 0 && len(cmd.Ip_address_id) == 0 && len(cmd.Ip_address) == 0 {
+		return slErr.NewInvalidUsageError(T("One of -d | --hardware-id, -v | --virtual-id, -i | --ip-address-id and -p | --ip-address must be specified."))
 	}
 
-	IPIds := c.IntSlice("ip-address-id")
-	IPs := c.StringSlice("ip-address")
+	IPIds := cmd.Ip_address_id
+	IPs := cmd.Ip_address
 	if len(IPs) > 0 {
 		for _, ip := range IPs {
 			ipRecord, err := cmd.NetworkManager.IPLookup(ip)
 			if err != nil {
-				return cli.NewExitError(T("IP address {{.IP}} is not found on your account.Please confirm IP and try again.\n",
-					map[string]interface{}{"IP": ip})+err.Error(), 2)
+				return slErr.NewAPIError(T("IP address {{.IP}} is not found on your account.Please confirm IP and try again.\n",
+					map[string]interface{}{"IP": ip}), err.Error(), 2)
 			}
 			if ipRecord.Id != nil {
 				IPIds = append(IPIds, *ipRecord.Id)
@@ -86,15 +76,15 @@ func (cmd *AccessRevokeCommand) Run(c *cli.Context) error {
 
 		}
 	}
-	_, err = cmd.StorageManager.DeauthorizeHostToVolume(volumeID, c.IntSlice("hardware-id"), c.IntSlice("virtual-id"), IPIds, nil)
+	_, err = cmd.StorageManager.DeauthorizeHostToVolume(volumeID, cmd.Hardware_id, cmd.Virtual_id, IPIds, nil)
 	if err != nil {
-		return cli.NewExitError(T("Failed to revoke access to volume {{.VolumeID}}.\n", map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to revoke access to volume {{.VolumeID}}.\n", map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
-	for _, vsID := range c.IntSlice("virtual-id") {
+	for _, vsID := range cmd.Virtual_id {
 		cmd.UI.Print(T("Access to {{.VolumeId}} was revoked for virtual server {{.VsID}}.", map[string]interface{}{"VolumeId": volumeID, "VsID": vsID}))
 	}
-	for _, hwID := range c.IntSlice("hardware-id") {
+	for _, hwID := range cmd.Hardware_id {
 		cmd.UI.Print(T("Access to {{.VolumeId}} was revoked for hardware server {{.HwID}}.", map[string]interface{}{"VolumeId": volumeID, "HwID": hwID}))
 	}
 	for _, ip := range IPIds {

@@ -6,38 +6,30 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Account shows Summary ", func() {
-	var (
-		fakeUI             *terminal.FakeUI
-		cmd                *account.SummaryCommand
-		cliCommand         cli.Command
-		fakeSession        *session.Session
-		fakeAccountManager managers.AccountManager
-	)
-	BeforeEach(func() {
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		fakeAccountManager = managers.NewAccountManager(fakeSession)
-		fakeUI = terminal.NewFakeUI()
-		cmd = account.NewSummaryCommand(fakeUI, fakeAccountManager)
-		cliCommand = cli.Command{
-			Name:        account.SummaryMetaData().Name,
-			Description: account.SummaryMetaData().Description,
-			Usage:       account.SummaryMetaData().Usage,
-			Flags:       account.SummaryMetaData().Flags,
-			Action:      cmd.Run,
-		}
-	})
+    var (
+        fakeUI              *terminal.FakeUI
+        cliCommand          *account.SummaryCommand
+        fakeSession         *session.Session
+        slCommand           *metadata.SoftlayerCommand
+    )
+    BeforeEach(func() {
+        fakeUI = terminal.NewFakeUI()
+        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+        cliCommand = account.NewSummaryCommand(slCommand)
+        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+    })
 
 	Describe("Account summary", func() {
 		Context("Account summary, Invalid Usage", func() {
 			It("Set command with an invalid output option", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -45,7 +37,7 @@ var _ = Describe("Account shows Summary ", func() {
 
 		Context("Account summary, correct use", func() {
 			It("return account summary", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Account Snapshot"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Name                      Value"))
@@ -65,7 +57,7 @@ var _ = Describe("Account shows Summary ", func() {
 				
 			})
 			It("return account summary in format json", func() {
-				err := testhelpers.RunCommand(cliCommand, "--output", "json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Account Snapshot":`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "Company Name","`))
@@ -74,10 +66,6 @@ var _ = Describe("Account shows Summary ", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "275246.130000""`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "Upcoming Invoice","`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "3052.870000""`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`]`))
 			})
 		})
 	})

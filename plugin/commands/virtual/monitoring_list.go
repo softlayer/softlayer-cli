@@ -5,10 +5,9 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -16,35 +15,41 @@ import (
 )
 
 type MonitoringListCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
 }
 
-func NewMonitoringListCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *MonitoringListCommand) {
-	return &MonitoringListCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewMonitoringListCommand(sl *metadata.SoftlayerCommand) (cmd *MonitoringListCommand) {
+	thisCmd := &MonitoringListCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "monitoring-list " + T("IDENTIFIER"),
+		Short: T("Get details for a vsi monitors device."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *MonitoringListCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	virtualId, err := strconv.Atoi(c.Args()[0])
+func (cmd *MonitoringListCommand) Run(args []string) error {
+
+	virtualId, err := strconv.Atoi(args[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Virtual server ID")
+		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := "mask[monitoringServiceComponent,networkMonitors[queryType,lastResult,responseAction],datacenter]"
 	virtual, err := cmd.VirtualServerManager.GetInstance(virtualId, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get virtual server: {{.ID}}.\n", map[string]interface{}{"ID": virtualId})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get virtual server: {{.ID}}.\n", map[string]interface{}{"ID": virtualId}), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -71,22 +76,6 @@ func (cmd *MonitoringListCommand) Run(c *cli.Context) error {
 		table.Add("Monitors", buf.String())
 	}
 
-	if outputFormat == "JSON" {
-		table.PrintJson()
-	} else {
-		table.Print()
-	}
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func VSMonitoringListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "monitoring-list",
-		Description: T("Get details for a vsi monitors device."),
-		Usage:       "${COMMAND_NAME} sl virtual monitoring-list IDENTIFIER [OPTIONS]",
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

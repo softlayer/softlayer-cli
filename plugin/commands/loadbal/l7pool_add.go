@@ -5,81 +5,113 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type L7PoolAddCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	Id                  int
+	Name                string
+	Method              string
+	Protocol            string
+	Server              []string
+	HealthPath          string
+	HealthInterval      int
+	HealthRetry         int
+	HealthTimeout       int
+	Sticky              string
 }
 
-func NewL7PoolAddCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *L7PoolAddCommand) {
-	return &L7PoolAddCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewL7PoolAddCommand(sl *metadata.SoftlayerCommand) *L7PoolAddCommand {
+	thisCmd := &L7PoolAddCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "l7pool-add",
+		Short: T("Add a new L7 pool"),
+		Long:  T("${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().IntVar(&thisCmd.Id, "id", 0, T("ID for the load balancer [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("Name for this L7 pool. [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Method, "method", "m", "ROUNDROBIN", T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Protocol, "protocol", "p", "HTTP", T("Protocol type to use for incoming connections"))
+	cobraCmd.Flags().StringSliceVarP(&thisCmd.Server, "server", "s", []string{}, T("Backend servers that are part of this pool. Format: BACKEND_IP:PORT. eg. 10.0.0.1:80 (multiple occurrence permitted)"))
+	cobraCmd.Flags().StringVar(&thisCmd.HealthPath, "health-path", "/", T("Health check path"))
+	cobraCmd.Flags().IntVar(&thisCmd.HealthInterval, "health-interval", 5, T("Health check interval between checks"))
+	cobraCmd.Flags().IntVar(&thisCmd.HealthRetry, "health-retry", 2, T("Health check number of times before marking as DOWN"))
+	cobraCmd.Flags().IntVar(&thisCmd.HealthTimeout, "health-timeout", 2, T("Health check timeout"))
+	cobraCmd.Flags().StringVar(&thisCmd.Sticky, "sticky", "", T("Use 'cookie' or 'source-ip' to stick"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *L7PoolAddCommand) Run(c *cli.Context) error {
-	loadbalID := c.Int("id")
+func (cmd *L7PoolAddCommand) Run(args []string) error {
+	loadbalID := cmd.Id
 	if loadbalID == 0 {
 		return bxErr.NewMissingInputError("--id")
 	}
 
-	name := c.String("n")
+	name := cmd.Name
 	if name == "" {
 		return bxErr.NewMissingInputError("-n, --name")
 	}
 
-	method := c.String("m")
+	method := cmd.Method
 	if method == "" {
 		method = "ROUNDROBIN"
 	}
 
-	protocol := c.String("p")
+	protocol := cmd.Protocol
 	if protocol == "" {
 		protocol = "HTTP"
 	}
 
-	healthPath := c.String("health-path")
+	healthPath := cmd.HealthPath
 	if healthPath == "" {
 		healthPath = "/"
 	}
 
-	healthInterval := c.Int("health-interval")
+	healthInterval := cmd.HealthInterval
 	if healthInterval == 0 {
 		healthInterval = 6
 	}
 
-	healthRetry := c.Int("health-retry")
+	healthRetry := cmd.HealthRetry
 	if healthRetry == 0 {
 		healthRetry = 2
 	}
 
-	healthTimeout := c.Int("health-timeout")
+	healthTimeout := cmd.HealthTimeout
 	if healthTimeout == 0 {
 		healthTimeout = 2
 	}
 
 	members := []datatypes.Network_LBaaS_L7Member{}
 	var err error
-	if c.IsSet("s") {
-		servers := c.StringSlice("s")
+	if len(cmd.Server) != 0 {
+		servers := cmd.Server
 		members, err = parseServer(servers)
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 	}
 
 	loadbalancerUUID, err := cmd.LoadBalancerManager.GetLoadBalancerUUID(loadbalID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}), 2)
+		return errors.New(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}))
 	}
 
 	l7Pool := datatypes.Network_LBaaS_L7Pool{
@@ -96,24 +128,23 @@ func (cmd *L7PoolAddCommand) Run(c *cli.Context) error {
 	}
 
 	var sessionAffinity *datatypes.Network_LBaaS_L7SessionAffinity
-	if strings.ToLower(c.String("sticky")) == "cookie" {
+	if strings.ToLower(cmd.Sticky) == "cookie" {
 		sessionAffinityType := "HTTP_COOKIE"
 		sessionAffinity = &datatypes.Network_LBaaS_L7SessionAffinity{
 			Type: &sessionAffinityType,
 		}
-	} else if strings.ToLower(c.String("sticky")) == "source-ip" {
+	} else if strings.ToLower(cmd.Sticky) == "source-ip" {
 		sessionAffinityType := "SOURCE_IP"
 		sessionAffinity = &datatypes.Network_LBaaS_L7SessionAffinity{
 			Type: &sessionAffinityType,
 		}
-	} else if c.String("sticky") != "" {
+	} else if cmd.Sticky != "" {
 		return bxErr.NewInvalidUsageError(T("Value of option '--sticky' should be cookie or source-ip"))
 	}
 
 	_, err = cmd.LoadBalancerManager.AddLoadBalancerL7Pool(&loadbalancerUUID, &l7Pool, members, &l7health, sessionAffinity)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add load balancer l7 pool: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to add load balancer l7 pool: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 pool added"))
@@ -138,55 +169,4 @@ func parseServer(servers []string) ([]datatypes.Network_LBaaS_L7Member, error) {
 		members = append(members, member)
 	}
 	return members, nil
-}
-
-func LoadbalL7PoolAddMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "l7pool-add",
-		Description: T("Add a new L7 pool"),
-		Usage:       "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "id",
-				Usage: T("ID for the load balancer [required]"),
-			},
-			cli.StringFlag{
-				Name:  "n, name",
-				Usage: T("Name for this L7 pool. [required]"),
-			},
-			cli.StringFlag{
-				Name:  "m, method",
-				Usage: T("Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [default: ROUNDROBIN]"),
-			},
-			cli.StringFlag{
-				Name:  "p, protocol",
-				Usage: T("Protocol type to use for incoming connections. [default: HTTP]"),
-			},
-			cli.StringSliceFlag{
-				Name:  "s, server",
-				Usage: T("Backend servers that are part of this pool. Format: BACKEND_IP:PORT. eg. 10.0.0.1:80 (multiple occurrence permitted)"),
-			},
-			cli.StringFlag{
-				Name:  "health-path",
-				Usage: T("Health check path.  [default: /]"),
-			},
-			cli.IntFlag{
-				Name:  "health-interval",
-				Usage: T("Health check interval between checks. [default: 5]"),
-			},
-			cli.IntFlag{
-				Name:  "health-retry",
-				Usage: T("Health check number of times before marking as DOWN. [default: 2]"),
-			},
-			cli.IntFlag{
-				Name:  "health-timeout",
-				Usage: T("Health check timeout. [default: 2]"),
-			},
-			cli.StringFlag{
-				Name:  "sticky",
-				Usage: T("Use 'cookie' or 'source-ip' to stick"),
-			},
-		},
-	}
 }

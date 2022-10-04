@@ -2,49 +2,48 @@ package virtual_test
 
 import (
 	"errors"
-
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.AuthorizeStorageCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cmd           *virtual.AuthorizeStorageCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = virtual.NewAuthorizeStorageCommand(fakeUI, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        virtual.VSAuthorizeStorageMetaData().Name,
-			Description: virtual.VSAuthorizeStorageMetaData().Description,
-			Usage:       virtual.VSAuthorizeStorageMetaData().Usage,
-			Flags:       virtual.VSAuthorizeStorageMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewAuthorizeStorageCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
 
 	Describe("Authorize Block, File, Portable Storage to a VS", func() {
 		Context("Authorize Storage without VS ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Authorize Storage with wrong VS ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Virtual server ID'. It must be a positive integer."))
 			})
@@ -55,9 +54,9 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 				fakeVSManager.AuthorizeStorageReturns(true, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--username-storage", "SL02SL11111111-11")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--username-storage", "SL02SL11111111-11")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 			})
 		})
 
@@ -66,7 +65,7 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 				fakeVSManager.AuthorizeStorageReturns(false, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--username-storage", "SL02SL111")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--username-storage", "SL02SL111")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to authorize storage to the virtual server instance: SL02SL111.\nInternal Server Error"))
 			})
@@ -79,9 +78,9 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--portable-id", "1234567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--portable-id", "1234567")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 			})
 		})
 
@@ -90,7 +89,7 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 				fakeVSManager.AttachPortableStorageReturns(datatypes.Provisioning_Version1_Transaction{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--portable-id", "1234567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--portable-id", "1234567")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to authorize portable storage to the virtual server instance: 1234567.\nInternal Server Error"))
 			})

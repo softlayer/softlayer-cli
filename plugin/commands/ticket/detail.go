@@ -5,34 +5,48 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type DetailTicketCommand struct {
-	UI            terminal.UI
+	*metadata.SoftlayerCommand
 	TicketManager managers.TicketManager
 	UserManager   managers.UserManager
+	Command       *cobra.Command
+	Count         int
 }
 
-func NewDetailTicketCommand(ui terminal.UI, ticketManager managers.TicketManager, userManager managers.UserManager) (cmd *DetailTicketCommand) {
-	return &DetailTicketCommand{
-		UI:            ui,
-		TicketManager: ticketManager,
-		UserManager:   userManager,
+func NewDetailTicketCommand(sl *metadata.SoftlayerCommand) *DetailTicketCommand {
+	thisCmd := &DetailTicketCommand{
+		SoftlayerCommand: sl,
+		TicketManager:    managers.NewTicketManager(sl.Session),
+		UserManager:      managers.NewUserManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "detail",
+		Short: T("Get details for a ticket"),
+		Long: T(`${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]
+  
+EXAMPLE:
+  ${COMMAND_NAME} sl ticket detail 767676
+  ${COMMAND_NAME} sl ticket detail 767676 --count 10`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().IntVar(&thisCmd.Count, "count", 0, T("Number of updates"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailTicketCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-
-	args := c.Args()
-
+func (cmd *DetailTicketCommand) Run(args []string) error {
 	ticketid, err := strconv.Atoi(args[0])
 	if err != nil || ticketid <= 0 {
 		return errors.NewInvalidUsageError(T("The ticket id must be a positive non-zero number."))
@@ -40,11 +54,11 @@ func (cmd *DetailTicketCommand) Run(c *cli.Context) error {
 
 	ticket, err := cmd.TicketManager.GetTicket(ticketid)
 	if err != nil {
-		return cli.NewExitError(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}))
 	}
 	ticketUpdates, err := cmd.TicketManager.GetAllUpdates(ticketid)
 	if err != nil {
-		return cli.NewExitError(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Error: {{.Error}}", map[string]interface{}{"Error": err.Error()}))
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -65,8 +79,8 @@ func (cmd *DetailTicketCommand) Run(c *cli.Context) error {
 	table.Add(T("Last Edited"), utils.FormatSLTimePointer(ticket.LastEditDate))
 
 	updateCount := 10
-	if c.IsSet("count") {
-		updateCount = c.Int("count")
+	if cmd.Count != 0 {
+		updateCount = cmd.Count
 	}
 
 	count := Min(len(ticketUpdates), updateCount)
@@ -82,7 +96,7 @@ func (cmd *DetailTicketCommand) Run(c *cli.Context) error {
 		if editor_type == "USER" && update.EditorId != nil {
 			user, err := cmd.UserManager.GetUser(*update.EditorId, "mask[firstName,lastName]")
 			if err != nil {
-				return cli.NewExitError(T("Error: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}), 2)
+				return errors.New(T("Error: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 			} else {
 				editor_name = utils.FormatStringPointer(user.FirstName) + " " + utils.FormatStringPointer(user.LastName)
 			}
@@ -119,23 +133,4 @@ func Min(x, y int) int {
 		return x
 	}
 	return y
-}
-
-func TicketDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "ticket",
-		Name:        "detail",
-		Description: T("Get details for a ticket"),
-		Usage: T(`${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]
-  
-EXAMPLE:
-  ${COMMAND_NAME} sl ticket detail 767676
-  ${COMMAND_NAME} sl ticket detail 767676 --count 10`),
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "count",
-				Usage: T("Number of updates"),
-			},
-		},
-	}
 }

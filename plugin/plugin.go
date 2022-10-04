@@ -11,10 +11,12 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
+
+	"github.com/softlayer/softlayer-go/session"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/client"
-	slError "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
@@ -36,7 +38,8 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
-	commandMetadata "github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/metadata"
+
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/meta"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/nas"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/objectstorage"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
@@ -52,31 +55,22 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
-var (
-	COMMAND_HELP_TEMPLATE = T("NAME:") + `
-{{.Name}} - {{.Usage}}{{with .ShortName}}
-` + T("ALIAS:") + `
-   {{.}}{{end}}
-
-` + T("USAGE:") + `
-   {{.Description}}
-{{with .Flags}}
-` + T("OPTIONS:") + `
-{{range .}}   {{.}}
-{{end}}{{end}}
-`
-)
+var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} {{.Use}}{{else}}{{.Use}}{{end}}` +
+	`{{if .HasLocalFlags}} [` + T("OPTIONS") + `] {{end}}
+{{.Long}}`
 
 func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
 		Name:       version.PLUGIN_SOFTLAYER,
 		Namespaces: Namespaces(),
-		Commands:   GetPluginCommands(getCLITopCommands()),
+		// TODO change this to convert cobra commands to pluginCommands... maybe see if another plugin does this already???
+		Commands: cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
 	}
 }
 
 type SoftlayerPlugin struct {
-	ui terminal.UI
+	ui      terminal.UI
+	session *session.Session
 }
 
 func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
@@ -86,106 +80,35 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 			os.Exit(1)
 		}
 	}()
+
 	trace.Logger = trace.NewLogger(context.Trace())
 	terminal.UserAskedForColors = context.ColorEnabled()
 	terminal.InitColorSupport()
 	sl.ui = terminal.NewStdUI()
+	sl.session, _ = client.NewSoftlayerClientSessionFromConfig(context)
 	// initCustomizedHelp(context)
-	cli.CommandHelpTemplate = COMMAND_HELP_TEMPLATE
 
-	app := cli.NewApp()
-	app.Name = context.CLIName() + "sl "
-	app.Usage = T(version.PLUGIN_SOFTLAYER_USAGE)
-	app.Version = version.PLUGIN_VERSION
+	cobraCommand := getTopCobraCommand(sl.ui, sl.session)
+	// cobraCommand.SetHelpTemplate(COMMAND_HELP_TEMPLATE)
+	// cobraCommand.SetUsageTemplate(USEAGE_TEMPLATE)
 
-	for _, cmd := range getCLITopCommands() {
-		cliCommand := cli.Command{
-			Category:    cmd.Category,
-			Name:        cmd.Name,
-			Description: cmd.Description,
-			Usage:       strings.Replace(cmd.Usage, "${COMMAND_NAME}", context.CLIName(), -1),
-			Flags:       cmd.Flags,
-		}
-		if len(cmd.Subcommands) == 0 {
-			action := GetCommandAction(context, sl.ui)
-			if action != nil {
-				cliCommand.Action = action
-			}
-		} else {
-			for _, subCmd := range cmd.Subcommands {
-				cliCommand.Subcommands = append(cliCommand.Subcommands,
-					cli.Command{
-						Category:    subCmd.Category,
-						Name:        subCmd.Name,
-						Description: subCmd.Description,
-						Usage:       strings.Replace(subCmd.Usage, "${COMMAND_NAME}", context.CLIName(), -1),
-						Flags:       subCmd.Flags,
-						Action:      GetCommandAction(context, sl.ui),
-					})
-			}
-		}
-		app.Commands = append(app.Commands, cliCommand)
+	// When the command comes in from the ibmcloud-cli it has `sl` in the Namespace, which we need to remove
+	args = append(strings.Split(context.CommandNamespace(), " "), args...)
+	if args[0] == "sl" || args[0] == "" {
+		args = args[1:]
 	}
-	err := app.Run(append(strings.Split(context.CommandNamespace(), " "), args...))
-	if err != nil {
-		sl.ui.Failed(err.Error())
-		os.Exit(1)
+	// Gives Cobra the args we were given
+	cobraCommand.SetArgs(args)
+	// fmt.Printf("ARgs: %v\n", args)
+	cobraErr := cobraCommand.Execute()
+	if cobraErr != nil {
+		fmt.Printf("Cobra Error:\n %v", cobraErr)
+	} else {
+		return
 	}
+
 }
 
-func GetCommandAction(pluginContext plugin.PluginContext, ui terminal.UI) func(cliContext *cli.Context) error {
-	return func(cliContext *cli.Context) error {
-		command := cliContext.Command
-
-		session, err := client.NewSoftlayerClientSessionFromConfig(pluginContext)
-		if err != nil {
-			return slError.Error_Not_Login(pluginContext)
-		}
-		actionMaps := GetCommandAcionBindings(pluginContext, ui, session)
-		return actionMaps[command.Category+"-"+command.Name](cliContext)
-	}
-}
-
-func GetPluginCommands(cliCommands []cli.Command) []plugin.Command {
-	var pluginCommands []plugin.Command
-	for _, cliCmd := range cliCommands {
-		if len(cliCmd.Subcommands) > 0 {
-			for _, subCmd := range cliCmd.Subcommands {
-				subPluginCmd := plugin.Command{
-					Namespace:   metadata.SoftlayerNamespace().Name + " " + subCmd.Category,
-					Name:        subCmd.Name,
-					Description: subCmd.Description,
-					Usage:       subCmd.Usage,
-					Flags:       convertToPluginFlags(subCmd.Flags),
-				}
-				pluginCommands = append(pluginCommands, subPluginCmd)
-			}
-		} else {
-			pluginCommand := plugin.Command{
-				Namespace:   metadata.SoftlayerNamespace().Name,
-				Name:        cliCmd.Name,
-				Description: cliCmd.Description,
-				Usage:       cliCmd.Usage,
-				Flags:       convertToPluginFlags(cliCmd.Flags),
-			}
-			pluginCommands = append(pluginCommands, pluginCommand)
-		}
-	}
-	return pluginCommands
-}
-
-func convertToPluginFlags(flags []cli.Flag) []plugin.Flag {
-	var ret []plugin.Flag
-	for _, f := range flags {
-		ret = append(ret, plugin.Flag{
-			Name:        reflect.ValueOf(f).FieldByName("Name").String(),
-			Description: reflect.ValueOf(f).FieldByName("Usage").String(),
-			HasValue:    reflect.TypeOf(f).String() != "cli.BoolFlag",
-			Hidden:      reflect.ValueOf(f).FieldByName("Hidden").Bool(),
-		})
-	}
-	return ret
-}
 
 func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
@@ -222,38 +145,123 @@ func Namespaces() []plugin.Namespace {
 	}
 }
 
-func getCLITopCommands() []cli.Command {
-	return []cli.Command{
-		autoscale.AutoScaleMetaData(),
-		block.BlockMetaData(),
-		file.FileMetaData(),
-		cdn.CdnMetaData(),
-		dns.DnsMetaData(),
-		eventlog.EventLogMetaData(),
-		firewall.FirewallMetaData(),
-		email.EmailMetaData(),
-		globalip.GlobalIpMetaData(),
-		hardware.HardwareMetaData(),
-		image.ImageMetaData(),
-		ipsec.IpsecMetaData(),
-		licenses.LicensesMetaData(),
-		loadbal.LoadbalMetaData(),
-		commandMetadata.MetadataMetadata(),
-		nas.NasNetworkStorageMetaData(),
-		security.SecurityMetaData(),
-		securitygroup.SecurityGroupMetaData(),
-		subnet.SubnetMetaData(),
-		ticket.TicketMetaData(),
-		vlan.VlanMetaData(),
-		placementgroup.PlacementGroupMetaData(),
-		objectstorage.ObjectStorageMetaData(),
-		order.OrderMetaData(),
-		user.UserMetaData(),
-		callapi.CallAPIMetadata(),
-		tags.TagsMetaData(),
-		dedicatedhost.DedicatedhostMetaData(),
-		virtual.VSMetaData(),
-		account.AccountMetaData(),
-		reports.ReportsMetaData(),
+func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag {
+	var pluginFlags []plugin.Flag
+	flagSet.VisitAll(func(pflag *pflag.Flag) {
+		flagName := pflag.Name
+		if pflag.Shorthand != "" {
+			flagName = pflag.Shorthand + "," + pflag.Name
+		}
+		flagDesc := pflag.Usage
+		if !defaultIsZeroValue(pflag) {
+			flagDesc = fmt.Sprintf("%s (%s: %s)", pflag.Usage, T("Default"), pflag.DefValue)
+		}
+		hasValue := true
+		if reflect.TypeOf(pflag.Value).String() == "*pflag.boolValue" {
+			hasValue = false
+		}
+		thisFlag := plugin.Flag{
+			Name:        flagName,
+			Description: flagDesc,
+			HasValue:    hasValue,
+			Hidden:      pflag.Hidden,
+		}
+		pluginFlags = append(pluginFlags, thisFlag)
+	})
+	return pluginFlags
+}
+
+// Copied from https://github.com/spf13/pflag/blob/master/flag.go#L538 
+// Because its a private function for some reason.
+func defaultIsZeroValue(f *pflag.Flag) bool {
+	switch f.DefValue {
+		case "false":
+			return true
+		case "0", "0s":
+			return true
+		case "<nil>":
+			return true
+		case "":
+			return true
+		case "[]":
+			return true
+		// Used when 0 is a value users can input
+		case "-1":
+			return true
+		default:
+			return false
 	}
+}
+
+func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Command {
+	var pluginCommands []plugin.Command
+	// Custom Usage to ibmcloud CLI prints out a nice messages for us
+	topCommand.SetUsageTemplate(USEAGE_TEMPLATE)
+	for _, cliCmd := range topCommand.Commands() {
+		if len(cliCmd.Commands()) > 0 {
+			pluginCommands = append(pluginCommands, cobraToCLIMeta(cliCmd, namespace+" "+cliCmd.Use)...)
+		} else {
+			thisCmd := plugin.Command{
+				Namespace:   namespace,
+				Name:        cliCmd.Name(),
+				Description: cliCmd.Short,
+				Usage:       cliCmd.UsageString(),
+				Flags:       cobraFlagToPlugin(cliCmd.Flags()),
+			}
+			pluginCommands = append(pluginCommands, thisCmd)
+		}
+	}
+
+	// for _, cmd := range pluginCommands {
+	// 	fmt.Printf("%v %v\n", cmd.Namespace, cmd.Name)
+	// }
+	return pluginCommands
+}
+
+func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command {
+
+	slCommand := metadata.NewSoftlayerCommand(ui, session)
+	cobraCmd := &cobra.Command{
+		Use:   "sl",
+		Short: T("Manage Classic infrastructure services"),
+		Long:  T("Manage Classic infrastructure services"),
+		RunE:  nil,
+	}
+
+	// Persistent Flags
+	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", T("Specify output format, only JSON is supported now."))
+	// Commands
+	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
+	cobraCmd.AddCommand(autoscale.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(account.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(email.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(image.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(hardware.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(ipsec.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(reports.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(eventlog.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(user.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(nas.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(cdn.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(dns.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(order.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(security.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(ticket.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(placementgroup.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(securitygroup.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(tags.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(block.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(loadbal.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(file.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(licenses.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(firewall.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(dedicatedhost.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(globalip.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(objectstorage.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(vlan.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(virtual.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(subnet.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(meta.NewMetaCommand(slCommand).Command) // single use command.
+
+	return cobraCmd
 }

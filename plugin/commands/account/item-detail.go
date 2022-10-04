@@ -8,7 +8,7 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -18,47 +18,42 @@ import (
 )
 
 type ItemDetailCommand struct {
-	UI             terminal.UI
-	AccountManager managers.AccountManager
+    *metadata.SoftlayerCommand
+    AccountManager managers.AccountManager
+    Command *cobra.Command
 }
 
-func NewItemDetailCommand(ui terminal.UI, accountManager managers.AccountManager) (cmd *ItemDetailCommand) {
-	return &ItemDetailCommand{
-		UI:             ui,
-		AccountManager: accountManager,
-	}
+func NewItemDetailCommand(sl *metadata.SoftlayerCommand) *ItemDetailCommand {
+    thisCmd := &ItemDetailCommand{
+        SoftlayerCommand: sl,
+        AccountManager: managers.NewAccountManager(sl.Session),
+    }
+    cobraCmd := &cobra.Command{
+        Use: "item-detail " + T("IDENTIFIER"),
+        Short: T("Gets detailed information about a billing item."),
+        Args: metadata.OneArgs,
+        RunE: func(cmd *cobra.Command, args []string) error {
+            return thisCmd.Run(args)
+        },
+    }
+    thisCmd.Command = cobraCmd
+    return thisCmd
 }
 
-func ItemDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "account",
-		Name:        "item-detail",
-		Description: T("Gets detailed information about a billing item."),
-		Usage:       T(`${COMMAND_NAME} sl account item-detail IDENTIFIER [OPTIONS]`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
-}
 
-func (cmd *ItemDetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-
-	itemID, err := strconv.Atoi(c.Args()[0])
+func (cmd *ItemDetailCommand) Run(args []string) error {
+	itemID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Item ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
+
 	mask := "mask[orderItem[id,order[id,userRecord[id,email,displayName,userStatus]]],nextInvoiceTotalRecurringAmount,location, hourlyFlag, children]"
 	item, err := cmd.AccountManager.GetItemDetail(itemID, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the item {{.itemID}}. ", map[string]interface{}{"itemID": itemID})+err.Error(), 2)
+		subs := map[string]interface{}{"itemID": itemID}
+		return slErr.NewAPIError(T("Failed to get the item {{.itemID}}. ", subs), err.Error(), 2)
 	}
 	PrintItemDetail(itemID, item, cmd.UI, outputFormat)
 	return nil

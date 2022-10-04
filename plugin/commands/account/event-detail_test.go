@@ -6,48 +6,41 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Account list EventDetail", func() {
 	var (
-		fakeUI             *terminal.FakeUI
-		cmd                *account.EventDetailCommand
-		cliCommand         cli.Command
-		fakeSession        *session.Session
-		fakeAccountManager managers.AccountManager
+		fakeUI				*terminal.FakeUI
+		cliCommand			*account.EventDetailCommand
+		fakeSession   		*session.Session
+		slCommand			*metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		fakeAccountManager = managers.NewAccountManager(fakeSession)
 		fakeUI = terminal.NewFakeUI()
-		cmd = account.NewEventDetailCommand(fakeUI, fakeAccountManager)
-		cliCommand = cli.Command{
-			Name:        account.EventDetailMetaData().Name,
-			Description: account.EventDetailMetaData().Description,
-			Usage:       account.EventDetailMetaData().Usage,
-			Flags:       account.EventDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = account.NewEventDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})
 
 	Describe("Account events", func() {
 		Context("Account events, Invalid Usage", func() {
 			It("Set command without id", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 			It("Set command with id like letters", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Event ID'. It must be a positive integer."))
 			})
 			It("Set command with an invalid output option", func() {
-				err := testhelpers.RunCommand(cliCommand, "123", "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -55,7 +48,7 @@ var _ = Describe("Account list EventDetail", func() {
 
 		Context("Account events, correct use", func() {
 			It("return account events", func() {
-				err := testhelpers.RunCommand(cliCommand, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ACTION REQUIRED - Windows"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Id       Status      Type           Start   End"))
@@ -67,7 +60,7 @@ var _ = Describe("Account list EventDetail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Updated"))
 			})
 			It("return account events in format json", func() {
-				err := testhelpers.RunCommand(cliCommand, "123", "--output", "json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`ACTION REQUIRED - Windows`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Id": "340846",`))

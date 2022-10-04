@@ -8,7 +8,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -17,49 +17,83 @@ import (
 )
 
 type QuoteCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	OrderManager managers.OrderManager
 	ImageManager managers.ImageManager
+	Command      *cobra.Command
+	Verify       bool
+	Quantity     int
+	ComplexType  string
+	Userdata     string
+	Userfile     string
+	Postinstall  string
+	Key          []int
+	Fqdn         []string
+	Image        int
 }
 
-func NewQuoteCommand(ui terminal.UI, orderManager managers.OrderManager, imageManager managers.ImageManager) (cmd *QuoteCommand) {
-	return &QuoteCommand{
-		UI:           ui,
-		OrderManager: orderManager,
-		ImageManager: imageManager,
+func NewQuoteCommand(sl *metadata.SoftlayerCommand) (cmd *QuoteCommand) {
+	thisCmd := &QuoteCommand{
+		SoftlayerCommand: sl,
+		OrderManager:     managers.NewOrderManager(sl.Session),
+		ImageManager:     managers.NewImageManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "quote " + T("IDENTIFIER"),
+		Short: T("View and Order a quote"),
+		Long: T(`${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]
+
+EXAMPLE: 
+	${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata
+	${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().BoolVar(&thisCmd.Verify, "verify", false, T("If specified, will only show what the quote will order, will NOT place an order [default: False]"))
+	cobraCmd.Flags().IntVar(&thisCmd.Quantity, "quantity", 1, T("The quantity of the item being ordered if different from quoted value"))
+	cobraCmd.Flags().StringVar(&thisCmd.ComplexType, "complex-type", "", T("The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]"))
+	cobraCmd.Flags().StringVar(&thisCmd.Userdata, "userdata", "", T("User defined metadata string"))
+	cobraCmd.Flags().StringVar(&thisCmd.Userfile, "userfile", "", T("Read userdata from file"))
+	cobraCmd.Flags().StringVar(&thisCmd.Postinstall, "postinstall", "", T("Post-install script to download"))
+	cobraCmd.Flags().IntSliceVar(&thisCmd.Key, "key", []int{}, T("SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)"))
+	cobraCmd.Flags().StringSliceVar(&thisCmd.Fqdn, "fqdn", []string{}, T("<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]"))
+	cobraCmd.Flags().IntVar(&thisCmd.Image, "image", 0, T("Image ID. See: 'ibmcloud sl image list' for reference"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *QuoteCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *QuoteCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	quoteId, err := strconv.Atoi(c.Args()[0])
+	quoteId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return errors.NewInvalidSoftlayerIdInputError("Quote ID")
 	}
 
-	if c.IsSet("userdata") && c.IsSet("userfile") {
+	if len(cmd.Fqdn) == 0 {
+		return errors.NewMissingInputError("--fqdn")
+	}
+
+	if cmd.Userdata != "" && cmd.Userfile != "" {
 		return errors.NewExclusiveFlagsError("[--userdata]", "[--userfile]")
 	}
 
 	quote, err := cmd.OrderManager.GetQuote(quoteId, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Quote.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Quote.\n"), err.Error(), 2)
 	}
 
 	recalculatedOrderContainer, err := cmd.OrderManager.GetRecalculatedOrderContainer(quoteId)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Recalculated Order Container.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Recalculated Order Container.\n"), err.Error(), 2)
 	}
 
-	extra, err := setArguments(c, cmd, recalculatedOrderContainer)
+	extra, err := setArguments(cmd, recalculatedOrderContainer)
 	if err != nil {
 		return err
 	}
@@ -68,10 +102,10 @@ func (cmd *QuoteCommand) Run(c *cli.Context) error {
 	extra.PackageId = packageObject.Id
 
 	var table terminal.Table
-	if c.IsSet("verify") {
+	if cmd.Verify {
 		order, err := cmd.OrderManager.VerifyOrder(quoteId, extra)
 		if err != nil {
-			return cli.NewExitError(T("Failed to verify Quote.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to verify Quote.\n"), err.Error(), 2)
 		}
 
 		table = cmd.UI.Table([]string{T("KeyName"), T("Description"), T("Cost")})
@@ -98,7 +132,7 @@ func (cmd *QuoteCommand) Run(c *cli.Context) error {
 	} else {
 		order, err := cmd.OrderManager.OrderQuote(quoteId, extra)
 		if err != nil {
-			return cli.NewExitError(T("Failed to order Quote.\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to order Quote.\n"), err.Error(), 2)
 		}
 
 		table = cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -111,29 +145,25 @@ func (cmd *QuoteCommand) Run(c *cli.Context) error {
 	return nil
 }
 
-func setArguments(c *cli.Context, cmd *QuoteCommand, recalculatedOrderContainer datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error) {
+func setArguments(cmd *QuoteCommand, recalculatedOrderContainer datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error) {
 
-	quantity := 1
-	if c.IsSet("quantity") {
-		quantity = c.Int("quantity")
-	}
+	quantity := cmd.Quantity
 	recalculatedOrderContainer.Quantity = &quantity
 
-	postinstall := []string{}
-	if c.IsSet("postinstall") {
-		postinstall = []string{c.String("postinstall")}
+	if cmd.Postinstall != "" {
+		postinstall := []string{cmd.Postinstall}
 		recalculatedOrderContainer.ProvisionScripts = postinstall
 	}
 
 	complexType := "SoftLayer_Container_Product_Order_Hardware_Server"
-	if c.IsSet("complex-type") {
-		complexType = c.String("complex-type")
+	if cmd.ComplexType != "" {
+		complexType = cmd.ComplexType
 	}
 	recalculatedOrderContainer.ComplexType = &complexType
 
 	servers := []datatypes.Hardware{}
-	if c.IsSet("fqdn") {
-		fqdns := c.StringSlice("fqdn")
+	if len(cmd.Fqdn) != 0 {
+		fqdns := cmd.Fqdn
 		for _, fqdn := range fqdns {
 			fqdnStrings := strings.SplitN(fqdn, ".", 2)
 			if len(fqdnStrings) < 2 {
@@ -148,16 +178,16 @@ func setArguments(c *cli.Context, cmd *QuoteCommand, recalculatedOrderContainer 
 		recalculatedOrderContainer.Hardware = servers
 	}
 
-	if c.IsSet("userdata") || c.IsSet("userfile") {
+	if cmd.Userdata != "" || cmd.Userfile != "" {
 		var userData string
-		if c.IsSet("userdata") {
-			userData = c.String("userdata")
+		if cmd.Userdata != "" {
+			userData = cmd.Userdata
 		}
-		if c.IsSet("userfile") {
-			userfile := c.String("userfile")
+		if cmd.Userfile != "" {
+			userfile := cmd.Userfile
 			content, err := ioutil.ReadFile(userfile) // #nosec
 			if err != nil {
-				return datatypes.Container_Product_Order{}, cli.NewExitError((T("Failed to read user data from file: {{.File}}.", map[string]interface{}{"File": userfile})), 2)
+				return datatypes.Container_Product_Order{}, errors.NewInvalidUsageError((T("Failed to read user data from file: {{.File}}.", map[string]interface{}{"File": userfile})))
 			}
 			userData = string(content)
 			for _, hardware := range recalculatedOrderContainer.Hardware {
@@ -166,8 +196,8 @@ func setArguments(c *cli.Context, cmd *QuoteCommand, recalculatedOrderContainer 
 		}
 	}
 
-	if c.IsSet("key") {
-		keys := c.IntSlice("key")
+	if len(cmd.Key) != 0 {
+		keys := cmd.Key
 		sshkeysIntegerArray := []int{}
 		for _, key := range keys {
 			sshkeysIntegerArray = append(sshkeysIntegerArray, key)
@@ -180,67 +210,13 @@ func setArguments(c *cli.Context, cmd *QuoteCommand, recalculatedOrderContainer 
 		recalculatedOrderContainer.SshKeys = sskeysDatatype
 	}
 
-	if c.IsSet("image") {
-		image, err := cmd.ImageManager.GetImage(c.Int("image"))
+	if cmd.Image != 0 {
+		image, err := cmd.ImageManager.GetImage(cmd.Image)
 		if err != nil {
-			return datatypes.Container_Product_Order{}, cli.NewExitError(T("Failed to get Image.\n")+err.Error(), 2)
+			return datatypes.Container_Product_Order{}, errors.NewAPIError(T("Failed to get Image.\n"), err.Error(), 2)
 		}
 		recalculatedOrderContainer.ImageTemplateGlobalIdentifier = image.GlobalIdentifier
 	}
 
 	return recalculatedOrderContainer, nil
-}
-
-func OrderQuoteMetaData() cli.Command {
-	return cli.Command{
-		Category:    "order",
-		Name:        "quote",
-		Description: T("View and Order a quote"),
-		Usage: T(`${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]
-
-EXAMPLE: 
-	${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata
-	${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "verify",
-				Usage: T("If specified, will only show what the quote will order, will NOT place an order [default: False]"),
-			},
-			cli.IntFlag{
-				Name:  "quantity",
-				Usage: T("The quantity of the item being ordered if different from quoted value"),
-				Value: 1,
-			},
-			cli.StringFlag{
-				Name:  "complex-type",
-				Usage: T("The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]"),
-			},
-			cli.StringFlag{
-				Name:  "userdata",
-				Usage: T("User defined metadata string"),
-			},
-			cli.StringFlag{
-				Name:  "userfile",
-				Usage: T("Read userdata from file"),
-			},
-			cli.StringFlag{
-				Name:  "postinstall",
-				Usage: T("Post-install script to download"),
-			},
-			cli.IntSliceFlag{
-				Name:  "key",
-				Usage: T("SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)"),
-			},
-			cli.StringSliceFlag{
-				Name:     "fqdn",
-				Usage:    T("<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]"),
-				Required: true,
-			},
-			cli.IntFlag{
-				Name:  "image",
-				Usage: T("Image ID. See: 'ibmcloud sl image list' for reference"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

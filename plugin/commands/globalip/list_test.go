@@ -9,36 +9,35 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("GlobalIP list", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *globalip.ListCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *globalip.ListCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = globalip.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = globalip.NewListCommand(fakeUI, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        globalip.GlobalIpListMetaData().Name,
-			Description: globalip.GlobalIpListMetaData().Description,
-			Usage:       globalip.GlobalIpListMetaData().Usage,
-			Flags:       globalip.GlobalIpListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("GlobalIP list", func() {
 		Context("GlobalIP list with both v4 and v6", func() {
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--v4", "--v6")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--v4", "--v6")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: [--v4] is not allowed with [--v6].")).To(BeTrue())
 			})
@@ -49,7 +48,7 @@ var _ = Describe("GlobalIP list", func() {
 				fakeNetworkManager.ListGlobalIPsReturns([]datatypes.Network_Subnet_IpAddress_Global{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to list global IPs on your account.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -68,7 +67,7 @@ var _ = Describe("GlobalIP list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"123456"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"5.6.7.8"}))
@@ -76,7 +75,7 @@ var _ = Describe("GlobalIP list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"None"}))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--v4")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--v4")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"123456"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"5.6.7.8"}))
@@ -84,7 +83,7 @@ var _ = Describe("GlobalIP list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"None"}))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--v6")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--v6")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"123456"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"5.6.7.8"}))

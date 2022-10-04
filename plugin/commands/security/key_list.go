@@ -3,8 +3,7 @@ package security
 import (
 	"sort"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,30 +12,44 @@ import (
 )
 
 type KeyListCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	SecurityManager managers.SecurityManager
+	Command         *cobra.Command
+	SortBy          string
 }
 
-func NewKeyListCommand(ui terminal.UI, securityManager managers.SecurityManager) (cmd *KeyListCommand) {
-	return &KeyListCommand{
-		UI:              ui,
-		SecurityManager: securityManager,
+func NewKeyListCommand(sl *metadata.SoftlayerCommand) *KeyListCommand {
+	thisCmd := &KeyListCommand{
+		SoftlayerCommand: sl,
+		SecurityManager:  managers.NewSecurityManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "sshkey-list",
+		Short: T("List SSH keys on your account"),
+		Long: T(`${COMMAND_NAME} sl security sshkey-list [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl security sshkey-list --sortby label
+   This command lists all SSH keys on current account and sorts them by label.`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.SortBy, "sortby", "", T("Column to sort by. Options are: id,label,fingerprint,note"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *KeyListCommand) Run(c *cli.Context) error {
-
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+func (cmd *KeyListCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
 	keys, err := cmd.SecurityManager.ListSSHKeys("")
 	if err != nil {
-		return cli.NewExitError(T("Failed to list SSH keys on your account.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list SSH keys on your account.\n"), err.Error(), 2)
 	}
 
-	sortby := c.String("sortby")
+	sortby := cmd.SortBy
 	if sortby == "id" || sortby == "ID" {
 		sort.Sort(utils.KeyById(keys))
 	} else if sortby == "label" {
@@ -52,10 +65,6 @@ func (cmd *KeyListCommand) Run(c *cli.Context) error {
 			map[string]interface{}{"Column": sortby}))
 	}
 
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, keys)
-	}
-
 	table := cmd.UI.Table([]string{T("ID"), T("label"), T("fingerprint"), T("note")})
 	for _, k := range keys {
 		table.Add(utils.FormatIntPointer(k.Id),
@@ -63,26 +72,6 @@ func (cmd *KeyListCommand) Run(c *cli.Context) error {
 			utils.FormatStringPointer(k.Fingerprint),
 			utils.FormatStringPointer(k.Notes))
 	}
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func SecuritySSHKeyListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "security",
-		Name:        "sshkey-list",
-		Description: T("List SSH keys on your account"),
-		Usage: T(`${COMMAND_NAME} sl security sshkey-list [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl security sshkey-list --sortby label
-   This command lists all SSH keys on current account and sorts them by label.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by. Options are: id,label,fingerprint,note"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

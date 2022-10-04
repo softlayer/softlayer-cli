@@ -110,19 +110,6 @@ type FakeVirtualServerManager struct {
 		result1 datatypes.Virtual_Guest
 		result2 error
 	}
-	PlacementCreateStub        func(group *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error)
-	placementCreateMutex       sync.RWMutex
-	placementCreateArgsForCall []struct {
-		arg1 *datatypes.Virtual_PlacementGroup
-	}
-	placementCreateReturns struct {
-		result1 datatypes.Virtual_PlacementGroup
-		result2 error
-	}
-	placementCreateReturnsOnCall map[int]struct {
-		result1 datatypes.Virtual_PlacementGroup
-		result2 error
-	}
 	CreateInstancesStub        func([]datatypes.Virtual_Guest) ([]datatypes.Virtual_Guest, error)
 	createInstancesMutex       sync.RWMutex
 	createInstancesArgsForCall []struct {
@@ -134,6 +121,20 @@ type FakeVirtualServerManager struct {
 	}
 	createInstancesReturnsOnCall map[int]struct {
 		result1 []datatypes.Virtual_Guest
+		result2 error
+	}
+	CreateUserCustomerNotificationStub        func(int, int) (datatypes.User_Customer_Notification_Virtual_Guest, error)
+	createUserCustomerNotificationMutex       sync.RWMutex
+	createUserCustomerNotificationArgsForCall []struct {
+		arg1 int
+		arg2 int
+	}
+	createUserCustomerNotificationReturns struct {
+		result1 datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}
+	createUserCustomerNotificationReturnsOnCall map[int]struct {
+		result1 datatypes.User_Customer_Notification_Virtual_Guest
 		result2 error
 	}
 	EditInstanceStub        func(int, string, string, string, string, *int, *int) ([]bool, []string)
@@ -181,6 +182,19 @@ type FakeVirtualServerManager struct {
 	}
 	generateInstanceCreationTemplateReturnsOnCall map[int]struct {
 		result1 *datatypes.Virtual_Guest
+		result2 error
+	}
+	GetAvailablePlacementRoutersStub        func(int) ([]datatypes.Hardware, error)
+	getAvailablePlacementRoutersMutex       sync.RWMutex
+	getAvailablePlacementRoutersArgsForCall []struct {
+		arg1 int
+	}
+	getAvailablePlacementRoutersReturns struct {
+		result1 []datatypes.Hardware
+		result2 error
+	}
+	getAvailablePlacementRoutersReturnsOnCall map[int]struct {
+		result1 []datatypes.Hardware
 		result2 error
 	}
 	GetBandwidthDataStub        func(int, time.Time, time.Time, int) ([]datatypes.Metric_Tracking_Object_Data, error)
@@ -237,6 +251,18 @@ type FakeVirtualServerManager struct {
 	}
 	getCreateOptionsReturnsOnCall map[int]struct {
 		result1 map[string]map[string]string
+		result2 error
+	}
+	GetDatacentersStub        func() ([]datatypes.Location, error)
+	getDatacentersMutex       sync.RWMutex
+	getDatacentersArgsForCall []struct {
+	}
+	getDatacentersReturns struct {
+		result1 []datatypes.Location
+		result2 error
+	}
+	getDatacentersReturnsOnCall map[int]struct {
+		result1 []datatypes.Location
 		result2 error
 	}
 	GetDedicatedHostStub        func(int) (datatypes.Virtual_DedicatedHost, error)
@@ -358,39 +384,9 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Location_Region
 		result2 error
 	}
-
-	GetAvailablePlacementRoutersStub        func(int) ([]datatypes.Hardware, error)
-	getAvailablePlacementRoutersMutex       sync.RWMutex
-	getAvailablePlacementRoutersArgsForCall []struct {
-		arg1 int
-	}
-	getAvailablePlacementRoutersReturns struct {
-		result1 []datatypes.Hardware
-		result2 error
-	}
-	getAvailablePlacementRoutersReturnsOnCall map[int]struct {
-		result1 []datatypes.Hardware
-		result2 error
-	}
-
-	GetDatacentersStub        func(string) ([]datatypes.Location, error)
-	getDatacentersMutex       sync.RWMutex
-	getDatacentersArgsForCall []struct {
-		arg1 string
-	}
-	getDatacentersReturns struct {
-		result1 []datatypes.Location
-		result2 error
-	}
-	getDatacentersReturnsOnCall map[int]struct {
-		result1 []datatypes.Location
-		result2 error
-	}
-
 	GetRulesStub        func() ([]datatypes.Virtual_PlacementGroup_Rule, error)
 	getRulesMutex       sync.RWMutex
 	getRulesArgsForCall []struct {
-		arg1 string
 	}
 	getRulesReturns struct {
 		result1 []datatypes.Virtual_PlacementGroup_Rule
@@ -442,6 +438,20 @@ type FakeVirtualServerManager struct {
 	}
 	getSummaryUsageReturnsOnCall map[int]struct {
 		result1 []datatypes.Metric_Tracking_Object_Data
+		result2 error
+	}
+	GetUserCustomerNotificationsByVirtualGuestIdStub        func(int, string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error)
+	getUserCustomerNotificationsByVirtualGuestIdMutex       sync.RWMutex
+	getUserCustomerNotificationsByVirtualGuestIdArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getUserCustomerNotificationsByVirtualGuestIdReturns struct {
+		result1 []datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}
+	getUserCustomerNotificationsByVirtualGuestIdReturnsOnCall map[int]struct {
+		result1 []datatypes.User_Customer_Notification_Virtual_Guest
 		result2 error
 	}
 	InstanceIsReadyStub        func(int, time.Time) (bool, string, error)
@@ -537,6 +547,19 @@ type FakeVirtualServerManager struct {
 	}
 	pauseInstanceReturnsOnCall map[int]struct {
 		result1 error
+	}
+	PlacementCreateStub        func(*datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error)
+	placementCreateMutex       sync.RWMutex
+	placementCreateArgsForCall []struct {
+		arg1 *datatypes.Virtual_PlacementGroup
+	}
+	placementCreateReturns struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}
+	placementCreateReturnsOnCall map[int]struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
 	}
 	PlacementsGroupListStub        func(string) ([]datatypes.Virtual_PlacementGroup, error)
 	placementsGroupListMutex       sync.RWMutex
@@ -696,244 +719,6 @@ type FakeVirtualServerManager struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeVirtualServerManager) GetDatacenters() ([]datatypes.Location, error) {
-	fake.getDatacentersMutex.Lock()
-	ret, specificReturn := fake.getDatacentersReturnsOnCall[len(fake.getDatacentersArgsForCall)]
-	fake.getDatacentersMutex.Unlock()
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	fakeReturns := fake.getDatacentersReturns
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeVirtualServerManager) GetDatacentersCallCount() int {
-	fake.getDatacentersMutex.RLock()
-	defer fake.getDatacentersMutex.RUnlock()
-	return len(fake.getDatacentersArgsForCall)
-}
-
-func (fake *FakeVirtualServerManager) GetDatacentersCalls(stub func(string) ([]datatypes.Location, error)) {
-	fake.getDatacentersMutex.Lock()
-	defer fake.getDatacentersMutex.Unlock()
-	fake.GetDatacentersStub = stub
-}
-
-func (fake *FakeVirtualServerManager) GetDatacentersArgsForCall(i int) string {
-	fake.getDatacentersMutex.RLock()
-	defer fake.getDatacentersMutex.RUnlock()
-	argsForCall := fake.getDatacentersArgsForCall[i]
-	return argsForCall.arg1
-}
-
-func (fake *FakeVirtualServerManager) GetDatacentersReturns(result1 []datatypes.Location, result2 error) {
-	fake.getDatacentersMutex.Lock()
-	defer fake.getDatacentersMutex.Unlock()
-	fake.GetDatacentersStub = nil
-	fake.getDatacentersReturns = struct {
-		result1 []datatypes.Location
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeVirtualServerManager) GetDatacentersReturnsOnCall(i int, result1 []datatypes.Location, result2 error) {
-	fake.getDatacentersMutex.Lock()
-	defer fake.getDatacentersMutex.Unlock()
-	fake.GetDatacentersStub = nil
-	if fake.getDatacentersReturnsOnCall == nil {
-		fake.getDatacentersReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Location
-			result2 error
-		})
-	}
-	fake.getDatacentersReturnsOnCall[i] = struct {
-		result1 []datatypes.Location
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeVirtualServerManager) GetAvailablePlacementRouters(arg1 int) ([]datatypes.Hardware, error) {
-	fake.getAvailablePlacementRoutersMutex.Lock()
-	ret, specificReturn := fake.getAvailablePlacementRoutersReturnsOnCall[len(fake.getAvailablePlacementRoutersArgsForCall)]
-	fake.getAvailablePlacementRoutersArgsForCall = append(fake.getAvailablePlacementRoutersArgsForCall, struct {
-		arg1 int
-	}{arg1})
-	fake.recordInvocation("GetDatacenters", []interface{}{arg1})
-	fake.getAvailablePlacementRoutersMutex.Unlock()
-	if fake.GetAvailablePlacementRoutersStub != nil {
-		return fake.GetAvailablePlacementRoutersStub(arg1)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	fakeReturns := fake.getAvailablePlacementRoutersReturns
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersCallCount() int {
-	fake.getAvailablePlacementRoutersMutex.RLock()
-	defer fake.getAvailablePlacementRoutersMutex.RUnlock()
-	return len(fake.getAvailablePlacementRoutersArgsForCall)
-}
-
-func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersCalls(stub func(int) ([]datatypes.Hardware, error)) {
-	fake.getAvailablePlacementRoutersMutex.Lock()
-	defer fake.getAvailablePlacementRoutersMutex.Unlock()
-	fake.GetAvailablePlacementRoutersStub = stub
-}
-
-func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersArgsForCall(i int) int {
-	fake.getAvailablePlacementRoutersMutex.RLock()
-	defer fake.getAvailablePlacementRoutersMutex.RUnlock()
-	argsForCall := fake.getAvailablePlacementRoutersArgsForCall[i]
-	return argsForCall.arg1
-}
-
-func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersReturns(result1 []datatypes.Hardware, result2 error) {
-	fake.getAvailablePlacementRoutersMutex.Lock()
-	defer fake.getAvailablePlacementRoutersMutex.Unlock()
-	fake.GetAvailablePlacementRoutersStub = nil
-	fake.getAvailablePlacementRoutersReturns = struct {
-		result1 []datatypes.Hardware
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersReturnsOnCall(i int, result1 []datatypes.Hardware, result2 error) {
-	fake.getAvailablePlacementRoutersMutex.Lock()
-	defer fake.getAvailablePlacementRoutersMutex.Unlock()
-	fake.GetAvailablePlacementRoutersStub = nil
-	if fake.getAvailablePlacementRoutersReturnsOnCall == nil {
-		fake.getAvailablePlacementRoutersReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Hardware
-			result2 error
-		})
-	}
-	fake.getAvailablePlacementRoutersReturnsOnCall[i] = struct {
-		result1 []datatypes.Hardware
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeVirtualServerManager) GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error) {
-	fake.getRulesMutex.Lock()
-	ret, specificReturn := fake.getRulesReturnsOnCall[len(fake.getRulesArgsForCall)]
-	fake.getRulesMutex.Unlock()
-	if fake.GetRulesStub != nil {
-		return fake.GetRulesStub()
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	fakeReturns := fake.getRulesReturns
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeVirtualServerManager) GetRulesCallCount() int {
-	fake.getRulesMutex.RLock()
-	defer fake.getRulesMutex.RUnlock()
-	return len(fake.getRulesArgsForCall)
-}
-
-func (fake *FakeVirtualServerManager) GetRulesCalls(stub func() ([]datatypes.Virtual_PlacementGroup_Rule, error)) {
-	fake.getRulesMutex.Lock()
-	defer fake.getRulesMutex.Unlock()
-	fake.GetRulesStub = stub
-}
-
-func (fake *FakeVirtualServerManager) GetRulesArgsForCall(i int) string {
-	fake.getRulesMutex.RLock()
-	defer fake.getRulesMutex.RUnlock()
-	argsForCall := fake.getRulesArgsForCall[i]
-	return argsForCall.arg1
-}
-
-func (fake *FakeVirtualServerManager) GetRulesReturns(result1 []datatypes.Virtual_PlacementGroup_Rule, result2 error) {
-	fake.getRulesMutex.Lock()
-	defer fake.getRulesMutex.Unlock()
-	fake.GetRulesStub = nil
-	fake.getRulesReturns = struct {
-		result1 []datatypes.Virtual_PlacementGroup_Rule
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeVirtualServerManager) GetRulesReturnsOnCall(i int, result1 []datatypes.Virtual_PlacementGroup_Rule, result2 error) {
-	fake.getRulesMutex.Lock()
-	defer fake.getRulesMutex.Unlock()
-	fake.GetRulesStub = nil
-	if fake.getRulesReturnsOnCall == nil {
-		fake.getRulesReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Virtual_PlacementGroup_Rule
-			result2 error
-		})
-	}
-	fake.getRulesReturnsOnCall[i] = struct {
-		result1 []datatypes.Virtual_PlacementGroup_Rule
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeVirtualServerManager) PlacementCreate(arg1 *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error) {
-	var arg1Copy []datatypes.Virtual_PlacementGroup
-	fake.placementCreateMutex.Lock()
-	ret, specificReturn := fake.placementCreateReturnsOnCall[len(fake.placementCreateArgsForCall)]
-	fake.recordInvocation("PlacementCreate", []interface{}{arg1Copy})
-	fake.placementCreateMutex.Unlock()
-	if fake.PlacementCreateStub != nil {
-		return fake.PlacementCreateStub(arg1)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	fakeReturns := fake.placementCreateReturns
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeVirtualServerManager) PlacementCreateCallCount() int {
-	fake.placementCreateMutex.RLock()
-	defer fake.placementCreateMutex.RUnlock()
-	return len(fake.placementCreateArgsForCall)
-}
-
-func (fake *FakeVirtualServerManager) PlacementCreateCalls(stub func(datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error)) {
-	fake.placementCreateMutex.Lock()
-	defer fake.placementCreateMutex.Unlock()
-}
-
-func (fake *FakeVirtualServerManager) PlacementCreateArgsForCall(i int) datatypes.Virtual_PlacementGroup {
-	fake.placementCreateMutex.RLock()
-	defer fake.placementCreateMutex.RUnlock()
-	argsForCall := fake.placementCreateArgsForCall[i]
-	return *argsForCall.arg1
-}
-
-func (fake *FakeVirtualServerManager) PlacementCreateReturns(result1 datatypes.Virtual_PlacementGroup, result2 error) {
-	fake.placementCreateMutex.Lock()
-	defer fake.placementCreateMutex.Unlock()
-	fake.PlacementCreateStub = nil
-	fake.placementCreateReturns = struct {
-		result1 datatypes.Virtual_PlacementGroup
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeVirtualServerManager) PlacementCreateReturnsOnCall(i int, result1 datatypes.Virtual_PlacementGroup, result2 error) {
-	fake.placementCreateMutex.Lock()
-	defer fake.placementCreateMutex.Unlock()
-	fake.PlacementCreateStub = nil
-	if fake.placementCreateReturnsOnCall == nil {
-		fake.placementCreateReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Virtual_PlacementGroup
-			result2 error
-		})
-	}
-	fake.placementCreateReturnsOnCall[i] = struct {
-		result1 datatypes.Virtual_PlacementGroup
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeVirtualServerManager) AttachPortableStorage(arg1 int, arg2 int) (datatypes.Provisioning_Version1_Transaction, error) {
 	fake.attachPortableStorageMutex.Lock()
 	ret, specificReturn := fake.attachPortableStorageReturnsOnCall[len(fake.attachPortableStorageArgsForCall)]
@@ -941,15 +726,16 @@ func (fake *FakeVirtualServerManager) AttachPortableStorage(arg1 int, arg2 int) 
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.AttachPortableStorageStub
+	fakeReturns := fake.attachPortableStorageReturns
 	fake.recordInvocation("AttachPortableStorage", []interface{}{arg1, arg2})
 	fake.attachPortableStorageMutex.Unlock()
-	if fake.AttachPortableStorageStub != nil {
-		return fake.AttachPortableStorageStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.attachPortableStorageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1005,15 +791,16 @@ func (fake *FakeVirtualServerManager) AuthorizeStorage(arg1 int, arg2 string) (b
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.AuthorizeStorageStub
+	fakeReturns := fake.authorizeStorageReturns
 	fake.recordInvocation("AuthorizeStorage", []interface{}{arg1, arg2})
 	fake.authorizeStorageMutex.Unlock()
-	if fake.AuthorizeStorageStub != nil {
-		return fake.AuthorizeStorageStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.authorizeStorageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1068,15 +855,16 @@ func (fake *FakeVirtualServerManager) CancelInstance(arg1 int) error {
 	fake.cancelInstanceArgsForCall = append(fake.cancelInstanceArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.CancelInstanceStub
+	fakeReturns := fake.cancelInstanceReturns
 	fake.recordInvocation("CancelInstance", []interface{}{arg1})
 	fake.cancelInstanceMutex.Unlock()
-	if fake.CancelInstanceStub != nil {
-		return fake.CancelInstanceStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.cancelInstanceReturns
 	return fakeReturns.result1
 }
 
@@ -1128,15 +916,16 @@ func (fake *FakeVirtualServerManager) CapacityList(arg1 string) ([]datatypes.Vir
 	fake.capacityListArgsForCall = append(fake.capacityListArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.CapacityListStub
+	fakeReturns := fake.capacityListReturns
 	fake.recordInvocation("CapacityList", []interface{}{arg1})
 	fake.capacityListMutex.Unlock()
-	if fake.CapacityListStub != nil {
-		return fake.CapacityListStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.capacityListReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1194,15 +983,16 @@ func (fake *FakeVirtualServerManager) CaptureImage(arg1 int, arg2 string, arg3 s
 		arg3 string
 		arg4 bool
 	}{arg1, arg2, arg3, arg4})
+	stub := fake.CaptureImageStub
+	fakeReturns := fake.captureImageReturns
 	fake.recordInvocation("CaptureImage", []interface{}{arg1, arg2, arg3, arg4})
 	fake.captureImageMutex.Unlock()
-	if fake.CaptureImageStub != nil {
-		return fake.CaptureImageStub(arg1, arg2, arg3, arg4)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.captureImageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1262,15 +1052,16 @@ func (fake *FakeVirtualServerManager) CreateDedicatedHost(arg1 string, arg2 stri
 		arg5 string
 		arg6 int
 	}{arg1, arg2, arg3, arg4, arg5, arg6})
+	stub := fake.CreateDedicatedHostStub
+	fakeReturns := fake.createDedicatedHostReturns
 	fake.recordInvocation("CreateDedicatedHost", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
 	fake.createDedicatedHostMutex.Unlock()
-	if fake.CreateDedicatedHostStub != nil {
-		return fake.CreateDedicatedHostStub(arg1, arg2, arg3, arg4, arg5, arg6)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createDedicatedHostReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1325,15 +1116,16 @@ func (fake *FakeVirtualServerManager) CreateInstance(arg1 *datatypes.Virtual_Gue
 	fake.createInstanceArgsForCall = append(fake.createInstanceArgsForCall, struct {
 		arg1 *datatypes.Virtual_Guest
 	}{arg1})
+	stub := fake.CreateInstanceStub
+	fakeReturns := fake.createInstanceReturns
 	fake.recordInvocation("CreateInstance", []interface{}{arg1})
 	fake.createInstanceMutex.Unlock()
-	if fake.CreateInstanceStub != nil {
-		return fake.CreateInstanceStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1393,15 +1185,16 @@ func (fake *FakeVirtualServerManager) CreateInstances(arg1 []datatypes.Virtual_G
 	fake.createInstancesArgsForCall = append(fake.createInstancesArgsForCall, struct {
 		arg1 []datatypes.Virtual_Guest
 	}{arg1Copy})
+	stub := fake.CreateInstancesStub
+	fakeReturns := fake.createInstancesReturns
 	fake.recordInvocation("CreateInstances", []interface{}{arg1Copy})
 	fake.createInstancesMutex.Unlock()
-	if fake.CreateInstancesStub != nil {
-		return fake.CreateInstancesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createInstancesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1450,6 +1243,71 @@ func (fake *FakeVirtualServerManager) CreateInstancesReturnsOnCall(i int, result
 	}{result1, result2}
 }
 
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotification(arg1 int, arg2 int) (datatypes.User_Customer_Notification_Virtual_Guest, error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	ret, specificReturn := fake.createUserCustomerNotificationReturnsOnCall[len(fake.createUserCustomerNotificationArgsForCall)]
+	fake.createUserCustomerNotificationArgsForCall = append(fake.createUserCustomerNotificationArgsForCall, struct {
+		arg1 int
+		arg2 int
+	}{arg1, arg2})
+	stub := fake.CreateUserCustomerNotificationStub
+	fakeReturns := fake.createUserCustomerNotificationReturns
+	fake.recordInvocation("CreateUserCustomerNotification", []interface{}{arg1, arg2})
+	fake.createUserCustomerNotificationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationCallCount() int {
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
+	return len(fake.createUserCustomerNotificationArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationCalls(stub func(int, int) (datatypes.User_Customer_Notification_Virtual_Guest, error)) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = stub
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationArgsForCall(i int) (int, int) {
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
+	argsForCall := fake.createUserCustomerNotificationArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationReturns(result1 datatypes.User_Customer_Notification_Virtual_Guest, result2 error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = nil
+	fake.createUserCustomerNotificationReturns = struct {
+		result1 datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationReturnsOnCall(i int, result1 datatypes.User_Customer_Notification_Virtual_Guest, result2 error) {
+	fake.createUserCustomerNotificationMutex.Lock()
+	defer fake.createUserCustomerNotificationMutex.Unlock()
+	fake.CreateUserCustomerNotificationStub = nil
+	if fake.createUserCustomerNotificationReturnsOnCall == nil {
+		fake.createUserCustomerNotificationReturnsOnCall = make(map[int]struct {
+			result1 datatypes.User_Customer_Notification_Virtual_Guest
+			result2 error
+		})
+	}
+	fake.createUserCustomerNotificationReturnsOnCall[i] = struct {
+		result1 datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeVirtualServerManager) EditInstance(arg1 int, arg2 string, arg3 string, arg4 string, arg5 string, arg6 *int, arg7 *int) ([]bool, []string) {
 	fake.editInstanceMutex.Lock()
 	ret, specificReturn := fake.editInstanceReturnsOnCall[len(fake.editInstanceArgsForCall)]
@@ -1462,15 +1320,16 @@ func (fake *FakeVirtualServerManager) EditInstance(arg1 int, arg2 string, arg3 s
 		arg6 *int
 		arg7 *int
 	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
+	stub := fake.EditInstanceStub
+	fakeReturns := fake.editInstanceReturns
 	fake.recordInvocation("EditInstance", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7})
 	fake.editInstanceMutex.Unlock()
-	if fake.EditInstanceStub != nil {
-		return fake.EditInstanceStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.editInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1526,15 +1385,16 @@ func (fake *FakeVirtualServerManager) GenerateInstanceCapacityCreationTemplate(a
 		arg1 *datatypes.Container_Product_Order_Virtual_ReservedCapacity
 		arg2 map[string]interface{}
 	}{arg1, arg2})
+	stub := fake.GenerateInstanceCapacityCreationTemplateStub
+	fakeReturns := fake.generateInstanceCapacityCreationTemplateReturns
 	fake.recordInvocation("GenerateInstanceCapacityCreationTemplate", []interface{}{arg1, arg2})
 	fake.generateInstanceCapacityCreationTemplateMutex.Unlock()
-	if fake.GenerateInstanceCapacityCreationTemplateStub != nil {
-		return fake.GenerateInstanceCapacityCreationTemplateStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.generateInstanceCapacityCreationTemplateReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1590,15 +1450,16 @@ func (fake *FakeVirtualServerManager) GenerateInstanceCreationTemplate(arg1 *dat
 		arg1 *datatypes.Virtual_Guest
 		arg2 map[string]interface{}
 	}{arg1, arg2})
+	stub := fake.GenerateInstanceCreationTemplateStub
+	fakeReturns := fake.generateInstanceCreationTemplateReturns
 	fake.recordInvocation("GenerateInstanceCreationTemplate", []interface{}{arg1, arg2})
 	fake.generateInstanceCreationTemplateMutex.Unlock()
-	if fake.GenerateInstanceCreationTemplateStub != nil {
-		return fake.GenerateInstanceCreationTemplateStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.generateInstanceCreationTemplateReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1647,6 +1508,70 @@ func (fake *FakeVirtualServerManager) GenerateInstanceCreationTemplateReturnsOnC
 	}{result1, result2}
 }
 
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRouters(arg1 int) ([]datatypes.Hardware, error) {
+	fake.getAvailablePlacementRoutersMutex.Lock()
+	ret, specificReturn := fake.getAvailablePlacementRoutersReturnsOnCall[len(fake.getAvailablePlacementRoutersArgsForCall)]
+	fake.getAvailablePlacementRoutersArgsForCall = append(fake.getAvailablePlacementRoutersArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetAvailablePlacementRoutersStub
+	fakeReturns := fake.getAvailablePlacementRoutersReturns
+	fake.recordInvocation("GetAvailablePlacementRouters", []interface{}{arg1})
+	fake.getAvailablePlacementRoutersMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersCallCount() int {
+	fake.getAvailablePlacementRoutersMutex.RLock()
+	defer fake.getAvailablePlacementRoutersMutex.RUnlock()
+	return len(fake.getAvailablePlacementRoutersArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersCalls(stub func(int) ([]datatypes.Hardware, error)) {
+	fake.getAvailablePlacementRoutersMutex.Lock()
+	defer fake.getAvailablePlacementRoutersMutex.Unlock()
+	fake.GetAvailablePlacementRoutersStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersArgsForCall(i int) int {
+	fake.getAvailablePlacementRoutersMutex.RLock()
+	defer fake.getAvailablePlacementRoutersMutex.RUnlock()
+	argsForCall := fake.getAvailablePlacementRoutersArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersReturns(result1 []datatypes.Hardware, result2 error) {
+	fake.getAvailablePlacementRoutersMutex.Lock()
+	defer fake.getAvailablePlacementRoutersMutex.Unlock()
+	fake.GetAvailablePlacementRoutersStub = nil
+	fake.getAvailablePlacementRoutersReturns = struct {
+		result1 []datatypes.Hardware
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetAvailablePlacementRoutersReturnsOnCall(i int, result1 []datatypes.Hardware, result2 error) {
+	fake.getAvailablePlacementRoutersMutex.Lock()
+	defer fake.getAvailablePlacementRoutersMutex.Unlock()
+	fake.GetAvailablePlacementRoutersStub = nil
+	if fake.getAvailablePlacementRoutersReturnsOnCall == nil {
+		fake.getAvailablePlacementRoutersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Hardware
+			result2 error
+		})
+	}
+	fake.getAvailablePlacementRoutersReturnsOnCall[i] = struct {
+		result1 []datatypes.Hardware
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeVirtualServerManager) GetBandwidthData(arg1 int, arg2 time.Time, arg3 time.Time, arg4 int) ([]datatypes.Metric_Tracking_Object_Data, error) {
 	fake.getBandwidthDataMutex.Lock()
 	ret, specificReturn := fake.getBandwidthDataReturnsOnCall[len(fake.getBandwidthDataArgsForCall)]
@@ -1656,15 +1581,16 @@ func (fake *FakeVirtualServerManager) GetBandwidthData(arg1 int, arg2 time.Time,
 		arg3 time.Time
 		arg4 int
 	}{arg1, arg2, arg3, arg4})
+	stub := fake.GetBandwidthDataStub
+	fakeReturns := fake.getBandwidthDataReturns
 	fake.recordInvocation("GetBandwidthData", []interface{}{arg1, arg2, arg3, arg4})
 	fake.getBandwidthDataMutex.Unlock()
-	if fake.GetBandwidthDataStub != nil {
-		return fake.GetBandwidthDataStub(arg1, arg2, arg3, arg4)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getBandwidthDataReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1719,15 +1645,16 @@ func (fake *FakeVirtualServerManager) GetCapacityCreateOptions(arg1 string) ([]d
 	fake.getCapacityCreateOptionsArgsForCall = append(fake.getCapacityCreateOptionsArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.GetCapacityCreateOptionsStub
+	fakeReturns := fake.getCapacityCreateOptionsReturns
 	fake.recordInvocation("GetCapacityCreateOptions", []interface{}{arg1})
 	fake.getCapacityCreateOptionsMutex.Unlock()
-	if fake.GetCapacityCreateOptionsStub != nil {
-		return fake.GetCapacityCreateOptionsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getCapacityCreateOptionsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1782,15 +1709,16 @@ func (fake *FakeVirtualServerManager) GetCapacityDetail(arg1 int) (datatypes.Vir
 	fake.getCapacityDetailArgsForCall = append(fake.getCapacityDetailArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetCapacityDetailStub
+	fakeReturns := fake.getCapacityDetailReturns
 	fake.recordInvocation("GetCapacityDetail", []interface{}{arg1})
 	fake.getCapacityDetailMutex.Unlock()
-	if fake.GetCapacityDetailStub != nil {
-		return fake.GetCapacityDetailStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getCapacityDetailReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1846,15 +1774,16 @@ func (fake *FakeVirtualServerManager) GetCreateOptions(arg1 string, arg2 string)
 		arg1 string
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetCreateOptionsStub
+	fakeReturns := fake.getCreateOptionsReturns
 	fake.recordInvocation("GetCreateOptions", []interface{}{arg1, arg2})
 	fake.getCreateOptionsMutex.Unlock()
-	if fake.GetCreateOptionsStub != nil {
-		return fake.GetCreateOptionsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getCreateOptionsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1903,21 +1832,78 @@ func (fake *FakeVirtualServerManager) GetCreateOptionsReturnsOnCall(i int, resul
 	}{result1, result2}
 }
 
+func (fake *FakeVirtualServerManager) GetDatacenters() ([]datatypes.Location, error) {
+	fake.getDatacentersMutex.Lock()
+	ret, specificReturn := fake.getDatacentersReturnsOnCall[len(fake.getDatacentersArgsForCall)]
+	fake.getDatacentersArgsForCall = append(fake.getDatacentersArgsForCall, struct {
+	}{})
+	stub := fake.GetDatacentersStub
+	fakeReturns := fake.getDatacentersReturns
+	fake.recordInvocation("GetDatacenters", []interface{}{})
+	fake.getDatacentersMutex.Unlock()
+	if stub != nil {
+		return stub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetDatacentersCallCount() int {
+	fake.getDatacentersMutex.RLock()
+	defer fake.getDatacentersMutex.RUnlock()
+	return len(fake.getDatacentersArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetDatacentersCalls(stub func() ([]datatypes.Location, error)) {
+	fake.getDatacentersMutex.Lock()
+	defer fake.getDatacentersMutex.Unlock()
+	fake.GetDatacentersStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetDatacentersReturns(result1 []datatypes.Location, result2 error) {
+	fake.getDatacentersMutex.Lock()
+	defer fake.getDatacentersMutex.Unlock()
+	fake.GetDatacentersStub = nil
+	fake.getDatacentersReturns = struct {
+		result1 []datatypes.Location
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetDatacentersReturnsOnCall(i int, result1 []datatypes.Location, result2 error) {
+	fake.getDatacentersMutex.Lock()
+	defer fake.getDatacentersMutex.Unlock()
+	fake.GetDatacentersStub = nil
+	if fake.getDatacentersReturnsOnCall == nil {
+		fake.getDatacentersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Location
+			result2 error
+		})
+	}
+	fake.getDatacentersReturnsOnCall[i] = struct {
+		result1 []datatypes.Location
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeVirtualServerManager) GetDedicatedHost(arg1 int) (datatypes.Virtual_DedicatedHost, error) {
 	fake.getDedicatedHostMutex.Lock()
 	ret, specificReturn := fake.getDedicatedHostReturnsOnCall[len(fake.getDedicatedHostArgsForCall)]
 	fake.getDedicatedHostArgsForCall = append(fake.getDedicatedHostArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetDedicatedHostStub
+	fakeReturns := fake.getDedicatedHostReturns
 	fake.recordInvocation("GetDedicatedHost", []interface{}{arg1})
 	fake.getDedicatedHostMutex.Unlock()
-	if fake.GetDedicatedHostStub != nil {
-		return fake.GetDedicatedHostStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getDedicatedHostReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1973,15 +1959,16 @@ func (fake *FakeVirtualServerManager) GetInstance(arg1 int, arg2 string) (dataty
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetInstanceStub
+	fakeReturns := fake.getInstanceReturns
 	fake.recordInvocation("GetInstance", []interface{}{arg1, arg2})
 	fake.getInstanceMutex.Unlock()
-	if fake.GetInstanceStub != nil {
-		return fake.GetInstanceStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2037,15 +2024,16 @@ func (fake *FakeVirtualServerManager) GetInstances(arg1 string, arg2 filter.Filt
 		arg1 string
 		arg2 filter.Filters
 	}{arg1, arg2})
+	stub := fake.GetInstancesStub
+	fakeReturns := fake.getInstancesReturns
 	fake.recordInvocation("GetInstances", []interface{}{arg1, arg2})
 	fake.getInstancesMutex.Unlock()
-	if fake.GetInstancesStub != nil {
-		return fake.GetInstancesStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getInstancesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2101,15 +2089,16 @@ func (fake *FakeVirtualServerManager) GetLikedInstance(arg1 *datatypes.Virtual_G
 		arg1 *datatypes.Virtual_Guest
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.GetLikedInstanceStub
+	fakeReturns := fake.getLikedInstanceReturns
 	fake.recordInvocation("GetLikedInstance", []interface{}{arg1, arg2})
 	fake.getLikedInstanceMutex.Unlock()
-	if fake.GetLikedInstanceStub != nil {
-		return fake.GetLikedInstanceStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getLikedInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2164,15 +2153,16 @@ func (fake *FakeVirtualServerManager) GetLocalDisks(arg1 int) ([]datatypes.Virtu
 	fake.getLocalDisksArgsForCall = append(fake.getLocalDisksArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetLocalDisksStub
+	fakeReturns := fake.getLocalDisksReturns
 	fake.recordInvocation("GetLocalDisks", []interface{}{arg1})
 	fake.getLocalDisksMutex.Unlock()
-	if fake.GetLocalDisksStub != nil {
-		return fake.GetLocalDisksStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getLocalDisksReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2227,15 +2217,16 @@ func (fake *FakeVirtualServerManager) GetPlacementGroupDetail(arg1 int) (datatyp
 	fake.getPlacementGroupDetailArgsForCall = append(fake.getPlacementGroupDetailArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetPlacementGroupDetailStub
+	fakeReturns := fake.getPlacementGroupDetailReturns
 	fake.recordInvocation("GetPlacementGroupDetail", []interface{}{arg1})
 	fake.getPlacementGroupDetailMutex.Unlock()
-	if fake.GetPlacementGroupDetailStub != nil {
-		return fake.GetPlacementGroupDetailStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getPlacementGroupDetailReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2289,15 +2280,16 @@ func (fake *FakeVirtualServerManager) GetPods() ([]datatypes.Network_Pod, error)
 	ret, specificReturn := fake.getPodsReturnsOnCall[len(fake.getPodsArgsForCall)]
 	fake.getPodsArgsForCall = append(fake.getPodsArgsForCall, struct {
 	}{})
+	stub := fake.GetPodsStub
+	fakeReturns := fake.getPodsReturns
 	fake.recordInvocation("GetPods", []interface{}{})
 	fake.getPodsMutex.Unlock()
-	if fake.GetPodsStub != nil {
-		return fake.GetPodsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getPodsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2345,15 +2337,16 @@ func (fake *FakeVirtualServerManager) GetPortableStorage(arg1 int) ([]datatypes.
 	fake.getPortableStorageArgsForCall = append(fake.getPortableStorageArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetPortableStorageStub
+	fakeReturns := fake.getPortableStorageReturns
 	fake.recordInvocation("GetPortableStorage", []interface{}{arg1})
 	fake.getPortableStorageMutex.Unlock()
-	if fake.GetPortableStorageStub != nil {
-		return fake.GetPortableStorageStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getPortableStorageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2408,15 +2401,16 @@ func (fake *FakeVirtualServerManager) GetRouters(arg1 string) ([]datatypes.Locat
 	fake.getRoutersArgsForCall = append(fake.getRoutersArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.GetRoutersStub
+	fakeReturns := fake.getRoutersReturns
 	fake.recordInvocation("GetRouters", []interface{}{arg1})
 	fake.getRoutersMutex.Unlock()
-	if fake.GetRoutersStub != nil {
-		return fake.GetRoutersStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getRoutersReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2465,21 +2459,78 @@ func (fake *FakeVirtualServerManager) GetRoutersReturnsOnCall(i int, result1 []d
 	}{result1, result2}
 }
 
+func (fake *FakeVirtualServerManager) GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error) {
+	fake.getRulesMutex.Lock()
+	ret, specificReturn := fake.getRulesReturnsOnCall[len(fake.getRulesArgsForCall)]
+	fake.getRulesArgsForCall = append(fake.getRulesArgsForCall, struct {
+	}{})
+	stub := fake.GetRulesStub
+	fakeReturns := fake.getRulesReturns
+	fake.recordInvocation("GetRules", []interface{}{})
+	fake.getRulesMutex.Unlock()
+	if stub != nil {
+		return stub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetRulesCallCount() int {
+	fake.getRulesMutex.RLock()
+	defer fake.getRulesMutex.RUnlock()
+	return len(fake.getRulesArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetRulesCalls(stub func() ([]datatypes.Virtual_PlacementGroup_Rule, error)) {
+	fake.getRulesMutex.Lock()
+	defer fake.getRulesMutex.Unlock()
+	fake.GetRulesStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetRulesReturns(result1 []datatypes.Virtual_PlacementGroup_Rule, result2 error) {
+	fake.getRulesMutex.Lock()
+	defer fake.getRulesMutex.Unlock()
+	fake.GetRulesStub = nil
+	fake.getRulesReturns = struct {
+		result1 []datatypes.Virtual_PlacementGroup_Rule
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetRulesReturnsOnCall(i int, result1 []datatypes.Virtual_PlacementGroup_Rule, result2 error) {
+	fake.getRulesMutex.Lock()
+	defer fake.getRulesMutex.Unlock()
+	fake.GetRulesStub = nil
+	if fake.getRulesReturnsOnCall == nil {
+		fake.getRulesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Virtual_PlacementGroup_Rule
+			result2 error
+		})
+	}
+	fake.getRulesReturnsOnCall[i] = struct {
+		result1 []datatypes.Virtual_PlacementGroup_Rule
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeVirtualServerManager) GetStorageCredentials(arg1 int) (datatypes.Network_Storage_Allowed_Host, error) {
 	fake.getStorageCredentialsMutex.Lock()
 	ret, specificReturn := fake.getStorageCredentialsReturnsOnCall[len(fake.getStorageCredentialsArgsForCall)]
 	fake.getStorageCredentialsArgsForCall = append(fake.getStorageCredentialsArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetStorageCredentialsStub
+	fakeReturns := fake.getStorageCredentialsReturns
 	fake.recordInvocation("GetStorageCredentials", []interface{}{arg1})
 	fake.getStorageCredentialsMutex.Unlock()
-	if fake.GetStorageCredentialsStub != nil {
-		return fake.GetStorageCredentialsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getStorageCredentialsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2535,15 +2586,16 @@ func (fake *FakeVirtualServerManager) GetStorageDetails(arg1 int, arg2 string) (
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetStorageDetailsStub
+	fakeReturns := fake.getStorageDetailsReturns
 	fake.recordInvocation("GetStorageDetails", []interface{}{arg1, arg2})
 	fake.getStorageDetailsMutex.Unlock()
-	if fake.GetStorageDetailsStub != nil {
-		return fake.GetStorageDetailsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getStorageDetailsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2602,15 +2654,16 @@ func (fake *FakeVirtualServerManager) GetSummaryUsage(arg1 int, arg2 time.Time, 
 		arg4 string
 		arg5 int
 	}{arg1, arg2, arg3, arg4, arg5})
+	stub := fake.GetSummaryUsageStub
+	fakeReturns := fake.getSummaryUsageReturns
 	fake.recordInvocation("GetSummaryUsage", []interface{}{arg1, arg2, arg3, arg4, arg5})
 	fake.getSummaryUsageMutex.Unlock()
-	if fake.GetSummaryUsageStub != nil {
-		return fake.GetSummaryUsageStub(arg1, arg2, arg3, arg4, arg5)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getSummaryUsageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2659,6 +2712,71 @@ func (fake *FakeVirtualServerManager) GetSummaryUsageReturnsOnCall(i int, result
 	}{result1, result2}
 }
 
+func (fake *FakeVirtualServerManager) GetUserCustomerNotificationsByVirtualGuestId(arg1 int, arg2 string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error) {
+	fake.getUserCustomerNotificationsByVirtualGuestIdMutex.Lock()
+	ret, specificReturn := fake.getUserCustomerNotificationsByVirtualGuestIdReturnsOnCall[len(fake.getUserCustomerNotificationsByVirtualGuestIdArgsForCall)]
+	fake.getUserCustomerNotificationsByVirtualGuestIdArgsForCall = append(fake.getUserCustomerNotificationsByVirtualGuestIdArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetUserCustomerNotificationsByVirtualGuestIdStub
+	fakeReturns := fake.getUserCustomerNotificationsByVirtualGuestIdReturns
+	fake.recordInvocation("GetUserCustomerNotificationsByVirtualGuestId", []interface{}{arg1, arg2})
+	fake.getUserCustomerNotificationsByVirtualGuestIdMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) GetUserCustomerNotificationsByVirtualGuestIdCallCount() int {
+	fake.getUserCustomerNotificationsByVirtualGuestIdMutex.RLock()
+	defer fake.getUserCustomerNotificationsByVirtualGuestIdMutex.RUnlock()
+	return len(fake.getUserCustomerNotificationsByVirtualGuestIdArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) GetUserCustomerNotificationsByVirtualGuestIdCalls(stub func(int, string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error)) {
+	fake.getUserCustomerNotificationsByVirtualGuestIdMutex.Lock()
+	defer fake.getUserCustomerNotificationsByVirtualGuestIdMutex.Unlock()
+	fake.GetUserCustomerNotificationsByVirtualGuestIdStub = stub
+}
+
+func (fake *FakeVirtualServerManager) GetUserCustomerNotificationsByVirtualGuestIdArgsForCall(i int) (int, string) {
+	fake.getUserCustomerNotificationsByVirtualGuestIdMutex.RLock()
+	defer fake.getUserCustomerNotificationsByVirtualGuestIdMutex.RUnlock()
+	argsForCall := fake.getUserCustomerNotificationsByVirtualGuestIdArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeVirtualServerManager) GetUserCustomerNotificationsByVirtualGuestIdReturns(result1 []datatypes.User_Customer_Notification_Virtual_Guest, result2 error) {
+	fake.getUserCustomerNotificationsByVirtualGuestIdMutex.Lock()
+	defer fake.getUserCustomerNotificationsByVirtualGuestIdMutex.Unlock()
+	fake.GetUserCustomerNotificationsByVirtualGuestIdStub = nil
+	fake.getUserCustomerNotificationsByVirtualGuestIdReturns = struct {
+		result1 []datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) GetUserCustomerNotificationsByVirtualGuestIdReturnsOnCall(i int, result1 []datatypes.User_Customer_Notification_Virtual_Guest, result2 error) {
+	fake.getUserCustomerNotificationsByVirtualGuestIdMutex.Lock()
+	defer fake.getUserCustomerNotificationsByVirtualGuestIdMutex.Unlock()
+	fake.GetUserCustomerNotificationsByVirtualGuestIdStub = nil
+	if fake.getUserCustomerNotificationsByVirtualGuestIdReturnsOnCall == nil {
+		fake.getUserCustomerNotificationsByVirtualGuestIdReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.User_Customer_Notification_Virtual_Guest
+			result2 error
+		})
+	}
+	fake.getUserCustomerNotificationsByVirtualGuestIdReturnsOnCall[i] = struct {
+		result1 []datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeVirtualServerManager) InstanceIsReady(arg1 int, arg2 time.Time) (bool, string, error) {
 	fake.instanceIsReadyMutex.Lock()
 	ret, specificReturn := fake.instanceIsReadyReturnsOnCall[len(fake.instanceIsReadyArgsForCall)]
@@ -2666,15 +2784,16 @@ func (fake *FakeVirtualServerManager) InstanceIsReady(arg1 int, arg2 time.Time) 
 		arg1 int
 		arg2 time.Time
 	}{arg1, arg2})
+	stub := fake.InstanceIsReadyStub
+	fakeReturns := fake.instanceIsReadyReturns
 	fake.recordInvocation("InstanceIsReady", []interface{}{arg1, arg2})
 	fake.instanceIsReadyMutex.Unlock()
-	if fake.InstanceIsReadyStub != nil {
-		return fake.InstanceIsReadyStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2, ret.result3
 	}
-	fakeReturns := fake.instanceIsReadyReturns
 	return fakeReturns.result1, fakeReturns.result2, fakeReturns.result3
 }
 
@@ -2735,15 +2854,16 @@ func (fake *FakeVirtualServerManager) ListDedicatedHost(arg1 string, arg2 string
 		arg3 string
 		arg4 int
 	}{arg1, arg2, arg3, arg4})
+	stub := fake.ListDedicatedHostStub
+	fakeReturns := fake.listDedicatedHostReturns
 	fake.recordInvocation("ListDedicatedHost", []interface{}{arg1, arg2, arg3, arg4})
 	fake.listDedicatedHostMutex.Unlock()
-	if fake.ListDedicatedHostStub != nil {
-		return fake.ListDedicatedHostStub(arg1, arg2, arg3, arg4)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listDedicatedHostReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2816,15 +2936,16 @@ func (fake *FakeVirtualServerManager) ListInstances(arg1 bool, arg2 bool, arg3 s
 		arg13 []string
 		arg14 string
 	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13Copy, arg14})
+	stub := fake.ListInstancesStub
+	fakeReturns := fake.listInstancesReturns
 	fake.recordInvocation("ListInstances", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13Copy, arg14})
 	fake.listInstancesMutex.Unlock()
-	if fake.ListInstancesStub != nil {
-		return fake.ListInstancesStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listInstancesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2880,15 +3001,16 @@ func (fake *FakeVirtualServerManager) MigrateDedicatedHost(arg1 int, arg2 int) e
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.MigrateDedicatedHostStub
+	fakeReturns := fake.migrateDedicatedHostReturns
 	fake.recordInvocation("MigrateDedicatedHost", []interface{}{arg1, arg2})
 	fake.migrateDedicatedHostMutex.Unlock()
-	if fake.MigrateDedicatedHostStub != nil {
-		return fake.MigrateDedicatedHostStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.migrateDedicatedHostReturns
 	return fakeReturns.result1
 }
 
@@ -2940,15 +3062,16 @@ func (fake *FakeVirtualServerManager) MigrateInstance(arg1 int) (datatypes.Provi
 	fake.migrateInstanceArgsForCall = append(fake.migrateInstanceArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.MigrateInstanceStub
+	fakeReturns := fake.migrateInstanceReturns
 	fake.recordInvocation("MigrateInstance", []interface{}{arg1})
 	fake.migrateInstanceMutex.Unlock()
-	if fake.MigrateInstanceStub != nil {
-		return fake.MigrateInstanceStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.migrateInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -3003,15 +3126,16 @@ func (fake *FakeVirtualServerManager) PauseInstance(arg1 int) error {
 	fake.pauseInstanceArgsForCall = append(fake.pauseInstanceArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.PauseInstanceStub
+	fakeReturns := fake.pauseInstanceReturns
 	fake.recordInvocation("PauseInstance", []interface{}{arg1})
 	fake.pauseInstanceMutex.Unlock()
-	if fake.PauseInstanceStub != nil {
-		return fake.PauseInstanceStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.pauseInstanceReturns
 	return fakeReturns.result1
 }
 
@@ -3057,21 +3181,86 @@ func (fake *FakeVirtualServerManager) PauseInstanceReturnsOnCall(i int, result1 
 	}{result1}
 }
 
+func (fake *FakeVirtualServerManager) PlacementCreate(arg1 *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error) {
+	fake.placementCreateMutex.Lock()
+	ret, specificReturn := fake.placementCreateReturnsOnCall[len(fake.placementCreateArgsForCall)]
+	fake.placementCreateArgsForCall = append(fake.placementCreateArgsForCall, struct {
+		arg1 *datatypes.Virtual_PlacementGroup
+	}{arg1})
+	stub := fake.PlacementCreateStub
+	fakeReturns := fake.placementCreateReturns
+	fake.recordInvocation("PlacementCreate", []interface{}{arg1})
+	fake.placementCreateMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateCallCount() int {
+	fake.placementCreateMutex.RLock()
+	defer fake.placementCreateMutex.RUnlock()
+	return len(fake.placementCreateArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateCalls(stub func(*datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error)) {
+	fake.placementCreateMutex.Lock()
+	defer fake.placementCreateMutex.Unlock()
+	fake.PlacementCreateStub = stub
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateArgsForCall(i int) *datatypes.Virtual_PlacementGroup {
+	fake.placementCreateMutex.RLock()
+	defer fake.placementCreateMutex.RUnlock()
+	argsForCall := fake.placementCreateArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateReturns(result1 datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.placementCreateMutex.Lock()
+	defer fake.placementCreateMutex.Unlock()
+	fake.PlacementCreateStub = nil
+	fake.placementCreateReturns = struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) PlacementCreateReturnsOnCall(i int, result1 datatypes.Virtual_PlacementGroup, result2 error) {
+	fake.placementCreateMutex.Lock()
+	defer fake.placementCreateMutex.Unlock()
+	fake.PlacementCreateStub = nil
+	if fake.placementCreateReturnsOnCall == nil {
+		fake.placementCreateReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Virtual_PlacementGroup
+			result2 error
+		})
+	}
+	fake.placementCreateReturnsOnCall[i] = struct {
+		result1 datatypes.Virtual_PlacementGroup
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeVirtualServerManager) PlacementsGroupList(arg1 string) ([]datatypes.Virtual_PlacementGroup, error) {
 	fake.placementsGroupListMutex.Lock()
 	ret, specificReturn := fake.placementsGroupListReturnsOnCall[len(fake.placementsGroupListArgsForCall)]
 	fake.placementsGroupListArgsForCall = append(fake.placementsGroupListArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.PlacementsGroupListStub
+	fakeReturns := fake.placementsGroupListReturns
 	fake.recordInvocation("PlacementsGroupList", []interface{}{arg1})
 	fake.placementsGroupListMutex.Unlock()
-	if fake.PlacementsGroupListStub != nil {
-		return fake.PlacementsGroupListStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.placementsGroupListReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -3128,15 +3317,16 @@ func (fake *FakeVirtualServerManager) PowerOffInstance(arg1 int, arg2 bool, arg3
 		arg2 bool
 		arg3 bool
 	}{arg1, arg2, arg3})
+	stub := fake.PowerOffInstanceStub
+	fakeReturns := fake.powerOffInstanceReturns
 	fake.recordInvocation("PowerOffInstance", []interface{}{arg1, arg2, arg3})
 	fake.powerOffInstanceMutex.Unlock()
-	if fake.PowerOffInstanceStub != nil {
-		return fake.PowerOffInstanceStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.powerOffInstanceReturns
 	return fakeReturns.result1
 }
 
@@ -3188,15 +3378,16 @@ func (fake *FakeVirtualServerManager) PowerOnInstance(arg1 int) error {
 	fake.powerOnInstanceArgsForCall = append(fake.powerOnInstanceArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.PowerOnInstanceStub
+	fakeReturns := fake.powerOnInstanceReturns
 	fake.recordInvocation("PowerOnInstance", []interface{}{arg1})
 	fake.powerOnInstanceMutex.Unlock()
-	if fake.PowerOnInstanceStub != nil {
-		return fake.PowerOnInstanceStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.powerOnInstanceReturns
 	return fakeReturns.result1
 }
 
@@ -3250,15 +3441,16 @@ func (fake *FakeVirtualServerManager) RebootInstance(arg1 int, arg2 bool, arg3 b
 		arg2 bool
 		arg3 bool
 	}{arg1, arg2, arg3})
+	stub := fake.RebootInstanceStub
+	fakeReturns := fake.rebootInstanceReturns
 	fake.recordInvocation("RebootInstance", []interface{}{arg1, arg2, arg3})
 	fake.rebootInstanceMutex.Unlock()
-	if fake.RebootInstanceStub != nil {
-		return fake.RebootInstanceStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.rebootInstanceReturns
 	return fakeReturns.result1
 }
 
@@ -3318,15 +3510,16 @@ func (fake *FakeVirtualServerManager) ReloadInstance(arg1 int, arg2 string, arg3
 		arg3 []int
 		arg4 int
 	}{arg1, arg2, arg3Copy, arg4})
+	stub := fake.ReloadInstanceStub
+	fakeReturns := fake.reloadInstanceReturns
 	fake.recordInvocation("ReloadInstance", []interface{}{arg1, arg2, arg3Copy, arg4})
 	fake.reloadInstanceMutex.Unlock()
-	if fake.ReloadInstanceStub != nil {
-		return fake.ReloadInstanceStub(arg1, arg2, arg3, arg4)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.reloadInstanceReturns
 	return fakeReturns.result1
 }
 
@@ -3378,15 +3571,16 @@ func (fake *FakeVirtualServerManager) RescueInstance(arg1 int) error {
 	fake.rescueInstanceArgsForCall = append(fake.rescueInstanceArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.RescueInstanceStub
+	fakeReturns := fake.rescueInstanceReturns
 	fake.recordInvocation("RescueInstance", []interface{}{arg1})
 	fake.rescueInstanceMutex.Unlock()
-	if fake.RescueInstanceStub != nil {
-		return fake.RescueInstanceStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.rescueInstanceReturns
 	return fakeReturns.result1
 }
 
@@ -3438,15 +3632,16 @@ func (fake *FakeVirtualServerManager) ResumeInstance(arg1 int) error {
 	fake.resumeInstanceArgsForCall = append(fake.resumeInstanceArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.ResumeInstanceStub
+	fakeReturns := fake.resumeInstanceReturns
 	fake.recordInvocation("ResumeInstance", []interface{}{arg1})
 	fake.resumeInstanceMutex.Unlock()
-	if fake.ResumeInstanceStub != nil {
-		return fake.ResumeInstanceStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.resumeInstanceReturns
 	return fakeReturns.result1
 }
 
@@ -3500,15 +3695,16 @@ func (fake *FakeVirtualServerManager) SetNetworkPortSpeed(arg1 int, arg2 bool, a
 		arg2 bool
 		arg3 int
 	}{arg1, arg2, arg3})
+	stub := fake.SetNetworkPortSpeedStub
+	fakeReturns := fake.setNetworkPortSpeedReturns
 	fake.recordInvocation("SetNetworkPortSpeed", []interface{}{arg1, arg2, arg3})
 	fake.setNetworkPortSpeedMutex.Unlock()
-	if fake.SetNetworkPortSpeedStub != nil {
-		return fake.SetNetworkPortSpeedStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.setNetworkPortSpeedReturns
 	return fakeReturns.result1
 }
 
@@ -3561,15 +3757,16 @@ func (fake *FakeVirtualServerManager) SetTags(arg1 int, arg2 string) error {
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.SetTagsStub
+	fakeReturns := fake.setTagsReturns
 	fake.recordInvocation("SetTags", []interface{}{arg1, arg2})
 	fake.setTagsMutex.Unlock()
-	if fake.SetTagsStub != nil {
-		return fake.SetTagsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.setTagsReturns
 	return fakeReturns.result1
 }
 
@@ -3627,15 +3824,16 @@ func (fake *FakeVirtualServerManager) SetUserMetadata(arg1 int, arg2 []string) e
 		arg1 int
 		arg2 []string
 	}{arg1, arg2Copy})
+	stub := fake.SetUserMetadataStub
+	fakeReturns := fake.setUserMetadataReturns
 	fake.recordInvocation("SetUserMetadata", []interface{}{arg1, arg2Copy})
 	fake.setUserMetadataMutex.Unlock()
-	if fake.SetUserMetadataStub != nil {
-		return fake.SetUserMetadataStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.setUserMetadataReturns
 	return fakeReturns.result1
 }
 
@@ -3692,15 +3890,16 @@ func (fake *FakeVirtualServerManager) UpgradeInstance(arg1 int, arg2 int, arg3 i
 		arg5 bool
 		arg6 string
 	}{arg1, arg2, arg3, arg4, arg5, arg6})
+	stub := fake.UpgradeInstanceStub
+	fakeReturns := fake.upgradeInstanceReturns
 	fake.recordInvocation("UpgradeInstance", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
 	fake.upgradeInstanceMutex.Unlock()
-	if fake.UpgradeInstanceStub != nil {
-		return fake.UpgradeInstanceStub(arg1, arg2, arg3, arg4, arg5, arg6)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.upgradeInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -3755,15 +3954,16 @@ func (fake *FakeVirtualServerManager) VerifyInstanceCreation(arg1 datatypes.Virt
 	fake.verifyInstanceCreationArgsForCall = append(fake.verifyInstanceCreationArgsForCall, struct {
 		arg1 datatypes.Virtual_Guest
 	}{arg1})
+	stub := fake.VerifyInstanceCreationStub
+	fakeReturns := fake.verifyInstanceCreationReturns
 	fake.recordInvocation("VerifyInstanceCreation", []interface{}{arg1})
 	fake.verifyInstanceCreationMutex.Unlock()
-	if fake.VerifyInstanceCreationStub != nil {
-		return fake.VerifyInstanceCreationStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.verifyInstanceCreationReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -3831,12 +4031,16 @@ func (fake *FakeVirtualServerManager) Invocations() map[string][][]interface{} {
 	defer fake.createInstanceMutex.RUnlock()
 	fake.createInstancesMutex.RLock()
 	defer fake.createInstancesMutex.RUnlock()
+	fake.createUserCustomerNotificationMutex.RLock()
+	defer fake.createUserCustomerNotificationMutex.RUnlock()
 	fake.editInstanceMutex.RLock()
 	defer fake.editInstanceMutex.RUnlock()
 	fake.generateInstanceCapacityCreationTemplateMutex.RLock()
 	defer fake.generateInstanceCapacityCreationTemplateMutex.RUnlock()
 	fake.generateInstanceCreationTemplateMutex.RLock()
 	defer fake.generateInstanceCreationTemplateMutex.RUnlock()
+	fake.getAvailablePlacementRoutersMutex.RLock()
+	defer fake.getAvailablePlacementRoutersMutex.RUnlock()
 	fake.getBandwidthDataMutex.RLock()
 	defer fake.getBandwidthDataMutex.RUnlock()
 	fake.getCapacityCreateOptionsMutex.RLock()
@@ -3845,6 +4049,8 @@ func (fake *FakeVirtualServerManager) Invocations() map[string][][]interface{} {
 	defer fake.getCapacityDetailMutex.RUnlock()
 	fake.getCreateOptionsMutex.RLock()
 	defer fake.getCreateOptionsMutex.RUnlock()
+	fake.getDatacentersMutex.RLock()
+	defer fake.getDatacentersMutex.RUnlock()
 	fake.getDedicatedHostMutex.RLock()
 	defer fake.getDedicatedHostMutex.RUnlock()
 	fake.getInstanceMutex.RLock()
@@ -3863,12 +4069,16 @@ func (fake *FakeVirtualServerManager) Invocations() map[string][][]interface{} {
 	defer fake.getPortableStorageMutex.RUnlock()
 	fake.getRoutersMutex.RLock()
 	defer fake.getRoutersMutex.RUnlock()
+	fake.getRulesMutex.RLock()
+	defer fake.getRulesMutex.RUnlock()
 	fake.getStorageCredentialsMutex.RLock()
 	defer fake.getStorageCredentialsMutex.RUnlock()
 	fake.getStorageDetailsMutex.RLock()
 	defer fake.getStorageDetailsMutex.RUnlock()
 	fake.getSummaryUsageMutex.RLock()
 	defer fake.getSummaryUsageMutex.RUnlock()
+	fake.getUserCustomerNotificationsByVirtualGuestIdMutex.RLock()
+	defer fake.getUserCustomerNotificationsByVirtualGuestIdMutex.RUnlock()
 	fake.instanceIsReadyMutex.RLock()
 	defer fake.instanceIsReadyMutex.RUnlock()
 	fake.listDedicatedHostMutex.RLock()
@@ -3881,6 +4091,8 @@ func (fake *FakeVirtualServerManager) Invocations() map[string][][]interface{} {
 	defer fake.migrateInstanceMutex.RUnlock()
 	fake.pauseInstanceMutex.RLock()
 	defer fake.pauseInstanceMutex.RUnlock()
+	fake.placementCreateMutex.RLock()
+	defer fake.placementCreateMutex.RUnlock()
 	fake.placementsGroupListMutex.RLock()
 	defer fake.placementsGroupListMutex.RUnlock()
 	fake.powerOffInstanceMutex.RLock()

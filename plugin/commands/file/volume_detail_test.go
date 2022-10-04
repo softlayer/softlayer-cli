@@ -2,53 +2,50 @@ package file_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Volume detail", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *file.VolumeDetailCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *file.VolumeDetailCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = file.NewVolumeDetailCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        file.FileVolumeDetailMetaData().Name,
-			Description: file.FileVolumeDetailMetaData().Description,
-			Usage:       file.FileVolumeDetailMetaData().Usage,
-			Flags:       file.FileVolumeDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "file")
+		cliCommand = file.NewVolumeDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Volume detail", func() {
 		Context("Volume detail without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Volume detail with wrong volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Volume ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 
@@ -57,10 +54,10 @@ var _ = Describe("Volume detail", func() {
 				FakeStorageManager.GetVolumeDetailsReturns(datatypes.Network_Storage{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to get details of volume 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to get details of volume 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -115,24 +112,13 @@ var _ = Describe("Volume detail", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"myvolume"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1000"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"400"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"HEAVY_WRITE"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"tok02"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"performance"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.9"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"500"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Restarting"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"replication finished"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"5678"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"myreplicant"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9.9.9.8"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dal10"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"DAILY"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("myvolume"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("tok02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("9.9.9.9"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Restarting"))
 			})
 		})
 	})

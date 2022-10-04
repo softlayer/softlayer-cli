@@ -4,7 +4,7 @@ import (
 	"bytes"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,31 +13,44 @@ import (
 )
 
 type PlacementGroupDetailCommand struct {
-	UI                terminal.UI
+	*metadata.SoftlayerCommand
 	PlaceGroupManager managers.PlaceGroupManager
+	Command           *cobra.Command
+	Id                int
 }
 
-func NewPlacementGroupDetailCommand(ui terminal.UI, placeGroupManager managers.PlaceGroupManager) (cmd *PlacementGroupDetailCommand) {
-	return &PlacementGroupDetailCommand{
-		UI:                ui,
-		PlaceGroupManager: placeGroupManager,
+func NewPlacementGroupDetailCommand(sl *metadata.SoftlayerCommand) (cmd *PlacementGroupDetailCommand) {
+	thisCmd := &PlacementGroupDetailCommand{
+		SoftlayerCommand:  sl,
+		PlaceGroupManager: managers.NewPlaceGroupManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "detail",
+		Short: T("View details of a placement group"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().IntVar(&thisCmd.Id, "id", 0, T("ID for the placement group. [required]"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PlacementGroupDetailCommand) Run(c *cli.Context) error {
-	placementGroupID := c.Int("id")
+func (cmd *PlacementGroupDetailCommand) Run(args []string) error {
+	placementGroupID := cmd.Id
 	if placementGroupID == 0 {
 		return errors.NewMissingInputError("--id")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	PlaceGroup, err := cmd.PlaceGroupManager.GetObject(placementGroupID, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get placement group: {{.ID}}.\n", map[string]interface{}{"ID": placementGroupID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get placement group: {{.ID}}.", map[string]interface{}{"ID": placementGroupID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -81,20 +94,4 @@ func (cmd *PlacementGroupDetailCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func PlacementGroupDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "placement-group",
-		Name:        "detail",
-		Description: T("View details of a placement group"),
-		Usage:       "${COMMAND_NAME} sl placement-group detail (--id PLACEMENTGROUP_ID) [--output FORMAT]",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "id",
-				Usage: T("ID for the placement group. [required]"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

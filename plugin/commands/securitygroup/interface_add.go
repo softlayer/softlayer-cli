@@ -9,38 +9,54 @@ import (
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type InterfaceAddCommand struct {
-	UI             terminal.UI
-	NetworkManager managers.NetworkManager
-	VSManager      managers.VirtualServerManager
+	*metadata.SoftlayerCommand
+	NetworkManager   managers.NetworkManager
+	VSManager        managers.VirtualServerManager
+	Command          *cobra.Command
+	NetworkComponent int
+	Server           int
+	Interface        string
 }
 
-func NewInterfaceAddCommand(ui terminal.UI, networkManager managers.NetworkManager, vsManager managers.VirtualServerManager) (cmd *InterfaceAddCommand) {
-	return &InterfaceAddCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
-		VSManager:      vsManager,
+func NewInterfaceAddCommand(sl *metadata.SoftlayerCommand) (cmd *InterfaceAddCommand) {
+	thisCmd := &InterfaceAddCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "interface-add " + T("SECURITYGROUP_ID"),
+		Short: T("Attach an interface to a security group"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().IntVarP(&thisCmd.NetworkComponent, "network-component", "n", 0, T("The network component ID to associate with the security group"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Server, "server", "s", 0, T(" The server ID to associate with the security group"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Interface, "interface", "i", "", T("The interface of the server to associate (public/private)"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *InterfaceAddCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	groupID, err := strconv.Atoi(c.Args()[0])
+func (cmd *InterfaceAddCommand) Run(args []string) error {
+	groupID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Security group ID")
 	}
 
-	networkComponent := c.Int("n")
-	serverID := c.Int("s")
-	serverInterface := c.String("i")
+	networkComponent := cmd.NetworkComponent
+	serverID := cmd.Server
+	serverInterface := cmd.Interface
 	err = ValidateArgs(networkComponent, serverID, serverInterface)
 	if err != nil {
 		return err
@@ -51,8 +67,8 @@ func (cmd *InterfaceAddCommand) Run(c *cli.Context) error {
 	}
 	err = cmd.NetworkManager.AttachSecurityGroupComponent(groupID, componentID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add network component {{.ComponentID}} to security group {{.GroupID}}.\n",
-			map[string]interface{}{"GroupID": groupID, "ComponentID": componentID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to add network component {{.ComponentID}} to security group {{.GroupID}}.\n",
+			map[string]interface{}{"GroupID": groupID, "ComponentID": componentID}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Network component {{.ComponentID}} is added to security group {{.GroupID}}.",
@@ -96,27 +112,4 @@ func GetComponentId(vsManager managers.VirtualServerManager, networkComponent in
 		return *component[0].Id, nil
 	}
 	return networkComponent, nil
-}
-
-func SecurityGroupInterfaceAddMetaData() cli.Command {
-	return cli.Command{
-		Category:    "securitygroup",
-		Name:        "interface-add",
-		Description: T("Attach an interface to a security group"),
-		Usage:       "${COMMAND_NAME} sl securitygroup interface-add SECURITYGROUP_ID [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "n,network-component",
-				Usage: T("The network component ID to associate with the security group"),
-			},
-			cli.StringFlag{
-				Name:  "s,server",
-				Usage: T(" The server ID to associate with the security group"),
-			},
-			cli.StringFlag{
-				Name:  "i,interface",
-				Usage: T("The interface of the server to associate (public/private)"),
-			},
-		},
-	}
 }

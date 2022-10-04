@@ -2,46 +2,44 @@ package block_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Replica locations", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *block.ReplicaLocationsCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.ReplicaLocationsCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewReplicaLocationsCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockReplicaLocationsMetaData().Name,
-			Description: block.BlockReplicaLocationsMetaData().Description,
-			Usage:       block.BlockReplicaLocationsMetaData().Usage,
-			Flags:       block.BlockReplicaLocationsMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
+		cliCommand = block.NewReplicaLocationsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Replicant locations", func() {
 		Context("replicant locations without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
+
 			})
 		})
 		Context("Replicant locations with server error", func() {
@@ -49,13 +47,10 @@ var _ = Describe("Replica locations", func() {
 				FakeStorageManager.GetReplicationLocationsReturns(nil, errors.New("Internal server error"))
 			})
 			It("error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{
-					"OK",
-				}))
-				Expect(strings.Contains(err.Error(), "Failed to get datacenters for volume 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal server error")).To(BeTrue())
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("OK"))
+				Expect(err.Error()).To(ContainSubstring("Failed to get datacenters for volume 1234."))
 			})
 		})
 		Context("Replicant locations", func() {
@@ -69,11 +64,11 @@ var _ = Describe("Replica locations", func() {
 					}, nil)
 			})
 			It("succeed", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"352494"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"hkg02"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Hong Kong 2"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("352494"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("hkg02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Hong Kong 2"))
 
 			})
 		})
@@ -83,11 +78,9 @@ var _ = Describe("Replica locations", func() {
 					[]datatypes.Location{}, nil)
 			})
 			It("succeed", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{
-					"No data centers compatible for replication.",
-				}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("No data centers compatible for replication."))
 			})
 		})
 	})

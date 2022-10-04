@@ -1,39 +1,47 @@
 package tags
 
 import (
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-
 type DeleteCommand struct {
-	UI 			terminal.UI
+	*metadata.SoftlayerCommand
 	TagsManager managers.TagsManager
+	Command     *cobra.Command
 }
 
-
-func NewDeleteCommand(ui terminal.UI, tagsManager managers.TagsManager) (cmd *DeleteCommand) {
-	return &DeleteCommand{
-		UI:             ui,
-		TagsManager: 	tagsManager,
-	}	
-}
-
-func (cmd *DeleteCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
+func NewDeleteCommand(sl *metadata.SoftlayerCommand) (cmd *DeleteCommand) {
+	thisCmd := &DeleteCommand{
+		SoftlayerCommand: sl,
+		TagsManager:      managers.NewTagsManager(sl.Session),
 	}
-	tagName := c.Args()[0]
-	outputFormat, _ := metadata.CheckOutputFormat(c, cmd.UI)
+
+	cobraCmd := &cobra.Command{
+		Use:   "delete " + T("[TAG NAME]"),
+		Short: T("Removes an empty tag from your account."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
+}
+
+func (cmd *DeleteCommand) Run(args []string) error {
+
+	tagName := args[0]
+	outputFormat := cmd.GetOutputFlag()
 	success, err := cmd.TagsManager.DeleteTag(tagName)
 
 	if err != nil {
-		return cli.NewExitError(err.Error(), 2)
+		return errors.NewAPIError(T("Failed to delete Tag"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -43,21 +51,4 @@ func (cmd *DeleteCommand) Run(c *cli.Context) error {
 	cmd.UI.Print("%v", success)
 	return nil
 
-}
-
-func TagsDeleteMetaData() cli.Command {
-	return cli.Command{
-		Category:    "tags",
-		Name:        "delete",
-		Description: T("Removes an empty tag from your account."),
-		Usage: T(`${COMMAND_NAME} sl tags delete [TAG NAME]
-
-EXAMPLE:
-	${COMMAND_NAME} sl tags delete tag1
-	Removes "tag" from your account.
-`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

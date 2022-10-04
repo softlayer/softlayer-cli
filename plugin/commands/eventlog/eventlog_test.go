@@ -1,16 +1,16 @@
 package eventlog_test
 
 import (
-	"reflect"
 	"testing"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/eventlog"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 func TestManagers(t *testing.T) {
@@ -18,57 +18,41 @@ func TestManagers(t *testing.T) {
 	RunSpecs(t, "Event Log Suite")
 }
 
-// These are all the commands in eventlog.go
 var availableCommands = []string{
-	"event-log-get",
-	"event-log-types",
+	"get",
+	"types",
 }
 
-// This test suite exists to make sure commands don't get accidently removed from the actionBindings
-var _ = Describe("Test eventlog.GetCommandActionBindings()", func() {
-	var (
-		context plugin.PluginContext
-	)
+// This test suite exists to make sure commands don't get accidently removed from the SetupCobraCommands
+var _ = Describe("Test eventlog commands", func() {
+
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
-	context = plugin.InitPluginContext("softlayer")
-	commands := eventlog.GetCommandActionBindings(context, fakeUI, fakeSession)
-
-	Context("Test Actions", func() {
-		for _, cmdName := range availableCommands {
-			//necessary to ensure the correct value is passed to the closure
-			cmdName := cmdName
-			It("ibmcloud sl "+cmdName, func() {
-				command, exists := commands[cmdName]
-				Expect(exists).To(BeTrue(), cmdName+" not found")
-				// Checks to make sure we actually have a function here.
-				// Test the actual function works in the specific commands test file.
-				Expect(reflect.ValueOf(command).Kind().String()).To(Equal("func"))
-				context := testhelpers.GetCliContext(cmdName)
-				err := command(context)
-				// some commands work without arguments
-				if err == nil {
-					Expect(err).NotTo(HaveOccurred())
-				} else {
-					Expect(err).To(HaveOccurred())
-				}
-			})
-		}
-	})
+	slMeta := metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 
 	Context("New commands testable", func() {
-		for cmdName, _ := range commands {
-			//necessary to ensure the correct value is passed to the closure
-			cmdName := cmdName
-			It("availableCommands["+cmdName+"]", func() {
-				found := false
-				for _, value := range availableCommands {
-					if value == cmdName {
-						found = true
-						break
-					}
+		commands := eventlog.SetupCobraCommands(slMeta)
+
+		var arrayCommands = []string{}
+		for _, command := range commands.Commands() {
+			commandName := command.Name()
+			arrayCommands = append(arrayCommands, commandName)
+			It("available commands "+commands.Name(), func() {
+				available := false
+				if utils.StringInSlice(commandName, availableCommands) != -1 {
+					available = true
 				}
-				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in eventlog.go")
+				Expect(available).To(BeTrue(), commandName+" not found in array available Commands")
+			})
+		}
+		for _, command := range availableCommands {
+			commandName := command
+			It("ibmcloud sl "+commands.Name(), func() {
+				available := false
+				if utils.StringInSlice(commandName, arrayCommands) != -1 {
+					available = true
+				}
+				Expect(available).To(BeTrue(), commandName+" not found in ibmcloud sl "+commands.Name())
 			})
 		}
 	})
@@ -78,15 +62,6 @@ var _ = Describe("Test eventlog.GetCommandActionBindings()", func() {
 			Expect(eventlog.EventLogNamespace().ParentName).To(ContainSubstring("sl"))
 			Expect(eventlog.EventLogNamespace().Name).To(ContainSubstring("event-log"))
 			Expect(eventlog.EventLogNamespace().Description).To(ContainSubstring("Classic infrastructure Event Log Group"))
-		})
-	})
-
-	Context("User MetaData", func() {
-		It("User MetaData", func() {
-			Expect(eventlog.EventLogMetaData().Category).To(ContainSubstring("sl"))
-			Expect(eventlog.EventLogMetaData().Name).To(ContainSubstring("event-log"))
-			Expect(eventlog.EventLogMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl event-log"))
-			Expect(eventlog.EventLogMetaData().Description).To(ContainSubstring("Classic infrastructure Event Log Group"))
 		})
 	})
 })

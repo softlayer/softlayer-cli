@@ -3,9 +3,8 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,71 +13,56 @@ import (
 )
 
 type VolumeSetNoteCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	Note           string
 }
 
-func NewVolumeSetNoteCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *VolumeSetNoteCommand) {
-	return &VolumeSetNoteCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewVolumeSetNoteCommand(sl *metadata.SoftlayerStorageCommand) *VolumeSetNoteCommand {
+	thisCmd := &VolumeSetNoteCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "volume-set-note " + T("IDENTIFIER"),
+		Short: T("Set note for an existing {{.storageType}} storage volume.", sl.StorageI18n),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID
+
+EXAMPLE:
+   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'`, sl.StorageI18n),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVarP(&thisCmd.Note, "note", "n", "", T("Public notes related to a Storage volume  [required]"))
+	//#nosec G104 -- This is a false positive
+	cobraCmd.MarkFlagRequired("note")
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *VolumeSetNoteCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	if !c.IsSet("n") {
-		return errors.NewInvalidUsageError(T("This command requires note flag."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *VolumeSetNoteCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	successful, err := cmd.StorageManager.VolumeSetNote(volumeID, c.String("note"))
+	successful, err := cmd.StorageManager.VolumeSetNote(volumeID, cmd.Note)
 	if err != nil {
-		return cli.NewExitError(T("Error occurred while note was adding in block volume {{.VolumeID}}.\n",
-			map[string]interface{}{"VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Error occurred while adding note to volume: {{.VolumeID}}",
+			map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
 		return utils.PrintPrettyJSON(cmd.UI, successful)
 	}
 
-	response := ""
-	if successful {
-		cmd.UI.Ok()
-		response = "The note was set successfully"
-	} else {
-		response = "Note could not be set! Please verify your options and try again."
-	}
-
-	cmd.UI.Print(T(response))
+	cmd.UI.Ok()
+	cmd.UI.Print(T("The note was set successfully"))
 	return nil
-}
-
-func BlockVolumeSetNoteMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "volume-set-note",
-		Description: T("Set note for an existing block storage volume."),
-		Usage: T(`${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID
-
-EXAMPLE:
-   ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'this is my note'`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "n,note",
-				Usage: T("Public notes related to a Storage volume  [required]"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

@@ -4,8 +4,7 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -15,39 +14,49 @@ import (
 )
 
 type RuleListCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	Sortby         string
 }
 
-func NewRuleListCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *RuleListCommand) {
-	return &RuleListCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewRuleListCommand(sl *metadata.SoftlayerCommand) (cmd *RuleListCommand) {
+	thisCmd := &RuleListCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "rule-list " + T("SECURITYGROUP_ID"),
+		Short: T("List security group rules"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "", T("Column to sort by. Options are: id,remoteIp,remoteGroupId,direction,ethertype,portRangeMin,portRangeMax,protocol"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *RuleListCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	groupID, err := strconv.Atoi(c.Args()[0])
+func (cmd *RuleListCommand) Run(args []string) error {
+	groupID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Security group ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	sortColumns := []string{"id", "remoteIp", "remoteGroupId", "direction", "ethertype", "portRangeMin", "portRangeMax", "protocol"}
-	sortby := c.String("sortby")
+	sortby := cmd.Sortby
 	if sortby != "" && utils.StringInSlice(sortby, sortColumns) == -1 {
 		return errors.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 	rules, err := cmd.NetworkManager.ListSecurityGroupRules(groupID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get rules of security group {{.GroupID}}.\n", map[string]interface{}{"GroupID": groupID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get rules of security group {{.GroupID}}.\n", map[string]interface{}{"GroupID": groupID}), err.Error(), 2)
 	}
 
 	if sortby == "" || sortby == "id" {
@@ -93,20 +102,4 @@ func (cmd *RuleListCommand) Run(c *cli.Context) error {
 	}
 	ruleTable.Print()
 	return nil
-}
-
-func SecurityGroupRuleListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "securitygroup",
-		Name:        "rule-list",
-		Description: T("List security group rules"),
-		Usage:       "${COMMAND_NAME} sl securitygroup rule-list SECURITYGROUP_ID [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by. Options are: id,remoteIp,remoteGroupId,direction,ethertype,portRangeMin,portRangeMax,protocol"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

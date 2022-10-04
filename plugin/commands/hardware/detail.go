@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -16,34 +16,49 @@ import (
 )
 
 type DetailCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
+	Passwords       bool
+	Price           bool
+	Components      bool
 }
 
-func NewDetailCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("IDENTIFIER"),
+		Short: T("Get details for a hardware server"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().BoolVarP(&thisCmd.Passwords, "passwords", "p", false, T("Show passwords (check over your shoulder!)"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Price, "price", "c", false, T("Show associated prices"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Components, "components", false, T("Show associated hardware components"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	hardwareId, err := strconv.Atoi(c.Args()[0])
+func (cmd *DetailCommand) Run(args []string) error {
+	hardwareId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Hardware server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	hardware, err := cmd.HardwareManager.GetHardware(hardwareId, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -99,7 +114,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		table.Add("Vlans", buf.String())
 	}
 
-	if c.IsSet("price") {
+	if cmd.Price {
 		if hardware.BillingItem != nil && hardware.BillingItem.NextInvoiceTotalRecurringAmount != nil {
 			buf := new(bytes.Buffer)
 			priceTable := terminal.NewTable(buf, []string{T("Item"), T("CategoryCode"), T("Recurring Price")})
@@ -119,7 +134,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if c.IsSet("passwords") {
+	if cmd.Passwords {
 		if hardware.OperatingSystem != nil && hardware.OperatingSystem.Passwords != nil {
 			buf := new(bytes.Buffer)
 			userTable := terminal.NewTable(buf, []string{T("Username"), T("Password")})
@@ -141,11 +156,11 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if c.IsSet("components") {
+	if cmd.Components {
 		components, err := cmd.HardwareManager.GetHardwareComponents(hardwareId)
 		componentIds := []int{}
 		if err != nil {
-			return cli.NewExitError(T("Failed to get components\n")+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get components\n"), err.Error(), 2)
 		}
 		buf := new(bytes.Buffer)
 		componentTable := terminal.NewTable(buf, []string{T("Name"), T("Firmware version"), T("Firmware build date"), T("Type")})
@@ -166,28 +181,4 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	table.Print()
 	return nil
-}
-
-func HardwareDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "detail",
-		Description: T("Get details for a hardware server"),
-		Usage:       "${COMMAND_NAME} sl hardware detail IDENTIFIER [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "p,passwords",
-				Usage: T("Show passwords (check over your shoulder!)"),
-			},
-			cli.BoolFlag{
-				Name:  "c,price",
-				Usage: T("Show associated prices"),
-			},
-			cli.BoolFlag{
-				Name:  "components",
-				Usage: T("Show associated hardware components"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

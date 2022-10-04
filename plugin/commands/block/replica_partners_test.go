@@ -2,17 +2,17 @@ package block_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -20,28 +20,25 @@ var _ = Describe("Replica partners", func() {
 	var (
 		fakeUI             *terminal.FakeUI
 		FakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.ReplicaPartnersCommand
-		cliCommand         cli.Command
+		cliCommand         *block.ReplicaPartnersCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewReplicaPartnersCommand(fakeUI, FakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockReplicaPartnersMetaData().Name,
-			Description: block.BlockReplicaPartnersMetaData().Description,
-			Usage:       block.BlockReplicaPartnersMetaData().Usage,
-			Flags:       block.BlockReplicaPartnersMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
+		cliCommand = block.NewReplicaPartnersCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("Replicant partners", func() {
 		Context("replicant partners without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Replicant partners with server error", func() {
@@ -49,13 +46,11 @@ var _ = Describe("Replica partners", func() {
 				FakeStorageManager.GetReplicationPartnersReturns(nil, errors.New("Internal server error"))
 			})
 			It("error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{
-					"OK",
-				}))
-				Expect(strings.Contains(err.Error(), "Failed to get replication partners for volume 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal server error")).To(BeTrue())
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("OK"))
+				Expect(err.Error()).To(ContainSubstring("Failed to get replication partners for volume 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
 		})
 		Context("Replicant partners", func() {
@@ -71,11 +66,11 @@ var _ = Describe("Replica partners", func() {
 					}, nil)
 			})
 			It("succeed", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"26876939"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"IBM02SL278444_566_REP_1"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"278444"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{
+					"26876939", "IBM02SL278444_566_REP_1", "278444",
+				}))
 			})
 		})
 		Context("Replicant partners", func() {
@@ -84,9 +79,9 @@ var _ = Describe("Replica partners", func() {
 					[]datatypes.Network_Storage{}, nil)
 			})
 			It("succeed", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"There are no replication partners for volume 1234."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("There are no replication partners for volume 1234."))
 			})
 		})
 	})

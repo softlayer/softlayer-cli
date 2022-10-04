@@ -1,10 +1,8 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	"github.com/urfave/cli"
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,33 +11,56 @@ import (
 )
 
 type ReloadCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
-	Context              plugin.PluginContext
+	Command              *cobra.Command
+	Postinstall          string
+	Image                int
+	Key                  []int
+	Force                bool
 }
 
-func NewReloadCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager, context plugin.PluginContext) (cmd *ReloadCommand) {
-	return &ReloadCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
-		Context:              context,
+func NewReloadCommand(sl *metadata.SoftlayerCommand) (cmd *ReloadCommand) {
+	thisCmd := &ReloadCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "reload " + T("IDENTIFIER"),
+		Short: T("Reload operating system on a virtual server instance"),
+		Long: T(`${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl vs reload 12345678
+   This command reloads current operating system for virtual server instance with ID 12345678.
+   ${COMMAND_NAME} sl vs reload 12345678 --image 1234
+   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().StringVarP(&thisCmd.Postinstall, "postinstall", "i", "", T("Post-install script to download"))
+	cobraCmd.Flags().IntVar(&thisCmd.Image, "image", 0, T("Image ID. The default is to use the current operating system.\nSee: '${COMMAND_NAME} sl image list' for reference"))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Key, "key", "k", []int{}, T("The IDs of the SSH keys to add to the root user (multiple occurrence permitted)"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+
+	return thisCmd
 }
 
-func (cmd *ReloadCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	vsID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+func (cmd *ReloadCommand) Run(args []string) error {
+
+	vsID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
 
-	if !c.IsSet("f") && !c.IsSet("force") {
-		confirm, err := cmd.UI.Confirm(T("This will reload operating system of virtual server instance: {{.VsId}} and cannot be undone. Continue?",
-			map[string]interface{}{"VsId": vsID}))
+	subs := map[string]interface{}{"VsId": vsID, "VsID": vsID, "CommandName": "ibmcloud"}
+	if !cmd.Force {
+		confirm, err := cmd.UI.Confirm(T("This will reload operating system of virtual server instance: {{.VsId}} and cannot be undone. Continue?", subs))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -47,44 +68,11 @@ func (cmd *ReloadCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	err = cmd.VirtualServerManager.ReloadInstance(vsID, c.String("i"), c.IntSlice("k"), c.Int("image"))
+	err = cmd.VirtualServerManager.ReloadInstance(vsID, cmd.Postinstall, cmd.Key, cmd.Image)
 	if err != nil {
-		return cli.NewExitError(T("Failed to reload virtual server instance: {{.VsID}}.\n", map[string]interface{}{"VsID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to reload virtual server instance: {{.VsID}}.\n", subs), err.Error(), 2)
 	}
 	cmd.UI.Ok()
-	cmd.UI.Print(T("System reloading for virtual server instance: {{.VsId}} is in progress. Run '{{.CommandName}} sl vs ready {{.VsId}}' to check whether it is ready later on.",
-		map[string]interface{}{
-			"VsId":        vsID,
-			"CommandName": cmd.Context.CLIName()}))
+	cmd.UI.Print(T("System reloading for virtual server instance: {{.VsId}} is in progress. Run '{{.CommandName}} sl vs ready {{.VsId}}' to check whether it is ready later on.", subs))
 	return nil
-}
-
-func VSReloadMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "reload",
-		Description: T("Reload operating system on a virtual server instance"),
-		Usage: T(`${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl vs reload 12345678
-   This command reloads current operating system for virtual server instance with ID 12345678.
-   ${COMMAND_NAME} sl vs reload 12345678 --image 1234
-   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "i,postinstall",
-				Usage: T("Post-install script to download"),
-			},
-			cli.IntFlag{
-				Name:  "image",
-				Usage: T("Image ID. The default is to use the current operating system.\nSee: '${COMMAND_NAME} sl image list' for reference"),
-			},
-			cli.IntSliceFlag{
-				Name:  "k,key",
-				Usage: T("The IDs of the SSH keys to add to the root user (multiple occurrence permitted)"),
-			},
-			metadata.ForceFlag(),
-		},
-	}
 }

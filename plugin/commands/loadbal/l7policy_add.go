@@ -3,14 +3,13 @@ package loadbal
 import (
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	bxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -22,55 +21,77 @@ const (
 )
 
 type L7PolicyAddCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	ProtocolUuid        string
+	Name                string
+	Action              string
+	Redirect            string
+	Priority            int
 }
 
-func NewL7PolicyAddCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *L7PolicyAddCommand) {
-	return &L7PolicyAddCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewL7PolicyAddCommand(sl *metadata.SoftlayerCommand) *L7PolicyAddCommand {
+	thisCmd := &L7PolicyAddCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "l7policy-add",
+		Short: T("Add a new L7 policy"),
+		Long:  T("${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.ProtocolUuid, "protocol-uuid", "", T("UUID for the load balancer protocol [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("Policy name"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Action, "action", "a", "", T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Redirect, "redirect", "r", "", T("POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Priority, "priority", "p", 1, T("Policy priority"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *L7PolicyAddCommand) Run(c *cli.Context) error {
+func (cmd *L7PolicyAddCommand) Run(args []string) error {
 
-	policyUUID := c.String("protocol-uuid")
+	policyUUID := cmd.ProtocolUuid
 	if utils.IsEmptyString(policyUUID) {
 		return errors.NewMissingInputError("--protocol-uuid")
 	}
 
-	name := c.String("n")
+	name := cmd.Name
 	if utils.IsEmptyString(name) {
-		return bxErr.NewMissingInputError("-n, --name")
+		return errors.NewMissingInputError("-n, --name")
 	}
 
-	action := c.String("a")
+	action := cmd.Action
 	if utils.IsEmptyString(action) {
-		return bxErr.NewMissingInputError("-a, --action")
+		return errors.NewMissingInputError("-a, --action")
 	}
 	actionUpperCase := strings.ToUpper(action)
 
 	if !IsValidAction(actionUpperCase) {
-		return bxErr.NewInvalidUsageError(
+		return errors.NewInvalidUsageError(
 			T("-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
 
-	redirect := c.String("r")
+	redirect := cmd.Redirect
 	if !utils.IsEmptyString(redirect) && actionUpperCase == REJECT {
-		return bxErr.NewInvalidUsageError(
+		return errors.NewInvalidUsageError(
 			T("-r, --redirect is only available with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
 
 	if IsValidAction(actionUpperCase) && utils.IsEmptyString(redirect) && actionUpperCase != REJECT {
-		return bxErr.NewInvalidUsageError(
+		return errors.NewInvalidUsageError(
 			T("-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
 		)
 	}
 
-	priority := c.Int("p")
+	priority := cmd.Priority
 
 	policy := datatypes.Network_LBaaS_L7Policy{
 		Name:   &name,
@@ -94,8 +115,7 @@ func (cmd *L7PolicyAddCommand) Run(c *cli.Context) error {
 
 	_, err := cmd.LoadBalancerManager.AddL7Policy(&policyUUID, policyRule)
 	if err != nil {
-		return cli.NewExitError(T("Failed to add l7 policy: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to add l7 policy: {{.Error}}.\n", map[string]interface{}{"Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7 policy added"))
@@ -108,36 +128,4 @@ func IsValidAction(action string) bool {
 		return true
 	}
 	return false
-}
-
-func LoadbalL7PolicyAddMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "l7policy-add",
-		Description: T("Add a new L7 policy"),
-		Usage:       "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "protocol-uuid",
-				Usage: T("UUID for the load balancer protocol [required]"),
-			},
-			cli.StringFlag{
-				Name:  "n,name",
-				Usage: T("Policy name"),
-			},
-			cli.StringFlag{
-				Name:  "a,action",
-				Usage: T("Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"),
-			},
-			cli.StringFlag{
-				Name:  "r,redirect",
-				Usage: T("POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action"),
-			},
-			cli.IntFlag{
-				Name:  "p,priority",
-				Usage: T("Policy priority"),
-				Value: 1,
-			},
-		},
-	}
 }

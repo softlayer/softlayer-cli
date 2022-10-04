@@ -3,8 +3,7 @@ package subnet
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -14,42 +13,58 @@ import (
 )
 
 type RouteCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	TypeId         string
+	Type           string
 }
 
-func NewRouteCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *RouteCommand) {
-	return &RouteCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewRouteCommand(sl *metadata.SoftlayerCommand) *RouteCommand {
+	thisCmd := &RouteCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "route " + T("IDENTIFIER"),
+		Short: T("This interface allows you to change the route of your Account Owned subnets."),
+		Long: T(`${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678
+   This command allows you to change the route of your Account Owned subnets.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVarP(&thisCmd.TypeId, "type-id", "i", "", T("An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required]."))
+	cobraCmd.Flags().StringVarP(&thisCmd.Type, "type", "t", "", T("Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required]."))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *RouteCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	subnetID, err := strconv.Atoi(c.Args()[0])
+func (cmd *RouteCommand) Run(args []string) error {
+
+	subnetID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Subnet ID")
 	}
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
 
-	if !c.IsSet("t") {
+	outputFormat := cmd.GetOutputFlag()
+
+	if cmd.Type == "" {
 		return errors.NewInvalidUsageError(T("[-t/--type] is required."))
 	}
 
-	if !c.IsSet("i") {
+	if cmd.TypeId == "" {
 		return errors.NewInvalidUsageError(T("[-i/--type-id] is required."))
 	}
 
-	resp, err := cmd.NetworkManager.Route(subnetID, c.String("t"), c.String("i"))
+	resp, err := cmd.NetworkManager.Route(subnetID, cmd.Type, cmd.TypeId)
 	if err != nil {
-		return cli.NewExitError(T("Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
-			map[string]interface{}{"TYPE": c.String("t"), "IDENTIFIER": c.String("i")})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
+			map[string]interface{}{"TYPE": cmd.Type, "IDENTIFIER": cmd.TypeId}), err.Error(), 2)
 
 	}
 	if outputFormat == "JSON" {
@@ -59,28 +74,4 @@ func (cmd *RouteCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("The transaction to route is created, routes will be updated in one or two minutes."))
 	return nil
-}
-
-func SubnetRouteMetaData() cli.Command {
-	return cli.Command{
-		Category:    "subnet",
-		Name:        "route",
-		Description: T("This interface allows you to change the route of your Account Owned subnets."),
-		Usage: T(`${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678
-   This command allows you to change the route of your Account Owned subnets.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "i, type-id",
-				Usage: T("An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required]."),
-			},
-			cli.StringFlag{
-				Name:  "t, type",
-				Usage: T("Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required]."),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

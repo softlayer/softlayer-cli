@@ -7,41 +7,40 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Order item-list", func() {
 	var (
 		fakeUI           *terminal.FakeUI
+		cliCommand       *order.ItemListCommand
+		fakeSession      *session.Session
+		slCommand        *metadata.SoftlayerCommand
 		fakeOrderManager *testhelpers.FakeOrderManager
-		cmd              *order.ItemListCommand
-		cliCommand       cli.Command
 	)
 	BeforeEach(func() {
 		fakeOrderManager = new(testhelpers.FakeOrderManager)
 		fakeUI = terminal.NewFakeUI()
-		cmd = order.NewItemListCommand(fakeUI, fakeOrderManager)
-		cliCommand = cli.Command{
-			Name:        order.OrderItemListMetaData().Name,
-			Description: order.OrderItemListMetaData().Description,
-			Usage:       order.OrderItemListMetaData().Usage,
-			Flags:       order.OrderItemListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = order.NewItemListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.OrderManager = fakeOrderManager
 	})
 
 	Describe("Order item-list", func() {
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeOrderManager.ListItemsReturns([]datatypes.Product_Item{}, errors.New("This command requires one argument."))
+				fakeOrderManager.ListItemsReturns([]datatypes.Product_Item{}, errors.New("This command requires one argument"))
 			})
 			It("Argument is not set", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("This command requires one argument"))
 			})
 		})
 
@@ -50,7 +49,7 @@ var _ = Describe("Order item-list", func() {
 				fakeOrderManager.ListItemsReturns([]datatypes.Product_Item{}, errors.New("Failed to list items."))
 			})
 			It("Package that does not exist is set", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcde")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcde")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to list items."))
 			})
@@ -61,7 +60,7 @@ var _ = Describe("Order item-list", func() {
 				fakeOrderManager.ListItemsReturns([]datatypes.Product_Item{}, errors.New("Invalid output format, only JSON is supported now."))
 			})
 			It("Invalid output is set", func() {
-				err := testhelpers.RunCommand(cliCommand, "BARE_METAL_SERVER", "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "BARE_METAL_SERVER", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid output format, only JSON is supported now."))
 			})
@@ -84,7 +83,7 @@ var _ = Describe("Order item-list", func() {
 			})
 
 			It("Item list is displayed", func() {
-				err := testhelpers.RunCommand(cliCommand, "BARE_METAL_SERVER")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "BARE_METAL_SERVER")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("bandwidth"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("BANDWIDTH_0_GB_2"))
@@ -92,7 +91,7 @@ var _ = Describe("Order item-list", func() {
 			})
 
 			It("Item list is displayed in json format", func() {
-				err := testhelpers.RunCommand(cliCommand, "BARE_METAL_SERVER", "--output=json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "BARE_METAL_SERVER", "--output=json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"categoryCode": "bandwidth"`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"keyName": "BANDWIDTH_0_GB_2"`))

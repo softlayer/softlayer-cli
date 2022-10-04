@@ -3,9 +3,8 @@ package user
 import (
 	"errors"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,33 +13,52 @@ import (
 )
 
 type EditNotificationsCommand struct {
-	UI          terminal.UI
+	*metadata.SoftlayerCommand
 	UserManager managers.UserManager
+	Command     *cobra.Command
+	Enable      []string
+	Disable     []string
 }
 
-func NewEditNotificationsCommand(ui terminal.UI, userManager managers.UserManager) (cmd *EditNotificationsCommand) {
-	return &EditNotificationsCommand{
-		UI:          ui,
-		UserManager: userManager,
+func NewEditNotificationsCommand(sl *metadata.SoftlayerCommand) (cmd *EditNotificationsCommand) {
+	thisCmd := &EditNotificationsCommand{
+		SoftlayerCommand: sl,
+		UserManager:      managers.NewUserManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "edit-notifications",
+		Short: T("Enable or Disable specific notifications for the active user."),
+		Long: T(`${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS
+
+		Notification names should be enclosed in quotation marks. Examples:
+			slcli user edit-notifications --enable 'Order Approved'
+			slcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'`),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringSliceVar(&thisCmd.Enable, "enable", []string{}, T("Enable (DEFAULT) selected notifications"))
+	cobraCmd.Flags().StringSliceVar(&thisCmd.Disable, "disable", []string{}, T("Disable selected notifications"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *EditNotificationsCommand) Run(c *cli.Context) error {
+func (cmd *EditNotificationsCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	if c.IsSet("disable") && c.IsSet("enable") {
+	if len(cmd.Disable) != 0 && len(cmd.Enable) != 0 {
 		return slErr.NewInvalidUsageError(T("Only set --enable or --disable options."))
 	}
 
-	if c.IsSet("disable") && c.NArg() > 0 {
+	if len(cmd.Disable) != 0 && len(args) > 0 {
 		return slErr.NewInvalidUsageError(T("Only set --enable or --disable options."))
 	}
 
-	if !c.IsSet("disable") && !c.IsSet("enable") && (c.NArg() == 0) {
+	if len(cmd.Disable) == 0 && len(cmd.Enable) == 0 && (len(args) == 0) {
 		return slErr.NewInvalidUsageError(T("This command requires notification names as arguments and options flags."))
 	}
 
@@ -50,21 +68,21 @@ func (cmd *EditNotificationsCommand) Run(c *cli.Context) error {
 
 	allNotifications, err := cmd.UserManager.GetAllNotifications("mask[id,name]")
 	if err != nil {
-		return cli.NewExitError(T("Failed to update notifications: "+printNotifications(notificationsInput)+"\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to update notifications: "+printNotifications(notificationsInput)+"\n"), err.Error(), 2)
 	}
 
-	if c.IsSet("disable") {
-		notificationsInput = c.StringSlice("disable")
+	if len(cmd.Disable) != 0 {
+		notificationsInput = cmd.Disable
 		succesNotifications, failedNotifications = setNotifications(cmd, "disable", notificationsInput, allNotifications)
 	}
 
-	if c.IsSet("enable") {
-		notificationsInput = c.StringSlice("enable")
+	if len(cmd.Enable) != 0 {
+		notificationsInput = cmd.Enable
 		succesNotifications, failedNotifications = setNotifications(cmd, "enable", notificationsInput, allNotifications)
 	}
 
-	if !c.IsSet("disable") && !c.IsSet("enable") {
-		notificationsInput = append(notificationsInput, c.Args()...)
+	if len(cmd.Disable) == 0 && len(cmd.Disable) == 0 {
+		notificationsInput = append(notificationsInput, args...)
 		succesNotifications, failedNotifications = setNotifications(cmd, "enable", notificationsInput, allNotifications)
 	}
 
@@ -119,28 +137,4 @@ func setNotifications(cmd *EditNotificationsCommand, action string, notification
 		}
 	}
 	return succesNotifications, failedNotifications
-}
-
-func UserEditNotificationsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "user",
-		Name:        "edit-notifications",
-		Description: T("Enable or Disable specific notifications for the active user."),
-		Usage: T(`${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS
-
-		Notification names should be enclosed in quotation marks. Examples:
-			slcli user edit-notifications --enable 'Order Approved'
-			slcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'`),
-		Flags: []cli.Flag{
-			cli.StringSliceFlag{
-				Name:  "enable",
-				Usage: T("Enable (DEFAULT) selected notifications"),
-			},
-			cli.StringSliceFlag{
-				Name:  "disable",
-				Usage: T("Disable selected notifications"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

@@ -6,30 +6,40 @@ import (
 
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type DeleteCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	ImageManager managers.ImageManager
+	Command      *cobra.Command
 }
 
-func NewDeleteCommand(ui terminal.UI, imageManager managers.ImageManager) (cmd *DeleteCommand) {
-	return &DeleteCommand{
-		UI:           ui,
-		ImageManager: imageManager,
+func NewDeleteCommand(sl *metadata.SoftlayerCommand) (cmd *DeleteCommand) {
+	thisCmd := &DeleteCommand{
+		SoftlayerCommand: sl,
+		ImageManager:     managers.NewImageManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "delete " + T("IDENTIFIER"),
+		Short: T("Delete an image "),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DeleteCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	imageID, err := strconv.Atoi(c.Args()[0])
+func (cmd *DeleteCommand) Run(args []string) error {
+	imageID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Image ID")
 	}
@@ -37,25 +47,12 @@ func (cmd *DeleteCommand) Run(c *cli.Context) error {
 	err = cmd.ImageManager.DeleteImage(imageID)
 	if err != nil {
 		if strings.Contains(err.Error(), slErrors.SL_EXP_OBJ_NOT_FOUND) {
-			return cli.NewExitError(T("Unable to find image with ID {{.ImageID}}.\n", map[string]interface{}{"ImageID": imageID})+err.Error(), 0)
+			return bmxErr.NewAPIError(T("Unable to find image with ID {{.ImageID}}.\n", map[string]interface{}{"ImageID": imageID}), err.Error(), 0)
 		}
-		return cli.NewExitError(T("Failed to delete image: {{.ImageID}}.\n", map[string]interface{}{"ImageID": imageID})+err.Error(), 2)
+		return bmxErr.NewAPIError(T("Failed to delete image: {{.ImageID}}.\n", map[string]interface{}{"ImageID": imageID}), err.Error(), 2)
 
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Image {{.ImageID}} was deleted.", map[string]interface{}{"ImageID": imageID}))
 	return nil
-}
-
-func ImageDelMetaData() cli.Command {
-	return cli.Command{
-		Category:    "image",
-		Name:        "delete",
-		Description: T("Delete an image "),
-		Usage: T(`${COMMAND_NAME} sl image delete IDENTIFIER
-
-EXAMPLE: 
-   ${COMMAND_NAME} sl image delete 12345678
-   This command deletes image with ID 12345678.`),
-	}
 }

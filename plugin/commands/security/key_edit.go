@@ -3,65 +3,59 @@ package security
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type KeyEditCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	SecurityManager managers.SecurityManager
+	Command         *cobra.Command
+	Label           string
+	Note            string
 }
 
-func NewKeyEditCommand(ui terminal.UI, securityManager managers.SecurityManager) (cmd *KeyEditCommand) {
-	return &KeyEditCommand{
-		UI:              ui,
-		SecurityManager: securityManager,
+func NewKeyEditCommand(sl *metadata.SoftlayerCommand) *KeyEditCommand {
+	thisCmd := &KeyEditCommand{
+		SoftlayerCommand: sl,
+		SecurityManager:  managers.NewSecurityManager(sl.Session),
 	}
-}
-
-func (cmd *KeyEditCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	keyID, err := strconv.Atoi(c.Args()[0])
-	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("SSH Key ID")
-	}
-	if !c.IsSet("label") && !c.IsSet("note") {
-		return errors.NewInvalidUsageError(T("either [--label] or [--note] must be specified to edit SSH key."))
-	}
-	err = cmd.SecurityManager.EditSSHKey(keyID, c.String("label"), c.String("note"))
-	if err != nil {
-		return cli.NewExitError(T("Failed to edit SSH key: {{.ID}}.\n", map[string]interface{}{"ID": keyID})+err.Error(), 2)
-	}
-	cmd.UI.Ok()
-	cmd.UI.Print(T("SSH key {{.ID}} was updated.", map[string]interface{}{"ID": keyID}))
-	return nil
-}
-
-func SecuritySSHKeyEditMetaData() cli.Command {
-	return cli.Command{
-		Category:    "security",
-		Name:        "sshkey-edit",
-		Description: T("Edit an SSH key"),
-		Usage: T(`${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "sshkey-edit " + T("IDENTIFIER"),
+		Short: T("Edit an SSH key"),
+		Long: T(`${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [OPTIONS]
 	
 EXAMPLE:
    ${COMMAND_NAME} sl security sshkey-edit 12345678 --label IBMCloud --note testing
    This command updates the SSH key with ID 12345678 and sets label to "IBMCloud" and note to "testing".`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "label",
-				Usage: T("The new label for the key"),
-			},
-			cli.StringFlag{
-				Name:  "note",
-				Usage: T("New notes for the key"),
-			},
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVar(&thisCmd.Label, "label", "", T("The new label for the key"))
+	cobraCmd.Flags().StringVar(&thisCmd.Note, "note", "", T("New notes for the key"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
+}
+
+func (cmd *KeyEditCommand) Run(args []string) error {
+	keyID, err := strconv.Atoi(args[0])
+	if err != nil {
+		return slErr.NewInvalidSoftlayerIdInputError("SSH Key ID")
+	}
+	if cmd.Label == "" && cmd.Note == "" {
+		return errors.NewInvalidUsageError(T("either [--label] or [--note] must be specified to edit SSH key."))
+	}
+	err = cmd.SecurityManager.EditSSHKey(keyID, cmd.Label, cmd.Note)
+	if err != nil {
+		return errors.NewAPIError(T("Failed to edit SSH key: {{.ID}}.\n", map[string]interface{}{"ID": keyID}), err.Error(), 2)
+	}
+	cmd.UI.Ok()
+	cmd.UI.Print(T("SSH key {{.ID}} was updated.", map[string]interface{}{"ID": keyID}))
+	return nil
 }

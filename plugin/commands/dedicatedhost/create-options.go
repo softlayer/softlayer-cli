@@ -3,9 +3,8 @@ package dedicatedhost
 import (
 	"sort"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,24 +13,45 @@ import (
 )
 
 type CreateOptionsCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	DedicatedHostManager managers.DedicatedHostManager
+	Command              *cobra.Command
+	Datacenter           string
+	Flavor               string
 }
 
-func NewCreateOptionsCommand(ui terminal.UI, dedicatedHostManager managers.DedicatedHostManager) (cmd *CreateOptionsCommand) {
-	return &CreateOptionsCommand{
-		UI:                   ui,
-		DedicatedHostManager: dedicatedHostManager,
+func NewCreateOptionsCommand(sl *metadata.SoftlayerCommand) *CreateOptionsCommand {
+	thisCmd := &CreateOptionsCommand{
+		SoftlayerCommand:     sl,
+		DedicatedHostManager: managers.NewDedicatedhostManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "create-options",
+		Short: T("Host order options for a given dedicated host."),
+		Long: T(`${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dedicatedhost create-options
+
+   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB"`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Filter private vlans by Datacenter shortname e.g. ams01, (requires --flavor)"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Flavor, "flavor", "f", "", T("Dedicated Virtual Host flavor (requires --datacenter) e.g. 56_CORES_X_242_RAM_X_1_4_TB"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
+func (cmd *CreateOptionsCommand) Run(args []string) error {
 	var productPackage datatypes.Product_Package
 	productPackage, err := cmd.DedicatedHostManager.GetPackage()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get product package for hardware server.")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get product package for hardware server."), err.Error(), 2)
 	}
-	if !c.IsSet("d") && !c.IsSet("f") {
+	if cmd.Datacenter == "" && cmd.Flavor == "" {
 		options := cmd.DedicatedHostManager.GetCreateOptions(productPackage)
 
 		//datacenters
@@ -62,12 +82,12 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 		flavorTable.Print()
 		cmd.UI.Print("")
 	} else {
-		if (c.IsSet("d") && !c.IsSet("f")) || (!c.IsSet("d") && c.IsSet("f")) {
+		if (cmd.Datacenter != "" && cmd.Flavor == "") || (cmd.Datacenter == "" && cmd.Flavor != "") {
 			return errors.NewMissingInputError("Both -d|--datacenter and -f|--flavor need to be passed as arguments e.g. ibmcloud sl dedicatedhost create-options -d ams01 -f 56_CORES_X_242_RAM_X_1_4_TB")
 		}
-		privateVlans, err := cmd.DedicatedHostManager.GetVlansOptions(c.String("d"), c.String("f"), productPackage)
+		privateVlans, err := cmd.DedicatedHostManager.GetVlansOptions(cmd.Datacenter, cmd.Flavor, productPackage)
 		if err != nil {
-			return cli.NewExitError(T("Failed to get the vlans available for datacener: {{.DATACENTER}} and flavor: {{.FLAVOR}}.", map[string]interface{}{"DATACENTER": c.String("d"), "FLAVOR": c.String("f")})+err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get the vlans available for datacener: {{.DATACENTER}} and flavor: {{.FLAVOR}}.", map[string]interface{}{"DATACENTER": cmd.Datacenter, "FLAVOR": cmd.Flavor}), err.Error(), 2)
 		}
 		table := cmd.UI.Table([]string{T("Id"), T("Name"), T("PrimaryRouter Hostname")})
 		for _, vlans := range privateVlans {
@@ -77,29 +97,4 @@ func (cmd *CreateOptionsCommand) Run(c *cli.Context) error {
 	}
 
 	return nil
-}
-
-func DedicatedhostCreateOptionsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dedicatedhost",
-		Name:        "create-options",
-		Description: T("Host order options for a given dedicated host."),
-		Usage: T(`${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl dedicatedhost create-options
-
-   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "d,datacenter",
-				Usage: T("Filter private vlans by Datacenter shortname e.g. ams01, (requires --flavor)"),
-			},
-			cli.StringFlag{
-				Name:  "f,flavor",
-				Usage: T("Dedicated Virtual Host flavor (requires --datacenter) e.g. 56_CORES_X_242_RAM_X_1_4_TB"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

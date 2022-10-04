@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -10,28 +10,38 @@ import (
 )
 
 type NotificationsCommand struct {
-	UI          terminal.UI
+	*metadata.SoftlayerCommand
 	UserManager managers.UserManager
+	Command     *cobra.Command
 }
 
-func NewNotificationsCommand(ui terminal.UI, userManager managers.UserManager) (cmd *NotificationsCommand) {
-	return &NotificationsCommand{
-		UI:          ui,
-		UserManager: userManager,
+func NewNotificationsCommand(sl *metadata.SoftlayerCommand) (cmd *NotificationsCommand) {
+	thisCmd := &NotificationsCommand{
+		SoftlayerCommand: sl,
+		UserManager:      managers.NewUserManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "notifications",
+		Short: T("List email subscription notifications"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *NotificationsCommand) Run(c *cli.Context) error {
+func (cmd *NotificationsCommand) Run(args []string) error {
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	mask := "mask[id, name,description,enabled]"
 	notifications, err := cmd.UserManager.GetAllNotifications(mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get notifications.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get notifications.\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -52,16 +62,4 @@ func (cmd *NotificationsCommand) Run(c *cli.Context) error {
 
 	table.Print()
 	return nil
-}
-
-func UserNotificationsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "user",
-		Name:        "notifications",
-		Description: T("List email subscription notifications"),
-		Usage:       "${COMMAND_NAME} sl user notifications [OPTIONS]",
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

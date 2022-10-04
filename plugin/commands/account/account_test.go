@@ -1,14 +1,13 @@
 package account_test
 
 import (
-	"reflect"
-
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 
 	"testing"
 )
@@ -19,65 +18,48 @@ func TestManagers(t *testing.T) {
 }
 
 var availableCommands = []string{
-	"account-bandwidth-pools",
-	"account-events",
-	"account-event-detail",
-	"account-invoices",
-	"account-invoice-detail",
-	"account-billing-items",
-	"account-cancel-item",
-	"account-item-detail",
-	"account-licenses",
-	"account-orders",
-	"account-summary",
-	"account-bandwidth-pools-detail",
+	"bandwidth-pools",
+	"bandwidth-pools-detail",
+	"billing-items",
+	"cancel-item",
+	"event-detail",
+	"events",
+	"invoice-detail",
+	"invoices",
+	"item-detail",
+	"licenses",
+	"orders",
+	"summary",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
 var _ = Describe("Test account.GetCommandActionBindings()", func() {
-	var (
-		context plugin.PluginContext
-	)
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
-	context = plugin.InitPluginContext("softlayer")
-	commands := account.GetCommandActionBindings(context, fakeUI, fakeSession)
+	slMeta := metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+	Context("New commands testable", func() {
+		commands := account.SetupCobraCommands(slMeta)
 
-	Context("Test Actions", func() {
-		for _, cmdName := range availableCommands {
-			//necessary to ensure the correct value is passed to the closure
-			cmdName := cmdName
-			It("ibmcloud sl "+cmdName, func() {
-				command, exists := commands[cmdName]
-				Expect(exists).To(BeTrue(), cmdName+" not found")
-				// Checks to make sure we actually have a function here.
-				// Test the actual function works in the specific commands test file.
-				Expect(reflect.ValueOf(command).Kind().String()).To(Equal("func"))
-				context := testhelpers.GetCliContext(cmdName)
-				err := command(context)
-				// some commands work without arguments
-				if err == nil {
-					Expect(err).NotTo(HaveOccurred())
-				} else {
-					Expect(err).To(HaveOccurred())
+		var arrayCommands = []string{}
+		for _, command := range commands.Commands() {
+			commandName := command.Name()
+			arrayCommands = append(arrayCommands, commandName)
+			It("available commands "+commands.Name(), func() {
+				available := false
+				if utils.StringInSlice(commandName, availableCommands) != -1 {
+					available = true
 				}
+				Expect(available).To(BeTrue(), commandName+" not found in array available Commands")
 			})
 		}
-	})
-
-	Context("New commands testable", func() {
-		for cmdName, _ := range commands {
-			//necessary to ensure the correct value is passed to the closure
-			cmdName := cmdName
-			It("availableCommands["+cmdName+"]", func() {
-				found := false
-				for _, value := range availableCommands {
-					if value == cmdName {
-						found = true
-						break
-					}
+		for _, command := range availableCommands {
+			commandName := command
+			It("ibmcloud sl "+commands.Name(), func() {
+				available := false
+				if utils.StringInSlice(commandName, arrayCommands) != -1 {
+					available = true
 				}
-				Expect(found).To(BeTrue(), cmdName+" needs to be added to availableCommands[] in account.go")
+				Expect(available).To(BeTrue(), commandName+" not found in ibmcloud sl "+commands.Name())
 			})
 		}
 	})
@@ -87,15 +69,6 @@ var _ = Describe("Test account.GetCommandActionBindings()", func() {
 			Expect(account.AccountNamespace().ParentName).To(ContainSubstring("sl"))
 			Expect(account.AccountNamespace().Name).To(ContainSubstring("account"))
 			Expect(account.AccountNamespace().Description).To(ContainSubstring("Classic infrastructure Account"))
-		})
-	})
-
-	Context("Account MetaData", func() {
-		It("Account MetaData", func() {
-			Expect(account.AccountMetaData().Category).To(ContainSubstring("sl"))
-			Expect(account.AccountMetaData().Name).To(ContainSubstring("account"))
-			Expect(account.AccountMetaData().Usage).To(ContainSubstring("${COMMAND_NAME} sl account"))
-			Expect(account.AccountMetaData().Description).To(ContainSubstring("Classic infrastructure Account"))
 		})
 	})
 })

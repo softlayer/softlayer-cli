@@ -3,8 +3,7 @@ package hardware
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -13,30 +12,43 @@ import (
 )
 
 type UpdateFirmwareCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
+	ForceFlag       bool
 }
 
-func NewUpdateFirmwareCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *UpdateFirmwareCommand) {
-	return &UpdateFirmwareCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewUpdateFirmwareCommand(sl *metadata.SoftlayerCommand) (cmd *UpdateFirmwareCommand) {
+	thisCmd := &UpdateFirmwareCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "update-firmware " + T("IDENTIFIER"),
+		Short: T("Update server firmware"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *UpdateFirmwareCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	hardwareId, err := strconv.Atoi(c.Args()[0])
+func (cmd *UpdateFirmwareCommand) Run(args []string) error {
+	hardwareId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Hardware server ID")
 	}
 
-	if !c.IsSet("f") && !c.IsSet("force") {
+	if !cmd.ForceFlag {
 		confirm, err := cmd.UI.Confirm(T("This will power off hardware server: {{.ID}} and update device firmware. Continue?", map[string]interface{}{"ID": hardwareId}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -46,21 +58,9 @@ func (cmd *UpdateFirmwareCommand) Run(c *cli.Context) error {
 
 	err = cmd.HardwareManager.UpdateFirmware(hardwareId, true, true, true, true)
 	if err != nil {
-		return cli.NewExitError(T("Failed to update firmware for hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to update firmware for hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Started to update firmware for hardware server: {{.ID}}.", map[string]interface{}{"ID": hardwareId}))
 	return nil
-}
-
-func HardwareUpdateFirmwareMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "update-firmware",
-		Description: T("Update server firmware"),
-		Usage:       "${COMMAND_NAME} sl hardware update-firmware IDENTIFIER [OPTIONS]",
-		Flags: []cli.Flag{
-			metadata.ForceFlag(),
-		},
-	}
 }

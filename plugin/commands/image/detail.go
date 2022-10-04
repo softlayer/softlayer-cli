@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -15,34 +14,41 @@ import (
 )
 
 type DetailCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	ImageManager managers.ImageManager
+	Command      *cobra.Command
 }
 
-func NewDetailCommand(ui terminal.UI, imageManager managers.ImageManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:           ui,
-		ImageManager: imageManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand: sl,
+		ImageManager:     managers.NewImageManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("IDENTIFIER"),
+		Short: T("Get details for an image"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	imageID, err := strconv.Atoi(c.Args()[0])
+func (cmd *DetailCommand) Run(args []string) error {
+	imageID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Image ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	image, err := cmd.ImageManager.GetImage(imageID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get image: {{.ImageID}}.\n", map[string]interface{}{"ImageID": imageID})+err.Error(), 2)
+		return bmxErr.NewAPIError(T("Failed to get image: {{.ImageID}}.\n", map[string]interface{}{"ImageID": imageID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -94,20 +100,4 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func ImageDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "image",
-		Name:        "detail",
-		Description: T("Get details for an image"),
-		Usage: T(`${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]
-
-EXAMPLE: 
-   ${COMMAND_NAME} sl image detail 12345678
-   This command gets details for image with ID 12345678.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

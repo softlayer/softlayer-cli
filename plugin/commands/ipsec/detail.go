@@ -6,7 +6,7 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -17,34 +17,56 @@ import (
 )
 
 type DetailCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	IPSECManager managers.IPSECManager
+	Command      *cobra.Command
+	Include      []string
 }
 
-func NewDetailCommand(ui terminal.UI, ipsecManager managers.IPSECManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:           ui,
-		IPSECManager: ipsecManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand: sl,
+		IPSECManager:     managers.NewIPSECManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("CONTEXT_ID"),
+		Short: T("List IPSec VPN tunnel context details"),
+		Long: T(`${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]
+
+  List IPSEC VPN tunnel context details.
+
+  Additional resources can be joined using multiple instances of the include
+  option, for which the following choices are available.
+
+  at: address translations
+  is: internal subnets
+  rs: remote subnets
+  sr: statically routed subnets
+  ss: service subnets`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringSliceVarP(&thisCmd.Include, "include", "i", []string{}, T("Include extra resources. Options are: at,is,rs,sr,ss"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	args0 := c.Args()[0]
+func (cmd *DetailCommand) Run(args []string) error {
+	args0 := args[0]
 	contextId, err := strconv.Atoi(args0)
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Context ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	at, is, rs, sr, ss := false, false, false, false, false
-	includes := c.StringSlice("i")
+	includes := cmd.Include
 	if i := utils.StringInSlice("at", includes); i >= 0 {
 		at = true
 	}
@@ -63,7 +85,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 	mask := GetTunnelContextMask(at, is, rs, sr, ss)
 	context, err := cmd.IPSECManager.GetTunnelContext(contextId, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get IPSec with ID {{.ID}}.\n", map[string]interface{}{"ID": contextId})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get IPSec with ID {{.ID}}.\n", map[string]interface{}{"ID": contextId}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -198,31 +220,4 @@ func printAddressTransaltion(table terminal.Table, header string, translations [
 	}
 
 	return table
-}
-
-func IpsecDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "ipsec",
-		Name:        "detail",
-		Description: T("List IPSec VPN tunnel context details"),
-		Usage: T(`${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]
-
-  List IPSEC VPN tunnel context details.
-
-  Additional resources can be joined using multiple instances of the include
-  option, for which the following choices are available.
-
-  at: address translations
-  is: internal subnets
-  rs: remote subnets
-  sr: statically routed subnets
-  ss: service subnets`),
-		Flags: []cli.Flag{
-			cli.StringSliceFlag{
-				Name:  "i,include",
-				Usage: T("Include extra resources. Options are: at,is,rs,sr,ss"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

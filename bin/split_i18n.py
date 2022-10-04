@@ -19,21 +19,21 @@ from pprint import pprint as pp
 
 # returns JSON object as 
 # a dictionary
+base_path = './plugin/i18n/resources/'
+files = [
+'de_DE.all.json',
+'en_US.all.json',
+'es_ES.all.json',
+'fr_FR.all.json',
+'it_IT.all.json',
+'ja_JP.all.json',
+'ko_KR.all.json',
+'pt_BR.all.json',
+'zh_Hans.all.json',
+'zh_Hant.all.json',
+]
 
-# files = [
-# 'de_DE.all.json',
-# 'en_US.all.json',
-# 'es_ES.all.json',
-# 'fr_FR.all.json',
-# 'it_IT.all.json',
-# 'ja_JP.all.json',
-# 'ko_KR.all.json',
-# 'pt_BR.all.json',
-# 'zh_Hans.all.json',
-# 'zh_Hant.all.json',
-# ]
-
-files = ['en_US.all.json']
+# files = ['en_US.all.json']
 
 def prune_bad_matches(bad_dct, mixed_dct):
 
@@ -98,15 +98,19 @@ def cleanup_i18n_file(file_name, bad_file='bad.json', bad=True):
     f.close()
 
 
+# Add to only en_us
 
+cleanup_i18n_file(base_path + 'en_US.all.json', bad_file='./old-i18n/add_these.json', bad=False)
+
+# Remove from all files
 for i18n in files:
     # Removes everything not in en_US.all.json
     # cleanup_i18n_file('./plugin/i18n/resources/' + i18n, bad_file='en_US.all.json', bad=False)
 
     # cleans up github.ibm.com/bluemix/bluemix-cli
     # base_path = '/Users/allmi/go/src/github.ibm.com/Bluemix/bluemix-cli/bluemix/i18n/resources/'
-    base_path = './plugin/i18n/resources/'
+    
     # Remove these
     cleanup_i18n_file(base_path + i18n, bad_file='./old-i18n/remove_these.json')
     # Add these
-    cleanup_i18n_file(base_path + i18n, bad_file='./old-i18n/add_these.json', bad=False)
+

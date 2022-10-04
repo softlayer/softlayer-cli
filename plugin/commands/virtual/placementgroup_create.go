@@ -1,50 +1,65 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-type PlacementgroupCreateCommand struct {
-	UI                   terminal.UI
+type PlacementGroupCreateCommand struct {
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
-	Context              plugin.PluginContext
+	Command              *cobra.Command
+	Name                 string
+	BackendRouterId      int
+	RuleId               int
 }
 
-func NewVSPlacementGroupCreateCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager, context plugin.PluginContext) (cmd *PlacementgroupCreateCommand) {
-	return &PlacementgroupCreateCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
-		Context:              context,
+func NewPlacementGroupCreateCommand(sl *metadata.SoftlayerCommand) (cmd *PlacementGroupCreateCommand) {
+	thisCmd := &PlacementGroupCreateCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "placementgroup-create",
+		Short: T("Create a placement group"),
+		Long: T(`${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]
+EXAMPLE:
+${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 
+This command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369`),
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("Name for this new placement group. [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.BackendRouterId, "backend-router-id", "b", 0, T("Backend router ID. [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.RuleId, "rule-id", "r", 0, T("The ID of the rule to govern this placement group. [required]"))
+	return thisCmd
 }
 
-func (cmd *PlacementgroupCreateCommand) Run(c *cli.Context) error {
-	name := c.String("n")
+func (cmd *PlacementGroupCreateCommand) Run(args []string) error {
+	name := cmd.Name
 	if name == "" {
-		return errors.NewMissingInputError("-n, --name")
+		return slErrors.NewMissingInputError("-n, --name")
 
 	}
-	backendRouter := c.Int("b")
+	backendRouter := cmd.BackendRouterId
 	if backendRouter == 0 {
-		return errors.NewMissingInputError("-b, --backend-router-id")
+		return slErrors.NewMissingInputError("-b, --backend-router-id")
 	}
-	rule := c.Int("r")
+	rule := cmd.RuleId
 	if rule == 0 {
-		return errors.NewMissingInputError("-r, --rule-id")
+		return slErrors.NewMissingInputError("-r, --rule-id")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	placementObject := datatypes.Virtual_PlacementGroup{
 		Name:            &name,
@@ -53,7 +68,7 @@ func (cmd *PlacementgroupCreateCommand) Run(c *cli.Context) error {
 	}
 	result, err := cmd.VirtualServerManager.PlacementCreate(&placementObject)
 	if err != nil {
-		return cli.NewExitError(T("Failed to create placement group\n")+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to create placement group\n"), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -63,31 +78,4 @@ func (cmd *PlacementgroupCreateCommand) Run(c *cli.Context) error {
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Successfully created placement group: ID: {{.ID}}, Name: {{.Name}}.", map[string]interface{}{"ID": result.Id, "Name": result.Name}))
 	return nil
-}
-
-func VSPlacementGroupCreateMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "placementgroup-create",
-		Description: T("Create a placement group."),
-		Usage: T(`${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]
-EXAMPLE:
-${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 
-This command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "n,name",
-				Usage: T("Name for this new placement group. [required]"),
-			},
-			cli.IntFlag{
-				Name:  "b,backend-router-id",
-				Usage: T("Backend router ID. [required]"),
-			},
-			cli.IntFlag{
-				Name:  "r,rule-id",
-				Usage: T("The ID of the rule to govern this placement group. [required]"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

@@ -5,54 +5,69 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type L7PoolDetailCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	PoolId              int
 }
 
-func NewL7PoolDetailCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *L7PoolDetailCommand) {
-	return &L7PoolDetailCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewL7PoolDetailCommand(sl *metadata.SoftlayerCommand) *L7PoolDetailCommand {
+	thisCmd := &L7PoolDetailCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "l7pool-detail",
+		Short: T("Show L7 pool details"),
+		Long:  T("${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().IntVar(&thisCmd.PoolId, "pool-id", 0, T("ID for the load balancer pool [required]"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *L7PoolDetailCommand) Run(c *cli.Context) error {
-	l7PoolID := c.Int("pool-id")
+func (cmd *L7PoolDetailCommand) Run(args []string) error {
+	l7PoolID := cmd.PoolId
 	if l7PoolID == 0 {
 		return errors.NewMissingInputError("--pool-id")
 	}
 
 	l7pool, err := cmd.LoadBalancerManager.GetLoadBalancerL7Pool(l7PoolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
-			map[string]interface{}{"L7PoolID": l7PoolID, "Error": err.Error()}), 2)
+		return errors.New(T("Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
+			map[string]interface{}{"L7PoolID": l7PoolID, "Error": err.Error()}))
 	}
 
 	l7SessionAffinity, err := cmd.LoadBalancerManager.GetL7SessionAffinity(l7PoolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get L7 Pool Session Affinity: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get L7 Pool Session Affinity: {{.Error}}.\n",
+			map[string]interface{}{"Error": err.Error()}))
 	}
 
 	l7HealthMonitor, err := cmd.LoadBalancerManager.GetL7HealthMonitor(l7PoolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get L7 Health Monitor: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get L7 Health Monitor: {{.Error}}.\n",
+			map[string]interface{}{"Error": err.Error()}))
 	}
 
 	l7Members, err := cmd.LoadBalancerManager.ListL7Members(l7PoolID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get L7 Members: {{.Error}}.\n",
-			map[string]interface{}{"Error": err.Error()}), 2)
+		return errors.New(T("Failed to get L7 Members: {{.Error}}.\n",
+			map[string]interface{}{"Error": err.Error()}))
 	}
 
 	printL7Pool(l7pool, l7Members, l7HealthMonitor, l7SessionAffinity, cmd.UI)
@@ -118,19 +133,4 @@ func printL7Pool(l7pool datatypes.Network_LBaaS_L7Pool, l7Members []datatypes.Ne
 	table.Add("Members:", bufMember.String())
 
 	table.Print()
-}
-
-func LoadbalL7PoolDetailMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "l7pool-detail",
-		Description: T("Show L7 pool details"),
-		Usage:       "${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "pool-id",
-				Usage: T("ID for the load balancer pool [required]"),
-			},
-		},
-	}
 }

@@ -4,10 +4,7 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -16,63 +13,45 @@ import (
 )
 
 type ListGuestsCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	DedicatedHostManager managers.DedicatedHostManager
+	Command              *cobra.Command
+	Cpu                  int
+	Tag                  []string
+	Domain               string
+	Hostname             string
+	Memory               int
+	Sortby               string
+	Column               []string
 }
 
-func NewListGuestsCommand(ui terminal.UI, dedicatedHostManager managers.DedicatedHostManager) (cmd *ListGuestsCommand) {
-	return &ListGuestsCommand{
-		UI:                   ui,
-		DedicatedHostManager: dedicatedHostManager,
+func NewListGuestsCommand(sl *metadata.SoftlayerCommand) *ListGuestsCommand {
+	thisCmd := &ListGuestsCommand{
+		SoftlayerCommand:     sl,
+		DedicatedHostManager: managers.NewDedicatedhostManager(sl.Session),
 	}
-}
-
-func DedicatedhostListGuestsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dedicatedhost",
-		Name:        "list-guests",
-		Description: T("List Dedicated Host Guests."),
-		Usage: T(`${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "list-guests " + T("IDENTIFIER"),
+		Short: T("List Dedicated Host Guests."),
+		Long: T(`${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]
 
 EXAMPLE:
    ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567
    This command list all Dedicated Host guests in the Account.`),
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "c,cpu",
-				Usage: T("Filter by the number of CPU cores"),
-			},
-			cli.StringSliceFlag{
-				Name:  "t,tag",
-				Usage: T("Filter by tags"),
-			},
-			cli.StringFlag{
-				Name:  "d,domain",
-				Usage: T("Filter by domain portion of the FQDN"),
-			},
-			cli.StringFlag{
-				Name:  "H,hostname",
-				Usage: T("Filter by host portion of the FQDN"),
-			},
-			cli.IntFlag{
-				Name:  "m,memory",
-				Usage: T("Filter by Memory capacity in megabytes"),
-			},
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by, default:hostname"),
-			},
-			cli.StringSliceFlag{
-				Name:  "column",
-				Usage: T("Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]"),
-			},
-			cli.StringSliceFlag{
-				Name:   "columns",
-				Hidden: true,
-			},
-			metadata.OutputFlag(),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().IntVarP(&thisCmd.Cpu, "cpu", "c", 0, T("Filter by the number of CPU cores"))
+	cobraCmd.Flags().StringSliceVarP(&thisCmd.Tag, "tag", "t", []string{}, T("Filter by tags."))
+	cobraCmd.Flags().StringVarP(&thisCmd.Domain, "domain", "d", "", T("Filter by domain portion of the FQDN."))
+	cobraCmd.Flags().StringVarP(&thisCmd.Hostname, "hostname", "H", "", T("Filter by host portion of the FQDN."))
+	cobraCmd.Flags().IntVarP(&thisCmd.Memory, "memory", "m", 0, T("Filter by Memory capacity in megabytes."))
+	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "id", T("Column to sort by"))
+	cobraCmd.Flags().StringSliceVar(&thisCmd.Column, "column", []string{}, T("Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]."))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 var maskListMap = map[string]string{
@@ -93,45 +72,29 @@ var maskListMap = map[string]string{
 	"action":            "activeTransaction.transactionStatus.name",
 }
 
-func (cmd *ListGuestsCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	hostId, err := strconv.Atoi(c.Args()[0])
+func (cmd *ListGuestsCommand) Run(args []string) error {
+	hostId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Host ID")
 	}
-	sortby := c.String("sortby")
-	if sortby == "" {
-		sortby = "id"
-	}
-
-	var columns []string
-	if c.IsSet("column") {
-		columns = c.StringSlice("column")
-	} else if c.IsSet("columns") {
-		columns = c.StringSlice("columns")
-	}
+	sortby := cmd.Sortby
 
 	defaultColumns := []string{"id", "hostname", "domain", "cpu", "memory", "public_ip", "private_ip", "datacenter", "action"}
 	optionalColumns := []string{"guid", "power_state", "created_by", "tags"}
 	sortColumns := []string{"id", "hostname", "domain", "cpu", "memory", "public_ip", "private_ip", "datacenter"}
 
-	showColumns, err := utils.ValidateColumns(sortby, columns, defaultColumns, optionalColumns, sortColumns, c)
+	showColumns, err := utils.ValidateColumns2(sortby, cmd.Column, defaultColumns, optionalColumns, sortColumns)
 	if err != nil {
 		return err
 	}
 
 	mask := utils.GetMask(maskListMap, showColumns, sortby)
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	guests, err := cmd.DedicatedHostManager.ListGuests(hostId, c.Int("cpu"), c.String("domain"), c.String("hostname"), c.Int("memory"), c.StringSlice("tag"), mask)
+	guests, err := cmd.DedicatedHostManager.ListGuests(hostId, cmd.Cpu, cmd.Domain, cmd.Hostname, cmd.Memory, cmd.Tag, mask)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list the host guest on your account.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to list the host guest on your account."), err.Error(), 2)
 	}
 
 	if sortby == "" || sortby == "hostname" {
@@ -151,11 +114,7 @@ func (cmd *ListGuestsCommand) Run(c *cli.Context) error {
 	} else if sortby == "private_ip" {
 		sort.Sort(utils.VirtualGuestByBackendIp(guests))
 	} else {
-		return bmxErr.NewInvalidUsageError(T("--sortby '{{.Column}}' is not supported.", map[string]interface{}{"Column": sortby}))
-	}
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, guests)
+		return slErr.NewInvalidUsageError(T("--sortby '{{.Column}}' is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 
 	table := cmd.UI.Table(utils.GetColumnHeader(showColumns))
@@ -189,7 +148,7 @@ func (cmd *ListGuestsCommand) Run(c *cli.Context) error {
 		}
 		table.Add(row...)
 	}
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 
 	return nil
 }

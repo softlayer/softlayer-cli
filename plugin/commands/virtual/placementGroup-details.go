@@ -1,49 +1,52 @@
 package virtual
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	"strconv"
+
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
-	"strconv"
 )
 
 type PlacementGroupDetailsCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
 }
 
-func NewPlacementGroupDetailsCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *PlacementGroupDetailsCommand) {
-	return &PlacementGroupDetailsCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewPlacementGroupDetailsCommand(sl *metadata.SoftlayerCommand) (cmd *PlacementGroupDetailsCommand) {
+	thisCmd := &PlacementGroupDetailsCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "placementgroup-detail " + T("IDENTIFIER"),
+		Short: T("Get placement Group details."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *PlacementGroupDetailsCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return slErrors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	id, err := strconv.Atoi(c.Args()[0])
-	placement, err := cmd.VirtualServerManager.GetPlacementGroupDetail(id)
+func (cmd *PlacementGroupDetailsCommand) Run(args []string) error {
+
+	id, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Placement Group Virtual server ID")
 	}
+	placement, err := cmd.VirtualServerManager.GetPlacementGroupDetail(id)
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, placement)
-	}
+	outputFormat := cmd.GetOutputFlag()
+	table := cmd.UI.Table([]string{T("ID"), T("Name"), T("Backend Router"), T("Rule"), T("Guests"), T("Created")})
 
-	table := cmd.UI.Table([]string{T("ID"), T("Name"), T("Backend Router"),
-		T("Rule"), T("Guests"), T("Created")})
-
-	tableGuest := cmd.UI.Table([]string{T("ID"), T("FQDN"), T("Primary IP"),
-		T("Backend IP"),
-		T("CPU"), T("Memory"), T("Provisioned"), T("Transaction")})
+	tableGuest := cmd.UI.Table([]string{T("ID"), T("FQDN"), T("Primary IP"), T("Backend IP"), T("CPU"), T("Memory"),
+		T("Provisioned"), T("Transaction")})
 
 	var backendName string
 	if placement.BackendRouter == nil {
@@ -75,21 +78,7 @@ func (cmd *PlacementGroupDetailsCommand) Run(c *cli.Context) error {
 			utils.FormatSLTimePointer(guest.ProvisionDate),
 			transaction)
 	}
-	table.Print()
-	tableGuest.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
+	utils.PrintTable(cmd.UI, tableGuest, outputFormat)
 	return nil
-}
-
-func VSPlacementGroupDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "placementgroup-detail",
-		Description: T("Get placement Group details."),
-		Usage: T(`${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER
-EXAMPLE:
-   ${COMMAND_NAME} sl vs placementgroup-details 12345678
-    Get placement Group details with ID 12345678.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		}}
 }

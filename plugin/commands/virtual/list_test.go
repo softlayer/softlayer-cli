@@ -8,60 +8,53 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VS list", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.ListCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cmd           *virtual.ListCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = virtual.NewListCommand(fakeUI, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        virtual.VSListMetaData().Name,
-			Description: virtual.VSListMetaData().Description,
-			Usage:       virtual.VSListMetaData().Usage,
-			Flags:       virtual.VSListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
 
 	Describe("VS list", func() {
 		Context("VS list with wrong parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--hourly", "--monthly")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--hourly", "--monthly")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: '[--hourly]', '[--monthly]' are exclusive.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '[--hourly]', '[--monthly]' are exclusive."))
 			})
 		})
 
 		Context("VS list with wrong parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--column", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--column", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --column abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --column abc is not supported."))
 			})
 		})
 		Context("VS list with wrong parameters", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--columns", "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --columns abc is not supported.")).To(BeTrue())
-			})
-		})
-		Context("VS list with wrong parameters", func() {
-			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: --sortby abc is not supported.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --sortby abc is not supported."))
 			})
 		})
 
@@ -70,10 +63,10 @@ var _ = Describe("VS list", func() {
 				fakeVSManager.ListInstancesReturns([]datatypes.Virtual_Guest{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to list virtual server instances on your account.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to list virtual server instances on your account."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -107,60 +100,60 @@ var _ = Describe("VS list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "id")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "id")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "789")).To(BeTrue())
-				Expect(strings.Contains(results[2], "987")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("789"))
+				Expect(results[2]).To(ContainSubstring("987"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "hostname")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "hostname")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "abc-vs")).To(BeTrue())
-				Expect(strings.Contains(results[2], "vs-abc")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("abc-vs"))
+				Expect(results[2]).To(ContainSubstring("vs-abc"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "domain")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "domain")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "abc.com")).To(BeTrue())
-				Expect(strings.Contains(results[2], "wilma.com")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("abc.com"))
+				Expect(results[2]).To(ContainSubstring("wilma.com"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "datacenter")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "datacenter")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "dal10")).To(BeTrue())
-				Expect(strings.Contains(results[2], "tok02")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("dal10"))
+				Expect(results[2]).To(ContainSubstring("tok02"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "cpu")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "cpu")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "1")).To(BeTrue())
-				Expect(strings.Contains(results[2], "4")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("1"))
+				Expect(results[2]).To(ContainSubstring("4"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "memory")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "memory")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "1024")).To(BeTrue())
-				Expect(strings.Contains(results[2], "4096")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("1024"))
+				Expect(results[2]).To(ContainSubstring("4096"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "public_ip")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "public_ip")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "9.9.8.9")).To(BeTrue())
-				Expect(strings.Contains(results[2], "9.9.9.9")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("9.9.8.9"))
+				Expect(results[2]).To(ContainSubstring("9.9.9.9"))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--sortby", "private_ip")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "private_ip")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(strings.Contains(results[1], "1.1.1.0")).To(BeTrue())
-				Expect(strings.Contains(results[2], "1.1.1.1")).To(BeTrue())
+				Expect(results[1]).To(ContainSubstring("1.1.1.0"))
+				Expect(results[2]).To(ContainSubstring("1.1.1.1"))
 			})
 		})
 	})

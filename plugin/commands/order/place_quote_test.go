@@ -9,37 +9,33 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
-	"github.com/urfave/cli"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Place", func() {
 	var (
 		fakeUI           *terminal.FakeUI
-		cmd              *order.PlaceQuoteCommand
-		cliCommand       cli.Command
-		fakeSLSession    *session.Session
+		cliCommand       *order.PlaceQuoteCommand
+		fakeSession      *session.Session
+		slCommand        *metadata.SoftlayerCommand
 		OrderManager     managers.OrderManager
 		fakeOrderManager *testhelpers.FakeOrderManager
 	)
 	BeforeEach(func() {
 
 		filenames := []string{"getDatacenters_1"}
-		fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-		fakeOrderManager = new(testhelpers.FakeOrderManager)
-		OrderManager = managers.NewOrderManager(fakeSLSession)
 		fakeUI = terminal.NewFakeUI()
-		cmd = order.NewPlaceQuoteCommand(fakeUI, OrderManager, nil)
-		cliCommand = cli.Command{
-			Name:        order.OrderPlaceQuoteMetaData().Name,
-			Description: order.OrderPlaceQuoteMetaData().Description,
-			Usage:       order.OrderPlaceQuoteMetaData().Usage,
-			Flags:       order.OrderPlaceQuoteMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession(filenames)
+		OrderManager = managers.NewOrderManager(fakeSession)
+		fakeOrderManager = new(testhelpers.FakeOrderManager)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = order.NewPlaceQuoteCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.OrderManager = OrderManager
 	})
 	Describe("order place-quote", func() {
 		for k, _ := range order.TYPEMAP {
@@ -47,7 +43,8 @@ var _ = Describe("Place", func() {
 
 				k := k
 				It("return error", func() {
-					err := testhelpers.RunCommand(cliCommand, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type", k, "--name", "test", "--send-email")
+					fakeUI.Inputs("Y")
+					err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type", k, "--name", "test", "--send-email")
 					Expect(err).NotTo(HaveOccurred())
 					Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2523413"}))
 				})
@@ -62,7 +59,8 @@ var _ = Describe("Place", func() {
 
 				k := k
 				It("return in json format", func() {
-					err := testhelpers.RunCommand(cliCommand, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type", k, "--output=json")
+					fakeUI.Inputs("Y")
+					err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type", k, "--output=json")
 					Expect(err).NotTo(HaveOccurred())
 					Expect(fakeUI.Outputs()).To(ContainSubstring("2523413"))
 				})
@@ -77,7 +75,8 @@ var _ = Describe("Place", func() {
 
 				k := k
 				It("return error", func() {
-					err := testhelpers.RunCommand(cliCommand, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type", k)
+					fakeUI.Inputs("Y")
+					err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type", k)
 					Expect(err).NotTo(HaveOccurred())
 					Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2523413"}))
 				})
@@ -92,7 +91,7 @@ var _ = Describe("Place", func() {
 				fakeOrderManager.PlaceQuoteReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("This command requires three arguments."))
 			})
 			It("Arguments is not set", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("This command requires three arguments."))
 			})
@@ -103,7 +102,7 @@ var _ = Describe("Place", func() {
 				fakeOrderManager.PlaceQuoteReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Incorrect complex type:"))
 			})
 			It("Complex type is set with an invalid value", func() {
-				err := testhelpers.RunCommand(cliCommand, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type=invalid")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type=invalid")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect complex type:"))
 			})
@@ -114,7 +113,7 @@ var _ = Describe("Place", func() {
 				fakeOrderManager.PlaceQuoteReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("failed reading file"))
 			})
 			It("Extras is set with an invalid file", func() {
-				err := testhelpers.RunCommand(cliCommand, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--extras=@invalid", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--extras=@invalid", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("failed reading file"))
 			})
@@ -125,7 +124,7 @@ var _ = Describe("Place", func() {
 				fakeOrderManager.PlaceQuoteReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Unable to unmarshal extras json:"))
 			})
 			It("Extras is set with an invalid value", func() {
-				err := testhelpers.RunCommand(cliCommand, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--extras=invalid", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--extras=invalid", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Unable to unmarshal extras json:"))
 			})
@@ -136,7 +135,7 @@ var _ = Describe("Place", func() {
 				fakeOrderManager.PlaceQuoteReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Invalid output format, only JSON is supported now."))
 			})
 			It("Invalid output is set", func() {
-				err := testhelpers.RunCommand(cliCommand, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest", "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid output format, only JSON is supported now."))
 			})

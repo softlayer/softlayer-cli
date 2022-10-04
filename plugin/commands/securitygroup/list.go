@@ -4,8 +4,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,34 +13,47 @@ import (
 )
 
 type ListCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	Sortby         string
 }
 
-func NewListCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
+	thisCmd := &ListCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List security groups"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "", T("Column to sort by. Options are: id,name,description,created"))
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
+func (cmd *ListCommand) Run(args []string) error {
 	var sortby string
-	if c.IsSet("sortby") {
-		sortby = strings.ToLower(c.String("sortby"))
+	if cmd.Sortby != "" {
+		sortby = strings.ToLower(cmd.Sortby)
 		if sortby != "id" && sortby != "name" && sortby != "description" && sortby != "created" {
 			return errors.NewInvalidUsageError(T("Options for --sortby are: id,name,description,created"))
 		}
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	groups, err := cmd.NetworkManager.ListSecurityGroups()
 	if err != nil {
-		return cli.NewExitError(T("Failed to get security groups.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get security groups.\n"), err.Error(), 2)
 	}
 
 	if sortby == "" || sortby == "id" {
@@ -74,20 +86,4 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func SecurityGroupListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "securitygroup",
-		Name:        "list",
-		Description: T("List security groups"),
-		Usage:       "${COMMAND_NAME} sl securitygroup list [OPTIONS]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by. Options are: id,name,description,created"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

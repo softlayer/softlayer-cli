@@ -8,30 +8,29 @@ import (
 	. "github.com/onsi/gomega"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/firewall"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("firewall detail", func() {
 	var (
 		fakeUI              *terminal.FakeUI
-		fakeFirewallManager *testhelpers.FakeFirewallManager
-		cmd                 *firewall.DetailCommand
-		cliCommand          cli.Command
+		cliCommand          *firewall.DetailCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
+		FakeFirewallManager *testhelpers.FakeFirewallManager
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeFirewallManager = new(testhelpers.FakeFirewallManager)
-		cmd = firewall.NewDetailCommand(fakeUI, fakeFirewallManager)
-		cliCommand = cli.Command{
-			Name:        firewall.FirewallDetailMetaData().Name,
-			Description: firewall.FirewallDetailMetaData().Description,
-			Usage:       firewall.FirewallDetailMetaData().Usage,
-			Flags:       firewall.FirewallDetailMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = firewall.NewDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		FakeFirewallManager = new(testhelpers.FakeFirewallManager)
+		cliCommand.FirewallManager = FakeFirewallManager
 	})
 
 	Describe("firewall detail", func() {
@@ -39,13 +38,13 @@ var _ = Describe("firewall detail", func() {
 		Context("Return error", func() {
 
 			It("Set without ID", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("This command requires one argument"))
 			})
 
 			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "vs:123456", "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "vs:123456", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -53,11 +52,11 @@ var _ = Describe("firewall detail", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeFirewallManager.ParseFirewallIDReturns("", 0, errors.New("Failed to parse firewall ID"))
+				FakeFirewallManager.ParseFirewallIDReturns("", 0, errors.New("Failed to parse firewall ID"))
 			})
 
 			It("Set invalid ID", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to parse firewall ID"))
 			})
@@ -65,11 +64,11 @@ var _ = Describe("firewall detail", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeFirewallManager.ParseFirewallIDReturns("vlan", 123456, nil)
-				fakeFirewallManager.GetDedicatedFirewallRulesReturns([]datatypes.Network_Vlan_Firewall_Rule{}, errors.New("Failed to get dedicated firewall rules."))
+				FakeFirewallManager.ParseFirewallIDReturns("vlan", 123456, nil)
+				FakeFirewallManager.GetDedicatedFirewallRulesReturns([]datatypes.Network_Vlan_Firewall_Rule{}, errors.New("Failed to get dedicated firewall rules.\n"))
 			})
 			It("Failed get vlan firewall", func() {
-				err := testhelpers.RunCommand(cliCommand, "vlan:123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "vlan:123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get dedicated firewall rules."))
 			})
@@ -77,11 +76,11 @@ var _ = Describe("firewall detail", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeFirewallManager.ParseFirewallIDReturns("vs", 123456, nil)
-				fakeFirewallManager.GetStandardFirewallRulesReturns([]datatypes.Network_Component_Firewall_Rule{}, errors.New("Failed to get standard firewall rules."))
+				FakeFirewallManager.ParseFirewallIDReturns("vs", 123456, nil)
+				FakeFirewallManager.GetStandardFirewallRulesReturns([]datatypes.Network_Component_Firewall_Rule{}, errors.New("Failed to get standard firewall rules."))
 			})
 			It("Failed get standard firewall", func() {
-				err := testhelpers.RunCommand(cliCommand, "vs:123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "vs:123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get standard firewall rules."))
 			})
@@ -89,11 +88,11 @@ var _ = Describe("firewall detail", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeFirewallManager.ParseFirewallIDReturns("multiVlan", 123456, nil)
-				fakeFirewallManager.GetMultiVlanFirewallReturns(datatypes.Network_Vlan_Firewall{}, errors.New("Failed to get multi vlan firewall."))
+				FakeFirewallManager.ParseFirewallIDReturns("multiVlan", 123456, nil)
+				FakeFirewallManager.GetMultiVlanFirewallReturns(datatypes.Network_Vlan_Firewall{}, errors.New("Failed to get multi vlan firewall."))
 			})
 			It("Failed get standard firewall", func() {
-				err := testhelpers.RunCommand(cliCommand, "multiVlan:123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "multiVlan:123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get multi vlan firewall."))
 			})
@@ -101,7 +100,7 @@ var _ = Describe("firewall detail", func() {
 
 		Context("Return no error", func() {
 			BeforeEach(func() {
-				fakeFirewallManager.ParseFirewallIDReturns("vlan", 123456, nil)
+				FakeFirewallManager.ParseFirewallIDReturns("vlan", 123456, nil)
 				fakerRules := []datatypes.Network_Vlan_Firewall_Rule{
 					datatypes.Network_Vlan_Firewall_Rule{
 						OrderValue:                sl.Int(1),
@@ -115,11 +114,11 @@ var _ = Describe("firewall detail", func() {
 						DestinationIpSubnetMask:   sl.String("255.255.255.255"),
 					},
 				}
-				fakeFirewallManager.GetDedicatedFirewallRulesReturns(fakerRules, nil)
+				FakeFirewallManager.GetDedicatedFirewallRulesReturns(fakerRules, nil)
 			})
 
 			It("get dedicated firewalls rules", func() {
-				err := testhelpers.RunCommand(cliCommand, "vlan:123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "vlan:123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("permit"))
@@ -133,7 +132,7 @@ var _ = Describe("firewall detail", func() {
 
 		Context("Return no error", func() {
 			BeforeEach(func() {
-				fakeFirewallManager.ParseFirewallIDReturns("vs", 123456, nil)
+				FakeFirewallManager.ParseFirewallIDReturns("vs", 123456, nil)
 				fakerRules := []datatypes.Network_Component_Firewall_Rule{
 					datatypes.Network_Component_Firewall_Rule{
 						OrderValue:                sl.Int(1),
@@ -147,11 +146,11 @@ var _ = Describe("firewall detail", func() {
 						DestinationIpSubnetMask:   sl.String("255.255.255.255"),
 					},
 				}
-				fakeFirewallManager.GetStandardFirewallRulesReturns(fakerRules, nil)
+				FakeFirewallManager.GetStandardFirewallRulesReturns(fakerRules, nil)
 			})
 
 			It("get standard firewalls rules", func() {
-				err := testhelpers.RunCommand(cliCommand, "vs:123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "vs:123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("permit"))
@@ -165,7 +164,7 @@ var _ = Describe("firewall detail", func() {
 
 		Context("Return no error", func() {
 			BeforeEach(func() {
-				fakeFirewallManager.ParseFirewallIDReturns("multiVlan", 123456, nil)
+				FakeFirewallManager.ParseFirewallIDReturns("multiVlan", 123456, nil)
 				fakerMultiVlan := datatypes.Network_Vlan_Firewall{
 					NetworkGateway: &datatypes.Network_Gateway{
 						Name: sl.String("firewall1"),
@@ -207,11 +206,11 @@ var _ = Describe("firewall detail", func() {
 						},
 					},
 				}
-				fakeFirewallManager.GetMultiVlanFirewallReturns(fakerMultiVlan, nil)
+				FakeFirewallManager.GetMultiVlanFirewallReturns(fakerMultiVlan, nil)
 			})
 
 			It("get multi vlan with credentials", func() {
-				err := testhelpers.RunCommand(cliCommand, "multiVlan:123456", "--credentials")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "multiVlan:123456", "--credentials")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("firewall1"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1.1.1.1"))

@@ -2,60 +2,58 @@ package virtual_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VS cancel", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *virtual.CancelCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cmd           *virtual.CancelCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
-		cmd = virtual.NewCancelCommand(fakeUI, fakeVSManager)
-		cliCommand = cli.Command{
-			Name:        virtual.VSCancelMetaData().Name,
-			Description: virtual.VSCancelMetaData().Description,
-			Usage:       virtual.VSCancelMetaData().Usage,
-			Flags:       virtual.VSCancelMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = virtual.NewCancelCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.VirtualServerManager = fakeVSManager
 	})
 
 	Describe("VS cancel", func() {
 		Context("VS cancel without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("VS cancel with wrong VS ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Virtual server ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Virtual server ID'. It must be a positive integer."))
 			})
 		})
 
 		Context("VS cancel with correct VS ID but not continue", func() {
 			It("return no error", func() {
 				fakeUI.Inputs("No")
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"This will cancel the virtual server instance: 1234 and cannot be undone. Continue?"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Aborted."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("This will cancel the virtual server instance: 1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
 			})
 		})
 
@@ -64,10 +62,10 @@ var _ = Describe("VS cancel", func() {
 				fakeVSManager.CancelInstanceReturns(errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to cancel virtual server instance: 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to cancel virtual server instance: 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -76,19 +74,18 @@ var _ = Describe("VS cancel", func() {
 				fakeVSManager.CancelInstanceReturns(errors.New("SoftLayer_Exception_ObjectNotFound"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Unable to find virtual server instance with ID: 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "SoftLayer_Exception_ObjectNotFound")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Unable to find virtual server instance with ID: 1234."))
+				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ObjectNotFound"))
 			})
 		})
 
 		Context("VS cancel with correct VS ID and continue", func() {
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Virtual server instance: 1234 was cancelled."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Virtual server instance: 1234 was cancelled."))
 			})
 		})
 	})

@@ -1,8 +1,9 @@
 package loadbal
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"strconv"
+
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -10,27 +11,40 @@ import (
 )
 
 type CancelCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	Force               bool
 }
 
-func NewCancelCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *CancelCommand) {
-	return &CancelCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewCancelCommand(sl *metadata.SoftlayerCommand) *CancelCommand {
+	thisCmd := &CancelCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "cancel " + T("IDENTIFIER"),
+		Short: T("Cancel an existing load balancer"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CancelCommand) Run(c *cli.Context) error {
-	loadbalID := c.Int("id")
-	if loadbalID == 0 {
-		return errors.NewMissingInputError("--id")
+func (cmd *CancelCommand) Run(args []string) error {
+	loadbalID, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.NewInvalidSoftlayerIdInputError("LoadBalancer ID")
 	}
 
-	if !c.IsSet("f") {
+	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will cancel the load balancer: {{.LBID}} and cannot be undone. Continue?", map[string]interface{}{"LBID": loadbalID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Print(T("Aborted."))
@@ -40,30 +54,14 @@ func (cmd *CancelCommand) Run(c *cli.Context) error {
 
 	loadbalUUID, err := cmd.LoadBalancerManager.GetLoadBalancerUUID(loadbalID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}), 2)
+		return errors.New(T("Failed to get load balancer: {{.ERR}}.", map[string]interface{}{"ERR": err.Error()}))
 	}
 
 	_, err = cmd.LoadBalancerManager.CancelLoadBalancer(&loadbalUUID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to cancel load balancer {{.LBID}}.\n", map[string]interface{}{"LBID": loadbalID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to cancel load balancer {{.LBID}}.\n", map[string]interface{}{"LBID": loadbalID}), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	cmd.UI.Print(T("Load balancer {{.LBID}} is cancelled.", map[string]interface{}{"LBID": loadbalID}))
 	return nil
-}
-
-func LoadbalCancelMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "cancel",
-		Description: T("Cancel an existing load balancer"),
-		Usage:       "${COMMAND_NAME} sl loadbal cancel (--id LOADBAL_ID)",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "id",
-				Usage: T("ID for the load balancer [required]"),
-			},
-			metadata.ForceFlag(),
-		},
-	}
 }

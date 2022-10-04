@@ -7,8 +7,9 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/urfave/cli"
+	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -16,33 +17,31 @@ var _ = Describe("hardware reload", func() {
 	var (
 		fakeUI              *terminal.FakeUI
 		fakeHardwareManager *testhelpers.FakeHardwareServerManager
-		cmd                 *hardware.ReloadCommand
-		cliCommand          cli.Command
+		cliCommand          *hardware.ReloadCommand
+		fakeSession         *session.Session
+		slCommand           *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
-		cmd = hardware.NewReloadCommand(fakeUI, fakeHardwareManager)
-		cliCommand = cli.Command{
-			Name:        hardware.HardwareReloadMetaData().Name,
-			Description: hardware.HardwareReloadMetaData().Description,
-			Usage:       hardware.HardwareReloadMetaData().Usage,
-			Flags:       hardware.HardwareReloadMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = hardware.NewReloadCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.HardwareManager = fakeHardwareManager
 	})
 
 	Describe("hardware reload", func() {
 		Context("hardware reload without ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
 			})
 		})
 		Context("hardware reload with wrong ID", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Invalid input for 'Hardware server ID'. It must be a positive integer.")).To(BeTrue())
 			})
@@ -51,7 +50,7 @@ var _ = Describe("hardware reload", func() {
 		Context("hardware reload with correct ID but not continue", func() {
 			It("return no error", func() {
 				fakeUI.Inputs("No")
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("This will reload operating system for hardware server: 1234. Continue?"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
@@ -63,7 +62,7 @@ var _ = Describe("hardware reload", func() {
 				fakeHardwareManager.ReloadReturns(errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to reload operating system for hardware server: 1234.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -75,28 +74,28 @@ var _ = Describe("hardware reload", func() {
 				fakeHardwareManager.ReloadReturns(nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Started to reload operating system for hardware server: 1234"))
 			})
 			It("return no error", func() {
 				fakeUI.Inputs("Yes")
-				err := testhelpers.RunCommand(cliCommand, "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Started to reload operating system for hardware server: 1234"))
 			})
 			It("return no error", func() {
 				fakeUI.Inputs("Yes")
-				err := testhelpers.RunCommand(cliCommand, "1234", "-b")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-b")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Started to reload operating system for hardware server: 1234"))
 			})
 			It("return no error", func() {
 				fakeUI.Inputs("Yes")
-				err := testhelpers.RunCommand(cliCommand, "1234", "-w")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-w")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Started to reload operating system for hardware server: 1234"))

@@ -2,84 +2,78 @@ package vlan_test
 
 import (
 	"errors"
-	"fmt"
-	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VLAN create", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *vlan.CreateCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *vlan.CreateCommand
-		cliCommand         cli.Command
-		context            plugin.PluginContext
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = vlan.NewCreateCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		context = plugin.InitPluginContext("softlayer")
-		cmd = vlan.NewCreateCommand(fakeUI, fakeNetworkManager, context)
-		cliCommand = cli.Command{
-			Name:        vlan.VlanCreateMetaData().Name,
-			Description: vlan.VlanCreateMetaData().Description,
-			Usage:       vlan.VlanCreateMetaData().Usage,
-			Flags:       vlan.VlanCreateMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("VLAN create", func() {
 		Context("VLAN create with -r and -d", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-r", "router123", "-d", "dal09")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-r", "router123", "-d", "dal09")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-r|--router] is not allowed with [-d|--datacenter] or [-t|--vlan-type].")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl vlan options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-r|--router] is not allowed with [-d|--datacenter] or [-t|--vlan-type]."))
+				Expect(err.Error()).To(ContainSubstrings([]string{"sl vlan options' to check available options."}))
 			})
 		})
 
 		Context("VLAN create with -r and -t", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-r", "router123", "-t", "public")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-r", "router123", "-t", "public")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-r|--router] is not allowed with [-d|--datacenter] or [-t|--vlan-type].")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl vlan options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-r|--router] is not allowed with [-d|--datacenter] or [-t|--vlan-type]."))
+				Expect(err.Error()).To(ContainSubstrings([]string{"sl vlan options' to check available options."}))
 			})
 		})
 
 		Context("VLAN create with -t but no -d", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "public")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "public")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-d|--datacenter] and [-t|--vlan-type] are required.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl vlan options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-d|--datacenter] and [-t|--vlan-type] are required."))
+				Expect(err.Error()).To(ContainSubstrings([]string{"sl vlan options' to check available options."}))
 			})
 		})
 
 		Context("VLAN create with -d but no -t", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-d", "dal10")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "dal10")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: [-d|--datacenter] and [-t|--vlan-type] are required.")).To(BeTrue())
-				Expect(err.Error()).To(ContainSubstrings([]string{fmt.Sprintf("Run '%s sl vlan options' to check available options.", cmd.Context.CLIName())}))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-d|--datacenter] and [-t|--vlan-type] are required."))
+				Expect(err.Error()).To(ContainSubstrings([]string{"sl vlan options' to check available options."}))
 			})
 		})
 
 		Context("VLAN create with -d and -t but not continue", func() {
 			It("return no error", func() {
 				fakeUI.Inputs("No")
-				err := testhelpers.RunCommand(cliCommand, "-t", "public", "-d", "dal10")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "public", "-d", "dal10")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"This action will incur charges on your account. Continue?"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Aborted."}))
@@ -91,10 +85,10 @@ var _ = Describe("VLAN create", func() {
 				fakeNetworkManager.AddVlanReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "public", "-d", "dal10", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "public", "-d", "dal10", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to add VLAN.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to add VLAN."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -103,7 +97,7 @@ var _ = Describe("VLAN create", func() {
 				fakeNetworkManager.AddVlanReturns(datatypes.Container_Product_Order_Receipt{OrderId: sl.Int(12345678)}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "-t", "public", "-d", "dal10", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "-t", "public", "-d", "dal10", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The order 12345678 was placed."}))

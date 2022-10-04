@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/spf13/cobra"
+
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -17,39 +17,54 @@ import (
 )
 
 type DetailCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
+	Passwords            bool
+	Price                bool
 }
 
-func NewDetailCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("IDENTIFIER"),
+		Short: T("Get details for a virtual server instance"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	cobraCmd.Flags().BoolVar(&thisCmd.Passwords, "passwords", false, T("Show passwords (check over your shoulder!)"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Price, "price", false, T("Show associated prices"))
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError("This command requires one argument.")
-	}
-	vsID, err := utils.ResolveVirtualGuestId(c.Args()[0])
+func (cmd *DetailCommand) Run(args []string) error {
+
+	vsID, err := utils.ResolveVirtualGuestId(args[0])
 	if err != nil {
 		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	virtualGuest, err := cmd.VirtualServerManager.GetInstance(vsID, managers.INSTANCE_DETAIL_MASK)
+	subs := map[string]interface{}{
+		"VsID":   vsID,
+		"ID":     vsID,
+		"HostID": 0,
+	}
 	if err != nil {
-		return cli.NewExitError(T("Failed to get virtual server instance: {{.VsID}}.\n", map[string]interface{}{"VsID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get virtual server instance: {{.VsID}}.\n", subs), err.Error(), 2)
 	}
 
 	localDisks, err := cmd.VirtualServerManager.GetLocalDisks(vsID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the local disks detail for the virtual server {{.ID}}.\n", map[string]interface{}{"ID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get the local disks detail for the virtual server {{.ID}}.\n", subs), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -61,8 +76,8 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		hostId := *virtualGuest.DedicatedHost.Id
 		host, err = cmd.VirtualServerManager.GetDedicatedHost(hostId)
 		if err != nil {
-			return cli.NewExitError(T("Failed to get virtual server {{.VsID}} dedicated host: {{.HostID}}.\n",
-				map[string]interface{}{"VsID": vsID, "HostID": hostId})+err.Error(), 2)
+			subs["HostID"] = hostId
+			return slErrors.NewAPIError(T("Failed to get virtual server {{.VsID}} dedicated host: {{.HostID}}.\n", subs), err.Error(), 2)
 		}
 	}
 
@@ -213,7 +228,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		table.Add(T("dedicated host"), buf.String())
 	}
 
-	if c.IsSet("passwords") {
+	if cmd.Passwords {
 		if virtualGuest.OperatingSystem != nil && virtualGuest.OperatingSystem.Passwords != nil {
 			buf := new(bytes.Buffer)
 			userTable := terminal.NewTable(buf, []string{T("software"), T("username"), T("password")})
@@ -229,7 +244,7 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 		}
 	}
 
-	if c.IsSet("price") {
+	if cmd.Price {
 		var sum datatypes.Float64
 		if virtualGuest.BillingItem != nil && virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount != nil {
 			sum = *virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
@@ -247,28 +262,4 @@ func (cmd *DetailCommand) Run(c *cli.Context) error {
 
 	table.Print()
 	return nil
-}
-
-func VSDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "detail",
-		Description: T("Get details for a virtual server instance"),
-		Usage: T(`${COMMAND_NAME} sl vs detail IDENTIFIER [OPTIONS] 
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vs details 12345678
-   This command lists detailed information about virtual server instance with ID 12345678.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "passwords",
-				Usage: T("Show passwords (check over your shoulder!)"),
-			},
-			cli.BoolFlag{
-				Name:  "price",
-				Usage: T("Show associated prices"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

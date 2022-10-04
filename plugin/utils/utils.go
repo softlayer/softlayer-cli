@@ -18,7 +18,7 @@ import (
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
@@ -255,15 +255,14 @@ func ReplaceUIntPointerValue(value *uint, newValue string) string {
 	return EMPTY_VALUE
 }
 
-func ValidateColumns(sortby string, columns []string, defaultColumns []string, optionalColumns, sortColumns []string, context *cli.Context) ([]string, error) {
+
+// TODO: Once refactor is done, remove ValidateColumns and rename ValidateColumns2 to it.
+func ValidateColumns2(sortby string, columns []string, defaultColumns []string, optionalColumns, sortColumns []string) ([]string, error) {
 	if sortby != EMPTY_STRING && StringInSlice(sortby, sortColumns) == -1 {
 		return nil, bmxErr.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 	allColumns := append(defaultColumns, optionalColumns...)
 	if exist, index := SliceInSlice(columns, allColumns); len(columns) > 0 && exist == false {
-		if context.IsSet("columns") {
-			return nil, bmxErr.NewInvalidUsageError(T("--columns {{.Column}} is not supported.", map[string]interface{}{"Column": columns[index]}))
-		}
 		return nil, bmxErr.NewInvalidUsageError(T("--column {{.Column}} is not supported.", map[string]interface{}{"Column": columns[index]}))
 	}
 
@@ -300,7 +299,7 @@ func FailWithError(message string, ui terminal.UI) error {
 	ui.Print(terminal.FailureColor(T("FAILED")))
 	msg := fmt.Sprintf("%s\n", message)
 	ui.Print(msg)
-	return cli.NewExitError(EMPTY_STRING, 1)
+	return errors.New(EMPTY_STRING)
 }
 
 func StructToMap(struc Access) (map[string]string, error) {

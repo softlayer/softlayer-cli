@@ -4,9 +4,8 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -15,57 +14,52 @@ import (
 )
 
 type SnapshotListCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
 	StorageManager managers.StorageManager
+	SortBy         string
 }
 
-func NewSnapshotListCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *SnapshotListCommand) {
-	return &SnapshotListCommand{
-		UI:             ui,
-		StorageManager: storageManager,
+func NewSnapshotListCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotListCommand {
+	thisCmd := &SnapshotListCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-}
-
-func BlockSnapshotListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "snapshot-list",
-		Description: T("List block storage snapshots"),
-		Usage: T(`${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]
+	cobraCmd := &cobra.Command{
+		Use:   "snapshot-list " + T("IDENTIFIER"),
+		Short: T("List block storage snapshots"),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]
 
 EXAMPLE:
-   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id 
-   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "sortby",
-				Usage: T("Column to sort by. Options are: id,name,created,size_bytes"),
-			},
-			metadata.OutputFlag(),
+   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id 
+   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.`, sl.StorageI18n),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().StringVar(&thisCmd.SortBy, "sortby", "", T("Column to sort by. Options are: id,name,created,size_bytes"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *SnapshotListCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+func (cmd *SnapshotListCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	snapshots, err := cmd.StorageManager.GetVolumeSnapshotList(volumeID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get snapshot list on your account.\n")+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get snapshot list on your account.\n"), err.Error(), 2)
 	}
-	sortby := c.String("sortby")
-	if sortby == "id" || sortby == "ID" {
+	sortby := cmd.SortBy
+	if sortby == "" {
+		// do nothing
+	} else if sortby == "id" || sortby == "ID" {
 		sort.Sort(utils.SnapshotsById(snapshots))
 	} else if sortby == "name" {
 		sort.Sort(utils.SnapshotsByName(snapshots))
@@ -73,10 +67,8 @@ func (cmd *SnapshotListCommand) Run(c *cli.Context) error {
 		sort.Sort(utils.SnapshotsByCreated(snapshots))
 	} else if sortby == "size_bytes" {
 		sort.Sort(utils.SnapshotsBySize(snapshots))
-	} else if sortby == "" {
-		//do nothing
 	} else {
-		return errors.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
+		return slErr.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 
 	if outputFormat == "JSON" {

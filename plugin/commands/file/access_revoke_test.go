@@ -2,55 +2,54 @@ package file_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("Access Revoke", func() {
+var _ = Describe("Access Authorize", func() {
 	var (
 		fakeUI             *terminal.FakeUI
+		cliCommand         *file.AccessRevokeCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 		FakeStorageManager *testhelpers.FakeStorageManager
 		fakeNetworkManager *testhelpers.FakeNetworkManager
-		cmd                *file.AccessRevokeCommand
-		cliCommand         cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		FakeStorageManager = new(testhelpers.FakeStorageManager)
 		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cmd = file.NewAccessRevokeCommand(fakeUI, FakeStorageManager, fakeNetworkManager)
-		cliCommand = cli.Command{
-			Name:        file.FileAccessRevokeMetaData().Name,
-			Description: file.FileAccessRevokeMetaData().Description,
-			Usage:       file.FileAccessRevokeMetaData().Usage,
-			Flags:       file.FileAccessRevokeMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "file")
+		cliCommand = file.NewAccessRevokeCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
+		cliCommand.NetworkManager = fakeNetworkManager
 	})
 
 	Describe("Access Revoke", func() {
 		Context("Access revoke without volume id", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Access revoke with wrong volume id", func() {
 			It("error resolving volume ID", func() {
-				err := testhelpers.RunCommand(cliCommand, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Volume ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 
@@ -59,7 +58,7 @@ var _ = Describe("Access Revoke", func() {
 				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--virtual-id", "5678")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--virtual-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Access to 1234 was revoked for virtual server 5678"}))
@@ -71,7 +70,7 @@ var _ = Describe("Access Revoke", func() {
 				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--hardware-id", "5678")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--hardware-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Access to 1234 was revoked for hardware server 5678."}))
@@ -83,7 +82,7 @@ var _ = Describe("Access Revoke", func() {
 				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--ip-address-id", "5678")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--ip-address-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Access to 1234 was revoked for IP address 5678."}))
@@ -95,10 +94,9 @@ var _ = Describe("Access Revoke", func() {
 				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "-s", "5678")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "5678")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Access to 1234 was revoked for subnet 5678."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for subnet 5678."))
 			})
 		})
 
@@ -108,7 +106,7 @@ var _ = Describe("Access Revoke", func() {
 				fakeNetworkManager.IPLookupReturns(datatypes.Network_Subnet_IpAddress{Id: sl.Int(5678)}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--ip-address", "1.2.3.4")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--ip-address", "1.2.3.4")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Access to 1234 was revoked for IP address 5678."}))
@@ -121,11 +119,11 @@ var _ = Describe("Access Revoke", func() {
 				fakeNetworkManager.IPLookupReturns(datatypes.Network_Subnet_IpAddress{}, errors.New("Not Found"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--ip-address", "1.2.3.4")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--ip-address", "1.2.3.4")
 				Expect(err).To(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"OK"}))
-				Expect(strings.Contains(err.Error(), "IP address 1.2.3.4 is not found on your account.Please confirm IP and try again.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Not Found")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("IP address 1.2.3.4 is not found on your account.Please confirm IP and try again."))
+				Expect(err.Error()).To(ContainSubstring("Not Found"))
 			})
 		})
 
@@ -134,11 +132,11 @@ var _ = Describe("Access Revoke", func() {
 				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "1234", "--virtual-id", "5678")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--virtual-id", "5678")
 				Expect(err).To(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"OK"}))
-				Expect(strings.Contains(err.Error(), "Failed to revoke access to volume 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to revoke access to volume 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 	})

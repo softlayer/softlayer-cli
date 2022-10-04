@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -14,35 +14,41 @@ import (
 )
 
 type QuoteDetailCommand struct {
-	UI           terminal.UI
+	*metadata.SoftlayerCommand
 	OrderManager managers.OrderManager
+	Command      *cobra.Command
 }
 
-func NewQuoteDetailCommand(ui terminal.UI, orderManager managers.OrderManager) (cmd *QuoteDetailCommand) {
-	return &QuoteDetailCommand{
-		UI:           ui,
-		OrderManager: orderManager,
+func NewQuoteDetailCommand(sl *metadata.SoftlayerCommand) (cmd *QuoteDetailCommand) {
+	thisCmd := &QuoteDetailCommand{
+		SoftlayerCommand: sl,
+		OrderManager:     managers.NewOrderManager(sl.Session),
 	}
+
+	cobraCmd := &cobra.Command{
+		Use:   "quote-detail " + T("IDENTIFIER"),
+		Short: T("View a quote"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *QuoteDetailCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
+func (cmd *QuoteDetailCommand) Run(args []string) error {
+	outputFormat := cmd.GetOutputFlag()
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
-
-	quoteId, err := strconv.Atoi(c.Args()[0])
+	quoteId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return errors.NewInvalidSoftlayerIdInputError("Quote ID")
 	}
 
 	quote, err := cmd.OrderManager.GetQuote(quoteId, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get Quote.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Quote\n"), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -66,19 +72,4 @@ func (cmd *QuoteDetailCommand) Run(c *cli.Context) error {
 
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func OrderQuoteDetailMetaData() cli.Command {
-	return cli.Command{
-		Category:    "order",
-		Name:        "quote-detail",
-		Description: T("View a quote"),
-		Usage: T(`${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]
-
-EXAMPLE: 
-	${COMMAND_NAME} sl order quote-detail 123456`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

@@ -3,8 +3,7 @@ package hardware
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -14,34 +13,42 @@ import (
 )
 
 type CredentialsCommand struct {
-	UI              terminal.UI
+	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	Command         *cobra.Command
 }
 
-func NewCredentialsCommand(ui terminal.UI, hardwareManager managers.HardwareServerManager) (cmd *CredentialsCommand) {
-	return &CredentialsCommand{
-		UI:              ui,
-		HardwareManager: hardwareManager,
+func NewCredentialsCommand(sl *metadata.SoftlayerCommand) (cmd *CredentialsCommand) {
+	thisCmd := &CredentialsCommand{
+		SoftlayerCommand: sl,
+		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
+
+
+	cobraCmd := &cobra.Command{
+		Use:   "credentials " + T("IDENTIFIER"),
+		Short: T("List hardware server credentials"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *CredentialsCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	hardwareID, err := strconv.Atoi(c.Args()[0])
+func (cmd *CredentialsCommand) Run(args []string) error {
+	hardwareID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Hardware server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	hardware, err := cmd.HardwareManager.GetHardware(hardwareID, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -61,17 +68,5 @@ func (cmd *CredentialsCommand) Run(c *cli.Context) error {
 		table.Print()
 		return nil
 	}
-	return cli.NewExitError(T("Failed to find credentials of hardware server {{.ID}}.", map[string]interface{}{"ID": hardwareID}), 2)
-}
-
-func HardwareCredentialsMetaData() cli.Command {
-	return cli.Command{
-		Category:    "hardware",
-		Name:        "credentials",
-		Description: T("List hardware server credentials"),
-		Usage:       "${COMMAND_NAME} sl hardware credentials IDENTIFIER",
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
+	return errors.NewInvalidUsageError(T("Failed to find credentials of hardware server {{.ID}}.", map[string]interface{}{"ID": hardwareID}))
 }

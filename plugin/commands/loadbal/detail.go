@@ -3,38 +3,50 @@ package loadbal
 import (
 	"bytes"
 	"fmt"
+	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type DetailCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
 }
 
-func NewDetailCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *DetailCommand) {
-	return &DetailCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
+	thisCmd := &DetailCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "detail " + T("IDENTIFIER"),
+		Short: T("Get load balancer details"),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *DetailCommand) Run(c *cli.Context) error {
-	loadbalID := c.Int("id")
-	if loadbalID == 0 {
-		return errors.NewMissingInputError("--id")
+func (cmd *DetailCommand) Run(args []string) error {
+	loadbalID, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.NewInvalidSoftlayerIdInputError("LoadBalancer ID")
 	}
-
 	loadbal, err := cmd.LoadBalancerManager.GetLoadBalancer(loadbalID, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get load balancer with ID {{.LoadbalID}}.\n",
-			map[string]interface{}{"LoadbalID": loadbalID})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get load balancer with ID {{.LoadbalID}}.\n",
+			map[string]interface{}{"LoadbalID": loadbalID}), err.Error(), 2)
 	}
 	PrintLoadbalancer(loadbal, cmd.UI)
 	return nil
@@ -192,19 +204,4 @@ func PrintLoadbalancer(loadbal datatypes.Network_LBaaS_LoadBalancer, ui terminal
 	}
 
 	table.Print()
-}
-
-func LoadbalDetailMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "detail",
-		Description: T("Get load balancer details"),
-		Usage:       "${COMMAND_NAME} sl loadbal detail (--id LOADBAL_ID)",
-		Flags: []cli.Flag{
-			cli.IntFlag{
-				Name:  "id",
-				Usage: T("ID for the load balancer [required]"),
-			},
-		},
-	}
 }

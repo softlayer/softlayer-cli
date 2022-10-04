@@ -8,31 +8,31 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Load balancer edit policies", func() {
 	var (
 		fakeUI        *terminal.FakeUI
+		cliCommand    *loadbal.L7PoolDetailCommand
+		fakeSession   *session.Session
+		slCommand     *metadata.SoftlayerCommand
 		fakeLBManager *testhelpers.FakeLoadBalancerManager
-		cmd           *loadbal.L7PoolDetailCommand
-		cliCommand    cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = loadbal.NewL7PoolDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		fakeLBManager = new(testhelpers.FakeLoadBalancerManager)
-		cmd = loadbal.NewL7PoolDetailCommand(fakeUI, fakeLBManager)
-		cliCommand = cli.Command{
-			Name:        loadbal.LoadbalL7PoolDetailMetadata().Name,
-			Description: loadbal.LoadbalL7PoolDetailMetadata().Description,
-			Usage:       loadbal.LoadbalL7PoolDetailMetadata().Usage,
-			Flags:       loadbal.LoadbalL7PoolDetailMetadata().Flags,
-			Action:      cmd.Run,
-		}
+		cliCommand.LoadBalancerManager = fakeLBManager
+
 		modifyDateTest, _ := time.Parse(time.RFC3339, "2022-02-01T00:00:00Z")
 		fakeLBManager.GetLoadBalancerL7PoolReturns(datatypes.Network_LBaaS_L7Pool{
 			Name:                   sl.String("Name"),
@@ -68,7 +68,7 @@ var _ = Describe("Load balancer edit policies", func() {
 	Describe("l7 pool detail", func() {
 		Context("l7 pool detail, missing arguments error", func() {
 			It("--pool-id is required", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--pool-id' is required"))
 			})
@@ -76,7 +76,7 @@ var _ = Describe("Load balancer edit policies", func() {
 
 		Context("l7 pool deleted", func() {
 			It("with all attributes", func() {
-				err := testhelpers.RunCommand(cliCommand, "--pool-id", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool-id", "123")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Name                 Value"))
@@ -97,28 +97,28 @@ var _ = Describe("Load balancer edit policies", func() {
 			It("failed to get the detail to l7pool", func() {
 				fakeUI.Inputs("yes")
 				fakeLBManager.GetLoadBalancerL7PoolReturns(datatypes.Network_LBaaS_L7Pool{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "--pool-id", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool-id", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get L7 Pool 123: Internal server error."))
 			})
 			It("Failed to get L7 Pool Session Affinity", func() {
 				fakeUI.Inputs("yes")
 				fakeLBManager.GetL7SessionAffinityReturns(datatypes.Network_LBaaS_L7SessionAffinity{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "--pool-id", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool-id", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get L7 Pool Session Affinity: Internal server error."))
 			})
 			It("Failed to get L7 Health Monitor", func() {
 				fakeUI.Inputs("yes")
 				fakeLBManager.GetL7HealthMonitorReturns(datatypes.Network_LBaaS_L7HealthMonitor{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "--pool-id", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool-id", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get L7 Health Monitor: Internal server error."))
 			})
 			It("Failed to get L7 Members", func() {
 				fakeUI.Inputs("yes")
 				fakeLBManager.ListL7MembersReturns([]datatypes.Network_LBaaS_L7Member{}, errors.New("Internal server error"))
-				err := testhelpers.RunCommand(cliCommand, "--pool-id", "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--pool-id", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get L7 Members: Internal server error."))
 			})

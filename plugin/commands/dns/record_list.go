@@ -3,8 +3,7 @@ package dns
 import (
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,35 +12,53 @@ import (
 )
 
 type RecordListCommand struct {
-	UI         terminal.UI
+	*metadata.SoftlayerCommand
 	DNSManager managers.DNSManager
+	Command    *cobra.Command
+	Data       string
+	Record     string
+	Ttl        int
+	Type       string
 }
 
-func NewRecordListCommand(ui terminal.UI, dnsManager managers.DNSManager) (cmd *RecordListCommand) {
-	return &RecordListCommand{
-		UI:         ui,
-		DNSManager: dnsManager,
+func NewRecordListCommand(sl *metadata.SoftlayerCommand) *RecordListCommand {
+	thisCmd := &RecordListCommand{
+		SoftlayerCommand: sl,
+		DNSManager:       managers.NewDNSManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "record-list " + T("ZONE"),
+		Short: T("List all the resource records in a zone"),
+		Long: T(`${COMMAND_NAME} sl dns record-list ZONE [OPTIONS]
+	
+EXAMPLE:
+   ${COMMAND_NAME} sl dns record-list ibm.com --record elasticsearch --type A --ttl 900
+   This command lists all A records under the zone: ibm.com, and filters by host is elasticsearch and ttl is 900 seconds.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.Data, "data", "", T("Filter by record data, such as an IP address"))
+	cobraCmd.Flags().StringVar(&thisCmd.Record, "record", "", T("Filter by host record, such as www"))
+	cobraCmd.Flags().IntVar(&thisCmd.Ttl, "ttl", 0, T("Filter by TTL(Time-To-Live) in seconds, such as 86400"))
+	cobraCmd.Flags().StringVar(&thisCmd.Type, "type", "", T("Filter by record type, such as A or CNAME"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *RecordListCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	zoneName := c.Args()[0]
+func (cmd *RecordListCommand) Run(args []string) error {
+	zoneName := args[0]
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
 	zoneID, err := cmd.DNSManager.GetZoneIdFromName(zoneName)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get zone ID from zone name: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get zone ID from zone name: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName}), err.Error(), 2)
 	}
-	records, err := cmd.DNSManager.ListResourceRecords(zoneID, c.String("type"), c.String("record"), c.String("data"), c.Int("ttl"), "")
+	records, err := cmd.DNSManager.ListResourceRecords(zoneID, cmd.Type, cmd.Record, cmd.Data, cmd.Ttl, "")
 	if err != nil {
-		return cli.NewExitError(T("Failed to list resource records under zone: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list resource records under zone: {{.Zone}}.\n", map[string]interface{}{"Zone": zoneName}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -58,36 +75,4 @@ func (cmd *RecordListCommand) Run(c *cli.Context) error {
 	}
 	table.Print()
 	return nil
-}
-
-func DnsRecordListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dns",
-		Name:        "record-list",
-		Description: T("List all the resource records in a zone"),
-		Usage: T(`${COMMAND_NAME} sl dns record-list ZONE [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl dns record-list ibm.com --record elasticsearch --type A --ttl 900
-   This command lists all A records under the zone: ibm.com, and filters by host is elasticsearch and ttl is 900 seconds.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "data",
-				Usage: T("Filter by record data, such as an IP address"),
-			},
-			cli.StringFlag{
-				Name:  "record",
-				Usage: T("Filter by host record, such as www"),
-			},
-			cli.IntFlag{
-				Name:  "ttl",
-				Usage: T("Filter by TTL(Time-To-Live) in seconds, such as 86400"),
-			},
-			cli.StringFlag{
-				Name:  "type",
-				Usage: T("Filter by record type, such as A or CNAME"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

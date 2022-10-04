@@ -3,8 +3,7 @@ package globalip
 import (
 	"fmt"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -13,42 +12,52 @@ import (
 )
 
 type ListCommand struct {
-	UI             terminal.UI
+	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
+	Command        *cobra.Command
+	V4             bool
+	V6             bool
+	Order          int
 }
 
-func NewListCommand(ui terminal.UI, networkManager managers.NetworkManager) (cmd *ListCommand) {
-	return &ListCommand{
-		UI:             ui,
-		NetworkManager: networkManager,
+func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
+	thisCmd := &ListCommand{
+		SoftlayerCommand: sl,
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "list",
+		Short: T("List all global IPs on your account"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVar(&thisCmd.V4, "v4", false, T("Display IPv4 IPs only"))
+	cobraCmd.Flags().BoolVar(&thisCmd.V6, "v6", false, T("Display IPv6 IPs only"))
+	cobraCmd.Flags().IntVar(&thisCmd.Order, "order", 0, T("Filter by the ID of order that purchased this IP address"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ListCommand) Run(c *cli.Context) error {
-	if c.IsSet("v4") && c.IsSet("v6") {
+func (cmd *ListCommand) Run(args []string) error {
+	if cmd.V4 && cmd.V6 {
 		return errors.NewInvalidUsageError(T("[--v4] is not allowed with [--v6]."))
 	}
 
 	version := 0
-	if c.IsSet("v4") {
+	if cmd.V4 {
 		version = 4
 	}
-	if c.IsSet("v6") {
+	if cmd.V6 {
 		version = 6
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
 
-	ips, err := cmd.NetworkManager.ListGlobalIPs(version, c.Int("order"))
+	ips, err := cmd.NetworkManager.ListGlobalIPs(version, cmd.Order)
 	if err != nil {
-		return cli.NewExitError(T("Failed to list global IPs on your account.\n")+err.Error(), 2)
-	}
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, ips)
+		return errors.NewAPIError(T("Failed to list global IPs on your account.\n"), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{T("ID"), T("ip"), T("assigned"), T("target")})
@@ -71,34 +80,6 @@ func (cmd *ListCommand) Run(c *cli.Context) error {
 		}
 		table.Add(utils.FormatIntPointer(ip.Id), ipAddress, assigned, target)
 	}
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
-}
-
-func GlobalIpListMetaData() cli.Command {
-	return cli.Command{
-		Category:    "globalip",
-		Name:        "list",
-		Description: T("List all global IPs on your account"),
-		Usage: T(`${COMMAND_NAME} sl globalip list [OPTIONS]
-
-EXAMPLE:
-    ${COMMAND_NAME} sl globalip list --v4 
-	This command lists all IPv4 addresses on the current account.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "v4",
-				Usage: T("Display IPv4 IPs only"),
-			},
-			cli.BoolFlag{
-				Name:  "v6",
-				Usage: T("Display IPv6 IPs only"),
-			},
-			cli.IntFlag{
-				Name:  "order",
-				Usage: T("Filter by the ID of order that purchased this IP address"),
-			},
-			metadata.OutputFlag(),
-		},
-	}
 }

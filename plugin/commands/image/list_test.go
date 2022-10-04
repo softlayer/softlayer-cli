@@ -9,36 +9,35 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Image list", func() {
 	var (
 		fakeUI           *terminal.FakeUI
+		cliCommand       *image.ListCommand
+		fakeSession      *session.Session
+		slCommand        *metadata.SoftlayerCommand
 		fakeImageManager *testhelpers.FakeImageManager
-		cmd              *image.ListCommand
-		cliCommand       cli.Command
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeImageManager = new(testhelpers.FakeImageManager)
-		cmd = image.NewListCommand(fakeUI, fakeImageManager)
-		cliCommand = cli.Command{
-			Name:        image.ImageListMetaData().Name,
-			Description: image.ImageListMetaData().Description,
-			Usage:       image.ImageListMetaData().Usage,
-			Flags:       image.ImageListMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = image.NewListCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.ImageManager = fakeImageManager
 	})
 
 	Describe("Image list", func() {
 		Context("Image list with both --public and --private", func() {
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--public", "--private")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--public", "--private")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: [--public] is not allowed with [--private].")).To(BeTrue())
 			})
@@ -49,7 +48,7 @@ var _ = Describe("Image list", func() {
 				fakeImageManager.ListPrivateImagesReturns([]datatypes.Virtual_Guest_Block_Device_Template_Group{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--private")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--private")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to list private images.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -70,7 +69,7 @@ var _ = Describe("Image list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--private")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--private")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"image-1234"}))
@@ -86,7 +85,7 @@ var _ = Describe("Image list", func() {
 				fakeImageManager.ListPublicImagesReturns([]datatypes.Virtual_Guest_Block_Device_Template_Group{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--public")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--public")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to list public images.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -107,7 +106,7 @@ var _ = Describe("Image list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "--public")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--public")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"image-1234"}))
@@ -123,7 +122,7 @@ var _ = Describe("Image list", func() {
 				fakeImageManager.ListPublicImagesReturns([]datatypes.Virtual_Guest_Block_Device_Template_Group{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to list public images.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -137,7 +136,7 @@ var _ = Describe("Image list", func() {
 
 			})
 			It("return error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Failed to list private images.")).To(BeTrue())
 				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
@@ -168,7 +167,7 @@ var _ = Describe("Image list", func() {
 				}, nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "")
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(strings.Contains(results[1], "1234")).To(BeTrue())

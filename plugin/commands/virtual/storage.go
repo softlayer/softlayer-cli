@@ -5,11 +5,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/spf13/cobra"
+
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -17,54 +16,61 @@ import (
 )
 
 type StorageCommand struct {
-	UI                   terminal.UI
+	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
+	Command              *cobra.Command
 }
 
-func NewStorageCommand(ui terminal.UI, virtualServerManager managers.VirtualServerManager) (cmd *StorageCommand) {
-	return &StorageCommand{
-		UI:                   ui,
-		VirtualServerManager: virtualServerManager,
+func NewStorageCommand(sl *metadata.SoftlayerCommand) (cmd *StorageCommand) {
+	thisCmd := &StorageCommand{
+		SoftlayerCommand:     sl,
+		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "storage " + T("IDENTIFIER"),
+		Short: T("Get storage details for a virtual server."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *StorageCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	vsID, err := strconv.Atoi(c.Args()[0])
+func (cmd *StorageCommand) Run(args []string) error {
+
+	vsID, err := strconv.Atoi(args[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Virtual server ID")
+		return slErrors.NewInvalidSoftlayerIdInputError("Virtual server ID")
 	}
 
-	outputFormat, err := metadata.CheckOutputFormat(c, cmd.UI)
-	if err != nil {
-		return err
-	}
+	outputFormat := cmd.GetOutputFlag()
+	subs := map[string]interface{}{"VsId": vsID, "VsID": vsID, "ID": vsID}
 
 	iscsiStorageData, err := cmd.VirtualServerManager.GetStorageDetails(vsID, "ISCSI")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get iscsi storage detail for the virtual server {{.ID}}.\n", map[string]interface{}{"ID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get iscsi storage detail for the virtual server {{.ID}}.\n", subs), err.Error(), 2)
 	}
 
 	nasStorageData, err := cmd.VirtualServerManager.GetStorageDetails(vsID, "NAS")
 	if err != nil {
-		return cli.NewExitError(T("Failed to get nas storage detail for the virtual server {{.ID}}.\n", map[string]interface{}{"ID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get nas storage detail for the virtual server {{.ID}}.\n", subs), err.Error(), 2)
 	}
 
 	storageCredentials, err := cmd.VirtualServerManager.GetStorageCredentials(vsID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the storage credential detail for the virtual server {{.ID}}.\n", map[string]interface{}{"ID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get the storage credential detail for the virtual server {{.ID}}.\n", subs), err.Error(), 2)
 	}
 
 	portableStorage, err := cmd.VirtualServerManager.GetPortableStorage(vsID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the portable storage detail for the virtual server {{.ID}}.\n", map[string]interface{}{"ID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get the portable storage detail for the virtual server {{.ID}}.\n", subs), err.Error(), 2)
 	}
 
 	localDisks, err := cmd.VirtualServerManager.GetLocalDisks(vsID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to get the local disks detail for the virtual server {{.ID}}.\n", map[string]interface{}{"ID": vsID})+err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to get the local disks detail for the virtual server {{.ID}}.\n", subs), err.Error(), 2)
 	}
 
 	var storageDetailList []interface{}
@@ -135,8 +141,8 @@ func (cmd *StorageCommand) Run(c *cli.Context) error {
 	return nil
 }
 
-//Returns the virtual server local disk type.
-//param disks: virtual server local disks.
+// Returns the virtual server local disk type.
+// param disks: virtual server local disks.
 func (cmd *StorageCommand) getLocalType(disk datatypes.Virtual_Guest_Block_Device) string {
 	diskType := "System"
 	swapType := disk.DiskImage.Description
@@ -144,20 +150,4 @@ func (cmd *StorageCommand) getLocalType(disk datatypes.Virtual_Guest_Block_Devic
 		diskType = "Swap"
 	}
 	return diskType
-}
-
-func VSStorageMetaData() cli.Command {
-	return cli.Command{
-		Category:    "vs",
-		Name:        "storage",
-		Description: T("Get storage details for a virtual server."),
-		Usage: T(`${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vs storage 1234567
-   Get storage details for a virtual server.`),
-		Flags: []cli.Flag{
-			metadata.OutputFlag(),
-		},
-	}
 }

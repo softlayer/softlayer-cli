@@ -3,25 +3,13 @@ package block
 import (
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
-
-type SnapshotEnableCommand struct {
-	UI             terminal.UI
-	StorageManager managers.StorageManager
-}
-
-func NewSnapshotEnableCommand(ui terminal.UI, storageManager managers.StorageManager) (cmd *SnapshotEnableCommand) {
-	return &SnapshotEnableCommand{
-		UI:             ui,
-		StorageManager: storageManager,
-	}
-}
 
 var DAY_OF_WEEK = map[int]string{
 	0: "SUNDAY",
@@ -33,79 +21,81 @@ var DAY_OF_WEEK = map[int]string{
 	6: "SATURDAY",
 }
 
-func BlockSnapshotEnableMetaData() cli.Command {
-	return cli.Command{
-		Category:    "block",
-		Name:        "snapshot-enable",
-		Description: T("Enable snapshots for a given volume on the specified schedule"),
-		Usage: T(`${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0
-   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.`),
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "s,schedule-type",
-				Usage: T("Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY"),
-			},
-			cli.IntFlag{
-				Name:  "c,retention-count",
-				Usage: T("Number of snapshots to retain [required]"),
-			},
-			cli.IntFlag{
-				Name:  "m,minute",
-				Usage: T("Minute of the hour when snapshots should be taken, integer between 0 to 59"),
-			},
-			cli.IntFlag{
-				Name:  "r,hour",
-				Usage: T("Hour of the day when snapshots should be taken, integer between 0 to 23"),
-			},
-			cli.IntFlag{
-				Name:  "d,day-of-week",
-				Usage: T("Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday"),
-			},
-		},
-	}
+type SnapshotEnableCommand struct {
+	*metadata.SoftlayerStorageCommand
+	Command        *cobra.Command
+	StorageManager managers.StorageManager
+	ScheduleType   string
+	RetentionCount int
+	Minute         int
+	Hour           int
+	DayOfWeek      int
 }
 
-func (cmd *SnapshotEnableCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return errors.NewInvalidUsageError(T("This command requires one argument."))
+func NewSnapshotEnableCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotEnableCommand {
+	thisCmd := &SnapshotEnableCommand{
+		SoftlayerStorageCommand: sl,
+		StorageManager:          managers.NewStorageManager(sl.Session),
 	}
-	volumeID, err := strconv.Atoi(c.Args()[0])
+	cobraCmd := &cobra.Command{
+		Use:   "snapshot-enable " + T("IDENTIFIER"),
+		Short: T("Enable snapshots for a given volume on the specified schedule"),
+		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0
+   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.`, sl.StorageI18n),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVarP(&thisCmd.ScheduleType, "schedule-type", "s", "", T("Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY"))
+	cobraCmd.Flags().IntVarP(&thisCmd.RetentionCount, "retention-count", "c", 0, T("Number of snapshots to retain [required]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Minute, "minute", "m", 0, T("Minute of the hour when snapshots should be taken, integer between 0 to 59"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Hour, "hour", "r", 0, T("Hour of the day when snapshots should be taken, integer between 0 to 23"))
+	cobraCmd.Flags().IntVarP(&thisCmd.DayOfWeek, "day-of-week", "d", 0, T("Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
+}
+
+func (cmd *SnapshotEnableCommand) Run(args []string) error {
+
+	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	if !c.IsSet("schedule-type") {
-		return errors.NewInvalidUsageError(T("[-s|--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY."))
+	if cmd.ScheduleType == "" {
+		return slErr.NewInvalidUsageError(T("[-s|--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY."))
 	}
-	scheduleType := c.String("schedule-type")
+	scheduleType := cmd.ScheduleType
 	if scheduleType != "HOURLY" && scheduleType != "DAILY" && scheduleType != "WEEKLY" {
-		return errors.NewInvalidUsageError(T("[-s|--schedule-type] must be HOURLY, DAILY, or WEEKLY."))
+		return slErr.NewInvalidUsageError(T("[-s|--schedule-type] must be HOURLY, DAILY, or WEEKLY."))
 	}
-	if !c.IsSet("retention-count") {
-		return errors.NewMissingInputError("-c|--retention-count")
+	retentionCount := cmd.RetentionCount
+
+	if retentionCount == 0 {
+		return slErr.NewMissingInputError("-c|--retention-count")
 	}
-	retentionCount := c.Int("retention-count")
-	minute := c.Int("m")
+
+	minute := cmd.Minute
 	if minute < 0 || minute > 59 {
-		return errors.NewInvalidUsageError(T("[-m|--minute] value must be between 0 and 59."))
+		return slErr.NewInvalidUsageError(T("[-m|--minute] value must be between 0 and 59."))
 	}
-	hour := c.Int("r")
+	hour := cmd.Hour
 	if hour < 0 || hour > 23 {
-		return errors.NewInvalidUsageError(T("[-r|--hour] value must be between 0 and 23."))
+		return slErr.NewInvalidUsageError(T("[-r|--hour] value must be between 0 and 23."))
 	}
-	dayOfWeek := c.Int("d")
+	dayOfWeek := cmd.DayOfWeek
 	if dayOfWeek < 0 || dayOfWeek > 6 {
-		return errors.NewInvalidUsageError(T("[-d|--day-of-week] value must be between 0 and 6."))
+		return slErr.NewInvalidUsageError(T("[-d|--day-of-week] value must be between 0 and 6."))
 	}
 	err = cmd.StorageManager.EnableSnapshot(volumeID, scheduleType, retentionCount, minute, hour, DAY_OF_WEEK[dayOfWeek])
+	subs := map[string]interface{}{"ScheduleType": scheduleType, "VolumeID": volumeID}
 	if err != nil {
-		return cli.NewExitError(T("Failed to enable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n",
-			map[string]interface{}{"ScheduleType": scheduleType, "VolumeID": volumeID})+err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to enable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n", subs), err.Error(), 2)
 	}
 	cmd.UI.Ok()
-	cmd.UI.Print(T("{{.ScheduleType}} snapshots have been enabled for volume {{.VolumeID}}.",
-		map[string]interface{}{"ScheduleType": scheduleType, "VolumeID": volumeID}))
+	cmd.UI.Print(T("{{.ScheduleType}} snapshots have been enabled for volume {{.VolumeID}}.", subs))
 	return nil
 }

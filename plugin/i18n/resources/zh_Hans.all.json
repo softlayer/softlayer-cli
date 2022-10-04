@@ -32,234 +32,6 @@
     "translation": "活动事务数"
   },
   {
-    "id": "${COMMAND_NAME} sl account bandwidth-pools",
-    "translation": "${COMMAND_NAME} sl account bandwidth-pools"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account bandwidth-pools-detail\nEXAMPLE: \n\t${COMMAND_NAME} sl account bandwidth-pools-detail 123456",
-    "translation": "${COMMAND_NAME} sl account bandwidth-pools-detail\n示例：\n${COMMAND_NAME} sl account bandwidth-pools-detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account cancel-item IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl account cancel-item IDENTIFIER"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account event-detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account event-detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account events",
-    "translation": "${COMMAND_NAME} sl account events"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account invoice-detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account invoice-detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account invoices [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl 帐户发票 [选项]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account item-detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account item-detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account licenses [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl 帐户许可证 [选项]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account orders [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account orders [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl account summary [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl account summary [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222",
-    "translation": "${COMMAND_NAME} sl autoscale create [OPTIONS]\n\n 示例：\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 -- domain mydomain.com --hostname myhostname --cooldown 3600 --min 2 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25\n\n   ${COMMAND_NAME} sl autoscale create --name testcreate --datacenter ams01 --domain mydomain.com --hostname myhostname --cooldown 3600 --min 1 --max 3 \n   --regional 142 --termination-policy 2 -os CENTOS_7_64 --cpu 2 --memory 1024 --disk 25  --disk 30 --userdata CENTOS --policy-relative ABSOLUTE \n   --policy-name mypolicy --policy-amount 3 --postinstall https://mypostinstallscript.com --key 1111111 --key 2222222"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale delete 123456",
-    "translation": "${COMMAND_NAME} sl autoscale delete IDENTIFIER \n \n示例：\n ${COMMAND_NAME} sl autoscale delete 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale detail IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale detail 123456",
-    "translation": "${COMMAND_NAME} sl autoscale detail IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl autoscale detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname\n   ${COMMAND_NAME} sl autoscale edit 123456 --name newscalegroupname --min 2 --max 5 --userdata CENTOS --cpu 2 --memory 2048",
-    "translation": "${COMMAND_NAME} sl autoscale edit IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl autoscale edit 123456 -- name newscalegroupname \n ${COMMAND_NAME} sl autoscale edit 123456 -- name newscalegroupname -- min 2 -- max 5 -- 5 CENTOS -- cpu 2 -- 2 2048"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale list\n   This command list all Autoscale Groups on current account.",
-    "translation": "${COMMAND_NAME} sl autoscale list \n \n 示例：\n ${COMMAND_NAME} sl autoscale list \n 此命令列出当前帐户的所有 Autoscale 组。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31",
-    "translation": "${COMMAND_NAME} sl autoscale logs IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl autoscale logs 123456 --date-min 2022-03-31"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 1 --by --down\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by --up\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 2 --by\n   ${COMMAND_NAME} sl autoscale scale 123456 --amount 3  --to",
-    "translation": "${COMMAND_NAME} sl autoscale scale IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl autoscale scale 123456 -- amount 1 -- by --down \n ${COMMAND_NAME} sl autoscale scale 2 -- amount 2 -- by --up \n ${COMMAND_NAME} sl autoscale scale 123456 -- amount 2 -- by \n ${COMMAND_NAME} sl autoscale 123456 -- amount 3 -- to"
-  },
-  {
-    "id": "${COMMAND_NAME} sl autoscale tag IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 'Use, single or double quotes, if you, want whitespace'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags Otherwise,Just,commas",
-    "translation": "${COMMAND_NAME} sl 自动标签标识 [选项] \n \n 示例：\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags '如果需要空格，请使用单引号或双引号'\n   ${COMMAND_NAME} sl autoscale tag 123456 --tags 否则，只需逗号"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl block snapshot-set-notification VOLUME_ID \n \n 示例：\n ${COMMAND_NAME} sl block snapshot-set-notification -- enable 1234567\n 对给定卷启用/禁用快照空间使用阈值警告。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl block access-authorize 12345678 --virtual-id 87654321\n   此命令授权标识为 87654321 的虚拟服务器访问标识为 12345678 的卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl block access-list 12345678 --sortby id \n   此命令列出有权访问标识为 12345678 的卷的所有主机，并按标识对其排序。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'\n\t",
-    "translation": "${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID 是“${COMMAND_NAME} sl block access-list”中的 allowed_host_id\n\t"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl block access-revoke 12345678 --virtual-id 87654321\n   此命令撤销标识为 87654321 的虚拟服务器对标识为 12345678 的卷的访问权。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl block replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block disaster-recovery-failover VOLUME_ID REPLICA_ID\n\n如果某个卷（有副本）因灾难事件变得无法访问，\n可以使用此方法将其立即故障转移到另一个位置中的可用副本。此方法不允许通过 API 进行故障恢复。\n要在使用此方法后故障恢复到原始卷，请开具支持凭单。\n要测试故障转移，请改为使用“${COMMAND_NAME} sl block replica-failover”。\n\n示例：\n\t${COMMAND_NAME} sl block disaster-recovery-failover 12345678 87654321\n\t此命令会将标识为 12345678 的卷故障转移到标识为 87654321 的副本卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl block duplicate-convert-status [OPTIONS] VOLUME_ID\n\n示例：\n   ${COMMAND_NAME} sl block duplicate-convert-status 12345678"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block object-list",
-    "translation": "${COMMAND_NAME} sl block object-list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block object-list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block replica-failback VOLUME_ID\n\t\t\n示例：\n   ${COMMAND_NAME} sl block replica-failback 12345678\n   此命令对标识为 12345678 的卷执行故障恢复操作。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-failover VOLUME_ID REPLICA_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block replica-failover VOLUME_ID REPLICA_ID\n\t\t\n示例：\n   ${COMMAND_NAME} sl block replica-failover 12345678 87654321\n   此命令对标识为 12345678 的卷执行到标识为 87654321 的副本卷的故障转移操作。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block replica-locations VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl block replica-locations 12345678\n   此命令列出标识为 12345678 的块卷的适用复制数据中心。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
-    "translation": "${COMMAND_NAME} sl block replica-order VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl block replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   此命令为标识为 12345678 的卷订购副本，此副本执行 DAILY 复制，位于 dal09 上，层级为 4，操作系统类型为 Linux。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block replica-partners VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl block replica-partners 12345678\n   此命令列出标识为 12345678 的块卷的现有副本卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl block snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl block snapshot-cancel 12345678 --immediate -f \n   此命令立即取消标识为 12345678 的快照，而不要求确认。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
-    "translation": "${COMMAND_NAME} sl block snapshot-create VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block snapshot-create 12345678 --note snapshotforibmcloud\n   此命令创建标识为 12345678 的卷的快照，并添加注释 snapshotforibmcloud。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block snapshot-delete SNAPSHOT_ID\n\n示例：\n   ${COMMAND_NAME} sl block snapshot-delete 12345678 \n   此命令删除标识为 12345678 的快照。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block snapshot-disable VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block snapshot-disable 12345678 -s DAILY\n   此命令禁用标识为 12345678 的卷的每日快照。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
-    "translation": "${COMMAND_NAME} sl block snapshot-enable VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   此命令启用标识为 12345678 的卷的快照，快照将在每周日 2:00 生成一次，最多保留 5 个快照。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID \n \n 示例：\n ${COMMAND_NAME} sl block snapshot-get-notification-status VOLUME_ID \n 获取给定卷的快照空间使用阈值警告标志设置。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl block snapshot-list VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block snapshot-list 12345678 --sortby id \n   此命令列出标识为 12345678 的卷的所有快照，并按标识对其排序。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl block snapshot-order VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block snapshot-order 12345678 -s 1000 -t 4 \n   此命令为标识为 12345678 的卷订购快照空间，大小为 1000 GB，层级为 4 IOPS/GB。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl block snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\n示例：\n   ${COMMAND_NAME} sl block snapshot-restore 12345678 87654321\n   此命令通过标识为 87654321 的快照复原标识为 12345678 的卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  This command list snapshot schedules for volume with ID 12345678",
-    "translation": "${COMMAND_NAME} sl block snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n   示例：\n\t  ${COMMAND_NAME} sl block snapshot-schedule-list 12345678\n\t  此命令列出标识为 12345678 的卷的快照安排。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-assign ACCESS_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是通过以下命令获取的 host_id：ibmcloud sl block access-list <volume_id>"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-list ACCESS_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block subnets-list 12345678 \n   ACCESS_ID 是通过以下命令获取的 host_id：ibmcloud sl block access-list <volume_id>"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl block access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl block subnets-remove ACCESS_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl block subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是通过以下命令获取的 host_id：ibmcloud sl block access-list <volume_id>"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl block volume-cancel VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block volume-cancel 12345678 --immediate -f\n   此命令立即取消标识为 12345678 的卷，而不要求确认。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume.",
-    "translation": "${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\n示例：\n\t${COMMAND_NAME} sl block volume-convert VOLUME_ID\n\t将从属的重复 VOLUME_ID 转换为独立卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   This command shows details of volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block volume-detail VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block volume-detail 12345678 \n   此命令显示标识为 12345678 的卷的详细信息。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl block volume-duplicate VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block volume-duplicate 12345678\n   此命令显示通过复制标识为 12345678 的卷来订购新卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
-    "translation": "${COMMAND_NAME} sl block volume-limits [OPTIONS]\n\n示例：\n\t${COMMAND_NAME} sl block volume-limits\n\t此命令列出此帐户的每个数据中心的存储限制。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
-    "translation": "${COMMAND_NAME} sl block volume-list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block volume-list -d dal09 -t endurance --sortby capacity_gb\n   此命令列出当前帐户上位于 dal09 的所有耐久性卷，并按容量对其排序。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl block volume-modify VOLUME_ID [OPTIONS]\n\n   示例：\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  此命令修改卷 12345678，卷的大小为 1000 GB，IOPS 为 4000。\n\t  ${COMMAND_NAME} sl block volume-modify 12345678 --new-size 500 --new-tier 4\n\t  此命令修改卷 12345678，卷的大小为 500 GB，层级为 4 IOPS/GB。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
-    "translation": "${COMMAND_NAME} sl block volume-options\n\t\n示例：\n   ${COMMAND_NAME} sl block volume-options\n   此命令列出用于创建块存储卷的所有选项，包括存储类型、卷大小、操作系统类型、IOPS、层级、数据中心和快照大小。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl block volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl block volume-order [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl block volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   此命令订购性能卷，卷的大小为 1000GB，IOPS 为 4000，操作系统类型为 LINUX，位于 dal09 上。\n   ${COMMAND_NAME} sl block volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   此命令订购耐久性卷，卷的大小为 500GB，层级为 4 IOPS/GB，操作系统类型为 XEN，位于 dal09 上，还有额外快照空间大小 500GB。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
-    "translation": "${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\n示例：\n\t${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID\n\t使用其父 SNAPSHOT_ID 的快照来刷新重复的 VOLUME_ID。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl block volume-set-lun-id VOLUME_ID LUN_ID\n\n\tLUN 标识仅在主机授权流程中有效。在使用\n\t此方法前，建议（但并非必需）对所有主机\n\t取消授权。\n\tVOLUME_ID - 要对其设置 LUN 标识的卷标识。\n\tLUN_ID - 建议的范围是 0 到 255 之间的整数。高级用户\n\t可以使用 0 到 4095 之间的整数。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl block volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl block volume-set-note [OPTIONS] VOLUME_ID \n \n 示例：\n ${COMMAND_NAME} sl block volume-set-note 12345678 -- note \"this is my note\""
-  },
-  {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n示例：\n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t此命令编辑卷注释。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t此命令显示用户详细信息。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\t此命令列出虚拟访客。"
   },
@@ -274,14 +46,6 @@
   {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB",
-    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl dedicatedhost create-options \n \n 要获取可用专用 vlans 的列表，请使用以下命令：${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 -- flavor 56_CORES_X_242_RAM_X_1_4_TB"
-  },
-  {
-    "id": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost detail 1234567\n   This command gets the details for a dedicated host.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl dedicatedhost detail 1234567\n 此命令获取专用主机的详细信息。"
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
@@ -324,174 +88,23 @@
     "translation": "${COMMAND_NAME} sl dns zone-print ZONE\n\n示例：\n   ${COMMAND_NAME} sl dns zone-print ibm.com\n   此命令以 BIND 格式打印名为 ibm.com 的专区。"
   },
   {
-    "id": "${COMMAND_NAME} sl email detail IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl email detail IDENTIFIER [OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl email edit",
-    "translation": "${COMMAND_NAME} sl email edit"
-  },
-  {
-    "id": "${COMMAND_NAME} sl email list",
-    "translation": "${COMMAND_NAME} sl email list"
-  },
-  {
     "id": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
     "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\n示例：\n  ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
-  },
-  {
-    "id": "${COMMAND_NAME} sl event-log types\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log types",
-    "translation": "${COMMAND_NAME} sl event-log types \n \n示例：\n ${COMMAND_NAME} sl event-log types"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n\tEnables/Disables snapshot space usage threshold warning for a given volume.",
-    "translation": "${COMMAND_NAME} sl file  snapshot-set-notification VOLUME_ID\n\n 示例：\n${COMMAND_NAME} sl file snapshot-set-notification --enable 1234567\n 对给定卷启用/禁用快照空间使用阈值警告。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file access-authorize VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl file access-authorize 12345678 --virtual-id 87654321\n   此命令授权标识为 87654321 的虚拟服务器访问标识为 12345678 的卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl file access-list VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl file access-list 12345678 --sortby id \n   此命令列出有权访问标识为 12345678 的卷的所有主机，并按标识对其排序。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file access-revoke VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl file access-revoke 12345678 --virtual-id 87654321\n   此命令撤销标识为 87654321 的虚拟服务器对标识为 12345678 的卷的访问权。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\nIf a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl file replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file disaster-recovery-failover VOLUME_ID REPLICA_ID\n\n如果某个卷（有副本）因灾难事件变得无法访问，\n可以使用此方法将其立即故障转移到另一个位置中的可用副本。此方法不允许通过 API 进行故障恢复。\n要在使用此方法后故障恢复到原始卷，请开具支持凭单。\n要测试故障转移，请改为使用“${COMMAND_NAME} sl block replica-failover”。\n\n示例：\n\t${COMMAND_NAME} sl file disaster-recovery-failover 12345678 87654321\n\t此命令会将标识为 12345678 的卷故障转移到标识为 87654321 的副本卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file duplicate-convert-status 12345678",
-    "translation": "${COMMAND_NAME} sl file duplicate-convert-status [OPTIONS] VOLUME_ID\n\n 示例：\n  ${COMMAND_NAME} sl file duplicate-convert-status 12345678"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file replica-failback VOLUME_ID\n\t\t\n示例：\n   ${COMMAND_NAME} sl file replica-failback 12345678\n   此命令对标识为 12345678 的卷执行故障恢复操作。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-failover VOLUME_ID REPLICA_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file replica-failover VOLUME_ID REPLICA_ID\n\t\t\n示例：\n   ${COMMAND_NAME} sl file replica-failover 12345678 87654321\n   此命令对标识为 12345678 的卷执行到标识为 87654321 的副本卷的故障转移操作。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-locations 12345678\n   This command lists suitable replication data centers for file volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file replica-locations VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl file replica-locations 12345678\n   此命令列出标识为 12345678 的文件卷的适用复制数据中心。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-order 12345678 -s DAILY -d dal09 --tier 4 \n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4.",
-    "translation": "${COMMAND_NAME} sl file replica-order VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl file replica-order 12345678 -s DAILY -d dal09 --tier 4\n   此命令为标识为 12345678 的卷订购副本，此副本执行 DAILY 复制，位于 dal09 上，层级为 4。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file replica-partners 12345678\n   This command lists existing replicant volumes for file volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file replica-partners VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl file replica-partners 12345678\n   此命令列出标识为 12345678 的文件卷的现有副本卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl file snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl file snapshot-cancel 12345678 --immediate -f\n   此命令立即取消标识为 12345678 的快照，而不要求确认。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
-    "translation": "${COMMAND_NAME} sl file snapshot-create VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file snapshot-create 12345678 --note snapshotforibmcloud\n   此命令创建标识为 12345678 的卷的快照，并添加注释 snapshotforibmcloud。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-delete SNAPSHOT_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-delete 12345678 \n   This command deletes snapshot with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file snapshot-delete SNAPSHOT_ID\n\n示例：\n   ${COMMAND_NAME} sl file snapshot-delete 12345678 \n   此命令删除标识为 12345678 的快照。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file snapshot-disable VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file snapshot-disable 12345678 -s DAILY\n   此命令禁用标识为 12345678 的卷的每日快照。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
-    "translation": "${COMMAND_NAME} sl file snapshot-enable VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   此命令启用标识为 12345678 的卷的快照，快照将在每周日 2:00 生成一次，最多保留 5 个快照。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n\tGet snapshots space usage threshold warning flag setting for a given volume.",
-    "translation": "${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n\n 示例：\n ${COMMAND_NAME} sl file snapshot-get-notification-status VOLUME_ID\n 获取给定卷的快照空间使用阈值警告标志设置。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl file snapshot-list VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file snapshot-list 12345678 --sortby id \n   此命令列出标识为 12345678 的卷的所有快照，并按标识对其排序。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-order 12345678 -s 1000 -t 4 \n   This commands order snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl file snapshot-order VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file snapshot-order 12345678 -s 1000 -t 4 \n   此命令为标识为 12345678 的卷订购快照空间，大小为 1000GB，层级为 4 IOPS/GB。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl file snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\n示例：\n   ${COMMAND_NAME} sl file snapshot-restore 12345678 87654321\n   此命令通过标识为 87654321 的快照复原标识为 12345678 的卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file snapshot-schedule-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file snapshot-schedule-list 12345678\n   This command list snapshot schedules for volume with ID 12345678",
-    "translation": "${COMMAND_NAME} sl file snapshot-schedule-list VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file snapshot-schedule-list 12345678\n   此命令列出标识为 12345678 的卷的快照安排。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl file volume-cancel VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file volume-cancel 12345678 --immediate -f\n   此命令立即取消标识为 12345678 的卷，而不要求确认。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-convert VOLUME_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file volume-convert VOLUME_ID\n\tConvert a dependent duplicate VOLUME_ID to an independent volume.",
-    "translation": "${COMMAND_NAME} sl file volume-convert VOLUME_ID\n\n示例：\n\t${COMMAND_NAME} sl file volume-convert VOLUME_ID\n\t将从属的重复 VOLUME_ID 转换为独立卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-detail VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-detail 12345678 \n   This command shows details of volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file volume-detail VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file volume-detail 12345678 \n   此命令显示标识为 12345678 的卷的详细信息。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl file volume-duplicate VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file volume-duplicate 12345678\n   此命令显示通过复制标识为 12345678 的卷来订购新卷。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
-    "translation": "${COMMAND_NAME} sl file volume-limits [OPTIONS]\n\n示例：\n\t${COMMAND_NAME} sl file volume-limits\n\t此命令列出此帐户的每个数据中心的存储限制。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
-    "translation": "${COMMAND_NAME} sl file volume-list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file volume-list -d dal09 -t endurance --sortby capacity_gb\n   此命令列出当前帐户上位于 dal09 的所有耐久性卷，并按容量对其排序。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl file volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl file volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl file volume-modify VOLUME_ID [OPTIONS]\n\n   示例：\n\t  ${COMMAND_NAME} sl file volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  此命令修改卷 12345678，卷的大小为 1000 GB，IOPS 为 4000。\n\t  ${COMMAND_NAME} sl file volume-modify 12345678 --new-size 500 --new-tier 4\n\t  此命令修改卷 12345678，卷的大小为 500 GB，层级为 4 IOPS/GB。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.",
-    "translation": "${COMMAND_NAME} sl file volume-options\n\t\n示例：\n   ${COMMAND_NAME} sl file volume-options\n   此命令列出用于创建文件存储卷的所有选项，包括存储类型、卷大小、IOPS、层级、数据中心和快照大小。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-order --storage-type performance --size 1000 --iops 4000  -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, located at dal09.\n   ${COMMAND_NAME} sl file volume-order --storage-type endurance --size 500 --tier 4 -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB,located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl file volume-order [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl file volume-order --storage-type performance --size 1000 --iops 4000  -d dal09\n   此命令订购性能卷，卷的大小为 1000GB，IOPS 为 4000，位于 dal09 上。\n   ${COMMAND_NAME} sl file volume-order --storage-type endurance --size 500 --tier 4 -d dal09 --snapshot-size 500\n   此命令订购耐久性卷，卷的大小为 500GB，层级为 4 IOPS/GB，位于 dal09 上，还有额外快照空间大小 500GB。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
-    "translation": "${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\n示例：\n\t${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID\n\t使用其父 SNAPSHOT_ID 的快照来刷新重复的 VOLUME_ID。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl file volume-set-note [OPTIONS] VOLUME_ID\n\n 示例：\n  ${COMMAND_NAME} sl file volume-set-note 12345678 --note 'this is my note'"
   },
   {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
     "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
-    "id": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl firewall list",
-    "translation": "${COMMAND_NAME} sl firewall list [OPTIONS]\n\n 示例：\n  ${COMMAND_NAME} sl firewall list"
-  },
-  {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
     "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\t此命令将标识为 12345678 的 IP 地址分配给 IP 地址为 9.111.123.456 的目标设备。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\tThis command cancels IP address with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl globalip cancel IDENTIFIER [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip cancel 12345678\n\t此命令取消标识为 12345678 的 IP 地址。"
   },
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip create --v6 \n\t此命令创建 IPv6 地址。"
   },
   {
+
     "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
     "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip list --v4 \n\t此命令列出当前帐户的所有 IPv4 地址。"
   },
@@ -524,32 +137,12 @@
     "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 -- remove sjc03\n 此命令添加/除去映像的数据中心。"
   },
   {
-    "id": "${COMMAND_NAME} sl image delete IDENTIFIER\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image delete 12345678\n   This command deletes image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image delete IDENTIFIER\n\n示例：\n   ${COMMAND_NAME} sl image delete 12345678\n   此命令删除标识为 12345678 的映像。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image detail 12345678\n   This command gets details for image with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl image detail IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl image detail 12345678\n   此命令获取标识为 12345678 的映像的详细信息。"
-  },
-  {
     "id": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\".",
     "translation": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   此命令编辑标识为 12345678 的映像，并将其名称设置为“ubuntu16”，将注释设置为“testing”，将标记设置为“staging”。"
   },
   {
-    "id": "${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER：图像标识\n  URI：格式如下的对象存储器对象（.vhd/.iso 文件）的 URI：cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY：有权访问 IBM Cloud Object Storage 实例的 IBM Cloud API 密钥。"
-  },
-  {
     "id": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
     "translation": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME：图像名称\n URI：格式如下的对象存储器对象（.vhd/.iso 文件）的 URI：cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY：有权访问 IBM Cloud Object Storage 实例的 IBM Cloud API 密钥。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl image list [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image list --public\n   This command list all public images on current account.",
-    "translation": "${COMMAND_NAME} sl image list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl image list --public\n   此命令列出当前帐户的所有公共映像。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl ipsec cancel CONTEXT_ID [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl ipsec cancel CONTEXT_ID [OPTIONS]"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  Request configuration of a tunnel context.\n\n  This action will update the advancedConfigurationFlag on the context\n  instance and further modifications against the context will be prevented\n  until all changes can be propagated to network devices.",
@@ -558,10 +151,6 @@
   {
     "id": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  List IPSEC VPN tunnel context details.\n\n  Additional resources can be joined using multiple instances of the include\n  option, for which the following choices are available.\n\n  at: address translations\n  is: internal subnets\n  rs: remote subnets\n  sr: statically routed subnets\n  ss: service subnets",
     "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  列出 IPSEC VPN 隧道上下文详细信息。\n\n  可以使用 include 选项的多个实例\n  来连接其他资源，可用选项如下。\n\n  at：地址转换\n  is：内部子网\n  rs：远程子网\n  sr：静态路由的子网\n  ss：服务子网"
-  },
-  {
-    "id": "${COMMAND_NAME} sl ipsec order [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl ipsec order [OPTIONS]"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  Add a subnet to an IPSEC tunnel context.\n\n  A subnet id may be specified to link to the existing tunnel context.\n\n  Otherwise, a network identifier in CIDR notation should be specified,\n  indicating that a subnet resource should first be created before\n  associating it with the tunnel context. Note that this is only supported\n  for remote subnets, which are also deleted upon failure to attach to a\n  context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
@@ -586,22 +175,6 @@
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  更新隧道上下文属性。\n\n  更新会自动进行，所以要么全部接受，要么全部不接受。\n\n  密钥生存期值必须在 120-172800 范围内。\n\n  第 2 阶段完美前向保密必须位于 0-1 范围内。\n\n  应该发起单独的配置请求，\n  以在网络设备上实现更改。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl licenses cancel KEY",
-    "translation": "${COMMAND_NAME} sl licenses cancel KEY"
-  },
-  {
-    "id": "${COMMAND_NAME} sl metadata [OPTIONS]\n\t\t\n\t.. csv-table:: Choices: \n\t\t- backend_ip\n\t\t- backend_mac\n\t\t- datacenter\n\t\t- datacenter_id\n\t\t- fqdn\n\t\t- frontend_mac\n\t\t- id\n\t\t- ip\n\t\t- network\n\t\t- provision_state\n\t\t- tags\n\t\t- user_data\n\t\t\n\t\tExamples:\n\t\t\t\t\t${COMMAND_NAME} sl metadata backend_ip\n\t\t\t\t\t${COMMAND_NAME} sl metadata network\n\n\tThese commands only work on devices on the backend SoftLayer network. This allows for self-discovery for newly provisioned resources.",
-    "translation": "${COMMAND_NAME} sl metadata [OPTIONS]\n\n.. csv-table:: 选项：\n- backend_ip\n- backend_mac\n- datacenter\n- datacenter_id\n- fqdn\n- frontend_mac\n- id\n- ip\n- network\n- provision_state\n- tags\n- user_data\n\n示例：\n${COMMAND_NAME} sl metadata backend_ip\n${COMMAND_NAME} sl metadata network\n\n这些命令仅适用于后端 SoftLayer 网络上的设备。 这允许对新供应的资源进行自发现。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas credentials 123456",
-    "translation": "${COMMAND_NAME} sl nas credentials IDENTIFIER [OPTIONS] \n \n示例：\n ${COMMAND_NAME} sl nas credentials 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl nas list\n\nEXAMPLE: \n   ${COMMAND_NAME} sl nas list",
-    "translation": "${COMMAND_NAME} sl nas list \n \n 示例：\n ${COMMAND_NAME} sl nas list"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
@@ -632,14 +205,6 @@
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n示例：\n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   此命令列出 Bare Metal Server 的类别。"
   },
   {
-    "id": "${COMMAND_NAME} sl order item-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order item-list CLOUD_SERVER\n   This command lists all items in the VSI package.",
-    "translation": "${COMMAND_NAME} sl order item-list [OPTIONS] PACKAGE_KEYNAME\n\t\n示例：\n   ${COMMAND_NAME} sl order item-list CLOUD_SERVER\n   此命令列出 VSI 包中的所有项。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order package-list [OPTIONS]\n\t\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order package-list\n   This command list out all packages for ordering.",
-    "translation": "${COMMAND_NAME} sl order package-list [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl order package-list\n   此命令列出所有订购的包。"
-  },
-  {
     "id": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\tEXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
     "translation": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\t示例：\n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\t此命令订购一个按小时计费的 VSI，具有 4 个 CPU、16 GB RAM、100 GB SAN 磁盘、Ubuntu 16.04 以及 dal13 中的 1 Gbps 公用和专用上行链路"
   },
@@ -648,32 +213,8 @@
     "translation": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    示例：\n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    此命令提供 VSI 的报价，该 VSI 具有 4 个 CPU、16 GB RAM、100 GB SAN 磁盘、Ubuntu 16.04 以及数据中心 dal13 中的 1 Gbps 公用和专用上行链路"
   },
   {
-    "id": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  This command lists the presets for Bare Metal servers.",
-    "translation": "${COMMAND_NAME} sl order preset-list [OPTIONS] PACKAGE_KEYNAME\n\n   示例：\n\t  ${COMMAND_NAME} sl order preset-list BARE_METAL_SERVER\n\t  此命令列出 Bare Metal Server 的预设。"
-  },
-  {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
     "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-detail 123456",
-    "translation": "${COMMAND_NAME} sl order quote-detail IDENTIFIER [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl order quote-detail 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   EXAMPLE: \n\t  ${COMMAND_NAME} sl order quote-list",
-    "translation": "${COMMAND_NAME} sl order quote-list [OPTIONS]\n\n   示例：\n  ${COMMAND_NAME} sl order quote-list"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote-save 123456",
-    "translation": "${COMMAND_NAME} sl order quote-save IDENTIFIER [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl order quote-save 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl report bandwidth\n\nEXAMPLE: \n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut",
-    "translation": "${COMMAND_NAME} sl report bandwidth\n\n 示例：\n   ${COMMAND_NAME} sl report bandwidth\n   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08\n   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut"
-  },
-  {
-    "id": "${COMMAND_NAME} sl report datacenter-closures",
-    "translation": "${COMMAND_NAME} sl report datacenter-closures"
   },
   {
     "id": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.",
@@ -752,22 +293,6 @@
     "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl subnet route -- type-id 1234567 -- type SoftLayer_Network_Subnet_IpAddress 12345678\n 此命令允许更改帐户拥有的子网的路由。"
   },
   {
-    "id": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags cleanup",
-    "translation": "${COMMAND_NAME} sl tags cleanup [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl tags cleanup"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags delete tag1\n\tRemoves \"tag\" from your account.\n",
-    "translation": "${COMMAND_NAME} sl tags delete [TAG NAME]\n\n示例：\n\t${COMMAND_NAME} sl tags delete tag1\n\t从帐户中除去“tag”。\n"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags detail [TAG NAME]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags detail tag1\n\tShows all items that are tagged with 'tag1'\n",
-    "translation": "${COMMAND_NAME} sl tags detail [TAG NAME]\n\n示例：\n\t${COMMAND_NAME} sl tags detail tag1\n\t显示所有标记了“tag1”的项目。\n"
-  },
-  {
-    "id": "${COMMAND_NAME} sl tags list [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags list\n\tShows all tags and a count of devices associated with that tag.\n\n\t${COMMAND_NAME} sl tags list -d\n\tShows all tags with devices, and some basic information about devices using this tag.\n",
-    "translation": "${COMMAND_NAME} sl tags list [OPTIONS]\n\n示例：\n\t${COMMAND_NAME} sl tags list\n\t显示所有标记以及与该标记关联的设备数。\n\n\t${COMMAND_NAME} sl tags list -d\n\t显示设备的所有标记，以及有关使用此标记的设备的一些基本信息。\n"
-  },
-  {
     "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
     "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
@@ -788,14 +313,6 @@
     "translation": "${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]\n  \n示例：\n  ${COMMAND_NAME} sl ticket detail 767676\n  ${COMMAND_NAME} sl ticket detail 767676 --count 10"
   },
   {
-    "id": "${COMMAND_NAME} sl ticket list [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl ticket list[OPTIONS]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl ticket subjects\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket subjects\n  ",
-    "translation": "${COMMAND_NAME} sl ticket subjects\n  \n示例：\n  ${COMMAND_NAME} sl ticket subjects\n  "
-  },
-  {
     "id": "${COMMAND_NAME} sl ticket update TICKETID [\"CONTENTS\"] \n  \n    If the second argument is not specified on a non-Windows machine, it will attempt to use either the value stored in the EDITOR environmental variable, or find either nano, vim, or emacs in that order.\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket update 767676 \"A problem has been detected.\"\n  ${COMMAND_NAME} sl ticket update 767667",
     "translation": "${COMMAND_NAME} sl ticket update TICKETID [\"CONTENTS\"] \n  \n    如果在非 Windows 计算机上未指定第 2 个自变量，那么此命令将尝试使用存储在 EDITOR 环境变量中的值，或者按顺序查找 nano、vim 或 emacs。\n  \n示例：\n  ${COMMAND_NAME} sl ticket update 767676 \"A problem has been detected.\"\n  ${COMMAND_NAME} sl ticket update 767667"
   },
@@ -808,24 +325,12 @@
     "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\n 示例：\n  ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n  请记住设置此新用户的许可权和访问权。"
   },
   {
-    "id": "${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONS]\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl user delete userId\n   This command delete user with userId.",
-    "translation": "${COMMAND_NAME} sl user delete IDENTIFIER [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl user delete userId\n   此命令删除具有 userId 的用户。"
-  },
-  {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
     "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    此命令编辑用户详细信息。"
   },
   {
     "id": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'",
     "translation": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS \n \n 通知名称应括在引号中。 示例：\n slcli user edit-notifications -- enable 'Order Approved' \n slcli user edit-notifications -- enable 'Order Approved' -- enable 'Reload Complete'"
-  },
-  {
-    "id": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user grant-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user grant-access IDENTIFIER [OPTION]\n\n示例：\n ${COMMAND_NAME} sl user grant-access 123456 -- hardware 987654"
-  },
-  {
-    "id": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl user remove-access 123456 --hardware 987654",
-    "translation": "${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTION]\n \n示例：\n ${COMMAND_NAME} sl user remove-access 123456 -- hardware 987654"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -856,28 +361,8 @@
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl vs authorize-storage -- username-storage SL01SL30-37 1234567\n 将文件、块和可移植存储器授权给虚拟服务器。"
   },
   {
-    "id": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \nEXAMPLE:\n   ${COMMAND_NAME} sl vs billing 12345678\n   This command billing lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs billing IDENTIFIER [OPTIONS] \n 示例：\n  ${COMMAND_NAME} sl vs billing 12345678\n   此命令用于列出有关标识为 12345678 的虚拟服务器实例的详细信息。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs cancel 12345678\n   This command cancels virtual server instance with ID of 12345678.",
-    "translation": "${COMMAND_NAME} sl vs cancel IDENTIFIER [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs cancel 12345678\n   此命令取消标识为 12345678 的虚拟服务器实例。"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.",
     "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\n示例：\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\n 此命令订购名称为 myvsi、backendRouterId 1234567、flavor 和 C1_2X2_1_YEAR_TERM 的“保留容量”实例以及 2 个实例。\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\n 此命令测试在实际下单之前是否使用上述选项有效。\n\n “保留容量”在年度合约中，在合约到期之前不可取消。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs capacity-create-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a Reserved Capacity Group instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create-options\n\n 示例：\n  ${COMMAND_NAME} sl vs options\n   此命令列示用于创建保留容量组实例等所有选项，例如，datacenters、cpu、memory、os、disk、network speed，等。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS]\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-details 12345678\n    Get Reserved Capacity Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs capacity-detail IDENTIFIER [OPTIONS] \n示例：\n ${COMMAND_NAME} sl vs capacity-details 12345678\n 获取标识为 12345678 的保留容量组详细信息。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n   List Reserved Capacity groups.",
-    "translation": "${COMMAND_NAME} sl vs capacity-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capacity-list\n 列示保留容量组。"
   },
   {
     "id": "${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   This command captures virtual server instance with ID of 12345678 with all disks into an image named \"mycloud\" with note \"testing\".",
@@ -886,14 +371,6 @@
   {
     "id": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\tThis command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,\n\toperation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\tThis command tests whether the order is valid with above options before the order is actually placed.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\tThis command exports above options to a file: myvsi.txt under user home directory for later use.",
     "translation": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\t此命令订购虚拟服务器实例，其中主机名为 myvsi，域为 ibm.com，4 个 CPU 核心，4096M 内存，位于数据中心 dal10，\n\t操作系统为 UBUNTU 16 64 位，2 个磁盘，一个为 100G，另一个为 1000G，位于标识为 413 的公用 VLAN 上。\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\t此命令用于在实际下达使用上述选项的订单之前，测试该订单是否有效。\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\t此命令将上述选项导出到用户主目录下的文件 myvsi.txt 中，以供以后使用。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs credentials IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs credentials 12345678\n   This command lists all username and password pairs of virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs credentials IDENTIFIER [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs credentials 12345678\n   此命令列出标识为 12345678 的虚拟服务器实例的所有用户名和密码对。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs detail IDENTIFIER [OPTIONS] \n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs details 12345678\n   This command lists detailed information about virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs detail IDENTIFIER [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs details 12345678\n   此命令列出有关标识为 12345678 的虚拟服务器实例的详细信息。"
   },
   {
     "id": "${COMMAND_NAME} sl vs dns-sync IDENTIFIER [OPTIONS]\n   Note: If you don't specify any arguments, it will attempt to update both the A\n   and PTR records. If you don't want to update both records, you may use the\n   -a or --ptr arguments to limit the records updated.\n \nEXAMPLE:\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --a-record --ttl 3600\n   This command synchronizes A record(IP V4 address) of virtual server instance with ID 12345678 to DNS server and sets ttl of this A record to 3600.\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --aaaa-record --ptr\n   This command synchronizes both AAAA record(IP V6 address) and PTR record of virtual server instance with ID 12345678 to DNS server.",
@@ -912,60 +389,16 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl vs migrate -- guest 1234567\n 管理需要迁移的 VSI。 也可以将专用实例从一个专用主机迁移到另一个专用主机。"
   },
   {
-    "id": "${COMMAND_NAME} sl vs options [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs options\n   This command lists all the options for creating a virtual server instance, eg.datacenters, cpu, memory, os, disk, network speed, etc.",
-    "translation": "${COMMAND_NAME} sl vs options [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs options\n   此命令列出用于创建虚拟服务器实例的所有选项，例如数据中心、CPU、内存、操作系统、磁盘、网络速度等。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs pause IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs pause 12345678 -f\n   This command pauses virtual server instance with ID 12345678 without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl vs pause IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vs pause 12345678 -f\n   此命令暂停标识为 12345678 的虚拟服务器实例，而不要求确认。"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
     "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS] \n 示例：\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \n 此命令订购名为 myvsi、backendRouterId 为 1234567 以及规则为 258369 的放置组实例"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-create-options\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-create-options\n    Get List options for creating a placement group.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create-options \n 示例：\n ${COMMAND_NAME} sl vs placementgroup-create-options \n 获取用于创建放置组的列表选项。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-details 12345678\n    Get placement Group details with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER \n示例：\n ${COMMAND_NAME} sl vs placementgroup-details 12345678\n 获取标识为 12345678 的放置组详细信息。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n   This command lists all placement groups.",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-list\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs placementgroup-list\n 此命令列示所有放置组。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs power-off IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs power-off 12345678 --soft\n   This command performs a soft power off for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs power-off IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vs power-off 12345678 --soft\n   此命令对标识为 12345678 的虚拟服务器实例执行软电源关闭。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs power-on IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs power-on 12345678\n   This command performs a power on for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs power-on IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vs power-on 12345678\n   此命令对标识为 12345678 的虚拟服务器实例执行电源打开。"
   },
   {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
     "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   此命令检查标识为 12345678 的虚拟服务器实例的状态以确定它是否准备就绪可持续使用，并且最长等待 30 秒。"
   },
   {
-    "id": "${COMMAND_NAME} sl vs reboot IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reboot 12345678 --hard\n   This command performs a hard reboot for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs reboot IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vs reboot 12345678 --hard\n   此命令对标识为 12345678 的虚拟服务器实例执行硬重新引导。"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vs reload 12345678\n   此命令为标识为 12345678 的虚拟服务器实例重新装入当前操作系统。\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   此命令为标识为 12345678 的虚拟服务器实例从标识为 1234 的映像重新装入操作系统。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs rescue IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs rescue 12345678\n   This command reboots virtual server instance with ID 12345678 into a rescue image.",
-    "translation": "${COMMAND_NAME} sl vs rescue IDENTIFIER [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs rescue 12345678\n   此命令将标识为 12345678 的虚拟服务器实例重新引导到拯救映像。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs resume IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs resume 12345678\n   This command resumes virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs resume IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vs resume 12345678\n   此命令恢复标识为 12345678 的虚拟服务器实例。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs storage 1234567\n   Get storage details for a virtual server.",
-    "translation": "${COMMAND_NAME} sl vs storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl vs storage 1234567\n 获取虚拟服务器的存储器详细信息。"
   },
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
@@ -980,8 +413,100 @@
     "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\n 虚拟服务器的用法信息。\n示例：\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
   {
-    "id": "${COMMAND_NAME} slcli account billing-items [OPTIONS]",
-    "translation": "${COMMAND_NAME} slcli account billing-items [OPTIONS]"
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   此命令授权标识为 87654321 的虚拟服务器访问标识为 12345678 的卷。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   此命令列出有权访问标识为 12345678 的卷的所有主机，并按标识对其排序。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   此命令撤销标识为 87654321 的虚拟服务器对标识为 12345678 的卷的访问权。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   此命令对标识为 12345678 的卷执行故障恢复操作。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   此命令列出标识为 12345678 的块卷的适用复制数据中心。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   此命令为标识为 12345678 的卷订购副本，此副本执行 DAILY 复制，位于 dal09 上，层级为 4，操作系统类型为 Linux。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   此命令列出标识为 12345678 的块卷的现有副本卷。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   此命令立即取消标识为 12345678 的快照，而不要求确认。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   此命令创建标识为 12345678 的卷的快照，并添加注释 snapshotforibmcloud。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   此命令禁用标识为 12345678 的卷的每日快照。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   此命令启用标识为 12345678 的卷的快照，快照将在每周日 2:00 生成一次，最多保留 5 个快照。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   此命令列出标识为 12345678 的卷的所有快照，并按标识对其排序。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   此命令为标识为 12345678 的卷订购快照空间，大小为 1000 GB，层级为 4 IOPS/GB。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   此命令通过标识为 87654321 的快照复原标识为 12345678 的卷。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f\n   此命令立即取消标识为 12345678 的卷，而不要求确认。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678\n   此命令显示通过复制标识为 12345678 的卷来订购新卷。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\n示例：\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\t此命令列出此帐户的每个数据中心的存储限制。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   此命令列出当前帐户上位于 dal09 的所有耐久性卷，并按容量对其排序。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   示例：\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  此命令修改卷 12345678，卷的大小为 1000 GB，IOPS 为 4000。\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  此命令修改卷 12345678，卷的大小为 500 GB，层级为 4 IOPS/GB。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   此命令列出用于创建块存储卷的所有选项，包括存储类型、卷大小、操作系统类型、IOPS、层级、数据中心和快照大小。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   此命令订购性能卷，卷的大小为 1000GB，IOPS 为 4000，操作系统类型为 LINUX，位于 dal09 上。\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   此命令订购耐久性卷，卷的大小为 500GB，层级为 4 IOPS/GB，操作系统类型为 XEN，位于 dal09 上，还有额外快照空间大小 500GB。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n示例：\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\t使用其父 SNAPSHOT_ID 的快照来刷新重复的 VOLUME_ID。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tLUN 标识仅在主机授权流程中有效。在使用\n\t此方法前，建议（但并非必需）对所有主机\n\t取消授权。\n\tVOLUME_ID - 要对其设置 LUN 标识的卷标识。\n\tLUN_ID - 建议的范围是 0 到 255 之间的整数。高级用户\n\t可以使用 0 到 4095 之间的整数。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID \n \n 示例：\n ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 -- note \"this is my note\""
   },
   {
     "id": "%s is not a valid permission",
@@ -1022,10 +547,6 @@
   {
     "id": "--sortby {{.Column}} is not supported.",
     "translation": "不支持 --sortby {{.Column}}。"
-  },
-  {
-    "id": "--to or --by is required",
-    "translation": "--to 或 --by 是必需的"
   },
   {
     "id": "--url cannot be used with TCP checks.",
@@ -1232,10 +753,6 @@
     "translation": "用于过滤预设的字（或字符串）"
   },
   {
-    "id": "ALIAS:",
-    "translation": "ALIAS:"
-  },
-  {
     "id": "APIKEY",
     "translation": "API 密钥"
   },
@@ -1392,20 +909,12 @@
     "translation": "向现有凭单添加更新"
   },
   {
-    "id": "Adds guests. (Only set --up or --down) (default)",
-    "translation": "添加访客。 （仅设置 --up 或 --down）（缺省值）"
-  },
-  {
     "id": "Advanced configuration flag",
     "translation": "高级配置标志"
   },
   {
     "id": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.",
     "translation": "所有多重 VLAN 规则都必须使用提供的凭证通过 FortiGate 仪表板进行管理。"
-  },
-  {
-    "id": "All tags will be removed",
-    "translation": "将除去所有标记"
   },
   {
     "id": "Allocation",
@@ -1418,10 +927,6 @@
   {
     "id": "An ID of one subnet to authorize",
     "translation": "要授权的某个子网的标识"
-  },
-  {
-    "id": "An ID of one subnet to revoke",
-    "translation": "要撤销的某个子网的标识"
   },
   {
     "id": "An IP address to authorize",
@@ -1508,20 +1013,8 @@
     "translation": "将文件、块和可移植存储器授权给虚拟服务器"
   },
   {
-    "id": "Authorize hosts to access a given volume",
-    "translation": "授权主机访问给定卷"
-  },
-  {
     "id": "Auto Scale Group was deleted successfully",
     "translation": "已成功删除自动缩放组"
-  },
-  {
-    "id": "Auto Scale Group was scaled successfully",
-    "translation": "已成功缩放自动缩放组"
-  },
-  {
-    "id": "Autoscale Group {{.Id}} was updated",
-    "translation": "已更新自动缩放组 {{.Id}}"
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1576,20 +1069,8 @@
     "translation": "BackendRouterId 和 create-options 具有要使用的有效标识的列表。 [必需]"
   },
   {
-    "id": "Balancing Method: ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR, default: ROUNDROBIN",
-    "translation": "均衡方法：ROUNDROBIN | LEASTCONNECTION | WEIGHTED_RR，缺省值：ROUNDROBIN"
-  },
-  {
     "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]",
     "translation": "均衡方法：[ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. Default: ROUNDROBIN",
-    "translation": "均衡方法：[ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]。缺省值：ROUNDROBIN"
-  },
-  {
-    "id": "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]. [default: ROUNDROBIN]",
-    "translation": "均衡方法：[ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]。[缺省值：ROUNDROBIN]"
   },
   {
     "id": "Bandwidth",
@@ -2048,10 +1529,6 @@
     "translation": "要显示的列。 选项为：id、username、datacenter、storage_type、capacity_gb、bytes_used、IOPS、ip_addr、lunId、created_by、active_transactions、rep_partner_count 或 notes。 此选项可以多次指定"
   },
   {
-    "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]",
-    "translation": "要显示的列。 [选项为：guid、cpu、memory、datacenter、primary_ip、backend_ip、created_by、power_state、tags] [缺省值：id、hostname、domain、primary_ip、backend_ip、power_state]"
-  },
-  {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
     "translation": "要显示的列。 选项为：id、username、email、displayName、2FA、classicAPIKey、status、hardwareCount 或 virtualGuestCount。 此选项可以多次指定"
   },
@@ -2064,16 +1541,8 @@
     "translation": "要作为排序依据的列，缺省值为：hostname，选项为：id、hostname、domain、datacenter、cpu、memory、public_ip、private_ip"
   },
   {
-    "id": "Column to sort by, default:hostname",
-    "translation": "要排序的列，缺省值：hostname"
-  },
-  {
     "id": "Column to sort by, default:hostname, option:id,guid,hostname,domain,public_ip,private_ip,cpu,memory,os,datacenter,status,ipmi_ip,created,created_by",
     "translation": "要作为排序依据的列，缺省值为：hostname，选项为：id、guid、hostname、domain、public_ip、private_ip、cpu、memory、os、datacenter、status、ipmi_ip、created 或 created_by"
-  },
-  {
-    "id": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,active_transactions,created_by,mount_addr",
-    "translation": "要作为排序依据的列，缺省值为：id，选项为：id、username、datacenter、storage_type、capacity_gb、bytes_used、ip_addr、active_transactions、created_by 或 mount_addr"
   },
   {
     "id": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by",
@@ -2290,10 +1759,6 @@
   {
     "id": "Create a placement group",
     "translation": "创建放置组"
-  },
-  {
-    "id": "Create a placement group.",
-    "translation": "创建放置组。"
   },
   {
     "id": "Create a security group",
@@ -2712,10 +2177,6 @@
     "translation": "请勿删除，仅显示将删除的内容。"
   },
   {
-    "id": "Done",
-    "translation": "完成"
-  },
-  {
     "id": "Download SSL certificate and key files",
     "translation": "下载 SSL 证书和密钥文件"
   },
@@ -2730,10 +2191,6 @@
   {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
     "translation": "检索 [YYYY-MM-DD] 事件的最早日期。"
-  },
-  {
-    "id": "Earliest date to retrieve logs for [YYYY-MM-DD].",
-    "translation": "检索 [YYYY-MM-DD] 的日志的最早日期。"
   },
   {
     "id": "Edit SSL certificate",
@@ -2822,10 +2279,6 @@
   {
     "id": "Editor could not be ran: {{.Error}}.\n",
     "translation": "无法运行编辑器：{{.Error}}。\n"
-  },
-  {
-    "id": "Edits an Autoscale group.",
-    "translation": "编辑自动缩放组。"
   },
   {
     "id": "Either '--enable' or '--disable' is required.",
@@ -2952,16 +2405,8 @@
     "translation": "耐久性层/IOPS"
   },
   {
-    "id": "Entry",
-    "translation": "条目"
-  },
-  {
     "id": "Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n",
     "translation": "创建卷 {{.VolumeID}} 的快照时发生错误。请确保卷未故障转移，也未处于会阻止生成快照的其他状态。\n"
-  },
-  {
-    "id": "Error occurred while note was adding in block volume {{.VolumeID}}.\n",
-    "translation": "在块卷 {{.VolumeID}}中添加注释时发生错误。\n"
   },
   {
     "id": "Error: {{.Error}}",
@@ -3024,10 +2469,6 @@
     "translation": "从副本对块卷进行故障恢复"
   },
   {
-    "id": "Failback a file volume from replica",
-    "translation": "从副本对文件卷进行故障恢复"
-  },
-  {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
     "translation": "现在，正在对卷 {{.VolumeID}} 进行故障恢复。"
   },
@@ -3040,10 +2481,6 @@
     "translation": "失败，错误为： "
   },
   {
-    "id": "Failed set tags for virtual guest {{.VirtualGuestHostname}}.\n",
-    "translation": "为虚拟访客 {{.VirtualGuestHostname}}设置标记失败。\n"
-  },
-  {
     "id": "Failed to Edit email account: {{.emailID}}.\n",
     "translation": "未能编辑电子邮件帐户：{{.emailID}}。\n"
   },
@@ -3052,7 +2489,7 @@
     "translation": "未能编辑 emailAddress 帐户：{{.emailID}}。\n"
   },
   {
-    "id": "Failed to Order the dedicatedhost.\n",
+    "id": "Failed to Order the dedicatedhost.",
     "translation": "未能对专用主机进行排序。\n"
   },
   {
@@ -3152,7 +2589,7 @@
     "translation": "未能取消 VLAN {{.ID}}。\n"
   },
   {
-    "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.\n",
+    "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.",
     "translation": "未能取消专用主机中的所有访客：{{.HostID}}。\n"
   },
   {
@@ -3180,7 +2617,7 @@
     "translation": "未能取消项：{{.itemID}}。\n"
   },
   {
-    "id": "Failed to cancel license: {{.key}}.\n",
+    "id": "Failed to cancel license: {{.key}}.",
     "translation": "未能取消许可证：{{.key}}。\n"
   },
   {
@@ -3216,10 +2653,6 @@
     "translation": "未能确认卷 {{.VolumeId}} 上的新 LUN 标识。"
   },
   {
-    "id": "Failed to create Auto Scale Group.\n",
-    "translation": "未能创建自动缩放组。\n"
-  },
-  {
     "id": "Failed to create credential. ",
     "translation": "未能创建凭证。 "
   },
@@ -3240,7 +2673,7 @@
     "translation": "未能创建多个虚拟服务器实例。\n"
   },
   {
-    "id": "Failed to create placement group\n",
+    "id": "Failed to create placement group",
     "translation": "未能创建放置组\n"
   },
   {
@@ -3260,7 +2693,7 @@
     "translation": "未能创建子网：{{.ID}}。\n"
   },
   {
-    "id": "Failed to create the license.\n",
+    "id": "Failed to create the license.",
     "translation": "未能创建该许可证。\n"
   },
   {
@@ -3284,7 +2717,7 @@
     "translation": "未能对注释进行解码。\n"
   },
   {
-    "id": "Failed to delete AutoScale Group.\n",
+    "id": "Failed to delete AutoScale Group.",
     "translation": "未能删除自动缩放组。\n"
   },
   {
@@ -3428,7 +2861,7 @@
     "translation": "找不到此防火墙的产品包。"
   },
   {
-    "id": "Failed to generate the order template.\n",
+    "id": "Failed to generate the order template.",
     "translation": "未能生成顺序模板。\n"
   },
   {
@@ -3436,15 +2869,11 @@
     "translation": "未能获取帐户概述。"
   },
   {
-    "id": "Failed to get AutoScale group logs.\n",
-    "translation": "未能获取 AutoScale 组日志。\n"
-  },
-  {
-    "id": "Failed to get AutoScale group.\n",
+    "id": "Failed to get AutoScale group.",
     "translation": "未能获取 AutoScale 组。\n"
   },
   {
-    "id": "Failed to get Bandwidth Pool.\n",
+    "id": "Failed to get Bandwidth Pool.",
     "translation": "未能获取带宽池。\n"
   },
   {
@@ -3462,10 +2891,6 @@
   {
     "id": "Failed to get Cloud Object Storages.\n",
     "translation": "未能获取 Cloud Object Storage。\n"
-  },
-  {
-    "id": "Failed to get Datacenter {{.datacenter}}.\n",
-    "translation": "未能获取 Datacenter {{.datacenter}}。\n"
   },
   {
     "id": "Failed to get Event Log types.\n",
@@ -3612,7 +3037,7 @@
     "translation": "未能获取专用主机。\n"
   },
   {
-    "id": "Failed to get dedicatedhost instance: {{.HostID}}.\n",
+    "id": "Failed to get dedicatedhost instance: {{.HostID}}.",
     "translation": "未能获取专用主机实例：{{.HostID}}。\n"
   },
   {
@@ -3748,7 +3173,7 @@
     "translation": "未能获取许可权。\n"
   },
   {
-    "id": "Failed to get placement group: {{.ID}}.\n",
+    "id": "Failed to get placement group: {{.ID}}.",
     "translation": "未能获取放置组：{{.ID}}。\n"
   },
   {
@@ -3888,10 +3313,6 @@
     "translation": "无法获取帐户上的虚拟专用机架。\n"
   },
   {
-    "id": "Failed to get virtual guest members.\n",
-    "translation": "未能获取虚拟访客成员。\n"
-  },
-  {
     "id": "Failed to get virtual guests on your account.\n",
     "translation": "无法获取帐户上的虚拟访客。\n"
   },
@@ -3924,7 +3345,7 @@
     "translation": "未能获取 VLAN 主路由器标识。"
   },
   {
-    "id": "Failed to get vlan {{.VlanId}}.\n",
+    "id": "Failed to get vlan {{.VlanId}}.",
     "translation": "未能获取 vlan {{.VlanId}}。\n"
   },
   {
@@ -3932,7 +3353,7 @@
     "translation": "未能从专区名称 {{.Zone}} 获取专区标识。\n"
   },
   {
-    "id": "Failed to licenses create options.\n",
+    "id": "Failed to licenses create options.",
     "translation": "未能许可证创建选项。\n"
   },
   {
@@ -3980,7 +3401,7 @@
     "translation": "未能列出包。\n"
   },
   {
-    "id": "Failed to list placement groups\n",
+    "id": "Failed to list placement groups",
     "translation": "未能列出放置组\n"
   },
   {
@@ -3996,11 +3417,11 @@
     "translation": "未能列出专区 {{.Zone}} 下的资源记录。\n"
   },
   {
-    "id": "Failed to list routers\n",
+    "id": "Failed to list routers",
     "translation": "未能列出路由器\n"
   },
   {
-    "id": "Failed to list rules\n",
+    "id": "Failed to list rules",
     "translation": "未能列出规则\n"
   },
   {
@@ -4008,7 +3429,7 @@
     "translation": "未能列出您帐户的子网。\n"
   },
   {
-    "id": "Failed to list the host guest on your account.\n",
+    "id": "Failed to list the host guest on your account.",
     "translation": "未能列出帐户上的主机访客。\n"
   },
   {
@@ -4212,7 +3633,7 @@
     "translation": "未能从安全组 {{.GroupID}} 中除去网络组件 {{.ComponentID}}。\n"
   },
   {
-    "id": "Failed to remove placement group: {{.ID}}.\n",
+    "id": "Failed to remove placement group: {{.ID}}.",
     "translation": "未能除去放置组：{{.ID}}。\n"
   },
   {
@@ -4268,10 +3689,6 @@
     "translation": "未能保存报价。\n"
   },
   {
-    "id": "Failed to scale Auto Scale Group.",
-    "translation": "无法缩放自动缩放组。"
-  },
-  {
     "id": "Failed to set LUN ID for volume {{.VolumeID}}.\n",
     "translation": "未能设置卷 {{.VolumeID}} 的 LUN 标识。\n"
   },
@@ -4288,7 +3705,7 @@
     "translation": "未能设置主机 {{.HostID}} 的密码。\n"
   },
   {
-    "id": "Failed to set tags.\n",
+    "id": "Failed to set tags.",
     "translation": "未能设置标记。\n"
   },
   {
@@ -4346,10 +3763,6 @@
   {
     "id": "Failed to unmarshal template file: {{.File}}.\n",
     "translation": "未能反序列化模板文件：{{.File}}。\n"
-  },
-  {
-    "id": "Failed to update Auto Scale Group.\n",
-    "translation": "未能更新自动缩放组。\n"
   },
   {
     "id": "Failed to update IPSec {{.ContextID}}.\n",
@@ -4456,7 +3869,7 @@
     "translation": "未能验证此订单。\n"
   },
   {
-    "id": "Failed to verify virtual server creation.\n",
+    "id": "Failed to verify virtual server creation.",
     "translation": "未能验证虚拟服务器创建。\n"
   },
   {
@@ -4488,12 +3901,8 @@
     "translation": "未能将虚拟服务器模板文件写入 {{.Template}}。"
   },
   {
-    "id": "Failover a block volume to the given replica volume",
+    "id": "Failover a {{.storageType}} volume to the given replica volume",
     "translation": "将块卷故障转移到给定副本卷"
-  },
-  {
-    "id": "Failover a file volume to the given replica volume",
-    "translation": "将文件卷故障转移到给定副本卷"
   },
   {
     "id": "Failover an inaccessible volume to its available replicant volume.",
@@ -4532,10 +3941,6 @@
     "translation": "文件卷 {{.VolumeId}} 已标记为立即取消。"
   },
   {
-    "id": "File volume {{.VolumeId}} is being restored using snapshot {{.SnapshotId}}.",
-    "translation": "正在使用快照 {{.SnapshotId}} 复原文件卷 {{.VolumeId}}。"
-  },
-  {
     "id": "Filter by ID of the order that purchased the IPSec",
     "translation": "按购买了 IPSec 的订单的标识过滤"
   },
@@ -4566,10 +3971,6 @@
   {
     "id": "Filter by ID of the owner",
     "translation": "按所有者标识过滤"
-  },
-  {
-    "id": "Filter by Memory capacity in megabytes",
-    "translation": "按内存容量（以兆字节为单位）过滤"
   },
   {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
@@ -4670,10 +4071,6 @@
   {
     "id": "Filter by subnet type",
     "translation": "按子网类型过滤"
-  },
-  {
-    "id": "Filter by tags",
-    "translation": "按标记过滤"
   },
   {
     "id": "Filter by tags (multiple occurrence permitted)",
@@ -4792,12 +4189,12 @@
     "translation": "FriendlyName"
   },
   {
-    "id": "Frontend port [default: 80]",
+    "id": "Frontend port",
     "translation": "前端端口 [缺省值：80]"
   },
   {
-    "id": "Frontend protocol [default: HTTP]",
-    "translation": "前端协议 [缺省值：HTTP]"
+    "id": "Frontend protocol",
+    "translation": "前端协议"
   },
   {
     "id": "Fully qualified name",
@@ -4912,10 +4309,6 @@
     "translation": "获取给定块存储器重复卷的分割或移动完成百分比的状态。"
   },
   {
-    "id": "Get status for split or move completed percentage of a given file storage duplicate volume.",
-    "translation": "获取给定文件存储器重复卷的分割或移动完成百分比的状态。"
-  },
-  {
     "id": "Get storage details for a hardware server.",
     "translation": "获取硬件服务器的存储器详细信息。"
   },
@@ -5016,32 +4409,16 @@
     "translation": "运行状况检查的时间间隔"
   },
   {
-    "id": "Health check interval between checks. [default: 5]",
-    "translation": "运行状况检查的时间间隔。[缺省值：5]"
-  },
-  {
     "id": "Health check number of times before marking as DOWN",
     "translation": "在标记为“关闭”之前的运行状况检查次数"
-  },
-  {
-    "id": "Health check number of times before marking as DOWN. [default: 2]",
-    "translation": "在标记为“关闭”之前的运行状况检查次数。[缺省值：2]"
   },
   {
     "id": "Health check path",
     "translation": "运行状况检查路径"
   },
   {
-    "id": "Health check path.  [default: /]",
-    "translation": "运行状况检查路径。[缺省值：/]"
-  },
-  {
     "id": "Health check timeout",
     "translation": "运行状况检查超时"
-  },
-  {
-    "id": "Health check timeout. [default: 2]",
-    "translation": "运行状况检查超时。[缺省值：2]"
   },
   {
     "id": "Hide IP address listing",
@@ -5176,10 +4553,6 @@
     "translation": "用于复制的源卷快照的标识"
   },
   {
-    "id": "ID of an original volume snapshot to use for duplication",
-    "translation": "用于复制的原始卷快照的标识"
-  },
-  {
     "id": "ID of the object being tagged  [required]",
     "translation": "正在标记的对象的标识 [必需]"
   },
@@ -5194,50 +4567,6 @@
   {
     "id": "IDs of the subnets to remove",
     "translation": "要除去的子网的标识"
-  },
-  {
-    "id": "INTEGER Disk sizes (multiple occurrence permitted)  [required]",
-    "translation": "INTEGER 磁盘大小（允许多次出现）[必需]"
-  },
-  {
-    "id": "INTEGER Number of CPUs for new guests (existing not effected)",
-    "translation": "INTEGER 新访客的 CPU 数（现有不受影响）"
-  },
-  {
-    "id": "INTEGER Number of CPUs for new guests (existing not effected)  [required]",
-    "translation": "INTEGER 新访客的 CPU 数（现有不受影响）[必需]"
-  },
-  {
-    "id": "INTEGER RAM in MB or GB for new guests (existing not effected)",
-    "translation": "INTEGER 新访客的 RAM，以 MB 或 GB 为单位（现有不受影响）"
-  },
-  {
-    "id": "INTEGER RAM in MB or GB for new guests (existing not effected)  [required]",
-    "translation": "INTEGER 新访客的 RAM，以 MB 或 GB 为单位（现有不受影响）[必需]"
-  },
-  {
-    "id": "INTEGER Set the maximum number of guests",
-    "translation": "INTEGER 设置最大访客数"
-  },
-  {
-    "id": "INTEGER Set the maximum number of guests  [required]",
-    "translation": "INTEGER 设置最大访客数 [必需]"
-  },
-  {
-    "id": "INTEGER Set the minimum number of guests",
-    "translation": "INTEGER 设置最小访客数"
-  },
-  {
-    "id": "INTEGER Set the minimum number of guests  [required]",
-    "translation": "INTEGER 设置最小访客数 [必需]"
-  },
-  {
-    "id": "INTEGER The identifier of the regional group this scaling group is assigned to.  [required]",
-    "translation": "INTEGER 将此缩放组分配到的区域组的标识。 [必需]"
-  },
-  {
-    "id": "INTEGER The number of seconds this group will wait after lastActionDate before performing another action.  [required]",
-    "translation": "INTEGER 此组在执行其他操作之前将在 lastActionDate 之后等待的秒数。 [必需]"
   },
   {
     "id": "IOPS",
@@ -5402,10 +4731,6 @@
   {
     "id": "Internal peer IP address",
     "translation": "内部对等 IP 地址"
-  },
-  {
-    "id": "Internet side port. Default: 80",
-    "translation": "因特网侧端口。缺省值：80"
   },
   {
     "id": "Invalid --sortBy option.",
@@ -5772,16 +5097,8 @@
     "translation": "列出块卷的现有副本卷"
   },
   {
-    "id": "List existing replicant volumes for a file volume",
-    "translation": "列出文件卷的现有副本卷"
-  },
-  {
     "id": "List file storage",
     "translation": "列出文件存储器"
-  },
-  {
-    "id": "List file storage snapshots",
-    "translation": "列出文件存储器快照"
   },
   {
     "id": "List hardware server credentials",
@@ -6096,10 +5413,6 @@
     "translation": "使用 [--private] 时必须指定 [--cpu]。"
   },
   {
-    "id": "NAME:",
-    "translation": "名称："
-  },
-  {
     "id": "NETWORK has to be either public or private.",
     "translation": "NETWORK 必须为 public 或 private。"
   },
@@ -6178,10 +5491,6 @@
   {
     "id": "New Size of file volume in GB. ***If no size is given, the original size of volume is used.***\n      Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n      Minimum: [the original size of the volume]",
     "translation": "文件卷的新大小（以 GB 为单位）。***如果没有提供大小，那么将使用卷的原始大小。***\n可能的大小：[20、40、80、100、250、500、1000、2000、4000、8000、12000] \n最小值：[卷的原始大小]"
-  },
-  {
-    "id": "New Tags: {{.Tags}}.",
-    "translation": "新标记：{{.Tags}}。"
   },
   {
     "id": "New notes for the key",
@@ -6356,10 +5665,6 @@
     "translation": "此容量预留可支持的 VSI 实例数。[必需]"
   },
   {
-    "id": "Number of guests for the scale action.",
-    "translation": "用于缩放操作的访客数。"
-  },
-  {
     "id": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds",
     "translation": "要报告为一个数据点的秒数。 300、600、1800、3600（缺省值）、43200 或 86400 秒"
   },
@@ -6374,10 +5679,6 @@
   {
     "id": "Number of updates",
     "translation": "更新数"
-  },
-  {
-    "id": "OPTIONS:",
-    "translation": "选项："
   },
   {
     "id": "OS",
@@ -6422,10 +5723,6 @@
   {
     "id": "One of -d | --hardware-id, -v | --virtual-id, -i | --ip-address-id and -p | --ip-address must be specified.",
     "translation": "必须指定 -d | --hardware-id、-v | --virtual-id、-i | --ip-address-id 和 -p | --ip-address 其中一项。"
-  },
-  {
-    "id": "One of -d | --hardware-id, -v | --virtual-id, -i | --ip-address-id, -p | --ip-address and -s | --subnet-id must be specified.",
-    "translation": "必须指定 -d | --hardware-id、-v | --virtual-id、-i | --ip-address-id、-p | --ip-address 和 -s | --subnet-id 其中一项。"
   },
   {
     "id": "Ongoing Transactions",
@@ -6492,10 +5789,6 @@
     "translation": "用于订购快照空间以及耐久性块存储器的可选参数；指定要订购的快照空间的大小 (GB)"
   },
   {
-    "id": "Optional parameter for ordering snapshot space along with the volume",
-    "translation": "用于订购快照空间以及卷的可选参数"
-  },
-  {
     "id": "Options for --sortby are: id,name,description,created",
     "translation": "--sortby 的选项为：id、name、description 或 created"
   },
@@ -6526,10 +5819,6 @@
   {
     "id": "Order a block volume by duplicating an existing volume",
     "translation": "通过复制现有卷来订购块卷"
-  },
-  {
-    "id": "Order a file storage replica volume",
-    "translation": "订购文件存储器副本卷"
   },
   {
     "id": "Order a file storage volume",
@@ -6574,10 +5863,6 @@
   {
     "id": "Order/Create License.",
     "translation": "订购/创建许可证。"
-  },
-  {
-    "id": "Order/Create a scale group.",
-    "translation": "订购/创建缩放组。"
   },
   {
     "id": "Order/create a hardware server",
@@ -6650,10 +5935,6 @@
   {
     "id": "Owner",
     "translation": "所有者"
-  },
-  {
-    "id": "PATH Read userdata from a file",
-    "translation": "PATH 从文件读取用户数据"
   },
   {
     "id": "POD",
@@ -6750,10 +6031,6 @@
   {
     "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]",
     "translation": "性能存储器 IOPs，介于 100 到 6000 之间且为 100 的倍数 [storage-type 为 performance 时是必需的]"
-  },
-  {
-    "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100,if no IOPS value is specified, the IOPS value of the original volume will be used",
-    "translation": "性能存储器 IOPs，介于 100 到 6000 之间且为 100 的倍数；如果未指定 IOPS 值，那么将使用原始卷的 IOPS 值"
   },
   {
     "id": "Permanently removes an SSH key",
@@ -7072,7 +6349,7 @@
     "translation": "专用端口速度，选项为：0、10、100、1000 或 10000"
   },
   {
-    "id": "Private side port. Default: 80",
+    "id": "Private side port",
     "translation": "专用网络侧端口。缺省值：80"
   },
   {
@@ -7098,10 +6375,6 @@
   {
     "id": "Protocol type to use for incoming connections",
     "translation": "要用于入局连接的协议类型"
-  },
-  {
-    "id": "Protocol type to use for incoming connections. [default: HTTP]",
-    "translation": "要用于入局连接的协议类型。[缺省值：HTTP]"
   },
   {
     "id": "Protocol type to use for incoming connections: [HTTP|HTTPS|TCP]. Default: HTTP",
@@ -7336,10 +6609,6 @@
     "translation": "除去帐户上的空标记。"
   },
   {
-    "id": "Removes guests. (Only set --up or --down)",
-    "translation": "除去访客。 （仅设置 --up 或 --down）"
-  },
-  {
     "id": "Removing Tag: {{.tag}}.",
     "translation": "除去标记：{{.tag}}。"
   },
@@ -7400,10 +6669,6 @@
     "translation": "使用给定快照复原块卷"
   },
   {
-    "id": "Restore file volume using a given snapshot",
-    "translation": "使用给定快照复原文件卷"
-  },
-  {
     "id": "Result limit",
     "translation": "结果限制"
   },
@@ -7422,10 +6687,6 @@
   {
     "id": "Retrieve credentials used for generating an AWS signature. Max of 2.",
     "translation": "检索用于生成 AWS 签名的凭证。 最大值为 2。"
-  },
-  {
-    "id": "Retrieve logs for an Autoscale group.",
-    "translation": "检索自动缩放组的日志。"
   },
   {
     "id": "Return ALL invoices. There may be a lot of these. [default: False]",
@@ -7552,10 +6813,6 @@
     "translation": "保存报价"
   },
   {
-    "id": "Scales an Autoscale group. Bypasses a scale group's cooldown period.",
-    "translation": "缩放自动缩放组。 绕过缩放组的冷却时间段。"
-  },
-  {
     "id": "Schedule",
     "translation": "安排"
   },
@@ -7628,12 +6885,8 @@
     "translation": "设置标记。"
   },
   {
-    "id": "Set note for an existing block storage volume.",
+    "id": "Set note for an existing {{.storageType}} storage volume.",
     "translation": "为现有块存储卷设置注释。"
-  },
-  {
-    "id": "Set note for an existing file storage volume.",
-    "translation": "为现有文件存储卷设置注释。"
   },
   {
     "id": "Set note successfully",
@@ -7670,10 +6923,6 @@
   {
     "id": "Sets username for this account.",
     "translation": "设置此帐户的用户名。"
-  },
-  {
-    "id": "Setting tags for {{.VirtualGuestHostname}}.",
-    "translation": "正在设置 {{.VirtualGuestHostname}}的标记。"
   },
   {
     "id": "Short Name",
@@ -7734,10 +6983,6 @@
   {
     "id": "Show only selected datacenter, use shortname (dal13) format",
     "translation": "仅显示所选数据中心，使用短名称 (dal13) 格式"
-  },
-  {
-    "id": "Show only the bandwidth pool summary.",
-    "translation": "仅显示带宽池摘要。"
   },
   {
     "id": "Show only the bandwidth summary for each hardware server ",
@@ -7988,12 +7233,12 @@
     "translation": "成功创建的放置组：标识为 {{.ID}}，名称为 {{.Name}}。"
   },
   {
-    "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
-    "translation": "已成功将子网标识 {{.subnetID}} 从允许的主机标识 {{.accessID}} 除去"
-  },
-  {
     "id": "Successfully device firmware reflashed",
     "translation": "已成功重刷设备固件"
+  },
+  {
+    "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
+    "translation": "已成功将子网标识 {{.subnetID}} 从允许的主机标识 {{.accessID}} 除去"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
@@ -8048,62 +7293,6 @@
     "translation": "正在对虚拟服务器实例 {{.VsId}} 执行系统重新装入。请稍后运行“{{.CommandName}} sl vs ready {{.VsId}}”以检查它是否已就绪。"
   },
   {
-    "id": "TEXT Collection of policies for this group. This can be empty.",
-    "translation": "TEXT 此组的策略集合。 可以为空。"
-  },
-  {
-    "id": "TEXT Datacenter shortname  [required]",
-    "translation": "TEXT 数据中心短名称 [必需]"
-  },
-  {
-    "id": "TEXT Domain portion of the FQDN  [required]",
-    "translation": "TEXT FQDN 的域部分 [必需]"
-  },
-  {
-    "id": "TEXT Host portion of the FQDN  [required]",
-    "translation": "TEXT FQDN 的主机部分 [必需]"
-  },
-  {
-    "id": "TEXT OS install code. Tip: you can specify <OS>_LATEST  [required]",
-    "translation": "TEXT 操作系统安装代码。 提示：可以指定 <OS>_LATEST  [必需]"
-  },
-  {
-    "id": "TEXT Post-install script to download",
-    "translation": "TEXT 要下载的安装后脚本"
-  },
-  {
-    "id": "TEXT SSH keys to add to the root user (multiple occurrence permitted)",
-    "translation": "TEXT 要添加到 root 用户的 SSH 密钥（允许多次出现）"
-  },
-  {
-    "id": "TEXT Scale group's name.",
-    "translation": "TEXT 缩放组的名称。"
-  },
-  {
-    "id": "TEXT Scale group's name.  [required]",
-    "translation": "TEXT 缩放组的名称。 [必需]"
-  },
-  {
-    "id": "TEXT The number to scale by. This number has different meanings based on type.",
-    "translation": "TEXT 要缩放的数量。 根据类型，此数量具有不同的含义。"
-  },
-  {
-    "id": "TEXT The termination policy for the group(CLOSEST_TO_NEXT_CHARGE=1, NEWEST=2, OLDEST=3).  [required]",
-    "translation": "TEXT 该组的终止策略（CLOSEST_TO_NEXT_CHARGE=1、NEWEST=2 或 OLDEST=3）。 [必需]"
-  },
-  {
-    "id": "TEXT The type of scale to perform(ABSOLUTE, PERCENT, RELATIVE).",
-    "translation": "TEXT 要执行的缩放类型（绝对值、百分比或相对值）。"
-  },
-  {
-    "id": "TEXT User defined metadata string",
-    "translation": "TEXT 用户定义的元数据字符串"
-  },
-  {
-    "id": "TTL(Time-To-Live) in seconds, such as: 86400",
-    "translation": "以秒为单位的 TTL（生存时间），例如：86400"
-  },
-  {
     "id": "TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200",
     "translation": "以秒为单位的 TTL（生存时间），例如：86400。缺省值为：7200"
   },
@@ -8126,10 +7315,6 @@
   {
     "id": "Tags to add to the instance (multiple occurrence permitted)",
     "translation": "要添加到实例的标记（允许多次出现）"
-  },
-  {
-    "id": "Tags to set for each guest in this group. Existing tags are overwritten. An empty string will remove all tags.",
-    "translation": "要为此组中的每个访客设置的标记。 将覆盖现有标记。 空字符串将除去所有标记。"
   },
   {
     "id": "Tags to set or empty string to remove all",
@@ -8380,10 +7565,6 @@
     "translation": "密钥的新标签"
   },
   {
-    "id": "The note ",
-    "translation": "注释 "
-  },
-  {
     "id": "The note of hardware server: {{.ID}} was updated.",
     "translation": "硬件服务器 {{.ID}} 的注释已更新。"
   },
@@ -8482,10 +7663,6 @@
   {
     "id": "The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the origin volume will be used",
     "translation": "要为复制项订购的快照空间的大小，如果未指定快照空间大小，将使用源卷的快照空间大小"
-  },
-  {
-    "id": "The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the original volume will be used",
-    "translation": "要为复制项订购的快照空间的大小，如果未指定快照空间大小，将使用原始卷的快照空间大小"
   },
   {
     "id": "The snapshot space for this volume is set for cancellation; unable to order replicant volume.",
@@ -8644,28 +7821,12 @@
     "translation": "此命令需要 --add 或 --remove 选项。"
   },
   {
-    "id": "This command requires four arguments.",
-    "translation": "此命令需要 4 个自变量。"
-  },
-  {
-    "id": "This command requires note flag.",
-    "translation": "此命令需要注释标志。"
-  },
-  {
     "id": "This command requires notification names as arguments and options flags.",
     "translation": "此命令需要通知名称作为参数和选项标志。"
   },
   {
     "id": "This command requires one argument.",
     "translation": "此命令需要 1 个自变量。"
-  },
-  {
-    "id": "This command requires one identifier.",
-    "translation": "此命令需要一个标识。"
-  },
-  {
-    "id": "This command requires one indentifier, the option and the option arguments.",
-    "translation": "此命令需要标识、选项和选项参数。"
   },
   {
     "id": "This command requires one option.",
@@ -8680,20 +7841,8 @@
     "translation": "此命令需要 --title 选项。"
   },
   {
-    "id": "This command requires three arguments.",
-    "translation": "此命令需要 3 个自变量。"
-  },
-  {
     "id": "This command requires two arguments.",
     "translation": "此命令需要 2 个自变量。"
-  },
-  {
-    "id": "This command requires zero arguments.",
-    "translation": "此命令不需要自变量。"
-  },
-  {
-    "id": "This command uses 0 arguments",
-    "translation": "此命令不使用自变量。"
   },
   {
     "id": "This interface allows you to change the route of your Account Owned subnets.",
@@ -8944,10 +8093,6 @@
     "translation": "类型"
   },
   {
-    "id": "USAGE:",
-    "translation": "用法："
-  },
-  {
     "id": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]",
     "translation": "用于搜索日期的 UTC 偏移量。 +/-hhmm 格式 [缺省值：-0000]"
   },
@@ -9022,10 +8167,6 @@
   {
     "id": "Unable to find item with ID: {{.itemID}}.\n",
     "translation": "找不到标识为 {{.itemID}}的项。\n"
-  },
-  {
-    "id": "Unable to find license with key: {{.key}}.\n",
-    "translation": "找不到密钥为 {{.key}}的许可证。\n"
   },
   {
     "id": "Unable to find location",
@@ -9268,10 +8409,6 @@
     "translation": "虚拟访客成员模板"
   },
   {
-    "id": "Virtual Guest Members",
-    "translation": "虚拟访客成员"
-  },
-  {
     "id": "Virtual guest domain name not found.",
     "translation": "找不到虚拟访客域名。"
   },
@@ -9380,14 +8517,6 @@
     "translation": "此重复卷是否将成为源卷的从属重复卷。"
   },
   {
-    "id": "Will add/remove a number of guests to get the group's guest count to the specified number. (Only set --by or --to)",
-    "translation": "将添加/除去多个访客，以将组的访客计数添加到指定的数量。 （仅设置 --by 或 --to）"
-  },
-  {
-    "id": "Will add/remove the specified number of guests. (Only set --by or --to)",
-    "translation": "将添加/除去指定数量的访客。 （仅设置 --by 或 --to）"
-  },
-  {
     "id": "Would you like to submit the rules. Continue?",
     "translation": "提交规则。要继续吗？"
   },
@@ -9466,10 +8595,6 @@
   {
     "id": "[-d|--datacenter] is required.\n Run '{{.CommandName}} sl block volume-options' to get available options.",
     "translation": "[-d|--datacenter] 是必需的。\n请运行“{{.CommandName}} sl block volume-options”以获取可用的选项。"
-  },
-  {
-    "id": "[-d|--datacenter] is required.\n Run '{{.CommandName}} sl file volume-options' to get available options.",
-    "translation": "[-d|--datacenter] 是必需的。\n请运行“{{.CommandName}} sl file volume-options”以获取可用的选项。"
   },
   {
     "id": "[-d|--day-of-week] value must be between 0 and 6.",

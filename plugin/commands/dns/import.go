@@ -1,56 +1,71 @@
 package dns
 
 import (
-	"errors"
 	"io/ioutil"
 	"strconv"
 	"strings"
 
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/miekg/dns"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
+	
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type ImportCommand struct {
-	UI         terminal.UI
+	*metadata.SoftlayerCommand
 	DNSManager managers.DNSManager
+	Command    *cobra.Command
+	DryRun     bool
 }
 
-func NewImportCommand(ui terminal.UI, dnsManager managers.DNSManager) (cmd *ImportCommand) {
-	return &ImportCommand{
-		UI:         ui,
-		DNSManager: dnsManager,
+func NewImportCommand(sl *metadata.SoftlayerCommand) *ImportCommand {
+	thisCmd := &ImportCommand{
+		SoftlayerCommand: sl,
+		DNSManager:       managers.NewDNSManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "import " + T("ZONEFILE"),
+		Short: T("Import a zone based off a BIND zone file"),
+		Long: T(`${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl dns import ~/ibm.com.txt
+   This command imports zone and its resource records from file: ~/ibm.com.txt.`),
+		Args: metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVar(&thisCmd.DryRun, "dry-run", false, T("Don't actually create records"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *ImportCommand) Run(c *cli.Context) error {
-	if c.NArg() != 1 {
-		return bmxErr.NewInvalidUsageError(T("This command requires one argument."))
-	}
-	bytes, err := ioutil.ReadFile(c.Args()[0])
+func (cmd *ImportCommand) Run(args []string) error {
+	bytes, err := ioutil.ReadFile(args[0])
 	if err != nil {
-		return cli.NewExitError(T("Failed to read file: {{.FilePath}}.\n", map[string]interface{}{"FilePath": c.Args()[0]})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to read file: {{.FilePath}}.\n", map[string]interface{}{"FilePath": args[0]}), err.Error(), 2)
 	}
 	zone, records, err := parseFileContent(string(bytes))
 	if err != nil {
-		return cli.NewExitError(T("Failed to parse file.\n")+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to parse file.\n"), err.Error(), 2)
 	}
 
-	if c.IsSet("dry-run") {
+	if cmd.DryRun {
 		cmd.UI.Ok()
 		return nil
 	}
 
 	dnsDomain, err := cmd.DNSManager.CreateZone(*zone.Name) //parseFileContent can guarantee zone.name is not nil
 	if err != nil {
-		return cli.NewExitError(T("Failed to create zone: {{.ZoneName}}.\n", map[string]interface{}{"ZoneName": *zone.Name})+err.Error(), 2)
+		return errors.NewAPIError(T("Failed to create zone: {{.ZoneName}}.\n", map[string]interface{}{"ZoneName": *zone.Name}), err.Error(), 2)
 	}
 	cmd.UI.Print(T("Zone {{.Zone}} was created.", map[string]interface{}{"Zone": utils.StringPointertoString(dnsDomain.Name)}))
 
@@ -68,7 +83,7 @@ func (cmd *ImportCommand) Run(c *cli.Context) error {
 	}
 
 	if len(multiErrors) > 0 {
-		return cli.NewExitError(cli.NewMultiError(multiErrors...).Error(), 2)
+		return errors.CollapseErrors(multiErrors)
 	}
 	return nil
 }
@@ -127,23 +142,4 @@ func parseFileContent(content string) (datatypes.Dns_Domain, []datatypes.Dns_Dom
 	}
 	zone.ResourceRecords = records
 	return zone, records, nil
-}
-
-func DnsImportMetaData() cli.Command {
-	return cli.Command{
-		Category:    "dns",
-		Name:        "import",
-		Description: T("Import a zone based off a BIND zone file"),
-		Usage: T(`${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl dns import ~/ibm.com.txt
-   This command imports zone and its resource records from file: ~/ibm.com.txt.`),
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "dry-run",
-				Usage: T("Don't actually create records"),
-			},
-		},
-	}
 }

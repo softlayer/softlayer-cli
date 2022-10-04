@@ -1,8 +1,7 @@
 package loadbal
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -11,32 +10,50 @@ import (
 )
 
 type L7RuleDelCommand struct {
-	UI                  terminal.UI
+	*metadata.SoftlayerCommand
 	LoadBalancerManager managers.LoadBalancerManager
+	Command             *cobra.Command
+	PolicyUuid          string
+	RuleUuid            string
+	Force               bool
 }
 
-func NewL7RuleDelCommand(ui terminal.UI, lbManager managers.LoadBalancerManager) (cmd *L7RuleDelCommand) {
-	return &L7RuleDelCommand{
-		UI:                  ui,
-		LoadBalancerManager: lbManager,
+func NewL7RuleDelCommand(sl *metadata.SoftlayerCommand) *L7RuleDelCommand {
+	thisCmd := &L7RuleDelCommand{
+		SoftlayerCommand:    sl,
+		LoadBalancerManager: managers.NewLoadBalancerManager(sl.Session),
 	}
+	cobraCmd := &cobra.Command{
+		Use:   "l7rule-delete",
+		Short: T("Delete a L7 rule"),
+		Long:  T("${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]"),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().StringVar(&thisCmd.PolicyUuid, "policy-uuid", "", T("UUID for the load balancer policy [required]"))
+	cobraCmd.Flags().StringVar(&thisCmd.RuleUuid, "rule-uuid", "", T("UUID for the load balancer rule [required]"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-func (cmd *L7RuleDelCommand) Run(c *cli.Context) error {
-	l7PolicyID := c.String("policy-uuid")
+func (cmd *L7RuleDelCommand) Run(args []string) error {
+	l7PolicyID := cmd.PolicyUuid
 	if l7PolicyID == "" {
 		return errors.NewMissingInputError("--policy-uuid")
 	}
 
-	l7RuleID := c.String("rule-uuid")
+	l7RuleID := cmd.RuleUuid
 	if l7RuleID == "" {
 		return errors.NewMissingInputError("--rule-uuid")
 	}
 
-	if !c.IsSet("f") {
+	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will delete the load balancer L7 rule: {{.RuleID}} and cannot be undone. Continue?", map[string]interface{}{"RuleID": l7RuleID}))
 		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
+			return err
 		}
 		if !confirm {
 			cmd.UI.Say(T("Aborted."))
@@ -46,30 +63,10 @@ func (cmd *L7RuleDelCommand) Run(c *cli.Context) error {
 
 	_, err := cmd.LoadBalancerManager.DeleteL7Rule(&l7PolicyID, l7RuleID)
 	if err != nil {
-		return cli.NewExitError(T("Failed to delete L7Rule {{.L7RuleID}}: {{.Error}}.\n",
-			map[string]interface{}{"L7RuleID": l7RuleID, "Error": err.Error()}), 2)
+		return errors.New(T("Failed to delete L7Rule {{.L7RuleID}}: {{.Error}}.\n",
+			map[string]interface{}{"L7RuleID": l7RuleID, "Error": err.Error()}))
 	}
 	cmd.UI.Ok()
 	cmd.UI.Say(T("L7Rule {{.L7RuleID}} removed", map[string]interface{}{"L7RuleID": l7RuleID}))
 	return nil
-}
-
-func LoadbalL7RuleDelMetadata() cli.Command {
-	return cli.Command{
-		Category:    "loadbal",
-		Name:        "l7rule-delete",
-		Description: T("Delete a L7 rule"),
-		Usage:       "${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "policy-uuid",
-				Usage: T("UUID for the load balancer policy [required]"),
-			},
-			cli.StringFlag{
-				Name:  "rule-uuid",
-				Usage: T("UUID for the load balancer rule [required]"),
-			},
-			metadata.ForceFlag(),
-		},
-	}
 }

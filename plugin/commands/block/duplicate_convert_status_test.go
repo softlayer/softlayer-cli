@@ -8,49 +8,48 @@ import (
 	. "github.com/onsi/gomega"
 
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/urfave/cli"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("block duplicate-convert-status", func() {
 	var (
 		fakeUI             *terminal.FakeUI
-		fakeStorageManager *testhelpers.FakeStorageManager
-		cmd                *block.DuplicateConvertStatusCommand
-		cliCommand         cli.Command
+		FakeStorageManager *testhelpers.FakeStorageManager
+		cliCommand         *block.DuplicateConvertStatusCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeStorageManager = new(testhelpers.FakeStorageManager)
-		cmd = block.NewDuplicateConvertStatusCommand(fakeUI, fakeStorageManager)
-		cliCommand = cli.Command{
-			Name:        block.BlockDuplicateConvertStatusMetaData().Name,
-			Description: block.BlockDuplicateConvertStatusMetaData().Description,
-			Usage:       block.BlockDuplicateConvertStatusMetaData().Usage,
-			Flags:       block.BlockDuplicateConvertStatusMetaData().Flags,
-			Action:      cmd.Run,
-		}
+		FakeStorageManager = new(testhelpers.FakeStorageManager)
+		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
+		cliCommand = block.NewDuplicateConvertStatusCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+		cliCommand.StorageManager = FakeStorageManager
 	})
 
 	Describe("block duplicate-convert-status", func() {
 
 		Context("Return error", func() {
 			It("Set command without Id", func() {
-				err := testhelpers.RunCommand(cliCommand)
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 
 			It("Set command with an invalid Id", func() {
-				err := testhelpers.RunCommand(cliCommand, "abcde")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcde")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 
 			It("Set invalid output", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456", "--output=xml")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid output format, only JSON is supported now."))
 			})
@@ -58,10 +57,10 @@ var _ = Describe("block duplicate-convert-status", func() {
 
 		Context("Return error", func() {
 			BeforeEach(func() {
-				fakeStorageManager.GetDuplicateConversionStatusReturns(datatypes.Container_Network_Storage_DuplicateConversionStatusInformation{}, errors.New("Failed to get duplicate conversion status"))
+				FakeStorageManager.GetDuplicateConversionStatusReturns(datatypes.Container_Network_Storage_DuplicateConversionStatusInformation{}, errors.New("Failed to get duplicate conversion status"))
 			})
 			It("Failed get duplicate conversion status", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get duplicate conversion status"))
 			})
@@ -74,10 +73,10 @@ var _ = Describe("block duplicate-convert-status", func() {
 					DeDuplicateConversionPercentage: sl.Int(68),
 					VolumeUsername:                  sl.String("SL02SEVC123456_74"),
 				}
-				fakeStorageManager.GetDuplicateConversionStatusReturns(fakerDuplicateConversionStatus, nil)
+				FakeStorageManager.GetDuplicateConversionStatusReturns(fakerDuplicateConversionStatus, nil)
 			})
 			It("Return no error", func() {
-				err := testhelpers.RunCommand(cliCommand, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2022-06-13 14:59:17"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("68"))
