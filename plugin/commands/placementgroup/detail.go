@@ -2,6 +2,7 @@ package placementgroup
 
 import (
 	"bytes"
+	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/spf13/cobra"
@@ -16,7 +17,6 @@ type PlacementGroupDetailCommand struct {
 	*metadata.SoftlayerCommand
 	PlaceGroupManager managers.PlaceGroupManager
 	Command           *cobra.Command
-	Id                int
 }
 
 func NewPlacementGroupDetailCommand(sl *metadata.SoftlayerCommand) (cmd *PlacementGroupDetailCommand) {
@@ -26,24 +26,22 @@ func NewPlacementGroupDetailCommand(sl *metadata.SoftlayerCommand) (cmd *Placeme
 	}
 
 	cobraCmd := &cobra.Command{
-		Use:   "detail",
+		Use:   "detail " + T("PLACEMENTGROUP_ID"),
 		Short: T("View details of a placement group"),
-		Args:  metadata.NoArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
 	}
-
-	cobraCmd.Flags().IntVar(&thisCmd.Id, "id", 0, T("ID for the placement group. [required]"))
 
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
 
 func (cmd *PlacementGroupDetailCommand) Run(args []string) error {
-	placementGroupID := cmd.Id
-	if placementGroupID == 0 {
-		return errors.NewMissingInputError("--id")
+	placementGroupID, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.NewInvalidSoftlayerIdInputError("Placement Group ID")
 	}
 
 	outputFormat := cmd.GetOutputFlag()
