@@ -11,11 +11,11 @@ This repository houses the code that powers the [ibmcloud-cli sl](https://github
 Your golang source directory should be setup as follows
 
 ```
-~/go/src/github.ibm.com/Bluemix/bluemix-cli
+~/go/src/github.ibm.com/ibmcloud-cli/bluemix-cli
 ~/go/src/github.ibm.com/SoftLayer/softlayer-cli
 ```
 
-github.ibm.com/Bluemix/bluemix-cli should be branched off from the `dev` branch
+github.ibm.com/ibmcloud-cli/bluemix-cli should be branched off from the `dev` branch
 github.ibm.com/SoftLayer/softlayer-cli should be branched off from the `master` branch
 
 Edit github.ibm.com/Bluemix/bluemix-cli/go.mod and add this line to the `replace` section. This will force `go mod vendor` to read changes from your local directory instead of off github.ibm.com. You may also need to change `github.ibm.com/SoftLayer/softlayer-cli v0.0.1` to `github.ibm.com/SoftLayer/softlayer-cli latest` in the require section.
@@ -31,20 +31,28 @@ From there, make any changes you need to the code in `github.ibm.com/SoftLayer/s
 Before making a pull request, make sure everything looks good with these tools.
 Working directory: `github.ibm.com/SoftLayer/softlayer-cli`
 
+### What the build runs
+
 ```
 go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")
 go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")
 ```
 
-Then check the language files
+### Individual Tests
 
+This will test all the block commands, with verbose output
 ```
-./bin/catch-i18n-mismatch.sh
+go test -v  github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block
 ```
 
-### Running Tests
+This will test only the block commands that have "Access Password" in their test name, and stop after 1 failure
+```
+go test -v  github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block -ginkgo.failFast  -ginkgo.focus "Access Password"
+```
 
-To actually run the tests, do `go test <PACKAGE>`. Use `-coverprofile=coverage.out` to produce a coverage.out file that you can then use to figure out what lines are missing coverage.
+### Code Coverage
+
+This will generate a code coverage report for all the file commands
 
 ```
 $> go test -coverprofile=coverage.out github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file
@@ -73,8 +81,7 @@ go test -v -coverprofile=coverage.out github.ibm.com/SoftLayer/softlayer-cli/plu
 
 ### Fake Session And Handlers
 
-At the start of each test you should have something like this:
-
+To force API errors, or api results that you don't want to put in a fixture, you need to get the testhelper transport handler, something like this.
 
 ```go
     var (
@@ -212,68 +219,131 @@ networkManager = managers.NewNetworkManager(fakeSLSession)
 
 Fixutres can also be loaded by ID automatically with the format `testfixtures/SoftLayer_Service/getObject-1234.json` where 1234 is the ID you passed into the API call.
 
-## Adding new actions to slplugin
+
+# Development
+
+![Basic Architecture](./cli_arch.png)
+![Code Flow](./cli_codeflow.png)
 
 > Terminology:
 > `ibmcloud sl <COMMAND> <ACTION>`
 > *COMMAND*: is a collection of actions here.
 > *ACTION*: What part of the command you are running.
 
-1. Add command metadata func in `bluemix-cli\bluemix\slplugin\metadata\<COMMAND>.go`
-- Add command metadata func
+## Adding new commands to slplugin
 
+1. Add an entry to `plugin/plugin.go` in the `getTopCobraCommand()` function that follows this pattern
+`cobraCmd.AddCommand(newcommand.SetupCobraCommands(slCommand))`
+
+2. Create a new folder `plugin/commands/newcommand/`
+3. Create a new file `plugin/commands/newcommand/newcommand.go` Which will look like this:
+```go
+package newcommand
+
+import (
+    "github.com/spf13/cobra"
+    "github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+    . "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+    "github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+)
+
+func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
+    cobraCmd := &cobra.Command{
+        Use:   "newcommand",
+        Short: T("A description of the new command"),
+        RunE:  nil,
+    }
+    cobraCmd.AddCommand(NewSomeNewCommand(sl).Command)
+    return cobraCmd
+}
+
+func AccountNamespace() plugin.Namespace {
+    return plugin.Namespace{
+        ParentName:  "sl",
+        Name:        "newcommand",
+        Description: T("A description of the new command"),
+    }
+}
 ```
-func BlockVolumeLimitsMetaData() cli.Command {
-    return cli.Command{
-        Category:    CMD_BLOCK_NAME,
-        Name:        CMD_BLK_VOLUME_LIMITS_NAME,
-        Description: T("Lists the storage limits per datacenter for this account."),
-        Usage: T(`${COMMAND_NAME} sl block volume-limits [OPTIONS]
+for tests, copy from one of the other command main test functions. Make sure to add any actions to the actions list.
+
+## Adding new actions to slplugin
+
+1. Create a new files `plugin/commands/the_command/action.go`
+2. It should have its own type
+```go
+type ActionNameCommand struct {
+    *metadata.SoftlayerCommand
+    Command *cobra.Command
+    Manager managers.SomeManager
+    // Flags go here as well
+}
+```
+
+3. It should have a function to create an instance of the type called `NewActionNameCommand`
+```go
+func NewActionNameCommand(sl *metadata.SoftlayerCommand) *ActionNameCommand {
+    thisCmd := &ActionNameCommand{
+        SoftlayerCommand: sl,
+        Manager: managers.NewSomeManager(sl.Session),
+    }
+    cobraCmd := &cobra.Command{
+        Use: "command-name",
+        Short: T("A description of the command"),
+        Long: T(`This is an optional field, you can remove it if the command is simple.
+Otherwise create a nice long description of how to use this command. Its good to add some examples.
 
 EXAMPLE:
-    ${COMMAND_NAME} sl block volume-limits
-    This command lists the storage limits per datacenter for this account.`),
-        Flags: []cli.Flag{
-            OutputFlag(),
+    ${COMMAND_NAME} sl newcommand command-name --someFlag test --soomethingElse
+    This sets a flag and does something else.`)
+        Args: metadata.NoArgs,
+        RunE: func(cmd *cobra.Command, args []string) error {
+            return thisCmd.Run(args)
         },
     }
+    thisCmd.Command = cobraCmd
+    return thisCmd
 }
 ```
 
-- Add the command metadata to the `BlockMetaData()` top level func
 
-```
-
-func BlockMetaData() cli.Command {
-    return cli.Command{
-        Category:    NS_SL_NAME,
-        Name:        CMD_BLOCK_NAME,
-        Description: T("Classic infrastructure Block Storage"),
-        Usage:       "${COMMAND_NAME} sl block",
-        Subcommands: []cli.Command{
-...
-            BlockVolumeLimitsMetaData(),
-...
-        },
-    }
+4. It should have a `Run()` function
+```go
+func (cmd *BandwidthPoolsCommand) Run(args []string) error {
+    // do some stuff
+    return nil
 }
 ```
 
-- Add the `BlockMetaData()` to the func `getCLITopCommands()` in `bluemix-cli\bluemix\slplugin\softlayer_plugin.go`
-2. Add action mapping in `bluemix-cli\bluemix\slplugin\actions.go`
-3. Add actual CLI command code in `bluemix-cli\bluemix\slplugin\commands\<COMMAND>\<ACTION>.go`
-    - `runtime error: invalid memory address or nil pointer dereference` means you forgot this step.
-4. Add any manager code in `bluemix-cli\bluemix\slplugin\managers\`
-
-
+5. Add the function to `command.go` in the `SetupCobraCommand` function
+```go
+cobraCmd.AddCommand(NewActionNameCommand(sl).Command)
+```
 
 ## i18n stuff
 
 anything with `T("some string here")` uses the internationalization system. Definitions are located in `plugin\i18n\en_US.all.json` for english.
+The string passed into the `T()` function serves as the ID when looking these up. So the ID Will need to be present in all i18n files, it will also need a translation string. 
 
-[i18n4go](https://github.com/maximilien/i18n4go) is used to make sure all strings being transalted have translations. To test run this command
+[i18n4go](https://github.com/maximilien/i18n4go) is used to make sure all strings being transalted have translations. To test run this command.
+[go-i18n](https://github.com/nicksnyder/go-i18n/) is what is actually doing the translations, but its using an old v1 version.
+[go-bindata](https://github.com/jteeuwen/go-bindata) takes the json files, and turns them into a go binary.
 
-Your working directory should be in `go/src/github.ibm.com/SoftLayer/softlayer-cli/`
+### Basic Patterns and Tips
+
+Where possible, you should try to minimize the number of unique strings we need to translate. To do this, make use of substitutions. For example:
+
+BAD:
+```go
+T("This is some output for a file command")
+T("This is some output for a block command")
+```
+
+GOOD:
+```go
+subs := map[string]interface{}{"CMDTYPE": "block"}
+T("This is some output for a {{.CMDTYPE}} command", subs)
+```
 
 ### Useful Scripts
 
