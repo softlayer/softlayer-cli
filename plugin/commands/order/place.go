@@ -65,7 +65,13 @@ func NewPlaceCommand(sl *metadata.SoftlayerCommand) (cmd *PlaceCommand) {
 func (cmd *PlaceCommand) Run(args []string) error {
 	packageKeyname := args[0]
 	location := args[1]
-	orderItems := getOrderItems(args)
+
+	orderItems := []string{}
+	if len(args) > 3 {
+		orderItems = getOrderItems(args)
+	} else {
+		orderItems = strings.Split(args[2], ",")
+	}
 
 	preset := cmd.Preset
 
