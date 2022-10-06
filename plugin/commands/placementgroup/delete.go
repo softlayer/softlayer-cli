@@ -1,6 +1,8 @@
 package placementgroup
 
 import (
+	"strconv"
+
 	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -12,7 +14,6 @@ type PlacementGroupDeleteCommand struct {
 	*metadata.SoftlayerCommand
 	PlaceGroupManager managers.PlaceGroupManager
 	Command           *cobra.Command
-	Id                int
 	ForceFlag         bool
 }
 
@@ -23,15 +24,14 @@ func NewPlacementGroupDeleteCommand(sl *metadata.SoftlayerCommand) (cmd *Placeme
 	}
 
 	cobraCmd := &cobra.Command{
-		Use:   "delete",
+		Use:   "delete " + T("PLACEMENTGROUP_ID"),
 		Short: T("Delete a placement group"),
-		Args:  metadata.NoArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
 	}
 
-	cobraCmd.Flags().IntVar(&thisCmd.Id, "id", 0, T("ID for the placement group. [required]"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
 	//cli.BoolFlag{   # tmp disable this option. because the placement can't be deleted if the VSI status is delete pending.
 	//	Name:  "purge",
@@ -43,9 +43,9 @@ func NewPlacementGroupDeleteCommand(sl *metadata.SoftlayerCommand) (cmd *Placeme
 }
 
 func (cmd *PlacementGroupDeleteCommand) Run(args []string) error {
-	placementGroupID := cmd.Id
-	if placementGroupID == 0 {
-		return errors.NewMissingInputError("--id")
+	placementGroupID, err := strconv.Atoi(args[0])
+	if err != nil {
+		return errors.NewInvalidSoftlayerIdInputError("Placement Group ID")
 	}
 
 	//if c.IsSet("purge") {
@@ -97,7 +97,7 @@ func (cmd *PlacementGroupDeleteCommand) Run(args []string) error {
 		}
 	}
 
-	_, err := cmd.PlaceGroupManager.Delete(placementGroupID)
+	_, err = cmd.PlaceGroupManager.Delete(placementGroupID)
 	if err != nil {
 		return errors.NewAPIError(T("Failed to remove placement group: {{.ID}}.", map[string]interface{}{"ID": placementGroupID}), err.Error(), 2)
 	}
