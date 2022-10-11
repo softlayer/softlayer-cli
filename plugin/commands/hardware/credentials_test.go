@@ -78,8 +78,8 @@ var _ = Describe("hardware credentials", func() {
 				fakeHardwareManager.GetHardwareReturns(datatypes.Hardware_Server{
 					Hardware: datatypes.Hardware{
 						Id: sl.Int(1234),
-						OperatingSystem: &datatypes.Software_Component_OperatingSystem{
-							Software_Component: datatypes.Software_Component{
+						SoftwareComponents: []datatypes.Software_Component{
+							datatypes.Software_Component{
 								Passwords: []datatypes.Software_Component_Password{
 									datatypes.Software_Component_Password{
 										Username: sl.String("root"),
@@ -88,6 +88,12 @@ var _ = Describe("hardware credentials", func() {
 									datatypes.Software_Component_Password{
 										Username: sl.String("user1"),
 										Password: sl.String("pIzdjMvf3mE"),
+									},
+								},
+								SoftwareLicense: &datatypes.Software_License{
+									SoftwareDescription: &datatypes.Software_Description{
+										ReferenceCode: sl.String("UBUNTU_20_64"),
+										Version:       sl.String("20.04.1-64"),
 									},
 								},
 							},
@@ -100,8 +106,12 @@ var _ = Describe("hardware credentials", func() {
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("root"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("MdZYMicl"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("UBUNTU_20_64"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("20.04.1-64"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("user1"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("pIzdjMvf3mE"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("UBUNTU_20_64"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("20.04.1-64"))
 			})
 		})
 	})
