@@ -42,9 +42,16 @@ var _ = Describe("Place", func() {
 			Context("successfully"+k, func() {
 
 				k := k
-				It("return error", func() {
+				It("return error with three arguments", func() {
 					fakeUI.Inputs("Y")
 					err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type", k, "--name", "test", "--send-email")
+					Expect(err).NotTo(HaveOccurred())
+					Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2523413"}))
+				})
+
+				It("return error with more of three arguments", func() {
+					fakeUI.Inputs("Y")
+					err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB", "CITRIX_VDC", "--complex-type", k, "--name", "test", "--send-email")
 					Expect(err).NotTo(HaveOccurred())
 					Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2523413"}))
 				})
@@ -58,9 +65,16 @@ var _ = Describe("Place", func() {
 			Context("successfully "+k, func() {
 
 				k := k
-				It("return in json format", func() {
+				It("return in json format with three arguments", func() {
 					fakeUI.Inputs("Y")
 					err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type", k, "--output=json")
+					Expect(err).NotTo(HaveOccurred())
+					Expect(fakeUI.Outputs()).To(ContainSubstring("2523413"))
+				})
+
+				It("return in json format with more of three arguments", func() {
+					fakeUI.Inputs("Y")
+					err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB", "CITRIX_VDC", "--complex-type", k, "--output=json")
 					Expect(err).NotTo(HaveOccurred())
 					Expect(fakeUI.Outputs()).To(ContainSubstring("2523413"))
 				})
@@ -74,9 +88,16 @@ var _ = Describe("Place", func() {
 			Context("successfully"+k, func() {
 
 				k := k
-				It("return error", func() {
+				It("return error with three arguments", func() {
 					fakeUI.Inputs("Y")
 					err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type", k)
+					Expect(err).NotTo(HaveOccurred())
+					Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2523413"}))
+				})
+
+				It("return error with more of three arguments", func() {
+					fakeUI.Inputs("Y")
+					err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB", "CITRIX_VDC", "--complex-type", k)
 					Expect(err).NotTo(HaveOccurred())
 					Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2523413"}))
 				})
@@ -93,7 +114,7 @@ var _ = Describe("Place", func() {
 			It("Arguments is not set", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("This command requires three arguments."))
+				Expect(err.Error()).To(ContainSubstring("requires at least 3 arg(s), only received 0"))
 			})
 		})
 
@@ -101,8 +122,14 @@ var _ = Describe("Place", func() {
 			BeforeEach(func() {
 				fakeOrderManager.PlaceQuoteReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Incorrect complex type:"))
 			})
-			It("Complex type is set with an invalid value", func() {
+			It("Complex type is set with an invalid value withthree arguments", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type=invalid")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect complex type:"))
+			})
+
+			It("Complex type is set with an invalid value with more of three arguments", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB", "CITRIX_VDC", "--complex-type=invalid")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect complex type:"))
 			})
@@ -112,8 +139,14 @@ var _ = Describe("Place", func() {
 			BeforeEach(func() {
 				fakeOrderManager.PlaceQuoteReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("failed reading file"))
 			})
-			It("Extras is set with an invalid file", func() {
+			It("Extras is set with an invalid file with three arguments", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--extras=@invalid", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("failed reading file"))
+			})
+
+			It("Extras is set with an invalid file with more of three arguments", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB", "CITRIX_VDC", "--extras=@invalid", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("failed reading file"))
 			})
@@ -123,8 +156,14 @@ var _ = Describe("Place", func() {
 			BeforeEach(func() {
 				fakeOrderManager.PlaceQuoteReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Unable to unmarshal extras json:"))
 			})
-			It("Extras is set with an invalid value", func() {
+			It("Extras is set with an invalid value with three arguments", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--extras=invalid", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Unable to unmarshal extras json:"))
+			})
+
+			It("Extras is set with an invalid value with more of three arguments", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB", "CITRIX_VDC", "--extras=invalid", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Unable to unmarshal extras json:"))
 			})
@@ -134,8 +173,14 @@ var _ = Describe("Place", func() {
 			BeforeEach(func() {
 				fakeOrderManager.PlaceQuoteReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Invalid output format, only JSON is supported now."))
 			})
-			It("Invalid output is set", func() {
+			It("Invalid output is set with three arguments", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB,CITRIX_VDC", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest", "--output=xml")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Invalid output format, only JSON is supported now."))
+			})
+
+			It("Invalid output is set with more of three arguments", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "CLOUD_SERVER", "dal13", "EVAULT_100_GB", "CITRIX_VDC", "--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest", "--output=xml")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid output format, only JSON is supported now."))
 			})
