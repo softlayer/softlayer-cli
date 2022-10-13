@@ -316,10 +316,6 @@
     "translation": "${COMMAND_NAME} sl vlan list [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Questi comandi elencano tutte le vlan nell'account corrente utilizzando il filtro per data center uguale a dal09, e le ordinano in base al numero vlan.\n \nNota: nel campo Pod, l'aggiunta di (*) indica che verrà presto chiuso"
   },
   {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\nESEMPIO:\n   ${COMMAND_NAME} sl vlan options\n   Questo comando elenca tutte le opzioni per la creazione di una vlan, ad es. il tipo di vlan, i datacenter, la dimensione della sottorete, i router, ecc."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPZIONI] IDENTIFICATIVO\n\nESEMPIO:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Autorizzazione storage file, a blocchi e portatile su Server Virtuale."
   },
@@ -6864,10 +6860,6 @@
     "translation": "Imposta il nome utente di questo account."
   },
   {
-    "id": "Setting tags for {{.VirtualGuestHostname}}.",
-    "translation": "Impostazione dei tag per {{.VirtualGuestHostname}}."
-  },
-  {
     "id": "Short Name",
     "translation": "Nome breve"
   },
@@ -7246,10 +7238,6 @@
   {
     "id": "Tags",
     "translation": "Tag"
-  },
-  {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "Applica tag a tutti i guest in un gruppo di ridimensionamento automatico."
   },
   {
     "id": "Tags for the image",

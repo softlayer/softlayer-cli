@@ -104,34 +104,6 @@
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip create --v6 \n\tCette commande crée une adresse IPv6."
   },
   {
-    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
-    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip list --v4 \n\tCette commande répertorie toutes les adresses IPv4 sur le compte en cours."
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
-    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tCette commande annule l'affectation de l'adresse IP dont l'ID est 12345678 sur le périphérique cible."
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
-    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFICATEUR\n\nEXEMPLE :\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authoriser un fichier et le stockage par blocs sur un serveur matériel."
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFICATEUR\n\nEXEMPLE :\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Répertorie les invités virtuels s'exécutant sur ce serveur."
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl hardware sensor 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFICATEUR\n\nEXEMPLE :\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Obtenir les détails de stockage pour un serveur matériel."
-  },
-  {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
     "translation": "${COMMAND_NAME} sl image datacenter IDENTIFICATEUR [ OPTIONS ] \n \nEXEMPLE :\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 -- remove sjc03\n Cette commande ajoute/supprime le centre de données d'une image."
   },
@@ -342,10 +314,6 @@
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby numéro\n  Cette commande répertorie tous les réseaux locaux virtuels sur le compte en cours avec un filtrage par centre de données égal à dal09 et les trie par numéro de réseau local virtuel.\n \nRemarque : dans la zone Pod, un astérisque (*) indique une fermeture imminente"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\nEXEMPLE :\n   ${COMMAND_NAME}   sl vlan options\n   Cette commande répertorie toutes les options de création d'un VLAN, comme le type, les centres de données, la taille de sous-réseau, les routeurs, etc."
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
@@ -7272,10 +7240,6 @@
     "translation": "Etiquettes"
   },
   {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "Balise tous les invités d'un groupe Auto Scale."
-  },
-  {
     "id": "Tags for the image",
     "translation": "Etiquettes de l'image"
   },
@@ -8558,10 +8522,6 @@
   {
     "id": "[-d|--datacenter] is required.\n Run '{{.CommandName}} sl block volume-options' to get available options.",
     "translation": "[-d|--datacenter] est requis.\n Exécutez '{{.CommandName}} sl block volume-options' pour obtenir les options disponibles."
-  },
-  {
-    "id": "[-d|--datacenter] is required.\n Run '{{.CommandName}} sl file volume-options' to get available options.",
-    "translation": "[-d|--datacenter] est requis.\n Exécutez {{.CommandName}} sl file volume-options' pour obtenir les options disponibles."
   },
   {
     "id": "[-d|--day-of-week] value must be between 0 and 6.",

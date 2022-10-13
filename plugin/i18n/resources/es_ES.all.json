@@ -316,10 +316,6 @@
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS] \n \nEJEMPLO:\n ${COMMAND_NAME} sl vlan list -d dal09 -- sortby number \n Este mandato lista todos los vlans en la cuenta actual filtrados por centro de datos igual a dal09 y los ordena por número de vlan. \n \nNota: en el campo Pod, si se añade (*) se indica que se cerró pronto"
   },
   {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\nEJEMPLO:\n   ${COMMAND_NAME} sl vlan options\n   Este mandato lista todas las opciones para crear una vlan, por ejemplo, tipo de vlan, centros de datos, tamaño de subred, direccionadores, etc."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEJEMPLO:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Autorizar almacenamiento de archivos, en bloque y portátil en un servidor virtual."
   },
@@ -4140,10 +4136,6 @@
     "translation": "FriendlyName"
   },
   {
-    "id": "Frontend ",
-    "translation": "Protocolo frontal"
-  },
-  {
     "id": "Frontend port",
     "translation": "Puerto frontal [valor predeterminado: 80]"
   },
@@ -7242,10 +7234,6 @@
   {
     "id": "Tags",
     "translation": "Etiquetas"
-  },
-  {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "Etiqueta todos los invitados de un grupo de escalado automático."
   },
   {
     "id": "Tags for the image",

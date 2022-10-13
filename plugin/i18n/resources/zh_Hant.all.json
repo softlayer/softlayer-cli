@@ -316,10 +316,6 @@
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n 範例：\n ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n此指令會列出現行帳戶上的所有 vlan，依 datacenter 等於 dal09 過濾並按 vlan 號碼排序。\n \n附註：在欄位 Pod 中，如果新增 (*)，則指出即將關閉"
   },
   {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\n範例：\n   ${COMMAND_NAME} sl vlan options\n   這個指令會列出用來建立 VLAN 的所有選項，例如 VLAN 類型、資料中心、子網路大小、路由器等等。"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   將檔案、區塊及可攜式儲存體授權至虛擬伺服器。"
   },
@@ -7242,10 +7238,6 @@
   {
     "id": "Tags",
     "translation": "標籤"
-  },
-  {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "標記自動調整群組中的所有訪客。"
   },
   {
     "id": "Tags for the image",

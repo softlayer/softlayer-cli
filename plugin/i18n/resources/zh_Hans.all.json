@@ -104,34 +104,6 @@
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip create --v6 \n\t此命令创建 IPv6 地址。"
   },
   {
-    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
-    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip list --v4 \n\t此命令列出当前帐户的所有 IPv4 地址。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
-    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\t此命令对目标设备取消分配标识为 12345678 的 IP 地址。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
-    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl hardware authorize-storage -- username-storage SL01SL30-37 1234567\n 将文件和块存储器授权给硬件服务器。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\n示例：\n  ${COMMAND_NAME} sl hardware guests 1234567\n   列出在此服务器上运行的虚拟访客。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl hardware sensor 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl hardware storage 1234567\n 获取硬件服务器的存储器详细信息。"
-  },
-  {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
     "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 -- remove sjc03\n 此命令添加/除去映像的数据中心。"
   },
@@ -344,10 +316,6 @@
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   此命令列示当前帐户上按 datacenter 等于 dal09 进行过滤的所有 vlan，并按 vlan 编号对其进行排序。\n \n注：在字段 Pod 中，如果添加 (*)，则指示即将关闭"
   },
   {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\n示例：\n   ${COMMAND_NAME} sl vlan options\n   此命令列出用于创建 VLAN 的所有选项，例如 VLAN 类型、数据中心、子网大小、路由器等。"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl vs authorize-storage -- username-storage SL01SL30-37 1234567\n 将文件、块和可移植存储器授权给虚拟服务器。"
   },
@@ -394,10 +362,6 @@
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
     "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t注：一旦发出升级请求后，经典基础架构服务会自动重新引导\n  \t实例。此实例在升级事务完成之前会一直停止。\n  \t但是，对于网络，无需重新引导。\n\n示例：\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   此命令升级标识为 12345678 的虚拟服务器实例，并将 CPU 核心数设置为 8，内存设置为 8192M，网络端口速度设置为 1000 Mbps。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n时间格式为 '2006-01-02'、'2006-01-02T15:04' 或 '2006-01-02T15:04-07:00'\n\n由于某些舍入和日期对齐详细信息，此处的结果可能与控制门户中的结果略有不同。\n列出的带宽以 GB 为单位，如果未指定时区，则假定为 GMT+0。\n\n示例：\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
@@ -7274,10 +7238,6 @@
   {
     "id": "Tags",
     "translation": "标记"
-  },
-  {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "标记自动缩放组中的所有访客。"
   },
   {
     "id": "Tags for the image",
