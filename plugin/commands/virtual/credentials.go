@@ -59,10 +59,15 @@ func (cmd *CredentialsCommand) Run(args []string) error {
 		return utils.PrintPrettyJSON(cmd.UI, virtualGuest.OperatingSystem)
 	}
 
-	table := cmd.UI.Table([]string{T("username"), T("password")})
+	table := cmd.UI.Table([]string{T("Username"), T("Password"), T("Software"), T("Version")})
 	if virtualGuest.OperatingSystem != nil && len(virtualGuest.OperatingSystem.Passwords) > 0 {
 		for _, pwd := range virtualGuest.OperatingSystem.Passwords {
-			table.Add(utils.FormatStringPointer(pwd.Username), utils.FormatStringPointer(pwd.Password))
+			table.Add(
+				utils.FormatStringPointer(pwd.Username),
+				utils.FormatStringPointer(pwd.Password),
+				utils.FormatStringPointer(virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription.ReferenceCode),
+				utils.FormatStringPointer(virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription.Version),
+			)
 		}
 	}
 	table.Print()

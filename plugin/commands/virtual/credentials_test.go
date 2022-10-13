@@ -78,6 +78,12 @@ var _ = Describe("VS credentials", func() {
 										Password: sl.String("password4db2admin"),
 									},
 								},
+								SoftwareLicense: &datatypes.Software_License{
+									SoftwareDescription: &datatypes.Software_Description{
+										ReferenceCode: sl.String("CENTOS_8_64"),
+										Version:       sl.String("8.0-64 Minimal for VSI"),
+									},
+								},
 							},
 						},
 					}, nil)
@@ -88,7 +94,10 @@ var _ = Describe("VS credentials", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("root"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("password4root"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("db2admin"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("CENTOS_8_64"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("8.0-64 Minimal for VSI"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("password4db2admin"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("db2admin"))
 			})
 		})
 	})
