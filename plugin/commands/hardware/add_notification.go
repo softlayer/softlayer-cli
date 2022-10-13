@@ -50,7 +50,7 @@ func (cmd *AddNotificationCommand) Run(args []string) error {
 	userIds := cmd.Users
 	printTable := false
 
-	table := cmd.UI.Table([]string{T("Id"), T("Hostmane"), T("Username"), T("Email"), T("FirstName"), T("LastName")})
+	table := cmd.UI.Table([]string{T("Id"), T("Hostmane"), T("Username"), T("Email"), T("First Name"), T("Last Name")})
 	for _, userId := range userIds {
 
 		UserCustomerNotification, err := cmd.HardwareManager.CreateUserCustomerNotification(hardwareId, userId)
