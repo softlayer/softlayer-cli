@@ -134,7 +134,7 @@ func getMigrationServerList(mask string, filter filter.Filters, cmd *MigrateComm
 
 func showsServerPendingMigration(vsList []datatypes.Virtual_Guest, cmd *MigrateCommand, typeServer string) {
 	if typeServer == "vs" {
-		table := cmd.UI.Table([]string{T("id"), T("hostname"), T("domain"), T("datacenter"), T("pendingMigrationFlag")})
+		table := cmd.UI.Table([]string{T("id"), T("Hostname"), T("domain"), T("datacenter"), T("pendingMigrationFlag")})
 		cmd.UI.Print("Virtual Server Pending Migration")
 		for _, vm := range vsList {
 			table.Add(utils.FormatIntPointer(vm.Id), utils.FormatStringPointer(vm.Hostname),
@@ -144,8 +144,8 @@ func showsServerPendingMigration(vsList []datatypes.Virtual_Guest, cmd *MigrateC
 		table.Print()
 		fmt.Println()
 	} else {
-		table := cmd.UI.Table([]string{T("id"), T("hostname"), T("domain"), T("datacenter"), T("PendingMigrationFlag"),
-			T("HostName"), T("HostId")})
+		table := cmd.UI.Table([]string{T("id"), T("Hostname"), T("domain"), T("datacenter"), T("PendingMigrationFlag"),
+			T("Hostname"), T("HostId")})
 		cmd.UI.Print("Dedicated Hosts")
 		for _, vm := range vsList {
 			table.Add(utils.FormatIntPointer(vm.Id), utils.FormatStringPointer(vm.Hostname),

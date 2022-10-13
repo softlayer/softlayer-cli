@@ -4400,16 +4400,8 @@
     "translation": "要在其上佈建「專用虛擬伺服器」的主機 ID"
   },
   {
-    "id": "Host Name",
-    "translation": "主機名稱"
-  },
-  {
     "id": "Host header.",
     "translation": "主機標頭。"
-  },
-  {
-    "id": "Host name",
-    "translation": "主機名稱"
   },
   {
     "id": "Host order options for a given dedicated host.",
@@ -4436,16 +4428,8 @@
     "translation": "主機 ID"
   },
   {
-    "id": "HostName",
-    "translation": "主機名稱"
-  },
-  {
     "id": "Hostname",
     "translation": "主機名稱"
-  },
-  {
-    "id": "Hostname: ",
-    "translation": "主機名稱： "
   },
   {
     "id": "Hour of the day when snapshots should be taken, integer between 0 to 23",
@@ -8842,10 +8826,6 @@
   {
     "id": "host",
     "translation": "host"
-  },
-  {
-    "id": "hostname",
-    "translation": "hostname"
   },
   {
     "id": "hour",

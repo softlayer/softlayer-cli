@@ -106,7 +106,7 @@ func (cmd *BandwidthPoolsDetailCommand) Run(args []string) error {
 
 func getHardwareTable(hardwares []datatypes.Hardware) *bytes.Buffer {
 	buf := new(bytes.Buffer)
-	hardwareTable := terminal.NewTable(buf, []string{T("Id"), T("HostName"), T("IP Address"), T("Amount"), T("Current Usage")})
+	hardwareTable := terminal.NewTable(buf, []string{T("Id"), T("Hostname"), T("IP Address"), T("Amount"), T("Current Usage")})
 	for _, hardware := range hardwares {
 		ipAddress := "-"
 		if hardware.PrimaryIpAddress != nil {
@@ -134,7 +134,7 @@ func getHardwareTable(hardwares []datatypes.Hardware) *bytes.Buffer {
 
 func getVirtualTable(virtuals []datatypes.Virtual_Guest) *bytes.Buffer {
 	buf := new(bytes.Buffer)
-	virtualTable := terminal.NewTable(buf, []string{T("Id"), T("HostName"), T("IP Address"), T("Amount"), T("Current Usage")})
+	virtualTable := terminal.NewTable(buf, []string{T("Id"), T("Hostname"), T("IP Address"), T("Amount"), T("Current Usage")})
 	for _, virtual := range virtuals {
 		ipAddress := "-"
 		if virtual.PrimaryIpAddress != nil {

@@ -56,7 +56,7 @@ func (cmd *GuestsCommand) Run(args []string) error {
 	}
 
 	cmd.UI.Print("Hardware Guests")
-	tableHardwareGuest := cmd.UI.Table([]string{T("id"), T("hostname"), T("CPU"), T("Memory"), T("Start Date"), T("Status"), T("powerState")})
+	tableHardwareGuest := cmd.UI.Table([]string{T("id"), T("Hostname"), T("CPU"), T("Memory"), T("Start Date"), T("Status"), T("powerState")})
 	for _, guest := range hardwareGuestsResult {
 		tableHardwareGuest.Add(
 			utils.FormatIntPointer(guest.Id),

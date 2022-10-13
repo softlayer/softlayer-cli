@@ -48,7 +48,7 @@ func (cmd *PlacementGroupCreateOptionsCommand) Run(args []string) error {
 		cmd.UI.Print(T("No available router was found."))
 	} else {
 		sort.Sort(utils.RouterByHostname(routers))
-		table := cmd.UI.Table([]string{T("Data Center"), T("Host Name"), T("Backend Router Id")})
+		table := cmd.UI.Table([]string{T("Data Center"), T("Hostname"), T("Backend Router Id")})
 		for _, router := range routers {
 			center := "-"
 			if router.TopLevelLocation != nil {

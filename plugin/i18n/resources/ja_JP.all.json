@@ -4400,16 +4400,8 @@
     "translation": "専用 Virtual Server をプロビジョンするホスト ID"
   },
   {
-    "id": "Host Name",
-    "translation": "ホスト名"
-  },
-  {
     "id": "Host header.",
     "translation": "ホスト・ヘッダー。"
-  },
-  {
-    "id": "Host name",
-    "translation": "ホスト名"
   },
   {
     "id": "Host order options for a given dedicated host.",
@@ -4436,16 +4428,8 @@
     "translation": "HostId"
   },
   {
-    "id": "HostName",
-    "translation": "ホスト名"
-  },
-  {
     "id": "Hostname",
     "translation": "ホスト名"
-  },
-  {
-    "id": "Hostname: ",
-    "translation": "ホスト名: "
   },
   {
     "id": "Hour of the day when snapshots should be taken, integer between 0 to 23",
@@ -8842,10 +8826,6 @@
   {
     "id": "host",
     "translation": "ホスト"
-  },
-  {
-    "id": "hostname",
-    "translation": "hostname"
   },
   {
     "id": "hour",

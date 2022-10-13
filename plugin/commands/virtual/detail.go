@@ -84,7 +84,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add(T("ID"), utils.FormatIntPointer(virtualGuest.Id))
 	table.Add(T("guid"), utils.FormatStringPointer(virtualGuest.GlobalIdentifier))
-	table.Add(T("hostname"), utils.FormatStringPointer(virtualGuest.Hostname))
+	table.Add(T("Hostname"), utils.FormatStringPointer(virtualGuest.Hostname))
 	table.Add(T("domain"), utils.FormatStringPointer(virtualGuest.Domain))
 	table.Add(T("fqdn"), utils.FormatStringPointer(virtualGuest.FullyQualifiedDomainName))
 	if virtualGuest.Status != nil {

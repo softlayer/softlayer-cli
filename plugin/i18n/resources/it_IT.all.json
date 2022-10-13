@@ -4400,16 +4400,8 @@
     "translation": "ID host su cui eseguire il provisioning di un Virtual Server dedicato"
   },
   {
-    "id": "Host Name",
-    "translation": "Nome host"
-  },
-  {
     "id": "Host header.",
     "translation": "Intestazione host."
-  },
-  {
-    "id": "Host name",
-    "translation": "Nome host"
   },
   {
     "id": "Host order options for a given dedicated host.",
@@ -4436,16 +4428,8 @@
     "translation": "HostId"
   },
   {
-    "id": "HostName",
-    "translation": "Nome host"
-  },
-  {
     "id": "Hostname",
     "translation": "Nome host"
-  },
-  {
-    "id": "Hostname: ",
-    "translation": "Nome host: "
   },
   {
     "id": "Hour of the day when snapshots should be taken, integer between 0 to 23",
@@ -8842,10 +8826,6 @@
   {
     "id": "host",
     "translation": "host"
-  },
-  {
-    "id": "hostname",
-    "translation": "hostname"
   },
   {
     "id": "hour",

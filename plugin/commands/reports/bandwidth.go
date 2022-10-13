@@ -184,7 +184,7 @@ func (cmd *BandwidthCommand) Run(args []string) error {
 		sort.Sort(ByPublicOut(tableRows))
 	}
 
-	table := cmd.UI.Table([]string{T("type"), T("hostname"), T("publicIn"), T("publicOut"), T("privateIn"), T("privateOut"), T("pool")})
+	table := cmd.UI.Table([]string{T("type"), T("Hostname"), T("publicIn"), T("publicOut"), T("privateIn"), T("privateOut"), T("pool")})
 	for _, row := range tableRows {
 		table.Add(
 			row.typeDevice,

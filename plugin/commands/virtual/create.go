@@ -160,12 +160,12 @@ func (cmd *CreateCommand) Run(args []string) error {
 
 		if params["hostname"] == "" {
 			params := make(map[string]interface{})
-			params["hostname"], _ = cmd.UI.Ask(T("Hostname: "))
+			params["hostname"], _ = cmd.UI.Ask(T("Hostname") + ": "))
 			// return slErrors.NewMissingInputError("[-H|--hostname]")
 		}
 
 		if params["domain"] == "" {
-			params["domain"], _ = cmd.UI.Ask(T("Domain: "))
+			params["domain"], _ = cmd.UI.Ask(T("Domain") + ": "))
 		}
 
 		if params["cpu"] == 0 && params["flavor"] == "" {
@@ -178,7 +178,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 		}
 
 		if params["memory"] == 0 && params["flavor"] == "" {
-			inputMemory, _ := cmd.UI.Ask(T("Memory: "))
+			inputMemory, _ := cmd.UI.Ask(T("Memory") + ": "))
 			memory, err := strconv.Atoi(inputMemory)
 			if err != nil {
 				return slErrors.NewInvalidSoftlayerIdInputError("Memory")
@@ -190,11 +190,11 @@ func (cmd *CreateCommand) Run(args []string) error {
 		}
 
 		if params["datacenter"] == "" {
-			params["datacenter"], _ = cmd.UI.Ask(T("Datacenter: "))
+			params["datacenter"], _ = cmd.UI.Ask(T("Datacenter") + ": "))
 		}
 
 		if params["os"] == "" {
-			params["os"], _ = cmd.UI.Ask(T("Operating System Code: "))
+			params["os"], _ = cmd.UI.Ask(T("Operating System Code") + ": "))
 		}
 
 		_, err = cmd.VirtualServerManager.GenerateInstanceCreationTemplate(&virtualGuest, params)
@@ -351,7 +351,7 @@ func (cmd *CreateCommand) printVirtualGuest(virtualGuest datatypes.Virtual_Guest
 }
 
 func (cmd *CreateCommand) printVirtualGuests(virtualGuests []datatypes.Virtual_Guest) {
-	table := cmd.UI.Table([]string{T("ID"), T("HostName"), T("GUID"), T("Placement Group ID"), T("Created")})
+	table := cmd.UI.Table([]string{T("ID"), T("Hostname"), T("GUID"), T("Placement Group ID"), T("Created")})
 	for _, vm := range virtualGuests {
 		table.Add(utils.FormatIntPointer(vm.Id), utils.FormatStringPointer(vm.FullyQualifiedDomainName), utils.FormatStringPointer(vm.GlobalIdentifier), utils.FormatIntPointer(vm.PlacementGroupId), utils.FormatSLTimePointer(vm.CreateDate))
 	}

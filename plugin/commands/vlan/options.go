@@ -45,7 +45,7 @@ func (cmd *OptionsCommand) Run(args []string) error {
 	}
 	var datacenternames []string
 	buf := new(bytes.Buffer)
-	dTable := terminal.NewTable(buf, []string{T("datacenter"), T("hostname")})
+	dTable := terminal.NewTable(buf, []string{T("datacenter"), T("Hostname")})
 
 	var wg sync.WaitGroup
 	var mutex sync.Mutex
