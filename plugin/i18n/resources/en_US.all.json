@@ -28,8 +28,8 @@
     "translation": " is not following <hostname>.<domain.name.tld> --fqdn option format"
   },
   {
-    "id": "\"${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "\"${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY\n  IDENTIFIER: ID of the image\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
+    "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
+    "translation": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
   },
   {
     "id": "# of Active Transactions",
