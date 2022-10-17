@@ -104,7 +104,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 			table.Add(T("virtual guests"), T("none"))
 		} else {
 			buf := new(bytes.Buffer)
-			vsTable := terminal.NewTable(buf, []string{T("hostname"), T("domain"), T("public_ip"), T("private_ip")})
+			vsTable := terminal.NewTable(buf, []string{T("Hostname"), T("domain"), T("public_ip"), T("private_ip")})
 			for _, vs := range subnet.VirtualGuests {
 				vsTable.Add(utils.FormatStringPointer(vs.Hostname),
 					utils.FormatStringPointer(vs.Domain),
@@ -120,7 +120,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 			table.Add(T("hardware"), T("none"))
 		} else {
 			buf := new(bytes.Buffer)
-			hwTable := terminal.NewTable(buf, []string{T("hostname"), T("domain"), T("public_ip"), T("private_ip")})
+			hwTable := terminal.NewTable(buf, []string{T("Hostname"), T("domain"), T("public_ip"), T("private_ip")})
 			for _, hw := range subnet.Hardware {
 				hwTable.Add(utils.FormatStringPointer(hw.Hostname),
 					utils.FormatStringPointer(hw.Domain),

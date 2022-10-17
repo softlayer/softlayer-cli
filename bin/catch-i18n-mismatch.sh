@@ -83,7 +83,7 @@ while IFS= read -r line; do
 
         # printf "\033[0;33m>>>  $JSON <<<\033[0m\n"
         OUTPUT=""
-        # DEL_JSON_OUT=`printf "%s\n    %s" "${DEL_JSON_OUT}" "${JSON}"`
+        DEL_JSON_OUT=`printf "%s\n    %s" "${DEL_JSON_OUT}" "${JSON}"`
         JSON=""
         # printf "\033[0;31m>>> cd plugin; ../bin/i18n4go -c checkup -q i18n -v <<<\033[0m\n"
         # printf "\033[0;31m>>> The translation files are out of sync. Run \`python bin/sync_enUS.py\`.<<<\033[0m\n"

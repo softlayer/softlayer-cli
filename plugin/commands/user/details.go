@@ -107,7 +107,7 @@ func (cmd *DetailsCommand) Run(args []string) error {
 		table.Add("", "")
 		table.Print()
 
-		tableAccess := cmd.UI.Table([]string{T("ID"), T("Host Name"), T("Primary Public IP"), T("Primary Private IP"), T("Created")})
+		tableAccess := cmd.UI.Table([]string{T("ID"), T("Hostname"), T("Primary Public IP"), T("Primary Private IP"), T("Created")})
 		for _, host := range access.Hardware {
 			hostId := utils.FormatIntPointer(host.Id)
 			hostFqdn := utils.FormatStringPointer(host.FullyQualifiedDomainName)
@@ -127,7 +127,7 @@ func (cmd *DetailsCommand) Run(args []string) error {
 			return errors.NewAPIError(T("Failed to show virual server.\n"), err.Error(), 2)
 		}
 
-		tableAccess := cmd.UI.Table([]string{T("ID"), T("Host Name"), T("Primary Public IP"), T("Primary Private IP"), T("Created")})
+		tableAccess := cmd.UI.Table([]string{T("ID"), T("Hostname"), T("Primary Public IP"), T("Primary Private IP"), T("Created")})
 		for _, host := range access.VirtualGuests {
 			hostId := utils.FormatIntPointer(host.Id)
 			hostFqdn := utils.FormatStringPointer(host.FullyQualifiedDomainName)

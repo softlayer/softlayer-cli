@@ -104,35 +104,6 @@
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip create --v6 \n\t此命令创建 IPv6 地址。"
   },
   {
-
-    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
-    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip list --v4 \n\t此命令列出当前帐户的所有 IPv4 地址。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
-    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\n示例：\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\t此命令对目标设备取消分配标识为 12345678 的 IP 地址。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
-    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl hardware authorize-storage -- username-storage SL01SL30-37 1234567\n 将文件和块存储器授权给硬件服务器。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\n示例：\n  ${COMMAND_NAME} sl hardware guests 1234567\n   列出在此服务器上运行的虚拟访客。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl hardware sensor 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl hardware storage 1234567\n 获取硬件服务器的存储器详细信息。"
-  },
-  {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
     "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 -- remove sjc03\n 此命令添加/除去映像的数据中心。"
   },
@@ -203,14 +174,6 @@
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n示例：\n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   此命令列出 Bare Metal Server 的类别。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\tEXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
-    "translation": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\t示例：\n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\t此命令订购一个按小时计费的 VSI，具有 4 个 CPU、16 GB RAM、100 GB SAN 磁盘、Ubuntu 16.04 以及 dal13 中的 1 Gbps 公用和专用上行链路"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
-    "translation": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    示例：\n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    此命令提供 VSI 的报价，该 VSI 具有 4 个 CPU、16 GB RAM、100 GB SAN 磁盘、Ubuntu 16.04 以及数据中心 dal13 中的 1 Gbps 公用和专用上行链路"
   },
   {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
@@ -353,10 +316,6 @@
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   此命令列示当前帐户上按 datacenter 等于 dal09 进行过滤的所有 vlan，并按 vlan 编号对其进行排序。\n \n注：在字段 Pod 中，如果添加 (*)，则指示即将关闭"
   },
   {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\n示例：\n   ${COMMAND_NAME} sl vlan options\n   此命令列出用于创建 VLAN 的所有选项，例如 VLAN 类型、数据中心、子网大小、路由器等。"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER \n \n 示例：\n ${COMMAND_NAME} sl vs authorize-storage -- username-storage SL01SL30-37 1234567\n 将文件、块和可移植存储器授权给虚拟服务器。"
   },
@@ -403,10 +362,6 @@
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
     "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t注：一旦发出升级请求后，经典基础架构服务会自动重新引导\n  \t实例。此实例在升级事务完成之前会一直停止。\n  \t但是，对于网络，无需重新引导。\n\n示例：\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   此命令升级标识为 12345678 的虚拟服务器实例，并将 CPU 核心数设置为 8，内存设置为 8192M，网络端口速度设置为 1000 Mbps。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n时间格式为 '2006-01-02'、'2006-01-02T15:04' 或 '2006-01-02T15:04-07:00'\n\n由于某些舍入和日期对齐详细信息，此处的结果可能与控制门户中的结果略有不同。\n列出的带宽以 GB 为单位，如果未指定时区，则假定为 GMT+0。\n\n示例：\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
@@ -527,10 +482,6 @@
   {
     "id": "--column {{.Column}} is not supported.",
     "translation": "不支持 --column {{.Column}}。"
-  },
-  {
-    "id": "--columns {{.Column}} is not supported.",
-    "translation": "不支持 --columns {{.Column}}。"
   },
   {
     "id": "--note",
@@ -1859,10 +1810,6 @@
   {
     "id": "Current Usage",
     "translation": "当前使用量"
-  },
-  {
-    "id": "Current account is not linked to a Softlayer account. Use '{{.Command}}' to switch account.",
-    "translation": "当前帐户未链接到 Softlayer 帐户。请使用“{{.Command}}”来切换帐户。"
   },
   {
     "id": "Customer Peer IP Address",
@@ -4453,16 +4400,8 @@
     "translation": "要用于供应 Dedicated Virtual Server 的主机的标识"
   },
   {
-    "id": "Host Name",
-    "translation": "主机名"
-  },
-  {
     "id": "Host header.",
     "translation": "主机头。"
-  },
-  {
-    "id": "Host name",
-    "translation": "主机名"
   },
   {
     "id": "Host order options for a given dedicated host.",
@@ -4489,16 +4428,8 @@
     "translation": "主机标识"
   },
   {
-    "id": "HostName",
-    "translation": "主机名"
-  },
-  {
     "id": "Hostname",
     "translation": "主机名"
-  },
-  {
-    "id": "Hostname: ",
-    "translation": "主机名： "
   },
   {
     "id": "Hour of the day when snapshots should be taken, integer between 0 to 23",
@@ -4521,10 +4452,6 @@
     "translation": "HTTPS 端口"
   },
   {
-    "id": "IAM token is required. Use '{{.Command}}' to log in.",
-    "translation": "IAM 令牌是必需的。请使用“{{.Command}}”登录。"
-  },
-  {
     "id": "ID",
     "translation": "标识"
   },
@@ -4543,10 +4470,6 @@
   {
     "id": "ID for the load balancer protocol [required]",
     "translation": "负载均衡器协议的标识 [必需]"
-  },
-  {
-    "id": "ID for the placement group. [required]",
-    "translation": "放置组的标识。[必需]"
   },
   {
     "id": "ID of an origin volume snapshot to use for duplication",
@@ -5615,10 +5538,6 @@
   {
     "id": "Not Found",
     "translation": "找不到"
-  },
-  {
-    "id": "Not logged in. Use '{{.Command}}' to log in.",
-    "translation": "未登录。请使用“{{.Command}}”登录。"
   },
   {
     "id": "Not ready: {{.Message}}",
@@ -7305,10 +7224,6 @@
     "translation": "标记"
   },
   {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "标记自动缩放组中的所有访客。"
-  },
-  {
     "id": "Tags for the image",
     "translation": "映像的标记"
   },
@@ -7523,10 +7438,6 @@
   {
     "id": "The latest date we want to search for event logs [YYYY-MM-DD].",
     "translation": "希望搜索事件日志的最新日期 [YYYY-MM-DD]。"
-  },
-  {
-    "id": "The linked Softlayer account is not validated. Use '{{.Command}}' to re-login.",
-    "translation": "链接的 Softlayer 帐户未经过验证。请使用“{{.Command}}”重新登录。"
   },
   {
     "id": "The lower port bound to enforce",
@@ -8915,10 +8826,6 @@
   {
     "id": "host",
     "translation": "host"
-  },
-  {
-    "id": "hostname",
-    "translation": "hostname"
   },
   {
     "id": "hour",

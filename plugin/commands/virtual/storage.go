@@ -116,7 +116,7 @@ func (cmd *StorageCommand) Run(args []string) error {
 	tablePortableStorage.Print()
 
 	cmd.UI.Print("\nFile Storage Details")
-	tableNas := cmd.UI.Table([]string{T("Volume name"), T("capacity"), T("Host name"), T("Location"), T("Notes")})
+	tableNas := cmd.UI.Table([]string{T("Volume name"), T("capacity"), T("Hostname"), T("Location"), T("Notes")})
 	for _, nas := range nasStorageData {
 		tableNas.Add(
 			*nas.Username,

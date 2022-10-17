@@ -176,14 +176,6 @@
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXEMPLO: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   Este comando lista as categorias para os servidores Bare Metal."
   },
   {
-    "id": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\tEXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
-    "translation": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\tEXEMPLO: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tEste comando solicita um VSI por hora com 4 CPUs, 16 GB de RAM, disco SAN de 100 GB, Ubuntu 16.04 e uplink público e privado 1 Gbps em dal13"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
-    "translation": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    EXEMPLO: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    Este comando faz uma cotação para um VSI com 4 CPUs, RAM de 16 GB, disco SAN de 100 GB, Ubuntu 16.04 e uplink público e privado de 1 Gbps no data center dal13"
-  },
-  {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
     "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
   },
@@ -322,10 +314,6 @@
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Este comando lista todas as VLANs na conta atual filtradas por data center iguais a dal09 e as classifica por número de VLAN.\n \nNota: no campo Pod, a inclusão de (*) indica encerramento próximo"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\nEXEMPLO:\n   ${COMMAND_NAME} sl vlan options\n Esse comando lista todas as opções para criar uma VLAN, por exemplo, tipo de VLAN, data centers, tamanho da sub-rede, roteadores, etc."
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
@@ -494,10 +482,6 @@
   {
     "id": "--column {{.Column}} is not supported.",
     "translation": "--column {{.Column}} nao é suportado."
-  },
-  {
-    "id": "--columns {{.Column}} is not supported.",
-    "translation": "--columns {{.Column}} não é suportado."
   },
   {
     "id": "--note",
@@ -1826,10 +1810,6 @@
   {
     "id": "Current Usage",
     "translation": "Uso atual"
-  },
-  {
-    "id": "Current account is not linked to a Softlayer account. Use '{{.Command}}' to switch account.",
-    "translation": "A conta atual não está vinculada a uma conta do Softlayer. Use '{{.Command}}' para alternar a conta."
   },
   {
     "id": "Customer Peer IP Address",
@@ -4420,16 +4400,8 @@
     "translation": "ID do Host para provisionar um Virtual Server Dedicado para"
   },
   {
-    "id": "Host Name",
-    "translation": "Nome do host"
-  },
-  {
     "id": "Host header.",
     "translation": "Cabeçalho do host."
-  },
-  {
-    "id": "Host name",
-    "translation": "Nome do host"
   },
   {
     "id": "Host order options for a given dedicated host.",
@@ -4456,16 +4428,8 @@
     "translation": "HostId"
   },
   {
-    "id": "HostName",
-    "translation": "Nome do Host"
-  },
-  {
     "id": "Hostname",
     "translation": "Nome do host"
-  },
-  {
-    "id": "Hostname: ",
-    "translation": "Nome do host: "
   },
   {
     "id": "Hour of the day when snapshots should be taken, integer between 0 to 23",
@@ -4488,10 +4452,6 @@
     "translation": "Porta Https"
   },
   {
-    "id": "IAM token is required. Use '{{.Command}}' to log in.",
-    "translation": "O token do IAM é necessário. Use '{{.Command}}' para efetuar login."
-  },
-  {
     "id": "ID",
     "translation": "ID"
   },
@@ -4510,10 +4470,6 @@
   {
     "id": "ID for the load balancer protocol [required]",
     "translation": "ID para o protocolo de balanceador de carga [necessário]"
-  },
-  {
-    "id": "ID for the placement group. [required]",
-    "translation": "ID para o grupo de posicionamento. [requerido]"
   },
   {
     "id": "ID of an origin volume snapshot to use for duplication",
@@ -5582,10 +5538,6 @@
   {
     "id": "Not Found",
     "translation": "Não Encontrado"
-  },
-  {
-    "id": "Not logged in. Use '{{.Command}}' to log in.",
-    "translation": "Login não efetuado. Use '{{.Command}}' para efetuar login."
   },
   {
     "id": "Not ready: {{.Message}}",
@@ -7272,10 +7224,6 @@
     "translation": "Tags"
   },
   {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "Indentifica todos os guests em um grupo de escala automática."
-  },
-  {
     "id": "Tags for the image",
     "translation": "Tags para a imagem"
   },
@@ -7490,10 +7438,6 @@
   {
     "id": "The latest date we want to search for event logs [YYYY-MM-DD].",
     "translation": "A última data que desejamos procurar logs de eventos [YYYYY-MM-DD]."
-  },
-  {
-    "id": "The linked Softlayer account is not validated. Use '{{.Command}}' to re-login.",
-    "translation": "A conta do Softlayer vinculada não está validada. Use '{{.Command}}' para efetuar login novamente."
   },
   {
     "id": "The lower port bound to enforce",
@@ -8882,10 +8826,6 @@
   {
     "id": "host",
     "translation": "host"
-  },
-  {
-    "id": "hostname",
-    "translation": "nome do host"
   },
   {
     "id": "hour",

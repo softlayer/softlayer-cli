@@ -104,34 +104,6 @@
     "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n例:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tこのコマンドは、IPv6 アドレスを作成します。"
   },
   {
-    "id": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tThis command lists all IPv4 addresses on the current account.",
-    "translation": "${COMMAND_NAME} sl globalip list [OPTIONS]\n\n例:\n    ${COMMAND_NAME} sl globalip list --v4 \n\tこのコマンドは、現行アカウントのすべての IPv4 アドレスをリストします。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tThis command unassigns IP address with ID 12345678 from the target device.",
-    "translation": "${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS]\n\n例:\n    ${COMMAND_NAME} sl globalip unassign 12345678\n\tこのコマンドは、ID 12345678 の IP アドレスをターゲット・デバイスから割り当て解除します。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File and Block Storage to a Hardware Server.",
-    "translation": "${COMMAND_NAME} sl hardware authorize-storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware authorize-storage -- username-storage SL01SL30-37 1234567\n ファイルと Block Storage をハードウェア・サーバーに許可します。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware guests 1234567\n   Lists the Virtual Guests running on this server.",
-    "translation": "${COMMAND_NAME} sl hardware guests [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware guests 1234567\n このサーバー上で稼働している仮想ゲストをリストします。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456",
-    "translation": "${COMMAND_NAME} sl hardware reflash-firmware IDENTIFIER [OPTIONS]\n\n例: \n   ${COMMAND_NAME} sl hardware reflash-firmware 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl hardware sensor 123456",
-    "translation": "${COMMAND_NAME} sl hardware sensor IDENTIFIER [OPTIONS]\n\n例: \n   ${COMMAND_NAME} sl hardware sensor 123456"
-  },
-  {
-    "id": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl hardware storage 1234567\n   Get storage details for a hardware server.",
-    "translation": "${COMMAND_NAME} sl hardware storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl hardware storage 1234567\n ハードウェア・サーバーのストレージ詳細を取得します。"
-  },
-  {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
     "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl image datacenter 12345678 -- add dal05 -- remove sjc03\n このコマンドは、イメージのデータ・センターを追加/削除します。"
   },
@@ -202,14 +174,6 @@
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
     "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n例: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   このコマンドは、ベアメタル・サーバーのカテゴリーをリストします。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\tEXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
-    "translation": "${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\t\n\t例: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tこのコマンドは、4 つの CPU、16 GB RAM、100 GB SAN ディスク、Ubuntu 16.04 が搭載され、パブリック・アップリンクとプライベート・アップリンクが 1 Gbps で、dal13 にある時間単位の VSI を注文します"
-  },
-  {
-    "id": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
-    "translation": "${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]\n\n    例: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    このコマンドは、4 つの CPU、16 GB RAM、100 GB SAN ディスク、Ubuntu 16.04 が搭載され、パブリック・アップリンクとプライベート・アップリンクが 1 Gbps で、データ・センター dal13 にある VSI の見積もりを行います"
   },
   {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
@@ -352,10 +316,6 @@
     "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウントのすべての VLAN を dal09 に等しいデータ・センターでフィルタリングしてリストし、それらを VLAN 番号でソートします。\n \n注: フィールド Pod で (*) が追加されている場合は、間もなくクローズされることを示しています。"
   },
   {
-    "id": "${COMMAND_NAME} sl vlan options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan options\n   This command lists all options for creating a vlan, eg. vlan type, datacenters, subnet size, routers, etc.",
-    "translation": "${COMMAND_NAME} sl vlan options\n\t\n例:\n   ${COMMAND_NAME} sl vlan options\n   このコマンドは、vlan の作成に関するすべてのオプション (例えば、vlan タイプ、データ・センター、サブネット・サイズ、ルーターなど) をリストします。"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
     "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl vs authorize-storage -- username-storage SL01SL30-37 1234567\n ファイル、ブロック、およびポータブル・ストレージを仮想サーバーに許可します。"
   },
@@ -402,10 +362,6 @@
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
     "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t注: クラシック・インフラストラクチャー・サービスは、アップグレード要求が行われると、インスタンスを自動的にリブートします。\n  \t インスタンスは、アップグレード・トランザクションが完了するまで停止されます。\n  \tただし、ネットワークにはリブートは不要です。\n\n例:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   このコマンドは、ID 12345678 の Virtual Server インスタンスをアップグレードし、CPU コアの数を 8 に、メモリーを 8192 M に、ネットワーク・ポート速度を 1000 Mbps に設定します。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth upgrade IDENTIFIER [OPTIONS]\n時間フォーマットは、'2006-01-02'、'2006-01-02T15:04'、'2006-01-02T15:04-07:00' のいずれかです。'\n\n丸めや日付合わせの詳細により、この結果は制御ポータルでの結果とは若干異なる可能性があります。\n帯域幅は GB 単位で表示され、タイムゾーンが指定されていない場合は GMT+0 とみなされます。\n\n例:\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
@@ -526,10 +482,6 @@
   {
     "id": "--column {{.Column}} is not supported.",
     "translation": "--column {{.Column}} はサポートされていません。"
-  },
-  {
-    "id": "--columns {{.Column}} is not supported.",
-    "translation": "--columns {{.Column}} はサポートされていません。"
   },
   {
     "id": "--note",
@@ -1858,10 +1810,6 @@
   {
     "id": "Current Usage",
     "translation": "現在の使用量"
-  },
-  {
-    "id": "Current account is not linked to a Softlayer account. Use '{{.Command}}' to switch account.",
-    "translation": "現行アカウントは Softlayer アカウントにリンクされていません。 '{{.Command}}' を使用してアカウントを切り替えてください。"
   },
   {
     "id": "Customer Peer IP Address",
@@ -4452,16 +4400,8 @@
     "translation": "専用 Virtual Server をプロビジョンするホスト ID"
   },
   {
-    "id": "Host Name",
-    "translation": "ホスト名"
-  },
-  {
     "id": "Host header.",
     "translation": "ホスト・ヘッダー。"
-  },
-  {
-    "id": "Host name",
-    "translation": "ホスト名"
   },
   {
     "id": "Host order options for a given dedicated host.",
@@ -4488,16 +4428,8 @@
     "translation": "HostId"
   },
   {
-    "id": "HostName",
-    "translation": "ホスト名"
-  },
-  {
     "id": "Hostname",
     "translation": "ホスト名"
-  },
-  {
-    "id": "Hostname: ",
-    "translation": "ホスト名: "
   },
   {
     "id": "Hour of the day when snapshots should be taken, integer between 0 to 23",
@@ -4520,10 +4452,6 @@
     "translation": "HTTPS ポート"
   },
   {
-    "id": "IAM token is required. Use '{{.Command}}' to log in.",
-    "translation": "IAM トークンは必須です。 '{{.Command}}' を使用してログインしてください。"
-  },
-  {
     "id": "ID",
     "translation": "ID"
   },
@@ -4542,10 +4470,6 @@
   {
     "id": "ID for the load balancer protocol [required]",
     "translation": "ロード・バランサー・プロトコルの ID [必須]"
-  },
-  {
-    "id": "ID for the placement group. [required]",
-    "translation": "配置グループの ID。 [必須]"
   },
   {
     "id": "ID of an origin volume snapshot to use for duplication",
@@ -5614,10 +5538,6 @@
   {
     "id": "Not Found",
     "translation": "見つかりません"
-  },
-  {
-    "id": "Not logged in. Use '{{.Command}}' to log in.",
-    "translation": "ログインしていません。 '{{.Command}}' を使用してログインしてください。"
   },
   {
     "id": "Not ready: {{.Message}}",
@@ -7304,10 +7224,6 @@
     "translation": "タグ"
   },
   {
-    "id": "Tags all guests in an autoscale group.",
-    "translation": "オート・スケール・グループ内のすべてのゲストにタグを付けます。"
-  },
-  {
     "id": "Tags for the image",
     "translation": "イメージのタグ"
   },
@@ -7522,10 +7438,6 @@
   {
     "id": "The latest date we want to search for event logs [YYYY-MM-DD].",
     "translation": "イベント・ログを検索する最新の日付 [YYYY-MM-DD]。"
-  },
-  {
-    "id": "The linked Softlayer account is not validated. Use '{{.Command}}' to re-login.",
-    "translation": "リンクされた Softlayer アカウントは検証されません。 '{{.Command}}' を使用して再ログインしてください。"
   },
   {
     "id": "The lower port bound to enforce",
@@ -8914,10 +8826,6 @@
   {
     "id": "host",
     "translation": "ホスト"
-  },
-  {
-    "id": "hostname",
-    "translation": "hostname"
   },
   {
     "id": "hour",
