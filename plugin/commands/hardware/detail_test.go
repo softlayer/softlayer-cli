@@ -61,7 +61,46 @@ var _ = Describe("hardware detail", func() {
 			})
 		})
 
-		Context("VS detail with correct VS ID ", func() {
+		Context("Failed to get the hard drives detail", func() {
+			BeforeEach(func() {
+				fakeHardwareManager.GetHardwareReturns(datatypes.Hardware_Server{}, nil)
+				fakeHardwareManager.GetHardDrivesReturns([]datatypes.Hardware_Component{}, errors.New("Failed to get the hard drives detail"))
+			})
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to get the hard drives detail"))
+			})
+		})
+
+		Context("Failed to get bandwidth allotment detail", func() {
+			BeforeEach(func() {
+				fakeHardwareManager.GetHardwareReturns(datatypes.Hardware_Server{}, nil)
+				fakeHardwareManager.GetHardDrivesReturns([]datatypes.Hardware_Component{}, nil)
+				fakeHardwareManager.GetBandwidthAllotmentDetailReturns(datatypes.Network_Bandwidth_Version1_Allotment_Detail{}, errors.New("Failed to get bandwidth allotment detail"))
+			})
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to get bandwidth allotment detail"))
+			})
+		})
+
+		Context("Failed to get billing cycle bandwidth usage", func() {
+			BeforeEach(func() {
+				fakeHardwareManager.GetHardwareReturns(datatypes.Hardware_Server{}, nil)
+				fakeHardwareManager.GetHardDrivesReturns([]datatypes.Hardware_Component{}, nil)
+				fakeHardwareManager.GetBandwidthAllotmentDetailReturns(datatypes.Network_Bandwidth_Version1_Allotment_Detail{}, nil)
+				fakeHardwareManager.GetBillingCycleBandwidthUsageReturns([]datatypes.Network_Bandwidth_Usage{}, errors.New("Failed to get billing cycle bandwidth usage"))
+			})
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to get billing cycle bandwidth usage"))
+			})
+		})
+
+		Context("hardware detail with correct hardware ID ", func() {
 			created, _ := time.Parse(time.RFC3339, "2017-11-08T00:00:00Z")
 			firmwareCreated, _ := time.Parse(time.RFC3339, "2015-10-09T00:00:00Z")
 			BeforeEach(func() {
@@ -141,6 +180,25 @@ var _ = Describe("hardware detail", func() {
 									NetworkSpace: sl.String("PRIMARY"),
 								},
 							},
+							LastTransaction: &datatypes.Provisioning_Version1_Transaction{
+								TransactionGroup: &datatypes.Provisioning_Version1_Transaction_Group{
+									Name: sl.String("Storage_EvaultProvision"),
+								},
+								ModifyDate: sl.Time(created),
+							},
+							HourlyBillingFlag: sl.Bool(true),
+							ActiveComponents: []datatypes.Hardware_Component{
+								datatypes.Hardware_Component{
+									HardwareComponentModel: &datatypes.Hardware_Component_Model{
+										HardwareGenericComponentModel: &datatypes.Hardware_Component_Model_Generic{
+											HardwareComponentType: &datatypes.Hardware_Component_Type{
+												KeyName: sl.String("DRIVE_CONTROLLER"),
+											},
+										},
+										LongDescription: sl.String("LSI / DRIVE CONTROLLER / Avago MegaRAID 9361-8i / SATA/SAS - MegaRAID SAS 9361-8i / 8"),
+									},
+								},
+							},
 						},
 					}, nil)
 				fakeHardwareManager.GetHardwareComponentsReturns([]datatypes.Hardware_Component{
@@ -162,6 +220,42 @@ var _ = Describe("hardware detail", func() {
 						},
 					},
 				}, nil)
+				fakeHardwareManager.GetHardDrivesReturns(
+					[]datatypes.Hardware_Component{
+						datatypes.Hardware_Component{
+							HardwareComponentModel: &datatypes.Hardware_Component_Model{
+								Manufacturer: sl.String("Seagate"),
+								Name:         sl.String("Constellation ES"),
+								HardwareGenericComponentModel: &datatypes.Hardware_Component_Model_Generic{
+									Capacity: sl.Float(1000.00),
+									Units:    sl.String("GB"),
+								},
+							},
+							SerialNumber: sl.String("z1w4zqye"),
+						},
+					},
+					nil,
+				)
+				fakeHardwareManager.GetBandwidthAllotmentDetailReturns(
+					datatypes.Network_Bandwidth_Version1_Allotment_Detail{
+						Allocation: &datatypes.Network_Bandwidth_Version1_Allocation{
+							Amount: sl.Float(20000),
+						},
+					},
+					nil,
+				)
+				fakeHardwareManager.GetBillingCycleBandwidthUsageReturns(
+					[]datatypes.Network_Bandwidth_Usage{
+						datatypes.Network_Bandwidth_Usage{
+							Type: &datatypes.Network_Bandwidth_Version1_Usage_Detail_Type{
+								Alias: sl.String("PUBLIC_SERVER_BW"),
+							},
+							AmountIn:  sl.Float(0.326090),
+							AmountOut: sl.Float(0.015740),
+						},
+					},
+					nil,
+				)
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
@@ -187,9 +281,17 @@ var _ = Describe("hardware detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("678"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("50"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("PRIMARY"))
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("root"))
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("password4root"))
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("1000.00"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Seagate Constellation ES"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00 GB"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("z1w4zqye"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Storage_EvaultProvision 2017-11-08T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Hourly"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Public"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0.326090"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0.015740"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("20000"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("DRIVE_CONTROLLER"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("LSI / DRIVE CONTROLLER / Avago MegaRAID 9361-8i / SATA/SAS - MegaRAID SAS 9361-8i / 8"))
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--passwords", "--price", "--components")

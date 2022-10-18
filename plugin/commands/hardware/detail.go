@@ -30,7 +30,6 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) (cmd *DetailCommand) {
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
-
 	cobraCmd := &cobra.Command{
 		Use:   "detail " + T("IDENTIFIER"),
 		Short: T("Get details for a hardware server"),
@@ -61,6 +60,21 @@ func (cmd *DetailCommand) Run(args []string) error {
 		return errors.NewAPIError(T("Failed to get hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
 	}
 
+	hardDrives, err := cmd.HardwareManager.GetHardDrives(hardwareId)
+	if err != nil {
+		return errors.NewAPIError(T("Failed to get the hard drives detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+	}
+
+	bandwidthAllotmentDetail, err := cmd.HardwareManager.GetBandwidthAllotmentDetail(hardwareId, "")
+	if err != nil {
+		return errors.NewAPIError(T("Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+	}
+
+	billingCycleBandwidthUsage, err := cmd.HardwareManager.GetBillingCycleBandwidthUsage(hardwareId, "")
+	if err != nil {
+		return errors.NewAPIError(T("Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+	}
+
 	if outputFormat == "JSON" {
 		return utils.PrintPrettyJSON(cmd.UI, hardware)
 	}
@@ -79,6 +93,27 @@ func (cmd *DetailCommand) Run(args []string) error {
 	}
 	table.Add(T("CPU cores"), utils.FormatUIntPointer(hardware.ProcessorPhysicalCoreAmount))
 	table.Add(T("Memory"), utils.FormatUIntPointer(hardware.MemoryCapacity)+"G")
+
+	if len(hardDrives) > 0 {
+		buf := new(bytes.Buffer)
+		hardDriveTable := terminal.NewTable(buf, []string{T("Name"), T("Capacity"), T("Serial #")})
+		for _, hardDrive := range hardDrives {
+			name := *hardDrive.HardwareComponentModel.Manufacturer + " " + *hardDrive.HardwareComponentModel.Name
+			capacity := fmt.Sprintf(
+				"%.2f %s",
+				*hardDrive.HardwareComponentModel.HardwareGenericComponentModel.Capacity,
+				*hardDrive.HardwareComponentModel.HardwareGenericComponentModel.Units,
+			)
+			serial := *hardDrive.SerialNumber
+			hardDriveTable.Add(
+				name,
+				capacity,
+				serial,
+			)
+		}
+		hardDriveTable.Print()
+		table.Add("Drives", buf.String())
+	}
 	table.Add(T("Public IP"), utils.FormatStringPointer(hardware.PrimaryIpAddress))
 	table.Add(T("Private IP"), utils.FormatStringPointer(hardware.PrimaryBackendIpAddress))
 	table.Add(T("IPMI IP"), utils.FormatStringPointer(hardware.NetworkManagementIpAddress))
@@ -95,6 +130,16 @@ func (cmd *DetailCommand) Run(args []string) error {
 		hardware.BillingItem.OrderItem.Order.UserRecord != nil {
 		table.Add(T("Owner"), utils.FormatStringPointer(hardware.BillingItem.OrderItem.Order.UserRecord.Username))
 	}
+	table.Add(T("Last transaction"), fmt.Sprintf(
+		"%s %s",
+		*hardware.LastTransaction.TransactionGroup.Name,
+		*hardware.LastTransaction.ModifyDate,
+	))
+	billing := "Monthly"
+	if *hardware.HourlyBillingFlag {
+		billing = "Hourly"
+	}
+	table.Add(T("Billing"), billing)
 	if hardware.Notes != nil && *hardware.Notes != "" {
 		table.Add(T("Note"), utils.FormatStringPointer(hardware.Notes))
 	}
@@ -112,6 +157,44 @@ func (cmd *DetailCommand) Run(args []string) error {
 		}
 		vlanTable.Print()
 		table.Add("Vlans", buf.String())
+	}
+
+	if len(billingCycleBandwidthUsage) > 0 {
+		buf := new(bytes.Buffer)
+		bandwithTable := terminal.NewTable(buf, []string{T("Type"), T("In GB"), T("Out GB"), T("Allotment")})
+		for _, billingCycle := range billingCycleBandwidthUsage {
+			bw_type := "Private"
+			allotment := "N/A"
+			if *billingCycle.Type.Alias == "PUBLIC_SERVER_BW" {
+				bw_type = "Public"
+				if bandwidthAllotmentDetail.Allocation == nil {
+					allotment = "-"
+				} else {
+					allotment = utils.FormatSLFloatPointerToInt(bandwidthAllotmentDetail.Allocation.Amount)
+				}
+			}
+			bandwithTable.Add(
+				bw_type,
+				utils.FormatSLFloatPointerToFloat(billingCycle.AmountIn),
+				utils.FormatSLFloatPointerToFloat(billingCycle.AmountOut),
+				allotment,
+			)
+		}
+		bandwithTable.Print()
+		table.Add("Bandwidth", buf.String())
+	}
+
+	if len(hardware.ActiveComponents) > 0 {
+		buf := new(bytes.Buffer)
+		vlanTable := terminal.NewTable(buf, []string{T("Type"), T("Name")})
+		for _, activeComponent := range hardware.ActiveComponents {
+			vlanTable.Add(
+				utils.FormatStringPointer(activeComponent.HardwareComponentModel.HardwareGenericComponentModel.HardwareComponentType.KeyName),
+				utils.FormatStringPointer(activeComponent.HardwareComponentModel.LongDescription),
+			)
+		}
+		vlanTable.Print()
+		table.Add("System_data", buf.String())
 	}
 
 	if cmd.Price {
