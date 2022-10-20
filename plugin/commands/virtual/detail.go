@@ -245,19 +245,23 @@ func (cmd *DetailCommand) Run(args []string) error {
 	}
 
 	if cmd.Price {
-		var sum datatypes.Float64
 		if virtualGuest.BillingItem != nil && virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount != nil {
-			sum = *virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
-			for _, item := range virtualGuest.BillingItem.Children {
-				if item.NextInvoiceTotalRecurringAmount != nil {
-					sum += *item.NextInvoiceTotalRecurringAmount
+			buf := new(bytes.Buffer)
+			priceTable := terminal.NewTable(buf, []string{T("Item"), T("CategoryCode"), T("Recurring Price")})
+
+			totalPrice := virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
+			priceTable.Add("Total", "-", fmt.Sprintf("%.2f", *totalPrice))
+			sum := *virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
+			for _, item := range virtualGuest.BillingItem.NextInvoiceChildren {
+				if item.RecurringFee != nil {
+					sum += *item.RecurringFee
+					priceTable.Add(*item.Description, *item.CategoryCode, fmt.Sprintf("%.2f", *item.RecurringFee))
 				}
 			}
-		} else {
-			sum = 0.0
+			priceTable.Print()
+			table.Add("Prices", buf.String())
+			table.Add(T("Price rate"), fmt.Sprintf("%.2f", sum))
 		}
-
-		table.Add(T("price rate"), fmt.Sprintf("%.2f", sum))
 	}
 
 	table.Print()

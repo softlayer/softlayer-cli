@@ -68,6 +68,13 @@ var GetInstanceReturn = datatypes.Virtual_Guest{
 			},
 			RecurringFee:                    sl.Float(1000.00),
 			NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
+			NextInvoiceChildren: []datatypes.Billing_Item{
+				datatypes.Billing_Item{
+					RecurringFee: sl.Float(59.52),
+					Description:  sl.String("CPU Cores: a suspendable product. Anticipated usage for the billing cycle is 743.9997 hours Used"),
+					CategoryCode: sl.String("guest_core_usage"),
+				},
+			},
 		},
 	},
 	Notes: sl.String("mynotes"),
@@ -94,7 +101,6 @@ var GetInstanceReturn = datatypes.Virtual_Guest{
 	HourlyBillingFlag: sl.Bool(true),
 }
 
-
 var BlockDeviceReturns = []datatypes.Virtual_Guest_Block_Device{
 	datatypes.Virtual_Guest_Block_Device{
 		DiskImage: &datatypes.Virtual_Disk_Image{
@@ -106,7 +112,6 @@ var BlockDeviceReturns = []datatypes.Virtual_Guest_Block_Device{
 		Device:    sl.String("1"),
 	},
 }
-
 
 var _ = Describe("VS detail", func() {
 	var (
@@ -204,6 +209,10 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("PRIMARY"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("root"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("password4root"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("59.52"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("CPU Cores: a suspendable product. Anticipated usage for the billing cycle is 743.9997 hours Used"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("guest_core_usage"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1059.52"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00"))
 			})
 		})
@@ -217,7 +226,7 @@ var _ = Describe("VS detail", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--passwords", "--price")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("price rate           0.00"))
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("Price rate"))
 			})
 		})
 	})
