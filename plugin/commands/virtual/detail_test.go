@@ -70,7 +70,7 @@ var GetInstanceReturn = datatypes.Virtual_Guest{
 			NextInvoiceTotalRecurringAmount: sl.Float(1000.00),
 			NextInvoiceChildren: []datatypes.Billing_Item{
 				datatypes.Billing_Item{
-					RecurringFee: sl.Float(59.52),
+					RecurringFee: sl.Float(1000.00),
 					Description:  sl.String("CPU Cores: a suspendable product. Anticipated usage for the billing cycle is 743.9997 hours Used"),
 					CategoryCode: sl.String("guest_core_usage"),
 				},
@@ -209,11 +209,10 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("PRIMARY"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("root"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("password4root"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("59.52"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("CPU Cores: a suspendable product. Anticipated usage for the billing cycle is 743.9997 hours Used"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("guest_core_usage"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1059.52"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2000.00"))
 			})
 		})
 		Context("Github issues #252 ", func() {
