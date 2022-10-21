@@ -24,7 +24,6 @@ func NewCredentialsCommand(sl *metadata.SoftlayerCommand) (cmd *CredentialsComma
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
-
 	cobraCmd := &cobra.Command{
 		Use:   "credentials " + T("IDENTIFIER"),
 		Short: T("List hardware server credentials"),
@@ -46,7 +45,8 @@ func (cmd *CredentialsCommand) Run(args []string) error {
 
 	outputFormat := cmd.GetOutputFlag()
 
-	hardware, err := cmd.HardwareManager.GetHardware(hardwareID, "")
+	mask := "mask[id,softwareComponents[passwords,softwareLicense[softwareDescription[referenceCode,version]]]]"
+	hardware, err := cmd.HardwareManager.GetHardware(hardwareID, mask)
 	if err != nil {
 		return errors.NewAPIError(T("Failed to get hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareID}), err.Error(), 2)
 	}
@@ -58,15 +58,25 @@ func (cmd *CredentialsCommand) Run(args []string) error {
 		return utils.PrintPrettyJSON(cmd.UI, hardware.OperatingSystem)
 	}
 
-	if hardware.OperatingSystem != nil && hardware.OperatingSystem.Passwords != nil {
-		table := cmd.UI.Table([]string{T("Username"), T("Password")})
-		for _, item := range hardware.OperatingSystem.Passwords {
-			if item.Username != nil && item.Password != nil {
-				table.Add(*item.Username, *item.Password)
+	table := cmd.UI.Table([]string{T("Username"), T("Password"), T("Software"), T("Version")})
+	existCredentials := false
+	for _, softwareComponent := range hardware.SoftwareComponents {
+		for _, password := range softwareComponent.Passwords {
+			if password.Username != nil && password.Password != nil {
+				existCredentials = true
+				table.Add(
+					*password.Username,
+					*password.Password,
+					*softwareComponent.SoftwareLicense.SoftwareDescription.ReferenceCode,
+					*softwareComponent.SoftwareLicense.SoftwareDescription.Version,
+				)
 			}
 		}
+	}
+	if existCredentials {
 		table.Print()
 		return nil
+	} else {
+		return errors.NewInvalidUsageError(T("Failed to find credentials of hardware server {{.ID}}.", map[string]interface{}{"ID": hardwareID}))
 	}
-	return errors.NewInvalidUsageError(T("Failed to find credentials of hardware server {{.ID}}.", map[string]interface{}{"ID": hardwareID}))
 }
