@@ -28,7 +28,7 @@ const (
 		"powerState.name, activeTransaction, datacenter.name, account.id, " +
 		"maxCpu, maxMemory, primaryIpAddress, primaryBackendIpAddress, " +
 		"privateNetworkOnlyFlag, dedicatedAccountHostOnlyFlag, createDate, modifyDate, " +
-		"billingItem[orderItem[id,order.userRecord[username]], recurringFee], notes, tagReferences.tag.name"
+		"billingItem[orderItem[id,order.userRecord[username]], recurringFee,nextInvoiceChildren], notes, tagReferences.tag.name"
 	INSTANCE_DETAIL_MASK = "id,globalIdentifier,fullyQualifiedDomainName,hostname,domain,createDate,modifyDate,provisionDate,notes," +
 		"dedicatedAccountHostOnlyFlag,privateNetworkOnlyFlag,primaryBackendIpAddress,primaryIpAddress," +
 		"networkComponents[id,status,speed,maxSpeed,name,macAddress,primaryIpAddress,port,primarySubnet,securityGroupBindings[securityGroup[id, name]]]," +
@@ -37,7 +37,7 @@ const (
 		"operatingSystem[passwords[username,password],softwareLicense.softwareDescription[manufacturer,name,version,referenceCode]]," +
 		"softwareComponents[passwords[username,password,notes],softwareLicense[softwareDescription[manufacturer,name,version,referenceCode]]]," +
 		"hourlyBillingFlag,userData," +
-		"billingItem[id,package,nextInvoiceTotalRecurringAmount,children[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem[id,order.userRecord[username],preset.keyName]]," +
+		"billingItem[id,package,nextInvoiceTotalRecurringAmount,nextInvoiceChildren[description,categoryCode,recurringFee,nextInvoiceTotalRecurringAmount],children[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem[id,order.userRecord[username],preset.keyName]]," +
 		"tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],dedicatedHost.id,transientGuestFlag,lastTransaction[transactionGroup]"
 	HOST_DEFAULT_MASK = "id,name,createDate,cpuCount,diskCapacity,memoryCapacity,guestCount,datacenter,backendRouter,allocationStatus"
 
