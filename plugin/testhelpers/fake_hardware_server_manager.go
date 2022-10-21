@@ -99,6 +99,20 @@ type FakeHardwareServerManager struct {
 		result1 datatypes.Container_Product_Order
 		result2 error
 	}
+	GetBandwidthAllotmentDetailStub        func(int, string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error)
+	getBandwidthAllotmentDetailMutex       sync.RWMutex
+	getBandwidthAllotmentDetailArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getBandwidthAllotmentDetailReturns struct {
+		result1 datatypes.Network_Bandwidth_Version1_Allotment_Detail
+		result2 error
+	}
+	getBandwidthAllotmentDetailReturnsOnCall map[int]struct {
+		result1 datatypes.Network_Bandwidth_Version1_Allotment_Detail
+		result2 error
+	}
 	GetBandwidthDataStub        func(int, time.Time, time.Time, int) ([]datatypes.Metric_Tracking_Object_Data, error)
 	getBandwidthDataMutex       sync.RWMutex
 	getBandwidthDataArgsForCall []struct {
@@ -129,6 +143,20 @@ type FakeHardwareServerManager struct {
 	}
 	getBandwidthPriceIdReturnsOnCall map[int]struct {
 		result1 int
+		result2 error
+	}
+	GetBillingCycleBandwidthUsageStub        func(int, string) ([]datatypes.Network_Bandwidth_Usage, error)
+	getBillingCycleBandwidthUsageMutex       sync.RWMutex
+	getBillingCycleBandwidthUsageArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getBillingCycleBandwidthUsageReturns struct {
+		result1 []datatypes.Network_Bandwidth_Usage
+		result2 error
+	}
+	getBillingCycleBandwidthUsageReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Bandwidth_Usage
 		result2 error
 	}
 	GetCancellationReasonsStub        func() map[string]string
@@ -882,6 +910,71 @@ func (fake *FakeHardwareServerManager) GenerateCreateTemplateReturnsOnCall(i int
 	}{result1, result2}
 }
 
+func (fake *FakeHardwareServerManager) GetBandwidthAllotmentDetail(arg1 int, arg2 string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error) {
+	fake.getBandwidthAllotmentDetailMutex.Lock()
+	ret, specificReturn := fake.getBandwidthAllotmentDetailReturnsOnCall[len(fake.getBandwidthAllotmentDetailArgsForCall)]
+	fake.getBandwidthAllotmentDetailArgsForCall = append(fake.getBandwidthAllotmentDetailArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetBandwidthAllotmentDetailStub
+	fakeReturns := fake.getBandwidthAllotmentDetailReturns
+	fake.recordInvocation("GetBandwidthAllotmentDetail", []interface{}{arg1, arg2})
+	fake.getBandwidthAllotmentDetailMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) GetBandwidthAllotmentDetailCallCount() int {
+	fake.getBandwidthAllotmentDetailMutex.RLock()
+	defer fake.getBandwidthAllotmentDetailMutex.RUnlock()
+	return len(fake.getBandwidthAllotmentDetailArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) GetBandwidthAllotmentDetailCalls(stub func(int, string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error)) {
+	fake.getBandwidthAllotmentDetailMutex.Lock()
+	defer fake.getBandwidthAllotmentDetailMutex.Unlock()
+	fake.GetBandwidthAllotmentDetailStub = stub
+}
+
+func (fake *FakeHardwareServerManager) GetBandwidthAllotmentDetailArgsForCall(i int) (int, string) {
+	fake.getBandwidthAllotmentDetailMutex.RLock()
+	defer fake.getBandwidthAllotmentDetailMutex.RUnlock()
+	argsForCall := fake.getBandwidthAllotmentDetailArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeHardwareServerManager) GetBandwidthAllotmentDetailReturns(result1 datatypes.Network_Bandwidth_Version1_Allotment_Detail, result2 error) {
+	fake.getBandwidthAllotmentDetailMutex.Lock()
+	defer fake.getBandwidthAllotmentDetailMutex.Unlock()
+	fake.GetBandwidthAllotmentDetailStub = nil
+	fake.getBandwidthAllotmentDetailReturns = struct {
+		result1 datatypes.Network_Bandwidth_Version1_Allotment_Detail
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) GetBandwidthAllotmentDetailReturnsOnCall(i int, result1 datatypes.Network_Bandwidth_Version1_Allotment_Detail, result2 error) {
+	fake.getBandwidthAllotmentDetailMutex.Lock()
+	defer fake.getBandwidthAllotmentDetailMutex.Unlock()
+	fake.GetBandwidthAllotmentDetailStub = nil
+	if fake.getBandwidthAllotmentDetailReturnsOnCall == nil {
+		fake.getBandwidthAllotmentDetailReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_Bandwidth_Version1_Allotment_Detail
+			result2 error
+		})
+	}
+	fake.getBandwidthAllotmentDetailReturnsOnCall[i] = struct {
+		result1 datatypes.Network_Bandwidth_Version1_Allotment_Detail
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeHardwareServerManager) GetBandwidthData(arg1 int, arg2 time.Time, arg3 time.Time, arg4 int) ([]datatypes.Metric_Tracking_Object_Data, error) {
 	fake.getBandwidthDataMutex.Lock()
 	ret, specificReturn := fake.getBandwidthDataReturnsOnCall[len(fake.getBandwidthDataArgsForCall)]
@@ -1017,6 +1110,71 @@ func (fake *FakeHardwareServerManager) GetBandwidthPriceIdReturnsOnCall(i int, r
 	}
 	fake.getBandwidthPriceIdReturnsOnCall[i] = struct {
 		result1 int
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) GetBillingCycleBandwidthUsage(arg1 int, arg2 string) ([]datatypes.Network_Bandwidth_Usage, error) {
+	fake.getBillingCycleBandwidthUsageMutex.Lock()
+	ret, specificReturn := fake.getBillingCycleBandwidthUsageReturnsOnCall[len(fake.getBillingCycleBandwidthUsageArgsForCall)]
+	fake.getBillingCycleBandwidthUsageArgsForCall = append(fake.getBillingCycleBandwidthUsageArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetBillingCycleBandwidthUsageStub
+	fakeReturns := fake.getBillingCycleBandwidthUsageReturns
+	fake.recordInvocation("GetBillingCycleBandwidthUsage", []interface{}{arg1, arg2})
+	fake.getBillingCycleBandwidthUsageMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) GetBillingCycleBandwidthUsageCallCount() int {
+	fake.getBillingCycleBandwidthUsageMutex.RLock()
+	defer fake.getBillingCycleBandwidthUsageMutex.RUnlock()
+	return len(fake.getBillingCycleBandwidthUsageArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) GetBillingCycleBandwidthUsageCalls(stub func(int, string) ([]datatypes.Network_Bandwidth_Usage, error)) {
+	fake.getBillingCycleBandwidthUsageMutex.Lock()
+	defer fake.getBillingCycleBandwidthUsageMutex.Unlock()
+	fake.GetBillingCycleBandwidthUsageStub = stub
+}
+
+func (fake *FakeHardwareServerManager) GetBillingCycleBandwidthUsageArgsForCall(i int) (int, string) {
+	fake.getBillingCycleBandwidthUsageMutex.RLock()
+	defer fake.getBillingCycleBandwidthUsageMutex.RUnlock()
+	argsForCall := fake.getBillingCycleBandwidthUsageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeHardwareServerManager) GetBillingCycleBandwidthUsageReturns(result1 []datatypes.Network_Bandwidth_Usage, result2 error) {
+	fake.getBillingCycleBandwidthUsageMutex.Lock()
+	defer fake.getBillingCycleBandwidthUsageMutex.Unlock()
+	fake.GetBillingCycleBandwidthUsageStub = nil
+	fake.getBillingCycleBandwidthUsageReturns = struct {
+		result1 []datatypes.Network_Bandwidth_Usage
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) GetBillingCycleBandwidthUsageReturnsOnCall(i int, result1 []datatypes.Network_Bandwidth_Usage, result2 error) {
+	fake.getBillingCycleBandwidthUsageMutex.Lock()
+	defer fake.getBillingCycleBandwidthUsageMutex.Unlock()
+	fake.GetBillingCycleBandwidthUsageStub = nil
+	if fake.getBillingCycleBandwidthUsageReturnsOnCall == nil {
+		fake.getBillingCycleBandwidthUsageReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Bandwidth_Usage
+			result2 error
+		})
+	}
+	fake.getBillingCycleBandwidthUsageReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Bandwidth_Usage
 		result2 error
 	}{result1, result2}
 }
@@ -2721,10 +2879,14 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.editMutex.RUnlock()
 	fake.generateCreateTemplateMutex.RLock()
 	defer fake.generateCreateTemplateMutex.RUnlock()
+	fake.getBandwidthAllotmentDetailMutex.RLock()
+	defer fake.getBandwidthAllotmentDetailMutex.RUnlock()
 	fake.getBandwidthDataMutex.RLock()
 	defer fake.getBandwidthDataMutex.RUnlock()
 	fake.getBandwidthPriceIdMutex.RLock()
 	defer fake.getBandwidthPriceIdMutex.RUnlock()
+	fake.getBillingCycleBandwidthUsageMutex.RLock()
+	defer fake.getBillingCycleBandwidthUsageMutex.RUnlock()
 	fake.getCancellationReasonsMutex.RLock()
 	defer fake.getCancellationReasonsMutex.RUnlock()
 	fake.getCreateOptionsMutex.RLock()

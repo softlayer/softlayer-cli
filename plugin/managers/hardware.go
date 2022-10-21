@@ -24,7 +24,7 @@ const (
 		"primarySubnet[id,netmask,broadcastAddress,networkIdentifier,gateway]],hardwareChassis[id,name],activeTransaction[id,transactionStatus[friendlyName,name]]," +
 		"operatingSystem[softwareLicense[softwareDescription[manufacturer,name,version,referenceCode]],passwords[username,password]]," +
 		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
-		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password]"
+		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password],lastTransaction[transactionGroup],activeComponents"
 
 	KEY_SIZES      = "sizes"
 	KEY_OS         = "operating_systems"
@@ -71,6 +71,8 @@ type HardwareServerManager interface {
 	CreateFirmwareReflashTransaction(id int) (bool, error)
 	GetUserCustomerNotificationsByHardwareId(id int, mask string) ([]datatypes.User_Customer_Notification_Hardware, error)
 	CreateUserCustomerNotification(hardwareId int, userId int) (datatypes.User_Customer_Notification_Hardware, error)
+	GetBandwidthAllotmentDetail(hardwareId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error)
+	GetBillingCycleBandwidthUsage(hardwareId int, mask string) ([]datatypes.Network_Bandwidth_Usage, error)
 }
 
 type hardwareServerManager struct {
@@ -836,4 +838,24 @@ func (hw hardwareServerManager) CreateUserCustomerNotification(hardwareId int, u
 	}
 	userCustomerNotificationHardwareService := services.GetUserCustomerNotificationHardwareService(hw.Session)
 	return userCustomerNotificationHardwareService.CreateObject(&userCustomerNotificationTemplate)
+}
+
+// Return hardware’s allotted detail record.
+// int hardwareId: The hardware server identifier.
+// string mask: The Object mask.
+func (hw hardwareServerManager) GetBandwidthAllotmentDetail(hardwareId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error) {
+	if mask == "" {
+		mask = "mask[allocation[amount]]"
+	}
+	return hw.HardwareService.Id(hardwareId).Mask(mask).GetBandwidthAllotmentDetail()
+}
+
+// Retrieve The raw bandwidth usage data for the current billing cycle.
+// int hardwareId: The hardware server identifier.
+// string mask: The Object mask.
+func (hw hardwareServerManager) GetBillingCycleBandwidthUsage(hardwareId int, mask string) ([]datatypes.Network_Bandwidth_Usage, error) {
+	if mask == "" {
+		mask = "mask[amountIn,amountOut,type]"
+	}
+	return hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingCycleBandwidthUsage()
 }
