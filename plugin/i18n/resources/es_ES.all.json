@@ -3116,8 +3116,8 @@
     "translation": "No se ha podido obtener el paquete para el cortafuegos {{.Type}}.\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "No se han podido obtener permisos.\n"
+    "id": "Failed to get permissions.",
+    "translation": "No se han podido obtener permisos."
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
@@ -3252,8 +3252,8 @@
     "translation": "No se han podido obtener los permisos de usuario.\n"
   },
   {
-    "id": "Failed to get user.\n",
-    "translation": "No se ha podido obtener el usuario.\n"
+    "id": "Failed to get user.",
+    "translation": "No se ha podido obtener el usuario."
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3732,8 +3732,8 @@
     "translation": "No se ha podido actualizar la agrupación de l7: {{.Error}}.\n"
   },
   {
-    "id": "Failed to update permissions: %s",
-    "translation": "No se han podido actualizar permisos: %s"
+    "id": "Failed to update permissions",
+    "translation": "No se han podido actualizar permisos"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5960,8 +5960,8 @@
     "translation": "Permisos"
   },
   {
-    "id": "Permissions updated successfully: %s",
-    "translation": "Los permisos se han actualizado correctamente: %s"
+    "id": "Permissions updated successfully",
+    "translation": "Los permisos se han actualizado correctamente"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -8936,8 +8936,8 @@
     "translation": "las opciones para %s son hardware o virtual"
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "las opciones para %s son true, false"
+    "id": "options for --enable are true, false",
+    "translation": "las opciones para --enable son true, false"
   },
   {
     "id": "os",

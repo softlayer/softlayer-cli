@@ -3116,8 +3116,8 @@
     "translation": "Abrufen des Pakets für die {{.Type}}-Firewall fehlgeschlagen.\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "Abrufen von Berechtigungen fehlgeschlagen.\n"
+    "id": "Failed to get permissions.",
+    "translation": "Abrufen von Berechtigungen fehlgeschlagen."
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
@@ -3252,8 +3252,8 @@
     "translation": "Die Benutzerberechtigungen konnten nicht abgerufen werden.\n"
   },
   {
-    "id": "Failed to get user.\n",
-    "translation": "Abrufen des Benutzers fehlgeschlagen.\n"
+    "id": "Failed to get user.",
+    "translation": "Abrufen des Benutzers fehlgeschlagen."
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3732,8 +3732,8 @@
     "translation": "Aktualisieren des L7-Pools fehlgeschlagen: {{.Error}}.\n"
   },
   {
-    "id": "Failed to update permissions: %s",
-    "translation": "Aktualisieren der Berechtigungen fehlgeschlagen: %s"
+    "id": "Failed to update permissions",
+    "translation": "Aktualisieren der Berechtigungen fehlgeschlagen"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5964,8 +5964,8 @@
     "translation": "Berechtigungen"
   },
   {
-    "id": "Permissions updated successfully: %s",
-    "translation": "Berechtigungen wurden erfolgreich aktualisiert: %s"
+    "id": "Permissions updated successfully",
+    "translation": "Berechtigungen wurden erfolgreich aktualisiert"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -8940,8 +8940,8 @@
     "translation": "Optionen für %s sind 'hardware' oder 'virtual'"
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "Optionen für %s sind 'true' und 'false'"
+    "id": "options for --enable are true, false",
+    "translation": "Optionen für --enable sind 'true' und 'false'"
   },
   {
     "id": "os",

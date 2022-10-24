@@ -103,8 +103,6 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	cobraErr := cobraCommand.Execute()
 	if cobraErr != nil {
 		fmt.Printf("Cobra Error:\n %v", cobraErr)
-	} else {
-		return
 	}
 
 }

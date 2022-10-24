@@ -3116,8 +3116,8 @@
     "translation": "{{.Type}} ファイアウォールのパッケージの取得に失敗しました。\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "許可の取得に失敗しました。\n"
+    "id": "Failed to get permissions.",
+    "translation": "許可の取得に失敗しました。"
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
@@ -3252,8 +3252,8 @@
     "translation": "ユーザー権限の取得に失敗しました。\n"
   },
   {
-    "id": "Failed to get user.\n",
-    "translation": "ユーザーの取得に失敗しました。\n"
+    "id": "Failed to get user.",
+    "translation": "ユーザーの取得に失敗しました。"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3732,8 +3732,8 @@
     "translation": "l7 プールの更新に失敗しました: {{.Error}}。\n"
   },
   {
-    "id": "Failed to update permissions: %s",
-    "translation": "許可の更新に失敗しました: %s"
+    "id": "Failed to update permissions",
+    "translation": "許可の更新に失敗しました"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5964,8 +5964,8 @@
     "translation": "権限"
   },
   {
-    "id": "Permissions updated successfully: %s",
-    "translation": "許可が正常に更新されました: %s"
+    "id": "Permissions updated successfully",
+    "translation": "許可が正常に更新されました"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -8940,8 +8940,8 @@
     "translation": "%s のオプションは、hardware または virtual です"
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "%s のオプションは、true、false です"
+    "id": "options for --enable are true, false",
+    "translation": "--enable のオプションは、true、false です"
   },
   {
     "id": "os",

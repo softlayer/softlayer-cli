@@ -3320,8 +3320,8 @@
     "translation": "Failed to get package for {{.Type}} firewall.\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "Failed to get permissions.\n"
+    "id": "Failed to get permissions.",
+    "translation": "Failed to get permissions."
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
@@ -3464,8 +3464,8 @@
     "translation": "Failed to get user permissions.\n"
   },
   {
-    "id": "Failed to get user.\n",
-    "translation": "Failed to get user.\n"
+    "id": "Failed to get user.",
+    "translation": "Failed to get user."
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3952,8 +3952,8 @@
     "translation": "Failed to update l7 pool: {{.Error}}.\n"
   },
   {
-    "id": "Failed to update permissions: %s",
-    "translation": "Failed to update permissions: %s"
+    "id": "Failed to update permissions",
+    "translation": "Failed to update permissions"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -6276,8 +6276,8 @@
     "translation": "Permissions"
   },
   {
-    "id": "Permissions updated successfully: %s",
-    "translation": "Permissions updated successfully: %s"
+    "id": "Permissions updated successfully",
+    "translation": "Permissions updated successfully"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -9376,8 +9376,8 @@
     "translation": "options for %s are hardware or virtual"
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "options for %s are true, false"
+    "id": "options for --enable are true, false",
+    "translation": "options for --enable are true, false"
   },
   {
     "id": "os",
