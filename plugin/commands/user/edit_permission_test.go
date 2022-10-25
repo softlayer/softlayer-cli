@@ -61,7 +61,7 @@ var _ = Describe("Edit Permission", func() {
 				fakeUserManager.AddPermissionReturns(false, errors.New("Internal server error"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--permission", "PERMISSION")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to update permissions: PERMISSION"))
+				Expect(err.Error()).To(ContainSubstring("Failed to update permissions"))
 			})
 		})
 
@@ -69,7 +69,7 @@ var _ = Describe("Edit Permission", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--permission", "PERMISSION", "--enable", "notTrue o False")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("options for enable are true, false"))
+				Expect(err.Error()).To(ContainSubstring("options for --enable are true, false"))
 			})
 		})
 
@@ -77,7 +77,7 @@ var _ = Describe("Edit Permission", func() {
 			It("updated permission", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--permission", "PERMISSION")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Permissions updated successfully: PERMISSION"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Permissions updated successfully"))
 			})
 		})
 
@@ -85,7 +85,7 @@ var _ = Describe("Edit Permission", func() {
 			It("updated permission", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--permission", "PERMISSION", "--enable", "false")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Permissions updated successfully: PERMISSION"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Permissions updated successfully"))
 			})
 		})
 
@@ -93,7 +93,7 @@ var _ = Describe("Edit Permission", func() {
 			It("updated permission", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--from-user", "456")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Permissions updated successfully:"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Permissions updated successfully"))
 			})
 		})
 	})
