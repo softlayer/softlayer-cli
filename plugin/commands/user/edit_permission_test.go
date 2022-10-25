@@ -7,6 +7,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/datatypes"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -70,6 +71,14 @@ var _ = Describe("Edit Permission", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--permission", "PERMISSION", "--enable", "notTrue o False")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("options for --enable are true, false"))
+			})
+		})
+		Context("Problem with cmd.UserManager.FormatPermissionObject()", func() {
+			It("return error", func() {
+				fakeUserManager.FormatPermissionObjectReturns([]datatypes.User_Customer_CustomerPermission_Permission{}, errors.New("Format Error"))
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--permission", "PERMISSION", "--enable", "true")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Format Error"))
 			})
 		})
 
