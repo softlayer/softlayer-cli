@@ -1,7 +1,6 @@
 package user
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -36,7 +35,7 @@ func NewEditPermissionCommand(sl *metadata.SoftlayerCommand) (cmd *EditPermissio
 		},
 	}
 
-	cobraCmd.Flags().StringVar(&thisCmd.Enable, "enable", "", T("Enable or Disable selected permissions. Accepted inputs are 'true' and 'false'. default is 'true'"))
+	cobraCmd.Flags().StringVar(&thisCmd.Enable, "enable", "true", T("Enable or Disable selected permissions. Accepted inputs are 'true' and 'false'. default is 'true'"))
 	cobraCmd.Flags().StringSliceVar(&thisCmd.Permission, "permission", []string{}, T("Permission keyName to set. Use keyword ALL to select ALL permissions"))
 	cobraCmd.Flags().IntVar(&thisCmd.FromUser, "from-user", 0, T("Set permissions to match this user's permissions. Adds and removes the appropriate permissions"))
 
@@ -45,8 +44,7 @@ func NewEditPermissionCommand(sl *metadata.SoftlayerCommand) (cmd *EditPermissio
 }
 
 func (cmd *EditPermissionCommand) Run(args []string) error {
-	userId := args[0]
-	id, err := strconv.Atoi(userId)
+	id, err := strconv.Atoi(args[0])
 	if err != nil {
 		return errors.NewInvalidUsageError(T("User ID should be a number."))
 	}
@@ -61,28 +59,20 @@ func (cmd *EditPermissionCommand) Run(args []string) error {
 		return err
 	}
 
-	enableFlag := true
-	enable := cmd.Enable
-	if enable != "" {
-		enable = strings.ToLower(enable)
-		if enable != "true" && enable != "false" {
-			return errors.NewInvalidUsageError(fmt.Sprintf(T("options for %s are true, false"), "enable"))
-		}
-		enableFlag = (enable == "true")
-	}
-
 	if cmd.FromUser != 0 {
 		fromUser := cmd.FromUser
 		err = cmd.UserManager.PermissionFromUser(id, fromUser)
-	} else if enableFlag {
+	} else if strings.ToLower(cmd.Enable) == "true" {
 		_, err = cmd.UserManager.AddPermission(id, permissions)
-	} else {
+	} else if strings.ToLower(cmd.Enable) == "false" {
 		_, err = cmd.UserManager.RemovePermission(id, permissions)
+	} else {
+		 return errors.NewInvalidUsageError(T("options for --enable are true, false"))
 	}
 
 	if err != nil {
-		return errors.NewAPIError(fmt.Sprintf(T("Failed to update permissions: %s"), strings.Join(permissionKeynames, ",")), err.Error(), 1)
+		return errors.NewAPIError(T("Failed to update permissions"), err.Error(), 1)
 	}
-	cmd.UI.Print(fmt.Sprintf(T("Permissions updated successfully: %s"), strings.Join(permissionKeynames, ",")))
+	cmd.UI.Print(T("Permissions updated successfully"))
 	return nil
 }

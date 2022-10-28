@@ -3116,8 +3116,8 @@
     "translation": "{{.Type}} 방화벽에 대한 패키지를 가져오는 데 실패했습니다.\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "권한을 가져오는 데 실패했습니다.\n"
+    "id": "Failed to get permissions.",
+    "translation": "권한을 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
@@ -3252,8 +3252,8 @@
     "translation": "사용자 권한을 가져오는 데 실패했습니다. \n"
   },
   {
-    "id": "Failed to get user.\n",
-    "translation": "사용자를 가져오는 데 실패했습니다.\n"
+    "id": "Failed to get user.",
+    "translation": "사용자를 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3732,8 +3732,8 @@
     "translation": "l7 풀 업데이트 실패: {{.Error}}.\n"
   },
   {
-    "id": "Failed to update permissions: %s",
-    "translation": "권한을 업데이트하는 데 실패: %s"
+    "id": "Failed to update permissions",
+    "translation": "권한을 업데이트하는 데 실패"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5964,8 +5964,8 @@
     "translation": "권한"
   },
   {
-    "id": "Permissions updated successfully: %s",
-    "translation": "권한이 업데이트됨: %s"
+    "id": "Permissions updated successfully",
+    "translation": "권한이 업데이트됨"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -8940,8 +8940,8 @@
     "translation": "%s의 옵션은 hardware 또는 virtual입니다."
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "%s의 옵션은 true, false입니다."
+    "id": "options for --enable are true, false",
+    "translation": "--enable의 옵션은 true, false입니다."
   },
   {
     "id": "os",

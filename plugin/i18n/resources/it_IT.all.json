@@ -3116,8 +3116,8 @@
     "translation": "Impossibile ottenere il pacchetto per il firewall {{.Type}}.\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "Impossibile ottenere le autorizzazioni.\n"
+    "id": "Failed to get permissions.",
+    "translation": "Impossibile ottenere le autorizzazioni."
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
@@ -3252,8 +3252,8 @@
     "translation": "Impossibile ottenere le autorizzazioni dell'utente. \n"
   },
   {
-    "id": "Failed to get user.\n",
-    "translation": "Impossibile ottenere l'utente.\n"
+    "id": "Failed to get user.",
+    "translation": "Impossibile ottenere l'utente."
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3732,8 +3732,8 @@
     "translation": "Impossibile aggiornare il pool l7: {{.Error}}.\n"
   },
   {
-    "id": "Failed to update permissions: %s",
-    "translation": "Impossibile aggiornare le autorizzazioni: %s"
+    "id": "Failed to update permissions",
+    "translation": "Impossibile aggiornare le autorizzazioni"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5964,8 +5964,8 @@
     "translation": "Autorizzazioni"
   },
   {
-    "id": "Permissions updated successfully: %s",
-    "translation": "Le autorizzazioni sono state aggiornate correttamente: %s"
+    "id": "Permissions updated successfully",
+    "translation": "Le autorizzazioni sono state aggiornate correttamente"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -8940,8 +8940,8 @@
     "translation": "le opzioni per %s sono hardware o virtuale"
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "le opzioni per %s sono true, false"
+    "id": "options for --enable are true, false",
+    "translation": "le opzioni per --enable sono true, false"
   },
   {
     "id": "os",

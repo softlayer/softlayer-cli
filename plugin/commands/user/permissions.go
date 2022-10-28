@@ -37,8 +37,7 @@ func NewPermissionsCommand(sl *metadata.SoftlayerCommand) (cmd *PermissionsComma
 }
 
 func (cmd *PermissionsCommand) Run(args []string) error {
-	userId := args[0]
-	id, err := strconv.Atoi(userId)
+	id, err := strconv.Atoi(args[0])
 	if err != nil {
 		return errors.NewInvalidUsageError(T("User ID should be a number."))
 	}
@@ -46,17 +45,18 @@ func (cmd *PermissionsCommand) Run(args []string) error {
 	object_mask := "mask[id, permissions, isMasterUserFlag, roles]"
 	user, err := cmd.UserManager.GetUser(id, object_mask)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get user.\n"), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get user."), err.Error(), 2)
 	}
 
 	allPermission, err := cmd.UserManager.GetAllPermission()
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get permissions.\n"), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get permissions."), err.Error(), 2)
 	}
 
+	isMasterUser := false
 	if user.IsMasterUserFlag != nil && *user.IsMasterUserFlag {
 		cmd.UI.Print(T("This account is the Master User and has all permissions enabled"))
-
+		isMasterUser = true
 	}
 
 	table := cmd.UI.Table([]string{T("ID"), T("Role Name"), T("Description")})
@@ -74,10 +74,15 @@ func (cmd *PermissionsCommand) Run(args []string) error {
 	tablePermission := cmd.UI.Table([]string{T("Description"), T("KeyName"), T("Assigned")})
 	for _, perm := range allPermission {
 		var assigned bool
+		// Display master user as having all permissions, even though they have none, technically.
+		if isMasterUser {
+			assigned = true
+		}
 		for _, userPerm := range user.Permissions {
 			if perm.KeyName != nil && userPerm.KeyName != nil && *perm.KeyName == *userPerm.KeyName {
 				assigned = true
 			}
+
 		}
 		tablePermission.Add(utils.FormatStringPointer(perm.Name), utils.FormatStringPointer(perm.KeyName), strconv.FormatBool(assigned))
 	}

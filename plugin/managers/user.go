@@ -110,6 +110,7 @@ func (u userManager) RemovePermission(userId int, permissions []datatypes.User_C
 
 func (u userManager) PermissionFromUser(userId, fromUserId int) error {
 	fromPermission, err := u.GetUserPermissions(fromUserId)
+
 	if err != nil {
 		return err
 	}
@@ -142,11 +143,21 @@ func (u userManager) PermissionFromUser(userId, fromUserId int) error {
 }
 
 func (u userManager) GetUserPermissions(userId int) ([]datatypes.User_Customer_CustomerPermission_Permission, error) {
-	permissions, err := u.UserCustomerService.Id(userId).GetPermissions()
+	var permissions []datatypes.User_Customer_CustomerPermission_Permission
+	var err error
+	isMasterUser, err := u.UserCustomerService.Id(userId).IsMasterUser()
+	if isMasterUser {
+		permissions, err = u.GetAllPermission()
+	} else {
+		permissions, err = u.UserCustomerService.Id(userId).GetPermissions()	
+	}
+	
+
 	if err != nil {
 		return nil, err
 	}
 	sort.Sort(utils.PermissionsBykeyName(permissions))
+
 	return permissions, err
 }
 

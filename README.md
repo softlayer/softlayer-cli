@@ -445,3 +445,29 @@ ALSO:
 
 ## CLI Documentation
 To make changes to the cli documentation, do so here: https://github.ibm.com/cloud-docs/cli/tree/draft/reference/ibmcloud
+
+
+# Code Patterns
+
+Here are a list of common problems and what the code should look like if you need to solve them.
+
+## Checking that IDENTIFIER is an `id` on the CLI
+
+```go
+id, err := strconv.Atoi(args[0])
+if err != nil {
+    return slErrors.NewInvalidSoftlayerIdInputError(T("IDENTIFIER"))
+}
+```
+
+## Setting fake manager returns for multiple method calls
+
+```go
+It("return error", func() {
+    fakeUserManager.GetUserReturnsOnCall(0, testUser, nil)
+    fakeUserManager.GetUserReturnsOnCall(1, datatypes.User_Customer{}, errors.New("BAD HARDWARE"))
+    err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--hardware")
+    Expect(err).To(HaveOccurred())
+    Expect(err.Error()).To(ContainSubstring("Failed to show hardware."))
+})
+```
