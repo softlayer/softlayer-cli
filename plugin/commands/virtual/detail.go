@@ -115,16 +115,27 @@ func (cmd *DetailCommand) Run(args []string) error {
 		drivesTable := terminal.NewTable(buf, []string{T("type"), T("name"), T("drive"), T("capacity")})
 		for _, localDisk := range localDisks {
 			diskType := "System"
+			diskCapacity := 0
+			diskUnits := "GB"
+
 			if localDisk.DiskImage != nil && localDisk.DiskImage.Description != nil {
 				if strings.Contains(*localDisk.DiskImage.Description, "SWAP") {
 					diskType = "Swap"
 				}
+				diskCapacity = *localDisk.DiskImage.Capacity
+				diskUnits = *localDisk.DiskImage.Units
+
+			} else {
+				// Some VMs have CDs mounted, which don't have an Image, this check is for that.
+				// see testfixtures/SoftLayer_Virtual_Guest/getBlockDevices-124929698.json
+				diskType = "Rescue"
+				diskUnits = ""
 			}
 			drivesTable.Add(
 				diskType,
 				utils.FormatStringPointer(localDisk.MountType),
 				utils.FormatStringPointer(localDisk.Device),
-				fmt.Sprintf("%d %s", *localDisk.DiskImage.Capacity, *localDisk.DiskImage.Units),
+				fmt.Sprintf("%d %s", diskCapacity, diskUnits),
 			)
 		}
 		drivesTable.Print()
