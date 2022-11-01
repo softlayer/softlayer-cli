@@ -32,6 +32,10 @@
     "translation": "作用中交易數目"
   },
   {
+    "id": "${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n範例：\n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t這個指令會編輯磁區附註。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t這個指令會顯示使用者詳細資料。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\t這個指令會列出虛擬訪客。"
   },
@@ -46,6 +50,10 @@
   {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn 清單"
+  },
+  {
+    "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
+    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl dedicatedhost create-options \n \n 若要取得可用的專用 VLAN 清單，請使用下列指令：${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
@@ -146,6 +154,98 @@
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  更新通道環境定義內容。\n\n  會以不可分割的方式進行更新，因此會接受所有項目或完全不接受任何項目。\n\n  金鑰使用期限值的範圍必須為 120-172800。\n\n  階段 2 完全秘密轉遞的範圍必須為 0-1。\n\n  應該提出不同的配置要求，以在網路裝置上\n  實現變更。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
+    "translation": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+    "translation": "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policy-delete (--policy-id POLICY_ID) [-f, --force]",
+    "translation": "${COMMAND_NAME} sl loadbal l7policy-delete (--policy-id POLICY_ID) [-f, --force]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+    "translation": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-edit (--pool-uuid L7POOL_UUID) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-edit (--pool-uuid L7POOL_UUID) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]",
+    "translation": "${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]",
+    "translation": "${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7rules (--policy-id Policy_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7rules (--policy-id Policy_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal list",
+    "translation": "${COMMAND_NAME} sl loadbal list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)",
+    "translation": "${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)",
+    "translation": "${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)",
+    "translation": "${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal netscalers",
+    "translation": "${COMMAND_NAME} sl loadbal netscalers"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal order (-n, --name NAME) (-d, --datacenter DATACENTER) (-t, --type PublicToPrivate | PrivateToPrivate | PublicToPublic ) [-l, --label LABEL] [ -s, --subnet SUBNET_ID] [--frontend-protocol PROTOCOL] [--frontend-port PORT] [--backend-protocol PROTOCOL] [--backend-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--use-public-subnet] [--verify]",
+    "translation": "${COMMAND_NAME} sl loadbal order (-n, --name NAME) (-d, --datacenter DATACENTER) (-t, --type PublicToPrivate | PrivateToPrivate | PublicToPublic ) [-l, --label LABEL] [ -s, --subnet SUBNET_ID] [--frontend-protocol PROTOCOL] [--frontend-port PORT] [--backend-protocol PROTOCOL] [--backend-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--use-public-subnet] [--verify]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]",
+    "translation": "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+    "translation": "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)",
+    "translation": "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+    "translation": "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
@@ -364,100 +464,128 @@
     "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t附註：一旦提出升級要求，標準基礎架構服務就會自動將實例重新開機。\n  \t實例會先停止，直到升級交易完成。\n  \t不過，若為網路，則不需要重新開機。\n\n範例：\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   這個指令會升級虛擬伺服器實例（其 ID 為12345678），並將 CPU 核心數目設為 8、將記憶體設為 8192M、將網路埠速度設為 1000 Mbps。"
   },
   {
+    "id": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\n時間格式為 '2006-01-02'、'2006-01-02T15:04' 或 '2006-01-02T15:04-07:00'\n\n由於部分四捨五入及日期對齊詳細資料，這裡的結果可能與控制入口網站中的結果略有不同。\n頻寬以 GB 為單位列出，如果未指定時區，則會採用 GMT+0。\n\n範例：\n\n${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+  },
+  {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
     "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\n虛擬伺服器的用法資訊。\n範例：\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   這個指令會授權虛擬伺服器（其 ID 為 87654321）存取磁區（其 ID 為 12345678）。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n 這個指令會授權虛擬伺服器（其 ID 為 87654321）存取磁區（其 ID 為 12345678）。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   這個指令會列出獲授權存取磁區（其 ID 為 12345678）的所有主機，並依 ID 排序。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n 這個指令會列出獲授權存取磁區（其 ID 為 12345678）的所有主機，並依 ID 排序。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD \n \n ACCESS_ID 是來自 '${COMMAND_NAME} sl {{.storageType}} access-list' 的 allowed_host_id"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   這個指令會撤銷虛擬伺服器（其 ID 為 87654321）對磁區（其 ID 為 12345678）的存取權。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n 這個指令會撤銷虛擬伺服器（其 ID 為 87654321）對磁區（其 ID 為 12345678）的存取權。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   這個指令會針對磁區（其 ID 為 12345678）執行失效回復作業。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n 這個指令會針對磁區（其 ID 為 12345678）執行失效回復作業。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n 這個指令會針對磁區（其 ID 為 12345678）對抄本磁區（其 ID 為 87654321）執行失效接手作業。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   這個指令會針對區塊磁區（其 ID 為 12345678）列出適合的抄寫資料中心。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n 這個指令會列出區塊磁區（其 ID 為 12345678）的適當抄寫資料中心。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   這個指令會訂購磁區（其 ID 為 12345678）的抄本，此抄本會執行每日抄寫、位於 dal09、層級層次為 4、OS 類型為 Linux。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n 這個指令會為磁區（其 ID 為 12345678）訂購抄本（執行每日抄寫），位於 dal09，層級層次為 4，OS 類型為 Linux。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   這個指令會針對區塊磁區（其 ID 為 12345678）列出現有抄本磁區。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n 這個指令會列出區塊磁區（其 ID 為 12345678）的現有抄本磁區。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   這個指令會立即取消 Snapshot（其 ID 為 12345678），而不會要求確認。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n 這個指令會立即取消 Snapshot（其 ID 為 12345678），而不要求確認。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   這個指令會為磁區（其 ID 為 12345678）建立 Snapshot，並新增附註 snapshotforibmcloud。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n 這個指令會為磁區（其 ID 為 12345678）建立 Snapshot，並新增附註 snapshotforibmcloud。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   這個指令會為磁區（其 ID 為 12345678）停用每日 Snapshot。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n 這個指令會針對磁區（其 ID 為 12345678）停用每日 Snapshot。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   這個指令會為磁區（其 ID 為 12345678）啟用 Snapshot、在每週的星期日 2:00 擷取 Snapshot，且最多保留 5 個 Snapshot。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n 這個指令會針對磁區（其 ID 為 12345678）啟用 Snapshot。每週在星期日 2:00 建立 Snapshot，以及最多保留 5 個 Snapshot。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   這個指令會列出磁區（其 ID 為 12345678）的所有 Snapshot，並依 ID 排序。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n 這個指令會列出磁區（其 ID 為 12345678）的所有 Snapshot，並依 ID 排序。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   這個指令會為磁區（其 ID 為 12345678）訂購 Snapshot 空間、大小為 1000GB、層級層次為每 GB 4 個 IOPS。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n 這個指令會為磁區（其 ID 為 12345678）訂購 Snapshot 空間。大小為 1000GB，層級層次為每 GB 4 IOPS。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   這個指令會從 Snapshot（其 ID 為 87654321）還原磁區（其 ID 為 12345678）。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n 這個指令會從 Snapshot（其 ID 為 87654321）還原磁區（其 ID 為 12345678）。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是 ibmcloud sl {{.storageType}} access-list <volume_id> 取得的 host_id"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID 是 ibmcloud sl {{.storageType}} access-list <volume_id> 取得的 host_id"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID 是 ibmcloud sl {{.storageType}} access-list <volume_id> 取得的 host_id"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   這個指令會立即取消磁區（其 ID 為 12345678），而不會要求確認。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n 這個指令會立即取消磁區（其 ID 為 12345678），而不要求確認。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   這個指令顯示如何複製磁區（其 ID 為 12345678）來訂購新磁區。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n 這個指令會透過複製磁區（其 ID 為 12345678）來顯示訂購新磁區。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\n範例：\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\t這個指令會列出這個帳戶的每個資料中心的儲存空間限制。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-limits\n 這個指令會列出此帳戶每個資料中心的儲存空間限制。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   這個指令會列出現行帳戶上位於 dal09 的所有耐久性磁區，並依容量排序。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n 這個指令會列出現行帳戶位於 dal09 的所有耐久性磁區，並依容量排序。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   範例：\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  這個指令會將磁區 12345678 的大小修改為 1000GB，IOPS 修改為 4000。\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  這個指令會將磁區 12345678 的大小修改為 500GB，將層級層次修改為每 GB 4 個 IOPS。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n 這個指令會修改磁區 12345678，其大小為 1000GB，IOPS 是 4000。\n ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n 這個指令會修改磁區 12345678，其大小為 500GB，層級層次為每 GB 4 IOPS。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   這個指令會列出用來建立區塊儲存磁區的所有選項，包括儲存空間類型、磁區大小、OS 類型、IOPS、層級層次、資料中心及 Snapshot 大小。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-options \n 這個指令會列出用於建立區塊儲存空間磁區的所有選項，包括儲存空間類型、磁區大小、OS 類型、IOPS、層級層次、資料中心及 Snapshot 大小。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-options \n 這個指令會列出用於建立檔案儲存空間磁區的所有選項，包括儲存空間類型、磁區大小、IOPS、層級層次、資料中心及 Snapshot 大小。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   這個指令會訂購效能磁區：大小為 1000GB、IOPS 為 4000、OS 類型為 LINUX、位於 dal09。\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   這個指令會訂購耐久性磁區：大小為 500GB、層級層次為每 GB 4 個 IOPS、OS 類型為 XEN、位於 dal09，且額外的 Snapshot 空間大小為 500GB。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n 這個指令會訂購效能磁區，其大小為 1000GB，IOPS 為 4000，OS 類型為 LINUX，位於 dal09。\n ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n 這個指令會訂購耐久性磁區，其大小為 500GB，層級層次為每 GB 4 IOPS，OS 類型為 XEN，位於 dal09，以及額外的 Snapshot 空間大小 500GB。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n範例：\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\t以來自母項 SNAPSHOT_ID 的 Snapshot 重新整理重複 VOLUME_ID。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n 以來自其母項 SNAPSHOT_ID 的 Snapshot 重新整理重複的 VOLUME_ID。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tLUN ID 只會在「代管權限」處理程序期間生效。建議（但不需要）\n\t先取消授權所有主機，再使用\n\t此方法。\n\tVOLUME_ID - 要在其上設定 LUN ID 的磁區 ID\n\tLUN_ID - 建議的範圍是 0 與 255 之間的整數。進階使用者\n\t可以使用 0 與 4095 之間的整數"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n LUN ID 僅在「主機授權」處理程序期間生效。 在使用此方法之前，\n 建議（但非必要）解除所有主機的授權。\n VOLUME_ID - 要設定 LUN ID 的磁區 ID \n LUN_ID - 建議範圍是 0 到 255 之間的整數。 進階使用者 \n 可以使用 0 到 4095 之間的整數"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
@@ -706,6 +834,14 @@
   {
     "id": "APIKEY",
     "translation": "APIKEY"
+  },
+  {
+    "id": "API_KEY",
+    "translation": "API_KEY"
+  },
+  {
+    "id": "ARGUMENT",
+    "translation": "引數"
   },
   {
     "id": "Aborted.",
@@ -964,6 +1100,10 @@
     "translation": "授權檔案、區塊及可攜式儲存體至虛擬伺服器"
   },
   {
+    "id": "Authorize hosts  to access a given volume",
+    "translation": "授權主機存取給定的磁區"
+  },
+  {
     "id": "Auto Scale Group was deleted successfully",
     "translation": "已順利刪除自動調整群組"
   },
@@ -1106,6 +1246,10 @@
   {
     "id": "CIDR",
     "translation": "CIDR"
+  },
+  {
+    "id": "CONTEXT_ID",
+    "translation": "CONTEXT_ID"
   },
   {
     "id": "CPU",
@@ -1480,8 +1624,16 @@
     "translation": "要顯示的直欄。 選項為：id、username、datacenter、storage_type、capacity_gb、bytes_used、IOPS、ip_addr、lunId、created_by、active_transactions、rep_partner_count、notes。 這個選項可以多次指定"
   },
   {
+    "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state].",
+    "translation": "要顯示的直欄。 [選項包含：guid、cpu、memory、datacenter、primary_ip、backend_ip、created_by、power_state、tags] [預設值：id、hostname、domain、primary_ip、backend_ip、power_state]。"
+  },
+  {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
     "translation": "要顯示的直欄。 選項為：id、username、email、displayName、2FA、classicAPIKey、status、hardwareCount、virtualGuestCount。 這個選項可以多次指定"
+  },
+  {
+    "id": "Column to sort by",
+    "translation": "直欄排序方式"
   },
   {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
@@ -1498,6 +1650,10 @@
   {
     "id": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by",
     "translation": "直欄排序方式，預設值為：id，選項包含：id、username、datacenter、storage_type、capacity_gb、bytes_used、ip_addr、lunId、active_transactions、created_by"
+  },
+  {
+    "id": "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip",
+    "translation": "直欄排序方式， 選項包含：id、hostname、domain、primary_ip、backend_ip"
   },
   {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
@@ -1728,6 +1884,14 @@
     "translation": "建立暫時性虛擬伺服器"
   },
   {
+    "id": "Create a user hardware notification entry.",
+    "translation": "建立使用者硬體通知項目。"
+  },
+  {
+    "id": "Create a user virtual notification entry.",
+    "translation": "建立使用者虛擬通知項目。"
+  },
+  {
     "id": "Create a zone",
     "translation": "建立區域"
   },
@@ -1816,6 +1980,10 @@
     "translation": "客戶對等節點 IP 位址"
   },
   {
+    "id": "DATA",
+    "translation": "資料"
+  },
+  {
     "id": "Data Center",
     "translation": "資料中心"
   },
@@ -1886,6 +2054,10 @@
   {
     "id": "Dedicated host ID should be a number.",
     "translation": "專用主機 ID 應該是數字。"
+  },
+  {
+    "id": "Default",
+    "translation": "預設值"
   },
   {
     "id": "Default Hourly Price Per Instance",
@@ -2136,6 +2308,14 @@
     "translation": "重複的磁區內容"
   },
   {
+    "id": "EXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
+    "translation": "範例：\n ${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n 這個指令會訂購每小時 VSI ，具有 4 CPU、16 GB RAM、100 GB SAN 磁碟、Ubuntu 16.04 及 dal13 內 1 Gbps 公用及專用上行鏈路"
+  },
+  {
+    "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
+    "translation": "範例：\n ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email \n 這個指令會針對 VSI 進行報價，其具有 4 CPU、16 GB RAM、100 GB SAN 磁碟、Ubuntu 16.04 及資料中心 dal13 內 1 Gbps 公用及專用上行鏈路"
+  },
+  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
     "translation": "擷取事件的最早日期 [YYYY-MM-DD]。"
   },
@@ -2352,6 +2532,10 @@
     "translation": "每個 IOPS 的耐久性層級"
   },
   {
+    "id": "Error occurred while adding note to volume: {{.VolumeID}}",
+    "translation": "將附註新增至磁區時發生錯誤：{{.VolumeID}}"
+  },
+  {
     "id": "Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n",
     "translation": "為磁區 {{.VolumeID}} 建立 Snapshot 時發生錯誤。請確定磁區未進行失效接手，或不是處於防止擷取 Snapshot 的其他狀態。\n"
   },
@@ -2408,6 +2592,10 @@
     "translation": "失敗"
   },
   {
+    "id": "FILEPATH",
+    "translation": "檔案路徑"
+  },
+  {
     "id": "FQDN",
     "translation": "FQDN"
   },
@@ -2437,7 +2625,7 @@
   },
   {
     "id": "Failed to Order the dedicatedhost.",
-    "translation": "無法訂購專用主機。\n"
+    "translation": "無法訂購 dedicatedhost。"
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -2537,7 +2725,7 @@
   },
   {
     "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.",
-    "translation": "無法取消專用主機中的所有訪客：{{.HostID}}。\n"
+    "translation": "無法取消 dedicatedhost 中的所有來賓：{{.HostID}}。"
   },
   {
     "id": "Failed to cancel block volume: {{.ID}}.\n",
@@ -2565,7 +2753,7 @@
   },
   {
     "id": "Failed to cancel license: {{.key}}.",
-    "translation": "無法取消授權：{{.key}}。\n"
+    "translation": "無法取消授權：{{.key}}。"
   },
   {
     "id": "Failed to cancel load balancer {{.LBID}}.\n",
@@ -2621,6 +2809,10 @@
   },
   {
     "id": "Failed to create placement group",
+    "translation": "無法建立放置群組"
+  },
+  {
+    "id": "Failed to create placement group\n",
     "translation": "無法建立放置群組\n"
   },
   {
@@ -2641,7 +2833,7 @@
   },
   {
     "id": "Failed to create the license.",
-    "translation": "無法建立授權。\n"
+    "translation": "無法建立授權。"
   },
   {
     "id": "Failed to create translation for IPSec with ID {{.ID}}.\n",
@@ -2665,7 +2857,7 @@
   },
   {
     "id": "Failed to delete AutoScale Group.",
-    "translation": "無法刪除自動調整群組。\n"
+    "translation": "無法刪除 AutoScale 群組。"
   },
   {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
@@ -2678,6 +2870,10 @@
   {
     "id": "Failed to delete L7member {{.Member}}: {{.Error}}.\n",
     "translation": "無法刪除 L7member {{.Member}}：{{.Error}}。\n"
+  },
+  {
+    "id": "Failed to delete Tag",
+    "translation": "無法刪除標籤"
   },
   {
     "id": "Failed to delete Tag: {{.tag}}.",
@@ -2809,7 +3005,7 @@
   },
   {
     "id": "Failed to generate the order template.",
-    "translation": "無法產生訂單範本。\n"
+    "translation": "無法產生訂單範本。"
   },
   {
     "id": "Failed to get Account Overview.",
@@ -2817,11 +3013,11 @@
   },
   {
     "id": "Failed to get AutoScale group.",
-    "translation": "無法取得自動調整群組。\n"
+    "translation": "無法取得 AutoScale 群組。"
   },
   {
     "id": "Failed to get Bandwidth Pool.",
-    "translation": "無法取得頻寬儲存區。\n"
+    "translation": "無法取得頻寬儲存區。"
   },
   {
     "id": "Failed to get CDN Detail. ",
@@ -2892,6 +3088,10 @@
     "translation": "無法取得 Pod。\n"
   },
   {
+    "id": "Failed to get Quote\n",
+    "translation": "無法取得報價\n"
+  },
+  {
     "id": "Failed to get Quote.\n",
     "translation": "無法取得報價。\n"
   },
@@ -2926,6 +3126,10 @@
   {
     "id": "Failed to get Unattached Tags.",
     "translation": "未能取得未附加的標籤。"
+  },
+  {
+    "id": "Failed to get User Customer Notifications.",
+    "translation": "無法取得「使用者客戶通知」。"
   },
   {
     "id": "Failed to get VLAN: {{.VLANID}}.\n",
@@ -2985,7 +3189,7 @@
   },
   {
     "id": "Failed to get dedicatedhost instance: {{.HostID}}.",
-    "translation": "無法取得專用主機實例：{{.HostID}}。\n"
+    "translation": "無法取得 dedicatedhost 實例：{{.HostID}}。"
   },
   {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
@@ -3116,12 +3320,12 @@
     "translation": "無法取得 {{.Type}} 防火牆的套件。\n"
   },
   {
-    "id": "Failed to get permissions.",
-    "translation": "無法取得許可權。"
+    "id": "Failed to get permissions.\n",
+    "translation": "無法取得許可權。\n"
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
-    "translation": "無法取得放置群組：{{.ID}}。\n"
+    "translation": "無法取得放置群組：{{.ID}}。"
   },
   {
     "id": "Failed to get planned events.",
@@ -3130,6 +3334,10 @@
   {
     "id": "Failed to get product package for hardware server.",
     "translation": "無法取得硬體伺服器的產品套件。"
+  },
+  {
+    "id": "Failed to get product package for hardware server.\n",
+    "translation": "無法取得硬體伺服器的產品套件。\n"
   },
   {
     "id": "Failed to get ready status of virtual server instance: {{.VsID}}.\n",
@@ -3186,6 +3394,10 @@
   {
     "id": "Failed to get summary.",
     "translation": "無法取得摘要。"
+  },
+  {
+    "id": "Failed to get tag details",
+    "translation": "無法取得標籤詳細資料"
   },
   {
     "id": "Failed to get the email {{.emailID}}. ",
@@ -3252,8 +3464,8 @@
     "translation": "無法取得使用者許可權。\n"
   },
   {
-    "id": "Failed to get user.",
-    "translation": "無法取得使用者。"
+    "id": "Failed to get user.\n",
+    "translation": "無法取得使用者。\n"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3293,6 +3505,10 @@
   },
   {
     "id": "Failed to get vlan {{.VlanId}}.",
+    "translation": "無法取得 VLAN {{.VlanId}}。"
+  },
+  {
+    "id": "Failed to get vlan {{.VlanId}}.\n",
     "translation": "無法取得 Vlan {{.VlanId}}。\n"
   },
   {
@@ -3301,7 +3517,7 @@
   },
   {
     "id": "Failed to licenses create options.",
-    "translation": "無法授權建立選項。\n"
+    "translation": "無法授權建立選項。"
   },
   {
     "id": "Failed to list SSH keys on your account.\n",
@@ -3349,7 +3565,11 @@
   },
   {
     "id": "Failed to list placement groups",
-    "translation": "無法列出放置群組\n"
+    "translation": "無法列出放置群組"
+  },
+  {
+    "id": "Failed to list presets",
+    "translation": "無法列出預設"
   },
   {
     "id": "Failed to list private images.",
@@ -3365,11 +3585,11 @@
   },
   {
     "id": "Failed to list routers",
-    "translation": "無法列出路由器\n"
+    "translation": "無法列出路由器"
   },
   {
     "id": "Failed to list rules",
-    "translation": "無法列出規則\n"
+    "translation": "無法列出規則"
   },
   {
     "id": "Failed to list subnets on your account.\n",
@@ -3377,7 +3597,7 @@
   },
   {
     "id": "Failed to list the host guest on your account.",
-    "translation": "無法列出您帳戶上的主機訪客。\n"
+    "translation": "無法列出您帳戶上的主機訪客。"
   },
   {
     "id": "Failed to list users.\n",
@@ -3581,7 +3801,7 @@
   },
   {
     "id": "Failed to remove placement group: {{.ID}}.",
-    "translation": "無法移除放置群組：{{.ID}}。\n"
+    "translation": "無法移除放置群組：{{.ID}}。"
   },
   {
     "id": "Failed to remove rule {{.RuleId}} in security group {{.GroupID}}.\n",
@@ -3653,7 +3873,7 @@
   },
   {
     "id": "Failed to set tags.",
-    "translation": "無法設定標籤。\n"
+    "translation": "無法設定標籤。"
   },
   {
     "id": "Failed to set tags: {{.tags}}.\n",
@@ -3732,8 +3952,8 @@
     "translation": "無法更新 l7 儲存區：{{.Error}}。\n"
   },
   {
-    "id": "Failed to update permissions",
-    "translation": "無法更新許可權"
+    "id": "Failed to update permissions: %s",
+    "translation": "無法更新許可權：%s"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -3817,6 +4037,10 @@
   },
   {
     "id": "Failed to verify virtual server creation.",
+    "translation": "無法驗證已建立虛擬伺服器。"
+  },
+  {
+    "id": "Failed to verify virtual server creation.\n",
     "translation": "無法驗證已建立虛擬伺服器。\n"
   },
   {
@@ -3849,7 +4073,7 @@
   },
   {
     "id": "Failover a {{.storageType}} volume to the given replica volume",
-    "translation": "將區塊磁區失效接手至給定的抄本磁區"
+    "translation": "將 {{.storageType}} 磁區失效接手至給定的抄本磁區"
   },
   {
     "id": "Failover an inaccessible volume to its available replicant volume.",
@@ -3920,6 +4144,10 @@
     "translation": "依擁有者 ID 過濾"
   },
   {
+    "id": "Filter by Memory capacity in megabytes.",
+    "translation": "依記憶體容量 (MB) 過濾。"
+  },
+  {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
     "translation": "依 TTL（存活時間，以秒為單位）過濾，例如 86400"
   },
@@ -3952,8 +4180,16 @@
     "translation": "依 FQDN 的網域部分過濾"
   },
   {
+    "id": "Filter by domain portion of the FQDN.",
+    "translation": "依 FQDN 的網域部分進行過濾。"
+  },
+  {
     "id": "Filter by host portion of the FQDN",
     "translation": "依 FQDN 的主機部分過濾"
+  },
+  {
+    "id": "Filter by host portion of the FQDN.",
+    "translation": "依 FQDN 的主機部分進行過濾。"
   },
   {
     "id": "Filter by host record, such as www",
@@ -4028,6 +4264,10 @@
     "translation": "依標籤過濾，容許多次出現的項目"
   },
   {
+    "id": "Filter by tags.",
+    "translation": "依標籤進行過濾。"
+  },
+  {
     "id": "Filter by the ID of order that purchased the subnets",
     "translation": "依購買子網路的訂單 ID 過濾"
   },
@@ -4096,6 +4336,10 @@
     "translation": "韌體版本"
   },
   {
+    "id": "First Name",
+    "translation": "名字"
+  },
+  {
     "id": "Flag denoting whether to verify the order, or not place it",
     "translation": "表示要驗證訂單，還是不要下訂單的旗標"
   },
@@ -4137,7 +4381,7 @@
   },
   {
     "id": "Frontend port",
-    "translation": "前端埠 [預設：80]"
+    "translation": "前端埠"
   },
   {
     "id": "Frontend protocol",
@@ -4480,6 +4724,18 @@
     "translation": "所標記物件的 ID [必要]"
   },
   {
+    "id": "IDENTIFIER",
+    "translation": "ID"
+  },
+  {
+    "id": "IDENTIFIER TARGET",
+    "translation": "ID 目標"
+  },
+  {
+    "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
+    "translation": "IDENTIFIER：映像檔的 ID\nURI： Object Storage 物件的 URI（.vhd/.iso 檔案），格式為：cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY：IBM Cloud API 金鑰，其具有對 IBM Cloud Object Storage 實例的存取權。"
+  },
+  {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
     "translation": "要新增至 root 使用者的 SSH 金鑰 ID，容許多次出現的項目"
   },
@@ -4556,6 +4812,10 @@
     "translation": "ID"
   },
   {
+    "id": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "如果由於災難事件而無法存取具有抄寫的磁區，則此方法可用來 \n 立即失效接手至另一個位置中的可用抄本。 此方法不容許透過 API 進行失效回復。\n若要在使用此方法之後，失效回復至原始磁區，請開立支援問題單。\n若要測試失效接手，請改為使用 '${COMMAND_NAME} sl {{.storageType}} replica-failover'。\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n 這個指令會針對磁區（其 ID 為 12345678）執行失效接手作業至抄本磁區（其 ID 為 87654321）。"
+  },
+  {
     "id": "If specified, will only show what the quote will order, will NOT place an order [default: False]",
     "translation": "如果指定的話，只會顯示報價將訂購的項目，不會下訂單 [預設值：False]"
   },
@@ -4612,6 +4872,10 @@
     "translation": "包含具有關閉狀態的發票。[預設值：False]"
   },
   {
+    "id": "Incorrect Usage",
+    "translation": "用法不正確"
+  },
+  {
     "id": "Incorrect Usage.",
     "translation": "用法不正確。"
   },
@@ -4654,6 +4918,10 @@
   {
     "id": "Internal peer IP address",
     "translation": "內部對等節點 IP 位址"
+  },
+  {
+    "id": "Internet side port",
+    "translation": "網際網路端埠"
   },
   {
     "id": "Invalid --sortBy option.",
@@ -4832,8 +5100,20 @@
     "translation": "已移除 L7Rule {{.L7RuleID}}"
   },
   {
+    "id": "LABEL",
+    "translation": "標籤"
+  },
+  {
+    "id": "LOCATION",
+    "translation": "位置"
+  },
+  {
     "id": "LUN Id",
     "translation": "LUN ID"
+  },
+  {
+    "id": "LUN_ID",
+    "translation": "LUN_ID"
   },
   {
     "id": "Label",
@@ -4854,6 +5134,10 @@
   {
     "id": "Last Login",
     "translation": "前次登入"
+  },
+  {
+    "id": "Last Name",
+    "translation": "姓氏"
   },
   {
     "id": "Last Updated",
@@ -5336,6 +5620,10 @@
     "translation": "使用 [--private] 時，必須指定 [--cpu]。"
   },
   {
+    "id": "NAME",
+    "translation": "名稱"
+  },
+  {
     "id": "NETWORK has to be either public or private.",
     "translation": "NETWORK 必須是 public 或 private。"
   },
@@ -5600,6 +5888,14 @@
     "translation": "更新次數"
   },
   {
+    "id": "OPTIONS",
+    "translation": "選項"
+  },
+  {
+    "id": "ORDER_ITEM1 ORDER_ITEM2 ORDER_ITEM3 ORDER_ITEM4...",
+    "translation": "ORDER_ITEM1 ORDER_ITEM2 ORDER_ITEM3 ORDER_ITEM4..."
+  },
+  {
     "id": "OS",
     "translation": "OS"
   },
@@ -5706,6 +6002,10 @@
   {
     "id": "Optional parameter for ordering snapshot space along with endurance block storage; specifies the size (in GB) of snapshot space to order",
     "translation": "隨耐久性區塊儲存空間訂購 Snapshot 空間的選用參數；指定要訂購的 Snapshot 空間大小（以 GB 為單位）"
+  },
+  {
+    "id": "Optional parameter for ordering snapshot space along with endurance file storage; specifies the size (in GB) of snapshot space to order",
+    "translation": "用於訂購 Snapshot 空間及耐久性檔案儲存空間的選用參數；指定要訂購的 Snapshot 空間大小 (GB)"
   },
   {
     "id": "Options for --sortby are: id,name,description,created",
@@ -5856,6 +6156,18 @@
     "translation": "擁有者"
   },
   {
+    "id": "PACKAGE_KEYNAME",
+    "translation": "PACKAGE_KEYNAME"
+  },
+  {
+    "id": "PASSWORD",
+    "translation": "密碼"
+  },
+  {
+    "id": "PLACEMENTGROUP_ID",
+    "translation": "PLACEMENTGROUP_ID"
+  },
+  {
     "id": "POD",
     "translation": "POD"
   },
@@ -5964,8 +6276,8 @@
     "translation": "許可權"
   },
   {
-    "id": "Permissions updated successfully",
-    "translation": "許可權已順利更新"
+    "id": "Permissions updated successfully: %s",
+    "translation": "許可權已順利更新：%s"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -6269,7 +6581,7 @@
   },
   {
     "id": "Private side port",
-    "translation": "專用端的埠。預設：80"
+    "translation": "專用端埠"
   },
   {
     "id": "Private subnet Id to order the load balancer. See '${COMMAND_NAME} sl loadbal order-options'. Only available in PublicToPrivate and PrivateToPrivate load balancer type",
@@ -6368,8 +6680,24 @@
     "translation": "數量"
   },
   {
+    "id": "RECORD",
+    "translation": "記錄"
+  },
+  {
+    "id": "RECORD_ID",
+    "translation": "RECORD_ID"
+  },
+  {
+    "id": "REPLICA_ID",
+    "translation": "REPLICA_ID"
+  },
+  {
     "id": "RPM Sensor",
     "translation": "RPM 感應器"
+  },
+  {
+    "id": "RULE_ID",
+    "translation": "RULE_ID"
   },
   {
     "id": "Ram",
@@ -6672,6 +7000,14 @@
     "translation": "執行"
   },
   {
+    "id": "SECURITYGROUP_ID",
+    "translation": "SECURITYGROUP_ID"
+  },
+  {
+    "id": "SNAPSHOT_ID",
+    "translation": "SNAPSHOT_ID"
+  },
+  {
     "id": "SSH Key ",
     "translation": "SSH 金鑰 (SSH Key) "
   },
@@ -6718,6 +7054,14 @@
   {
     "id": "SUBNET",
     "translation": "子網路"
+  },
+  {
+    "id": "SUBNET_ID",
+    "translation": "SUBNET_ID"
+  },
+  {
+    "id": "SUBNET_TYPE",
+    "translation": "SUBNET_TYPE"
   },
   {
     "id": "Sales",
@@ -6780,6 +7124,10 @@
     "translation": "給定機箱的伺服器訂單選項"
   },
   {
+    "id": "Server order options for a given chassis.",
+    "translation": "給定機箱的伺服器訂單選項。"
+  },
+  {
     "id": "Server side timeout setting, in seconds",
     "translation": "伺服器端逾時設定（以秒為單位）"
   },
@@ -6805,7 +7153,7 @@
   },
   {
     "id": "Set note for an existing {{.storageType}} storage volume.",
-    "translation": "設定現有區塊儲存磁區的附註。"
+    "translation": "設定現有 {{.storageType}} 儲存磁區的附註。"
   },
   {
     "id": "Set note successfully",
@@ -6922,6 +7270,14 @@
   {
     "id": "Shows a very detailed list of charges",
     "translation": "顯示非常詳細的費用清單"
+  },
+  {
+    "id": "Shows who gets notified when the server has a monitoring issues.",
+    "translation": "顯示當伺服器有監視問題時，誰會收到通知。"
+  },
+  {
+    "id": "Shows who gets notified when the server virtual instance has a monitoring issues",
+    "translation": "顯示當伺服器虛擬實例有監視問題時，誰會收到通知"
   },
   {
     "id": "Single",
@@ -7212,8 +7568,20 @@
     "translation": "正在為虛擬伺服器實例 {{.VsId}} 重新載入系統。稍後可執行 '{{.CommandName}} sl vs ready {{.VsId}}'，以確定其是否備妥。"
   },
   {
+    "id": "TICKETID",
+    "translation": "TICKETID"
+  },
+  {
+    "id": "TRANSLATION_ID",
+    "translation": "TRANSLATION_ID"
+  },
+  {
     "id": "TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200",
     "translation": "TTL（存活時間，以秒為單位），例如：86400。預設值為：7200"
+  },
+  {
+    "id": "TYPE",
+    "translation": "類型"
   },
   {
     "id": "Tag",
@@ -7476,6 +7844,10 @@
     "translation": "金鑰的新標籤"
   },
   {
+    "id": "The note",
+    "translation": "附註"
+  },
+  {
     "id": "The note of hardware server: {{.ID}} was updated.",
     "translation": "已更新硬體伺服器 {{.ID}} 的附註。"
   },
@@ -7486,6 +7858,10 @@
   {
     "id": "The note to be applied to the imported template",
     "translation": "要套用至所匯入範本的附註"
+  },
+  {
+    "id": "The note was set successfully",
+    "translation": "已順利設定附註"
   },
   {
     "id": "The order is correct.",
@@ -7732,6 +8108,10 @@
     "translation": "此指令需要 -- add 或 -- remove 選項。"
   },
   {
+    "id": "This command requires four arguments.",
+    "translation": "這個指令需要四個引數。"
+  },
+  {
     "id": "This command requires notification names as arguments and options flags.",
     "translation": "此指令需要通知名稱作為引數及選項旗標。"
   },
@@ -7750,6 +8130,10 @@
   {
     "id": "This command requires the --title option.",
     "translation": "這個指令需要 --title 選項。"
+  },
+  {
+    "id": "This command requires three arguments.",
+    "translation": "這個指令需要三個引數。"
   },
   {
     "id": "This command requires two arguments.",
@@ -8004,6 +8388,18 @@
     "translation": "類型"
   },
   {
+    "id": "URI",
+    "translation": "URI"
+  },
+  {
+    "id": "USERNAME",
+    "translation": "使用者名稱"
+  },
+  {
+    "id": "USER_ID",
+    "translation": "USER_ID"
+  },
+  {
     "id": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]",
     "translation": "使用日期搜尋的 UTC 偏移。+/-HHMM 格式 [預設值：-0000]"
   },
@@ -8078,6 +8474,10 @@
   {
     "id": "Unable to find item with ID: {{.itemID}}.\n",
     "translation": "找不到 ID 為 {{.itemID}} 的項目。\n"
+  },
+  {
+    "id": "Unable to find license with key: {{.key}}.",
+    "translation": "找不到金鑰為 {{.key}} 的授權。"
   },
   {
     "id": "Unable to find location",
@@ -8234,6 +8634,10 @@
   {
     "id": "User ID should be a number.",
     "translation": "使用者 ID 應該是數字。"
+  },
+  {
+    "id": "User ID to be notified on monitoring failure, multiple occurrence allowed",
+    "translation": "監視失敗時要通知的使用者 ID，容許多次出現"
   },
   {
     "id": "User defined metadata string",
@@ -8464,6 +8868,14 @@
     "translation": "在此專用主機備妥之後，您可以執行 '{{.CommandName}} sl vs host-list --order {{.OrderID}}' 來尋找它。"
   },
   {
+    "id": "ZONE",
+    "translation": "ZONE"
+  },
+  {
+    "id": "ZONEFILE",
+    "translation": "ZONEFILE"
+  },
+  {
     "id": "Zone {{.Zone}} was created.",
     "translation": "已建立區域 {{.Zone}}。"
   },
@@ -8474,6 +8886,10 @@
   {
     "id": "[--billing] billing rate must be either hourly or monthly.",
     "translation": "[--billing] 計費頻率必須是每小時或每月。"
+  },
+  {
+    "id": "[--billing] has to be either hourly or monthly.",
+    "translation": "[--billing] 必須是每小時或每月。"
   },
   {
     "id": "[--public] is not allowed with [--private].",
@@ -8566,6 +8982,22 @@
   {
     "id": "[-u|--userdata] is not allowed with [-F|--userfile].",
     "translation": "[-u|--userdata] 不能與 [-F|--userfile] 搭配使用。"
+  },
+  {
+    "id": "[TAG NAME]",
+    "translation": "[標籤名稱]"
+  },
+  {
+    "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
+    "translation": "最多接受 {{.Limit}} 個引數，已收到 {{.Args}} 個"
+  },
+  {
+    "id": "accepts between {{.Min}} and {{.Max}} arg(s), received {{.Args}}",
+    "translation": "接受介於 {{.Min}} 到 {{.Max}} 個之間的引數，已收到 {{.Args}} 個"
+  },
+  {
+    "id": "accepts {{.Limit}} arg(s), received {{.Args}}",
+    "translation": "接受 {{.Limit}} 個引數，已收到 {{.Args}} 個"
   },
   {
     "id": "account",
@@ -8852,6 +9284,10 @@
     "translation": "找不到中繼憑證"
   },
   {
+    "id": "invalid argument {{.Arg}} for {{.Path}}",
+    "translation": "{{.Path}} 的引數 {{.Arg}} 無效"
+  },
+  {
     "id": "ip",
     "translation": "ip"
   },
@@ -8940,8 +9376,8 @@
     "translation": "%s 的選項為 hardware 或 virtual"
   },
   {
-    "id": "options for --enable are true, false",
-    "translation": "--enable 的選項為 true、false"
+    "id": "options for %s are true, false",
+    "translation": "%s 的選項為 true、false"
   },
   {
     "id": "os",
@@ -9044,6 +9480,10 @@
     "translation": "replication"
   },
   {
+    "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
+    "translation": "至少需要 {{.Limit}} 個引數，僅收到 {{.Args}} 個"
+  },
+  {
     "id": "router",
     "translation": "router"
   },
@@ -9126,6 +9566,10 @@
   {
     "id": "type",
     "translation": "type"
+  },
+  {
+    "id": "unknown command {{.Arg}} for {{.Command}}",
+    "translation": "對 {{.Command}} 而言不明的指令 {{.Arg}}"
   },
   {
     "id": "updated",
