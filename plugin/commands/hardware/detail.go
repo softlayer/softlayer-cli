@@ -204,16 +204,13 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 			totalPrice := hardware.BillingItem.NextInvoiceTotalRecurringAmount
 			priceTable.Add("Total", "-", fmt.Sprintf("%.2f", *totalPrice))
-			sum := *hardware.BillingItem.NextInvoiceTotalRecurringAmount
 			for _, item := range hardware.BillingItem.NextInvoiceChildren {
 				if item.NextInvoiceTotalRecurringAmount != nil {
-					sum += *item.NextInvoiceTotalRecurringAmount
 					priceTable.Add(*item.Description, *item.CategoryCode, fmt.Sprintf("%.2f", *item.NextInvoiceTotalRecurringAmount))
 				}
 			}
 			priceTable.Print()
 			table.Add("Prices", buf.String())
-			table.Add(T("Price rate"), fmt.Sprintf("%.2f", sum))
 		}
 	}
 

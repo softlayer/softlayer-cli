@@ -214,7 +214,6 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("CPU Cores: a suspendable product. Anticipated usage for the billing cycle is 743.9997 hours Used"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("guest_core_usage"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("2000.00"))
 			})
 		})
 		Context("Github issues #252", func() {

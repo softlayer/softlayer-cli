@@ -262,16 +262,14 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 			totalPrice := virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
 			priceTable.Add("Total", "-", fmt.Sprintf("%.2f", *totalPrice))
-			sum := *virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
 			for _, item := range virtualGuest.BillingItem.NextInvoiceChildren {
 				if item.RecurringFee != nil {
-					sum += *item.RecurringFee
 					priceTable.Add(*item.Description, *item.CategoryCode, fmt.Sprintf("%.2f", *item.RecurringFee))
 				}
 			}
 			priceTable.Print()
 			table.Add("Prices", buf.String())
-			table.Add(T("Price rate"), fmt.Sprintf("%.2f", sum))
+			table.Add(T("Price rate"), fmt.Sprintf("%.2f", *totalPrice))
 		}
 	}
 
