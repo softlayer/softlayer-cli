@@ -1,0 +1,436 @@
+{
+    "billingItem":
+    {
+        "children":
+        [
+            {
+                "categoryCode": "ram",
+                "description": "4 GB",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "remote_management",
+                "description": "Reboot / Remote Console",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "port_speed",
+                "description": "1 Gbps Public & Private Network Uplinks",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "public_port",
+                "description": "1 Gbps Public Uplink",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "service_port",
+                "description": "1 Gbps Private Uplink",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "bandwidth",
+                "description": "0 GB Bandwidth Allotment",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "pri_ip_addresses",
+                "description": "1 IP Address",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "guest_disk0",
+                "description": "100 GB (SAN)",
+                "nextInvoiceTotalRecurringAmount": 11.232
+            },
+            {
+                "categoryCode": "os",
+                "description": "Ubuntu Linux 20.04 LTS Focal Fossa Minimal Install (64 bit)",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "monitoring",
+                "description": "Host Ping and TCP Service Monitoring",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "notification",
+                "description": "Email and Ticket",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "response",
+                "description": "Automated Reboot from Monitoring",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "vpn_management",
+                "description": "Unlimited SSL VPN Users",
+                "nextInvoiceTotalRecurringAmount": 0
+            }
+        ],
+        "id": 899336420,
+        "nextInvoiceTotalRecurringAmount": 122.082,
+        "orderItem":
+        {
+            "id": 865183008,
+            "order":
+            {
+                "accountId": 11223345,
+                "createDate": "2021-10-11T02:49:31-06:00",
+                "id": 11229988,
+                "impersonatingUserRecordId": null,
+                "modifyDate": "2021-10-11T02:51:14-06:00",
+                "orderQuoteId": null,
+                "orderTypeId": 4,
+                "presaleEventId": null,
+                "privateCloudOrderFlag": false,
+                "status": "APPROVED",
+                "userRecord":
+                {
+                    "username": "11223345_testers@test.ibm.com"
+                },
+                "userRecordId": 8316166
+            },
+            "preset":
+            {
+                "keyName": "B1_2X4X100"
+            }
+        },
+        "package":
+        {
+            "description": "Suspend Instance",
+            "firstOrderStepId": 1,
+            "id": 1035,
+            "isActive": 1,
+            "keyName": "SUSPEND_CLOUD_SERVER",
+            "name": "Public Virtual Server (hourly)",
+            "subDescription": "Suspend Instance",
+            "type":
+            {
+                "id": 4,
+                "keyName": "VIRTUAL_SERVER_INSTANCE",
+                "name": "Virtual Server Instance"
+            },
+            "unitSize": 1
+        }
+    },
+    "blockDevices":
+    [
+        {
+            "bootableFlag": 1,
+            "createDate": "2021-10-11T02:51:41-06:00",
+            "device": "0",
+            "diskImageId": 188563620,
+            "guestId": 124929698,
+            "hotPlugFlag": 0,
+            "id": 276212176,
+            "modifyDate": null,
+            "mountMode": "RW",
+            "mountType": "Disk",
+            "statusId": 1,
+            "uuid": "4e6f02ea-31f4-9229-dab1-13219dff93b1"
+        },
+        {
+            "bootableFlag": 0,
+            "createDate": "2021-10-11T02:51:48-06:00",
+            "device": "1",
+            "diskImageId": 188563670,
+            "guestId": 124929698,
+            "hotPlugFlag": 0,
+            "id": 276212228,
+            "modifyDate": null,
+            "mountMode": "RW",
+            "mountType": "Disk",
+            "statusId": 1,
+            "uuid": "9b2fc7a1-54e5-a6a8-b6af-89cd058eb77d"
+        },
+        {
+            "bootableFlag": 1,
+            "createDate": "2022-08-30T05:39:35-06:00",
+            "device": "3",
+            "diskImageId": null,
+            "guestId": 124929698,
+            "hotPlugFlag": 1,
+            "id": 300771026,
+            "modifyDate": "2022-08-30T07:07:51-06:00",
+            "mountMode": "RO",
+            "mountType": "CD",
+            "statusId": 1,
+            "uuid": "0634aa9b-eabc-1446-75f6-f7ea4dfcbb24"
+        },
+        {
+            "bootableFlag": 0,
+            "createDate": "2021-10-11T02:51:56-06:00",
+            "device": "7",
+            "diskImageId": 188563640,
+            "guestId": 124929698,
+            "hotPlugFlag": 0,
+            "id": 276212276,
+            "modifyDate": "2022-08-30T07:08:11-06:00",
+            "mountMode": "RW",
+            "mountType": "Disk",
+            "statusId": 1,
+            "uuid": "619f7f6f-efe2-4045-fae7-14b526cc17ed"
+        }
+    ],
+    "createDate": "2021-10-11T02:49:31-06:00",
+    "datacenter":
+    {
+        "id": 2434695,
+        "longName": "Frankfurt 4",
+        "name": "fra04",
+        "statusId": 2
+    },
+    "dedicatedAccountHostOnlyFlag": false,
+    "domain": "ibm.com",
+    "fullyQualifiedDomainName": "test-ui-rp.ibm.com",
+    "globalIdentifier": "9207eefb-72f0-4ef6-b6cd-6d25c1862af8",
+    "hostname": "test-ui-rp",
+    "hourlyBillingFlag": true,
+    "id": 124929698,
+    "lastTransaction":
+    {
+        "createDate": "2022-08-30T07:07:37-06:00",
+        "elapsedSeconds": 4988799,
+        "guestId": 124929698,
+        "hardwareId": null,
+        "id": 294337052,
+        "modifyDate": "2022-08-30T07:08:27-06:00",
+        "statusChangeDate": "2022-08-30T07:08:27-06:00",
+        "transactionGroup":
+        {
+            "averageTimeToComplete": ".43",
+            "name": "Cloud ISO Teardown"
+        },
+        "transactionStatus":
+        {
+            "averageDuration": "0",
+            "friendlyName": "Complete",
+            "name": "COMPLETE"
+        }
+    },
+    "maxCpu": 2,
+    "maxMemory": 4096,
+    "modifyDate": "2022-08-30T07:26:05-06:00",
+    "networkComponents":
+    [
+        {
+            "id": 88658818,
+            "macAddress": "06:f9:65:9b:23:65",
+            "maxSpeed": 1000,
+            "name": "eth",
+            "port": 0,
+            "primaryIpAddress": "10.240.142.59",
+            "primarySubnet":
+            {
+                "broadcastAddress": "6.55.44.112",
+                "cidr": 26,
+                "gateway": "6.55.44.131",
+                "id": 2447534,
+                "isCustomerOwned": false,
+                "isCustomerRoutable": false,
+                "modifyDate": "2021-10-11T02:51:25-06:00",
+                "netmask": "255.255.255.192",
+                "networkIdentifier": "6.55.44.111",
+                "networkVlanId": 3151180,
+                "sortOrder": "1",
+                "subnetType": "ADDITIONAL_PRIMARY",
+                "totalIpAddresses": "64",
+                "usableIpAddressCount": "61",
+                "version": 4
+            },
+            "securityGroupBindings":
+            [
+                {
+                    "id": 22016592,
+                    "networkComponentId": 88658818,
+                    "securityGroup":
+                    {
+                        "id": 405819,
+                        "name": "allow_outbound"
+                    },
+                    "securityGroupId": 405819
+                },
+                {
+                    "id": 22016312,
+                    "networkComponentId": 88658818,
+                    "securityGroup":
+                    {
+                        "id": 405811,
+                        "name": "allow_ssh"
+                    },
+                    "securityGroupId": 405811
+                },
+                {
+                    "id": 22016378,
+                    "networkComponentId": 88658818,
+                    "securityGroup":
+                    {
+                        "id": 3659122,
+                        "name": "sg_ping_monitoring_test-env-ibm-inform"
+                    },
+                    "securityGroupId": 3659122
+                },
+                {
+                    "id": 22016738,
+                    "networkComponentId": 88658818,
+                    "securityGroup":
+                    {
+                        "id": 3658856,
+                        "name": "sg_rp_vm_private_test-env-ibm-inform"
+                    },
+                    "securityGroupId": 3658856
+                }
+            ],
+            "speed": 1000,
+            "status": "ACTIVE"
+        },
+        {
+            "id": 88658816,
+            "macAddress": "06:1d:56:aa:aa:aa",
+            "maxSpeed": 1000,
+            "name": "eth",
+            "port": 1,
+            "primaryIpAddress": "23.22.11.55",
+            "primarySubnet":
+            {
+                "addressSpace": "PUBLIC",
+                "broadcastAddress": "123.44.55.79",
+                "cidr": 28,
+                "gateway": "123.55.98.44",
+                "id": 1897975,
+                "isCustomerOwned": false,
+                "isCustomerRoutable": false,
+                "modifyDate": "2021-10-11T02:51:24-06:00",
+                "netmask": "255.255.255.240",
+                "networkIdentifier": "161.111.222.33",
+                "networkVlanId": 3151182,
+                "sortOrder": "1",
+                "subnetType": "ADDITIONAL_PRIMARY",
+                "totalIpAddresses": "16",
+                "usableIpAddressCount": "13",
+                "version": 4
+            },
+            "securityGroupBindings":
+            [
+                {
+                    "id": 22016732,
+                    "networkComponentId": 88658816,
+                    "securityGroup":
+                    {
+                        "id": 3659122,
+                        "name": "sg_ping_monitoring_test-env-ibm-inform"
+                    },
+                    "securityGroupId": 3659122
+                },
+                {
+                    "id": 22016474,
+                    "networkComponentId": 88658816,
+                    "securityGroup":
+                    {
+                        "id": 3659298,
+                        "name": "sg_rp_vm_public_test-env-ibm-inform"
+                    },
+                    "securityGroupId": 3659298
+                },
+                {
+                    "id": 22016584,
+                    "networkComponentId": 88658816,
+                    "securityGroup":
+                    {
+                        "id": 405819,
+                        "name": "allow_outbound"
+                    },
+                    "securityGroupId": 405819
+                }
+            ],
+            "speed": 1000,
+            "status": "ACTIVE"
+        }
+    ],
+    "networkVlans":
+    [
+        {
+            "id": 3151180,
+            "networkSpace": "PRIVATE",
+            "vlanNumber": 924
+        },
+        {
+            "id": 3151182,
+            "networkSpace": "PUBLIC",
+            "vlanNumber": 852
+        }
+    ],
+    "operatingSystem":
+    {
+        "hardwareId": null,
+        "id": 65648056,
+        "manufacturerLicenseInstance": "",
+        "passwords":
+        [
+            {
+                "password": "THISISAFAKE_NOTREAL_PASSWORD",
+                "username": "root"
+            }
+        ],
+        "softwareLicense":
+        {
+            "id": 15892,
+            "softwareDescription":
+            {
+                "manufacturer": "Ubuntu",
+                "name": "Ubuntu",
+                "referenceCode": "UBUNTU_20_64",
+                "version": "20.04-64 Minimal for VSI"
+            },
+            "softwareDescriptionId": 2748
+        }
+    },
+    "powerState":
+    {
+        "keyName": "RUNNING",
+        "name": "Running"
+    },
+    "primaryBackendIpAddress": "10.111.222.59",
+    "primaryIpAddress": "161.222.111.111",
+    "privateNetworkOnlyFlag": false,
+    "provisionDate": "2021-10-11T02:54:00-06:00",
+    "softwareComponents":
+    [
+        {
+            "hardwareId": null,
+            "id": 65648056,
+            "manufacturerLicenseInstance": "",
+            "passwords":
+            [
+                {
+                    "password": "THISISAFAKE_NOTREAL_PASSWORD",
+                    "username": "root"
+                }
+            ],
+            "softwareLicense":
+            {
+                "id": 15892,
+                "softwareDescription":
+                {
+                    "manufacturer": "Ubuntu",
+                    "name": "Ubuntu",
+                    "referenceCode": "UBUNTU_20_64",
+                    "version": "20.04-64 Minimal for VSI"
+                },
+                "softwareDescriptionId": 2748
+            }
+        }
+    ],
+    "status":
+    {
+        "keyName": "ACTIVE",
+        "name": "Active"
+    },
+    "tagReferences":
+    [],
+    "transientGuestFlag": false,
+    "userData":
+    []
+}

@@ -1,0 +1,100 @@
+[
+    {
+        "bootableFlag": 1,
+        "createDate": "2021-10-11T02:51:41-06:00",
+        "device": "0",
+        "diskImage":
+        {
+            "capacity": 100,
+            "createDate": "2021-10-11T02:51:34-06:00",
+            "description": "test-ui-rp.test.ibm.com",
+            "id": 188563620,
+            "modifyDate": null,
+            "name": "test-ui-rp.test.ibm.com",
+            "parentId": null,
+            "storageRepositoryId": 59417284,
+            "typeId": 241,
+            "units": "GB",
+            "uuid": "6040e973-ddc1-49dc-9fc7-749721ca55e2"
+        },
+        "diskImageId": 188563620,
+        "guestId": 124929698,
+        "hotPlugFlag": 0,
+        "id": 276212176,
+        "modifyDate": null,
+        "mountMode": "RW",
+        "mountType": "Disk",
+        "statusId": 1,
+        "uuid": "4e6f02ea-31f4-9229-dab1-13219dff93b1"
+    },
+    {
+        "bootableFlag": 0,
+        "createDate": "2021-10-11T02:51:48-06:00",
+        "device": "1",
+        "diskImage":
+        {
+            "capacity": 2,
+            "createDate": "2021-10-11T02:51:44-06:00",
+            "description": "124929698-SWAP",
+            "id": 188563670,
+            "modifyDate": null,
+            "name": "124929698-SWAP",
+            "parentId": null,
+            "storageRepositoryId": 56006397,
+            "typeId": 246,
+            "units": "GB",
+            "uuid": "f0215e3e-8f33-431e-8e4b-095e77b63d9d"
+        },
+        "diskImageId": 188563670,
+        "guestId": 124929698,
+        "hotPlugFlag": 0,
+        "id": 276212228,
+        "modifyDate": null,
+        "mountMode": "RW",
+        "mountType": "Disk",
+        "statusId": 1,
+        "uuid": "9b2fc7a1-54e5-a6a8-b6af-89cd058eb77d"
+    },
+    {
+        "bootableFlag": 1,
+        "createDate": "2022-08-30T05:39:35-06:00",
+        "device": "3",
+        "diskImageId": null,
+        "guestId": 124929698,
+        "hotPlugFlag": 1,
+        "id": 300771026,
+        "modifyDate": "2022-08-30T07:07:51-06:00",
+        "mountMode": "RO",
+        "mountType": "CD",
+        "statusId": 1,
+        "uuid": "0634aa9b-eabc-1446-75f6-f7ea4dfcbb24"
+    },
+    {
+        "bootableFlag": 0,
+        "createDate": "2021-10-11T02:51:56-06:00",
+        "device": "7",
+        "diskImage":
+        {
+            "capacity": 64,
+            "createDate": "2021-10-11T02:51:41-06:00",
+            "description": "A description for a block devices",
+            "id": 188563640,
+            "modifyDate": null,
+            "name": "test-ui-rp.test.ibm.com-124929698-METADATA",
+            "parentId": null,
+            "storageRepositoryId": 59417294,
+            "typeId": 241,
+            "units": "MB",
+            "uuid": "a104f337-64a4-4f68-b3c7-44e16d38ba8d"
+        },
+        "diskImageId": 188563640,
+        "guestId": 124929698,
+        "hotPlugFlag": 0,
+        "id": 276212276,
+        "modifyDate": "2022-08-30T07:08:11-06:00",
+        "mountMode": "RW",
+        "mountType": "Disk",
+        "statusId": 1,
+        "uuid": "619f7f6f-efe2-4045-fae7-14b526cc17ed"
+    }
+]
