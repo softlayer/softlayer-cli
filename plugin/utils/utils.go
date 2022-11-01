@@ -3,8 +3,11 @@ package utils
 import (
 	"bytes"
 	"encoding/json"
+
+	"encoding/csv"
 	"errors"
 	"fmt"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -255,7 +258,6 @@ func ReplaceUIntPointerValue(value *uint, newValue string) string {
 	return EMPTY_VALUE
 }
 
-
 // TODO: Once refactor is done, remove ValidateColumns and rename ValidateColumns2 to it.
 func ValidateColumns2(sortby string, columns []string, defaultColumns []string, optionalColumns, sortColumns []string) ([]string, error) {
 	if sortby != EMPTY_STRING && StringInSlice(sortby, sortColumns) == -1 {
@@ -363,6 +365,87 @@ func PrintTableWithTitle(ui terminal.UI, table terminal.Table, bufEvent *bytes.B
 		tableTitle.Add(bufEvent.String())
 		tableTitle.Print()
 	}
+}
+
+func csvParseNestedTable(rows [][]string, title string) string {
+	buf := new(bytes.Buffer)
+	csvwriter := csv.NewWriter(buf)
+	csvwriter.Write(rows[0])
+	rows = rows[1:]
+	for _, row := range rows {
+		row = append([]string{title}, row...)
+		csvwriter.Write(row)
+	}
+	csvwriter.Flush()
+	return buf.String()[:len(buf.String())-1]
+}
+
+func ParseNestedTable(ui terminal.UI, title string, rows [][]string, outputFormat string) string {
+	if outputFormat == "CSV" {
+		return csvParseNestedTable(rows, title)
+	}
+
+	buf := new(bytes.Buffer)
+	table := terminal.NewTable(buf, rows[0])
+	rows = rows[1:]
+	for _, row := range rows {
+		table.Add(row...)
+	}
+
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()
+	}
+	return buf.String()
+}
+
+func PrintTableWithCSV(ui terminal.UI, rows [][]string, outputFormat string) error {
+	if outputFormat == "CSV" {
+		csvwriter := csv.NewWriter(os.Stdout)
+		csvwriter.WriteAll(rows)
+		return nil
+	}
+
+	table := ui.Table(rows[0])
+	rows = rows[1:]
+	for _, row := range rows {
+		table.Add(row...)
+	}
+
+	if outputFormat == "JSON" {
+		table.PrintJson()
+	} else {
+		table.Print()
+	}
+	return nil
+}
+
+func PrintTableWithTitleAndCSV(ui terminal.UI, rows [][]string, title string, outputFormat string) error {
+	if outputFormat == "CSV" {
+		csvwriter := csv.NewWriter(os.Stdout)
+		csvwriter.WriteAll(rows)
+		return nil
+	}
+
+	tableTitle := ui.Table([]string{T(title)})
+	bufEvent := new(bytes.Buffer)
+	table := terminal.NewTable(bufEvent, rows[0])
+	rows = rows[1:]
+	for _, row := range rows {
+		table.Add(row...)
+	}
+
+	if outputFormat == "JSON" {
+		table.PrintJson()
+		tableTitle.Add(bufEvent.String())
+		tableTitle.PrintJson()
+	} else {
+		table.Print()
+		tableTitle.Add(bufEvent.String())
+		tableTitle.Print()
+	}
+	return nil
 }
 
 func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) {

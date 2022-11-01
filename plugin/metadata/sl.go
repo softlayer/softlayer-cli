@@ -18,23 +18,24 @@ var (
 )
 
 const OutputJSON = "JSON"
+const OutputCSV = "CSV"
 
 var SupportedOutputFormat = []string{
-       OutputJSON,
-       //define supported output format here in UPPER case...
+	OutputJSON,
+	OutputCSV,
+	//define supported output format here in UPPER case...
 }
 
-
 type SoftlayerCommand struct {
-	UI terminal.UI
-	Session *session.Session
+	UI         terminal.UI
+	Session    *session.Session
 	OutputFlag *CobraOutputFlag
 }
 
 func NewSoftlayerCommand(ui terminal.UI, session *session.Session) *SoftlayerCommand {
 	return &SoftlayerCommand{
-		UI: ui,
-		Session: session,
+		UI:         ui,
+		Session:    session,
 		OutputFlag: &CobraOutputFlag{""},
 	}
 }
@@ -47,15 +48,13 @@ type SoftlayerStorageCommand struct {
 func NewSoftlayerStorageCommand(ui terminal.UI, session *session.Session, storageType string) *SoftlayerStorageCommand {
 	return &SoftlayerStorageCommand{
 		SoftlayerCommand: NewSoftlayerCommand(ui, session),
-		StorageI18n: map[string]interface{}{"storageType": storageType},
+		StorageI18n:      map[string]interface{}{"storageType": storageType},
 	}
 }
-
 
 func (slcmd *SoftlayerCommand) GetOutputFlag() string {
 	return slcmd.OutputFlag.String()
 }
-
 
 func SoftlayerNamespace() plugin.Namespace {
 	return plugin.Namespace{

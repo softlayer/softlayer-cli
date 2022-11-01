@@ -1,7 +1,6 @@
 package account
 
 import (
-	"bytes"
 	"fmt"
 	"strconv"
 
@@ -19,20 +18,20 @@ import (
 
 type InvoiceDetailCommand struct {
 	*metadata.SoftlayerCommand
-	AccountManager 	managers.AccountManager
-	Command 		*cobra.Command
-	Details			bool
+	AccountManager managers.AccountManager
+	Command        *cobra.Command
+	Details        bool
 }
 
 func NewInvoiceDetailCommand(sl *metadata.SoftlayerCommand) *InvoiceDetailCommand {
 	thisCmd := &InvoiceDetailCommand{
 		SoftlayerCommand: sl,
-		AccountManager: managers.NewAccountManager(sl.Session),
+		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use: "invoice-detail " + T("IDENTIFIER"),
+		Use:   "invoice-detail " + T("IDENTIFIER"),
 		Short: T("Invoice details."),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -42,7 +41,6 @@ func NewInvoiceDetailCommand(sl *metadata.SoftlayerCommand) *InvoiceDetailComman
 	return thisCmd
 }
 
-
 func (cmd *InvoiceDetailCommand) Run(args []string) error {
 
 	invoiceID, err := strconv.Atoi(args[0])
@@ -51,10 +49,10 @@ func (cmd *InvoiceDetailCommand) Run(args []string) error {
 	}
 
 	outputFormat := cmd.GetOutputFlag()
-	
+
 	mask := `mask[id, description, hostName, domainName, oneTimeAfterTaxAmount, recurringAfterTaxAmount, ` +
-			`createDate,categoryCode,category[name],location[name],children[id, category[name], description, ` +
-			`oneTimeAfterTaxAmount, recurringAfterTaxAmount]]`
+		`createDate,categoryCode,category[name],location[name],children[id, category[name], description, ` +
+		`oneTimeAfterTaxAmount, recurringAfterTaxAmount]]`
 	invoice, err := cmd.AccountManager.GetInvoiceDetail(invoiceID, mask)
 	if err != nil {
 		subs := map[string]interface{}{"invoiceID": invoiceID}
@@ -65,8 +63,8 @@ func (cmd *InvoiceDetailCommand) Run(args []string) error {
 }
 
 func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item, ui terminal.UI, outputFormat string, details bool) {
-	bufEvent := new(bytes.Buffer)
-	table := terminal.NewTable(bufEvent, []string{
+	var rows [][]string
+	rows = append(rows, []string{
 		T("Item Id"),
 		T("Category"),
 		T("Description"),
@@ -75,6 +73,7 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 		T("Create Date"),
 		T("Location"),
 	})
+
 	for _, invoiceDetail := range invoice {
 		Category := utils.FormatStringPointerName(invoiceDetail.Category.Name)
 		if Category == "" {
@@ -85,28 +84,28 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 		if fqdn != "." {
 			Description = fmt.Sprintf("%s (%s)", Description, fqdn)
 		}
-		table.Add(
+		rows = append(rows, []string{
 			utils.FormatIntPointer(invoiceDetail.Id),
 			Category,
 			utils.ShortenString(Description),
 			fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
 			fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
 			utils.FormatSLTimePointer(invoiceDetail.CreateDate),
-			utils.FormatStringPointer(invoiceDetail.Location.Name),
+			utils.FormatStringPointer(invoiceDetail.Location.Name)},
 		)
 		if details {
 			for _, child := range invoiceDetail.Children {
-				table.Add(
+				rows = append(rows, []string{
 					">>>",
 					utils.FormatStringPointer(child.Category.Name),
 					utils.ShortenString(utils.FormatStringPointer(child.Description)),
 					fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
 					fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
 					"---",
-					"---",
+					"---"},
 				)
 			}
 		}
 	}
-	utils.PrintTableWithTitle(ui, table, bufEvent, "Invoice: "+strconv.Itoa(invoiceID), outputFormat)
+	utils.PrintTableWithTitleAndCSV(ui, rows, "Invoice: "+strconv.Itoa(invoiceID), outputFormat)
 }
