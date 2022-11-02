@@ -111,7 +111,7 @@ var _ = Describe("Order preset-list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"description": "1U 4210 384GB 2x4TB RAID1"`))
 			})
 
-			It("Preset list is displayed in json format", func() {
+			It("Preset price list is displayed", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "BARE_METAL_SERVER", "--prices")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1U_4210S_384GB_2X4TB_RAID_1"))
