@@ -19,7 +19,7 @@ const (
 	CATEGORY_MASK = "id,isRequired,itemCategory[id, name, categoryCode]"
 	ITEM_MASK     = "id, keyName, description, itemCategory, categories"
 	PACKAGE_MASK  = "id, name, keyName, isActive, type"
-	PRESET_MASK   = "id, name, keyName, description"
+	PRESET_MASK   = "id, name, keyName, description, categories, prices, locations"
 )
 
 type OrderManager interface {

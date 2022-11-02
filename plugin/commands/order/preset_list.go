@@ -1,6 +1,8 @@
 package order
 
 import (
+	"fmt"
+
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -15,6 +17,7 @@ type PresetListCommand struct {
 	OrderManager managers.OrderManager
 	Command      *cobra.Command
 	Keyword      string
+	Prices       bool
 }
 
 func NewPresetListCommand(sl *metadata.SoftlayerCommand) (cmd *PresetListCommand) {
@@ -33,6 +36,7 @@ func NewPresetListCommand(sl *metadata.SoftlayerCommand) (cmd *PresetListCommand
 	}
 
 	cobraCmd.Flags().StringVar(&thisCmd.Keyword, "keyword", "", T("A word (or string) used to filter presets"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Prices, "prices", false, T("Use --prices to list the server item prices, e.g. --prices"))
 
 	thisCmd.Command = cobraCmd
 	return thisCmd
@@ -54,7 +58,12 @@ func (cmd *PresetListCommand) Run(args []string) error {
 		return utils.PrintPrettyJSON(cmd.UI, presets)
 	}
 
-	cmd.Print(presets)
+	if cmd.Prices {
+		cmd.PrintPresetPrices(presets)
+	} else {
+		cmd.Print(presets)
+	}
+
 	return nil
 }
 
@@ -65,6 +74,53 @@ func (cmd *PresetListCommand) Print(presets []datatypes.Product_Package_Preset) 
 		table.Add(utils.FormatStringPointer(preset.Name),
 			utils.FormatStringPointer(preset.KeyName),
 			utils.FormatStringPointer(preset.Description))
+	}
+	table.Print()
+}
+
+func (cmd *PresetListCommand) PrintPresetPrices(presets []datatypes.Product_Package_Preset) {
+	table := cmd.UI.Table([]string{T("Key Name"), T("Price Id"), T("Hourly"), T("Monthly"), T("Restriction"), T("Location")})
+
+	for _, preset := range presets {
+		locations := "[]"
+		if preset.Locations != nil && len(preset.Locations) > 0 {
+			locations = ""
+			for _, location := range preset.Locations {
+				locations = locations + *location.Name + ", "
+			}
+			locations = "[" + locations[0:len(locations)-2] + "]"
+		}
+
+		crMax := "-"
+		if len(preset.Prices) > 0 && preset.Prices[0].CapacityRestrictionMaximum != nil {
+			crMax = *preset.Prices[0].CapacityRestrictionMaximum
+		}
+		crMin := "-"
+		if len(preset.Prices) > 0 && preset.Prices[0].CapacityRestrictionMaximum != nil {
+			crMin = *preset.Prices[0].CapacityRestrictionMinimum
+		}
+		crType := "-"
+		if len(preset.Prices) > 0 && preset.Prices[0].CapacityRestrictionMaximum != nil {
+			crType = *preset.Prices[0].CapacityRestrictionType
+		}
+
+		hourly := "-"
+		if len(preset.Prices) > 0 && preset.Prices[0].HourlyRecurringFee != nil {
+			hourly = fmt.Sprintf("%.2f", *preset.Prices[0].HourlyRecurringFee)
+		}
+		monthly := "-"
+		if len(preset.Prices) > 0 && preset.Prices[0].HourlyRecurringFee != nil {
+			monthly = fmt.Sprintf("%.2f", *preset.Prices[0].RecurringFee)
+		}
+
+		table.Add(
+			utils.FormatStringPointer(preset.KeyName),
+			utils.FormatIntPointer(preset.Id),
+			hourly,
+			monthly,
+			fmt.Sprintf("%s - %s %s", crMin, crMax, crType),
+			locations,
+		)
 	}
 	table.Print()
 }

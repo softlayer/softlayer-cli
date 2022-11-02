@@ -75,12 +75,26 @@ var _ = Describe("Order preset-list", func() {
 						Name:        sl.String("1U 4210 384GB 2x4TB RAID1"),
 						KeyName:     sl.String("1U_4210S_384GB_2X4TB_RAID_1"),
 						Description: sl.String("1U 4210 384GB 2x4TB RAID1"),
+						Locations: []datatypes.Location{
+							datatypes.Location{
+								Name: sl.String("sao01"),
+							},
+							datatypes.Location{
+								Name: sl.String("tok04"),
+							},
+						},
+						Prices: []datatypes.Product_Item_Price{
+							datatypes.Product_Item_Price{
+								HourlyRecurringFee: sl.Float(0.73),
+								RecurringFee:       sl.Float(485.00),
+							},
+						},
 					},
 				}
 				fakeOrderManager.ListPresetReturns(fakePresetList, nil)
 			})
 
-			It("Location list is displayed", func() {
+			It("Preset list is displayed", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "BARE_METAL_SERVER")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1U 4210 384GB 2x4TB RAID1"))
@@ -88,13 +102,24 @@ var _ = Describe("Order preset-list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1U 4210 384GB 2x4TB RAID1"))
 			})
 
-			It("Location list is displayed in json format", func() {
+			It("Preset list is displayed in json format", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "BARE_METAL_SERVER", "--output=json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"id": 1278`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"name": "1U 4210 384GB 2x4TB RAID1"`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"keyName": "1U_4210S_384GB_2X4TB_RAID_1"`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"description": "1U 4210 384GB 2x4TB RAID1"`))
+			})
+
+			It("Preset list is displayed in json format", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "BARE_METAL_SERVER", "--prices")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1U_4210S_384GB_2X4TB_RAID_1"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1278"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0.73"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("485.00"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("- - - -"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("[sao01, tok04]"))
 			})
 		})
 	})
