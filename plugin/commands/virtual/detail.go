@@ -1,11 +1,13 @@
 package virtual
 
 import (
+	"bytes"
 	"fmt"
 	"strings"
 
 	"github.com/spf13/cobra"
 
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/datatypes"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -65,6 +67,10 @@ func (cmd *DetailCommand) Run(args []string) error {
 		return slErrors.NewAPIError(T("Failed to get the local disks detail for the virtual server {{.ID}}.\n", subs), err.Error(), 2)
 	}
 
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, virtualGuest)
+	}
+
 	var host datatypes.Virtual_DedicatedHost
 	if virtualGuest.DedicatedHost != nil && virtualGuest.DedicatedHost.Id != nil {
 		hostId := *virtualGuest.DedicatedHost.Id
@@ -74,40 +80,39 @@ func (cmd *DetailCommand) Run(args []string) error {
 			return slErrors.NewAPIError(T("Failed to get virtual server {{.VsID}} dedicated host: {{.HostID}}.\n", subs), err.Error(), 2)
 		}
 	}
-	var rows [][]string
-	rows = append(rows, []string{T("Name"), T("Value")})
-	rows = append(rows, []string{T("ID"), utils.FormatIntPointer(virtualGuest.Id)})
 
-	rows = append(rows, []string{T("guid"), utils.FormatStringPointer(virtualGuest.GlobalIdentifier)})
-	rows = append(rows, []string{T("Hostname"), utils.FormatStringPointer(virtualGuest.Hostname)})
-	rows = append(rows, []string{T("domain"), utils.FormatStringPointer(virtualGuest.Domain)})
-	rows = append(rows, []string{T("fqdn"), utils.FormatStringPointer(virtualGuest.FullyQualifiedDomainName)})
+	table := cmd.UI.Table([]string{T("Name"), T("Value")})
+	table.Add(T("ID"), utils.FormatIntPointer(virtualGuest.Id))
+	table.Add(T("guid"), utils.FormatStringPointer(virtualGuest.GlobalIdentifier))
+	table.Add(T("Hostname"), utils.FormatStringPointer(virtualGuest.Hostname))
+	table.Add(T("domain"), utils.FormatStringPointer(virtualGuest.Domain))
+	table.Add(T("fqdn"), utils.FormatStringPointer(virtualGuest.FullyQualifiedDomainName))
 	if virtualGuest.Status != nil {
-		rows = append(rows, []string{T("status"), utils.FormatStringPointer(virtualGuest.Status.Name)})
+		table.Add(T("status"), utils.FormatStringPointer(virtualGuest.Status.Name))
 	}
 	if virtualGuest.PowerState != nil {
-		rows = append(rows, []string{T("state"), utils.FormatStringPointer(virtualGuest.PowerState.Name)})
+		table.Add(T("state"), utils.FormatStringPointer(virtualGuest.PowerState.Name))
 	}
 
 	if virtualGuest.ActiveTransaction != nil && virtualGuest.ActiveTransaction.TransactionStatus != nil {
-		rows = append(rows, []string{T("active transaction"), utils.FormatStringPointer(virtualGuest.ActiveTransaction.TransactionStatus.Name)})
+		table.Add(T("active transaction"), utils.FormatStringPointer(virtualGuest.ActiveTransaction.TransactionStatus.Name))
 	}
 	if virtualGuest.Datacenter != nil {
-		rows = append(rows, []string{T("datacenter"), utils.FormatStringPointer(virtualGuest.Datacenter.Name)})
+		table.Add(T("datacenter"), utils.FormatStringPointer(virtualGuest.Datacenter.Name))
 	}
 	if virtualGuest.OperatingSystem != nil &&
 		virtualGuest.OperatingSystem.SoftwareLicense != nil &&
 		virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription != nil {
-		rows = append(rows, []string{T("os"), utils.FormatStringPointer(virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription.Name)})
-		rows = append(rows, []string{T("os version"), utils.FormatStringPointer(virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription.Version)})
+		table.Add(T("os"), utils.FormatStringPointer(virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription.Name))
+		table.Add(T("os version"), utils.FormatStringPointer(virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription.Version))
 	}
 
-	rows = append(rows, []string{T("cpu cores"), utils.FormatIntPointer(virtualGuest.MaxCpu)})
-	rows = append(rows, []string{T("memory"), utils.FormatIntPointer(virtualGuest.MaxMemory)})
+	table.Add(T("cpu cores"), utils.FormatIntPointer(virtualGuest.MaxCpu))
+	table.Add(T("memory"), utils.FormatIntPointer(virtualGuest.MaxMemory))
 
 	if localDisks != nil && len(localDisks) > 0 {
-		var drivesRows [][]string
-		drivesRows = append(drivesRows, []string{T("type"), T("name"), T("drive"), T("capacity")})
+		buf := new(bytes.Buffer)
+		drivesTable := terminal.NewTable(buf, []string{T("type"), T("name"), T("drive"), T("capacity")})
 		for _, localDisk := range localDisks {
 			diskType := "System"
 			if localDisk.DiskImage != nil && localDisk.DiskImage.Description != nil {
@@ -115,89 +120,89 @@ func (cmd *DetailCommand) Run(args []string) error {
 					diskType = "Swap"
 				}
 			}
-			drivesRows = append(drivesRows, []string{
+			drivesTable.Add(
 				diskType,
 				utils.FormatStringPointer(localDisk.MountType),
 				utils.FormatStringPointer(localDisk.Device),
-				fmt.Sprintf("%d %s", *localDisk.DiskImage.Capacity, *localDisk.DiskImage.Units)},
+				fmt.Sprintf("%d %s", *localDisk.DiskImage.Capacity, *localDisk.DiskImage.Units),
 			)
 		}
-		title := "drives"
-		rows = append(rows, []string{title, utils.ParseNestedTable(cmd.UI, title, drivesRows, outputFormat)})
+		drivesTable.Print()
+		table.Add("drives", buf.String())
 	} else {
-		rows = append(rows, []string{"drives", "-"})
+		table.Add("drives", "-")
 	}
 
-	rows = append(rows, []string{T("public ip"), utils.FormatStringPointer(virtualGuest.PrimaryIpAddress)})
-	rows = append(rows, []string{T("private ip"), utils.FormatStringPointer(virtualGuest.PrimaryBackendIpAddress)})
-	rows = append(rows, []string{T("private network"), utils.FormatBoolPointer(virtualGuest.PrivateNetworkOnlyFlag)})
-	rows = append(rows, []string{T("private cpu"), utils.FormatBoolPointer(virtualGuest.DedicatedAccountHostOnlyFlag)})
+	table.Add(T("public ip"), utils.FormatStringPointer(virtualGuest.PrimaryIpAddress))
+	table.Add(T("private ip"), utils.FormatStringPointer(virtualGuest.PrimaryBackendIpAddress))
+	table.Add(T("private network"), utils.FormatBoolPointer(virtualGuest.PrivateNetworkOnlyFlag))
+	table.Add(T("private cpu"), utils.FormatBoolPointer(virtualGuest.DedicatedAccountHostOnlyFlag))
 
 	if virtualGuest.TransientGuestFlag != nil {
-		rows = append(rows, []string{T("transient"), utils.FormatBoolPointer(virtualGuest.TransientGuestFlag)})
+		table.Add(T("transient"), utils.FormatBoolPointer(virtualGuest.TransientGuestFlag))
 	} else {
-		rows = append(rows, []string{T("transient"), "false"})
+		table.Add(T("transient"), "false")
 	}
 
-	rows = append(rows, []string{T("created"), utils.FormatSLTimePointer(virtualGuest.CreateDate)})
-	rows = append(rows, []string{T("updated"), utils.FormatSLTimePointer(virtualGuest.ModifyDate)})
+	table.Add(T("created"), utils.FormatSLTimePointer(virtualGuest.CreateDate))
+	table.Add(T("updated"), utils.FormatSLTimePointer(virtualGuest.ModifyDate))
 
 	lastTransaction := "-"
 	if virtualGuest.LastTransaction != nil && virtualGuest.LastTransaction.TransactionGroup != nil {
 		lastTransaction = fmt.Sprintf("%s (%s)", *virtualGuest.LastTransaction.TransactionGroup.Name,
 			utils.FormatSLTimePointer(virtualGuest.LastTransaction.ModifyDate))
 	}
-	rows = append(rows, []string{T("last transaction"), lastTransaction})
+	table.Add(T("last transaction"), lastTransaction)
 
 	billing := "Monthly"
 	if virtualGuest.HourlyBillingFlag != nil && *virtualGuest.HourlyBillingFlag {
 		billing = "Hourly"
 	}
-	rows = append(rows, []string{T("billing"), billing})
+	table.Add(T("billing"), billing)
 
 	if virtualGuest.BillingItem != nil &&
 		virtualGuest.BillingItem.OrderItem != nil &&
 		virtualGuest.BillingItem.OrderItem.Preset != nil &&
 		virtualGuest.BillingItem.OrderItem.Preset.KeyName != nil {
-		rows = append(rows, []string{T("preset"), utils.FormatStringPointer(virtualGuest.BillingItem.OrderItem.Preset.KeyName)})
+		table.Add(T("preset"), utils.FormatStringPointer(virtualGuest.BillingItem.OrderItem.Preset.KeyName))
 	} else {
-		rows = append(rows, []string{T("preset"), "-"})
+		table.Add(T("preset"), "-")
 	}
 
 	if virtualGuest.BillingItem != nil &&
 		virtualGuest.BillingItem.OrderItem != nil &&
 		virtualGuest.BillingItem.OrderItem.Order != nil &&
 		virtualGuest.BillingItem.OrderItem.Order.UserRecord != nil {
-		rows = append(rows, []string{T("owner"), utils.FormatStringPointer(virtualGuest.BillingItem.OrderItem.Order.UserRecord.Username)})
+		table.Add(T("owner"), utils.FormatStringPointer(virtualGuest.BillingItem.OrderItem.Order.UserRecord.Username))
 	}
 
 	if virtualGuest.Notes != nil && *virtualGuest.Notes != "" {
-		rows = append(rows, []string{T("notes"), utils.FormatStringPointer(virtualGuest.Notes)})
+		table.Add(T("notes"), utils.FormatStringPointer(virtualGuest.Notes))
 	} else {
-		rows = append(rows, []string{T("notes"), "-"})
+		table.Add(T("notes"), "-")
 	}
 
 	if virtualGuest.TagReferences != nil && len(virtualGuest.TagReferences) > 0 {
-		rows = append(rows, []string{T("tags"), utils.TagRefsToString(virtualGuest.TagReferences)})
+		table.Add(T("tags"), utils.TagRefsToString(virtualGuest.TagReferences))
 	} else {
-		rows = append(rows, []string{T("tags"), "-"})
+		table.Add(T("tags"), "-")
 	}
 
 	if vlans := virtualGuest.NetworkVlans; len(vlans) > 0 {
-		var vlanRows [][]string
-		vlanRows = append(vlanRows, []string{T("type"), T("number"), T("id")})
+		buf := new(bytes.Buffer)
+		vlanTable := terminal.NewTable(buf, []string{T("type"), T("number"), T("id")})
 		for _, vlan := range vlans {
-			vlanRows = append(vlanRows, []string{utils.FormatStringPointer(vlan.NetworkSpace),
+			vlanTable.Add(utils.FormatStringPointer(vlan.NetworkSpace),
 				utils.FormatIntPointer(vlan.VlanNumber),
-				utils.FormatIntPointer(vlan.Id)})
+				utils.FormatIntPointer(vlan.Id))
 		}
-		title := "vlans"
-		rows = append(rows, []string{title, utils.ParseNestedTable(cmd.UI, title, vlanRows, outputFormat)})
+		vlanTable.Print()
+		table.Add("vlans", buf.String())
 	}
 
 	hasSecGroups := false
-	var secGroupRows [][]string
-	secGroupRows = append(secGroupRows, []string{T("interface"), T("id"), T("name")})
+	buf := new(bytes.Buffer)
+	secGroupTable := terminal.NewTable(buf, []string{T("interface"), T("id"), T("name")})
 	for _, comp := range virtualGuest.NetworkComponents {
 		nicType := T("public")
 		if (comp.Port != nil && *comp.Port == 0) || comp.Port == nil {
@@ -206,58 +211,59 @@ func (cmd *DetailCommand) Run(args []string) error {
 		for _, binding := range comp.SecurityGroupBindings {
 			hasSecGroups = true
 			secgroup := binding.SecurityGroup
-			secGroupRows = append(secGroupRows, []string{nicType, utils.FormatIntPointer(secgroup.Id), utils.FormatStringPointer(secgroup.Name)})
+			secGroupTable.Add(nicType, utils.FormatIntPointer(secgroup.Id), utils.FormatStringPointer(secgroup.Name))
 		}
 	}
 	if hasSecGroups {
-		title := "security groups"
-		rows = append(rows, []string{title, utils.ParseNestedTable(cmd.UI, title, secGroupRows, outputFormat)})
+		secGroupTable.Print()
+		table.Add(T("security groups"), buf.String())
 	}
 
 	if virtualGuest.DedicatedHost != nil && virtualGuest.DedicatedHost.Id != nil {
-		var hostRows [][]string
-		hostRows = append(hostRows, []string{T("id"), T("name")})
-		hostRows = append(hostRows, []string{utils.FormatIntPointer(host.Id),
-			utils.FormatStringPointer(host.Name)})
-		title := "dedicated host"
-		rows = append(rows, []string{title, utils.ParseNestedTable(cmd.UI, title, hostRows, outputFormat)})
+		buf := new(bytes.Buffer)
+		hostTable := terminal.NewTable(buf, []string{T("id"), T("name")})
+		hostTable.Add(utils.FormatIntPointer(host.Id),
+			utils.FormatStringPointer(host.Name))
+		hostTable.Print()
+		table.Add(T("dedicated host"), buf.String())
 	}
 
 	if cmd.Passwords {
 		if virtualGuest.OperatingSystem != nil && virtualGuest.OperatingSystem.Passwords != nil {
-			var userRows [][]string
-			userRows = append(userRows, []string{T("software"), T("username"), T("password")})
+			buf := new(bytes.Buffer)
+			userTable := terminal.NewTable(buf, []string{T("software"), T("username"), T("password")})
 			for _, pwd := range virtualGuest.OperatingSystem.Passwords {
 				software := ""
 				if virtualGuest.OperatingSystem.SoftwareLicense != nil && virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription != nil && virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription.Name != nil {
 					software = utils.FormatStringPointer(virtualGuest.OperatingSystem.SoftwareLicense.SoftwareDescription.Name)
 				}
-				userRows = append(userRows, []string{software, utils.FormatStringPointer(pwd.Username), utils.FormatStringPointer(pwd.Password)})
+				userTable.Add(software, utils.FormatStringPointer(pwd.Username), utils.FormatStringPointer(pwd.Password))
 			}
-			title := "users"
-			rows = append(rows, []string{title, utils.ParseNestedTable(cmd.UI, title, userRows, outputFormat)})
+			userTable.Print()
+			table.Add("users", buf.String())
 		}
 	}
 
 	if cmd.Price {
 		if virtualGuest.BillingItem != nil && virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount != nil {
-			var priceRows [][]string
-			priceRows = append(priceRows, []string{T("Item"), T("CategoryCode"), T("Recurring Price")})
+			buf := new(bytes.Buffer)
+			priceTable := terminal.NewTable(buf, []string{T("Item"), T("CategoryCode"), T("Recurring Price")})
+
 			totalPrice := virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
-			priceRows = append(priceRows, []string{"Total", "-", fmt.Sprintf("%.2f", *totalPrice)})
+			priceTable.Add("Total", "-", fmt.Sprintf("%.2f", *totalPrice))
 			sum := *virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
 			for _, item := range virtualGuest.BillingItem.NextInvoiceChildren {
 				if item.RecurringFee != nil {
 					sum += *item.RecurringFee
-					priceRows = append(priceRows, []string{*item.Description, *item.CategoryCode, fmt.Sprintf("%.2f", *item.RecurringFee)})
+					priceTable.Add(*item.Description, *item.CategoryCode, fmt.Sprintf("%.2f", *item.RecurringFee))
 				}
 			}
-			title := "Prices"
-			rows = append(rows, []string{title, utils.ParseNestedTable(cmd.UI, title, priceRows, outputFormat)})
-			rows = append(rows, []string{T("Price rate"), fmt.Sprintf("%.2f", sum)})
+			priceTable.Print()
+			table.Add("Prices", buf.String())
+			table.Add(T("Price rate"), fmt.Sprintf("%.2f", sum))
 		}
 	}
 
-	utils.PrintTableWithCSV(cmd.UI, rows, outputFormat)
+	table.Print()
 	return nil
 }
