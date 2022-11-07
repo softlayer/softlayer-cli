@@ -111,6 +111,7 @@ type VirtualServerManager interface {
 	GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error)
 	GetUserCustomerNotificationsByVirtualGuestId(id int, mask string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error)
 	CreateUserCustomerNotification(virtualServerId int, userId int) (datatypes.User_Customer_Notification_Virtual_Guest, error)
+	DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error)
 }
 
 type virtualServerManager struct {
@@ -1504,7 +1505,7 @@ func (vs virtualServerManager) PlacementCreate(templateObject *datatypes.Virtual
 func (vs virtualServerManager) GetUserCustomerNotificationsByVirtualGuestId(id int, mask string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error) {
 	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(vs.Session)
 	if mask == "" {
-		mask = "mask[guestId,userId,user[firstName,lastName,email,username]]"
+		mask = "mask[id,guestId,userId,user[firstName,lastName,email,username]]"
 	}
 	return userCustomerNotificationVirtualGuestService.Mask(mask).FindByGuestId(&id)
 }
@@ -1520,4 +1521,16 @@ func (vs virtualServerManager) CreateUserCustomerNotification(virtualServerId in
 	mask := "mask[user]"
 	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(vs.Session)
 	return userCustomerNotificationVirtualGuestService.Mask(mask).CreateObject(&userCustomerNotificationTemplate)
+}
+
+//Delete a user virtual server notification entry
+//int userCustomerNotificationId: The user customer notification identifier.
+func (vs virtualServerManager) DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error) {
+	userCustomerNotificationTemplates := []datatypes.User_Customer_Notification_Virtual_Guest{
+		datatypes.User_Customer_Notification_Virtual_Guest{
+			Id: sl.Int(userCustomerNotificationId),
+		},
+	}
+	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(vs.Session)
+	return userCustomerNotificationVirtualGuestService.Mask(mask).DeleteObjects(userCustomerNotificationTemplates)
 }

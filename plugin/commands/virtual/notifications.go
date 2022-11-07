@@ -50,9 +50,10 @@ func (cmd *NotifiactionsCommand) Run(args []string) error {
 		return slErrors.NewAPIError(T("Failed to get User Customer Notifications."), err.Error(), 2)
 	}
 
-	table := cmd.UI.Table([]string{T("Last Name"), T("First Name"), T("Email"), T("User ID")})
+	table := cmd.UI.Table([]string{T("ID"), T("Last Name"), T("First Name"), T("Email"), T("User ID")})
 	for _, userCustomer := range userCustomers {
 		table.Add(
+			utils.FormatIntPointer(userCustomer.Id),
 			utils.FormatStringPointer(userCustomer.User.LastName),
 			utils.FormatStringPointer(userCustomer.User.FirstName),
 			utils.FormatStringPointer(userCustomer.User.Email),
