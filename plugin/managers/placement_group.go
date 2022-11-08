@@ -15,7 +15,7 @@ type PlaceGroupManager interface {
 	GetObject(placementgroupID int, mask string) (datatypes.Virtual_PlacementGroup, error)
 	Delete(placementgroupID int) (bool, error)
 	GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error)
-	getBackendRouterFromHostName() ([]datatypes.Network_Pod, error)
+	GetBackendRouterFromHostName() ([]datatypes.Network_Pod, error)
 }
 
 type placeGroupManager struct {
@@ -88,6 +88,6 @@ func (i placeGroupManager) GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, 
 	return i.PlaceGroupRule.GetAllObjects()
 }
 
-func (i placeGroupManager) getBackendRouterFromHostName() ([]datatypes.Network_Pod, error) {
+func (i placeGroupManager) GetBackendRouterFromHostName() ([]datatypes.Network_Pod, error) {
 	return i.NetworkPod.GetAllObjects()
 }

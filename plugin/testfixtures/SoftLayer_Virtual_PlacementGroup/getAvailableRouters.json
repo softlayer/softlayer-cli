@@ -1,0 +1,11 @@
+[{
+    "accountId": 1,
+    "fullyQualifiedDomainName": "bcr01.dal01.softlayer.com",
+    "hostname": "bcr01.dal01",
+    "id": 1,
+    "topLevelLocation": {
+        "id": 3,
+        "longName": "Dallas 1",
+        "name": "dal01"
+    }
+}]
