@@ -71,6 +71,7 @@ type HardwareServerManager interface {
 	CreateFirmwareReflashTransaction(id int) (bool, error)
 	GetUserCustomerNotificationsByHardwareId(id int, mask string) ([]datatypes.User_Customer_Notification_Hardware, error)
 	CreateUserCustomerNotification(hardwareId int, userId int) (datatypes.User_Customer_Notification_Hardware, error)
+	DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error)
 	GetBandwidthAllotmentDetail(hardwareId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error)
 	GetBillingCycleBandwidthUsage(hardwareId int, mask string) ([]datatypes.Network_Bandwidth_Usage, error)
 }
@@ -823,7 +824,7 @@ func (hw hardwareServerManager) CreateFirmwareReflashTransaction(id int) (bool, 
 func (hw hardwareServerManager) GetUserCustomerNotificationsByHardwareId(id int, mask string) ([]datatypes.User_Customer_Notification_Hardware, error) {
 	UserCustomerNotificationHardwareService := services.GetUserCustomerNotificationHardwareService(hw.Session)
 	if mask == "" {
-		mask = "mask[hardwareId,user[firstName,lastName,email,username]]"
+		mask = "mask[id,hardwareId,user[firstName,lastName,email,username]]"
 	}
 	return UserCustomerNotificationHardwareService.Mask(mask).FindByHardwareId(&id)
 }
@@ -838,6 +839,18 @@ func (hw hardwareServerManager) CreateUserCustomerNotification(hardwareId int, u
 	}
 	userCustomerNotificationHardwareService := services.GetUserCustomerNotificationHardwareService(hw.Session)
 	return userCustomerNotificationHardwareService.CreateObject(&userCustomerNotificationTemplate)
+}
+
+//Delete a user server notification entry
+//int userCustomerNotificationId: The user customer notification identifier.
+func (hw hardwareServerManager) DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error) {
+	userCustomerNotificationTemplates := []datatypes.User_Customer_Notification_Hardware{
+		datatypes.User_Customer_Notification_Hardware{
+			Id: sl.Int(userCustomerNotificationId),
+		},
+	}
+	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationHardwareService(hw.Session)
+	return userCustomerNotificationVirtualGuestService.Mask(mask).DeleteObjects(userCustomerNotificationTemplates)
 }
 
 // Return hardware’s allotted detail record.

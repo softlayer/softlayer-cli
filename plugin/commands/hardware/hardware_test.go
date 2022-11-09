@@ -37,6 +37,7 @@ var availableCommands = []string{
 	"power-on",
 	"reboot",
 	"notifications",
+	"notifications-delete",
 	"reflash-firmware",
 	"reload",
 	"rescue",
