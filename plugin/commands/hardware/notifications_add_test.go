@@ -14,11 +14,11 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("hardware add-notification", func() {
+var _ = Describe("hardware notifications-add", func() {
 	var (
 		fakeUI              *terminal.FakeUI
 		fakeHardwareManager *testhelpers.FakeHardwareServerManager
-		cliCommand          *hardware.AddNotificationCommand
+		cliCommand          *hardware.NotificationsAddCommand
 		fakeSession         *session.Session
 		slCommand           *metadata.SoftlayerCommand
 	)
@@ -27,21 +27,21 @@ var _ = Describe("hardware add-notification", func() {
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-		cliCommand = hardware.NewAddNotificationCommand(slCommand)
+		cliCommand = hardware.NewNotificationsAddCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.HardwareManager = fakeHardwareManager
 	})
 
-	Describe("hardware add-notification", func() {
-		Context("hardware add-notification without arguments", func() {
-			It("hardware add-notification without hardware ID", func() {
+	Describe("hardware notifications-add", func() {
+		Context("hardware notifications-add without arguments", func() {
+			It("hardware notifications-add without hardware ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 
-		Context("hardware add-notification with wrong hardware ID", func() {
+		Context("hardware notifications-add with wrong hardware ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
@@ -60,7 +60,7 @@ var _ = Describe("hardware add-notification", func() {
 			})
 		})
 
-		Context("hardware add-notification with correct hardware ID ", func() {
+		Context("hardware notifications-add with correct hardware ID ", func() {
 			BeforeEach(func() {
 				fakerUserCustomerNotification := datatypes.User_Customer_Notification_Hardware{
 

@@ -14,11 +14,11 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("vs add-notification", func() {
+var _ = Describe("vs notifications-add", func() {
 	var (
 		fakeUI        *terminal.FakeUI
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		cliCommand    *virtual.AddNotificationCommand
+		cliCommand    *virtual.NotificationsAddCommand
 		fakeSession   *session.Session
 		slCommand     *metadata.SoftlayerCommand
 	)
@@ -27,21 +27,21 @@ var _ = Describe("vs add-notification", func() {
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-		cliCommand = virtual.NewAddNotificationCommand(slCommand)
+		cliCommand = virtual.NewNotificationsAddCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.VirtualServerManager = fakeVSManager
 	})
 
-	Describe("vs add-notification", func() {
-		Context("vs add-notification without arguments", func() {
-			It("vs add-notification without virtual server ID", func() {
+	Describe("vs notifications-add", func() {
+		Context("vs notifications-add without arguments", func() {
+			It("vs notifications-add without virtual server ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 
-		Context("vs add-notification with wrong virtual server ID", func() {
+		Context("vs notifications-add with wrong virtual server ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
@@ -60,7 +60,7 @@ var _ = Describe("vs add-notification", func() {
 			})
 		})
 
-		Context("hardware add-notification with correct hardware ID ", func() {
+		Context("hardware notifications-add with correct hardware ID ", func() {
 			BeforeEach(func() {
 				fakerUserCustomerNotification := datatypes.User_Customer_Notification_Virtual_Guest{
 
