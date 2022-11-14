@@ -11,7 +11,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("placementgroup credentials", func() {
+var _ = Describe("placementgroup delete", func() {
 	var (
 		fakeUI      *terminal.FakeUI
 		cliCommand  *placementgroup.PlacementGroupDeleteCommand

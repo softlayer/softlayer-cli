@@ -26,21 +26,8 @@ var _ = Describe("placementgroup credentials", func() {
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})
 
-	Describe("placementgroup detail options", func() {
-		// Context("Return error", func() {
-		// 	It("Set command without ID", func() {
-		// 		err := testhelpers.RunCobraCommand(cliCommand.Command)
-		// 		Expect(err).To(HaveOccurred())
-		// 		Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
-		// 	})
-		// 	It("Set command without ID", func() {
-		// 		err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-		// 		Expect(err).To(HaveOccurred())
-		// 		Expect(err.Error()).To(ContainSubstring("Invalid input for 'Placement Group ID'. It must be a positive integer."))
-		// 	})
-		// })
-
-		Context("Placementgroup detail, correct use", func() {
+	Describe("placementgroup list", func() {
+		Context("Placementgroup list, correct use", func() {
 			It("return placementgroup", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
@@ -48,7 +35,7 @@ var _ = Describe("placementgroup credentials", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("140665   dal05-ibmtest   -                testRule1   -        2019-06-07T19:34:55Z"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("71643    TestGroup       -                testRule1   -        2019-01-30T23:53:00Z"))
 			})
-			It("return placementgroup detail in format json", func() {
+			It("return placementgroup list in format json", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"accountId": 99999,`))
