@@ -43,7 +43,7 @@ func (cmd *NotificationsDeleteCommand) Run(args []string) error {
 
 	success, err := cmd.HardwareManager.DeleteUserCustomerNotification(userCustomerNotificationId)
 	if err != nil {
-		cmd.UI.Failed(T("Failed to delete User Customer Notification." + "\n" + err.Error()))
+		cmd.UI.Failed(T("Failed to delete User Customer Notification.") + "\n" + err.Error())
 	}
 	if success {
 		cmd.UI.Ok()
