@@ -46,6 +46,21 @@ var _ = Describe("firewall edit", func() {
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials."))
 			})
+			It("Set invalid type firewall", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc:123")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Invalid firewall type abc: firewall type should be either vlan, multiVlan, vs or server"))
+			})
+			It("Set valid vlan ID, but it's not possible open editor", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "vlan:123")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to open editor for vlan rules: 123"))
+			})
+			It("Set valid vs ID, but it's not possible open editor", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "vs:123")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to open editor for component rules:  123"))
+			})
 		})
 	})
 })
