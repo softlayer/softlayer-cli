@@ -11,21 +11,21 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-type AddNotificationCommand struct {
+type NotificationsAddCommand struct {
 	*metadata.SoftlayerCommand
 	VirtualServerManager managers.VirtualServerManager
 	Command              *cobra.Command
 	Users                []int
 }
 
-func NewAddNotificationCommand(sl *metadata.SoftlayerCommand) (cmd *AddNotificationCommand) {
-	thisCmd := &AddNotificationCommand{
+func NewNotificationsAddCommand(sl *metadata.SoftlayerCommand) (cmd *NotificationsAddCommand) {
+	thisCmd := &NotificationsAddCommand{
 		SoftlayerCommand:     sl,
 		VirtualServerManager: managers.NewVirtualServerManager(sl.Session),
 	}
 
 	cobraCmd := &cobra.Command{
-		Use:   "add-notification " + T("IDENTIFIER"),
+		Use:   "notifications-add " + T("IDENTIFIER"),
 		Short: T("Create a user virtual notification entry."),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -39,7 +39,7 @@ func NewAddNotificationCommand(sl *metadata.SoftlayerCommand) (cmd *AddNotificat
 	return thisCmd
 }
 
-func (cmd *AddNotificationCommand) Run(args []string) error {
+func (cmd *NotificationsAddCommand) Run(args []string) error {
 	virtualServerId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Virtual server ID")
