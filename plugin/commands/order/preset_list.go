@@ -36,7 +36,7 @@ func NewPresetListCommand(sl *metadata.SoftlayerCommand) (cmd *PresetListCommand
 	}
 
 	cobraCmd.Flags().StringVar(&thisCmd.Keyword, "keyword", "", T("A word (or string) used to filter presets"))
-	cobraCmd.Flags().BoolVar(&thisCmd.Prices, "prices", false, T("Use --prices to list the server item prices, e.g. --prices"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Prices, "prices", false, T("Lists the prices for each item in this preset"))
 
 	thisCmd.Command = cobraCmd
 	return thisCmd
@@ -91,26 +91,27 @@ func (cmd *PresetListCommand) PrintPresetPrices(presets []datatypes.Product_Pack
 			locations = "[" + locations[0:len(locations)-2] + "]"
 		}
 
-		crMax := "-"
-		if len(preset.Prices) > 0 && preset.Prices[0].CapacityRestrictionMaximum != nil {
-			crMax = *preset.Prices[0].CapacityRestrictionMaximum
-		}
-		crMin := "-"
-		if len(preset.Prices) > 0 && preset.Prices[0].CapacityRestrictionMaximum != nil {
-			crMin = *preset.Prices[0].CapacityRestrictionMinimum
-		}
-		crType := "-"
-		if len(preset.Prices) > 0 && preset.Prices[0].CapacityRestrictionMaximum != nil {
-			crType = *preset.Prices[0].CapacityRestrictionType
-		}
+		crMax, crMin, crType, hourly, monthly := "-", "-", "-", "-", "-"
+		if len(preset.Prices) > 0 {
+			if preset.Prices[0].CapacityRestrictionMaximum != nil {
+				crMax = *preset.Prices[0].CapacityRestrictionMaximum
+			}
 
-		hourly := "-"
-		if len(preset.Prices) > 0 && preset.Prices[0].HourlyRecurringFee != nil {
-			hourly = fmt.Sprintf("%.2f", *preset.Prices[0].HourlyRecurringFee)
-		}
-		monthly := "-"
-		if len(preset.Prices) > 0 && preset.Prices[0].HourlyRecurringFee != nil {
-			monthly = fmt.Sprintf("%.2f", *preset.Prices[0].RecurringFee)
+			if preset.Prices[0].CapacityRestrictionMaximum != nil {
+				crMin = *preset.Prices[0].CapacityRestrictionMinimum
+			}
+
+			if preset.Prices[0].CapacityRestrictionMaximum != nil {
+				crType = *preset.Prices[0].CapacityRestrictionType
+			}
+
+			if preset.Prices[0].HourlyRecurringFee != nil {
+				hourly = fmt.Sprintf("%.2f", *preset.Prices[0].HourlyRecurringFee)
+			}
+
+			if preset.Prices[0].HourlyRecurringFee != nil {
+				monthly = fmt.Sprintf("%.2f", *preset.Prices[0].RecurringFee)
+			}
 		}
 
 		table.Add(
