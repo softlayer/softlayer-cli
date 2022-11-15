@@ -39,6 +39,7 @@ var availableCommands = []string{
 	"monitoring-list",
 	"notifications",
 	"notifications-add",
+	"notifications-delete",
 	"options",
 	"pause",
 	"placementgroup-create",

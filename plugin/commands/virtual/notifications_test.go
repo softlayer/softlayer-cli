@@ -71,6 +71,7 @@ var _ = Describe("VS notifications", func() {
 							Email:     sl.String("jhonsmith@email.com"),
 							Username:  sl.String("jhonsmith"),
 						},
+						Id: sl.Int(111111),
 					},
 				}
 				fakeVSManager.GetUserCustomerNotificationsByVirtualGuestIdReturns(fakerUserCustomerNotifications, nil)
@@ -78,6 +79,7 @@ var _ = Describe("VS notifications", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
 				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Jhon"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Smith"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("jhonsmith@email.com"))

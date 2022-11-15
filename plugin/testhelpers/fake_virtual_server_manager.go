@@ -137,6 +137,19 @@ type FakeVirtualServerManager struct {
 		result1 datatypes.User_Customer_Notification_Virtual_Guest
 		result2 error
 	}
+	DeleteUserCustomerNotificationStub        func(int) (bool, error)
+	deleteUserCustomerNotificationMutex       sync.RWMutex
+	deleteUserCustomerNotificationArgsForCall []struct {
+		arg1 int
+	}
+	deleteUserCustomerNotificationReturns struct {
+		result1 bool
+		result2 error
+	}
+	deleteUserCustomerNotificationReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	EditInstanceStub        func(int, string, string, string, string, *int, *int) ([]bool, []string)
 	editInstanceMutex       sync.RWMutex
 	editInstanceArgsForCall []struct {
@@ -1304,6 +1317,70 @@ func (fake *FakeVirtualServerManager) CreateUserCustomerNotificationReturnsOnCal
 	}
 	fake.createUserCustomerNotificationReturnsOnCall[i] = struct {
 		result1 datatypes.User_Customer_Notification_Virtual_Guest
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) DeleteUserCustomerNotification(arg1 int) (bool, error) {
+	fake.deleteUserCustomerNotificationMutex.Lock()
+	ret, specificReturn := fake.deleteUserCustomerNotificationReturnsOnCall[len(fake.deleteUserCustomerNotificationArgsForCall)]
+	fake.deleteUserCustomerNotificationArgsForCall = append(fake.deleteUserCustomerNotificationArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteUserCustomerNotificationStub
+	fakeReturns := fake.deleteUserCustomerNotificationReturns
+	fake.recordInvocation("DeleteUserCustomerNotification", []interface{}{arg1})
+	fake.deleteUserCustomerNotificationMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeVirtualServerManager) DeleteUserCustomerNotificationCallCount() int {
+	fake.deleteUserCustomerNotificationMutex.RLock()
+	defer fake.deleteUserCustomerNotificationMutex.RUnlock()
+	return len(fake.deleteUserCustomerNotificationArgsForCall)
+}
+
+func (fake *FakeVirtualServerManager) DeleteUserCustomerNotificationCalls(stub func(int) (bool, error)) {
+	fake.deleteUserCustomerNotificationMutex.Lock()
+	defer fake.deleteUserCustomerNotificationMutex.Unlock()
+	fake.DeleteUserCustomerNotificationStub = stub
+}
+
+func (fake *FakeVirtualServerManager) DeleteUserCustomerNotificationArgsForCall(i int) int {
+	fake.deleteUserCustomerNotificationMutex.RLock()
+	defer fake.deleteUserCustomerNotificationMutex.RUnlock()
+	argsForCall := fake.deleteUserCustomerNotificationArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeVirtualServerManager) DeleteUserCustomerNotificationReturns(result1 bool, result2 error) {
+	fake.deleteUserCustomerNotificationMutex.Lock()
+	defer fake.deleteUserCustomerNotificationMutex.Unlock()
+	fake.DeleteUserCustomerNotificationStub = nil
+	fake.deleteUserCustomerNotificationReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeVirtualServerManager) DeleteUserCustomerNotificationReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.deleteUserCustomerNotificationMutex.Lock()
+	defer fake.deleteUserCustomerNotificationMutex.Unlock()
+	fake.DeleteUserCustomerNotificationStub = nil
+	if fake.deleteUserCustomerNotificationReturnsOnCall == nil {
+		fake.deleteUserCustomerNotificationReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.deleteUserCustomerNotificationReturnsOnCall[i] = struct {
+		result1 bool
 		result2 error
 	}{result1, result2}
 }
@@ -4033,6 +4110,8 @@ func (fake *FakeVirtualServerManager) Invocations() map[string][][]interface{} {
 	defer fake.createInstancesMutex.RUnlock()
 	fake.createUserCustomerNotificationMutex.RLock()
 	defer fake.createUserCustomerNotificationMutex.RUnlock()
+	fake.deleteUserCustomerNotificationMutex.RLock()
+	defer fake.deleteUserCustomerNotificationMutex.RUnlock()
 	fake.editInstanceMutex.RLock()
 	defer fake.editInstanceMutex.RUnlock()
 	fake.generateInstanceCapacityCreationTemplateMutex.RLock()
