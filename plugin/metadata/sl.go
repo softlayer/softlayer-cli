@@ -1,8 +1,8 @@
 package metadata
 
 import (
-	"strings"
 	"strconv"
+	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
@@ -13,33 +13,32 @@ import (
 )
 
 var (
-	LIMIT          		= 50
-	NS_SL_NAME     		= "sl"
-	OutputFlagName 		= "output"
-	PLUGIN_VERSION 		= "1.2.0"
-	PLUGIN_SOFTLAYER 		= "sl"
-	PLUGIN_SOFTLAYER_USAGE 	= "Classic Infrastructure"
-	UsageAgentHeader 	 	= "ibmcloud sl v" + PLUGIN_VERSION
+	LIMIT                  = 50
+	NS_SL_NAME             = "sl"
+	OutputFlagName         = "output"
+	PLUGIN_VERSION         = "1.2.0"
+	PLUGIN_SOFTLAYER       = "sl"
+	PLUGIN_SOFTLAYER_USAGE = "Classic Infrastructure"
+	UsageAgentHeader       = "ibmcloud sl v" + PLUGIN_VERSION
 )
 
 const OutputJSON = "JSON"
 
 var SupportedOutputFormat = []string{
-       OutputJSON,
-       //define supported output format here in UPPER case...
+	OutputJSON,
+	//define supported output format here in UPPER case...
 }
 
-
 type SoftlayerCommand struct {
-	UI terminal.UI
-	Session *session.Session
+	UI         terminal.UI
+	Session    *session.Session
 	OutputFlag *CobraOutputFlag
 }
 
 func NewSoftlayerCommand(ui terminal.UI, session *session.Session) *SoftlayerCommand {
 	return &SoftlayerCommand{
-		UI: ui,
-		Session: session,
+		UI:         ui,
+		Session:    session,
 		OutputFlag: &CobraOutputFlag{""},
 	}
 }
@@ -52,15 +51,13 @@ type SoftlayerStorageCommand struct {
 func NewSoftlayerStorageCommand(ui terminal.UI, session *session.Session, storageType string) *SoftlayerStorageCommand {
 	return &SoftlayerStorageCommand{
 		SoftlayerCommand: NewSoftlayerCommand(ui, session),
-		StorageI18n: map[string]interface{}{"storageType": storageType},
+		StorageI18n:      map[string]interface{}{"storageType": storageType},
 	}
 }
-
 
 func (slcmd *SoftlayerCommand) GetOutputFlag() string {
 	return slcmd.OutputFlag.String()
 }
-
 
 func SoftlayerNamespace() plugin.Namespace {
 	return plugin.Namespace{
@@ -100,10 +97,16 @@ func GetVersion() plugin.VersionType {
 	major, minor, revision := 0, 0, 0
 	// Error checking here seems a bit much, but a mistake in the version string would cause a crash otherwise.
 	if len(versionSplit) == 3 {
-		if major, err = strconv.Atoi(versionSplit[0]); err != nil {major = 99}
-		if minor, err  = strconv.Atoi(versionSplit[1]); err != nil {minor = 99}
-		if revision, err = strconv.Atoi(versionSplit[2]); err != nil {revision = 99}
+		if major, err = strconv.Atoi(versionSplit[0]); err != nil {
+			major = 99
+		}
+		if minor, err = strconv.Atoi(versionSplit[1]); err != nil {
+			minor = 99
+		}
+		if revision, err = strconv.Atoi(versionSplit[2]); err != nil {
+			revision = 99
+		}
 	}
-	return plugin.VersionType{major, minor, revision}
+	return plugin.VersionType{Major: major, Minor: minor, Build: revision}
 
 }

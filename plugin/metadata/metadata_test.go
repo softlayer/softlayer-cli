@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 func TestMetadata(t *testing.T) {
@@ -15,14 +15,13 @@ func TestMetadata(t *testing.T) {
 	RunSpecs(t, "SL Metadata Suite")
 }
 
-
 var _ = Describe("SL Metadata Tests", func() {
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
 	Describe("Happy Path Tests", func() {
 		Context("Tests Get Version", func() {
 			version := metadata.GetVersion()
-			It("Make sure we got valid numbers", func() { 
+			It("Make sure we got valid numbers", func() {
 				Expect(version.Major).Should(BeNumerically(">", 0))
 				Expect(version.Major).Should(BeNumerically("<", 99))
 				Expect(version.Major).Should(BeNumerically("<", 99))
@@ -30,7 +29,7 @@ var _ = Describe("SL Metadata Tests", func() {
 		})
 		Context("Tests SoftLayerNamespace", func() {
 			result := metadata.SoftlayerNamespace()
-			It("Make sure we got valid numbers", func() { 
+			It("Make sure we got valid numbers", func() {
 				Expect(result.Name).Should(Equal(metadata.NS_SL_NAME))
 				Expect(result.Description).Should(ContainSubstring("Manage Classic"))
 			})
@@ -62,4 +61,3 @@ var _ = Describe("SL Metadata Tests", func() {
 	})
 
 })
-
