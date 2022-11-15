@@ -7,7 +7,7 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/softlayer/softlayer-go/session"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 const (
@@ -59,6 +59,6 @@ func NewSoftlayerClientSessionFromConfig(context plugin.PluginContext) (*session
 		IAMToken:         token,
 		TransportHandler: transportHandler,
 	}
-	sess.AppendUserAgent(version.UsageAgentHeader)
+	sess.AppendUserAgent(metadata.UsageAgentHeader)
 	return sess, nil
 }

@@ -19,7 +19,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/client"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
@@ -61,10 +60,11 @@ var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} 
 
 func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
-		Name:       version.PLUGIN_SOFTLAYER,
+		Name:       metadata.NS_SL_NAME,
 		Namespaces: Namespaces(),
 		// TODO change this to convert cobra commands to pluginCommands... maybe see if another plugin does this already???
-		Commands: cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
+		Commands:   cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
+		Version:    metadata.GetVersion(),
 	}
 }
 

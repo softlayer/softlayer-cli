@@ -2,6 +2,7 @@ package metadata
 
 import (
 	"strings"
+	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
@@ -12,9 +13,13 @@ import (
 )
 
 var (
-	LIMIT          = 50
-	NS_SL_NAME     = "sl"
-	OutputFlagName = "output"
+	LIMIT          		= 50
+	NS_SL_NAME     		= "sl"
+	OutputFlagName 		= "output"
+	PLUGIN_VERSION 		= "1.2.0"
+	PLUGIN_SOFTLAYER 		= "sl"
+	PLUGIN_SOFTLAYER_USAGE 	= "Classic Infrastructure"
+	UsageAgentHeader 	 	= "ibmcloud sl v" + PLUGIN_VERSION
 )
 
 const OutputJSON = "JSON"
@@ -87,4 +92,18 @@ func (o *CobraOutputFlag) Set(p string) error {
 
 func (o *CobraOutputFlag) Type() string {
 	return "string"
+}
+
+func GetVersion() plugin.VersionType {
+	versionSplit := strings.Split(PLUGIN_VERSION, ".")
+	var err error
+	major, minor, revision := 0, 0, 0
+	// Error checking here seems a bit much, but a mistake in the version string would cause a crash otherwise.
+	if len(versionSplit) == 3 {
+		if major, err = strconv.Atoi(versionSplit[0]); err != nil {major = 99}
+		if minor, err  = strconv.Atoi(versionSplit[1]); err != nil {minor = 99}
+		if revision, err = strconv.Atoi(versionSplit[2]); err != nil {revision = 99}
+	}
+	return plugin.VersionType{major, minor, revision}
+
 }
