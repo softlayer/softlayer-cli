@@ -226,8 +226,18 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 		RunE:  nil,
 	}
 
+	versionCommand := &cobra.Command{
+		Use:	"version",
+		Short:  T("Print the version of the sl plugin"),
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(metadata.PLUGIN_VERSION)
+		},
+	}
+	cobraCmd.AddCommand(versionCommand)
+
 	// Persistent Flags
 	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", T("Specify output format, only JSON is supported now."))
+
 	// Commands
 	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
 	cobraCmd.AddCommand(autoscale.SetupCobraCommands(slCommand))
