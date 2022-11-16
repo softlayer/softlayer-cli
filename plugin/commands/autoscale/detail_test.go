@@ -26,8 +26,6 @@ var _ = Describe("autoscale detail", func() {
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = autoscale.NewDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-		// fakeAutoScaleManager = new(testhelpers.FakeAutoScaleManager)
-		// cliCommand.AutoScaleManager = fakeAutoScaleManager
 	})
 
 	Describe("autoscale detail", func() {
@@ -54,7 +52,7 @@ var _ = Describe("autoscale detail", func() {
 
 		Context("Autoscale detail, correct use", func() {
 			It("return autoscale detail", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "12222222")
 				Expect(err).NotTo(HaveOccurred())
 				output := strings.Split(fakeUI.Outputs(), "\n")
 				Expect(output[0]).To(ContainSubstring("Name"))
@@ -76,18 +74,19 @@ var _ = Describe("autoscale detail", func() {
 			It("return autoscale detail in format json", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "ID",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "12222222"`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "Minimum Members",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "2"`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "Maximum Members",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "6"`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "SSH Key 490279   label   "`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "SAN Disk 0       25   "`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "SAN Disk 2       10   "`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "Post Install     https://test.com/   "`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "Active Guests",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "Id   Hostname   Created   "`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"ID",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"12222222"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Minimum Members",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"2"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Maximum Members",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"6"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"SSH Key 490279   label   "`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"SAN Disk 0       25   "`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"SAN Disk 2       10   "`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Post Install     https://test.com/   "`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Active Guests",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
