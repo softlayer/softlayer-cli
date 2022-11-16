@@ -29,7 +29,6 @@ var availableCommands = []string{
 	"credentials",
 	"detail",
 	"edit",
-	"guests",
 	"list",
 	"monitoring-list",
 	"power-cycle",
