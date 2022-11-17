@@ -65,6 +65,8 @@ func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 		// TODO change this to convert cobra commands to pluginCommands... maybe see if another plugin does this already???
 		Commands:   cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
 		Version:    metadata.GetVersion(),
+		SDKVersion: metadata.GetSDKVersion(),
+		MinCliVersion: metadata.GetMinCLI(),
 	}
 }
 
@@ -204,6 +206,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 				Name:        cliCmd.Name(),
 				Description: cliCmd.Short,
 				Usage:       cliCmd.UsageString(),
+				// try using the ibm-cloud/ibm-cloud-cli-sdk/plugin/plugin.ConvertCObraFlagsToPluginFlags
 				Flags:       cobraFlagToPlugin(cliCmd.Flags()),
 			}
 			pluginCommands = append(pluginCommands, thisCmd)

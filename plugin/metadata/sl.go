@@ -16,7 +16,7 @@ var (
 	LIMIT                  = 50
 	NS_SL_NAME             = "sl"
 	OutputFlagName         = "output"
-	PLUGIN_VERSION         = "1.2.0"
+	PLUGIN_VERSION         = "1.2.1"
 	PLUGIN_SOFTLAYER       = "sl"
 	PLUGIN_SOFTLAYER_USAGE = "Classic Infrastructure"
 	UsageAgentHeader       = "ibmcloud sl v" + PLUGIN_VERSION
@@ -109,4 +109,13 @@ func GetVersion() plugin.VersionType {
 	}
 	return plugin.VersionType{Major: major, Minor: minor, Build: revision}
 
+}
+
+// Might be a way to read this from go.mod, or something?
+func GetSDKVersion() plugin.VersionType {
+	return plugin.VersionType{Major: 0, Minor: 9, Build: 0}
+}
+
+func GetMinCLI()  plugin.VersionType {
+	return plugin.VersionType{Major: 2, Minor: 12, Build: 0}
 }
