@@ -146,7 +146,6 @@ var _ = Describe("Create", func() {
 			It("Create a user", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "createdUser@email.com", "--email", "createdUser@email.com", "--password", "generate", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(verifyPassword(fakeUI.Outputs())).Should(BeTrue())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name       value"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Username   createdUser"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Email      createdUser@email.com"))
@@ -214,36 +213,3 @@ var _ = Describe("Create", func() {
 		})
 	})
 })
-
-func verifyPassword(output string) bool {
-	indexWordPassword := strings.Index(output, "Password")
-	pass := output[indexWordPassword+8:]
-	pass = strings.TrimSpace(pass)
-	var uppercase, lowercase, number, simbol, lenght bool
-	//Verify lenght is 23
-	if len(pass) == 23 {
-		lenght = true
-	}
-	for _, char := range pass {
-		//Verify exist uppercase
-		if int(char) >= 65 && int(char) <= 90 {
-			uppercase = true
-		}
-		//Verify exist lowercase
-		if int(char) >= 97 && int(char) <= 122 {
-			lowercase = true
-		}
-		//Verify exist number
-		if int(char) >= 48 && int(char) <= 57 {
-			number = true
-		}
-		//Verify exist simbol
-		if int(char) >= 33 && int(char) <= 47 {
-			simbol = true
-		}
-	}
-	if uppercase && lowercase && number && simbol && lenght {
-		return true
-	}
-	return false
-}
