@@ -8,34 +8,34 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/spf13/cobra"
 
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type SummaryCommand struct {
-    *metadata.SoftlayerCommand
-    AccountManager managers.AccountManager
-    Command *cobra.Command
+	*metadata.SoftlayerCommand
+	AccountManager managers.AccountManager
+	Command        *cobra.Command
 }
 
 func NewSummaryCommand(sl *metadata.SoftlayerCommand) *SummaryCommand {
-    thisCmd := &SummaryCommand{
-        SoftlayerCommand: sl,
-        AccountManager: managers.NewAccountManager(sl.Session),
-    }
-    cobraCmd := &cobra.Command{
-        Use: "summary",
-        Short: T("Prints some various bits of information about an account."),
-        Args: metadata.NoArgs,
-        RunE: func(cmd *cobra.Command, args []string) error {
-            return thisCmd.Run(args)
-        },
-    }
-    thisCmd.Command = cobraCmd
-    return thisCmd
+	thisCmd := &SummaryCommand{
+		SoftlayerCommand: sl,
+		AccountManager:   managers.NewAccountManager(sl.Session),
+	}
+	cobraCmd := &cobra.Command{
+		Use:   "summary",
+		Short: T("Prints some various bits of information about an account."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
 func (cmd *SummaryCommand) Run(args []string) error {
@@ -57,9 +57,16 @@ func PrintSummary(account datatypes.Account, ui terminal.UI, outputFormat string
 		T("Value"),
 	})
 
+	Balance := "-"
+	UpcomingInvoice := "-"
+	if account.PendingInvoice != nil {
+		Balance = utils.FormatSLFloatPointerToFloat(account.PendingInvoice.StartingBalance)
+		UpcomingInvoice = utils.FormatSLFloatPointerToFloat(account.PendingInvoice.InvoiceTotalAmount)
+	}
+	
 	table.Add("Company Name", utils.FormatStringPointer(account.CompanyName))
-	table.Add("Balance", utils.FormatSLFloatPointerToFloat(account.PendingInvoice.StartingBalance))
-	table.Add("Upcoming Invoice", utils.FormatSLFloatPointerToFloat(account.PendingInvoice.InvoiceTotalAmount))
+	table.Add("Balance", Balance)
+	table.Add("Upcoming Invoice", UpcomingInvoice)
 	table.Add("Image Templates", utils.FormatUIntPointer(account.BlockDeviceTemplateGroupCount))
 	table.Add("Dedicated Hosts", utils.FormatUIntPointer(account.DedicatedHostCount))
 	table.Add("Hardware", utils.FormatUIntPointer(account.HardwareCount))
