@@ -8,7 +8,7 @@ import (
 	"log"
 	"math/rand"
 	"reflect"
-	"time"
+	"strings"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
@@ -170,13 +170,17 @@ func GeneratePassword(size int, kind int) []byte {
 
 	// #nosec G404: Use "crypto/rand" as the seed, which should resolve the pseudo "math/rand"
 	rnd := rand.New(&cryptoSource{})
-	fmt.Println(time.Now().UnixNano())
-	for i := 0; i < size; i++ {
-		if isAll { // random ikind
-			ikind = rnd.Intn(4)
+	generate := true
+	for generate {
+		result = make([]byte, size)
+		for i := 0; i < size; i++ {
+			if isAll { // random ikind
+				ikind = rnd.Intn(4)
+			}
+			scope, base := kinds[ikind][0], kinds[ikind][1]
+			result[i] = uint8(base + rnd.Intn(scope))
 		}
-		scope, base := kinds[ikind][0], kinds[ikind][1]
-		result[i] = uint8(base + rnd.Intn(scope))
+		generate = !IsValidPassword(string(result))
 	}
 	return result
 }
@@ -197,4 +201,35 @@ func StructAssignment(A, B interface{}) { //a =b
 			}
 		}
 	}
+}
+
+func IsValidPassword(output string) bool {
+	output = strings.TrimSpace(output)
+	var uppercase, lowercase, number, simbol, lenght bool
+	//Verify lenght is 23
+	if len(output) == 23 {
+		lenght = true
+	}
+	for _, char := range output {
+		//Verify exist uppercase
+		if int(char) >= 65 && int(char) <= 90 {
+			uppercase = true
+		}
+		//Verify exist lowercase
+		if int(char) >= 97 && int(char) <= 122 {
+			lowercase = true
+		}
+		//Verify exist number
+		if int(char) >= 48 && int(char) <= 57 {
+			number = true
+		}
+		//Verify exist simbol
+		if int(char) >= 33 && int(char) <= 47 {
+			simbol = true
+		}
+	}
+	if uppercase && lowercase && number && simbol && lenght {
+		return true
+	}
+	return false
 }
