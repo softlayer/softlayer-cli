@@ -57,15 +57,14 @@ func PrintSummary(account datatypes.Account, ui terminal.UI, outputFormat string
 		T("Value"),
 	})
 
-	table.Add("Company Name", utils.FormatStringPointer(account.CompanyName))
-	// table.Add("Balance", utils.FormatSLFloatPointerToFloat(account.PendingInvoice.StartingBalance))
-	// table.Add("Upcoming Invoice", utils.FormatSLFloatPointerToFloat(account.PendingInvoice.InvoiceTotalAmount))
 	Balance := "-"
 	UpcomingInvoice := "-"
 	if account.PendingInvoice != nil {
 		Balance = utils.FormatSLFloatPointerToFloat(account.PendingInvoice.StartingBalance)
 		UpcomingInvoice = utils.FormatSLFloatPointerToFloat(account.PendingInvoice.InvoiceTotalAmount)
 	}
+	
+	table.Add("Company Name", utils.FormatStringPointer(account.CompanyName))
 	table.Add("Balance", Balance)
 	table.Add("Upcoming Invoice", UpcomingInvoice)
 	table.Add("Image Templates", utils.FormatUIntPointer(account.BlockDeviceTemplateGroupCount))
