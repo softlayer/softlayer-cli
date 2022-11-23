@@ -19,7 +19,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/client"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/version"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
@@ -61,10 +60,13 @@ var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} 
 
 func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
-		Name:       version.PLUGIN_SOFTLAYER,
+		Name:       metadata.NS_SL_NAME,
 		Namespaces: Namespaces(),
 		// TODO change this to convert cobra commands to pluginCommands... maybe see if another plugin does this already???
-		Commands: cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
+		Commands:   cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
+		Version:    metadata.GetVersion(),
+		SDKVersion: metadata.GetSDKVersion(),
+		MinCliVersion: metadata.GetMinCLI(),
 	}
 }
 
@@ -204,6 +206,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 				Name:        cliCmd.Name(),
 				Description: cliCmd.Short,
 				Usage:       cliCmd.UsageString(),
+				// try using the ibm-cloud/ibm-cloud-cli-sdk/plugin/plugin.ConvertCObraFlagsToPluginFlags
 				Flags:       cobraFlagToPlugin(cliCmd.Flags()),
 			}
 			pluginCommands = append(pluginCommands, thisCmd)
@@ -226,8 +229,18 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 		RunE:  nil,
 	}
 
+	versionCommand := &cobra.Command{
+		Use:	"version",
+		Short:  T("Print the version of the sl plugin"),
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(metadata.PLUGIN_VERSION)
+		},
+	}
+	cobraCmd.AddCommand(versionCommand)
+
 	// Persistent Flags
 	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", T("Specify output format, only JSON is supported now."))
+
 	// Commands
 	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
 	cobraCmd.AddCommand(autoscale.SetupCobraCommands(slCommand))
