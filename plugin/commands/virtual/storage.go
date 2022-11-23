@@ -73,17 +73,6 @@ func (cmd *StorageCommand) Run(args []string) error {
 		return slErrors.NewAPIError(T("Failed to get the local disks detail for the virtual server {{.ID}}.\n", subs), err.Error(), 2)
 	}
 
-	var storageDetailList []interface{}
-	storageDetailList = append(storageDetailList, storageCredentials)
-	storageDetailList = append(storageDetailList, iscsiStorageData)
-	storageDetailList = append(storageDetailList, nasStorageData)
-	storageDetailList = append(storageDetailList, portableStorage)
-	storageDetailList = append(storageDetailList, localDisks)
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSONList(cmd.UI, storageDetailList)
-	}
-
 	cmd.UI.Print("Block Storage Details\niSCSI")
 	tableCredentials := cmd.UI.Table([]string{T("Username"), T("Password"), T("IQN")})
 	if storageCredentials.Credential != nil && storageCredentials.Credential.Password != nil {
@@ -92,7 +81,7 @@ func (cmd *StorageCommand) Run(args []string) error {
 			*storageCredentials.Credential.Password,
 			*storageCredentials.Name)
 	}
-	tableCredentials.Print()
+	utils.PrintTable(cmd.UI, tableCredentials, outputFormat)
 
 	tableIscsi := cmd.UI.Table([]string{T("\nLUN name"), T("capacity"), T("Target address"), T("Location"), T("Notes")})
 	for _, iscsi := range iscsiStorageData {
@@ -103,7 +92,7 @@ func (cmd *StorageCommand) Run(args []string) error {
 			*iscsi.AllowedVirtualGuests[0].Datacenter.LongName,
 			*iscsi.Notes)
 	}
-	tableIscsi.Print()
+	utils.PrintTable(cmd.UI, tableIscsi, outputFormat)
 
 	cmd.UI.Print("\nPortable Storage")
 	tablePortableStorage := cmd.UI.Table([]string{T("Description"), T("Capacity"), T("Location")})
@@ -113,7 +102,7 @@ func (cmd *StorageCommand) Run(args []string) error {
 			utils.FormatIntPointer(portable.Capacity),
 			*portable.BillingItem.Location.LongName)
 	}
-	tablePortableStorage.Print()
+	utils.PrintTable(cmd.UI, tablePortableStorage, outputFormat)
 
 	cmd.UI.Print("\nFile Storage Details")
 	tableNas := cmd.UI.Table([]string{T("Volume name"), T("capacity"), T("Hostname"), T("Location"), T("Notes")})
@@ -125,7 +114,7 @@ func (cmd *StorageCommand) Run(args []string) error {
 			*nas.AllowedVirtualGuests[0].Datacenter.LongName,
 			*nas.Notes)
 	}
-	tableNas.Print()
+	utils.PrintTable(cmd.UI, tableNas, outputFormat)
 
 	cmd.UI.Print("\nSystem storage details")
 	tableLocalDisks := cmd.UI.Table([]string{T("Type"), T("Name"), T("Drive"), T("Capacity")})
@@ -136,7 +125,7 @@ func (cmd *StorageCommand) Run(args []string) error {
 			tableLocalDisks.Add(cmd.getLocalType(disk), *disk.MountType, *disk.Device, capacity)
 		}
 	}
-	tableLocalDisks.Print()
+	utils.PrintTable(cmd.UI, tableLocalDisks, outputFormat)
 
 	return nil
 }
