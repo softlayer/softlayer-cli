@@ -37,6 +37,9 @@ func NewCapacityCreateOptionsCommand(sl *metadata.SoftlayerCommand) (cmd *Capaci
 func (cmd *CapacityCreateOptionsCommand) Run(args []string) error {
 	datacenters, _ := cmd.VirtualServerManager.GetRouters("RESERVED_CAPACITY")
 	pods, err := cmd.VirtualServerManager.GetPods()
+	if err != nil {
+		return slErrors.NewAPIError("Failed to get Pods.", err.Error(), 2)
+	}
 	outputFormat := cmd.GetOutputFlag()
 	tableRegion := cmd.UI.Table([]string{T("Location"), T("POD"), T("BackendRouterId")})
 	for _, datacenter := range datacenters {
@@ -48,12 +51,7 @@ func (cmd *CapacityCreateOptionsCommand) Run(args []string) error {
 			}
 		}
 	}
-	var capacityCreateOptions []interface{}
-	capacityCreateOptions = append(capacityCreateOptions, pods)
-	capacityCreateOptions = append(capacityCreateOptions, datacenters)
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSONList(cmd.UI, capacityCreateOptions)
-	}
+
 	tableItems := cmd.UI.Table([]string{T("KeyName"), T("Description"), T("term"), T("Default Hourly Price Per Instance")})
 	items, err := cmd.VirtualServerManager.GetCapacityCreateOptions("RESERVED_CAPACITY")
 	if err != nil {
@@ -65,8 +63,8 @@ func (cmd *CapacityCreateOptionsCommand) Run(args []string) error {
 			utils.FormatSLFloatPointerToFloat(item.Capacity), getPrices(item.Prices))
 	}
 
-	tableItems.Print()
-	tableRegion.Print()
+	utils.PrintTable(cmd.UI, tableItems, outputFormat)
+	utils.PrintTable(cmd.UI, tableRegion, outputFormat)
 	return nil
 }
 
