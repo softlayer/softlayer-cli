@@ -14,6 +14,8 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/trace"
+	"github.com/k0kubun/go-ansi"
+	"github.com/schollz/progressbar/v3"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
@@ -255,7 +257,6 @@ func ReplaceUIntPointerValue(value *uint, newValue string) string {
 	return EMPTY_VALUE
 }
 
-
 // TODO: Once refactor is done, remove ValidateColumns and rename ValidateColumns2 to it.
 func ValidateColumns2(sortby string, columns []string, defaultColumns []string, optionalColumns, sortColumns []string) ([]string, error) {
 	if sortby != EMPTY_STRING && StringInSlice(sortby, sortColumns) == -1 {
@@ -399,4 +400,22 @@ func ArrayStringToString(array []string) string {
 	}
 
 	return valueToReturn
+}
+
+func ProgresBar(size int, description string) *progressbar.ProgressBar {
+	progresBar := progressbar.NewOptions(size,
+		progressbar.OptionSetWriter(ansi.NewAnsiStdout()),
+		progressbar.OptionEnableColorCodes(true),
+		progressbar.OptionSetRenderBlankState(true),
+		progressbar.OptionShowElapsedTimeOnFinish(),
+		progressbar.OptionSetWidth(20),
+		progressbar.OptionSetDescription(T(description)+": [cyan]["+strconv.Itoa(size)+" Server(s)][reset]"),
+		progressbar.OptionSetTheme(progressbar.Theme{
+			Saucer:        "[green]=[reset]",
+			SaucerHead:    "[green]>[reset]",
+			SaucerPadding: " ",
+			BarStart:      "[",
+			BarEnd:        "]",
+		}))
+	return progresBar
 }
