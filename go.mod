@@ -5,10 +5,12 @@ go 1.19
 require (
 	github.com/IBM-Cloud/ibm-cloud-cli-sdk v0.9.0
 	github.com/Xuanwo/go-locale v1.1.0
+	github.com/k0kubun/go-ansi v0.0.0-20180517002512-3bf9e2903213
 	github.com/miekg/dns v1.1.25
 	github.com/nicksnyder/go-i18n v1.10.1
 	github.com/onsi/ginkgo v1.16.2
 	github.com/onsi/gomega v1.11.0
+	github.com/schollz/progressbar/v3 v3.12.1
 	github.com/softlayer/softlayer-go v1.0.6
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/pflag v1.0.5
