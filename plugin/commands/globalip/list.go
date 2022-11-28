@@ -65,20 +65,22 @@ func (cmd *ListCommand) Run(args []string) error {
 		ipAddress := ""
 		assigned := T("No")
 		target := T("None")
+		subnetId := T("None")
 		if ip.IpAddress != nil {
 			ipAddress = utils.FormatStringPointer(ip.IpAddress.IpAddress)
+			subnetId = utils.FormatIntPointer(ip.IpAddress.SubnetId)
 		}
 		if ip.DestinationIpAddress != nil {
 			dest := ip.DestinationIpAddress
 			assigned = T("Yes")
 			target = utils.FormatStringPointer(ip.DestinationIpAddress.IpAddress)
 			if vs := dest.VirtualGuest; vs != nil {
-				target += fmt.Sprintf("(%s)", utils.FormatStringPointer(vs.FullyQualifiedDomainName))
+				target += fmt.Sprintf(" (%s)", utils.FormatStringPointer(vs.FullyQualifiedDomainName))
 			} else if hw := dest.Hardware; hw != nil {
-				target += fmt.Sprintf("(%s)", utils.FormatStringPointer(hw.FullyQualifiedDomainName))
+				target += fmt.Sprintf(" (%s)", utils.FormatStringPointer(hw.FullyQualifiedDomainName))
 			}
 		}
-		table.Add(utils.FormatIntPointer(ip.Id), ipAddress, assigned, target)
+		table.Add(subnetId, ipAddress, assigned, target)
 	}
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil

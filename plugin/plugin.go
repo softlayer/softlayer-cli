@@ -2,8 +2,6 @@ package plugin
 
 import (
 	"fmt"
-
-	"os"
 	"reflect"
 	"strings"
 
@@ -76,23 +74,13 @@ type SoftlayerPlugin struct {
 }
 
 func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
-	defer func() {
-		if err := recover(); err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-	}()
-
 	trace.Logger = trace.NewLogger(context.Trace())
 	terminal.UserAskedForColors = context.ColorEnabled()
 	terminal.InitColorSupport()
 	sl.ui = terminal.NewStdUI()
 	sl.session, _ = client.NewSoftlayerClientSessionFromConfig(context)
-	// initCustomizedHelp(context)
 
 	cobraCommand := getTopCobraCommand(sl.ui, sl.session)
-	// cobraCommand.SetHelpTemplate(COMMAND_HELP_TEMPLATE)
-	// cobraCommand.SetUsageTemplate(USEAGE_TEMPLATE)
 
 	// When the command comes in from the ibmcloud-cli it has `sl` in the Namespace, which we need to remove
 	args = append(strings.Split(context.CommandNamespace(), " "), args...)
@@ -101,11 +89,12 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	}
 	// Gives Cobra the args we were given
 	cobraCommand.SetArgs(args)
-	// fmt.Printf("ARgs: %v\n", args)
-	cobraErr := cobraCommand.Execute()
-	if cobraErr != nil {
-		fmt.Printf("Cobra Error:\n %v", cobraErr)
-	}
+	// No real need to handle errors from Execute(), errors will be printed without any work from us.
+	_ = cobraCommand.Execute()
+	// if cobraErr != nil {
+	// 	fmt.Println(cobraErr)
+	// 	os.Exit(1)
+	// }
 
 }
 
@@ -227,6 +216,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 		Short: T("Manage Classic infrastructure services"),
 		Long:  T("Manage Classic infrastructure services"),
 		RunE:  nil,
+		SilenceUsage: true, // Surpresses help text on errors
 	}
 
 	versionCommand := &cobra.Command{
