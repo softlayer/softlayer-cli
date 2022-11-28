@@ -1,7 +1,7 @@
 group: bluezone
 language: go
 go:
-  - 1.17.7
+  - 1.18.8
 addons:
   apt:
     packages:
