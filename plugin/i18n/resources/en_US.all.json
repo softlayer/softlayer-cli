@@ -1008,6 +1008,10 @@
     "translation": "Allocation"
   },
   {
+    "id": "Allotment",
+    "translation": "Allotment"
+  },
+  {
     "id": "Amount",
     "translation": "Amount"
   },
@@ -1278,18 +1282,6 @@
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
     "translation": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description."
-  },
-  {
-    "id": "Calculating for bandwidth pools",
-    "translation": "Calculating for bandwidth pools"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "Calculating for hardware"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "Calculating for virtual"
   },
   {
     "id": "Call arbitrary API endpoints",
@@ -2020,10 +2012,6 @@
     "translation": "To remove Datacenter"
   },
   {
-    "id": "Datacenter: ",
-    "translation": "Datacenter: "
-  },
-  {
     "id": "Date",
     "translation": "Date"
   },
@@ -2282,10 +2270,6 @@
   {
     "id": "Domain record not found",
     "translation": "Domain record not found"
-  },
-  {
-    "id": "Domain: ",
-    "translation": "Domain: "
   },
   {
     "id": "Don't actually create records",
@@ -2880,6 +2864,10 @@
     "translation": "Failed to delete Tag: {{.tag}}."
   },
   {
+    "id": "Failed to delete User Customer Notification.",
+    "translation": "Failed to delete User Customer Notification."
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "Failed to delete credential: {{.storageID}}.\n"
   },
@@ -3156,8 +3144,16 @@
     "translation": "Failed to get announcement events."
   },
   {
+    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
+    "translation": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n"
+  },
+  {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Failed to get bare metal servers.\n"
+  },
+  {
+    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
+    "translation": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n"
   },
   {
     "id": "Failed to get billing items.",
@@ -3406,10 +3402,6 @@
   {
     "id": "Failed to get the event {{.eventID}}. ",
     "translation": "Failed to get the event {{.eventID}}. "
-  },
-  {
-    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
-    "translation": "Failed to get the guests instances for the hardware server {{.ID}}.\n"
   },
   {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
@@ -4680,6 +4672,10 @@
     "translation": "Hour of the day when snapshots should be taken, integer between 0 to 23"
   },
   {
+    "id": "Hourly",
+    "translation": "Hourly"
+  },
+  {
     "id": "How many invoices to get back. [default: 50]",
     "translation": "How many invoices to get back. [default: 50]"
   },
@@ -4854,6 +4850,10 @@
   {
     "id": "Import an image from an object storage",
     "translation": "Import an image from an object storage"
+  },
+  {
+    "id": "In GB",
+    "translation": "In GB"
   },
   {
     "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
@@ -5142,6 +5142,10 @@
   {
     "id": "Last Updated",
     "translation": "Last Updated"
+  },
+  {
+    "id": "Last transaction",
+    "translation": "Last transaction"
   },
   {
     "id": "Legacy",
@@ -5436,8 +5440,8 @@
     "translation": "Lists billing items with some other useful information."
   },
   {
-    "id": "Lists the Virtual Guests running on this server.",
-    "translation": "Lists the Virtual Guests running on this server."
+    "id": "Lists the prices for each item in this preset",
+    "translation": "Lists the prices for each item in this preset"
   },
   {
     "id": "Lists the storage limits per datacenter for this account.",
@@ -5534,10 +5538,6 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "Memory in megabytes [required]"
-  },
-  {
-    "id": "Memory: ",
-    "translation": "Memory: "
   },
   {
     "id": "Metadata",
@@ -5722,10 +5722,6 @@
   {
     "id": "No IPSec was found.",
     "translation": "No IPSec was found."
-  },
-  {
-    "id": "No Virtual Guests found.",
-    "translation": "No Virtual Guests found."
   },
   {
     "id": "No available router was found.",
@@ -5968,8 +5964,8 @@
     "translation": "Opens"
   },
   {
-    "id": "Operating System Code: ",
-    "translation": "Operating System Code: "
+    "id": "Operating System Code",
+    "translation": "Operating System Code"
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -6150,6 +6146,10 @@
   {
     "id": "Other",
     "translation": "Other"
+  },
+  {
+    "id": "Out GB",
+    "translation": "Out GB"
   },
   {
     "id": "Owner",
@@ -6482,6 +6482,10 @@
   {
     "id": "Price ID not found",
     "translation": "Price ID not found"
+  },
+  {
+    "id": "Price Id",
+    "translation": "Price Id"
   },
   {
     "id": "Price Rate",
@@ -6828,6 +6832,14 @@
     "translation": "Remove a translation entry from an IPSec"
   },
   {
+    "id": "Remove a user VS notification entry.",
+    "translation": "Remove a user VS notification entry."
+  },
+  {
+    "id": "Remove a user hardware notification entry.",
+    "translation": "Remove a user hardware notification entry."
+  },
+  {
     "id": "Remove access from a user to an specific device",
     "translation": "Remove access from a user to an specific device"
   },
@@ -6914,6 +6926,10 @@
   {
     "id": "Restore block volume using a given snapshot",
     "translation": "Restore block volume using a given snapshot"
+  },
+  {
+    "id": "Restriction",
+    "translation": "Restriction"
   },
   {
     "id": "Result limit",
@@ -7510,6 +7526,10 @@
   {
     "id": "Successfully device firmware reflashed",
     "translation": "Successfully device firmware reflashed"
+  },
+  {
+    "id": "Successfully removed User Customer notification.",
+    "translation": "Successfully removed User Customer notification."
   },
   {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -8696,6 +8716,10 @@
     "translation": "Vendor Name"
   },
   {
+    "id": "Version",
+    "translation": "Version"
+  },
+  {
     "id": "View a quote",
     "translation": "View a quote"
   },
@@ -9404,16 +9428,8 @@
     "translation": "pool"
   },
   {
-    "id": "powerState",
-    "translation": "powerState"
-  },
-  {
     "id": "preset",
     "translation": "preset"
-  },
-  {
-    "id": "price rate",
-    "translation": "price rate"
   },
   {
     "id": "primary_router",

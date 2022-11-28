@@ -1280,18 +1280,6 @@
     "translation": "Optimización de clave de memoria caché. Estas son las opciones válidas a elegir: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. Si selecciona 'include-specified' o 'ignore-specified', añada un valor en la opción cache-description."
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "Cálculo de las agrupaciones de ancho de banda"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "Cálculo del hardware"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "Cálculo para virtual"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "Llamar a puntos finales de API arbitrarios"
   },
@@ -2020,10 +2008,6 @@
     "translation": "Para eliminar el centro de datos"
   },
   {
-    "id": "Datacenter: ",
-    "translation": "Centro de datos: "
-  },
-  {
     "id": "Date",
     "translation": "Fecha"
   },
@@ -2282,10 +2266,6 @@
   {
     "id": "Domain record not found",
     "translation": "No se ha encontrado el registro de dominio"
-  },
-  {
-    "id": "Domain: ",
-    "translation": "Dominio: "
   },
   {
     "id": "Don't actually create records",
@@ -3320,10 +3300,6 @@
     "translation": "No se ha podido obtener el paquete para el cortafuegos {{.Type}}.\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "No se han podido obtener permisos.\n"
-  },
-  {
     "id": "Failed to get placement group: {{.ID}}.",
     "translation": "No se ha podido obtener el grupo de colocación: {{.ID}}."
   },
@@ -3408,10 +3384,6 @@
     "translation": "No se ha podido obtener el suceso {{.eventID}}. "
   },
   {
-    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
-    "translation": "No se han podido obtener las instancias de invitados para el servidor de hardware {{.ID}}.\n"
-  },
-  {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
     "translation": "No se han podido obtener los detalles de las unidades de disco duro para el servidor de hardware {{.ID}}.\n"
   },
@@ -3462,10 +3434,6 @@
   {
     "id": "Failed to get user permissions.\n",
     "translation": "No se han podido obtener los permisos de usuario.\n"
-  },
-  {
-    "id": "Failed to get user.\n",
-    "translation": "No se ha podido obtener el usuario.\n"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3950,10 +3918,6 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "No se ha podido actualizar la agrupación de l7: {{.Error}}.\n"
-  },
-  {
-    "id": "Failed to update permissions: %s",
-    "translation": "No se han podido actualizar permisos: %s"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5436,10 +5400,6 @@
     "translation": "Lista los elementos de facturación con alguna otra información útil."
   },
   {
-    "id": "Lists the Virtual Guests running on this server.",
-    "translation": "Lista los invitados virtuales que se ejecutan en este servidor."
-  },
-  {
     "id": "Lists the storage limits per datacenter for this account.",
     "translation": "Listar los límites de almacenamiento por centro de datos para esta cuenta."
   },
@@ -5534,10 +5494,6 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "Memoria en megabytes [obligatorio]"
-  },
-  {
-    "id": "Memory: ",
-    "translation": "Memoria: "
   },
   {
     "id": "Metadata",
@@ -5722,10 +5678,6 @@
   {
     "id": "No IPSec was found.",
     "translation": "No se ha encontrado ninguna IPSec."
-  },
-  {
-    "id": "No Virtual Guests found.",
-    "translation": "No se han encontrado invitados virtuales."
   },
   {
     "id": "No available router was found.",
@@ -5966,10 +5918,6 @@
   {
     "id": "Opens",
     "translation": "Aperturas"
-  },
-  {
-    "id": "Operating System Code: ",
-    "translation": "Código del sistema operativo: "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -6274,10 +6222,6 @@
   {
     "id": "Permissions",
     "translation": "Permisos"
-  },
-  {
-    "id": "Permissions updated successfully: %s",
-    "translation": "Los permisos se han actualizado correctamente: %s"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -9376,10 +9320,6 @@
     "translation": "las opciones para %s son hardware o virtual"
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "las opciones para %s son true, false"
-  },
-  {
     "id": "os",
     "translation": "sistema operativo"
   },
@@ -9404,16 +9344,8 @@
     "translation": "agrupación"
   },
   {
-    "id": "powerState",
-    "translation": "powerState"
-  },
-  {
     "id": "preset",
     "translation": "valor preestablecido"
-  },
-  {
-    "id": "price rate",
-    "translation": "tarifa de precio"
   },
   {
     "id": "primary_router",

@@ -1280,18 +1280,6 @@
     "translation": "快取金鑰最佳化。 這些是要選擇的有效選項：'include-all'、'ignore-all'、'include-specified'、'ignore-specified'。 如果您選取 'include-specified' 或 'ignore-specified'，請新增至選項 cache-description。"
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "計算頻寬儲存區"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "計算硬體"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "計算虛擬"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "呼叫任意 API 端點"
   },
@@ -2020,10 +2008,6 @@
     "translation": "移除資料中心"
   },
   {
-    "id": "Datacenter: ",
-    "translation": "資料中心： "
-  },
-  {
     "id": "Date",
     "translation": "日期"
   },
@@ -2282,10 +2266,6 @@
   {
     "id": "Domain record not found",
     "translation": "找不到網域記錄"
-  },
-  {
-    "id": "Domain: ",
-    "translation": "網域： "
   },
   {
     "id": "Don't actually create records",
@@ -3320,10 +3300,6 @@
     "translation": "無法取得 {{.Type}} 防火牆的套件。\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "無法取得許可權。\n"
-  },
-  {
     "id": "Failed to get placement group: {{.ID}}.",
     "translation": "無法取得放置群組：{{.ID}}。"
   },
@@ -3408,10 +3384,6 @@
     "translation": "無法取得事件 {{.eventID}}。 "
   },
   {
-    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
-    "translation": "無法取得硬體伺服器 {{.ID}} 的訪客實例。\n"
-  },
-  {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
     "translation": "無法取得硬體伺服器 {{.ID}} 的硬碟明細。\n"
   },
@@ -3462,10 +3434,6 @@
   {
     "id": "Failed to get user permissions.\n",
     "translation": "無法取得使用者許可權。\n"
-  },
-  {
-    "id": "Failed to get user.\n",
-    "translation": "無法取得使用者。\n"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3950,10 +3918,6 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "無法更新 l7 儲存區：{{.Error}}。\n"
-  },
-  {
-    "id": "Failed to update permissions: %s",
-    "translation": "無法更新許可權：%s"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5436,10 +5400,6 @@
     "translation": "列出計費項目以及一些其他有用資訊。"
   },
   {
-    "id": "Lists the Virtual Guests running on this server.",
-    "translation": "列出在此伺服器上執行的虛擬訪客。"
-  },
-  {
     "id": "Lists the storage limits per datacenter for this account.",
     "translation": "列出此帳戶的每個資料中心的儲存空間限制。"
   },
@@ -5534,10 +5494,6 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "記憶體（以 MB 為單位）[必要]"
-  },
-  {
-    "id": "Memory: ",
-    "translation": "記憶體： "
   },
   {
     "id": "Metadata",
@@ -5722,10 +5678,6 @@
   {
     "id": "No IPSec was found.",
     "translation": "找不到任何 IPSec。"
-  },
-  {
-    "id": "No Virtual Guests found.",
-    "translation": "找不到虛擬訪客。"
   },
   {
     "id": "No available router was found.",
@@ -5966,10 +5918,6 @@
   {
     "id": "Opens",
     "translation": "開啟"
-  },
-  {
-    "id": "Operating System Code: ",
-    "translation": "作業系統程式碼： "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -6274,10 +6222,6 @@
   {
     "id": "Permissions",
     "translation": "許可權"
-  },
-  {
-    "id": "Permissions updated successfully: %s",
-    "translation": "許可權已順利更新：%s"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -9376,10 +9320,6 @@
     "translation": "%s 的選項為 hardware 或 virtual"
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "%s 的選項為 true、false"
-  },
-  {
     "id": "os",
     "translation": "os"
   },
@@ -9404,16 +9344,8 @@
     "translation": "儲存區"
   },
   {
-    "id": "powerState",
-    "translation": "PowerState"
-  },
-  {
     "id": "preset",
     "translation": "預設"
-  },
-  {
-    "id": "price rate",
-    "translation": "price rate"
   },
   {
     "id": "primary_router",
