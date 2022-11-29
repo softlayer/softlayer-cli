@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"strings"
 
@@ -89,12 +90,12 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	}
 	// Gives Cobra the args we were given
 	cobraCommand.SetArgs(args)
-	// No real need to handle errors from Execute(), errors will be printed without any work from us.
-	_ = cobraCommand.Execute()
-	// if cobraErr != nil {
-	// 	fmt.Println(cobraErr)
-	// 	os.Exit(1)
-	// }
+	cobraErr := cobraCommand.Execute()
+	if cobraErr != nil {
+		// Error will be printed in any case.
+		// fmt.Println(cobraErr)  
+		os.Exit(1)
+	}
 
 }
 
@@ -202,9 +203,6 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 		}
 	}
 
-	// for _, cmd := range pluginCommands {
-	// 	fmt.Printf("%v %v\n", cmd.Namespace, cmd.Name)
-	// }
 	return pluginCommands
 }
 
