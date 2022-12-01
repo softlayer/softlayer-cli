@@ -324,10 +324,6 @@
     "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   Dieser Befehl bricht das Teilnetz mit der ID 12345678 ab, ohne eine Bestätigung anzufordern."
   },
   {
-    "id": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n   This command allows you to remove the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n ${COMMAND_NAME} sl subnet clear-route 12345678\n Mit diesem Befehl können Sie die Route Ihrer kontoeigenen Teilnetze entfernen."
-  },
-  {
     "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
     "translation": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONEN]\n\t\n\tFügt ein neues Teilnetz zu Ihrem Konto hinzu. Die gültigen Mengen sind vom Typ abhängig.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nBEISPIEL:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   Dieser Befehl erstellt ein öffentliches Teilnetz mit 16 IPv4-Adressen und ordnet es im VLAN mit der ID 567 an."
   },
@@ -350,10 +346,6 @@
   {
     "id": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.",
     "translation": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONEN]\n\t\nBEISPIEL: \n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   Dieser Befehl sucht nach dem IP-Adressdatensatz mit der IP-Adresse 9.125.235.255 und zeigt sein Teilnetz und die Gerätedaten an."
-  },
-  {
-    "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONEN]\n\nBEISPIEL:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Dieser Befehl ermöglicht es Ihnen, die Route Ihrer kontoeigenen Teilnetze zu ändern."
   },
   {
     "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
@@ -1022,10 +1014,6 @@
   {
     "id": "An IP address to revoke",
     "translation": "Eine zu widerrufende IP-Adresse"
-  },
-  {
-    "id": "An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required].",
-    "translation": "Eine geeignete ID für den angegebenen $type, z. B. die ID eines SoftLayer_Network_Subnet_IpAddress [erforderlich]."
   },
   {
     "id": "An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options",
@@ -2020,10 +2008,6 @@
     "translation": "So entfernen Sie das Rechenzentrum"
   },
   {
-    "id": "Datacenter: ",
-    "translation": "Rechenzentrum: "
-  },
-  {
     "id": "Date",
     "translation": "Datum"
   },
@@ -2282,10 +2266,6 @@
   {
     "id": "Domain record not found",
     "translation": "Domänendatensatz nicht gefunden"
-  },
-  {
-    "id": "Domain: ",
-    "translation": "Domäne: "
   },
   {
     "id": "Don't actually create records",
@@ -2778,10 +2758,6 @@
   {
     "id": "Failed to check virtual server instance {{.VsID}} is ready.\n",
     "translation": "Prüfen der Bereitschaft der virtuellen Serverinstanz {{.VsID}} fehlgeschlagen.\n"
-  },
-  {
-    "id": "Failed to clear the route for the subnet: {{.ID}}.\n",
-    "translation": "Das Löschen der Route für das Teilnetz {{.ID}} ist fehlgeschlagen.\n"
   },
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
@@ -3408,10 +3384,6 @@
     "translation": "Fehler beim Abrufen des Ereignisses {{.eventID}}. "
   },
   {
-    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
-    "translation": "Die Gastinstanzen für den Hardware-Server {{.ID}} konnten nicht abgerufen werden.\n"
-  },
-  {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
     "translation": "Die Details zu den Festplattenlaufwerken für den Hardwareserver {{.ID}} konnten nicht abgerufen werden.\n"
   },
@@ -3846,10 +3818,6 @@
   {
     "id": "Failed to revoke access to volume {{.VolumeID}}.\n",
     "translation": "Widerrufen des Zugriffs auf Datenträger {{.VolumeID}} fehlgeschlagen.\n"
-  },
-  {
-    "id": "Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
-    "translation": "Typ {{.TYPE}} und ID {{.IDENTIFIER}} konnten nicht weitergeleitet werden.\n"
   },
   {
     "id": "Failed to save Quote.\n",
@@ -5436,10 +5404,6 @@
     "translation": "Listet Rechnungspositionen mit einigen anderen nützlichen Informationen auf."
   },
   {
-    "id": "Lists the Virtual Guests running on this server.",
-    "translation": "Listet die auf diesem Server ausgeführten virtuellen Gastmaschinen auf."
-  },
-  {
     "id": "Lists the storage limits per datacenter for this account.",
     "translation": "Listet die Speichergrenzwerte pro Rechenzentrum für dieses Konto auf."
   },
@@ -5534,10 +5498,6 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "Speicher in Megabyte [erforderlich]"
-  },
-  {
-    "id": "Memory: ",
-    "translation": "Speicher: "
   },
   {
     "id": "Metadata",
@@ -5722,10 +5682,6 @@
   {
     "id": "No IPSec was found.",
     "translation": "Es wurde kein IPSec gefunden."
-  },
-  {
-    "id": "No Virtual Guests found.",
-    "translation": "Keine virtuellen Gastmaschinen gefunden."
   },
   {
     "id": "No available router was found.",
@@ -5966,10 +5922,6 @@
   {
     "id": "Opens",
     "translation": "Öffnungsvorgänge"
-  },
-  {
-    "id": "Operating System Code: ",
-    "translation": "Betriebssystemcode: "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -8144,14 +8096,6 @@
     "translation": "Für diesen Befehl sind 2 Argumente erforderlich."
   },
   {
-    "id": "This interface allows you to change the route of your Account Owned subnets.",
-    "translation": "Mit dieser Schnittstelle können Sie die Route Ihrer kontoeigenen Teilnetze ändern."
-  },
-  {
-    "id": "This interface allows you to remove the route of your Account Owned subnets.",
-    "translation": "Mit dieser Schnittstelle können Sie die Route Ihrer kontoeigenen Teilnetze entfernen."
-  },
-  {
     "id": "This is the credential id associated with the volume. [Required]",
     "translation": "Dies ist die dem Datenträger zugeordnete Berechtigungsnachweis-ID. [Erforderlich]"
   },
@@ -8382,10 +8326,6 @@
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
     "translation": "Typ des Speicherdatenträgers [erforderlich]; Optionen: performance,endurance"
-  },
-  {
-    "id": "Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required].",
-    "translation": "Geben Sie einen Wert für das statische Routing ein, z. B. SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [erforderlich]."
   },
   {
     "id": "Types",
@@ -8936,10 +8876,6 @@
     "translation": "Der Wert für [-d|--day-of-week] muss zwischen 0 und 6 liegen."
   },
   {
-    "id": "[-i/--type-id] is required.",
-    "translation": "[-i/--type-id] ist erforderlich."
-  },
-  {
     "id": "[-k] is not allowed with [-f|--in-file].",
     "translation": "[-k] ist zusammen mit [-f|--in-file] nicht zulässig."
   },
@@ -8974,10 +8910,6 @@
   {
     "id": "[-s|--snapshot-schedule] is required, options are: HOURLY, DAILY, WEEKLY.",
     "translation": "[-s|--snapshot-schedule] ist erforderlich; Optionen: HOURLY, DAILY, WEEKLY."
-  },
-  {
-    "id": "[-t/--type] is required.",
-    "translation": "[-t/--type] ist erforderlich."
   },
   {
     "id": "[-t|--tier] is optional, options are: 0.25,2,4,10.",
@@ -9412,16 +9344,8 @@
     "translation": "Pool"
   },
   {
-    "id": "powerState",
-    "translation": "powerState"
-  },
-  {
     "id": "preset",
     "translation": "Voreinstellung"
-  },
-  {
-    "id": "price rate",
-    "translation": "Preisrate"
   },
   {
     "id": "primary_router",

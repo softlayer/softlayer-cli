@@ -324,10 +324,6 @@
     "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   這個指令會取消子網路（其 ID 為 12345678），而不會要求確認。"
   },
   {
-    "id": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n   This command allows you to remove the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n   這個指令可讓您移除「帳戶擁有」子網路的路徑。"
-  },
-  {
     "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
     "translation": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\t將新的子網路新增至您的帳戶。有效數量會依類型而不同。\n\t\n\t類型    - 有效數量 (IPv4)\n  \tpublic  - 4、8、16、32\n  \tprivate - 4、8、16、32、64\n\n  \t類型    - 有效數量 (IPv6)\n\tpublic  - 64\n\n範例：\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   這個指令會建立含有 16 個 IPv4 位址的公用子網路，並將其放在 VLAN（其 ID 為 567）上。"
   },
@@ -350,10 +346,6 @@
   {
     "id": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.",
     "translation": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\n範例：\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   這個指令會尋找 IP 位址為 9.125.235.255 的 IP 位址記錄，並顯示其子網路和裝置資訊。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   這個指令可讓您變更「帳戶擁有」子網路的路徑。"
   },
   {
     "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
@@ -1022,10 +1014,6 @@
   {
     "id": "An IP address to revoke",
     "translation": "要撤銷的 IP 位址"
-  },
-  {
-    "id": "An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required].",
-    "translation": "指定 $type 的適當 ID，例如 SoftLayer_Network_Subnet_IpAddress 的 ID [必要]。"
   },
   {
     "id": "An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options",
@@ -2020,10 +2008,6 @@
     "translation": "移除資料中心"
   },
   {
-    "id": "Datacenter: ",
-    "translation": "資料中心： "
-  },
-  {
     "id": "Date",
     "translation": "日期"
   },
@@ -2282,10 +2266,6 @@
   {
     "id": "Domain record not found",
     "translation": "找不到網域記錄"
-  },
-  {
-    "id": "Domain: ",
-    "translation": "網域： "
   },
   {
     "id": "Don't actually create records",
@@ -2778,10 +2758,6 @@
   {
     "id": "Failed to check virtual server instance {{.VsID}} is ready.\n",
     "translation": "無法確認虛擬伺服器實例 {{.VsID}} 已備妥。\n"
-  },
-  {
-    "id": "Failed to clear the route for the subnet: {{.ID}}.\n",
-    "translation": "無法清除子網路 {{.ID}} 的路徑。\n"
   },
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
@@ -3408,10 +3384,6 @@
     "translation": "無法取得事件 {{.eventID}}。 "
   },
   {
-    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
-    "translation": "無法取得硬體伺服器 {{.ID}} 的訪客實例。\n"
-  },
-  {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
     "translation": "無法取得硬體伺服器 {{.ID}} 的硬碟明細。\n"
   },
@@ -3846,10 +3818,6 @@
   {
     "id": "Failed to revoke access to volume {{.VolumeID}}.\n",
     "translation": "無法撤銷對磁區 {{.VolumeID}} 的存取權。\n"
-  },
-  {
-    "id": "Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
-    "translation": "無法使用類型 {{.TYPE}} 及 ID {{.IDENTIFIER}} 來遞送。\n"
   },
   {
     "id": "Failed to save Quote.\n",
@@ -5436,10 +5404,6 @@
     "translation": "列出計費項目以及一些其他有用資訊。"
   },
   {
-    "id": "Lists the Virtual Guests running on this server.",
-    "translation": "列出在此伺服器上執行的虛擬訪客。"
-  },
-  {
     "id": "Lists the storage limits per datacenter for this account.",
     "translation": "列出此帳戶的每個資料中心的儲存空間限制。"
   },
@@ -5534,10 +5498,6 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "記憶體（以 MB 為單位）[必要]"
-  },
-  {
-    "id": "Memory: ",
-    "translation": "記憶體： "
   },
   {
     "id": "Metadata",
@@ -5722,10 +5682,6 @@
   {
     "id": "No IPSec was found.",
     "translation": "找不到任何 IPSec。"
-  },
-  {
-    "id": "No Virtual Guests found.",
-    "translation": "找不到虛擬訪客。"
   },
   {
     "id": "No available router was found.",
@@ -5966,10 +5922,6 @@
   {
     "id": "Opens",
     "translation": "開啟"
-  },
-  {
-    "id": "Operating System Code: ",
-    "translation": "作業系統程式碼： "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -8144,14 +8096,6 @@
     "translation": "這個指令需要兩個引數。"
   },
   {
-    "id": "This interface allows you to change the route of your Account Owned subnets.",
-    "translation": "此介面可讓您變更「帳戶擁有的子網路」的路徑。"
-  },
-  {
-    "id": "This interface allows you to remove the route of your Account Owned subnets.",
-    "translation": "此介面可讓您移除「帳戶擁有的子網路」的路徑。"
-  },
-  {
     "id": "This is the credential id associated with the volume. [Required]",
     "translation": "這是與磁區相關聯的認證 ID。 [必要]"
   },
@@ -8382,10 +8326,6 @@
   {
     "id": "Type of storage volume [required], options are: performance,endurance",
     "translation": "儲存磁區的類型 [必要]，選項包含：performance、endurance"
-  },
-  {
-    "id": "Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required].",
-    "translation": "在靜態遞送中鍵入值，例如：SoftLayer_Network_Subnet_IpAddress、SoftLayer_Hardware_Server [必要]。"
   },
   {
     "id": "Types",
@@ -8936,10 +8876,6 @@
     "translation": "[-d|--day-of-week] 值必須介於 0 與 6 之間。"
   },
   {
-    "id": "[-i/--type-id] is required.",
-    "translation": "[-i/--type-id] 是必要項目。"
-  },
-  {
     "id": "[-k] is not allowed with [-f|--in-file].",
     "translation": "[-k] 不能與 [-f|--in-file] 搭配使用。"
   },
@@ -8974,10 +8910,6 @@
   {
     "id": "[-s|--snapshot-schedule] is required, options are: HOURLY, DAILY, WEEKLY.",
     "translation": "[-s|--snapshot-schedule] 是必要項目，選項包含：HOURLY、DAILY、WEEKLY。"
-  },
-  {
-    "id": "[-t/--type] is required.",
-    "translation": "[-t/--type] 是必要項目。"
   },
   {
     "id": "[-t|--tier] is optional, options are: 0.25,2,4,10.",
@@ -9412,16 +9344,8 @@
     "translation": "儲存區"
   },
   {
-    "id": "powerState",
-    "translation": "PowerState"
-  },
-  {
     "id": "preset",
     "translation": "預設"
-  },
-  {
-    "id": "price rate",
-    "translation": "price rate"
   },
   {
     "id": "primary_router",
