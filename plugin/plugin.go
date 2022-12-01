@@ -97,7 +97,7 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 		for _, trigger := range helpTextTriggers {
 			if strings.Contains(fmt.Sprintf("%v", cobraErr), trigger) {
 				realCommand, _, _ := cobraCommand.Find(args)
-				realCommand.Help()
+				_ = realCommand.Help()
 			}
 		}
 		os.Exit(1)
