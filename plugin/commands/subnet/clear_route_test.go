@@ -3,7 +3,6 @@ package subnet_test
 import (
 	"errors"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -54,7 +53,6 @@ var _ = Describe("Subnet Clear Route", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234567")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to clear the route for the subnet: 1234567.\n"))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
@@ -66,8 +64,7 @@ var _ = Describe("Subnet Clear Route", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234567")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The transaction to clear the route is created, routes will be updated in one or two minutes."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("The transaction to clear the route is created"))
 			})
 		})
 	})

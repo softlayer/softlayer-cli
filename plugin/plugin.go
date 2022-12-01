@@ -93,7 +93,7 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	cobraErr := cobraCommand.Execute()
 	if cobraErr != nil {
 		// Since we surpress the help message on errors, lets show the help message if the error is 'unknown flag'
-		helpTextTriggers := []strings{"unknown flag", T("Incorrect Usage"), T("Invalid input for")}
+		helpTextTriggers := []string{"unknown flag", T("Incorrect Usage"), T("Invalid input for")}
 		for _, trigger := range helpTextTriggers {
 			if strings.Contains(fmt.Sprintf("%v", cobraErr), trigger) {
 				realCommand, _, _ := cobraCommand.Find(args)

@@ -392,9 +392,7 @@ func (n networkManager) ListSubnets(identifier string, datacenter string, versio
 	}
 	if subnetType != "" {
 		filters = append(filters, filter.Path("subnets.subnetType").Eq(subnetType))
-	} else {
-		filters = append(filters, filter.Path("subnets.subnetType").NotEq("GLOBAL_IP"))
-	}
+	} 
 	if networkSpace != "" {
 		filters = append(filters, filter.Path("subnets.networkVlan.networkSpace").Eq(networkSpace))
 	}
