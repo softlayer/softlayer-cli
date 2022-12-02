@@ -6524,6 +6524,10 @@
     "translation": "PrimaryRouter Hostname"
   },
   {
+    "id": "Print the version of the sl plugin",
+    "translation": "Print the version of the sl plugin"
+  },
+  {
     "id": "Print zone and resource records in BIND format",
     "translation": "Print zone and resource records in BIND format"
   },

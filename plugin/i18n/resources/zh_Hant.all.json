@@ -3116,8 +3116,8 @@
     "translation": "無法取得 {{.Type}} 防火牆的套件。\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "無法取得許可權。\n"
+    "id": "Failed to get permissions.",
+    "translation": "無法取得許可權。"
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
@@ -3252,8 +3252,8 @@
     "translation": "無法取得使用者許可權。\n"
   },
   {
-    "id": "Failed to get user.\n",
-    "translation": "無法取得使用者。\n"
+    "id": "Failed to get user.",
+    "translation": "無法取得使用者。"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3732,8 +3732,8 @@
     "translation": "無法更新 l7 儲存區：{{.Error}}。\n"
   },
   {
-    "id": "Failed to update permissions: %s",
-    "translation": "無法更新許可權：%s"
+    "id": "Failed to update permissions",
+    "translation": "無法更新許可權"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5964,8 +5964,8 @@
     "translation": "許可權"
   },
   {
-    "id": "Permissions updated successfully: %s",
-    "translation": "許可權已順利更新：%s"
+    "id": "Permissions updated successfully",
+    "translation": "已順利更新許可權"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -6206,6 +6206,10 @@
   {
     "id": "PrimaryRouter Hostname",
     "translation": "主要路由器主機名稱"
+  },
+  {
+    "id": "Print the version of the sl plugin",
+    "translation": "列印 sl 外掛程式的版本"
   },
   {
     "id": "Print zone and resource records in BIND format",
@@ -8292,6 +8296,10 @@
     "translation": "供應商名稱"
   },
   {
+    "id": "Version",
+    "translation": "版本"
+  },
+  {
     "id": "View a quote",
     "translation": "檢視報價"
   },
@@ -8940,8 +8948,8 @@
     "translation": "%s 的選項為 hardware 或 virtual"
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "%s 的選項為 true、false"
+    "id": "options for --enable are true, false",
+    "translation": "--enable 的選項為 true 及 false"
   },
   {
     "id": "os",
