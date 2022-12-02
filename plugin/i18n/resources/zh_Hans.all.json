@@ -1136,18 +1136,6 @@
     "translation": "高速缓存密钥优化。 以下是可选择的有效选项：“include-all”、“ignore-all”、“include-specified”和“ignore-specified”。 如果选择“include-specified”或“ignore-specified”，请添加到选项 cache-description。"
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "计算带宽池"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "硬件计算"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "正在计算虚拟"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "调用任意 API 端点"
   },
@@ -1852,10 +1840,6 @@
     "translation": "要除去数据中心，请执行以下操作："
   },
   {
-    "id": "Datacenter: ",
-    "translation": "数据中心： "
-  },
-  {
     "id": "Date",
     "translation": "日期"
   },
@@ -2110,10 +2094,6 @@
   {
     "id": "Domain record not found",
     "translation": "找不到域记录"
-  },
-  {
-    "id": "Domain: ",
-    "translation": "域： "
   },
   {
     "id": "Don't actually create records",
@@ -3194,10 +3174,6 @@
   {
     "id": "Failed to get the event {{.eventID}}. ",
     "translation": "未能获取 {{.eventID}}事件。 "
-  },
-  {
-    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
-    "translation": "未能获取硬件服务器 {{.ID}}的客户机实例。\n"
   },
   {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
@@ -5152,10 +5128,6 @@
     "translation": "列出计费项以及一些其他有用信息。"
   },
   {
-    "id": "Lists the Virtual Guests running on this server.",
-    "translation": "列出在此服务器上运行的虚拟访客。"
-  },
-  {
     "id": "Lists the storage limits per datacenter for this account.",
     "translation": "列出此帐户的每个数据中心的存储限制。"
   },
@@ -5250,10 +5222,6 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "内存（以 MB 为单位）[必需]"
-  },
-  {
-    "id": "Memory: ",
-    "translation": "内存： "
   },
   {
     "id": "Metadata",
@@ -5434,10 +5402,6 @@
   {
     "id": "No IPSec was found.",
     "translation": "找不到 IPSec。"
-  },
-  {
-    "id": "No Virtual Guests found.",
-    "translation": "找不到虚拟访客。"
   },
   {
     "id": "No available router was found.",
@@ -5670,10 +5634,6 @@
   {
     "id": "Opens",
     "translation": "打开数"
-  },
-  {
-    "id": "Operating System Code: ",
-    "translation": "操作系统代码： "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -8976,16 +8936,8 @@
     "translation": "池"
   },
   {
-    "id": "powerState",
-    "translation": "PowerState"
-  },
-  {
     "id": "preset",
     "translation": "预设"
-  },
-  {
-    "id": "price rate",
-    "translation": "price rate"
   },
   {
     "id": "primary_router",

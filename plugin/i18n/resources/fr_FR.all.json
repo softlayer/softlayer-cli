@@ -1136,18 +1136,6 @@
     "translation": "Optimisation des clés de cache. Les options valides sont les suivantes : 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. Si vous sélectionnez la valeur 'include-specified' ou 'ignore-specified', ajoutez-la à l'option cache-description."
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "Calcul des pools de bande passante"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "Calcul du matériel"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "Calcul pour virtuel"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "Appeler des noeuds finaux d'API arbitraires"
   },
@@ -1852,10 +1840,6 @@
     "translation": "Pour supprimer Datacenter"
   },
   {
-    "id": "Datacenter: ",
-    "translation": "Centre de données : "
-  },
-  {
     "id": "Date",
     "translation": "Date"
   },
@@ -2110,10 +2094,6 @@
   {
     "id": "Domain record not found",
     "translation": "Enregistrement de domaine introuvable"
-  },
-  {
-    "id": "Domain: ",
-    "translation": "Domaine : "
   },
   {
     "id": "Don't actually create records",
@@ -3194,10 +3174,6 @@
   {
     "id": "Failed to get the event {{.eventID}}. ",
     "translation": "Echec de l'obtention de l'événement {{.eventID}}. "
-  },
-  {
-    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
-    "translation": "Echec de l'obtention des instances invités du serveur matériel {{.ID}}. \n"
   },
   {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
@@ -5152,10 +5128,6 @@
     "translation": "Répertorie les éléments de facturation avec d'autres informations utiles."
   },
   {
-    "id": "Lists the Virtual Guests running on this server.",
-    "translation": "Répertorie les invités virtuels s'exécutant sur ce serveur."
-  },
-  {
     "id": "Lists the storage limits per datacenter for this account.",
     "translation": "Répertorie les limites de stockage par centre de données pour ce compte."
   },
@@ -5250,10 +5222,6 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "Mémoire en mégaoctets [requis]"
-  },
-  {
-    "id": "Memory: ",
-    "translation": "Mémoire : "
   },
   {
     "id": "Metadata",
@@ -5434,10 +5402,6 @@
   {
     "id": "No IPSec was found.",
     "translation": "Aucun IPSec trouvé."
-  },
-  {
-    "id": "No Virtual Guests found.",
-    "translation": "Aucun invité virtuel trouvé."
   },
   {
     "id": "No available router was found.",
@@ -5670,10 +5634,6 @@
   {
     "id": "Opens",
     "translation": "Ouvertures"
-  },
-  {
-    "id": "Operating System Code: ",
-    "translation": "Code du système d'exploitation : "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -8976,16 +8936,8 @@
     "translation": "pool"
   },
   {
-    "id": "powerState",
-    "translation": "PowerState"
-  },
-  {
     "id": "preset",
     "translation": "préréglage"
-  },
-  {
-    "id": "price rate",
-    "translation": "tarif"
   },
   {
     "id": "primary_router",
