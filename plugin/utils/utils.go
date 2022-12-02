@@ -401,24 +401,6 @@ func ArrayStringToString(array []string) string {
 }
 
 func ProgressBar(title string, numberElements int) *progress_bar.ProgressBar {
-	/*
-		Initialization of ProgressBar
-		It is possible to initialize in the following ways:
-
-		1.
-		bar := progress_bar.NewProgressBar(numberElements).OptionTitle("Title").OptionSizeProgressBar(100).OptioProgressBarStart("(").OptioProgressBarEnd(")").OptioArrowBody("-").OptioArrowHead("}").OptionDebug(true)
-
-		2.
-		bar := progress_bar.NewProgressBar(numberElements)
-		bar.OptionTitle("Title")
-		bar.OptionSizeProgressBar(100)
-		bar.OptioProgressBarStart("(")
-		bar.OptioProgressBarEnd(")")
-		bar.OptioArrowBody("-")
-		bar.OptioArrowHead("}")
-		bar.OptionDebug(true)
-	*/
-
 	bar := progress_bar.NewProgressBar(numberElements).OptionTitle(T(title) + ":").PrintBlankProgressBar()
 	return bar
 }
