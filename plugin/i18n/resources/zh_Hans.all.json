@@ -3096,10 +3096,6 @@
     "translation": "未能获取 {{.Type}} 防火墙的包。\n"
   },
   {
-    "id": "Failed to get permissions.",
-    "translation": "未能获取许可权。"
-  },
-  {
     "id": "Failed to get placement group: {{.ID}}.",
     "translation": "未能获取放置组：{{.ID}}。\n"
   },
@@ -3226,10 +3222,6 @@
   {
     "id": "Failed to get user permissions.\n",
     "translation": "未能获取用户许可权。\n"
-  },
-  {
-    "id": "Failed to get user.",
-    "translation": "未能获取用户。"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3706,10 +3698,6 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "未能更新 L7 池：{{.Error}}。\n"
-  },
-  {
-    "id": "Failed to update permissions",
-    "translation": "未能更新许可权"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5924,10 +5912,6 @@
     "translation": "许可权"
   },
   {
-    "id": "Permissions updated successfully",
-    "translation": "已成功更新许可权"
-  },
-  {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
     "translation": "第 1 阶段 Diffie-Hellman 组。选项为：0、1、2 或 5"
   },
@@ -6166,10 +6150,6 @@
   {
     "id": "PrimaryRouter Hostname",
     "translation": "PrimaryRouter 主机名"
-  },
-  {
-    "id": "Print the version of the sl plugin",
-    "translation": "打印 sl 插件的版本"
   },
   {
     "id": "Print zone and resource records in BIND format",
@@ -8256,10 +8236,6 @@
     "translation": "供应商名称"
   },
   {
-    "id": "Version",
-    "translation": "版本"
-  },
-  {
     "id": "View a quote",
     "translation": "查看报价"
   },
@@ -8906,10 +8882,6 @@
   {
     "id": "options for %s are hardware or virtual",
     "translation": "%s 的选项为 hardware 或 virtual"
-  },
-  {
-    "id": "options for --enable are true, false",
-    "translation": "--enable 的选项为 true、false"
   },
   {
     "id": "os",

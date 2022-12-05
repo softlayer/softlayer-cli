@@ -3096,10 +3096,6 @@
     "translation": "No se ha podido obtener el paquete para el cortafuegos {{.Type}}.\n"
   },
   {
-    "id": "Failed to get permissions.",
-    "translation": "No se han podido obtener permisos."
-  },
-  {
     "id": "Failed to get placement group: {{.ID}}.",
     "translation": "No se ha podido obtener un grupo de colocación: {{.ID}}.\n"
   },
@@ -3226,10 +3222,6 @@
   {
     "id": "Failed to get user permissions.\n",
     "translation": "No se han podido obtener los permisos de usuario.\n"
-  },
-  {
-    "id": "Failed to get user.",
-    "translation": "No se ha podido obtener el usuario."
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3706,10 +3698,6 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "No se ha podido actualizar la agrupación de l7: {{.Error}}.\n"
-  },
-  {
-    "id": "Failed to update permissions",
-    "translation": "No se han podido actualizar los permisos"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5920,10 +5908,6 @@
     "translation": "Permisos"
   },
   {
-    "id": "Permissions updated successfully",
-    "translation": "Permisos actualizados correctamente"
-  },
-  {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
     "translation": "Grupo Diffie-Hellman de fase 1. Las opciones son: 0,1,2,5"
   },
@@ -6162,10 +6146,6 @@
   {
     "id": "PrimaryRouter Hostname",
     "translation": "Nombre de host de PrimaryRouter"
-  },
-  {
-    "id": "Print the version of the sl plugin",
-    "translation": "Imprimir la versión del plugin sl"
   },
   {
     "id": "Print zone and resource records in BIND format",
@@ -8252,10 +8232,6 @@
     "translation": "Nombre de proveedor"
   },
   {
-    "id": "Version",
-    "translation": "Versión"
-  },
-  {
     "id": "View a quote",
     "translation": "Ver un presupuesto"
   },
@@ -8902,10 +8878,6 @@
   {
     "id": "options for %s are hardware or virtual",
     "translation": "las opciones para %s son hardware o virtual"
-  },
-  {
-    "id": "options for --enable are true, false",
-    "translation": "opciones para --enable son true, false"
   },
   {
     "id": "os",

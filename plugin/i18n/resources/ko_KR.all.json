@@ -3096,10 +3096,6 @@
     "translation": "{{.Type}} 방화벽에 대한 패키지를 가져오는 데 실패했습니다.\n"
   },
   {
-    "id": "Failed to get permissions.",
-    "translation": "권한을 가져오는 데 실패했습니다."
-  },
-  {
     "id": "Failed to get placement group: {{.ID}}.",
     "translation": "배치 그룹 가져오기 실패: {{.ID}}.\n"
   },
@@ -3226,10 +3222,6 @@
   {
     "id": "Failed to get user permissions.\n",
     "translation": "사용자 권한을 가져오는 데 실패했습니다. \n"
-  },
-  {
-    "id": "Failed to get user.",
-    "translation": "사용자를 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3706,10 +3698,6 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "l7 풀 업데이트 실패: {{.Error}}.\n"
-  },
-  {
-    "id": "Failed to update permissions",
-    "translation": "권한을 업데이트하는 데 실패함"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5924,10 +5912,6 @@
     "translation": "권한"
   },
   {
-    "id": "Permissions updated successfully",
-    "translation": "권한 업데이트 성공"
-  },
-  {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
     "translation": "1단계(Phase) Diffie-Hellman 그룹입니다. 옵션: 0,1,2,5"
   },
@@ -6166,10 +6150,6 @@
   {
     "id": "PrimaryRouter Hostname",
     "translation": "기본 라우터 호스트 이름"
-  },
-  {
-    "id": "Print the version of the sl plugin",
-    "translation": "sl 플러그인 버전 인쇄"
   },
   {
     "id": "Print zone and resource records in BIND format",
@@ -8256,10 +8236,6 @@
     "translation": "공급업체 이름"
   },
   {
-    "id": "Version",
-    "translation": "버전"
-  },
-  {
     "id": "View a quote",
     "translation": "견적 보기"
   },
@@ -8906,10 +8882,6 @@
   {
     "id": "options for %s are hardware or virtual",
     "translation": "%s의 옵션은 hardware 또는 virtual입니다."
-  },
-  {
-    "id": "options for --enable are true, false",
-    "translation": "--enable 옵션은 true, false입니다."
   },
   {
     "id": "os",

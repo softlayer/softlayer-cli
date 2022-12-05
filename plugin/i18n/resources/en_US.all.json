@@ -1284,6 +1284,18 @@
     "translation": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description."
   },
   {
+    "id": "Calculating for bandwidth pools",
+    "translation": "Calculating for bandwidth pools"
+  },
+  {
+    "id": "Calculating for hardware",
+    "translation": "Calculating for hardware"
+  },
+  {
+    "id": "Calculating for virtual",
+    "translation": "Calculating for virtual"
+  },
+  {
     "id": "Call arbitrary API endpoints",
     "translation": "Call arbitrary API endpoints"
   },

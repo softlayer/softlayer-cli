@@ -401,6 +401,6 @@ func ArrayStringToString(array []string) string {
 }
 
 func ProgressBar(title string, numberElements int) *progress_bar.ProgressBar {
-	bar := progress_bar.NewProgressBar(numberElements).OptionTitle(T(title) + ":").PrintBlankProgressBar()
+	bar := progress_bar.NewProgressBar(numberElements).OptionTitle(title + ":").PrintBlankProgressBar()
 	return bar
 }

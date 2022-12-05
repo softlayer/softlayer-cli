@@ -3096,10 +3096,6 @@
     "translation": "{{.Type}} ファイアウォールのパッケージの取得に失敗しました。\n"
   },
   {
-    "id": "Failed to get permissions.",
-    "translation": "許可の取得に失敗しました。"
-  },
-  {
     "id": "Failed to get placement group: {{.ID}}.",
     "translation": "配置グループ: {{.ID}} の取得に失敗しました。\n"
   },
@@ -3226,10 +3222,6 @@
   {
     "id": "Failed to get user permissions.\n",
     "translation": "ユーザー権限の取得に失敗しました。\n"
-  },
-  {
-    "id": "Failed to get user.",
-    "translation": "ユーザーの取得に失敗しました。"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3706,10 +3698,6 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "l7 プールの更新に失敗しました: {{.Error}}。\n"
-  },
-  {
-    "id": "Failed to update permissions",
-    "translation": "許可の更新に失敗しました"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5924,10 +5912,6 @@
     "translation": "権限"
   },
   {
-    "id": "Permissions updated successfully",
-    "translation": "許可が正常に更新されました"
-  },
-  {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
     "translation": "フェーズ 1 Diffie-Hellman グループ。 オプション: 0,1,2,5"
   },
@@ -6166,10 +6150,6 @@
   {
     "id": "PrimaryRouter Hostname",
     "translation": "PrimaryRouter ホスト名"
-  },
-  {
-    "id": "Print the version of the sl plugin",
-    "translation": "sl プラグインのバージョンを出力します"
   },
   {
     "id": "Print zone and resource records in BIND format",
@@ -8256,10 +8236,6 @@
     "translation": "ベンダー名"
   },
   {
-    "id": "Version",
-    "translation": "バージョン"
-  },
-  {
     "id": "View a quote",
     "translation": "見積もりの表示"
   },
@@ -8906,10 +8882,6 @@
   {
     "id": "options for %s are hardware or virtual",
     "translation": "%s のオプションは、hardware または virtual です"
-  },
-  {
-    "id": "options for --enable are true, false",
-    "translation": "-- enable のオプションは true、false です"
   },
   {
     "id": "os",

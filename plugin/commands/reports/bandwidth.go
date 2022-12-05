@@ -281,7 +281,7 @@ func getVirtualBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, st
 		},
 	}
 
-	progressBar := utils.ProgressBar("Calculating for virtual", len(virtualGuests))
+	progressBar := utils.ProgressBar(T("Calculating for virtual"), len(virtualGuests))
 
 	for _, virtualGuest := range virtualGuests {
 		if virtualGuest.MetricTrackingObjectId != nil {
@@ -342,7 +342,7 @@ func getHardwareBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, s
 		},
 	}
 
-	progressBar := utils.ProgressBar("Calculating for hardware", len(hardwareServers))
+	progressBar := utils.ProgressBar(T("Calculating for hardware"), len(hardwareServers))
 	for _, hardware := range hardwareServers {
 		if hardware.MetricTrackingObject != nil {
 			if hardware.MetricTrackingObject.Id != nil {
@@ -404,7 +404,7 @@ func getPoolBandwidth(cmd *BandwidthCommand, metricObjects []metricObject, start
 		},
 	}
 
-	progressBar := utils.ProgressBar("Calculating for bandwidth pools", len(pools))
+	progressBar := utils.ProgressBar(T("Calculating for bandwidth pools"), len(pools))
 	for _, pool := range pools {
 		if pool.MetricTrackingObjectId != nil {
 			metricTrackingSummary, err := cmd.ReportManager.GetMetricTrackingSummaryData(*pool.MetricTrackingObjectId, start, end, validTypes)
