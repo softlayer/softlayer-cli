@@ -62,9 +62,9 @@ func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 		Name:       metadata.NS_SL_NAME,
 		Namespaces: Namespaces(),
 		// TODO change this to convert cobra commands to pluginCommands... maybe see if another plugin does this already???
-		Commands:   cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
-		Version:    metadata.GetVersion(),
-		SDKVersion: metadata.GetSDKVersion(),
+		Commands:      cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
+		Version:       metadata.GetVersion(),
+		SDKVersion:    metadata.GetSDKVersion(),
 		MinCliVersion: metadata.GetMinCLI(),
 	}
 }
@@ -92,13 +92,18 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	cobraCommand.SetArgs(args)
 	cobraErr := cobraCommand.Execute()
 	if cobraErr != nil {
-		// Error will be printed in any case.
-		// fmt.Println(cobraErr)  
+		// Since we surpress the help message on errors, lets show the help message if the error is 'unknown flag'
+		helpTextTriggers := []string{"unknown flag", T("Incorrect Usage"), T("Invalid input for")}
+		for _, trigger := range helpTextTriggers {
+			if strings.Contains(fmt.Sprintf("%v", cobraErr), trigger) {
+				realCommand, _, _ := cobraCommand.Find(args)
+				_ = realCommand.Help()
+			}
+		}
 		os.Exit(1)
 	}
 
 }
-
 
 func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
@@ -161,25 +166,25 @@ func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag {
 	return pluginFlags
 }
 
-// Copied from https://github.com/spf13/pflag/blob/master/flag.go#L538 
+// Copied from https://github.com/spf13/pflag/blob/master/flag.go#L538
 // Because its a private function for some reason.
 func defaultIsZeroValue(f *pflag.Flag) bool {
 	switch f.DefValue {
-		case "false":
-			return true
-		case "0", "0s":
-			return true
-		case "<nil>":
-			return true
-		case "":
-			return true
-		case "[]":
-			return true
-		// Used when 0 is a value users can input
-		case "-1":
-			return true
-		default:
-			return false
+	case "false":
+		return true
+	case "0", "0s":
+		return true
+	case "<nil>":
+		return true
+	case "":
+		return true
+	case "[]":
+		return true
+	// Used when 0 is a value users can input
+	case "-1":
+		return true
+	default:
+		return false
 	}
 }
 
@@ -197,7 +202,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 				Description: cliCmd.Short,
 				Usage:       cliCmd.UsageString(),
 				// try using the ibm-cloud/ibm-cloud-cli-sdk/plugin/plugin.ConvertCObraFlagsToPluginFlags
-				Flags:       cobraFlagToPlugin(cliCmd.Flags()),
+				Flags: cobraFlagToPlugin(cliCmd.Flags()),
 			}
 			pluginCommands = append(pluginCommands, thisCmd)
 		}
@@ -210,16 +215,16 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 
 	slCommand := metadata.NewSoftlayerCommand(ui, session)
 	cobraCmd := &cobra.Command{
-		Use:   "sl",
-		Short: T("Manage Classic infrastructure services"),
-		Long:  T("Manage Classic infrastructure services"),
-		RunE:  nil,
+		Use:          "sl",
+		Short:        T("Manage Classic infrastructure services"),
+		Long:         T("Manage Classic infrastructure services"),
+		RunE:         nil,
 		SilenceUsage: true, // Surpresses help text on errors
 	}
 
 	versionCommand := &cobra.Command{
-		Use:	"version",
-		Short:  T("Print the version of the sl plugin"),
+		Use:   "version",
+		Short: T("Print the version of the sl plugin"),
 		Run: func(cmd *cobra.Command, args []string) {
 			fmt.Println(metadata.PLUGIN_VERSION)
 		},
