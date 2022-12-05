@@ -16,7 +16,6 @@ import (
 
 const (
 	DEFAULT_IP_MASK            = "hardware,virtualGuest,subnet[id,networkIdentifier,cidr,netmask,gateway,subnetType]"
-	DEFAULT_GLOBALIP_MASK      = "id,ipAddress,destinationIpAddress[ipAddress,virtualGuest.fullyQualifiedDomainName,hardware.fullyQualifiedDomainName]"
 	DEFAULT_SUBNET_MASK        = "id,datacenter.name,hardware.id,ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests.id"
 	DEFAULT_SUBNET_DETAIL_MASK = "id,broadcastAddress,cidr,datacenter.name,gateway,hardware[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress],ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress]"
 	DEFAULT_VLAN_MASK          = "firewallInterfaces,hardwareCount,primaryRouter[id, fullyQualifiedDomainName, datacenter],subnetCount,billingItem,totalPrimaryIpAddressCount,virtualGuestCount,networkSpace,networkVlanFirewall[id,fullyQualifiedDomainName,primaryIpAddress],attachedNetworkGateway[id,name,networkFirewall],tagReferences[tag[name]]"
@@ -286,13 +285,14 @@ func (n networkManager) AddSubnet(subnetType string, quantity int, vlanID int, v
 //globalIPID: The ID of the global IP being assigned
 //targetIPAddress: The IP address to assign
 func (n networkManager) AssignGlobalIP(globalIPID int, targetIPAddress string) (bool, error) {
-	return n.GlobalIPService.Id(globalIPID).Route(&targetIPAddress)
+	routeType := "SoftLayer_Network_Subnet_IpAddress"
+	return n.SubnetService.Id(globalIPID).Route(&routeType, &targetIPAddress)
 }
 
 //Unassign a global IP address from a target
 //globalIPID: The ID of the global IP to be cancelled.
 func (n networkManager) UnassignGlobalIP(globalIPID int) (bool, error) {
-	return n.GlobalIPService.Id(globalIPID).Unroute()
+	return n.SubnetService.Id(globalIPID).ClearRoute()
 }
 
 //Cancel the specifeid vlan.
@@ -428,29 +428,22 @@ func (n networkManager) ListSubnets(identifier string, datacenter string, versio
 //version:  4 for IPv4, 6 for IPv6 to be filtered
 //orderId: ID of order to be filtered
 func (n networkManager) ListGlobalIPs(version int, orderId int) ([]datatypes.Network_Subnet_IpAddress_Global, error) {
-	ips := []datatypes.Network_Subnet_IpAddress_Global{}
-	var err error
-	if version == 0 {
-		if orderId == 0 {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).GetGlobalIpRecords()
-		} else {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).Filter(filter.Path("globalIpRecords.billingItem.orderItem.order.id").Eq(orderId).Build()).GetGlobalIpRecords()
-		}
+	DEFAULT_GLOBALIP_MASK := `id, ipAddress[id, ipAddress, subnetId],
+destinationIpAddress[ipAddress,virtualGuest.fullyQualifiedDomainName,hardware.fullyQualifiedDomainName]`
 
-	} else if version == 4 {
-		if orderId == 0 {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).GetGlobalIpv4Records()
-		} else {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).Filter(filter.Path("globalIpv4Records.billingItem.orderItem.order.id").Eq(orderId).Build()).GetGlobalIpv4Records()
-		}
-	} else if version == 6 {
-		if orderId == 0 {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).GetGlobalIpv6Records()
-		} else {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).Filter(filter.Path("globalIpv6Records.billingItem.orderItem.order.id").Eq(orderId).Build()).GetGlobalIpv6Records()
-		}
+	orderFilter := filter.Path("globalIpRecords.billingItem.orderItem.order.id").Eq(orderId).Build()
+	gipService := n.AccountService.Mask(DEFAULT_GLOBALIP_MASK)
+	if orderId != 0 {
+		return gipService.Filter(orderFilter).GetGlobalIpRecords()
 	}
-	return ips, err
+	if version == 4 {
+		return gipService.GetGlobalIpv4Records()
+	} else if version == 6 {
+		return gipService.GetGlobalIpv6Records()
+	}
+
+	return gipService.GetGlobalIpRecords()
+
 }
 
 //List all VLANs on the account, filter by datacenter name, vlan number, and vlan name
