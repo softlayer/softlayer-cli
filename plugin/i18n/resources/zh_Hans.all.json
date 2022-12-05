@@ -1136,6 +1136,18 @@
     "translation": "高速缓存密钥优化。 以下是可选择的有效选项：“include-all”、“ignore-all”、“include-specified”和“ignore-specified”。 如果选择“include-specified”或“ignore-specified”，请添加到选项 cache-description。"
   },
   {
+    "id": "Calculating for bandwidth pools",
+    "translation": "计算带宽池"
+  },
+  {
+    "id": "Calculating for hardware",
+    "translation": "硬件计算"
+  },
+  {
+    "id": "Calculating for virtual",
+    "translation": "正在计算虚拟"
+  },
+  {
     "id": "Call arbitrary API endpoints",
     "translation": "调用任意 API 端点"
   },
@@ -1840,6 +1852,10 @@
     "translation": "要除去数据中心，请执行以下操作："
   },
   {
+    "id": "Datacenter: ",
+    "translation": "数据中心： "
+  },
+  {
     "id": "Date",
     "translation": "日期"
   },
@@ -2094,6 +2110,10 @@
   {
     "id": "Domain record not found",
     "translation": "找不到域记录"
+  },
+  {
+    "id": "Domain: ",
+    "translation": "域： "
   },
   {
     "id": "Don't actually create records",
@@ -3096,6 +3116,10 @@
     "translation": "未能获取 {{.Type}} 防火墙的包。\n"
   },
   {
+    "id": "Failed to get permissions.\n",
+    "translation": "未能获取许可权。\n"
+  },
+  {
     "id": "Failed to get placement group: {{.ID}}.",
     "translation": "未能获取放置组：{{.ID}}。\n"
   },
@@ -3172,6 +3196,10 @@
     "translation": "未能获取 {{.eventID}}事件。 "
   },
   {
+    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
+    "translation": "未能获取硬件服务器 {{.ID}}的客户机实例。\n"
+  },
+  {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
     "translation": "未能获取硬件服务器 {{.ID}}的硬盘详细信息。\n"
   },
@@ -3222,6 +3250,10 @@
   {
     "id": "Failed to get user permissions.\n",
     "translation": "未能获取用户许可权。\n"
+  },
+  {
+    "id": "Failed to get user.\n",
+    "translation": "未能获取用户。\n"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3698,6 +3730,10 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "未能更新 L7 池：{{.Error}}。\n"
+  },
+  {
+    "id": "Failed to update permissions: %s",
+    "translation": "未能更新许可权：%s"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5116,6 +5152,10 @@
     "translation": "列出计费项以及一些其他有用信息。"
   },
   {
+    "id": "Lists the Virtual Guests running on this server.",
+    "translation": "列出在此服务器上运行的虚拟访客。"
+  },
+  {
     "id": "Lists the storage limits per datacenter for this account.",
     "translation": "列出此帐户的每个数据中心的存储限制。"
   },
@@ -5210,6 +5250,10 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "内存（以 MB 为单位）[必需]"
+  },
+  {
+    "id": "Memory: ",
+    "translation": "内存： "
   },
   {
     "id": "Metadata",
@@ -5390,6 +5434,10 @@
   {
     "id": "No IPSec was found.",
     "translation": "找不到 IPSec。"
+  },
+  {
+    "id": "No Virtual Guests found.",
+    "translation": "找不到虚拟访客。"
   },
   {
     "id": "No available router was found.",
@@ -5622,6 +5670,10 @@
   {
     "id": "Opens",
     "translation": "打开数"
+  },
+  {
+    "id": "Operating System Code: ",
+    "translation": "操作系统代码： "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -5910,6 +5962,10 @@
   {
     "id": "Permissions",
     "translation": "许可权"
+  },
+  {
+    "id": "Permissions updated successfully: %s",
+    "translation": "已成功更新许可权：%s"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -8884,6 +8940,10 @@
     "translation": "%s 的选项为 hardware 或 virtual"
   },
   {
+    "id": "options for %s are true, false",
+    "translation": "%s 的选项为 true 和 false"
+  },
+  {
     "id": "os",
     "translation": "os"
   },
@@ -8908,8 +8968,16 @@
     "translation": "池"
   },
   {
+    "id": "powerState",
+    "translation": "PowerState"
+  },
+  {
     "id": "preset",
     "translation": "预设"
+  },
+  {
+    "id": "price rate",
+    "translation": "price rate"
   },
   {
     "id": "primary_router",

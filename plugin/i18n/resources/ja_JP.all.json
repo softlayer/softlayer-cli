@@ -1136,6 +1136,18 @@
     "translation": "キャッシュ・キーの最適化。 選択できる有効なオプションは、「include-all」、「ignore-all」、「include-specified」、「ignore-specified」です。 「include-specified」または「ignore-specified」を選択する場合は、オプション cache-description に追加してください。"
   },
   {
+    "id": "Calculating for bandwidth pools",
+    "translation": "帯域幅プールの計算"
+  },
+  {
+    "id": "Calculating for hardware",
+    "translation": "ハードウェアの計算"
+  },
+  {
+    "id": "Calculating for virtual",
+    "translation": "仮想の計算"
+  },
+  {
     "id": "Call arbitrary API endpoints",
     "translation": "任意の API エンドポイントを呼び出します"
   },
@@ -1840,6 +1852,10 @@
     "translation": "データ・センターを削除するには"
   },
   {
+    "id": "Datacenter: ",
+    "translation": "データ・センター: "
+  },
+  {
     "id": "Date",
     "translation": "日付"
   },
@@ -2094,6 +2110,10 @@
   {
     "id": "Domain record not found",
     "translation": "ドメイン・レコードが見つかりませんでした"
+  },
+  {
+    "id": "Domain: ",
+    "translation": "ドメイン: "
   },
   {
     "id": "Don't actually create records",
@@ -3096,6 +3116,10 @@
     "translation": "{{.Type}} ファイアウォールのパッケージの取得に失敗しました。\n"
   },
   {
+    "id": "Failed to get permissions.\n",
+    "translation": "許可の取得に失敗しました。\n"
+  },
+  {
     "id": "Failed to get placement group: {{.ID}}.",
     "translation": "配置グループ: {{.ID}} の取得に失敗しました。\n"
   },
@@ -3172,6 +3196,10 @@
     "translation": "イベント {{.eventID}}の取得に失敗しました。 "
   },
   {
+    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
+    "translation": "ハードウェア・サーバー {{.ID}}のゲスト・インスタンスを取得できませんでした。\n"
+  },
+  {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
     "translation": "ハードウェア・サーバー {{.ID}}のハード・ディスクの詳細を取得できませんでした。\n"
   },
@@ -3222,6 +3250,10 @@
   {
     "id": "Failed to get user permissions.\n",
     "translation": "ユーザー権限の取得に失敗しました。\n"
+  },
+  {
+    "id": "Failed to get user.\n",
+    "translation": "ユーザーの取得に失敗しました。\n"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3698,6 +3730,10 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "l7 プールの更新に失敗しました: {{.Error}}。\n"
+  },
+  {
+    "id": "Failed to update permissions: %s",
+    "translation": "許可の更新に失敗しました: %s"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5116,6 +5152,10 @@
     "translation": "請求アイテムとその他の有用な情報をリストします。"
   },
   {
+    "id": "Lists the Virtual Guests running on this server.",
+    "translation": "このサーバーで実行されている仮想ゲストをリストします。"
+  },
+  {
     "id": "Lists the storage limits per datacenter for this account.",
     "translation": "このアカウントにおけるデータ・センターごとのストレージ制限をリストします。"
   },
@@ -5210,6 +5250,10 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "メガバイト単位のメモリー [必須]"
+  },
+  {
+    "id": "Memory: ",
+    "translation": "メモリー: "
   },
   {
     "id": "Metadata",
@@ -5390,6 +5434,10 @@
   {
     "id": "No IPSec was found.",
     "translation": "IPSec が見つかりませんでした。"
+  },
+  {
+    "id": "No Virtual Guests found.",
+    "translation": "仮想ゲストが見つかりません。"
   },
   {
     "id": "No available router was found.",
@@ -5622,6 +5670,10 @@
   {
     "id": "Opens",
     "translation": "オープンの数"
+  },
+  {
+    "id": "Operating System Code: ",
+    "translation": "オペレーティング・システム・コード: "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -5910,6 +5962,10 @@
   {
     "id": "Permissions",
     "translation": "権限"
+  },
+  {
+    "id": "Permissions updated successfully: %s",
+    "translation": "許可が正常に更新されました: %s"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -8884,6 +8940,10 @@
     "translation": "%s のオプションは、hardware または virtual です"
   },
   {
+    "id": "options for %s are true, false",
+    "translation": "%s のオプションは、true、false です"
+  },
+  {
     "id": "os",
     "translation": "os"
   },
@@ -8908,8 +8968,16 @@
     "translation": "プール"
   },
   {
+    "id": "powerState",
+    "translation": "PowerState"
+  },
+  {
     "id": "preset",
     "translation": "事前設定"
+  },
+  {
+    "id": "price rate",
+    "translation": "価格レート"
   },
   {
     "id": "primary_router",

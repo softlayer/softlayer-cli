@@ -1136,6 +1136,18 @@
     "translation": "캐시 키 최적화. 선택할 수 있는 유효한 옵션은 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'입니다. 'include-specified' 또는 'ignore-specified'를 선택하는 경우 cache-description 옵션에 추가하십시오."
   },
   {
+    "id": "Calculating for bandwidth pools",
+    "translation": "대역폭 풀 계산"
+  },
+  {
+    "id": "Calculating for hardware",
+    "translation": "하드웨어 계산"
+  },
+  {
+    "id": "Calculating for virtual",
+    "translation": "가상 계산"
+  },
+  {
     "id": "Call arbitrary API endpoints",
     "translation": "임의의 API 엔드포인트 호출"
   },
@@ -1840,6 +1852,10 @@
     "translation": "데이터 센터 제거 방법"
   },
   {
+    "id": "Datacenter: ",
+    "translation": "데이터 센터: "
+  },
+  {
     "id": "Date",
     "translation": "날짜"
   },
@@ -2094,6 +2110,10 @@
   {
     "id": "Domain record not found",
     "translation": "도메인 레코드를 찾을 수 없음"
+  },
+  {
+    "id": "Domain: ",
+    "translation": "도메인: "
   },
   {
     "id": "Don't actually create records",
@@ -3096,6 +3116,10 @@
     "translation": "{{.Type}} 방화벽에 대한 패키지를 가져오는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to get permissions.\n",
+    "translation": "권한을 가져오는 데 실패했습니다.\n"
+  },
+  {
     "id": "Failed to get placement group: {{.ID}}.",
     "translation": "배치 그룹 가져오기 실패: {{.ID}}.\n"
   },
@@ -3172,6 +3196,10 @@
     "translation": "{{.eventID}} 이벤트를 가져오는 데 실패했습니다. "
   },
   {
+    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
+    "translation": "하드웨어 서버 {{.ID}}에 대한 게스트 인스턴스를 가져오는 데 실패했습니다. \n"
+  },
+  {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
     "translation": "하드웨어 서버 {{.ID}}에 대한 하드 드라이브 세부사항을 가져오는 데 실패했습니다. \n"
   },
@@ -3222,6 +3250,10 @@
   {
     "id": "Failed to get user permissions.\n",
     "translation": "사용자 권한을 가져오는 데 실패했습니다. \n"
+  },
+  {
+    "id": "Failed to get user.\n",
+    "translation": "사용자를 가져오는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3698,6 +3730,10 @@
   {
     "id": "Failed to update l7 pool: {{.Error}}.\n",
     "translation": "l7 풀 업데이트 실패: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to update permissions: %s",
+    "translation": "권한을 업데이트하는 데 실패: %s"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -5116,6 +5152,10 @@
     "translation": "다른 유용한 정보와 함께 비용 청구 항목을 나열합니다."
   },
   {
+    "id": "Lists the Virtual Guests running on this server.",
+    "translation": "이 서버에서 실행 중인 가상 게스트를 나열합니다."
+  },
+  {
     "id": "Lists the storage limits per datacenter for this account.",
     "translation": "이 계정의 데이터 센터당 스토리지 한계를 나열합니다."
   },
@@ -5210,6 +5250,10 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "메모리(MB) [필수]"
+  },
+  {
+    "id": "Memory: ",
+    "translation": "메모리: "
   },
   {
     "id": "Metadata",
@@ -5390,6 +5434,10 @@
   {
     "id": "No IPSec was found.",
     "translation": "IPSec을 찾을 수 없습니다."
+  },
+  {
+    "id": "No Virtual Guests found.",
+    "translation": "가상 게스트를 찾을 수 없습니다."
   },
   {
     "id": "No available router was found.",
@@ -5622,6 +5670,10 @@
   {
     "id": "Opens",
     "translation": "열기"
+  },
+  {
+    "id": "Operating System Code: ",
+    "translation": "운영 체제 코드: "
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -5910,6 +5962,10 @@
   {
     "id": "Permissions",
     "translation": "권한"
+  },
+  {
+    "id": "Permissions updated successfully: %s",
+    "translation": "권한이 업데이트됨: %s"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -8884,6 +8940,10 @@
     "translation": "%s의 옵션은 hardware 또는 virtual입니다."
   },
   {
+    "id": "options for %s are true, false",
+    "translation": "%s의 옵션은 true, false입니다."
+  },
+  {
     "id": "os",
     "translation": "os"
   },
@@ -8908,8 +8968,16 @@
     "translation": "풀"
   },
   {
+    "id": "powerState",
+    "translation": "PowerState"
+  },
+  {
     "id": "preset",
     "translation": "사전 설정"
+  },
+  {
+    "id": "price rate",
+    "translation": "가격 비율"
   },
   {
     "id": "primary_router",
