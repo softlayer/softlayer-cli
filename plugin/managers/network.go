@@ -392,9 +392,7 @@ func (n networkManager) ListSubnets(identifier string, datacenter string, versio
 	}
 	if subnetType != "" {
 		filters = append(filters, filter.Path("subnets.subnetType").Eq(subnetType))
-	} else {
-		filters = append(filters, filter.Path("subnets.subnetType").NotEq("GLOBAL_IP"))
-	}
+	} 
 	if networkSpace != "" {
 		filters = append(filters, filter.Path("subnets.networkVlan.networkSpace").Eq(networkSpace))
 	}
@@ -735,10 +733,11 @@ func (n networkManager) GetCancelFailureReasons(vlanId int) []string {
 	return reasons
 }
 
-//This interface allows you to change the route of your Account Owned subnets.
+//This interface allows you to change the route of your subnets.
 //subnetId int: The subnet identifier.
 //typeRoute string: type value in static routing: e.g. SoftLayer_Network_Subnet_IpAddress.
 //typeId string: The type identifier.
+//See Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/
 func (n networkManager) Route(subnetId int, typeRoute string, typeId string) (bool, error) {
 	return n.SubnetService.Id(subnetId).Route(&typeRoute, &typeId)
 }

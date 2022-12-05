@@ -4,12 +4,11 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type ClearRouteCommand struct {
@@ -25,12 +24,7 @@ func NewClearRouteCommand(sl *metadata.SoftlayerCommand) *ClearRouteCommand {
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "clear-route " + T("IDENTIFIER"),
-		Short: T("This interface allows you to remove the route of your Account Owned subnets."),
-		Long: T(`${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]
-
-EXAMPLE:
-   ${COMMAND_NAME} sl subnet clear-route 12345678
-   This command allows you to remove the route of your Account Owned subnets.`),
+		Short: T("Removes the routing for a specified subnet, turning it into an unrouted portable subnet."),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -45,15 +39,10 @@ func (cmd *ClearRouteCommand) Run(args []string) error {
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Subnet ID")
 	}
-	outputFormat := cmd.GetOutputFlag()
 
-	resp, err := cmd.NetworkManager.ClearRoute(subnetID)
+	_, err = cmd.NetworkManager.ClearRoute(subnetID)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to clear the route for the subnet: {{.ID}}.\n", map[string]interface{}{"ID": subnetID}), err.Error(), 2)
-	}
-
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, resp)
+		return err
 	}
 
 	cmd.UI.Ok()
