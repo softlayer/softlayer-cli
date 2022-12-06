@@ -18,8 +18,8 @@ import (
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/progress_bar"
 )
 
 const (
@@ -255,7 +255,6 @@ func ReplaceUIntPointerValue(value *uint, newValue string) string {
 	return EMPTY_VALUE
 }
 
-
 // TODO: Once refactor is done, remove ValidateColumns and rename ValidateColumns2 to it.
 func ValidateColumns2(sortby string, columns []string, defaultColumns []string, optionalColumns, sortColumns []string) ([]string, error) {
 	if sortby != EMPTY_STRING && StringInSlice(sortby, sortColumns) == -1 {
@@ -399,4 +398,9 @@ func ArrayStringToString(array []string) string {
 	}
 
 	return valueToReturn
+}
+
+func ProgressBar(title string, numberElements int) *progress_bar.ProgressBar {
+	bar := progress_bar.NewProgressBar(numberElements).OptionTitle(title + ":").PrintBlankProgressBar()
+	return bar
 }
