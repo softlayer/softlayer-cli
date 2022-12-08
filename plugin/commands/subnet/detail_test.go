@@ -206,7 +206,7 @@ var _ = Describe("Subnet detail", func() {
 					},
 				}, nil)
 			})
-			It("return error", func() {
+			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
