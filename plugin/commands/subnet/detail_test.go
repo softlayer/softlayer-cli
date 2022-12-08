@@ -167,5 +167,59 @@ var _ = Describe("Subnet detail", func() {
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"1.2.1.2"}))
 			})
 		})
+		Context("Subnet detail with virtual endpoint Ip address", func() {
+			BeforeEach(func() {
+				fakeNetworkManager.GetSubnetReturns(datatypes.Network_Subnet{
+					Id:                sl.Int(1234),
+					NetworkIdentifier: sl.String("9.9.9.9"),
+					Cidr:              sl.Int(10),
+					SubnetType:        sl.String("PRIMARY"),
+					NetworkVlan: &datatypes.Network_Vlan{
+						NetworkSpace: sl.String("PUBLIC"),
+					},
+					Gateway:          sl.String("9.9.9.1"),
+					BroadcastAddress: sl.String("9.9.9.0"),
+					Datacenter: &datatypes.Location_Datacenter{
+						Location: datatypes.Location{
+							Name: sl.String("dal10"),
+						},
+					},
+					EndPointIpAddress: &datatypes.Network_Subnet_IpAddress{
+						IpAddress: sl.String("9.9.9.20"),
+						Subnet: &datatypes.Network_Subnet{
+							NetworkIdentifier: sl.String("9.9.9.0"),
+							Cidr:              sl.Int(26),
+						},
+						VirtualGuest: &datatypes.Virtual_Guest{
+							FullyQualifiedDomainName: sl.String("hostname.com"),
+						},
+					},
+					IpAddresses: []datatypes.Network_Subnet_IpAddress{
+						datatypes.Network_Subnet_IpAddress{
+							Id:        sl.Int(345),
+							IpAddress: sl.String("9.9.9.2"),
+						},
+						datatypes.Network_Subnet_IpAddress{
+							Id:        sl.Int(456),
+							IpAddress: sl.String("9.9.9.3"),
+						},
+					},
+				}, nil)
+			})
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("9.9.9.9/10"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("PRIMARY"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("PUBLIC"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("9.9.9.1"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("9.9.9.0"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("9.9.9.2"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("9.9.9.3"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Routed to 9.9.9.20 → hostname.com "))
+			})
+		})
 	})
 })
