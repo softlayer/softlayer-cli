@@ -121,7 +121,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "${COMMAND_NAME} sl image import NOM URI CLE_API [--note REMARQUE] [--os-code CODE_SE] [--root-key-crn CRN_CLE_RACINE] [--wrapper-dek DEK_ENCAPSULEE] [--cloud-init] [--byol] [--is-encrypted]\n  NOM : Nom de l'image\n  URI : URI d'un objet de stockage d'objets (fichier .vhd/.iso) au format cos://<regionName>/<bucketName>/<objectPath>\n  CLE_API : Clé d'API IBM Cloud avec accès à l'instance IBM Cloud Object Storage."
+    "translation": "${COMMAND_NAME} sl image import NOM URI CLE_API [--note REMARQUE] [--os-code CODE_SE] [--root-key-crn CRN_CLE_RACINE] [--wrapper-dek DEK_ENCAPSULEE] [--cloud-init] [--byol] [--is-encrypted]\n NOM : Nom de l'image\n URI : URI d'un objet de stockage d'objets (fichier .vhd/.iso) au format cos://<nomRégion>/<nomCompartiment>/<cheminObjet>\n CLE_API : Clé d'API IBM Cloud avec accès à l'instance IBM Cloud Object Storage."
   },
   {
     "id": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  Request configuration of a tunnel context.\n\n  This action will update the advancedConfigurationFlag on the context\n  instance and further modifications against the context will be prevented\n  until all changes can be propagated to network devices.",
@@ -4745,7 +4745,7 @@
   },
   {
     "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
-    "translation": "IDENTIFICATEUR : ID de l'image\nURI : URI d'un objet de stockage d'objets (fichier .vhd/.iso) au format cos://<regionName>/<bucketName>/<objectPath>\nCLE_API : Clé d'API IBM Cloud avec accès à l'instance IBM Cloud Object Storage."
+    "translation": "IDENTIFICATEUR : ID de l'image\nURI : URI d'un objet de stockage d'objets (fichier .vhd/.iso) au format cos://<nomRégion>/<nomCompartiment>/<cheminObjet>\nCLE_API : Clé d'API IBM Cloud avec accès à l'instance IBM Cloud Object Storage."
   },
   {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
