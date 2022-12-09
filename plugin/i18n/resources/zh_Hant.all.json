@@ -788,6 +788,22 @@
     "translation": "要使用 <hostname>.<domain.name.tld> 格式化名稱。 每個伺服器指定一個 fqdn（允許多次出現）[必要]"
   },
   {
+    "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "所需伺服器的 Hardware_Server.id 或 UUID 值。 A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>"
+  },
+  {
+    "id": "A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.",
+    "translation": "Network_Subnet_IpAddress.id、帶點四組 IPv4 位址，或完整或壓縮的 IPv6 位址。"
+  },
+  {
+    "id": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ",
+    "translation": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 -路由器名稱可以選擇性地包含 'a' 或 'b' 冗餘限定元 "
+  },
+  {
+    "id": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "所需伺服器的 Virtual_Guest.id 或 UUID 值。 A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>"
+  },
+  {
     "id": "A custom name to be assigned to the quote (optional)",
     "translation": "要指派給報價的自訂名稱（選用）"
   },
@@ -997,7 +1013,15 @@
   },
   {
     "id": "Allocation",
-    "translation": "分配"
+    "translation": "配置"
+  },
+  {
+    "id": "Allotment",
+    "translation": "撥款"
+  },
+  {
+    "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
+    "translation": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n"
   },
   {
     "id": "Amount",
@@ -1446,6 +1470,10 @@
   {
     "id": "Certificate signing request not found",
     "translation": "找不到憑證簽署要求"
+  },
+  {
+    "id": "Change how a secondary subnet is routed.",
+    "translation": "變更次要子網路的遞送方式。"
   },
   {
     "id": "Changes a password for a volume's access",
@@ -2856,6 +2884,10 @@
     "translation": "無法刪除標籤：{{.tag}}。"
   },
   {
+    "id": "Failed to delete User Customer Notification.",
+    "translation": "無法刪除「使用者客戶通知」。"
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "無法刪除認證：{{.storageID}}。\n"
   },
@@ -3132,8 +3164,16 @@
     "translation": "無法取得公告事件。"
   },
   {
+    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
+    "translation": "無法取得硬體伺服器 {{.ID}}的頻寬配額明細。\n"
+  },
+  {
     "id": "Failed to get bare metal servers.\n",
     "translation": "無法取得裸機伺服器。\n"
+  },
+  {
+    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
+    "translation": "無法取得硬體伺服器 {{.ID}}的計費週期頻寬使用情形。\n"
   },
   {
     "id": "Failed to get billing items.",
@@ -4648,6 +4688,10 @@
     "translation": "應該在幾點擷取 Snapshot，選項為 0 到 23 之間的整數"
   },
   {
+    "id": "Hourly",
+    "translation": "每小時"
+  },
+  {
     "id": "How many invoices to get back. [default: 50]",
     "translation": "要取回多少發票。[預設值：50]"
   },
@@ -4693,11 +4737,11 @@
   },
   {
     "id": "IDENTIFIER",
-    "translation": "ID"
+    "translation": "IDENTIFIER"
   },
   {
     "id": "IDENTIFIER TARGET",
-    "translation": "ID 目標"
+    "translation": "IDENTIFIER TARGET"
   },
   {
     "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
@@ -4824,6 +4868,10 @@
     "translation": "從物件儲存空間匯入映像檔"
   },
   {
+    "id": "In GB",
+    "translation": "GB"
+  },
+  {
     "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
     "translation": "在快取選項中，如果您選取 'include-specified' 或 'ignorespecified'，也請使用此選項來新增說明，例如 --cache include-specified --cache-description 說明。"
   },
@@ -4934,6 +4982,10 @@
   {
     "id": "Invalid format date.",
     "translation": "格式日期無效。"
+  },
+  {
+    "id": "Invalid input for",
+    "translation": "的輸入無效"
   },
   {
     "id": "Invalid input for '{{.Name}}'. It must be a positive integer.",
@@ -5110,6 +5162,10 @@
   {
     "id": "Last Updated",
     "translation": "前次更新時間"
+  },
+  {
+    "id": "Last transaction",
+    "translation": "前次交易"
   },
   {
     "id": "Legacy",
@@ -5402,6 +5458,10 @@
   {
     "id": "Lists billing items with some other useful information.",
     "translation": "列出計費項目以及一些其他有用資訊。"
+  },
+  {
+    "id": "Lists the prices for each item in this preset",
+    "translation": "列出此預設中每一個項目的價格"
   },
   {
     "id": "Lists the storage limits per datacenter for this account.",
@@ -5924,6 +5984,10 @@
     "translation": "開啟"
   },
   {
+    "id": "Operating System Code",
+    "translation": "作業系統程式碼"
+  },
+  {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
     "translation": "已訂購抄本之主要磁區的作業系統類型（例如 LINUX）[選用]，選項包含：HYPER_V、LINUX、VMWARE、WINDOWS_2008、WINDOWS_GPT、WINDOWS、XEN"
   },
@@ -6102,6 +6166,10 @@
   {
     "id": "Other",
     "translation": "其他"
+  },
+  {
+    "id": "Out GB",
+    "translation": "輸出 GB"
   },
   {
     "id": "Owner",
@@ -6434,6 +6502,10 @@
   {
     "id": "Price ID not found",
     "translation": "找不到價格 ID"
+  },
+  {
+    "id": "Price Id",
+    "translation": "價格 ID"
   },
   {
     "id": "Price Rate",
@@ -6784,6 +6856,14 @@
     "translation": "從 IPSec 移除轉換項目"
   },
   {
+    "id": "Remove a user VS notification entry.",
+    "translation": "移除使用者 VS 通知項目。"
+  },
+  {
+    "id": "Remove a user hardware notification entry.",
+    "translation": "移除使用者硬體通知項目。"
+  },
+  {
     "id": "Remove access from a user to an specific device",
     "translation": "移除使用者對特定裝置的存取權"
   },
@@ -6810,6 +6890,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "從帳戶移除空的標籤。"
+  },
+  {
+    "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
+    "translation": "移除指定子網路的遞送，將它變成未遞送的可攜式子網路。"
   },
   {
     "id": "Removing Tag: {{.tag}}.",
@@ -6870,6 +6954,10 @@
   {
     "id": "Restore block volume using a given snapshot",
     "translation": "使用給定的 Snapshot 還原區塊磁區"
+  },
+  {
+    "id": "Restriction",
+    "translation": "限制"
   },
   {
     "id": "Result limit",
@@ -7466,6 +7554,10 @@
   {
     "id": "Successfully device firmware reflashed",
     "translation": "已順利再更新裝置韌體"
+  },
+  {
+    "id": "Successfully removed User Customer notification.",
+    "translation": "已順利移除「使用者客戶」通知。"
   },
   {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",

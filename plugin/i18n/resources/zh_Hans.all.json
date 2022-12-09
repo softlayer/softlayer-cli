@@ -125,35 +125,35 @@
   },
   {
     "id": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  Request configuration of a tunnel context.\n\n  This action will update the advancedConfigurationFlag on the context\n  instance and further modifications against the context will be prevented\n  until all changes can be propagated to network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  请求隧道上下文的配置。\n\n  此操作将更新上下文实例上的 advancedConfigurationFlag，\n  并将阻止对上下文的进一步修改，\n  直到所有更改都可传播到网络设备为止。"
+    "translation": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  请求隧道上下文的配置。\n\n  此操作将更新上下文实例上的 advancedConfigurationFlag，\n  并将阻止对上下文的进一步修改，直到所有更改都可传播到网络设备为止。"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  List IPSEC VPN tunnel context details.\n\n  Additional resources can be joined using multiple instances of the include\n  option, for which the following choices are available.\n\n  at: address translations\n  is: internal subnets\n  rs: remote subnets\n  sr: statically routed subnets\n  ss: service subnets",
-    "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  列出 IPSEC VPN 隧道上下文详细信息。\n\n  可以使用 include 选项的多个实例\n  来连接其他资源，可用选项如下。\n\n  at：地址转换\n  is：内部子网\n  rs：远程子网\n  sr：静态路由的子网\n  ss：服务子网"
+    "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  列出 IPSEC VPN 隧道上下文详细信息。\n\n  可以使用 include 选项的多个实例来连接其他资源，可用选项如下。\n\n  at：地址转换\n  is：内部子网\n  rs：远程子网\n  sr：静态路由的子网\n  ss：服务子网"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  Add a subnet to an IPSEC tunnel context.\n\n  A subnet id may be specified to link to the existing tunnel context.\n\n  Otherwise, a network identifier in CIDR notation should be specified,\n  indicating that a subnet resource should first be created before\n  associating it with the tunnel context. Note that this is only supported\n  for remote subnets, which are also deleted upon failure to attach to a\n  context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  向 IPSEC 隧道上下文添加子网。\n\n  可指定子网标识来链接到现有隧道上下文。\n\n  否则，应该指定采用 CIDR 表示法的网络标识，\n  以指示应该先创建子网资源，\n  再将其与隧道上下文关联。请注意，只有远程子网\n  才支持此项，这些远程子网在未能连接到\n  上下文时也将被删除。\n\n  应该发起单独的配置请求，\n  以在网络设备上实现更改。"
+    "translation": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  向 IPSEC 隧道上下文添加子网。\n\n  可指定子网标识来链接到现有隧道上下文。\n\n  否则，应该指定采用 CIDR 表示法的网络标识，以指示应该先创建子网\n  资源，再将其与隧道上下文关联。请注意，只有远程子网才支持此项，\n  这些远程子网在未能连接到上下文时也将被删除。\n\n  应该发起单独的配置请求，以在网络设备上实现更改。"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec subnet-remove CONTEXT_ID SUBNET_ID SUBNET_TYPE \n\n  Remove a subnet from an IPSEC tunnel context.\n\n  The subnet id to remove must be specified.\n\n  Remote subnets are deleted upon removal from a tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec subnet-remove CONTEXT_ID SUBNET_ID SUBNET_TYPE \n\n  从 IPSEC 隧道上下文中除去子网。\n\n  必须指定要除去的子网标识。\n\n  远程子网在从隧道上下文中除去时会被删除。\n\n  应该发起单独的配置请求，\n  以在网络设备上实现更改。"
+    "translation": "${COMMAND_NAME} sl ipsec subnet-remove CONTEXT_ID SUBNET_ID SUBNET_TYPE \n\n  从 IPSEC 隧道上下文中除去子网。\n\n  必须指定要除去的子网标识。\n\n  远程子网在从隧道上下文中除去时会被删除。\n\n  应该发起单独的配置请求，以在网络设备上实现更改。"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec translation-add CONTEXT_ID [OPTIONS]\n\n  Add an address translation to an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec translation-add CONTEXT_ID [OPTIONS]\n\n  向 IPSEC 隧道上下文添加地址转换。\n\n  应该发起单独的配置请求，\n  以在网络设备上实现更改。"
+    "translation": "${COMMAND_NAME} sl ipsec translation-add CONTEXT_ID [OPTIONS]\n\n  向 IPSEC 隧道上下文添加地址转换。\n\n  应该发起单独的配置请求，以在网络设备上实现更改。"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec translation-remove CONTEXT_ID TRANSLATION_ID \n\n  Remove a translation entry from an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec translation-remove CONTEXT_ID TRANSLATION_ID \n\n  从 IPSEC 隧道上下文中除去转换条目。\n\n  应该发起单独的配置请求，\n  以在网络设备上实现更改。"
+    "translation": "${COMMAND_NAME} sl ipsec translation-remove CONTEXT_ID TRANSLATION_ID \n\n  从 IPSEC 隧道上下文中除去转换条目。\n\n  应该发起单独的配置请求，以在网络设备上实现更改。"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [OPTIONS]\n\n  Update an address translation for an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [OPTIONS]\n\n  更新 IPSEC 隧道上下文的地址转换。\n\n  应该发起单独的配置请求，\n  以在网络设备上实现更改。"
+    "translation": "${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [OPTIONS]\n\n  更新 IPSEC 隧道上下文的地址转换。\n\n  应该发起单独的配置请求，以在网络设备上实现更改。"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  更新隧道上下文属性。\n\n  更新会自动进行，所以要么全部接受，要么全部不接受。\n\n  密钥生存期值必须在 120-172800 范围内。\n\n  第 2 阶段完美前向保密必须位于 0-1 范围内。\n\n  应该发起单独的配置请求，\n  以在网络设备上实现更改。"
+    "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  更新隧道上下文属性。\n\n  更新会自动进行，所以要么全部接受，要么全部不接受。\n\n  密钥生存期值必须在 120-172800 范围内。\n\n  第 2 阶段完美前向保密必须位于 0-1 范围内。\n\n  应该发起单独的配置请求，以在网络设备上实现更改。"
   },
   {
     "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
@@ -453,7 +453,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
-    "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t注：一旦发出升级请求后，经典基础架构服务会自动重新引导\n  \t实例。此实例在升级事务完成之前会一直停止。\n  \t但是，对于网络，无需重新引导。\n\n示例：\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   此命令升级标识为 12345678 的虚拟服务器实例，并将 CPU 核心数设置为 8，内存设置为 8192M，网络端口速度设置为 1000 Mbps。"
+    "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n注：一旦发出升级请求后，经典基础架构服务会自动重新引导实例。此实例在升级事务完成之前会一直停止。\n  但是，对于网络，无需重新引导。\n\n示例：\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   此命令升级标识为 12345678 的虚拟服务器实例，并将 CPU 核心数设置为 8，内存设置为 8192M，网络端口速度设置为 1000 Mbps。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
@@ -501,7 +501,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n 此命令可立即取消标识为 12345678 的快照，而不要求确认。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n 此命令立即取消标识为 12345678 的快照，而不要求确认。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
@@ -541,23 +541,23 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   此命令可立即取消标识为 12345678 的卷，而不要求确认。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   此命令立即取消标识为 12345678 的卷，而不要求确认。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n 此命令显示通过复制标识为 12345678 的卷来订购新卷。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   此命令显示通过复制标识为 12345678 的卷来订购新卷。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\n示例：\n${COMMAND_NAME} sl {{.storageType}} volume-limits\n 此命令列出此帐户的每个数据中心的存储限制。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\n示例：\n  ${COMMAND_NAME} sl {{.storageType}} volume-limits\n 此命令列出此帐户的每个数据中心的存储限制。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n 此命令列出当前帐户上位于 dal09 处的所有耐久性卷，并按容量进行排序。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   此命令列出当前帐户上位于 dal09 处的所有耐久性卷，并按容量进行排序。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   示例：\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n 此命令修改卷 12345678，其大小为 1000GB，IOPS 为 4000。\n ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 -- new-size 500 -- new-tier 4\n 此命令修改卷 12345678，其大小为 500GB，层级别为 4 IOPS/GB。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   示例：\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n  此命令修改卷 12345678，其大小为 1000GB，IOPS 为 4000.\n   ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 -- new-size 500 -- new-tier 4\n  此命令修改卷 12345678，其大小为 500GB，层级别为 4 IOPS/GB。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
@@ -573,7 +573,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n示例：\n${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n 使用来自其父 SNAPSHOT_ID 的快照刷新重复的 VOLUME_ID。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n示例：\n ${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n 使用来自其父 SNAPSHOT_ID 的快照刷新重复的 VOLUME_ID。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
@@ -788,6 +788,22 @@
     "translation": "要使用的 <hostname>.<domain.name.tld> 格式化名称。 为每个服务器指定一个 fqdn（允许多次出现）[必需]"
   },
   {
+    "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "所需服务器的 Hardware_Server.id 或 UUID 值。 A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>"
+  },
+  {
+    "id": "A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.",
+    "translation": "Network_Subnet_IpAddress.id ，点分四组 IPv4 地址或完整或压缩的 IPv6 地址。"
+  },
+  {
+    "id": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ",
+    "translation": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 -路由器名称可以选择包含 \"a\" 或 \"b\" 冗余限定符 "
+  },
+  {
+    "id": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "所需服务器的 Virtual_Guest.id 或 UUID 值。 A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>"
+  },
+  {
     "id": "A custom name to be assigned to the quote (optional)",
     "translation": "要分配给报价的定制名称（可选）"
   },
@@ -998,6 +1014,14 @@
   {
     "id": "Allocation",
     "translation": "分配"
+  },
+  {
+    "id": "Allotment",
+    "translation": "分配"
+  },
+  {
+    "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
+    "translation": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n"
   },
   {
     "id": "Amount",
@@ -1446,6 +1470,10 @@
   {
     "id": "Certificate signing request not found",
     "translation": "找不到证书签名请求"
+  },
+  {
+    "id": "Change how a secondary subnet is routed.",
+    "translation": "更改辅助子网的路由方式。"
   },
   {
     "id": "Changes a password for a volume's access",
@@ -2856,6 +2884,10 @@
     "translation": "未能删除标记：{{.tag}}。"
   },
   {
+    "id": "Failed to delete User Customer Notification.",
+    "translation": "未能删除用户客户通知。"
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "未能删除凭证：{{.storageID}}。\n"
   },
@@ -3132,8 +3164,16 @@
     "translation": "未能获取声明事件。"
   },
   {
+    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
+    "translation": "未能获取硬件服务器 {{.ID}}的带宽分配详细信息。\n"
+  },
+  {
     "id": "Failed to get bare metal servers.\n",
     "translation": "未能获取 Bare Metal Server。\n"
+  },
+  {
+    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
+    "translation": "无法获取硬件服务器 {{.ID}}的计费周期带宽使用情况。\n"
   },
   {
     "id": "Failed to get billing items.",
@@ -4648,6 +4688,10 @@
     "translation": "应该生成快照的时刻，值为整数 0 到 23"
   },
   {
+    "id": "Hourly",
+    "translation": "每小时"
+  },
+  {
     "id": "How many invoices to get back. [default: 50]",
     "translation": "要退回多少张发票。 [缺省值：50]"
   },
@@ -4824,6 +4868,10 @@
     "translation": "从对象存储器导入映像"
   },
   {
+    "id": "In GB",
+    "translation": "(GB)"
+  },
+  {
     "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
     "translation": "在 cache 选项中，如果选择“include-specified”或“ignore-specified”，请也使用此选项来添加描述，例如，--cache include-specified --cache-description description。"
   },
@@ -4934,6 +4982,10 @@
   {
     "id": "Invalid format date.",
     "translation": "格式日期无效。"
+  },
+  {
+    "id": "Invalid input for",
+    "translation": "输入无效"
   },
   {
     "id": "Invalid input for '{{.Name}}'. It must be a positive integer.",
@@ -5110,6 +5162,10 @@
   {
     "id": "Last Updated",
     "translation": "上次更新时间"
+  },
+  {
+    "id": "Last transaction",
+    "translation": "上次事务处理"
   },
   {
     "id": "Legacy",
@@ -5402,6 +5458,10 @@
   {
     "id": "Lists billing items with some other useful information.",
     "translation": "列出计费项以及一些其他有用信息。"
+  },
+  {
+    "id": "Lists the prices for each item in this preset",
+    "translation": "列出此预设中每个商品的价格"
   },
   {
     "id": "Lists the storage limits per datacenter for this account.",
@@ -5924,6 +5984,10 @@
     "translation": "打开数"
   },
   {
+    "id": "Operating System Code",
+    "translation": "操作系统代码"
+  },
+  {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
     "translation": "为其订购副本的主卷的操作系统类型（例如，LINUX）[可选]，选项为：HYPER_V、LINUX、VMWARE、WINDOWS_2008、WINDOWS_GPT、WINDOWS 或 XEN"
   },
@@ -6102,6 +6166,10 @@
   {
     "id": "Other",
     "translation": "其他"
+  },
+  {
+    "id": "Out GB",
+    "translation": "输出 GB"
   },
   {
     "id": "Owner",
@@ -6434,6 +6502,10 @@
   {
     "id": "Price ID not found",
     "translation": "找不到价格标识"
+  },
+  {
+    "id": "Price Id",
+    "translation": "价格标识"
   },
   {
     "id": "Price Rate",
@@ -6784,6 +6856,14 @@
     "translation": "从 IPSec 中除去转换条目"
   },
   {
+    "id": "Remove a user VS notification entry.",
+    "translation": "除去用户 VS 通知条目。"
+  },
+  {
+    "id": "Remove a user hardware notification entry.",
+    "translation": "除去用户硬件通知条目。"
+  },
+  {
     "id": "Remove access from a user to an specific device",
     "translation": "除去用户对特定设备的访问权"
   },
@@ -6810,6 +6890,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "除去帐户上的空标记。"
+  },
+  {
+    "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
+    "translation": "除去指定子网的路由，将其转换为不可路由的可移植子网。"
   },
   {
     "id": "Removing Tag: {{.tag}}.",
@@ -6870,6 +6954,10 @@
   {
     "id": "Restore block volume using a given snapshot",
     "translation": "使用给定快照复原块卷"
+  },
+  {
+    "id": "Restriction",
+    "translation": "限制"
   },
   {
     "id": "Result limit",
@@ -7466,6 +7554,10 @@
   {
     "id": "Successfully device firmware reflashed",
     "translation": "已成功重刷设备固件"
+  },
+  {
+    "id": "Successfully removed User Customer notification.",
+    "translation": "已成功除去用户客户通知。"
   },
   {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -8277,7 +8369,7 @@
   },
   {
     "id": "Title",
-    "translation": "标题"
+    "translation": "职位"
   },
   {
     "id": "To add Datacenter",
