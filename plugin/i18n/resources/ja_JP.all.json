@@ -53,7 +53,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
-    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl dedicatedhost create-options \n \n 使用可能なプライベート VLAN のリストを取得するには、次のコマンドを使用します。${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 -- フレーバー 56_CORES_X_242_RAM_X_1_4_TB\""
+    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl dedicatedhost create-options \n \n 使用可能なプライベート VLAN のリストを取得するには、次のコマンドを使用します。${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor  56_CORES_X_242_RAM_X_1_4_TB\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
@@ -101,7 +101,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl ファイアウォールの詳細 IDENTIFIER [OPTIONS] \n \n 例: \n${COMMAND_NAME} sl ファイアウォールの詳細 vs:12345\n${COMMAND_NAME} sl ファイアウォールの詳細 server:234567\n${COMMAND_NAME} sl ファイアウォールの詳細 vlan:345678\n${COMMAND_NAME} sl ファイアウォールの詳細 multiVlan:456789"
+    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\n例: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
@@ -413,7 +413,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\n例:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nこのコマンドは、名前が myvsi、backendRouterId 1234567、フレーバー C1_2X2_1_YEAR_TERM の予約済み容量インスタンスと 2 つのインスタンスを注文します。\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nこのコマンドは、実際に注文を出す前に、上記のオプションで注文が有効かどうかをテストします。\n\n警告: 予約済み容量は年間契約であり、契約が終了するまでキャンセルすることはできません。"
+    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\n例:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nこのコマンドは、名前が myvsi、backendRouterId 1234567、フレーバー C1_2X2_1_YEAR_TERM の予約済み容量インスタンスと 2 つのインスタンスを注文します。\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nこのコマンドは、実際にオーダーを出す前に、上記のオプションで注文が有効かどうかをテストします。\n\n警告: 予約済み容量は年間契約であり、契約が終了するまでキャンセルすることはできません。"
   },
   {
     "id": "${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   This command captures virtual server instance with ID of 12345678 with all disks into an image named \"mycloud\" with note \"testing\".",
@@ -421,7 +421,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\tThis command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,\n\toperation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\tThis command tests whether the order is valid with above options before the order is actually placed.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\tThis command exports above options to a file: myvsi.txt under user home directory for later use.",
-    "translation": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\n例:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\tこのコマンドは、Virtual Server インスタンスを注文します。それは、ホスト名が myvsi、ドメインが ibm.com、cpu コアが 4 つ、メモリーが 4096 M であり、データ・センター dal10 に置かれていて、\n\tオペレーション・システムは UBUNTU 16 64 ビット、ディスクは 2 個あり、1 つは 100 G、もう 1 つは 1000 G であり、ID 413 のパブリック vlan に置かれています。\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\tこのコマンドは、上のオプションでの注文が実際に行われる前に、この注文が有効かどうかをテストします。\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\tこのコマンドは、上のオプションを後で使用できるように、ユーザーのホーム・ディレクトリーの下にあるファイル myvsi.txt にエクスポートします。"
+    "translation": "${COMMAND_NAME} sl vs create [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\nこのコマンドは、Virtual Server インスタンスを注文します。それは、ホスト名が myvsi、ドメインが ibm.com、cpu コアが 4 つ、メモリーが 4096 M であり、データ・センター dal10 に置かれていて、\nオペレーション・システムは UBUNTU 16 64 ビット、ディスクは 2 個あり、1 つは 100 G、もう 1 つは 1000 G であり、ID 413 のパブリック vlan に置かれています。\n${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\nこのコマンドは、上のオプションでの注文が実際に行われる前に、このオーダーが有効かどうかをテストします。\n${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\nこのコマンドは、上のオプションを後で使用できるように、ユーザーのホーム・ディレクトリーの下にあるファイル myvsi.txt にエクスポートします。"
   },
   {
     "id": "${COMMAND_NAME} sl vs dns-sync IDENTIFIER [OPTIONS]\n   Note: If you don't specify any arguments, it will attempt to update both the A\n   and PTR records. If you don't want to update both records, you may use the\n   -a or --ptr arguments to limit the records updated.\n \nEXAMPLE:\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --a-record --ttl 3600\n   This command synchronizes A record(IP V4 address) of virtual server instance with ID 12345678 to DNS server and sets ttl of this A record to 3600.\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --aaaa-record --ptr\n   This command synchronizes both AAAA record(IP V6 address) and PTR record of virtual server instance with ID 12345678 to DNS server.",
@@ -457,7 +457,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
-    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\n日時形式は「2006-01-02」、「2006-01-02T15:04」、「2006-01-02T15:04-07:00」のいずれかです。\n\n一部の丸めと日付配置の詳細により、結果はコントロール・ポータルの結果と若干異なる場合があります。\n帯域幅はGB単位でリストされ、タイム・ゾーンが指定されていない場合はGMT+0とみなされます。\n\n例::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
@@ -493,7 +493,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   このコマンドは、 層レベルが4、OSタイプがLinux (dal09に配置)でDAILYレプリケーションを実施する、ID 12345678のボリュームのレプリカを注文します。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
@@ -529,15 +529,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_IDは、次のコマンドで得られるhost_idです。ibmcloud sl {{.storageType}} access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_IDは、次のコマンドで得られるhost_idです。ibmcloud sl {{.storageType}} access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_IDは、次のコマンドで得られるhost_idです。ibmcloud sl {{.storageType}} access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
@@ -557,11 +557,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   例:\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n  このコマンドは、サイズが1000GB、IOPSが4000のボリュームを変更します。\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n  このコマンドは、サイズが500GB、層レベルが4 IOPS/GBのボリューム 12345678を変更します。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} volume-options \n このコマンドは、ストレージ・タイプ、ボリューム・サイズ、OS タイプ、IOPS、Tier レベル、データ・センター、およびスナップショット・サイズなど、ブロック・ストレージ・ボリュームを作成するためのすべてのオプションをリストします。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} volume-options \n このコマンドは、ストレージ・タイプ、ボリューム・サイズ、OS タイプ、IOPS、層レベル、データ・センター、およびスナップショット・サイズなど、ブロック・ストレージ・ボリュームを作成するためのすべてのオプションをリストします。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.",
@@ -569,7 +569,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} volume-order -- storage-type performance -- size 1000 -- iops 4000 -- os-type LINUX -d dal09\n このコマンドは、サイズが 1000GB、IOPS が 4000、OS タイプが LINUX のパフォーマンス・ボリュームを注文します。 dal09.\n ${COMMAND_NAME} sl {{.storageType}} volume-order -- storage-type endurance -- size 500 -- tier 4 -- os-type XEN -d dal09 -- snapshot-size 500\n このコマンドは、サイズが 500GB、層レベルが 4 IOPS/GB、OS タイプが XEN ( dal09に配置)、追加のスナップショット・スペース・サイズが 500GBのエンデュランス・ボリュームを注文します。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} volume-order -- storage-type performance -- size 1000 -- iops 4000 -- os-type LINUX -d dal09\n このコマンドは、サイズが 1000GB、IOPS が 4000、OS タイプが LINUX (dal09に配置)のパフォーマンス・ボリュームを注文します。\n ${COMMAND_NAME} sl {{.storageType}} volume-order -- storage-type endurance -- size 500 -- tier 4 -- os-type XEN -d dal09 -- snapshot-size 500\n このコマンドは、サイズが 500GB、層レベルが 4 IOPS/GB、OS タイプが XEN ( dal09に配置)、追加のスナップショット・スペース・サイズが 500GBのエンデュランス・ボリュームを注文します。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
@@ -581,7 +581,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 -- これはマイ・ノートです '"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\n例:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'"
   },
   {
     "id": "%s is not a valid permission",
@@ -786,6 +786,22 @@
   {
     "id": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]",
     "translation": "<hostname>.<domain.name.tld> 使用するフォーマット済みの名前。 サーバーごとに 1 つの fqdn を指定します (複数のオカレンスが許可されます) [必須]"
+  },
+  {
+    "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "目的のサーバーの Hardware_Server.id または UUID 値。 固有の完全修飾ドメイン名に対応する \n 値。形式は「hostname < domain>」です。ここで、< および> はリテラルです。例: myhost < mydomain.com>"
+  },
+  {
+    "id": "A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.",
+    "translation": "Network_Subnet_IpAddress.id、A ドット付きクワッド IPv4 アドレス、または A フルまたは圧縮 IPv6 アドレス。"
+  },
+  {
+    "id": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ",
+    "translation": "希望する VLAN の Network_Vlan.id 値、または < data center short name>. < router>. < vlan number>, ¥ neg の形式のセマンティック VLAN ID。 dal13.fcr01.1234 -ルーター名には、オプションで「a」または「b」の冗長修飾子を含めることができます。 "
+  },
+  {
+    "id": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "目的のサーバーの Virtual_Guest.id または UUID 値。 固有の完全修飾ドメイン名に対応する \n 値。形式は「hostname < domain>」です。ここで、< および> はリテラルです。例: myhost < mydomain.com>"
   },
   {
     "id": "A custom name to be assigned to the quote (optional)",
@@ -998,6 +1014,14 @@
   {
     "id": "Allocation",
     "translation": "割り振り"
+  },
+  {
+    "id": "Allotment",
+    "translation": "割り当て"
+  },
+  {
+    "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
+    "translation": "セカンダリー・サブネットの経路を変更できます。\n サブネットは静的またはポータブルとしてルーティングでき、その指定は指定されたルーティング宛先によって決定されます。\n 静的サブネットは、単一の IP アドレスの最終的なルーティング宛先を持ちますが、サブネットが Statictable として最終的にルーティングされる既存のサブネットの IP アドレスにはルーティングできません。\n サブネットの最終的なルーティング先を持つサブネット宛先を持つサブネット 通常は単一のデータ・センターに制限されます。\n \n 以下も参照してください。https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n ${COMMAND_NAME} sl subnet route 1234567 -- ip 11.22.33.44\n ${COMMAND_NAME} sl subnet route 1234567 -- server myUniqueHostname < domain.com> \n ${COMMAND_NAME} sl subnet route 1234567 -- vsi vsiId \n ${COMMAND_NAME} sl"
   },
   {
     "id": "Amount",
@@ -1446,6 +1470,10 @@
   {
     "id": "Certificate signing request not found",
     "translation": "証明書署名要求が見つかりませんでした"
+  },
+  {
+    "id": "Change how a secondary subnet is routed.",
+    "translation": "セカンダリー・サブネットのルーティング方法を変更します。"
   },
   {
     "id": "Changes a password for a volume's access",
@@ -2029,7 +2057,7 @@
   },
   {
     "id": "Dedicated Virtual Host Flavor(s)",
-    "translation": "専用仮想ホスト・フレーバー (Dedicated Virtual Host Flavor (s))"
+    "translation": "専用仮想ホスト・フレーバー"
   },
   {
     "id": "Dedicated Virtual Host flavor (requires --datacenter) e.g. 56_CORES_X_242_RAM_X_1_4_TB",
@@ -2129,7 +2157,7 @@
   },
   {
     "id": "Devices",
-    "translation": "装置"
+    "translation": "デバイス"
   },
   {
     "id": "Direction",
@@ -2289,11 +2317,11 @@
   },
   {
     "id": "EXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
-    "translation": "EXAMPLE: \n${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\nThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13"
+    "translation": "例: \n${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\nこのコマンドは、 4つのCPU、16 GBのRAM、100 GBのSANディスク、Ubuntu 16.04、1 Gbpsのパブリック&プライベート・アップリンク(dal13内)の時間単位のVSIを注文します"
   },
   {
     "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
-    "translation": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13"
+    "translation": "例: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    このコマンドは、4つのCPU、16 GBのRAM、100 GBのSANディスク、Ubuntu 16.04、1 Gbpsのパブリック&プライベート・アップリンク(データセンターdal13内)のVSIに見積もりを配置します"
   },
   {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
@@ -2856,6 +2884,10 @@
     "translation": "タグ{{.tag}}の削除に失敗しました。"
   },
   {
+    "id": "Failed to delete User Customer Notification.",
+    "translation": "ユーザー・カスタマー通知の削除に失敗しました。"
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "資格情報の削除に失敗しました: {{.storageID}}。\n"
   },
@@ -3132,8 +3164,16 @@
     "translation": "アナウンス・イベントの取得に失敗しました。"
   },
   {
+    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
+    "translation": "ハードウェア・サーバー {{.ID}}の帯域幅割り当ての詳細を取得できませんでした。\n"
+  },
+  {
     "id": "Failed to get bare metal servers.\n",
     "translation": "ベアメタル・サーバーを取得できませんでした。\n"
+  },
+  {
+    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
+    "translation": "ハードウェア・サーバー {{.ID}}の請求サイクル帯域幅使用量を取得できませんでした。\n"
   },
   {
     "id": "Failed to get billing items.",
@@ -4261,7 +4301,7 @@
   },
   {
     "id": "Filter private vlans by Datacenter shortname e.g. ams01, (requires --flavor)",
-    "translation": "プライベート VLAN をデータ・センターの短縮名でフィルタリングします (例: ams01, (requires -- フレーバー))"
+    "translation": "プライベート VLAN をデータ・センターの短縮名でフィルタリングします (例: ams01, (--flavorが必要))"
   },
   {
     "id": "Filtered by Id of user who owns the instances",
@@ -4648,6 +4688,10 @@
     "translation": "0 から 23 までの整数で表した、スナップショットが作成される時刻"
   },
   {
+    "id": "Hourly",
+    "translation": "毎時"
+  },
+  {
     "id": "How many invoices to get back. [default: 50]",
     "translation": "返送する請求書の数。 [デフォルト: 50]"
   },
@@ -4697,7 +4741,7 @@
   },
   {
     "id": "IDENTIFIER TARGET",
-    "translation": "ID ターゲット"
+    "translation": "IDENTIFIER TARGET"
   },
   {
     "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
@@ -4824,6 +4868,10 @@
     "translation": "Object Storage からイメージをインポートします"
   },
   {
+    "id": "In GB",
+    "translation": "GB 単位"
+  },
+  {
     "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
     "translation": "キャッシュ・オプションで「include-specified」または「ignore-specified」を選択した場合は、このオプションを使用して説明も追加してください (例: --cache include-specified --cache-description)。"
   },
@@ -4934,6 +4982,10 @@
   {
     "id": "Invalid format date.",
     "translation": "フォーマット日付が無効です。"
+  },
+  {
+    "id": "Invalid input for",
+    "translation": "入力が無効です:"
   },
   {
     "id": "Invalid input for '{{.Name}}'. It must be a positive integer.",
@@ -5073,7 +5125,7 @@
   },
   {
     "id": "LOCATION",
-    "translation": "ロケーション"
+    "translation": "LOCATION"
   },
   {
     "id": "LUN Id",
@@ -5081,7 +5133,7 @@
   },
   {
     "id": "LUN_ID",
-    "translation": "LUN ID"
+    "translation": "LUN_ID"
   },
   {
     "id": "Label",
@@ -5110,6 +5162,10 @@
   {
     "id": "Last Updated",
     "translation": "最終更新日"
+  },
+  {
+    "id": "Last transaction",
+    "translation": "最終トランザクション"
   },
   {
     "id": "Legacy",
@@ -5393,7 +5449,7 @@
   },
   {
     "id": "Lists Email Delivery Service.",
-    "translation": "E メール配信サービスをリストします。"
+    "translation": "Email Delivery Serviceをリストします。"
   },
   {
     "id": "Lists account orders.",
@@ -5402,6 +5458,10 @@
   {
     "id": "Lists billing items with some other useful information.",
     "translation": "請求アイテムとその他の有用な情報をリストします。"
+  },
+  {
+    "id": "Lists the prices for each item in this preset",
+    "translation": "この事前設定の各アイテムの価格をリストします"
   },
   {
     "id": "Lists the storage limits per datacenter for this account.",
@@ -5845,7 +5905,7 @@
   },
   {
     "id": "OPTIONS",
-    "translation": "オプション"
+    "translation": "OPTIONS"
   },
   {
     "id": "ORDER_ITEM1 ORDER_ITEM2 ORDER_ITEM3 ORDER_ITEM4...",
@@ -5922,6 +5982,10 @@
   {
     "id": "Opens",
     "translation": "オープンの数"
+  },
+  {
+    "id": "Operating System Code",
+    "translation": "オペレーティング・システム・コード"
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -6104,20 +6168,24 @@
     "translation": "その他"
   },
   {
+    "id": "Out GB",
+    "translation": "出力 GB"
+  },
+  {
     "id": "Owner",
     "translation": "所有者"
   },
   {
     "id": "PACKAGE_KEYNAME",
-    "translation": "パッケージ・キー名"
+    "translation": "PACKAGE_KEYNAME"
   },
   {
     "id": "PASSWORD",
-    "translation": "パスワード"
+    "translation": "PASSWORD"
   },
   {
     "id": "PLACEMENTGROUP_ID",
-    "translation": "プレースメント・グループ ID"
+    "translation": "PLACEMENTGROUP_ID"
   },
   {
     "id": "POD",
@@ -6434,6 +6502,10 @@
   {
     "id": "Price ID not found",
     "translation": "価格 ID が見つかりませんでした"
+  },
+  {
+    "id": "Price Id",
+    "translation": "価格 ID"
   },
   {
     "id": "Price Rate",
@@ -6784,6 +6856,14 @@
     "translation": "IPSec から変換項目を削除します"
   },
   {
+    "id": "Remove a user VS notification entry.",
+    "translation": "ユーザー VS 通知項目を除去します。"
+  },
+  {
+    "id": "Remove a user hardware notification entry.",
+    "translation": "ユーザー・ハードウェア通知項目を除去します。"
+  },
+  {
     "id": "Remove access from a user to an specific device",
     "translation": "ユーザーから特定のデバイスへのアクセス権限を削除する"
   },
@@ -6810,6 +6890,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "アカウントから空のタグを削除します。"
+  },
+  {
+    "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
+    "translation": "指定されたサブネットのルーティングを削除し、ルーティングされていないポータブル・サブネットにします。"
   },
   {
     "id": "Removing Tag: {{.tag}}.",
@@ -6870,6 +6954,10 @@
   {
     "id": "Restore block volume using a given snapshot",
     "translation": "指定されたスナップショットを使用してブロック・ボリュームをリストアします"
+  },
+  {
+    "id": "Restriction",
+    "translation": "制約事項"
   },
   {
     "id": "Result limit",
@@ -7017,7 +7105,7 @@
   },
   {
     "id": "SUBNET_TYPE",
-    "translation": "サブネット・タイプ"
+    "translation": "SUBNET_TYPE"
   },
   {
     "id": "Sales",
@@ -7468,6 +7556,10 @@
     "translation": "デバイス・ファームウェアが正常に再フラッシュされました"
   },
   {
+    "id": "Successfully removed User Customer notification.",
+    "translation": "ユーザー・カスタマー通知が正常に削除されました。"
+  },
+  {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "サブネット ID {{.subnetID}}を許可されたホスト ID {{.accessID}}に正常に削除しました"
   },
@@ -7529,7 +7621,7 @@
   },
   {
     "id": "TRANSLATION_ID",
-    "translation": "送信者の ID"
+    "translation": "TRANSLATION_ID"
   },
   {
     "id": "TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200",

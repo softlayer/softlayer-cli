@@ -33,7 +33,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER",
-    "translation": "${COMMAND_NAME} sl loadbal ns-detail [OPTIONEN] ID"
+    "translation": "${COMMAND_NAME} sl loadbal ns-detail [OPTIONEN] IDENTIFIER"
   },
   {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
@@ -521,7 +521,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order DATENTRÄGER_ID [OPTIONEN]\n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4\n Dieser Befehl bestellt Snapshotspeicherplatz für den Datenträger mit der ID 12345678, die Größe beträgt 1000GB, die Tierebene beträgt 4 IOPS pro GB."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order DATENTRÄGER_ID [OPTIONEN]\n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4\n Dieser Befehl bestellt Snapshotspeicherplatz für den Datenträger mit der ID 12345678, die Größe beträgt 1000 GB, die Tierebene beträgt 4 IOPS pro GB."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
@@ -557,7 +557,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify DATENTRÄGER_ID [OPTIONEN]\n\n BEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n Dieser Befehl ändert einen Datenträger 12345678 mit der Größe 1000GB, E/A-Operationen pro Sekunde sind 4000.\n ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n Dieser Befehl ändert einen Datenträger 12345678 mit einer Größe von 500GB und einer Tierebene von 4 E/A-Operationen pro Sekunde pro GB."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify DATENTRÄGER_ID [OPTIONEN]\n\n BEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n Dieser Befehl ändert einen Datenträger 12345678 mit der Größe 1000 GB, E/A-Operationen pro Sekunde sind 4000.\n ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n Dieser Befehl ändert einen Datenträger 12345678 mit einer Größe von 500 GB und einer Tierebene von 4 E/A-Operationen pro Sekunde pro GB."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
@@ -569,7 +569,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONEN]\n\nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n Dieser Befehl bestellt einen Leistungsdatenträger mit der Größe 1000GB, IOPS 4000, OS LINUX, dal09.\n ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n Dieser Befehl bestellt einen Endurance-Datenträger mit der Größe 500GB, die Tierebene ist 4 E/A-Operationen pro Sekunde pro GB, der Betriebssystemtyp ist XEN, befindet sich in dal09 und die Größe des zusätzlichen Snapshotbereichs ist 500GB."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONEN]\n\nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n Dieser Befehl bestellt einen Leistungsdatenträger mit der Größe 1000 GB, IOPS 4000, OS LINUX, dal09.\n ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n Dieser Befehl bestellt einen Endurance-Datenträger mit der Größe 500 GB, die Tierebene ist 4 E/A-Operationen pro Sekunde pro GB, der Betriebssystemtyp ist XEN, befindet sich in dal09 und die Größe des zusätzlichen Snapshotbereichs ist 500 GB."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
@@ -788,6 +788,22 @@
     "translation": "<hostname>.<domain.name.tld>-formatierter Name, der verwendet werden soll. Geben Sie einen vollständig qualifizierten Domänennamen pro Server an (Mehrfachvorkommen zulässig) [erforderlich]."
   },
   {
+    "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "Ein Hardware_Server.id-oder UUID-Wert des gewünschten Servers. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>"
+  },
+  {
+    "id": "A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.",
+    "translation": "Eine Network_Subnet_IpAddress.id, eine IPv4 -Adresse mit Trennzeichen oder eine vollständige oder komprimierte IPv6 -Adresse."
+  },
+  {
+    "id": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ",
+    "translation": "Ein Network_Vlan.id-Wert des gewünschten VLAN oder eine semantische VLAN-ID im Format < Kurzname des Rechenzentrums >. < Router>. < VLAN-Nummer>, \neg. dal13.fcr01.1234 -Der Routername kann optional das Redundanzqualifikationsmerkmal 'a' oder 'b' enthalten "
+  },
+  {
+    "id": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "Ein Virtual_Guest.id-oder UUID-Wert des gewünschten Servers. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>"
+  },
+  {
     "id": "A custom name to be assigned to the quote (optional)",
     "translation": "Benutzerdefinierter Name, der dem Angebot zugewiesen werden kann (optional)"
   },
@@ -998,6 +1014,14 @@
   {
     "id": "Allocation",
     "translation": "Zuordnung"
+  },
+  {
+    "id": "Allotment",
+    "translation": "Zuteilung"
+  },
+  {
+    "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
+    "translation": "Ermöglicht Ihnen, die Route Ihrer sekundären Teilnetze zu ändern. \nTeilnetze können als statisch oder portierbar weitergeleitet werden und diese Bezeichnung wird durch das angegebene Routing-Ziel vorgegeben. \nStatische Teilnetze haben ein endgültiges Routing-Ziel einer einzelnen IP-Adresse, können aber nicht an die IP-Adresse eines vorhandenen Teilnetzes weitergeleitet werden, dessen Teilnetz als statisch weitergeleitet wird. \nPortierbare Teilnetze haben ein endgültiges Routing-Ziel eines VLAN. \nEin Teilnetz kann an eine beliebige Ressource in derselben Routing-Region wie das Teilnetz selbst weitergeleitet werden. normalerweise auf ein einzelnes Rechenzentrum beschränkt. \n \nSiehe auch: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n ${COMMAND_NAME} sl subnet route 1234567 -- ip 11.22.33.44\n ${COMMAND_NAME} sl subnet route 1234567 -- server myUniqueHostname < domain.com> \n ${COMMAND_NAME} sl subnet route 1234567 -- vsi vsiId \n ${COMMAND_NAME} sl subnet route 1234567 -- vlan vlanId \n \n"
   },
   {
     "id": "Amount",
@@ -1446,6 +1470,10 @@
   {
     "id": "Certificate signing request not found",
     "translation": "Zertifikatssignieranforderung nicht gefunden"
+  },
+  {
+    "id": "Change how a secondary subnet is routed.",
+    "translation": "Ändern Sie, wie ein sekundäres Teilnetz weitergeleitet wird."
   },
   {
     "id": "Changes a password for a volume's access",
@@ -2856,6 +2884,10 @@
     "translation": "Löschen des Tags {{.tag}} fehlgeschlagen."
   },
   {
+    "id": "Failed to delete User Customer Notification.",
+    "translation": "Benutzerkundenbenachrichtigung konnte nicht gelöscht werden."
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "Berechtigungsnachweis konnte nicht gelöscht werden: {{.storageID}}. \n"
   },
@@ -3132,8 +3164,16 @@
     "translation": "Abrufen von Ankündigungsereignissen fehlgeschlagen."
   },
   {
+    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
+    "translation": "Das Abrufen der Details zur Bandbreitenzuteilung für den Hardwareserver {{.ID}}ist fehlgeschlagen. \n"
+  },
+  {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Bare-Metal-Server konnten nicht abgerufen werden.\n"
+  },
+  {
+    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
+    "translation": "Die Bandbreitennutzung für den Abrechnungszyklus für den Hardwareserver {{.ID}}konnte nicht abgerufen werden. \n"
   },
   {
     "id": "Failed to get billing items.",
@@ -4648,6 +4688,10 @@
     "translation": "Stunde des Tages, zu der Snapshots erfasst werden sollten; Ganzzahl zwischen 0 und 23"
   },
   {
+    "id": "Hourly",
+    "translation": "Stündlich"
+  },
+  {
     "id": "How many invoices to get back. [default: 50]",
     "translation": "Wie viele Rechnungen sollen zurückgegeben werden? [Standardwert: 50]"
   },
@@ -4824,6 +4868,10 @@
     "translation": "Image aus einem Objektspeicher importieren"
   },
   {
+    "id": "In GB",
+    "translation": "in GB"
+  },
+  {
     "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
     "translation": "Wenn Sie in der Option \"cache\" die Option \"include-specified\" oder \"ignore-specified\" auswählen, fügen Sie mit dieser Option auch eine Beschreibung hinzu. Beispiel: --cache include-specified --cache-description Beschreibung."
   },
@@ -4934,6 +4982,10 @@
   {
     "id": "Invalid format date.",
     "translation": "Ungültiges Formatdatum."
+  },
+  {
+    "id": "Invalid input for",
+    "translation": "Ungültige Eingabe für"
   },
   {
     "id": "Invalid input for '{{.Name}}'. It must be a positive integer.",
@@ -5110,6 +5162,10 @@
   {
     "id": "Last Updated",
     "translation": "Letzte Aktualisierung"
+  },
+  {
+    "id": "Last transaction",
+    "translation": "Letzte Transaktion"
   },
   {
     "id": "Legacy",
@@ -5402,6 +5458,10 @@
   {
     "id": "Lists billing items with some other useful information.",
     "translation": "Listet Rechnungspositionen mit einigen anderen nützlichen Informationen auf."
+  },
+  {
+    "id": "Lists the prices for each item in this preset",
+    "translation": "Listet die Preise für jeden Artikel in dieser Voreinstellung auf"
   },
   {
     "id": "Lists the storage limits per datacenter for this account.",
@@ -5873,7 +5933,7 @@
   },
   {
     "id": "Object",
-    "translation": "Object"
+    "translation": "Objekt"
   },
   {
     "id": "Object filters",
@@ -5922,6 +5982,10 @@
   {
     "id": "Opens",
     "translation": "Öffnungsvorgänge"
+  },
+  {
+    "id": "Operating System Code",
+    "translation": "Betriebssystemcode"
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -6102,6 +6166,10 @@
   {
     "id": "Other",
     "translation": "Sonstige"
+  },
+  {
+    "id": "Out GB",
+    "translation": "Abgehen GB"
   },
   {
     "id": "Owner",
@@ -6434,6 +6502,10 @@
   {
     "id": "Price ID not found",
     "translation": "Preis-ID nicht gefunden"
+  },
+  {
+    "id": "Price Id",
+    "translation": "Preis-ID"
   },
   {
     "id": "Price Rate",
@@ -6784,6 +6856,14 @@
     "translation": "Umsetzungseintrag aus IPSec entfernen"
   },
   {
+    "id": "Remove a user VS notification entry.",
+    "translation": "Entfernt einen Benutzer-VS-Benachrichtigungseintrag."
+  },
+  {
+    "id": "Remove a user hardware notification entry.",
+    "translation": "Entfernt einen Benutzerhardwarebenachrichtigungseintrag."
+  },
+  {
     "id": "Remove access from a user to an specific device",
     "translation": "Zugriff eines Benutzers auf ein bestimmtes Gerät entfernen"
   },
@@ -6810,6 +6890,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "Entfernt einen leeren Tag vom Konto."
+  },
+  {
+    "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
+    "translation": "Entfernt das Routing für ein angegebenes Teilnetz und verwandelt es in ein portierbares Teilnetz ohne Routing."
   },
   {
     "id": "Removing Tag: {{.tag}}.",
@@ -6870,6 +6954,10 @@
   {
     "id": "Restore block volume using a given snapshot",
     "translation": "Blockdatenträger mithilfe eines bestimmten Snapshots wiederherstellen"
+  },
+  {
+    "id": "Restriction",
+    "translation": "Einschränkung"
   },
   {
     "id": "Result limit",
@@ -7466,6 +7554,10 @@
   {
     "id": "Successfully device firmware reflashed",
     "translation": "Für die Einheitenfirmware wurde erfolgreich ein erneutes Flash-Update durchgeführt."
+  },
+  {
+    "id": "Successfully removed User Customer notification.",
+    "translation": "Benutzerkundenbenachrichtigung erfolgreich entfernt."
   },
   {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",

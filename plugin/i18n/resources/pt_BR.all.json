@@ -97,11 +97,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
-    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
+    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXEMPLO: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
   {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
+    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXEMPLO: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
@@ -113,7 +113,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
-    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n Este comando Inclui / Remove datacenter de uma imagem."
+    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXEMPLO:\n${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n Este comando Inclui/Remove um datacenter de uma imagem."
   },
   {
     "id": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\".",
@@ -129,7 +129,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  List IPSEC VPN tunnel context details.\n\n  Additional resources can be joined using multiple instances of the include\n  option, for which the following choices are available.\n\n  at: address translations\n  is: internal subnets\n  rs: remote subnets\n  sr: statically routed subnets\n  ss: service subnets",
-    "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  Listar detalhes de contexto do túnel VPN IPSEC.\n\n  É possível associar recursos adicionais usando múltiplas instâncias da opção include\n, para a qual as opções a seguir estão disponíveis.\n\n  at: conversões de endereço\n  is: sub-redes internas\n  rs: sub-redes remotas\n  sr: sub-redes encaminhadas estaticamente\n  ss: sub-redes de serviço"
+    "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  Listar detalhes de contexto do túnel VPN IPSEC.\n\n  É possível associar recursos adicionais usando múltiplas instâncias da opção include,\n para a qual as opções a seguir estão disponíveis.\n\n  at: conversões de endereço\n  is: sub-redes internas\n  rs: sub-redes remotas\n  sr: sub-redes encaminhadas estaticamente\n  ss: sub-redes de serviço"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  Add a subnet to an IPSEC tunnel context.\n\n  A subnet id may be specified to link to the existing tunnel context.\n\n  Otherwise, a network identifier in CIDR notation should be specified,\n  indicating that a subnet resource should first be created before\n  associating it with the tunnel context. Note that this is only supported\n  for remote subnets, which are also deleted upon failure to attach to a\n  context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
@@ -277,7 +277,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
-    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
+    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXEMPLO: \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
   },
   {
     "id": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.",
@@ -349,7 +349,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
-    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
+    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXEMPLO:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
   {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
@@ -377,7 +377,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXAMPLE: \t\n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Remember to set the permissions and access for this new user.",
-    "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXAMPLE: \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Lembre-se de configurar as permissões e o acesso para este novo usuário."
+    "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXEMPLO: \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Lembre-se de configurar as permissões e o acesso para este novo usuário."
   },
   {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
@@ -405,15 +405,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Este comando lista todas as VLANs na conta atual filtradas por data center iguais a dal09 e as classifica por número de VLAN.\n \nNota: no campo Pod, a inclusão de (*) indica encerramento próximo"
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Este comando lista todas as VLANs na conta atual filtradas por data center iguais a dal09 e as classifica por número de VLAN.\n \nNota: no campo Pod, a inclusão de (*) indica encerramento próximo"
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
-    "translation": "${COMMAND_NAME} sl vs autorizar-storage [OPTIONS] IDENTIFICADOR \n \nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n  Autorizar arquivo, bloco e armazenamento portátil a um servidor virtual."
+    "translation": "${COMMAND_NAME} sl vs autorizar-storage [OPTIONS] IDENTIFICADOR \n \nEXEMPLO:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n  Autorizar arquivo, bloco e armazenamento portátil a um servidor virtual."
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nEste comando faz o pedido de uma instância Reserved Capacity com nome é myvsi, backendRouterId 1234567, tipo C1_2X2_1_YEAR_TERM e 2 instâncias, \n\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nEste comando testa se o pedido é válida com opções acima antes da ordem é realmente colocada. \n \nAVISO: Reserved Capacity está em um contrato anual e não cancelável até que o contrato seja expirado."
+    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXEMPLO:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nEste comando faz o pedido de uma instância Reserved Capacity com nome myvsi, backendRouterId 1234567, tipo C1_2X2_1_YEAR_TERM e 2 instâncias, \n\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nEste comando testa se o pedido é válida com opções acima antes da ordem é realmente colocada. \n \nAVISO: Reserved Capacity está em um contrato anual e não cancelável até que o contrato seja expirado."
   },
   {
     "id": "${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   This command captures virtual server instance with ID of 12345678 with all disks into an image named \"mycloud\" with note \"testing\".",
@@ -437,11 +437,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.",
-    "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n       \nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Gerenciar VSIs que requerem migração. É possível migrar Instância Dedicada a partir de um host dedicado para outro host dedicado também."
+    "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n       \nEXEMPLO:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Gerenciar VSIs que requerem migração. É possível migrar Instância Dedicada a partir de um host dedicado para outro host dedicado também."
   },
   {
     "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXEMPLO:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nEste comando faz o pedido de uma instância do grupo Placement com nome é myvsi, backendRouterId 1234567 e regra 258369"
+    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXEMPLO:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nEste comando faz o pedido de uma instância do grupo Placement com nome myvsi, backendRouterId 1234567 e regra 258369"
   },
   {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
@@ -513,7 +513,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   Esse comando ativa a captura instantânea para o volume com o ID 12345678. A captura é tirada semanalmente todos os domingos às 2h e até cinco capturas instantâneas são retidas."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   Esse comando ativa a captura instantânea para o volume com o ID 12345678. A captura é tirada semanalmente todos os domingos às 2h, e até cinco capturas instantâneas são retidas."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
@@ -788,6 +788,22 @@
     "translation": "Nome <hostname>.<domain.name.tld> formatado para usar. Especifique um fqdn por servidor (múltipla ocorrência permitida) [obrigatório]"
   },
   {
+    "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "Um valor Hardware_Server.id ou UUID do servidor desejado. Um valor correspondente a um nome de domínio exclusivo \ntotalmente qualificado no formato 'hostname < domain>' onde < e> são literais, ex.: myhost < mydomain.com>"
+  },
+  {
+    "id": "A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.",
+    "translation": "Um endereço Network_Subnet_IpAddress.id, Um endereço pontilhado IPv4 , ou um endereço IPv6 completo ou compactado."
+  },
+  {
+    "id": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ",
+    "translation": "Um valor de Network_Vlan.id do VLAN desejada ou Um identificador semântico VLAN do formulário < nome abreviado data center>. < router>. < vlan numer>, \neg. dal13.fcr01.1234 -o nome do roteador pode, opcionalmente, conter o qualificador de redundância 'a' ou 'b' "
+  },
+  {
+    "id": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "Um valor Virtual_Guest.id ou UUID do servidor desejado. Um valor correspondente a um nome de domínio exclusivo \ntotalmente qualificado no formato 'hostname < domain>' onde < e> são literais, ex.: myhost < mydomain.com>"
+  },
+  {
     "id": "A custom name to be assigned to the quote (optional)",
     "translation": "Um nome customizado a ser designado para a cotação (opcional)"
   },
@@ -998,6 +1014,14 @@
   {
     "id": "Allocation",
     "translation": "Alocação"
+  },
+  {
+    "id": "Allotment",
+    "translation": "Colocação"
+  },
+  {
+    "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
+    "translation": "Permite alterar a rota de suas sub-redes secundárias. \nSubredes podem ser encaminhadas como Static ou Portable, e essa designação é ditada pelo destino de roteamento especificado. \nEstadísticas possuem destino de roteamento de um único endereço IP mas podem não ser encaminhadas para um endereço IP de sub-rede existente cuja sub-rede é roteirizada como uma Static. \nsubredes portáteis possuem um destino final de roteamento de uma VLAN. \nA sub-rede pode ser encaminhada para qualquer recurso dentro da mesma 'região de roteamento' como a própria sub-rede, geralmente limitado a um único data center. \n \nVeja Também: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n ${COMMAND_NAME} sl subnet route 1234567 -- ip 11.22.33.44\n ${COMMAND_NAME} sl subnet route 1234567 -- server myUniqueHostname < domain.com> \n ${COMMAND_NAME} sl subnet route 1234567 -- vsi vsiId \n ${COMMAND_NAME} sl subnet route 1234567 -- vlan vlanId \n \n \n"
   },
   {
     "id": "Amount",
@@ -1446,6 +1470,10 @@
   {
     "id": "Certificate signing request not found",
     "translation": "A solicitação de assinatura de certificado não foi localizada"
+  },
+  {
+    "id": "Change how a secondary subnet is routed.",
+    "translation": "Altere como uma sub-rede secundária é roteada."
   },
   {
     "id": "Changes a password for a volume's access",
@@ -2856,6 +2884,10 @@
     "translation": "Falha ao excluir a tag: {{.tag}}."
   },
   {
+    "id": "Failed to delete User Customer Notification.",
+    "translation": "Falha ao excluir Notificação de Cliente do Usuário."
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "Falha ao excluir credencial: {{.storageID}}. \n"
   },
@@ -3132,8 +3164,16 @@
     "translation": "Falha em obter eventos de lançamento."
   },
   {
+    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
+    "translation": "Falha ao obter detalhes de colocação de largura de banda para o servidor de hardware {{.ID}}. \n"
+  },
+  {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Falha em obter servidores bare metal.\n"
+  },
+  {
+    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
+    "translation": "Falha ao obter uso de largura de banda do ciclo de faturamento para o servidor de hardware {{.ID}}. \n"
   },
   {
     "id": "Failed to get billing items.",
@@ -4648,6 +4688,10 @@
     "translation": "Hora do dia em que as capturas instantâneas devem ser obtidas, número inteiro entre 0 e 23"
   },
   {
+    "id": "Hourly",
+    "translation": "A cada hora"
+  },
+  {
     "id": "How many invoices to get back. [default: 50]",
     "translation": "Quantas faturas para receber de volta. [padrão: 50]"
   },
@@ -4824,6 +4868,10 @@
     "translation": "Importar uma imagem de um armazenamento de objeto"
   },
   {
+    "id": "In GB",
+    "translation": "em GB"
+  },
+  {
     "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
     "translation": "Na opção de cache, se você selecionar 'include-specified' ou 'ignore-specified', inclua também uma descrição usando esta opção, por exemplo, a descrição --cache include-specified --cache-description."
   },
@@ -4934,6 +4982,10 @@
   {
     "id": "Invalid format date.",
     "translation": "Formato de data inválido."
+  },
+  {
+    "id": "Invalid input for",
+    "translation": "Entrada inválida para"
   },
   {
     "id": "Invalid input for '{{.Name}}'. It must be a positive integer.",
@@ -5110,6 +5162,10 @@
   {
     "id": "Last Updated",
     "translation": "Última atualização"
+  },
+  {
+    "id": "Last transaction",
+    "translation": "Última transação"
   },
   {
     "id": "Legacy",
@@ -5402,6 +5458,10 @@
   {
     "id": "Lists billing items with some other useful information.",
     "translation": "Lista itens de faturamento com algumas outras informações úteis."
+  },
+  {
+    "id": "Lists the prices for each item in this preset",
+    "translation": "Lista os preços para cada item neste preset"
   },
   {
     "id": "Lists the storage limits per datacenter for this account.",
@@ -5924,6 +5984,10 @@
     "translation": "Abre"
   },
   {
+    "id": "Operating System Code",
+    "translation": "Código do Sistema Operacional"
+  },
+  {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
     "translation": "Tipo de sistema operacional (por exemplo, LINUX) do volume primário para o qual uma réplica é pedida [opcional], as opções são: HYPER_V, LINUX, VMWARE, WINDOWS_2008, WINDOWS_GPT, WINDOWS, XEN"
   },
@@ -6102,6 +6166,10 @@
   {
     "id": "Other",
     "translation": "Outros"
+  },
+  {
+    "id": "Out GB",
+    "translation": "Fora GB"
   },
   {
     "id": "Owner",
@@ -6434,6 +6502,10 @@
   {
     "id": "Price ID not found",
     "translation": "O ID de preço não foi localizado"
+  },
+  {
+    "id": "Price Id",
+    "translation": "ID do preço"
   },
   {
     "id": "Price Rate",
@@ -6784,6 +6856,14 @@
     "translation": "Remover uma entrada de conversão de um Internet Protocol Security"
   },
   {
+    "id": "Remove a user VS notification entry.",
+    "translation": "Remova uma entrada de notificação de VS de usuário."
+  },
+  {
+    "id": "Remove a user hardware notification entry.",
+    "translation": "Remova uma entrada de notificação de hardware do usuário."
+  },
+  {
     "id": "Remove access from a user to an specific device",
     "translation": "Remover o acesso de um usuário a um dispositivo específico"
   },
@@ -6810,6 +6890,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "Remove uma tag vazia da sua conta."
+  },
+  {
+    "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
+    "translation": "Remove o roteamento para uma sub-rede especificada, transformando-a em uma sub-rede portátil não roteada."
   },
   {
     "id": "Removing Tag: {{.tag}}.",
@@ -6870,6 +6954,10 @@
   {
     "id": "Restore block volume using a given snapshot",
     "translation": "Restaurar volume de bloco usando uma captura instantânea especificada"
+  },
+  {
+    "id": "Restriction",
+    "translation": "Restrição"
   },
   {
     "id": "Result limit",
@@ -7466,6 +7554,10 @@
   {
     "id": "Successfully device firmware reflashed",
     "translation": "Reflash do firmware de dispositivo feito reflash com sucesso"
+  },
+  {
+    "id": "Successfully removed User Customer notification.",
+    "translation": "Notificação de Customer Customer removida com sucesso."
   },
   {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -8277,7 +8369,7 @@
   },
   {
     "id": "Title",
-    "translation": "Title"
+    "translation": "Título"
   },
   {
     "id": "To add Datacenter",
