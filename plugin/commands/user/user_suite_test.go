@@ -31,6 +31,7 @@ var availableCommands = []string{
 	"permission-edit",
 	"permissions",
 	"remove-access",
+	"vpn-manual",
 	"vpn-subnet",
 }
 
