@@ -10,6 +10,8 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
+const BLANK_SPACE = " "
+
 type VpnSubnetCommand struct {
 	*metadata.SoftlayerCommand
 	UserManager managers.UserManager
@@ -25,7 +27,7 @@ func NewVpnSubnetCommand(sl *metadata.SoftlayerCommand) (cmd *VpnSubnetCommand) 
 	}
 
 	cobraCmd := &cobra.Command{
-		Use:   "vpn-subnet " + T("USER_ID") + " " + T("SUBNET_ID"),
+		Use:   "vpn-subnet " + T("USER_ID") + BLANK_SPACE + T("SUBNET_ID"),
 		Short: T("Add or remove subnet access for a user."),
 		Args:  metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
