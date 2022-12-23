@@ -25,15 +25,17 @@ const (
 		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
 		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password],lastTransaction[transactionGroup],activeComponents"
 
-	KEY_SIZES      = "sizes"
-	KEY_OS         = "operating_systems"
-	KEY_PORT_SPEED = "port_speed"
-	KEY_LOCATIONS  = "locations"
-	KEY_EXTRAS     = "extras"
+	KEY_SIZES                  = "sizes"
+	KEY_OS                     = "operating_systems"
+	KEY_NAME_OS                = "key_name_operating_systems"
+	KEY_PORT_SPEED             = "port_speed"
+	KEY_PORT_SPEED_DESCRIPTION = "port_speed_description"
+	KEY_LOCATIONS              = "locations"
+	KEY_EXTRAS                 = "extras"
 )
 
 var DEFAULT_CATEGORIES = []string{"pri_ip_addresses", "vpn_management", "remote_management"}
-var EXTRA_CATEGORIES = []string{"pri_ipv6_addresses", "static_ipv6_addresses", "sec_ip_addresses"}
+var EXTRA_CATEGORIES = []string{"pri_ipv6_addresses", "static_ipv6_addresses", "sec_ip_addresses", "trusted_platform_module", "software_guard_extensions"}
 
 type HardwareServerManager interface {
 	AuthorizeStorage(id int, storageId string) (bool, error)
@@ -434,15 +436,20 @@ func (hw hardwareServerManager) GetCreateOptions(productPackage datatypes.Produc
 	}
 	//operating system
 	operatingSystems := make(map[string]string)
+	keyNameOperatingSystems := make(map[string]string)
 	portSpeeds := make(map[string]string)
+	portSpeedsDescription := make(map[string]string)
 	extras := make(map[string]string)
 	for _, item := range productPackage.Items {
 		if item.ItemCategory != nil && item.ItemCategory.CategoryCode != nil {
 			if *item.ItemCategory.CategoryCode == "os" && item.SoftwareDescription != nil && item.SoftwareDescription.ReferenceCode != nil && item.SoftwareDescription.LongDescription != nil {
 				operatingSystems[*item.SoftwareDescription.ReferenceCode] = *item.SoftwareDescription.LongDescription
+
+				keyNameOperatingSystems[*item.SoftwareDescription.ReferenceCode] = *item.KeyName
 			} else if *item.ItemCategory.CategoryCode == "port_speed" {
 				if !IsPrivatePortSpeedItem(item) && IsBonded(item) && item.Description != nil {
-					portSpeeds[utils.FormatSLFloatPointerToInt(item.Capacity)] = *item.Description
+					portSpeeds[*item.KeyName] = utils.FormatSLFloatPointerToInt(item.Capacity)
+					portSpeedsDescription[*item.KeyName] = *item.Description
 				}
 			} else if utils.StringInSlice(*item.ItemCategory.CategoryCode, EXTRA_CATEGORIES) > -1 && item.KeyName != nil && item.Description != nil {
 				extras[*item.KeyName] = *item.Description
@@ -450,11 +457,13 @@ func (hw hardwareServerManager) GetCreateOptions(productPackage datatypes.Produc
 		}
 	}
 	return map[string]map[string]string{
-		KEY_LOCATIONS:  locations,
-		KEY_SIZES:      sizes,
-		KEY_OS:         operatingSystems,
-		KEY_PORT_SPEED: portSpeeds,
-		KEY_EXTRAS:     extras,
+		KEY_LOCATIONS:              locations,
+		KEY_SIZES:                  sizes,
+		KEY_OS:                     operatingSystems,
+		KEY_NAME_OS:                keyNameOperatingSystems,
+		KEY_PORT_SPEED:             portSpeeds,
+		KEY_PORT_SPEED_DESCRIPTION: portSpeedsDescription,
+		KEY_EXTRAS:                 extras,
 	}
 }
 

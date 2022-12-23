@@ -71,9 +71,10 @@ type NetworkManager interface {
 	ClearRoute(subnetId int) (bool, error)
 	SetSubnetTags(subnetId int, tags string) (bool, error)
 	SetSubnetNote(subnetId int, note string) (bool, error)
-	GetPods(mask string) ([]datatypes.Network_Pod, error)
+	GetPods(mask string, closureAnnounced bool) ([]datatypes.Network_Pod, error)
 	GetIpByAddress(ipAddress string) (datatypes.Network_Subnet_IpAddress, error)
 	EditSubnetIpAddress(subnetIpAddressId int, subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress) (bool, error)
+	GetRouters(mask string) ([]datatypes.Hardware, error)
 }
 
 type networkManager struct {
@@ -392,7 +393,7 @@ func (n networkManager) ListSubnets(identifier string, datacenter string, versio
 	}
 	if subnetType != "" {
 		filters = append(filters, filter.Path("subnets.subnetType").Eq(subnetType))
-	} 
+	}
 	if networkSpace != "" {
 		filters = append(filters, filter.Path("subnets.networkVlan.networkSpace").Eq(networkSpace))
 	}
@@ -762,9 +763,12 @@ func (n networkManager) SetSubnetNote(subnetId int, note string) (bool, error) {
 	return n.SubnetService.Id(subnetId).EditNote(&note)
 }
 
-func (n networkManager) GetPods(mask string) ([]datatypes.Network_Pod, error) {
+func (n networkManager) GetPods(mask string, closureAnnounced bool) ([]datatypes.Network_Pod, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("networkVlans.id").OrderBy("ASC"))
+	if closureAnnounced {
+		filters = append(filters, filter.Path("capabilities").In("CLOSURE_ANNOUNCED"))
+	}
 
 	if mask == "" {
 		mask = "mask[name, datacenterLongName, frontendRouterId, capabilities, datacenterId, backendRouterId,backendRouterName, frontendRouterName]"
@@ -784,4 +788,12 @@ func (n networkManager) GetIpByAddress(ipAddress string) (datatypes.Network_Subn
 // subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress: New subnet ip address templatet.
 func (n networkManager) EditSubnetIpAddress(subnetIpAddressId int, subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress) (bool, error) {
 	return n.IPService.Id(subnetIpAddressId).EditObject(&subnetIpAddressTemplate)
+}
+
+// https://sldn.softlayer.com/reference/services/SoftLayer_Account/getRouters/
+func (n networkManager) GetRouters(mask string) ([]datatypes.Hardware, error) {
+	if mask == "" {
+		mask = "topLevelLocation"
+	}
+	return n.AccountService.Mask(mask).GetRouters()
 }

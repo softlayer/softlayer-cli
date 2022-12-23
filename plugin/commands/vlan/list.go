@@ -64,7 +64,7 @@ func (cmd *ListCommand) Run(args []string) error {
 	}
 
 	mask := ""
-	pods, err := cmd.NetworkManager.GetPods(mask)
+	pods, err := cmd.NetworkManager.GetPods(mask, false)
 	if err != nil {
 		return errors.NewAPIError(T("Failed to get Pods.\n"), err.Error(), 2)
 	}
