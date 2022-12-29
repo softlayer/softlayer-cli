@@ -47,9 +47,6 @@ var _ = Describe("hardware create options", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
-				fmt.Println("************")
-				fmt.Println(fakeUI.Outputs())
-				fmt.Println("***************")
 				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("D2620_128GB_2X1T_SATA_RAID_1xM60_GPU"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("CENTOS_6_32"))

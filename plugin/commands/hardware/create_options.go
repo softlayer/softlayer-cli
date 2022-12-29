@@ -47,7 +47,7 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 	options := cmd.HardwareManager.GetCreateOptions(productPackage)
 	pods, err := cmd.NetworkManager.GetPods("", true)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get Pods.\n"), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Pods."), err.Error(), 2)
 	}
 	//datacenters
 	dcTable := cmd.UI.Table([]string{T("Data center"), T("Value"), T("Note")})
@@ -126,7 +126,7 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 	routerTable := cmd.UI.Table([]string{T("Routers"), T("Hostname"), T("Name")})
 	routers, err := cmd.NetworkManager.GetRouters("")
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get Routers.\n"), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get Routers."), err.Error(), 2)
 	}
 	for _, router := range routers {
 		routerTable.Add(
@@ -136,7 +136,6 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 		)
 	}
 	routerTable.Print()
-	cmd.UI.Print("")
 	return nil
 }
 
