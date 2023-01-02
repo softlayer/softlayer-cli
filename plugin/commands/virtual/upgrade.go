@@ -1,6 +1,9 @@
 package virtual
 
 import (
+	"strconv"
+	"strings"
+
 	"github.com/spf13/cobra"
 
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -20,6 +23,8 @@ type UpgradeCommand struct {
 	Network              int
 	Flavor               string
 	Force                bool
+	AddDisk              int
+	ResizeDisk           string
 }
 
 func NewUpgradeCommand(sl *metadata.SoftlayerCommand) (cmd *UpgradeCommand) {
@@ -51,6 +56,8 @@ EXAMPLE:
 	cobraCmd.Flags().IntVar(&thisCmd.Network, "network", -1, T("Network port speed in Mbps"))
 	cobraCmd.Flags().StringVar(&thisCmd.Flavor, "flavor", "", T("Flavor key name"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	cobraCmd.Flags().IntVar(&thisCmd.AddDisk, "add-disk", -1, T("Add Hard disk in GB"))
+	cobraCmd.Flags().StringVar(&thisCmd.ResizeDisk, "resize-disk", "", T("Update disk number to size in GB [capacity,diskNumber]. --resize-disk 250,2"))
 	return thisCmd
 }
 
@@ -65,8 +72,8 @@ func (cmd *UpgradeCommand) Run(args []string) error {
 		return slErrors.NewInvalidUsageError(T("Must specify [--cpu] when using [--private]."))
 	}
 
-	if cmd.Cpu == 0 && cmd.Memory == 0 && cmd.Network == -1 && cmd.Flavor == "" {
-		return slErrors.NewInvalidUsageError(T("Must provide [--cpu], [--memory], [--network] or [--flavor] to upgrade."))
+	if cmd.Cpu == 0 && cmd.Memory == 0 && cmd.Network == -1 && cmd.AddDisk == -1 && cmd.ResizeDisk == "" && cmd.Flavor == "" {
+		return slErrors.NewInvalidUsageError(T("Must provide [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] or [--flavor] to upgrade."))
 	}
 
 	if cmd.Flavor != "" && (cmd.Cpu != 0 || cmd.Memory != 0 || cmd.Private) {
@@ -86,7 +93,23 @@ func (cmd *UpgradeCommand) Run(args []string) error {
 		}
 	}
 	subs := map[string]interface{}{"VsID": vsID, "VsId": vsID, "OrderId": 0}
-	orderReceipt, err := cmd.VirtualServerManager.UpgradeInstance(vsID, cmd.Cpu, cmd.Memory, cmd.Network, cmd.Private, cmd.Flavor)
+	resizeDiskValues := []int{}
+	if cmd.ResizeDisk != "" {
+		resizeDiskStringValues := strings.Split(cmd.ResizeDisk, ",")
+		if len(resizeDiskStringValues) != 2 {
+			return slErrors.NewInvalidUsageError(T("--resize-disk requires capacity and disk number values separated by one comma."))
+		}
+		capacity, err := strconv.Atoi(resizeDiskStringValues[0])
+		if err != nil {
+			return slErrors.NewInvalidSoftlayerIdInputError("--resize-disk capacity")
+		}
+		diskNumber, err := strconv.Atoi(resizeDiskStringValues[1])
+		if err != nil {
+			return slErrors.NewInvalidSoftlayerIdInputError("--resize-disk disk number")
+		}
+		resizeDiskValues = []int{capacity, diskNumber}
+	}
+	orderReceipt, err := cmd.VirtualServerManager.UpgradeInstance(vsID, cmd.Cpu, cmd.Memory, cmd.Network, cmd.AddDisk, resizeDiskValues, cmd.Private, cmd.Flavor)
 	if err != nil {
 		return slErrors.NewAPIError(T("Failed to upgrade virtual server instance: {{.VsID}}.\n", subs), err.Error(), 2)
 	}

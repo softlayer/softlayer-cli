@@ -85,7 +85,7 @@ type VirtualServerManager interface {
 	ReloadInstance(id int, postURI string, sshKeys []int, imageID int) error
 	ResumeInstance(id int) error
 	RescueInstance(id int) error
-	UpgradeInstance(id int, cpu int, memory int, network int, privateCPU bool, flavor string) (datatypes.Container_Product_Order_Receipt, error)
+	UpgradeInstance(id int, cpu int, memory int, network int, addDisk int, resizeDisk []int, privateCPU bool, flavor string) (datatypes.Container_Product_Order_Receipt, error)
 	InstanceIsReady(id int, until time.Time) (bool, string, error)
 	SetUserMetadata(id int, userdata []string) error
 	SetTags(id int, tags string) error
@@ -1024,7 +1024,7 @@ func (vs virtualServerManager) RescueInstance(id int) error {
 //memory: RAM of the virtual server to be upgraded to
 //network: The port speed to set
 //privateCPU: CPU will be in Private Node.
-func (vs virtualServerManager) UpgradeInstance(id int, cpu int, memory int, network int, privateCPU bool, flavor string) (datatypes.Container_Product_Order_Receipt, error) {
+func (vs virtualServerManager) UpgradeInstance(id int, cpu int, memory int, network int, addDisk int, resizeDisk []int, privateCPU bool, flavor string) (datatypes.Container_Product_Order_Receipt, error) {
 	upgradeOptions := make(map[string]int)
 	public := true
 	if cpu != 0 {
@@ -1033,7 +1033,7 @@ func (vs virtualServerManager) UpgradeInstance(id int, cpu int, memory int, netw
 	if memory != 0 {
 		upgradeOptions["ram"] = memory / 1024
 	}
-	if network != 0 {
+	if network != -1 {
 		upgradeOptions["port_speed"] = network
 	}
 	if privateCPU == true {
@@ -1091,6 +1091,106 @@ func (vs virtualServerManager) UpgradeInstance(id int, cpu int, memory int, netw
 			},
 		},
 	}
+
+	if addDisk != -1 || len(resizeDisk) != 0 {
+		itemPrices := []datatypes.Product_Item_Price{}
+		if addDisk != -1 {
+			//dictionary to match names used by SoftLayer_Virtual_Guest::getUpgradeItemPrices and SoftLayer_Virtual_Guest::getBlockDevices
+			diskKeyNames := map[string]string{
+				"First Disk":  "Disk 1",
+				"Second Disk": "Disk 2",
+				"Third Disk":  "Disk 3",
+				"Fourth Disk": "Disk 4",
+				"Fifth Disk":  "Disk 5",
+			}
+			diskItemId := 0
+			allAvailableDiskCategoriesToNewDisk := []string{}
+			description := strconv.Itoa(addDisk) + " GB (SAN)"
+			for _, item := range packageItems {
+				if *item.Item.Description == description {
+					diskItemId = *item.Id
+					allAvailableDiskCategoriesToNewDisk = append(allAvailableDiskCategoriesToNewDisk, *item.Categories[0].Name)
+				}
+			}
+			virtualGuestDisks, err := vs.GetLocalDisks(id)
+			if err != nil {
+				return datatypes.Container_Product_Order_Receipt{}, err
+			}
+			diskCategoriesUsedByVS := []string{}
+			for _, disk := range virtualGuestDisks {
+				diskCategoriesUsedByVS = append(diskCategoriesUsedByVS, *disk.DiskImage.Name)
+			}
+			availableDiskCategoriesToNewDiskinVS := []string{}
+			for _, diskCategoy := range allAvailableDiskCategoriesToNewDisk {
+				diskCategoyCounter := utils.StringInSlice(diskKeyNames[diskCategoy], diskCategoriesUsedByVS)
+				if diskCategoyCounter == -1 {
+					availableDiskCategoriesToNewDiskinVS = append(availableDiskCategoriesToNewDiskinVS, diskCategoy)
+				}
+			}
+			if len(availableDiskCategoriesToNewDiskinVS) == 0 {
+				return datatypes.Container_Product_Order_Receipt{},
+					errors.New(T("There is not available category to this disk size"))
+			}
+			categoryId := 0
+			for _, item := range packageItems {
+				if *item.Item.Description == description && *item.Categories[0].Name == availableDiskCategoriesToNewDiskinVS[0] {
+					categoryId = *item.Categories[0].Id
+					break
+				}
+			}
+
+			diskItem := datatypes.Product_Item_Price{
+				Categories: []datatypes.Product_Item_Category{
+					datatypes.Product_Item_Category{
+						Id: sl.Int(categoryId),
+					},
+				},
+				Id: sl.Int(diskItemId),
+			}
+			itemPrices = append(itemPrices, diskItem)
+		}
+
+		if len(resizeDisk) != 0 {
+			//disk_key_names dictionary to convert disk numbers (int) to ordinal numbers (string)
+			diskKeyNames := map[int]string{
+				1: "First Disk",
+				2: "Second Disk",
+				3: "Third Disk",
+				4: "Fourth Disk",
+				5: "Fifth Disk",
+			}
+			capacity := resizeDisk[0]
+			diskNumber := resizeDisk[1]
+			categoryToRequest := diskKeyNames[diskNumber]
+			if categoryToRequest == "" {
+				return datatypes.Container_Product_Order_Receipt{}, errors.New(T("Invalid disk number to this disk capacity"))
+			}
+			description := strconv.Itoa(capacity) + " GB (SAN)"
+			diskItemId := 0
+			categoryId := 0
+			for _, item := range packageItems {
+				if *item.Item.Description == description && *item.Categories[0].Name == categoryToRequest {
+					diskItemId = *item.Id
+					categoryId = *item.Categories[0].Id
+					break
+				}
+			}
+			if diskItemId == 0 && categoryId == 0 {
+				return datatypes.Container_Product_Order_Receipt{}, errors.New(T("Invalid disk number to this disk capacity"))
+			}
+			diskItem := datatypes.Product_Item_Price{
+				Categories: []datatypes.Product_Item_Category{
+					datatypes.Product_Item_Category{
+						Id: sl.Int(categoryId),
+					},
+				},
+				Id: sl.Int(diskItemId),
+			}
+			itemPrices = append(itemPrices, diskItem)
+		}
+		upgradeOrder.Container_Product_Order_Virtual_Guest.Container_Product_Order_Hardware_Server.Container_Product_Order.Prices = itemPrices
+	}
+
 	return vs.OrderService.PlaceOrder(&upgradeOrder, sl.Bool(false))
 }
 
