@@ -45,7 +45,7 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 		return errors.NewAPIError(T("Failed to get product package for hardware server."), err.Error(), 2)
 	}
 	options := cmd.HardwareManager.GetCreateOptions(productPackage)
-	pods, err := cmd.NetworkManager.GetPods("", true)
+	pods, err := cmd.NetworkManager.GetClosingPods()
 	if err != nil {
 		return errors.NewAPIError(T("Failed to get Pods."), err.Error(), 2)
 	}
@@ -142,7 +142,7 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 func getPodWithClosedAnnouncement(key string, pods []datatypes.Network_Pod) string {
 	for _, pod := range pods {
 		if key == *pod.DatacenterLongName {
-			return "closed soon: " + *pod.Name
+			return T("closing soon: ") + *pod.Name
 		}
 	}
 	return "-"
