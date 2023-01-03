@@ -260,7 +260,6 @@ var _ = Describe("HardwareServerManager", func() {
 			Expect(result[managers.KEY_LOCATIONS]["dal06"]).To(Equal("Dallas 6"))
 			Expect(result[managers.KEY_SIZES]["D2620V4_64GB_2X1TB_SATA_RAID_1"]).To(Equal("Dual Xeon 2620v4, 64GB Ram, 2x1TB SATA disks, RAID1"))
 			Expect(result[managers.KEY_OS]["UBUNTU_16_64"]).To(Equal("Ubuntu 16.04-64"))
-			Expect(result[managers.KEY_PORT_SPEED]["100"]).To(Equal("100 Mbps Public & Private Network Uplinks"))
 			Expect(result[managers.KEY_EXTRAS]["64_BLOCK_STATIC_PUBLIC_IPV6_ADDRESSES"]).To(Equal("/64 Block Static Public IPv6 Addresses"))
 		})
 	})

@@ -7,7 +7,11 @@
         "datacenterName": "ams01",
         "frontendRouterId": 117960,
         "frontendRouterName": "fcr01a.ams01",
-        "name": "ams01.pod01"
+        "name": "ams01.pod01",
+        "capabilities": [
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ]
     },
     {
         "backendRouterId": 1115295,
@@ -17,7 +21,11 @@
         "datacenterName": "wdc07",
         "frontendRouterId": 1114993,
         "frontendRouterName": "fcr01a.wdc07",
-        "name": "wdc07.pod01"
+        "name": "wdc07.pod01",
+        "capabilities": [
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ]
     },
     {
         "backendRouterId": 1234567,
@@ -27,7 +35,11 @@
         "datacenterName": "wdc07",
         "frontendRouterId": 258741369,
         "frontendRouterName": "fcr01a.wdc07",
-        "name": "TEST00.pod2"
+        "name": "TEST00.pod2",
+        "capabilities": [
+            "CLOSURE_ANNOUNCED",
+            "DATACENTER_CLOSURE_ANNOUNCED"
+        ]
     }
 ]
 

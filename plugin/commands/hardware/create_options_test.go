@@ -36,7 +36,9 @@ var _ = Describe("hardware create options", func() {
 					managers.KEY_LOCATIONS:  map[string]string{"dal10": "Dallas 10"},
 					managers.KEY_SIZES:      map[string]string{"D2620_128GB_2X1T_SATA_RAID_1xM60_GPU": "Dual Xeon 2620v4, 128GB Ram, 2x800GB SSD disks, RAID1"},
 					managers.KEY_OS:         map[string]string{"CENTOS_6_32": "CentOS 6.5-32"},
-					managers.KEY_PORT_SPEED: map[string]string{"10000": "10 Gbps Redundant Public & Private Network Uplinks"},
+					managers.KEY_NAME_OS:         map[string]string{"CENTOS_6_32": "OS_CENTOS_6_X_32_BIT"},
+					managers.KEY_PORT_SPEED: map[string]string{"100_MBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS": "10000"},
+					managers.KEY_PORT_SPEED_DESCRIPTION: map[string]string{"100_MBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS": "10 Gbps Redundant Public & Private Network Uplinks"},
 					managers.KEY_EXTRAS:     map[string]string{"8_PUBLIC_IP_ADDRESSES": "8 Public IP Addresses"},
 				})
 			})
@@ -46,8 +48,13 @@ var _ = Describe("hardware create options", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("D2620_128GB_2X1T_SATA_RAID_1xM60_GPU"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("CENTOS_6_32"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OS_CENTOS_6_X_32_BIT"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("10000"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("100_MBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("8_PUBLIC_IP_ADDRESSES"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Routers"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("fcr01a.ams01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Amsterdam 1"))
 			})
 		})
 	})
