@@ -55,7 +55,7 @@ var _ = Describe("user vpn-manual", func() {
 			It("Set with both options", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "111111", "--enable", "--disable")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--enable', '--disable' are exclusive"))
+				Expect(err.Error()).To(ContainSubstring("if any flags in the group [enable disable] are set none of the others can be; [disable enable] were all set"))
 			})
 		})
 

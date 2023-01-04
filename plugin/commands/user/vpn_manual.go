@@ -37,6 +37,7 @@ func NewVpnManualCommand(sl *metadata.SoftlayerCommand) (cmd *VpnManualCommand) 
 
 	cobraCmd.Flags().BoolVar(&thisCmd.Enable, "enable", false, T("Enable vpn subnets manual config."))
 	cobraCmd.Flags().BoolVar(&thisCmd.Disable, "disable", false, T("Disable vpn subnets manual config."))
+	cobraCmd.MarkFlagsMutuallyExclusive("enable", "disable")
 
 	thisCmd.Command = cobraCmd
 	return thisCmd
@@ -46,10 +47,6 @@ func (cmd *VpnManualCommand) Run(args []string) error {
 
 	if !cmd.Enable && !cmd.Disable {
 		return errors.NewInvalidUsageError(T("This command requires --enable or --disable option."))
-	}
-
-	if cmd.Enable && cmd.Disable {
-		return errors.NewExclusiveFlagsError("--enable", "--disable")
 	}
 
 	userID, err := strconv.Atoi(args[0])
@@ -68,7 +65,7 @@ func (cmd *VpnManualCommand) Run(args []string) error {
 		VpnManualConfig: sl.Bool(vpnManualConfig),
 	}
 
-	mapValue := map[string]interface{}{"action": action}
+	mapValue := map[string]interface{}{"action": T(action)}
 
 	success, err := cmd.UserManager.EditUser(userTemplate, userID)
 	if err != nil {
