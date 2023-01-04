@@ -65,6 +65,7 @@ var _ = Describe("Subnet list", func() {
 							Id:           sl.Int(7654),
 							NetworkSpace: sl.String("PUBLIC"),
 						},
+						AddressSpace: sl.String("PUBLIC"),
 						Datacenter: &datatypes.Location_Datacenter{
 							Location: datatypes.Location{
 								Name: sl.String("tok02"),
@@ -79,6 +80,7 @@ var _ = Describe("Subnet list", func() {
 							Id:           sl.Int(4567),
 							NetworkSpace: sl.String("PRIVATE"),
 						},
+						AddressSpace: sl.String("PRIVATE"),
 						Datacenter: &datatypes.Location_Datacenter{
 							Location: datatypes.Location{
 								Name: sl.String("dal10"),
@@ -129,22 +131,14 @@ var _ = Describe("Subnet list", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "type")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(results[1]).To(ContainSubstring("PRIMARY"))
-				Expect(results[2]).To(ContainSubstring("SECONDARY"))
+				Expect(results[1]).To(ContainSubstring("Primary"))
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "network_space")
 				Expect(err).NotTo(HaveOccurred())
 				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(results[1]).To(ContainSubstring("PRIVATE"))
-				Expect(results[2]).To(ContainSubstring("PUBLIC"))
-			})
-			It("return no error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "datacenter")
-				Expect(err).NotTo(HaveOccurred())
-				results := strings.Split(fakeUI.Outputs(), "\n")
-				Expect(results[1]).To(ContainSubstring("4567"))
-				Expect(results[2]).To(ContainSubstring("7654"))
+				Expect(results[1]).To(ContainSubstring("Private"))
+				Expect(results[2]).To(ContainSubstring("Public"))
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "IPs")

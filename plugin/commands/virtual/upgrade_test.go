@@ -2,6 +2,7 @@ package virtual_test
 
 import (
 	"errors"
+
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -58,7 +59,24 @@ var _ = Describe("VS upgrade", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Must provide [--cpu], [--memory], [--network] or [--flavor] to upgrade."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Must provide [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] or [--flavor] to upgrade."))
+			})
+		})
+		Context("VS upgrade with wrong --resize-disk parameters", func() {
+			It("invalid --resize-disk argument", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--resize-disk", "20:2", "-f")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --resize-disk requires capacity and disk number values separated by one comma."))
+			})
+			It("invalid --resize-disk capacity", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--resize-disk", "twenty,2", "-f")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for '--resize-disk capacity'. It must be a positive integer."))
+			})
+			It("invalid --resize-disk disk number", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--resize-disk", "20,two", "-f")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for '--resize-disk disk number'. It must be a positive integer."))
 			})
 		})
 		Context("VS upgrade without -f", func() {
@@ -89,6 +107,12 @@ var _ = Describe("VS upgrade", func() {
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--cpu", "8", "-f")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 12345678 to upgrade virtual server instance: 1234 was placed."))
+			})
+			It("return no error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--resize-disk", "10,2", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 12345678 to upgrade virtual server instance: 1234 was placed."))
