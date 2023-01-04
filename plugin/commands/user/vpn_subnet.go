@@ -10,8 +10,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
-const BLANK_SPACE = " "
-
 type VpnSubnetCommand struct {
 	*metadata.SoftlayerCommand
 	UserManager managers.UserManager
@@ -27,7 +25,7 @@ func NewVpnSubnetCommand(sl *metadata.SoftlayerCommand) (cmd *VpnSubnetCommand) 
 	}
 
 	cobraCmd := &cobra.Command{
-		Use:   "vpn-subnet " + T("USER_ID") + BLANK_SPACE + T("SUBNET_ID"),
+		Use:   "vpn-subnet " + T("USER_ID") + " " + T("SUBNET_ID"),
 		Short: T("Add or remove subnet access for a user."),
 		Args:  metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -37,6 +35,7 @@ func NewVpnSubnetCommand(sl *metadata.SoftlayerCommand) (cmd *VpnSubnetCommand) 
 
 	cobraCmd.Flags().BoolVar(&thisCmd.Add, "add", false, T("Add access to subnet."))
 	cobraCmd.Flags().BoolVar(&thisCmd.Remove, "remove", false, T("Remove access to subnet."))
+	cobraCmd.MarkFlagsMutuallyExclusive("add", "remove")
 
 	thisCmd.Command = cobraCmd
 	return thisCmd
@@ -46,10 +45,6 @@ func (cmd *VpnSubnetCommand) Run(args []string) error {
 
 	if !cmd.Add && !cmd.Remove {
 		return errors.NewInvalidUsageError(T("This command requires --add or --remove option."))
-	}
-
-	if cmd.Add && cmd.Remove {
-		return errors.NewExclusiveFlagsError("--add", "--remove")
 	}
 
 	userID, err := strconv.Atoi(args[0])
