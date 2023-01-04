@@ -10,6 +10,8 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 type ListCommand struct {
@@ -66,7 +68,7 @@ func (cmd *ListCommand) Run(args []string) error {
 
 	outputFormat := cmd.GetOutputFlag()
 
-	mask := "hardware,datacenter,ipAddressCount,virtualGuests,networkVlan[id,networkSpace],subnetType,id,networkIdentifier"
+	mask := "hardware,datacenter,ipAddressCount,virtualGuests,networkVlan[id,networkSpace,fullyQualifiedName],subnetType,id,networkIdentifier,addressSpace,endPointIpAddress,note,tagReferences[tag]"
 	subnets, err := cmd.NetworkManager.ListSubnets(cmd.Identifier, cmd.Datacenter, version, cmd.SubnetType, cmd.NetworkSpace, cmd.Order, mask)
 	if err != nil {
 		return errors.NewAPIError(T("Failed to list subnets on your account.\n"), err.Error(), 2)
@@ -94,29 +96,62 @@ func (cmd *ListCommand) Run(args []string) error {
 		return errors.NewInvalidUsageError(T("--sortby {{.Column}} is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 
-	headers := []string{T("ID"), T("identifier"), T("type"), T("network_space"), T("datacenter"), T("vlan_id"), T("IPs"), T("hardware"), T("virtual_servers")}
+	headers := []string{T("ID"), T("Identifier"), T("Network"), T("Type"), T("VLAN"), T("Location"), T("Target"), T("IPs"), T("Hardware"), T("Vs"), T("Tags"), T("Note")}
 	table := cmd.UI.Table(headers)
 	for _, subnet := range subnets {
 
-		var networktype, datacenter, vlanID string
+		var networktype, datacenter, subnetType, note string
+		target := "-"
+		vlan := ""
+
+		networktype = cases.Title(language.Und).String(utils.FormatStringPointer(subnet.AddressSpace))
 
 		if subnet.NetworkVlan != nil {
-			networktype = utils.FormatStringPointer(subnet.NetworkVlan.NetworkSpace)
+			vlan = utils.FormatStringPointer(subnet.NetworkVlan.FullyQualifiedName)
 		}
+		if vlan == "" {
+			vlan = "Unrouted"
+		}
+
+		subnetType = utils.FormatStringPointer(subnet.SubnetType)
+		if subnetType == "PRIMARY" || subnetType == "PRIMARY_6" || subnetType == "ADDITIONAL_PRIMARY" {
+			subnetType = "Primary"
+		}
+		if subnetType == "SECONDARY_ON_VLAN" {
+			subnetType = "Portable"
+		}
+		if subnetType == "STATIC_IP_ROUTED" {
+			subnetType = "Static"
+		}
+		if subnetType == "GLOBAL_IP" {
+			subnetType = "Global"
+		}
+
 		if subnet.Datacenter != nil {
 			datacenter = utils.FormatStringPointer(subnet.Datacenter.Name)
 		}
-		if subnet.NetworkVlan != nil {
-			vlanID = utils.FormatIntPointer(subnet.NetworkVlan.Id)
+
+		if subnet.EndPointIpAddress != nil {
+			target = utils.FormatStringPointer(subnet.EndPointIpAddress.IpAddress)
+		}
+		note = utils.TagRefsToString(subnet.TagReferences)
+		if note == "" {
+			note = "-"
 		}
 
 		table.Add(utils.FormatIntPointer(subnet.Id),
 			utils.FormatStringPointer(subnet.NetworkIdentifier),
-			utils.FormatStringPointer(subnet.SubnetType),
-			networktype, datacenter, vlanID,
+			networktype,
+			subnetType,
+			vlan,
+			datacenter,
+			target,
 			utils.FormatUIntPointer(subnet.IpAddressCount),
 			strconv.Itoa(len(subnet.Hardware)),
-			strconv.Itoa(len(subnet.VirtualGuests)))
+			strconv.Itoa(len(subnet.VirtualGuests)),
+			note,
+			utils.FormatStringPointer(subnet.Note),
+		)
 	}
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil

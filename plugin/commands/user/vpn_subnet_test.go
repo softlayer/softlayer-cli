@@ -63,7 +63,7 @@ var _ = Describe("user vpn-subnet", func() {
 			It("Set with both options", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "111111", "222222", "--add", "--remove")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--add', '--remove' are exclusive"))
+				Expect(err.Error()).To(ContainSubstring("if any flags in the group [add remove] are set none of the others can be; [add remove] were all set"))
 			})
 		})
 

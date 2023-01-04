@@ -697,15 +697,17 @@ type FakeVirtualServerManager struct {
 	setUserMetadataReturnsOnCall map[int]struct {
 		result1 error
 	}
-	UpgradeInstanceStub        func(int, int, int, int, bool, string) (datatypes.Container_Product_Order_Receipt, error)
+	UpgradeInstanceStub        func(int, int, int, int, int, []int, bool, string) (datatypes.Container_Product_Order_Receipt, error)
 	upgradeInstanceMutex       sync.RWMutex
 	upgradeInstanceArgsForCall []struct {
 		arg1 int
 		arg2 int
 		arg3 int
 		arg4 int
-		arg5 bool
-		arg6 string
+		arg5 int
+		arg6 []int
+		arg7 bool
+		arg8 string
 	}
 	upgradeInstanceReturns struct {
 		result1 datatypes.Container_Product_Order_Receipt
@@ -3956,7 +3958,12 @@ func (fake *FakeVirtualServerManager) SetUserMetadataReturnsOnCall(i int, result
 	}{result1}
 }
 
-func (fake *FakeVirtualServerManager) UpgradeInstance(arg1 int, arg2 int, arg3 int, arg4 int, arg5 bool, arg6 string) (datatypes.Container_Product_Order_Receipt, error) {
+func (fake *FakeVirtualServerManager) UpgradeInstance(arg1 int, arg2 int, arg3 int, arg4 int, arg5 int, arg6 []int, arg7 bool, arg8 string) (datatypes.Container_Product_Order_Receipt, error) {
+	var arg6Copy []int
+	if arg6 != nil {
+		arg6Copy = make([]int, len(arg6))
+		copy(arg6Copy, arg6)
+	}
 	fake.upgradeInstanceMutex.Lock()
 	ret, specificReturn := fake.upgradeInstanceReturnsOnCall[len(fake.upgradeInstanceArgsForCall)]
 	fake.upgradeInstanceArgsForCall = append(fake.upgradeInstanceArgsForCall, struct {
@@ -3964,15 +3971,17 @@ func (fake *FakeVirtualServerManager) UpgradeInstance(arg1 int, arg2 int, arg3 i
 		arg2 int
 		arg3 int
 		arg4 int
-		arg5 bool
-		arg6 string
-	}{arg1, arg2, arg3, arg4, arg5, arg6})
+		arg5 int
+		arg6 []int
+		arg7 bool
+		arg8 string
+	}{arg1, arg2, arg3, arg4, arg5, arg6Copy, arg7, arg8})
 	stub := fake.UpgradeInstanceStub
 	fakeReturns := fake.upgradeInstanceReturns
-	fake.recordInvocation("UpgradeInstance", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
+	fake.recordInvocation("UpgradeInstance", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6Copy, arg7, arg8})
 	fake.upgradeInstanceMutex.Unlock()
 	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4, arg5, arg6)
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -3986,17 +3995,17 @@ func (fake *FakeVirtualServerManager) UpgradeInstanceCallCount() int {
 	return len(fake.upgradeInstanceArgsForCall)
 }
 
-func (fake *FakeVirtualServerManager) UpgradeInstanceCalls(stub func(int, int, int, int, bool, string) (datatypes.Container_Product_Order_Receipt, error)) {
+func (fake *FakeVirtualServerManager) UpgradeInstanceCalls(stub func(int, int, int, int, int, []int, bool, string) (datatypes.Container_Product_Order_Receipt, error)) {
 	fake.upgradeInstanceMutex.Lock()
 	defer fake.upgradeInstanceMutex.Unlock()
 	fake.UpgradeInstanceStub = stub
 }
 
-func (fake *FakeVirtualServerManager) UpgradeInstanceArgsForCall(i int) (int, int, int, int, bool, string) {
+func (fake *FakeVirtualServerManager) UpgradeInstanceArgsForCall(i int) (int, int, int, int, int, []int, bool, string) {
 	fake.upgradeInstanceMutex.RLock()
 	defer fake.upgradeInstanceMutex.RUnlock()
 	argsForCall := fake.upgradeInstanceArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8
 }
 
 func (fake *FakeVirtualServerManager) UpgradeInstanceReturns(result1 datatypes.Container_Product_Order_Receipt, result2 error) {
