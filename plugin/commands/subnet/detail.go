@@ -68,6 +68,11 @@ func (cmd *DetailCommand) Run(args []string) error {
 		return errors.NewAPIError(T("Failed to get subnet: {{.ID}}.\n", map[string]interface{}{"ID": subnetID}), err.Error(), 2)
 	}
 
+	// Remove this once the table library supports more complicated tables
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, subnet)
+	}
+
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add(T("ID"), utils.FormatIntPointer(subnet.Id))
 	table.Add(T("identifier"), fmt.Sprintf("%s/%s", utils.FormatStringPointer(subnet.NetworkIdentifier), utils.FormatIntPointer(subnet.Cidr)))
