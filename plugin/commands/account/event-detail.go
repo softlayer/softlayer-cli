@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/spf13/cobra"
-	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
-	
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/spf13/cobra"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -19,18 +19,18 @@ import (
 type EventDetailCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
-	Command *cobra.Command
+	Command        *cobra.Command
 }
 
 func NewEventDetailCommand(sl *metadata.SoftlayerCommand) *EventDetailCommand {
 	thisCmd := &EventDetailCommand{
 		SoftlayerCommand: sl,
-		AccountManager: managers.NewAccountManager(sl.Session),
+		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use: "event-detail " + T("IDENTIFIER"),
+		Use:   "event-detail " + T("IDENTIFIER"),
 		Short: T("Details of a specific event, and ability to acknowledge event."),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -38,7 +38,6 @@ func NewEventDetailCommand(sl *metadata.SoftlayerCommand) *EventDetailCommand {
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
-
 
 func (cmd *EventDetailCommand) Run(args []string) error {
 
@@ -79,7 +78,7 @@ func BasicEventTable(event datatypes.Notification_Occurrence_Event, ui terminal.
 		utils.FormatSLTimePointer(event.EndDate),
 	)
 	utils.PrintTableWithTitle(ui, table, bufEvent, utils.FormatStringPointer(event.Subject), outputFormat)
-	
+
 }
 
 func ImpactedTable(event datatypes.Notification_Occurrence_Event, ui terminal.UI, outputFormat string) {

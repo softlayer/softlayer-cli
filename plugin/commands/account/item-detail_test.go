@@ -12,19 +12,19 @@ import (
 )
 
 var _ = Describe("Account list ItemDetail", func() {
-    var (
-        fakeUI              *terminal.FakeUI
-        cliCommand          *account.ItemDetailCommand
-        fakeSession         *session.Session
-        slCommand           *metadata.SoftlayerCommand
-    )
-    BeforeEach(func() {
-        fakeUI = terminal.NewFakeUI()
-        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-        cliCommand = account.NewItemDetailCommand(slCommand)
-        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-    })
+	var (
+		fakeUI      *terminal.FakeUI
+		cliCommand  *account.ItemDetailCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
+	)
+	BeforeEach(func() {
+		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = account.NewItemDetailCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+	})
 
 	Describe("Account item detail", func() {
 		Context("Account item detail, Invalid Usage", func() {

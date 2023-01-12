@@ -3,44 +3,43 @@ package account
 import (
 	"github.com/spf13/cobra"
 
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type InvoicesCommand struct {
-    *metadata.SoftlayerCommand
-    AccountManager managers.AccountManager
-    Command *cobra.Command
-    Limit	int
-    Closed	bool
-    All		bool
+	*metadata.SoftlayerCommand
+	AccountManager managers.AccountManager
+	Command        *cobra.Command
+	Limit          int
+	Closed         bool
+	All            bool
 }
 
 func NewInvoicesCommand(sl *metadata.SoftlayerCommand) *InvoicesCommand {
-    thisCmd := &InvoicesCommand{
-        SoftlayerCommand: sl,
-        AccountManager: managers.NewAccountManager(sl.Session),
-    }
-    cobraCmd := &cobra.Command{
-        Use: "invoices",  
-        Short: T("List invoices"),
-        Args: metadata.NoArgs,
-        RunE: func(cmd *cobra.Command, args []string) error {
-            return thisCmd.Run(args)
-        },
-    }
-    cobraCmd.Flags().IntVar(&thisCmd.Limit, "limit", 50, T("How many invoices to get back. [default: 50]"))
-    cobraCmd.Flags().BoolVar(&thisCmd.Closed, "closed", false, T("Include invoices with a CLOSED status. [default: False]"))
-    cobraCmd.Flags().BoolVar(&thisCmd.All, "all", false, T("Return ALL invoices. There may be a lot of these. [default: False]"))
-    thisCmd.Command = cobraCmd
-    return thisCmd
+	thisCmd := &InvoicesCommand{
+		SoftlayerCommand: sl,
+		AccountManager:   managers.NewAccountManager(sl.Session),
+	}
+	cobraCmd := &cobra.Command{
+		Use:   "invoices",
+		Short: T("List invoices."),
+		Args:  metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	cobraCmd.Flags().BoolVar(&thisCmd.All, "all", false, T("Return ALL invoices. There may be a lot of these. [default: False]"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Closed, "closed", false, T("Include invoices with a CLOSED status. [default: False]"))
+	cobraCmd.Flags().IntVar(&thisCmd.Limit, "limit", 50, T("How many invoices to get back. [default: 50]"))
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
 
-
-func (cmd *InvoicesCommand) Run(args []string) error  {
+func (cmd *InvoicesCommand) Run(args []string) error {
 	outputFormat := cmd.GetOutputFlag()
 
 	invoices, err := cmd.AccountManager.GetInvoices(cmd.Limit, cmd.Closed, cmd.All)

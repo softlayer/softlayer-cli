@@ -1,30 +1,28 @@
 package account_test
 
-
 import (
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
 	"github.com/softlayer/softlayer-go/session"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Account Bandwidth-Pools", func() {
 	var (
-		fakeUI			*terminal.FakeUI
-		cliCommand		*account.BandwidthPoolsCommand
-		fakeSession   	*session.Session
-		slCommand		*metadata.SoftlayerCommand
+		fakeUI      *terminal.FakeUI
+		cliCommand  *account.BandwidthPoolsCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = account.NewBandwidthPoolsCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})
@@ -42,7 +40,7 @@ var _ = Describe("Account Bandwidth-Pools", func() {
 				Expect(err).NotTo(HaveOccurred())
 				outputs := fakeUI.Outputs()
 				Expect(outputs).To(ContainSubstring("\"amountIn\": 7.54252,"))
-	
+
 			})
 		})
 	})

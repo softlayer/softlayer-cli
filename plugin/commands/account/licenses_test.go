@@ -12,19 +12,19 @@ import (
 )
 
 var _ = Describe("Account list Licenses", func() {
-    var (
-        fakeUI          *terminal.FakeUI
-        cliCommand      *account.LicensesCommand
-        fakeSession     *session.Session
-        slCommand       *metadata.SoftlayerCommand
-    )
-    BeforeEach(func() {
-        fakeUI = terminal.NewFakeUI()
-        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-        cliCommand = account.NewLicensesCommand(slCommand)
-        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-    })
+	var (
+		fakeUI      *terminal.FakeUI
+		cliCommand  *account.LicensesCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
+	)
+	BeforeEach(func() {
+		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = account.NewLicensesCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+	})
 
 	Describe("Account licenses", func() {
 		Context("Account licenses, Invalid Usage", func() {

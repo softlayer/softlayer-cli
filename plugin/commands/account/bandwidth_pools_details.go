@@ -20,27 +20,26 @@ import (
 type BandwidthPoolsDetailCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
-	Command *cobra.Command
+	Command        *cobra.Command
 }
 
 func NewBandwidthPoolsDetailCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsDetailCommand {
 
 	thisCmd := &BandwidthPoolsDetailCommand{
 		SoftlayerCommand: sl,
-		AccountManager: managers.NewAccountManager(sl.Session),
+		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use: "bandwidth-pools-detail " + T("IDENTIFIER"),
+		Use:   "bandwidth-pools-detail " + T("IDENTIFIER"),
 		Short: T("Get bandwidth pool details."),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-            return thisCmd.Run(args)
-        },
+			return thisCmd.Run(args)
+		},
 	}
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
-
 
 func (cmd *BandwidthPoolsDetailCommand) Run(args []string) error {
 

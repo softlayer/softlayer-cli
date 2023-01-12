@@ -68,6 +68,7 @@ var _ = Describe("Account shows Summary ", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "3052.870000""`))
 			})
 		})
+
 		Context("Issue #481", func() {
 			BeforeEach(func() {
 				filename := []string{"getObject_missingPendingInvoice"}

@@ -36,7 +36,7 @@ func NewInvoiceDetailCommand(sl *metadata.SoftlayerCommand) *InvoiceDetailComman
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().BoolVar(&thisCmd.Details, "details", false, T("Shows a very detailed list of charges"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Details, "details", false, T("Shows a very detailed list of charges. [default: False]"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
