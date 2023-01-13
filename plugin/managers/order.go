@@ -43,6 +43,7 @@ type OrderManager interface {
 	VerifyOrder(quoteId int, extra datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error)
 	OrderQuote(quoteId int, extra datatypes.Container_Product_Order) (datatypes.Container_Product_Order_Receipt, error)
 	GetRecalculatedOrderContainer(quoteId int) (datatypes.Container_Product_Order, error)
+	GetOrderDetail(orderId int, mask string) (datatypes.Billing_Order, error)
 }
 
 type orderManager struct {
@@ -52,6 +53,7 @@ type orderManager struct {
 	PackagePreset            services.Product_Package_Preset
 	AccountService           services.Account
 	BillingOrderQuoteService services.Billing_Order_Quote
+	Session                  *session.Session
 }
 
 func NewOrderManager(session *session.Session) *orderManager {
@@ -62,6 +64,7 @@ func NewOrderManager(session *session.Session) *orderManager {
 		services.GetProductPackagePresetService(session),
 		services.GetAccountService(session),
 		services.GetBillingOrderQuoteService(session),
+		session,
 	}
 }
 
@@ -436,4 +439,23 @@ func (i orderManager) GetRecalculatedOrderContainer(quoteId int) (datatypes.Cont
 	orderBeingPlacedFlag := false
 	userOrderData := datatypes.Container_Product_Order{}
 	return i.BillingOrderQuoteService.Id(quoteId).GetRecalculatedOrderContainer(&userOrderData, &orderBeingPlacedFlag)
+}
+
+// Return order detail
+//int orderId: The order identifier.
+//string mask: The object mask.
+func (i orderManager) GetOrderDetail(orderId int, mask string) (datatypes.Billing_Order, error) {
+	if mask == "" {
+		mask = `mask[orderTotalAmount,orderApprovalDate,
+		initialInvoice[id,amount,invoiceTotalAmount,
+		invoiceTopLevelItems[id, description, hostName, domainName, oneTimeAfterTaxAmount,
+		recurringAfterTaxAmount, createDate,
+		categoryCode,
+		category[name],
+		location[name],
+		children[id, category[name], description, oneTimeAfterTaxAmount,recurringAfterTaxAmount]]],
+		items[description],userRecord[displayName,userStatus]]`
+	}
+	billingOrderService := services.GetBillingOrderService(i.Session)
+	return billingOrderService.Id(orderId).Mask(mask).GetObject()
 }
