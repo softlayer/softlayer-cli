@@ -20,6 +20,7 @@ type EventDetailCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
 	Command        *cobra.Command
+	Ack            bool
 }
 
 func NewEventDetailCommand(sl *metadata.SoftlayerCommand) *EventDetailCommand {
@@ -35,6 +36,7 @@ func NewEventDetailCommand(sl *metadata.SoftlayerCommand) *EventDetailCommand {
 			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().BoolVar(&thisCmd.Ack, "ack", false, T("Acknowledge Event. Doing so will turn off the popup in the control portal."))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
@@ -47,6 +49,13 @@ func (cmd *EventDetailCommand) Run(args []string) error {
 	}
 
 	outputFormat := cmd.GetOutputFlag()
+
+	if cmd.Ack {
+		_, err := cmd.AccountManager.AckEvent(eventID)
+		if err != nil {
+			return slErr.NewAPIError(T("Failed to acknowledge event."), err.Error(), 2)
+		}
+	}
 
 	mask := "mask[acknowledgedFlag,attachments,impactedResources,statusCode,updates,notificationOccurrenceEventType]"
 	event, err := cmd.AccountManager.GetEventDetail(eventID, mask)
