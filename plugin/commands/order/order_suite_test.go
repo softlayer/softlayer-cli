@@ -20,6 +20,7 @@ func TestOrder(t *testing.T) {
 var availableCommands = []string{
 	"category-list",
 	"item-list",
+	"lookup",
 	"package-list",
 	"package-locations",
 	"place",

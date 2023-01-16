@@ -55,6 +55,20 @@ type FakeOrderManager struct {
 		result1 string
 		result2 error
 	}
+	GetOrderDetailStub        func(int, string) (datatypes.Billing_Order, error)
+	getOrderDetailMutex       sync.RWMutex
+	getOrderDetailArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getOrderDetailReturns struct {
+		result1 datatypes.Billing_Order
+		result2 error
+	}
+	getOrderDetailReturnsOnCall map[int]struct {
+		result1 datatypes.Billing_Order
+		result2 error
+	}
 	GetPackageByKeyStub        func(string, string) (datatypes.Product_Package, error)
 	getPackageByKeyMutex       sync.RWMutex
 	getPackageByKeyArgsForCall []struct {
@@ -512,6 +526,71 @@ func (fake *FakeOrderManager) GetLocationReturnsOnCall(i int, result1 string, re
 	}
 	fake.getLocationReturnsOnCall[i] = struct {
 		result1 string
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetOrderDetail(arg1 int, arg2 string) (datatypes.Billing_Order, error) {
+	fake.getOrderDetailMutex.Lock()
+	ret, specificReturn := fake.getOrderDetailReturnsOnCall[len(fake.getOrderDetailArgsForCall)]
+	fake.getOrderDetailArgsForCall = append(fake.getOrderDetailArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetOrderDetailStub
+	fakeReturns := fake.getOrderDetailReturns
+	fake.recordInvocation("GetOrderDetail", []interface{}{arg1, arg2})
+	fake.getOrderDetailMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) GetOrderDetailCallCount() int {
+	fake.getOrderDetailMutex.RLock()
+	defer fake.getOrderDetailMutex.RUnlock()
+	return len(fake.getOrderDetailArgsForCall)
+}
+
+func (fake *FakeOrderManager) GetOrderDetailCalls(stub func(int, string) (datatypes.Billing_Order, error)) {
+	fake.getOrderDetailMutex.Lock()
+	defer fake.getOrderDetailMutex.Unlock()
+	fake.GetOrderDetailStub = stub
+}
+
+func (fake *FakeOrderManager) GetOrderDetailArgsForCall(i int) (int, string) {
+	fake.getOrderDetailMutex.RLock()
+	defer fake.getOrderDetailMutex.RUnlock()
+	argsForCall := fake.getOrderDetailArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeOrderManager) GetOrderDetailReturns(result1 datatypes.Billing_Order, result2 error) {
+	fake.getOrderDetailMutex.Lock()
+	defer fake.getOrderDetailMutex.Unlock()
+	fake.GetOrderDetailStub = nil
+	fake.getOrderDetailReturns = struct {
+		result1 datatypes.Billing_Order
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) GetOrderDetailReturnsOnCall(i int, result1 datatypes.Billing_Order, result2 error) {
+	fake.getOrderDetailMutex.Lock()
+	defer fake.getOrderDetailMutex.Unlock()
+	fake.GetOrderDetailStub = nil
+	if fake.getOrderDetailReturnsOnCall == nil {
+		fake.getOrderDetailReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Billing_Order
+			result2 error
+		})
+	}
+	fake.getOrderDetailReturnsOnCall[i] = struct {
+		result1 datatypes.Billing_Order
 		result2 error
 	}{result1, result2}
 }
@@ -1665,6 +1744,8 @@ func (fake *FakeOrderManager) Invocations() map[string][][]interface{} {
 	defer fake.getActiveQuotesMutex.RUnlock()
 	fake.getLocationMutex.RLock()
 	defer fake.getLocationMutex.RUnlock()
+	fake.getOrderDetailMutex.RLock()
+	defer fake.getOrderDetailMutex.RUnlock()
 	fake.getPackageByKeyMutex.RLock()
 	defer fake.getPackageByKeyMutex.RUnlock()
 	fake.getPresetPricesMutex.RLock()
