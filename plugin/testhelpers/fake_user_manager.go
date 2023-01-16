@@ -94,6 +94,33 @@ type FakeUserManager struct {
 		result1 datatypes.User_Customer
 		result2 error
 	}
+	CreateUserVpnOverrideStub        func(int, int) (bool, error)
+	createUserVpnOverrideMutex       sync.RWMutex
+	createUserVpnOverrideArgsForCall []struct {
+		arg1 int
+		arg2 int
+	}
+	createUserVpnOverrideReturns struct {
+		result1 bool
+		result2 error
+	}
+	createUserVpnOverrideReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
+	DeleteUserVpnOverrideStub        func(int) (bool, error)
+	deleteUserVpnOverrideMutex       sync.RWMutex
+	deleteUserVpnOverrideArgsForCall []struct {
+		arg1 int
+	}
+	deleteUserVpnOverrideReturns struct {
+		result1 bool
+		result2 error
+	}
+	deleteUserVpnOverrideReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	DisableEmailSubscriptionNotificationStub        func(int) (bool, error)
 	disableEmailSubscriptionNotificationMutex       sync.RWMutex
 	disableEmailSubscriptionNotificationArgsForCall []struct {
@@ -253,6 +280,19 @@ type FakeUserManager struct {
 		result1 []datatypes.User_Customer_Access_Authentication
 		result2 error
 	}
+	GetOverridesStub        func(int) ([]datatypes.Network_Service_Vpn_Overrides, error)
+	getOverridesMutex       sync.RWMutex
+	getOverridesArgsForCall []struct {
+		arg1 int
+	}
+	getOverridesReturns struct {
+		result1 []datatypes.Network_Service_Vpn_Overrides
+		result2 error
+	}
+	getOverridesReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Service_Vpn_Overrides
+		result2 error
+	}
 	GetUserStub        func(int, string) (datatypes.User_Customer, error)
 	getUserMutex       sync.RWMutex
 	getUserArgsForCall []struct {
@@ -385,6 +425,19 @@ type FakeUserManager struct {
 		result2 error
 	}
 	removeVirtualGuestAccessReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
+	UpdateVpnUserStub        func(int) (bool, error)
+	updateVpnUserMutex       sync.RWMutex
+	updateVpnUserArgsForCall []struct {
+		arg1 int
+	}
+	updateVpnUserReturns struct {
+		result1 bool
+		result2 error
+	}
+	updateVpnUserReturnsOnCall map[int]struct {
 		result1 bool
 		result2 error
 	}
@@ -783,6 +836,135 @@ func (fake *FakeUserManager) CreateUserReturnsOnCall(i int, result1 datatypes.Us
 	}
 	fake.createUserReturnsOnCall[i] = struct {
 		result1 datatypes.User_Customer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) CreateUserVpnOverride(arg1 int, arg2 int) (bool, error) {
+	fake.createUserVpnOverrideMutex.Lock()
+	ret, specificReturn := fake.createUserVpnOverrideReturnsOnCall[len(fake.createUserVpnOverrideArgsForCall)]
+	fake.createUserVpnOverrideArgsForCall = append(fake.createUserVpnOverrideArgsForCall, struct {
+		arg1 int
+		arg2 int
+	}{arg1, arg2})
+	stub := fake.CreateUserVpnOverrideStub
+	fakeReturns := fake.createUserVpnOverrideReturns
+	fake.recordInvocation("CreateUserVpnOverride", []interface{}{arg1, arg2})
+	fake.createUserVpnOverrideMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) CreateUserVpnOverrideCallCount() int {
+	fake.createUserVpnOverrideMutex.RLock()
+	defer fake.createUserVpnOverrideMutex.RUnlock()
+	return len(fake.createUserVpnOverrideArgsForCall)
+}
+
+func (fake *FakeUserManager) CreateUserVpnOverrideCalls(stub func(int, int) (bool, error)) {
+	fake.createUserVpnOverrideMutex.Lock()
+	defer fake.createUserVpnOverrideMutex.Unlock()
+	fake.CreateUserVpnOverrideStub = stub
+}
+
+func (fake *FakeUserManager) CreateUserVpnOverrideArgsForCall(i int) (int, int) {
+	fake.createUserVpnOverrideMutex.RLock()
+	defer fake.createUserVpnOverrideMutex.RUnlock()
+	argsForCall := fake.createUserVpnOverrideArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeUserManager) CreateUserVpnOverrideReturns(result1 bool, result2 error) {
+	fake.createUserVpnOverrideMutex.Lock()
+	defer fake.createUserVpnOverrideMutex.Unlock()
+	fake.CreateUserVpnOverrideStub = nil
+	fake.createUserVpnOverrideReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) CreateUserVpnOverrideReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.createUserVpnOverrideMutex.Lock()
+	defer fake.createUserVpnOverrideMutex.Unlock()
+	fake.CreateUserVpnOverrideStub = nil
+	if fake.createUserVpnOverrideReturnsOnCall == nil {
+		fake.createUserVpnOverrideReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.createUserVpnOverrideReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) DeleteUserVpnOverride(arg1 int) (bool, error) {
+	fake.deleteUserVpnOverrideMutex.Lock()
+	ret, specificReturn := fake.deleteUserVpnOverrideReturnsOnCall[len(fake.deleteUserVpnOverrideArgsForCall)]
+	fake.deleteUserVpnOverrideArgsForCall = append(fake.deleteUserVpnOverrideArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteUserVpnOverrideStub
+	fakeReturns := fake.deleteUserVpnOverrideReturns
+	fake.recordInvocation("DeleteUserVpnOverride", []interface{}{arg1})
+	fake.deleteUserVpnOverrideMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) DeleteUserVpnOverrideCallCount() int {
+	fake.deleteUserVpnOverrideMutex.RLock()
+	defer fake.deleteUserVpnOverrideMutex.RUnlock()
+	return len(fake.deleteUserVpnOverrideArgsForCall)
+}
+
+func (fake *FakeUserManager) DeleteUserVpnOverrideCalls(stub func(int) (bool, error)) {
+	fake.deleteUserVpnOverrideMutex.Lock()
+	defer fake.deleteUserVpnOverrideMutex.Unlock()
+	fake.DeleteUserVpnOverrideStub = stub
+}
+
+func (fake *FakeUserManager) DeleteUserVpnOverrideArgsForCall(i int) int {
+	fake.deleteUserVpnOverrideMutex.RLock()
+	defer fake.deleteUserVpnOverrideMutex.RUnlock()
+	argsForCall := fake.deleteUserVpnOverrideArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeUserManager) DeleteUserVpnOverrideReturns(result1 bool, result2 error) {
+	fake.deleteUserVpnOverrideMutex.Lock()
+	defer fake.deleteUserVpnOverrideMutex.Unlock()
+	fake.DeleteUserVpnOverrideStub = nil
+	fake.deleteUserVpnOverrideReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) DeleteUserVpnOverrideReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.deleteUserVpnOverrideMutex.Lock()
+	defer fake.deleteUserVpnOverrideMutex.Unlock()
+	fake.DeleteUserVpnOverrideStub = nil
+	if fake.deleteUserVpnOverrideReturnsOnCall == nil {
+		fake.deleteUserVpnOverrideReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.deleteUserVpnOverrideReturnsOnCall[i] = struct {
+		result1 bool
 		result2 error
 	}{result1, result2}
 }
@@ -1549,6 +1731,70 @@ func (fake *FakeUserManager) GetLoginsReturnsOnCall(i int, result1 []datatypes.U
 	}{result1, result2}
 }
 
+func (fake *FakeUserManager) GetOverrides(arg1 int) ([]datatypes.Network_Service_Vpn_Overrides, error) {
+	fake.getOverridesMutex.Lock()
+	ret, specificReturn := fake.getOverridesReturnsOnCall[len(fake.getOverridesArgsForCall)]
+	fake.getOverridesArgsForCall = append(fake.getOverridesArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetOverridesStub
+	fakeReturns := fake.getOverridesReturns
+	fake.recordInvocation("GetOverrides", []interface{}{arg1})
+	fake.getOverridesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) GetOverridesCallCount() int {
+	fake.getOverridesMutex.RLock()
+	defer fake.getOverridesMutex.RUnlock()
+	return len(fake.getOverridesArgsForCall)
+}
+
+func (fake *FakeUserManager) GetOverridesCalls(stub func(int) ([]datatypes.Network_Service_Vpn_Overrides, error)) {
+	fake.getOverridesMutex.Lock()
+	defer fake.getOverridesMutex.Unlock()
+	fake.GetOverridesStub = stub
+}
+
+func (fake *FakeUserManager) GetOverridesArgsForCall(i int) int {
+	fake.getOverridesMutex.RLock()
+	defer fake.getOverridesMutex.RUnlock()
+	argsForCall := fake.getOverridesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeUserManager) GetOverridesReturns(result1 []datatypes.Network_Service_Vpn_Overrides, result2 error) {
+	fake.getOverridesMutex.Lock()
+	defer fake.getOverridesMutex.Unlock()
+	fake.GetOverridesStub = nil
+	fake.getOverridesReturns = struct {
+		result1 []datatypes.Network_Service_Vpn_Overrides
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetOverridesReturnsOnCall(i int, result1 []datatypes.Network_Service_Vpn_Overrides, result2 error) {
+	fake.getOverridesMutex.Lock()
+	defer fake.getOverridesMutex.Unlock()
+	fake.GetOverridesStub = nil
+	if fake.getOverridesReturnsOnCall == nil {
+		fake.getOverridesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Service_Vpn_Overrides
+			result2 error
+		})
+	}
+	fake.getOverridesReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Service_Vpn_Overrides
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeUserManager) GetUser(arg1 int, arg2 string) (datatypes.User_Customer, error) {
 	fake.getUserMutex.Lock()
 	ret, specificReturn := fake.getUserReturnsOnCall[len(fake.getUserArgsForCall)]
@@ -2198,6 +2444,70 @@ func (fake *FakeUserManager) RemoveVirtualGuestAccessReturnsOnCall(i int, result
 	}{result1, result2}
 }
 
+func (fake *FakeUserManager) UpdateVpnUser(arg1 int) (bool, error) {
+	fake.updateVpnUserMutex.Lock()
+	ret, specificReturn := fake.updateVpnUserReturnsOnCall[len(fake.updateVpnUserArgsForCall)]
+	fake.updateVpnUserArgsForCall = append(fake.updateVpnUserArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.UpdateVpnUserStub
+	fakeReturns := fake.updateVpnUserReturns
+	fake.recordInvocation("UpdateVpnUser", []interface{}{arg1})
+	fake.updateVpnUserMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) UpdateVpnUserCallCount() int {
+	fake.updateVpnUserMutex.RLock()
+	defer fake.updateVpnUserMutex.RUnlock()
+	return len(fake.updateVpnUserArgsForCall)
+}
+
+func (fake *FakeUserManager) UpdateVpnUserCalls(stub func(int) (bool, error)) {
+	fake.updateVpnUserMutex.Lock()
+	defer fake.updateVpnUserMutex.Unlock()
+	fake.UpdateVpnUserStub = stub
+}
+
+func (fake *FakeUserManager) UpdateVpnUserArgsForCall(i int) int {
+	fake.updateVpnUserMutex.RLock()
+	defer fake.updateVpnUserMutex.RUnlock()
+	argsForCall := fake.updateVpnUserArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeUserManager) UpdateVpnUserReturns(result1 bool, result2 error) {
+	fake.updateVpnUserMutex.Lock()
+	defer fake.updateVpnUserMutex.Unlock()
+	fake.UpdateVpnUserStub = nil
+	fake.updateVpnUserReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) UpdateVpnUserReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.updateVpnUserMutex.Lock()
+	defer fake.updateVpnUserMutex.Unlock()
+	fake.UpdateVpnUserStub = nil
+	if fake.updateVpnUserReturnsOnCall == nil {
+		fake.updateVpnUserReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.updateVpnUserReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -2213,6 +2523,10 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.addVirtualGuestAccessMutex.RUnlock()
 	fake.createUserMutex.RLock()
 	defer fake.createUserMutex.RUnlock()
+	fake.createUserVpnOverrideMutex.RLock()
+	defer fake.createUserVpnOverrideMutex.RUnlock()
+	fake.deleteUserVpnOverrideMutex.RLock()
+	defer fake.deleteUserVpnOverrideMutex.RUnlock()
 	fake.disableEmailSubscriptionNotificationMutex.RLock()
 	defer fake.disableEmailSubscriptionNotificationMutex.RUnlock()
 	fake.editUserMutex.RLock()
@@ -2237,6 +2551,8 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.getIdFromUsernameMutex.RUnlock()
 	fake.getLoginsMutex.RLock()
 	defer fake.getLoginsMutex.RUnlock()
+	fake.getOverridesMutex.RLock()
+	defer fake.getOverridesMutex.RUnlock()
 	fake.getUserMutex.RLock()
 	defer fake.getUserMutex.RUnlock()
 	fake.getUserAllowDevicesPermissionsMutex.RLock()
@@ -2257,6 +2573,8 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.removePermissionMutex.RUnlock()
 	fake.removeVirtualGuestAccessMutex.RLock()
 	defer fake.removeVirtualGuestAccessMutex.RUnlock()
+	fake.updateVpnUserMutex.RLock()
+	defer fake.updateVpnUserMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

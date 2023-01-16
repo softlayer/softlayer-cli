@@ -13,6 +13,7 @@ import (
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -53,6 +54,10 @@ type UserManager interface {
 	GetDedicatedHosts(userId int, mask string) ([]datatypes.Virtual_DedicatedHost, error)
 	GetHardware(userId int, mask string) ([]datatypes.Hardware, error)
 	GetVirtualGuests(userId int, mask string) ([]datatypes.Virtual_Guest, error)
+	CreateUserVpnOverride(userId int, subnetId int) (bool, error)
+	UpdateVpnUser(userId int) (bool, error)
+	GetOverrides(userId int) ([]datatypes.Network_Service_Vpn_Overrides, error)
+	DeleteUserVpnOverride(overrideId int) (bool, error)
 }
 
 type userManager struct {
@@ -61,6 +66,7 @@ type userManager struct {
 	UserPermissionService services.User_Customer_CustomerPermission_Permission
 	EventLogService       services.Event_Log
 	Email_Subscription    services.Email_Subscription
+	Session               *session.Session
 }
 
 func NewUserManager(session *session.Session) *userManager {
@@ -70,6 +76,7 @@ func NewUserManager(session *session.Session) *userManager {
 		services.GetUserCustomerCustomerPermissionPermissionService(session),
 		services.GetEventLogService(session),
 		services.GetEmailSubscriptionService(session),
+		session,
 	}
 }
 
@@ -149,9 +156,8 @@ func (u userManager) GetUserPermissions(userId int) ([]datatypes.User_Customer_C
 	if isMasterUser {
 		permissions, err = u.GetAllPermission()
 	} else {
-		permissions, err = u.UserCustomerService.Id(userId).GetPermissions()	
+		permissions, err = u.UserCustomerService.Id(userId).GetPermissions()
 	}
-	
 
 	if err != nil {
 		return nil, err
@@ -309,4 +315,37 @@ func (u userManager) GetVirtualGuests(userId int, mask string) ([]datatypes.Virt
 		mask = "mask[id,fullyQualifiedDomainName,primaryIpAddress,primaryBackendIpAddress,notes]"
 	}
 	return u.UserCustomerService.Id(userId).GetVirtualGuests()
+}
+
+// Create Softlayer portal user VPN overrides.
+// int userId: The user customer identifier.
+// int subnetId: The subnet identifier.
+func (u userManager) CreateUserVpnOverride(userId int, subnetId int) (bool, error) {
+	vpnOverrideTemplates := []datatypes.Network_Service_Vpn_Overrides{
+		datatypes.Network_Service_Vpn_Overrides{
+			UserId:   sl.Int(userId),
+			SubnetId: sl.Int(subnetId),
+		},
+	}
+	networkServiceVpnOverridesService := services.GetNetworkServiceVpnOverridesService(u.Session)
+	return networkServiceVpnOverridesService.CreateObjects(vpnOverrideTemplates)
+}
+
+// Creates or updates a user’s VPN access privileges.
+// int userId: The user customer identifier.
+func (u userManager) UpdateVpnUser(userId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).UpdateVpnUser()
+}
+
+// Return user’s vpn accessible subnets.
+// int userId: The user customer identifier.
+func (u userManager) GetOverrides(userId int) ([]datatypes.Network_Service_Vpn_Overrides, error) {
+	return u.UserCustomerService.Id(userId).GetOverrides()
+}
+
+// Delete overrides.
+// int overrideId: Override to be deleted.
+func (u userManager) DeleteUserVpnOverride(overrideId int) (bool, error) {
+	networkServiceVpnOverridesService := services.GetNetworkServiceVpnOverridesService(u.Session)
+	return networkServiceVpnOverridesService.Id(overrideId).DeleteObject()
 }

@@ -31,6 +31,7 @@ var availableCommands = []string{
 	"permission-edit",
 	"permissions",
 	"remove-access",
+	"vpn-subnet",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the SetupCobraCommands
