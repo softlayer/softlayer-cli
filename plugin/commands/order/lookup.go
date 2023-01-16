@@ -70,7 +70,11 @@ func (cmd *LookupCommand) Run(args []string) error {
 	table.Add(T("Order Approval Date"), utils.FormatSLTimePointer(order.OrderApprovalDate))
 	table.Add(T("Status"), utils.FormatStringPointer(order.Status))
 	table.Add(T("Order Total Amount"), fmt.Sprintf("%.2f", float64(*order.OrderTotalAmount)))
-	table.Add(T("Invoice Total Amount"), fmt.Sprintf("%.2f", float64(*order.InitialInvoice.InvoiceTotalAmount)))
+	if order.InitialInvoice != nil && order.InitialInvoice.InvoiceTotalAmount != nil {
+		table.Add(T("Invoice Total Amount"), fmt.Sprintf("%.2f", float64(*order.InitialInvoice.InvoiceTotalAmount)))
+	} else {
+		table.Add(T("Invoice Total Amount"), "0.00")
+	}
 
 	buf := new(bytes.Buffer)
 	itemsTable := terminal.NewTable(buf, []string{T("Item Description")})
@@ -90,39 +94,42 @@ func (cmd *LookupCommand) Run(args []string) error {
 		T("Create Date"),
 		T("Location"),
 	})
-	for _, invoiceDetail := range order.InitialInvoice.InvoiceTopLevelItems {
-		Category := utils.FormatStringPointerName(invoiceDetail.Category.Name)
-		if Category == "" {
-			Category = utils.FormatStringPointer(invoiceDetail.CategoryCode)
-		}
-		fqdn := fmt.Sprintf("%s.%s", utils.FormatStringPointerName(invoiceDetail.HostName), utils.FormatStringPointerName(invoiceDetail.DomainName))
-		Description := utils.FormatStringPointer(invoiceDetail.Description)
-		if fqdn != "." {
-			Description = fmt.Sprintf("%s (%s)", Description, fqdn)
-		}
-		invoiceTable.Add(
-			utils.FormatIntPointer(invoiceDetail.Id),
-			Category,
-			utils.ShortenString(Description),
-			fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
-			fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
-			utils.FormatSLTimePointer(invoiceDetail.CreateDate),
-			utils.FormatStringPointer(invoiceDetail.Location.Name),
-		)
-		if cmd.Details {
-			for _, child := range invoiceDetail.Children {
-				invoiceTable.Add(
-					">>>",
-					utils.FormatStringPointer(child.Category.Name),
-					utils.ShortenString(utils.FormatStringPointer(child.Description)),
-					fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
-					fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
-					"---",
-					"---",
-				)
+	if order.InitialInvoice != nil && order.InitialInvoice.InvoiceTopLevelItems != nil {
+		for _, invoiceDetail := range order.InitialInvoice.InvoiceTopLevelItems {
+			Category := utils.FormatStringPointerName(invoiceDetail.Category.Name)
+			if Category == "" {
+				Category = utils.FormatStringPointer(invoiceDetail.CategoryCode)
+			}
+			fqdn := fmt.Sprintf("%s.%s", utils.FormatStringPointerName(invoiceDetail.HostName), utils.FormatStringPointerName(invoiceDetail.DomainName))
+			Description := utils.FormatStringPointer(invoiceDetail.Description)
+			if fqdn != "." {
+				Description = fmt.Sprintf("%s (%s)", Description, fqdn)
+			}
+			invoiceTable.Add(
+				utils.FormatIntPointer(invoiceDetail.Id),
+				Category,
+				utils.ShortenString(Description),
+				fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
+				fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
+				utils.FormatSLTimePointer(invoiceDetail.CreateDate),
+				utils.FormatStringPointer(invoiceDetail.Location.Name),
+			)
+			if cmd.Details {
+				for _, child := range invoiceDetail.Children {
+					invoiceTable.Add(
+						">>>",
+						utils.FormatStringPointer(child.Category.Name),
+						utils.ShortenString(utils.FormatStringPointer(child.Description)),
+						fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
+						fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
+						"---",
+						"---",
+					)
+				}
 			}
 		}
 	}
+
 	invoiceTable.Print()
 	table.Add(T("Initial Invoice"), buf.String())
 
