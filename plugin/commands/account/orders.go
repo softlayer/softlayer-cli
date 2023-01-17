@@ -36,7 +36,7 @@ func NewOrdersCommand(sl *metadata.SoftlayerCommand) *OrdersCommand {
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().IntVar(&thisCmd.Limit, "limit", 100, T("How many results to get in one api call. [default: 100]"))
+	cobraCmd.Flags().IntVar(&thisCmd.Limit, "limit", 100, T("How many results to get in one api call."))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }

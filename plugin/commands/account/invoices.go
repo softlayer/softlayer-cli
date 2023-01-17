@@ -32,9 +32,9 @@ func NewInvoicesCommand(sl *metadata.SoftlayerCommand) *InvoicesCommand {
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().BoolVar(&thisCmd.All, "all", false, T("Return ALL invoices. There may be a lot of these. [default: False]"))
-	cobraCmd.Flags().BoolVar(&thisCmd.Closed, "closed", false, T("Include invoices with a CLOSED status. [default: False]"))
-	cobraCmd.Flags().IntVar(&thisCmd.Limit, "limit", 50, T("How many invoices to get back. [default: 50]"))
+	cobraCmd.Flags().BoolVar(&thisCmd.All, "all", false, T("Return ALL invoices. There may be a lot of these."))
+	cobraCmd.Flags().BoolVar(&thisCmd.Closed, "closed", false, T("Include invoices with a CLOSED status."))
+	cobraCmd.Flags().IntVar(&thisCmd.Limit, "limit", 50, T("How many invoices to get back."))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
