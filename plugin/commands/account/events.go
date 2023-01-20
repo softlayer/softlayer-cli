@@ -40,7 +40,7 @@ func NewEventsCommand(sl *metadata.SoftlayerCommand) *EventsCommand {
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().StringVarP(&thisCmd.DateMin, "date-min", "d", "", T("Earliest date to retrieve events for [YYYY-MM-DD]."))
+	cobraCmd.Flags().StringVarP(&thisCmd.DateMin, "date-min", "d", "", T("Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago."))
 	cobraCmd.Flags().BoolVar(&thisCmd.Ack, "ack-all", false, T("Acknowledge every upcoming event. Doing so will turn off the popup in the control portal."))
 	cobraCmd.Flags().BoolVar(&thisCmd.Planned, "planned", false, T("Show only planned events."))
 	cobraCmd.Flags().BoolVar(&thisCmd.Unplanned, "unplanned", false, T("Show only unplanned events."))
@@ -196,6 +196,8 @@ func PrintAnnouncementEvents(events []datatypes.Notification_Occurrence_Event, u
 
 func ackAll(events []datatypes.Notification_Occurrence_Event, accountManager managers.AccountManager) {
 	for _, event := range events {
-		accountManager.AckEvent(*event.Id)
+		if event.Id != nil {
+			accountManager.AckEvent(*event.Id)
+		}
 	}
 }
