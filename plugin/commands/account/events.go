@@ -2,6 +2,7 @@ package account
 
 import (
 	"bytes"
+	"strconv"
 	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -197,7 +198,8 @@ func PrintAnnouncementEvents(events []datatypes.Notification_Occurrence_Event, u
 func ackAll(events []datatypes.Notification_Occurrence_Event, accountManager managers.AccountManager) {
 	for _, event := range events {
 		if event.Id != nil {
-			accountManager.AckEvent(*event.Id)
+			eventID, _ := strconv.Atoi(utils.FormatIntPointer(event.Id))
+			accountManager.AckEvent(eventID)
 		}
 	}
 }
