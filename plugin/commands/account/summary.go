@@ -63,7 +63,7 @@ func PrintSummary(account datatypes.Account, ui terminal.UI, outputFormat string
 		Balance = utils.FormatSLFloatPointerToFloat(account.PendingInvoice.StartingBalance)
 		UpcomingInvoice = utils.FormatSLFloatPointerToFloat(account.PendingInvoice.InvoiceTotalAmount)
 	}
-	
+
 	table.Add("Company Name", utils.FormatStringPointer(account.CompanyName))
 	table.Add("Balance", Balance)
 	table.Add("Upcoming Invoice", UpcomingInvoice)

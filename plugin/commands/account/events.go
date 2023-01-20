@@ -18,30 +18,29 @@ import (
 
 type EventsCommand struct {
 	*metadata.SoftlayerCommand
-	AccountManager 	managers.AccountManager
-	Command 		*cobra.Command
-	DateMin			string
+	AccountManager managers.AccountManager
+	Command        *cobra.Command
+	DateMin        string
 }
 
 func NewEventsCommand(sl *metadata.SoftlayerCommand) *EventsCommand {
 	thisCmd := &EventsCommand{
 		SoftlayerCommand: sl,
-		AccountManager: managers.NewAccountManager(sl.Session),
+		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use: "events",
-		Short: T("Summary and acknowledgement of upcoming and ongoing maintenance events"),
-		Args: metadata.NoArgs,
+		Use:   "events",
+		Short: T("Summary and acknowledgement of upcoming and ongoing maintenance events."),
+		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
 	}
 	cobraCmd.Flags().StringVarP(&thisCmd.DateMin, "date-min", "d", "",
-								T("Earliest date to retrieve events for [YYYY-MM-DD]."))
+		T("Earliest date to retrieve events for [YYYY-MM-DD]."))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
-
 
 func (cmd *EventsCommand) Run(args []string) error {
 	outputFormat := cmd.GetOutputFlag()

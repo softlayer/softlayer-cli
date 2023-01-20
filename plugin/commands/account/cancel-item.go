@@ -14,20 +14,20 @@ import (
 
 type CancelItemCommand struct {
 	*metadata.SoftlayerCommand
-	Command *cobra.Command
+	Command        *cobra.Command
 	AccountManager managers.AccountManager
 }
 
 func NewCancelItemCommand(sl *metadata.SoftlayerCommand) *CancelItemCommand {
 	thisCmd := &CancelItemCommand{
 		SoftlayerCommand: sl,
-		AccountManager: managers.NewAccountManager(sl.Session),
+		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use: "cancel-item",
+		Use:   "cancel-item",
 		Short: T("Cancels a billing item."),
-		Long: T(`Cancel the resource or service for a billing Item. By default the billing item will be canceled ` + 
-				`on the next bill date and reclaim of the resource will begin shortly after the cancellation`),
+		Long: T(`Cancel the resource or service for a billing Item. By default the billing item will be canceled ` +
+			`on the next bill date and reclaim of the resource will begin shortly after the cancellation`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -36,7 +36,6 @@ func NewCancelItemCommand(sl *metadata.SoftlayerCommand) *CancelItemCommand {
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
-
 
 func (cmd *CancelItemCommand) Run(args []string) error {
 

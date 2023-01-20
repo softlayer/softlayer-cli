@@ -6,26 +6,26 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 
-	
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Account list BillingItems", func() {
 	var (
-		fakeUI			*terminal.FakeUI
-		cliCommand		*account.BillingItemsCommand
-		fakeSession   	*session.Session
-		slCommand		*metadata.SoftlayerCommand
+		fakeUI      *terminal.FakeUI
+		cliCommand  *account.BillingItemsCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = account.NewBillingItemsCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})
+
 	Describe("Account events", func() {
 		Context("Account events, Invalid Usage", func() {
 			It("Set command with an invalid output option", func() {
