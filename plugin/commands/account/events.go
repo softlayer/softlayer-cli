@@ -86,9 +86,18 @@ func (cmd *EventsCommand) Run(args []string) error {
 	}
 
 	if cmd.Ack {
-		ackAll(plannedEvents, cmd.AccountManager)
-		ackAll(unplannedEvents, cmd.AccountManager)
-		ackAll(announcement, cmd.AccountManager)
+		err := ackAll(plannedEvents, cmd.AccountManager)
+		if err != nil {
+			return errors.NewAPIError(T("Failed to get planned event ID."), err.Error(), 2)
+		}
+		err = ackAll(unplannedEvents, cmd.AccountManager)
+		if err != nil {
+			return errors.NewAPIError(T("Failed to get unplanned event ID."), err.Error(), 2)
+		}
+		err = ackAll(announcement, cmd.AccountManager)
+		if err != nil {
+			return errors.NewAPIError(T("Failed to get announcement event ID."), err.Error(), 2)
+		}
 	}
 
 	if cmd.Planned {
@@ -200,9 +209,12 @@ func ackAll(events []datatypes.Notification_Occurrence_Event, accountManager man
 		if event.Id != nil {
 			eventID, err := strconv.Atoi(utils.FormatIntPointer(event.Id))
 			if err != nil {
-				return errors.NewAPIError(T("Failed to get event ID."), err.Error(), 2)
+				return err
 			}
-			accountManager.AckEvent(eventID)
+			_, err = accountManager.AckEvent(eventID)
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return nil
