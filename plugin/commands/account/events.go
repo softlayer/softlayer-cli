@@ -195,11 +195,15 @@ func PrintAnnouncementEvents(events []datatypes.Notification_Occurrence_Event, u
 	utils.PrintTableWithTitle(ui, table, bufEvent, "Announcement", outputFormat)
 }
 
-func ackAll(events []datatypes.Notification_Occurrence_Event, accountManager managers.AccountManager) {
+func ackAll(events []datatypes.Notification_Occurrence_Event, accountManager managers.AccountManager) error {
 	for _, event := range events {
 		if event.Id != nil {
-			eventID, _ := strconv.Atoi(utils.FormatIntPointer(event.Id))
+			eventID, err := strconv.Atoi(utils.FormatIntPointer(event.Id))
+			if err != nil {
+				return errors.NewAPIError(T("Failed to get event ID."), err.Error(), 2)
+			}
 			accountManager.AckEvent(eventID)
 		}
 	}
+	return nil
 }
