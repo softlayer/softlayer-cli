@@ -42,7 +42,7 @@ var _ = Describe("Account list Events", func() {
 
 		Context("Account events, correct use", func() {
 			It("return account events", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "--date-min", "2022-03-12")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--date-min", "2022-03-12", "--ack-all")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Planned"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Event Data             Id       Event ID    Subject                Status   Items   Start Date             End Date               Acknowledged   Updates"))
@@ -53,6 +53,27 @@ var _ = Describe("Account list Events", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Announcement"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Id       Event ID    Subject                Status   Items   Acknowledged   Updates"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("341058   144369902   Maintenance - Zone 2   Active   2       false          1"))
+			})
+			It("return account events only planned", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--planned")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Planned"))
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("Unplanned"))
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("Announcement"))
+			})
+			It("return account events only unplanned", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--unplanned")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("Planned"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Unplanned"))
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("Announcement"))
+			})
+			It("return account events only announcement", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--announcement")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("Planned"))
+				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("Unplanned"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Announcement"))
 			})
 			It("return account events in format json", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output", "json")
