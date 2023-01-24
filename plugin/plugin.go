@@ -235,7 +235,7 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", T("Specify output format, only JSON is supported now."))
 
 	// Commands
-	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand))
+	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand).Command) // single command
 	cobraCmd.AddCommand(autoscale.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(account.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(email.SetupCobraCommands(slCommand))
