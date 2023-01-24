@@ -25,6 +25,7 @@ var _ = Describe("Account list InvoiceDetail", func() {
 		cliCommand = account.NewInvoiceDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})
+
 	Describe("Account invoice detail", func() {
 		Context("Account invoice detail, Invalid Usage", func() {
 			It("Set command without id", func() {

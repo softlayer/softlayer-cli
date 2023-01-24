@@ -19,18 +19,18 @@ import (
 type BillingItemsCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
-	Command *cobra.Command
+	Command        *cobra.Command
 }
 
 func NewBillingItemsCommand(sl *metadata.SoftlayerCommand) *BillingItemsCommand {
 	thisCmd := &BillingItemsCommand{
 		SoftlayerCommand: sl,
-		AccountManager: managers.NewAccountManager(sl.Session),
+		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use: "billing-items",
+		Use:   "billing-items",
 		Short: T("Lists billing items with some other useful information."),
-		Args: metadata.NoArgs,
+		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -39,8 +39,7 @@ func NewBillingItemsCommand(sl *metadata.SoftlayerCommand) *BillingItemsCommand 
 	return thisCmd
 }
 
-
-func (cmd *BillingItemsCommand)  Run(args []string) error {
+func (cmd *BillingItemsCommand) Run(args []string) error {
 
 	outputFormat := cmd.GetOutputFlag()
 

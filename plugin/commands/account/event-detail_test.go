@@ -14,15 +14,15 @@ import (
 
 var _ = Describe("Account list EventDetail", func() {
 	var (
-		fakeUI				*terminal.FakeUI
-		cliCommand			*account.EventDetailCommand
-		fakeSession   		*session.Session
-		slCommand			*metadata.SoftlayerCommand
+		fakeUI      *terminal.FakeUI
+		cliCommand  *account.EventDetailCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = account.NewEventDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})

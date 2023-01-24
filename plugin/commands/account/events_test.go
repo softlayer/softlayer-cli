@@ -7,24 +7,24 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("Account list Events", func() {
-    var (
-        fakeUI              *terminal.FakeUI
-        cliCommand          *account.EventsCommand
-        fakeSession         *session.Session
-        slCommand           *metadata.SoftlayerCommand
-    )
-    BeforeEach(func() {
-        fakeUI = terminal.NewFakeUI()
-        fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-        slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-        cliCommand = account.NewEventsCommand(slCommand)
-        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-    })
+	var (
+		fakeUI      *terminal.FakeUI
+		cliCommand  *account.EventsCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
+	)
+	BeforeEach(func() {
+		fakeUI = terminal.NewFakeUI()
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		cliCommand = account.NewEventsCommand(slCommand)
+		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+	})
 
 	Describe("Account events", func() {
 		Context("Account events, Invalid Usage", func() {

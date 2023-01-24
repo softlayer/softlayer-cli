@@ -8,36 +8,34 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-
-	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("account bandwidth_pools_details", func() {
 	var (
-		fakeUI				*terminal.FakeUI
-		cliCommand			*account.BandwidthPoolsDetailCommand
-		fakeSession   		*session.Session
-		slCommand			*metadata.SoftlayerCommand
-		fakeAccountManager 	*testhelpers.FakeAccountManager
+		fakeUI             *terminal.FakeUI
+		cliCommand         *account.BandwidthPoolsDetailCommand
+		fakeSession        *session.Session
+		slCommand          *metadata.SoftlayerCommand
+		fakeAccountManager *testhelpers.FakeAccountManager
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeAccountManager = new(testhelpers.FakeAccountManager)
-		slCommand  = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = account.NewBandwidthPoolsDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.AccountManager = fakeAccountManager
 	})
 
 	Describe("account bandwidth_pools_details", func() {
-
 		Context("Return error", func() {
 			It("Set command without Id", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
