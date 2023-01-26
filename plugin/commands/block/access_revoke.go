@@ -30,7 +30,7 @@ func NewAccessRevokeCommand(sl *metadata.SoftlayerStorageCommand) *AccessRevokeC
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "access-revoke " + T("IDENTIFIER"),
-		Short: T("Revoke authorization for hosts that are accessing a specific volume"),
+		Short: T("Revoke authorization for hosts that are accessing a specific volume."),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]
 		
 EXAMPLE:

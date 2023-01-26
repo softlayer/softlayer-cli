@@ -26,7 +26,7 @@ func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
 
 	cobraCmd := &cobra.Command{
 		Use:   "list",
-		Short: T("List all Autoscale Groups on your account"),
+		Short: T("List all Autoscale Groups on your account."),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

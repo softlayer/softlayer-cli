@@ -27,7 +27,7 @@ func NewDeleteCommand(sl *metadata.SoftlayerCommand) (cmd *DeleteCommand) {
 
 	cobraCmd := &cobra.Command{
 		Use:   "delete " + T("IDENTIFIER"),
-		Short: T("Delete this group and destroy all members of it"),
+		Short: T("Delete this group and destroy all members of it."),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
