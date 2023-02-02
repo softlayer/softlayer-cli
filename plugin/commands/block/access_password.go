@@ -36,6 +36,7 @@ func NewAccessPasswordCommand(sl *metadata.SoftlayerStorageCommand) *AccessPassw
 		DisableFlagsInUseLine: true,
 	}
 	cobraCmd.Flags().StringVarP(&thisCmd.Password, "password", "p", "", T("Password you want to set, this command will fail if the password is not strong. [required]"))
+	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("password")
 	thisCmd.Command = cobraCmd
 
