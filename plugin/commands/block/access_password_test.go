@@ -46,7 +46,7 @@ var _ = Describe("Access Password", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "124")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-p|--password] is required."))
+				Expect(err.Error()).To(ContainSubstring(`required flag(s) "password" not set`))
 			})
 		})
 		Context("Access password with wrong hostId", func() {

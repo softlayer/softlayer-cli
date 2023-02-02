@@ -36,6 +36,7 @@ func NewAccessPasswordCommand(sl *metadata.SoftlayerStorageCommand) *AccessPassw
 		DisableFlagsInUseLine: true,
 	}
 	cobraCmd.Flags().StringVarP(&thisCmd.Password, "password", "p", "", T("Password you want to set, this command will fail if the password is not strong. [required]"))
+	cobraCmd.MarkFlagRequired("password")
 	thisCmd.Command = cobraCmd
 
 	return thisCmd
@@ -47,10 +48,6 @@ func (cmd *AccessPasswordCommand) Run(args []string) error {
 	hostID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("allowed access host ID")
-	}
-
-	if cmd.Password == "" {
-		return slErr.NewInvalidUsageError(T("[-p|--password] is required."))
 	}
 
 	err = cmd.StorageManager.SetCredentialPassword(hostID, cmd.Password)

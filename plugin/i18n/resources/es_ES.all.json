@@ -8,10 +8,6 @@
     "translation": " Nombre de clave de la capacidad (por ejemplo, C1_2X2_1_YEAR_TERM). [obligatorio]"
   },
   {
-    "id": " Disk ",
-    "translation": " Disco "
-  },
-  {
     "id": " Do not actually create the reserved capacity",
     "translation": " No crear realmente la capacidad reservada"
   },
@@ -440,10 +436,6 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\nEJEMPLO:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Gestionar las VSI que requieran migración. Puede migrar la Instancia dedicada de un host dedicado a otro host dedicado también."
   },
   {
-    "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEJEMPLO:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nEste mandato solicita una instancia de Grupo de colocación cuyo nombre es myvsi, backendRouterId 1234567 y la regla 258369"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
     "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEJEMPLO:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   Este mandato comprueba la instancia de servidor virtual con el estado del ID 12345678 para ver si está lista para su uso continuado y espera hasta 30 segundos."
   },
@@ -470,10 +462,6 @@
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} access-list ID_VOLUME [OPTIONS]\n\nEJEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   Este mandato lista todos los hosts autorizados a acceder al volumen con ID 12345678 y los ordena por ID."
-  },
-  {
-    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\nACCESS_ID es el allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -912,10 +900,6 @@
     "translation": "Indicación de fecha y hora de inicio de conversión activa"
   },
   {
-    "id": "Active Guests",
-    "translation": "Invitados activos"
-  },
-  {
     "id": "Add a new L7 policy",
     "translation": "Añadir una nueva política de L7"
   },
@@ -1114,10 +1098,6 @@
   {
     "id": "Authorize hosts  to access a given volume",
     "translation": "Autorizar que los hosts accedan a un volumen determinado"
-  },
-  {
-    "id": "Auto Scale Group was deleted successfully",
-    "translation": "El Grupo de escalado automático se ha suprimido correctamente"
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1476,10 +1456,6 @@
     "translation": "Cambiar cómo se direcciona una subred secundaria."
   },
   {
-    "id": "Changes a password for a volume's access",
-    "translation": "Cambia una contraseña para un acceso de volumen"
-  },
-  {
     "id": "Check if a virtual server instance is ready for use",
     "translation": "Comprobar si hay una instancia de servidor virtual lista para su uso"
   },
@@ -1490,10 +1466,6 @@
   {
     "id": "Classic infrastructure Account commands",
     "translation": "Mandatos de cuenta de infraestructura clásica"
-  },
-  {
-    "id": "Classic infrastructure Autoscale Group",
-    "translation": "Grupo de escalado automático de infraestructura clásica"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1632,10 +1604,6 @@
     "translation": "Columna que se va a mostrar. Las opciones son: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. Esta opción se puede especificar varias veces"
   },
   {
-    "id": "Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times",
-    "translation": "Columna que se va a mostrar. Las opciones son: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. Esta opción se puede especificar varias veces"
-  },
-  {
     "id": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times",
     "translation": "Columna a visualizar. Las opciones son: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. Esta opción se puede especificar varias veces"
   },
@@ -1692,10 +1660,6 @@
     "translation": "Columna por la que se debe ordenar. Las opciones son: id,name,description,created"
   },
   {
-    "id": "Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id",
-    "translation": "Columna por la que se debe ordenar. Las opciones son: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id"
-  },
-  {
     "id": "Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips",
     "translation": "Columna por la que se debe ordenar. Las opciones son: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips"
   },
@@ -1742,14 +1706,6 @@
   {
     "id": "Convert a dependent duplicate volume to an independent volume.",
     "translation": "Convertir un volumen duplicado dependiente en un volumen independiente."
-  },
-  {
-    "id": "Cooldown",
-    "translation": "Recuperación"
-  },
-  {
-    "id": "Core",
-    "translation": "Core"
   },
   {
     "id": "Cost",
@@ -1984,10 +1940,6 @@
     "translation": "Varias regiones"
   },
   {
-    "id": "Current Members",
-    "translation": "Miembros actuales"
-  },
-  {
     "id": "Current Usage",
     "translation": "Uso actual"
   },
@@ -2114,10 +2066,6 @@
   {
     "id": "Delete the given security group",
     "translation": "Suprimir el grupo de seguridad determinado"
-  },
-  {
-    "id": "Delete this group and destroy all members of it",
-    "translation": "Suprimir este grupo y destruir todos sus miembros"
   },
   {
     "id": "Delivered",
@@ -2322,10 +2270,6 @@
   {
     "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
     "translation": "EJEMPLO: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    Este comando solicita presupuesto para una VSI con 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04 y un enlace ascendente público y privado de 1 Gbps en el centro de datos dal13"
-  },
-  {
-    "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
-    "translation": "Fecha más temprana para recuperar los sucesos [AAAA-MM-DD]."
   },
   {
     "id": "Edit SSL certificate",
@@ -2816,10 +2760,6 @@
     "translation": "No se ha podido crear el grupo de colocación"
   },
   {
-    "id": "Failed to create placement group\n",
-    "translation": "No se ha podido crear un grupo de colocación\n"
-  },
-  {
     "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n",
     "translation": "No se ha podido crear el registro de recurso en la zona {{.Zone}}: tipo={{.RecordType}}, registro={{.Host}}, datos={{.Data}}, ttl={{.Ttl}}.\n"
   },
@@ -2858,10 +2798,6 @@
   {
     "id": "Failed to decoded the note.\n",
     "translation": "No se ha podido descodificar la nota.\n"
-  },
-  {
-    "id": "Failed to delete AutoScale Group.",
-    "translation": "No se ha podido suprimir el grupo de escalado automático."
   },
   {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
@@ -3020,10 +2956,6 @@
     "translation": "No se ha podido obtener la visión general de la cuenta."
   },
   {
-    "id": "Failed to get AutoScale group.",
-    "translation": "No se ha podido obtener el grupo de escalado automático."
-  },
-  {
     "id": "Failed to get Bandwidth Pool.",
     "translation": "No se ha podido obtener la agrupación de ancho de banda."
   },
@@ -3114,10 +3046,6 @@
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
     "translation": "No se ha podido obtener la clave SSH {{.KeyID}}.\n"
-  },
-  {
-    "id": "Failed to get SSH key.",
-    "translation": "No se ha podido obtener la clave SSH."
   },
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
@@ -3366,10 +3294,6 @@
   {
     "id": "Failed to get rules of security group {{.GroupID}}.\n",
     "translation": "No se han podido obtener las reglas del grupo de seguridad {{.GroupID}}.\n"
-  },
-  {
-    "id": "Failed to get scale groups.",
-    "translation": "No se han podido obtener grupos de escalado."
   },
   {
     "id": "Failed to get security group {{.GroupID}}.\n",
@@ -4420,10 +4344,6 @@
     "translation": "Obtener registros de sucesos"
   },
   {
-    "id": "Get List options for creating a placement group..",
-    "translation": "Obtener opciones de Listar para crear un grupo de colocación."
-  },
-  {
     "id": "Get Netscaler details.",
     "translation": "Obtener detalles de Netscaler."
   },
@@ -4484,20 +4404,12 @@
     "translation": "Obtener detalles de una subred"
   },
   {
-    "id": "Get details of an Autoscale group.",
-    "translation": "Obtener detalles de un grupo de escalado automático."
-  },
-  {
     "id": "Get information about the resources using the selected tag.",
     "translation": "Obtener información sobre los recursos que utilizan la etiqueta seleccionada."
   },
   {
     "id": "Get load balancer details",
     "translation": "Obtener detalles del equilibrador de carga"
-  },
-  {
-    "id": "Get placement Group details.",
-    "translation": "Obtener detalles del grupo de colocación."
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
@@ -4692,14 +4604,6 @@
     "translation": "Cada hora"
   },
   {
-    "id": "How many invoices to get back. [default: 50]",
-    "translation": "Cuántas facturas hay que recuperar. [valor predeterminado: 50]"
-  },
-  {
-    "id": "How many results to get in one api call. [default: 50]",
-    "translation": "Cuántos resultados se obtienen en una llamada de api. [valor predeterminado: 50]"
-  },
-  {
     "id": "Http Port",
     "translation": "Puerto Http"
   },
@@ -4882,10 +4786,6 @@
   {
     "id": "Include extra resources. Options are: at,is,rs,sr,ss",
     "translation": "Incluir recursos adicionales. Las opciones son: at,is,rs,sr,ss"
-  },
-  {
-    "id": "Include invoices with a CLOSED status. [default: False]",
-    "translation": "Incluir facturas con un estado CLOSED. [valor predeterminado: False]"
   },
   {
     "id": "Incorrect Usage",
@@ -5140,10 +5040,6 @@
     "translation": "Etiqueta"
   },
   {
-    "id": "Last Action",
-    "translation": "Última acción"
-  },
-  {
     "id": "Last Edited",
     "translation": "Editado por última vez"
   },
@@ -5234,10 +5130,6 @@
   {
     "id": "List active load balancers",
     "translation": "Listar equilibradores de carga activos"
-  },
-  {
-    "id": "List all Autoscale Groups on your account",
-    "translation": "Listar todos los grupos de escalado automático en su cuenta"
   },
   {
     "id": "List all CDN accounts.",
@@ -5340,20 +5232,12 @@
     "translation": "Listar los servidores hardware"
   },
   {
-    "id": "List hosts that are authorized to access the volume",
-    "translation": "Listar hosts que tienen autorización para acceder al volumen"
-  },
-  {
     "id": "List information about devices using the tag.",
     "translation": "Listar información sobre los dispositivos que utilizan la etiqueta."
   },
   {
     "id": "List interfaces associated with security group",
     "translation": "Listar interfaces asociadas al grupo de seguridad"
-  },
-  {
-    "id": "List invoices",
-    "translation": "Listar facturas"
   },
   {
     "id": "List l7 rules",
@@ -5410,10 +5294,6 @@
   {
     "id": "List placement groups",
     "translation": "Listar grupos de colocación"
-  },
-  {
-    "id": "List placement groups.",
-    "translation": "Listar grupos de colocación."
   },
   {
     "id": "List security group rules",
@@ -5520,10 +5400,6 @@
     "translation": "IOPS máx."
   },
   {
-    "id": "Maximum Members",
-    "translation": "Número máximo de miembros"
-  },
-  {
     "id": "Maximum number of connections to allow",
     "translation": "Número máximo de conexiones para permitir"
   },
@@ -5584,14 +5460,6 @@
     "translation": "IOPS mín."
   },
   {
-    "id": "Min/Max",
-    "translation": "Mín./Máx."
-  },
-  {
-    "id": "Minimum Members",
-    "translation": "Mínimo de miembros"
-  },
-  {
     "id": "Minute of the hour when snapshots should be taken, integer between 0 to 59",
     "translation": "Minuto de la hora en el que deben tomarse las instantáneas, entero entre 0 y 59."
   },
@@ -5626,10 +5494,6 @@
   {
     "id": "Multiple users found with the name: %s",
     "translation": "Se han encontrado varios usuarios con el nombre: %s"
-  },
-  {
-    "id": "Must provide [--cpu], [--memory], [--network] or [--flavor] to upgrade.",
-    "translation": "Debe proporcionar [--cpu], [--memory], [--network] o [--flavor] para poder actualizar."
   },
   {
     "id": "Must set either -n|--network-component or both -s|--server and -i|--interface",
@@ -5690,14 +5554,6 @@
   {
     "id": "Network Identifier",
     "translation": "Identificador de red"
-  },
-  {
-    "id": "Network Type",
-    "translation": "Network Type"
-  },
-  {
-    "id": "Network Vlans",
-    "translation": "Vlan de red"
   },
   {
     "id": "Network component {{.ComponentID}} is added to security group {{.GroupID}}.",
@@ -6180,10 +6036,6 @@
     "translation": "PACKAGE_KEYNAME"
   },
   {
-    "id": "PASSWORD",
-    "translation": "CONTRASEÑA"
-  },
-  {
     "id": "PLACEMENTGROUP_ID",
     "translation": "ID_GRUPO_COLOCACIÓN"
   },
@@ -6416,14 +6268,6 @@
     "translation": "Pod"
   },
   {
-    "id": "Policies",
-    "translation": "Políticas"
-  },
-  {
-    "id": "Policy",
-    "translation": "Política"
-  },
-  {
     "id": "Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS",
     "translation": "Acción de política: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
   },
@@ -6454,10 +6298,6 @@
   {
     "id": "Port speed[required]",
     "translation": "Velocidad de puerto [obligatorio]"
-  },
-  {
-    "id": "Post Install",
-    "translation": "Después de la instalación"
   },
   {
     "id": "Post-install script to download",
@@ -6728,10 +6568,6 @@
     "translation": "ID_REGLA"
   },
   {
-    "id": "Ram",
-    "translation": "Ram"
-  },
-  {
     "id": "Read Failure: {{.Error}}.\n",
     "translation": "Error de lectura: {{.Error}}.\n"
   },
@@ -6980,10 +6816,6 @@
     "translation": "Recuperar credenciales utilizadas para generar una firma AWS. Máx. de 2."
   },
   {
-    "id": "Return ALL invoices. There may be a lot of these. [default: False]",
-    "translation": "Devolver TODAS las facturas. Puede que haya muchas de ellas. [valor predeterminado: False]"
-  },
-  {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
     "translation": "Revocar autorización para hosts que acceden a un volumen específico"
   },
@@ -7040,20 +6872,12 @@
     "translation": "Ejecute '{{.CommandName}} sl hardware list --order {{.OrderID}}' para encontrar este servidor de hardware cuando esté listo."
   },
   {
-    "id": "Running",
-    "translation": "En ejecución"
-  },
-  {
     "id": "SECURITYGROUP_ID",
     "translation": "ID_GRUPO_SEGURIDAD"
   },
   {
     "id": "SNAPSHOT_ID",
     "translation": "SNAPSHOT_ID"
-  },
-  {
-    "id": "SSH Key ",
-    "translation": "Clave SSH "
   },
   {
     "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
@@ -7568,10 +7392,6 @@
     "translation": "Se ha enviado correctamente la solicitud para conmutar la interfaz IPMI del servidor de hardware '{{.ID}}'."
   },
   {
-    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events",
-    "translation": "Resumen y acuse de recibo de los sucesos de mantenimiento próximos y en curso"
-  },
-  {
     "id": "Summary info about tickets",
     "translation": "Información de resumen sobre incidencias"
   },
@@ -7670,10 +7490,6 @@
   {
     "id": "Template file: {{.Location}} does not exist.",
     "translation": "El archivo de plantilla: {{.Location}} no existe."
-  },
-  {
-    "id": "Termination",
-    "translation": "Terminación"
   },
   {
     "id": "Test order",
@@ -8208,10 +8024,6 @@
     "translation": "Se cancelarán todas las instancias de servidor virtual en el host dedicado: {{.HostID}}; esta acción no se puede deshacer. ¿Desea continuar?"
   },
   {
-    "id": "This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?",
-    "translation": "Se cancelarán la instancia del grupo de escalado automático: {{.autoScaleGroupId}} y todos sus miembros, esta acción no se puede deshacer. ¿Desea continuar?"
-  },
-  {
     "id": "This will cancel the IP address: {{.ID}} and cannot be undone. Continue?",
     "translation": "Esto cancelará la dirección IP: {{.ID}} y no se puede deshacer. ¿Desea continuar?"
   },
@@ -8398,10 +8210,6 @@
   {
     "id": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]",
     "translation": "Número total de resultados a devolver. -1 para devolver TODO, puede haber MUCHOS de ellos.  [valor predeterminados: 50]"
-  },
-  {
-    "id": "Transaction",
-    "translation": "Transacción"
   },
   {
     "id": "True",
@@ -8760,10 +8568,6 @@
     "translation": "ID de invitado virtual"
   },
   {
-    "id": "Virtual Guest Member Template",
-    "translation": "Plantilla de miembro invitado virtual"
-  },
-  {
     "id": "Virtual guest domain name not found.",
     "translation": "No se ha encontrado el nombre de dominio de invitado virtual."
   },
@@ -8826,10 +8630,6 @@
   {
     "id": "Vlan",
     "translation": "Vlan"
-  },
-  {
-    "id": "Vlan Name",
-    "translation": "Nombre de VLAN"
   },
   {
     "id": "Vlan ids",
@@ -9344,10 +9144,6 @@
     "translation": "última transacción"
   },
   {
-    "id": "lists bandwidth pools",
-    "translation": "Lista agrupaciones de ancho de banda."
-  },
-  {
     "id": "maximum_snapshots",
     "translation": "maximum_snapshots"
   },
@@ -9378,10 +9174,6 @@
   {
     "id": "network space",
     "translation": "espacio de red"
-  },
-  {
-    "id": "network_space",
-    "translation": "network_space"
   },
   {
     "id": "none",
@@ -9640,16 +9432,8 @@
     "translation": "servidores virtuales"
   },
   {
-    "id": "virtual_servers",
-    "translation": "virtual_servers"
-  },
-  {
     "id": "visibility",
     "translation": "visibilidad"
-  },
-  {
-    "id": "vlan_id",
-    "translation": "vlan_id"
   },
   {
     "id": "vs_id",

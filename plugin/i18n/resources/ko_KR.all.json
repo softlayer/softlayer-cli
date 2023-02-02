@@ -8,10 +8,6 @@
     "translation": " 용량 키 이름(예:C1_2X2_1_YEAR_TERM). [필수]"
   },
   {
-    "id": " Disk ",
-    "translation": " 디스크 "
-  },
-  {
     "id": " Do not actually create the reserved capacity",
     "translation": " 예약된 용량을 실제로 작성하지 않음"
   },
@@ -440,10 +436,6 @@
     "translation": "${COMMAND_NAME} sl vs migrate [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n 마이그레이션이 필요한 VSI를 관리합니다. 전용 인스턴스를 한 전용 호스트에서 다른 전용 호스트로 마이그레이션할 수 있습니다."
   },
   {
-    "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [옵션]\n예:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \n이 명령은 이름이 myvsi이고, backendRouterId가 1234567이며, 규칙이 258369인 배치 그룹 인스턴스를 주문합니다."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
     "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   이 명령은 계속해서 사용할 준비가 되었는지 확인하기 위해 ID 12345678인 가상 서버 인스턴스 상태를 확인하고 최대 30초 동안 대기합니다."
   },
@@ -470,10 +462,6 @@
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   이 명령은 볼륨(ID 12345678)에 액세스하도록 권한이 부여된 모든 호스트를 나열하고 ID별로 정렬합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\nACCESS_ID는 '${COMMAND_NAME} sl {{.storageType}} access-list'의 allowed_host_id입니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -912,10 +900,6 @@
     "translation": "활성 변환 시작 시간소인"
   },
   {
-    "id": "Active Guests",
-    "translation": "활성 게스트"
-  },
-  {
     "id": "Add a new L7 policy",
     "translation": "새 L7 정책 추가"
   },
@@ -1114,10 +1098,6 @@
   {
     "id": "Authorize hosts  to access a given volume",
     "translation": "지정된 볼륨에 액세스하도록 호스트에 권한 부여"
-  },
-  {
-    "id": "Auto Scale Group was deleted successfully",
-    "translation": "자동 스케일 그룹이 삭제됨"
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1476,10 +1456,6 @@
     "translation": "2차 서브넷이 라우트되는 방법을 변경하십시오."
   },
   {
-    "id": "Changes a password for a volume's access",
-    "translation": "볼륨의 액세스를 위한 비밀번호 변경"
-  },
-  {
     "id": "Check if a virtual server instance is ready for use",
     "translation": "가상 서버 인스턴스가 사용할 준비가 되었는지 확인"
   },
@@ -1490,10 +1466,6 @@
   {
     "id": "Classic infrastructure Account commands",
     "translation": "클래식 인프라 계정 명령"
-  },
-  {
-    "id": "Classic infrastructure Autoscale Group",
-    "translation": "클래식 인프라 자동 스케일 그룹"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1632,10 +1604,6 @@
     "translation": "표시할 열. 옵션: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. 이 옵션은 여러 번 지정할 수 있습니다."
   },
   {
-    "id": "Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times",
-    "translation": "표시할 열. 옵션: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. 이 옵션은 여러 번 지정할 수 있습니다."
-  },
-  {
     "id": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times",
     "translation": "표시할 열. 옵션은 id, username, datacenter, storage_type, capacity_gb, bytes_used, IOPs, ip_addr, lunId, created_by, active_transactions, rep_partner_count, notes입니다. 이 옵션은 여러 번 지정할 수 있습니다."
   },
@@ -1692,10 +1660,6 @@
     "translation": "정렬 기준 열. 옵션: id,name,description,created"
   },
   {
-    "id": "Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id",
-    "translation": "정렬 기준 열. 옵션: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id"
-  },
-  {
     "id": "Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips",
     "translation": "정렬 기준 열. 옵션: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips"
   },
@@ -1742,14 +1706,6 @@
   {
     "id": "Convert a dependent duplicate volume to an independent volume.",
     "translation": "종속 복제 볼륨을 독립 볼륨으로 변환합니다."
-  },
-  {
-    "id": "Cooldown",
-    "translation": "쿨다운"
-  },
-  {
-    "id": "Core",
-    "translation": "코어"
   },
   {
     "id": "Cost",
@@ -1984,10 +1940,6 @@
     "translation": "교차 지역"
   },
   {
-    "id": "Current Members",
-    "translation": "현재 멤버"
-  },
-  {
     "id": "Current Usage",
     "translation": "현재 사용량"
   },
@@ -2114,10 +2066,6 @@
   {
     "id": "Delete the given security group",
     "translation": "제공된 보안 그룹 삭제"
-  },
-  {
-    "id": "Delete this group and destroy all members of it",
-    "translation": "이 그룹을 삭제하고 이 그룹의 모든 멤버를 삭제합니다."
   },
   {
     "id": "Delivered",
@@ -2322,10 +2270,6 @@
   {
     "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
     "translation": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    이 명령은 데이터 센터 dal13에서 4개의 CPU, 16GB RAM, 100GB SanDisk, Ubuntu 16.04, 1Gbps 공용 및 사설 업링크를 포함하여 VSI용 견적을 배치합니다."
-  },
-  {
-    "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
-    "translation": "[YYYY-MM-DD]에 대한 이벤트를 검색하는 가장 빠른 날짜입니다."
   },
   {
     "id": "Edit SSL certificate",
@@ -2816,10 +2760,6 @@
     "translation": "배치 그룹을 작성하는 데 실패함"
   },
   {
-    "id": "Failed to create placement group\n",
-    "translation": "배치 그룹 작성 실패\n"
-  },
-  {
     "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n",
     "translation": "{{.Zone}} 구역 아래 리소스 레코드 작성 실패: 유형={{.RecordType}}, 레코드={{.Host}}, 데이터={{.Data}}, ttl={{.Ttl}}.\n"
   },
@@ -2858,10 +2798,6 @@
   {
     "id": "Failed to decoded the note.\n",
     "translation": "참고를 디코딩하는 데 실패했습니다. \n"
-  },
-  {
-    "id": "Failed to delete AutoScale Group.",
-    "translation": "자동 스케일 그룹을 삭제하는 데 실패했습니다."
   },
   {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
@@ -3020,10 +2956,6 @@
     "translation": "계정 개요를 가져오는 데 실패했습니다."
   },
   {
-    "id": "Failed to get AutoScale group.",
-    "translation": "자동 스케일 그룹을 가져오는 데 실패했습니다."
-  },
-  {
     "id": "Failed to get Bandwidth Pool.",
     "translation": "대역폭 풀을 가져오는 데 실패했습니다."
   },
@@ -3114,10 +3046,6 @@
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
     "translation": "SSH 키 {{.KeyID}}을(를) 가져오는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to get SSH key.",
-    "translation": "SSH 키를 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
@@ -3366,10 +3294,6 @@
   {
     "id": "Failed to get rules of security group {{.GroupID}}.\n",
     "translation": "보안 그룹 {{.GroupID}}의 규칙을 가져오는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to get scale groups.",
-    "translation": "스케일 그룹을 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get security group {{.GroupID}}.\n",
@@ -4420,10 +4344,6 @@
     "translation": "이벤트 로그 가져오기"
   },
   {
-    "id": "Get List options for creating a placement group..",
-    "translation": "배치 그룹 작성을 위한 목록 옵션을 가져옵니다."
-  },
-  {
     "id": "Get Netscaler details.",
     "translation": "Netscaler 세부사항을 가져옵니다."
   },
@@ -4484,20 +4404,12 @@
     "translation": "서브넷 세부사항 가져오기"
   },
   {
-    "id": "Get details of an Autoscale group.",
-    "translation": "자동 스케일 그룹의 세부사항을 가져옵니다."
-  },
-  {
     "id": "Get information about the resources using the selected tag.",
     "translation": "선택된 태그를 사용하고 있는 리소스에 대한 정보를 가져옵니다."
   },
   {
     "id": "Get load balancer details",
     "translation": "로드 밸런서 세부사항 가져오기"
-  },
-  {
-    "id": "Get placement Group details.",
-    "translation": "배치 그룹 세부사항을 가져옵니다."
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
@@ -4692,14 +4604,6 @@
     "translation": "시간당"
   },
   {
-    "id": "How many invoices to get back. [default: 50]",
-    "translation": "취소할 송장이 몇 개입니까?[기본값: 50]"
-  },
-  {
-    "id": "How many results to get in one api call. [default: 50]",
-    "translation": "한 번의 api 호출로 확보하는 결과는 몇 개입니까?[기본값: 50]"
-  },
-  {
     "id": "Http Port",
     "translation": "HTTP 포트"
   },
@@ -4882,10 +4786,6 @@
   {
     "id": "Include extra resources. Options are: at,is,rs,sr,ss",
     "translation": "추가 리소스를 포함합니다. 옵션: at,is,rs,sr,ss"
-  },
-  {
-    "id": "Include invoices with a CLOSED status. [default: False]",
-    "translation": "마감됨 상태의 송장을 포함합니다.[기본값: 거짓]"
   },
   {
     "id": "Incorrect Usage",
@@ -5140,10 +5040,6 @@
     "translation": "레이블"
   },
   {
-    "id": "Last Action",
-    "translation": "마지막 조치"
-  },
-  {
     "id": "Last Edited",
     "translation": "마지막 편집 날짜"
   },
@@ -5234,10 +5130,6 @@
   {
     "id": "List active load balancers",
     "translation": "활성 로드 밸런서 나열"
-  },
-  {
-    "id": "List all Autoscale Groups on your account",
-    "translation": "계정에 대한 모든 자동 스케일 그룹 나열"
   },
   {
     "id": "List all CDN accounts.",
@@ -5340,20 +5232,12 @@
     "translation": "하드웨어 서버 나열"
   },
   {
-    "id": "List hosts that are authorized to access the volume",
-    "translation": "볼륨에 액세스할 수 있는 권한이 부여된 호스트 나열"
-  },
-  {
     "id": "List information about devices using the tag.",
     "translation": "해당 태그를 사용하고 있는 디바이스에 대한 정보를 나열합니다."
   },
   {
     "id": "List interfaces associated with security group",
     "translation": "보안 그룹과 연관된 인터페이스 나열"
-  },
-  {
-    "id": "List invoices",
-    "translation": "송장 나열"
   },
   {
     "id": "List l7 rules",
@@ -5410,10 +5294,6 @@
   {
     "id": "List placement groups",
     "translation": "배치 그룹 나열"
-  },
-  {
-    "id": "List placement groups.",
-    "translation": "배치 그룹을 나열합니다."
   },
   {
     "id": "List security group rules",
@@ -5520,10 +5400,6 @@
     "translation": "최대 IOPS"
   },
   {
-    "id": "Maximum Members",
-    "translation": "최대 멤버 수"
-  },
-  {
     "id": "Maximum number of connections to allow",
     "translation": "허용할 최대 연결 수"
   },
@@ -5584,14 +5460,6 @@
     "translation": "최소 IOPS"
   },
   {
-    "id": "Min/Max",
-    "translation": "최소/최대"
-  },
-  {
-    "id": "Minimum Members",
-    "translation": "최소 멤버"
-  },
-  {
     "id": "Minute of the hour when snapshots should be taken, integer between 0 to 59",
     "translation": "스냅샷을 작성해야 하는 시간(분), 0 - 59 사이의 정수."
   },
@@ -5626,10 +5494,6 @@
   {
     "id": "Multiple users found with the name: %s",
     "translation": "이름이 다음과 같은 사용자를 여러 명 발견: %s"
-  },
-  {
-    "id": "Must provide [--cpu], [--memory], [--network] or [--flavor] to upgrade.",
-    "translation": "업그레이드하려면 [--cpu], [--memory], [--network] 또는 [--flavor]를 제공해야 합니다."
   },
   {
     "id": "Must set either -n|--network-component or both -s|--server and -i|--interface",
@@ -5690,14 +5554,6 @@
   {
     "id": "Network Identifier",
     "translation": "네트워크 ID"
-  },
-  {
-    "id": "Network Type",
-    "translation": "네트워크 유형"
-  },
-  {
-    "id": "Network Vlans",
-    "translation": "네트워크 Vlan"
   },
   {
     "id": "Network component {{.ComponentID}} is added to security group {{.GroupID}}.",
@@ -6180,10 +6036,6 @@
     "translation": "PACKAGE_KEYNAME"
   },
   {
-    "id": "PASSWORD",
-    "translation": "PASSWORD"
-  },
-  {
     "id": "PLACEMENTGROUP_ID",
     "translation": "PLACEMENTGROUP_ID"
   },
@@ -6416,14 +6268,6 @@
     "translation": "팟(Pod)"
   },
   {
-    "id": "Policies",
-    "translation": "정책"
-  },
-  {
-    "id": "Policy",
-    "translation": "정책"
-  },
-  {
     "id": "Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS",
     "translation": "정책 조치: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
   },
@@ -6454,10 +6298,6 @@
   {
     "id": "Port speed[required]",
     "translation": "포트 속도[필수]"
-  },
-  {
-    "id": "Post Install",
-    "translation": "사후 설치"
   },
   {
     "id": "Post-install script to download",
@@ -6728,10 +6568,6 @@
     "translation": "RULE_ID"
   },
   {
-    "id": "Ram",
-    "translation": "RAM"
-  },
-  {
     "id": "Read Failure: {{.Error}}.\n",
     "translation": "읽기 실패: {{.Error}}.\n"
   },
@@ -6980,10 +6816,6 @@
     "translation": "AWS 서명을 생성하는 데 사용되는 인증 정보를 검색합니다. 최대 2개입니다."
   },
   {
-    "id": "Return ALL invoices. There may be a lot of these. [default: False]",
-    "translation": "모든 송장을 반환합니다. 이러한 것들이 많을 수 있습니다. [기본값: 거짓]"
-  },
-  {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
     "translation": "특정 볼륨에 액세스하는 호스트의 권한 취소"
   },
@@ -7040,20 +6872,12 @@
     "translation": "이 하드웨어 서버가 준비된 후 해당 서버를 찾으려면 '{{.CommandName}} sl hardware list --order {{.OrderID}}'을(를) 실행하십시오."
   },
   {
-    "id": "Running",
-    "translation": "실행 중"
-  },
-  {
     "id": "SECURITYGROUP_ID",
     "translation": "SECURITYGROUP_ID"
   },
   {
     "id": "SNAPSHOT_ID",
     "translation": "SNAPSHOT_ID"
-  },
-  {
-    "id": "SSH Key ",
-    "translation": "SSH 키 "
   },
   {
     "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
@@ -7568,10 +7392,6 @@
     "translation": "하드웨어 서버 '{{.ID}}'의 IPMI 인터페이스를 토글하기 위해 요청을 전송했습니다."
   },
   {
-    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events",
-    "translation": "향후 발생 및 진행 중인 유지보수 이벤트의 요약 및 수신확인"
-  },
-  {
     "id": "Summary info about tickets",
     "translation": "티켓에 대한 요약 정보"
   },
@@ -7670,10 +7490,6 @@
   {
     "id": "Template file: {{.Location}} does not exist.",
     "translation": "템플리트 파일: {{.Location}}이(가) 없습니다."
-  },
-  {
-    "id": "Termination",
-    "translation": "종료"
   },
   {
     "id": "Test order",
@@ -8208,10 +8024,6 @@
     "translation": "이렇게 하면 {{.HostID}} 전용 호스트에서 모든 가상 서버 인스턴스가 취소되고 이는 실행 취소할 수 없습니다. 계속하시겠습니까?"
   },
   {
-    "id": "This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?",
-    "translation": "그러면 자동 스케일 그룹 인스턴스 {{.autoScaleGroupId}} 및 모든 해당 멤버가 취소되며 이 조치는 실행 취소할 수 없습니다. 계속하시겠습니까?"
-  },
-  {
     "id": "This will cancel the IP address: {{.ID}} and cannot be undone. Continue?",
     "translation": "이 작업은 {{.ID}} IP 주소를 취소하며 이를 실행 취소할 수 없습니다. 계속하시겠습니까?"
   },
@@ -8398,10 +8210,6 @@
   {
     "id": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]",
     "translation": "리턴할 총 결과 수입니다. 모두를 리턴하려면 -1을 지정하십시오. 이러한 경우가 많습니다. [기본값: 50]"
-  },
-  {
-    "id": "Transaction",
-    "translation": "트랜잭션"
   },
   {
     "id": "True",
@@ -8760,10 +8568,6 @@
     "translation": "가상 게스트 ID"
   },
   {
-    "id": "Virtual Guest Member Template",
-    "translation": "가상 게스트 멤버 템플리트"
-  },
-  {
     "id": "Virtual guest domain name not found.",
     "translation": "가상 게스트 도메인 이름을 찾을 수 없습니다."
   },
@@ -8826,10 +8630,6 @@
   {
     "id": "Vlan",
     "translation": "VLAN"
-  },
-  {
-    "id": "Vlan Name",
-    "translation": "VLAN 이름"
   },
   {
     "id": "Vlan ids",
@@ -9344,10 +9144,6 @@
     "translation": "마지막 트랜잭션"
   },
   {
-    "id": "lists bandwidth pools",
-    "translation": "대역폭 풀 나열"
-  },
-  {
     "id": "maximum_snapshots",
     "translation": "maximum_snapshots"
   },
@@ -9378,10 +9174,6 @@
   {
     "id": "network space",
     "translation": "네트워크 영역"
-  },
-  {
-    "id": "network_space",
-    "translation": "network_space"
   },
   {
     "id": "none",
@@ -9640,16 +9432,8 @@
     "translation": "가상 서버"
   },
   {
-    "id": "virtual_servers",
-    "translation": "virtual_servers"
-  },
-  {
     "id": "visibility",
     "translation": "가시성"
-  },
-  {
-    "id": "vlan_id",
-    "translation": "vlan_id"
   },
   {
     "id": "vs_id",
