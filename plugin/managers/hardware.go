@@ -58,7 +58,7 @@ type HardwareServerManager interface {
 	VerifyOrder(orderTemplate datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error)
 	GetPackage() (datatypes.Product_Package, error)
 	Edit(hardwareId int, userdata, hostname, domain, notes string, tags string, publicPortSpeed, privatePortSpeed int) ([]bool, []string)
-	UpdateFirmware(hardwareId int, ipmi bool, raidController bool, bios bool, hardDrive bool) error
+	UpdateFirmware(hardwareId int, ipmi bool, raidController bool, bios bool, hardDrive bool, network bool) error
 	GetExtraPriceId(items []datatypes.Product_Item, keyName string, hourly bool, location datatypes.Location_Region) (int, error)
 	GetDefaultPriceId(items []datatypes.Product_Item, option string, hourly bool, location datatypes.Location_Region) (int, error)
 	GetOSPriceId(items []datatypes.Product_Item, os string, location datatypes.Location_Region) (int, error)
@@ -574,12 +574,14 @@ func (hw hardwareServerManager) Edit(hardwareId int, userdata, hostname, domain,
 //raidController: update the raid controller firmware
 //bios: update the bios firmware
 //hardDrive: update the hard drive firmware
-func (hw hardwareServerManager) UpdateFirmware(hardwareId int, ipmi bool, raidController bool, bios bool, hardDrive bool) error {
+//network: update the network card firmware
+func (hw hardwareServerManager) UpdateFirmware(hardwareId int, ipmi bool, raidController bool, bios bool, hardDrive bool, network bool) error {
 	_, err := hw.HardwareService.Id(hardwareId).CreateFirmwareUpdateTransaction(
 		sl.Int(utils.Bool2Int(ipmi)),
 		sl.Int(utils.Bool2Int(raidController)),
 		sl.Int(utils.Bool2Int(bios)),
-		sl.Int(utils.Bool2Int(hardDrive)))
+		sl.Int(utils.Bool2Int(hardDrive)),
+		sl.Int(utils.Bool2Int(network)))
 	return err
 }
 
