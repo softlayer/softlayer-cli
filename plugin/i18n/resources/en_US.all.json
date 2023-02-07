@@ -8,10 +8,6 @@
     "translation": " Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]"
   },
   {
-    "id": " Disk ",
-    "translation": " Disk "
-  },
-  {
     "id": " Do not actually create the reserved capacity",
     "translation": " Do not actually create the reserved capacity"
   },
@@ -440,10 +436,6 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well."
   },
   {
-    "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
     "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds."
   },
@@ -472,8 +464,8 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID."
   },
   {
-    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'"
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -606,6 +598,10 @@
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--resize-disk requires capacity and disk number values separated by one comma.",
+    "translation": "--resize-disk requires capacity and disk number values separated by one comma."
   },
   {
     "id": "--server needs a port. {{.Server}} improperly formatted",
@@ -900,6 +896,14 @@
     "translation": "Accounting"
   },
   {
+    "id": "Acknowledge Event. Doing so will turn off the popup in the control portal.",
+    "translation": "Acknowledge Event. Doing so will turn off the popup in the control portal."
+  },
+  {
+    "id": "Acknowledge every upcoming event. Doing so will turn off the popup in the control portal.",
+    "translation": "Acknowledge every upcoming event. Doing so will turn off the popup in the control portal."
+  },
+  {
     "id": "Acknowledged",
     "translation": "Acknowledged"
   },
@@ -912,8 +916,8 @@
     "translation": "Active Conversion Start Timestamp"
   },
   {
-    "id": "Active Guests",
-    "translation": "Active Guests"
+    "id": "Add Hard disk in GB",
+    "translation": "Add Hard disk in GB"
   },
   {
     "id": "Add a new L7 policy",
@@ -960,6 +964,10 @@
     "translation": "Add a subnet to an IPSec tunnel context"
   },
   {
+    "id": "Add access to subnet.",
+    "translation": "Add access to subnet."
+  },
+  {
     "id": "Add an address translation to an IPSec tunnel",
     "translation": "Add an address translation to an IPSec tunnel"
   },
@@ -970,6 +978,10 @@
   {
     "id": "Add notes for the image",
     "translation": "Add notes for the image"
+  },
+  {
+    "id": "Add or remove subnet access for a user.",
+    "translation": "Add or remove subnet access for a user."
   },
   {
     "id": "Add resource record in a zone",
@@ -1034,6 +1046,10 @@
   {
     "id": "An IP address to authorize",
     "translation": "An IP address to authorize"
+  },
+  {
+    "id": "An IP address to authorize.",
+    "translation": "An IP address to authorize."
   },
   {
     "id": "An IP address to revoke",
@@ -1116,8 +1132,8 @@
     "translation": "Authorize hosts  to access a given volume"
   },
   {
-    "id": "Auto Scale Group was deleted successfully",
-    "translation": "Auto Scale Group was deleted successfully"
+    "id": "Authorize hosts to access a given volume.",
+    "translation": "Authorize hosts to access a given volume."
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1476,8 +1492,8 @@
     "translation": "Change how a secondary subnet is routed."
   },
   {
-    "id": "Changes a password for a volume's access",
-    "translation": "Changes a password for a volume's access"
+    "id": "Changes a password for a volume's access.",
+    "translation": "Changes a password for a volume's access."
   },
   {
     "id": "Check if a virtual server instance is ready for use",
@@ -1490,10 +1506,6 @@
   {
     "id": "Classic infrastructure Account commands",
     "translation": "Classic infrastructure Account commands"
-  },
-  {
-    "id": "Classic infrastructure Autoscale Group",
-    "translation": "Classic infrastructure Autoscale Group"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1628,12 +1640,12 @@
     "translation": "Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times"
   },
   {
-    "id": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times",
-    "translation": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times"
+    "id": "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.",
+    "translation": "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times."
   },
   {
-    "id": "Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times",
-    "translation": "Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times"
+    "id": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times",
+    "translation": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times"
   },
   {
     "id": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times",
@@ -1672,6 +1684,10 @@
     "translation": "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip"
   },
   {
+    "id": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.",
+    "translation": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
+  },
+  {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
     "translation": "Column to sort by. Options are: id,common_name,days_until_expire,note"
   },
@@ -1690,10 +1706,6 @@
   {
     "id": "Column to sort by. Options are: id,name,description,created",
     "translation": "Column to sort by. Options are: id,name,description,created"
-  },
-  {
-    "id": "Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id",
-    "translation": "Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id"
   },
   {
     "id": "Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips",
@@ -1742,14 +1754,6 @@
   {
     "id": "Convert a dependent duplicate volume to an independent volume.",
     "translation": "Convert a dependent duplicate volume to an independent volume."
-  },
-  {
-    "id": "Cooldown",
-    "translation": "Cooldown"
-  },
-  {
-    "id": "Core",
-    "translation": "Core"
   },
   {
     "id": "Cost",
@@ -1984,10 +1988,6 @@
     "translation": "Cross Region"
   },
   {
-    "id": "Current Members",
-    "translation": "Current Members"
-  },
-  {
     "id": "Current Usage",
     "translation": "Current Usage"
   },
@@ -2116,10 +2116,6 @@
     "translation": "Delete the given security group"
   },
   {
-    "id": "Delete this group and destroy all members of it",
-    "translation": "Delete this group and destroy all members of it"
-  },
-  {
     "id": "Delivered",
     "translation": "Delivered"
   },
@@ -2178,6 +2174,10 @@
   {
     "id": "Disable the IPMI interface.",
     "translation": "Disable the IPMI interface."
+  },
+  {
+    "id": "Disable vpn subnets manual config.",
+    "translation": "Disable vpn subnets manual config."
   },
   {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
@@ -2264,6 +2264,10 @@
     "translation": "Display virtual guests this user has access to"
   },
   {
+    "id": "Displays bandwidth pool information.",
+    "translation": "Displays bandwidth pool information."
+  },
+  {
     "id": "Do not actually create the dedicatedhost",
     "translation": "Do not actually create the dedicatedhost"
   },
@@ -2324,8 +2328,8 @@
     "translation": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13"
   },
   {
-    "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
-    "translation": "Earliest date to retrieve events for [YYYY-MM-DD]."
+    "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
+    "translation": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago."
   },
   {
     "id": "Edit SSL certificate",
@@ -2460,6 +2464,10 @@
     "translation": "Enable or Disable specific permissions"
   },
   {
+    "id": "Enable or disable user vpn subnets manual config.",
+    "translation": "Enable or disable user vpn subnets manual config."
+  },
+  {
     "id": "Enable snapshot notification.",
     "translation": "Enable snapshot notification."
   },
@@ -2470,6 +2478,10 @@
   {
     "id": "Enable the IPMI interface.",
     "translation": "Enable the IPMI interface."
+  },
+  {
+    "id": "Enable vpn subnets manual config.",
+    "translation": "Enable vpn subnets manual config."
   },
   {
     "id": "Enabled: Snapshots space usage threshold is enabled for volume '{{.ID}}'.",
@@ -2634,6 +2646,10 @@
   {
     "id": "Failed to Order the dedicatedhost.",
     "translation": "Failed to Order the dedicatedhost."
+  },
+  {
+    "id": "Failed to acknowledge event.",
+    "translation": "Failed to acknowledge event."
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -2816,10 +2832,6 @@
     "translation": "Failed to create placement group"
   },
   {
-    "id": "Failed to create placement group\n",
-    "translation": "Failed to create placement group\n"
-  },
-  {
     "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n",
     "translation": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n"
   },
@@ -2844,6 +2856,10 @@
     "translation": "Failed to create translation for IPSec with ID {{.ID}}.\n"
   },
   {
+    "id": "Failed to create user vpn override.",
+    "translation": "Failed to create user vpn override."
+  },
+  {
     "id": "Failed to create virtual server instance.\n",
     "translation": "Failed to create virtual server instance.\n"
   },
@@ -2858,10 +2874,6 @@
   {
     "id": "Failed to decoded the note.\n",
     "translation": "Failed to decoded the note.\n"
-  },
-  {
-    "id": "Failed to delete AutoScale Group.",
-    "translation": "Failed to delete AutoScale Group."
   },
   {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
@@ -2918,6 +2930,10 @@
   {
     "id": "Failed to delete snapshot {{.ID}}.\n",
     "translation": "Failed to delete snapshot {{.ID}}.\n"
+  },
+  {
+    "id": "Failed to delete user vpn override.",
+    "translation": "Failed to delete user vpn override."
   },
   {
     "id": "Failed to delete user.\n",
@@ -3020,10 +3036,6 @@
     "translation": "Failed to get Account Overview."
   },
   {
-    "id": "Failed to get AutoScale group.",
-    "translation": "Failed to get AutoScale group."
-  },
-  {
     "id": "Failed to get Bandwidth Pool.",
     "translation": "Failed to get Bandwidth Pool."
   },
@@ -3092,6 +3104,14 @@
     "translation": "Failed to get Network Message Delivery Accounts."
   },
   {
+    "id": "Failed to get Order.",
+    "translation": "Failed to get Order."
+  },
+  {
+    "id": "Failed to get Pods.",
+    "translation": "Failed to get Pods."
+  },
+  {
     "id": "Failed to get Pods.\n",
     "translation": "Failed to get Pods.\n"
   },
@@ -3112,12 +3132,12 @@
     "translation": "Failed to get Recalculated Order Container.\n"
   },
   {
-    "id": "Failed to get SSH Key {{.KeyID}}.\n",
-    "translation": "Failed to get SSH Key {{.KeyID}}.\n"
+    "id": "Failed to get Routers.",
+    "translation": "Failed to get Routers."
   },
   {
-    "id": "Failed to get SSH key.",
-    "translation": "Failed to get SSH key."
+    "id": "Failed to get SSH Key {{.KeyID}}.\n",
+    "translation": "Failed to get SSH Key {{.KeyID}}.\n"
   },
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
@@ -3158,6 +3178,10 @@
   {
     "id": "Failed to get all datacenters.\n",
     "translation": "Failed to get all datacenters.\n"
+  },
+  {
+    "id": "Failed to get announcement event ID.",
+    "translation": "Failed to get announcement event ID."
   },
   {
     "id": "Failed to get announcement events.",
@@ -3344,6 +3368,10 @@
     "translation": "Failed to get placement group: {{.ID}}."
   },
   {
+    "id": "Failed to get planned event ID.",
+    "translation": "Failed to get planned event ID."
+  },
+  {
     "id": "Failed to get planned events.",
     "translation": "Failed to get planned events."
   },
@@ -3366,10 +3394,6 @@
   {
     "id": "Failed to get rules of security group {{.GroupID}}.\n",
     "translation": "Failed to get rules of security group {{.GroupID}}.\n"
-  },
-  {
-    "id": "Failed to get scale groups.",
-    "translation": "Failed to get scale groups."
   },
   {
     "id": "Failed to get security group {{.GroupID}}.\n",
@@ -3468,12 +3492,20 @@
     "translation": "Failed to get translation with ID {{.TransID}} from IPSec {{.ID}}."
   },
   {
+    "id": "Failed to get unplanned event ID.",
+    "translation": "Failed to get unplanned event ID."
+  },
+  {
     "id": "Failed to get unplanned events.",
     "translation": "Failed to get unplanned events."
   },
   {
     "id": "Failed to get user permissions.\n",
     "translation": "Failed to get user permissions.\n"
+  },
+  {
+    "id": "Failed to get user vpn overrides.",
+    "translation": "Failed to get user vpn overrides."
   },
   {
     "id": "Failed to get user.",
@@ -3944,6 +3976,10 @@
     "translation": "Failed to update IPSec {{.ContextID}}.\n"
   },
   {
+    "id": "Failed to update VPN user.",
+    "translation": "Failed to update VPN user."
+  },
+  {
     "id": "Failed to update access.\n",
     "translation": "Failed to update access.\n"
   },
@@ -4078,6 +4114,10 @@
   {
     "id": "Failed to write virtual server template file to: {{.Template}}.",
     "translation": "Failed to write virtual server template file to: {{.Template}}."
+  },
+  {
+    "id": "Failed to {{.action}} user vpn subnets manual config",
+    "translation": "Failed to {{.action}} user vpn subnets manual config"
   },
   {
     "id": "Failover a {{.storageType}} volume to the given replica volume",
@@ -4420,10 +4460,6 @@
     "translation": "Get Event Logs"
   },
   {
-    "id": "Get List options for creating a placement group..",
-    "translation": "Get List options for creating a placement group.."
-  },
-  {
     "id": "Get Netscaler details.",
     "translation": "Get Netscaler details."
   },
@@ -4484,20 +4520,12 @@
     "translation": "Get details of a subnet"
   },
   {
-    "id": "Get details of an Autoscale group.",
-    "translation": "Get details of an Autoscale group."
-  },
-  {
     "id": "Get information about the resources using the selected tag.",
     "translation": "Get information about the resources using the selected tag."
   },
   {
     "id": "Get load balancer details",
     "translation": "Get load balancer details"
-  },
-  {
-    "id": "Get placement Group details.",
-    "translation": "Get placement Group details."
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
@@ -4692,12 +4720,12 @@
     "translation": "Hourly"
   },
   {
-    "id": "How many invoices to get back. [default: 50]",
-    "translation": "How many invoices to get back. [default: 50]"
+    "id": "How many invoices to get back.",
+    "translation": "How many invoices to get back."
   },
   {
-    "id": "How many results to get in one api call. [default: 50]",
-    "translation": "How many results to get in one api call. [default: 50]"
+    "id": "How many results to get in one api call.",
+    "translation": "How many results to get in one api call."
   },
   {
     "id": "Http Port",
@@ -4824,6 +4852,10 @@
     "translation": "Id"
   },
   {
+    "id": "Identifier",
+    "translation": "Identifier"
+  },
+  {
     "id": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
     "translation": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321."
   },
@@ -4884,8 +4916,8 @@
     "translation": "Include extra resources. Options are: at,is,rs,sr,ss"
   },
   {
-    "id": "Include invoices with a CLOSED status. [default: False]",
-    "translation": "Include invoices with a CLOSED status. [default: False]"
+    "id": "Include invoices with a CLOSED status.",
+    "translation": "Include invoices with a CLOSED status."
   },
   {
     "id": "Incorrect Usage",
@@ -4906,6 +4938,10 @@
   {
     "id": "Init parameter",
     "translation": "Init parameter"
+  },
+  {
+    "id": "Initial Invoice",
+    "translation": "Initial Invoice"
   },
   {
     "id": "Initial object ID number to attach to ticket",
@@ -4958,6 +4994,10 @@
   {
     "id": "Invalid datacenter name specified. Please provide the lower case short name (e.g.: dal09).",
     "translation": "Invalid datacenter name specified. Please provide the lower case short name (e.g.: dal09)."
+  },
+  {
+    "id": "Invalid disk number to this disk capacity",
+    "translation": "Invalid disk number to this disk capacity"
   },
   {
     "id": "Invalid firewall type {{.Type}}: firewall type should be either vlan, multiVlan, vs or server.",
@@ -5024,6 +5064,10 @@
     "translation": "Invoice Amount"
   },
   {
+    "id": "Invoice Total Amount",
+    "translation": "Invoice Total Amount"
+  },
+  {
     "id": "Invoice details.",
     "translation": "Invoice details."
   },
@@ -5042,6 +5086,10 @@
   {
     "id": "Item",
     "translation": "Item"
+  },
+  {
+    "id": "Item Description",
+    "translation": "Item Description"
   },
   {
     "id": "Item Id",
@@ -5140,10 +5188,6 @@
     "translation": "Label"
   },
   {
-    "id": "Last Action",
-    "translation": "Last Action"
-  },
-  {
     "id": "Last Edited",
     "translation": "Last Edited"
   },
@@ -5234,10 +5278,6 @@
   {
     "id": "List active load balancers",
     "translation": "List active load balancers"
-  },
-  {
-    "id": "List all Autoscale Groups on your account",
-    "translation": "List all Autoscale Groups on your account"
   },
   {
     "id": "List all CDN accounts.",
@@ -5340,8 +5380,8 @@
     "translation": "List hardware servers"
   },
   {
-    "id": "List hosts that are authorized to access the volume",
-    "translation": "List hosts that are authorized to access the volume"
+    "id": "List hosts that are authorized to access the volume.",
+    "translation": "List hosts that are authorized to access the volume."
   },
   {
     "id": "List information about devices using the tag.",
@@ -5352,8 +5392,8 @@
     "translation": "List interfaces associated with security group"
   },
   {
-    "id": "List invoices",
-    "translation": "List invoices"
+    "id": "List invoices.",
+    "translation": "List invoices."
   },
   {
     "id": "List l7 rules",
@@ -5410,10 +5450,6 @@
   {
     "id": "List placement groups",
     "translation": "List placement groups"
-  },
-  {
-    "id": "List placement groups.",
-    "translation": "List placement groups."
   },
   {
     "id": "List security group rules",
@@ -5520,10 +5556,6 @@
     "translation": "Max IOPS"
   },
   {
-    "id": "Maximum Members",
-    "translation": "Maximum Members"
-  },
-  {
     "id": "Maximum number of connections to allow",
     "translation": "Maximum number of connections to allow"
   },
@@ -5584,14 +5616,6 @@
     "translation": "Min IOPS"
   },
   {
-    "id": "Min/Max",
-    "translation": "Min/Max"
-  },
-  {
-    "id": "Minimum Members",
-    "translation": "Minimum Members"
-  },
-  {
     "id": "Minute of the hour when snapshots should be taken, integer between 0 to 59",
     "translation": "Minute of the hour when snapshots should be taken, integer between 0 to 59"
   },
@@ -5628,8 +5652,8 @@
     "translation": "Multiple users found with the name: %s"
   },
   {
-    "id": "Must provide [--cpu], [--memory], [--network] or [--flavor] to upgrade.",
-    "translation": "Must provide [--cpu], [--memory], [--network] or [--flavor] to upgrade."
+    "id": "Must provide [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] or [--flavor] to upgrade.",
+    "translation": "Must provide [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] or [--flavor] to upgrade."
   },
   {
     "id": "Must set either -n|--network-component or both -s|--server and -i|--interface",
@@ -5690,14 +5714,6 @@
   {
     "id": "Network Identifier",
     "translation": "Network Identifier"
-  },
-  {
-    "id": "Network Type",
-    "translation": "Network Type"
-  },
-  {
-    "id": "Network Vlans",
-    "translation": "Network Vlans"
   },
   {
     "id": "Network component {{.ComponentID}} is added to security group {{.GroupID}}.",
@@ -6032,12 +6048,20 @@
     "translation": "Options for -p|--protocol are: icmp,tcp,udp"
   },
   {
+    "id": "Order Approval Date",
+    "translation": "Order Approval Date"
+  },
+  {
     "id": "Order ID: {{.OrderID}}",
     "translation": "Order ID: {{.OrderID}}"
   },
   {
     "id": "Order IPv6 Addresses",
     "translation": "Order IPv6 Addresses"
+  },
+  {
+    "id": "Order Total Amount",
+    "translation": "Order Total Amount"
   },
   {
     "id": "Order a IPSec VPN tunnel",
@@ -6172,16 +6196,16 @@
     "translation": "Out GB"
   },
   {
+    "id": "Override created, but unable to update VPN user.",
+    "translation": "Override created, but unable to update VPN user."
+  },
+  {
     "id": "Owner",
     "translation": "Owner"
   },
   {
     "id": "PACKAGE_KEYNAME",
     "translation": "PACKAGE_KEYNAME"
-  },
-  {
-    "id": "PASSWORD",
-    "translation": "PASSWORD"
   },
   {
     "id": "PLACEMENTGROUP_ID",
@@ -6234,6 +6258,10 @@
   {
     "id": "Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol",
     "translation": "Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol"
+  },
+  {
+    "id": "Password you want to set, this command will fail if the password is not strong. [required]",
+    "translation": "Password you want to set, this command will fail if the password is not strong. [required]"
   },
   {
     "id": "Path",
@@ -6416,14 +6444,6 @@
     "translation": "Pod"
   },
   {
-    "id": "Policies",
-    "translation": "Policies"
-  },
-  {
-    "id": "Policy",
-    "translation": "Policy"
-  },
-  {
     "id": "Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS",
     "translation": "Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
   },
@@ -6454,10 +6474,6 @@
   {
     "id": "Port speed[required]",
     "translation": "Port speed[required]"
-  },
-  {
-    "id": "Post Install",
-    "translation": "Post Install"
   },
   {
     "id": "Post-install script to download",
@@ -6652,6 +6668,10 @@
     "translation": "Provider"
   },
   {
+    "id": "Provides some details related to order owner, date order, cost information, initial invoice.",
+    "translation": "Provides some details related to order owner, date order, cost information, initial invoice."
+  },
+  {
     "id": "Provisioned",
     "translation": "Provisioned"
   },
@@ -6728,10 +6748,6 @@
     "translation": "RULE_ID"
   },
   {
-    "id": "Ram",
-    "translation": "Ram"
-  },
-  {
     "id": "Read Failure: {{.Error}}.\n",
     "translation": "Read Failure: {{.Error}}.\n"
   },
@@ -6786,6 +6802,10 @@
   {
     "id": "Redirect",
     "translation": "Redirect"
+  },
+  {
+    "id": "Reference Code",
+    "translation": "Reference Code"
   },
   {
     "id": "Reflash server firmware.",
@@ -6866,6 +6886,10 @@
   {
     "id": "Remove access from a user to an specific device",
     "translation": "Remove access from a user to an specific device"
+  },
+  {
+    "id": "Remove access to subnet.",
+    "translation": "Remove access to subnet."
   },
   {
     "id": "Remove block storage subnets to the given host id.",
@@ -6980,12 +7004,16 @@
     "translation": "Retrieve credentials used for generating an AWS signature. Max of 2."
   },
   {
-    "id": "Return ALL invoices. There may be a lot of these. [default: False]",
-    "translation": "Return ALL invoices. There may be a lot of these. [default: False]"
+    "id": "Return ALL invoices. There may be a lot of these.",
+    "translation": "Return ALL invoices. There may be a lot of these."
   },
   {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
     "translation": "Revoke authorization for hosts that are accessing a specific volume"
+  },
+  {
+    "id": "Revoke authorization for hosts that are accessing a specific volume.",
+    "translation": "Revoke authorization for hosts that are accessing a specific volume."
   },
   {
     "id": "Role Name",
@@ -7010,6 +7038,10 @@
   {
     "id": "Router Id",
     "translation": "Router Id"
+  },
+  {
+    "id": "Routers",
+    "translation": "Routers"
   },
   {
     "id": "Rule",
@@ -7040,20 +7072,12 @@
     "translation": "Run '{{.CommandName}} sl hardware list --order {{.OrderID}}' to find this hardware server after it is ready."
   },
   {
-    "id": "Running",
-    "translation": "Running"
-  },
-  {
     "id": "SECURITYGROUP_ID",
     "translation": "SECURITYGROUP_ID"
   },
   {
     "id": "SNAPSHOT_ID",
     "translation": "SNAPSHOT_ID"
-  },
-  {
-    "id": "SSH Key ",
-    "translation": "SSH Key "
   },
   {
     "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
@@ -7284,12 +7308,20 @@
     "translation": "Show login history of this user for the last 24 hours"
   },
   {
+    "id": "Show only announcement events.",
+    "translation": "Show only announcement events."
+  },
+  {
     "id": "Show only hourly instances",
     "translation": "Show only hourly instances"
   },
   {
     "id": "Show only monthly instances",
     "translation": "Show only monthly instances"
+  },
+  {
+    "id": "Show only planned events.",
+    "translation": "Show only planned events."
   },
   {
     "id": "Show only selected datacenter, use shortname (dal13) format",
@@ -7304,6 +7336,10 @@
     "translation": "Show only the bandwidth summary for each virtual server"
   },
   {
+    "id": "Show only unplanned events.",
+    "translation": "Show only unplanned events."
+  },
+  {
     "id": "Show passwords (check over your shoulder!)",
     "translation": "Show passwords (check over your shoulder!)"
   },
@@ -7314,6 +7350,10 @@
   {
     "id": "Shows a very detailed list of charges",
     "translation": "Shows a very detailed list of charges"
+  },
+  {
+    "id": "Shows a very detailed list of charges.",
+    "translation": "Shows a very detailed list of charges."
   },
   {
     "id": "Shows who gets notified when the server has a monitoring issues.",
@@ -7440,6 +7480,10 @@
     "translation": "Specify the type of attachment, hardware or virtual. default is hardware"
   },
   {
+    "id": "Speed",
+    "translation": "Speed"
+  },
+  {
     "id": "Start",
     "translation": "Start"
   },
@@ -7532,8 +7576,16 @@
     "translation": "Subnet {{.ID}} was cancelled."
   },
   {
+    "id": "Subnet {{.subnetID}} is not assigned to User {{.userID}}",
+    "translation": "Subnet {{.subnetID}} is not assigned to User {{.userID}}"
+  },
+  {
     "id": "Successful Login?",
     "translation": "Successful Login?"
+  },
+  {
+    "id": "Successfully added subnet access for user.",
+    "translation": "Successfully added subnet access for user."
   },
   {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -7560,6 +7612,10 @@
     "translation": "Successfully removed User Customer notification."
   },
   {
+    "id": "Successfully removed subnet access for user.",
+    "translation": "Successfully removed subnet access for user."
+  },
+  {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}"
   },
@@ -7568,8 +7624,12 @@
     "translation": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'."
   },
   {
-    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events",
-    "translation": "Summary and acknowledgement of upcoming and ongoing maintenance events"
+    "id": "Successfully {{.action}} user vpn subnets manual config",
+    "translation": "Successfully {{.action}} user vpn subnets manual config"
+  },
+  {
+    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events.",
+    "translation": "Summary and acknowledgement of upcoming and ongoing maintenance events."
   },
   {
     "id": "Summary info about tickets",
@@ -7656,6 +7716,10 @@
     "translation": "Tags to set or empty string to remove all (multiple occurrence permitted)."
   },
   {
+    "id": "Target",
+    "translation": "Target"
+  },
+  {
     "id": "Target IP",
     "translation": "Target IP"
   },
@@ -7672,16 +7736,16 @@
     "translation": "Template file: {{.Location}} does not exist."
   },
   {
-    "id": "Termination",
-    "translation": "Termination"
-  },
-  {
     "id": "Test order",
     "translation": "Test order"
   },
   {
     "id": "The ID of one IP address to authorize",
     "translation": "The ID of one IP address to authorize"
+  },
+  {
+    "id": "The ID of one IP address to authorize.",
+    "translation": "The ID of one IP address to authorize."
   },
   {
     "id": "The ID of one IP address to revoke",
@@ -7692,12 +7756,20 @@
     "translation": "The ID of one hardware server to authorize"
   },
   {
+    "id": "The ID of one hardware server to authorize.",
+    "translation": "The ID of one hardware server to authorize."
+  },
+  {
     "id": "The ID of one hardware server to revoke",
     "translation": "The ID of one hardware server to revoke"
   },
   {
     "id": "The ID of one virtual server to authorize",
     "translation": "The ID of one virtual server to authorize"
+  },
+  {
+    "id": "The ID of one virtual server to authorize.",
+    "translation": "The ID of one virtual server to authorize."
   },
   {
     "id": "The ID of one virtual server to revoke",
@@ -8136,6 +8208,10 @@
     "translation": "There is not any guest into the dedicated host {{.ID}}."
   },
   {
+    "id": "There is not available category to this disk size",
+    "translation": "There is not available category to this disk size"
+  },
+  {
     "id": "This account is the Master User and has all permissions enabled",
     "translation": "This account is the Master User and has all permissions enabled"
   },
@@ -8154,6 +8230,10 @@
   {
     "id": "This command requires --add or --remove option.",
     "translation": "This command requires --add or --remove option."
+  },
+  {
+    "id": "This command requires --enable or --disable option.",
+    "translation": "This command requires --enable or --disable option."
   },
   {
     "id": "This command requires four arguments.",
@@ -8206,10 +8286,6 @@
   {
     "id": "This will cancel all virtual server instances in the dedicatedhost: {{.HostID}} and cannot be undone. Continue?",
     "translation": "This will cancel all virtual server instances in the dedicatedhost: {{.HostID}} and cannot be undone. Continue?"
-  },
-  {
-    "id": "This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?",
-    "translation": "This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?"
   },
   {
     "id": "This will cancel the IP address: {{.ID}} and cannot be undone. Continue?",
@@ -8398,10 +8474,6 @@
   {
     "id": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]",
     "translation": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]"
-  },
-  {
-    "id": "Transaction",
-    "translation": "Transaction"
   },
   {
     "id": "True",
@@ -8600,6 +8672,10 @@
     "translation": "Update could not be added: {{.Error}}\n"
   },
   {
+    "id": "Update disk number to size in GB [capacity,diskNumber]. --resize-disk 250,2",
+    "translation": "Update disk number to size in GB [capacity,diskNumber]. --resize-disk 250,2"
+  },
+  {
     "id": "Update resource records in a zone",
     "translation": "Update resource records in a zone"
   },
@@ -8700,6 +8776,10 @@
     "translation": "VIRTUAL"
   },
   {
+    "id": "VLAN",
+    "translation": "VLAN"
+  },
+  {
     "id": "VLAN type",
     "translation": "VLAN type"
   },
@@ -8758,10 +8838,6 @@
   {
     "id": "Virtual Guest ID",
     "translation": "Virtual Guest ID"
-  },
-  {
-    "id": "Virtual Guest Member Template",
-    "translation": "Virtual Guest Member Template"
   },
   {
     "id": "Virtual guest domain name not found.",
@@ -8828,10 +8904,6 @@
     "translation": "Vlan"
   },
   {
-    "id": "Vlan Name",
-    "translation": "Vlan Name"
-  },
-  {
     "id": "Vlan ids",
     "translation": "Vlan ids"
   },
@@ -8854,6 +8926,10 @@
   {
     "id": "Volume name",
     "translation": "Volume name"
+  },
+  {
+    "id": "Vs",
+    "translation": "Vs"
   },
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning",
@@ -9100,6 +9176,10 @@
     "translation": "certificate ID not found"
   },
   {
+    "id": "closing soon: ",
+    "translation": "closing soon: "
+  },
+  {
     "id": "common_name",
     "translation": "common_name"
   },
@@ -9344,10 +9424,6 @@
     "translation": "last transaction"
   },
   {
-    "id": "lists bandwidth pools",
-    "translation": "lists bandwidth pools"
-  },
-  {
     "id": "maximum_snapshots",
     "translation": "maximum_snapshots"
   },
@@ -9378,10 +9454,6 @@
   {
     "id": "network space",
     "translation": "network space"
-  },
-  {
-    "id": "network_space",
-    "translation": "network_space"
   },
   {
     "id": "none",
@@ -9640,16 +9712,8 @@
     "translation": "virtual servers"
   },
   {
-    "id": "virtual_servers",
-    "translation": "virtual_servers"
-  },
-  {
     "id": "visibility",
     "translation": "visibility"
-  },
-  {
-    "id": "vlan_id",
-    "translation": "vlan_id"
   },
   {
     "id": "vs_id",
