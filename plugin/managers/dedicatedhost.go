@@ -9,6 +9,7 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -28,8 +29,8 @@ const (
 	LOCATIONS      = "locations"
 	DEDICATED_HOST = "dedicatedhost"
 )
-var existDatacenter = false
 
+var existDatacenter = false
 
 //Manages SoftLayer Dedicated host.
 type DedicatedHostManager interface {
@@ -42,6 +43,7 @@ type DedicatedHostManager interface {
 	GetPackage() (datatypes.Product_Package, error)
 	GetCreateOptions(productPackage datatypes.Product_Package) map[string]map[string]string
 	GetVlansOptions(datacenter string, flavor string, productPackage datatypes.Product_Package) ([]datatypes.Network_Vlan, error)
+	ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error)
 }
 
 type dedicatedhostManager struct {
@@ -264,4 +266,38 @@ func (d dedicatedhostManager) GetVlansOptions(datacenter string, flavor string, 
 	} else {
 		return []datatypes.Network_Vlan{}, errors.New(T("There are not private vlans available for this datacenter."))
 	}
+}
+
+// Returns dedicated hosts
+func (d dedicatedhostManager) ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("dedicatedHosts.id").OrderBy("ASC"))
+
+	if name != "" {
+		filters = append(filters, filter.Path("dedicatedHosts.name").Eq(name))
+	}
+	if datacenter != "" {
+		filters = append(filters, filter.Path("dedicatedHosts.datacenter.name").Eq(datacenter))
+	}
+	if owner != "" {
+		filters = append(filters, filter.Path("dedicatedHosts.billingItem.orderItem.order.userRecord.username").Eq(owner))
+	}
+	if orderId != 0 {
+		filters = append(filters, filter.Path("dedicatedHosts.billingItem.orderItem.order.id").Eq(orderId))
+	}
+
+	i := 0
+	resourceList := []datatypes.Virtual_DedicatedHost{}
+	for {
+		resp, err := d.AccountService.Mask(HOST_DEFAULT_MASK).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetDedicatedHosts()
+		i++
+		if err != nil {
+			return []datatypes.Virtual_DedicatedHost{}, err
+		}
+		resourceList = append(resourceList, resp...)
+		if len(resp) < metadata.LIMIT {
+			break
+		}
+	}
+	return resourceList, nil
 }
