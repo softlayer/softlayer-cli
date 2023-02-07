@@ -60,8 +60,8 @@ var (
 	}
 )
 
-//Manages SoftLayer Block and File Storage volumes.
-//See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
+// Manages SoftLayer Block and File Storage volumes.
+// See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
 type StorageManager interface {
 	SetSnapshotNotification(volumeID int, enabled bool) error
 	GetSnapshotNotificationStatus(volumeId int) (int, error)
@@ -106,6 +106,7 @@ type StorageManager interface {
 	GetSubnetsInAcl(accessID int, mask string) ([]datatypes.Network_Subnet, error)
 	AssignSubnetsToAcl(accessID int, subnets []int) ([]int, error)
 	RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error)
+	GetNetworkMessageDeliveryAccounts(storageId int, mask string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error)
 }
 
 type storageManager struct {
@@ -116,9 +117,10 @@ type storageManager struct {
 	BillingService     services.Billing_Item
 	LocationService    services.Location_Datacenter
 	AllowedHostService services.Network_Storage_Allowed_Host
+	Session            *session.Session
 }
 
-//Used for OrderDuplicateVolume
+// Used for OrderDuplicateVolume
 type DuplicateOrderConfig struct {
 	// "block" or "file"
 	VolumeType string
@@ -147,6 +149,7 @@ func NewStorageManager(session *session.Session) *storageManager {
 		services.GetBillingItemService(session),
 		services.GetLocationDatacenterService(session),
 		services.GetNetworkStorageAllowedHostService(session),
+		session,
 	}
 }
 
@@ -155,8 +158,8 @@ func (s storageManager) GetVolumeSnapshotSchedules(volumeId int) (datatypes.Netw
 	return s.StorageService.Id(volumeId).Mask(mask).GetObject()
 }
 
-//Returns a list of authorized hosts for a specified volume.
-//volumeId: ID of volume
+// Returns a list of authorized hosts for a specified volume.
+// volumeId: ID of volume
 func (s storageManager) GetVolumeAccessList(volumeId int) (datatypes.Network_Storage, error) {
 	mask := "id,allowedVirtualGuests.allowedHost.credential," +
 		"allowedHardware.allowedHost.credential," +
@@ -165,59 +168,59 @@ func (s storageManager) GetVolumeAccessList(volumeId int) (datatypes.Network_Sto
 	return s.StorageService.Id(volumeId).Mask(mask).GetObject()
 }
 
-//Returns a specific volume.
-//string username: The volume username.
+// Returns a specific volume.
+// string username: The volume username.
 func (s storageManager) GetVolumeByUsername(username string) ([]datatypes.Network_Storage, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("networkStorage.username").Eq(username))
 	return s.AccountService.Filter(filters.Build()).GetNetworkStorage()
 }
 
-//Authorizes hosts to Block/File Storage Volumes
-//volumeId: The Block/File volume to authorize hosts to
-//hardwareIds: A List of SoftLayer_Hardware ids
-//vsIds: A List of SoftLayer_Virtual_Guest ids
-//IPIds: A List of SoftLayer_Network_Subnet_IpAddress ids
-//subnetIds: A List of SoftLayer_Network_Subnet ids, block volume does not support subnetIds
+// Authorizes hosts to Block/File Storage Volumes
+// volumeId: The Block/File volume to authorize hosts to
+// hardwareIds: A List of SoftLayer_Hardware ids
+// vsIds: A List of SoftLayer_Virtual_Guest ids
+// IPIds: A List of SoftLayer_Network_Subnet_IpAddress ids
+// subnetIds: A List of SoftLayer_Network_Subnet ids, block volume does not support subnetIds
 func (s storageManager) AuthorizeHostToVolume(volumeId int, hardwareIds []int, vsIds []int, IPIds []int, subnetIds []int) ([]datatypes.Network_Storage_Allowed_Host, error) {
 	templates := PopulateHostTemplates(hardwareIds, vsIds, IPIds, subnetIds)
 	return s.StorageService.Id(volumeId).AllowAccessFromHostList(templates)
 }
 
-//Revokes authorization of hosts to Block/File Storage Volumes
-//volumeId: The Block/File volume to authorize hosts to
-//hardwareIds: A List of SoftLayer_Hardware ids
-//vsIds: A List of SoftLayer_Virtual_Guest ids
-//IPIds: A List of SoftLayer_Network_Subnet_IpAddress ids
-//subnetIds: A List of SoftLayer_Network_Subnet ids, block volume does not support subnetIds
+// Revokes authorization of hosts to Block/File Storage Volumes
+// volumeId: The Block/File volume to authorize hosts to
+// hardwareIds: A List of SoftLayer_Hardware ids
+// vsIds: A List of SoftLayer_Virtual_Guest ids
+// IPIds: A List of SoftLayer_Network_Subnet_IpAddress ids
+// subnetIds: A List of SoftLayer_Network_Subnet ids, block volume does not support subnetIds
 func (s storageManager) DeauthorizeHostToVolume(volumeId int, hardwareIds []int, vsIds []int, IPIds []int, subnetIds []int) ([]datatypes.Network_Storage_Allowed_Host, error) {
 	templates := PopulateHostTemplates(hardwareIds, vsIds, IPIds, subnetIds)
 	return s.StorageService.Id(volumeId).RemoveAccessFromHostList(templates)
 }
 
-//Sets the password for an access host
-//hostId: id of the allowed access host
-//password: password to set
+// Sets the password for an access host
+// hostId: id of the allowed access host
+// password: password to set
 func (s storageManager) SetCredentialPassword(hostId int, password string) error {
 	_, err := s.AllowedHostService.Id(hostId).SetCredentialPassword(&password)
 	return err
 }
 
-//Set the LUN ID on a volume
-//volumeId: the id of the volume
-//lunId: LUN ID to set on the volume
+// Set the LUN ID on a volume
+// volumeId: the id of the volume
+// lunId: LUN ID to set on the volume
 func (s storageManager) SetLunId(volumeId int, lunId int) (datatypes.Network_Storage_Property, error) {
 	return s.StorageService.Id(volumeId).CreateOrUpdateLunId(&lunId)
 }
 
-//Places an order for a replicant Block/File volume.
-//volumeType: block or file
-//volumeId: The ID of the primary volume to be replicated
-//snapshotSchedule: The primary volume's snapshot schedule to use for replication
-//location: The location for the ordered replicant volume
-//tier: The tier (IOPS per GB) of endurance volume
-//iops: The IOPS of performance volume
-//opType: The OS type of block volume
+// Places an order for a replicant Block/File volume.
+// volumeType: block or file
+// volumeId: The ID of the primary volume to be replicated
+// snapshotSchedule: The primary volume's snapshot schedule to use for replication
+// location: The location for the ordered replicant volume
+// tier: The tier (IOPS per GB) of endurance volume
+// iops: The IOPS of performance volume
+// opType: The OS type of block volume
 func (s storageManager) OrderReplicantVolume(volumeType string, volumeId int, snapshotSchedule string, location string, tier float64, iops int, osType string) (datatypes.Container_Product_Order_Receipt, error) {
 	mask := "billingItem[hourlyFlag,activeChildren],snapshotCapacityGb,schedules,hourlySchedule,dailySchedule,weeklySchedule,storageType.keyName,iops,storageTierLevel"
 	if volumeType == VOLUME_TYPE_BLOCK {
@@ -259,52 +262,52 @@ func (s storageManager) OrderReplicantVolume(volumeType string, volumeId int, sn
 	return s.OrderService.PlaceOrder(&order, sl.Bool(false))
 }
 
-//Failover to a volume replicant.
-//volumeId: The id of the volume
-//replicantId: ID of replicant to failover to
+// Failover to a volume replicant.
+// volumeId: The id of the volume
+// replicantId: ID of replicant to failover to
 func (s storageManager) FailOverToReplicant(volumeId int, replicantId int) error {
 	_, err := s.StorageService.Id(volumeId).FailoverToReplicant(sl.Int(replicantId))
 	return err
 }
 
-//Failback from a volume replicant.
-//volumeId: The id of the volume
+// Failback from a volume replicant.
+// volumeId: The id of the volume
 func (s storageManager) FailBackFromReplicant(volumeId int) error {
 	_, err := s.StorageService.Id(volumeId).FailbackFromReplicant()
 	return err
 }
 
-//DISASTER Failover to a volume replicant.
-//If a volume (with replication) becomes inaccessible due to a disaster event,
-//this method can be used to immediately failover to an available replica in another location.
-//This method does not allow for fail back via the API.
-//To fail back to the original volume after using this method, open a support ticket.
-//To test failover, use FailOverToReplicant() instead.
-//volumeId: The id of the volume that is inaccessible.
-//replicantId: ID of replicant volume to make the new primary
+// DISASTER Failover to a volume replicant.
+// If a volume (with replication) becomes inaccessible due to a disaster event,
+// this method can be used to immediately failover to an available replica in another location.
+// This method does not allow for fail back via the API.
+// To fail back to the original volume after using this method, open a support ticket.
+// To test failover, use FailOverToReplicant() instead.
+// volumeId: The id of the volume that is inaccessible.
+// replicantId: ID of replicant volume to make the new primary
 func (s storageManager) DisasterRecoveryFailover(volumeId int, replicantId int) error {
 	_, err := s.StorageService.Id(volumeId).DisasterRecoveryFailoverToReplicant(sl.Int(replicantId))
 	return err
 }
 
-//Acquires list of replicant volumes pertaining to the given volume.
-//volumeId: The id of the volume
+// Acquires list of replicant volumes pertaining to the given volume.
+// volumeId: The id of the volume
 func (s storageManager) GetReplicationPartners(volumeId int) ([]datatypes.Network_Storage, error) {
 	return s.StorageService.Id(volumeId).GetReplicationPartners()
 }
 
-//Acquires list of the datacenters to which a volume can be replicated.
-//volumeId: The id of the volume
+// Acquires list of the datacenters to which a volume can be replicated.
+// volumeId: The id of the volume
 func (s storageManager) GetReplicationLocations(volumeId int) ([]datatypes.Location, error) {
 	return s.StorageService.Id(volumeId).GetValidReplicationTargetDatacenterLocations()
 }
 
-//Returns a list of block volumes.
-//volumeType: block or file
-//datacenter: Datacenter short name (e.g.: dal09)
-//username: Name of volume.
-//storageType: Type of volume: Endurance or Performance
-//orderId: ID of order
+// Returns a list of block volumes.
+// volumeType: block or file
+// datacenter: Datacenter short name (e.g.: dal09)
+// username: Name of volume.
+// storageType: Type of volume: Endurance or Performance
+// orderId: ID of order
 func (s storageManager) ListVolumes(volumeType string, datacenter string, username string, storageType string, notes string, orderId int, mask string) ([]datatypes.Network_Storage, error) {
 	filters := filter.New()
 	if volumeType == VOLUME_TYPE_BLOCK {
@@ -393,10 +396,10 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 	}
 }
 
-//Returns details about the specified volume.
-//volumeType: block or file
-//volumeId: ID of volume
-//mask: mask of properties
+// Returns details about the specified volume.
+// volumeType: block or file
+// volumeId: ID of volume
+// mask: mask of properties
 func (s storageManager) GetVolumeDetails(volumeType string, volumeId int, mask string) (datatypes.Network_Storage, error) {
 	if mask == "" {
 		if volumeType == VOLUME_TYPE_BLOCK {
@@ -560,11 +563,11 @@ func (s storageManager) OrderVolume(volumeType string, location string, storageT
 	return s.OrderService.PlaceOrder(&order, sl.Bool(false))
 }
 
-//Cancels the given block storage volume.
-//volumeType: block or file
-//volumeId: The volume ID
-//reason: The reason for cancellation
-//immediate: Cancel immediately or on anniversary date
+// Cancels the given block storage volume.
+// volumeType: block or file
+// volumeId: The volume ID
+// reason: The reason for cancellation
+// immediate: Cancel immediately or on anniversary date
 func (s storageManager) CancelVolume(volumeType string, volumeId int, reason string, immediate bool) error {
 	volume, err := s.GetVolumeDetails(volumeType, volumeId, "id,billingItem.id")
 	if err != nil {
@@ -581,8 +584,8 @@ func (s storageManager) CancelVolume(volumeType string, volumeId int, reason str
 	return err
 }
 
-//Places an order for a duplicate block/file volume
-//config A DuplicateOrderConfig entry.
+// Places an order for a duplicate block/file volume
+// config A DuplicateOrderConfig entry.
 func (s storageManager) OrderDuplicateVolume(config DuplicateOrderConfig) (datatypes.Container_Product_Order_Receipt, error) {
 	mask := "id,billingItem.location,snapshotCapacityGb,storageType.keyName,capacityGb,originalVolumeSize,provisionedIops,storageTierLevel"
 	if config.VolumeType == VOLUME_TYPE_BLOCK {
@@ -621,31 +624,31 @@ func (s storageManager) OrderDuplicateVolume(config DuplicateOrderConfig) (datat
 	return s.OrderService.PlaceOrder(&order, sl.Bool(false))
 }
 
-//Returns a list of snapshots for the specified volume.
-//volumeId: ID of volume
+// Returns a list of snapshots for the specified volume.
+// volumeId: ID of volume
 func (s storageManager) GetVolumeSnapshotList(volumeId int) ([]datatypes.Network_Storage, error) {
 	mask := "id,username,notes,snapshotSizeBytes,storageType.keyName,snapshotCreationTimestamp,hourlySchedule,dailySchedule,weeklySchedule"
 	return s.StorageService.Id(volumeId).Mask(mask).GetSnapshots()
 }
 
-//Deletes the specified snapshot object.
-//snapshotId: The ID of the snapshot object to delete.
+// Deletes the specified snapshot object.
+// snapshotId: The ID of the snapshot object to delete.
 func (s storageManager) DeleteSnapshot(snapshotId int) error {
 	_, err := s.StorageService.Id(snapshotId).DeleteObject()
 	return err
 }
 
-//Creates a snapshot on the given block volume.
-//volumeId: The id of the volume
-//notes: The notes or "name" to assign the snapshot
+// Creates a snapshot on the given block volume.
+// volumeId: The id of the volume
+// notes: The notes or "name" to assign the snapshot
 func (s storageManager) CreateSnapshot(volumeId int, notes string) (datatypes.Network_Storage, error) {
 	return s.StorageService.Id(volumeId).CreateSnapshot(sl.String((notes)))
 }
 
-//Cancels snapshot space for a given volume.
-//volumeId: The volume ID
-//reason: The reason for cancellation
-//immediate: Cancel immediately or on anniversary date
+// Cancels snapshot space for a given volume.
+// volumeId: The volume ID
+// reason: The reason for cancellation
+// immediate: Cancel immediately or on anniversary date
 func (s storageManager) CancelSnapshotSpace(volumeType string, volumeId int, reason string, immediate bool) error {
 	volume, err := s.GetVolumeDetails(volumeType, volumeId, "id,billingItem.activeChildren")
 	if err != nil {
@@ -669,41 +672,41 @@ func (s storageManager) CancelSnapshotSpace(volumeType string, volumeId int, rea
 	return err
 }
 
-//Enables snapshots for a specific block volume at a given schedule.
-//volumeId: The id of the volume
-//scheduleType: 'HOURLY'|'DAILY'|'WEEKLY'
-//retentionCount: Number of snapshots to be kept
-//minute: Minute when to take snapshot
-//hour: Hour when to take snapshot
-//dayOfWeek: Day when to take snapshot
+// Enables snapshots for a specific block volume at a given schedule.
+// volumeId: The id of the volume
+// scheduleType: 'HOURLY'|'DAILY'|'WEEKLY'
+// retentionCount: Number of snapshots to be kept
+// minute: Minute when to take snapshot
+// hour: Hour when to take snapshot
+// dayOfWeek: Day when to take snapshot
 func (s storageManager) EnableSnapshot(volumeId int, scheduleType string, retentionCount int, minute int, hour int, dayOfWeek string) error {
 	_, err := s.StorageService.Id(volumeId).EnableSnapshots(sl.String(scheduleType), sl.Int(retentionCount), sl.Int(minute), sl.Int(hour), sl.String(dayOfWeek))
 	return err
 }
 
-//Disables snapshots for a specific block volume at a given schedule.
-//volumeId: The id of the volume
-//scheduleType: 'HOURLY'|'DAILY'|'WEEKLY'
+// Disables snapshots for a specific block volume at a given schedule.
+// volumeId: The id of the volume
+// scheduleType: 'HOURLY'|'DAILY'|'WEEKLY'
 func (s storageManager) DisableSnapshots(volumeId int, scheduleType string) error {
 	_, err := s.StorageService.Id(volumeId).DisableSnapshots(sl.String(scheduleType))
 	return err
 }
 
-//Restores a specific volume from a snapshot.
-//volumeId: The id of the volume
-//snapshotId: The id of the restore point
+// Restores a specific volume from a snapshot.
+// volumeId: The id of the volume
+// snapshotId: The id of the restore point
 func (s storageManager) RestoreFromSnapshot(volumeId int, snapshotId int) error {
 	_, err := s.StorageService.Id(volumeId).RestoreFromSnapshot(sl.Int(snapshotId))
 	return err
 }
 
-//Orders snapshot space for the given block/file volume.
-//volumeType: block or file
-//volumeId: The id of the volume
-//snapshotSize: The capacity to order, in GB
-//tier: The tier level of the endurance volume, in IOPS per GB
-//iops: The IOSP of the performance volume
-//upgrade: Flag to indicate if this order is an upgrade
+// Orders snapshot space for the given block/file volume.
+// volumeType: block or file
+// volumeId: The id of the volume
+// snapshotSize: The capacity to order, in GB
+// tier: The tier level of the endurance volume, in IOPS per GB
+// iops: The IOSP of the performance volume
+// upgrade: Flag to indicate if this order is an upgrade
 func (s storageManager) OrderSnapshotSpace(volumeType string, volumeId int, snapshotSize int, tier float64, iops int, upgrade bool) (datatypes.Container_Product_Order_Receipt, error) {
 	productPackage, err := GetPackage(s.PackageService, SaaS_Category)
 	if err != nil {
@@ -791,30 +794,30 @@ func (s storageManager) GetAllDatacenters() ([]string, error) {
 	return datacenters, nil
 }
 
-//Retrieves an array of volume count limits per location and globally.
+// Retrieves an array of volume count limits per location and globally.
 func (s storageManager) GetVolumeCountLimits() ([]datatypes.Container_Network_Storage_DataCenterLimits_VolumeCountLimitContainer, error) {
 	volumeLimits, err := s.StorageService.GetVolumeCountLimits()
 	return volumeLimits, err
 }
 
-//Splits a clone from its parent allowing it to be an independent volume.
-//volumeId: The ID of the volume object to convert.
+// Splits a clone from its parent allowing it to be an independent volume.
+// volumeId: The ID of the volume object to convert.
 func (s storageManager) VolumeConvert(volumeId int) error {
 	_, err := s.StorageService.Id(volumeId).ConvertCloneDependentToIndependent()
 	return err
 }
 
-//Refreshes a duplicate volume with a snapshot taken from its parent.
-//volumeId: The ID of the volume to refresh.
-//snapshotId: The Id of the parent volume's snapshot to use as a refresh point.
+// Refreshes a duplicate volume with a snapshot taken from its parent.
+// volumeId: The ID of the volume to refresh.
+// snapshotId: The Id of the parent volume's snapshot to use as a refresh point.
 func (s storageManager) VolumeRefresh(volumeId int, snapshotId int) error {
 	_, err := s.StorageService.Id(volumeId).RefreshDuplicate(sl.Int(snapshotId))
 	return err
 }
 
-//Add a note in a storage volume.
-//volumeId: The ID of the volume to add.
-//note: The note that will be added.
+// Add a note in a storage volume.
+// volumeId: The ID of the volume to add.
+// note: The note that will be added.
 func (s storageManager) VolumeSetNote(volumeId int, note string) (bool, error) {
 	noteTemplate := datatypes.Network_Storage{
 		Notes: sl.String(note),
@@ -822,13 +825,13 @@ func (s storageManager) VolumeSetNote(volumeId int, note string) (bool, error) {
 	return s.StorageService.Id(volumeId).EditObject(&noteTemplate)
 }
 
-//Enables/Disables snapshot space usage threshold warning for a given volume.
+// Enables/Disables snapshot space usage threshold warning for a given volume.
 func (s storageManager) SetSnapshotNotification(volumeID int, enabled bool) error {
 
 	return s.StorageService.Id(volumeID).SetSnapshotNotification(&enabled)
 }
 
-//returns Enabled/Disabled snapshot space usage threshold warning for a given volume
+// returns Enabled/Disabled snapshot space usage threshold warning for a given volume
 func (s storageManager) GetSnapshotNotificationStatus(volumeId int) (int, error) {
 	status, err := s.StorageService.Id(volumeId).GetSnapshotNotificationStatus()
 	if err != nil {
@@ -843,7 +846,7 @@ func (s storageManager) GetSnapshotNotificationStatus(volumeId int) (int, error)
 	return result, err
 }
 
-//Returns a list of cloud object storages.
+// Returns a list of cloud object storages.
 func (s storageManager) GetHubNetworkStorage(mask string) ([]datatypes.Network_Storage, error) {
 	if mask == "" {
 		mask = "mask[id,username,billingItem,storageType, notes]"
@@ -851,9 +854,9 @@ func (s storageManager) GetHubNetworkStorage(mask string) ([]datatypes.Network_S
 	return s.AccountService.Mask(mask).GetHubNetworkStorage()
 }
 
-//Get the status of the duplication process of a volume
-//volumeID: id of duplicated volume
-//mask: object mask
+// Get the status of the duplication process of a volume
+// volumeID: id of duplicated volume
+// mask: object mask
 func (s storageManager) GetDuplicateConversionStatus(volumeID int, mask string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error) {
 	if mask == "" {
 		mask = "mask[activeConversionStartTime,deDuplicateConversionPercentage,volumeUsername]"
@@ -861,9 +864,9 @@ func (s storageManager) GetDuplicateConversionStatus(volumeID int, mask string) 
 	return s.StorageService.Id(volumeID).Mask(mask).GetDuplicateConversionStatus()
 }
 
-//Get records assigned to the ACL for this allowed host
-//accessID: id of allowed host
-//mask: object mask
+// Get records assigned to the ACL for this allowed host
+// accessID: id of allowed host
+// mask: object mask
 func (s storageManager) GetSubnetsInAcl(accessID int, mask string) ([]datatypes.Network_Subnet, error) {
 	if mask == "" {
 		mask = "mask[id,modifyDate,networkIdentifier,cidr]"
@@ -883,4 +886,29 @@ func (s storageManager) AssignSubnetsToAcl(accessID int, subnets []int) ([]int, 
 // subnets: subnets IDs to be assigned
 func (s storageManager) RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error) {
 	return s.AllowedHostService.Id(accessID).RemoveSubnetsFromAcl(subnets)
+}
+
+/*
+Retrieve a SoftLayer_Network_Storage_Hub_Cleversafe_Account record.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getObject/
+*/
+func (s storageManager) GetNetworkMessageDeliveryAccounts(storageId int, mask string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error) {
+	if mask == "" {
+		mask = "mask[uuid,credentials]"
+	}
+
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(s.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Id(storageId).Mask(mask).GetObject()
+}
+
+/*
+Returns a collection of endpoint URLs available to this IBM Cloud Object Storage account.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getEndpoints/
+*/
+func (s storageManager) GetEndpoints(storageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error) {
+
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(s.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Id(storageId).GetEndpoints(nil)
 }
