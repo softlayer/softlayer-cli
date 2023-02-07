@@ -10,7 +10,7 @@ import (
 
 type EmailManager interface {
 	GetNetworkMessageDeliveryAccounts(mask string) ([]datatypes.Network_Message_Delivery, error)
-	GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error)
+	GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, error)
 	GetStatistics(emailId int) ([]datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics, error)
 	GetInstance(emailId int, mask string) (datatypes.Network_Message_Delivery_Email_Sendgrid, error)
 	UpdateEmail(emailId int, emailAddress string) error
@@ -59,7 +59,7 @@ func (a emailManager) GetNetworkMessageDeliveryAccounts(mask string) ([]datatype
 Gets account overview by email.
 https://sldn.softlayer.com/reference/services/SoftLayer_Network_Message_Delivery_Email_Sendgrid/getAccountOverview/
 */
-func (a emailManager) GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error) {
+func (a emailManager) GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, error) {
 	return a.EmailService.Id(emailId).GetAccountOverview()
 }
 
