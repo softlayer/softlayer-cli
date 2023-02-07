@@ -61,6 +61,20 @@ var _ = Describe("Block Volume Refresh", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "5678")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				volId, dupId, force := FakeStorageManager.VolumeRefreshArgsForCall(0)
+				Expect(force).To(Equal(false))
+				Expect(dupId).To(Equal(5678))
+				Expect(volId).To(Equal(1234))
+			})
+			It("Force Flag", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "5678", "--force")
+
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				volId, dupId, force := FakeStorageManager.VolumeRefreshArgsForCall(0)
+				Expect(force).To(Equal(true))
+				Expect(dupId).To(Equal(5678))
+				Expect(volId).To(Equal(1234))
 			})
 		})
 

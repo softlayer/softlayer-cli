@@ -14,7 +14,8 @@ import (
 type VolumeRefreshCommand struct {
 	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
-	StorageManager managers.StorageManager
+	StorageManager	managers.StorageManager
+	Force 			bool
 }
 
 func NewVolumeRefreshCommand(sl *metadata.SoftlayerStorageCommand) *VolumeRefreshCommand {
@@ -35,6 +36,8 @@ EXAMPLE:
 			return thisCmd.Run(args)
 		},
 	}
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force the volume refresh, will cancel any ongoing transactions."))
+
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
@@ -50,7 +53,7 @@ func (cmd *VolumeRefreshCommand) Run(args []string) error {
 		return slErr.NewInvalidSoftlayerIdInputError("Snapshot ID")
 	}
 
-	err = cmd.StorageManager.VolumeRefresh(volumeID, snapshotId)
+	err = cmd.StorageManager.VolumeRefresh(volumeID, snapshotId, cmd.Force)
 	if err != nil {
 		return err
 	}
