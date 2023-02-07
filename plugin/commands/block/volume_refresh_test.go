@@ -67,7 +67,7 @@ var _ = Describe("Block Volume Refresh", func() {
 				Expect(volId).To(Equal(1234))
 			})
 			It("Force Flag", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "5678", "--force")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "5678", "--force-refresh")
 
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))

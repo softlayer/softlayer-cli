@@ -36,7 +36,7 @@ EXAMPLE:
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force the volume refresh, will cancel any ongoing transactions."))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force-refresh", "f", false, T("Force the volume refresh, will cancel any ongoing transactions."))
 
 	thisCmd.Command = cobraCmd
 	return thisCmd
