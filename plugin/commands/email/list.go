@@ -56,7 +56,8 @@ func (cmd *ListCommand) Run(args []string) error {
 
 	bufEmail := new(bytes.Buffer)
 	bufOverview := new(bytes.Buffer)
-	bufStatistics := new(bytes.Buffer)
+	//Commented these lines until we fix EmailManager.GetStatistics() method
+	//bufStatistics := new(bytes.Buffer)
 
 	emailTable := terminal.NewTable(bufEmail, []string{
 		T("Id"),
@@ -65,24 +66,22 @@ func (cmd *ListCommand) Run(args []string) error {
 		T("Vendor"),
 	})
 
-	// overviewTable := terminal.NewTable(bufOverview, []string{
-	// 	T("Credit allowed"),
-	// 	T("Credits remain"),
-	// 	T("Credits overage"),
-	// 	T("Credits used"),
-	// 	T("Package"),
-	// 	T("Reputation"),
-	// 	T("Requests"),
-	// })
-
-	statisticsTable := terminal.NewTable(bufStatistics, []string{
-		T("Delivered"),
-		T("Requests"),
-		T("Bounces"),
-		T("Opens"),
-		T("Clicks"),
-		T("Spam reports"),
+	overviewTable := terminal.NewTable(bufOverview, []string{
+		T("Package"),
+		T("Reputation"),
 	})
+
+	//Commented these lines until we fix EmailManager.GetStatistics() method
+	/*
+		statisticsTable := terminal.NewTable(bufStatistics, []string{
+			T("Delivered"),
+			T("Requests"),
+			T("Bounces"),
+			T("Opens"),
+			T("Clicks"),
+			T("Spam reports"),
+		})
+	*/
 
 	for _, email := range emailList {
 		emailTable.Add(
@@ -92,19 +91,22 @@ func (cmd *ListCommand) Run(args []string) error {
 			utils.FormatStringPointer(email.Vendor.KeyName),
 		)
 
-		// accountOverview, err := cmd.EmailManager.GetAccountOverview(*email.Id)
-		// if err != nil {
-		// 	return errors.NewAPIError(T("Failed to get Account Overview."), err.Error(), 2)
-		// }
-		// PrintAccountOverview(accountOverview, overviewTable, cmd.UI, outputFormat)
-
-		statistics, err := cmd.EmailManager.GetStatistics(*email.Id)
+		accountOverview, err := cmd.EmailManager.GetAccountOverview(*email.Id)
 		if err != nil {
-			return errors.NewAPIError(T("Failed to get Statistics."), err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get Account Overview."), err.Error(), 2)
 		}
-		for _, statistic := range statistics {
-			PrintStatistics(statistic, statisticsTable, cmd.UI, outputFormat)
-		}
+		PrintAccountOverview(accountOverview, overviewTable, cmd.UI, outputFormat)
+
+		//Commented these lines until we fix EmailManager.GetStatistics() method
+		/*
+			statistics, err := cmd.EmailManager.GetStatistics(*email.Id)
+			if err != nil {
+				return errors.NewAPIError(T("Failed to get Statistics."), err.Error(), 2)
+			}
+			for _, statistic := range statistics {
+				PrintStatistics(statistic, statisticsTable, cmd.UI, outputFormat)
+			}
+		*/
 	}
 
 	utils.PrintTable(cmd.UI, emailTable, outputFormat)
@@ -117,32 +119,28 @@ func (cmd *ListCommand) Run(args []string) error {
 		"Email overview",
 		bufOverview.String(),
 	)
-	table.Add(
-		"Statistics",
-		bufStatistics.String(),
-	)
+	//Commented these lines until we fix EmailManager.GetStatistics() method
+	/*
+		table.Add(
+			"Statistics",
+			bufStatistics.String(),
+		)
+	*/
 
 	utils.PrintTable(cmd.UI, table, outputFormat)
 
 	return nil
 }
-/*
 
 func PrintAccountOverview(accountOverview datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, overviewTable terminal.Table, ui terminal.UI, outputFormat string) {
 
 	overviewTable.Add(
-		utils.FormatIntPointer(accountOverview.CreditsAllowed),
-		utils.FormatIntPointer(accountOverview.CreditsRemain),
-		utils.FormatIntPointer(accountOverview.CreditsOverage),
-		utils.FormatIntPointer(accountOverview.CreditsUsed),
-		utils.FormatStringPointer(accountOverview.Package),
-		utils.FormatIntPointer(accountOverview.Reputation),
-		utils.FormatIntPointer(accountOverview.Requests),
+		utils.FormatStringPointer(accountOverview.Profile.Package),
+		utils.FormatIntPointer(accountOverview.Profile.Reputation),
 	)
 	utils.PrintTable(ui, overviewTable, outputFormat)
 }
 
-*/
 func PrintStatistics(statistic datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics, statisticsTable terminal.Table, ui terminal.UI, outputFormat string) {
 	statisticsTable.Add(
 		utils.FormatIntPointer(statistic.Delivered),
