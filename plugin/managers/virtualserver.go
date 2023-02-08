@@ -76,7 +76,6 @@ type VirtualServerManager interface {
 	GetLikedInstance(virtualGuest *datatypes.Virtual_Guest, id int) (*datatypes.Virtual_Guest, error)
 	CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error)
 	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
-	ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error)
 	GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
 	PauseInstance(id int) error
 	PowerOnInstance(id int) error
@@ -769,39 +768,6 @@ func getDisks(vs datatypes.Virtual_Guest, all bool) []datatypes.Virtual_Guest_Bl
 		disks = append(disks, disk)
 	}
 	return disks
-}
-
-func (vs virtualServerManager) ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error) {
-	filters := filter.New()
-	filters = append(filters, filter.Path("dedicatedHosts.id").OrderBy("ASC"))
-
-	if name != "" {
-		filters = append(filters, filter.Path("dedicatedHosts.name").Eq(name))
-	}
-	if datacenter != "" {
-		filters = append(filters, filter.Path("dedicatedHosts.datacenter.name").Eq(datacenter))
-	}
-	if owner != "" {
-		filters = append(filters, filter.Path("dedicatedHosts.billingItem.orderItem.order.userRecord.username").Eq(owner))
-	}
-	if orderId != 0 {
-		filters = append(filters, filter.Path("dedicatedHosts.billingItem.orderItem.order.id").Eq(orderId))
-	}
-
-	i := 0
-	resourceList := []datatypes.Virtual_DedicatedHost{}
-	for {
-		resp, err := vs.AccountService.Mask(HOST_DEFAULT_MASK).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetDedicatedHosts()
-		i++
-		if err != nil {
-			return []datatypes.Virtual_DedicatedHost{}, err
-		}
-		resourceList = append(resourceList, resp...)
-		if len(resp) < metadata.LIMIT {
-			break
-		}
-	}
-	return resourceList, nil
 }
 
 //Retrieve a list of all virtual servers on the account.
