@@ -484,7 +484,7 @@ type FakeHardwareServerManager struct {
 	toggleIPMIReturnsOnCall map[int]struct {
 		result1 error
 	}
-	UpdateFirmwareStub        func(int, bool, bool, bool, bool) error
+	UpdateFirmwareStub        func(int, bool, bool, bool, bool, bool) error
 	updateFirmwareMutex       sync.RWMutex
 	updateFirmwareArgsForCall []struct {
 		arg1 int
@@ -492,6 +492,7 @@ type FakeHardwareServerManager struct {
 		arg3 bool
 		arg4 bool
 		arg5 bool
+		arg6 bool
 	}
 	updateFirmwareReturns struct {
 		result1 error
@@ -523,16 +524,15 @@ func (fake *FakeHardwareServerManager) AuthorizeStorage(arg1 int, arg2 string) (
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
-	stub := fake.AuthorizeStorageStub
-	fakeReturns := fake.authorizeStorageReturns
 	fake.recordInvocation("AuthorizeStorage", []interface{}{arg1, arg2})
 	fake.authorizeStorageMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.AuthorizeStorageStub != nil {
+		return fake.AuthorizeStorageStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.authorizeStorageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -590,16 +590,15 @@ func (fake *FakeHardwareServerManager) CancelHardware(arg1 int, arg2 string, arg
 		arg3 string
 		arg4 bool
 	}{arg1, arg2, arg3, arg4})
-	stub := fake.CancelHardwareStub
-	fakeReturns := fake.cancelHardwareReturns
 	fake.recordInvocation("CancelHardware", []interface{}{arg1, arg2, arg3, arg4})
 	fake.cancelHardwareMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4)
+	if fake.CancelHardwareStub != nil {
+		return fake.CancelHardwareStub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.cancelHardwareReturns
 	return fakeReturns.result1
 }
 
@@ -651,16 +650,15 @@ func (fake *FakeHardwareServerManager) CreateFirmwareReflashTransaction(arg1 int
 	fake.createFirmwareReflashTransactionArgsForCall = append(fake.createFirmwareReflashTransactionArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.CreateFirmwareReflashTransactionStub
-	fakeReturns := fake.createFirmwareReflashTransactionReturns
 	fake.recordInvocation("CreateFirmwareReflashTransaction", []interface{}{arg1})
 	fake.createFirmwareReflashTransactionMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.CreateFirmwareReflashTransactionStub != nil {
+		return fake.CreateFirmwareReflashTransactionStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.createFirmwareReflashTransactionReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -716,16 +714,15 @@ func (fake *FakeHardwareServerManager) CreateUserCustomerNotification(arg1 int, 
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
-	stub := fake.CreateUserCustomerNotificationStub
-	fakeReturns := fake.createUserCustomerNotificationReturns
 	fake.recordInvocation("CreateUserCustomerNotification", []interface{}{arg1, arg2})
 	fake.createUserCustomerNotificationMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.CreateUserCustomerNotificationStub != nil {
+		return fake.CreateUserCustomerNotificationStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.createUserCustomerNotificationReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -780,16 +777,15 @@ func (fake *FakeHardwareServerManager) DeleteUserCustomerNotification(arg1 int) 
 	fake.deleteUserCustomerNotificationArgsForCall = append(fake.deleteUserCustomerNotificationArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.DeleteUserCustomerNotificationStub
-	fakeReturns := fake.deleteUserCustomerNotificationReturns
 	fake.recordInvocation("DeleteUserCustomerNotification", []interface{}{arg1})
 	fake.deleteUserCustomerNotificationMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.DeleteUserCustomerNotificationStub != nil {
+		return fake.DeleteUserCustomerNotificationStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.deleteUserCustomerNotificationReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -851,16 +847,15 @@ func (fake *FakeHardwareServerManager) Edit(arg1 int, arg2 string, arg3 string, 
 		arg7 int
 		arg8 int
 	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8})
-	stub := fake.EditStub
-	fakeReturns := fake.editReturns
 	fake.recordInvocation("Edit", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8})
 	fake.editMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+	if fake.EditStub != nil {
+		return fake.EditStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.editReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -916,16 +911,15 @@ func (fake *FakeHardwareServerManager) GenerateCreateTemplate(arg1 datatypes.Pro
 		arg1 datatypes.Product_Package
 		arg2 map[string]interface{}
 	}{arg1, arg2})
-	stub := fake.GenerateCreateTemplateStub
-	fakeReturns := fake.generateCreateTemplateReturns
 	fake.recordInvocation("GenerateCreateTemplate", []interface{}{arg1, arg2})
 	fake.generateCreateTemplateMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.GenerateCreateTemplateStub != nil {
+		return fake.GenerateCreateTemplateStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.generateCreateTemplateReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -981,16 +975,15 @@ func (fake *FakeHardwareServerManager) GetBandwidthAllotmentDetail(arg1 int, arg
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
-	stub := fake.GetBandwidthAllotmentDetailStub
-	fakeReturns := fake.getBandwidthAllotmentDetailReturns
 	fake.recordInvocation("GetBandwidthAllotmentDetail", []interface{}{arg1, arg2})
 	fake.getBandwidthAllotmentDetailMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.GetBandwidthAllotmentDetailStub != nil {
+		return fake.GetBandwidthAllotmentDetailStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getBandwidthAllotmentDetailReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1048,16 +1041,15 @@ func (fake *FakeHardwareServerManager) GetBandwidthData(arg1 int, arg2 time.Time
 		arg3 time.Time
 		arg4 int
 	}{arg1, arg2, arg3, arg4})
-	stub := fake.GetBandwidthDataStub
-	fakeReturns := fake.getBandwidthDataReturns
 	fake.recordInvocation("GetBandwidthData", []interface{}{arg1, arg2, arg3, arg4})
 	fake.getBandwidthDataMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4)
+	if fake.GetBandwidthDataStub != nil {
+		return fake.GetBandwidthDataStub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getBandwidthDataReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1120,16 +1112,15 @@ func (fake *FakeHardwareServerManager) GetBandwidthPriceId(arg1 []datatypes.Prod
 		arg3 bool
 		arg4 datatypes.Location_Region
 	}{arg1Copy, arg2, arg3, arg4})
-	stub := fake.GetBandwidthPriceIdStub
-	fakeReturns := fake.getBandwidthPriceIdReturns
 	fake.recordInvocation("GetBandwidthPriceId", []interface{}{arg1Copy, arg2, arg3, arg4})
 	fake.getBandwidthPriceIdMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4)
+	if fake.GetBandwidthPriceIdStub != nil {
+		return fake.GetBandwidthPriceIdStub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getBandwidthPriceIdReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1185,16 +1176,15 @@ func (fake *FakeHardwareServerManager) GetBillingCycleBandwidthUsage(arg1 int, a
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
-	stub := fake.GetBillingCycleBandwidthUsageStub
-	fakeReturns := fake.getBillingCycleBandwidthUsageReturns
 	fake.recordInvocation("GetBillingCycleBandwidthUsage", []interface{}{arg1, arg2})
 	fake.getBillingCycleBandwidthUsageMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.GetBillingCycleBandwidthUsageStub != nil {
+		return fake.GetBillingCycleBandwidthUsageStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getBillingCycleBandwidthUsageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1248,16 +1238,15 @@ func (fake *FakeHardwareServerManager) GetCancellationReasons() map[string]strin
 	ret, specificReturn := fake.getCancellationReasonsReturnsOnCall[len(fake.getCancellationReasonsArgsForCall)]
 	fake.getCancellationReasonsArgsForCall = append(fake.getCancellationReasonsArgsForCall, struct {
 	}{})
-	stub := fake.GetCancellationReasonsStub
-	fakeReturns := fake.getCancellationReasonsReturns
 	fake.recordInvocation("GetCancellationReasons", []interface{}{})
 	fake.getCancellationReasonsMutex.Unlock()
-	if stub != nil {
-		return stub()
+	if fake.GetCancellationReasonsStub != nil {
+		return fake.GetCancellationReasonsStub()
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.getCancellationReasonsReturns
 	return fakeReturns.result1
 }
 
@@ -1302,16 +1291,15 @@ func (fake *FakeHardwareServerManager) GetCreateOptions(arg1 datatypes.Product_P
 	fake.getCreateOptionsArgsForCall = append(fake.getCreateOptionsArgsForCall, struct {
 		arg1 datatypes.Product_Package
 	}{arg1})
-	stub := fake.GetCreateOptionsStub
-	fakeReturns := fake.getCreateOptionsReturns
 	fake.recordInvocation("GetCreateOptions", []interface{}{arg1})
 	fake.getCreateOptionsMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.GetCreateOptionsStub != nil {
+		return fake.GetCreateOptionsStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.getCreateOptionsReturns
 	return fakeReturns.result1
 }
 
@@ -1371,16 +1359,15 @@ func (fake *FakeHardwareServerManager) GetDefaultPriceId(arg1 []datatypes.Produc
 		arg3 bool
 		arg4 datatypes.Location_Region
 	}{arg1Copy, arg2, arg3, arg4})
-	stub := fake.GetDefaultPriceIdStub
-	fakeReturns := fake.getDefaultPriceIdReturns
 	fake.recordInvocation("GetDefaultPriceId", []interface{}{arg1Copy, arg2, arg3, arg4})
 	fake.getDefaultPriceIdMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4)
+	if fake.GetDefaultPriceIdStub != nil {
+		return fake.GetDefaultPriceIdStub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getDefaultPriceIdReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1443,16 +1430,15 @@ func (fake *FakeHardwareServerManager) GetExtraPriceId(arg1 []datatypes.Product_
 		arg3 bool
 		arg4 datatypes.Location_Region
 	}{arg1Copy, arg2, arg3, arg4})
-	stub := fake.GetExtraPriceIdStub
-	fakeReturns := fake.getExtraPriceIdReturns
 	fake.recordInvocation("GetExtraPriceId", []interface{}{arg1Copy, arg2, arg3, arg4})
 	fake.getExtraPriceIdMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4)
+	if fake.GetExtraPriceIdStub != nil {
+		return fake.GetExtraPriceIdStub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getExtraPriceIdReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1507,16 +1493,15 @@ func (fake *FakeHardwareServerManager) GetHardDrives(arg1 int) ([]datatypes.Hard
 	fake.getHardDrivesArgsForCall = append(fake.getHardDrivesArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.GetHardDrivesStub
-	fakeReturns := fake.getHardDrivesReturns
 	fake.recordInvocation("GetHardDrives", []interface{}{arg1})
 	fake.getHardDrivesMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.GetHardDrivesStub != nil {
+		return fake.GetHardDrivesStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getHardDrivesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1572,16 +1557,15 @@ func (fake *FakeHardwareServerManager) GetHardware(arg1 int, arg2 string) (datat
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
-	stub := fake.GetHardwareStub
-	fakeReturns := fake.getHardwareReturns
 	fake.recordInvocation("GetHardware", []interface{}{arg1, arg2})
 	fake.getHardwareMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.GetHardwareStub != nil {
+		return fake.GetHardwareStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getHardwareReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1636,16 +1620,15 @@ func (fake *FakeHardwareServerManager) GetHardwareComponents(arg1 int) ([]dataty
 	fake.getHardwareComponentsArgsForCall = append(fake.getHardwareComponentsArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.GetHardwareComponentsStub
-	fakeReturns := fake.getHardwareComponentsReturns
 	fake.recordInvocation("GetHardwareComponents", []interface{}{arg1})
 	fake.getHardwareComponentsMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.GetHardwareComponentsStub != nil {
+		return fake.GetHardwareComponentsStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getHardwareComponentsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1707,16 +1690,15 @@ func (fake *FakeHardwareServerManager) GetOSPriceId(arg1 []datatypes.Product_Ite
 		arg2 string
 		arg3 datatypes.Location_Region
 	}{arg1Copy, arg2, arg3})
-	stub := fake.GetOSPriceIdStub
-	fakeReturns := fake.getOSPriceIdReturns
 	fake.recordInvocation("GetOSPriceId", []interface{}{arg1Copy, arg2, arg3})
 	fake.getOSPriceIdMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3)
+	if fake.GetOSPriceIdStub != nil {
+		return fake.GetOSPriceIdStub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getOSPriceIdReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1770,16 +1752,15 @@ func (fake *FakeHardwareServerManager) GetPackage() (datatypes.Product_Package, 
 	ret, specificReturn := fake.getPackageReturnsOnCall[len(fake.getPackageArgsForCall)]
 	fake.getPackageArgsForCall = append(fake.getPackageArgsForCall, struct {
 	}{})
-	stub := fake.GetPackageStub
-	fakeReturns := fake.getPackageReturns
 	fake.recordInvocation("GetPackage", []interface{}{})
 	fake.getPackageMutex.Unlock()
-	if stub != nil {
-		return stub()
+	if fake.GetPackageStub != nil {
+		return fake.GetPackageStub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getPackageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1835,16 +1816,15 @@ func (fake *FakeHardwareServerManager) GetPortSpeedPriceId(arg1 []datatypes.Prod
 		arg3 bool
 		arg4 datatypes.Location_Region
 	}{arg1Copy, arg2, arg3, arg4})
-	stub := fake.GetPortSpeedPriceIdStub
-	fakeReturns := fake.getPortSpeedPriceIdReturns
 	fake.recordInvocation("GetPortSpeedPriceId", []interface{}{arg1Copy, arg2, arg3, arg4})
 	fake.getPortSpeedPriceIdMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4)
+	if fake.GetPortSpeedPriceIdStub != nil {
+		return fake.GetPortSpeedPriceIdStub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getPortSpeedPriceIdReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1900,16 +1880,15 @@ func (fake *FakeHardwareServerManager) GetSensorData(arg1 int, arg2 string) ([]d
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
-	stub := fake.GetSensorDataStub
-	fakeReturns := fake.getSensorDataReturns
 	fake.recordInvocation("GetSensorData", []interface{}{arg1, arg2})
 	fake.getSensorDataMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.GetSensorDataStub != nil {
+		return fake.GetSensorDataStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getSensorDataReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1964,16 +1943,15 @@ func (fake *FakeHardwareServerManager) GetStorageCredentials(arg1 int) (datatype
 	fake.getStorageCredentialsArgsForCall = append(fake.getStorageCredentialsArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.GetStorageCredentialsStub
-	fakeReturns := fake.getStorageCredentialsReturns
 	fake.recordInvocation("GetStorageCredentials", []interface{}{arg1})
 	fake.getStorageCredentialsMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.GetStorageCredentialsStub != nil {
+		return fake.GetStorageCredentialsStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getStorageCredentialsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2029,16 +2007,15 @@ func (fake *FakeHardwareServerManager) GetStorageDetails(arg1 int, arg2 string) 
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
-	stub := fake.GetStorageDetailsStub
-	fakeReturns := fake.getStorageDetailsReturns
 	fake.recordInvocation("GetStorageDetails", []interface{}{arg1, arg2})
 	fake.getStorageDetailsMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.GetStorageDetailsStub != nil {
+		return fake.GetStorageDetailsStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getStorageDetailsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2094,16 +2071,15 @@ func (fake *FakeHardwareServerManager) GetUserCustomerNotificationsByHardwareId(
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
-	stub := fake.GetUserCustomerNotificationsByHardwareIdStub
-	fakeReturns := fake.getUserCustomerNotificationsByHardwareIdReturns
 	fake.recordInvocation("GetUserCustomerNotificationsByHardwareId", []interface{}{arg1, arg2})
 	fake.getUserCustomerNotificationsByHardwareIdMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.GetUserCustomerNotificationsByHardwareIdStub != nil {
+		return fake.GetUserCustomerNotificationsByHardwareIdStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getUserCustomerNotificationsByHardwareIdReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2174,16 +2150,15 @@ func (fake *FakeHardwareServerManager) ListHardware(arg1 []string, arg2 int, arg
 		arg11 int
 		arg12 string
 	}{arg1Copy, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12})
-	stub := fake.ListHardwareStub
-	fakeReturns := fake.listHardwareReturns
 	fake.recordInvocation("ListHardware", []interface{}{arg1Copy, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12})
 	fake.listHardwareMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12)
+	if fake.ListHardwareStub != nil {
+		return fake.ListHardwareStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.listHardwareReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2238,16 +2213,15 @@ func (fake *FakeHardwareServerManager) PlaceOrder(arg1 datatypes.Container_Produ
 	fake.placeOrderArgsForCall = append(fake.placeOrderArgsForCall, struct {
 		arg1 datatypes.Container_Product_Order
 	}{arg1})
-	stub := fake.PlaceOrderStub
-	fakeReturns := fake.placeOrderReturns
 	fake.recordInvocation("PlaceOrder", []interface{}{arg1})
 	fake.placeOrderMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.PlaceOrderStub != nil {
+		return fake.PlaceOrderStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.placeOrderReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -2302,16 +2276,15 @@ func (fake *FakeHardwareServerManager) PowerCycle(arg1 int) error {
 	fake.powerCycleArgsForCall = append(fake.powerCycleArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.PowerCycleStub
-	fakeReturns := fake.powerCycleReturns
 	fake.recordInvocation("PowerCycle", []interface{}{arg1})
 	fake.powerCycleMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.PowerCycleStub != nil {
+		return fake.PowerCycleStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.powerCycleReturns
 	return fakeReturns.result1
 }
 
@@ -2363,16 +2336,15 @@ func (fake *FakeHardwareServerManager) PowerOff(arg1 int) error {
 	fake.powerOffArgsForCall = append(fake.powerOffArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.PowerOffStub
-	fakeReturns := fake.powerOffReturns
 	fake.recordInvocation("PowerOff", []interface{}{arg1})
 	fake.powerOffMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.PowerOffStub != nil {
+		return fake.PowerOffStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.powerOffReturns
 	return fakeReturns.result1
 }
 
@@ -2424,16 +2396,15 @@ func (fake *FakeHardwareServerManager) PowerOn(arg1 int) error {
 	fake.powerOnArgsForCall = append(fake.powerOnArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.PowerOnStub
-	fakeReturns := fake.powerOnReturns
 	fake.recordInvocation("PowerOn", []interface{}{arg1})
 	fake.powerOnMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.PowerOnStub != nil {
+		return fake.PowerOnStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.powerOnReturns
 	return fakeReturns.result1
 }
 
@@ -2487,16 +2458,15 @@ func (fake *FakeHardwareServerManager) Reboot(arg1 int, arg2 bool, arg3 bool) er
 		arg2 bool
 		arg3 bool
 	}{arg1, arg2, arg3})
-	stub := fake.RebootStub
-	fakeReturns := fake.rebootReturns
 	fake.recordInvocation("Reboot", []interface{}{arg1, arg2, arg3})
 	fake.rebootMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3)
+	if fake.RebootStub != nil {
+		return fake.RebootStub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.rebootReturns
 	return fakeReturns.result1
 }
 
@@ -2557,16 +2527,15 @@ func (fake *FakeHardwareServerManager) Reload(arg1 int, arg2 string, arg3 []int,
 		arg4 bool
 		arg5 bool
 	}{arg1, arg2, arg3Copy, arg4, arg5})
-	stub := fake.ReloadStub
-	fakeReturns := fake.reloadReturns
 	fake.recordInvocation("Reload", []interface{}{arg1, arg2, arg3Copy, arg4, arg5})
 	fake.reloadMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4, arg5)
+	if fake.ReloadStub != nil {
+		return fake.ReloadStub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.reloadReturns
 	return fakeReturns.result1
 }
 
@@ -2618,16 +2587,15 @@ func (fake *FakeHardwareServerManager) Rescure(arg1 int) error {
 	fake.rescureArgsForCall = append(fake.rescureArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.RescureStub
-	fakeReturns := fake.rescureReturns
 	fake.recordInvocation("Rescure", []interface{}{arg1})
 	fake.rescureMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.RescureStub != nil {
+		return fake.RescureStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.rescureReturns
 	return fakeReturns.result1
 }
 
@@ -2680,16 +2648,15 @@ func (fake *FakeHardwareServerManager) ToggleIPMI(arg1 int, arg2 bool) error {
 		arg1 int
 		arg2 bool
 	}{arg1, arg2})
-	stub := fake.ToggleIPMIStub
-	fakeReturns := fake.toggleIPMIReturns
 	fake.recordInvocation("ToggleIPMI", []interface{}{arg1, arg2})
 	fake.toggleIPMIMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.ToggleIPMIStub != nil {
+		return fake.ToggleIPMIStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.toggleIPMIReturns
 	return fakeReturns.result1
 }
 
@@ -2735,7 +2702,7 @@ func (fake *FakeHardwareServerManager) ToggleIPMIReturnsOnCall(i int, result1 er
 	}{result1}
 }
 
-func (fake *FakeHardwareServerManager) UpdateFirmware(arg1 int, arg2 bool, arg3 bool, arg4 bool, arg5 bool) error {
+func (fake *FakeHardwareServerManager) UpdateFirmware(arg1 int, arg2 bool, arg3 bool, arg4 bool, arg5 bool, arg6 bool) error {
 	fake.updateFirmwareMutex.Lock()
 	ret, specificReturn := fake.updateFirmwareReturnsOnCall[len(fake.updateFirmwareArgsForCall)]
 	fake.updateFirmwareArgsForCall = append(fake.updateFirmwareArgsForCall, struct {
@@ -2744,17 +2711,17 @@ func (fake *FakeHardwareServerManager) UpdateFirmware(arg1 int, arg2 bool, arg3 
 		arg3 bool
 		arg4 bool
 		arg5 bool
-	}{arg1, arg2, arg3, arg4, arg5})
-	stub := fake.UpdateFirmwareStub
-	fakeReturns := fake.updateFirmwareReturns
-	fake.recordInvocation("UpdateFirmware", []interface{}{arg1, arg2, arg3, arg4, arg5})
+		arg6 bool
+	}{arg1, arg2, arg3, arg4, arg5, arg6})
+	fake.recordInvocation("UpdateFirmware", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
 	fake.updateFirmwareMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4, arg5)
+	if fake.UpdateFirmwareStub != nil {
+		return fake.UpdateFirmwareStub(arg1, arg2, arg3, arg4, arg5, arg6)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.updateFirmwareReturns
 	return fakeReturns.result1
 }
 
@@ -2764,17 +2731,17 @@ func (fake *FakeHardwareServerManager) UpdateFirmwareCallCount() int {
 	return len(fake.updateFirmwareArgsForCall)
 }
 
-func (fake *FakeHardwareServerManager) UpdateFirmwareCalls(stub func(int, bool, bool, bool, bool) error) {
+func (fake *FakeHardwareServerManager) UpdateFirmwareCalls(stub func(int, bool, bool, bool, bool, bool) error) {
 	fake.updateFirmwareMutex.Lock()
 	defer fake.updateFirmwareMutex.Unlock()
 	fake.UpdateFirmwareStub = stub
 }
 
-func (fake *FakeHardwareServerManager) UpdateFirmwareArgsForCall(i int) (int, bool, bool, bool, bool) {
+func (fake *FakeHardwareServerManager) UpdateFirmwareArgsForCall(i int) (int, bool, bool, bool, bool, bool) {
 	fake.updateFirmwareMutex.RLock()
 	defer fake.updateFirmwareMutex.RUnlock()
 	argsForCall := fake.updateFirmwareArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6
 }
 
 func (fake *FakeHardwareServerManager) UpdateFirmwareReturns(result1 error) {
@@ -2806,16 +2773,15 @@ func (fake *FakeHardwareServerManager) VerifyOrder(arg1 datatypes.Container_Prod
 	fake.verifyOrderArgsForCall = append(fake.verifyOrderArgsForCall, struct {
 		arg1 datatypes.Container_Product_Order
 	}{arg1})
-	stub := fake.VerifyOrderStub
-	fakeReturns := fake.verifyOrderReturns
 	fake.recordInvocation("VerifyOrder", []interface{}{arg1})
 	fake.verifyOrderMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.VerifyOrderStub != nil {
+		return fake.VerifyOrderStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.verifyOrderReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 

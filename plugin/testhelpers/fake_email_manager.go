@@ -21,17 +21,17 @@ type FakeEmailManager struct {
 	editObjectReturnsOnCall map[int]struct {
 		result1 error
 	}
-	GetAccountOverviewStub        func(int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error)
+	GetAccountOverviewStub        func(int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, error)
 	getAccountOverviewMutex       sync.RWMutex
 	getAccountOverviewArgsForCall []struct {
 		arg1 int
 	}
 	getAccountOverviewReturns struct {
-		result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview
+		result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account
 		result2 error
 	}
 	getAccountOverviewReturnsOnCall map[int]struct {
-		result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview
+		result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account
 		result2 error
 	}
 	GetInstanceStub        func(int, string) (datatypes.Network_Message_Delivery_Email_Sendgrid, error)
@@ -97,16 +97,15 @@ func (fake *FakeEmailManager) EditObject(arg1 int, arg2 datatypes.Network_Messag
 		arg1 int
 		arg2 datatypes.Network_Message_Delivery
 	}{arg1, arg2})
-	stub := fake.EditObjectStub
-	fakeReturns := fake.editObjectReturns
 	fake.recordInvocation("EditObject", []interface{}{arg1, arg2})
 	fake.editObjectMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.EditObjectStub != nil {
+		return fake.EditObjectStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.editObjectReturns
 	return fakeReturns.result1
 }
 
@@ -152,22 +151,21 @@ func (fake *FakeEmailManager) EditObjectReturnsOnCall(i int, result1 error) {
 	}{result1}
 }
 
-func (fake *FakeEmailManager) GetAccountOverview(arg1 int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error) {
+func (fake *FakeEmailManager) GetAccountOverview(arg1 int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, error) {
 	fake.getAccountOverviewMutex.Lock()
 	ret, specificReturn := fake.getAccountOverviewReturnsOnCall[len(fake.getAccountOverviewArgsForCall)]
 	fake.getAccountOverviewArgsForCall = append(fake.getAccountOverviewArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.GetAccountOverviewStub
-	fakeReturns := fake.getAccountOverviewReturns
 	fake.recordInvocation("GetAccountOverview", []interface{}{arg1})
 	fake.getAccountOverviewMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.GetAccountOverviewStub != nil {
+		return fake.GetAccountOverviewStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getAccountOverviewReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -177,7 +175,7 @@ func (fake *FakeEmailManager) GetAccountOverviewCallCount() int {
 	return len(fake.getAccountOverviewArgsForCall)
 }
 
-func (fake *FakeEmailManager) GetAccountOverviewCalls(stub func(int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error)) {
+func (fake *FakeEmailManager) GetAccountOverviewCalls(stub func(int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, error)) {
 	fake.getAccountOverviewMutex.Lock()
 	defer fake.getAccountOverviewMutex.Unlock()
 	fake.GetAccountOverviewStub = stub
@@ -190,28 +188,28 @@ func (fake *FakeEmailManager) GetAccountOverviewArgsForCall(i int) int {
 	return argsForCall.arg1
 }
 
-func (fake *FakeEmailManager) GetAccountOverviewReturns(result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, result2 error) {
+func (fake *FakeEmailManager) GetAccountOverviewReturns(result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, result2 error) {
 	fake.getAccountOverviewMutex.Lock()
 	defer fake.getAccountOverviewMutex.Unlock()
 	fake.GetAccountOverviewStub = nil
 	fake.getAccountOverviewReturns = struct {
-		result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview
+		result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeEmailManager) GetAccountOverviewReturnsOnCall(i int, result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, result2 error) {
+func (fake *FakeEmailManager) GetAccountOverviewReturnsOnCall(i int, result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, result2 error) {
 	fake.getAccountOverviewMutex.Lock()
 	defer fake.getAccountOverviewMutex.Unlock()
 	fake.GetAccountOverviewStub = nil
 	if fake.getAccountOverviewReturnsOnCall == nil {
 		fake.getAccountOverviewReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview
+			result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account
 			result2 error
 		})
 	}
 	fake.getAccountOverviewReturnsOnCall[i] = struct {
-		result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview
+		result1 datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account
 		result2 error
 	}{result1, result2}
 }
@@ -223,16 +221,15 @@ func (fake *FakeEmailManager) GetInstance(arg1 int, arg2 string) (datatypes.Netw
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
-	stub := fake.GetInstanceStub
-	fakeReturns := fake.getInstanceReturns
 	fake.recordInvocation("GetInstance", []interface{}{arg1, arg2})
 	fake.getInstanceMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.GetInstanceStub != nil {
+		return fake.GetInstanceStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -287,16 +284,15 @@ func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccounts(arg1 string) ([]
 	fake.getNetworkMessageDeliveryAccountsArgsForCall = append(fake.getNetworkMessageDeliveryAccountsArgsForCall, struct {
 		arg1 string
 	}{arg1})
-	stub := fake.GetNetworkMessageDeliveryAccountsStub
-	fakeReturns := fake.getNetworkMessageDeliveryAccountsReturns
 	fake.recordInvocation("GetNetworkMessageDeliveryAccounts", []interface{}{arg1})
 	fake.getNetworkMessageDeliveryAccountsMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.GetNetworkMessageDeliveryAccountsStub != nil {
+		return fake.GetNetworkMessageDeliveryAccountsStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getNetworkMessageDeliveryAccountsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -351,16 +347,15 @@ func (fake *FakeEmailManager) GetStatistics(arg1 int) ([]datatypes.Container_Net
 	fake.getStatisticsArgsForCall = append(fake.getStatisticsArgsForCall, struct {
 		arg1 int
 	}{arg1})
-	stub := fake.GetStatisticsStub
-	fakeReturns := fake.getStatisticsReturns
 	fake.recordInvocation("GetStatistics", []interface{}{arg1})
 	fake.getStatisticsMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
+	if fake.GetStatisticsStub != nil {
+		return fake.GetStatisticsStub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
+	fakeReturns := fake.getStatisticsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -416,16 +411,15 @@ func (fake *FakeEmailManager) UpdateEmail(arg1 int, arg2 string) error {
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
-	stub := fake.UpdateEmailStub
-	fakeReturns := fake.updateEmailReturns
 	fake.recordInvocation("UpdateEmail", []interface{}{arg1, arg2})
 	fake.updateEmailMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2)
+	if fake.UpdateEmailStub != nil {
+		return fake.UpdateEmailStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
+	fakeReturns := fake.updateEmailReturns
 	return fakeReturns.result1
 }
 

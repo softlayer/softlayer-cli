@@ -5,7 +5,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -42,7 +41,7 @@ func NewUpdateFirmwareCommand(sl *metadata.SoftlayerCommand) (cmd *UpdateFirmwar
 func (cmd *UpdateFirmwareCommand) Run(args []string) error {
 	hardwareId, err := strconv.Atoi(args[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Hardware server ID")
+		return errors.NewInvalidSoftlayerIdInputError("Hardware server ID")
 	}
 
 	if !cmd.ForceFlag {
@@ -56,7 +55,7 @@ func (cmd *UpdateFirmwareCommand) Run(args []string) error {
 		}
 	}
 
-	err = cmd.HardwareManager.UpdateFirmware(hardwareId, true, true, true, true)
+	err = cmd.HardwareManager.UpdateFirmware(hardwareId, true, true, true, true, true)
 	if err != nil {
 		return errors.NewAPIError(T("Failed to update firmware for hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
 	}
