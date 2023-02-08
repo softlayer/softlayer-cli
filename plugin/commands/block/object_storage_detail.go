@@ -45,13 +45,13 @@ func (cmd *ObjectStorageDetailCommand) Run(args []string) error {
 
 	networkStorageDetail, err := cmd.StorageManager.GetNetworkStorageDetail(storageID, "")
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get details of storage {{.StorageID}}.\n",
+		return slErr.NewAPIError(T("Failed to get details of storage {{.StorageID}}.",
 			map[string]interface{}{"StorageID": storageID}), err.Error(), 2)
 	}
 
 	bucket, err := cmd.StorageManager.GetBuckets(storageID)
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get bucket of storage {{.StorageID}}.\n",
+		return slErr.NewAPIError(T("Failed to get bucket of storage {{.StorageID}}.",
 			map[string]interface{}{"StorageID": storageID}), err.Error(), 2)
 	}
 
