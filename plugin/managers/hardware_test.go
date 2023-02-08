@@ -233,14 +233,14 @@ var _ = Describe("HardwareServerManager", func() {
 	Describe("UpdateFirmware", func() {
 		Context("UpdateFirmware succeed", func() {
 			It("it returns nil", func() {
-				err := hardwareManager.UpdateFirmware(123456, true, true, true, true)
+				err := hardwareManager.UpdateFirmware(123456, true, true, true, true, true)
 				Expect(err).NotTo(HaveOccurred())
 			})
 		})
 		Context("UpdateFirmware fails", func() {
 			It("it returns error", func() {
 				fakeHandler.AddApiError("SoftLayer_Hardware_Server", "createFirmwareUpdateTransaction", 500, "FAILED")
-				err := hardwareManager.UpdateFirmware(123456, true, true, true, true)
+				err := hardwareManager.UpdateFirmware(123456, true, true, true, true, true)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(Equal("FAILED: FAILED (HTTP 500)"))
 			})

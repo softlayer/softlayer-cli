@@ -39,19 +39,19 @@ var _ = Describe("Access Password", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires two arguments."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument."))
 			})
 		})
 		Context("Access password without password", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "124")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires two arguments."))
+				Expect(err.Error()).To(ContainSubstring(`required flag(s) "password" not set`))
 			})
 		})
 		Context("Access password with wrong hostId", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "password")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "--password", "abcdefg")
 				Expect(err).To(HaveOccurred())
 				Expect(strings.Contains(err.Error(), "Invalid input for 'allowed access host ID'. It must be a positive integer.")).To(BeTrue())
 			})
@@ -61,7 +61,7 @@ var _ = Describe("Access Password", func() {
 				FakeStorageManager.SetCredentialPasswordReturns(errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "password")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--password", "abcdefg")
 				Expect(err).To(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("OK"))
 				Expect(strings.Contains(err.Error(), "Failed to set password for host 1234.")).To(BeTrue())
@@ -73,7 +73,7 @@ var _ = Describe("Access Password", func() {
 				FakeStorageManager.SetCredentialPasswordReturns(nil)
 			})
 			It("succeed", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "password")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--password", "abcdefg")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Password is updated for host 1234."))

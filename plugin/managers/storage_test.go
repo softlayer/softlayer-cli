@@ -282,7 +282,7 @@ var _ = Describe("StorageManager", func() {
 	Describe("VolumeRefresh", func() {
 		Context("VolumeRefresh test", func() {
 			It("Return no error", func() {
-				err := StorageManager.VolumeRefresh(1234, 4567)
+				err := StorageManager.VolumeRefresh(1234, 4567, false)
 				Expect(err).ToNot(HaveOccurred())
 			})
 		})

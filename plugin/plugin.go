@@ -20,7 +20,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/autoscale"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/callapi"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
@@ -108,7 +107,6 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 func Namespaces() []plugin.Namespace {
 	return []plugin.Namespace{
 		metadata.SoftlayerNamespace(),
-		autoscale.AutoScaleNamespace(),
 		block.BlockNamespace(),
 		file.FileNamespace(),
 		cdn.CdnNamespace(),
@@ -236,7 +234,6 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 
 	// Commands
 	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand).Command) // single command
-	cobraCmd.AddCommand(autoscale.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(account.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(email.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(image.SetupCobraCommands(slCommand))

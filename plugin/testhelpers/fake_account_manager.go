@@ -9,6 +9,19 @@ import (
 )
 
 type FakeAccountManager struct {
+	AckEventStub        func(int) (bool, error)
+	ackEventMutex       sync.RWMutex
+	ackEventArgsForCall []struct {
+		arg1 int
+	}
+	ackEventReturns struct {
+		result1 bool
+		result2 error
+	}
+	ackEventReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	CancelItemStub        func(int) error
 	cancelItemMutex       sync.RWMutex
 	cancelItemArgsForCall []struct {
@@ -211,6 +224,70 @@ type FakeAccountManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeAccountManager) AckEvent(arg1 int) (bool, error) {
+	fake.ackEventMutex.Lock()
+	ret, specificReturn := fake.ackEventReturnsOnCall[len(fake.ackEventArgsForCall)]
+	fake.ackEventArgsForCall = append(fake.ackEventArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.AckEventStub
+	fakeReturns := fake.ackEventReturns
+	fake.recordInvocation("AckEvent", []interface{}{arg1})
+	fake.ackEventMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) AckEventCallCount() int {
+	fake.ackEventMutex.RLock()
+	defer fake.ackEventMutex.RUnlock()
+	return len(fake.ackEventArgsForCall)
+}
+
+func (fake *FakeAccountManager) AckEventCalls(stub func(int) (bool, error)) {
+	fake.ackEventMutex.Lock()
+	defer fake.ackEventMutex.Unlock()
+	fake.AckEventStub = stub
+}
+
+func (fake *FakeAccountManager) AckEventArgsForCall(i int) int {
+	fake.ackEventMutex.RLock()
+	defer fake.ackEventMutex.RUnlock()
+	argsForCall := fake.ackEventArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) AckEventReturns(result1 bool, result2 error) {
+	fake.ackEventMutex.Lock()
+	defer fake.ackEventMutex.Unlock()
+	fake.AckEventStub = nil
+	fake.ackEventReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) AckEventReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.ackEventMutex.Lock()
+	defer fake.ackEventMutex.Unlock()
+	fake.AckEventStub = nil
+	if fake.ackEventReturnsOnCall == nil {
+		fake.ackEventReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.ackEventReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) CancelItem(arg1 int) error {
@@ -1166,6 +1243,8 @@ func (fake *FakeAccountManager) SummaryByDatacenterReturnsOnCall(i int, result1 
 func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.ackEventMutex.RLock()
+	defer fake.ackEventMutex.RUnlock()
 	fake.cancelItemMutex.RLock()
 	defer fake.cancelItemMutex.RUnlock()
 	fake.getAccountAllBillingOrdersMutex.RLock()

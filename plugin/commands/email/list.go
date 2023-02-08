@@ -65,15 +65,15 @@ func (cmd *ListCommand) Run(args []string) error {
 		T("Vendor"),
 	})
 
-	overviewTable := terminal.NewTable(bufOverview, []string{
-		T("Credit allowed"),
-		T("Credits remain"),
-		T("Credits overage"),
-		T("Credits used"),
-		T("Package"),
-		T("Reputation"),
-		T("Requests"),
-	})
+	// overviewTable := terminal.NewTable(bufOverview, []string{
+	// 	T("Credit allowed"),
+	// 	T("Credits remain"),
+	// 	T("Credits overage"),
+	// 	T("Credits used"),
+	// 	T("Package"),
+	// 	T("Reputation"),
+	// 	T("Requests"),
+	// })
 
 	statisticsTable := terminal.NewTable(bufStatistics, []string{
 		T("Delivered"),
@@ -92,11 +92,11 @@ func (cmd *ListCommand) Run(args []string) error {
 			utils.FormatStringPointer(email.Vendor.KeyName),
 		)
 
-		accountOverview, err := cmd.EmailManager.GetAccountOverview(*email.Id)
-		if err != nil {
-			return errors.NewAPIError(T("Failed to get Account Overview."), err.Error(), 2)
-		}
-		PrintAccountOverview(accountOverview, overviewTable, cmd.UI, outputFormat)
+		// accountOverview, err := cmd.EmailManager.GetAccountOverview(*email.Id)
+		// if err != nil {
+		// 	return errors.NewAPIError(T("Failed to get Account Overview."), err.Error(), 2)
+		// }
+		// PrintAccountOverview(accountOverview, overviewTable, cmd.UI, outputFormat)
 
 		statistics, err := cmd.EmailManager.GetStatistics(*email.Id)
 		if err != nil {
@@ -126,8 +126,9 @@ func (cmd *ListCommand) Run(args []string) error {
 
 	return nil
 }
+/*
 
-func PrintAccountOverview(accountOverview datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, overviewTable terminal.Table, ui terminal.UI, outputFormat string) {
+func PrintAccountOverview(accountOverview datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, overviewTable terminal.Table, ui terminal.UI, outputFormat string) {
 
 	overviewTable.Add(
 		utils.FormatIntPointer(accountOverview.CreditsAllowed),
@@ -141,6 +142,7 @@ func PrintAccountOverview(accountOverview datatypes.Container_Network_Message_De
 	utils.PrintTable(ui, overviewTable, outputFormat)
 }
 
+*/
 func PrintStatistics(statistic datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics, statisticsTable terminal.Table, ui terminal.UI, outputFormat string) {
 	statisticsTable.Add(
 		utils.FormatIntPointer(statistic.Delivered),

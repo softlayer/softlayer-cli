@@ -28,7 +28,7 @@ func NewAccessListCommand(sl *metadata.SoftlayerStorageCommand) *AccessListComma
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "access-list " + T("IDENTIFIER"),
-		Short: T("List hosts that are authorized to access the volume"),
+		Short: T("List hosts that are authorized to access the volume."),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
@@ -39,8 +39,8 @@ EXAMPLE:
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "id", T("Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id"))
-	cobraCmd.Flags().StringSliceVar(&thisCmd.UserColumn, "column", []string{}, T("Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times"))
+	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "id", T("Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."))
+	cobraCmd.Flags().StringSliceVar(&thisCmd.UserColumn, "column", []string{}, T("Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times."))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }

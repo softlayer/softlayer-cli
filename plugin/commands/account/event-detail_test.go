@@ -48,7 +48,7 @@ var _ = Describe("Account list EventDetail", func() {
 
 		Context("Account events, correct use", func() {
 			It("return account events", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--ack")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ACTION REQUIRED - Windows"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Id       Status      Type           Start   End"))

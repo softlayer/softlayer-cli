@@ -18,6 +18,7 @@ type AccountManager interface {
 	GetBillingItems(mask string) ([]datatypes.Billing_Item, error)
 	GetEvents(typeEvent string, mask string, dateFilter string) ([]datatypes.Notification_Occurrence_Event, error)
 	GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error)
+	AckEvent(identifier int) (bool, error)
 	GetInvoiceDetail(identifier int, mask string) ([]datatypes.Billing_Invoice_Item, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 	CancelItem(identifier int) error
@@ -41,10 +42,10 @@ func NewAccountManager(session *session.Session) *accountManager {
 	}
 }
 
-//Summary of the networks on the account, grouped by data center.
-//returns a map, the key of the map is datacenter name, the value of the map is another map
-//the keys of the inner map are: vlan_count, public_ip_count, subnet_count, hardware_count, virtual_guest_count
-//the value of the innter map are the count of those resources
+// Summary of the networks on the account, grouped by data center.
+// returns a map, the key of the map is datacenter name, the value of the map is another map
+// the keys of the inner map are: vlan_count, public_ip_count, subnet_count, hardware_count, virtual_guest_count
+// the value of the innter map are the count of those resources
 func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
 	datacenters := make(map[string](map[string]int))
 	vlans, err := a.AccountService.Mask(DEFAULT_VLAN_MASK).GetNetworkVlans()
@@ -196,6 +197,16 @@ func (a accountManager) GetEventDetail(identifier int, mask string) (datatypes.N
 		return datatypes.Notification_Occurrence_Event{}, err
 	}
 	return resourceList, err
+}
+
+/*
+Acknowledge Event. Doing so will turn off the popup in the control portal
+https://sldn.softlayer.com/reference/services/SoftLayer_Notification_Occurrence_Event/acknowledgeNotification/
+*/
+func (a accountManager) AckEvent(identifier int) (bool, error) {
+	NotificationOccurrenceEventService := services.GetNotificationOccurrenceEventService(a.Session)
+
+	return NotificationOccurrenceEventService.Id(identifier).AcknowledgeNotification()
 }
 
 /*

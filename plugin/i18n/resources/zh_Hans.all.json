@@ -8,10 +8,6 @@
     "translation": " 容量密钥名称（例如C1_2X2_1_YEAR_TERM）。[必需]"
   },
   {
-    "id": " Disk ",
-    "translation": " 磁盘 "
-  },
-  {
     "id": " Do not actually create the reserved capacity",
     "translation": " 实际不创建保留容量"
   },
@@ -440,10 +436,6 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS] \n \n 示例：\n ${COMMAND_NAME} sl vs migrate -- guest 1234567\n 管理需要迁移的 VSI。 也可以将专用实例从一个专用主机迁移到另一个专用主机。"
   },
   {
-    "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS] \n 示例：\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \n 此命令订购名为 myvsi、backendRouterId 为 1234567 以及规则为 258369 的放置组实例"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
     "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\n示例：\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   此命令检查标识为 12345678 的虚拟服务器实例的状态以确定它是否准备就绪可持续使用，并且最长等待 30 秒。"
   },
@@ -470,10 +462,6 @@
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n此命令列出所有有权访问标识为 12345678 的卷的主机，并按标识对它们进行排序。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID PASSWORD\n\n ACCESS_ID 是来自“${COMMAND_NAME} sl {{.storageType}} access-list”的 allowed_host_id"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -912,10 +900,6 @@
     "translation": "活动转换开始时间戳记"
   },
   {
-    "id": "Active Guests",
-    "translation": "活动访客"
-  },
-  {
     "id": "Add a new L7 policy",
     "translation": "添加新的 L7 策略"
   },
@@ -1114,10 +1098,6 @@
   {
     "id": "Authorize hosts  to access a given volume",
     "translation": "授权主机访问给定卷"
-  },
-  {
-    "id": "Auto Scale Group was deleted successfully",
-    "translation": "已成功删除自动缩放组"
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1476,10 +1456,6 @@
     "translation": "更改辅助子网的路由方式。"
   },
   {
-    "id": "Changes a password for a volume's access",
-    "translation": "更改卷访问的密码"
-  },
-  {
     "id": "Check if a virtual server instance is ready for use",
     "translation": "检查虚拟服务器实例是否已准备就绪随时可用"
   },
@@ -1490,10 +1466,6 @@
   {
     "id": "Classic infrastructure Account commands",
     "translation": "经典基础架构帐户命令"
-  },
-  {
-    "id": "Classic infrastructure Autoscale Group",
-    "translation": "经典基础架构自动缩放组"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1632,10 +1604,6 @@
     "translation": "要显示的列。选项为：id、hostname、domain、cpu、memory、public_ip、private_ip、datacenter、action、guid、power_state、created_by 或 tags。此选项可以多次指定"
   },
   {
-    "id": "Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times",
-    "translation": "要显示的列。选项为：id、name、type、private_ip_address、source_subnet、host_iqn、username、password 或 allowed_host_id。此选项可以多次指定"
-  },
-  {
     "id": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times",
     "translation": "要显示的列。 选项为：id、username、datacenter、storage_type、capacity_gb、bytes_used、IOPS、ip_addr、lunId、created_by、active_transactions、rep_partner_count 或 notes。 此选项可以多次指定"
   },
@@ -1692,10 +1660,6 @@
     "translation": "要作为排序依据的列。选项为：id、name、description 或 created"
   },
   {
-    "id": "Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id",
-    "translation": "要作为排序依据的列。选项为：id、name、type、private_ip_address、source_subnet、host_iqn、username、password 或 allowed_host_id"
-  },
-  {
     "id": "Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips",
     "translation": "要作为排序依据的列。选项为：id、number、name、firewall、datacenter、hardware、virtual_servers 或 public_ips"
   },
@@ -1742,14 +1706,6 @@
   {
     "id": "Convert a dependent duplicate volume to an independent volume.",
     "translation": "将从属的重复卷转换为独立卷。"
-  },
-  {
-    "id": "Cooldown",
-    "translation": "降温"
-  },
-  {
-    "id": "Core",
-    "translation": "Core"
   },
   {
     "id": "Cost",
@@ -1984,10 +1940,6 @@
     "translation": "跨区域"
   },
   {
-    "id": "Current Members",
-    "translation": "当前成员"
-  },
-  {
     "id": "Current Usage",
     "translation": "当前使用量"
   },
@@ -2114,10 +2066,6 @@
   {
     "id": "Delete the given security group",
     "translation": "删除给定的安全组"
-  },
-  {
-    "id": "Delete this group and destroy all members of it",
-    "translation": "删除此组并销毁它的所有成员"
   },
   {
     "id": "Delivered",
@@ -2322,10 +2270,6 @@
   {
     "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
     "translation": "示例： \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    此命令为 VSI 设置一个报价，其具有 4 个 CPU、16 GB RAM、100 GB SAN 磁盘、Ubuntu 16.04，以及数据中心 dal13 中的 1 Gbps 公共和专用上行链路"
-  },
-  {
-    "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
-    "translation": "检索 [YYYY-MM-DD] 事件的最早日期。"
   },
   {
     "id": "Edit SSL certificate",
@@ -2816,10 +2760,6 @@
     "translation": "未能创建放置组"
   },
   {
-    "id": "Failed to create placement group\n",
-    "translation": "未能创建放置组\n"
-  },
-  {
     "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n",
     "translation": "未能在专区 {{.Zone}} 下创建资源记录：类型={{.RecordType}}，记录={{.Host}}，数据={{.Data}}，ttl={{.Ttl}}。\n"
   },
@@ -2858,10 +2798,6 @@
   {
     "id": "Failed to decoded the note.\n",
     "translation": "未能对注释进行解码。\n"
-  },
-  {
-    "id": "Failed to delete AutoScale Group.",
-    "translation": "未能删除 AutoScale 组。"
   },
   {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
@@ -3020,10 +2956,6 @@
     "translation": "未能获取帐户概述。"
   },
   {
-    "id": "Failed to get AutoScale group.",
-    "translation": "未能获取 AutoScale 组。"
-  },
-  {
     "id": "Failed to get Bandwidth Pool.",
     "translation": "未能获取带宽池。"
   },
@@ -3114,10 +3046,6 @@
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
     "translation": "未能获取 SSH 密钥 {{.KeyID}}。\n"
-  },
-  {
-    "id": "Failed to get SSH key.",
-    "translation": "无法获取 SSH 密钥。"
   },
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
@@ -3366,10 +3294,6 @@
   {
     "id": "Failed to get rules of security group {{.GroupID}}.\n",
     "translation": "未能获取安全组 {{.GroupID}} 的规则。\n"
-  },
-  {
-    "id": "Failed to get scale groups.",
-    "translation": "未能获取缩放组。"
   },
   {
     "id": "Failed to get security group {{.GroupID}}.\n",
@@ -4420,10 +4344,6 @@
     "translation": "获取事件日志"
   },
   {
-    "id": "Get List options for creating a placement group..",
-    "translation": "获取用于创建放置组的列表选项。"
-  },
-  {
     "id": "Get Netscaler details.",
     "translation": "获取 Netscaler 详细信息。"
   },
@@ -4484,20 +4404,12 @@
     "translation": "获取子网的详细信息"
   },
   {
-    "id": "Get details of an Autoscale group.",
-    "translation": "获取自动缩放组的详细信息。"
-  },
-  {
     "id": "Get information about the resources using the selected tag.",
     "translation": "获取使用所选标记的资源的相关信息。"
   },
   {
     "id": "Get load balancer details",
     "translation": "获取负载均衡器详细信息"
-  },
-  {
-    "id": "Get placement Group details.",
-    "translation": "获取放置组详细信息。"
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
@@ -4692,14 +4604,6 @@
     "translation": "每小时"
   },
   {
-    "id": "How many invoices to get back. [default: 50]",
-    "translation": "要退回多少张发票。 [缺省值：50]"
-  },
-  {
-    "id": "How many results to get in one api call. [default: 50]",
-    "translation": "要在一个 API 调用中获取的结果数。[缺省值：50]"
-  },
-  {
     "id": "Http Port",
     "translation": "HTTP 端口"
   },
@@ -4882,10 +4786,6 @@
   {
     "id": "Include extra resources. Options are: at,is,rs,sr,ss",
     "translation": "包含额外资源。选项为：at、is、rs、sr 或 ss"
-  },
-  {
-    "id": "Include invoices with a CLOSED status. [default: False]",
-    "translation": "包含处于 CLOSED 状态的发票。 [缺省值：False]"
   },
   {
     "id": "Incorrect Usage",
@@ -5140,10 +5040,6 @@
     "translation": "标签"
   },
   {
-    "id": "Last Action",
-    "translation": "上一个操作"
-  },
-  {
     "id": "Last Edited",
     "translation": "上次编辑时间"
   },
@@ -5234,10 +5130,6 @@
   {
     "id": "List active load balancers",
     "translation": "列出活动负载均衡器"
-  },
-  {
-    "id": "List all Autoscale Groups on your account",
-    "translation": "列出帐户上的所有自动缩放组"
   },
   {
     "id": "List all CDN accounts.",
@@ -5340,20 +5232,12 @@
     "translation": "列出硬件服务器"
   },
   {
-    "id": "List hosts that are authorized to access the volume",
-    "translation": "列出有权访问卷的主机"
-  },
-  {
     "id": "List information about devices using the tag.",
     "translation": "列出使用该标记的设备的相关信息。"
   },
   {
     "id": "List interfaces associated with security group",
     "translation": "列出与安全组关联的接口"
-  },
-  {
-    "id": "List invoices",
-    "translation": "列出发票"
   },
   {
     "id": "List l7 rules",
@@ -5410,10 +5294,6 @@
   {
     "id": "List placement groups",
     "translation": "列出放置组"
-  },
-  {
-    "id": "List placement groups.",
-    "translation": "列出放置组。"
   },
   {
     "id": "List security group rules",
@@ -5520,10 +5400,6 @@
     "translation": "最大 IOPS"
   },
   {
-    "id": "Maximum Members",
-    "translation": "最大成员数"
-  },
-  {
     "id": "Maximum number of connections to allow",
     "translation": "允许的最大连接数"
   },
@@ -5584,14 +5460,6 @@
     "translation": "最小 IOPS"
   },
   {
-    "id": "Min/Max",
-    "translation": "最小值/最大值"
-  },
-  {
-    "id": "Minimum Members",
-    "translation": "最小成员数"
-  },
-  {
     "id": "Minute of the hour when snapshots should be taken, integer between 0 to 59",
     "translation": "应该生成快照的分钟，值为整数 0 到 59"
   },
@@ -5626,10 +5494,6 @@
   {
     "id": "Multiple users found with the name: %s",
     "translation": "找到名称为 %s 的多个用户"
-  },
-  {
-    "id": "Must provide [--cpu], [--memory], [--network] or [--flavor] to upgrade.",
-    "translation": "必须提供 [--cpu]、[--memory]、[--network] 或 [--flavor] 才能升级。"
   },
   {
     "id": "Must set either -n|--network-component or both -s|--server and -i|--interface",
@@ -5690,14 +5554,6 @@
   {
     "id": "Network Identifier",
     "translation": "网络标识"
-  },
-  {
-    "id": "Network Type",
-    "translation": "网络类型"
-  },
-  {
-    "id": "Network Vlans",
-    "translation": "网络 Vlan"
   },
   {
     "id": "Network component {{.ComponentID}} is added to security group {{.GroupID}}.",
@@ -6180,10 +6036,6 @@
     "translation": "PACKAGE_KEYNAME"
   },
   {
-    "id": "PASSWORD",
-    "translation": "PASSWORD"
-  },
-  {
     "id": "PLACEMENTGROUP_ID",
     "translation": "PLACEMENTGROUP_ID"
   },
@@ -6416,14 +6268,6 @@
     "translation": "Pod"
   },
   {
-    "id": "Policies",
-    "translation": "策略"
-  },
-  {
-    "id": "Policy",
-    "translation": "策略"
-  },
-  {
     "id": "Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS",
     "translation": "策略操作：REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
   },
@@ -6454,10 +6298,6 @@
   {
     "id": "Port speed[required]",
     "translation": "端口速度 [必需]"
-  },
-  {
-    "id": "Post Install",
-    "translation": "安装后"
   },
   {
     "id": "Post-install script to download",
@@ -6728,10 +6568,6 @@
     "translation": "RULE_ID"
   },
   {
-    "id": "Ram",
-    "translation": "RAM"
-  },
-  {
     "id": "Read Failure: {{.Error}}.\n",
     "translation": "读取失败：{{.Error}}。\n"
   },
@@ -6980,10 +6816,6 @@
     "translation": "检索用于生成 AWS 签名的凭证。 最大值为 2。"
   },
   {
-    "id": "Return ALL invoices. There may be a lot of these. [default: False]",
-    "translation": "返回所有发票。 这其中可能有很多。 [缺省值：False]"
-  },
-  {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
     "translation": "撤销对访问特定卷的主机的授权"
   },
@@ -7040,20 +6872,12 @@
     "translation": "请运行“{{.CommandName}} sl hardware list --order {{.OrderID}}”以在此硬件服务器就绪时查找此硬件服务器。"
   },
   {
-    "id": "Running",
-    "translation": "正在运行"
-  },
-  {
     "id": "SECURITYGROUP_ID",
     "translation": "SECURITYGROUP_ID"
   },
   {
     "id": "SNAPSHOT_ID",
     "translation": "SNAPSHOT_ID"
-  },
-  {
-    "id": "SSH Key ",
-    "translation": "SSH 密钥 (SSH Key) "
   },
   {
     "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
@@ -7568,10 +7392,6 @@
     "translation": "已成功发送切换硬件服务器“{{.ID}}”IPMI 接口的请求。"
   },
   {
-    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events",
-    "translation": "即将进行的和正在进行的维护事件的摘要和确认"
-  },
-  {
     "id": "Summary info about tickets",
     "translation": "有关凭单的摘要信息"
   },
@@ -7670,10 +7490,6 @@
   {
     "id": "Template file: {{.Location}} does not exist.",
     "translation": "模板文件 {{.Location}} 不存在。"
-  },
-  {
-    "id": "Termination",
-    "translation": "终止"
   },
   {
     "id": "Test order",
@@ -8208,10 +8024,6 @@
     "translation": "这将取消专用主机中的所有虚拟服务器实例：{{.HostID}}，此操作无法撤销。 继续吗？"
   },
   {
-    "id": "This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?",
-    "translation": "这将取消“自动缩放组”实例：{{.autoScaleGroupId}} 及其所有成员，此操作无法撤销。 继续吗？"
-  },
-  {
     "id": "This will cancel the IP address: {{.ID}} and cannot be undone. Continue?",
     "translation": "这将取消 IP 地址 {{.ID}}，并且无法撤销。要继续吗？"
   },
@@ -8398,10 +8210,6 @@
   {
     "id": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]",
     "translation": "要返回的结果总数。-1 表示返回全部，可能存在这些值的 LOT。[缺省值：50]"
-  },
-  {
-    "id": "Transaction",
-    "translation": "事务"
   },
   {
     "id": "True",
@@ -8760,10 +8568,6 @@
     "translation": "虚拟访客标识"
   },
   {
-    "id": "Virtual Guest Member Template",
-    "translation": "虚拟访客成员模板"
-  },
-  {
     "id": "Virtual guest domain name not found.",
     "translation": "找不到虚拟访客域名。"
   },
@@ -8826,10 +8630,6 @@
   {
     "id": "Vlan",
     "translation": "VLAN"
-  },
-  {
-    "id": "Vlan Name",
-    "translation": "vLAN 名称"
   },
   {
     "id": "Vlan ids",
@@ -9344,10 +9144,6 @@
     "translation": "上次交易"
   },
   {
-    "id": "lists bandwidth pools",
-    "translation": "列出带宽池"
-  },
-  {
     "id": "maximum_snapshots",
     "translation": "maximum_snapshots"
   },
@@ -9378,10 +9174,6 @@
   {
     "id": "network space",
     "translation": "network space"
-  },
-  {
-    "id": "network_space",
-    "translation": "network_space"
   },
   {
     "id": "none",
@@ -9640,16 +9432,8 @@
     "translation": "virtual servers"
   },
   {
-    "id": "virtual_servers",
-    "translation": "virtual_servers"
-  },
-  {
     "id": "visibility",
     "translation": "visibility"
-  },
-  {
-    "id": "vlan_id",
-    "translation": "vlan_id"
   },
   {
     "id": "vs_id",
