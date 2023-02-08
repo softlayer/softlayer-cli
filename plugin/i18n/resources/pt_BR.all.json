@@ -1224,10 +1224,6 @@
     "translation": "O volume de bloco {{.VolumeId}} está relatando o ID de LUN {{.LunID}}."
   },
   {
-    "id": "Bounces",
-    "translation": "Devoluções"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "Não foi possível fechar o arquivo de buffer: {{.Error}}.\n"
   },
@@ -1572,10 +1568,6 @@
     "translation": "Grupos de segurança de rede da infraestrutura clássica"
   },
   {
-    "id": "Clicks",
-    "translation": "Cliques"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "Configuração do tempo limite do lado do cliente, em segundos"
   },
@@ -1792,6 +1784,10 @@
     "translation": "Counter"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "cpu (alocada/total)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "Contagem de CPU"
   },
@@ -1910,22 +1906,6 @@
   {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "Credencial: {{.credentialID}} foi excluído."
-  },
-  {
-    "id": "Credit allowed",
-    "translation": "Crédito permitido"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "Créditos excedentes"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "Créditos remanescentes"
-  },
-  {
-    "id": "Credits used",
-    "translation": "Créditos utilizados"
   },
   {
     "id": "Critical Max",
@@ -2068,10 +2048,6 @@
     "translation": "Excluir o grupo de segurança especificado"
   },
   {
-    "id": "Delivered",
-    "translation": "Entregue"
-  },
-  {
     "id": "Description",
     "translation": "Descrição"
   },
@@ -2138,6 +2114,10 @@
   {
     "id": "Disk",
     "translation": "Disco"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "disco (alocado/total)"
   },
   {
     "id": "Disk Capacity",
@@ -3050,10 +3030,6 @@
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "Falha ao obter certificado SSL: {{.ID}}.\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "Falha ao obter Estatísticas."
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -5424,6 +5400,10 @@
     "translation": "Memória"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "memória (alocada/total)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "Capacidade da memória"
   },
@@ -5834,10 +5814,6 @@
   {
     "id": "OpenID",
     "translation": "OpenID"
-  },
-  {
-    "id": "Opens",
-    "translation": "Abre"
   },
   {
     "id": "Operating System Code",
@@ -6764,10 +6740,6 @@
     "translation": "Solicitar configuração de um contexto de túnel"
   },
   {
-    "id": "Requests",
-    "translation": "Solicitações"
-  },
-  {
     "id": "Required User",
     "translation": "Usuário requerido"
   },
@@ -7226,10 +7198,6 @@
   {
     "id": "Software",
     "translation": "Software"
-  },
-  {
-    "id": "Spam reports",
-    "translation": "Relatórios de spam"
   },
   {
     "id": "Specifies if image is bring your own license",
@@ -8912,10 +8880,6 @@
     "translation": "cost"
   },
   {
-    "id": "cpu (allocated/total)",
-    "translation": "cpu (alocada/total)"
-  },
-  {
     "id": "cpu cores",
     "translation": "núcleos da cpu"
   },
@@ -8990,10 +8954,6 @@
   {
     "id": "device",
     "translation": "dispositivo"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "disco (alocado/total)"
   },
   {
     "id": "disk_guest",
@@ -9072,10 +9032,6 @@
     "translation": "identificador global"
   },
   {
-    "id": "guests",
-    "translation": "guests"
-  },
-  {
     "id": "guid",
     "translation": "guid"
   },
@@ -9150,10 +9106,6 @@
   {
     "id": "memory",
     "translation": "memória"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "memória (alocada/total)"
   },
   {
     "id": "minute",
@@ -9298,10 +9250,6 @@
   {
     "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
     "translation": "requer pelo menos {{.Limit}} argumentos, recebido apenas {{.Args}}"
-  },
-  {
-    "id": "router",
-    "translation": "roteador"
   },
   {
     "id": "routers",

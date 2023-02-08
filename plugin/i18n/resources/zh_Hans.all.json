@@ -1224,10 +1224,6 @@
     "translation": "块卷 {{.VolumeId}} 正在报告 LUN 标识 {{.LunID}}。"
   },
   {
-    "id": "Bounces",
-    "translation": "拒绝数"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "无法关闭缓冲区文件：{{.Error}}。\n"
   },
@@ -1572,10 +1568,6 @@
     "translation": "经典基础架构网络安全组"
   },
   {
-    "id": "Clicks",
-    "translation": "点击数"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "客户机端超时设置（以秒计）"
   },
@@ -1792,6 +1784,10 @@
     "translation": "计数器"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "Cpu (allocated/total)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "CPU 计数"
   },
@@ -1910,22 +1906,6 @@
   {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "已删除凭证：{{.credentialID}}。"
-  },
-  {
-    "id": "Credit allowed",
-    "translation": "允许信用值"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "超出的信用值"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "剩余信用值"
-  },
-  {
-    "id": "Credits used",
-    "translation": "已用信用值"
   },
   {
     "id": "Critical Max",
@@ -2068,10 +2048,6 @@
     "translation": "删除给定的安全组"
   },
   {
-    "id": "Delivered",
-    "translation": "已交付"
-  },
-  {
     "id": "Description",
     "translation": "描述"
   },
@@ -2138,6 +2114,10 @@
   {
     "id": "Disk",
     "translation": "磁盘"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "Disk (allocated/total)"
   },
   {
     "id": "Disk Capacity",
@@ -3050,10 +3030,6 @@
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "未能获取 SSH 证书：{{.ID}}。\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "未能获取统计信息。"
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -5424,6 +5400,10 @@
     "translation": "内存"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "Memory (allocated/total)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "内存容量"
   },
@@ -5834,10 +5814,6 @@
   {
     "id": "OpenID",
     "translation": "OpenID"
-  },
-  {
-    "id": "Opens",
-    "translation": "打开数"
   },
   {
     "id": "Operating System Code",
@@ -6764,10 +6740,6 @@
     "translation": "请求隧道上下文的配置"
   },
   {
-    "id": "Requests",
-    "translation": "请求数"
-  },
-  {
     "id": "Required User",
     "translation": "必需的用户"
   },
@@ -7226,10 +7198,6 @@
   {
     "id": "Software",
     "translation": "软件"
-  },
-  {
-    "id": "Spam reports",
-    "translation": "垃圾邮件报告数"
   },
   {
     "id": "Specifies if image is bring your own license",
@@ -8912,10 +8880,6 @@
     "translation": "cost"
   },
   {
-    "id": "cpu (allocated/total)",
-    "translation": "cpu (allocated/total)"
-  },
-  {
     "id": "cpu cores",
     "translation": "cpu cores"
   },
@@ -8990,10 +8954,6 @@
   {
     "id": "device",
     "translation": "device"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "disk (allocated/total)"
   },
   {
     "id": "disk_guest",
@@ -9072,10 +9032,6 @@
     "translation": "global_identifier"
   },
   {
-    "id": "guests",
-    "translation": "guests"
-  },
-  {
     "id": "guid",
     "translation": "guid"
   },
@@ -9150,10 +9106,6 @@
   {
     "id": "memory",
     "translation": "memory"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "memory (allocated/total)"
   },
   {
     "id": "minute",
@@ -9298,10 +9250,6 @@
   {
     "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
     "translation": "至少需要 {{.Limit}} 个参数，仅收到 {{.Args}} 个"
-  },
-  {
-    "id": "router",
-    "translation": "router"
   },
   {
     "id": "routers",
