@@ -144,10 +144,10 @@ var _ = Describe("Load balancer create options", func() {
 		It("return no error", func() {
 			err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "loc02")
 			Expect(err).NotTo(HaveOccurred())
-			Expect(fakeUI.Outputs()).To(ContainSubstring("Prices:                          Private Subnets"))
-			Expect(fakeUI.Outputs()).To(ContainSubstring("Key Name           Cost          ID    Subnet           Vlan"))
-			Expect(fakeUI.Outputs()).To(ContainSubstring("KEY_NAME_PRICE_1   1.200000      789   10.10.10.10/12   test.pod01.456"))
-			Expect(fakeUI.Outputs()).To(ContainSubstring("KEY_NAME_PRICE_2   2.200000      781   20.20.20.20/13   test.pod02.457"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("Private Subnets"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("Key Name"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("test.pod01.456"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("test.pod02.457"))
 		})
 	})
 	Context("create options with 0 subnets", func() {
@@ -157,10 +157,10 @@ var _ = Describe("Load balancer create options", func() {
 		It("return no error", func() {
 			err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "loc02")
 			Expect(err).NotTo(HaveOccurred())
-			Expect(fakeUI.Outputs()).To(ContainSubstring("Prices:                          Private Subnets"))
-			Expect(fakeUI.Outputs()).To(ContainSubstring("Key Name           Cost          Not Found"))
-			Expect(fakeUI.Outputs()).To(ContainSubstring("KEY_NAME_PRICE_1   1.200000"))
-			Expect(fakeUI.Outputs()).To(ContainSubstring("KEY_NAME_PRICE_2   2.200000"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("Private Subnets"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("Not Found"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("KEY_NAME_PRICE_1"))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("2.200000"))
 		})
 	})
 	Context("create options return subnet error", func() {

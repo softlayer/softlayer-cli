@@ -98,7 +98,7 @@ type StorageManager interface {
 
 	GetAllDatacenters() ([]string, error)
 	GetVolumeCountLimits() ([]datatypes.Container_Network_Storage_DataCenterLimits_VolumeCountLimitContainer, error)
-	VolumeRefresh(volumeId int, snapshotId int) error
+	VolumeRefresh(volumeId int, snapshotId int, force bool) error
 	VolumeConvert(volumeId int) error
 	VolumeSetNote(volumeId int, note string) (bool, error)
 	GetHubNetworkStorage(mask string) ([]datatypes.Network_Storage, error)
@@ -807,11 +807,11 @@ func (s storageManager) VolumeConvert(volumeId int) error {
 	return err
 }
 
-// Refreshes a duplicate volume with a snapshot taken from its parent.
-// volumeId: The ID of the volume to refresh.
-// snapshotId: The Id of the parent volume's snapshot to use as a refresh point.
-func (s storageManager) VolumeRefresh(volumeId int, snapshotId int) error {
-	_, err := s.StorageService.Id(volumeId).RefreshDuplicate(sl.Int(snapshotId))
+//Refreshes a duplicate volume with a snapshot taken from its parent.
+//volumeId: The ID of the volume to refresh.
+//snapshotId: The Id of the parent volume's snapshot to use as a refresh point.
+func (s storageManager) VolumeRefresh(volumeId int, snapshotId int, force bool) error {
+	_, err := s.StorageService.Id(volumeId).RefreshDuplicate(&snapshotId, &force)
 	return err
 }
 
