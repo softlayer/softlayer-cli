@@ -48,12 +48,12 @@ func (cmd *ObjectStoragePermissionCommand) Run(args []string) error {
 
 	cloudObjectStorages, err := cmd.StorageManager.GetNetworkMessageDeliveryAccounts(storageID, "")
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get permissions.\n"), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get permissions."), err.Error(), 2)
 	}
 
 	endPoints, err := cmd.ObjectStorageManager.GetEndpoints(storageID)
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get endPoints.\n"), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get endPoints."), err.Error(), 2)
 	}
 
 	table := cmd.UI.Table([]string{
