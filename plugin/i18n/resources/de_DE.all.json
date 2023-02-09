@@ -1224,10 +1224,6 @@
     "translation": "Blockdatenträger {{.VolumeId}} meldet LUN-ID {{.LunID}}."
   },
   {
-    "id": "Bounces",
-    "translation": "Bounces"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "Pufferdatei konnte nicht geschlossen werden: {{.Error}}.\n"
   },
@@ -1572,10 +1568,6 @@
     "translation": "Klassische Infrastruktur - Netzsicherheitsgruppen"
   },
   {
-    "id": "Clicks",
-    "translation": "Klicks"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "Clientseitige Zeitlimiteinstellung in Sekunden"
   },
@@ -1792,6 +1784,10 @@
     "translation": "Zähler"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "CPU (zugeordnet/gesamt)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "CPU-Anzahl"
   },
@@ -1910,22 +1906,6 @@
   {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "Berechtigungsnachweis: {{.credentialID}} wurde gelöscht."
-  },
-  {
-    "id": "Credit allowed",
-    "translation": "Kredit zulässig"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "Kreditüberschuss"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "Verbleibende Kredite"
-  },
-  {
-    "id": "Credits used",
-    "translation": "Genutztes Guthaben"
   },
   {
     "id": "Critical Max",
@@ -2068,10 +2048,6 @@
     "translation": "Angegebene Sicherheitsgruppe löschen"
   },
   {
-    "id": "Delivered",
-    "translation": "Geliefert"
-  },
-  {
     "id": "Description",
     "translation": "Beschreibung"
   },
@@ -2138,6 +2114,10 @@
   {
     "id": "Disk",
     "translation": "Platte"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "Platte (zugeordnet/gesamt)"
   },
   {
     "id": "Disk Capacity",
@@ -3050,10 +3030,6 @@
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "Abrufen des SSL-Zertifikats {{.ID}} fehlgeschlagen.\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "Abrufen der Statistik fehlgeschlagen."
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -5424,6 +5400,10 @@
     "translation": "Speicher"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "Speicher (zugeordnet/gesamt)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "Speicherkapazität"
   },
@@ -5834,10 +5814,6 @@
   {
     "id": "OpenID",
     "translation": "OpenID"
-  },
-  {
-    "id": "Opens",
-    "translation": "Öffnungsvorgänge"
   },
   {
     "id": "Operating System Code",
@@ -6764,10 +6740,6 @@
     "translation": "Anforderungskonfiguration für Tunnelkontext"
   },
   {
-    "id": "Requests",
-    "translation": "Anforderungen"
-  },
-  {
     "id": "Required User",
     "translation": "Erforderlicher Benutzer"
   },
@@ -7226,10 +7198,6 @@
   {
     "id": "Software",
     "translation": "Software"
-  },
-  {
-    "id": "Spam reports",
-    "translation": "Berichte zu Spam"
   },
   {
     "id": "Specifies if image is bring your own license",
@@ -8912,10 +8880,6 @@
     "translation": "Kosten"
   },
   {
-    "id": "cpu (allocated/total)",
-    "translation": "CPU (zugeordnet/gesamt)"
-  },
-  {
     "id": "cpu cores",
     "translation": "CPU-Cores"
   },
@@ -8990,10 +8954,6 @@
   {
     "id": "device",
     "translation": "Gerät"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "Platte (zugeordnet/gesamt)"
   },
   {
     "id": "disk_guest",
@@ -9072,10 +9032,6 @@
     "translation": "global_identifier"
   },
   {
-    "id": "guests",
-    "translation": "Gastmaschinen"
-  },
-  {
     "id": "guid",
     "translation": "GUID"
   },
@@ -9150,10 +9106,6 @@
   {
     "id": "memory",
     "translation": "Speicher"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "Speicher (zugeordnet/gesamt)"
   },
   {
     "id": "minute",
@@ -9298,10 +9250,6 @@
   {
     "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
     "translation": "erfordert mindestens {{.Limit}} Argument(e), nur {{.Args}} empfangen"
-  },
-  {
-    "id": "router",
-    "translation": "Router"
   },
   {
     "id": "routers",

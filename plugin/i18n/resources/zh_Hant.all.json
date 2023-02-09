@@ -1224,10 +1224,6 @@
     "translation": "區塊磁區 {{.VolumeId}} 正在報告 LUN ID {{.LunID}}。"
   },
   {
-    "id": "Bounces",
-    "translation": "退件數"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "無法關閉緩衝區檔案：{{.Error}}。\n"
   },
@@ -1572,10 +1568,6 @@
     "translation": "標準基礎架構網路安全群組"
   },
   {
-    "id": "Clicks",
-    "translation": "點閱數"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "用戶端逾時設定（以秒為單位）"
   },
@@ -1792,6 +1784,10 @@
     "translation": "計數器"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "Cpu (allocated/total)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "CPU 計數"
   },
@@ -1910,22 +1906,6 @@
   {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "已刪除認證：{{.credentialID}}。"
-  },
-  {
-    "id": "Credit allowed",
-    "translation": "允許的額度"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "過多額度"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "剩餘額度"
-  },
-  {
-    "id": "Credits used",
-    "translation": "已使用的額度"
   },
   {
     "id": "Critical Max",
@@ -2068,10 +2048,6 @@
     "translation": "刪除給定的安全群組"
   },
   {
-    "id": "Delivered",
-    "translation": "已交貨"
-  },
-  {
     "id": "Description",
     "translation": "說明"
   },
@@ -2138,6 +2114,10 @@
   {
     "id": "Disk",
     "translation": "磁碟"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "Disk (allocated/total)"
   },
   {
     "id": "Disk Capacity",
@@ -3050,10 +3030,6 @@
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "無法取得 SSL 憑證：{{.ID}}。\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "無法取得統計資料。"
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -5424,6 +5400,10 @@
     "translation": "記憶體"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "Memory (allocated/total)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "記憶體容量"
   },
@@ -5834,10 +5814,6 @@
   {
     "id": "OpenID",
     "translation": "OpenID"
-  },
-  {
-    "id": "Opens",
-    "translation": "開啟"
   },
   {
     "id": "Operating System Code",
@@ -6764,10 +6740,6 @@
     "translation": "通道環境定義的要求配置"
   },
   {
-    "id": "Requests",
-    "translation": "要求"
-  },
-  {
     "id": "Required User",
     "translation": "必要的使用者"
   },
@@ -7226,10 +7198,6 @@
   {
     "id": "Software",
     "translation": "軟體"
-  },
-  {
-    "id": "Spam reports",
-    "translation": "垃圾郵件報告"
   },
   {
     "id": "Specifies if image is bring your own license",
@@ -8912,10 +8880,6 @@
     "translation": "cost"
   },
   {
-    "id": "cpu (allocated/total)",
-    "translation": "cpu (allocated/total)"
-  },
-  {
     "id": "cpu cores",
     "translation": "cpu cores"
   },
@@ -8990,10 +8954,6 @@
   {
     "id": "device",
     "translation": "device"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "disk (allocated/total)"
   },
   {
     "id": "disk_guest",
@@ -9072,10 +9032,6 @@
     "translation": "global_identifier"
   },
   {
-    "id": "guests",
-    "translation": "guests"
-  },
-  {
     "id": "guid",
     "translation": "guid"
   },
@@ -9150,10 +9106,6 @@
   {
     "id": "memory",
     "translation": "memory"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "memory (allocated/total)"
   },
   {
     "id": "minute",
@@ -9298,10 +9250,6 @@
   {
     "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
     "translation": "至少需要 {{.Limit}} 個引數，僅收到 {{.Args}} 個"
-  },
-  {
-    "id": "router",
-    "translation": "router"
   },
   {
     "id": "routers",

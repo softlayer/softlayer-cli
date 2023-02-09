@@ -1260,10 +1260,6 @@
     "translation": "Block volume {{.VolumeId}} is reporting LUN ID {{.LunID}}."
   },
   {
-    "id": "Bounces",
-    "translation": "Bounces"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "Buffer file could not be closed: {{.Error}}.\n"
   },
@@ -1612,10 +1608,6 @@
     "translation": "Classic infrastructure network security groups"
   },
   {
-    "id": "Clicks",
-    "translation": "Clicks"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "Client side timeout setting, in seconds"
   },
@@ -1662,6 +1654,10 @@
   {
     "id": "Column to sort by",
     "translation": "Column to sort by"
+  },
+  {
+    "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
+    "translation": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]"
   },
   {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
@@ -1840,6 +1836,10 @@
     "translation": "Counter"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "Cpu (allocated/total)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "Cpu Count"
   },
@@ -1958,22 +1958,6 @@
   {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "Credential: {{.credentialID}} was deleted."
-  },
-  {
-    "id": "Credit allowed",
-    "translation": "Credit allowed"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "Credits overage"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "Credits remain"
-  },
-  {
-    "id": "Credits used",
-    "translation": "Credits used"
   },
   {
     "id": "Critical Max",
@@ -2116,10 +2100,6 @@
     "translation": "Delete the given security group"
   },
   {
-    "id": "Delivered",
-    "translation": "Delivered"
-  },
-  {
     "id": "Description",
     "translation": "Description"
   },
@@ -2190,6 +2170,10 @@
   {
     "id": "Disk",
     "translation": "Disk"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "Disk (allocated/total)"
   },
   {
     "id": "Disk Capacity",
@@ -3142,10 +3126,6 @@
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "Failed to get SSL certificate: {{.ID}}.\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "Failed to get Statistics."
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -4408,6 +4388,10 @@
     "translation": "Force operation without confirmation"
   },
   {
+    "id": "Force the volume refresh, will cancel any ongoing transactions.",
+    "translation": "Force the volume refresh, will cancel any ongoing transactions."
+  },
+  {
     "id": "Forces the virtual server to only have access the private network",
     "translation": "Forces the virtual server to only have access the private network"
   },
@@ -5580,6 +5564,10 @@
     "translation": "Memory"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "Memory (allocated/total)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "Memory Capacity"
   },
@@ -5994,10 +5982,6 @@
   {
     "id": "OpenID",
     "translation": "OpenID"
-  },
-  {
-    "id": "Opens",
-    "translation": "Opens"
   },
   {
     "id": "Operating System Code",
@@ -6952,10 +6936,6 @@
     "translation": "Request configuration of a tunnel context"
   },
   {
-    "id": "Requests",
-    "translation": "Requests"
-  },
-  {
     "id": "Required User",
     "translation": "Required User"
   },
@@ -7442,10 +7422,6 @@
   {
     "id": "Software",
     "translation": "Software"
-  },
-  {
-    "id": "Spam reports",
-    "translation": "Spam reports"
   },
   {
     "id": "Specifies if image is bring your own license",
@@ -9192,10 +9168,6 @@
     "translation": "cost"
   },
   {
-    "id": "cpu (allocated/total)",
-    "translation": "cpu (allocated/total)"
-  },
-  {
     "id": "cpu cores",
     "translation": "cpu cores"
   },
@@ -9270,10 +9242,6 @@
   {
     "id": "device",
     "translation": "device"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "disk (allocated/total)"
   },
   {
     "id": "disk_guest",
@@ -9352,10 +9320,6 @@
     "translation": "global_identifier"
   },
   {
-    "id": "guests",
-    "translation": "guests"
-  },
-  {
     "id": "guid",
     "translation": "guid"
   },
@@ -9430,10 +9394,6 @@
   {
     "id": "memory",
     "translation": "memory"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "memory (allocated/total)"
   },
   {
     "id": "minute",
@@ -9578,10 +9538,6 @@
   {
     "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
     "translation": "requires at least {{.Limit}} arg(s), only received {{.Args}}"
-  },
-  {
-    "id": "router",
-    "translation": "router"
   },
   {
     "id": "routers",
