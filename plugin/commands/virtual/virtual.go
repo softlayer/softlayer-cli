@@ -56,6 +56,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewNotifiactionsCommand(sl).Command)
 	cobraCmd.AddCommand(NewNotificationsDeleteCommand(sl).Command)
 	cobraCmd.AddCommand(NewNotificationsAddCommand(sl).Command)
+	cobraCmd.AddCommand(NewOsAvailableCommand(sl).Command)
 
 	return cobraCmd
 }
