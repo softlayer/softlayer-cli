@@ -57,6 +57,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewVolumeSetNoteCommand(StorageCommand).Command)
 	// Miscellaneous Commands
 	cobraCmd.AddCommand(NewObjectListCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(NewObjectStorageDetailCommand(StorageCommand).Command)
 	cobraCmd.AddCommand(NewDisasterRecoveryFailoverCommand(StorageCommand).Command)
 	cobraCmd.AddCommand(NewDuplicateConvertStatusCommand(StorageCommand).Command)
 
