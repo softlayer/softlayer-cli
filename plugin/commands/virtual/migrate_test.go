@@ -69,5 +69,23 @@ var _ = Describe("VS migrate", func() {
 				Expect(err).To(HaveOccurred())
 			})
 		})
+		Context("sl vs migrate happy path", func() {
+			BeforeEach(func() {
+				fakeVSManager.GetInstancesReturns([]datatypes.Virtual_Guest{}, nil)
+			})
+			It("table output", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
+				Expect(err).NotTo(HaveOccurred())
+				output := fakeUI.Outputs()
+				Expect(output).To(ContainSubstring("Virtual Server Pending Migration"))
+				Expect(output).To(ContainSubstring("Dedicated Hosts"))
+			})
+			It("JSON output", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=JSON")
+				Expect(err).NotTo(HaveOccurred())
+				output := fakeUI.Outputs()
+				Expect(output).To(ContainSubstring("[]\n[]"))
+			})
+		})
 	})
 })
