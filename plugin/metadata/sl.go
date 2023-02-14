@@ -16,7 +16,7 @@ var (
 	LIMIT                  = 50
 	NS_SL_NAME             = "sl"
 	OutputFlagName         = "output"
-	PLUGIN_VERSION         = "1.4.0"
+	PLUGIN_VERSION         = "1.4.1"
 	PLUGIN_SOFTLAYER       = "sl"
 	PLUGIN_SOFTLAYER_USAGE = "Classic Infrastructure"
 	UsageAgentHeader       = "ibmcloud sl v" + PLUGIN_VERSION
