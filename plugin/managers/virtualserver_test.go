@@ -158,9 +158,10 @@ var _ = Describe("VirtualServerManager", func() {
 	Describe("Capture instance to an image", func() {
 		Context("Capture instance to an image", func() {
 			It("It returns no err and a transaction", func() {
-				txn, err := vsManager.CaptureImage(25804753, "wilmaimage", "imagenote", true)
+				txn, err := vsManager.CaptureImage(25804753, "wilmaimage", "imagenote", []datatypes.Virtual_Guest_Block_Device{})
 				Expect(err).ToNot(HaveOccurred())
-				Expect(*txn.GuestId).To(Equal(25804753))
+				Expect(*txn.Name).To(Equal("wilmaimage"))
+				Expect(*txn.Note).To(Equal("imagenote"))
 			})
 		})
 	})

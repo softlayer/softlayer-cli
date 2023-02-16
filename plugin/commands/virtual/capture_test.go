@@ -4,7 +4,6 @@ import (
 	"errors"
 	"time"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -60,12 +59,32 @@ var _ = Describe("VS capture", func() {
 			})
 		})
 
-		Context("VS capture with server fails", func() {
+		Context("VS capture without --all or --device", func() {
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--name=imageName")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--all|--device' is required"))
+			})
+		})
+
+		Context("VS capture fails to get VS info", func() {
 			BeforeEach(func() {
-				fakeVSManager.CaptureImageReturns(datatypes.Provisioning_Version1_Transaction{}, errors.New("Internal Server Error"))
+				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage", "--all")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to get virtual server instance"))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
+			})
+		})
+
+		Context("VS capture with server fails", func() {
+			BeforeEach(func() {
+				fakeVSManager.CaptureImageReturns(datatypes.Virtual_Guest_Block_Device_Template_Group{}, errors.New("Internal Server Error"))
+			})
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage", "--all")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to capture image for virtual server instance: 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
@@ -75,32 +94,54 @@ var _ = Describe("VS capture", func() {
 		Context("VS capture ", func() {
 			BeforeEach(func() {
 				created, _ := time.Parse(time.RFC3339, "2016-12-30T00:00:00Z")
-				fakeVSManager.CaptureImageReturns(datatypes.Provisioning_Version1_Transaction{
-					GuestId:    sl.Int(1234),
-					Id:         sl.Int(12345678),
-					CreateDate: sl.Time(created),
-					TransactionStatus: &datatypes.Provisioning_Version1_Transaction_Status{
-						Name: sl.String("Ongoing"),
+				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{
+					BlockDevices: []datatypes.Virtual_Guest_Block_Device{
+						datatypes.Virtual_Guest_Block_Device{
+							DiskImage: &datatypes.Virtual_Disk_Image{
+								MetadataFlag: sl.Bool(true),
+							},
+						},
+						datatypes.Virtual_Guest_Block_Device{
+							DiskImage: &datatypes.Virtual_Disk_Image{
+								Type: &datatypes.Virtual_Disk_Image_Type{
+									KeyName: sl.String("SWAP"),
+								},
+							},
+						},
+						datatypes.Virtual_Guest_Block_Device{
+							MountType: sl.String("CD"),
+						},
+						datatypes.Virtual_Guest_Block_Device{
+							DiskImage: &datatypes.Virtual_Disk_Image{
+								MetadataFlag: sl.Bool(false),
+								Type: &datatypes.Virtual_Disk_Image_Type{
+									KeyName: sl.String("SYSTEM"),
+								},
+							},
+						},
 					},
 				}, nil)
+				fakeVSManager.CaptureImageReturns(datatypes.Virtual_Guest_Block_Device_Template_Group{
+					Id:         sl.Int(12345678),
+					CreateDate: sl.Time(created),
+					Note:       sl.String("-"),
+				}, nil)
 			})
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage")
+			It("return no error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage", "--device", "111111")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-30T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Ongoing"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"12345678"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"false"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("12345678"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-30T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("-"))
 			})
-			It("return error", func() {
+			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage", "--all")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-30T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Ongoing"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"12345678"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"true"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("12345678"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-30T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("-"))
 			})
 		})
 	})
