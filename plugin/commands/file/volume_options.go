@@ -7,7 +7,6 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 
-	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -49,10 +48,10 @@ EXAMPLE:
 
 func (cmd *VolumeOptionsCommand) Run(args []string) error {
 	table := cmd.UI.Table([]string{"name", "value"})
-	locations, err := cmd.StorageManager.GetAllDatacenters()
-	if err != nil {
-		return slErr.NewAPIError(T("Failed to get all datacenters.\n"), err.Error(), 2)
-	}
+	// locations, err := cmd.StorageManager.GetAllDatacenters()
+	// if err != nil {
+	// 	return slErr.NewAPIError(T("Failed to get all datacenters.\n"), err.Error(), 2)
+	// }
 	table.Add(T("Storage Type"), "performance,endurance")
 	table.Add(T("Size (GB)"), utils.StringSliceToString(volumeSizes))
 
@@ -63,7 +62,7 @@ func (cmd *VolumeOptionsCommand) Run(args []string) error {
 	iopsTable.Print()
 	table.Add(T("IOPS"), buf.String())
 	table.Add(T("Tier"), "0.25,2,4,10")
-	table.Add(T("Location"), utils.StringSliceToString(locations))
+	// table.Add(T("Location"), utils.StringSliceToString(locations))
 	buf = new(bytes.Buffer)
 	snapshotTable := terminal.NewTable(buf, []string{T("Storage Size (GB)"), T("Available Snapshot Size (GB)")})
 	snapshotTable.Add(volumeSizes[0], "0,5,10,20")

@@ -3,7 +3,6 @@ package hardware
 import (
 	"sort"
 
-	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -58,7 +57,7 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 	}
 	sort.Strings(sortedLocations)
 	for _, key := range sortedLocations {
-		note := getPodWithClosedAnnouncement(locations[key], pods)
+		note := utils.GetPodWithClosedAnnouncement(locations[key], pods)
 		dcTable.Add(locations[key], key, note)
 	}
 	dcTable.Print()
@@ -137,13 +136,4 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 	}
 	routerTable.Print()
 	return nil
-}
-
-func getPodWithClosedAnnouncement(key string, pods []datatypes.Network_Pod) string {
-	for _, pod := range pods {
-		if key == *pod.DatacenterLongName {
-			return T("closing soon: ") + *pod.Name
-		}
-	}
-	return "-"
 }

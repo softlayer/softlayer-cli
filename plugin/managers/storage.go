@@ -3,7 +3,6 @@ package managers
 import (
 	"errors"
 	"fmt"
-	"sort"
 	"strconv"
 	"strings"
 
@@ -96,7 +95,7 @@ type StorageManager interface {
 	OrderSnapshotSpace(volumeType string, volumeId int, snapshotSize int, tier float64, iops int, upgrade bool) (datatypes.Container_Product_Order_Receipt, error)
 	GetVolumeSnapshotSchedules(volumeId int) (datatypes.Network_Storage, error)
 
-	GetAllDatacenters() ([]string, error)
+	GetAllDatacenters() ([]datatypes.Location, error)
 	GetVolumeCountLimits() ([]datatypes.Container_Network_Storage_DataCenterLimits_VolumeCountLimitContainer, error)
 	VolumeRefresh(volumeId int, snapshotId int, force bool) error
 	VolumeConvert(volumeId int) error
@@ -108,6 +107,9 @@ type StorageManager interface {
 	GetSubnetsInAcl(accessID int, mask string) ([]datatypes.Network_Subnet, error)
 	AssignSubnetsToAcl(accessID int, subnets []int) ([]int, error)
 	RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error)
+	GetOsType() ([]datatypes.Network_Storage_Iscsi_OS_Type, error)
+	ListItems(packageId int, categoryCode string, mask string) ([]datatypes.Product_Item, error)
+	GetRegions(packageId int) ([]datatypes.Location_Region, error)
 }
 
 type storageManager struct {
@@ -780,19 +782,8 @@ func (s storageManager) OrderSnapshotSpace(volumeType string, volumeId int, snap
 	return s.OrderService.PlaceOrder(&order, sl.Bool(false))
 }
 
-func (s storageManager) GetAllDatacenters() ([]string, error) {
-	locations, err := s.LocationService.GetDatacenters()
-	if err != nil {
-		return nil, err
-	}
-	var datacenters []string
-	for _, location := range locations {
-		if location.Name != nil {
-			datacenters = append(datacenters, *location.Name)
-		}
-	}
-	sort.Strings(datacenters)
-	return datacenters, nil
+func (s storageManager) GetAllDatacenters() ([]datatypes.Location, error) {
+	return s.LocationService.GetDatacenters()
 }
 
 // Retrieves an array of volume count limits per location and globally.
@@ -808,9 +799,9 @@ func (s storageManager) VolumeConvert(volumeId int) error {
 	return err
 }
 
-//Refreshes a duplicate volume with a snapshot taken from its parent.
-//volumeId: The ID of the volume to refresh.
-//snapshotId: The Id of the parent volume's snapshot to use as a refresh point.
+// Refreshes a duplicate volume with a snapshot taken from its parent.
+// volumeId: The ID of the volume to refresh.
+// snapshotId: The Id of the parent volume's snapshot to use as a refresh point.
 func (s storageManager) VolumeRefresh(volumeId int, snapshotId int, force bool) error {
 	_, err := s.StorageService.Id(volumeId).RefreshDuplicate(&snapshotId, &force)
 	return err
@@ -902,4 +893,37 @@ func (s storageManager) AssignSubnetsToAcl(accessID int, subnets []int) ([]int, 
 // subnets: subnets IDs to be assigned
 func (s storageManager) RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error) {
 	return s.AllowedHostService.Id(accessID).RemoveSubnetsFromAcl(subnets)
+}
+
+/*
+List items by packageId
+*/
+func (s storageManager) ListItems(packageId int, categoryCode string, mask string) ([]datatypes.Product_Item, error) {
+	if mask == "" {
+		mask = "mask[id,keyName,description,capacity,capacityMaximum,capacityMinimum,prices[id,capacityRestrictionType,capacityRestrictionMinimum,capacityRestrictionMaximum,hourlyRecurringFee,recurringFee,locationGroupId,pricingLocationGroup[id,locations]],rules]"
+	}
+
+	filters := filter.New()
+	filters = append(filters, filter.Path("items.id").OrderBy("ASC"))
+	if categoryCode != "" {
+		filters = append(filters, filter.Path("items.itemCategory.categoryCode").Eq(categoryCode))
+	}
+
+	return s.PackageService.Mask(mask).Id(packageId).Filter(filters.Build()).GetItems()
+}
+
+/*
+Returns all iSCSI OS Types
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Iscsi_OS_Type/getAllObjects/
+*/
+func (s storageManager) GetOsType() ([]datatypes.Network_Storage_Iscsi_OS_Type, error) {
+	NetworkStorageIscsiOSTypeService := services.GetNetworkStorageIscsiOSTypeService(s.Session)
+	return NetworkStorageIscsiOSTypeService.GetAllObjects()
+}
+
+/*
+List datacenters by packgeId
+*/
+func (s storageManager) GetRegions(packageId int) ([]datatypes.Location_Region, error) {
+	return s.PackageService.Id(packageId).GetRegions()
 }
