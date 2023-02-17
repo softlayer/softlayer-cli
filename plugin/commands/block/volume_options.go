@@ -131,18 +131,7 @@ func (cmd *VolumeOptionsCommand) Run(args []string) error {
 	for _, storage := range storagePackages {
 		// Adding datas to storage table
 		if *storage.Prices[0].CapacityRestrictionType == "IOPS" {
-			if cmd.Rules {
-				rules := "-"
-				if len(storage.Rules) != 0 {
-					rules = getRules(storage.Rules)
-				}
-				tableStorage.Add(
-					utils.FormatIntPointer(storage.Id),
-					utils.FormatStringPointer(storage.Description),
-					utils.FormatStringPointer(storage.KeyName),
-					rules,
-				)
-			} else if cmd.Prices {
+			if cmd.Prices {
 				tableStorage.Add(
 					utils.FormatIntPointer(storage.Id),
 					utils.FormatStringPointer(storage.Description),
@@ -256,14 +245,6 @@ func getRegions(regionConflicts []datatypes.Product_Item_Resource_Conflict, data
 		}
 	}
 	return strings.Join(listLocationConflicts, ",")
-}
-
-func getRules(rules []datatypes.Product_Item_Rule) string {
-	allRules := []string{}
-	for _, rule := range rules {
-		allRules = append(allRules, *rule.Message)
-	}
-	return strings.Join(allRules, ",")
 }
 
 func getPrices(prices []datatypes.Product_Item_Price, tierLevel bool) string {
