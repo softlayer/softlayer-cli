@@ -62,11 +62,9 @@ func (cmd *ListCommand) Run(args []string) error {
 			utils.FormatSLTimePointer(email.CreateDate),
 			utils.FormatSLTimePointer(email.ModifyDate),
 			utils.FormatStringPointer(email.SmtpAccess),		
-
 		)
 	}
 
 	utils.PrintTable(cmd.UI, emailTable, outputFormat)
-
 	return nil
 }
