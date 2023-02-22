@@ -24,7 +24,6 @@ type VolumeOptionsCommand struct {
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	NetworkManager managers.NetworkManager
-	Rules          bool
 	Prices         bool
 }
 
@@ -47,7 +46,6 @@ EXAMPLE:
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().BoolVar(&thisCmd.Rules, "rules", false, T("Show rules in the storage tables."))
 	cobraCmd.Flags().BoolVar(&thisCmd.Prices, "prices", false, T("Show prices in the storage, snapshot and iops range tables."))
 	thisCmd.Command = cobraCmd
 	return thisCmd
@@ -106,9 +104,6 @@ func (cmd *VolumeOptionsCommand) Run(args []string) error {
 	tableOsTypes := cmd.UI.Table([]string{T("OS Type"), T("KeyName"), T("Description")})
 	tableIops := cmd.UI.Table([]string{T("IOPS"), T("KeyName"), T("Description"), T("Location Conflicts")})
 
-	if cmd.Rules {
-		tableStorage = cmd.UI.Table([]string{T("Storage"), T("Description"), T("KeyName"), T("Rules")})
-	}
 	if cmd.Prices {
 		tableStorage = cmd.UI.Table([]string{T("Storage"), T("Description"), T("KeyName"), T("Prices")})
 		tableSnapshot = cmd.UI.Table([]string{T("Snapshot"), T("Description"), T("KeyName"), T("Prices")})
