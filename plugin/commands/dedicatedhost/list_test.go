@@ -1,4 +1,4 @@
-package virtual_test
+package dedicatedhost_test
 
 import (
 	"errors"
@@ -14,7 +14,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("VS list", func() {
+var _ = Describe("Dedicated host detail", func() {
 	var (
 		fakeUI                   *terminal.FakeUI
 		cliCommand               *dedicatedhost.ListCommand
@@ -32,7 +32,7 @@ var _ = Describe("VS list", func() {
 		cliCommand.DedicatedHostManager = FakeDedicatedhostManager
 	})
 
-	Describe("list host", func() {
+	Describe("Dedicatedhost list", func() {
 		Context("list with server fails", func() {
 			BeforeEach(func() {
 				FakeDedicatedhostManager.ListDedicatedHostReturns([]datatypes.Virtual_DedicatedHost{}, errors.New("Internal Server Error"))

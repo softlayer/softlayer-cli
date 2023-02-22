@@ -1224,10 +1224,6 @@
     "translation": "블록 볼륨 {{.VolumeId}}에서 LUN ID {{.LunID}}을(를) 보고합니다."
   },
   {
-    "id": "Bounces",
-    "translation": "바운스"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "버퍼 파일을 닫을 수 없음: {{.Error}}.\n"
   },
@@ -1572,10 +1568,6 @@
     "translation": "클래식 인프라 네트워크 보안 그룹"
   },
   {
-    "id": "Clicks",
-    "translation": "클릭"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "클라이언트측 제한시간 설정(초)"
   },
@@ -1792,6 +1784,10 @@
     "translation": "카운터"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "CPU(할당됨/총계)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "CPU 수"
   },
@@ -1910,22 +1906,6 @@
   {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "인증 정보 {{.credentialID}}이(가) 삭제되었습니다."
-  },
-  {
-    "id": "Credit allowed",
-    "translation": "크레디트 허용"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "크레디트 초과"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "크레디트 기한"
-  },
-  {
-    "id": "Credits used",
-    "translation": "사용한 크레딧"
   },
   {
     "id": "Critical Max",
@@ -2068,10 +2048,6 @@
     "translation": "제공된 보안 그룹 삭제"
   },
   {
-    "id": "Delivered",
-    "translation": "전달됨"
-  },
-  {
     "id": "Description",
     "translation": "설명"
   },
@@ -2138,6 +2114,10 @@
   {
     "id": "Disk",
     "translation": "디스크"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "디스크(할당됨/총계)"
   },
   {
     "id": "Disk Capacity",
@@ -3050,10 +3030,6 @@
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "SSL 인증서 가져오기 실패: {{.ID}}.\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "통계를 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -5424,6 +5400,10 @@
     "translation": "메모리"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "메모리(할당됨/총계)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "메모리 용량"
   },
@@ -5834,10 +5814,6 @@
   {
     "id": "OpenID",
     "translation": "OpenID"
-  },
-  {
-    "id": "Opens",
-    "translation": "열기"
   },
   {
     "id": "Operating System Code",
@@ -6764,10 +6740,6 @@
     "translation": "터널 컨텍스트의 요청 구성"
   },
   {
-    "id": "Requests",
-    "translation": "요청"
-  },
-  {
     "id": "Required User",
     "translation": "필수 사용자"
   },
@@ -7226,10 +7198,6 @@
   {
     "id": "Software",
     "translation": "소프트웨어"
-  },
-  {
-    "id": "Spam reports",
-    "translation": "스팸 보고서"
   },
   {
     "id": "Specifies if image is bring your own license",
@@ -8912,10 +8880,6 @@
     "translation": "비용"
   },
   {
-    "id": "cpu (allocated/total)",
-    "translation": "CPU(할당됨/총계)"
-  },
-  {
     "id": "cpu cores",
     "translation": "cpu 코어"
   },
@@ -8990,10 +8954,6 @@
   {
     "id": "device",
     "translation": "디바이스"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "디스크(할당됨/총계)"
   },
   {
     "id": "disk_guest",
@@ -9072,10 +9032,6 @@
     "translation": "global_identifier"
   },
   {
-    "id": "guests",
-    "translation": "게스트"
-  },
-  {
     "id": "guid",
     "translation": "guid"
   },
@@ -9150,10 +9106,6 @@
   {
     "id": "memory",
     "translation": "메모리"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "메모리(할당됨/총계)"
   },
   {
     "id": "minute",
@@ -9298,10 +9250,6 @@
   {
     "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
     "translation": "{{.Limit}}개 이상의 인수가 필요하지만 {{.Args}}만 수신함"
-  },
-  {
-    "id": "router",
-    "translation": "라우터"
   },
   {
     "id": "routers",

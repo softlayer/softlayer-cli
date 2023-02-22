@@ -102,6 +102,8 @@ type StorageManager interface {
 	VolumeConvert(volumeId int) error
 	VolumeSetNote(volumeId int, note string) (bool, error)
 	GetHubNetworkStorage(mask string) ([]datatypes.Network_Storage, error)
+	GetNetworkStorageDetail(storageId int, mask string) (datatypes.Network_Storage, error)
+	GetBuckets(storageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket, error)
 	GetDuplicateConversionStatus(volumeID int, mask string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error)
 	GetSubnetsInAcl(accessID int, mask string) ([]datatypes.Network_Subnet, error)
 	AssignSubnetsToAcl(accessID int, subnets []int) ([]int, error)
@@ -852,6 +854,21 @@ func (s storageManager) GetHubNetworkStorage(mask string) ([]datatypes.Network_S
 		mask = "mask[id,username,billingItem,storageType, notes]"
 	}
 	return s.AccountService.Mask(mask).GetHubNetworkStorage()
+}
+
+// Returns a list of cloud object storages.
+func (s storageManager) GetNetworkStorageDetail(storageID int, mask string) (datatypes.Network_Storage, error) {
+	if mask == "" {
+		mask = "mask[id,username,password,capacityGb,snapshotCapacityGb,parentVolume.snapshotSizeBytes,storageType.keyName,serviceResource.datacenter[name],serviceResourceBackendIpAddress,storageTierLevel,provisionedIops,lunId,originalVolumeName,originalSnapshotName,originalVolumeSize,activeTransactionCount,activeTransactions.transactionStatus[friendlyName],replicationPartnerCount,replicationStatus,replicationPartners[id,username,serviceResourceBackendIpAddress,serviceResource[datacenter[name]],replicationSchedule[type[keyname]]],notes]"
+	}
+	NetworkStorageService := services.GetNetworkStorageService(s.Session)
+	return NetworkStorageService.Mask(mask).Id(storageID).GetObject()
+}
+
+// Returns a list of cloud object storages.
+func (s storageManager) GetBuckets(storageID int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket, error) {
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(s.Session)
+	return NetworkStorageHubCleversafeAccountService.Id(storageID).GetBuckets()
 }
 
 // Get the status of the duplication process of a volume

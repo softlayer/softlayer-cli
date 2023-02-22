@@ -1224,10 +1224,6 @@
     "translation": "ブロック・ボリューム {{.VolumeId}} は LUN ID {{.LunID}} を報告しています。"
   },
   {
-    "id": "Bounces",
-    "translation": "バウンス"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "バッファー・ファイルを閉じることができませんでした: {{.Error}}。\n"
   },
@@ -1572,10 +1568,6 @@
     "translation": "クラシック・インフラストラクチャー・ネットワーク・セキュリティー・グループ"
   },
   {
-    "id": "Clicks",
-    "translation": "クリック"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "クライアント・サイドのタイムアウト設定 (秒)"
   },
@@ -1792,6 +1784,10 @@
     "translation": "カウンター"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "cpu (割り振り済み/合計)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "CPU カウント"
   },
@@ -1910,22 +1906,6 @@
   {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "資格情報: {{.credentialID}} が削除されました。"
-  },
-  {
-    "id": "Credit allowed",
-    "translation": "許可されたクレジット"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "超過クレジット"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "クレジット残量"
-  },
-  {
-    "id": "Credits used",
-    "translation": "使用されたクレジット"
   },
   {
     "id": "Critical Max",
@@ -2068,10 +2048,6 @@
     "translation": "指定されたセキュリティー・グループを削除します"
   },
   {
-    "id": "Delivered",
-    "translation": "送信済み"
-  },
-  {
     "id": "Description",
     "translation": "説明"
   },
@@ -2138,6 +2114,10 @@
   {
     "id": "Disk",
     "translation": "ディスク"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "ディスク (割り振り済み/合計)"
   },
   {
     "id": "Disk Capacity",
@@ -3050,10 +3030,6 @@
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "SSL Certificates : {{.ID}} の取得に失敗しました。\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "統計の取得に失敗しました。"
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -5424,6 +5400,10 @@
     "translation": "メモリー"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "メモリー (割り振り済み/合計)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "メモリー容量"
   },
@@ -5834,10 +5814,6 @@
   {
     "id": "OpenID",
     "translation": "OpenID"
-  },
-  {
-    "id": "Opens",
-    "translation": "オープンの数"
   },
   {
     "id": "Operating System Code",
@@ -6764,10 +6740,6 @@
     "translation": "トンネル・コンテキストの構成を要求します"
   },
   {
-    "id": "Requests",
-    "translation": "要求"
-  },
-  {
     "id": "Required User",
     "translation": "必須ユーザー"
   },
@@ -7226,10 +7198,6 @@
   {
     "id": "Software",
     "translation": "ソフトウェア"
-  },
-  {
-    "id": "Spam reports",
-    "translation": "スパム・レポート"
   },
   {
     "id": "Specifies if image is bring your own license",
@@ -8912,10 +8880,6 @@
     "translation": "cost"
   },
   {
-    "id": "cpu (allocated/total)",
-    "translation": "cpu (割り振り済み/合計)"
-  },
-  {
     "id": "cpu cores",
     "translation": "cpu コア"
   },
@@ -8990,10 +8954,6 @@
   {
     "id": "device",
     "translation": "device"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "ディスク (割り振り済み/合計)"
   },
   {
     "id": "disk_guest",
@@ -9072,10 +9032,6 @@
     "translation": "global_identifier"
   },
   {
-    "id": "guests",
-    "translation": "guests"
-  },
-  {
     "id": "guid",
     "translation": "guid"
   },
@@ -9150,10 +9106,6 @@
   {
     "id": "memory",
     "translation": "メモリー"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "メモリー (割り振り済み/合計)"
   },
   {
     "id": "minute",
@@ -9298,10 +9250,6 @@
   {
     "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
     "translation": "少なくとも {{.Limit}} 個の引数が必要です。受信したもののみ {{.Args}}"
-  },
-  {
-    "id": "router",
-    "translation": "router"
   },
   {
     "id": "routers",

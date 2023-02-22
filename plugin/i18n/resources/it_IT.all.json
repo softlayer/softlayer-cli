@@ -1224,10 +1224,6 @@
     "translation": "Il volume di un blocco {{.VolumeId}} sta segnalando ID LUN {{.LunID}}."
   },
   {
-    "id": "Bounces",
-    "translation": "Salti"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "Impossibile chiudere il file di buffer:  {{.Error}}.\n"
   },
@@ -1572,10 +1568,6 @@
     "translation": "Gruppi di sicurezza di rete dell'infrastruttura classica"
   },
   {
-    "id": "Clicks",
-    "translation": "Clic"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "Impostazione timeout lato client, in secondi"
   },
@@ -1792,6 +1784,10 @@
     "translation": "Contatore"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "cpu (allocata/totale)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "Conteggio Cpu"
   },
@@ -1910,22 +1906,6 @@
   {
     "id": "Credential: {{.credentialID}} was deleted.",
     "translation": "Credenziale: {{.credentialID}} è stato eliminato."
-  },
-  {
-    "id": "Credit allowed",
-    "translation": "Credito consentito"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "Eccesso di crediti"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "Crediti residui"
-  },
-  {
-    "id": "Credits used",
-    "translation": "Crediti utilizzati"
   },
   {
     "id": "Critical Max",
@@ -2068,10 +2048,6 @@
     "translation": "Elimina il gruppo di sicurezza fornito"
   },
   {
-    "id": "Delivered",
-    "translation": "Consegnato"
-  },
-  {
     "id": "Description",
     "translation": "Descrizione"
   },
@@ -2138,6 +2114,10 @@
   {
     "id": "Disk",
     "translation": "Disco"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "disco (allocato/totale)"
   },
   {
     "id": "Disk Capacity",
@@ -3050,10 +3030,6 @@
   {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "Impossibile ottenere il certificato SSL: {{.ID}}.\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "Impossibile ottenere statistiche."
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -5424,6 +5400,10 @@
     "translation": "Memoria"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "memoria (allocata/totale)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "Capacità memoria"
   },
@@ -5834,10 +5814,6 @@
   {
     "id": "OpenID",
     "translation": "OpenID"
-  },
-  {
-    "id": "Opens",
-    "translation": "Aperture"
   },
   {
     "id": "Operating System Code",
@@ -6764,10 +6740,6 @@
     "translation": "Richiedere la configurazione di un contesto tunnel"
   },
   {
-    "id": "Requests",
-    "translation": "Richieste"
-  },
-  {
     "id": "Required User",
     "translation": "Utente richiesto"
   },
@@ -7226,10 +7198,6 @@
   {
     "id": "Software",
     "translation": "Software"
-  },
-  {
-    "id": "Spam reports",
-    "translation": "Report sullo Spam"
   },
   {
     "id": "Specifies if image is bring your own license",
@@ -8912,10 +8880,6 @@
     "translation": "cost"
   },
   {
-    "id": "cpu (allocated/total)",
-    "translation": "cpu (allocata/totale)"
-  },
-  {
     "id": "cpu cores",
     "translation": "cpu cores"
   },
@@ -8990,10 +8954,6 @@
   {
     "id": "device",
     "translation": "device"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "disco (allocato/totale)"
   },
   {
     "id": "disk_guest",
@@ -9072,10 +9032,6 @@
     "translation": "global_identifier"
   },
   {
-    "id": "guests",
-    "translation": "guests"
-  },
-  {
     "id": "guid",
     "translation": "guid"
   },
@@ -9150,10 +9106,6 @@
   {
     "id": "memory",
     "translation": "memory"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "memoria (allocata/totale)"
   },
   {
     "id": "minute",
@@ -9298,10 +9250,6 @@
   {
     "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
     "translation": "richiede almeno {{.Limit}} arg, ricevuti solo {{.Args}}"
-  },
-  {
-    "id": "router",
-    "translation": "router"
   },
   {
     "id": "routers",

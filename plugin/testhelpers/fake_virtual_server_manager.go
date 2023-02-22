@@ -483,22 +483,6 @@ type FakeVirtualServerManager struct {
 		result2 string
 		result3 error
 	}
-	ListDedicatedHostStub        func(string, string, string, int) ([]datatypes.Virtual_DedicatedHost, error)
-	listDedicatedHostMutex       sync.RWMutex
-	listDedicatedHostArgsForCall []struct {
-		arg1 string
-		arg2 string
-		arg3 string
-		arg4 int
-	}
-	listDedicatedHostReturns struct {
-		result1 []datatypes.Virtual_DedicatedHost
-		result2 error
-	}
-	listDedicatedHostReturnsOnCall map[int]struct {
-		result1 []datatypes.Virtual_DedicatedHost
-		result2 error
-	}
 	ListInstancesStub        func(bool, bool, string, string, string, string, string, string, int, int, int, int, []string, string) ([]datatypes.Virtual_Guest, error)
 	listInstancesMutex       sync.RWMutex
 	listInstancesArgsForCall []struct {
@@ -2924,73 +2908,6 @@ func (fake *FakeVirtualServerManager) InstanceIsReadyReturnsOnCall(i int, result
 	}{result1, result2, result3}
 }
 
-func (fake *FakeVirtualServerManager) ListDedicatedHost(arg1 string, arg2 string, arg3 string, arg4 int) ([]datatypes.Virtual_DedicatedHost, error) {
-	fake.listDedicatedHostMutex.Lock()
-	ret, specificReturn := fake.listDedicatedHostReturnsOnCall[len(fake.listDedicatedHostArgsForCall)]
-	fake.listDedicatedHostArgsForCall = append(fake.listDedicatedHostArgsForCall, struct {
-		arg1 string
-		arg2 string
-		arg3 string
-		arg4 int
-	}{arg1, arg2, arg3, arg4})
-	stub := fake.ListDedicatedHostStub
-	fakeReturns := fake.listDedicatedHostReturns
-	fake.recordInvocation("ListDedicatedHost", []interface{}{arg1, arg2, arg3, arg4})
-	fake.listDedicatedHostMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeVirtualServerManager) ListDedicatedHostCallCount() int {
-	fake.listDedicatedHostMutex.RLock()
-	defer fake.listDedicatedHostMutex.RUnlock()
-	return len(fake.listDedicatedHostArgsForCall)
-}
-
-func (fake *FakeVirtualServerManager) ListDedicatedHostCalls(stub func(string, string, string, int) ([]datatypes.Virtual_DedicatedHost, error)) {
-	fake.listDedicatedHostMutex.Lock()
-	defer fake.listDedicatedHostMutex.Unlock()
-	fake.ListDedicatedHostStub = stub
-}
-
-func (fake *FakeVirtualServerManager) ListDedicatedHostArgsForCall(i int) (string, string, string, int) {
-	fake.listDedicatedHostMutex.RLock()
-	defer fake.listDedicatedHostMutex.RUnlock()
-	argsForCall := fake.listDedicatedHostArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4
-}
-
-func (fake *FakeVirtualServerManager) ListDedicatedHostReturns(result1 []datatypes.Virtual_DedicatedHost, result2 error) {
-	fake.listDedicatedHostMutex.Lock()
-	defer fake.listDedicatedHostMutex.Unlock()
-	fake.ListDedicatedHostStub = nil
-	fake.listDedicatedHostReturns = struct {
-		result1 []datatypes.Virtual_DedicatedHost
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeVirtualServerManager) ListDedicatedHostReturnsOnCall(i int, result1 []datatypes.Virtual_DedicatedHost, result2 error) {
-	fake.listDedicatedHostMutex.Lock()
-	defer fake.listDedicatedHostMutex.Unlock()
-	fake.ListDedicatedHostStub = nil
-	if fake.listDedicatedHostReturnsOnCall == nil {
-		fake.listDedicatedHostReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Virtual_DedicatedHost
-			result2 error
-		})
-	}
-	fake.listDedicatedHostReturnsOnCall[i] = struct {
-		result1 []datatypes.Virtual_DedicatedHost
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeVirtualServerManager) ListInstances(arg1 bool, arg2 bool, arg3 string, arg4 string, arg5 string, arg6 string, arg7 string, arg8 string, arg9 int, arg10 int, arg11 int, arg12 int, arg13 []string, arg14 string) ([]datatypes.Virtual_Guest, error) {
 	var arg13Copy []string
 	if arg13 != nil {
@@ -4169,8 +4086,6 @@ func (fake *FakeVirtualServerManager) Invocations() map[string][][]interface{} {
 	defer fake.getUserCustomerNotificationsByVirtualGuestIdMutex.RUnlock()
 	fake.instanceIsReadyMutex.RLock()
 	defer fake.instanceIsReadyMutex.RUnlock()
-	fake.listDedicatedHostMutex.RLock()
-	defer fake.listDedicatedHostMutex.RUnlock()
 	fake.listInstancesMutex.RLock()
 	defer fake.listInstancesMutex.RUnlock()
 	fake.migrateDedicatedHostMutex.RLock()

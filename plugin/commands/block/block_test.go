@@ -26,6 +26,7 @@ var availableCommands = []string{
 	"disaster-recovery-failover",
 	"duplicate-convert-status",
 	"object-list",
+	"object-storage-detail",
 	"object-storage-permission",
 	"replica-failback",
 	"replica-failover",

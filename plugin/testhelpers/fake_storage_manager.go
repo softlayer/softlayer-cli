@@ -185,6 +185,19 @@ type FakeStorageManager struct {
 		result1 []string
 		result2 error
 	}
+	GetBucketsStub        func(int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket, error)
+	getBucketsMutex       sync.RWMutex
+	getBucketsArgsForCall []struct {
+		arg1 int
+	}
+	getBucketsReturns struct {
+		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket
+		result2 error
+	}
+	getBucketsReturnsOnCall map[int]struct {
+		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket
+		result2 error
+	}
 	GetDuplicateConversionStatusStub        func(int, string) (datatypes.Container_Network_Storage_DuplicateConversionStatusInformation, error)
 	getDuplicateConversionStatusMutex       sync.RWMutex
 	getDuplicateConversionStatusArgsForCall []struct {
@@ -1423,6 +1436,70 @@ func (fake *FakeStorageManager) GetAllDatacentersReturnsOnCall(i int, result1 []
 	}
 	fake.getAllDatacentersReturnsOnCall[i] = struct {
 		result1 []string
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetBuckets(arg1 int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket, error) {
+	fake.getBucketsMutex.Lock()
+	ret, specificReturn := fake.getBucketsReturnsOnCall[len(fake.getBucketsArgsForCall)]
+	fake.getBucketsArgsForCall = append(fake.getBucketsArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetBucketsStub
+	fakeReturns := fake.getBucketsReturns
+	fake.recordInvocation("GetBuckets", []interface{}{arg1})
+	fake.getBucketsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) GetBucketsCallCount() int {
+	fake.getBucketsMutex.RLock()
+	defer fake.getBucketsMutex.RUnlock()
+	return len(fake.getBucketsArgsForCall)
+}
+
+func (fake *FakeStorageManager) GetBucketsCalls(stub func(int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket, error)) {
+	fake.getBucketsMutex.Lock()
+	defer fake.getBucketsMutex.Unlock()
+	fake.GetBucketsStub = stub
+}
+
+func (fake *FakeStorageManager) GetBucketsArgsForCall(i int) int {
+	fake.getBucketsMutex.RLock()
+	defer fake.getBucketsMutex.RUnlock()
+	argsForCall := fake.getBucketsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeStorageManager) GetBucketsReturns(result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket, result2 error) {
+	fake.getBucketsMutex.Lock()
+	defer fake.getBucketsMutex.Unlock()
+	fake.GetBucketsStub = nil
+	fake.getBucketsReturns = struct {
+		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetBucketsReturnsOnCall(i int, result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket, result2 error) {
+	fake.getBucketsMutex.Lock()
+	defer fake.getBucketsMutex.Unlock()
+	fake.GetBucketsStub = nil
+	if fake.getBucketsReturnsOnCall == nil {
+		fake.getBucketsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket
+			result2 error
+		})
+	}
+	fake.getBucketsReturnsOnCall[i] = struct {
+		result1 []datatypes.Container_Network_Storage_Hub_ObjectStorage_Bucket
 		result2 error
 	}{result1, result2}
 }
@@ -3182,6 +3259,8 @@ func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	defer fake.failOverToReplicantMutex.RUnlock()
 	fake.getAllDatacentersMutex.RLock()
 	defer fake.getAllDatacentersMutex.RUnlock()
+	fake.getBucketsMutex.RLock()
+	defer fake.getBucketsMutex.RUnlock()
 	fake.getDuplicateConversionStatusMutex.RLock()
 	defer fake.getDuplicateConversionStatusMutex.RUnlock()
 	fake.getHubNetworkStorageMutex.RLock()
