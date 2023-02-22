@@ -27,7 +27,7 @@ func NewObjectStoragePermissionCommand(sl *metadata.SoftlayerStorageCommand) (cm
 		ObjectStorageManager:    managers.NewObjectStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "object-storage-permission" + " " + T("IDENTIFIER"),
+		Use:   "object-storage-permission " + T("IDENTIFIER"),
 		Short: T("Display permission details for a cloud object storage."),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -101,7 +101,7 @@ func (cmd *ObjectStoragePermissionCommand) Run(args []string) error {
 	}
 
 	utils.PrintTable(cmd.UI, tableEndPoints, outputFormat)
-	table.Add("EndPoint URL´s", bufTableEndPoints.String())
+	table.Add("EndPoint URL's", bufTableEndPoints.String())
 
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
