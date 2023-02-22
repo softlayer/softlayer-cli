@@ -55,8 +55,8 @@ func (cmd *OsAvailableCommand) Run(args []string) error {
 			if availableOs.Prices[0].HourlyRecurringFee != nil {
 				hourly = fmt.Sprintf("%.2f", *availableOs.Prices[0].HourlyRecurringFee)
 			}
-			if availableOs.Prices[0].LaborFee != nil {
-				monthly = fmt.Sprintf("%.2f", *availableOs.Prices[0].LaborFee)
+			if availableOs.Prices[0].RecurringFee != nil {
+				monthly = fmt.Sprintf("%.2f", *availableOs.Prices[0].RecurringFee)
 			}
 			if availableOs.Prices[0].SetupFee != nil {
 				setup = fmt.Sprintf("%.2f", *availableOs.Prices[0].SetupFee)

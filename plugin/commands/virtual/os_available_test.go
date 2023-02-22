@@ -56,7 +56,7 @@ var _ = Describe("VS os-available", func() {
 						Prices: []datatypes.Product_Item_Price{
 							datatypes.Product_Item_Price{
 								HourlyRecurringFee: sl.Float(0.0),
-								LaborFee:           sl.Float(0.2),
+								RecurringFee:       sl.Float(0.2),
 								SetupFee:           sl.Float(0.4),
 							},
 						},
