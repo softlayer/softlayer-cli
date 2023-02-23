@@ -36,8 +36,7 @@ func NewCaptureCommand(sl *metadata.SoftlayerCommand) (cmd *CaptureCommand) {
 	
 EXAMPLE:
    ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing
-   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --device 111111 --device 222222 --note testing
-   --all and --device options can not be set at the same time and one is required.`),
+   This command captures virtual server instance with ID of 12345678 with all disks into an image named "mycloud" with note "testing".`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
