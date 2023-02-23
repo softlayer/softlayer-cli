@@ -60,27 +60,27 @@ func (cmd *CaptureCommand) Run(args []string) error {
 	if cmd.Name == "" {
 		return slErrors.NewMissingInputError("-n|--name")
 	}
-	if !cmd.All && len(cmd.BlockDevices) == 0 {
-		return slErrors.NewMissingInputError("--all|--device")
-	}
 	blockDevices := []datatypes.Virtual_Guest_Block_Device{}
-	if cmd.All {
-		virtualGuest, err := cmd.VirtualServerManager.GetInstance(vsID, "id,blockDevices[id,device,mountType,diskImage[id,metadataFlag,type[keyName]]]")
-		if err != nil {
-			subs := map[string]interface{}{"VsID": vsID}
-			return slErrors.NewAPIError(T("Failed to get virtual server instance: {{.VsID}}.", subs), err.Error(), 2)
-		}
-		blockDevices = getDisks(virtualGuest)
 
-	} else {
+	if len(cmd.BlockDevices) != 0 {
 		for _, blockDeviceId := range cmd.BlockDevices {
 			blockDevice := datatypes.Virtual_Guest_Block_Device{
 				Id: sl.Int(blockDeviceId),
 			}
 			blockDevices = append(blockDevices, blockDevice)
 		}
+	} else {
+		virtualGuest, err := cmd.VirtualServerManager.GetInstance(vsID, "id,blockDevices[id,device,mountType,diskImage[id,metadataFlag,type[keyName]]]")
+		if err != nil {
+			subs := map[string]interface{}{"VsID": vsID}
+			return slErrors.NewAPIError(T("Failed to get virtual server instance: {{.VsID}}.", subs), err.Error(), 2)
+		}
+		if cmd.All {
+			blockDevices = getDisks(virtualGuest, false)
+		} else {
+			blockDevices = getDisks(virtualGuest, true)
+		}
 	}
-
 	outputFormat := cmd.GetOutputFlag()
 
 	image, err := cmd.VirtualServerManager.CaptureImage(vsID, cmd.Name, cmd.Note, blockDevices)
@@ -98,7 +98,7 @@ func (cmd *CaptureCommand) Run(args []string) error {
 	return nil
 }
 
-func getDisks(vs datatypes.Virtual_Guest) []datatypes.Virtual_Guest_Block_Device {
+func getDisks(vs datatypes.Virtual_Guest, onlyPrimary bool) []datatypes.Virtual_Guest_Block_Device {
 	disks := []datatypes.Virtual_Guest_Block_Device{}
 	for _, disk := range vs.BlockDevices {
 		//We never want metadata disks
@@ -111,6 +111,10 @@ func getDisks(vs datatypes.Virtual_Guest) []datatypes.Virtual_Guest_Block_Device
 		}
 		//We never want CD images
 		if disk.MountType != nil && *disk.MountType == "CD" {
+			continue
+		}
+		//If onlyPrimary is true we only want disk 0 ID
+		if onlyPrimary && *disk.Device != "0" {
 			continue
 		}
 		disks = append(disks, disk)

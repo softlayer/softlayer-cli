@@ -59,14 +59,6 @@ var _ = Describe("VS capture", func() {
 			})
 		})
 
-		Context("VS capture without --all or --device", func() {
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--name=imageName")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--all|--device' is required"))
-			})
-		})
-
 		Context("VS capture fails to get VS info", func() {
 			BeforeEach(func() {
 				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{}, errors.New("Internal Server Error"))
@@ -118,6 +110,16 @@ var _ = Describe("VS capture", func() {
 									KeyName: sl.String("SYSTEM"),
 								},
 							},
+							Device: sl.String("0"),
+						},
+						datatypes.Virtual_Guest_Block_Device{
+							DiskImage: &datatypes.Virtual_Disk_Image{
+								MetadataFlag: sl.Bool(false),
+								Type: &datatypes.Virtual_Disk_Image_Type{
+									KeyName: sl.String("SYSTEM"),
+								},
+							},
+							Device: sl.String("4"),
 						},
 					},
 				}, nil)
@@ -127,7 +129,7 @@ var _ = Describe("VS capture", func() {
 					Note:       sl.String("-"),
 				}, nil)
 			})
-			It("return no error", func() {
+			It("--device option", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage", "--device", "111111")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
@@ -135,8 +137,16 @@ var _ = Describe("VS capture", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-30T00:00:00Z"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("-"))
 			})
-			It("return no error", func() {
+			It("--all option", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage", "--all")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("12345678"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-30T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("-"))
+			})
+			It("only system disk", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-n", "myimage")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("12345678"))
