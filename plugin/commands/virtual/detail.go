@@ -112,7 +112,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	if localDisks != nil && len(localDisks) > 0 {
 		buf := new(bytes.Buffer)
-		drivesTable := terminal.NewTable(buf, []string{T("type"), T("name"), T("drive"), T("capacity")})
+		drivesTable := terminal.NewTable(buf, []string{T("id"), T("type"), T("name"), T("drive"), T("capacity")})
 		for _, localDisk := range localDisks {
 			diskType := "System"
 			diskCapacity := 0
@@ -132,6 +132,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 				diskUnits = ""
 			}
 			drivesTable.Add(
+				utils.FormatIntPointer(localDisk.Id),
 				diskType,
 				utils.FormatStringPointer(localDisk.MountType),
 				utils.FormatStringPointer(localDisk.Device),
