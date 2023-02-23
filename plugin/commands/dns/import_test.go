@@ -1,16 +1,76 @@
 package dns_test
 
 import (
-	"os"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+	"github.com/softlayer/softlayer-go/datatypes"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
+var defaultCreateZoneReturn = datatypes.Dns_Domain{
+	Id: sl.Int(12345),
+	Name: sl.String("default.com"),
+}
+
+var defaultResourceRecordReturn = datatypes.Dns_Domain_ResourceRecord{
+	Id: sl.Int(99999),
+	DomainId: sl.Int(12345),
+	Host: sl.String("www.default.com"),
+	Type: sl.String("A"),
+	Data: sl.String("192.168.1.1"),
+	Ttl: sl.Int(100),
+}
+
+
+// See `plugin/testfixtures/dns_import.bind` for where these come from
+var complexZoneArgs = []datatypes.Dns_Domain_ResourceRecord{
+	datatypes.Dns_Domain_ResourceRecord{
+		DomainId: sl.Int(12345), Host: sl.String("@"),
+		Type: sl.String("MX"), Ttl: sl.Int(1814400),
+		Data: sl.String("mail.example.com."),
+	},
+	datatypes.Dns_Domain_ResourceRecord{
+		DomainId: sl.Int(12345), Host: sl.String("@"),
+		Type: sl.String("MX"), Ttl: sl.Int(1814400),
+		Data: sl.String("mail.example.net."),
+	},
+	datatypes.Dns_Domain_ResourceRecord{
+		DomainId: sl.Int(12345), Host: sl.String("ns1"),
+		Type: sl.String("A"), Ttl: sl.Int(1814400),
+		Data: sl.String("192.168.254.2"),
+	},
+	datatypes.Dns_Domain_ResourceRecord{
+		DomainId: sl.Int(12345), Host: sl.String("mail"),
+		Type: sl.String("A"), Ttl: sl.Int(1814400),
+		Data: sl.String("192.168.254.4"),
+	},
+	datatypes.Dns_Domain_ResourceRecord{
+		DomainId: sl.Int(12345), Host: sl.String("joe"),
+		Type: sl.String("A"), Ttl: sl.Int(1814400),
+		Data: sl.String("192.168.254.6"),
+	},
+	datatypes.Dns_Domain_ResourceRecord{
+		DomainId: sl.Int(12345), Host: sl.String("www"),
+		Type: sl.String("A"), Ttl: sl.Int(1814400),
+		Data: sl.String("192.168.254.7"),
+	},
+	datatypes.Dns_Domain_ResourceRecord{
+		DomainId: sl.Int(12345), Host: sl.String("ftp"),
+		Type: sl.String("CNAME"), Ttl: sl.Int(1814400),
+		Data: sl.String("ftp.example.net."),
+	},
+	datatypes.Dns_Domain_ResourceRecord{
+		DomainId: sl.Int(12345), Host: sl.String("@"),
+		Type: sl.String("TXT"), Ttl: sl.Int(3600),
+		Data: sl.String("v=spf1 includespf.dynect.net ~all"),
+	},
+}
+
 
 var _ = Describe("DNS Import", func() {
 	var (
@@ -46,75 +106,52 @@ var _ = Describe("DNS Import", func() {
 		})
 
 		Context("DNS send a file import", func() {
-
-			dirFile := os.TempDir() + "/file.txt"
-
+			BeforeEach(func() {
+				fakeDNSManager.CreateZoneReturns(defaultCreateZoneReturn, nil)
+				fakeDNSManager.CreateResourceRecordReturns(defaultResourceRecordReturn, nil)
+				fakeDNSManager.ResourceRecordCreateReturns(defaultResourceRecordReturn, nil)
+			})
 			It("send a empty file", func() {
-				file, _ := os.Create(dirFile)
-				err := testhelpers.RunCobraCommand(cliCommand.Command, file.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/empty_file.bind")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to parse file."))
 				Expect(err.Error()).To(ContainSubstring("Unable to parse zone from BIND file."))
 			})
 
-			content := `$ORIGIN`
+			
 			It("no send a TTL in the file", func() {
-				file, _ := os.Create(dirFile)
-				file.WriteString(content)
-				err := testhelpers.RunCobraCommand(cliCommand.Command, file.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/no_ttl.bind")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to parse file."))
 				Expect(err.Error()).To(ContainSubstring("dns: not a TTL: \"$ORIGIN\" at line: 1:7"))
 			})
 
-			content_ := `$ORIGIN dal06.bluemix.ibmcsf.net.
-$TTL 900
-@ IN SOA ns1.softlayer.com. support.softlayer.com. (
-					2014121600        ; Serial
-					7200              ; Refresh
-					600               ; Retry
-					1728000           ; Expire
-					43200)            ; Minimum
-
-@                      900      IN NS    ns1.softlayer.com.
-@                      900      IN NS    ns2.softlayer.com.
-
-@                      900      IN MX 10 mail.dal06.bluemix.ibmcsf.net.
-
-txt                    900      IN TXT   bcr01.dal06.bluemix.ibmcsf.net
-@                      900      IN A     127.0.0.1
-ftp                    86400    IN A     127.0.0.1
-mail                   86400    IN A     127.0.0.1
-webmail                86400    IN A     127.0.0.1
-www                    86400    IN A     127.0.0.1
-`
 			It("send a good file with --dry-run argument", func() {
-				file, _ := os.Create(dirFile)
-				file.WriteString(content_)
-				err := testhelpers.RunCobraCommand(cliCommand.Command, file.Name(), "--dry-run")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/dns_import_2.bind", "--dry-run")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 			})
 
-			content__ := `$ORIGIN dal06.bluemix.ibmcsf.net.
-$TTL 900
-@ IN SOA ns1.softlayer.com. support.softlayer.com. (
-					2014121600        ; Serial
-					7200              ; Refresh
-					600               ; Retry
-					1728000           ; Expire
-					43200)            ; Minimum
-@                      900      IN NS    ns1.softlayer.com.
-@                      900      IN NS    ns2.softlayer.com.
-`
 			It("send a good file", func() {
-				file, _ := os.Create(dirFile)
-				file.WriteString(content__)
-				err := testhelpers.RunCobraCommand(cliCommand.Command, file.Name())
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/dns_import_3.bind")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Zone  was created."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Zone default.com was created."))
 			})
-			os.Remove(dirFile)
+
+			It("Complex Bind File", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/dns_import.bind")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Zone default.com was created."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Created resource record under zone example.com: ID=99999,"))
+				for i := 0; i < 8; i++ {
+					apiCall := fakeDNSManager.ResourceRecordCreateArgsForCall(i)
+					Expect(apiCall.DomainId).To(Equal(complexZoneArgs[i].DomainId))
+					Expect(apiCall.Type).To(Equal(complexZoneArgs[i].Type))
+					Expect(apiCall.Host).To(Equal(complexZoneArgs[i].Host))
+					Expect(apiCall.Ttl).To(Equal(complexZoneArgs[i].Ttl))
+					Expect(apiCall.Data).To(Equal(complexZoneArgs[i].Data))
+				}
+			})
 		})
 	})
 })

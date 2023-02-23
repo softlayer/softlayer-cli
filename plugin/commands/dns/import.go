@@ -1,11 +1,9 @@
 package dns
 
 import (
-	"io/ioutil"
-	"strconv"
+	"os"
 	"strings"
-
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"bytes"
 
 	"github.com/miekg/dns"
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -15,6 +13,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -49,11 +48,11 @@ EXAMPLE:
 }
 
 func (cmd *ImportCommand) Run(args []string) error {
-	bytes, err := ioutil.ReadFile(args[0])
+	bytes, err := os.ReadFile(args[0])
 	if err != nil {
 		return errors.NewAPIError(T("Failed to read file: {{.FilePath}}.\n", map[string]interface{}{"FilePath": args[0]}), err.Error(), 2)
 	}
-	zone, records, err := parseFileContent(string(bytes))
+	zone, records, err := parseFileContent(bytes, args[0])
 	if err != nil {
 		return errors.NewAPIError(T("Failed to parse file.\n"), err.Error(), 2)
 	}
@@ -65,20 +64,23 @@ func (cmd *ImportCommand) Run(args []string) error {
 
 	dnsDomain, err := cmd.DNSManager.CreateZone(*zone.Name) //parseFileContent can guarantee zone.name is not nil
 	if err != nil {
+
 		return errors.NewAPIError(T("Failed to create zone: {{.ZoneName}}.\n", map[string]interface{}{"ZoneName": *zone.Name}), err.Error(), 2)
 	}
+
 	cmd.UI.Print(T("Zone {{.Zone}} was created.", map[string]interface{}{"Zone": utils.StringPointertoString(dnsDomain.Name)}))
 
 	var multiErrors []error
 	for _, record := range records {
-		rr, err := cmd.DNSManager.CreateResourceRecord(*dnsDomain.Id, *record.Host, *record.Type, *record.Data, *record.Ttl)
+		record.DomainId = dnsDomain.Id
+		rr, err := cmd.DNSManager.ResourceRecordCreate(record)
 		if err != nil {
 			newError := errors.New(T("Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}",
-				map[string]interface{}{"Zone": zone, "RecordType": *rr.Type, "Host": *rr.Host, "Data": *rr.Data, "Ttl": *rr.Ttl, "ErrorMessage": err.Error()}))
+				map[string]interface{}{"Zone": zone.Name, "RecordType": *rr.Type, "Host": *rr.Host, "Data": *rr.Data, "Ttl": *rr.Ttl, "ErrorMessage": err.Error()}))
 			multiErrors = append(multiErrors, newError)
 		} else {
 			cmd.UI.Print(T("Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
-				map[string]interface{}{"Zone": zone, "ID": *rr.Id, "RecordType": *rr.Type, "Host": *rr.Host, "Data": *rr.Data, "Ttl": *rr.Ttl}))
+				map[string]interface{}{"Zone": zone.Name, "ID": *rr.Id, "RecordType": *rr.Type, "Host": *rr.Host, "Data": *rr.Data, "Ttl": *rr.Ttl}))
 		}
 	}
 
@@ -88,57 +90,70 @@ func (cmd *ImportCommand) Run(args []string) error {
 	return nil
 }
 
-func parseFileContent(content string) (datatypes.Dns_Domain, []datatypes.Dns_Domain_ResourceRecord, error) {
+func parseFileContent(content []byte, filename string) (datatypes.Dns_Domain, []datatypes.Dns_Domain_ResourceRecord, error) {
 	zone := datatypes.Dns_Domain{}
 	records := []datatypes.Dns_Domain_ResourceRecord{}
-	lines := strings.Split(content, "\n")
-	if strings.HasPrefix(lines[0], "$ORIGIN") {
-		zone.Name = sl.String(strings.TrimRight(strings.Replace(lines[0], "$ORIGIN", "", -1), "."))
-	} else {
-		return datatypes.Dns_Domain{}, nil, errors.New(T("Unable to parse zone from BIND file."))
-	}
-	for x := range dns.ParseZone(strings.NewReader(content), "", "") {
-		if x.Error != nil {
-			return datatypes.Dns_Domain{}, nil, x.Error
+	// Top Level Domain: AKA $ORIGIN
+	tld := ""
+	zoneParser := dns.NewZoneParser(bytes.NewReader(content), "", filename)
+
+	for rr, ok := zoneParser.Next(); ok; rr, ok = zoneParser.Next() {
+		header := rr.Header()
+		// Not really a good way to do this outside of this loop that I could find.
+		if tld == "" {
+			tld = strings.TrimSuffix(header.Name, ".")
+			zone.Name = sl.String(tld)
+
 		}
 		record := datatypes.Dns_Domain_ResourceRecord{Domain: &zone}
-		//fmt.Println("RR", x.RR.String())
-		arrs := strings.Split(x.RR.String(), "\t")
-		fqdn := strings.TrimSuffix(strings.TrimSpace(arrs[0]), "\t")
-		domain := strings.TrimSpace(*zone.Name)
-		index := strings.Index(fqdn, domain)
-		host := ""
-		if index > 0 {
-			host = strings.TrimRight(fqdn[0:index], ".")
-		}
-		if host == "" {
+		// This is the full record name. `www.example.com`
+		fqdn := strings.TrimSuffix(header.Name, ".")
+		// Just the domain part. `www`
+		domain := strings.TrimSuffix(fqdn, tld)
+		if domain == "" {
 			record.Host = sl.String("@")
 		} else {
-			record.Host = sl.String(host)
+			record.Host = sl.String(strings.TrimSuffix(domain, "."))
 		}
-		record.Type = sl.String(dns.Type(x.RR.Header().Rrtype).String())
-		record.Ttl = sl.Int(int(x.RR.Header().Ttl))
-		if *record.Type == "SOA" {
-			continue //skip SOA record in records
-		} else if *record.Type == "NS" {
-			record.Data = sl.String(arrs[4])
+
+		record.Type = sl.String(dns.TypeToString[header.Rrtype])
+		record.Ttl = sl.Int(int(header.Ttl))
+
+		switch rr.(type) {
+		case *dns.NS:
 			if *record.Host == "@" {
-				continue // skip the 2 default ns records
+				continue
 			}
-		} else if *record.Type == "MX" {
-			ss := strings.Split(arrs[4], " ")
-			priority := 10
-			priority, _ = strconv.Atoi(ss[0])
-			record.Priority = sl.Int(priority)
-			record.Data = sl.String(ss[1])
-		} else if *record.Type == "TXT" {
-			record.Data = sl.String(strings.Trim(arrs[4], "\""))
-		} else {
-			record.Data = sl.String(arrs[4])
+			record.Data = sl.String(rr.(*dns.NS).Ns)
+		case *dns.CNAME:
+			record.Data = sl.String(rr.(*dns.CNAME).Target)
+		case *dns.MX:
+			priority := int(rr.(*dns.MX).Preference)
+			record.Data = sl.String(rr.(*dns.MX).Mx)
+			record.MxPriority = sl.Int(priority)
+		case *dns.TXT:
+			data := strings.Join(rr.(*dns.TXT).Txt, " ")
+			record.Data = sl.String(strings.Trim(data, "\""))
+		case *dns.SOA:
+			continue
+		default:
+			if dns.NumField(rr) < 1 {
+				record.Data = sl.String(rr.String())
+			}
+			record.Data = sl.String(dns.Field(rr, 1))
+
 		}
-		//fmt.Println("zone:", *record.Domain.Name, "\thost:", *record.Host, "\ttype:", *record.Type, "\tttl:", *record.Ttl, "\tdata:", *record.Data)
-		//fmt.Println()
 		records = append(records, record)
+
+	}
+
+	// Detect any errors in parsing the Zone file
+	if err := zoneParser.Err(); err != nil {
+		return datatypes.Dns_Domain{}, nil, err
+	}
+	// This zone file was empty, but the dns library doesn't consider that an error.
+	if tld == "" && len(records) == 0 {
+		return datatypes.Dns_Domain{}, nil, errors.New(T("Unable to parse zone from BIND file."))
 	}
 	zone.ResourceRecords = records
 	return zone, records, nil

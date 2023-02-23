@@ -28,6 +28,7 @@ type DNSManager interface {
 	DeleteZone(zoneId int) error
 	DumpZone(zoneId int) (string, error)
 	CreateResourceRecord(zoneId int, host string, recordType string, data string, ttl int) (datatypes.Dns_Domain_ResourceRecord, error)
+	ResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecord) (datatypes.Dns_Domain_ResourceRecord, error)
 	DeleteResourceRecord(recordId int) error
 	GetResourceRecord(recordId int) (datatypes.Dns_Domain_ResourceRecord, error)
 	ListResourceRecords(zoneId int, recordType string, host string, data string, ttl int, mask string) ([]datatypes.Dns_Domain_ResourceRecord, error)
@@ -130,6 +131,16 @@ func (dns DNSmanager) CreateResourceRecord(zoneId int, host string, recordType s
 		Ttl:      sl.Int(ttl),
 	}
 	return dns.ResourceRecordService.CreateObject(&record)
+}
+
+// A "simpler" method than CreateResourceRecord
+func (dns DNSmanager) ResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecord) (datatypes.Dns_Domain_ResourceRecord, error) {
+	// Make sure a TTL is set to something at least.
+	if *rr.Ttl == 0 {
+		rr.Ttl = sl.Int(3600)
+	}
+	return dns.ResourceRecordService.CreateObject(&rr)
+
 }
 
 //Delete a resource record by its ID
