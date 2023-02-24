@@ -1,31 +1,30 @@
 package dns_test
 
 import (
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-	"github.com/softlayer/softlayer-go/datatypes"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dns"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
+
 var defaultCreateZoneReturn = datatypes.Dns_Domain{
-	Id: sl.Int(12345),
+	Id:   sl.Int(12345),
 	Name: sl.String("default.com"),
 }
 
 var defaultResourceRecordReturn = datatypes.Dns_Domain_ResourceRecord{
-	Id: sl.Int(99999),
+	Id:       sl.Int(99999),
 	DomainId: sl.Int(12345),
-	Host: sl.String("www.default.com"),
-	Type: sl.String("A"),
-	Data: sl.String("192.168.1.1"),
-	Ttl: sl.Int(100),
+	Host:     sl.String("www.default.com"),
+	Type:     sl.String("A"),
+	Data:     sl.String("192.168.1.1"),
+	Ttl:      sl.Int(100),
 }
-
 
 // See `plugin/testfixtures/dns_import.bind` for where these come from
 var complexZoneArgs = []datatypes.Dns_Domain_ResourceRecord{
@@ -70,7 +69,6 @@ var complexZoneArgs = []datatypes.Dns_Domain_ResourceRecord{
 		Data: sl.String("v=spf1 includespf.dynect.net ~all"),
 	},
 }
-
 
 var _ = Describe("DNS Import", func() {
 	var (
@@ -118,7 +116,6 @@ var _ = Describe("DNS Import", func() {
 				Expect(err.Error()).To(ContainSubstring("Unable to parse zone from BIND file."))
 			})
 
-			
 			It("no send a TTL in the file", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/no_ttl.bind")
 				Expect(err).To(HaveOccurred())
