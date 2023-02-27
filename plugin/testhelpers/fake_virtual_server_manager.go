@@ -63,20 +63,20 @@ type FakeVirtualServerManager struct {
 		result1 []datatypes.Virtual_ReservedCapacityGroup
 		result2 error
 	}
-	CaptureImageStub        func(int, string, string, bool) (datatypes.Provisioning_Version1_Transaction, error)
+	CaptureImageStub        func(int, string, string, []datatypes.Virtual_Guest_Block_Device) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
 	captureImageMutex       sync.RWMutex
 	captureImageArgsForCall []struct {
 		arg1 int
 		arg2 string
 		arg3 string
-		arg4 bool
+		arg4 []datatypes.Virtual_Guest_Block_Device
 	}
 	captureImageReturns struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 datatypes.Virtual_Guest_Block_Device_Template_Group
 		result2 error
 	}
 	captureImageReturnsOnCall map[int]struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 datatypes.Virtual_Guest_Block_Device_Template_Group
 		result2 error
 	}
 	CreateDedicatedHostStub        func(string, string, string, string, string, int) (datatypes.Container_Product_Order_Receipt, error)
@@ -973,18 +973,23 @@ func (fake *FakeVirtualServerManager) CapacityListReturnsOnCall(i int, result1 [
 	}{result1, result2}
 }
 
-func (fake *FakeVirtualServerManager) CaptureImage(arg1 int, arg2 string, arg3 string, arg4 bool) (datatypes.Provisioning_Version1_Transaction, error) {
+func (fake *FakeVirtualServerManager) CaptureImage(arg1 int, arg2 string, arg3 string, arg4 []datatypes.Virtual_Guest_Block_Device) (datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
+	var arg4Copy []datatypes.Virtual_Guest_Block_Device
+	if arg4 != nil {
+		arg4Copy = make([]datatypes.Virtual_Guest_Block_Device, len(arg4))
+		copy(arg4Copy, arg4)
+	}
 	fake.captureImageMutex.Lock()
 	ret, specificReturn := fake.captureImageReturnsOnCall[len(fake.captureImageArgsForCall)]
 	fake.captureImageArgsForCall = append(fake.captureImageArgsForCall, struct {
 		arg1 int
 		arg2 string
 		arg3 string
-		arg4 bool
-	}{arg1, arg2, arg3, arg4})
+		arg4 []datatypes.Virtual_Guest_Block_Device
+	}{arg1, arg2, arg3, arg4Copy})
 	stub := fake.CaptureImageStub
 	fakeReturns := fake.captureImageReturns
-	fake.recordInvocation("CaptureImage", []interface{}{arg1, arg2, arg3, arg4})
+	fake.recordInvocation("CaptureImage", []interface{}{arg1, arg2, arg3, arg4Copy})
 	fake.captureImageMutex.Unlock()
 	if stub != nil {
 		return stub(arg1, arg2, arg3, arg4)
@@ -1001,41 +1006,41 @@ func (fake *FakeVirtualServerManager) CaptureImageCallCount() int {
 	return len(fake.captureImageArgsForCall)
 }
 
-func (fake *FakeVirtualServerManager) CaptureImageCalls(stub func(int, string, string, bool) (datatypes.Provisioning_Version1_Transaction, error)) {
+func (fake *FakeVirtualServerManager) CaptureImageCalls(stub func(int, string, string, []datatypes.Virtual_Guest_Block_Device) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)) {
 	fake.captureImageMutex.Lock()
 	defer fake.captureImageMutex.Unlock()
 	fake.CaptureImageStub = stub
 }
 
-func (fake *FakeVirtualServerManager) CaptureImageArgsForCall(i int) (int, string, string, bool) {
+func (fake *FakeVirtualServerManager) CaptureImageArgsForCall(i int) (int, string, string, []datatypes.Virtual_Guest_Block_Device) {
 	fake.captureImageMutex.RLock()
 	defer fake.captureImageMutex.RUnlock()
 	argsForCall := fake.captureImageArgsForCall[i]
 	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4
 }
 
-func (fake *FakeVirtualServerManager) CaptureImageReturns(result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+func (fake *FakeVirtualServerManager) CaptureImageReturns(result1 datatypes.Virtual_Guest_Block_Device_Template_Group, result2 error) {
 	fake.captureImageMutex.Lock()
 	defer fake.captureImageMutex.Unlock()
 	fake.CaptureImageStub = nil
 	fake.captureImageReturns = struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 datatypes.Virtual_Guest_Block_Device_Template_Group
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeVirtualServerManager) CaptureImageReturnsOnCall(i int, result1 datatypes.Provisioning_Version1_Transaction, result2 error) {
+func (fake *FakeVirtualServerManager) CaptureImageReturnsOnCall(i int, result1 datatypes.Virtual_Guest_Block_Device_Template_Group, result2 error) {
 	fake.captureImageMutex.Lock()
 	defer fake.captureImageMutex.Unlock()
 	fake.CaptureImageStub = nil
 	if fake.captureImageReturnsOnCall == nil {
 		fake.captureImageReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Provisioning_Version1_Transaction
+			result1 datatypes.Virtual_Guest_Block_Device_Template_Group
 			result2 error
 		})
 	}
 	fake.captureImageReturnsOnCall[i] = struct {
-		result1 datatypes.Provisioning_Version1_Transaction
+		result1 datatypes.Virtual_Guest_Block_Device_Template_Group
 		result2 error
 	}{result1, result2}
 }
