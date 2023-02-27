@@ -464,6 +464,10 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} access-list ID_VOLUME [OPTIONS]\n\nEJEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   Este mandato lista todos los hosts autorizados a acceder al volumen con ID 12345678 y los ordena por ID."
   },
   {
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID--password PASSWORD\n\nACCESS_ID es el allowed_host_id de '${COMMAND_NAME} sl {{.storageType}} access-list'"
+  },
+  {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\nEJEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   Este mandato revoca el acceso del servidor virtual con ID 87654321 al volumen con ID 12345678."
   },
@@ -594,6 +598,10 @@
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--resize-disk requires capacity and disk number values separated by one comma.",
+    "translation": "--resize-disk requiere valores de capacidad y número de disco separados por una coma."
   },
   {
     "id": "--server needs a port. {{.Server}} improperly formatted",
@@ -777,19 +785,19 @@
   },
   {
     "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
-    "translation": "Un valor de Hardware_Server.id o UUID del servidor deseado. Un valor correspondiente a un \nnombre de dominio completo exclusivo con el formato 'hostname < dominio>' donde < y > son literales, por ejemplo, myhost < midominio.com>"
+    "translation": "Un valor de Hardware_Server.id o UUID del servidor deseado. Un valor correspondiente a un \nnombre de dominio completo exclusivo con el formato 'hostname<domain>' donde < y > son literales, por ejemplo, myhost<mydomain.com>"
   },
   {
     "id": "A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.",
-    "translation": "Una dirección IPv4 de Network_Subnet_IpAddress.id, una dirección IPv4 con puntos o una dirección IPv6 completa o comprimida."
+    "translation": "Un Network_Subnet_IpAddress.id, una dirección IPv4 con puntos o una dirección IPv6 completa o comprimida."
   },
   {
     "id": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ",
-    "translation": "Un valor de Network_Vlan.id de la VLAN deseada o un identificador de VLAN semántica con el formato < nombre abreviado del centro de datos >. < ruta>. < número de vlan >, \neg. dal13.fcr01.1234 -el nombre de direccionador puede contener opcionalmente el calificador de redundancia 'a' o 'b' "
+    "translation": "Un valor de Network_Vlan.id de la VLAN deseada o un identificador de VLAN semántico con el formato <data center short name>.<router>.<vlan number>,\nej. dal13.fcr01.1234 - el nombre de direccionador puede contener opcionalmente el calificador de redundancia 'a' o 'b' "
   },
   {
     "id": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
-    "translation": "Un valor de Virtual_Guest.id o UUID del servidor deseado. Un valor correspondiente a un \nnombre de dominio completo exclusivo con el formato 'hostname < dominio>' donde < y > son literales, por ejemplo, myhost < midominio.com>"
+    "translation": "Un valor de Virtual_Guest.id o UUID del servidor deseado. Un valor correspondiente a un \nnombre de dominio completo exclusivo con el formato 'hostname<domain>' donde < y > son literales, por ejemplo, myhost<mydomain.com>"
   },
   {
     "id": "A custom name to be assigned to the quote (optional)",
@@ -888,6 +896,14 @@
     "translation": "Contabilidad"
   },
   {
+    "id": "Acknowledge Event. Doing so will turn off the popup in the control portal.",
+    "translation": "Reconocer suceso. Si lo hace, desactivará la ventana emergente en el portal de control."
+  },
+  {
+    "id": "Acknowledge every upcoming event. Doing so will turn off the popup in the control portal.",
+    "translation": "Reconocer cada uno de los próximos sucesos. Si lo hace, desactivará la ventana emergente en el portal de control."
+  },
+  {
     "id": "Acknowledged",
     "translation": "Aceptado"
   },
@@ -898,6 +914,10 @@
   {
     "id": "Active Conversion Start Timestamp",
     "translation": "Indicación de fecha y hora de inicio de conversión activa"
+  },
+  {
+    "id": "Add Hard disk in GB",
+    "translation": "Añadir disco duro en GB"
   },
   {
     "id": "Add a new L7 policy",
@@ -944,6 +964,10 @@
     "translation": "Añadir una nueva subred al contexto de túnel de IPSec"
   },
   {
+    "id": "Add access to subnet.",
+    "translation": "Añadir acceso a la subred."
+  },
+  {
     "id": "Add an address translation to an IPSec tunnel",
     "translation": "Añadir una conversión de dirección a un túnel de IPSec"
   },
@@ -954,6 +978,10 @@
   {
     "id": "Add notes for the image",
     "translation": "Añadir notas a la imagen"
+  },
+  {
+    "id": "Add or remove subnet access for a user.",
+    "translation": "Añada o elimine el acceso de subred de un usuario."
   },
   {
     "id": "Add resource record in a zone",
@@ -1005,7 +1033,7 @@
   },
   {
     "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
-    "translation": "Permite cambiar la ruta de las subredes secundarias. \nLas subredes se pueden direccionar como estáticas o portátiles, y esa designación la dicta el destino de direccionamiento especificado. \nLas subredes estáticas tienen un destino de direccionamiento final de una única dirección IP, pero no se pueden direccionar a una dirección IP de subred existente cuya subred se direcciona como una subred portátil. \nLas subredes portátiles tienen un destino de direccionamiento final de una VLAN. \nUna subred se puede direccionar a cualquier recurso dentro de la misma 'región de direccionamiento' que la propia subred. normalmente limitado a un único centro de datos. \n \nConsulte también: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n ${COMMAND_NAME} sl subnet route 1234567 -- ip 11.22.33.44\n ${COMMAND_NAME} sl subnet route 1234567 -- server myUniqueHostname < domain.com> \n ${COMMAND_NAME} sl subnet route 1234567 -- vsi vsiId \n ${COMMAND_NAME} sl subnet route 1234567 -- vlan vlanId \n \n"
+    "translation": "Permite cambiar la ruta de las subredes secundarias. \nLas subredes se pueden direccionar como Estáticas o Portátiles, y esa designación la dicta el destino de direccionamiento especificado. \nLas subredes estáticas tienen un destino de direccionamiento final de una única dirección IP, pero no se pueden direccionar a una dirección IP de subred existente cuya subred se direcciona como una subred Portátil. \nLas subredes Portátiles tienen un destino de direccionamiento final de una VLAN. \nUna subred se puede direccionar a cualquier recurso dentro de la misma 'región de direccionamiento' que la propia subred, generalmente limitado a un único centro de datos. \n\nConsulte también: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEJEMPLO:\n ${COMMAND_NAME} sl subnet route 1234567 -- ip 11.22.33.44\n ${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>n ${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n ${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n"
   },
   {
     "id": "Amount",
@@ -1018,6 +1046,10 @@
   {
     "id": "An IP address to authorize",
     "translation": "Dirección IP que se va a autorizar"
+  },
+  {
+    "id": "An IP address to authorize.",
+    "translation": "Una dirección IP para autorizar."
   },
   {
     "id": "An IP address to revoke",
@@ -1098,6 +1130,10 @@
   {
     "id": "Authorize hosts  to access a given volume",
     "translation": "Autorizar que los hosts accedan a un volumen determinado"
+  },
+  {
+    "id": "Authorize hosts to access a given volume.",
+    "translation": "Autorizar que los hosts accedan a un volumen determinado."
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1452,6 +1488,10 @@
     "translation": "Cambiar cómo se direcciona una subred secundaria."
   },
   {
+    "id": "Changes a password for a volume's access.",
+    "translation": "Cambia una contraseña para un acceso de volumen."
+  },
+  {
     "id": "Check if a virtual server instance is ready for use",
     "translation": "Comprobar si hay una instancia de servidor virtual lista para su uso"
   },
@@ -1592,6 +1632,10 @@
     "translation": "Columna a visualizar. Las opciones son: id, hostname, domain, primary_ip, backend_ip. Esta opción se puede especificar varias veces"
   },
   {
+    "id": "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.",
+    "translation": "Columna a visualizar. Las opciones son: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. Esta opción se puede especificar varias veces."
+  },
+  {
     "id": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times",
     "translation": "Columna que se va a mostrar. Las opciones son: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. Esta opción se puede especificar varias veces"
   },
@@ -1612,6 +1656,10 @@
     "translation": "Columna por la que se ordena"
   },
   {
+    "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
+    "translation": "Columna por la que ordenar (ID, Nombre, Centro de datos, Direccionador, Cpu, Memoria, Disco, Invitados) [valor predeterminado: Id]"
+  },
+  {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
     "translation": "Columna por la que ordenar (type, hostname, publicIn, publicOut, privateIn, privateOut, pool) [predeterminado: publicOut]"
   },
@@ -1630,6 +1678,10 @@
   {
     "id": "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip",
     "translation": "Columna por la que se debe ordenar. Las opciones son: id, hostname, domain, primary_ip, backend_ip"
+  },
+  {
+    "id": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.",
+    "translation": "Columna por la que se debe ordenar. Las opciones son: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
   },
   {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
@@ -1785,7 +1837,7 @@
   },
   {
     "id": "Cpu (allocated/total)",
-    "translation": "cpu (asignada/total)"
+    "translation": "Cpu (asignada/total)"
   },
   {
     "id": "Cpu Count",
@@ -2104,6 +2156,10 @@
     "translation": "Inhabilitar la interfaz IPMI."
   },
   {
+    "id": "Disable vpn subnets manual config.",
+    "translation": "Inhabilitar configuración manual de subredes vpn."
+  },
+  {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "Inhabilitado: el umbral de uso de espacio de instantáneas está inhabilitado para el volumen '{{.ID}}'."
   },
@@ -2117,7 +2173,7 @@
   },
   {
     "id": "Disk (allocated/total)",
-    "translation": "disco (asignado/total)"
+    "translation": "Disco (asignado/total)"
   },
   {
     "id": "Disk Capacity",
@@ -2192,6 +2248,10 @@
     "translation": "Mostrar los invitados virtuales a los que tiene acceso este usuario"
   },
   {
+    "id": "Displays bandwidth pool information.",
+    "translation": "Muestra información de agrupación de ancho de banda."
+  },
+  {
     "id": "Do not actually create the dedicatedhost",
     "translation": "No crear realmente el host dedicado"
   },
@@ -2250,6 +2310,10 @@
   {
     "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
     "translation": "EJEMPLO: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    Este comando solicita presupuesto para una VSI con 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04 y un enlace ascendente público y privado de 1 Gbps en el centro de datos dal13"
+  },
+  {
+    "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
+    "translation": "Fecha más temprana para recuperar los sucesos [AAAA-MM-DD]. Valor predeterminado: hace 2 días."
   },
   {
     "id": "Edit SSL certificate",
@@ -2384,6 +2448,10 @@
     "translation": "Habilitar o inhabilitar permisos específicos"
   },
   {
+    "id": "Enable or disable user vpn subnets manual config.",
+    "translation": "Habilite o inhabilite la configuración manual de subredes vpn de usuario."
+  },
+  {
     "id": "Enable snapshot notification.",
     "translation": "Habilitar notificación de instantáneas."
   },
@@ -2394,6 +2462,10 @@
   {
     "id": "Enable the IPMI interface.",
     "translation": "Habilitar la interfaz IPMI."
+  },
+  {
+    "id": "Enable vpn subnets manual config.",
+    "translation": "Habilitar la configuración manual de subredes vpn."
   },
   {
     "id": "Enabled: Snapshots space usage threshold is enabled for volume '{{.ID}}'.",
@@ -2558,6 +2630,10 @@
   {
     "id": "Failed to Order the dedicatedhost.",
     "translation": "No se ha podido solicitar el host dedicado."
+  },
+  {
+    "id": "Failed to acknowledge event.",
+    "translation": "No se ha podido reconocer el suceso."
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -2764,6 +2840,10 @@
     "translation": "No se ha podido crear la conversión para la IPSec con ID {{.ID}}.\n"
   },
   {
+    "id": "Failed to create user vpn override.",
+    "translation": "No se ha podido crear la alteración temporal de vpn de usuario."
+  },
+  {
     "id": "Failed to create virtual server instance.\n",
     "translation": "No se ha podido crear la instancia de servidor virtual.\n"
   },
@@ -2834,6 +2914,10 @@
   {
     "id": "Failed to delete snapshot {{.ID}}.\n",
     "translation": "No se ha podido suprimir la instantánea {{.ID}}.\n"
+  },
+  {
+    "id": "Failed to delete user vpn override.",
+    "translation": "No se ha podido suprimir la alteración temporal de vpn de usuario."
   },
   {
     "id": "Failed to delete user.\n",
@@ -3004,6 +3088,14 @@
     "translation": "Error al obtener las cuentas de entrega de mensajes de red."
   },
   {
+    "id": "Failed to get Order.",
+    "translation": "No se ha podido obtener el pedido."
+  },
+  {
+    "id": "Failed to get Pods.",
+    "translation": "No se han podido obtener los pods."
+  },
+  {
     "id": "Failed to get Pods.\n",
     "translation": "No se han podido obtener los pods. \n"
   },
@@ -3022,6 +3114,10 @@
   {
     "id": "Failed to get Recalculated Order Container.\n",
     "translation": "No se ha podido obtener el contenedor de pedidos recalculado.\n"
+  },
+  {
+    "id": "Failed to get Routers.",
+    "translation": "No se han podido obtener los direccionadores."
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3064,12 +3160,16 @@
     "translation": "No se han podido obtener todos los centros de datos.\n"
   },
   {
+    "id": "Failed to get announcement event ID.",
+    "translation": "No se ha podido obtener el ID de suceso e anuncio."
+  },
+  {
     "id": "Failed to get announcement events.",
     "translation": "No se han podido obtener sucesos de anuncio."
   },
   {
     "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "No se ha podido obtener el detalle de asignación de ancho de banda para el servidor de hardware {{.ID}}. \n"
+    "translation": "No se ha podido obtener el detalle de asignación de ancho de banda del servidor de hardware {{.ID}}.\n"
   },
   {
     "id": "Failed to get bare metal servers.\n",
@@ -3077,7 +3177,7 @@
   },
   {
     "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "No se ha podido obtener el uso del ancho de banda del ciclo de facturación para el servidor de hardware {{.ID}}. \n"
+    "translation": "No se ha podido obtener el uso del ancho de banda del ciclo de facturación del servidor de hardware {{.ID}}.\n"
   },
   {
     "id": "Failed to get billing items.",
@@ -3248,6 +3348,10 @@
     "translation": "No se ha podido obtener el grupo de colocación: {{.ID}}."
   },
   {
+    "id": "Failed to get planned event ID.",
+    "translation": "No se ha podido obtener el ID de suceso planificado."
+  },
+  {
     "id": "Failed to get planned events.",
     "translation": "No se han podido obtener sucesos planificados."
   },
@@ -3368,12 +3472,20 @@
     "translation": "No se ha podido obtener conversión con ID {{.TransID}} de la IPSec {{.ID}}."
   },
   {
+    "id": "Failed to get unplanned event ID.",
+    "translation": "No se ha podido obtener el ID de suceso no planificado."
+  },
+  {
     "id": "Failed to get unplanned events.",
     "translation": "No se han podido obtener sucesos no planificados."
   },
   {
     "id": "Failed to get user permissions.\n",
     "translation": "No se han podido obtener los permisos de usuario.\n"
+  },
+  {
+    "id": "Failed to get user vpn overrides.",
+    "translation": "No se han podido obtener las alteraciones temporales de vpn de usuario."
   },
   {
     "id": "Failed to get user.",
@@ -3844,6 +3956,10 @@
     "translation": "No se ha podido actualizar la IPSec {{.ContextID}}.\n"
   },
   {
+    "id": "Failed to update VPN user.",
+    "translation": "No se ha podido actualizar el usuario de VPN."
+  },
+  {
     "id": "Failed to update access.\n",
     "translation": "No se ha podido actualizar el acceso.\n"
   },
@@ -3978,6 +4094,10 @@
   {
     "id": "Failed to write virtual server template file to: {{.Template}}.",
     "translation": "No se ha podido escribir el archivo de plantilla de servidor virtual en: {{.Template}}."
+  },
+  {
+    "id": "Failed to {{.action}} user vpn subnets manual config",
+    "translation": "No se han podido configurar manualmente las subredes de vpn de usuario de {{.action}}"
   },
   {
     "id": "Failover a {{.storageType}} volume to the given replica volume",
@@ -4266,6 +4386,10 @@
   {
     "id": "Force operation without confirmation",
     "translation": "Forzar la operación sin confirmación"
+  },
+  {
+    "id": "Force the volume refresh, will cancel any ongoing transactions.",
+    "translation": "Forzar la renovación del volumen cancelará las transacciones en curso."
   },
   {
     "id": "Forces the virtual server to only have access the private network",
@@ -4580,6 +4704,14 @@
     "translation": "Cada hora"
   },
   {
+    "id": "How many invoices to get back.",
+    "translation": "El número de facturas que se devolverán."
+  },
+  {
+    "id": "How many results to get in one api call.",
+    "translation": "El número de resultados que se obtendrán en una llamada de api."
+  },
+  {
     "id": "Http Port",
     "translation": "Puerto Http"
   },
@@ -4704,6 +4836,10 @@
     "translation": "Id"
   },
   {
+    "id": "Identifier",
+    "translation": "Identificador"
+  },
+  {
     "id": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
     "translation": "Si un volumen (con replicación) quedara inaccesible por un suceso catastrófico, este método se podrá utilizar para\nmigrar tras error de forma inmediata a una réplica disponible en otra ubicación. Este método no permite la migración tras error a través del API. \nPara migrar tras error al volumen original después de utilizar este método, abra una incidencia de soporte. \nPara probar la migración tras error, utilice '${COMMAND_NAME} sl {{.storageType}} replica-failover' en su lugar. \n \nEJEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n Este comando realiza la operación de migración tras error del volumen con ID 12345678 al volumen de réplica con ID 87654321."
   },
@@ -4749,7 +4885,7 @@
   },
   {
     "id": "In GB",
-    "translation": "en GB"
+    "translation": "En GB"
   },
   {
     "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
@@ -4762,6 +4898,10 @@
   {
     "id": "Include extra resources. Options are: at,is,rs,sr,ss",
     "translation": "Incluir recursos adicionales. Las opciones son: at,is,rs,sr,ss"
+  },
+  {
+    "id": "Include invoices with a CLOSED status.",
+    "translation": "Incluir facturas con un estado CLOSED."
   },
   {
     "id": "Incorrect Usage",
@@ -4782,6 +4922,10 @@
   {
     "id": "Init parameter",
     "translation": "Parámetro Init"
+  },
+  {
+    "id": "Initial Invoice",
+    "translation": "Factura inicial"
   },
   {
     "id": "Initial object ID number to attach to ticket",
@@ -4834,6 +4978,10 @@
   {
     "id": "Invalid datacenter name specified. Please provide the lower case short name (e.g.: dal09).",
     "translation": "Nombre de centro de datos especificado no válido. Proporcione el nombre abreviado en minúsculas (por ejemplo: dal09)."
+  },
+  {
+    "id": "Invalid disk number to this disk capacity",
+    "translation": "Número de disco no válido para esta capacidad de disco"
   },
   {
     "id": "Invalid firewall type {{.Type}}: firewall type should be either vlan, multiVlan, vs or server.",
@@ -4900,6 +5048,10 @@
     "translation": "Importe de la factura"
   },
   {
+    "id": "Invoice Total Amount",
+    "translation": "Importe total de factura"
+  },
+  {
     "id": "Invoice details.",
     "translation": "Detalles de la factura."
   },
@@ -4918,6 +5070,10 @@
   {
     "id": "Item",
     "translation": "Elemento"
+  },
+  {
+    "id": "Item Description",
+    "translation": "Descripción del elemento"
   },
   {
     "id": "Item Id",
@@ -5208,12 +5364,20 @@
     "translation": "Listar los servidores hardware"
   },
   {
+    "id": "List hosts that are authorized to access the volume.",
+    "translation": "Listar los hosts que están autorizados a acceder al volumen."
+  },
+  {
     "id": "List information about devices using the tag.",
     "translation": "Listar información sobre los dispositivos que utilizan la etiqueta."
   },
   {
     "id": "List interfaces associated with security group",
     "translation": "Listar interfaces asociadas al grupo de seguridad"
+  },
+  {
+    "id": "List invoices.",
+    "translation": "Listar facturas."
   },
   {
     "id": "List l7 rules",
@@ -5401,7 +5565,7 @@
   },
   {
     "id": "Memory (allocated/total)",
-    "translation": "memoria (asignada/total)"
+    "translation": "Memoria (asignada/total)"
   },
   {
     "id": "Memory Capacity",
@@ -5474,6 +5638,10 @@
   {
     "id": "Multiple users found with the name: %s",
     "translation": "Se han encontrado varios usuarios con el nombre: %s"
+  },
+  {
+    "id": "Must provide [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] or [--flavor] to upgrade.",
+    "translation": "Debe proporcionar [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] o [--flavor] para actualizar."
   },
   {
     "id": "Must set either -n|--network-component or both -s|--server and -i|--interface",
@@ -5864,12 +6032,20 @@
     "translation": "Las opciones para -p|--protocol son: icmp,tcp,udp"
   },
   {
+    "id": "Order Approval Date",
+    "translation": "Fecha de aprobación de pedido"
+  },
+  {
     "id": "Order ID: {{.OrderID}}",
     "translation": "ID de pedido: {{.OrderID}}"
   },
   {
     "id": "Order IPv6 Addresses",
     "translation": "Solicitar direcciones IPv6"
+  },
+  {
+    "id": "Order Total Amount",
+    "translation": "Importe total del pedido"
   },
   {
     "id": "Order a IPSec VPN tunnel",
@@ -6004,6 +6180,10 @@
     "translation": "GB de salida"
   },
   {
+    "id": "Override created, but unable to update VPN user.",
+    "translation": "Se ha creado una alteración temporal, pero no se ha podido actualizar el usuario de VPN."
+  },
+  {
     "id": "Owner",
     "translation": "Propietario"
   },
@@ -6062,6 +6242,10 @@
   {
     "id": "Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol",
     "translation": "Se ha establecido la contraseña para este usuario. Si no se proporciona una contraseña, se envía al usuario un correo electrónico para que genere una, que caduca en 24 horas. Especifique la opción '-p generate' para que se genere una contraseña. La contraseña debe contener 8 o más caracteres, mayúsculas y minúsculas, un número y un símbolo"
+  },
+  {
+    "id": "Password you want to set, this command will fail if the password is not strong. [required]",
+    "translation": "Contraseña que desea establecer, este mandato fallará si la contraseña no es segura. [obligatorio]"
   },
   {
     "id": "Path",
@@ -6468,6 +6652,10 @@
     "translation": "Proveedor"
   },
   {
+    "id": "Provides some details related to order owner, date order, cost information, initial invoice.",
+    "translation": "Proporciona algunos detalles relacionados con el propietario del pedido, orden de fecha, información de coste, factura inicial."
+  },
+  {
     "id": "Provisioned",
     "translation": "Suministrado"
   },
@@ -6600,6 +6788,10 @@
     "translation": "Redirigir"
   },
   {
+    "id": "Reference Code",
+    "translation": "Código de referencia"
+  },
+  {
     "id": "Reflash server firmware.",
     "translation": "Volver a ejecutar flash de firmware de servidor."
   },
@@ -6678,6 +6870,10 @@
   {
     "id": "Remove access from a user to an specific device",
     "translation": "Eliminar el acceso de un usuario a un dispositivo específico"
+  },
+  {
+    "id": "Remove access to subnet.",
+    "translation": "Eliminar el acceso a la subred."
   },
   {
     "id": "Remove block storage subnets to the given host id.",
@@ -6788,8 +6984,16 @@
     "translation": "Recuperar credenciales utilizadas para generar una firma AWS. Máx. de 2."
   },
   {
+    "id": "Return ALL invoices. There may be a lot of these.",
+    "translation": "Devolver TODAS las facturas. Puede que haya haber muchas."
+  },
+  {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
     "translation": "Revocar autorización para hosts que acceden a un volumen específico"
+  },
+  {
+    "id": "Revoke authorization for hosts that are accessing a specific volume.",
+    "translation": "Revocar autorización para los hosts que acceden a un volumen específico."
   },
   {
     "id": "Role Name",
@@ -6814,6 +7018,10 @@
   {
     "id": "Router Id",
     "translation": "ID de direccionador"
+  },
+  {
+    "id": "Routers",
+    "translation": "Direccionadores"
   },
   {
     "id": "Rule",
@@ -7080,12 +7288,20 @@
     "translation": "Mostrar historial de inicios de sesión de este usuario durante las últimas 24 horas"
   },
   {
+    "id": "Show only announcement events.",
+    "translation": "Mostrar solo los sucesos de anuncio."
+  },
+  {
     "id": "Show only hourly instances",
     "translation": "Mostrar solo las instancias por hora"
   },
   {
     "id": "Show only monthly instances",
     "translation": "Mostrar solo las instancias mensuales"
+  },
+  {
+    "id": "Show only planned events.",
+    "translation": "Mostrar solo los sucesos planificados."
   },
   {
     "id": "Show only selected datacenter, use shortname (dal13) format",
@@ -7100,6 +7316,10 @@
     "translation": "Mostrar solo el resumen de ancho de banda de cada servidor virtual"
   },
   {
+    "id": "Show only unplanned events.",
+    "translation": "Mostrar solo los sucesos no planificados."
+  },
+  {
     "id": "Show passwords (check over your shoulder!)",
     "translation": "Mostrar contraseñas (revise por encima)"
   },
@@ -7110,6 +7330,10 @@
   {
     "id": "Shows a very detailed list of charges",
     "translation": "Muestra una lista muy detallada de cargos"
+  },
+  {
+    "id": "Shows a very detailed list of charges.",
+    "translation": "Muestra una lista muy detallada de cargos."
   },
   {
     "id": "Shows who gets notified when the server has a monitoring issues.",
@@ -7232,6 +7456,10 @@
     "translation": "Especifique el tipo de conexión: hardware o virtual. El valor predeterminado es hardware"
   },
   {
+    "id": "Speed",
+    "translation": "Velocidad"
+  },
+  {
     "id": "Start",
     "translation": "Iniciar"
   },
@@ -7324,8 +7552,16 @@
     "translation": "Se ha cancelado la subred {{.ID}}."
   },
   {
+    "id": "Subnet {{.subnetID}} is not assigned to User {{.userID}}",
+    "translation": "La subred {{.subnetID}} no está asignada al usuario {{.userID}}"
+  },
+  {
     "id": "Successful Login?",
     "translation": "¿Ha iniciado la sesión correctamente?"
+  },
+  {
+    "id": "Successfully added subnet access for user.",
+    "translation": "Se ha añadido correctamente el acceso de subred del usuario."
   },
   {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -7352,12 +7588,24 @@
     "translation": "Se ha eliminado correctamente la notificación de cliente de usuario."
   },
   {
+    "id": "Successfully removed subnet access for user.",
+    "translation": "Se ha eliminado correctamente el acceso de subred del usuario."
+  },
+  {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "Se ha eliminado satisfactoriamente el ID de subred: {{.subnetID}} para el ID de host permitido: {{.accessID}}"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "Se ha enviado correctamente la solicitud para conmutar la interfaz IPMI del servidor de hardware '{{.ID}}'."
+  },
+  {
+    "id": "Successfully {{.action}} user vpn subnets manual config",
+    "translation": "Configuración manual de subredes vpn de usuario de {{.action}} correcta"
+  },
+  {
+    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events.",
+    "translation": "Resumen y reconocimiento de los sucesos de mantenimiento próximos y en curso."
   },
   {
     "id": "Summary info about tickets",
@@ -7444,6 +7692,10 @@
     "translation": "Etiquetas para establecer o cadena vacía para eliminar todas (se permiten varias ocurrencias)."
   },
   {
+    "id": "Target",
+    "translation": "Destino"
+  },
+  {
     "id": "Target IP",
     "translation": "IP de destino"
   },
@@ -7468,6 +7720,10 @@
     "translation": "ID de una dirección IP que se va a autorizar"
   },
   {
+    "id": "The ID of one IP address to authorize.",
+    "translation": "El ID de una dirección IP para autorizar."
+  },
+  {
     "id": "The ID of one IP address to revoke",
     "translation": "ID de una dirección IP que se va a revocar"
   },
@@ -7476,12 +7732,20 @@
     "translation": "ID de un servidor de hardware que se va a autorizar"
   },
   {
+    "id": "The ID of one hardware server to authorize.",
+    "translation": "El ID de un servidor hardware para autorizar."
+  },
+  {
     "id": "The ID of one hardware server to revoke",
     "translation": "ID de un servidor de hardware que se va a revocar"
   },
   {
     "id": "The ID of one virtual server to authorize",
     "translation": "ID de un servidor virtual que se va a autorizar"
+  },
+  {
+    "id": "The ID of one virtual server to authorize.",
+    "translation": "El ID de un servidor virtual para autorizar."
   },
   {
     "id": "The ID of one virtual server to revoke",
@@ -7920,6 +8184,10 @@
     "translation": "No hay ningún invitado en el host dedicado {{.ID}}."
   },
   {
+    "id": "There is not available category to this disk size",
+    "translation": "No hay ninguna categoría disponible para este tamaño de disco"
+  },
+  {
     "id": "This account is the Master User and has all permissions enabled",
     "translation": "Esta cuenta es el usuario maestro y tiene habilitados todos los permisos"
   },
@@ -7938,6 +8206,10 @@
   {
     "id": "This command requires --add or --remove option.",
     "translation": "Este mandato requiere la opción --add o --remove."
+  },
+  {
+    "id": "This command requires --enable or --disable option.",
+    "translation": "Este mandato requiere la opción --enable o --disable."
   },
   {
     "id": "This command requires four arguments.",
@@ -8376,6 +8648,10 @@
     "translation": "No se ha podido añadir la actualización: {{.Error}}\n"
   },
   {
+    "id": "Update disk number to size in GB [capacity,diskNumber]. --resize-disk 250,2",
+    "translation": "Actualizar el número de disco al tamaño en GB [capacidad,númeroDisco]. --resize-disk 250,2"
+  },
+  {
     "id": "Update resource records in a zone",
     "translation": "Actualizar los registros de recursos en una zona"
   },
@@ -8474,6 +8750,10 @@
   {
     "id": "VIRTUAL",
     "translation": "VIRTUAL"
+  },
+  {
+    "id": "VLAN",
+    "translation": "VLAN"
   },
   {
     "id": "VLAN type",
@@ -8622,6 +8902,10 @@
   {
     "id": "Volume name",
     "translation": "Nombre de volumen"
+  },
+  {
+    "id": "Vs",
+    "translation": "Vs"
   },
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning",
@@ -8866,6 +9150,10 @@
   {
     "id": "certificate ID not found",
     "translation": "No se ha encontrado el ID de certificado"
+  },
+  {
+    "id": "closing soon: ",
+    "translation": "cierre en breve: "
   },
   {
     "id": "common_name",
