@@ -45,10 +45,15 @@ var _ = Describe("Email list Email", func() {
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("295324"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("test.test2@ibm.com"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Delivery of messages through e-mail"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("SENDGRID"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("test.test5@ibm.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Free TEST email account"))
 
+			})
+			It("return email list JSON", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=json")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Username": "test.test2@ibm.com",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"SMTP": "1"`))
 			})
 		})
 	})

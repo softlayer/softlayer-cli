@@ -48,17 +48,17 @@ type FakeEmailManager struct {
 		result1 datatypes.Network_Message_Delivery_Email_Sendgrid
 		result2 error
 	}
-	GetNetworkMessageDeliveryAccountsStub        func(string) ([]datatypes.Network_Message_Delivery, error)
+	GetNetworkMessageDeliveryAccountsStub        func(string) ([]datatypes.Network_Message_Delivery_Email_Sendgrid, error)
 	getNetworkMessageDeliveryAccountsMutex       sync.RWMutex
 	getNetworkMessageDeliveryAccountsArgsForCall []struct {
 		arg1 string
 	}
 	getNetworkMessageDeliveryAccountsReturns struct {
-		result1 []datatypes.Network_Message_Delivery
+		result1 []datatypes.Network_Message_Delivery_Email_Sendgrid
 		result2 error
 	}
 	getNetworkMessageDeliveryAccountsReturnsOnCall map[int]struct {
-		result1 []datatypes.Network_Message_Delivery
+		result1 []datatypes.Network_Message_Delivery_Email_Sendgrid
 		result2 error
 	}
 	GetStatisticsStub        func(int) ([]datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics, error)
@@ -278,7 +278,7 @@ func (fake *FakeEmailManager) GetInstanceReturnsOnCall(i int, result1 datatypes.
 	}{result1, result2}
 }
 
-func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccounts(arg1 string) ([]datatypes.Network_Message_Delivery, error) {
+func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccounts(arg1 string) ([]datatypes.Network_Message_Delivery_Email_Sendgrid, error) {
 	fake.getNetworkMessageDeliveryAccountsMutex.Lock()
 	ret, specificReturn := fake.getNetworkMessageDeliveryAccountsReturnsOnCall[len(fake.getNetworkMessageDeliveryAccountsArgsForCall)]
 	fake.getNetworkMessageDeliveryAccountsArgsForCall = append(fake.getNetworkMessageDeliveryAccountsArgsForCall, struct {
@@ -302,7 +302,7 @@ func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccountsCallCount() int {
 	return len(fake.getNetworkMessageDeliveryAccountsArgsForCall)
 }
 
-func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccountsCalls(stub func(string) ([]datatypes.Network_Message_Delivery, error)) {
+func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccountsCalls(stub func(string) ([]datatypes.Network_Message_Delivery_Email_Sendgrid, error)) {
 	fake.getNetworkMessageDeliveryAccountsMutex.Lock()
 	defer fake.getNetworkMessageDeliveryAccountsMutex.Unlock()
 	fake.GetNetworkMessageDeliveryAccountsStub = stub
@@ -315,28 +315,28 @@ func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccountsArgsForCall(i int
 	return argsForCall.arg1
 }
 
-func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccountsReturns(result1 []datatypes.Network_Message_Delivery, result2 error) {
+func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccountsReturns(result1 []datatypes.Network_Message_Delivery_Email_Sendgrid, result2 error) {
 	fake.getNetworkMessageDeliveryAccountsMutex.Lock()
 	defer fake.getNetworkMessageDeliveryAccountsMutex.Unlock()
 	fake.GetNetworkMessageDeliveryAccountsStub = nil
 	fake.getNetworkMessageDeliveryAccountsReturns = struct {
-		result1 []datatypes.Network_Message_Delivery
+		result1 []datatypes.Network_Message_Delivery_Email_Sendgrid
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccountsReturnsOnCall(i int, result1 []datatypes.Network_Message_Delivery, result2 error) {
+func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccountsReturnsOnCall(i int, result1 []datatypes.Network_Message_Delivery_Email_Sendgrid, result2 error) {
 	fake.getNetworkMessageDeliveryAccountsMutex.Lock()
 	defer fake.getNetworkMessageDeliveryAccountsMutex.Unlock()
 	fake.GetNetworkMessageDeliveryAccountsStub = nil
 	if fake.getNetworkMessageDeliveryAccountsReturnsOnCall == nil {
 		fake.getNetworkMessageDeliveryAccountsReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Network_Message_Delivery
+			result1 []datatypes.Network_Message_Delivery_Email_Sendgrid
 			result2 error
 		})
 	}
 	fake.getNetworkMessageDeliveryAccountsReturnsOnCall[i] = struct {
-		result1 []datatypes.Network_Message_Delivery
+		result1 []datatypes.Network_Message_Delivery_Email_Sendgrid
 		result2 error
 	}{result1, result2}
 }
