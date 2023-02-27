@@ -349,7 +349,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
-    "translation": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \n例:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 "
+    "translation": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \n例:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567"
   },
   {
     "id": "${COMMAND_NAME} sl ticket create [OPTIONS]\n\nEXAMPLE: \t\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"This is an example ticket. Please disregard.\"\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"This is an example ticket. Please disregard.\" --attachment 8675654 --attachment-type hardware --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"This is an example ticket. Please disregard.\" --attachment 1234567 --attachment-type virtual --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --attachment 8675654 --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522",
@@ -462,6 +462,10 @@
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 -- sortby id \n このコマンドは、ID 12345678 のボリュームへのアクセスを許可されているすべてのホストをリストし、ID でソートします。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
+    "translation": "${COMMAND_NAME}sl {{.storageType}} access-password ACCESS_ID--password PASSWORD \n \n ACCESS_ID は、「${COMMAND_NAME} sl {{.storageType}} access-list」からの allowed_host_id です。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -594,6 +598,10 @@
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--resize-disk requires capacity and disk number values separated by one comma.",
+    "translation": "-- resize-disk には、1 つのコンマで区切られた容量とディスク番号の値が必要です。"
   },
   {
     "id": "--server needs a port. {{.Server}} improperly formatted",
@@ -777,7 +785,7 @@
   },
   {
     "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
-    "translation": "目的のサーバーの Hardware_Server.id または UUID 値。 固有の完全修飾ドメイン名に対応する \n 値。形式は「hostname < domain>」です。ここで、< および> はリテラルです。例: myhost < mydomain.com>"
+    "translation": "目的のサーバーの Hardware_Server.id または UUID 値。 固有の完全修飾ドメイン名に対応する \n 値。形式は「hostname<domain>」です。ここで、< および> はリテラルです。例: myhost<mydomain.com>"
   },
   {
     "id": "A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.",
@@ -785,11 +793,11 @@
   },
   {
     "id": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ",
-    "translation": "希望する VLAN の Network_Vlan.id 値、または < data center short name>. < router>. < vlan number>, ¥ neg の形式のセマンティック VLAN ID。 dal13.fcr01.1234 -ルーター名には、オプションで「a」または「b」の冗長修飾子を含めることができます。 "
+    "translation": "希望する VLAN の Network_Vlan.id 値、または <data center short name>.<router>.<vlan number>\neg の形式のセマンティック VLAN ID。 dal13.fcr01.1234 - ルーター名には、オプションで「a」または「b」の冗長修飾子を含めることができます "
   },
   {
     "id": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
-    "translation": "目的のサーバーの Virtual_Guest.id または UUID 値。 固有の完全修飾ドメイン名に対応する \n 値。形式は「hostname < domain>」です。ここで、< および> はリテラルです。例: myhost < mydomain.com>"
+    "translation": "目的のサーバーの Virtual_Guest.id または UUID 値。 固有の完全修飾ドメイン名に対応する \n 値。形式は「hostname<domain>」です。ここで、< および> はリテラルです。例: myhost<mydomain.com>"
   },
   {
     "id": "A custom name to be assigned to the quote (optional)",
@@ -888,6 +896,14 @@
     "translation": "アカウンティング"
   },
   {
+    "id": "Acknowledge Event. Doing so will turn off the popup in the control portal.",
+    "translation": "イベントを確認します。 これを行うと、コントロール・ポータルのポップアップがオフになります。"
+  },
+  {
+    "id": "Acknowledge every upcoming event. Doing so will turn off the popup in the control portal.",
+    "translation": "今後のすべてのイベントを確認します。 これを行うと、コントロール・ポータルのポップアップがオフになります。"
+  },
+  {
     "id": "Acknowledged",
     "translation": "確認済み"
   },
@@ -898,6 +914,10 @@
   {
     "id": "Active Conversion Start Timestamp",
     "translation": "アクティブな変換開始タイム・スタンプ"
+  },
+  {
+    "id": "Add Hard disk in GB",
+    "translation": "ハード・ディスクの追加 (GB)"
   },
   {
     "id": "Add a new L7 policy",
@@ -944,6 +964,10 @@
     "translation": "IPSec トンネル・コンテキストにサブネットを追加します"
   },
   {
+    "id": "Add access to subnet.",
+    "translation": "サブネットへのアクセスを追加します。"
+  },
+  {
     "id": "Add an address translation to an IPSec tunnel",
     "translation": "IPSec トンネルにアドレス変換を追加します"
   },
@@ -954,6 +978,10 @@
   {
     "id": "Add notes for the image",
     "translation": "イメージのメモを追加します"
+  },
+  {
+    "id": "Add or remove subnet access for a user.",
+    "translation": "ユーザーのサブネット・アクセスを追加または削除します。"
   },
   {
     "id": "Add resource record in a zone",
@@ -1005,7 +1033,7 @@
   },
   {
     "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
-    "translation": "セカンダリー・サブネットの経路を変更できます。\n サブネットは静的またはポータブルとしてルーティングでき、その指定は指定されたルーティング宛先によって決定されます。\n 静的サブネットは、単一の IP アドレスの最終的なルーティング宛先を持ちますが、サブネットが Statictable として最終的にルーティングされる既存のサブネットの IP アドレスにはルーティングできません。\n サブネットの最終的なルーティング先を持つサブネット宛先を持つサブネット 通常は単一のデータ・センターに制限されます。\n \n 以下も参照してください。https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n ${COMMAND_NAME} sl subnet route 1234567 -- ip 11.22.33.44\n ${COMMAND_NAME} sl subnet route 1234567 -- server myUniqueHostname < domain.com> \n ${COMMAND_NAME} sl subnet route 1234567 -- vsi vsiId \n ${COMMAND_NAME} sl"
+    "translation": "セカンダリー・サブネットの経路を変更できます。\nサブネットは静的またはポータブルとしてルーティングでき、その指定は指定されたルーティング宛先によって決定されます。\n静的サブネットは、単一の IP アドレスの最終的なルーティング宛先を持ちますが、サブネットが静的として最終的にルーティングされる既存のサブネットの IP アドレスにはルーティングできません。\nポータブル サブネットには、VLAN の最終的なルーティング宛先があります。\nサブネットは、サブネット自体と同じ「ルーティング・リージョン」内の任意のリソースにルーティングできますが、通常は 1 つのデータ・センターに制限されます。\n\n以下も参照してください。https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n"
   },
   {
     "id": "Amount",
@@ -1018,6 +1046,10 @@
   {
     "id": "An IP address to authorize",
     "translation": "許可する IP アドレス"
+  },
+  {
+    "id": "An IP address to authorize.",
+    "translation": "許可する IP アドレス。"
   },
   {
     "id": "An IP address to revoke",
@@ -1098,6 +1130,10 @@
   {
     "id": "Authorize hosts  to access a given volume",
     "translation": "ホストに指定ボリュームへのアクセスを許可します"
+  },
+  {
+    "id": "Authorize hosts to access a given volume.",
+    "translation": "指定されたボリュームへのホストのアクセスを許可します。"
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1452,6 +1488,10 @@
     "translation": "セカンダリー・サブネットのルーティング方法を変更します。"
   },
   {
+    "id": "Changes a password for a volume's access.",
+    "translation": "ボリュームのアクセスのためのパスワードを変更します。"
+  },
+  {
     "id": "Check if a virtual server instance is ready for use",
     "translation": "Virtual Server インスタンスの使用準備ができているかどうかをチェックします"
   },
@@ -1592,6 +1632,10 @@
     "translation": "表示する列。 オプション: id、hostname、domain、primary_ip、backend_ip。 このオプションは複数回指定できます"
   },
   {
+    "id": "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.",
+    "translation": "表示する列。 オプション: id、name、type、private_ip_address、source_subnet、host_iqn、username、password、allowed_host_id。 このオプションは、複数回指定できます。"
+  },
+  {
     "id": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times",
     "translation": "表示する列。 オプション: id、hostname、domain、cpu、memory、public_ip、private_ip、datacenter、action、guid、power_state、created_by、tags。 このオプションは複数回指定できます"
   },
@@ -1612,6 +1656,10 @@
     "translation": "ソート基準の列"
   },
   {
+    "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
+    "translation": "ソート基準の列 (ID、名前、データ・センター、ルーター、CPU、メモリー、ディスク、ゲスト) [デフォルト: Id]"
+  },
+  {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
     "translation": "ソートする列 (type、hostname、publicIn、publicOut、privateIn、privateOut、pool) [デフォルト: publicOut]"
   },
@@ -1630,6 +1678,10 @@
   {
     "id": "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip",
     "translation": "ソートの基準にする列。 オプション: id、hostname、domain、primary_ip、backend_ip"
+  },
+  {
+    "id": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.",
+    "translation": "ソートの基準にする列。 オプション: id、name、type、private_ip_address、source_subnet、host_iqn、username、password、allowed_host_id。"
   },
   {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
@@ -2104,6 +2156,10 @@
     "translation": "IPMI インターフェースの無効化。"
   },
   {
+    "id": "Disable vpn subnets manual config.",
+    "translation": "VPN サブネットの手動構成を無効にします。"
+  },
+  {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "無効: ボリューム '{{.ID}}' のスナップショット・スペース使用量のしきい値が無効になっています。"
   },
@@ -2192,6 +2248,10 @@
     "translation": "このユーザーがアクセスできる仮想ゲストを表示します"
   },
   {
+    "id": "Displays bandwidth pool information.",
+    "translation": "帯域幅プール情報を表示します。"
+  },
+  {
     "id": "Do not actually create the dedicatedhost",
     "translation": "専用ホストを実際には作成しない"
   },
@@ -2250,6 +2310,10 @@
   {
     "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
     "translation": "例: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    このコマンドは、4つのCPU、16 GBのRAM、100 GBのSANディスク、Ubuntu 16.04、1 Gbpsのパブリック&プライベート・アップリンク(データセンターdal13内)のVSIに見積もりを配置します"
+  },
+  {
+    "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
+    "translation": "[YYYY-MM-DD] のイベントを取得する最も早い日付。 デフォルト: 2 日前。"
   },
   {
     "id": "Edit SSL certificate",
@@ -2384,6 +2448,10 @@
     "translation": "特定の許可を有効または無効にします"
   },
   {
+    "id": "Enable or disable user vpn subnets manual config.",
+    "translation": "ユーザー VPN サブネットの手動構成を有効または無効にします。"
+  },
+  {
     "id": "Enable snapshot notification.",
     "translation": "スナップショット通知を有効にします。"
   },
@@ -2394,6 +2462,10 @@
   {
     "id": "Enable the IPMI interface.",
     "translation": "IPMI インターフェースの有効化。"
+  },
+  {
+    "id": "Enable vpn subnets manual config.",
+    "translation": "VPN サブネットの手動構成を有効にします。"
   },
   {
     "id": "Enabled: Snapshots space usage threshold is enabled for volume '{{.ID}}'.",
@@ -2558,6 +2630,10 @@
   {
     "id": "Failed to Order the dedicatedhost.",
     "translation": "専用ホストの注文に失敗しました。"
+  },
+  {
+    "id": "Failed to acknowledge event.",
+    "translation": "イベントの確認に失敗しました。"
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -2764,6 +2840,10 @@
     "translation": "ID {{.ID}} の IPSec 用の変換の作成に失敗しました。\n"
   },
   {
+    "id": "Failed to create user vpn override.",
+    "translation": "ユーザー VPN オーバーライドの作成に失敗しました。"
+  },
+  {
     "id": "Failed to create virtual server instance.\n",
     "translation": "Virtual Server インスタンスの作成に失敗しました。\n"
   },
@@ -2834,6 +2914,10 @@
   {
     "id": "Failed to delete snapshot {{.ID}}.\n",
     "translation": "スナップショット {{.ID}} の削除に失敗しました。\n"
+  },
+  {
+    "id": "Failed to delete user vpn override.",
+    "translation": "ユーザー VPN オーバーライドの削除に失敗しました。"
   },
   {
     "id": "Failed to delete user.\n",
@@ -3004,6 +3088,14 @@
     "translation": "ネットワーク・メッセージ配信アカウントの取得に失敗しました。"
   },
   {
+    "id": "Failed to get Order.",
+    "translation": "注文の取得に失敗しました。"
+  },
+  {
+    "id": "Failed to get Pods.",
+    "translation": "ポッドの取得に失敗しました。"
+  },
+  {
     "id": "Failed to get Pods.\n",
     "translation": "ポッドの取得に失敗しました。\n"
   },
@@ -3022,6 +3114,10 @@
   {
     "id": "Failed to get Recalculated Order Container.\n",
     "translation": "再計算された注文コンテナーを取得できませんでした。\n"
+  },
+  {
+    "id": "Failed to get Routers.",
+    "translation": "ルーターの取得に失敗しました。"
   },
   {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
@@ -3064,12 +3160,16 @@
     "translation": "すべてのデータ・センターの取得に失敗しました。\n"
   },
   {
+    "id": "Failed to get announcement event ID.",
+    "translation": "アナウンス・イベント ID の取得に失敗しました。"
+  },
+  {
     "id": "Failed to get announcement events.",
     "translation": "アナウンス・イベントの取得に失敗しました。"
   },
   {
     "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "ハードウェア・サーバー {{.ID}}の帯域幅割り当ての詳細を取得できませんでした。\n"
+    "translation": "ハードウェア・サーバー{{.ID}}の帯域幅割り当ての詳細を取得できませんでした。\n"
   },
   {
     "id": "Failed to get bare metal servers.\n",
@@ -3077,7 +3177,7 @@
   },
   {
     "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "ハードウェア・サーバー {{.ID}}の請求サイクル帯域幅使用量を取得できませんでした。\n"
+    "translation": "ハードウェア・サーバー{{.ID}}の請求サイクル帯域幅使用量を取得できませんでした。\n"
   },
   {
     "id": "Failed to get billing items.",
@@ -3248,6 +3348,10 @@
     "translation": "配置グループの取得に失敗しました: {{.ID}}。"
   },
   {
+    "id": "Failed to get planned event ID.",
+    "translation": "計画されたイベント ID の取得に失敗しました。"
+  },
+  {
     "id": "Failed to get planned events.",
     "translation": "計画されたイベントの取得に失敗しました。"
   },
@@ -3368,12 +3472,20 @@
     "translation": "IPSec {{.ID}} からの ID {{.TransID}} の変換の取得に失敗しました。"
   },
   {
+    "id": "Failed to get unplanned event ID.",
+    "translation": "計画外のイベント ID の取得に失敗しました。"
+  },
+  {
     "id": "Failed to get unplanned events.",
     "translation": "計画外イベントの取得に失敗しました。"
   },
   {
     "id": "Failed to get user permissions.\n",
     "translation": "ユーザー権限の取得に失敗しました。\n"
+  },
+  {
+    "id": "Failed to get user vpn overrides.",
+    "translation": "ユーザー VPN オーバーライドの取得に失敗しました。"
   },
   {
     "id": "Failed to get user.",
@@ -3844,6 +3956,10 @@
     "translation": "IPSec {{.ContextID}} の更新に失敗しました。\n"
   },
   {
+    "id": "Failed to update VPN user.",
+    "translation": "VPN ユーザーの更新に失敗しました。"
+  },
+  {
     "id": "Failed to update access.\n",
     "translation": "アクセスの更新に失敗しました。\n"
   },
@@ -3978,6 +4094,10 @@
   {
     "id": "Failed to write virtual server template file to: {{.Template}}.",
     "translation": "Virtual Server テンプレート・ファイルを {{.Template}} に書き込めませんでした。"
+  },
+  {
+    "id": "Failed to {{.action}} user vpn subnets manual config",
+    "translation": "{{.action}}ユーザー VPN サブネットの手動構成に失敗しました"
   },
   {
     "id": "Failover a {{.storageType}} volume to the given replica volume",
@@ -4266,6 +4386,10 @@
   {
     "id": "Force operation without confirmation",
     "translation": "確認を求めずに操作を強制します"
+  },
+  {
+    "id": "Force the volume refresh, will cancel any ongoing transactions.",
+    "translation": "ボリュームを強制的にリフレッシュします。進行中のすべてのトランザクションを取り消します。"
   },
   {
     "id": "Forces the virtual server to only have access the private network",
@@ -4580,6 +4704,14 @@
     "translation": "毎時"
   },
   {
+    "id": "How many invoices to get back.",
+    "translation": "返送する請求書の数。"
+  },
+  {
+    "id": "How many results to get in one api call.",
+    "translation": "1 回の API 呼び出しで取得する結果の数。"
+  },
+  {
     "id": "Http Port",
     "translation": "HTTP ポート"
   },
@@ -4704,6 +4836,10 @@
     "translation": "ID"
   },
   {
+    "id": "Identifier",
+    "translation": "識別子"
+  },
+  {
     "id": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
     "translation": "災害イベントが原因でボリューム (複製あり) がアクセス不能になった場合、この方法を使用して、\n 別の場所にある使用可能なレプリカに即時にフェイルオーバーすることができます。 この方法では、API を介したフェイルバックは許可されません。\n この方法を使用した後で元のボリュームにフェイルバックするには、サポート・チケットを開きます。\n フェイルオーバーをテストするには、代わりに「${COMMAND_NAME} sl {{.storageType}} replica-failover」を使用します。\n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover-failover 12345678 87654321\n このコマンドは、レプリカ ID に対して 34438778 操作を実行します。"
   },
@@ -4764,6 +4900,10 @@
     "translation": "追加リソースを組み込みます。 オプション: at、is、rs、sr、ss"
   },
   {
+    "id": "Include invoices with a CLOSED status.",
+    "translation": "ステータスが CLOSED の請求書を含めます。"
+  },
+  {
     "id": "Incorrect Usage",
     "translation": "誤った使用法"
   },
@@ -4782,6 +4922,10 @@
   {
     "id": "Init parameter",
     "translation": "初期設定パラメーター"
+  },
+  {
+    "id": "Initial Invoice",
+    "translation": "初期請求書"
   },
   {
     "id": "Initial object ID number to attach to ticket",
@@ -4834,6 +4978,10 @@
   {
     "id": "Invalid datacenter name specified. Please provide the lower case short name (e.g.: dal09).",
     "translation": "指定されたデータ・センター名は無効です。 小文字の短縮名を指定してください (例: dal09)。"
+  },
+  {
+    "id": "Invalid disk number to this disk capacity",
+    "translation": "このディスク容量に対するディスク番号が無効です"
   },
   {
     "id": "Invalid firewall type {{.Type}}: firewall type should be either vlan, multiVlan, vs or server.",
@@ -4900,6 +5048,10 @@
     "translation": "送り状金額"
   },
   {
+    "id": "Invoice Total Amount",
+    "translation": "請求書合計金額"
+  },
+  {
     "id": "Invoice details.",
     "translation": "請求書の詳細。"
   },
@@ -4918,6 +5070,10 @@
   {
     "id": "Item",
     "translation": "項目"
+  },
+  {
+    "id": "Item Description",
+    "translation": "アイテムの説明 (Item Description)"
   },
   {
     "id": "Item Id",
@@ -5208,12 +5364,20 @@
     "translation": "ハードウェア・サーバーをリストします"
   },
   {
+    "id": "List hosts that are authorized to access the volume.",
+    "translation": "ボリュームへのアクセスが許可されているホストをリストします。"
+  },
+  {
     "id": "List information about devices using the tag.",
     "translation": "タグを使用してデバイスに関する情報をリストします。"
   },
   {
     "id": "List interfaces associated with security group",
     "translation": "セキュリティー・グループに関連付けられたインターフェースをリストします"
+  },
+  {
+    "id": "List invoices.",
+    "translation": "請求書をリストします。"
   },
   {
     "id": "List l7 rules",
@@ -5474,6 +5638,10 @@
   {
     "id": "Multiple users found with the name: %s",
     "translation": "次の名前の複数のユーザーが見つかりました: %s"
+  },
+  {
+    "id": "Must provide [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] or [--flavor] to upgrade.",
+    "translation": "アップグレードするには、[-- cpu]、[-- memory]、[-- network]、[-- add-disk]、[-- resize-disk]、または [-- flavor] を指定する必要があります。"
   },
   {
     "id": "Must set either -n|--network-component or both -s|--server and -i|--interface",
@@ -5864,12 +6032,20 @@
     "translation": "-p|--protocol のオプション: icmp、tcp、udp"
   },
   {
+    "id": "Order Approval Date",
+    "translation": "オーダー承認日"
+  },
+  {
     "id": "Order ID: {{.OrderID}}",
     "translation": "注文 ID: {{.OrderID}}"
   },
   {
     "id": "Order IPv6 Addresses",
     "translation": "IPv6 アドレスを注文します"
+  },
+  {
+    "id": "Order Total Amount",
+    "translation": "オーダー合計金額"
   },
   {
     "id": "Order a IPSec VPN tunnel",
@@ -6001,7 +6177,11 @@
   },
   {
     "id": "Out GB",
-    "translation": "出力 GB"
+    "translation": "アウト GB"
+  },
+  {
+    "id": "Override created, but unable to update VPN user.",
+    "translation": "オーバーライドが作成されましたが、VPN ユーザーを更新できません。"
   },
   {
     "id": "Owner",
@@ -6062,6 +6242,10 @@
   {
     "id": "Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol",
     "translation": "このユーザーに設定するパスワード。 パスワードが指定されていない場合は、パスワード生成のための E メールがユーザーに送信されます。このパスワードは 24 時間で有効期限が切れます。 '-p generate' オプションを指定すると、パスワードが生成されます。 パスワードは 8 文字以上で、英字の大文字と小文字、数字、記号で構成する必要があります"
+  },
+  {
+    "id": "Password you want to set, this command will fail if the password is not strong. [required]",
+    "translation": "設定するパスワード。パスワードが強くない場合、このコマンドは失敗します。[必須]"
   },
   {
     "id": "Path",
@@ -6468,6 +6652,10 @@
     "translation": "プロバイダー"
   },
   {
+    "id": "Provides some details related to order owner, date order, cost information, initial invoice.",
+    "translation": "オーダー・オーナー、日付オーダー、コスト情報、初期請求書に関連するいくつかの詳細を提供します。"
+  },
+  {
     "id": "Provisioned",
     "translation": "プロビジョン済み"
   },
@@ -6600,6 +6788,10 @@
     "translation": "リダイレクト"
   },
   {
+    "id": "Reference Code",
+    "translation": "参照コード"
+  },
+  {
     "id": "Reflash server firmware.",
     "translation": "サーバー・ファームウェアを再フラッシュします。"
   },
@@ -6678,6 +6870,10 @@
   {
     "id": "Remove access from a user to an specific device",
     "translation": "ユーザーから特定のデバイスへのアクセス権限を削除する"
+  },
+  {
+    "id": "Remove access to subnet.",
+    "translation": "サブネットへのアクセス権限を削除します。"
   },
   {
     "id": "Remove block storage subnets to the given host id.",
@@ -6788,8 +6984,16 @@
     "translation": "AWS 署名の生成に使用される資格情報を取得します。 最大 2。"
   },
   {
+    "id": "Return ALL invoices. There may be a lot of these.",
+    "translation": "すべての送り状を返します。 これらの多くが存在する可能性があります。"
+  },
+  {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
     "translation": "特定のボリュームにアクセスしているホストの許可を取り消します"
+  },
+  {
+    "id": "Revoke authorization for hosts that are accessing a specific volume.",
+    "translation": "特定のボリュームにアクセスしているホストの許可を取り消します。"
   },
   {
     "id": "Role Name",
@@ -6814,6 +7018,10 @@
   {
     "id": "Router Id",
     "translation": "ルーター ID"
+  },
+  {
+    "id": "Routers",
+    "translation": "ルーター"
   },
   {
     "id": "Rule",
@@ -7080,12 +7288,20 @@
     "translation": "このユーザーの過去 24 時間のログイン履歴を表示します"
   },
   {
+    "id": "Show only announcement events.",
+    "translation": "アナウンス・イベントのみを表示します。"
+  },
+  {
     "id": "Show only hourly instances",
     "translation": "時間単位のインスタンスのみを表示します"
   },
   {
     "id": "Show only monthly instances",
     "translation": "月単位のインスタンスのみを表示します"
+  },
+  {
+    "id": "Show only planned events.",
+    "translation": "計画されたイベントのみを表示します。"
   },
   {
     "id": "Show only selected datacenter, use shortname (dal13) format",
@@ -7100,6 +7316,10 @@
     "translation": "各仮想サーバーの帯域幅の要約のみを表示します"
   },
   {
+    "id": "Show only unplanned events.",
+    "translation": "計画外のイベントのみを表示します。"
+  },
+  {
     "id": "Show passwords (check over your shoulder!)",
     "translation": "パスワードを表示します (関係者以外への表示は推奨されません)"
   },
@@ -7110,6 +7330,10 @@
   {
     "id": "Shows a very detailed list of charges",
     "translation": "課金の非常に詳細なリストを表示します。"
+  },
+  {
+    "id": "Shows a very detailed list of charges.",
+    "translation": "料金の非常に詳細なリストを表示します。"
   },
   {
     "id": "Shows who gets notified when the server has a monitoring issues.",
@@ -7232,6 +7456,10 @@
     "translation": "タイプとして attachment、hardware、または virtual を指定します。 デフォルトは hardware です"
   },
   {
+    "id": "Speed",
+    "translation": "速度"
+  },
+  {
     "id": "Start",
     "translation": "開始"
   },
@@ -7324,8 +7552,16 @@
     "translation": "サブネット {{.ID}} は取り消されました。"
   },
   {
+    "id": "Subnet {{.subnetID}} is not assigned to User {{.userID}}",
+    "translation": "サブネット{{.subnetID}}はユーザー{{.userID}}に割り当てられていません"
+  },
+  {
     "id": "Successful Login?",
     "translation": "ログイン成功?"
+  },
+  {
+    "id": "Successfully added subnet access for user.",
+    "translation": "ユーザーのサブネット・アクセスが正常に追加されました。"
   },
   {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -7352,12 +7588,24 @@
     "translation": "ユーザー・カスタマー通知が正常に削除されました。"
   },
   {
+    "id": "Successfully removed subnet access for user.",
+    "translation": "ユーザーのサブネット・アクセスが正常に削除されました。"
+  },
+  {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "サブネット ID {{.subnetID}}を許可されたホスト ID {{.accessID}}に正常に削除しました"
   },
   {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "ハードウェア・サーバー '{{.ID}}' の IPMI インターフェースの切り替えの要求を正常に送信しました。"
+  },
+  {
+    "id": "Successfully {{.action}} user vpn subnets manual config",
+    "translation": "{{.action}}個のユーザー VPN サブネットの手動構成が正常に完了しました"
+  },
+  {
+    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events.",
+    "translation": "今後予定されている保守イベントと進行中の保守イベントの要約と確認応答。"
   },
   {
     "id": "Summary info about tickets",
@@ -7444,6 +7692,10 @@
     "translation": "設定するタグ、または、すべて削除する場合は空ストリング (複数のオカレンスが許可されます)。"
   },
   {
+    "id": "Target",
+    "translation": "ターゲット"
+  },
+  {
     "id": "Target IP",
     "translation": "ターゲット IP"
   },
@@ -7468,6 +7720,10 @@
     "translation": "許可する 1 つの IP アドレスの ID"
   },
   {
+    "id": "The ID of one IP address to authorize.",
+    "translation": "許可する 1 つの IP アドレスの ID。"
+  },
+  {
     "id": "The ID of one IP address to revoke",
     "translation": "取り消す 1 つの IP アドレスの ID"
   },
@@ -7476,12 +7732,20 @@
     "translation": "許可する 1 つのハードウェア・サーバーの ID"
   },
   {
+    "id": "The ID of one hardware server to authorize.",
+    "translation": "許可する 1 つのハードウェア・サーバーの ID。"
+  },
+  {
     "id": "The ID of one hardware server to revoke",
     "translation": "取り消す 1 つのハードウェア・サーバーの ID"
   },
   {
     "id": "The ID of one virtual server to authorize",
     "translation": "許可する 1 つの Virtual Server の ID"
+  },
+  {
+    "id": "The ID of one virtual server to authorize.",
+    "translation": "許可する 1 つの仮想サーバーの ID。"
   },
   {
     "id": "The ID of one virtual server to revoke",
@@ -7920,6 +8184,10 @@
     "translation": "専用ホスト {{.ID}}にゲストがありません。"
   },
   {
+    "id": "There is not available category to this disk size",
+    "translation": "このディスク・サイズには使用可能なカテゴリーがありません"
+  },
+  {
     "id": "This account is the Master User and has all permissions enabled",
     "translation": "このアカウントはマスター・ユーザーであり、すべての許可が有効です"
   },
@@ -7938,6 +8206,10 @@
   {
     "id": "This command requires --add or --remove option.",
     "translation": "このコマンドには -- add または -- remove オプションが必要です。"
+  },
+  {
+    "id": "This command requires --enable or --disable option.",
+    "translation": "このコマンドには -- enable または --disable オプションが必要です。"
   },
   {
     "id": "This command requires four arguments.",
@@ -8376,6 +8648,10 @@
     "translation": "更新を追加できませんでした: {{.Error}}\n"
   },
   {
+    "id": "Update disk number to size in GB [capacity,diskNumber]. --resize-disk 250,2",
+    "translation": "ディスク番号を GB 単位のサイズに更新します [容量、diskNumber]。-- resize-disk 250,2"
+  },
+  {
     "id": "Update resource records in a zone",
     "translation": "ゾーン内のリソース・レコードを更新します"
   },
@@ -8474,6 +8750,10 @@
   {
     "id": "VIRTUAL",
     "translation": "VIRTUAL"
+  },
+  {
+    "id": "VLAN",
+    "translation": "VLAN"
   },
   {
     "id": "VLAN type",
@@ -8622,6 +8902,10 @@
   {
     "id": "Volume name",
     "translation": "ボリューム名"
+  },
+  {
+    "id": "Vs",
+    "translation": "Vs"
   },
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning",
@@ -8866,6 +9150,10 @@
   {
     "id": "certificate ID not found",
     "translation": "証明書 ID が見つかりませんでした"
+  },
+  {
+    "id": "closing soon: ",
+    "translation": "まもなく終了します: "
   },
   {
     "id": "common_name",
