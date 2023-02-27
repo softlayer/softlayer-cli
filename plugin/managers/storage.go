@@ -108,6 +108,7 @@ type StorageManager interface {
 	GetSubnetsInAcl(accessID int, mask string) ([]datatypes.Network_Subnet, error)
 	AssignSubnetsToAcl(accessID int, subnets []int) ([]int, error)
 	RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error)
+	GetNetworkMessageDeliveryAccounts(storageId int, mask string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error)
 }
 
 type storageManager struct {
@@ -902,4 +903,29 @@ func (s storageManager) AssignSubnetsToAcl(accessID int, subnets []int) ([]int, 
 // subnets: subnets IDs to be assigned
 func (s storageManager) RemoveSubnetsFromAcl(accessID int, subnets []int) ([]int, error) {
 	return s.AllowedHostService.Id(accessID).RemoveSubnetsFromAcl(subnets)
+}
+
+/*
+Retrieve a SoftLayer_Network_Storage_Hub_Cleversafe_Account record.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getObject/
+*/
+func (s storageManager) GetNetworkMessageDeliveryAccounts(storageId int, mask string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error) {
+	if mask == "" {
+		mask = "mask[uuid,credentials]"
+	}
+
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(s.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Id(storageId).Mask(mask).GetObject()
+}
+
+/*
+Returns a collection of endpoint URLs available to this IBM Cloud Object Storage account.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getEndpoints/
+*/
+func (s storageManager) GetEndpoints(storageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error) {
+
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(s.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Id(storageId).GetEndpoints(nil)
 }
