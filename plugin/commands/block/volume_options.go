@@ -59,40 +59,40 @@ func (cmd *VolumeOptionsCommand) Run(args []string) error {
 
 	datacentersByPackage, err := cmd.StorageManager.GetRegions(PACKAGE_ID)
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get all datacenters by PackageId."), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get all datacenters."), err.Error(), 2)
 	}
 
 	storagePackages, err := cmd.StorageManager.ListItems(PACKAGE_ID, CATEGORY_CODE_STORAGE_PAGKAGE, "")
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get all storages packages."), err.Error(), 2)
+		return slErr.NewAPIError(T("API Error."), err.Error(), 2)
 	}
 
 	osTypes, err := cmd.StorageManager.GetOsType()
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get all os types."), err.Error(), 2)
+		return slErr.NewAPIError(T("API Error."), err.Error(), 2)
 	}
 
 	maskIops := "mask[id,keyName,description,locationConflicts]"
 	iopsLevels, err := cmd.StorageManager.ListItems(PACKAGE_ID, CATEGORY_CODE_IOPS, maskIops)
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get all iops tier level."), err.Error(), 2)
+		return slErr.NewAPIError(T("API Error."), err.Error(), 2)
 	}
 
 	iopsPackages, err := cmd.StorageManager.ListItems(PACKAGE_ID, CATEGORY_CODE_IOPS_PAGKAGE, "")
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get all iops packages."), err.Error(), 2)
+		return slErr.NewAPIError(T("API Error."), err.Error(), 2)
 	}
 
 	// Get datacenters to Iops locations conflicts
 	datacenters, err := cmd.StorageManager.GetAllDatacenters()
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get all datacenters."), err.Error(), 2)
+		return slErr.NewAPIError(T("API Error."), err.Error(), 2)
 	}
 
 	// Get closing pods
 	pods, err := cmd.NetworkManager.GetClosingPods()
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get Pods."), err.Error(), 2)
+		return slErr.NewAPIError(T("API Error."), err.Error(), 2)
 	}
 
 	// Tables
