@@ -15,10 +15,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-var (
-	volumeSizes = []string{"20", "40", "80", "100", "250", "500", "1000", "2000-3000", "4000-7000", "8000-9000", "10000-12000"}
-)
-
 type VolumeOptionsCommand struct {
 	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
@@ -100,7 +96,6 @@ func (cmd *VolumeOptionsCommand) Run(args []string) error {
 	tableStorage := cmd.UI.Table([]string{T("Storage"), T("Description"), T("KeyName")})
 	tableSnapshot := cmd.UI.Table([]string{T("Snapshot"), T("Description"), T("KeyName")})
 	tableIopsRange := cmd.UI.Table([]string{T("Storage"), T("Range")})
-	tableSnapshotRules := cmd.UI.Table([]string{T("Rules Snapshot - Storage Size (GB)"), T("Available Snapshot Size (GB)")})
 	tableOsTypes := cmd.UI.Table([]string{T("OS Type"), T("KeyName"), T("Description")})
 	tableIops := cmd.UI.Table([]string{T("IOPS"), T("KeyName"), T("Description"), T("Location Conflicts")})
 
@@ -163,21 +158,7 @@ func (cmd *VolumeOptionsCommand) Run(args []string) error {
 	println()
 
 	tableSnapshot.Print()
-	println()
-
-	// Snapshot rules table
-	tableSnapshotRules.Add(volumeSizes[0], "0,5,10,20")
-	tableSnapshotRules.Add(volumeSizes[1], "0,5,10,20,40")
-	tableSnapshotRules.Add(volumeSizes[2], "0,5,10,20,40,60,80")
-	tableSnapshotRules.Add(volumeSizes[3], "0,5,10,20,40,60,80,100")
-	tableSnapshotRules.Add(volumeSizes[4], "0,5,10,20,40,60,80,100,150,200,250")
-	tableSnapshotRules.Add(volumeSizes[5], "0,5,10,20,40,60,80,100,150,200,250,300,350,400,450,500")
-	tableSnapshotRules.Add(volumeSizes[6], "0,5,10,20,40,60,80,100,150,200,250,300,350,400,450,500,600,700,1000")
-	tableSnapshotRules.Add(volumeSizes[7], "0,5,10,20,40,60,80,100,150,200,250,300,350,400,450,500,600,700,1000,2000")
-	tableSnapshotRules.Add(volumeSizes[8], "0,5,10,20,40,60,80,100,150,200,250,300,350,400,450,500,600,700,1000,2000,4000")
-	tableSnapshotRules.Add(volumeSizes[9], "0,5,10,20,40,60,80,100,150,200,250,300,350,400,450,500,600,700,1000,2000,4000")
-	tableSnapshotRules.Add(volumeSizes[10], "0,5,10,20,40,60,80,100,150,200,250,300,350,400,450,500,600,700,1000,2000,4000")
-	tableSnapshotRules.Print()
+	println("The snapshot size must be equal to or less than the chosen storage, and of the following sizes:\n0,5,10,20,40,60,80,100,150,200,250,300,350,400,450,500,600,700,1000,2000,4000")
 	println()
 
 	// Os type table
