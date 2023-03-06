@@ -41,6 +41,7 @@ var availableCommands = []string{
 	"notifications-add",
 	"notifications-delete",
 	"options",
+	"os-available",
 	"pause",
 	"power-off",
 	"power-on",

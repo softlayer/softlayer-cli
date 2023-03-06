@@ -110,6 +110,7 @@ var BlockDeviceReturns = []datatypes.Virtual_Guest_Block_Device{
 		},
 		MountType: sl.String("Disk"),
 		Device:    sl.String("1"),
+		Id:        sl.Int(111111),
 	},
 }
 
@@ -120,7 +121,7 @@ var _ = Describe("VS detail", func() {
 		fakeSession   *session.Session
 		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
-		fakeTransport       *testhelpers.FakeTransportHandler
+		fakeTransport *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
@@ -195,6 +196,7 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Hourly"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("C1_2X2X25"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("PRIMARY"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("root"))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("password4root"))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("1000.00"))

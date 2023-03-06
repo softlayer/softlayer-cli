@@ -74,7 +74,7 @@ type VirtualServerManager interface {
 	GetInstance(id int, mask string) (datatypes.Virtual_Guest, error)
 	GetDedicatedHost(hostId int) (datatypes.Virtual_DedicatedHost, error)
 	GetLikedInstance(virtualGuest *datatypes.Virtual_Guest, id int) (*datatypes.Virtual_Guest, error)
-	CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error)
+	CaptureImage(vsId int, imageName string, imageNote string, imageBlockDevices []datatypes.Virtual_Guest_Block_Device) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
 	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
 	GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
 	PauseInstance(id int) error
@@ -737,37 +737,9 @@ func (vs virtualServerManager) GetLikedInstance(virtualGuest *datatypes.Virtual_
 //vsId: ID of instance
 //imageName: name of the image to be created
 //imageNote: note of the image to be created
-//allDisk: set to true to include all additional attached storage devices
-func (vs virtualServerManager) CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error) {
-	vsi, err := vs.GetInstance(vsId, "id,blockDevices[id,device,mountType,diskImage[id,metadataFlag,type[keyName]]]")
-	if err != nil {
-		return datatypes.Provisioning_Version1_Transaction{}, err
-	}
-	return vs.VirtualGuestService.Id(vsId).CreateArchiveTransaction(sl.String(imageName), getDisks(vsi, allDisk), sl.String(imageNote))
-}
-
-func getDisks(vs datatypes.Virtual_Guest, all bool) []datatypes.Virtual_Guest_Block_Device {
-	disks := []datatypes.Virtual_Guest_Block_Device{}
-	for _, disk := range vs.BlockDevices {
-		//We never want metadata disks
-		if disk.DiskImage != nil && disk.DiskImage.MetadataFlag != nil && *disk.DiskImage.MetadataFlag == true {
-			continue
-		}
-		//We never want swap devices
-		if disk.DiskImage != nil && disk.DiskImage.Type != nil && disk.DiskImage.Type.KeyName != nil && *disk.DiskImage.Type.KeyName == "SWAP" {
-			continue
-		}
-		//We never want CD images
-		if disk.MountType != nil && *disk.MountType == "CD" {
-			continue
-		}
-		//Only use the first block device if we don't want additional disks
-		if !all && disk.Device != nil && *disk.Device != "0" {
-			continue
-		}
-		disks = append(disks, disk)
-	}
-	return disks
+//imageBlockDevices: image block devices to be created
+func (vs virtualServerManager) CaptureImage(vsId int, imageName string, imageNote string, imageBlockDevices []datatypes.Virtual_Guest_Block_Device) (datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
+	return vs.VirtualGuestService.Id(vsId).CreateArchiveTemplate(&imageName, imageBlockDevices, &imageNote)
 }
 
 //Retrieve a list of all virtual servers on the account.

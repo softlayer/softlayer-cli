@@ -110,6 +110,7 @@ type StorageManager interface {
 	GetOsType() ([]datatypes.Network_Storage_Iscsi_OS_Type, error)
 	ListItems(packageId int, categoryCode string, mask string) ([]datatypes.Product_Item, error)
 	GetRegions(packageId int) ([]datatypes.Location_Region, error)
+	GetNetworkMessageDeliveryAccounts(storageId int, mask string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error)
 }
 
 type storageManager struct {
@@ -926,4 +927,29 @@ List datacenters by packgeId
 */
 func (s storageManager) GetRegions(packageId int) ([]datatypes.Location_Region, error) {
 	return s.PackageService.Id(packageId).GetRegions()
+}
+
+/*
+Retrieve a SoftLayer_Network_Storage_Hub_Cleversafe_Account record.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getObject/
+*/
+func (s storageManager) GetNetworkMessageDeliveryAccounts(storageId int, mask string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error) {
+	if mask == "" {
+		mask = "mask[uuid,credentials]"
+	}
+
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(s.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Id(storageId).Mask(mask).GetObject()
+}
+
+/*
+Returns a collection of endpoint URLs available to this IBM Cloud Object Storage account.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage_Hub_Cleversafe_Account/getEndpoints/
+*/
+func (s storageManager) GetEndpoints(storageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error) {
+
+	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(s.Session)
+
+	return NetworkStorageHubCleversafeAccountService.Id(storageId).GetEndpoints(nil)
 }

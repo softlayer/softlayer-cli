@@ -225,6 +225,20 @@ type FakeStorageManager struct {
 		result1 []datatypes.Network_Storage
 		result2 error
 	}
+	GetNetworkMessageDeliveryAccountsStub        func(int, string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error)
+	getNetworkMessageDeliveryAccountsMutex       sync.RWMutex
+	getNetworkMessageDeliveryAccountsArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getNetworkMessageDeliveryAccountsReturns struct {
+		result1 datatypes.Network_Storage_Hub_Cleversafe_Account
+		result2 error
+	}
+	getNetworkMessageDeliveryAccountsReturnsOnCall map[int]struct {
+		result1 datatypes.Network_Storage_Hub_Cleversafe_Account
+		result2 error
+	}
 	GetNetworkStorageDetailStub        func(int, string) (datatypes.Network_Storage, error)
 	getNetworkStorageDetailMutex       sync.RWMutex
 	getNetworkStorageDetailArgsForCall []struct {
@@ -1682,6 +1696,71 @@ func (fake *FakeStorageManager) GetHubNetworkStorageReturnsOnCall(i int, result1
 	}
 	fake.getHubNetworkStorageReturnsOnCall[i] = struct {
 		result1 []datatypes.Network_Storage
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetNetworkMessageDeliveryAccounts(arg1 int, arg2 string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error) {
+	fake.getNetworkMessageDeliveryAccountsMutex.Lock()
+	ret, specificReturn := fake.getNetworkMessageDeliveryAccountsReturnsOnCall[len(fake.getNetworkMessageDeliveryAccountsArgsForCall)]
+	fake.getNetworkMessageDeliveryAccountsArgsForCall = append(fake.getNetworkMessageDeliveryAccountsArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetNetworkMessageDeliveryAccountsStub
+	fakeReturns := fake.getNetworkMessageDeliveryAccountsReturns
+	fake.recordInvocation("GetNetworkMessageDeliveryAccounts", []interface{}{arg1, arg2})
+	fake.getNetworkMessageDeliveryAccountsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) GetNetworkMessageDeliveryAccountsCallCount() int {
+	fake.getNetworkMessageDeliveryAccountsMutex.RLock()
+	defer fake.getNetworkMessageDeliveryAccountsMutex.RUnlock()
+	return len(fake.getNetworkMessageDeliveryAccountsArgsForCall)
+}
+
+func (fake *FakeStorageManager) GetNetworkMessageDeliveryAccountsCalls(stub func(int, string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error)) {
+	fake.getNetworkMessageDeliveryAccountsMutex.Lock()
+	defer fake.getNetworkMessageDeliveryAccountsMutex.Unlock()
+	fake.GetNetworkMessageDeliveryAccountsStub = stub
+}
+
+func (fake *FakeStorageManager) GetNetworkMessageDeliveryAccountsArgsForCall(i int) (int, string) {
+	fake.getNetworkMessageDeliveryAccountsMutex.RLock()
+	defer fake.getNetworkMessageDeliveryAccountsMutex.RUnlock()
+	argsForCall := fake.getNetworkMessageDeliveryAccountsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeStorageManager) GetNetworkMessageDeliveryAccountsReturns(result1 datatypes.Network_Storage_Hub_Cleversafe_Account, result2 error) {
+	fake.getNetworkMessageDeliveryAccountsMutex.Lock()
+	defer fake.getNetworkMessageDeliveryAccountsMutex.Unlock()
+	fake.GetNetworkMessageDeliveryAccountsStub = nil
+	fake.getNetworkMessageDeliveryAccountsReturns = struct {
+		result1 datatypes.Network_Storage_Hub_Cleversafe_Account
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetNetworkMessageDeliveryAccountsReturnsOnCall(i int, result1 datatypes.Network_Storage_Hub_Cleversafe_Account, result2 error) {
+	fake.getNetworkMessageDeliveryAccountsMutex.Lock()
+	defer fake.getNetworkMessageDeliveryAccountsMutex.Unlock()
+	fake.GetNetworkMessageDeliveryAccountsStub = nil
+	if fake.getNetworkMessageDeliveryAccountsReturnsOnCall == nil {
+		fake.getNetworkMessageDeliveryAccountsReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_Storage_Hub_Cleversafe_Account
+			result2 error
+		})
+	}
+	fake.getNetworkMessageDeliveryAccountsReturnsOnCall[i] = struct {
+		result1 datatypes.Network_Storage_Hub_Cleversafe_Account
 		result2 error
 	}{result1, result2}
 }
@@ -3530,6 +3609,8 @@ func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	defer fake.getDuplicateConversionStatusMutex.RUnlock()
 	fake.getHubNetworkStorageMutex.RLock()
 	defer fake.getHubNetworkStorageMutex.RUnlock()
+	fake.getNetworkMessageDeliveryAccountsMutex.RLock()
+	defer fake.getNetworkMessageDeliveryAccountsMutex.RUnlock()
 	fake.getNetworkStorageDetailMutex.RLock()
 	defer fake.getNetworkStorageDetailMutex.RUnlock()
 	fake.getOsTypeMutex.RLock()
