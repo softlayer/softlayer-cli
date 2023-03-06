@@ -26,6 +26,7 @@ var availableCommands = []string{
 	"export",
 	"import",
 	"list",
+	"share",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the SetupCobraCommands
