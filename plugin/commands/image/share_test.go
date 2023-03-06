@@ -35,24 +35,24 @@ var _ = Describe("Image share", func() {
 			It("image share without imageId", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires two argument"))
 			})
 
 			It("set command with an invalid Id", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Image Id'. It must be a positive integer."))
 			})
 
-			It("image share without account-id", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
+			It("set command with an invalid Id", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--account-id' is required"))
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Account Id'. It must be a positive integer."))
 			})
 
 			It("image share without account-id", func() {
 				fakeImageManager.ShareImageReturns(false, errors.New("Internal Server Error"))
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--account-id", "654321")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "654321")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to share image"))
 			})
@@ -61,7 +61,7 @@ var _ = Describe("Image share", func() {
 		Context("return no error", func() {
 			It("correct use", func() {
 				fakeImageManager.ShareImageReturns(true, nil)
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--account-id", "654321")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "654321")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Image"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("was shared with account"))
