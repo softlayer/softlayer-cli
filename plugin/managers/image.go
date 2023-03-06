@@ -15,7 +15,7 @@ const (
 	//IMAGE_DEFAULT_MASK = "id,accountId,name,globalIdentifier,blockDevices,parentId,createDate,transaction"
 	IMAGE_DETAIL_MASK = `id, globalIdentifier, name, datacenter.name, status.name,
 accountId, publicFlag, imageType, flexImageFlag, note, createDate, blockDevicesDiskSpaceTotal,
-children[transaction, blockDevicesDiskSpaceTotal, datacenter.name]`
+children[transaction, blockDevicesDiskSpaceTotal, datacenter.name, blockDevices[diskImage[softwareReferences[softwareDescription]]]]`
 )
 
 //Manages SoftLayer server images.
@@ -81,7 +81,7 @@ func (i imageManager) ListPrivateImages(name string, mask string) ([]datatypes.V
 	n := 0
 	resourceList := []datatypes.Virtual_Guest_Block_Device_Template_Group{}
 	for {
-		resp, err := i.AccountService.Mask(IMAGE_DEFAULT_MASK).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(n * metadata.LIMIT).GetPrivateBlockDeviceTemplateGroups()
+		resp, err := i.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(n * metadata.LIMIT).GetPrivateBlockDeviceTemplateGroups()
 		n++
 		if err != nil {
 			return []datatypes.Virtual_Guest_Block_Device_Template_Group{}, err
