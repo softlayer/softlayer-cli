@@ -163,6 +163,23 @@ var _ = Describe("Image list", func() {
 							Name: sl.String("SYSTEM"),
 						},
 						AccountId: sl.Int(278444),
+						Children: []datatypes.Virtual_Guest_Block_Device_Template_Group{
+							datatypes.Virtual_Guest_Block_Device_Template_Group{
+								BlockDevices: []datatypes.Virtual_Guest_Block_Device_Template{
+									datatypes.Virtual_Guest_Block_Device_Template{
+										DiskImage: &datatypes.Virtual_Disk_Image{
+											SoftwareReferences: []datatypes.Virtual_Disk_Image_Software{
+												datatypes.Virtual_Disk_Image_Software{
+													SoftwareDescription: &datatypes.Software_Description{
+														LongDescription: sl.String("Ubuntu 20.04-64 Minimal for VSI"),
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
 					},
 				}, nil)
 			})
@@ -175,12 +192,13 @@ var _ = Describe("Image list", func() {
 				Expect(strings.Contains(results[1], "Public")).To(BeTrue())
 				Expect(strings.Contains(results[1], "SYSTEM")).To(BeTrue())
 				Expect(strings.Contains(results[1], "278444")).To(BeTrue())
+				Expect(strings.Contains(results[1], "-")).To(BeTrue())
 
 				Expect(strings.Contains(results[2], "5678")).To(BeTrue())
 				Expect(strings.Contains(results[2], "image-5678")).To(BeTrue())
 				Expect(strings.Contains(results[2], "Private")).To(BeTrue())
 				Expect(strings.Contains(results[2], "SYSTEM")).To(BeTrue())
-				Expect(strings.Contains(results[2], "278444")).To(BeTrue())
+				Expect(strings.Contains(results[2], "Ubuntu 20.04-64 Minimal for VSI")).To(BeTrue())
 			})
 		})
 	})

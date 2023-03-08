@@ -3,6 +3,8 @@ package virtual
 import (
 	"strconv"
 
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/sl"
 	"github.com/spf13/cobra"
 
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -19,6 +21,7 @@ type CaptureCommand struct {
 	Name                 string
 	All                  bool
 	Note                 string
+	BlockDevices         []int
 }
 
 func NewCaptureCommand(sl *metadata.SoftlayerCommand) (cmd *CaptureCommand) {
@@ -41,8 +44,10 @@ EXAMPLE:
 	}
 	thisCmd.Command = cobraCmd
 	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "n", "", T("Name of the image [required]"))
-	cobraCmd.Flags().BoolVar(&thisCmd.All, "all", false, T("Capture all disks that belong to the virtual server"))
+	cobraCmd.Flags().BoolVar(&thisCmd.All, "all", false, T("Capture all block devices that belong to the virtual server"))
 	cobraCmd.Flags().StringVar(&thisCmd.Note, "note", "", T("Add a note to be associated with the image"))
+	cobraCmd.Flags().IntSliceVar(&thisCmd.BlockDevices, "device", []int{}, T("The block device ID´s to archive, multiple occurrence allowed"))
+	cobraCmd.MarkFlagsMutuallyExclusive("all", "device")
 	return thisCmd
 }
 func (cmd *CaptureCommand) Run(args []string) error {
@@ -54,29 +59,64 @@ func (cmd *CaptureCommand) Run(args []string) error {
 	if cmd.Name == "" {
 		return slErrors.NewMissingInputError("-n|--name")
 	}
+	blockDevices := []datatypes.Virtual_Guest_Block_Device{}
 
+	if len(cmd.BlockDevices) != 0 {
+		for _, blockDeviceId := range cmd.BlockDevices {
+			blockDevice := datatypes.Virtual_Guest_Block_Device{
+				Id: sl.Int(blockDeviceId),
+			}
+			blockDevices = append(blockDevices, blockDevice)
+		}
+	} else {
+		virtualGuest, err := cmd.VirtualServerManager.GetInstance(vsID, "id,blockDevices[id,device,mountType,diskImage[id,metadataFlag,type[keyName]]]")
+		if err != nil {
+			subs := map[string]interface{}{"VsID": vsID}
+			return slErrors.NewAPIError(T("Failed to get virtual server instance: {{.VsID}}.", subs), err.Error(), 2)
+		}
+		if cmd.All {
+			blockDevices = getDisks(virtualGuest, false)
+		} else {
+			blockDevices = getDisks(virtualGuest, true)
+		}
+	}
 	outputFormat := cmd.GetOutputFlag()
 
-	txn, err := cmd.VirtualServerManager.CaptureImage(vsID, cmd.Name, cmd.Note, cmd.All)
+	image, err := cmd.VirtualServerManager.CaptureImage(vsID, cmd.Name, cmd.Note, blockDevices)
 	if err != nil {
 		return slErrors.NewAPIError(T("Failed to capture image for virtual server instance: {{.VsID}}.\n",
 			map[string]interface{}{"VsID": vsID}), err.Error(), 2)
 	}
 
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, txn)
-	}
-
 	table := cmd.UI.Table([]string{T("name"), T("value")})
-	table.Add(T("vs_id"), utils.FormatIntPointer(txn.GuestId))
-	table.Add(T("date_time"), utils.FormatSLTimePointer(txn.CreateDate))
-	var transaction string
-	if txn.TransactionStatus != nil {
-		transaction = utils.FormatStringPointer(txn.TransactionStatus.Name)
-	}
-	table.Add(T("transaction"), transaction)
-	table.Add(T("transaction_id"), utils.FormatIntPointer(txn.Id))
-	table.Add(T("all_disks"), strconv.FormatBool(cmd.All))
-	table.Print()
+	table.Add(T("Virtual guest ID"), strconv.Itoa(vsID))
+	table.Add(T("Image ID"), utils.FormatIntPointer(image.Id))
+	table.Add(T("Date time"), utils.FormatSLTimePointer(image.CreateDate))
+	table.Add(T("Note"), utils.FormatStringPointer(image.Note))
+	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
+}
+
+func getDisks(vs datatypes.Virtual_Guest, onlyPrimary bool) []datatypes.Virtual_Guest_Block_Device {
+	disks := []datatypes.Virtual_Guest_Block_Device{}
+	for _, disk := range vs.BlockDevices {
+		//We never want metadata disks
+		if disk.DiskImage != nil && disk.DiskImage.MetadataFlag != nil && *disk.DiskImage.MetadataFlag == true {
+			continue
+		}
+		//We never want swap devices
+		if disk.DiskImage != nil && disk.DiskImage.Type != nil && disk.DiskImage.Type.KeyName != nil && *disk.DiskImage.Type.KeyName == "SWAP" {
+			continue
+		}
+		//We never want CD images
+		if disk.MountType != nil && *disk.MountType == "CD" {
+			continue
+		}
+		//If onlyPrimary is true we only want disk 0 ID
+		if onlyPrimary && *disk.Device != "0" {
+			continue
+		}
+		disks = append(disks, disk)
+	}
+	return disks
 }

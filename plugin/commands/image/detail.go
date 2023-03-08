@@ -87,6 +87,16 @@ func (cmd *DetailCommand) Run(args []string) error {
 	table.Add(T("flex"), utils.FormatBoolPointer(image.FlexImageFlag))
 	table.Add(T("note"), utils.FormatStringPointer(image.Note))
 	table.Add(T("created"), utils.FormatSLTimePointer(image.CreateDate))
+
+	os := "-"
+	if image.Children[0].BlockDevices != nil && len(image.Children[0].BlockDevices) != 0 {
+		for _, blockDevice := range image.Children[0].BlockDevices {
+			if blockDevice.DiskImage.SoftwareReferences != nil && len(blockDevice.DiskImage.SoftwareReferences) != 0 {
+				os = *blockDevice.DiskImage.SoftwareReferences[0].SoftwareDescription.LongDescription
+			}
+		}
+	}
+	table.Add(T("os"), os)
 	table.Add(T("disk_space"), utils.B2GB(diskspace))
 	table.Add(T("datacenter"), "-------------------------------")
 	for _, child := range image.Children {
