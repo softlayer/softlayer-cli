@@ -80,7 +80,13 @@ var _ = Describe("Image detail", func() {
 			BeforeEach(func() {
 				created, _ := time.Parse(time.RFC3339, "2016-12-29T00:00:00Z")
 				fakeImage = datatypes.Virtual_Guest_Block_Device_Template_Group{
-					Id:               sl.Int(1234),
+					Id: sl.Int(1234),
+					AccountReferences: []datatypes.Virtual_Guest_Block_Device_Template_Group_Accounts{
+						{
+							AccountId: sl.Int(654),
+							CreateDate: sl.Time(created),
+						},
+					},
 					GlobalIdentifier: sl.String("abcdefghijk"),
 					Name:             sl.String("myimage"),
 					Status: &datatypes.Virtual_Guest_Block_Device_Template_Group_Status{
@@ -142,10 +148,10 @@ var _ = Describe("Image detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("true"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("linux"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-29T00:00:00Z"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("200.00G"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Test_Transaction"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Ubuntu 20.04-64 Minimal for VSI"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("share image"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("654"))
 			})
 			It("Test edge case output", func() {
 				fakeImage.Status = nil
