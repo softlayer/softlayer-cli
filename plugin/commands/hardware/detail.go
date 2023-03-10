@@ -144,7 +144,6 @@ func (cmd *DetailCommand) Run(args []string) error {
 		transactionGroupDate,
 	))
 	billing := "Monthly"
-	utils.FormatBoolPointer(hardware.HourlyBillingFlag)
 	if utils.FormatBoolPointer(hardware.HourlyBillingFlag) != "" {
 		billing = "Hourly"
 	}
