@@ -901,7 +901,7 @@
   },
   {
     "id": "Acknowledge every upcoming event. Doing so will turn off the popup in the control portal.",
-    "translation": "確認每個即將舉行的活動。 這樣做會關閉控制入口網站中的蹦現畫面。"
+    "translation": "確認每個即將發生的事件。 這樣做會關閉控制入口網站中的蹦現畫面。"
   },
   {
     "id": "Acknowledged",
@@ -1677,43 +1677,43 @@
   },
   {
     "id": "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip",
-    "translation": "直欄排序方式， 選項包含：id、hostname、domain、primary_ip、backend_ip"
+    "translation": "要排序的直欄。 選項包含：id、hostname、domain、primary_ip、backend_ip"
   },
   {
     "id": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.",
-    "translation": "直欄排序方式， 選項包含：id、name、type、private_ip_address、source_subnet、host_iqn、username、password、allowed_host_id。"
+    "translation": "要排序的直欄。 選項包含：id、name、type、private_ip_address、source_subnet、host_iqn、username、password、allowed_host_id。"
   },
   {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
-    "translation": "直欄排序方式，選項包含：id、common_name、days_until_expire、note"
+    "translation": "要排序的直欄。選項包含：id、common_name、days_until_expire、note"
   },
   {
     "id": "Column to sort by. Options are: id,identifier,type,network_space,datacenter,vlan_id,IPs,hardware,vs",
-    "translation": "直欄排序方式，選項包含：id、identifier、type、network_space、datacenter、vlan_id、IPs、hardware、vs"
+    "translation": "要排序的直欄。選項包含：id、identifier、type、network_space、datacenter、vlan_id、IPs、hardware、vs"
   },
   {
     "id": "Column to sort by. Options are: id,label,fingerprint,note",
-    "translation": "直欄排序方式，選項包含：id、label、fingerprint、note"
+    "translation": "要排序的直欄。選項包含：id、label、fingerprint、note"
   },
   {
     "id": "Column to sort by. Options are: id,name,created,size_bytes",
-    "translation": "直欄排序方式，選項包含：id、name、created、size_bytes"
+    "translation": "要排序的直欄。選項包含：id、name、created、size_bytes"
   },
   {
     "id": "Column to sort by. Options are: id,name,description,created",
-    "translation": "直欄排序方式，選項包含：id、name、description、created"
+    "translation": "要排序的直欄。選項包含：id、name、description、created"
   },
   {
     "id": "Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips",
-    "translation": "直欄排序方式，選項包含：id、number、name、firewall、datacenter、hardware、virtual_servers、public_ips"
+    "translation": "要排序的直欄。選項包含：id、number、name、firewall、datacenter、hardware、virtual_servers、public_ips"
   },
   {
     "id": "Column to sort by. Options are: id,remoteIp,remoteGroupId,direction,ethertype,portRangeMin,portRangeMax,protocol",
-    "translation": "直欄排序方式，選項包含：id、remoteIp、remoteGroupId、direction、ethertype、portRangeMin、portRangeMax、protocol"
+    "translation": "要排序的直欄。選項包含：id、remoteIp、remoteGroupId、direction、ethertype、portRangeMin、portRangeMax、protocol"
   },
   {
     "id": "Column to sort by. Options are: id,virtualServerId,hostname",
-    "translation": "直欄排序方式，選項包含：id、virtualServerId、hostname"
+    "translation": "要排序的直欄。選項包含：id、virtualServerId、hostname"
   },
   {
     "id": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'",
