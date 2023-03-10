@@ -130,13 +130,23 @@ func (cmd *DetailCommand) Run(args []string) error {
 		hardware.BillingItem.OrderItem.Order.UserRecord != nil {
 		table.Add(T("Owner"), utils.FormatStringPointer(hardware.BillingItem.OrderItem.Order.UserRecord.Username))
 	}
+	transactionGroupName := "-"
+	transactionGroupDate := ""
+	if hardware.LastTransaction != nil {
+		if hardware.LastTransaction.TransactionGroup != nil {
+			transactionGroupName = utils.FormatStringPointer(hardware.LastTransaction.TransactionGroup.Name)
+		}
+		transactionGroupDate = utils.FormatSLTimePointer(hardware.LastTransaction.ModifyDate)
+	}
 	table.Add(T("Last transaction"), fmt.Sprintf(
 		"%s %s",
-		*hardware.LastTransaction.TransactionGroup.Name,
-		*hardware.LastTransaction.ModifyDate,
+		transactionGroupName,
+		transactionGroupDate,
 	))
 	billing := "Monthly"
-	if *hardware.HourlyBillingFlag {
+	utils.FormatBoolPointer(hardware.HourlyBillingFlag)
+	// if *hardware.HourlyBillingFlag {
+	if utils.FormatBoolPointer(hardware.HourlyBillingFlag) != "" {
 		billing = "Hourly"
 	}
 	table.Add(T("Billing"), billing)

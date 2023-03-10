@@ -1,0 +1,35 @@
+[
+    {
+        "hardwareComponentModelId": 1979,
+        "hardwareId": 1403539,
+        "id": 14523851,
+        "modifyDate": "2017-11-21T14:59:16-06:00",
+        "name": "0",
+        "serialNumber": "zc21brfd",
+        "serviceProviderId": 1,
+        "hardwareComponentModel": {
+            "capacity": "2000",
+            "description": "SATAIII:2000:7200:SATAIII:2000:7200:EnterpriseCapacity3.5V5",
+            "hardwareGenericComponentModelId": 449,
+            "id": 1979,
+            "longDescription": "Seagate \/  \/ Enterprise Capacity 3.5 V5 \/ ST2000NM0055 \/ 2000",
+            "manufacturer": "Seagate",
+            "name": "Enterprise Capacity 3.5 V5",
+            "version": "ST2000NM0055",
+            "hardwareGenericComponentModel": {
+                "capacity": "2000",
+                "description": "SATAIII",
+                "hardwareComponentTypeId": 1,
+                "id": 449,
+                "units": "GB",
+                "upgradePriority": 7,
+                "hardwareComponentType": {
+                    "id": 1,
+                    "keyName": "HARD_DRIVE",
+                    "type": "Hard Drive",
+                    "typeParentId": 5
+                }
+            }
+        }
+    }
+]

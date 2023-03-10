@@ -1,7 +1,6 @@
 package hardware_test
 
 import (
-	"errors"
 	"time"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -11,6 +10,7 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
@@ -338,6 +338,19 @@ var _ = Describe("hardware detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("3.10"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2015-10-09T00:00:00Z"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("REMOTE_MGMT_CARD"))
+			})
+		})
+
+		Context("Issue #649", func() {
+			BeforeEach(func() {
+				fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+				slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+				cliCommand = hardware.NewDetailCommand(slCommand)
+			})
+			It("return hardware detail", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1403539")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Last transaction   - -"))
 			})
 		})
 	})

@@ -1,683 +1,687 @@
 {
-    "domain": "softlayer.com",
-    "fullyQualifiedDomainName": "ys1-0-baremetal-uaadb.softlayer.com",
-    "hostname": "ys1-0-baremetal-uaadb",
-    "id": 218027,
-    "notes": "",
-    "provisionDate": "2016-02-02T10:04:19-06:00",
+    "domain": "testedit.com",
+    "fullyQualifiedDomainName": "bardcabero.testedit.com",
+    "hostname": "bardcabero",
+    "id":1403539,
+    "notes": "My golang note",
+    "provisionDate": "2020-04-27T15:10:56-07:00",
+    "activeComponents": [
+        {
+            "hardwareComponentModelId": 1979,
+            "hardwareId": 1403539,
+            "id": 14523851,
+            "modifyDate": "2017-11-21T14:59:16-06:00",
+            "name": "0",
+            "serialNumber": "zc21brfd",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "2000",
+                "description": "SATAIII:2000:7200:SATAIII:2000:7200:EnterpriseCapacity3.5V5",
+                "hardwareGenericComponentModelId": 449,
+                "id": 1979,
+                "longDescription": "Seagate \/  \/ Enterprise Capacity 3.5 V5 \/ ST2000NM0055 \/ 2000",
+                "manufacturer": "Seagate",
+                "name": "Enterprise Capacity 3.5 V5",
+                "version": "ST2000NM0055",
+                "hardwareGenericComponentModel": {
+                    "capacity": "2000",
+                    "description": "SATAIII",
+                    "hardwareComponentTypeId": 1,
+                    "id": 449,
+                    "units": "GB",
+                    "upgradePriority": 7,
+                    "hardwareComponentType": {
+                        "id": 1,
+                        "keyName": "HARD_DRIVE",
+                        "type": "Hard Drive",
+                        "typeParentId": 5
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 4472,
+            "hardwareId": 1403539,
+            "id": 18439819,
+            "modifyDate": "2023-01-17T15:51:53-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "16",
+                "description": "DDR4:16:2666 NON ECC NON REG",
+                "hardwareGenericComponentModelId": 1420,
+                "id": 4472,
+                "longDescription": "Hynix \/ 16GB DDR4 2666 2Rx8 NON ECC NON REG \/ 2666 NON ECC NON REG",
+                "manufacturer": "Hynix",
+                "name": "16GB DDR4 2666 2Rx8 NON ECC NON REG",
+                "version": "16GB DDR4 2666 2Rx8 NON ECC NON REG",
+                "hardwareGenericComponentModel": {
+                    "capacity": "16",
+                    "description": "DDR4-2666 NON-ECC NON Reg",
+                    "hardwareComponentTypeId": 4,
+                    "id": 1420,
+                    "units": "GB",
+                    "upgradePriority": 0,
+                    "hardwareComponentType": {
+                        "id": 4,
+                        "keyName": "RAM",
+                        "type": "RAM",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 1799,
+            "hardwareId": 1403539,
+            "id": 14523839,
+            "modifyDate": "2017-11-10T16:59:38-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "1",
+                "hardwareGenericComponentModelId": 231,
+                "id": 1799,
+                "longDescription": "Lenovo \/ IMM2 - Onboard \/ IPMI-KVM \/ Remote Management Count1",
+                "manufacturer": "Lenovo",
+                "name": "IMM2 - Onboard",
+                "version": "IPMI-KVM",
+                "attributes": [
+                    {
+                        "attributeTypeId": 3,
+                        "hardwareComponentModelId": 1799,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Has a browser-accessible web interface",
+                            "id": 3,
+                            "keyName": "WEB_INTERFACE",
+                            "name": "Web Interface"
+                        }
+                    },
+                    {
+                        "attributeTypeId": 5,
+                        "hardwareComponentModelId": 1799,
+                        "value": "IPMI",
+                        "hardwareComponentAttributeType": {
+                            "description": "Protocol used by the remote management component",
+                            "id": 5,
+                            "keyName": "REMOTE_MANAGEMENT_PROTOCOL",
+                            "name": "Remote Management Protocol"
+                        }
+                    },
+                    {
+                        "attributeTypeId": 2,
+                        "hardwareComponentModelId": 1799,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Remote management count",
+                            "id": 2,
+                            "keyName": "REMOTE_MANAGEMENT_COUNT",
+                            "name": "Remote Management Count"
+                        }
+                    },
+                    {
+                        "attributeTypeId": 162,
+                        "hardwareComponentModelId": 1799,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Use the lanplus IPMI Interface type",
+                            "id": 162,
+                            "keyName": "LAN_PLUS_IMPI_INTERFACE",
+                            "name": "LAN PLUS IPMI Interface"
+                        }
+                    },
+                    {
+                        "attributeTypeId": 121,
+                        "hardwareComponentModelId": 1799,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Onboard identifier",
+                            "id": 121,
+                            "keyName": "ONBOARD",
+                            "name": "Onboard"
+                        }
+                    }
+                ],
+                "hardwareGenericComponentModel": {
+                    "capacity": "1",
+                    "description": "MGMT-KVM",
+                    "hardwareComponentTypeId": 14,
+                    "id": 231,
+                    "units": "Unit",
+                    "upgradePriority": 10,
+                    "hardwareComponentType": {
+                        "id": 14,
+                        "keyName": "REMOTE_MGMT_CARD",
+                        "type": "Remote Mgmt Card",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 2303,
+            "hardwareId": 1403539,
+            "id": 14523837,
+            "modifyDate": "2017-11-10T16:59:38-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "architectureTypeId": "4",
+                "capacity": "1",
+                "description": "RAM slots:4",
+                "hardwareGenericComponentModelId": 382,
+                "id": 2303,
+                "longDescription": "Lenovo \/ 3943PAJ \/ Systemx3250-M6 \/ Intel Xeon SingleProc SATA \/ 1",
+                "manufacturer": "Lenovo",
+                "name": "Systemx3250-M6",
+                "version": "Intel Xeon SingleProc SATA",
+                "attributes": [
+                    {
+                        "attributeTypeId": 302,
+                        "hardwareComponentModelId": 2303,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Allow TPM Module.",
+                            "id": 302,
+                            "keyName": "ALLOW_TPM_MODULE",
+                            "name": "TPM Module"
+                        }
+                    },
+                    {
+                        "attributeTypeId": 306,
+                        "hardwareComponentModelId": 2303,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Network Port Offset",
+                            "id": 306,
+                            "keyName": "NETWORK_PORT_OFFSET",
+                            "name": "Network Port Offset"
+                        }
+                    },
+                    {
+                        "attributeTypeId": 7,
+                        "hardwareComponentModelId": 2303,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Motherboards that have DCMI functionality",
+                            "id": 7,
+                            "keyName": "DCMI_MOTHERBOARD",
+                            "name": "DCMI Capable"
+                        }
+                    },
+                    {
+                        "attributeTypeId": 1,
+                        "hardwareComponentModelId": 2303,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Network component count",
+                            "id": 1,
+                            "keyName": "NETWORK_COMPONENT_COUNT",
+                            "name": "Network Component Count"
+                        }
+                    },
+                    {
+                        "attributeTypeId": 298,
+                        "hardwareComponentModelId": 2303,
+                        "value": "4",
+                        "hardwareComponentAttributeType": {
+                            "description": "Ram Capacity for modules",
+                            "id": 298,
+                            "keyName": "RAM_CAPACITY",
+                            "name": "Ram Capacity"
+                        }
+                    },
+                    {
+                        "attributeTypeId": 282,
+                        "hardwareComponentModelId": 2303,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Auto provision the TPM\/TXT Bios setting",
+                            "id": 282,
+                            "keyName": "TPM_AUTO_PROVISION",
+                            "name": "TPM Auto Provision"
+                        }
+                    }
+                ],
+                "hardwareGenericComponentModel": {
+                    "capacity": "1",
+                    "description": "Intel Xeon SingleProc",
+                    "hardwareComponentTypeId": 3,
+                    "id": 382,
+                    "units": "Proc",
+                    "upgradePriority": 10,
+                    "hardwareComponentType": {
+                        "id": 3,
+                        "keyName": "MOTHERBOARD",
+                        "type": "Motherboard",
+                        "typeParentId": null
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 2043,
+            "hardwareId": 1403539,
+            "id": 14523853,
+            "modifyDate": "2017-11-10T16:59:38-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "4",
+                "description": "4Port:PE310G4i40-T",
+                "hardwareGenericComponentModelId": 634,
+                "id": 2043,
+                "longDescription": "Silicom \/  \/ PE310G4i40-T \/ 4 Port 10G Network Adapter \/ 4",
+                "manufacturer": "Silicom",
+                "name": "PE310G4i40-T",
+                "version": "4 Port 10G Network Adapter",
+                "hardwareGenericComponentModel": {
+                    "capacity": "4",
+                    "description": "10 Gigabit Quad Port Server Adapter",
+                    "hardwareComponentTypeId": 16,
+                    "id": 634,
+                    "units": "Unit",
+                    "upgradePriority": 0,
+                    "hardwareComponentType": {
+                        "id": 16,
+                        "keyName": "NETWORK_CARD",
+                        "type": "Network Card",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 2311,
+            "hardwareId": 1403539,
+            "id": 14523855,
+            "modifyDate": "2017-11-10T16:59:38-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "460",
+                "description": "Lenovo System X M6",
+                "hardwareGenericComponentModelId": 421,
+                "id": 2311,
+                "longDescription": "Lenovo \/  \/ 94Y8348 \/ 460W AC PS \/ 460",
+                "manufacturer": "Lenovo",
+                "name": "94Y8348",
+                "version": "460W AC PS",
+                "attributes": [
+                    {
+                        "attributeTypeId": 8,
+                        "hardwareComponentModelId": 2311,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Power supplies that have PMBUS functionality",
+                            "id": 8,
+                            "keyName": "PMBUS_POWER_SUPPLY",
+                            "name": "PMBUS Capable"
+                        }
+                    }
+                ],
+                "hardwareGenericComponentModel": {
+                    "capacity": "1",
+                    "description": "80 Plus Gold",
+                    "hardwareComponentTypeId": 19,
+                    "id": 421,
+                    "units": "Unit",
+                    "upgradePriority": 0,
+                    "hardwareComponentType": {
+                        "id": 19,
+                        "keyName": "POWER_SUPPLY",
+                        "type": "Power Supply",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 4472,
+            "hardwareId": 1403539,
+            "id": 18306155,
+            "modifyDate": "2023-01-17T15:50:41-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "16",
+                "description": "DDR4:16:2666 NON ECC NON REG",
+                "hardwareGenericComponentModelId": 1420,
+                "id": 4472,
+                "longDescription": "Hynix \/ 16GB DDR4 2666 2Rx8 NON ECC NON REG \/ 2666 NON ECC NON REG",
+                "manufacturer": "Hynix",
+                "name": "16GB DDR4 2666 2Rx8 NON ECC NON REG",
+                "version": "16GB DDR4 2666 2Rx8 NON ECC NON REG",
+                "hardwareGenericComponentModel": {
+                    "capacity": "16",
+                    "description": "DDR4-2666 NON-ECC NON Reg",
+                    "hardwareComponentTypeId": 4,
+                    "id": 1420,
+                    "units": "GB",
+                    "upgradePriority": 0,
+                    "hardwareComponentType": {
+                        "id": 4,
+                        "keyName": "RAM",
+                        "type": "RAM",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 2311,
+            "hardwareId": 1403539,
+            "id": 14523857,
+            "modifyDate": "2017-11-10T16:59:38-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "460",
+                "description": "Lenovo System X M6",
+                "hardwareGenericComponentModelId": 421,
+                "id": 2311,
+                "longDescription": "Lenovo \/  \/ 94Y8348 \/ 460W AC PS \/ 460",
+                "manufacturer": "Lenovo",
+                "name": "94Y8348",
+                "version": "460W AC PS",
+                "attributes": [
+                    {
+                        "attributeTypeId": 8,
+                        "hardwareComponentModelId": 2311,
+                        "value": "1",
+                        "hardwareComponentAttributeType": {
+                            "description": "Power supplies that have PMBUS functionality",
+                            "id": 8,
+                            "keyName": "PMBUS_POWER_SUPPLY",
+                            "name": "PMBUS Capable"
+                        }
+                    }
+                ],
+                "hardwareGenericComponentModel": {
+                    "capacity": "1",
+                    "description": "80 Plus Gold",
+                    "hardwareComponentTypeId": 19,
+                    "id": 421,
+                    "units": "Unit",
+                    "upgradePriority": 0,
+                    "hardwareComponentType": {
+                        "id": 19,
+                        "keyName": "POWER_SUPPLY",
+                        "type": "Power Supply",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 2419,
+            "hardwareId": 1403539,
+            "id": 14523843,
+            "modifyDate": "2017-11-10T16:59:38-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "3.8",
+                "description": "3.8GHz:2144FSB",
+                "hardwareGenericComponentModelId": 883,
+                "id": 2419,
+                "longDescription": "Xeon-KabyLake \/ E3-1270-V6-Quadcore \/ 3.8GHz:2144FSB",
+                "manufacturer": "Intel",
+                "name": "Xeon-KabyLake",
+                "version": "E3-1270-V6-Quadcore",
+                "hardwareGenericComponentModel": {
+                    "capacity": "3.8",
+                    "description": "XEON-E3-1270-V6-QuadCore-KabyLake",
+                    "hardwareComponentTypeId": 2,
+                    "id": 883,
+                    "units": "GHz",
+                    "upgradePriority": 57,
+                    "hardwareComponentType": {
+                        "id": 2,
+                        "keyName": "PROCESSOR",
+                        "type": "Processor",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 1847,
+            "hardwareId": 1403539,
+            "id": 14523859,
+            "modifyDate": "2017-11-10T16:59:38-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "4",
+                "description": "Backplane",
+                "hardwareGenericComponentModelId": 731,
+                "id": 1847,
+                "longDescription": "Lenovo \/ BACKPLANE \/ 00MU417 \/ 4 Port Expander \/ 4",
+                "manufacturer": "Lenovo",
+                "name": "00MU417",
+                "version": "4 Port Expander",
+                "hardwareGenericComponentModel": {
+                    "capacity": "4",
+                    "description": "Expander Backplane",
+                    "hardwareComponentTypeId": 18,
+                    "id": 731,
+                    "units": "Drives",
+                    "upgradePriority": 0,
+                    "hardwareComponentType": {
+                        "id": 18,
+                        "keyName": "BACKPLANE",
+                        "type": "Backplane",
+                        "typeParentId": null
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 4472,
+            "hardwareId": 1403539,
+            "id": 22050690,
+            "modifyDate": "2023-01-17T15:54:11-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "16",
+                "description": "DDR4:16:2666 NON ECC NON REG",
+                "hardwareGenericComponentModelId": 1420,
+                "id": 4472,
+                "longDescription": "Hynix \/ 16GB DDR4 2666 2Rx8 NON ECC NON REG \/ 2666 NON ECC NON REG",
+                "manufacturer": "Hynix",
+                "name": "16GB DDR4 2666 2Rx8 NON ECC NON REG",
+                "version": "16GB DDR4 2666 2Rx8 NON ECC NON REG",
+                "hardwareGenericComponentModel": {
+                    "capacity": "16",
+                    "description": "DDR4-2666 NON-ECC NON Reg",
+                    "hardwareComponentTypeId": 4,
+                    "id": 1420,
+                    "units": "GB",
+                    "upgradePriority": 0,
+                    "hardwareComponentType": {
+                        "id": 4,
+                        "keyName": "RAM",
+                        "type": "RAM",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 4472,
+            "hardwareId": 1403539,
+            "id": 18306209,
+            "modifyDate": "2023-01-17T15:50:41-06:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "16",
+                "description": "DDR4:16:2666 NON ECC NON REG",
+                "hardwareGenericComponentModelId": 1420,
+                "id": 4472,
+                "longDescription": "Hynix \/ 16GB DDR4 2666 2Rx8 NON ECC NON REG \/ 2666 NON ECC NON REG",
+                "manufacturer": "Hynix",
+                "name": "16GB DDR4 2666 2Rx8 NON ECC NON REG",
+                "version": "16GB DDR4 2666 2Rx8 NON ECC NON REG",
+                "hardwareGenericComponentModel": {
+                    "capacity": "16",
+                    "description": "DDR4-2666 NON-ECC NON Reg",
+                    "hardwareComponentTypeId": 4,
+                    "id": 1420,
+                    "units": "GB",
+                    "upgradePriority": 0,
+                    "hardwareComponentType": {
+                        "id": 4,
+                        "keyName": "RAM",
+                        "type": "RAM",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        },
+        {
+            "hardwareComponentModelId": 852,
+            "hardwareId": 1403539,
+            "id": 14523841,
+            "modifyDate": "2018-04-16T11:10:28-07:00",
+            "serviceProviderId": 1,
+            "hardwareComponentModel": {
+                "capacity": "2",
+                "description": "Mainboard Onboard SATAIII Controller",
+                "hardwareGenericComponentModelId": 123,
+                "id": 852,
+                "longDescription": "Mainboard \/ OBSAT3IAC \/ Onboard \/ SATAIII IDE\/AHCI Controller \/ 2",
+                "manufacturer": "Mainboard",
+                "name": "Onboard",
+                "version": "SATAIII IDE\/AHCI Controller",
+                "hardwareGenericComponentModel": {
+                    "capacity": "2",
+                    "description": "SATA",
+                    "hardwareComponentTypeId": 5,
+                    "id": 123,
+                    "units": "Drives",
+                    "upgradePriority": 12,
+                    "hardwareComponentType": {
+                        "id": 5,
+                        "keyName": "DRIVE_CONTROLLER",
+                        "type": "Drive Controller",
+                        "typeParentId": 3
+                    }
+                }
+            }
+        }
+    ],
     "billingItem": {
-        "id": 82968861,
+        "id": 658637762,
         "children": [
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "second_processor",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "Intel Xeon E5-2650 (8 Cores, 2.00 GHz)",
-                "id": 82968863,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909887,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 0
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "os",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "Ubuntu Linux 14.04 LTS Trusty Tahr - Minimal Install (64 bit)",
-                "id": 82968865,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909889,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
+                "description": "CentOS 7.x (64 bit)ee",
                 "nextInvoiceTotalRecurringAmount": 0
             },
             {
                 "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
+                "associatedBillingItemId": "658637762",
+                "cancellationDate": "2021-05-07T09:45:40-07:00",
                 "categoryCode": "ram",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "32 GB",
-                "id": 82968867,
+                "createDate": "2020-04-27T12:51:42-07:00",
+                "cycleStartDate": "2021-05-03T22:28:24-07:00",
+                "description": "16 GB RAM",
+                "id": 658637766,
                 "laborFee": "0",
                 "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
+                "lastBillDate": "2021-05-03T22:28:24-07:00",
+                "modifyDate": "2021-05-07T09:45:40-07:00",
+                "nextBillDate": "2021-06-03T22:00:00-07:00",
                 "oneTimeFee": "0",
                 "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909891,
-                "parentId": 82968861,
-                "recurringFee": "101.5",
+                "orderItemId": 665826084,
+                "packageId": 911,
+                "parentId": 658637762,
+                "recurringFee": "0",
                 "recurringFeeTaxRate": "0",
                 "recurringMonths": 1,
                 "serviceProviderId": 1,
                 "setupFee": "0",
                 "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 101.5
+                "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "disk_controller",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "RAID",
-                "id": 82968869,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909893,
-                "parentId": 82968861,
-                "recurringFee": "60",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 60
+                "description": "Non-RAID",
+                "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "disk0",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10DWPD)",
-                "id": 82968871,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909895,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
+                "description": "2.00 TB SATA ",
+                "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "disk1",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10 DWPD)",
-                "id": 82968873,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909897,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "disk2",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10 DWPD)",
-                "id": 82968875,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909899,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "disk3",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10 DWPD)",
-                "id": 82968877,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909901,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "disk4",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10 DWPD)",
-                "id": 82968879,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909903,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "disk5",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10 DWPD)",
-                "id": 82968881,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909905,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "disk6",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10 DWPD)",
-                "id": 82968883,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909907,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "disk7",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10 DWPD)",
-                "id": 82968885,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909909,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "disk8",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10 DWPD)",
-                "id": 82968887,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909911,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "disk9",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "800 GB SSD (10 DWPD)",
-                "id": 82968889,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909913,
-                "parentId": 82968861,
-                "recurringFee": "129.05",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 129.05
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "bandwidth",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "500 GB Bandwidth",
-                "id": 82968891,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909915,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
+                "description": "20000 GB Bandwidth Allotment",
                 "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "port_speed",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "1 Gbps Redundant Public & Private Network Uplinks",
-                "id": 82968893,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909917,
-                "parentId": 82968861,
-                "recurringFee": "35",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 35
+                "description": "10 Gbps Redundant Public & Private Network Uplinks",
+                "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "service_port",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "1 Gbps Redundant Private Uplinks",
-                "id": 82968895,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909919,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
+                "description": "10 Gbps Redundant Private Uplinks",
                 "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "public_port",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "1 Gbps Redundant Public Uplinks",
-                "id": 82968897,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909921,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
+                "description": "10 Gbps Redundant Public Uplinks",
                 "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "remote_management",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
                 "description": "Reboot \/ KVM over IP",
-                "id": 82968899,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909923,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
                 "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "pri_ip_addresses",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
                 "description": "1 IP Address",
-                "id": 82968901,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909925,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 0,
-                "resourceName": "75.126.172.128\/25",
-                "resourceTableId": 512759
+                "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "power_supply",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "Redundant Power Supply",
-                "id": 82968903,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909927,
-                "parentId": 82968861,
-                "recurringFee": "7.25",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 7.25
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "monitoring",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "Host Ping and TCP Service Monitoring",
-                "id": 82968905,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909929,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
+                "description": "Host Ping",
                 "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "notification",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
                 "description": "Email and Ticket",
-                "id": 82968907,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909931,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
                 "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "monitoring_package",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "Monitoring Package - Basic",
-                "id": 82968909,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909933,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
-                "nextInvoiceTotalRecurringAmount": 0
-            },
-            {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "response",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "Automated Reboot from Monitoring",
-                "id": 82968911,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909935,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
+                "description": "Automated Notification",
                 "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
                 "categoryCode": "vpn_management",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "Unlimited SSL VPN Users &1 PPTP VPN User per account",
-                "id": 82968913,
+                "description": "Unlimited SSL VPN Users",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "vulnerability_scanner",
+                "description": "Nessus Vulnerability Assessment & Reporting",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "allowCancellationFlag": 1,
+                "associatedBillingItemId": "658637762",
+                "cancellationDate": "2021-05-07T23:56:20-07:00",
+                "categoryCode": "ram",
+                "createDate": "2021-05-07T09:45:40-07:00",
+                "cycleStartDate": "2021-05-03T22:28:24-07:00",
+                "description": "32 GB RAM",
+                "id": 850135674,
                 "laborFee": "0",
                 "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
+                "lastBillDate": "2021-05-03T22:28:24-07:00",
+                "modifyDate": "2021-05-07T23:56:20-07:00",
+                "nextBillDate": "2021-06-03T22:00:00-07:00",
                 "oneTimeFee": "0",
                 "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909937,
-                "parentId": 82968861,
+                "orderItemId": 824199364,
+                "packageId": 911,
+                "parentId": 658637762,
                 "recurringFee": "0",
                 "recurringFeeTaxRate": "0",
                 "recurringMonths": 1,
@@ -687,41 +691,97 @@
                 "nextInvoiceTotalRecurringAmount": 0
             },
             {
-                "allowCancellationFlag": 1,
-                "associatedBillingItemId": "82968861",
-                "cancellationDate": null,
-                "categoryCode": "vulnerability_scanner",
-                "createDate": "2016-02-02T05:22:00-06:00",
-                "cycleStartDate": "2017-10-31T23:56:04-07:00",
-                "description": "Nessus Vulnerability Assessment & Reporting",
-                "id": 82968915,
-                "laborFee": "0",
-                "laborFeeTaxRate": "0",
-                "lastBillDate": "2017-10-31T23:56:04-07:00",
-                "modifyDate": "2017-10-31T23:56:04-07:00",
-                "nextBillDate": "2017-12-01T00:00:00-06:00",
-                "oneTimeFee": "0",
-                "oneTimeFeeTaxRate": "0",
-                "orderItemId": 106909939,
-                "parentId": 82968861,
-                "recurringFee": "0",
-                "recurringFeeTaxRate": "0",
-                "recurringMonths": 1,
-                "serviceProviderId": 1,
-                "setupFee": "0",
-                "setupFeeTaxRate": "0",
+                "categoryCode": "ram",
+                "description": "64 GB RAM",
                 "nextInvoiceTotalRecurringAmount": 0
             }
         ],
-        "nextInvoiceTotalRecurringAmount": 1791.5,
+        "nextInvoiceChildren": [
+            {
+                "categoryCode": "os",
+                "description": "CentOS 7.x (64 bit)e2",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "disk_controller",
+                "description": "Non-RAID",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "disk0",
+                "description": "2.00 TB SATA ",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "bandwidth",
+                "description": "20000 GB Bandwidth Allotment",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "port_speed",
+                "description": "10 Gbps Redundant Public & Private Network Uplinks",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "service_port",
+                "description": "10 Gbps Redundant Private Uplinks",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "public_port",
+                "description": "10 Gbps Redundant Public Uplinks",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "remote_management",
+                "description": "Reboot \/ KVM over IP",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "pri_ip_addresses",
+                "description": "1 IP Address",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "monitoring",
+                "description": "Host Ping",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "notification",
+                "description": "Email and Ticket",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "response",
+                "description": "Automated Notification",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "vpn_management",
+                "description": "Unlimited SSL VPN Users",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "vulnerability_scanner",
+                "description": "Nessus Vulnerability Assessment & Reporting",
+                "nextInvoiceTotalRecurringAmount": 0
+            },
+            {
+                "categoryCode": "ram",
+                "description": "64 GB RAM",
+                "nextInvoiceTotalRecurringAmount": 0
+            }
+        ],
+        "nextInvoiceTotalRecurringAmount": 0,
         "orderItem": {
             "categoryCode": "server",
-            "description": "Dual Intel Xeon E5-2650 (8 Cores, 2.00 GHz)",
-            "domainName": "softlayer.com",
-            "hostName": "ys1-0-baremetal-uaadb",
-            "id": 106909885,
-            "itemId": 4115,
-            "itemPriceId": "49567",
+            "description": "Single Intel Xeon E3-1270 v6 (4 Cores, 3.80 GHz)",
+            "domainName": "testedit.com",
+            "hostName": "barDcabero",
+            "id": 665826080,
+            "itemId": 10831,
+            "itemPriceId": "206237",
             "laborAfterTaxAmount": "0",
             "laborFee": "0",
             "laborFeeTaxRate": "0",
@@ -734,8 +794,8 @@
             "presetId": null,
             "promoCodeId": null,
             "quantity": null,
-            "recurringAfterTaxAmount": "297.25",
-            "recurringFee": "297.25",
+            "recurringAfterTaxAmount": "0",
+            "recurringFee": "0",
             "recurringTaxAmount": "0",
             "setupAfterTaxAmount": "0",
             "setupFee": "0",
@@ -743,155 +803,234 @@
             "setupFeeTaxRate": "0",
             "setupTaxAmount": "0",
             "order": {
-                "accountId": 278444,
-                "createDate": "2016-02-02T05:21:58-06:00",
-                "id": 6795611,
+                "accountId": 307608,
+                "createDate": "2020-04-27T12:51:40-07:00",
+                "id": 58098036,
                 "impersonatingUserRecordId": null,
-                "modifyDate": "2016-02-02T05:22:01-06:00",
+                "modifyDate": "2020-04-27T12:51:42-07:00",
                 "orderQuoteId": null,
-                "orderTypeId": 7,
+                "orderTypeId": 11,
                 "presaleEventId": null,
                 "privateCloudOrderFlag": false,
                 "status": "APPROVED",
-                "userRecordId": 451275,
+                "userRecordId": 7650493,
                 "userRecord": {
-                    "username": "cancelled_2017-08-31-04.36.48_mikdipede"
+                    "username": "sl307608-dcabero"
                 }
             }
         }
     },
     "datacenter": {
-        "id": 138124,
-        "longName": "Dallas 5",
-        "name": "dal05",
+        "id": 1441195,
+        "longName": "Dallas 10",
+        "name": "dal10",
         "statusId": 2
     },
-    "globalIdentifier": "50b15347-f575-4bc1-88f3-f1d1783fbd1d",
+    "globalIdentifier": "81434794-af69-44d5-bb97-6b6f43454eee",
     "hardwareChassis": {
-        "id": 30,
-        "name": "SMCH12"
+        "id": 729,
+        "name": "x3250 M6"
     },
     "hardwareStatus": {
         "id": 5,
         "status": "ACTIVE"
     },
     "hourlyBillingFlag": false,
-    "memoryCapacity": 32,
+    "lastTransaction": {
+        "id": 310529980,
+        "transactionStatus": {
+            "friendlyName": "Rescue kernel is booting",
+            "name": "RESCUE_BOOT"
+        }
+    },
+    "memoryCapacity": 64,
     "networkComponents": [
         {
-            "id": 1293040,
-            "ipmiIpAddress": "10.81.188.26",
-            "ipmiMacAddress": "02:25:90:f0:47:7a",
+            "id": 10646655,
+            "ipmiIpAddress": "10.93.138.222",
+            "ipmiMacAddress": "6e:0b:84:f0:bb:27",
             "maxSpeed": 100,
             "name": "mgmt",
             "port": 0,
             "speed": 100,
             "status": "ACTIVE",
             "primarySubnet": {
-                "broadcastAddress": "10.81.188.255",
-                "gateway": "10.81.188.1",
-                "id": 573086,
-                "netmask": "255.255.255.0",
-                "networkIdentifier": "10.81.188.0"
+                "broadcastAddress": "10.93.138.255",
+                "gateway": "10.93.138.193",
+                "id": 1596063,
+                "netmask": "255.255.255.192",
+                "networkIdentifier": "10.93.138.192"
             }
         },
         {
-            "id": 1293041,
-            "macAddress": "00:25:90:f0:47:7a",
-            "maxSpeed": 1000,
+            "id": 10646653,
+            "macAddress": "6c:0b:84:f0:bb:27",
+            "maxSpeed": 10000,
             "name": "eth",
             "port": 0,
-            "primaryIpAddress": "10.81.188.141",
-            "speed": 1000,
-            "status": "ACTIVE",
-            "primarySubnet": {
-                "broadcastAddress": "10.81.188.255",
-                "gateway": "10.81.188.1",
-                "id": 573086,
-                "netmask": "255.255.255.0",
-                "networkIdentifier": "10.81.188.0"
-            }
-        },
-        {
-            "id": 1293042,
-            "macAddress": "00:25:90:f0:47:7b",
-            "maxSpeed": 1000,
-            "name": "eth",
-            "port": 1,
-            "primaryIpAddress": "75.126.172.160",
-            "speed": 1000,
-            "status": "ACTIVE",
-            "primarySubnet": {
-                "broadcastAddress": "75.126.172.255",
-                "gateway": "75.126.172.129",
-                "id": 512759,
-                "netmask": "255.255.255.128",
-                "networkIdentifier": "75.126.172.128"
-            }
-        },
-        {
-            "id": 1293043,
-            "macAddress": "00:25:90:f0:47:7c",
-            "maxSpeed": 1000,
-            "name": "eth",
-            "port": 2,
-            "speed": 1000,
+            "speed": 10000,
             "status": "ACTIVE"
         },
         {
-            "id": 1293044,
-            "macAddress": "00:25:90:f0:47:7d",
-            "maxSpeed": 1000,
+            "id": 10646645,
+            "macAddress": "00:e0:ed:7a:fd:b1",
+            "maxSpeed": 10000,
+            "name": "eth",
+            "port": 1,
+            "primaryIpAddress": "10.93.138.202",
+            "speed": 10000,
+            "status": "ACTIVE",
+            "primarySubnet": {
+                "broadcastAddress": "10.93.138.255",
+                "gateway": "10.93.138.193",
+                "id": 1596063,
+                "netmask": "255.255.255.192",
+                "networkIdentifier": "10.93.138.192"
+            }
+        },
+        {
+            "id": 10646647,
+            "macAddress": "00:e0:ed:7a:fd:b2",
+            "maxSpeed": 10000,
+            "name": "eth",
+            "port": 2,
+            "primaryIpAddress": "169.48.191.244",
+            "speed": 10000,
+            "status": "ACTIVE",
+            "primarySubnet": {
+                "broadcastAddress": "169.48.191.255",
+                "gateway": "169.48.191.241",
+                "id": 2136303,
+                "netmask": "255.255.255.240",
+                "networkIdentifier": "169.48.191.240"
+            }
+        },
+        {
+            "id": 10646649,
+            "macAddress": "00:e0:ed:7a:fd:b3",
+            "maxSpeed": 10000,
             "name": "eth",
             "port": 3,
-            "speed": 1000,
+            "speed": 10000,
+            "status": "ACTIVE"
+        },
+        {
+            "id": 10646651,
+            "macAddress": "00:e0:ed:7a:fd:b4",
+            "maxSpeed": 10000,
+            "name": "eth",
+            "port": 4,
+            "speed": 10000,
             "status": "ACTIVE"
         }
     ],
-    "networkManagementIpAddress": "10.81.188.26",
+    "networkManagementIpAddress": "10.93.138.222",
     "networkVlans": [
         {
-            "id": 292432,
-            "vlanNumber": 1963,
+            "id": 2848186,
+            "vlanNumber": 886,
             "networkSpace": "PRIVATE"
         },
         {
-            "id": 292431,
-            "vlanNumber": 1359,
+            "id": 2848184,
+            "vlanNumber": 1236,
             "networkSpace": "PUBLIC"
         }
     ],
     "operatingSystem": {
-        "hardwareId": 218027,
-        "id": 9113189,
+        "hardwareId": 1403539,
+        "id": 66958096,
         "manufacturerLicenseInstance": "",
         "passwords": [
             {
-                "password": "abcdfegh",
+                "password": "ppx772A5dZUL",
                 "username": "root"
             }
         ],
         "softwareLicense": {
-            "id": 1938,
-            "softwareDescriptionId": 1346,
+            "id": 17502,
+            "softwareDescriptionId": 2816,
             "softwareDescription": {
-                "manufacturer": "Ubuntu",
-                "name": "Ubuntu",
-                "referenceCode": "UBUNTU_14_64",
-                "version": "14.04-64 Minimal for Bare Metal"
+                "manufacturer": "CentOS",
+                "name": "CentOS",
+                "referenceCode": "CENTOS_7_64",
+                "version": "7.8-64  "
             }
         }
     },
-    "primaryBackendIpAddress": "10.81.188.141",
-    "primaryIpAddress": "75.126.172.160",
+    "primaryBackendIpAddress": "10.93.138.202",
+    "primaryIpAddress": "169.48.191.244",
     "privateNetworkOnlyFlag": false,
-    "processorPhysicalCoreAmount": 16,
+    "processorPhysicalCoreAmount": 4,
     "remoteManagementAccounts": [
         {
-            "password": "abcdfeghgrt",
+            "password": "abc1234",
             "username": "root"
         }
     ],
-    "tagReferences": [],
-    "userData": []
+    "tagReferences": [
+        {
+            "id": 1545600997,
+            "tag": {
+                "id": 5158941,
+                "name": "thistag"
+            }
+        }
+    ],
+    "userData": [
+        {
+            "hardwareAttributeTypeId": 47,
+            "id": 1340838,
+            "value": "CNAME1=disney-stg-pdb-wdc04-2.cds.tririga.com; CNAME2=pdb.stg.disney.cds.tririga.com; OFFERING=TRIRIGA; MIDDLEWARE=crowdstrike,r1soft,bigfix,db2; TRI_VERSION=380; FP=0",
+            "hardwareAttributeType": {
+                "keyname": "USER_DATA",
+                "name": "User Data"
+            }
+        }
+    ],
+    "activeTransaction": {
+        "id": 310529980,
+        "transactionStatus": {
+            "friendlyName": "Rescue kernel is booting",
+            "name": "RESCUE_BOOT"
+        }
+    },
+    "allocationId": 36835796,
+    "bandwidthAllotmentId": 138442,
+    "effectiveDate": "2020-05-03T22:00:00-07:00",
+    "endEffectiveDate": null,
+    
+    "serviceProviderId": 1,
+    "allocation": {
+        "amount": "20000"
+    },
+    "hardwareComponentModelId": 1979,
+    "hardwareId": 1403539,
+    "modifyDate": "2017-11-21T14:59:16-06:00",
+    "name": "0",
+    "serialNumber": "zc21brfd",
+    "hardwareComponentModel": {
+        "capacity": "2000",
+        "description": "SATAIII:2000:7200:SATAIII:2000:7200:EnterpriseCapacity3.5V5",
+        "hardwareGenericComponentModelId": 449,
+        "id": 1979,
+        "longDescription": "Seagate \/  \/ Enterprise Capacity 3.5 V5 \/ ST2000NM0055 \/ 2000",
+        "manufacturer": "Seagate",
+        "name": "Enterprise Capacity 3.5 V5",
+        "version": "ST2000NM0055",
+        "hardwareGenericComponentModel": {
+            "capacity": "2000",
+            "description": "SATAIII",
+            "hardwareComponentTypeId": 1,
+            "id": 449,
+            "units": "GB",
+            "upgradePriority": 7,
+            "hardwareComponentType": {
+                "id": 1,
+                "keyName": "HARD_DRIVE",
+                "type": "Hard Drive",
+                "typeParentId": 5
+            }
+        }
+    }
 }
