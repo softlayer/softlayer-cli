@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"os"
 	"strings"
-
+	"fmt"
 	"github.com/miekg/dns"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
@@ -62,22 +62,37 @@ func (cmd *ImportCommand) Run(args []string) error {
 		return nil
 	}
 
-	dnsDomain, err := cmd.DNSManager.CreateZone(*zone.Name) //parseFileContent can guarantee zone.name is not nil
+	// dnsDomain, err := cmd.DNSManager.CreateZone(*zone.Name) //parseFileContent can guarantee zone.name is not nil
+	dnsDomain := datatypes.Dns_Domain{}
+	domainId, err := cmd.DNSManager.GetZoneIdFromName(*zone.Name)
 	if err != nil {
 
-		return errors.NewAPIError(T("Failed to create zone: {{.ZoneName}}.\n", map[string]interface{}{"ZoneName": *zone.Name}), err.Error(), 2)
+		fmt.Printf("Error creating zone, it likely already exists....\n %v\n", err.Error())
+		return errors.NewAPIError(T("Failed to create zone: {{.ZoneName}}.\n", map[string]interface{}{"ZoneName": *zone.Name}), err.Error(), 2)		
 	}
+	dnsDomain.Id = sl.Int(domainId)	
 
 	cmd.UI.Print(T("Zone {{.Zone}} was created.", map[string]interface{}{"Zone": utils.StringPointertoString(dnsDomain.Name)}))
 
 	var multiErrors []error
 	for _, record := range records {
-		record.DomainId = dnsDomain.Id
-		rr, err := cmd.DNSManager.ResourceRecordCreate(record)
+		
+		
+		switch record.(type) {
+		case	datatypes.Dns_Domain_ResourceRecord:
+			localRecord := datatypes.Dns_Domain_ResourceRecord(record.(datatypes.Dns_Domain_ResourceRecord))
+			localRecord.DomainId = dnsDomain.Id
+			rr, err := cmd.DNSManager.ResourceRecordCreate(localRecord)
+		case Dns_Domain_ResourceRecord_SrvType:
+			rr, err := cmd.DNSManager.SrvResourceRecordCreate(record)
+		}
+		
+		
 		if err != nil {
 			newError := errors.New(T("Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}",
-				map[string]interface{}{"Zone": zone.Name, "RecordType": *rr.Type, "Host": *rr.Host, "Data": *rr.Data, "Ttl": *rr.Ttl, "ErrorMessage": err.Error()}))
+				map[string]interface{}{"Zone": zone.Name, "RecordType": *record.Type, "Host": *record.Host, "Data": *record.Data, "Ttl": *record.Ttl, "ErrorMessage": err.Error()}))
 			multiErrors = append(multiErrors, newError)
+			break
 		} else {
 			cmd.UI.Print(T("Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
 				map[string]interface{}{"Zone": zone.Name, "ID": *rr.Id, "RecordType": *rr.Type, "Host": *rr.Host, "Data": *rr.Data, "Ttl": *rr.Ttl}))
@@ -90,9 +105,9 @@ func (cmd *ImportCommand) Run(args []string) error {
 	return nil
 }
 
-func parseFileContent(content []byte, filename string) (datatypes.Dns_Domain, []datatypes.Dns_Domain_ResourceRecord, error) {
+func parseFileContent(content []byte, filename string) (datatypes.Dns_Domain, []interface{}, error) {
 	zone := datatypes.Dns_Domain{}
-	records := []datatypes.Dns_Domain_ResourceRecord{}
+	records := []interface{}
 	// Top Level Domain: AKA $ORIGIN
 	tld := ""
 	zoneParser := dns.NewZoneParser(bytes.NewReader(content), "", filename)
@@ -106,6 +121,7 @@ func parseFileContent(content []byte, filename string) (datatypes.Dns_Domain, []
 
 		}
 		record := datatypes.Dns_Domain_ResourceRecord{Domain: &zone}
+		record.Ttl = sl.Int(3600)
 		// This is the full record name. `www.example.com`
 		fqdn := strings.TrimSuffix(header.Name, ".")
 		// Just the domain part. `www`
@@ -134,6 +150,13 @@ func parseFileContent(content []byte, filename string) (datatypes.Dns_Domain, []
 		case *dns.TXT:
 			data := strings.Join(rr.(*dns.TXT).Txt, " ")
 			record.Data = sl.String(strings.Trim(data, "\""))
+		case *dns.SRV:
+			record = datatypes.Dns_Domain_ResourceRecord_SrvType(record)
+			priority := int(rr.(*dns.Srv).Priority)
+			record.Priority = sl.Int(priority)
+			record.Port = sl.Int(rr.(*dns.Srv).Port)
+			record.Weight = sl.Int(rr.(*dns.Srv).Weight)
+			record.Data = sl.String(rr.(*dns.Srv).Target)
 		case *dns.SOA:
 			continue
 		default:

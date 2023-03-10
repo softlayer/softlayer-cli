@@ -93,6 +93,34 @@ var _ = Describe("DNSManager", func() {
 		})
 	})
 
+	Describe("ResourceRecordCreate", func() {
+		Context("Create a A record under a domain", func() {
+			It("Happy path", func() {
+				newRecord := datatypes.Dns_Domain_ResourceRecord{
+					DomainId: sl.Int(1745153),
+					Host: sl.String("TESTHOST"),
+					Type: sl.String("A"),
+					Data: sl.String("1.1.2.2"),
+					Ttl: sl.Int(300),
+				}
+				record, err := dnsManager.ResourceRecordCreate(newRecord)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(*record.DomainId).To(Equal(1745153))
+				// Get the API logs from the test handler
+				fakeHandler := testhelpers.GetSessionHandler(fakeSLSession)
+				ApiLogs := fakeHandler.ApiCallLogs
+				// Make sure we have 1 API call
+				Expect(len(ApiLogs)).To(Equal(1))
+				Expect(ApiLogs[0].Service).To(Equal("SoftLayer_Dns_Domain_ResourceRecord"))
+				Expect(ApiLogs[0].Method).To(Equal("createObject"))
+				Expect(len(ApiLogs[0].Args)).To(Equal(1))
+				// Convert the arg[0] back to a Dns_Domain_ResourceRecord
+				callDomain := ApiLogs[0].Args[0].(*datatypes.Dns_Domain_ResourceRecord)
+				Expect(*callDomain.Host).To(Equal("TESTHOST"))
+			})
+		})
+	})
+
 	Describe("Delete a resource record", func() {
 		Context("Delete a resource record given its ID", func() {
 			It("It returns nil", func() {
@@ -157,4 +185,5 @@ var _ = Describe("DNSManager", func() {
 			})
 		})
 	})
+
 })

@@ -70,6 +70,14 @@ var complexZoneArgs = []datatypes.Dns_Domain_ResourceRecord{
 	},
 }
 
+var srvZoneArgs = []datatypes.Dns_Domain_ResourceRecord{
+	datatypes.Dns_Domain_ResourceRecord{
+		DomainId: sl.Int(12345), Host: sl.String("_serviceTest._tls.host.local"),
+		Type: sl.String("SRV"), Ttl: sl.Int(900),
+		Data: sl.String("v=spf1 includespf.dynect.net ~all"),
+	},
+}
+
 var _ = Describe("DNS Import", func() {
 	var (
 		fakeUI         *terminal.FakeUI
@@ -148,6 +156,20 @@ var _ = Describe("DNS Import", func() {
 					Expect(apiCall.Ttl).To(Equal(complexZoneArgs[i].Ttl))
 					Expect(apiCall.Data).To(Equal(complexZoneArgs[i].Data))
 				}
+			})
+			It("SRV record", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/dns_import_srv.bind")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Zone default.com was created."))
+				// Expect(fakeUI.Outputs()).To(ContainSubstring("Created resource record under zone btest1.com: ID=99999, type=SRV"))
+
+				apiCall := fakeDNSManager.ResourceRecordCreateArgsForCall(0)
+				Expect(apiCall.DomainId).To(Equal(srvZoneArgs[0].DomainId))
+				Expect(apiCall.Type).To(Equal(srvZoneArgs[0].Type))
+				Expect(apiCall.Host).To(Equal(srvZoneArgs[0].Host))
+				Expect(apiCall.Ttl).To(Equal(srvZoneArgs[0].Ttl))
+				Expect(apiCall.Data).To(Equal(srvZoneArgs[0].Data))
+
 			})
 		})
 	})
