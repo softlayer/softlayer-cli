@@ -145,7 +145,6 @@ func (cmd *DetailCommand) Run(args []string) error {
 	))
 	billing := "Monthly"
 	utils.FormatBoolPointer(hardware.HourlyBillingFlag)
-	// if *hardware.HourlyBillingFlag {
 	if utils.FormatBoolPointer(hardware.HourlyBillingFlag) != "" {
 		billing = "Hourly"
 	}
