@@ -348,7 +348,7 @@ var _ = Describe("hardware detail", func() {
 				cliCommand = hardware.NewDetailCommand(slCommand)
 			})
 			It("return hardware detail", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1403539")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "218027")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Last transaction   - -"))
 			})
