@@ -465,7 +465,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\nACCESS_ID est l'ID d'hôte autorisé extrait de '${COMMAND_NAME} sl {{.storageType}} access-list'"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\nACCESS_ID est l'ID d'hôte autorisé obtenu avec '${COMMAND_NAME} sl {{.storageType}} access-list'"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
@@ -965,7 +965,7 @@
   },
   {
     "id": "Add access to subnet.",
-    "translation": "Ajoutez un accès au sous-réseau."
+    "translation": "Ajouter l'accès au sous-réseau."
   },
   {
     "id": "Add an address translation to an IPSec tunnel",
@@ -981,7 +981,7 @@
   },
   {
     "id": "Add or remove subnet access for a user.",
-    "translation": "Ajouter ou supprimer un accès au sous-réseau pour un utilisateur."
+    "translation": "Ajouter ou retirer l'accès au sous-réseau pour un utilisateur."
   },
   {
     "id": "Add resource record in a zone",
@@ -1133,7 +1133,7 @@
   },
   {
     "id": "Authorize hosts to access a given volume.",
-    "translation": "Permet d'autoriser les hôtes à accéder à un volume donné."
+    "translation": "Autoriser les hôtes à accéder à un volume donné."
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -2313,7 +2313,7 @@
   },
   {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
-    "translation": "Date la plus ancienne pour récupérer les événements pour [AAAA-MM-JJ]. Valeur par défaut : il y a 2 jours."
+    "translation": "Première date de récupération des événements [AAAA-MM-JJ]. Valeur par défaut : il y a 2 jours."
   },
   {
     "id": "Edit SSL certificate",
@@ -4389,7 +4389,7 @@
   },
   {
     "id": "Force the volume refresh, will cancel any ongoing transactions.",
-    "translation": "Forcer l'actualisation du volume va annuler toutes les transactions en cours."
+    "translation": "Forcer l'actualisation du volume ; toutes les transactions en cours seront annulées."
   },
   {
     "id": "Forces the virtual server to only have access the private network",
@@ -4709,7 +4709,7 @@
   },
   {
     "id": "How many results to get in one api call.",
-    "translation": "Nombre de résultats à obtenir dans un seul appel d'API."
+    "translation": "Nombre de résultats à obtenir avec un seul appel API."
   },
   {
     "id": "Http Port",
@@ -4901,7 +4901,7 @@
   },
   {
     "id": "Include invoices with a CLOSED status.",
-    "translation": "Inclure les factures dont le statut est CLOSED."
+    "translation": "Inclure les factures dont le statut est FERME."
   },
   {
     "id": "Incorrect Usage",
@@ -5365,7 +5365,7 @@
   },
   {
     "id": "List hosts that are authorized to access the volume.",
-    "translation": "Répertorie les hôtes autorisés à accéder au volume."
+    "translation": "Répertorier les hôtes autorisés à accéder au volume."
   },
   {
     "id": "List information about devices using the tag.",
@@ -6013,7 +6013,7 @@
   },
   {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
-    "translation": "Paramètre facultatif pour Billing rate (valeur par défaut : ), options : hourly, monthly"
+    "translation": "Paramètre facultatif pour le taux de facturation (monthly par défaut), options : hourly, monthly"
   },
   {
     "id": "Optional parameter for ordering snapshot space along with endurance block storage; specifies the size (in GB) of snapshot space to order",
@@ -6245,7 +6245,7 @@
   },
   {
     "id": "Password you want to set, this command will fail if the password is not strong. [required]",
-    "translation": "Mot de passe que vous souhaitez définir. Cette commande échoue si le mot de passe n'est pas fiable. [obligatoire]"
+    "translation": "Mot de passe à définir. Cette commande échoue si le mot de passe n'est pas fort. [requis]"
   },
   {
     "id": "Path",
@@ -6653,7 +6653,7 @@
   },
   {
     "id": "Provides some details related to order owner, date order, cost information, initial invoice.",
-    "translation": "Fournit quelques détails relatifs au propriétaire de la commande, à la date de la commande, aux informations de coût et à la facture initiale."
+    "translation": "Fournit des détails relatifs au propriétaire de la commande, à la date de la commande, aux informations sur le coût et à la facture initiale."
   },
   {
     "id": "Provisioned",
@@ -6873,7 +6873,7 @@
   },
   {
     "id": "Remove access to subnet.",
-    "translation": "Supprimez l'accès au sous-réseau."
+    "translation": "Retirer l'accès au sous-réseau."
   },
   {
     "id": "Remove block storage subnets to the given host id.",
@@ -6993,7 +6993,7 @@
   },
   {
     "id": "Revoke authorization for hosts that are accessing a specific volume.",
-    "translation": "Révoquez l'autorisation pour les hôtes qui accèdent à un volume spécifique."
+    "translation": "Révoquer l'autorisation pour les hôtes qui accèdent à un volume spécifique."
   },
   {
     "id": "Role Name",
@@ -7829,7 +7829,7 @@
   },
   {
     "id": "The earliest date we want to search for event logs [YYYY-MM-DD].",
-    "translation": "La date la plus ancienne pour laquelle nous voulons rechercher des journaux d'événements [1AAAA-MM-JJ]."
+    "translation": "Première date à laquelle rechercher des journaux des événements [AAAA-MM-JJ]."
   },
   {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
