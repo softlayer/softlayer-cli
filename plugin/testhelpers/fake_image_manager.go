@@ -145,6 +145,20 @@ type FakeImageManager struct {
 		result1 []datatypes.Virtual_Guest_Block_Device_Template_Group
 		result2 error
 	}
+	ShareImageStub        func(int, int) (bool, error)
+	shareImageMutex       sync.RWMutex
+	shareImageArgsForCall []struct {
+		arg1 int
+		arg2 int
+	}
+	shareImageReturns struct {
+		result1 bool
+		result2 error
+	}
+	shareImageReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -804,6 +818,71 @@ func (fake *FakeImageManager) ListPublicImagesReturnsOnCall(i int, result1 []dat
 	}{result1, result2}
 }
 
+func (fake *FakeImageManager) ShareImage(arg1 int, arg2 int) (bool, error) {
+	fake.shareImageMutex.Lock()
+	ret, specificReturn := fake.shareImageReturnsOnCall[len(fake.shareImageArgsForCall)]
+	fake.shareImageArgsForCall = append(fake.shareImageArgsForCall, struct {
+		arg1 int
+		arg2 int
+	}{arg1, arg2})
+	stub := fake.ShareImageStub
+	fakeReturns := fake.shareImageReturns
+	fake.recordInvocation("ShareImage", []interface{}{arg1, arg2})
+	fake.shareImageMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeImageManager) ShareImageCallCount() int {
+	fake.shareImageMutex.RLock()
+	defer fake.shareImageMutex.RUnlock()
+	return len(fake.shareImageArgsForCall)
+}
+
+func (fake *FakeImageManager) ShareImageCalls(stub func(int, int) (bool, error)) {
+	fake.shareImageMutex.Lock()
+	defer fake.shareImageMutex.Unlock()
+	fake.ShareImageStub = stub
+}
+
+func (fake *FakeImageManager) ShareImageArgsForCall(i int) (int, int) {
+	fake.shareImageMutex.RLock()
+	defer fake.shareImageMutex.RUnlock()
+	argsForCall := fake.shareImageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeImageManager) ShareImageReturns(result1 bool, result2 error) {
+	fake.shareImageMutex.Lock()
+	defer fake.shareImageMutex.Unlock()
+	fake.ShareImageStub = nil
+	fake.shareImageReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeImageManager) ShareImageReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.shareImageMutex.Lock()
+	defer fake.shareImageMutex.Unlock()
+	fake.ShareImageStub = nil
+	if fake.shareImageReturnsOnCall == nil {
+		fake.shareImageReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.shareImageReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeImageManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -827,6 +906,8 @@ func (fake *FakeImageManager) Invocations() map[string][][]interface{} {
 	defer fake.listPrivateImagesMutex.RUnlock()
 	fake.listPublicImagesMutex.RLock()
 	defer fake.listPublicImagesMutex.RUnlock()
+	fake.shareImageMutex.RLock()
+	defer fake.shareImageMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
