@@ -27,7 +27,7 @@ const (
 	EMPTY_STRING = ""
 )
 
-//TODO support resolving guid to integer id
+// TODO support resolving guid to integer id
 func ResolveVirtualGuestId(identifier string) (int, error) {
 	id, err := strconv.Atoi(identifier)
 	if err != nil {
@@ -134,8 +134,8 @@ func IntSliceToStringSlice(slice []int) []string {
 	return result
 }
 
-//the first bool value indicates whether the source slice are all in target slice
-//the second int value indicates the index of the source slice value is not in the target slice
+// the first bool value indicates whether the source slice are all in target slice
+// the second int value indicates the index of the source slice value is not in the target slice
 func SliceInSlice(source, target []string) (bool, int) {
 	exist := make([]bool, len(source))
 	for i, s := range source {
@@ -172,7 +172,7 @@ func MergeAndSortSlice(s1, s2 []string) []string {
 	return s
 }
 
-//Converts number of bytes to a string in gigabytes.
+// Converts number of bytes to a string in gigabytes.
 func B2GB(bytes int) string {
 	return fmt.Sprintf("%.2f%s", float32(bytes)/1024/1024/1024, "G")
 }
@@ -403,4 +403,17 @@ func ArrayStringToString(array []string) string {
 func ProgressBar(title string, numberElements int) *progress_bar.ProgressBar {
 	bar := progress_bar.NewProgressBar(numberElements).OptionTitle(title + ":").PrintBlankProgressBar()
 	return bar
+}
+
+/*
+longName key: 'Amsterdam 3'
+pod from: pods, err := cmd.NetworkManager.GetClosingPods()
+*/
+func GetPodWithClosedAnnouncement(key string, pods []datatypes.Network_Pod) string {
+	for _, pod := range pods {
+		if key == *pod.DatacenterLongName {
+			return T("closing soon: ") + *pod.Name
+		}
+	}
+	return "-"
 }

@@ -2,6 +2,7 @@ package file
 
 import (
 	"bytes"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -63,7 +64,11 @@ func (cmd *VolumeOptionsCommand) Run(args []string) error {
 	iopsTable.Print()
 	table.Add(T("IOPS"), buf.String())
 	table.Add(T("Tier"), "0.25,2,4,10")
-	table.Add(T("Location"), utils.StringSliceToString(locations))
+	datacentersName := []string{}
+	for _, location := range locations {
+		datacentersName = append(datacentersName, utils.FormatStringPointer(location.Name))
+	}
+	table.Add(T("Location"), strings.Join(datacentersName, ","))
 	buf = new(bytes.Buffer)
 	snapshotTable := terminal.NewTable(buf, []string{T("Storage Size (GB)"), T("Available Snapshot Size (GB)")})
 	snapshotTable.Add(volumeSizes[0], "0,5,10,20")
