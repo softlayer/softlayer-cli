@@ -77,9 +77,10 @@ func (cmd *ImportCommand) Run(args []string) error {
 	var multiErrors []error
 	for _, record := range records {
 		
-		
+
 		switch record.(type) {
 		case	datatypes.Dns_Domain_ResourceRecord:
+			// TODO: Is there a better way to do this?
 			localRecord := datatypes.Dns_Domain_ResourceRecord(record.(datatypes.Dns_Domain_ResourceRecord))
 			localRecord.DomainId = dnsDomain.Id
 			rr, err := cmd.DNSManager.ResourceRecordCreate(localRecord)
@@ -105,7 +106,8 @@ func (cmd *ImportCommand) Run(args []string) error {
 	return nil
 }
 
-func parseFileContent(content []byte, filename string) (datatypes.Dns_Domain, []interface{}, error) {
+// TODO, this function needs to make the API call. No real need to send data back and forth like this.
+func parseFileContent(content []byte, filename string, dnsManager managers.DNSManager) (datatypes.Dns_Domain, []interface{}, error) {
 	zone := datatypes.Dns_Domain{}
 	records := []interface{}
 	// Top Level Domain: AKA $ORIGIN
