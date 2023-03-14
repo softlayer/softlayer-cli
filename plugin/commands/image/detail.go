@@ -109,8 +109,8 @@ func (cmd *DetailCommand) Run(args []string) error {
 func getDatacenters(childrens []datatypes.Virtual_Guest_Block_Device_Template_Group, ui terminal.UI, outputFormat string) string {
 	bufTable := new(bytes.Buffer)
 	table := terminal.NewTable(bufTable, []string{
-		T("Data Center"),
-		T("Size"),
+		T("data center"),
+		T("size"),
 	})
 	for _, child := range childrens {
 		table.Add(
@@ -125,26 +125,28 @@ func getDatacenters(childrens []datatypes.Virtual_Guest_Block_Device_Template_Gr
 func getVirtualDisks(childrens []datatypes.Virtual_Guest_Block_Device_Template_Group, ui terminal.UI, outputFormat string) string {
 	bufTable := new(bytes.Buffer)
 	table := terminal.NewTable(bufTable, []string{
-		T("Device"),
-		T("Capacity"),
-		T("Size on disk"),
+		T("device"),
+		T("capacity"),
+		T("size on disk"),
 	})
-	for _, blockDevices := range childrens[0].BlockDevices {
-		device_name := utils.FormatStringPointer(blockDevices.DiskImage.Name)
-		if len(blockDevices.DiskImage.SoftwareReferences) > 0 {
-			device_name = *blockDevices.DiskImage.SoftwareReferences[0].SoftwareDescription.LongDescription
-		}
-		sizeOnDisk := "N/A"
-		if blockDevices.DiskSpace != nil {
-			sizeOnDisk = utils.B2GB(int(*blockDevices.DiskSpace))
-		}
+	if childrens != nil && childrens[0].BlockDevices != nil {
+		for _, blockDevice := range childrens[0].BlockDevices {
+			device_name := utils.FormatStringPointer(blockDevice.DiskImage.Name)
+			if len(blockDevice.DiskImage.SoftwareReferences) > 0 {
+				device_name = *blockDevice.DiskImage.SoftwareReferences[0].SoftwareDescription.LongDescription
+			}
+			sizeOnDisk := "N/A"
+			if blockDevice.DiskSpace != nil {
+				sizeOnDisk = utils.B2GB(int(*blockDevice.DiskSpace))
+			}
 
-		table.Add(
-			device_name,
-			utils.FormatIntPointer(blockDevices.DiskImage.Capacity)+
-				utils.FormatStringPointer(blockDevices.DiskImage.Units),
-			sizeOnDisk,
-		)
+			table.Add(
+				device_name,
+				utils.FormatIntPointer(blockDevice.DiskImage.Capacity)+
+					utils.FormatStringPointer(blockDevice.DiskImage.Units),
+				sizeOnDisk,
+			)
+		}
 	}
 	utils.PrintTable(ui, table, outputFormat)
 	return bufTable.String()
@@ -153,8 +155,8 @@ func getVirtualDisks(childrens []datatypes.Virtual_Guest_Block_Device_Template_G
 func getShareImages(image datatypes.Virtual_Guest_Block_Device_Template_Group, ui terminal.UI, outputFormat string) string {
 	bufTable := new(bytes.Buffer)
 	table := terminal.NewTable(bufTable, []string{
-		T("Account"),
-		T("Shared On"),
+		T("account"),
+		T("shared on"),
 	})
 	for _, account := range image.AccountReferences {
 		if *account.AccountId != *image.AccountId {
