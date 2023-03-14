@@ -31,6 +31,7 @@ type ImageManager interface {
 	ExportImage(imageId int, config datatypes.Container_Virtual_Guest_Block_Device_Template_Configuration) (bool, error)
 	ImportImage(config datatypes.Container_Virtual_Guest_Block_Device_Template_Configuration) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
 	GetDatacenters(imageId int) ([]datatypes.Location, error)
+	ShareImage(imageId int, accountId int) (bool, error)
 	ShareDenyImage(imageId int, accountId int) (bool, error)
 }
 
@@ -192,9 +193,17 @@ func (i imageManager) GetDatacenters(imageId int) ([]datatypes.Location, error) 
 	return i.ImageService.Id(imageId).GetStorageLocations()
 }
 
+//Permit sharing image template with another account.
+//imageId: The ID of the image.
+//accountId: The ID of the another account to share the image.
+func (i imageManager) ShareImage(imageId int, accountId int) (bool, error) {
+	return i.ImageService.Id(imageId).PermitSharingAccess(&accountId)
+}
+
 // Deny sharing image template with another account.
 // imageId: The ID of the image.
 // accountId: The ID of the another account to deny share the image.
 func (i imageManager) ShareDenyImage(imageId int, accountId int) (bool, error) {
 	return i.ImageService.Id(imageId).DenySharingAccess(&accountId)
 }
+

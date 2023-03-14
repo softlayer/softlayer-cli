@@ -26,6 +26,7 @@ var availableCommands = []string{
 	"export",
 	"import",
 	"list",
+	"share",
 	"share-deny",
 }
 

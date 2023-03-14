@@ -1,0 +1,11 @@
+{
+    "allocationId": 36835796,
+    "bandwidthAllotmentId": 138442,
+    "effectiveDate": "2020-05-03T22:00:00-07:00",
+    "endEffectiveDate": null,
+    "id": 37331754,
+    "serviceProviderId": 1,
+    "allocation": {
+        "amount": "20000"
+    }
+}
