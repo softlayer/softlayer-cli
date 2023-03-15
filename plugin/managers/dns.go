@@ -149,9 +149,9 @@ func (dns DNSmanager) ResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecor
 		Ttl: rr.Ttl,
 	}
 
-	fmt.Printf("ResourceRecordCreate Host: |%s|, %v\n", rr.Host, rr)
-	return dns.ResourceRecordService.CreateObject(&record)
-
+	fmt.Printf("ResourceRecordCreate Host: |%s|\n", *rr.Host)
+	return record, nil
+	// return dns.ResourceRecordService.CreateObject(&record)
 }
 
 // A "simpler" method than CreateResourceRecord
@@ -163,9 +163,11 @@ func (dns DNSmanager) SrvResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRe
 
 	}
 
-	fmt.Printf("ResourceRecordCreate Host: |%s|, %v\n", rr.Host, rr)
-	service :=  services.GetDnsDomainResourceRecordSrvTypeService(dns.Session)
-	return service.CreateObject(&record)
+	
+	fmt.Printf("SrvResourceRecordCreate Host: |%s|\n", *rr.Host)
+	return record, nil
+	// service :=  services.GetDnsDomainResourceRecordSrvTypeService(dns.Session)
+	// return service.CreateObject(&record)
 
 }
 
