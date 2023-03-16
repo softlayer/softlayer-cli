@@ -168,6 +168,19 @@ type FakeDNSManager struct {
 		result1 datatypes.Dns_Domain_ResourceRecord
 		result2 error
 	}
+	SrvResourceRecordCreateStub        func(datatypes.Dns_Domain_ResourceRecord_SrvType) (datatypes.Dns_Domain_ResourceRecord_SrvType, error)
+	srvResourceRecordCreateMutex       sync.RWMutex
+	srvResourceRecordCreateArgsForCall []struct {
+		arg1 datatypes.Dns_Domain_ResourceRecord_SrvType
+	}
+	srvResourceRecordCreateReturns struct {
+		result1 datatypes.Dns_Domain_ResourceRecord_SrvType
+		result2 error
+	}
+	srvResourceRecordCreateReturnsOnCall map[int]struct {
+		result1 datatypes.Dns_Domain_ResourceRecord_SrvType
+		result2 error
+	}
 	SyncAAAARecordStub        func(datatypes.Virtual_Guest, int, int) error
 	syncAAAARecordMutex       sync.RWMutex
 	syncAAAARecordArgsForCall []struct {
@@ -959,6 +972,69 @@ func (fake *FakeDNSManager) ResourceRecordCreateReturnsOnCall(i int, result1 dat
 	}{result1, result2}
 }
 
+func (fake *FakeDNSManager) SrvResourceRecordCreate(arg1 datatypes.Dns_Domain_ResourceRecord_SrvType) (datatypes.Dns_Domain_ResourceRecord_SrvType, error) {
+	fake.srvResourceRecordCreateMutex.Lock()
+	ret, specificReturn := fake.srvResourceRecordCreateReturnsOnCall[len(fake.srvResourceRecordCreateArgsForCall)]
+	fake.srvResourceRecordCreateArgsForCall = append(fake.srvResourceRecordCreateArgsForCall, struct {
+		arg1 datatypes.Dns_Domain_ResourceRecord_SrvType
+	}{arg1})
+	fake.recordInvocation("SrvResourceRecordCreate", []interface{}{arg1})
+	fake.srvResourceRecordCreateMutex.Unlock()
+	if fake.SrvResourceRecordCreateStub != nil {
+		return fake.SrvResourceRecordCreateStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.srvResourceRecordCreateReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeDNSManager) SrvResourceRecordCreateCallCount() int {
+	fake.srvResourceRecordCreateMutex.RLock()
+	defer fake.srvResourceRecordCreateMutex.RUnlock()
+	return len(fake.srvResourceRecordCreateArgsForCall)
+}
+
+func (fake *FakeDNSManager) SrvResourceRecordCreateCalls(stub func(datatypes.Dns_Domain_ResourceRecord_SrvType) (datatypes.Dns_Domain_ResourceRecord_SrvType, error)) {
+	fake.srvResourceRecordCreateMutex.Lock()
+	defer fake.srvResourceRecordCreateMutex.Unlock()
+	fake.SrvResourceRecordCreateStub = stub
+}
+
+func (fake *FakeDNSManager) SrvResourceRecordCreateArgsForCall(i int) datatypes.Dns_Domain_ResourceRecord_SrvType {
+	fake.srvResourceRecordCreateMutex.RLock()
+	defer fake.srvResourceRecordCreateMutex.RUnlock()
+	argsForCall := fake.srvResourceRecordCreateArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeDNSManager) SrvResourceRecordCreateReturns(result1 datatypes.Dns_Domain_ResourceRecord_SrvType, result2 error) {
+	fake.srvResourceRecordCreateMutex.Lock()
+	defer fake.srvResourceRecordCreateMutex.Unlock()
+	fake.SrvResourceRecordCreateStub = nil
+	fake.srvResourceRecordCreateReturns = struct {
+		result1 datatypes.Dns_Domain_ResourceRecord_SrvType
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeDNSManager) SrvResourceRecordCreateReturnsOnCall(i int, result1 datatypes.Dns_Domain_ResourceRecord_SrvType, result2 error) {
+	fake.srvResourceRecordCreateMutex.Lock()
+	defer fake.srvResourceRecordCreateMutex.Unlock()
+	fake.SrvResourceRecordCreateStub = nil
+	if fake.srvResourceRecordCreateReturnsOnCall == nil {
+		fake.srvResourceRecordCreateReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Dns_Domain_ResourceRecord_SrvType
+			result2 error
+		})
+	}
+	fake.srvResourceRecordCreateReturnsOnCall[i] = struct {
+		result1 datatypes.Dns_Domain_ResourceRecord_SrvType
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeDNSManager) SyncAAAARecord(arg1 datatypes.Virtual_Guest, arg2 int, arg3 int) error {
 	fake.syncAAAARecordMutex.Lock()
 	ret, specificReturn := fake.syncAAAARecordReturnsOnCall[len(fake.syncAAAARecordArgsForCall)]
@@ -1171,6 +1247,8 @@ func (fake *FakeDNSManager) Invocations() map[string][][]interface{} {
 	defer fake.listZonesMutex.RUnlock()
 	fake.resourceRecordCreateMutex.RLock()
 	defer fake.resourceRecordCreateMutex.RUnlock()
+	fake.srvResourceRecordCreateMutex.RLock()
+	defer fake.srvResourceRecordCreateMutex.RUnlock()
 	fake.syncAAAARecordMutex.RLock()
 	defer fake.syncAAAARecordMutex.RUnlock()
 	fake.syncARecordMutex.RLock()

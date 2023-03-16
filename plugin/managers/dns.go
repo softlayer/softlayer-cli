@@ -141,16 +141,16 @@ func (dns DNSmanager) CreateResourceRecord(zoneId int, host string, recordType s
 func (dns DNSmanager) ResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecord) (datatypes.Dns_Domain_ResourceRecord, error) {
 	// Simply passing in rr to CreateObject passes in an empty object for some reason I can't figure out
 	// So making a new variable here and passing that in seems to work ok.
-	record := datatypes.Dns_Domain_ResourceRecord{
-		DomainId: rr.DomainId,
-		Host: rr.Host,
-		Type: rr.Type,
-		Data: rr.Data,
-		Ttl: rr.Ttl,
-	}
+	// record := datatypes.Dns_Domain_ResourceRecord{
+	// 	DomainId: rr.DomainId,
+	// 	Host: rr.Host,
+	// 	Type: rr.Type,
+	// 	Data: rr.Data,
+	// 	Ttl: rr.Ttl,
+	// }
 
 	fmt.Printf("ResourceRecordCreate Host: |%s|\n", *rr.Host)
-	return record, nil
+	return rr, nil
 	// return dns.ResourceRecordService.CreateObject(&record)
 }
 

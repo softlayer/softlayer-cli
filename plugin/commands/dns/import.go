@@ -1,10 +1,9 @@
 package dns
 
 import (
-
 	"os"
 	"strings"
-	"fmt"
+
 	"github.com/miekg/dns"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
@@ -62,12 +61,12 @@ func (cmd *ImportCommand) Run(args []string) error {
       // If we dont know what the TLD is yet, figure it out.
 		if tld == "" {
 			tld = strings.TrimSuffix(header.Name, ".")
-			zone, err := GetZone(tld, cmd.DNSManager)
+			zone, err = CreateOrGetZone(tld, cmd.DNSManager)
 			if err != nil {
 				subs := map[string]interface{}{"ZoneName": tld}
 				return errors.NewAPIError(T("Failed to create zone: {{.ZoneName}}.\n", subs), err.Error(), 2)
 			}
-			fmt.Printf("Zone is : %v\n", *zone.Id)
+			cmd.UI.Print("Domain: %s Id: %d\n", tld, *zone.Id)
 		} // END TLD == ""
 
 		record := datatypes.Dns_Domain_ResourceRecord{}
@@ -89,16 +88,36 @@ func (cmd *ImportCommand) Run(args []string) error {
 		record.Type = sl.String(dns.TypeToString[header.Rrtype])
 		record.Ttl = sl.Int(int(header.Ttl))
 		record.Data = sl.String("")
-		createErr := CreateRecord(&record, rr, cmd.DNSManager)
-		if createErr != nil {
-			return createErr
+		created := false
+		if cmd.DryRun {
+			record.Data = sl.String(dns.Field(rr, 1))
+			created = false
+		} else {
+			created, err = CreateRecord(&record, rr, cmd.DNSManager)
+			if err != nil {
+				return err
+			}
 		}
-		fmt.Printf("Record.Host: %v Record.Data: %v\n", *record.Host, *record.Data)
+		if created {
+			cmd.UI.Print("Created Record: %v %v %v %v\n", *record.Host, *record.Ttl, *record.Type, *record.Data)	
+		} else {
+			cmd.UI.Print("Parsed Record: %v %v %v %v\n", *record.Host, *record.Ttl, *record.Type, *record.Data)
+		}
+		
 	} // END for rr, ok
+	// Detect any errors in parsing the Zone file
+	if err := zoneParser.Err(); err != nil {
+		return err
+	}
+	// This zone file was empty, but the dns library doesn't consider that an error.
+	if tld == "" {
+		return errors.New(T("Unable to parse zone from BIND file."))
+	}
+
 	return nil
 }
 
-func GetZone(tld string, manager managers.DNSManager) (zone datatypes.Dns_Domain, err error) {
+func CreateOrGetZone(tld string, manager managers.DNSManager) (datatypes.Dns_Domain, error) {
 	zone, createZoneErr := manager.CreateZone(tld)
 	// Possibly this zone exists already
 	if createZoneErr != nil {
@@ -108,16 +127,20 @@ func GetZone(tld string, manager managers.DNSManager) (zone datatypes.Dns_Domain
 			return zone, createZoneErr  
 		} else {
 			zone.Id = sl.Int(zoneId)
+			zone.Name = sl.String(tld)
 		}
 	}
 	return zone, nil
 }
 
-func CreateRecord(record *datatypes.Dns_Domain_ResourceRecord, rr dns.RR, manager managers.DNSManager) error {
+// Returns true, nil when a record was created
+// false, nil when a record was not created
+// false, err when an error happens
+func CreateRecord(record *datatypes.Dns_Domain_ResourceRecord, rr dns.RR, manager managers.DNSManager) (bool, error) {
 	switch rr.(type) {
 	case *dns.NS:
 	   if *record.Host == "@" {
-	       return nil
+	       return false, nil
 	   }
 	   record.Data = sl.String(rr.(*dns.NS).Ns)
 	case *dns.CNAME:
@@ -140,23 +163,23 @@ func CreateRecord(record *datatypes.Dns_Domain_ResourceRecord, rr dns.RR, manage
 	   srvRecord.Port = sl.Int(int(rr.(*dns.SRV).Port))
 	   srvRecord.Weight = sl.Int(int(rr.(*dns.SRV).Weight))
 	   srvRecord.Data = sl.String(rr.(*dns.SRV).Target)
+	   // So we can add this to our output at the end
+	   record.Data = sl.String(rr.(*dns.SRV).Target)
 	   _, err := manager.SrvResourceRecordCreate(srvRecord)
 	   if err != nil {
-	   	return err
+	   	return false, err
 	   } else {
-	   	return nil
+	   	return true, nil
 	   }
 	case *dns.SOA:
-	   return nil
+	   return false, nil
 	default:
-	   if dns.NumField(rr) < 1 {
-	       record.Data = sl.String(rr.String())
-	   }
+		// Sets data to the end bit of the resource record, basically.
 	   record.Data = sl.String(dns.Field(rr, 1))
 	}
 	_, err := manager.ResourceRecordCreate(*record)
 	if err != nil {
-		return err
+		return false, err
 	}
-	return nil
+	return true, nil
 }
