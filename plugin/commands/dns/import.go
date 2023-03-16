@@ -3,7 +3,6 @@ package dns
 import (
 	"os"
 	"strings"
-
 	"github.com/miekg/dns"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
@@ -66,7 +65,7 @@ func (cmd *ImportCommand) Run(args []string) error {
 				subs := map[string]interface{}{"ZoneName": tld}
 				return errors.NewAPIError(T("Failed to create zone: {{.ZoneName}}.\n", subs), err.Error(), 2)
 			}
-			cmd.UI.Print("Domain: %s Id: %d\n", tld, *zone.Id)
+			cmd.UI.Print("Domain: %s Id: %d", tld, *zone.Id)
 		} // END TLD == ""
 
 		record := datatypes.Dns_Domain_ResourceRecord{}
@@ -99,9 +98,9 @@ func (cmd *ImportCommand) Run(args []string) error {
 			}
 		}
 		if created {
-			cmd.UI.Print("Created Record: %v %v %v %v\n", *record.Host, *record.Ttl, *record.Type, *record.Data)	
+			cmd.UI.Print("Created Record: %v %v %v %v", *record.Host, *record.Ttl, *record.Type, *record.Data)	
 		} else {
-			cmd.UI.Print("Parsed Record: %v %v %v %v\n", *record.Host, *record.Ttl, *record.Type, *record.Data)
+			cmd.UI.Print("Parsed Record: %v %v %v %v", *record.Host, *record.Ttl, *record.Type, *record.Data)
 		}
 		
 	} // END for rr, ok
@@ -153,16 +152,24 @@ func CreateRecord(record *datatypes.Dns_Domain_ResourceRecord, rr dns.RR, manage
 	   data := strings.Join(rr.(*dns.TXT).Txt, " ")
 	   record.Data = sl.String(strings.Trim(data, "\""))
 	case *dns.SRV:
+		srvrr := rr.(*dns.SRV)
+		parts := strings.Split(srvrr.Header().Name, ".")
+		if len(parts) < 3 {
+			subs := map[string]interface{}{"sub": srvrr.String()}
+			return false, errors.New(T("Invalid SRV record: {{.sub}}.", subs))
+		}
 	   srvRecord := datatypes.Dns_Domain_ResourceRecord_SrvType{}
-	   priority := int(rr.(*dns.SRV).Priority)
+	   priority := int(srvrr.Priority)
 	   srvRecord.DomainId = record.DomainId
 	   srvRecord.Type = record.Type
 	   srvRecord.Ttl = record.Ttl
 	   srvRecord.Host = record.Host
 	   srvRecord.Priority = sl.Int(priority)
-	   srvRecord.Port = sl.Int(int(rr.(*dns.SRV).Port))
-	   srvRecord.Weight = sl.Int(int(rr.(*dns.SRV).Weight))
-	   srvRecord.Data = sl.String(rr.(*dns.SRV).Target)
+	   srvRecord.Port = sl.Int(int(srvrr.Port))
+	   srvRecord.Weight = sl.Int(int(srvrr.Weight))
+	   srvRecord.Data = sl.String(srvrr.Target)
+	   srvRecord.Service = sl.String(parts[0])
+	   srvRecord.Protocol = sl.String(parts[1])
 	   // So we can add this to our output at the end
 	   record.Data = sl.String(rr.(*dns.SRV).Target)
 	   _, err := manager.SrvResourceRecordCreate(srvRecord)

@@ -218,7 +218,9 @@ var _ = Describe("DNS Import", func() {
 					Expect(*apiCall.Priority).To(Equal(15))					
 					Expect(*apiCall.Port).To(Equal(5005))					
 					Expect(*apiCall.Weight).To(Equal(20))					
-					Expect(*apiCall.Data).To(Equal("target.field."))					
+					Expect(*apiCall.Data).To(Equal("target.field."))				
+					Expect(*apiCall.Service).To(Equal("_serviceTest"))
+					Expect(*apiCall.Protocol).To(Equal("_tls"))
 				})
 				It("Some error during create", func() {
 					rr, _ := mdns.NewRR(`_serviceTest._tls.host.local 900      IN SRV   15 20 5005 target.field.`)
@@ -230,6 +232,16 @@ var _ = Describe("DNS Import", func() {
 					Expect(err).To(HaveOccurred())
 					Expect(response).To(Equal(false))
 					Expect(err.Error()).To(ContainSubstring("fake error"))
+				})
+				It("Bad SRV record", func() {
+					rr, _ := mdns.NewRR(`local 900      IN SRV   15 20 5005 target.field.`)
+					record := datatypes.Dns_Domain_ResourceRecord{
+						Host: sl.String("@"), DomainId: sl.Int(12344), Type: sl.String("SRV"), Ttl: sl.Int(900),
+					}
+					response, err := dns.CreateRecord(&record, rr, fakeDNSManager)
+					Expect(err).To(HaveOccurred())
+					Expect(response).To(Equal(false))
+					Expect(err.Error()).To(ContainSubstring("Invalid SRV record:"))
 				})
 			})
 			Context("Test SOA", func() {
@@ -280,6 +292,23 @@ var _ = Describe("DNS Import", func() {
 					Expect(err.Error()).To(ContainSubstring("fake error"))					
 				})				
 			})
+		})
+		Context("Error Handling", func() {
+			It("Fails to get or create zone", func() {
+				fakeDNSManager.CreateZoneReturns(defaultCreateZoneReturn, errors.New("CreateZoneFail"))
+				fakeDNSManager.GetZoneIdFromNameReturns(0, errors.New("GetZoneIdFromNameFail"))
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/dns_import_2.bind")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to create zone: dal06.bluemix.ibmcsf.net."))
+				Expect(err.Error()).To(ContainSubstring("CreateZoneFail"))
+			})
+			It("CreateRecord fails", func() {
+				fakeDNSManager.CreateZoneReturns(defaultCreateZoneReturn, nil)
+				fakeDNSManager.ResourceRecordCreateReturns(datatypes.Dns_Domain_ResourceRecord{}, errors.New("ResourceRecordCreateReturnsFail"))
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/dns_import_2.bind")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("ResourceRecordCreateReturnsFail"))
+			})	
 		})
 		Context("DNS send a file import", func() {
 			BeforeEach(func() {

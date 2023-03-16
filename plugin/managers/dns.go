@@ -3,7 +3,6 @@ package managers
 import (
 	"errors"
 	"strings"
-	"fmt"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
@@ -149,25 +148,25 @@ func (dns DNSmanager) ResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecor
 	// 	Ttl: rr.Ttl,
 	// }
 
-	fmt.Printf("ResourceRecordCreate Host: |%s|\n", *rr.Host)
-	return rr, nil
-	// return dns.ResourceRecordService.CreateObject(&record)
+	// fmt.Printf("ResourceRecordCreate Host: |%s|\n", *rr.Host)
+	// return rr, nil
+	return dns.ResourceRecordService.CreateObject(&rr)
 }
 
 // A "simpler" method than CreateResourceRecord
 func (dns DNSmanager) SrvResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecord_SrvType) (datatypes.Dns_Domain_ResourceRecord_SrvType, error) {
 	// Simply passing in rr to CreateObject passes in an empty object for some reason I can't figure out
 	// So making a new variable here and passing that in seems to work ok.
-	record := datatypes.Dns_Domain_ResourceRecord_SrvType{
-		Dns_Domain_ResourceRecord: rr.Dns_Domain_ResourceRecord,
+	// record := datatypes.Dns_Domain_ResourceRecord_SrvType{
+	// 	Dns_Domain_ResourceRecord: rr.Dns_Domain_ResourceRecord,
 
-	}
+	// }
 
 	
-	fmt.Printf("SrvResourceRecordCreate Host: |%s|\n", *rr.Host)
-	return record, nil
-	// service :=  services.GetDnsDomainResourceRecordSrvTypeService(dns.Session)
-	// return service.CreateObject(&record)
+	// fmt.Printf("SrvResourceRecordCreate Host: |%s|\n", *rr.Host)
+	// return record, nil
+	service :=  services.GetDnsDomainResourceRecordSrvTypeService(dns.Session)
+	return service.CreateObject(&rr)
 
 }
 
