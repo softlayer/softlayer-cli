@@ -65,7 +65,7 @@ func (cmd *ImportCommand) Run(args []string) error {
 				subs := map[string]interface{}{"ZoneName": tld}
 				return errors.NewAPIError(T("Failed to create zone: {{.ZoneName}}.\n", subs), err.Error(), 2)
 			}
-			cmd.UI.Print("Domain: %s Id: %d", tld, *zone.Id)
+			cmd.UI.Print(T("Domain: {{.Domain}} Id: {{.Id}}", map[string]interface{}{"Domain": tld, "Id": *zone.Id}))
 		} // END TLD == ""
 
 		record := datatypes.Dns_Domain_ResourceRecord{}
@@ -97,10 +97,16 @@ func (cmd *ImportCommand) Run(args []string) error {
 				return err
 			}
 		}
+		outSubs := map[string]interface{}{
+			"Host": *record.Host,
+			"TTL": *record.Ttl,
+			"Type": *record.Type,
+			"Data": *record.Data,
+		}
 		if created {
-			cmd.UI.Print("Created Record: %v %v %v %v", *record.Host, *record.Ttl, *record.Type, *record.Data)	
+			cmd.UI.Print(T("Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}", outSubs))	
 		} else {
-			cmd.UI.Print("Parsed Record: %v %v %v %v", *record.Host, *record.Ttl, *record.Type, *record.Data)
+			cmd.UI.Print(T("Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}", outSubs))
 		}
 		
 	} // END for rr, ok

@@ -860,6 +860,10 @@
     "translation": "Aborting AAAA record sync, found {{.Num}} AAAA records exists!"
   },
   {
+    "id": "Access Key ID",
+    "translation": "Access Key ID"
+  },
+  {
     "id": "Access granted to user {{.userId}} for {{.objectId}}",
     "translation": "Access granted to user {{.userId}} for {{.objectId}}"
   },
@@ -1444,8 +1448,8 @@
     "translation": "Capacity (GB)"
   },
   {
-    "id": "Capture all disks that belong to the virtual server",
-    "translation": "Capture all disks that belong to the virtual server"
+    "id": "Capture all block devices that belong to the virtual server",
+    "translation": "Capture all block devices that belong to the virtual server"
   },
   {
     "id": "Capture virtual server instance into an image",
@@ -1936,6 +1940,10 @@
     "translation": "Created Date"
   },
   {
+    "id": "Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
     "translation": "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}."
   },
@@ -2022,6 +2030,10 @@
   {
     "id": "Date",
     "translation": "Date"
+  },
+  {
+    "id": "Date time",
+    "translation": "Date time"
   },
   {
     "id": "Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday",
@@ -2208,6 +2220,10 @@
     "translation": "Display a list of cancellation reasons"
   },
   {
+    "id": "Display details for a cloud object storage.",
+    "translation": "Display details for a cloud object storage."
+  },
+  {
     "id": "Display details for a specified email.",
     "translation": "Display details for a specified email."
   },
@@ -2238,6 +2254,10 @@
   {
     "id": "Display only public images",
     "translation": "Display only public images"
+  },
+  {
+    "id": "Display permission details for a cloud object storage.",
+    "translation": "Display permission details for a cloud object storage."
   },
   {
     "id": "Display permissions assigned to this user. Master users do not show permissions",
@@ -2282,6 +2302,10 @@
   {
     "id": "Domain record not found",
     "translation": "Domain record not found"
+  },
+  {
+    "id": "Domain: {{.Domain}} Id: {{.Id}}",
+    "translation": "Domain: {{.Domain}} Id: {{.Id}}"
   },
   {
     "id": "Don't actually create records",
@@ -2820,10 +2844,6 @@
     "translation": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n"
   },
   {
-    "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}",
-    "translation": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}"
-  },
-  {
     "id": "Failed to create security group with name {{.Name}}.\n",
     "translation": "Failed to create security group with name {{.Name}}.\n"
   },
@@ -3016,10 +3036,6 @@
     "translation": "Failed to generate the order template."
   },
   {
-    "id": "Failed to get Account Overview.",
-    "translation": "Failed to get Account Overview."
-  },
-  {
     "id": "Failed to get Bandwidth Pool.",
     "translation": "Failed to get Bandwidth Pool."
   },
@@ -3184,6 +3200,10 @@
     "translation": "Failed to get billing items."
   },
   {
+    "id": "Failed to get bucket of storage {{.StorageID}}.",
+    "translation": "Failed to get bucket of storage {{.StorageID}}."
+  },
+  {
     "id": "Failed to get components\n",
     "translation": "Failed to get components\n"
   },
@@ -3212,12 +3232,20 @@
     "translation": "Failed to get dedicatedhost instance: {{.HostID}}."
   },
   {
+    "id": "Failed to get details of storage {{.StorageID}}.",
+    "translation": "Failed to get details of storage {{.StorageID}}."
+  },
+  {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
     "translation": "Failed to get details of volume {{.VolumeID}}.\n"
   },
   {
     "id": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
     "translation": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n"
+  },
+  {
+    "id": "Failed to get endPoints.",
+    "translation": "Failed to get endPoints."
   },
   {
     "id": "Failed to get firewalls on your account.\n",
@@ -3508,6 +3536,10 @@
     "translation": "Failed to get virtual server creation options.\n"
   },
   {
+    "id": "Failed to get virtual server instance: {{.VsID}}.",
+    "translation": "Failed to get virtual server instance: {{.VsID}}."
+  },
+  {
     "id": "Failed to get virtual server instance: {{.VsID}}.\n",
     "translation": "Failed to get virtual server instance: {{.VsID}}.\n"
   },
@@ -3554,6 +3586,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "Failed to list VLANs on your account.\n"
+  },
+  {
+    "id": "Failed to list available OS's.",
+    "translation": "Failed to list available OS's."
   },
   {
     "id": "Failed to list categories.\n",
@@ -3706,10 +3742,6 @@
   {
     "id": "Failed to parse destination port range start. \n",
     "translation": "Failed to parse destination port range start. \n"
-  },
-  {
-    "id": "Failed to parse file.\n",
-    "translation": "Failed to parse file.\n"
   },
   {
     "id": "Failed to parse firewall ID : {{.FirewallID}}.\n",
@@ -4452,6 +4484,10 @@
     "translation": "Get Reserved Capacity Group details."
   },
   {
+    "id": "Get all available Operating Systems.",
+    "translation": "Get all available Operating Systems."
+  },
+  {
     "id": "Get bandwidth pool details.",
     "translation": "Get bandwidth pool details."
   },
@@ -4852,6 +4888,10 @@
     "translation": "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type."
   },
   {
+    "id": "Image ID",
+    "translation": "Image ID"
+  },
+  {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
     "translation": "Image ID. See: '${COMMAND_NAME} sl image list' for reference"
   },
@@ -4966,6 +5006,10 @@
   {
     "id": "Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID.",
     "translation": "Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID."
+  },
+  {
+    "id": "Invalid SRV record: {{.sub}}.",
+    "translation": "Invalid SRV record: {{.sub}}."
   },
   {
     "id": "Invalid combination specified for ordering a subnet.",
@@ -6228,6 +6272,10 @@
     "translation": "Parent User"
   },
   {
+    "id": "Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Password",
     "translation": "Password"
   },
@@ -6406,6 +6454,10 @@
   {
     "id": "Placement group {{.ID}} was removed.",
     "translation": "Placement group {{.ID}} was removed."
+  },
+  {
+    "id": "Plan",
+    "translation": "Plan"
   },
   {
     "id": "Please add the '--guest' id too.\n",
@@ -6928,10 +6980,6 @@
     "translation": "Reports which resources are still active in Datacenters that are scheduled to be closed."
   },
   {
-    "id": "Reputation",
-    "translation": "Reputation"
-  },
-  {
     "id": "Request configuration of a tunnel context",
     "translation": "Request configuration of a tunnel context"
   },
@@ -7056,6 +7104,10 @@
     "translation": "SECURITYGROUP_ID"
   },
   {
+    "id": "SMTP",
+    "translation": "SMTP"
+  },
+  {
     "id": "SNAPSHOT_ID",
     "translation": "SNAPSHOT_ID"
   },
@@ -7134,6 +7186,10 @@
   {
     "id": "Seconds to wait for a connection. [1-59]",
     "translation": "Seconds to wait for a connection. [1-59]"
+  },
+  {
+    "id": "Secret Access Key",
+    "translation": "Secret Access Key"
   },
   {
     "id": "Security group ID to associate with the private interface (multiple occurrence permitted)",
@@ -7238,6 +7294,10 @@
   {
     "id": "Sets username for this account.",
     "translation": "Sets username for this account."
+  },
+  {
+    "id": "Setup",
+    "translation": "Setup"
   },
   {
     "id": "Short Name",
@@ -7798,6 +7858,10 @@
   {
     "id": "The actual SSH key",
     "translation": "The actual SSH key"
+  },
+  {
+    "id": "The block device ID´s to archive, multiple occurrence allowed",
+    "translation": "The block device ID´s to archive, multiple occurrence allowed"
   },
   {
     "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
@@ -8476,6 +8540,10 @@
     "translation": "URI"
   },
   {
+    "id": "URL",
+    "translation": "URL"
+  },
+  {
     "id": "USERNAME",
     "translation": "USERNAME"
   },
@@ -8816,6 +8884,10 @@
     "translation": "Virtual Guest ID"
   },
   {
+    "id": "Virtual guest ID",
+    "translation": "Virtual guest ID"
+  },
+  {
     "id": "Virtual guest domain name not found.",
     "translation": "Virtual guest domain name not found."
   },
@@ -9100,10 +9172,6 @@
     "translation": "active transaction"
   },
   {
-    "id": "all_disks",
-    "translation": "all_disks"
-  },
-  {
     "id": "assigned",
     "translation": "assigned"
   },
@@ -9194,10 +9262,6 @@
   {
     "id": "date_of_month",
     "translation": "date_of_month"
-  },
-  {
-    "id": "date_time",
-    "translation": "date_time"
   },
   {
     "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
@@ -9460,10 +9524,6 @@
     "translation": "password"
   },
   {
-    "id": "pendingMigrationFlag",
-    "translation": "pendingMigrationFlag"
-  },
-  {
     "id": "pool",
     "translation": "pool"
   },
@@ -9600,14 +9660,6 @@
     "translation": "term"
   },
   {
-    "id": "transaction",
-    "translation": "transaction"
-  },
-  {
-    "id": "transaction_id",
-    "translation": "transaction_id"
-  },
-  {
     "id": "transient",
     "translation": "transient"
   },
@@ -9670,10 +9722,6 @@
   {
     "id": "visibility",
     "translation": "visibility"
-  },
-  {
-    "id": "vs_id",
-    "translation": "vs_id"
   },
   {
     "id": "week",
