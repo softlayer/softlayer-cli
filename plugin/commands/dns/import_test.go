@@ -3,8 +3,8 @@ package dns_test
 import (
 	"errors"
 
-	mdns "github.com/miekg/dns"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
+	mdns "github.com/miekg/dns"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -173,7 +173,7 @@ var _ = Describe("DNS Import", func() {
 					Expect(err).NotTo(HaveOccurred())
 					Expect(response).To(Equal(true))
 					apiCall := fakeDNSManager.ResourceRecordCreateArgsForCall(0)
-					Expect(*apiCall.Data).To(Equal("testcname."))					
+					Expect(*apiCall.Data).To(Equal("testcname."))
 				})
 			})
 			Context("Test MX", func() {
@@ -196,7 +196,7 @@ var _ = Describe("DNS Import", func() {
 					Expect(err).NotTo(HaveOccurred())
 					Expect(response).To(Equal(true))
 					apiCall := fakeDNSManager.ResourceRecordCreateArgsForCall(0)
-					Expect(*apiCall.Data).To(Equal("v=spf1 includespf.dynect.net ~all"))					
+					Expect(*apiCall.Data).To(Equal("v=spf1 includespf.dynect.net ~all"))
 				})
 			})
 			Context("Test SRV", func() {
@@ -214,11 +214,11 @@ var _ = Describe("DNS Import", func() {
 					Expect(*apiCall.DomainId).To(Equal(12344))
 					Expect(*apiCall.Type).To(Equal("SRV"))
 					Expect(*apiCall.Ttl).To(Equal(900))
-					Expect(*apiCall.Host).To(Equal("@"))					
-					Expect(*apiCall.Priority).To(Equal(15))					
-					Expect(*apiCall.Port).To(Equal(5005))					
-					Expect(*apiCall.Weight).To(Equal(20))					
-					Expect(*apiCall.Data).To(Equal("target.field."))				
+					Expect(*apiCall.Host).To(Equal("@"))
+					Expect(*apiCall.Priority).To(Equal(15))
+					Expect(*apiCall.Port).To(Equal(5005))
+					Expect(*apiCall.Weight).To(Equal(20))
+					Expect(*apiCall.Data).To(Equal("target.field."))
 					Expect(*apiCall.Service).To(Equal("_serviceTest"))
 					Expect(*apiCall.Protocol).To(Equal("_tls"))
 				})
@@ -257,7 +257,7 @@ var _ = Describe("DNS Import", func() {
 					Expect(err).NotTo(HaveOccurred())
 					Expect(response).To(Equal(false))
 					createCalls := fakeDNSManager.ResourceRecordCreateCallCount()
-					Expect(createCalls).To(Equal(0))					
+					Expect(createCalls).To(Equal(0))
 				})
 			})
 			Context("Test Default", func() {
@@ -268,7 +268,7 @@ var _ = Describe("DNS Import", func() {
 					Expect(err).NotTo(HaveOccurred())
 					Expect(response).To(Equal(true))
 					apiCall := fakeDNSManager.ResourceRecordCreateArgsForCall(0)
-					Expect(*apiCall.Data).To(Equal("1100:2202:33c4:4410:55d3:6635:77a4:8ecc"))					
+					Expect(*apiCall.Data).To(Equal("1100:2202:33c4:4410:55d3:6635:77a4:8ecc"))
 				})
 				It("Create A", func() {
 					rr, _ := mdns.NewRR(`www        3600 A  192.68.1.1`)
@@ -277,7 +277,7 @@ var _ = Describe("DNS Import", func() {
 					Expect(err).NotTo(HaveOccurred())
 					Expect(response).To(Equal(true))
 					apiCall := fakeDNSManager.ResourceRecordCreateArgsForCall(0)
-					Expect(*apiCall.Data).To(Equal("192.68.1.1"))					
+					Expect(*apiCall.Data).To(Equal("192.68.1.1"))
 				})
 			})
 			Context("Test Error Handling", func() {
@@ -289,8 +289,8 @@ var _ = Describe("DNS Import", func() {
 					response, err := dns.CreateRecord(&record, rr, fakeDNSManager)
 					Expect(err).To(HaveOccurred())
 					Expect(response).To(Equal(false))
-					Expect(err.Error()).To(ContainSubstring("fake error"))					
-				})				
+					Expect(err.Error()).To(ContainSubstring("fake error"))
+				})
 			})
 		})
 		Context("Error Handling", func() {
@@ -308,7 +308,7 @@ var _ = Describe("DNS Import", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/dns_import_2.bind")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("ResourceRecordCreateReturnsFail"))
-			})	
+			})
 		})
 		Context("DNS send a file import", func() {
 			BeforeEach(func() {
@@ -332,7 +332,7 @@ var _ = Describe("DNS Import", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "../../testfixtures/Dns_Import_Tests/dns_import_2.bind", "--dry-run")
 				Expect(err).NotTo(HaveOccurred())
 				createCalls := fakeDNSManager.ResourceRecordCreateCallCount()
-				Expect(createCalls).To(Equal(0))	
+				Expect(createCalls).To(Equal(0))
 			})
 
 			It("send a good file", func() {

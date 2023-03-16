@@ -44,7 +44,7 @@ type DNSmanager struct {
 	ResourceRecordService services.Dns_Domain_ResourceRecord
 	AccountService        services.Account
 	VirtualServerService  services.Virtual_Guest
-	Session					*session.Session
+	Session               *session.Session
 }
 
 func NewDNSManager(session *session.Session) *DNSmanager {
@@ -162,10 +162,9 @@ func (dns DNSmanager) SrvResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRe
 
 	// }
 
-	
 	// fmt.Printf("SrvResourceRecordCreate Host: |%s|\n", *rr.Host)
 	// return record, nil
-	service :=  services.GetDnsDomainResourceRecordSrvTypeService(dns.Session)
+	service := services.GetDnsDomainResourceRecordSrvTypeService(dns.Session)
 	return service.CreateObject(&rr)
 
 }

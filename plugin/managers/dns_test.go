@@ -98,10 +98,10 @@ var _ = Describe("DNSManager", func() {
 			It("Happy path", func() {
 				newRecord := datatypes.Dns_Domain_ResourceRecord{
 					DomainId: sl.Int(1745153),
-					Host: sl.String("TESTHOST"),
-					Type: sl.String("A"),
-					Data: sl.String("1.1.2.2"),
-					Ttl: sl.Int(300),
+					Host:     sl.String("TESTHOST"),
+					Type:     sl.String("A"),
+					Data:     sl.String("1.1.2.2"),
+					Ttl:      sl.Int(300),
 				}
 				record, err := dnsManager.ResourceRecordCreate(newRecord)
 				Expect(err).ToNot(HaveOccurred())

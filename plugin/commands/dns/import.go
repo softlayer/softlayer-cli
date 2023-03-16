@@ -1,18 +1,17 @@
 package dns
 
 import (
-	"os"
-	"strings"
 	"github.com/miekg/dns"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/spf13/cobra"
+	"os"
+	"strings"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-
 )
 
 type ImportCommand struct {
@@ -48,7 +47,7 @@ EXAMPLE:
 func (cmd *ImportCommand) Run(args []string) error {
 	zoneFile, err := os.Open(args[0])
 	if err != nil {
-	  return errors.NewAPIError(T("Failed to read file: {{.FilePath}}.\n", map[string]interface{}{"FilePath": args[0]}), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to read file: {{.FilePath}}.\n", map[string]interface{}{"FilePath": args[0]}), err.Error(), 2)
 	}
 	tld := ""
 
@@ -57,7 +56,7 @@ func (cmd *ImportCommand) Run(args []string) error {
 	// Go through the zone file line by line
 	for rr, ok := zoneParser.Next(); ok; rr, ok = zoneParser.Next() {
 		header := rr.Header()
-      // If we dont know what the TLD is yet, figure it out.
+		// If we dont know what the TLD is yet, figure it out.
 		if tld == "" {
 			tld = strings.TrimSuffix(header.Name, ".")
 			zone, err = CreateOrGetZone(tld, cmd.DNSManager)
@@ -78,10 +77,10 @@ func (cmd *ImportCommand) Run(args []string) error {
 		// Just the domain part. `www`, or if its blank, set to `@`
 		domain := strings.TrimSuffix(fqdn, tld)
 		if domain == "" {
-		   record.Host = sl.String("@")
+			record.Host = sl.String("@")
 		} else {
 			// The SL API assumes the hostpart will not end with .
-		   record.Host = sl.String(strings.TrimSuffix(domain, "."))
+			record.Host = sl.String(strings.TrimSuffix(domain, "."))
 		}
 
 		record.Type = sl.String(dns.TypeToString[header.Rrtype])
@@ -99,16 +98,16 @@ func (cmd *ImportCommand) Run(args []string) error {
 		}
 		outSubs := map[string]interface{}{
 			"Host": *record.Host,
-			"TTL": *record.Ttl,
+			"TTL":  *record.Ttl,
 			"Type": *record.Type,
 			"Data": *record.Data,
 		}
 		if created {
-			cmd.UI.Print(T("Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}", outSubs))	
+			cmd.UI.Print(T("Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}", outSubs))
 		} else {
 			cmd.UI.Print(T("Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}", outSubs))
 		}
-		
+
 	} // END for rr, ok
 	// Detect any errors in parsing the Zone file
 	if err := zoneParser.Err(); err != nil {
@@ -129,7 +128,7 @@ func CreateOrGetZone(tld string, manager managers.DNSManager) (datatypes.Dns_Dom
 		zoneId, getZoneErr := manager.GetZoneIdFromName(tld)
 		// Error creating zone, and getting a zone with this name, failure.
 		if getZoneErr != nil {
-			return zone, createZoneErr  
+			return zone, createZoneErr
 		} else {
 			zone.Id = sl.Int(zoneId)
 			zone.Name = sl.String(tld)
@@ -144,19 +143,19 @@ func CreateOrGetZone(tld string, manager managers.DNSManager) (datatypes.Dns_Dom
 func CreateRecord(record *datatypes.Dns_Domain_ResourceRecord, rr dns.RR, manager managers.DNSManager) (bool, error) {
 	switch rr.(type) {
 	case *dns.NS:
-	   if *record.Host == "@" {
-	       return false, nil
-	   }
-	   record.Data = sl.String(rr.(*dns.NS).Ns)
+		if *record.Host == "@" {
+			return false, nil
+		}
+		record.Data = sl.String(rr.(*dns.NS).Ns)
 	case *dns.CNAME:
-	   record.Data = sl.String(rr.(*dns.CNAME).Target)
+		record.Data = sl.String(rr.(*dns.CNAME).Target)
 	case *dns.MX:
-	   priority := int(rr.(*dns.MX).Preference)
-	   record.Data = sl.String(rr.(*dns.MX).Mx)
-	   record.MxPriority = sl.Int(priority)
+		priority := int(rr.(*dns.MX).Preference)
+		record.Data = sl.String(rr.(*dns.MX).Mx)
+		record.MxPriority = sl.Int(priority)
 	case *dns.TXT:
-	   data := strings.Join(rr.(*dns.TXT).Txt, " ")
-	   record.Data = sl.String(strings.Trim(data, "\""))
+		data := strings.Join(rr.(*dns.TXT).Txt, " ")
+		record.Data = sl.String(strings.Trim(data, "\""))
 	case *dns.SRV:
 		srvrr := rr.(*dns.SRV)
 		parts := strings.Split(srvrr.Header().Name, ".")
@@ -164,31 +163,31 @@ func CreateRecord(record *datatypes.Dns_Domain_ResourceRecord, rr dns.RR, manage
 			subs := map[string]interface{}{"sub": srvrr.String()}
 			return false, errors.New(T("Invalid SRV record: {{.sub}}.", subs))
 		}
-	   srvRecord := datatypes.Dns_Domain_ResourceRecord_SrvType{}
-	   priority := int(srvrr.Priority)
-	   srvRecord.DomainId = record.DomainId
-	   srvRecord.Type = record.Type
-	   srvRecord.Ttl = record.Ttl
-	   srvRecord.Host = record.Host
-	   srvRecord.Priority = sl.Int(priority)
-	   srvRecord.Port = sl.Int(int(srvrr.Port))
-	   srvRecord.Weight = sl.Int(int(srvrr.Weight))
-	   srvRecord.Data = sl.String(srvrr.Target)
-	   srvRecord.Service = sl.String(parts[0])
-	   srvRecord.Protocol = sl.String(parts[1])
-	   // So we can add this to our output at the end
-	   record.Data = sl.String(rr.(*dns.SRV).Target)
-	   _, err := manager.SrvResourceRecordCreate(srvRecord)
-	   if err != nil {
-	   	return false, err
-	   } else {
-	   	return true, nil
-	   }
+		srvRecord := datatypes.Dns_Domain_ResourceRecord_SrvType{}
+		priority := int(srvrr.Priority)
+		srvRecord.DomainId = record.DomainId
+		srvRecord.Type = record.Type
+		srvRecord.Ttl = record.Ttl
+		srvRecord.Host = record.Host
+		srvRecord.Priority = sl.Int(priority)
+		srvRecord.Port = sl.Int(int(srvrr.Port))
+		srvRecord.Weight = sl.Int(int(srvrr.Weight))
+		srvRecord.Data = sl.String(srvrr.Target)
+		srvRecord.Service = sl.String(parts[0])
+		srvRecord.Protocol = sl.String(parts[1])
+		// So we can add this to our output at the end
+		record.Data = sl.String(rr.(*dns.SRV).Target)
+		_, err := manager.SrvResourceRecordCreate(srvRecord)
+		if err != nil {
+			return false, err
+		} else {
+			return true, nil
+		}
 	case *dns.SOA:
-	   return false, nil
+		return false, nil
 	default:
 		// Sets data to the end bit of the resource record, basically.
-	   record.Data = sl.String(dns.Field(rr, 1))
+		record.Data = sl.String(dns.Field(rr, 1))
 	}
 	_, err := manager.ResourceRecordCreate(*record)
 	if err != nil {
