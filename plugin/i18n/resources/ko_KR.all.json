@@ -4373,7 +4373,7 @@
   },
   {
     "id": "Force the volume refresh, will cancel any ongoing transactions.",
-    "translation": "볼륨 새로 고치기를 강제 실행하면 진행 중인 모든 트랜잭션이 취소됩니다."
+    "translation": "볼륨 새로 고치기를 강제 실행합니다. 이 작업은 진행 중인 모든 트랜잭션을 취소합니다."
   },
   {
     "id": "Forces the virtual server to only have access the private network",

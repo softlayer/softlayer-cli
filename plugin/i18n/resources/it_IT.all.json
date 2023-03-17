@@ -901,7 +901,7 @@
   },
   {
     "id": "Acknowledge every upcoming event. Doing so will turn off the popup in the control portal.",
-    "translation": "Confermare ogni prossimo evento. In questo modo si disattiva la finestra a comparsa nel portale di controllo."
+    "translation": "Confermare ogni evento imminente. In questo modo si disattiva la finestra a comparsa nel portale di controllo."
   },
   {
     "id": "Acknowledged",
@@ -1133,7 +1133,7 @@
   },
   {
     "id": "Authorize hosts to access a given volume.",
-    "translation": "Autorizza gli host ad accedere a un determinato volume."
+    "translation": "Autorizzare gli host ad accedere a un determinato volume."
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -6965,7 +6965,7 @@
   },
   {
     "id": "Return ALL invoices. There may be a lot of these.",
-    "translation": "Restituire TUTTE le fatture. Possono essere presenti diversi elementi di questo tipo."
+    "translation": "Restituire TUTTE le fatture. Possono essere presenti numerosi elementi."
   },
   {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
@@ -7313,7 +7313,7 @@
   },
   {
     "id": "Shows a very detailed list of charges.",
-    "translation": "Mostra un elenco molto dettagliato delle spese."
+    "translation": "Mostra un elenco molto dettagliato degli addebiti."
   },
   {
     "id": "Shows who gets notified when the server has a monitoring issues.",
@@ -7585,7 +7585,7 @@
   },
   {
     "id": "Summary and acknowledgement of upcoming and ongoing maintenance events.",
-    "translation": "Riepilogo e riconoscimento degli eventi di manutenzione imminenti e in corso."
+    "translation": "Riepilogo e conferma degli eventi di manutenzione imminenti e in corso."
   },
   {
     "id": "Summary info about tickets",

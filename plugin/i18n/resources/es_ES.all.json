@@ -897,7 +897,7 @@
   },
   {
     "id": "Acknowledge Event. Doing so will turn off the popup in the control portal.",
-    "translation": "Reconocer suceso. Si lo hace, desactivará la ventana emergente en el portal de control."
+    "translation": "Acuse de recibo de suceso. Si lo hace, desactivará la ventana emergente en el portal de control."
   },
   {
     "id": "Acknowledge every upcoming event. Doing so will turn off the popup in the control portal.",
@@ -4461,11 +4461,11 @@
   },
   {
     "id": "Get details for a hardware monitors device.",
-    "translation": "Obtener detalles para un dispositivo de supervisores de hardware."
+    "translation": "Obtener detalles de un dispositivo de supervisores de hardware."
   },
   {
     "id": "Get details for a hardware server",
-    "translation": "Obtener detalles para un servidor hardware"
+    "translation": "Obtener detalles de un servidor hardware"
   },
   {
     "id": "Get details for a ticket",
@@ -4885,7 +4885,7 @@
   },
   {
     "id": "Include invoices with a CLOSED status.",
-    "translation": "Incluir facturas con un estado CLOSED."
+    "translation": "Incluir facturas con un estado CERRADO."
   },
   {
     "id": "Incorrect Usage",
@@ -6637,7 +6637,7 @@
   },
   {
     "id": "Provides some details related to order owner, date order, cost information, initial invoice.",
-    "translation": "Proporciona algunos detalles relacionados con el propietario del pedido, orden de fecha, información de coste, factura inicial."
+    "translation": "Proporciona algunos detalles relacionados con el propietario del pedido, fecha del pedido, información de coste, factura inicial."
   },
   {
     "id": "Provisioned",
@@ -6965,7 +6965,7 @@
   },
   {
     "id": "Return ALL invoices. There may be a lot of these.",
-    "translation": "Devolver TODAS las facturas. Puede que haya haber muchas."
+    "translation": "Devuelve TODAS las facturas. Puede que haya haber muchas."
   },
   {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
@@ -7585,7 +7585,7 @@
   },
   {
     "id": "Summary and acknowledgement of upcoming and ongoing maintenance events.",
-    "translation": "Resumen y reconocimiento de los sucesos de mantenimiento próximos y en curso."
+    "translation": "Resumen y acuse de recibo de los sucesos de mantenimiento próximos y en curso."
   },
   {
     "id": "Summary info about tickets",
