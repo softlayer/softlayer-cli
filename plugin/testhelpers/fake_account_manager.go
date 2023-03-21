@@ -197,6 +197,19 @@ type FakeAccountManager struct {
 		result1 datatypes.Billing_Item
 		result2 error
 	}
+	GetPostProvisioningHooksStub        func(string) ([]datatypes.Provisioning_Hook, error)
+	getPostProvisioningHooksMutex       sync.RWMutex
+	getPostProvisioningHooksArgsForCall []struct {
+		arg1 string
+	}
+	getPostProvisioningHooksReturns struct {
+		result1 []datatypes.Provisioning_Hook
+		result2 error
+	}
+	getPostProvisioningHooksReturnsOnCall map[int]struct {
+		result1 []datatypes.Provisioning_Hook
+		result2 error
+	}
 	GetSummaryStub        func(string) (datatypes.Account, error)
 	getSummaryMutex       sync.RWMutex
 	getSummaryArgsForCall []struct {
@@ -1120,6 +1133,70 @@ func (fake *FakeAccountManager) GetItemDetailReturnsOnCall(i int, result1 dataty
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetPostProvisioningHooks(arg1 string) ([]datatypes.Provisioning_Hook, error) {
+	fake.getPostProvisioningHooksMutex.Lock()
+	ret, specificReturn := fake.getPostProvisioningHooksReturnsOnCall[len(fake.getPostProvisioningHooksArgsForCall)]
+	fake.getPostProvisioningHooksArgsForCall = append(fake.getPostProvisioningHooksArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetPostProvisioningHooksStub
+	fakeReturns := fake.getPostProvisioningHooksReturns
+	fake.recordInvocation("GetPostProvisioningHooks", []interface{}{arg1})
+	fake.getPostProvisioningHooksMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksCallCount() int {
+	fake.getPostProvisioningHooksMutex.RLock()
+	defer fake.getPostProvisioningHooksMutex.RUnlock()
+	return len(fake.getPostProvisioningHooksArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksCalls(stub func(string) ([]datatypes.Provisioning_Hook, error)) {
+	fake.getPostProvisioningHooksMutex.Lock()
+	defer fake.getPostProvisioningHooksMutex.Unlock()
+	fake.GetPostProvisioningHooksStub = stub
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksArgsForCall(i int) string {
+	fake.getPostProvisioningHooksMutex.RLock()
+	defer fake.getPostProvisioningHooksMutex.RUnlock()
+	argsForCall := fake.getPostProvisioningHooksArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksReturns(result1 []datatypes.Provisioning_Hook, result2 error) {
+	fake.getPostProvisioningHooksMutex.Lock()
+	defer fake.getPostProvisioningHooksMutex.Unlock()
+	fake.GetPostProvisioningHooksStub = nil
+	fake.getPostProvisioningHooksReturns = struct {
+		result1 []datatypes.Provisioning_Hook
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksReturnsOnCall(i int, result1 []datatypes.Provisioning_Hook, result2 error) {
+	fake.getPostProvisioningHooksMutex.Lock()
+	defer fake.getPostProvisioningHooksMutex.Unlock()
+	fake.GetPostProvisioningHooksStub = nil
+	if fake.getPostProvisioningHooksReturnsOnCall == nil {
+		fake.getPostProvisioningHooksReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Provisioning_Hook
+			result2 error
+		})
+	}
+	fake.getPostProvisioningHooksReturnsOnCall[i] = struct {
+		result1 []datatypes.Provisioning_Hook
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAccountManager) GetSummary(arg1 string) (datatypes.Account, error) {
 	fake.getSummaryMutex.Lock()
 	ret, specificReturn := fake.getSummaryReturnsOnCall[len(fake.getSummaryArgsForCall)]
@@ -1271,6 +1348,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getInvoicesMutex.RUnlock()
 	fake.getItemDetailMutex.RLock()
 	defer fake.getItemDetailMutex.RUnlock()
+	fake.getPostProvisioningHooksMutex.RLock()
+	defer fake.getPostProvisioningHooksMutex.RUnlock()
 	fake.getSummaryMutex.RLock()
 	defer fake.getSummaryMutex.RUnlock()
 	fake.summaryByDatacenterMutex.RLock()

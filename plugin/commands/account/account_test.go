@@ -24,6 +24,7 @@ var availableCommands = []string{
 	"cancel-item",
 	"event-detail",
 	"events",
+	"hooks",
 	"invoice-detail",
 	"invoices",
 	"item-detail",
