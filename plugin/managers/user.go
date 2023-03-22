@@ -23,8 +23,8 @@ const (
 	GET_USER_MASK  = "mask[id, firstName, lastName, email, companyName, address1, city, country, postalCode, state, userStatusId, timezoneId]"
 )
 
-//Manages SoftLayer Block and File Storage volumes.
-//See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
+// Manages SoftLayer Block and File Storage volumes.
+// See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
 type UserManager interface {
 	ListUsers(mask string) ([]datatypes.User_Customer, error)
 	GetUser(userId int, mask string) (datatypes.User_Customer, error)
@@ -66,6 +66,7 @@ type userManager struct {
 	UserPermissionService services.User_Customer_CustomerPermission_Permission
 	EventLogService       services.Event_Log
 	Email_Subscription    services.Email_Subscription
+	UserPermissionAction  services.User_Permission_Action
 	Session               *session.Session
 }
 
@@ -76,6 +77,7 @@ func NewUserManager(session *session.Session) *userManager {
 		services.GetUserCustomerCustomerPermissionPermissionService(session),
 		services.GetEventLogService(session),
 		services.GetEmailSubscriptionService(session),
+		services.GetUserPermissionActionService(session),
 		session,
 	}
 }
@@ -99,12 +101,23 @@ func (u userManager) GetCurrentUser() (datatypes.User_Customer, error) {
 }
 
 func (u userManager) GetAllPermission() ([]datatypes.User_Customer_CustomerPermission_Permission, error) {
-	permissions, err := u.UserPermissionService.GetAllObjects()
+	permissions, err := u.UserPermissionAction.GetAllObjects()
 	if err != nil {
 		return nil, err
 	}
-	sort.Sort(utils.PermissionsBykeyName(permissions))
-	return permissions, nil
+
+	// parsing permission from datatypes.User_Permission_Action to datatypes.User_Customer_CustomerPermission_Permission
+	parsedPermission := []datatypes.User_Customer_CustomerPermission_Permission{}
+	for _, permission := range permissions {
+		parsedPermission = append(parsedPermission, datatypes.User_Customer_CustomerPermission_Permission{
+			Key:     sl.String(utils.FormatStringPointer(permission.Key)),
+			KeyName: sl.String(utils.FormatStringPointer(permission.KeyName)),
+			Name:    sl.String(utils.FormatStringPointer(permission.Name)),
+		})
+	}
+
+	sort.Sort(utils.PermissionsBykeyName(parsedPermission))
+	return parsedPermission, nil
 }
 
 func (u userManager) AddPermission(userId int, permissions []datatypes.User_Customer_CustomerPermission_Permission) (bool, error) {
