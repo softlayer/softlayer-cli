@@ -24,7 +24,7 @@ func NewShareDenyCommand(sl *metadata.SoftlayerCommand) (cmd *ShareDenyCommand) 
 
 	cobraCmd := &cobra.Command{
 		Use:   "share-deny " + T("IDENTIFIER") + " " + T("ACCOUNT ID"),
-		Short: T("Deny share an image template with another account."),
+		Short: T("Deny sharing of an image template with another account."),
 		Args:  metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
