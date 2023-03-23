@@ -28,6 +28,7 @@ type AccountManager interface {
 	GetAccountAllBillingOrders(mask string, limit int) ([]datatypes.Billing_Order, error)
 	GetSummary(mask string) (datatypes.Account, error)
 	GetBandwidthPoolDetail(bandwidthPoolId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment, error)
+	GetPostProvisioningHooks(mask string) ([]datatypes.Provisioning_Hook, error)
 }
 
 type accountManager struct {
@@ -349,4 +350,16 @@ func (a accountManager) GetBandwidthPoolDetail(bandwidthPoolId int, mask string)
         bareMetalInstances[outboundBandwidthUsage,bandwidthAllotmentDetail[allocation]]]`
 	}
 	return networkBandwidthService.Id(bandwidthPoolId).Mask(mask).GetObject()
+}
+
+/*
+Customer specified URIs that are downloaded onto a newly provisioned or reloaded server.
+If the URI is sent over https it will be executed directly on the server.
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getPostProvisioningHooks/
+*/
+func (a accountManager) GetPostProvisioningHooks(mask string) ([]datatypes.Provisioning_Hook, error) {
+	if mask == "" {
+		mask = "mask[id,name,uri]"
+	}
+	return a.AccountService.Mask(mask).GetPostProvisioningHooks()
 }
