@@ -1444,10 +1444,6 @@
     "translation": "Capacidad (GB)"
   },
   {
-    "id": "Capture all disks that belong to the virtual server",
-    "translation": "Capturar todos los discos que pertenecen al servidor virtual"
-  },
-  {
     "id": "Capture virtual server instance into an image",
     "translation": "Capturar la instancia de servidor virtual en una imagen"
   },
@@ -2820,10 +2816,6 @@
     "translation": "No se ha podido crear el registro de recurso en la zona {{.Zone}}: tipo={{.RecordType}}, registro={{.Host}}, datos={{.Data}}, ttl={{.Ttl}}.\n"
   },
   {
-    "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}",
-    "translation": "No se ha podido crear el registro de recurso en la zona {{.Zone}}: tipo={{.RecordType}}, registro={{.Host}}, datos={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}"
-  },
-  {
     "id": "Failed to create security group with name {{.Name}}.\n",
     "translation": "No se ha podido crear el grupo de seguridad con el nombre {{.Name}}.\n"
   },
@@ -3014,10 +3006,6 @@
   {
     "id": "Failed to generate the order template.",
     "translation": "No se ha podido generar la plantilla de solicitud."
-  },
-  {
-    "id": "Failed to get Account Overview.",
-    "translation": "No se ha podido obtener la visión general de la cuenta."
   },
   {
     "id": "Failed to get Bandwidth Pool.",
@@ -3706,10 +3694,6 @@
   {
     "id": "Failed to parse destination port range start. \n",
     "translation": "No se ha podido analizar el inicio de rango de puertos de destino. \n"
-  },
-  {
-    "id": "Failed to parse file.\n",
-    "translation": "No se ha podido analizar el archivo.\n"
   },
   {
     "id": "Failed to parse firewall ID : {{.FirewallID}}.\n",
@@ -6928,10 +6912,6 @@
     "translation": "Informa qué recursos siguen activos en los centros de datos cuyo cierre está previsto."
   },
   {
-    "id": "Reputation",
-    "translation": "Reputación"
-  },
-  {
     "id": "Request configuration of a tunnel context",
     "translation": "Solicitar configuración de un contexto de túnel"
   },
@@ -9100,10 +9080,6 @@
     "translation": "transacción activa"
   },
   {
-    "id": "all_disks",
-    "translation": "all_disks"
-  },
-  {
     "id": "assigned",
     "translation": "asignado"
   },
@@ -9194,10 +9170,6 @@
   {
     "id": "date_of_month",
     "translation": "date_of_month"
-  },
-  {
-    "id": "date_time",
-    "translation": "date_time"
   },
   {
     "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
@@ -9460,10 +9432,6 @@
     "translation": "contraseña"
   },
   {
-    "id": "pendingMigrationFlag",
-    "translation": "pendingMigrationFlag"
-  },
-  {
     "id": "pool",
     "translation": "agrupación"
   },
@@ -9600,14 +9568,6 @@
     "translation": "term"
   },
   {
-    "id": "transaction",
-    "translation": "transacción"
-  },
-  {
-    "id": "transaction_id",
-    "translation": "transaction_id"
-  },
-  {
     "id": "transient",
     "translation": "transitorio"
   },
@@ -9670,10 +9630,6 @@
   {
     "id": "visibility",
     "translation": "visibilidad"
-  },
-  {
-    "id": "vs_id",
-    "translation": "vs_id"
   },
   {
     "id": "week",

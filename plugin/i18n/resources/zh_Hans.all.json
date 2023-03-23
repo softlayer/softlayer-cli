@@ -1444,10 +1444,6 @@
     "translation": "容量 (GB)"
   },
   {
-    "id": "Capture all disks that belong to the virtual server",
-    "translation": "捕获属于虚拟服务器的所有磁盘"
-  },
-  {
     "id": "Capture virtual server instance into an image",
     "translation": "将虚拟服务器实例捕获到映像中"
   },
@@ -2820,10 +2816,6 @@
     "translation": "未能在专区 {{.Zone}} 下创建资源记录：类型={{.RecordType}}，记录={{.Host}}，数据={{.Data}}，ttl={{.Ttl}}。\n"
   },
   {
-    "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}",
-    "translation": "未能在专区 {{.Zone}} 下创建资源记录：类型={{.RecordType}}，记录={{.Host}}，数据={{.Data}}，ttl={{.Ttl}}。\n{{.ErrorMessage}}"
-  },
-  {
     "id": "Failed to create security group with name {{.Name}}.\n",
     "translation": "未能创建名称为 {{.Name}} 的安全组。\n"
   },
@@ -3014,10 +3006,6 @@
   {
     "id": "Failed to generate the order template.",
     "translation": "未能生成订单模板。"
-  },
-  {
-    "id": "Failed to get Account Overview.",
-    "translation": "未能获取帐户概述。"
   },
   {
     "id": "Failed to get Bandwidth Pool.",
@@ -3706,10 +3694,6 @@
   {
     "id": "Failed to parse destination port range start. \n",
     "translation": "未能解析目标端口范围下限。\n"
-  },
-  {
-    "id": "Failed to parse file.\n",
-    "translation": "未能解析文件。\n"
   },
   {
     "id": "Failed to parse firewall ID : {{.FirewallID}}.\n",
@@ -6928,10 +6912,6 @@
     "translation": "报告已调度关闭的数据中心内哪些资源仍处于活动状态。"
   },
   {
-    "id": "Reputation",
-    "translation": "声誉"
-  },
-  {
     "id": "Request configuration of a tunnel context",
     "translation": "请求隧道上下文的配置"
   },
@@ -9100,10 +9080,6 @@
     "translation": "活动事务"
   },
   {
-    "id": "all_disks",
-    "translation": "all_disks"
-  },
-  {
     "id": "assigned",
     "translation": "assigned"
   },
@@ -9194,10 +9170,6 @@
   {
     "id": "date_of_month",
     "translation": "date_of_month"
-  },
-  {
-    "id": "date_time",
-    "translation": "date_time"
   },
   {
     "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
@@ -9460,10 +9432,6 @@
     "translation": "password"
   },
   {
-    "id": "pendingMigrationFlag",
-    "translation": "暂挂迁移标志"
-  },
-  {
     "id": "pool",
     "translation": "池"
   },
@@ -9600,14 +9568,6 @@
     "translation": "期限"
   },
   {
-    "id": "transaction",
-    "translation": "transaction"
-  },
-  {
-    "id": "transaction_id",
-    "translation": "transaction_id"
-  },
-  {
     "id": "transient",
     "translation": "transient"
   },
@@ -9670,10 +9630,6 @@
   {
     "id": "visibility",
     "translation": "visibility"
-  },
-  {
-    "id": "vs_id",
-    "translation": "vs_id"
   },
   {
     "id": "week",
