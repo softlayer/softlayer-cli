@@ -109,8 +109,8 @@ func (cmd *DetailCommand) Run(args []string) error {
 func getDatacenters(childrens []datatypes.Virtual_Guest_Block_Device_Template_Group, ui terminal.UI, outputFormat string) string {
 	bufTable := new(bytes.Buffer)
 	table := terminal.NewTable(bufTable, []string{
-		T("data center"),
-		T("size"),
+		T("Data Center"),
+		T("Size"),
 	})
 	for _, child := range childrens {
 		table.Add(
@@ -125,9 +125,9 @@ func getDatacenters(childrens []datatypes.Virtual_Guest_Block_Device_Template_Gr
 func getVirtualDisks(childrens []datatypes.Virtual_Guest_Block_Device_Template_Group, ui terminal.UI, outputFormat string) string {
 	bufTable := new(bytes.Buffer)
 	table := terminal.NewTable(bufTable, []string{
-		T("device"),
-		T("capacity"),
-		T("size on disk"),
+		T("Device"),
+		T("Capacity"),
+		T("Size On Disk"),
 	})
 	if childrens != nil && childrens[0].BlockDevices != nil {
 		for _, blockDevice := range childrens[0].BlockDevices {
@@ -155,8 +155,8 @@ func getVirtualDisks(childrens []datatypes.Virtual_Guest_Block_Device_Template_G
 func getShareImages(image datatypes.Virtual_Guest_Block_Device_Template_Group, ui terminal.UI, outputFormat string) string {
 	bufTable := new(bytes.Buffer)
 	table := terminal.NewTable(bufTable, []string{
-		T("account"),
-		T("shared on"),
+		T("Account"),
+		T("Shared on"),
 	})
 	for _, account := range image.AccountReferences {
 		if *account.AccountId != *image.AccountId {
