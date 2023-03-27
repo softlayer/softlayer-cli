@@ -45,8 +45,11 @@ func NewCreateCredentialCommand(sl *metadata.SoftlayerCommand) (cmd *CreateCrede
 	cobraCmd.Flags().StringVarP(&thisCmd.Notes, "notes", "n", "", T("A note string stored for this username/password pair."))
 	cobraCmd.Flags().StringVar(&thisCmd.Software, "software", "", T("The name of this specific piece of software."))
 
+	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("username")
+	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("password")
+	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("software")
 
 	thisCmd.Command = cobraCmd
