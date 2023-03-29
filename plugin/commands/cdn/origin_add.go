@@ -62,15 +62,14 @@ ${COMMAND_NAME} sl cdn origin-add --hostname www.example.com --origin 123.45.67.
 }
 
 func (cmd *OriginAddCommand) Run(args []string) error {
-
+	if cmd.Http == 0 && cmd.Https == 0 {
+		return errors.NewMissingInputError("http or https")
+	}
 	if cmd.OriginType != "server" && cmd.OriginType != "storage" {
 		return errors.NewInvalidUsageError("--origintype")
 	}
 	if cmd.Ssl != "dvSan" && cmd.Ssl != "wilcard" && cmd.Ssl != "" {
 		return errors.NewInvalidUsageError("--ssl")
-	}
-	if cmd.Http == 0 && cmd.Https == 0 {
-		return errors.NewMissingInputError("http or https")
 	}
 
 	outputFormat := cmd.GetOutputFlag()
