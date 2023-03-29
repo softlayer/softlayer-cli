@@ -55,7 +55,9 @@ ${COMMAND_NAME} sl cdn origin-add --hostname www.example.com --origin 123.45.67.
 	cobraCmd.Flags().StringVar(&thisCmd.Path, "path", "", T("Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video"))
 	cobraCmd.Flags().StringVar(&thisCmd.Ssl, "ssl", "dvSan", T("A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]"))
 
+	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("hostname")
+	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("origin")
 	thisCmd.Command = cobraCmd
 	return thisCmd
