@@ -25,6 +25,7 @@ var availableCommands = []string{
 	"event-detail",
 	"events",
 	"hook-create",
+	"hook-delete",
 	"hooks",
 	"invoice-detail",
 	"invoices",

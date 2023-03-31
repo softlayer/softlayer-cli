@@ -46,6 +46,19 @@ type FakeAccountManager struct {
 		result1 datatypes.Provisioning_Hook
 		result2 error
 	}
+	DeleteProvisioningScriptStub        func(int) (bool, error)
+	deleteProvisioningScriptMutex       sync.RWMutex
+	deleteProvisioningScriptArgsForCall []struct {
+		arg1 int
+	}
+	deleteProvisioningScriptReturns struct {
+		result1 bool
+		result2 error
+	}
+	deleteProvisioningScriptReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	GetAccountAllBillingOrdersStub        func(string, int) ([]datatypes.Billing_Order, error)
 	getAccountAllBillingOrdersMutex       sync.RWMutex
 	getAccountAllBillingOrdersArgsForCall []struct {
@@ -437,6 +450,70 @@ func (fake *FakeAccountManager) CreateProvisioningScriptReturnsOnCall(i int, res
 	}
 	fake.createProvisioningScriptReturnsOnCall[i] = struct {
 		result1 datatypes.Provisioning_Hook
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScript(arg1 int) (bool, error) {
+	fake.deleteProvisioningScriptMutex.Lock()
+	ret, specificReturn := fake.deleteProvisioningScriptReturnsOnCall[len(fake.deleteProvisioningScriptArgsForCall)]
+	fake.deleteProvisioningScriptArgsForCall = append(fake.deleteProvisioningScriptArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteProvisioningScriptStub
+	fakeReturns := fake.deleteProvisioningScriptReturns
+	fake.recordInvocation("DeleteProvisioningScript", []interface{}{arg1})
+	fake.deleteProvisioningScriptMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptCallCount() int {
+	fake.deleteProvisioningScriptMutex.RLock()
+	defer fake.deleteProvisioningScriptMutex.RUnlock()
+	return len(fake.deleteProvisioningScriptArgsForCall)
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptCalls(stub func(int) (bool, error)) {
+	fake.deleteProvisioningScriptMutex.Lock()
+	defer fake.deleteProvisioningScriptMutex.Unlock()
+	fake.DeleteProvisioningScriptStub = stub
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptArgsForCall(i int) int {
+	fake.deleteProvisioningScriptMutex.RLock()
+	defer fake.deleteProvisioningScriptMutex.RUnlock()
+	argsForCall := fake.deleteProvisioningScriptArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptReturns(result1 bool, result2 error) {
+	fake.deleteProvisioningScriptMutex.Lock()
+	defer fake.deleteProvisioningScriptMutex.Unlock()
+	fake.DeleteProvisioningScriptStub = nil
+	fake.deleteProvisioningScriptReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.deleteProvisioningScriptMutex.Lock()
+	defer fake.deleteProvisioningScriptMutex.Unlock()
+	fake.DeleteProvisioningScriptStub = nil
+	if fake.deleteProvisioningScriptReturnsOnCall == nil {
+		fake.deleteProvisioningScriptReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.deleteProvisioningScriptReturnsOnCall[i] = struct {
+		result1 bool
 		result2 error
 	}{result1, result2}
 }
@@ -1403,6 +1480,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.cancelItemMutex.RUnlock()
 	fake.createProvisioningScriptMutex.RLock()
 	defer fake.createProvisioningScriptMutex.RUnlock()
+	fake.deleteProvisioningScriptMutex.RLock()
+	defer fake.deleteProvisioningScriptMutex.RUnlock()
 	fake.getAccountAllBillingOrdersMutex.RLock()
 	defer fake.getAccountAllBillingOrdersMutex.RUnlock()
 	fake.getActiveAccountLicensesMutex.RLock()

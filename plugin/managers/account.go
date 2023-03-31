@@ -30,6 +30,7 @@ type AccountManager interface {
 	GetBandwidthPoolDetail(bandwidthPoolId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetPostProvisioningHooks(mask string) ([]datatypes.Provisioning_Hook, error)
 	CreateProvisioningScript(template datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error)
+	DeleteProvisioningScript(idProvisioningScript int) (resp bool, err error)
 }
 
 type accountManager struct {
@@ -372,4 +373,13 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Provisioning_Hook/create
 func (a accountManager) CreateProvisioningScript(template datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error) {
 	provisioningHook := services.GetProvisioningHookService(a.Session)
 	return provisioningHook.CreateObject(&template)
+}
+
+/*
+Delete a provisioning script.
+https://sldn.softlayer.com/reference/services/SoftLayer_Provisioning_Hook/deleteObject/
+*/
+func (a accountManager) DeleteProvisioningScript(idProvisioningScript int) (resp bool, err error) {
+	provisioningHook := services.GetProvisioningHookService(a.Session)
+	return provisioningHook.Id(idProvisioningScript).DeleteObject()
 }
