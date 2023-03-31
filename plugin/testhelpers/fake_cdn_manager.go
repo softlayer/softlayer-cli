@@ -9,6 +9,28 @@ import (
 )
 
 type FakeCdnManager struct {
+	CreateCdnStub        func(string, string, string, int, int, string, string, string, string, string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	createCdnMutex       sync.RWMutex
+	createCdnArgsForCall []struct {
+		arg1  string
+		arg2  string
+		arg3  string
+		arg4  int
+		arg5  int
+		arg6  string
+		arg7  string
+		arg8  string
+		arg9  string
+		arg10 string
+	}
+	createCdnReturns struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
+		result2 error
+	}
+	createCdnReturnsOnCall map[int]struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
+		result2 error
+	}
 	EditCDNStub        func(int, string, int, int, string, string, string, string, string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	editCDNMutex       sync.RWMutex
 	editCDNArgsForCall []struct {
@@ -71,9 +93,14 @@ type FakeCdnManager struct {
 		result1 datatypes.Container_Network_CdnMarketplace_Metrics
 		result2 error
 	}
-	OriginAddStub        func(string, string, string, int, int, string, string, string, string, string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
-	originAddMutex       sync.RWMutex
-	originAddArgsForCall []struct {
+	invocations      map[string][][]interface{}
+	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeCdnManager) CreateCdn(arg1 string, arg2 string, arg3 string, arg4 int, arg5 int, arg6 string, arg7 string, arg8 string, arg9 string, arg10 string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
+	fake.createCdnMutex.Lock()
+	ret, specificReturn := fake.createCdnReturnsOnCall[len(fake.createCdnArgsForCall)]
+	fake.createCdnArgsForCall = append(fake.createCdnArgsForCall, struct {
 		arg1  string
 		arg2  string
 		arg3  string
@@ -84,17 +111,63 @@ type FakeCdnManager struct {
 		arg8  string
 		arg9  string
 		arg10 string
+	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10})
+	stub := fake.CreateCdnStub
+	fakeReturns := fake.createCdnReturns
+	fake.recordInvocation("CreateCdn", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10})
+	fake.createCdnMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
 	}
-	originAddReturns struct {
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeCdnManager) CreateCdnCallCount() int {
+	fake.createCdnMutex.RLock()
+	defer fake.createCdnMutex.RUnlock()
+	return len(fake.createCdnArgsForCall)
+}
+
+func (fake *FakeCdnManager) CreateCdnCalls(stub func(string, string, string, int, int, string, string, string, string, string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)) {
+	fake.createCdnMutex.Lock()
+	defer fake.createCdnMutex.Unlock()
+	fake.CreateCdnStub = stub
+}
+
+func (fake *FakeCdnManager) CreateCdnArgsForCall(i int) (string, string, string, int, int, string, string, string, string, string) {
+	fake.createCdnMutex.RLock()
+	defer fake.createCdnMutex.RUnlock()
+	argsForCall := fake.createCdnArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8, argsForCall.arg9, argsForCall.arg10
+}
+
+func (fake *FakeCdnManager) CreateCdnReturns(result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, result2 error) {
+	fake.createCdnMutex.Lock()
+	defer fake.createCdnMutex.Unlock()
+	fake.CreateCdnStub = nil
+	fake.createCdnReturns = struct {
 		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
 		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeCdnManager) CreateCdnReturnsOnCall(i int, result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, result2 error) {
+	fake.createCdnMutex.Lock()
+	defer fake.createCdnMutex.Unlock()
+	fake.CreateCdnStub = nil
+	if fake.createCdnReturnsOnCall == nil {
+		fake.createCdnReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
+			result2 error
+		})
 	}
-	originAddReturnsOnCall map[int]struct {
+	fake.createCdnReturnsOnCall[i] = struct {
 		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
 		result2 error
-	}
-	invocations      map[string][][]interface{}
-	invocationsMutex sync.RWMutex
+	}{result1, result2}
 }
 
 func (fake *FakeCdnManager) EditCDN(arg1 int, arg2 string, arg3 int, arg4 int, arg5 string, arg6 string, arg7 string, arg8 string, arg9 string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
@@ -356,82 +429,11 @@ func (fake *FakeCdnManager) GetUsageMetricsReturnsOnCall(i int, result1 datatype
 	}{result1, result2}
 }
 
-func (fake *FakeCdnManager) OriginAdd(arg1 string, arg2 string, arg3 string, arg4 int, arg5 int, arg6 string, arg7 string, arg8 string, arg9 string, arg10 string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
-	fake.originAddMutex.Lock()
-	ret, specificReturn := fake.originAddReturnsOnCall[len(fake.originAddArgsForCall)]
-	fake.originAddArgsForCall = append(fake.originAddArgsForCall, struct {
-		arg1  string
-		arg2  string
-		arg3  string
-		arg4  int
-		arg5  int
-		arg6  string
-		arg7  string
-		arg8  string
-		arg9  string
-		arg10 string
-	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10})
-	stub := fake.OriginAddStub
-	fakeReturns := fake.originAddReturns
-	fake.recordInvocation("OriginAdd", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10})
-	fake.originAddMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeCdnManager) OriginAddCallCount() int {
-	fake.originAddMutex.RLock()
-	defer fake.originAddMutex.RUnlock()
-	return len(fake.originAddArgsForCall)
-}
-
-func (fake *FakeCdnManager) OriginAddCalls(stub func(string, string, string, int, int, string, string, string, string, string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)) {
-	fake.originAddMutex.Lock()
-	defer fake.originAddMutex.Unlock()
-	fake.OriginAddStub = stub
-}
-
-func (fake *FakeCdnManager) OriginAddArgsForCall(i int) (string, string, string, int, int, string, string, string, string, string) {
-	fake.originAddMutex.RLock()
-	defer fake.originAddMutex.RUnlock()
-	argsForCall := fake.originAddArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8, argsForCall.arg9, argsForCall.arg10
-}
-
-func (fake *FakeCdnManager) OriginAddReturns(result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, result2 error) {
-	fake.originAddMutex.Lock()
-	defer fake.originAddMutex.Unlock()
-	fake.OriginAddStub = nil
-	fake.originAddReturns = struct {
-		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeCdnManager) OriginAddReturnsOnCall(i int, result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, result2 error) {
-	fake.originAddMutex.Lock()
-	defer fake.originAddMutex.Unlock()
-	fake.OriginAddStub = nil
-	if fake.originAddReturnsOnCall == nil {
-		fake.originAddReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
-			result2 error
-		})
-	}
-	fake.originAddReturnsOnCall[i] = struct {
-		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeCdnManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.createCdnMutex.RLock()
+	defer fake.createCdnMutex.RUnlock()
 	fake.editCDNMutex.RLock()
 	defer fake.editCDNMutex.RUnlock()
 	fake.getDetailCDNMutex.RLock()
@@ -440,8 +442,6 @@ func (fake *FakeCdnManager) Invocations() map[string][][]interface{} {
 	defer fake.getNetworkCdnMarketplaceConfigurationMappingMutex.RUnlock()
 	fake.getUsageMetricsMutex.RLock()
 	defer fake.getUsageMetricsMutex.RUnlock()
-	fake.originAddMutex.RLock()
-	defer fake.originAddMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

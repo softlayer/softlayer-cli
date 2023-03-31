@@ -11,26 +11,23 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("Cdn origin add", func() {
+var _ = Describe("Cdn create", func() {
 	var (
 		fakeUI      *terminal.FakeUI
-		cliCommand  *cdn.OriginAddCommand
+		cliCommand  *cdn.CreateCommand
 		fakeSession *session.Session
 		slCommand   *metadata.SoftlayerCommand
-		// fakeCdnManager *testhelpers.FakeCdnManager
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-		cliCommand = cdn.NewOriginAddCommand(slCommand)
+		cliCommand = cdn.NewCreateCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-		// fakeCdnManager = new(testhelpers.FakeCdnManager)
-		// cliCommand.CdnManager = fakeCdnManager
 	})
 
-	Describe("Cdn origin add", func() {
-		Context("Cdn origin add, Invalid Usage", func() {
+	Describe("Cdn create", func() {
+		Context("Cdn create, Invalid Usage", func() {
 			It("Set command with an invalid output option", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--output=xml")
 				Expect(err).To(HaveOccurred())
@@ -63,8 +60,8 @@ var _ = Describe("Cdn origin add", func() {
 			})
 		})
 
-		Context("Cdn origin add, correct use", func() {
-			It("return cdn origin add", func() {
+		Context("Cdn create, correct use", func() {
+			It("return cdn created", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--hostname", "www.example.com", "--origin", "123.45.67.8", "--http", "80")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("CDN Unique ID"))
@@ -82,7 +79,7 @@ var _ = Describe("Cdn origin add", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Certificate Type"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("WILDCARD_CERT"))
 			})
-			It("return cdn cdn in format json", func() {
+			It("return cdn in format json", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--hostname", "www.example.com", "--origin", "123.45.67.8", "--http", "80", "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "CDN Unique ID",`))

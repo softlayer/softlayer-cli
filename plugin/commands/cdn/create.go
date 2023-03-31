@@ -12,7 +12,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-type OriginAddCommand struct {
+type CreateCommand struct {
 	*metadata.SoftlayerCommand
 	CdnManager managers.CdnManager
 	Command    *cobra.Command
@@ -28,17 +28,17 @@ type OriginAddCommand struct {
 	Ssl        string
 }
 
-func NewOriginAddCommand(sl *metadata.SoftlayerCommand) *OriginAddCommand {
-	thisCmd := &OriginAddCommand{
+func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
+	thisCmd := &CreateCommand{
 		SoftlayerCommand: sl,
 		CdnManager:       managers.NewCdnManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "origin-add",
-		Short: T("Create an origin path for an existing CDN mapping."),
-		Long: T(`${COMMAND_NAME} sl cdn origin-add
+		Use:   "create",
+		Short: T("Create a new CDN domain mapping"),
+		Long: T(`${COMMAND_NAME} sl cdn create
 Example:
-${COMMAND_NAME} sl cdn origin-add --hostname www.example.com --origin 123.45.67.8 --http 80`),
+${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80`),
 		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -63,7 +63,7 @@ ${COMMAND_NAME} sl cdn origin-add --hostname www.example.com --origin 123.45.67.
 	return thisCmd
 }
 
-func (cmd *OriginAddCommand) Run(args []string) error {
+func (cmd *CreateCommand) Run(args []string) error {
 	if cmd.Http == 0 && cmd.Https == 0 {
 		return errors.NewMissingInputError("http or https")
 	}
@@ -76,7 +76,7 @@ func (cmd *OriginAddCommand) Run(args []string) error {
 
 	outputFormat := cmd.GetOutputFlag()
 
-	newCdn, err := cmd.CdnManager.OriginAdd(cmd.HostName, cmd.OriginHost, cmd.OriginType, cmd.Http, cmd.Https, cmd.BucketName, cmd.CName, cmd.Header, cmd.Path, cmd.Ssl)
+	newCdn, err := cmd.CdnManager.CreateCdn(cmd.HostName, cmd.OriginHost, cmd.OriginType, cmd.Http, cmd.Https, cmd.BucketName, cmd.CName, cmd.Header, cmd.Path, cmd.Ssl)
 	if err != nil {
 		return errors.NewAPIError(T("Failed to create a CDN."), err.Error(), 2)
 	}
