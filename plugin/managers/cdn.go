@@ -12,6 +12,7 @@ import (
 
 type CdnManager interface {
 	GetNetworkCdnMarketplaceConfigurationMapping() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetDetailCDN(uniqueId int, mask string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
 	EditCDN(uniqueId int, header string, httpPort int, httpsPort int, origin string, respectHeaders string, cache string, cacheDescription string, performanceConfiguration string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
@@ -48,6 +49,14 @@ func (a cdnManager) GetDetailCDN(uniqueId int, mask string) (datatypes.Container
 		return datatypes.Container_Network_CdnMarketplace_Configuration_Mapping{}, err
 	}
 	return cdn[0], nil
+}
+
+/*
+Delete CDN domain mapping.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping/deleteDomainMapping/
+*/
+func (a cdnManager) DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
+	return a.CdnService.Mask(mask).DeleteDomainMapping(&uniqueId)
 }
 
 /*

@@ -9,6 +9,19 @@ import (
 )
 
 type FakeCdnManager struct {
+	DeleteCDNStub        func(string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	deleteCDNMutex       sync.RWMutex
+	deleteCDNArgsForCall []struct {
+		arg1 string
+	}
+	deleteCDNReturns struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
+		result2 error
+	}
+	deleteCDNReturnsOnCall map[int]struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
+		result2 error
+	}
 	EditCDNStub        func(int, string, int, int, string, string, string, string, string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	editCDNMutex       sync.RWMutex
 	editCDNArgsForCall []struct {
@@ -73,6 +86,70 @@ type FakeCdnManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeCdnManager) DeleteCDN(arg1 string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
+	fake.deleteCDNMutex.Lock()
+	ret, specificReturn := fake.deleteCDNReturnsOnCall[len(fake.deleteCDNArgsForCall)]
+	fake.deleteCDNArgsForCall = append(fake.deleteCDNArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.DeleteCDNStub
+	fakeReturns := fake.deleteCDNReturns
+	fake.recordInvocation("DeleteCDN", []interface{}{arg1})
+	fake.deleteCDNMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeCdnManager) DeleteCDNCallCount() int {
+	fake.deleteCDNMutex.RLock()
+	defer fake.deleteCDNMutex.RUnlock()
+	return len(fake.deleteCDNArgsForCall)
+}
+
+func (fake *FakeCdnManager) DeleteCDNCalls(stub func(string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)) {
+	fake.deleteCDNMutex.Lock()
+	defer fake.deleteCDNMutex.Unlock()
+	fake.DeleteCDNStub = stub
+}
+
+func (fake *FakeCdnManager) DeleteCDNArgsForCall(i int) string {
+	fake.deleteCDNMutex.RLock()
+	defer fake.deleteCDNMutex.RUnlock()
+	argsForCall := fake.deleteCDNArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeCdnManager) DeleteCDNReturns(result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, result2 error) {
+	fake.deleteCDNMutex.Lock()
+	defer fake.deleteCDNMutex.Unlock()
+	fake.DeleteCDNStub = nil
+	fake.deleteCDNReturns = struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeCdnManager) DeleteCDNReturnsOnCall(i int, result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, result2 error) {
+	fake.deleteCDNMutex.Lock()
+	defer fake.deleteCDNMutex.Unlock()
+	fake.DeleteCDNStub = nil
+	if fake.deleteCDNReturnsOnCall == nil {
+		fake.deleteCDNReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
+			result2 error
+		})
+	}
+	fake.deleteCDNReturnsOnCall[i] = struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeCdnManager) EditCDN(arg1 int, arg2 string, arg3 int, arg4 int, arg5 string, arg6 string, arg7 string, arg8 string, arg9 string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
@@ -337,6 +414,8 @@ func (fake *FakeCdnManager) GetUsageMetricsReturnsOnCall(i int, result1 datatype
 func (fake *FakeCdnManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.deleteCDNMutex.RLock()
+	defer fake.deleteCDNMutex.RUnlock()
 	fake.editCDNMutex.RLock()
 	defer fake.editCDNMutex.RUnlock()
 	fake.getDetailCDNMutex.RLock()
