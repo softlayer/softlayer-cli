@@ -74,6 +74,7 @@ type HardwareServerManager interface {
 	DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error)
 	GetBandwidthAllotmentDetail(hardwareId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error)
 	GetBillingCycleBandwidthUsage(hardwareId int, mask string) ([]datatypes.Network_Bandwidth_Usage, error)
+	CreateSoftwareCredential(softwareComponentPasswordTemplate datatypes.Software_Component_Password) (datatypes.Software_Component_Password, error)
 }
 
 type hardwareServerManager struct {
@@ -857,4 +858,11 @@ func (hw hardwareServerManager) GetBillingCycleBandwidthUsage(hardwareId int, ma
 		mask = "mask[amountIn,amountOut,type]"
 	}
 	return hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingCycleBandwidthUsage()
+}
+
+// Create a password for a software component.
+// Software_Component_Password softwareComponentPasswordTemplate: The software component password template.
+func (hw hardwareServerManager) CreateSoftwareCredential(softwareComponentPasswordTemplate datatypes.Software_Component_Password) (datatypes.Software_Component_Password, error) {
+	softwareComponentPasswordService := services.GetSoftwareComponentPasswordService(hw.Session)
+	return softwareComponentPasswordService.CreateObject(&softwareComponentPasswordTemplate)
 }
