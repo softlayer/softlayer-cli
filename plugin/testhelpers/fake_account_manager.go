@@ -33,6 +33,19 @@ type FakeAccountManager struct {
 	cancelItemReturnsOnCall map[int]struct {
 		result1 error
 	}
+	CreateProvisioningScriptStub        func(datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error)
+	createProvisioningScriptMutex       sync.RWMutex
+	createProvisioningScriptArgsForCall []struct {
+		arg1 datatypes.Provisioning_Hook
+	}
+	createProvisioningScriptReturns struct {
+		result1 datatypes.Provisioning_Hook
+		result2 error
+	}
+	createProvisioningScriptReturnsOnCall map[int]struct {
+		result1 datatypes.Provisioning_Hook
+		result2 error
+	}
 	GetAccountAllBillingOrdersStub        func(string, int) ([]datatypes.Billing_Order, error)
 	getAccountAllBillingOrdersMutex       sync.RWMutex
 	getAccountAllBillingOrdersArgsForCall []struct {
@@ -362,6 +375,70 @@ func (fake *FakeAccountManager) CancelItemReturnsOnCall(i int, result1 error) {
 	fake.cancelItemReturnsOnCall[i] = struct {
 		result1 error
 	}{result1}
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScript(arg1 datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error) {
+	fake.createProvisioningScriptMutex.Lock()
+	ret, specificReturn := fake.createProvisioningScriptReturnsOnCall[len(fake.createProvisioningScriptArgsForCall)]
+	fake.createProvisioningScriptArgsForCall = append(fake.createProvisioningScriptArgsForCall, struct {
+		arg1 datatypes.Provisioning_Hook
+	}{arg1})
+	stub := fake.CreateProvisioningScriptStub
+	fakeReturns := fake.createProvisioningScriptReturns
+	fake.recordInvocation("CreateProvisioningScript", []interface{}{arg1})
+	fake.createProvisioningScriptMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptCallCount() int {
+	fake.createProvisioningScriptMutex.RLock()
+	defer fake.createProvisioningScriptMutex.RUnlock()
+	return len(fake.createProvisioningScriptArgsForCall)
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptCalls(stub func(datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error)) {
+	fake.createProvisioningScriptMutex.Lock()
+	defer fake.createProvisioningScriptMutex.Unlock()
+	fake.CreateProvisioningScriptStub = stub
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptArgsForCall(i int) datatypes.Provisioning_Hook {
+	fake.createProvisioningScriptMutex.RLock()
+	defer fake.createProvisioningScriptMutex.RUnlock()
+	argsForCall := fake.createProvisioningScriptArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptReturns(result1 datatypes.Provisioning_Hook, result2 error) {
+	fake.createProvisioningScriptMutex.Lock()
+	defer fake.createProvisioningScriptMutex.Unlock()
+	fake.CreateProvisioningScriptStub = nil
+	fake.createProvisioningScriptReturns = struct {
+		result1 datatypes.Provisioning_Hook
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptReturnsOnCall(i int, result1 datatypes.Provisioning_Hook, result2 error) {
+	fake.createProvisioningScriptMutex.Lock()
+	defer fake.createProvisioningScriptMutex.Unlock()
+	fake.CreateProvisioningScriptStub = nil
+	if fake.createProvisioningScriptReturnsOnCall == nil {
+		fake.createProvisioningScriptReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Provisioning_Hook
+			result2 error
+		})
+	}
+	fake.createProvisioningScriptReturnsOnCall[i] = struct {
+		result1 datatypes.Provisioning_Hook
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) GetAccountAllBillingOrders(arg1 string, arg2 int) ([]datatypes.Billing_Order, error) {
@@ -1324,6 +1401,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.ackEventMutex.RUnlock()
 	fake.cancelItemMutex.RLock()
 	defer fake.cancelItemMutex.RUnlock()
+	fake.createProvisioningScriptMutex.RLock()
+	defer fake.createProvisioningScriptMutex.RUnlock()
 	fake.getAccountAllBillingOrdersMutex.RLock()
 	defer fake.getAccountAllBillingOrdersMutex.RUnlock()
 	fake.getActiveAccountLicensesMutex.RLock()
