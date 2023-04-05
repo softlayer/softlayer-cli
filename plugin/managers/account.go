@@ -29,6 +29,7 @@ type AccountManager interface {
 	GetSummary(mask string) (datatypes.Account, error)
 	GetBandwidthPoolDetail(bandwidthPoolId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetPostProvisioningHooks(mask string) ([]datatypes.Provisioning_Hook, error)
+	CreateProvisioningScript(template datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error)
 }
 
 type accountManager struct {
@@ -362,4 +363,13 @@ func (a accountManager) GetPostProvisioningHooks(mask string) ([]datatypes.Provi
 		mask = "mask[id,name,uri]"
 	}
 	return a.AccountService.Mask(mask).GetPostProvisioningHooks()
+}
+
+/*
+Create a provisioning script.
+https://sldn.softlayer.com/reference/services/SoftLayer_Provisioning_Hook/createObject/
+*/
+func (a accountManager) CreateProvisioningScript(template datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error) {
+	provisioningHook := services.GetProvisioningHookService(a.Session)
+	return provisioningHook.CreateObject(&template)
 }

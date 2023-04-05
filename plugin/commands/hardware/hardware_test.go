@@ -24,6 +24,7 @@ var availableCommands = []string{
 	"cancel",
 	"cancel-reasons",
 	"create",
+	"create-credential",
 	"create-options",
 	"credentials",
 	"detail",

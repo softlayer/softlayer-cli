@@ -8,6 +8,7 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 )
 
 type CdnManager interface {
@@ -16,6 +17,7 @@ type CdnManager interface {
 	GetDetailCDN(uniqueId int, mask string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
 	EditCDN(uniqueId int, header string, httpPort int, httpsPort int, origin string, respectHeaders string, cache string, cacheDescription string, performanceConfiguration string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	CreateCdn(hostname string, originHost string, originType string, http int, https int, bucketName string, cname string, header string, path string, ssl string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 }
 
 type cdnManager struct {
@@ -145,4 +147,55 @@ func (a cdnManager) EditCDN(uniqueId int, header string, httpPort int, httpsPort
 		return datatypes.Container_Network_CdnMarketplace_Configuration_Mapping{}, err
 	}
 	return cdn[0], nil
+}
+
+/*
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping/createDomainMapping/
+*/
+func (a cdnManager) CreateCdn(hostname string, originHost string, originType string, http int, https int, bucketName string, cname string, header string, path string, ssl string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
+	types := map[string]string{
+		"server":  "HOST_SERVER",
+		"storage": "OBJECT_STORAGE",
+	}
+	sslCertificate := map[string]string{
+		"wilcard": "WILDCARD_CERT",
+		"dvSan":   "SHARED_SAN_CERT",
+	}
+
+	NewOrigin := datatypes.Container_Network_CdnMarketplace_Configuration_Input{
+		Domain:     sl.String(hostname),
+		Origin:     sl.String(originHost),
+		OriginType: sl.String(types[originType]),
+		VendorName: sl.String("akamai"),
+	}
+
+	protocol := ""
+	if http != 0 {
+		protocol = "HTTP"
+		NewOrigin.HttpPort = sl.Int(http)
+	}
+	if https != 0 {
+		protocol = "HTTPS"
+		NewOrigin.HttpsPort = sl.Int(https)
+		NewOrigin.CertificateType = sl.String(sslCertificate[ssl])
+	}
+	if http != 0 && https != 0 {
+		protocol = "HTTP_AND_HTTPS"
+	}
+	NewOrigin.Protocol = sl.String(protocol)
+	if types[originType] == "OBJECT_STORAGE" {
+		NewOrigin.BucketName = sl.String(bucketName)
+		NewOrigin.Header = sl.String(originHost)
+	}
+	if cname != "" {
+		NewOrigin.Cname = sl.String(cname + ".cdn.appdomain.cloud")
+	}
+	if header != "" {
+		NewOrigin.Header = sl.String(header)
+	}
+	if path != "" {
+		NewOrigin.Path = sl.String("/" + path)
+	}
+
+	return a.CdnService.CreateDomainMapping(&NewOrigin)
 }

@@ -23,6 +23,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewListCommand(sl).Command)
 	cobraCmd.AddCommand(NewDatacenterCommand(sl).Command)
 	cobraCmd.AddCommand(NewShareCommand(sl).Command)
+	cobraCmd.AddCommand(NewShareDenyCommand(sl).Command)
 	return cobraCmd
 }
 
