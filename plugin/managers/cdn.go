@@ -220,7 +220,7 @@ func (a cdnManager) OriginAddCdn(uniqueId string, header string, path string, or
 
 	NewOrigin := datatypes.Container_Network_CdnMarketplace_Configuration_Input{
 		UniqueId:                 sl.String(uniqueId),
-		Path:                     sl.String(path),
+		Path:                     sl.String("/" + path),
 		Origin:                   sl.String(originHost),
 		OriginType:               sl.String(types[originType]),
 		CacheKeyQueryRule:        sl.String(cacheKey),
