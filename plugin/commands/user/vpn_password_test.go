@@ -72,7 +72,7 @@ var _ = Describe("user vpn-password", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "111111", "--password=Mypassword1.")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Successfully updated user vpn"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Successfully updated user VPN password"))
 			})
 		})
 	})

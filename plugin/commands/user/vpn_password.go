@@ -53,7 +53,7 @@ func (cmd *VpnPasswordCommand) Run(args []string) error {
 	}
 	if success {
 		cmd.UI.Ok()
-		cmd.UI.Print(T("Successfully updated user vpn."))
+		cmd.UI.Print(T("Successfully updated user VPN password."))
 	}
 	return nil
 }
