@@ -17,17 +17,20 @@ type CdnManager interface {
 	GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
 	EditCDN(uniqueId int, header string, httpPort int, httpsPort int, origin string, respectHeaders string, cache string, cacheDescription string, performanceConfiguration string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	CreateCdn(hostname string, originHost string, originType string, http int, https int, bucketName string, cname string, header string, path string, ssl string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	OriginAddCdn(uniqueId string, header string, path string, originHost string, originType string, http int, https int, cacheKey string, optimize string, dynamicPath string, dynamicPrefetch bool, dynamicCompression bool, bucketName string, fileExtension string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error)
 }
 
 type cdnManager struct {
-	CdnService services.Network_CdnMarketplace_Configuration_Mapping
-	Session    *session.Session
+	CdnService     services.Network_CdnMarketplace_Configuration_Mapping
+	CdnPathService services.Network_CdnMarketplace_Configuration_Mapping_Path
+	Session        *session.Session
 }
 
 func NewCdnManager(session *session.Session) *cdnManager {
 	return &cdnManager{
-		CdnService: services.GetNetworkCdnMarketplaceConfigurationMappingService(session),
-		Session:    session,
+		CdnService:     services.GetNetworkCdnMarketplaceConfigurationMappingService(session),
+		CdnPathService: services.GetNetworkCdnMarketplaceConfigurationMappingPathService(session),
+		Session:        session,
 	}
 }
 
@@ -189,4 +192,55 @@ func (a cdnManager) CreateCdn(hostname string, originHost string, originType str
 	}
 
 	return a.CdnService.CreateDomainMapping(&NewOrigin)
+}
+
+/*
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping_Path/createOriginPath/
+*/
+func (a cdnManager) OriginAddCdn(uniqueId string, header string, path string, originHost string, originType string, http int, https int, cacheKey string, optimize string, dynamicPath string, dynamicPrefetch bool, dynamicCompression bool, bucketName string, fileExtension string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error) {
+	types := map[string]string{
+		"server":  "HOST_SERVER",
+		"storage": "OBJECT_STORAGE",
+	}
+	performanceConfig := map[string]string{
+		"web":     "General web delivery",
+		"video":   "Video on demand optimization",
+		"file":    "Large file optimization",
+		"dynamic": "Dynamic content acceleration",
+	}
+
+	NewOrigin := datatypes.Container_Network_CdnMarketplace_Configuration_Input{
+		UniqueId:                 sl.String(uniqueId),
+		Path:                     sl.String(path),
+		Origin:                   sl.String(originHost),
+		OriginType:               sl.String(types[originType]),
+		CacheKeyQueryRule:        sl.String(cacheKey),
+		PerformanceConfiguration: sl.String(performanceConfig[optimize]),
+	}
+
+	if optimize == "dynamic" {
+		NewOrigin.DynamicContentAcceleration = &datatypes.Container_Network_CdnMarketplace_Configuration_Performance_DynamicContentAcceleration{
+			DetectionPath:                 sl.String("/" + dynamicPath),
+			PrefetchEnabled:               sl.Bool(dynamicPrefetch),
+			MobileImageCompressionEnabled: sl.Bool(dynamicCompression),
+		}
+	}
+
+	if originType == "storage" {
+		NewOrigin.BucketName = sl.String(bucketName)
+		NewOrigin.FileExtension = sl.String(fileExtension)
+		NewOrigin.Header = sl.String(originHost)
+	}
+
+	if header != "" {
+		NewOrigin.Header = sl.String(header)
+	}
+	if http != 0 {
+		NewOrigin.HttpPort = sl.Int(http)
+	}
+	if https != 0 {
+		NewOrigin.HttpsPort = sl.Int(https)
+	}
+
+	return a.CdnPathService.CreateOriginPath(&NewOrigin)
 }
