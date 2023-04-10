@@ -13,9 +13,9 @@ import (
 const (
 	IMAGE_DEFAULT_MASK = "id, name, imageType, accountId"
 	//IMAGE_DEFAULT_MASK = "id,accountId,name,globalIdentifier,blockDevices,parentId,createDate,transaction"
-	IMAGE_DETAIL_MASK = `id, globalIdentifier, name, datacenter.name, status.name,
+	IMAGE_DETAIL_MASK = `id, accountReferences, firstChild, globalIdentifier, name, datacenter.name, status.name,
 accountId, publicFlag, imageType, flexImageFlag, note, createDate, blockDevicesDiskSpaceTotal,
-children[transaction, blockDevicesDiskSpaceTotal, datacenter.name, blockDevices[diskImage[softwareReferences[softwareDescription]]]]`
+children[transaction, blockDevicesDiskSpaceTotal, datacenter.name, blockDevices[diskSpace,diskImage[capacity,name,units,softwareReferences[softwareDescription]]]]`
 )
 
 // Manages SoftLayer server images.
