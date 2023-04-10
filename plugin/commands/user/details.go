@@ -188,10 +188,14 @@ func baseUserPrint(user datatypes.User_Customer, keys bool, ui terminal.UI) {
 	table.Add(T("ID"), utils.FormatIntPointer(user.Id))
 	table.Add(T("Username"), utils.FormatStringPointer(user.Username))
 
-	if keys {
+	if keys && user.ApiAuthenticationKeys != nil && len(user.ApiAuthenticationKeys) != 0 {
 		for _, key := range user.ApiAuthenticationKeys {
 			table.Add(T("APIKEY"), utils.FormatStringPointer(key.AuthenticationKey))
 		}
+	} else if user.ApiAuthenticationKeys != nil && len(user.ApiAuthenticationKeys) != 0 {
+		table.Add(T("APIKEY"), T("Yes"))
+	} else {
+		table.Add(T("APIKEY"), T("No"))
 	}
 
 	table.Add(T("Name"), utils.FormatStringPointer(user.FirstName)+" "+utils.FormatStringPointer(user.LastName))
