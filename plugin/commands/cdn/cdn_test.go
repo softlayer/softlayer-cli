@@ -19,6 +19,7 @@ func TestManagers(t *testing.T) {
 
 var availableCommands = []string{
 	"detail",
+	"delete",
 	"edit",
 	"list",
 	"create",

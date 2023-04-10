@@ -15,6 +15,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 		RunE:  nil,
 	}
 	cobraCmd.AddCommand(NewListCommand(sl).Command)
+	cobraCmd.AddCommand(NewDeleteCommand(sl).Command)
 	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
 	cobraCmd.AddCommand(NewEditCommand(sl).Command)
 	cobraCmd.AddCommand(NewCreateCommand(sl).Command)
