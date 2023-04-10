@@ -428,6 +428,20 @@ type FakeUserManager struct {
 		result1 bool
 		result2 error
 	}
+	UpdateVpnPasswordStub        func(int, string) (bool, error)
+	updateVpnPasswordMutex       sync.RWMutex
+	updateVpnPasswordArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	updateVpnPasswordReturns struct {
+		result1 bool
+		result2 error
+	}
+	updateVpnPasswordReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	UpdateVpnUserStub        func(int) (bool, error)
 	updateVpnUserMutex       sync.RWMutex
 	updateVpnUserArgsForCall []struct {
@@ -2444,6 +2458,71 @@ func (fake *FakeUserManager) RemoveVirtualGuestAccessReturnsOnCall(i int, result
 	}{result1, result2}
 }
 
+func (fake *FakeUserManager) UpdateVpnPassword(arg1 int, arg2 string) (bool, error) {
+	fake.updateVpnPasswordMutex.Lock()
+	ret, specificReturn := fake.updateVpnPasswordReturnsOnCall[len(fake.updateVpnPasswordArgsForCall)]
+	fake.updateVpnPasswordArgsForCall = append(fake.updateVpnPasswordArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.UpdateVpnPasswordStub
+	fakeReturns := fake.updateVpnPasswordReturns
+	fake.recordInvocation("UpdateVpnPassword", []interface{}{arg1, arg2})
+	fake.updateVpnPasswordMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) UpdateVpnPasswordCallCount() int {
+	fake.updateVpnPasswordMutex.RLock()
+	defer fake.updateVpnPasswordMutex.RUnlock()
+	return len(fake.updateVpnPasswordArgsForCall)
+}
+
+func (fake *FakeUserManager) UpdateVpnPasswordCalls(stub func(int, string) (bool, error)) {
+	fake.updateVpnPasswordMutex.Lock()
+	defer fake.updateVpnPasswordMutex.Unlock()
+	fake.UpdateVpnPasswordStub = stub
+}
+
+func (fake *FakeUserManager) UpdateVpnPasswordArgsForCall(i int) (int, string) {
+	fake.updateVpnPasswordMutex.RLock()
+	defer fake.updateVpnPasswordMutex.RUnlock()
+	argsForCall := fake.updateVpnPasswordArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeUserManager) UpdateVpnPasswordReturns(result1 bool, result2 error) {
+	fake.updateVpnPasswordMutex.Lock()
+	defer fake.updateVpnPasswordMutex.Unlock()
+	fake.UpdateVpnPasswordStub = nil
+	fake.updateVpnPasswordReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) UpdateVpnPasswordReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.updateVpnPasswordMutex.Lock()
+	defer fake.updateVpnPasswordMutex.Unlock()
+	fake.UpdateVpnPasswordStub = nil
+	if fake.updateVpnPasswordReturnsOnCall == nil {
+		fake.updateVpnPasswordReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.updateVpnPasswordReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeUserManager) UpdateVpnUser(arg1 int) (bool, error) {
 	fake.updateVpnUserMutex.Lock()
 	ret, specificReturn := fake.updateVpnUserReturnsOnCall[len(fake.updateVpnUserArgsForCall)]
@@ -2573,6 +2652,8 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.removePermissionMutex.RUnlock()
 	fake.removeVirtualGuestAccessMutex.RLock()
 	defer fake.removeVirtualGuestAccessMutex.RUnlock()
+	fake.updateVpnPasswordMutex.RLock()
+	defer fake.updateVpnPasswordMutex.RUnlock()
 	fake.updateVpnUserMutex.RLock()
 	defer fake.updateVpnUserMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}

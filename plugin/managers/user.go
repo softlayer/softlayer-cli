@@ -58,6 +58,7 @@ type UserManager interface {
 	UpdateVpnUser(userId int) (bool, error)
 	GetOverrides(userId int) ([]datatypes.Network_Service_Vpn_Overrides, error)
 	DeleteUserVpnOverride(overrideId int) (bool, error)
+	UpdateVpnPassword(userID int, password string) (bool, error)
 }
 
 type userManager struct {
@@ -361,4 +362,11 @@ func (u userManager) GetOverrides(userId int) ([]datatypes.Network_Service_Vpn_O
 func (u userManager) DeleteUserVpnOverride(overrideId int) (bool, error) {
 	networkServiceVpnOverridesService := services.GetNetworkServiceVpnOverridesService(u.Session)
 	return networkServiceVpnOverridesService.Id(overrideId).DeleteObject()
+}
+
+// Update a user’s VPN password.
+// int userID: The user customer identifier.
+// string password: New password
+func (u userManager) UpdateVpnPassword(userID int, password string) (bool, error) {
+	return u.UserCustomerService.Id(userID).UpdateVpnPassword(&password)
 }
