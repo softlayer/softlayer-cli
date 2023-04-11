@@ -39,7 +39,7 @@ func NewOriginAddCommand(sl *metadata.SoftlayerCommand) *OriginAddCommand {
 		CdnManager:       managers.NewCdnManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "origin-add",
+		Use:   "origin-add " + T("IDENTIFIER"),
 		Short: T("Create an origin path for an existing CDN mapping."),
 		Long: T(`${COMMAND_NAME} sl cdn origin-add
 Example:
@@ -53,8 +53,8 @@ ${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/video
 	cobraCmd.Flags().StringVar(&thisCmd.Path, "path", "", T("Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]"))
 	cobraCmd.Flags().StringVar(&thisCmd.OriginHost, "origin", "", T("Your server IP address or hostname. [required]"))
 	cobraCmd.Flags().StringVar(&thisCmd.OriginType, "origin-type", "server", T("The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint."))
-	cobraCmd.Flags().IntVar(&thisCmd.Http, "http", 0, T("Http port."))
-	cobraCmd.Flags().IntVar(&thisCmd.Https, "https", 0, T("Https port."))
+	cobraCmd.Flags().IntVar(&thisCmd.Http, "http", 0, T("Http port. [http or https is required]"))
+	cobraCmd.Flags().IntVar(&thisCmd.Https, "https", 0, T("Https port. [http or https is required]"))
 	cobraCmd.Flags().StringVar(&thisCmd.CacheKey, "cache-key", "include-all", T("Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'."))
 	cobraCmd.Flags().StringVar(&thisCmd.Optimize, "optimize", "web", T("Performance configuration. [Permit: web, video, file, dynamic]"))
 	cobraCmd.Flags().StringVar(&thisCmd.DynamicPath, "dynamic-path", "", T("The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html"))
