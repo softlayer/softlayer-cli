@@ -91,6 +91,19 @@ type FakeCdnManager struct {
 		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping
 		result2 error
 	}
+	GetOriginsStub        func(string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error)
+	getOriginsMutex       sync.RWMutex
+	getOriginsArgsForCall []struct {
+		arg1 string
+	}
+	getOriginsReturns struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path
+		result2 error
+	}
+	getOriginsReturnsOnCall map[int]struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path
+		result2 error
+	}
 	GetUsageMetricsStub        func(int, int, string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
 	getUsageMetricsMutex       sync.RWMutex
 	getUsageMetricsArgsForCall []struct {
@@ -440,6 +453,70 @@ func (fake *FakeCdnManager) GetNetworkCdnMarketplaceConfigurationMappingReturnsO
 	}{result1, result2}
 }
 
+func (fake *FakeCdnManager) GetOrigins(arg1 string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error) {
+	fake.getOriginsMutex.Lock()
+	ret, specificReturn := fake.getOriginsReturnsOnCall[len(fake.getOriginsArgsForCall)]
+	fake.getOriginsArgsForCall = append(fake.getOriginsArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetOriginsStub
+	fakeReturns := fake.getOriginsReturns
+	fake.recordInvocation("GetOrigins", []interface{}{arg1})
+	fake.getOriginsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeCdnManager) GetOriginsCallCount() int {
+	fake.getOriginsMutex.RLock()
+	defer fake.getOriginsMutex.RUnlock()
+	return len(fake.getOriginsArgsForCall)
+}
+
+func (fake *FakeCdnManager) GetOriginsCalls(stub func(string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error)) {
+	fake.getOriginsMutex.Lock()
+	defer fake.getOriginsMutex.Unlock()
+	fake.GetOriginsStub = stub
+}
+
+func (fake *FakeCdnManager) GetOriginsArgsForCall(i int) string {
+	fake.getOriginsMutex.RLock()
+	defer fake.getOriginsMutex.RUnlock()
+	argsForCall := fake.getOriginsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeCdnManager) GetOriginsReturns(result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, result2 error) {
+	fake.getOriginsMutex.Lock()
+	defer fake.getOriginsMutex.Unlock()
+	fake.GetOriginsStub = nil
+	fake.getOriginsReturns = struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeCdnManager) GetOriginsReturnsOnCall(i int, result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, result2 error) {
+	fake.getOriginsMutex.Lock()
+	defer fake.getOriginsMutex.Unlock()
+	fake.GetOriginsStub = nil
+	if fake.getOriginsReturnsOnCall == nil {
+		fake.getOriginsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path
+			result2 error
+		})
+	}
+	fake.getOriginsReturnsOnCall[i] = struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeCdnManager) GetUsageMetrics(arg1 int, arg2 int, arg3 string) (datatypes.Container_Network_CdnMarketplace_Metrics, error) {
 	fake.getUsageMetricsMutex.Lock()
 	ret, specificReturn := fake.getUsageMetricsReturnsOnCall[len(fake.getUsageMetricsArgsForCall)]
@@ -519,6 +596,8 @@ func (fake *FakeCdnManager) Invocations() map[string][][]interface{} {
 	defer fake.getDetailCDNMutex.RUnlock()
 	fake.getNetworkCdnMarketplaceConfigurationMappingMutex.RLock()
 	defer fake.getNetworkCdnMarketplaceConfigurationMappingMutex.RUnlock()
+	fake.getOriginsMutex.RLock()
+	defer fake.getOriginsMutex.RUnlock()
 	fake.getUsageMetricsMutex.RLock()
 	defer fake.getUsageMetricsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
