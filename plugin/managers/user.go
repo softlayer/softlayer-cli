@@ -41,6 +41,8 @@ type UserManager interface {
 	CreateUser(templateObject datatypes.User_Customer, password string, vpnPassword string) (datatypes.User_Customer, error)
 	EditUser(templateObject datatypes.User_Customer, UserId int) (bool, error)
 	AddApiAuthenticationKey(UserId int) (string, error)
+	GetApiAuthenticationKeys(userId int) ([]datatypes.User_Customer_ApiAuthentication, error)
+	RemoveApiAuthenticationKey(keyId int) (bool, error)
 	GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error)
 	EnableEmailSubscriptionNotification(notificationId int) (bool, error)
 	DisableEmailSubscriptionNotification(notificationId int) (bool, error)
@@ -369,4 +371,16 @@ func (u userManager) DeleteUserVpnOverride(overrideId int) (bool, error) {
 // string password: New password
 func (u userManager) UpdateVpnPassword(userID int, password string) (bool, error) {
 	return u.UserCustomerService.Id(userID).UpdateVpnPassword(&password)
+}
+
+// Returns user's API authentication keys.
+// int keyId: The user customer identifier.
+func (u userManager) GetApiAuthenticationKeys(userId int) ([]datatypes.User_Customer_ApiAuthentication, error) {
+	return u.UserCustomerService.Id(userId).GetApiAuthenticationKeys()
+}
+
+// Remove user's API authentication key.
+// int keyId: The identifier of the API authentication key you wish to remove.
+func (u userManager) RemoveApiAuthenticationKey(keyId int) (bool, error) {
+	return u.UserCustomerService.RemoveApiAuthenticationKey(&keyId)
 }

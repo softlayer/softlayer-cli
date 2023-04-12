@@ -19,6 +19,7 @@ func TestUser(t *testing.T) {
 }
 
 var availableCommands = []string{
+	"apikey",
 	"create",
 	"delete",
 	"detail",
