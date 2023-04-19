@@ -14,6 +14,7 @@ import (
 type CdnManager interface {
 	GetNetworkCdnMarketplaceConfigurationMapping() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	RemoveOrigin(uniqueId string, path string) (string, error)
 	GetDetailCDN(uniqueId int, mask string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
 	EditCDN(uniqueId int, header string, httpPort int, httpsPort int, origin string, respectHeaders string, cache string, cacheDescription string, performanceConfiguration string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
@@ -21,14 +22,16 @@ type CdnManager interface {
 }
 
 type cdnManager struct {
-	CdnService services.Network_CdnMarketplace_Configuration_Mapping
-	Session    *session.Session
+	CdnService     services.Network_CdnMarketplace_Configuration_Mapping
+	CdnPathService services.Network_CdnMarketplace_Configuration_Mapping_Path
+	Session        *session.Session
 }
 
 func NewCdnManager(session *session.Session) *cdnManager {
 	return &cdnManager{
-		CdnService: services.GetNetworkCdnMarketplaceConfigurationMappingService(session),
-		Session:    session,
+		CdnService:     services.GetNetworkCdnMarketplaceConfigurationMappingService(session),
+		CdnPathService: services.GetNetworkCdnMarketplaceConfigurationMappingPathService(session),
+		Session:        session,
 	}
 }
 
@@ -59,6 +62,14 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_C
 */
 func (a cdnManager) DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
 	return a.CdnService.Mask(mask).DeleteDomainMapping(&uniqueId)
+}
+
+/*
+Removes an origin path for an existing CDN mapping.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping_Path/deleteOriginPath/
+*/
+func (a cdnManager) RemoveOrigin(uniqueId string, path string) (string, error) {
+	return a.CdnPathService.DeleteOriginPath(&uniqueId, &path)
 }
 
 /*
