@@ -67,9 +67,9 @@ func (cmd *DeleteCommand) Run(args []string) error {
 	err = cmd.StorageManager.CancelVolume("block", objectStorageID, cmd.Reason, cmd.Immediate)
 	if err != nil {
 		if strings.Contains(err.Error(), slErr.SL_EXP_OBJ_NOT_FOUND) {
-			return slErr.NewAPIError(T("Unable to find object-storage with objectStorageID {{.objectStorageID}}.\n", subs), err.Error(), 0)
+			return slErr.NewAPIError(T("Unable to find object-storage with objectStorageID {{.objectStorageID}}.", subs), err.Error(), 0)
 		}
-		return slErr.NewAPIError(T("Failed to cancel object-storage: {{.objectStorageID}}.\n", subs), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to cancel object-storage: {{.objectStorageID}}.", subs), err.Error(), 2)
 	}
 	cmd.UI.Ok()
 	if cmd.Immediate {
