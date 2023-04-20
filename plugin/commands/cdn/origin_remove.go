@@ -21,9 +21,11 @@ func NewOriginRemoveCommand(sl *metadata.SoftlayerCommand) *OriginRemoveCommand 
 		CdnManager:       managers.NewCdnManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "origin-remove",
+		Use:   "origin-remove " + T("IDENTIFIER") + " " + T("PATH"),
 		Short: T("Removes an origin path for an existing CDN mapping."),
-		Long:  T("${COMMAND_NAME} sl cdn origin-remove"),
+		Long:  T(`${COMMAND_NAME} sl cdn origin-remove
+Example:
+${COMMAND_NAME} sl cdn origin-remove 123456789 "/path/*"`),
 		Args:  metadata.TwoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
