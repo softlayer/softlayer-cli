@@ -106,6 +106,20 @@ type FakeCdnManager struct {
 		result1 datatypes.Container_Network_CdnMarketplace_Metrics
 		result2 error
 	}
+	PurgeStub        func(string, string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, error)
+	purgeMutex       sync.RWMutex
+	purgeArgsForCall []struct {
+		arg1 string
+		arg2 string
+	}
+	purgeReturns struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge
+		result2 error
+	}
+	purgeReturnsOnCall map[int]struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -506,6 +520,71 @@ func (fake *FakeCdnManager) GetUsageMetricsReturnsOnCall(i int, result1 datatype
 	}{result1, result2}
 }
 
+func (fake *FakeCdnManager) Purge(arg1 string, arg2 string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, error) {
+	fake.purgeMutex.Lock()
+	ret, specificReturn := fake.purgeReturnsOnCall[len(fake.purgeArgsForCall)]
+	fake.purgeArgsForCall = append(fake.purgeArgsForCall, struct {
+		arg1 string
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.PurgeStub
+	fakeReturns := fake.purgeReturns
+	fake.recordInvocation("Purge", []interface{}{arg1, arg2})
+	fake.purgeMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeCdnManager) PurgeCallCount() int {
+	fake.purgeMutex.RLock()
+	defer fake.purgeMutex.RUnlock()
+	return len(fake.purgeArgsForCall)
+}
+
+func (fake *FakeCdnManager) PurgeCalls(stub func(string, string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, error)) {
+	fake.purgeMutex.Lock()
+	defer fake.purgeMutex.Unlock()
+	fake.PurgeStub = stub
+}
+
+func (fake *FakeCdnManager) PurgeArgsForCall(i int) (string, string) {
+	fake.purgeMutex.RLock()
+	defer fake.purgeMutex.RUnlock()
+	argsForCall := fake.purgeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeCdnManager) PurgeReturns(result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, result2 error) {
+	fake.purgeMutex.Lock()
+	defer fake.purgeMutex.Unlock()
+	fake.PurgeStub = nil
+	fake.purgeReturns = struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeCdnManager) PurgeReturnsOnCall(i int, result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, result2 error) {
+	fake.purgeMutex.Lock()
+	defer fake.purgeMutex.Unlock()
+	fake.PurgeStub = nil
+	if fake.purgeReturnsOnCall == nil {
+		fake.purgeReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge
+			result2 error
+		})
+	}
+	fake.purgeReturnsOnCall[i] = struct {
+		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeCdnManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -521,6 +600,8 @@ func (fake *FakeCdnManager) Invocations() map[string][][]interface{} {
 	defer fake.getNetworkCdnMarketplaceConfigurationMappingMutex.RUnlock()
 	fake.getUsageMetricsMutex.RLock()
 	defer fake.getUsageMetricsMutex.RUnlock()
+	fake.purgeMutex.RLock()
+	defer fake.purgeMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

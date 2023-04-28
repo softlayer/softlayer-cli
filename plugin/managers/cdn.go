@@ -1,6 +1,7 @@
 package managers
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -18,17 +19,20 @@ type CdnManager interface {
 	GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
 	EditCDN(uniqueId int, header string, httpPort int, httpsPort int, origin string, respectHeaders string, cache string, cacheDescription string, performanceConfiguration string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	CreateCdn(hostname string, originHost string, originType string, http int, https int, bucketName string, cname string, header string, path string, ssl string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	Purge(uniqueId string, path string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, error)
 }
 
 type cdnManager struct {
-	CdnService services.Network_CdnMarketplace_Configuration_Mapping
-	Session    *session.Session
+	CdnService      services.Network_CdnMarketplace_Configuration_Mapping
+	CdnPurgeService services.Network_CdnMarketplace_Configuration_Cache_Purge
+	Session         *session.Session
 }
 
 func NewCdnManager(session *session.Session) *cdnManager {
 	return &cdnManager{
-		CdnService: services.GetNetworkCdnMarketplaceConfigurationMappingService(session),
-		Session:    session,
+		CdnService:      services.GetNetworkCdnMarketplaceConfigurationMappingService(session),
+		CdnPurgeService: services.GetNetworkCdnMarketplaceConfigurationCachePurgeService(session),
+		Session:         session,
 	}
 }
 
@@ -198,4 +202,13 @@ func (a cdnManager) CreateCdn(hostname string, originHost string, originType str
 	}
 
 	return a.CdnService.CreateDomainMapping(&NewOrigin)
+}
+
+/*
+This method creates a purge record in the purge table, and also initiates the create purge call.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Cache_Purge/createPurge/
+*/
+func (a cdnManager) Purge(uniqueId string, path string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, error) {
+	path = fmt.Sprintf("/%s", path)
+	return a.CdnPurgeService.CreatePurge(&uniqueId, &path)
 }
