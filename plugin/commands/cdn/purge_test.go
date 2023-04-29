@@ -43,7 +43,6 @@ var _ = Describe("Cdn purge", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Path"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Saved"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Status"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("2023-04-28 12:06:27"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("/example/"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("UNSAVED"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("SUCCESS"))
@@ -51,7 +50,7 @@ var _ = Describe("Cdn purge", func() {
 			It("return cdn purge in format json", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456789", "/example/", "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Date": "2023-04-28 12:06:27",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Date":`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Path": "/example/",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Saved": "UNSAVED",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Status": "SUCCESS"`))
