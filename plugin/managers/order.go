@@ -44,6 +44,7 @@ type OrderManager interface {
 	OrderQuote(quoteId int, extra datatypes.Container_Product_Order) (datatypes.Container_Product_Order_Receipt, error)
 	GetRecalculatedOrderContainer(quoteId int) (datatypes.Container_Product_Order, error)
 	GetOrderDetail(orderId int, mask string) (datatypes.Billing_Order, error)
+	DeleteQuote(quoteId int) (datatypes.Billing_Order_Quote, error)
 }
 
 type orderManager struct {
@@ -458,4 +459,9 @@ func (i orderManager) GetOrderDetail(orderId int, mask string) (datatypes.Billin
 	}
 	billingOrderService := services.GetBillingOrderService(i.Session)
 	return billingOrderService.Id(orderId).Mask(mask).GetObject()
+}
+
+// Delete the quote of an order.
+func (i orderManager) DeleteQuote(quoteId int) (datatypes.Billing_Order_Quote, error) {
+	return i.BillingOrderQuoteService.Id(quoteId).DeleteQuote()
 }
