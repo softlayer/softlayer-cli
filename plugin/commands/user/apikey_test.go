@@ -65,27 +65,16 @@ var _ = Describe("user apikey", func() {
 			})
 		})
 
-		Context("Return error", func() {
-			BeforeEach(func() {
-				fakeUserManager.GetApiAuthenticationKeysReturns([]datatypes.User_Customer_ApiAuthentication{}, errors.New("Failed to get user's API authentication keys"))
-			})
-
-			It("Failed to get user's API authentication keys", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--remove")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to get user's API authentication keys"))
-			})
-		})
-
-		Context("Return error", func() {
+		Context("Return no error", func() {
 			BeforeEach(func() {
 				fakeUserManager.GetApiAuthenticationKeysReturns([]datatypes.User_Customer_ApiAuthentication{}, nil)
 			})
 
 			It("The user has not API authentication keys", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--remove")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("The user has not API authentication keys"))
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Successfully removed"))
 			})
 		})
 
@@ -141,6 +130,7 @@ var _ = Describe("user apikey", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--add")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Successfully added"))
 			})
 		})
 
@@ -160,12 +150,15 @@ var _ = Describe("user apikey", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--remove")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Successfully removed"))
 			})
 
 			It("Refreshed API Authentication Key", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--refresh")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Successfully removed"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Successfully added"))
 			})
 		})
 	})

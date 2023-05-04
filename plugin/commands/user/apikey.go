@@ -55,48 +55,25 @@ func (cmd *ApikeyCommand) Run(args []string) error {
 		return errors.NewInvalidUsageError(T("User ID should be a number."))
 	}
 
-	if cmd.Add {
-		apiAuthenticationKey, err := cmd.UserManager.AddApiAuthenticationKey(userId)
-		if err != nil {
-			return errors.NewAPIError(T("Failed to add user's API authentication key"), err.Error(), 2)
-		}
-		i18nsubs := map[string]interface{}{"action": "added", "apiAuthenticationKey": apiAuthenticationKey}
-		cmd.UI.Ok()
-		cmd.UI.Print(T("Successfully {{.action}}. New API Authentication Key: {{.apiAuthenticationKey}}", i18nsubs))
-	} else {
-		apiAuthenticationKeys, err := cmd.UserManager.GetApiAuthenticationKeys(userId)
-		if err != nil {
-			return errors.NewAPIError(T("Failed to get user's API authentication keys"), err.Error(), 2)
-		}
-		if len(apiAuthenticationKeys) == 0 {
-			return errors.NewInvalidUsageError(T("The user has not API authentication keys"))
-		}
-
-		removed, err := cmd.UserManager.RemoveApiAuthenticationKey(*apiAuthenticationKeys[0].Id)
+	if cmd.Remove || cmd.Refresh {
+		_, err := cmd.UserManager.RemoveApiAuthenticationKey(userId)
 		if err != nil {
 			return errors.NewAPIError(T("Failed to remove user's API authentication key"), err.Error(), 2)
 		}
 
-		if cmd.Remove {
-			if removed {
-				cmd.UI.Ok()
-				cmd.UI.Print(T("Successfully removed user's API authentication key"))
-			}
-		}
+		cmd.UI.Ok()
+		cmd.UI.Print(T("Successfully removed user's API authentication key"))
+	}
 
-		if cmd.Refresh {
-			if removed {
-				apiAuthenticationKey, err := cmd.UserManager.AddApiAuthenticationKey(userId)
-				if err != nil {
-					return errors.NewAPIError(T("Failed to add user's API authentication key"), err.Error(), 2)
-				}
-				i18nsubs := map[string]interface{}{"action": "refreshed", "apiAuthenticationKey": apiAuthenticationKey}
-				cmd.UI.Ok()
-				cmd.UI.Print(T("Successfully {{.action}}. New API Authentication Key: {{.apiAuthenticationKey}}", i18nsubs))
-			}
+	if cmd.Refresh || cmd.Add {
+		apiAuthenticationKey, err := cmd.UserManager.AddApiAuthenticationKey(userId)
+		if err != nil {
+			return errors.NewAPIError(T("Failed to add user's API authentication key"), err.Error(), 2)
 		}
+		i18nsubs := map[string]interface{}{"apiAuthenticationKey": apiAuthenticationKey}
+		cmd.UI.Ok()
+		cmd.UI.Print(T("Successfully added. New API Authentication Key: {{.apiAuthenticationKey}}", i18nsubs))
 	}
 
 	return nil
-
 }

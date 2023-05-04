@@ -14,6 +14,7 @@ import (
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -42,7 +43,7 @@ type UserManager interface {
 	EditUser(templateObject datatypes.User_Customer, UserId int) (bool, error)
 	AddApiAuthenticationKey(UserId int) (string, error)
 	GetApiAuthenticationKeys(userId int) ([]datatypes.User_Customer_ApiAuthentication, error)
-	RemoveApiAuthenticationKey(keyId int) (bool, error)
+	RemoveApiAuthenticationKey(userId int) (bool, error)
 	GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error)
 	EnableEmailSubscriptionNotification(notificationId int) (bool, error)
 	DisableEmailSubscriptionNotification(notificationId int) (bool, error)
@@ -380,7 +381,14 @@ func (u userManager) GetApiAuthenticationKeys(userId int) ([]datatypes.User_Cust
 }
 
 // Remove user's API authentication key.
-// int keyId: The identifier of the API authentication key you wish to remove.
-func (u userManager) RemoveApiAuthenticationKey(keyId int) (bool, error) {
-	return u.UserCustomerService.RemoveApiAuthenticationKey(&keyId)
+// int userId: The user customer identifier.
+func (u userManager) RemoveApiAuthenticationKey(userId int) (bool, error) {
+	apiAuthenticationKeys, err := u.GetApiAuthenticationKeys(userId)
+	if err != nil {
+		return false, slErrors.NewAPIError(T("Failed to get user's API authentication keys"), err.Error(), 2)
+	}
+	if len(apiAuthenticationKeys) == 0 {
+		return true, nil
+	}
+	return u.UserCustomerService.RemoveApiAuthenticationKey(apiAuthenticationKeys[0].Id)
 }
