@@ -16,6 +16,7 @@ type CdnManager interface {
 	DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetDetailCDN(uniqueId int, mask string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
+	GetOrigins(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error)
 	EditCDN(uniqueId int, header string, httpPort int, httpsPort int, origin string, respectHeaders string, cache string, cacheDescription string, performanceConfiguration string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	CreateCdn(hostname string, originHost string, originType string, http int, https int, bucketName string, cname string, header string, path string, ssl string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	OriginAddCdn(uniqueId string, header string, path string, originHost string, originType string, http int, https int, cacheKey string, optimize string, dynamicPath string, dynamicPrefetch bool, dynamicCompression bool, bucketName string, fileExtension string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error)
@@ -150,6 +151,13 @@ func (a cdnManager) EditCDN(uniqueId int, header string, httpPort int, httpsPort
 		return datatypes.Container_Network_CdnMarketplace_Configuration_Mapping{}, err
 	}
 	return cdn[0], nil
+}
+
+/*
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping/listDomainMappingByUniqueId/
+*/
+func (a cdnManager) GetOrigins(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error) {
+	return a.CdnPathService.ListOriginPath(&uniqueId)
 }
 
 /*

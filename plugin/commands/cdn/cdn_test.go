@@ -22,6 +22,7 @@ var availableCommands = []string{
 	"delete",
 	"edit",
 	"list",
+	"origin-list",
 	"create",
 	"origin-add",
 }
