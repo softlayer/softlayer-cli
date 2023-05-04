@@ -23,6 +23,7 @@ var availableCommands = []string{
 	"edit",
 	"list",
 	"create",
+	"origin-add",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
