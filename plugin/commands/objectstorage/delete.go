@@ -24,11 +24,11 @@ type DeleteCommand struct {
 func NewDeleteCommand(sl *metadata.SoftlayerCommand) *DeleteCommand {
 	thisCmd := &DeleteCommand{
 		SoftlayerCommand: sl,
-		StorageManager:          managers.NewStorageManager(sl.Session),
+		StorageManager:   managers.NewStorageManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "delete " + T("IDENTIFIER"),
-		Short: T("Cancel an existing block storage volume"),
+		Short: T("Cancel an existing object storage instance."),
 		Long: T(`${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]
 
 EXAMPLE:
@@ -40,7 +40,7 @@ EXAMPLE:
 		},
 	}
 	cobraCmd.Flags().StringVar(&thisCmd.Reason, "reason", "", T("An optional reason for cancellation"))
-	cobraCmd.Flags().BoolVar(&thisCmd.Immediate, "immediate", false, T("Cancel the block storage volume immediately instead of on the billing anniversary"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Immediate, "immediate", false, T("Cancel immediately instead of on the billing anniversary"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
@@ -54,7 +54,7 @@ func (cmd *DeleteCommand) Run(args []string) error {
 		return slErr.NewInvalidSoftlayerIdInputError("objectStorageID")
 	}
 	if !cmd.Force {
-		confirm, err := cmd.UI.Confirm(T("This action will incur charges on your account. Continue?", subs))
+		confirm, err := cmd.UI.Confirm(T("This will cancel the object-storage: {{.ID}} and cannot be undone. Continue?", subs))
 		if err != nil {
 			return err
 		}
