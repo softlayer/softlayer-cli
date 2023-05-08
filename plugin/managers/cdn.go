@@ -1,7 +1,6 @@
 package managers
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -209,6 +208,5 @@ This method creates a purge record in the purge table, and also initiates the cr
 https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Cache_Purge/createPurge/
 */
 func (a cdnManager) Purge(uniqueId string, path string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, error) {
-	path = fmt.Sprintf("/%s", path)
 	return a.CdnPurgeService.CreatePurge(&uniqueId, &path)
 }
