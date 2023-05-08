@@ -123,6 +123,20 @@ var _ = Describe("user apikey", func() {
 
 		Context("Return no error", func() {
 			BeforeEach(func() {
+				fakerApiAuthenticationKeys := []datatypes.User_Customer_ApiAuthentication{}
+				fakeUserManager.GetApiAuthenticationKeysReturns(fakerApiAuthenticationKeys, nil)
+			})
+
+			It("Remove API Authentication Key when the user does not have one", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--remove")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Successfully removed"))
+			})
+		})
+
+		Context("Return no error", func() {
+			BeforeEach(func() {
 				fakeUserManager.AddApiAuthenticationKeyReturns("secretApiKey", nil)
 			})
 
