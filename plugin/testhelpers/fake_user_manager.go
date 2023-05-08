@@ -199,6 +199,19 @@ type FakeUserManager struct {
 		result1 []datatypes.User_Customer_CustomerPermission_Permission
 		result2 error
 	}
+	GetApiAuthenticationKeysStub        func(int) ([]datatypes.User_Customer_ApiAuthentication, error)
+	getApiAuthenticationKeysMutex       sync.RWMutex
+	getApiAuthenticationKeysArgsForCall []struct {
+		arg1 int
+	}
+	getApiAuthenticationKeysReturns struct {
+		result1 []datatypes.User_Customer_ApiAuthentication
+		result2 error
+	}
+	getApiAuthenticationKeysReturnsOnCall map[int]struct {
+		result1 []datatypes.User_Customer_ApiAuthentication
+		result2 error
+	}
 	GetCurrentUserStub        func() (datatypes.User_Customer, error)
 	getCurrentUserMutex       sync.RWMutex
 	getCurrentUserArgsForCall []struct {
@@ -371,6 +384,19 @@ type FakeUserManager struct {
 	}
 	permissionFromUserReturnsOnCall map[int]struct {
 		result1 error
+	}
+	RemoveApiAuthenticationKeyStub        func(int) (bool, error)
+	removeApiAuthenticationKeyMutex       sync.RWMutex
+	removeApiAuthenticationKeyArgsForCall []struct {
+		arg1 int
+	}
+	removeApiAuthenticationKeyReturns struct {
+		result1 bool
+		result2 error
+	}
+	removeApiAuthenticationKeyReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
 	}
 	RemoveDedicatedHostAccessStub        func(int, int) (bool, error)
 	removeDedicatedHostAccessMutex       sync.RWMutex
@@ -1365,6 +1391,70 @@ func (fake *FakeUserManager) GetAllPermissionReturnsOnCall(i int, result1 []data
 	}{result1, result2}
 }
 
+func (fake *FakeUserManager) GetApiAuthenticationKeys(arg1 int) ([]datatypes.User_Customer_ApiAuthentication, error) {
+	fake.getApiAuthenticationKeysMutex.Lock()
+	ret, specificReturn := fake.getApiAuthenticationKeysReturnsOnCall[len(fake.getApiAuthenticationKeysArgsForCall)]
+	fake.getApiAuthenticationKeysArgsForCall = append(fake.getApiAuthenticationKeysArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetApiAuthenticationKeysStub
+	fakeReturns := fake.getApiAuthenticationKeysReturns
+	fake.recordInvocation("GetApiAuthenticationKeys", []interface{}{arg1})
+	fake.getApiAuthenticationKeysMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) GetApiAuthenticationKeysCallCount() int {
+	fake.getApiAuthenticationKeysMutex.RLock()
+	defer fake.getApiAuthenticationKeysMutex.RUnlock()
+	return len(fake.getApiAuthenticationKeysArgsForCall)
+}
+
+func (fake *FakeUserManager) GetApiAuthenticationKeysCalls(stub func(int) ([]datatypes.User_Customer_ApiAuthentication, error)) {
+	fake.getApiAuthenticationKeysMutex.Lock()
+	defer fake.getApiAuthenticationKeysMutex.Unlock()
+	fake.GetApiAuthenticationKeysStub = stub
+}
+
+func (fake *FakeUserManager) GetApiAuthenticationKeysArgsForCall(i int) int {
+	fake.getApiAuthenticationKeysMutex.RLock()
+	defer fake.getApiAuthenticationKeysMutex.RUnlock()
+	argsForCall := fake.getApiAuthenticationKeysArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeUserManager) GetApiAuthenticationKeysReturns(result1 []datatypes.User_Customer_ApiAuthentication, result2 error) {
+	fake.getApiAuthenticationKeysMutex.Lock()
+	defer fake.getApiAuthenticationKeysMutex.Unlock()
+	fake.GetApiAuthenticationKeysStub = nil
+	fake.getApiAuthenticationKeysReturns = struct {
+		result1 []datatypes.User_Customer_ApiAuthentication
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetApiAuthenticationKeysReturnsOnCall(i int, result1 []datatypes.User_Customer_ApiAuthentication, result2 error) {
+	fake.getApiAuthenticationKeysMutex.Lock()
+	defer fake.getApiAuthenticationKeysMutex.Unlock()
+	fake.GetApiAuthenticationKeysStub = nil
+	if fake.getApiAuthenticationKeysReturnsOnCall == nil {
+		fake.getApiAuthenticationKeysReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.User_Customer_ApiAuthentication
+			result2 error
+		})
+	}
+	fake.getApiAuthenticationKeysReturnsOnCall[i] = struct {
+		result1 []datatypes.User_Customer_ApiAuthentication
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeUserManager) GetCurrentUser() (datatypes.User_Customer, error) {
 	fake.getCurrentUserMutex.Lock()
 	ret, specificReturn := fake.getCurrentUserReturnsOnCall[len(fake.getCurrentUserArgsForCall)]
@@ -2193,6 +2283,70 @@ func (fake *FakeUserManager) PermissionFromUserReturnsOnCall(i int, result1 erro
 	}{result1}
 }
 
+func (fake *FakeUserManager) RemoveApiAuthenticationKey(arg1 int) (bool, error) {
+	fake.removeApiAuthenticationKeyMutex.Lock()
+	ret, specificReturn := fake.removeApiAuthenticationKeyReturnsOnCall[len(fake.removeApiAuthenticationKeyArgsForCall)]
+	fake.removeApiAuthenticationKeyArgsForCall = append(fake.removeApiAuthenticationKeyArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.RemoveApiAuthenticationKeyStub
+	fakeReturns := fake.removeApiAuthenticationKeyReturns
+	fake.recordInvocation("RemoveApiAuthenticationKey", []interface{}{arg1})
+	fake.removeApiAuthenticationKeyMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) RemoveApiAuthenticationKeyCallCount() int {
+	fake.removeApiAuthenticationKeyMutex.RLock()
+	defer fake.removeApiAuthenticationKeyMutex.RUnlock()
+	return len(fake.removeApiAuthenticationKeyArgsForCall)
+}
+
+func (fake *FakeUserManager) RemoveApiAuthenticationKeyCalls(stub func(int) (bool, error)) {
+	fake.removeApiAuthenticationKeyMutex.Lock()
+	defer fake.removeApiAuthenticationKeyMutex.Unlock()
+	fake.RemoveApiAuthenticationKeyStub = stub
+}
+
+func (fake *FakeUserManager) RemoveApiAuthenticationKeyArgsForCall(i int) int {
+	fake.removeApiAuthenticationKeyMutex.RLock()
+	defer fake.removeApiAuthenticationKeyMutex.RUnlock()
+	argsForCall := fake.removeApiAuthenticationKeyArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeUserManager) RemoveApiAuthenticationKeyReturns(result1 bool, result2 error) {
+	fake.removeApiAuthenticationKeyMutex.Lock()
+	defer fake.removeApiAuthenticationKeyMutex.Unlock()
+	fake.RemoveApiAuthenticationKeyStub = nil
+	fake.removeApiAuthenticationKeyReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) RemoveApiAuthenticationKeyReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.removeApiAuthenticationKeyMutex.Lock()
+	defer fake.removeApiAuthenticationKeyMutex.Unlock()
+	fake.RemoveApiAuthenticationKeyStub = nil
+	if fake.removeApiAuthenticationKeyReturnsOnCall == nil {
+		fake.removeApiAuthenticationKeyReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.removeApiAuthenticationKeyReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeUserManager) RemoveDedicatedHostAccess(arg1 int, arg2 int) (bool, error) {
 	fake.removeDedicatedHostAccessMutex.Lock()
 	ret, specificReturn := fake.removeDedicatedHostAccessReturnsOnCall[len(fake.removeDedicatedHostAccessArgsForCall)]
@@ -2618,6 +2772,8 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.getAllNotificationsMutex.RUnlock()
 	fake.getAllPermissionMutex.RLock()
 	defer fake.getAllPermissionMutex.RUnlock()
+	fake.getApiAuthenticationKeysMutex.RLock()
+	defer fake.getApiAuthenticationKeysMutex.RUnlock()
 	fake.getCurrentUserMutex.RLock()
 	defer fake.getCurrentUserMutex.RUnlock()
 	fake.getDedicatedHostsMutex.RLock()
@@ -2644,6 +2800,8 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.listUsersMutex.RUnlock()
 	fake.permissionFromUserMutex.RLock()
 	defer fake.permissionFromUserMutex.RUnlock()
+	fake.removeApiAuthenticationKeyMutex.RLock()
+	defer fake.removeApiAuthenticationKeyMutex.RUnlock()
 	fake.removeDedicatedHostAccessMutex.RLock()
 	defer fake.removeDedicatedHostAccessMutex.RUnlock()
 	fake.removeHardwareAccessMutex.RLock()
