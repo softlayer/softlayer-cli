@@ -1,0 +1,26 @@
+[
+	{
+		"cacheKeyQueryRule": "ignore-all",
+		"header": "www.test.com",
+		"httpPort": 80,
+		"httpsPort": null,
+		"mappingUniqueId": "401853089188535",
+		"origin": "123.123.123.123",
+		"originType": "HOST_SERVER",
+		"path": "\/example1\/*",
+		"performanceConfiguration": "General web delivery",
+		"status": "RUNNING"
+	},
+	{
+		"cacheKeyQueryRule": "ignore-all",
+		"header": "www.origin.com",
+		"httpPort": 80,
+		"httpsPort": null,
+		"mappingUniqueId": "401853089188535",
+		"origin": "123.123.123.123",
+		"originType": "HOST_SERVER",
+		"path": "\/example2\/*",
+		"performanceConfiguration": "General web delivery",
+		"status": "RUNNING"
+	}
+]
