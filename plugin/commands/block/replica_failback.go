@@ -24,7 +24,7 @@ func NewReplicaFailbackCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaFai
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-failback " + T("IDENTIFIER"),
-		Short: T("Failback a block volume from replica"),
+		Short: T("Failback a {{.storageType}} volume from replica", sl.StorageI18n),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID
 		
 EXAMPLE:
