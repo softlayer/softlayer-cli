@@ -145,6 +145,20 @@ type FakeCdnManager struct {
 		result1 []datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path
 		result2 error
 	}
+	RemoveOriginStub        func(string, string) (string, error)
+	removeOriginMutex       sync.RWMutex
+	removeOriginArgsForCall []struct {
+		arg1 string
+		arg2 string
+	}
+	removeOriginReturns struct {
+		result1 string
+		result2 error
+	}
+	removeOriginReturnsOnCall map[int]struct {
+		result1 string
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -686,6 +700,71 @@ func (fake *FakeCdnManager) OriginAddCdnReturnsOnCall(i int, result1 []datatypes
 	}{result1, result2}
 }
 
+func (fake *FakeCdnManager) RemoveOrigin(arg1 string, arg2 string) (string, error) {
+	fake.removeOriginMutex.Lock()
+	ret, specificReturn := fake.removeOriginReturnsOnCall[len(fake.removeOriginArgsForCall)]
+	fake.removeOriginArgsForCall = append(fake.removeOriginArgsForCall, struct {
+		arg1 string
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.RemoveOriginStub
+	fakeReturns := fake.removeOriginReturns
+	fake.recordInvocation("RemoveOrigin", []interface{}{arg1, arg2})
+	fake.removeOriginMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeCdnManager) RemoveOriginCallCount() int {
+	fake.removeOriginMutex.RLock()
+	defer fake.removeOriginMutex.RUnlock()
+	return len(fake.removeOriginArgsForCall)
+}
+
+func (fake *FakeCdnManager) RemoveOriginCalls(stub func(string, string) (string, error)) {
+	fake.removeOriginMutex.Lock()
+	defer fake.removeOriginMutex.Unlock()
+	fake.RemoveOriginStub = stub
+}
+
+func (fake *FakeCdnManager) RemoveOriginArgsForCall(i int) (string, string) {
+	fake.removeOriginMutex.RLock()
+	defer fake.removeOriginMutex.RUnlock()
+	argsForCall := fake.removeOriginArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeCdnManager) RemoveOriginReturns(result1 string, result2 error) {
+	fake.removeOriginMutex.Lock()
+	defer fake.removeOriginMutex.Unlock()
+	fake.RemoveOriginStub = nil
+	fake.removeOriginReturns = struct {
+		result1 string
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeCdnManager) RemoveOriginReturnsOnCall(i int, result1 string, result2 error) {
+	fake.removeOriginMutex.Lock()
+	defer fake.removeOriginMutex.Unlock()
+	fake.RemoveOriginStub = nil
+	if fake.removeOriginReturnsOnCall == nil {
+		fake.removeOriginReturnsOnCall = make(map[int]struct {
+			result1 string
+			result2 error
+		})
+	}
+	fake.removeOriginReturnsOnCall[i] = struct {
+		result1 string
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeCdnManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -705,6 +784,8 @@ func (fake *FakeCdnManager) Invocations() map[string][][]interface{} {
 	defer fake.getUsageMetricsMutex.RUnlock()
 	fake.originAddCdnMutex.RLock()
 	defer fake.originAddCdnMutex.RUnlock()
+	fake.removeOriginMutex.RLock()
+	defer fake.removeOriginMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

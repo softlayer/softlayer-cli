@@ -14,6 +14,7 @@ import (
 type CdnManager interface {
 	GetNetworkCdnMarketplaceConfigurationMapping() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	RemoveOrigin(uniqueId string, path string) (string, error)
 	GetDetailCDN(uniqueId int, mask string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
 	GetOrigins(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error)
@@ -63,6 +64,14 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_C
 */
 func (a cdnManager) DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
 	return a.CdnService.Mask(mask).DeleteDomainMapping(&uniqueId)
+}
+
+/*
+Removes an origin path for an existing CDN mapping.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping_Path/deleteOriginPath/
+*/
+func (a cdnManager) RemoveOrigin(uniqueId string, path string) (string, error) {
+	return a.CdnPathService.DeleteOriginPath(&uniqueId, &path)
 }
 
 /*
