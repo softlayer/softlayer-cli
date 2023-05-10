@@ -24,7 +24,7 @@ func NewSnapshotRestoreCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotRe
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-restore " + T("IDENTIFIER") + " " + T("SNAPSHOT_ID"),
-		Short: T("Restore block volume using a given snapshot"),
+		Short: T("Restore {{.storageType}} volume using a given snapshot", sl.StorageI18n),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID
 	
 EXAMPLE:

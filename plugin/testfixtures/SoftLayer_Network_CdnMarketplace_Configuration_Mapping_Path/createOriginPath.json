@@ -1,0 +1,16 @@
+[
+    {
+        "bucketName": "test-bucket-name",
+        "cacheKeyQueryRule": "include-all",
+        "fileExtension": "jpg,pdf,jpeg,png",
+        "header": "header.test.com",
+        "httpPort": 83,
+        "httpsPort": null,
+        "mappingUniqueId": "354034879028850",
+        "origin": "10.32.12.125",
+        "originType": "HOST_SERVER",
+        "path": "\/example\/videos",
+        "performanceConfiguration": "General web delivery",
+        "status": "RUNNING"
+    }
+]

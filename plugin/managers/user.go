@@ -14,6 +14,7 @@ import (
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -41,6 +42,8 @@ type UserManager interface {
 	CreateUser(templateObject datatypes.User_Customer, password string, vpnPassword string) (datatypes.User_Customer, error)
 	EditUser(templateObject datatypes.User_Customer, UserId int) (bool, error)
 	AddApiAuthenticationKey(UserId int) (string, error)
+	GetApiAuthenticationKeys(userId int) ([]datatypes.User_Customer_ApiAuthentication, error)
+	RemoveApiAuthenticationKey(userId int) (bool, error)
 	GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error)
 	EnableEmailSubscriptionNotification(notificationId int) (bool, error)
 	DisableEmailSubscriptionNotification(notificationId int) (bool, error)
@@ -369,4 +372,23 @@ func (u userManager) DeleteUserVpnOverride(overrideId int) (bool, error) {
 // string password: New password
 func (u userManager) UpdateVpnPassword(userID int, password string) (bool, error) {
 	return u.UserCustomerService.Id(userID).UpdateVpnPassword(&password)
+}
+
+// Returns user's API authentication keys.
+// int keyId: The user customer identifier.
+func (u userManager) GetApiAuthenticationKeys(userId int) ([]datatypes.User_Customer_ApiAuthentication, error) {
+	return u.UserCustomerService.Id(userId).GetApiAuthenticationKeys()
+}
+
+// Remove user's API authentication key.
+// int userId: The user customer identifier.
+func (u userManager) RemoveApiAuthenticationKey(userId int) (bool, error) {
+	apiAuthenticationKeys, err := u.GetApiAuthenticationKeys(userId)
+	if err != nil {
+		return false, slErrors.NewAPIError(T("Failed to get user's API authentication keys"), err.Error(), 2)
+	}
+	if len(apiAuthenticationKeys) == 0 {
+		return true, nil
+	}
+	return u.UserCustomerService.RemoveApiAuthenticationKey(apiAuthenticationKeys[0].Id)
 }

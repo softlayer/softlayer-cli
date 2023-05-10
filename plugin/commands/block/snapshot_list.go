@@ -27,7 +27,7 @@ func NewSnapshotListCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotListC
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-list " + T("IDENTIFIER"),
-		Short: T("List block storage snapshots"),
+		Short: T("List {{.storageType}} storage snapshots", sl.StorageI18n),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]
 
 EXAMPLE:
@@ -44,7 +44,6 @@ EXAMPLE:
 }
 
 func (cmd *SnapshotListCommand) Run(args []string) error {
-
 	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
