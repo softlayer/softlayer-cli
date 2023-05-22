@@ -2,12 +2,12 @@ package reports
 
 import (
 	"encoding/json"
-	"fmt"
 	"reflect"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
 
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -26,12 +26,9 @@ func NewBandwidthCommand(sl *metadata.SoftlayerCommand) *BandwidthCommand {
 		SearchManager:    managers.NewSearchManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-
 		Use:   "bandwidth",
 		Short: T("Bandwidth report for every pool/server."),
-		Long: `EXAMPLE:
-${COMMAND_NAME} sl report bandwidth`,
-		Args: metadata.NoArgs,
+		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -51,7 +48,7 @@ func (cmd *BandwidthCommand) Run(args []string) error {
 
 	bandwidths, err := cmd.SearchManager.AdvancedSearch(mask, searchString)
 	if err != nil {
-		return err
+		return errors.NewAPIError(T("Failed to get bandwidth summary"), err.Error(), 2)
 	}
 	table := cmd.UI.Table([]string{
 		T("Id"),
@@ -68,8 +65,7 @@ func (cmd *BandwidthCommand) Run(args []string) error {
 
 		resourceJSON, err := json.Marshal(bandwidth.Resource)
 		if err != nil {
-			fmt.Printf("Error marshalling resource: %v\n", err)
-			continue
+			return errors.NewAPIError(T("Error marshalling resource"), err.Error(), 2)
 		}
 
 		typeDataType := reflect.TypeOf(bandwidth.Resource).String()
