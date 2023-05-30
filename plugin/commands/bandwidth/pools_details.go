@@ -1,4 +1,4 @@
-package account
+package bandwidth
 
 import (
 	"bytes"
@@ -17,20 +17,20 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-type BandwidthPoolsDetailCommand struct {
+type PoolsDetailCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
 	Command        *cobra.Command
 }
 
-func NewBandwidthPoolsDetailCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsDetailCommand {
+func NewPoolsDetailCommand(sl *metadata.SoftlayerCommand) *PoolsDetailCommand {
 
-	thisCmd := &BandwidthPoolsDetailCommand{
+	thisCmd := &PoolsDetailCommand{
 		SoftlayerCommand: sl,
 		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "bandwidth-pools-detail " + T("IDENTIFIER"),
+		Use:   "pools-detail " + T("IDENTIFIER"),
 		Short: T("Get bandwidth pool details."),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -41,7 +41,7 @@ func NewBandwidthPoolsDetailCommand(sl *metadata.SoftlayerCommand) *BandwidthPoo
 	return thisCmd
 }
 
-func (cmd *BandwidthPoolsDetailCommand) Run(args []string) error {
+func (cmd *PoolsDetailCommand) Run(args []string) error {
 
 	outputFormat := cmd.GetOutputFlag()
 

@@ -1,4 +1,4 @@
-package account
+package bandwidth
 
 import (
 	"fmt"
@@ -11,19 +11,19 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-type BandwidthPoolsCommand struct {
+type PoolsCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
 	Command        *cobra.Command
 }
 
-func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsCommand {
-	thisCmd := &BandwidthPoolsCommand{
+func NewPoolsCommand(sl *metadata.SoftlayerCommand) *PoolsCommand {
+	thisCmd := &PoolsCommand{
 		SoftlayerCommand: sl,
 		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "bandwidth-pools",
+		Use:   "pools",
 		Short: T("Displays bandwidth pool information."),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -34,7 +34,7 @@ func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsComm
 	return thisCmd
 }
 
-func (cmd *BandwidthPoolsCommand) Run(args []string) error {
+func (cmd *PoolsCommand) Run(args []string) error {
 	pools, err := cmd.AccountManager.GetBandwidthPools()
 	if err != nil {
 		return err
@@ -42,21 +42,19 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 
 	outputFormat := cmd.GetOutputFlag()
 
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, pools)
-	}
-
 	table := cmd.UI.Table([]string{
 		T("ID"),
-		T("Pool Name"),
+		T("Name"),
 		T("Region"),
-		T("Servers"),
+		T("Devices"),
 		T("Allocation"),
 		T("Current Usage"),
 		T("Projected Usage"),
+		T("Cost"),
 	})
+
 	for _, pool := range pools {
-		curr_usage, proj_usage, allocation := "-", "-", "-"
+		curr_usage, proj_usage, allocation, cost := "-", "-", "-", "-"
 		if pool.BillingCyclePublicBandwidthUsage != nil {
 			curr_usage = fmt.Sprintf("%.2f GB", float64(*pool.BillingCyclePublicBandwidthUsage.AmountOut))
 		}
@@ -65,6 +63,9 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 		}
 		if pool.TotalBandwidthAllocated != nil {
 			allocation = fmt.Sprintf("%d GB", uint(*pool.TotalBandwidthAllocated))
+		}
+		if pool.BillingItem != nil {
+			cost = fmt.Sprintf("$%d", uint(*pool.BillingItem.NextInvoiceTotalRecurringAmount))
 		}
 		serverCount, _ := cmd.AccountManager.GetBandwidthPoolServers(*pool.Id)
 		table.Add(
@@ -75,10 +76,11 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 			allocation,
 			curr_usage,
 			proj_usage,
+			cost,
 		)
 	}
 
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 
 	return nil
 }

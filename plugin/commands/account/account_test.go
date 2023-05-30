@@ -18,8 +18,6 @@ func TestManagers(t *testing.T) {
 }
 
 var availableCommands = []string{
-	"bandwidth-pools",
-	"bandwidth-pools-detail",
 	"billing-items",
 	"cancel-item",
 	"event-detail",
