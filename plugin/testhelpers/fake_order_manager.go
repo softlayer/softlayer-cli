@@ -9,6 +9,19 @@ import (
 )
 
 type FakeOrderManager struct {
+	DeleteQuoteStub        func(int) (datatypes.Billing_Order_Quote, error)
+	deleteQuoteMutex       sync.RWMutex
+	deleteQuoteArgsForCall []struct {
+		arg1 int
+	}
+	deleteQuoteReturns struct {
+		result1 datatypes.Billing_Order_Quote
+		result2 error
+	}
+	deleteQuoteReturnsOnCall map[int]struct {
+		result1 datatypes.Billing_Order_Quote
+		result2 error
+	}
 	GenerateOrderStub        func(string, string, []string, string, bool, string, interface{}, int) (interface{}, error)
 	generateOrderMutex       sync.RWMutex
 	generateOrderArgsForCall []struct {
@@ -324,6 +337,70 @@ type FakeOrderManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeOrderManager) DeleteQuote(arg1 int) (datatypes.Billing_Order_Quote, error) {
+	fake.deleteQuoteMutex.Lock()
+	ret, specificReturn := fake.deleteQuoteReturnsOnCall[len(fake.deleteQuoteArgsForCall)]
+	fake.deleteQuoteArgsForCall = append(fake.deleteQuoteArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteQuoteStub
+	fakeReturns := fake.deleteQuoteReturns
+	fake.recordInvocation("DeleteQuote", []interface{}{arg1})
+	fake.deleteQuoteMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeOrderManager) DeleteQuoteCallCount() int {
+	fake.deleteQuoteMutex.RLock()
+	defer fake.deleteQuoteMutex.RUnlock()
+	return len(fake.deleteQuoteArgsForCall)
+}
+
+func (fake *FakeOrderManager) DeleteQuoteCalls(stub func(int) (datatypes.Billing_Order_Quote, error)) {
+	fake.deleteQuoteMutex.Lock()
+	defer fake.deleteQuoteMutex.Unlock()
+	fake.DeleteQuoteStub = stub
+}
+
+func (fake *FakeOrderManager) DeleteQuoteArgsForCall(i int) int {
+	fake.deleteQuoteMutex.RLock()
+	defer fake.deleteQuoteMutex.RUnlock()
+	argsForCall := fake.deleteQuoteArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeOrderManager) DeleteQuoteReturns(result1 datatypes.Billing_Order_Quote, result2 error) {
+	fake.deleteQuoteMutex.Lock()
+	defer fake.deleteQuoteMutex.Unlock()
+	fake.DeleteQuoteStub = nil
+	fake.deleteQuoteReturns = struct {
+		result1 datatypes.Billing_Order_Quote
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeOrderManager) DeleteQuoteReturnsOnCall(i int, result1 datatypes.Billing_Order_Quote, result2 error) {
+	fake.deleteQuoteMutex.Lock()
+	defer fake.deleteQuoteMutex.Unlock()
+	fake.DeleteQuoteStub = nil
+	if fake.deleteQuoteReturnsOnCall == nil {
+		fake.deleteQuoteReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Billing_Order_Quote
+			result2 error
+		})
+	}
+	fake.deleteQuoteReturnsOnCall[i] = struct {
+		result1 datatypes.Billing_Order_Quote
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeOrderManager) GenerateOrder(arg1 string, arg2 string, arg3 []string, arg4 string, arg5 bool, arg6 string, arg7 interface{}, arg8 int) (interface{}, error) {
@@ -1738,6 +1815,8 @@ func (fake *FakeOrderManager) VerifyPlaceOrderReturnsOnCall(i int, result1 datat
 func (fake *FakeOrderManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.deleteQuoteMutex.RLock()
+	defer fake.deleteQuoteMutex.RUnlock()
 	fake.generateOrderMutex.RLock()
 	defer fake.generateOrderMutex.RUnlock()
 	fake.getActiveQuotesMutex.RLock()
