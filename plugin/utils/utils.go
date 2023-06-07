@@ -417,3 +417,13 @@ func GetPodWithClosedAnnouncement(key string, pods []datatypes.Network_Pod) stri
 	}
 	return "-"
 }
+
+func FormatStringToTime(timestamp *string) string {
+	timeInt, err := strconv.ParseInt(*timestamp, 10, 64)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return ""
+	}
+	t := time.Unix(timeInt, 0)
+	return t.Format("2006-01-02 15:04:05")
+}

@@ -25,7 +25,7 @@ func NewCancelationCommand(sl *metadata.SoftlayerCommand) (cmd *CancelationComma
 
 	cobraCmd := &cobra.Command{
 		Use:   "cancelation",
-		Short: T("List all cancelation."),
+		Short: T("List cancelations."),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -42,7 +42,7 @@ func (cmd *CancelationCommand) Run(args []string) error {
 	mask := ""
 	items, err := cmd.OrderManager.GetAllCancelation(mask)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to list all items cancelation."), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to list all item cancelations."), err.Error(), 2)
 	}
 
 	PrintItemsCancelation(items, cmd.UI, outputFormat)

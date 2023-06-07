@@ -45,6 +45,7 @@ type OrderManager interface {
 	GetRecalculatedOrderContainer(quoteId int) (datatypes.Container_Product_Order, error)
 	GetOrderDetail(orderId int, mask string) (datatypes.Billing_Order, error)
 	GetAllCancelation(mask string) ([]datatypes.Billing_Item_Cancellation_Request, error)
+	DeleteQuote(quoteId int) (datatypes.Billing_Order_Quote, error)
 }
 
 type orderManager struct {
@@ -472,4 +473,9 @@ func (i orderManager) GetAllCancelation(mask string) ([]datatypes.Billing_Item_C
 		mask = "mask[id,itemCount,modifyDate,createDate,ticketId,ticket[assignedUserId,id,attachedHardware[id,hostname,domain],attachedVirtualGuests[id,hostname,domain],attachedDedicatedHosts[id,name],serviceProviderResourceId],status[name,id],user[id,firstName,lastName],items[billingItem[cancellationDate,categoryCode,pendingCancellationFlag]]]"
 	}
 	return i.BillingItemCancellationRequestService.Mask(mask).GetAllCancellationRequests()
+}
+
+// Delete the quote of an order.
+func (i orderManager) DeleteQuote(quoteId int) (datatypes.Billing_Order_Quote, error) {
+	return i.BillingOrderQuoteService.Id(quoteId).DeleteQuote()
 }

@@ -27,6 +27,7 @@ var availableCommands = []string{
 	"place-quote",
 	"preset-list",
 	"quote",
+	"quote-delete",
 	"quote-detail",
 	"quote-list",
 	"quote-save",
