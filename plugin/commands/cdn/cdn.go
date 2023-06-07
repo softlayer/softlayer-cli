@@ -16,9 +16,12 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	}
 	cobraCmd.AddCommand(NewListCommand(sl).Command)
 	cobraCmd.AddCommand(NewDeleteCommand(sl).Command)
+	cobraCmd.AddCommand(NewOriginRemoveCommand(sl).Command)
 	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
 	cobraCmd.AddCommand(NewEditCommand(sl).Command)
+	cobraCmd.AddCommand(NewOriginListCommand(sl).Command)
 	cobraCmd.AddCommand(NewCreateCommand(sl).Command)
+	cobraCmd.AddCommand(NewOriginAddCommand(sl).Command)
 	return cobraCmd
 }
 
