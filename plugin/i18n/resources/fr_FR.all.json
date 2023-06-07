@@ -2628,10 +2628,6 @@
     "translation": "Nom de domaine complet"
   },
   {
-    "id": "Failback a block volume from replica",
-    "translation": "Reprendre un volume de blocs par restauration à partir de la réplication"
-  },
-  {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
     "translation": "La reprise par restauration du volume {{.VolumeID}} est en cours."
   },
@@ -5372,10 +5368,6 @@
     "translation": "Répertoriez les sous-réseaux affectés au stockage par blocs de l'ID hôte indiqué."
   },
   {
-    "id": "List block storage snapshots",
-    "translation": "Répertorier les images instantanées du stockage par blocs"
-  },
-  {
     "id": "List cloud block storage.",
     "translation": "Répertorier le stockage par blocs en cloud."
   },
@@ -7002,10 +6994,6 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "Respecter les en-têtes. La valeur 1 correspond à Activé et 0 à Désactivé."
-  },
-  {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "Restaurer le volume de blocs à l'aide d'une image instantanée donnée"
   },
   {
     "id": "Restriction",
@@ -9310,10 +9298,6 @@
   {
     "id": "disk_guest",
     "translation": "disk_guest"
-  },
-  {
-    "id": "disk_space",
-    "translation": "disk_space"
   },
   {
     "id": "domain",
