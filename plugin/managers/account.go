@@ -31,6 +31,7 @@ type AccountManager interface {
 	GetPostProvisioningHooks(mask string) ([]datatypes.Provisioning_Hook, error)
 	CreateProvisioningScript(template datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error)
 	DeleteProvisioningScript(idProvisioningScript int) (resp bool, err error)
+	GetUpgradeRequests(mask string, limit int) ([]datatypes.Product_Upgrade_Request, error)
 }
 
 type accountManager struct {
@@ -382,4 +383,12 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Provisioning_Hook/delete
 func (a accountManager) DeleteProvisioningScript(idProvisioningScript int) (resp bool, err error) {
 	provisioningHook := services.GetProvisioningHookService(a.Session)
 	return provisioningHook.Id(idProvisioningScript).DeleteObject()
+}
+
+/*
+Gets account's associated upgrade requests.
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getUpgradeRequests/
+*/
+func (a accountManager) GetUpgradeRequests(mask string, limit int) ([]datatypes.Product_Upgrade_Request, error) {
+	return a.AccountService.Limit(limit).Mask(mask).GetUpgradeRequests()
 }
