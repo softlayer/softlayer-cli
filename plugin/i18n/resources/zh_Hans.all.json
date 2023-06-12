@@ -2628,10 +2628,6 @@
     "translation": "FQDN"
   },
   {
-    "id": "Failback a block volume from replica",
-    "translation": "从副本对块卷进行故障恢复"
-  },
-  {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
     "translation": "现在，正在对卷 {{.VolumeID}} 进行故障恢复。"
   },
@@ -5372,10 +5368,6 @@
     "translation": "列出块存储器为给定主机标识分配的子网。"
   },
   {
-    "id": "List block storage snapshots",
-    "translation": "列出块存储器快照"
-  },
-  {
     "id": "List cloud block storage.",
     "translation": "列示云块存储器。"
   },
@@ -7002,10 +6994,6 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "尊重头。 值 1 为“开”，值 0 为“关”。"
-  },
-  {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "使用给定快照复原块卷"
   },
   {
     "id": "Restriction",
@@ -9310,10 +9298,6 @@
   {
     "id": "disk_guest",
     "translation": "disk_guest"
-  },
-  {
-    "id": "disk_space",
-    "translation": "disk_space"
   },
   {
     "id": "domain",
