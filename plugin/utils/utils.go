@@ -351,38 +351,50 @@ func WordInList(wordList []string, key string) bool {
 	return false
 }
 
-func PrintTableWithTitle(ui terminal.UI, table terminal.Table, bufEvent *bytes.Buffer, title string, outputFormat string) error {
+func PrintTableWithTitle(ui terminal.UI, table terminal.Table, bufEvent *bytes.Buffer, title string, outputFormat string) string {
 	tableTitle := ui.Table([]string{T(title)})
 	if outputFormat == "JSON" {
 		table.PrintJson()
 		tableTitle.Add(bufEvent.String())
 		tableTitle.PrintJson()
-		return nil
+		return ""
 	}
 	if outputFormat == "CSV" {
-		table.PrintCsv()
+		err := table.PrintCsv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return ""
+		}
 		tableTitle.Add(bufEvent.String())
-		tableTitle.PrintCsv()
-		return nil
+		err = tableTitle.PrintCsv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return ""
+		}
+		return ""
 	}
 	table.Print()
 	tableTitle.Add(bufEvent.String())
 	tableTitle.Print()
-	return nil
+	return ""
 
 }
 
-func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) error {
+func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) string {
 	if outputFormat == "JSON" {
 		table.PrintJson()
-		return nil
+		return ""
 	}
 	if outputFormat == "CSV" {
-		table.PrintCsv()
-		return nil
+		err := table.PrintCsv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return ""
+		}
+		return ""
 	}
 	table.Print()
-	return nil
+	return ""
 }
 
 func ShortenString(ugly_string string) string {
