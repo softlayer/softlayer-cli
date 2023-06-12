@@ -1,7 +1,7 @@
 group: bluezone
 language: go
 go:
-  - 1.17.7
+  - 1.19.3
 addons:
   apt:
     packages:
@@ -14,8 +14,7 @@ install:
   #- sudo chmod o+rwx /usr/lib/python3/dist-packages/
   - sudo python3 -m pip install -U pip
   - sudo pip3 install --upgrade "git+https://github.com/ibm/detect-secrets.git@master#egg=detect-secrets"
-  - curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $GOPATH/bin v2.8.1
-  - go get -u github.com/go-bindata/go-bindata/...
+  - curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $GOPATH/bin
 before_script:
   - bash bin/catch-i18n-mismatch.sh
   - bash bin/generate-i18n-resources.sh

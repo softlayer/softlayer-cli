@@ -4,7 +4,6 @@ import (
 	"errors"
 	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -15,6 +14,16 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
+
+var globalIpReturn = []datatypes.Network_Subnet_IpAddress_Global{
+	datatypes.Network_Subnet_IpAddress_Global{
+		Id: sl.Int(123456),
+		IpAddress: &datatypes.Network_Subnet_IpAddress{
+			IpAddress: sl.String("5.6.7.8"),
+			SubnetId: sl.Int(998877),
+		},
+	},
+}
 
 var _ = Describe("GlobalIP list", func() {
 	var (
@@ -57,38 +66,31 @@ var _ = Describe("GlobalIP list", func() {
 
 		Context("GlobalIP list ", func() {
 			BeforeEach(func() {
-				fakeNetworkManager.ListGlobalIPsReturns([]datatypes.Network_Subnet_IpAddress_Global{
-					datatypes.Network_Subnet_IpAddress_Global{
-						Id: sl.Int(123456),
-						IpAddress: &datatypes.Network_Subnet_IpAddress{
-							IpAddress: sl.String("5.6.7.8"),
-						},
-					},
-				}, nil)
+				fakeNetworkManager.ListGlobalIPsReturns(globalIpReturn, nil)
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"123456"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"5.6.7.8"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"No"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"None"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("998877"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("5.6.7.8"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("No"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("None"))
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--v4")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"123456"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"5.6.7.8"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"No"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"None"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("998877"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("5.6.7.8"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("No"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("None"))
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--v6")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"123456"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"5.6.7.8"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"No"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"None"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("998877"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("5.6.7.8"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("No"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("None"))
 			})
 		})
 	})

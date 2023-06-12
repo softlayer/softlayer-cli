@@ -14,18 +14,18 @@ import (
 type BandwidthPoolsCommand struct {
 	*metadata.SoftlayerCommand
 	AccountManager managers.AccountManager
-	Command *cobra.Command
+	Command        *cobra.Command
 }
 
 func NewBandwidthPoolsCommand(sl *metadata.SoftlayerCommand) *BandwidthPoolsCommand {
 	thisCmd := &BandwidthPoolsCommand{
 		SoftlayerCommand: sl,
-		AccountManager: managers.NewAccountManager(sl.Session),
+		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use: "bandwidth-pools",
-		Short: T("lists bandwidth pools"),
-		Args: metadata.NoArgs,
+		Use:   "bandwidth-pools",
+		Short: T("Displays bandwidth pool information."),
+		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

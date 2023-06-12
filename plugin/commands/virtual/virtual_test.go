@@ -18,7 +18,6 @@ func TestVirtual(t *testing.T) {
 }
 
 var availableCommands = []string{
-	"add-notification",
 	"authorize-storage",
 	"bandwidth",
 	"billing",
@@ -39,12 +38,11 @@ var availableCommands = []string{
 	"migrate",
 	"monitoring-list",
 	"notifications",
+	"notifications-add",
+	"notifications-delete",
 	"options",
+	"os-available",
 	"pause",
-	"placementgroup-create",
-	"placementgroup-create-options",
-	"placementgroup-detail",
-	"placementgroup-list",
 	"power-off",
 	"power-on",
 	"ready",

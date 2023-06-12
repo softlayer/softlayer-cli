@@ -2,7 +2,6 @@ package managers
 
 import (
 	"errors"
-	"reflect"
 	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
@@ -26,15 +25,17 @@ const (
 		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
 		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password],lastTransaction[transactionGroup],activeComponents"
 
-	KEY_SIZES      = "sizes"
-	KEY_OS         = "operating_systems"
-	KEY_PORT_SPEED = "port_speed"
-	KEY_LOCATIONS  = "locations"
-	KEY_EXTRAS     = "extras"
+	KEY_SIZES                  = "sizes"
+	KEY_OS                     = "operating_systems"
+	KEY_NAME_OS                = "key_name_operating_systems"
+	KEY_PORT_SPEED             = "port_speed"
+	KEY_PORT_SPEED_DESCRIPTION = "port_speed_description"
+	KEY_LOCATIONS              = "locations"
+	KEY_EXTRAS                 = "extras"
 )
 
 var DEFAULT_CATEGORIES = []string{"pri_ip_addresses", "vpn_management", "remote_management"}
-var EXTRA_CATEGORIES = []string{"pri_ipv6_addresses", "static_ipv6_addresses", "sec_ip_addresses"}
+var EXTRA_CATEGORIES = []string{"pri_ipv6_addresses", "static_ipv6_addresses", "sec_ip_addresses", "trusted_platform_module", "software_guard_extensions"}
 
 type HardwareServerManager interface {
 	AuthorizeStorage(id int, storageId string) (bool, error)
@@ -57,7 +58,7 @@ type HardwareServerManager interface {
 	VerifyOrder(orderTemplate datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error)
 	GetPackage() (datatypes.Product_Package, error)
 	Edit(hardwareId int, userdata, hostname, domain, notes string, tags string, publicPortSpeed, privatePortSpeed int) ([]bool, []string)
-	UpdateFirmware(hardwareId int, ipmi bool, raidController bool, bios bool, hardDrive bool) error
+	UpdateFirmware(hardwareId int, ipmi bool, raidController bool, bios bool, hardDrive bool, network bool) error
 	GetExtraPriceId(items []datatypes.Product_Item, keyName string, hourly bool, location datatypes.Location_Region) (int, error)
 	GetDefaultPriceId(items []datatypes.Product_Item, option string, hourly bool, location datatypes.Location_Region) (int, error)
 	GetOSPriceId(items []datatypes.Product_Item, os string, location datatypes.Location_Region) (int, error)
@@ -65,14 +66,15 @@ type HardwareServerManager interface {
 	GetPortSpeedPriceId(items []datatypes.Product_Item, portSpeed int, noPublic bool, location datatypes.Location_Region) (int, error)
 	ToggleIPMI(hardwareID int, enabled bool) error
 	GetBandwidthData(id int, startDate time.Time, endDate time.Time, period int) ([]datatypes.Metric_Tracking_Object_Data, error)
-	GetHardwareGuests(id int) ([]datatypes.Virtual_Guest, error)
 	GetHardwareComponents(id int) ([]datatypes.Hardware_Component, error)
 	GetSensorData(id int, mask string) ([]datatypes.Container_RemoteManagement_SensorReading, error)
 	CreateFirmwareReflashTransaction(id int) (bool, error)
 	GetUserCustomerNotificationsByHardwareId(id int, mask string) ([]datatypes.User_Customer_Notification_Hardware, error)
 	CreateUserCustomerNotification(hardwareId int, userId int) (datatypes.User_Customer_Notification_Hardware, error)
+	DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error)
 	GetBandwidthAllotmentDetail(hardwareId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error)
 	GetBillingCycleBandwidthUsage(hardwareId int, mask string) ([]datatypes.Network_Bandwidth_Usage, error)
+	CreateSoftwareCredential(softwareComponentPasswordTemplate datatypes.Software_Component_Password) (datatypes.Software_Component_Password, error)
 }
 
 type hardwareServerManager struct {
@@ -435,15 +437,20 @@ func (hw hardwareServerManager) GetCreateOptions(productPackage datatypes.Produc
 	}
 	//operating system
 	operatingSystems := make(map[string]string)
+	keyNameOperatingSystems := make(map[string]string)
 	portSpeeds := make(map[string]string)
+	portSpeedsDescription := make(map[string]string)
 	extras := make(map[string]string)
 	for _, item := range productPackage.Items {
 		if item.ItemCategory != nil && item.ItemCategory.CategoryCode != nil {
 			if *item.ItemCategory.CategoryCode == "os" && item.SoftwareDescription != nil && item.SoftwareDescription.ReferenceCode != nil && item.SoftwareDescription.LongDescription != nil {
 				operatingSystems[*item.SoftwareDescription.ReferenceCode] = *item.SoftwareDescription.LongDescription
+
+				keyNameOperatingSystems[*item.SoftwareDescription.ReferenceCode] = *item.KeyName
 			} else if *item.ItemCategory.CategoryCode == "port_speed" {
 				if !IsPrivatePortSpeedItem(item) && IsBonded(item) && item.Description != nil {
-					portSpeeds[utils.FormatSLFloatPointerToInt(item.Capacity)] = *item.Description
+					portSpeeds[*item.KeyName] = utils.FormatSLFloatPointerToInt(item.Capacity)
+					portSpeedsDescription[*item.KeyName] = *item.Description
 				}
 			} else if utils.StringInSlice(*item.ItemCategory.CategoryCode, EXTRA_CATEGORIES) > -1 && item.KeyName != nil && item.Description != nil {
 				extras[*item.KeyName] = *item.Description
@@ -451,11 +458,13 @@ func (hw hardwareServerManager) GetCreateOptions(productPackage datatypes.Produc
 		}
 	}
 	return map[string]map[string]string{
-		KEY_LOCATIONS:  locations,
-		KEY_SIZES:      sizes,
-		KEY_OS:         operatingSystems,
-		KEY_PORT_SPEED: portSpeeds,
-		KEY_EXTRAS:     extras,
+		KEY_LOCATIONS:              locations,
+		KEY_SIZES:                  sizes,
+		KEY_OS:                     operatingSystems,
+		KEY_NAME_OS:                keyNameOperatingSystems,
+		KEY_PORT_SPEED:             portSpeeds,
+		KEY_PORT_SPEED_DESCRIPTION: portSpeedsDescription,
+		KEY_EXTRAS:                 extras,
 	}
 }
 
@@ -566,12 +575,14 @@ func (hw hardwareServerManager) Edit(hardwareId int, userdata, hostname, domain,
 //raidController: update the raid controller firmware
 //bios: update the bios firmware
 //hardDrive: update the hard drive firmware
-func (hw hardwareServerManager) UpdateFirmware(hardwareId int, ipmi bool, raidController bool, bios bool, hardDrive bool) error {
+//network: update the network card firmware
+func (hw hardwareServerManager) UpdateFirmware(hardwareId int, ipmi bool, raidController bool, bios bool, hardDrive bool, network bool) error {
 	_, err := hw.HardwareService.Id(hardwareId).CreateFirmwareUpdateTransaction(
 		sl.Int(utils.Bool2Int(ipmi)),
 		sl.Int(utils.Bool2Int(raidController)),
 		sl.Int(utils.Bool2Int(bios)),
-		sl.Int(utils.Bool2Int(hardDrive)))
+		sl.Int(utils.Bool2Int(hardDrive)),
+		sl.Int(utils.Bool2Int(network)))
 	return err
 }
 
@@ -762,29 +773,6 @@ func GetPresetId(productPackage datatypes.Product_Package, size string) (int, er
 	return 0, errors.New(T("Could not find valid size for: {{.Size}}", map[string]interface{}{"Size": size}))
 }
 
-//Returns the hardware server guests.
-//int id: The hardware server identifier.
-func (hw hardwareServerManager) GetHardwareGuests(id int) ([]datatypes.Virtual_Guest, error) {
-	mask := "mask[powerState]"
-	virtualHost, err := hw.GetHardwareVirtualHost(id)
-	if err != nil {
-		return []datatypes.Virtual_Guest{}, err
-	}
-
-	if reflect.ValueOf(virtualHost).IsZero() {
-		return []datatypes.Virtual_Guest{}, errors.New(T("No Virtual Guests found."))
-	}
-	virtualHostId := virtualHost.Id
-	virtualHostService := services.GetVirtualHostService(hw.Session)
-	return virtualHostService.Id(*virtualHostId).Mask(mask).GetGuests()
-}
-
-//Returns the hardware server virtual host.
-//int id: The hardware server identifier.
-func (hw hardwareServerManager) GetHardwareVirtualHost(id int) (datatypes.Virtual_Host, error) {
-	return hw.HardwareService.Id(id).GetVirtualHost()
-}
-
 //Returns hardware server components.
 //int id: The hardware server identifier.
 func (hw hardwareServerManager) GetHardwareComponents(id int) ([]datatypes.Hardware_Component, error) {
@@ -823,7 +811,7 @@ func (hw hardwareServerManager) CreateFirmwareReflashTransaction(id int) (bool, 
 func (hw hardwareServerManager) GetUserCustomerNotificationsByHardwareId(id int, mask string) ([]datatypes.User_Customer_Notification_Hardware, error) {
 	UserCustomerNotificationHardwareService := services.GetUserCustomerNotificationHardwareService(hw.Session)
 	if mask == "" {
-		mask = "mask[hardwareId,user[firstName,lastName,email,username]]"
+		mask = "mask[id,hardwareId,user[firstName,lastName,email,username]]"
 	}
 	return UserCustomerNotificationHardwareService.Mask(mask).FindByHardwareId(&id)
 }
@@ -838,6 +826,18 @@ func (hw hardwareServerManager) CreateUserCustomerNotification(hardwareId int, u
 	}
 	userCustomerNotificationHardwareService := services.GetUserCustomerNotificationHardwareService(hw.Session)
 	return userCustomerNotificationHardwareService.CreateObject(&userCustomerNotificationTemplate)
+}
+
+//Delete a user server notification entry
+//int userCustomerNotificationId: The user customer notification identifier.
+func (hw hardwareServerManager) DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error) {
+	userCustomerNotificationTemplates := []datatypes.User_Customer_Notification_Hardware{
+		datatypes.User_Customer_Notification_Hardware{
+			Id: sl.Int(userCustomerNotificationId),
+		},
+	}
+	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationHardwareService(hw.Session)
+	return userCustomerNotificationVirtualGuestService.Mask(mask).DeleteObjects(userCustomerNotificationTemplates)
 }
 
 // Return hardware’s allotted detail record.
@@ -858,4 +858,11 @@ func (hw hardwareServerManager) GetBillingCycleBandwidthUsage(hardwareId int, ma
 		mask = "mask[amountIn,amountOut,type]"
 	}
 	return hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingCycleBandwidthUsage()
+}
+
+// Create a password for a software component.
+// Software_Component_Password softwareComponentPasswordTemplate: The software component password template.
+func (hw hardwareServerManager) CreateSoftwareCredential(softwareComponentPasswordTemplate datatypes.Software_Component_Password) (datatypes.Software_Component_Password, error) {
+	softwareComponentPasswordService := services.GetSoftwareComponentPasswordService(hw.Session)
+	return softwareComponentPasswordService.CreateObject(&softwareComponentPasswordTemplate)
 }

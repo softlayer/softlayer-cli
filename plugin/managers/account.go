@@ -18,6 +18,7 @@ type AccountManager interface {
 	GetBillingItems(mask string) ([]datatypes.Billing_Item, error)
 	GetEvents(typeEvent string, mask string, dateFilter string) ([]datatypes.Notification_Occurrence_Event, error)
 	GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error)
+	AckEvent(identifier int) (bool, error)
 	GetInvoiceDetail(identifier int, mask string) ([]datatypes.Billing_Invoice_Item, error)
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 	CancelItem(identifier int) error
@@ -27,6 +28,9 @@ type AccountManager interface {
 	GetAccountAllBillingOrders(mask string, limit int) ([]datatypes.Billing_Order, error)
 	GetSummary(mask string) (datatypes.Account, error)
 	GetBandwidthPoolDetail(bandwidthPoolId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment, error)
+	GetPostProvisioningHooks(mask string) ([]datatypes.Provisioning_Hook, error)
+	CreateProvisioningScript(template datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error)
+	DeleteProvisioningScript(idProvisioningScript int) (resp bool, err error)
 }
 
 type accountManager struct {
@@ -41,10 +45,10 @@ func NewAccountManager(session *session.Session) *accountManager {
 	}
 }
 
-//Summary of the networks on the account, grouped by data center.
-//returns a map, the key of the map is datacenter name, the value of the map is another map
-//the keys of the inner map are: vlan_count, public_ip_count, subnet_count, hardware_count, virtual_guest_count
-//the value of the innter map are the count of those resources
+// Summary of the networks on the account, grouped by data center.
+// returns a map, the key of the map is datacenter name, the value of the map is another map
+// the keys of the inner map are: vlan_count, public_ip_count, subnet_count, hardware_count, virtual_guest_count
+// the value of the innter map are the count of those resources
 func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
 	datacenters := make(map[string](map[string]int))
 	vlans, err := a.AccountService.Mask(DEFAULT_VLAN_MASK).GetNetworkVlans()
@@ -199,6 +203,16 @@ func (a accountManager) GetEventDetail(identifier int, mask string) (datatypes.N
 }
 
 /*
+Acknowledge Event. Doing so will turn off the popup in the control portal
+https://sldn.softlayer.com/reference/services/SoftLayer_Notification_Occurrence_Event/acknowledgeNotification/
+*/
+func (a accountManager) AckEvent(identifier int) (bool, error) {
+	NotificationOccurrenceEventService := services.GetNotificationOccurrenceEventService(a.Session)
+
+	return NotificationOccurrenceEventService.Id(identifier).AcknowledgeNotification()
+}
+
+/*
 Gets all invoices from the account
 https://sldn.softlayer.com/reference/services/SoftLayer_Account/getInvoices/
 */
@@ -338,4 +352,34 @@ func (a accountManager) GetBandwidthPoolDetail(bandwidthPoolId int, mask string)
         bareMetalInstances[outboundBandwidthUsage,bandwidthAllotmentDetail[allocation]]]`
 	}
 	return networkBandwidthService.Id(bandwidthPoolId).Mask(mask).GetObject()
+}
+
+/*
+Customer specified URIs that are downloaded onto a newly provisioned or reloaded server.
+If the URI is sent over https it will be executed directly on the server.
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getPostProvisioningHooks/
+*/
+func (a accountManager) GetPostProvisioningHooks(mask string) ([]datatypes.Provisioning_Hook, error) {
+	if mask == "" {
+		mask = "mask[id,name,uri]"
+	}
+	return a.AccountService.Mask(mask).GetPostProvisioningHooks()
+}
+
+/*
+Create a provisioning script.
+https://sldn.softlayer.com/reference/services/SoftLayer_Provisioning_Hook/createObject/
+*/
+func (a accountManager) CreateProvisioningScript(template datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error) {
+	provisioningHook := services.GetProvisioningHookService(a.Session)
+	return provisioningHook.CreateObject(&template)
+}
+
+/*
+Delete a provisioning script.
+https://sldn.softlayer.com/reference/services/SoftLayer_Provisioning_Hook/deleteObject/
+*/
+func (a accountManager) DeleteProvisioningScript(idProvisioningScript int) (resp bool, err error) {
+	provisioningHook := services.GetProvisioningHookService(a.Session)
+	return provisioningHook.Id(idProvisioningScript).DeleteObject()
 }

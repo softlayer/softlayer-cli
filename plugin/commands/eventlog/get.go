@@ -111,11 +111,11 @@ func (cmd *GetCommand) Run(args []string) error {
 		}
 
 		for _, log := range logs {
-			user := ""
-			if log.UserId != nil {
-				user = *log.User.Username
-			} else {
-				user = *log.UserType
+			user := "CUSTOMER"
+			if log.UserId != nil && log.User != nil && log.User.Username != nil {
+				user = utils.FormatStringPointer(log.User.Username)
+			} else if log.UserType != nil {
+				user = utils.FormatStringPointer(log.UserType)
 			}
 
 			if metadata {

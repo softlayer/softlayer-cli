@@ -17,6 +17,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
+var testUser datatypes.User_Customer
 var _ = Describe("Detail", func() {
 	var (
 		fakeUI          *terminal.FakeUI
@@ -36,7 +37,7 @@ var _ = Describe("Detail", func() {
 
 		created, _ := time.Parse(time.RFC3339, "2017-11-08T00:00:00Z")
 
-		testUser := datatypes.User_Customer{
+		testUser = datatypes.User_Customer{
 			Id:       sl.Int(5555),
 			Username: sl.String("ATestUser"),
 			ApiAuthenticationKeys: []datatypes.User_Customer_ApiAuthentication{datatypes.User_Customer_ApiAuthentication{
@@ -218,7 +219,32 @@ var _ = Describe("Detail", func() {
 				Expect(err.Error()).To(ContainSubstring("Failed to show event log."))
 			})
 		})
-
+		Context("user detail error with events", func() {
+			It("return error", func() {
+				fakeUserManager.GetEventsReturns([]datatypes.Event_Log{}, errors.New("Internal server error"))
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--events")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to show event log."))
+			})
+		})
+		Context("Error getting hardware", func() {
+			It("return error", func() {
+				fakeUserManager.GetUserReturnsOnCall(0, testUser, nil)
+				fakeUserManager.GetUserReturnsOnCall(1, datatypes.User_Customer{}, errors.New("BAD HARDWARE"))
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--hardware")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to show hardware."))
+			})
+		})
+		Context("Error getting virtual", func() {
+			It("return error", func() {
+				fakeUserManager.GetUserReturnsOnCall(0, testUser, nil)
+				fakeUserManager.GetUserReturnsOnCall(1, datatypes.User_Customer{}, errors.New("BAD VIRTUAL"))
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--virtual")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to show virual server."))
+			})
+		})
 		Context("user detail with correct id", func() {
 			It("return a user", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555")
@@ -397,6 +423,56 @@ var _ = Describe("Detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Date                   Type                              IP Address    Label            Username"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-11-08T00:00:00Z   Login Successful                  70.70.70.70   test@test.com    test_test.com"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-11-08T00:00:00Z   IAM Token validation successful   80.80.80.80   test2@test.com   test2_test.com"))
+			})
+		})
+
+		Context("user detail with correct id and without apikey", func() {
+			BeforeEach(func() {
+				created, _ := time.Parse(time.RFC3339, "2017-11-08T00:00:00Z")
+
+				testUser = datatypes.User_Customer{
+					Id:                    sl.Int(5555),
+					Username:              sl.String("ATestUser"),
+					ApiAuthenticationKeys: []datatypes.User_Customer_ApiAuthentication{},
+					FirstName:             sl.String("Name"),
+					LastName:              sl.String("LastName"),
+					Email:                 sl.String("user@email.com"),
+					OpenIdConnectUserName: sl.String("123456"),
+					Address1:              sl.String("addres with number N 123"),
+					CompanyName:           sl.String("NameCompany"),
+					CreateDate:            sl.Time(created),
+					OfficePhone:           sl.String("123456789"),
+					PptpVpnAllowedFlag:    sl.Bool(true),
+					SslVpnAllowedFlag:     sl.Bool(true),
+					Parent: &datatypes.User_Customer{
+						Username: sl.String("ParentName"),
+					},
+					UserStatus: &datatypes.User_Customer_Status{
+						Name: sl.String("ACTIVE"),
+					},
+				}
+				fakeUserManager.GetUserReturns(testUser, nil)
+			})
+
+			It("return a user without apikey", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--keys")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("5555"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("ATestUser"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("No"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Name LastName"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("user@email.com"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("123456"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("addres with number N 123 - - - - -"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("NameCompany"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-11-08T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("ParentName"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("ACTIVE"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("true"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("true"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-11-08T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2017-11-08T00:00:00Z"))
 			})
 		})
 	})

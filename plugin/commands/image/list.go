@@ -50,7 +50,7 @@ type Image struct {
 func (cmd *ListCommand) Run(args []string) error {
 	var publicImages, privateImages []datatypes.Virtual_Guest_Block_Device_Template_Group
 	var err error
-	mask := "mask[id,name,accountId,imageType.name]"
+	mask := "mask[id,createDate,note,name,accountId,imageType.name,children[blockDevices[diskImage[softwareReferences[softwareDescription]]]]]"
 
 	if cmd.Public && cmd.Private {
 		return bmxErr.NewInvalidUsageError(T("[--public] is not allowed with [--private]."))
@@ -97,17 +97,36 @@ func (cmd *ListCommand) Run(args []string) error {
 		cmd.UI.Print(T("No image found."))
 	}
 
-	table := cmd.UI.Table([]string{T("id"), T("name"), T("type"), T("visibility"), T("account")})
+	table := cmd.UI.Table([]string{T("Id"), T("Name"), T("Type"), T("Visibility"), T("Account"), T("OS"), T("Created"), T("Notes")})
 
 	for _, image := range allImages {
 		var typeName string
 		if image.ImageType != nil {
 			typeName = utils.FormatStringPointer(image.ImageType.Name)
 		}
+
+		os := "-"
+		if image.Children != nil && len(image.Children) != 0 {
+			if image.Children[0].BlockDevices != nil && len(image.Children[0].BlockDevices) != 0 {
+				for _, blockDevice := range image.Children[0].BlockDevices {
+					if blockDevice.DiskImage.SoftwareReferences != nil && len(blockDevice.DiskImage.SoftwareReferences) != 0 {
+						os = *blockDevice.DiskImage.SoftwareReferences[0].SoftwareDescription.LongDescription
+					}
+				}
+			}
+		}
+		notes := "-"
+		if image.Note != nil {
+			notes = *image.Note
+		}
 		table.Add(utils.FormatIntPointer(image.Id),
 			utils.FormatStringPointer(image.Name),
 			typeName, image.Visibility,
-			utils.FormatIntPointer(image.AccountId))
+			utils.FormatIntPointer(image.AccountId),
+			os,
+			utils.FormatSLTimePointer(image.CreateDate),
+			notes,
+		)
 	}
 	table.Print()
 	return nil

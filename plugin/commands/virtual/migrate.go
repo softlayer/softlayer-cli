@@ -51,6 +51,7 @@ EXAMPLE:
 func (cmd *MigrateCommand) Run(args []string) error {
 	filters := filter.New()
 	vsList := []datatypes.Virtual_Guest{}
+	dedicatedMigrateList := []datatypes.Virtual_Guest{}
 	objMask := "mask[id, hostname, domain, datacenter, pendingMigrationFlag, powerState, primaryIpAddress,primaryBackendIpAddress, dedicatedHost]"
 
 	outputFormat := cmd.GetOutputFlag()
@@ -65,17 +66,17 @@ func (cmd *MigrateCommand) Run(args []string) error {
 		}
 
 		dedicatedFilter := append(filters, utils.QueryFilter("not null", "virtualGuests.dedicatedHost.id"))
-		dedicatedMigrateList := getMigrationServerList(objMask, dedicatedFilter, cmd)
+		dedicatedMigrateList = getMigrationServerList(objMask, dedicatedFilter, cmd)
 
-		var migrationList []interface{}
-		migrationList = append(migrationList, vsList)
-		migrationList = append(migrationList, dedicatedMigrateList)
+		// These two tables don't currently print well in JSON, so just print the data directly. See #623
 		if outputFormat == "JSON" {
+			var migrationList []interface{}
+			migrationList = append(migrationList, vsList)
+			migrationList = append(migrationList, dedicatedMigrateList)
 			return utils.PrintPrettyJSONList(cmd.UI, migrationList)
 		}
-
-		showsServerPendingMigration(vsList, cmd, "vs")
-		showsServerPendingMigration(dedicatedMigrateList, cmd, "dedicated")
+		showsServerPendingMigration(vsList, cmd, "vs", outputFormat)
+		showsServerPendingMigration(dedicatedMigrateList, cmd, "dedicated", outputFormat)
 	} else {
 		if cmd.All {
 			guestMigration := getMigrationServerList(objMask, nil, cmd)
@@ -117,7 +118,7 @@ func (cmd *MigrateCommand) Run(args []string) error {
 			cmd.UI.Print(T("The virtual server is migrating."))
 			table := cmd.UI.Table([]string{T("id"), T("CreateDate")})
 			table.Add(utils.FormatIntPointer(result.Id), utils.FormatSLTimePointer(result.CreateDate))
-			table.Print()
+			utils.PrintTable(cmd.UI, table, outputFormat)
 		}
 	}
 
@@ -132,16 +133,16 @@ func getMigrationServerList(mask string, filter filter.Filters, cmd *MigrateComm
 	return migrationServerList
 }
 
-func showsServerPendingMigration(vsList []datatypes.Virtual_Guest, cmd *MigrateCommand, typeServer string) {
+func showsServerPendingMigration(vsList []datatypes.Virtual_Guest, cmd *MigrateCommand, typeServer string, outputFormat string) {
 	if typeServer == "vs" {
-		table := cmd.UI.Table([]string{T("id"), T("Hostname"), T("domain"), T("datacenter"), T("pendingMigrationFlag")})
+		table := cmd.UI.Table([]string{T("id"), T("Hostname"), T("domain"), T("datacenter"), T("PendingMigrationFlag")})
 		cmd.UI.Print("Virtual Server Pending Migration")
 		for _, vm := range vsList {
 			table.Add(utils.FormatIntPointer(vm.Id), utils.FormatStringPointer(vm.Hostname),
 				utils.FormatStringPointer(vm.Domain), utils.FormatStringPointer(vm.Datacenter.Name),
 				utils.FormatBoolPointer(vm.PendingMigrationFlag))
 		}
-		table.Print()
+		utils.PrintTable(cmd.UI, table, outputFormat)
 		fmt.Println()
 	} else {
 		table := cmd.UI.Table([]string{T("id"), T("Hostname"), T("domain"), T("datacenter"), T("PendingMigrationFlag"),
@@ -153,6 +154,6 @@ func showsServerPendingMigration(vsList []datatypes.Virtual_Guest, cmd *MigrateC
 				utils.FormatBoolPointer(vm.PendingMigrationFlag), utils.FormatStringPointer(vm.DedicatedHost.Name),
 				utils.FormatIntPointer(vm.DedicatedHost.Id))
 		}
-		table.Print()
+		utils.PrintTable(cmd.UI, table, outputFormat)
 	}
 }

@@ -5,12 +5,13 @@ import (
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type EmailManager interface {
-	GetNetworkMessageDeliveryAccounts(mask string) ([]datatypes.Network_Message_Delivery, error)
-	GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error)
+	GetNetworkMessageDeliveryAccounts(mask string) ([]datatypes.Network_Message_Delivery_Email_Sendgrid, error)
+	GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, error)
 	GetStatistics(emailId int) ([]datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Statistics, error)
 	GetInstance(emailId int, mask string) (datatypes.Network_Message_Delivery_Email_Sendgrid, error)
 	UpdateEmail(emailId int, emailAddress string) error
@@ -33,20 +34,29 @@ func NewEmailManager(session *session.Session) *emailManager {
 Gets all emails by account.
 https://sldn.softlayer.com/reference/services/SoftLayer_Account/getNetworkMessageDeliveryAccounts/
 */
-func (a emailManager) GetNetworkMessageDeliveryAccounts(mask string) ([]datatypes.Network_Message_Delivery, error) {
-	NetworkMessageDeliveryService := services.GetAccountService(a.Session)
-
+func (a emailManager) GetNetworkMessageDeliveryAccounts(mask string) ([]datatypes.Network_Message_Delivery_Email_Sendgrid, error) {
+	// We make a Direct API call here so we can force the result to be Network_Message_Delivery_Email_Sendgrid
 	filters := filter.New()
 	filters = append(filters, filter.Path("id").OrderBy("DESC"))
-
 	i := 0
-	resourceList := []datatypes.Network_Message_Delivery{}
+	offset := 0
+	options := sl.Options{}
+	options.Mask = mask
+	options.Filter = filters.Build()
+	options.Limit = &metadata.LIMIT
+	options.Offset = &offset
+	
+	resourceList := []datatypes.Network_Message_Delivery_Email_Sendgrid{}
+	resp := []datatypes.Network_Message_Delivery_Email_Sendgrid{}
 	for {
-		resp, err := NetworkMessageDeliveryService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetNetworkMessageDeliveryAccounts()
+		err := a.Session.DoRequest("SoftLayer_Account", "getNetworkMessageDeliveryAccounts", nil, &options, &resp)
 		i++
+		offset = i * metadata.LIMIT
+		options.Offset = &offset
 		if err != nil {
-			return []datatypes.Network_Message_Delivery{}, err
+			return []datatypes.Network_Message_Delivery_Email_Sendgrid{}, err
 		}
+
 		resourceList = append(resourceList, resp...)
 		if len(resp) < metadata.LIMIT {
 			break
@@ -59,7 +69,7 @@ func (a emailManager) GetNetworkMessageDeliveryAccounts(mask string) ([]datatype
 Gets account overview by email.
 https://sldn.softlayer.com/reference/services/SoftLayer_Network_Message_Delivery_Email_Sendgrid/getAccountOverview/
 */
-func (a emailManager) GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account_Overview, error) {
+func (a emailManager) GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, error) {
 	return a.EmailService.Id(emailId).GetAccountOverview()
 }
 

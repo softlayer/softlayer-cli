@@ -13,13 +13,13 @@ import (
 const (
 	IMAGE_DEFAULT_MASK = "id, name, imageType, accountId"
 	//IMAGE_DEFAULT_MASK = "id,accountId,name,globalIdentifier,blockDevices,parentId,createDate,transaction"
-	IMAGE_DETAIL_MASK = `id, globalIdentifier, name, datacenter.name, status.name,
+	IMAGE_DETAIL_MASK = `id, accountReferences, firstChild, globalIdentifier, name, datacenter.name, status.name,
 accountId, publicFlag, imageType, flexImageFlag, note, createDate, blockDevicesDiskSpaceTotal,
-children[transaction, blockDevicesDiskSpaceTotal, datacenter.name]`
+children[transaction, blockDevicesDiskSpaceTotal, datacenter.name, blockDevices[diskSpace,diskImage[capacity,name,units,softwareReferences[softwareDescription]]]]`
 )
 
-//Manages SoftLayer server images.
-//See product information here: https://knowledgelayer.softlayer.com/topic/image-templates
+// Manages SoftLayer server images.
+// See product information here: https://knowledgelayer.softlayer.com/topic/image-templates
 type ImageManager interface {
 	GetImage(imageId int) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
 	AddLocation(imageId int, locations []datatypes.Location) (bool, error)
@@ -31,6 +31,8 @@ type ImageManager interface {
 	ExportImage(imageId int, config datatypes.Container_Virtual_Guest_Block_Device_Template_Configuration) (bool, error)
 	ImportImage(config datatypes.Container_Virtual_Guest_Block_Device_Template_Configuration) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
 	GetDatacenters(imageId int) ([]datatypes.Location, error)
+	ShareImage(imageId int, accountId int) (bool, error)
+	ShareDenyImage(imageId int, accountId int) (bool, error)
 }
 
 type imageManager struct {
@@ -52,21 +54,21 @@ func (i imageManager) ImportImage(config datatypes.Container_Virtual_Guest_Block
 	return i.ImageService.CreateFromIcos(&config)
 }
 
-//Get details about an image
-//image: The ID of the image.
+// Get details about an image
+// image: The ID of the image.
 func (i imageManager) GetImage(imageId int) (datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
 	return i.ImageService.Id(imageId).Mask(IMAGE_DETAIL_MASK).GetObject()
 }
 
-//Delete the image by its ID
-//imageId: The ID of the image.
+// Delete the image by its ID
+// imageId: The ID of the image.
 func (i imageManager) DeleteImage(imageId int) error {
 	_, err := i.ImageService.Id(imageId).DeleteObject()
 	return err
 }
 
-//List all public images, fitler by its name
-//name: filter based on name
+// List all public images, fitler by its name
+// name: filter based on name
 func (i imageManager) ListPrivateImages(name string, mask string) ([]datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("privateBlockDeviceTemplateGroups.id").OrderBy("ASC"))
@@ -81,7 +83,7 @@ func (i imageManager) ListPrivateImages(name string, mask string) ([]datatypes.V
 	n := 0
 	resourceList := []datatypes.Virtual_Guest_Block_Device_Template_Group{}
 	for {
-		resp, err := i.AccountService.Mask(IMAGE_DEFAULT_MASK).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(n * metadata.LIMIT).GetPrivateBlockDeviceTemplateGroups()
+		resp, err := i.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(n * metadata.LIMIT).GetPrivateBlockDeviceTemplateGroups()
 		n++
 		if err != nil {
 			return []datatypes.Virtual_Guest_Block_Device_Template_Group{}, err
@@ -95,8 +97,8 @@ func (i imageManager) ListPrivateImages(name string, mask string) ([]datatypes.V
 	return resourceList, nil
 }
 
-//List all public images,fitler by its name
-//name: filter based on name
+// List all public images,fitler by its name
+// name: filter based on name
 func (i imageManager) ListPublicImages(name string, mask string) ([]datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("id").OrderBy("ASC"))
@@ -125,11 +127,11 @@ func (i imageManager) ListPublicImages(name string, mask string) ([]datatypes.Vi
 	return resourceList, nil
 }
 
-//Edit image related details
-//imageId: The ID of the image
-//name: Name of the Image.
-//note: Note of the image.
-//tag: Tags of the image to be updated to.
+// Edit image related details
+// imageId: The ID of the image
+// name: Name of the Image.
+// note: Note of the image.
+// tag: Tags of the image to be updated to.
 func (i imageManager) EditImage(imageId int, name string, note string, tag string) ([]bool, []string) {
 	var succeed []bool
 	var messages []string
@@ -170,23 +172,38 @@ func (i imageManager) EditImage(imageId int, name string, note string, tag strin
 	return succeed, messages
 }
 
-//Add the location of the image
-//imageId: The ID of the image
-//location: location to remove of the image.
+// Add the location of the image
+// imageId: The ID of the image
+// location: location to remove of the image.
 func (i imageManager) AddLocation(imageId int, locations []datatypes.Location) (bool, error) {
 	return i.ImageService.Id(imageId).AddLocations(locations)
 }
 
-//Remove the location of the image
-//imageId: The ID of the image
-//location: location to remove of the image.
+// Remove the location of the image
+// imageId: The ID of the image
+// location: location to remove of the image.
 func (i imageManager) DeleteLocation(imageId int, locations []datatypes.Location) (bool, error) {
 	return i.ImageService.Id(imageId).RemoveLocations(locations)
 }
 
-//Remove the location of the image
-//imageId: The ID of the image
-//location: location to remove of the image.
+// Remove the location of the image
+// imageId: The ID of the image
+// location: location to remove of the image.
 func (i imageManager) GetDatacenters(imageId int) ([]datatypes.Location, error) {
 	return i.ImageService.Id(imageId).GetStorageLocations()
 }
+
+//Permit sharing image template with another account.
+//imageId: The ID of the image.
+//accountId: The ID of the another account to share the image.
+func (i imageManager) ShareImage(imageId int, accountId int) (bool, error) {
+	return i.ImageService.Id(imageId).PermitSharingAccess(&accountId)
+}
+
+// Deny sharing image template with another account.
+// imageId: The ID of the image.
+// accountId: The ID of the another account to deny share the image.
+func (i imageManager) ShareDenyImage(imageId int, accountId int) (bool, error) {
+	return i.ImageService.Id(imageId).DenySharingAccess(&accountId)
+}
+

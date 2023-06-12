@@ -25,8 +25,7 @@ var _ = Describe("Hardware bandwidth", func() {
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeHardwareManager = new(testhelpers.FakeHardwareServerManager)
-		bleg := []string{}
-		fakeSession = testhelpers.NewFakeSoftlayerSession(bleg)
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeTransport = new(testhelpers.FakeTransportHandler)
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)

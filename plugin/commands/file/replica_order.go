@@ -31,7 +31,7 @@ func NewReplicaOrderCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaOrderC
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "replica-order " + T("IDENTIFIER"),
-		Short: T("Order a block storage replica volume"),
+		Short: T("Order a file storage replica volume"),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]
 		
 EXAMPLE:

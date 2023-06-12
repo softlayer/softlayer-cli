@@ -7,7 +7,9 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
+	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/file"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -34,7 +36,7 @@ var _ = Describe("Volume options", func() {
 	Describe("Volume options", func() {
 		Context("Volume options with server API call fails", func() {
 			BeforeEach(func() {
-				FakeStorageManager.GetAllDatacentersReturns([]string{}, errors.New("Internal Server Error"))
+				FakeStorageManager.GetAllDatacentersReturns([]datatypes.Location{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
@@ -46,8 +48,14 @@ var _ = Describe("Volume options", func() {
 
 		Context("Volume options", func() {
 			BeforeEach(func() {
-				FakeStorageManager.GetAllDatacentersReturns([]string{
-					"ams01", "ams03", "che01", "dal01", "dal02", "dal05", "dal06", "dal07", "dal09", "dal10", "fra02", "hkg02", "hou02", "lon02", "mel01", "mex01", "mil01", "mon01", "osl01", "par01", "sao01", "sea01", "seo01", "sjc01", "sjc03", "sng01", "syd01", "tok02", "tor01", "wdc01", "wdc04"}, nil)
+				datacenters := []datatypes.Location{
+					{Name: sl.String("ams01")},
+					{Name: sl.String("dal06")},
+					{Name: sl.String("lon02")},
+					{Name: sl.String("sao01")},
+					{Name: sl.String("tok02")},
+				}
+				FakeStorageManager.GetAllDatacentersReturns(datacenters, nil)
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)

@@ -59,6 +59,12 @@ func (cmd *DetailCommand) Run(args []string) error {
 		return errors.NewAPIError(T("Failed to get VLAN: {{.VLANID}}.\n", map[string]interface{}{"VLANID": id}), err.Error(), 2)
 	}
 
+	// Remove this once the table library supports more complicated tables
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, vlan)
+	}
+
+
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add(T("id"), utils.FormatIntPointer(vlan.Id))
 	table.Add(T("number"), utils.FormatIntPointer(vlan.VlanNumber))

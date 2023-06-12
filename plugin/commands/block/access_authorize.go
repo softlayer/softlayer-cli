@@ -31,7 +31,7 @@ func NewAccessAuthorizeCommand(sl *metadata.SoftlayerStorageCommand) *AccessAuth
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "access-authorize " + T("IDENTIFIER"),
-		Short: T("Authorize hosts  to access a given volume"),
+		Short: T("Authorize hosts to access a given volume."),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]
 		
 EXAMPLE:
@@ -43,10 +43,10 @@ EXAMPLE:
 		},
 	}
 
-	cobraCmd.Flags().IntSliceVarP(&thisCmd.Hardware_id, "hardware-id", "d", []int{}, T("The ID of one hardware server to authorize"))
-	cobraCmd.Flags().IntSliceVarP(&thisCmd.Virtual_id, "virtual-id", "v", []int{}, T("The ID of one virtual server to authorize"))
-	cobraCmd.Flags().IntSliceVarP(&thisCmd.Ip_address_id, "ip-address-id", "i", []int{}, T("The ID of one IP address to authorize"))
-	cobraCmd.Flags().StringSliceVarP(&thisCmd.Ip_address, "ip-address", "p", []string{}, T("An IP address to authorize"))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Hardware_id, "hardware-id", "d", []int{}, T("The ID of one hardware server to authorize."))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Virtual_id, "virtual-id", "v", []int{}, T("The ID of one virtual server to authorize."))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Ip_address_id, "ip-address-id", "i", []int{}, T("The ID of one IP address to authorize."))
+	cobraCmd.Flags().StringSliceVarP(&thisCmd.Ip_address, "ip-address", "p", []string{}, T("An IP address to authorize."))
 	thisCmd.Command = cobraCmd
 
 	return thisCmd

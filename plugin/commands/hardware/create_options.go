@@ -8,11 +8,13 @@ import (
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type CreateOptionsCommand struct {
 	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
+	NetworkManager  managers.NetworkManager
 	Command         *cobra.Command
 }
 
@@ -20,6 +22,7 @@ func NewCreateOptionsCommand(sl *metadata.SoftlayerCommand) (cmd *CreateOptionsC
 	thisCmd := &CreateOptionsCommand{
 		SoftlayerCommand: sl,
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
 
 	cobraCmd := &cobra.Command{
@@ -41,8 +44,12 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 		return errors.NewAPIError(T("Failed to get product package for hardware server."), err.Error(), 2)
 	}
 	options := cmd.HardwareManager.GetCreateOptions(productPackage)
+	pods, err := cmd.NetworkManager.GetClosingPods()
+	if err != nil {
+		return errors.NewAPIError(T("Failed to get Pods."), err.Error(), 2)
+	}
 	//datacenters
-	dcTable := cmd.UI.Table([]string{T("Data center"), T("Value")})
+	dcTable := cmd.UI.Table([]string{T("Data center"), T("Value"), T("Note")})
 	locations := options[managers.KEY_LOCATIONS]
 	var sortedLocations []string
 	for key, _ := range locations {
@@ -50,7 +57,8 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 	}
 	sort.Strings(sortedLocations)
 	for _, key := range sortedLocations {
-		dcTable.Add(locations[key], key)
+		note := utils.GetPodWithClosedAnnouncement(locations[key], pods)
+		dcTable.Add(locations[key], key, note)
 	}
 	dcTable.Print()
 	cmd.UI.Print("")
@@ -70,29 +78,31 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 	cmd.UI.Print("")
 
 	//operating system
-	osTable := cmd.UI.Table([]string{T("Operating system"), T("Value")})
+	osTable := cmd.UI.Table([]string{T("Operating system"), T("Key"), T("Reference Code")})
 	oses := options[managers.KEY_OS]
+	nameOses := options[managers.KEY_NAME_OS]
 	var sortedoses []string
 	for key, _ := range oses {
 		sortedoses = append(sortedoses, key)
 	}
 	sort.Strings(sortedoses)
 	for _, key := range sortedoses {
-		osTable.Add(oses[key], key)
+		osTable.Add(oses[key], nameOses[key], key)
 	}
 	osTable.Print()
 	cmd.UI.Print("")
 
 	//port speed
-	portTable := cmd.UI.Table([]string{T("Port speed"), T("Value")})
+	portTable := cmd.UI.Table([]string{T("Port speed"), T("Speed"), T("Key")})
 	ports := options[managers.KEY_PORT_SPEED]
+	portsDescription := options[managers.KEY_PORT_SPEED_DESCRIPTION]
 	var sortedPorts []string
 	for key, _ := range ports {
 		sortedPorts = append(sortedPorts, key)
 	}
 	sort.Strings(sortedPorts)
 	for _, key := range sortedPorts {
-		portTable.Add(ports[key], key)
+		portTable.Add(portsDescription[key], ports[key], key)
 	}
 	portTable.Print()
 	cmd.UI.Print("")
@@ -110,5 +120,20 @@ func (cmd *CreateOptionsCommand) Run(args []string) error {
 	}
 	extraTable.Print()
 	cmd.UI.Print("")
+
+	//routers
+	routerTable := cmd.UI.Table([]string{T("Routers"), T("Hostname"), T("Name")})
+	routers, err := cmd.NetworkManager.GetRouters("")
+	if err != nil {
+		return errors.NewAPIError(T("Failed to get Routers."), err.Error(), 2)
+	}
+	for _, router := range routers {
+		routerTable.Add(
+			utils.FormatIntPointer(router.Id),
+			utils.FormatStringPointer(router.Hostname),
+			utils.FormatStringPointer(router.TopLevelLocation.LongName),
+		)
+	}
+	routerTable.Print()
 	return nil
 }

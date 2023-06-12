@@ -1,0 +1,9 @@
+$ORIGIN btest1.com.
+$TTL 3600
+@ IN SOA ns1.softlayer.com. support.softlayer.com. (
+                       2020042204        ; Serial
+                       7200              ; Refresh
+                       600               ; Retry
+                       1728000           ; Expire
+                       43200)            ; Minimum
+_serviceTest._tls.host.local 900      IN SRV   15 20 5005 target.field

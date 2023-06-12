@@ -110,6 +110,7 @@ var BlockDeviceReturns = []datatypes.Virtual_Guest_Block_Device{
 		},
 		MountType: sl.String("Disk"),
 		Device:    sl.String("1"),
+		Id:        sl.Int(111111),
 	},
 }
 
@@ -120,10 +121,12 @@ var _ = Describe("VS detail", func() {
 		fakeSession   *session.Session
 		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
+		fakeTransport *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeTransport = new(testhelpers.FakeTransportHandler)
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = virtual.NewDetailCommand(slCommand)
@@ -193,6 +196,7 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Hourly"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("C1_2X2X25"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("PRIMARY"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("root"))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("password4root"))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("1000.00"))
@@ -212,10 +216,9 @@ var _ = Describe("VS detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("1000.00"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("CPU Cores: a suspendable product. Anticipated usage for the billing cycle is 743.9997 hours Used"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("guest_core_usage"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("2000.00"))
 			})
 		})
-		Context("Github issues #252 ", func() {
+		Context("Github issues #252", func() {
 
 			BeforeEach(func() {
 				GetInstanceReturn.BillingItem = nil
@@ -226,6 +229,26 @@ var _ = Describe("VS detail", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--passwords", "--price")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("Price rate"))
+			})
+		})
+		Context("Github issues #540", func() {
+			var guestInstance datatypes.Virtual_Guest
+			var guestBlockDevices []datatypes.Virtual_Guest_Block_Device
+			options := sl.Options{Id: sl.Int(124929698)}
+			BeforeEach(func() {
+				errAPI := fakeTransport.DoRequest(fakeSession, "SoftLayer_Virtual_Guest", "getObject", nil, &options, &guestInstance)
+				Expect(errAPI).NotTo(HaveOccurred())
+				errAPI = fakeTransport.DoRequest(fakeSession, "SoftLayer_Virtual_Guest", "getBlockDevices", nil, &options, &guestBlockDevices)
+				Expect(errAPI).NotTo(HaveOccurred())
+				fakeVSManager.GetInstanceReturns(guestInstance, nil)
+				fakeVSManager.GetLocalDisksReturns(guestBlockDevices, nil)
+			})
+			It("handles virtual servers with CDs mounted", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
+				Expect(err).NotTo(HaveOccurred())
+				output := fakeUI.Outputs()
+				Expect(output).NotTo(ContainSubstring("Price rate"))
+				Expect(output).To(ContainSubstring("Rescue   CD     3"))
 			})
 		})
 	})

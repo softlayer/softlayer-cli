@@ -112,19 +112,31 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	if localDisks != nil && len(localDisks) > 0 {
 		buf := new(bytes.Buffer)
-		drivesTable := terminal.NewTable(buf, []string{T("type"), T("name"), T("drive"), T("capacity")})
+		drivesTable := terminal.NewTable(buf, []string{T("id"), T("type"), T("name"), T("drive"), T("capacity")})
 		for _, localDisk := range localDisks {
 			diskType := "System"
+			diskCapacity := 0
+			diskUnits := "GB"
+
 			if localDisk.DiskImage != nil && localDisk.DiskImage.Description != nil {
 				if strings.Contains(*localDisk.DiskImage.Description, "SWAP") {
 					diskType = "Swap"
 				}
+				diskCapacity = *localDisk.DiskImage.Capacity
+				diskUnits = *localDisk.DiskImage.Units
+
+			} else {
+				// Some VMs have CDs mounted, which don't have an Image, this check is for that.
+				// see testfixtures/SoftLayer_Virtual_Guest/getBlockDevices-124929698.json
+				diskType = "Rescue"
+				diskUnits = ""
 			}
 			drivesTable.Add(
+				utils.FormatIntPointer(localDisk.Id),
 				diskType,
 				utils.FormatStringPointer(localDisk.MountType),
 				utils.FormatStringPointer(localDisk.Device),
-				fmt.Sprintf("%d %s", *localDisk.DiskImage.Capacity, *localDisk.DiskImage.Units),
+				fmt.Sprintf("%d %s", diskCapacity, diskUnits),
 			)
 		}
 		drivesTable.Print()
@@ -251,16 +263,14 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 			totalPrice := virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
 			priceTable.Add("Total", "-", fmt.Sprintf("%.2f", *totalPrice))
-			sum := *virtualGuest.BillingItem.NextInvoiceTotalRecurringAmount
 			for _, item := range virtualGuest.BillingItem.NextInvoiceChildren {
 				if item.RecurringFee != nil {
-					sum += *item.RecurringFee
 					priceTable.Add(*item.Description, *item.CategoryCode, fmt.Sprintf("%.2f", *item.RecurringFee))
 				}
 			}
 			priceTable.Print()
 			table.Add("Prices", buf.String())
-			table.Add(T("Price rate"), fmt.Sprintf("%.2f", sum))
+			table.Add(T("Price rate"), fmt.Sprintf("%.2f", *totalPrice))
 		}
 	}
 

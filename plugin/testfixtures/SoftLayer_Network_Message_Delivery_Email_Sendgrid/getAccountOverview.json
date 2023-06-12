@@ -1,9 +1,18 @@
 {
-    "creditsAllowed": 25000,
-    "creditsOverage": 0,
-    "creditsRemain": 25000,
-    "creditsUsed": 0,
-    "package": "Free Package",
-    "reputation": 100,
-    "requests": 56
+    "offerings": [
+        {
+            "name": "flag.x.2fa-required.v1",
+            "quantity": 1,
+            "type": "flag"
+        }
+    ],
+    "profile": {
+        "firstName": "SoftLayer",
+        "lastName": "Technologies",
+        "overage": 0,
+        "remain": 25000,
+        "reputation": 1,
+        "total": 25000,
+        "used": 0
+    }
 }

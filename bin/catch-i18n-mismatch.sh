@@ -114,6 +114,7 @@ then
     ADD_JSON_OUT=`echo "$ADD_JSON_OUT" | sed -E 's/\t/\\\t/g'`
     printf "\033[0;34m ====== ADD THESE ======= \033[0m \n"
     # echo "$ADD_JSON_OUT"
+    echo "./old-i18n/add_these.json has been updated"
     echo "$ADD_JSON_OUT" > ../old-i18n/add_these.json
 
     DEL_JSON_OUT=${DEL_JSON_OUT%,}
@@ -122,6 +123,7 @@ then
     DEL_JSON_OUT=`echo "$DEL_JSON_OUT" | sed -E 's/\t/\\\t/g'`
     printf "\033[0;34m ====== DEL THESE ======= \033[0m \n"
     # echo "$DEL_JSON_OUT"
+    echo "./old-i18n/remove_these.json has been updated"
     echo "$DEL_JSON_OUT" > ../old-i18n/remove_these.json
 
 

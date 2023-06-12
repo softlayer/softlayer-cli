@@ -92,6 +92,22 @@ type FakeDedicatedHostManager struct {
 		result1 []datatypes.Network_Vlan
 		result2 error
 	}
+	ListDedicatedHostStub        func(string, string, string, int) ([]datatypes.Virtual_DedicatedHost, error)
+	listDedicatedHostMutex       sync.RWMutex
+	listDedicatedHostArgsForCall []struct {
+		arg1 string
+		arg2 string
+		arg3 string
+		arg4 int
+	}
+	listDedicatedHostReturns struct {
+		result1 []datatypes.Virtual_DedicatedHost
+		result2 error
+	}
+	listDedicatedHostReturnsOnCall map[int]struct {
+		result1 []datatypes.Virtual_DedicatedHost
+		result2 error
+	}
 	ListGuestsStub        func(int, int, string, string, int, []string, string) ([]datatypes.Virtual_Guest, error)
 	listGuestsMutex       sync.RWMutex
 	listGuestsArgsForCall []struct {
@@ -147,15 +163,16 @@ func (fake *FakeDedicatedHostManager) CancelGuests(arg1 int) ([]managers.StatusI
 	fake.cancelGuestsArgsForCall = append(fake.cancelGuestsArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.CancelGuestsStub
+	fakeReturns := fake.cancelGuestsReturns
 	fake.recordInvocation("CancelGuests", []interface{}{arg1})
 	fake.cancelGuestsMutex.Unlock()
-	if fake.CancelGuestsStub != nil {
-		return fake.CancelGuestsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.cancelGuestsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -215,15 +232,16 @@ func (fake *FakeDedicatedHostManager) GenerateOrderTemplate(arg1 string, arg2 st
 		arg5 string
 		arg6 int
 	}{arg1, arg2, arg3, arg4, arg5, arg6})
+	stub := fake.GenerateOrderTemplateStub
+	fakeReturns := fake.generateOrderTemplateReturns
 	fake.recordInvocation("GenerateOrderTemplate", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
 	fake.generateOrderTemplateMutex.Unlock()
-	if fake.GenerateOrderTemplateStub != nil {
-		return fake.GenerateOrderTemplateStub(arg1, arg2, arg3, arg4, arg5, arg6)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.generateOrderTemplateReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -278,15 +296,16 @@ func (fake *FakeDedicatedHostManager) GetCreateOptions(arg1 datatypes.Product_Pa
 	fake.getCreateOptionsArgsForCall = append(fake.getCreateOptionsArgsForCall, struct {
 		arg1 datatypes.Product_Package
 	}{arg1})
+	stub := fake.GetCreateOptionsStub
+	fakeReturns := fake.getCreateOptionsReturns
 	fake.recordInvocation("GetCreateOptions", []interface{}{arg1})
 	fake.getCreateOptionsMutex.Unlock()
-	if fake.GetCreateOptionsStub != nil {
-		return fake.GetCreateOptionsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.getCreateOptionsReturns
 	return fakeReturns.result1
 }
 
@@ -339,15 +358,16 @@ func (fake *FakeDedicatedHostManager) GetInstance(arg1 int, arg2 string) (dataty
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetInstanceStub
+	fakeReturns := fake.getInstanceReturns
 	fake.recordInvocation("GetInstance", []interface{}{arg1, arg2})
 	fake.getInstanceMutex.Unlock()
-	if fake.GetInstanceStub != nil {
-		return fake.GetInstanceStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -401,15 +421,16 @@ func (fake *FakeDedicatedHostManager) GetPackage() (datatypes.Product_Package, e
 	ret, specificReturn := fake.getPackageReturnsOnCall[len(fake.getPackageArgsForCall)]
 	fake.getPackageArgsForCall = append(fake.getPackageArgsForCall, struct {
 	}{})
+	stub := fake.GetPackageStub
+	fakeReturns := fake.getPackageReturns
 	fake.recordInvocation("GetPackage", []interface{}{})
 	fake.getPackageMutex.Unlock()
-	if fake.GetPackageStub != nil {
-		return fake.GetPackageStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getPackageReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -459,15 +480,16 @@ func (fake *FakeDedicatedHostManager) GetVlansOptions(arg1 string, arg2 string, 
 		arg2 string
 		arg3 datatypes.Product_Package
 	}{arg1, arg2, arg3})
+	stub := fake.GetVlansOptionsStub
+	fakeReturns := fake.getVlansOptionsReturns
 	fake.recordInvocation("GetVlansOptions", []interface{}{arg1, arg2, arg3})
 	fake.getVlansOptionsMutex.Unlock()
-	if fake.GetVlansOptionsStub != nil {
-		return fake.GetVlansOptionsStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getVlansOptionsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -516,6 +538,73 @@ func (fake *FakeDedicatedHostManager) GetVlansOptionsReturnsOnCall(i int, result
 	}{result1, result2}
 }
 
+func (fake *FakeDedicatedHostManager) ListDedicatedHost(arg1 string, arg2 string, arg3 string, arg4 int) ([]datatypes.Virtual_DedicatedHost, error) {
+	fake.listDedicatedHostMutex.Lock()
+	ret, specificReturn := fake.listDedicatedHostReturnsOnCall[len(fake.listDedicatedHostArgsForCall)]
+	fake.listDedicatedHostArgsForCall = append(fake.listDedicatedHostArgsForCall, struct {
+		arg1 string
+		arg2 string
+		arg3 string
+		arg4 int
+	}{arg1, arg2, arg3, arg4})
+	stub := fake.ListDedicatedHostStub
+	fakeReturns := fake.listDedicatedHostReturns
+	fake.recordInvocation("ListDedicatedHost", []interface{}{arg1, arg2, arg3, arg4})
+	fake.listDedicatedHostMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeDedicatedHostManager) ListDedicatedHostCallCount() int {
+	fake.listDedicatedHostMutex.RLock()
+	defer fake.listDedicatedHostMutex.RUnlock()
+	return len(fake.listDedicatedHostArgsForCall)
+}
+
+func (fake *FakeDedicatedHostManager) ListDedicatedHostCalls(stub func(string, string, string, int) ([]datatypes.Virtual_DedicatedHost, error)) {
+	fake.listDedicatedHostMutex.Lock()
+	defer fake.listDedicatedHostMutex.Unlock()
+	fake.ListDedicatedHostStub = stub
+}
+
+func (fake *FakeDedicatedHostManager) ListDedicatedHostArgsForCall(i int) (string, string, string, int) {
+	fake.listDedicatedHostMutex.RLock()
+	defer fake.listDedicatedHostMutex.RUnlock()
+	argsForCall := fake.listDedicatedHostArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4
+}
+
+func (fake *FakeDedicatedHostManager) ListDedicatedHostReturns(result1 []datatypes.Virtual_DedicatedHost, result2 error) {
+	fake.listDedicatedHostMutex.Lock()
+	defer fake.listDedicatedHostMutex.Unlock()
+	fake.ListDedicatedHostStub = nil
+	fake.listDedicatedHostReturns = struct {
+		result1 []datatypes.Virtual_DedicatedHost
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeDedicatedHostManager) ListDedicatedHostReturnsOnCall(i int, result1 []datatypes.Virtual_DedicatedHost, result2 error) {
+	fake.listDedicatedHostMutex.Lock()
+	defer fake.listDedicatedHostMutex.Unlock()
+	fake.ListDedicatedHostStub = nil
+	if fake.listDedicatedHostReturnsOnCall == nil {
+		fake.listDedicatedHostReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Virtual_DedicatedHost
+			result2 error
+		})
+	}
+	fake.listDedicatedHostReturnsOnCall[i] = struct {
+		result1 []datatypes.Virtual_DedicatedHost
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeDedicatedHostManager) ListGuests(arg1 int, arg2 int, arg3 string, arg4 string, arg5 int, arg6 []string, arg7 string) ([]datatypes.Virtual_Guest, error) {
 	var arg6Copy []string
 	if arg6 != nil {
@@ -533,15 +622,16 @@ func (fake *FakeDedicatedHostManager) ListGuests(arg1 int, arg2 int, arg3 string
 		arg6 []string
 		arg7 string
 	}{arg1, arg2, arg3, arg4, arg5, arg6Copy, arg7})
+	stub := fake.ListGuestsStub
+	fakeReturns := fake.listGuestsReturns
 	fake.recordInvocation("ListGuests", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6Copy, arg7})
 	fake.listGuestsMutex.Unlock()
-	if fake.ListGuestsStub != nil {
-		return fake.ListGuestsStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listGuestsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -596,15 +686,16 @@ func (fake *FakeDedicatedHostManager) OrderInstance(arg1 datatypes.Container_Pro
 	fake.orderInstanceArgsForCall = append(fake.orderInstanceArgsForCall, struct {
 		arg1 datatypes.Container_Product_Order_Virtual_DedicatedHost
 	}{arg1})
+	stub := fake.OrderInstanceStub
+	fakeReturns := fake.orderInstanceReturns
 	fake.recordInvocation("OrderInstance", []interface{}{arg1})
 	fake.orderInstanceMutex.Unlock()
-	if fake.OrderInstanceStub != nil {
-		return fake.OrderInstanceStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.orderInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -659,15 +750,16 @@ func (fake *FakeDedicatedHostManager) VerifyInstanceCreation(arg1 datatypes.Cont
 	fake.verifyInstanceCreationArgsForCall = append(fake.verifyInstanceCreationArgsForCall, struct {
 		arg1 datatypes.Container_Product_Order_Virtual_DedicatedHost
 	}{arg1})
+	stub := fake.VerifyInstanceCreationStub
+	fakeReturns := fake.verifyInstanceCreationReturns
 	fake.recordInvocation("VerifyInstanceCreation", []interface{}{arg1})
 	fake.verifyInstanceCreationMutex.Unlock()
-	if fake.VerifyInstanceCreationStub != nil {
-		return fake.VerifyInstanceCreationStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.verifyInstanceCreationReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -731,6 +823,8 @@ func (fake *FakeDedicatedHostManager) Invocations() map[string][][]interface{} {
 	defer fake.getPackageMutex.RUnlock()
 	fake.getVlansOptionsMutex.RLock()
 	defer fake.getVlansOptionsMutex.RUnlock()
+	fake.listDedicatedHostMutex.RLock()
+	defer fake.listDedicatedHostMutex.RUnlock()
 	fake.listGuestsMutex.RLock()
 	defer fake.listGuestsMutex.RUnlock()
 	fake.orderInstanceMutex.RLock()

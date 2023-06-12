@@ -1,10 +1,8 @@
 package email
 
 import (
-	"bytes"
 	"strconv"
 
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/spf13/cobra"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -58,15 +56,18 @@ func (cmd *DetailCommand) Run(args []string) error {
 		T("Value"),
 	})
 
-	bufStatistics := new(bytes.Buffer)
-	statisticsTable := terminal.NewTable(bufStatistics, []string{
-		T("Delivered"),
-		T("Requests"),
-		T("Bounces"),
-		T("Opens"),
-		T("Clicks"),
-		T("Spam reports"),
-	})
+	//Commented these lines until we fix EmailManager.GetStatistics() method
+	/*
+		bufStatistics := new(bytes.Buffer)
+		statisticsTable := terminal.NewTable(bufStatistics, []string{
+			T("Delivered"),
+			T("Requests"),
+			T("Bounces"),
+			T("Opens"),
+			T("Clicks"),
+			T("Spam reports"),
+		})
+	*/
 
 	table.Add("Id", utils.FormatIntPointerName(email.Id))
 	table.Add("Username", utils.FormatStringPointer(email.Username))
@@ -78,18 +79,21 @@ func (cmd *DetailCommand) Run(args []string) error {
 	table.Add("Type", utils.FormatStringPointer(email.Type.KeyName))
 	table.Add("Vendor", utils.FormatStringPointer(email.Vendor.KeyName))
 
-	statistics, err := cmd.EmailManager.GetStatistics(*email.Id)
-	if err != nil {
-		return slErr.NewAPIError(T("Failed to get Statistics."), err.Error(), 2)
-	}
-	for _, statistic := range statistics {
-		PrintStatistics(statistic, statisticsTable, cmd.UI, outputFormat)
-	}
+	//Commented these lines until we fix EmailManager.GetStatistics() method
+	/*
+		statistics, err := cmd.EmailManager.GetStatistics(*email.Id)
+		if err != nil {
+			return slErr.NewAPIError(T("Failed to get Statistics."), err.Error(), 2)
+		}
+		for _, statistic := range statistics {
+			PrintStatistics(statistic, statisticsTable, cmd.UI, outputFormat)
+		}
 
-	table.Add(
-		"Statistics",
-		bufStatistics.String(),
-	)
+		table.Add(
+			"Statistics",
+			bufStatistics.String(),
+		)
+	*/
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
 }

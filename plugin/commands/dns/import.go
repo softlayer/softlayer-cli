@@ -1,21 +1,17 @@
 package dns
 
 import (
-	"io/ioutil"
-	"strconv"
-	"strings"
-
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-
 	"github.com/miekg/dns"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/spf13/cobra"
-	
+	"os"
+	"strings"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
 type ImportCommand struct {
@@ -49,97 +45,153 @@ EXAMPLE:
 }
 
 func (cmd *ImportCommand) Run(args []string) error {
-	bytes, err := ioutil.ReadFile(args[0])
+	zoneFile, err := os.Open(args[0])
 	if err != nil {
 		return errors.NewAPIError(T("Failed to read file: {{.FilePath}}.\n", map[string]interface{}{"FilePath": args[0]}), err.Error(), 2)
 	}
-	zone, records, err := parseFileContent(string(bytes))
-	if err != nil {
-		return errors.NewAPIError(T("Failed to parse file.\n"), err.Error(), 2)
-	}
+	tld := ""
 
-	if cmd.DryRun {
-		cmd.UI.Ok()
-		return nil
-	}
+	zone := datatypes.Dns_Domain{}
+	zoneParser := dns.NewZoneParser(zoneFile, "", args[0])
+	// Go through the zone file line by line
+	for rr, ok := zoneParser.Next(); ok; rr, ok = zoneParser.Next() {
+		header := rr.Header()
+		// If we dont know what the TLD is yet, figure it out.
+		if tld == "" {
+			tld = strings.TrimSuffix(header.Name, ".")
+			zone, err = CreateOrGetZone(tld, cmd.DNSManager)
+			if err != nil {
+				subs := map[string]interface{}{"ZoneName": tld}
+				return errors.NewAPIError(T("Failed to create zone: {{.ZoneName}}.\n", subs), err.Error(), 2)
+			}
+			cmd.UI.Print(T("Domain: {{.Domain}} Id: {{.Id}}", map[string]interface{}{"Domain": tld, "Id": *zone.Id}))
+		} // END TLD == ""
 
-	dnsDomain, err := cmd.DNSManager.CreateZone(*zone.Name) //parseFileContent can guarantee zone.name is not nil
-	if err != nil {
-		return errors.NewAPIError(T("Failed to create zone: {{.ZoneName}}.\n", map[string]interface{}{"ZoneName": *zone.Name}), err.Error(), 2)
-	}
-	cmd.UI.Print(T("Zone {{.Zone}} was created.", map[string]interface{}{"Zone": utils.StringPointertoString(dnsDomain.Name)}))
-
-	var multiErrors []error
-	for _, record := range records {
-		rr, err := cmd.DNSManager.CreateResourceRecord(*dnsDomain.Id, *record.Host, *record.Type, *record.Data, *record.Ttl)
-		if err != nil {
-			newError := errors.New(T("Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}",
-				map[string]interface{}{"Zone": zone, "RecordType": *rr.Type, "Host": *rr.Host, "Data": *rr.Data, "Ttl": *rr.Ttl, "ErrorMessage": err.Error()}))
-			multiErrors = append(multiErrors, newError)
+		record := datatypes.Dns_Domain_ResourceRecord{}
+		// Set the DomainId to the Zone we are creating this record under
+		record.DomainId = zone.Id
+		// Set a default TTL incase the record doesn't have one
+		record.Ttl = sl.Int(3600)
+		// This is the full record name. `www.example.com`
+		fqdn := strings.TrimSuffix(header.Name, ".")
+		// Just the domain part. `www`, or if its blank, set to `@`
+		domain := strings.TrimSuffix(fqdn, tld)
+		if domain == "" {
+			record.Host = sl.String("@")
 		} else {
-			cmd.UI.Print(T("Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
-				map[string]interface{}{"Zone": zone, "ID": *rr.Id, "RecordType": *rr.Type, "Host": *rr.Host, "Data": *rr.Data, "Ttl": *rr.Ttl}))
+			// The SL API assumes the hostpart will not end with .
+			record.Host = sl.String(strings.TrimSuffix(domain, "."))
 		}
+
+		record.Type = sl.String(dns.TypeToString[header.Rrtype])
+		record.Ttl = sl.Int(int(header.Ttl))
+		record.Data = sl.String("")
+		created := false
+		if cmd.DryRun {
+			record.Data = sl.String(dns.Field(rr, 1))
+			created = false
+		} else {
+			created, err = CreateRecord(&record, rr, cmd.DNSManager)
+			if err != nil {
+				return err
+			}
+		}
+		outSubs := map[string]interface{}{
+			"Host": *record.Host,
+			"TTL":  *record.Ttl,
+			"Type": *record.Type,
+			"Data": *record.Data,
+		}
+		if created {
+			cmd.UI.Print(T("Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}", outSubs))
+		} else {
+			cmd.UI.Print(T("Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}", outSubs))
+		}
+
+	} // END for rr, ok
+	// Detect any errors in parsing the Zone file
+	if err := zoneParser.Err(); err != nil {
+		return err
+	}
+	// This zone file was empty, but the dns library doesn't consider that an error.
+	if tld == "" {
+		return errors.New(T("Unable to parse zone from BIND file."))
 	}
 
-	if len(multiErrors) > 0 {
-		return errors.CollapseErrors(multiErrors)
-	}
 	return nil
 }
 
-func parseFileContent(content string) (datatypes.Dns_Domain, []datatypes.Dns_Domain_ResourceRecord, error) {
-	zone := datatypes.Dns_Domain{}
-	records := []datatypes.Dns_Domain_ResourceRecord{}
-	lines := strings.Split(content, "\n")
-	if strings.HasPrefix(lines[0], "$ORIGIN") {
-		zone.Name = sl.String(strings.TrimRight(strings.Replace(lines[0], "$ORIGIN", "", -1), "."))
-	} else {
-		return datatypes.Dns_Domain{}, nil, errors.New(T("Unable to parse zone from BIND file."))
-	}
-	for x := range dns.ParseZone(strings.NewReader(content), "", "") {
-		if x.Error != nil {
-			return datatypes.Dns_Domain{}, nil, x.Error
-		}
-		record := datatypes.Dns_Domain_ResourceRecord{Domain: &zone}
-		//fmt.Println("RR", x.RR.String())
-		arrs := strings.Split(x.RR.String(), "\t")
-		fqdn := strings.TrimSuffix(strings.TrimSpace(arrs[0]), "\t")
-		domain := strings.TrimSpace(*zone.Name)
-		index := strings.Index(fqdn, domain)
-		host := ""
-		if index > 0 {
-			host = strings.TrimRight(fqdn[0:index], ".")
-		}
-		if host == "" {
-			record.Host = sl.String("@")
+func CreateOrGetZone(tld string, manager managers.DNSManager) (datatypes.Dns_Domain, error) {
+	zone, createZoneErr := manager.CreateZone(tld)
+	// Possibly this zone exists already
+	if createZoneErr != nil {
+		zoneId, getZoneErr := manager.GetZoneIdFromName(tld)
+		// Error creating zone, and getting a zone with this name, failure.
+		if getZoneErr != nil {
+			return zone, createZoneErr
 		} else {
-			record.Host = sl.String(host)
+			zone.Id = sl.Int(zoneId)
+			zone.Name = sl.String(tld)
 		}
-		record.Type = sl.String(dns.Type(x.RR.Header().Rrtype).String())
-		record.Ttl = sl.Int(int(x.RR.Header().Ttl))
-		if *record.Type == "SOA" {
-			continue //skip SOA record in records
-		} else if *record.Type == "NS" {
-			record.Data = sl.String(arrs[4])
-			if *record.Host == "@" {
-				continue // skip the 2 default ns records
-			}
-		} else if *record.Type == "MX" {
-			ss := strings.Split(arrs[4], " ")
-			priority := 10
-			priority, _ = strconv.Atoi(ss[0])
-			record.Priority = sl.Int(priority)
-			record.Data = sl.String(ss[1])
-		} else if *record.Type == "TXT" {
-			record.Data = sl.String(strings.Trim(arrs[4], "\""))
-		} else {
-			record.Data = sl.String(arrs[4])
-		}
-		//fmt.Println("zone:", *record.Domain.Name, "\thost:", *record.Host, "\ttype:", *record.Type, "\tttl:", *record.Ttl, "\tdata:", *record.Data)
-		//fmt.Println()
-		records = append(records, record)
 	}
-	zone.ResourceRecords = records
-	return zone, records, nil
+	return zone, nil
+}
+
+// Returns true, nil when a record was created
+// false, nil when a record was not created
+// false, err when an error happens
+func CreateRecord(record *datatypes.Dns_Domain_ResourceRecord, rr dns.RR, manager managers.DNSManager) (bool, error) {
+	switch rr.(type) {
+	case *dns.NS:
+		if *record.Host == "@" {
+			return false, nil
+		}
+		record.Data = sl.String(rr.(*dns.NS).Ns)
+	case *dns.CNAME:
+		record.Data = sl.String(rr.(*dns.CNAME).Target)
+	case *dns.MX:
+		priority := int(rr.(*dns.MX).Preference)
+		record.Data = sl.String(rr.(*dns.MX).Mx)
+		record.MxPriority = sl.Int(priority)
+	case *dns.TXT:
+		data := strings.Join(rr.(*dns.TXT).Txt, " ")
+		record.Data = sl.String(strings.Trim(data, "\""))
+	case *dns.SRV:
+		srvrr := rr.(*dns.SRV)
+		parts := strings.Split(srvrr.Header().Name, ".")
+		if len(parts) < 3 {
+			subs := map[string]interface{}{"sub": srvrr.String()}
+			return false, errors.New(T("Invalid SRV record: {{.sub}}.", subs))
+		}
+		srvRecord := datatypes.Dns_Domain_ResourceRecord_SrvType{}
+		priority := int(srvrr.Priority)
+		srvRecord.DomainId = record.DomainId
+		srvRecord.Type = record.Type
+		srvRecord.Ttl = record.Ttl
+		srvRecord.Host = record.Host
+		srvRecord.Priority = sl.Int(priority)
+		srvRecord.Port = sl.Int(int(srvrr.Port))
+		srvRecord.Weight = sl.Int(int(srvrr.Weight))
+		srvRecord.Data = sl.String(srvrr.Target)
+		srvRecord.Service = sl.String(parts[0])
+		srvRecord.Protocol = sl.String(parts[1])
+		// So we can add this to our output at the end
+		record.Data = sl.String(rr.(*dns.SRV).Target)
+		_, err := manager.SrvResourceRecordCreate(srvRecord)
+		if err != nil {
+			return false, err
+		} else {
+			return true, nil
+		}
+	case *dns.SOA:
+		return false, nil
+	default:
+		// Sets data to the end bit of the resource record, basically.
+		record.Data = sl.String(dns.Field(rr, 1))
+	}
+	_, err := manager.ResourceRecordCreate(*record)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }

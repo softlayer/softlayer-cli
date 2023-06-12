@@ -23,6 +23,7 @@ var availableCommands = []string{
 	"create-options",
 	"detail",
 	"list-guests",
+	"list",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
@@ -32,7 +33,7 @@ var _ = Describe("Test dedicatedhost.GetCommandActionBindings()", func() {
 	slMeta := metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 	Context("New commands testable", func() {
 		commands := dedicatedhost.SetupCobraCommands(slMeta)
-		
+
 		var arrayCommands = []string{}
 		for _, command := range commands.Commands() {
 			commandName := command.Name()

@@ -20,6 +20,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewCredentialLimitCommand(sl).Command)
 	cobraCmd.AddCommand(NewCredentialListCommand(sl).Command)
 	cobraCmd.AddCommand(NewEndpointsCommand(sl).Command)
+	cobraCmd.AddCommand(NewDeleteCommand(sl).Command)
 	return cobraCmd
 }
 

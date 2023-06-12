@@ -13,6 +13,8 @@ import (
 	"github.com/softlayer/softlayer-go/filter"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
+	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
@@ -22,8 +24,8 @@ const (
 	GET_USER_MASK  = "mask[id, firstName, lastName, email, companyName, address1, city, country, postalCode, state, userStatusId, timezoneId]"
 )
 
-//Manages SoftLayer Block and File Storage volumes.
-//See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
+// Manages SoftLayer Block and File Storage volumes.
+// See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
 type UserManager interface {
 	ListUsers(mask string) ([]datatypes.User_Customer, error)
 	GetUser(userId int, mask string) (datatypes.User_Customer, error)
@@ -40,6 +42,8 @@ type UserManager interface {
 	CreateUser(templateObject datatypes.User_Customer, password string, vpnPassword string) (datatypes.User_Customer, error)
 	EditUser(templateObject datatypes.User_Customer, UserId int) (bool, error)
 	AddApiAuthenticationKey(UserId int) (string, error)
+	GetApiAuthenticationKeys(userId int) ([]datatypes.User_Customer_ApiAuthentication, error)
+	RemoveApiAuthenticationKey(userId int) (bool, error)
 	GetAllNotifications(mask string) ([]datatypes.Email_Subscription, error)
 	EnableEmailSubscriptionNotification(notificationId int) (bool, error)
 	DisableEmailSubscriptionNotification(notificationId int) (bool, error)
@@ -53,6 +57,11 @@ type UserManager interface {
 	GetDedicatedHosts(userId int, mask string) ([]datatypes.Virtual_DedicatedHost, error)
 	GetHardware(userId int, mask string) ([]datatypes.Hardware, error)
 	GetVirtualGuests(userId int, mask string) ([]datatypes.Virtual_Guest, error)
+	CreateUserVpnOverride(userId int, subnetId int) (bool, error)
+	UpdateVpnUser(userId int) (bool, error)
+	GetOverrides(userId int) ([]datatypes.Network_Service_Vpn_Overrides, error)
+	DeleteUserVpnOverride(overrideId int) (bool, error)
+	UpdateVpnPassword(userID int, password string) (bool, error)
 }
 
 type userManager struct {
@@ -61,6 +70,8 @@ type userManager struct {
 	UserPermissionService services.User_Customer_CustomerPermission_Permission
 	EventLogService       services.Event_Log
 	Email_Subscription    services.Email_Subscription
+	UserPermissionAction  services.User_Permission_Action
+	Session               *session.Session
 }
 
 func NewUserManager(session *session.Session) *userManager {
@@ -70,6 +81,8 @@ func NewUserManager(session *session.Session) *userManager {
 		services.GetUserCustomerCustomerPermissionPermissionService(session),
 		services.GetEventLogService(session),
 		services.GetEmailSubscriptionService(session),
+		services.GetUserPermissionActionService(session),
+		session,
 	}
 }
 
@@ -92,12 +105,23 @@ func (u userManager) GetCurrentUser() (datatypes.User_Customer, error) {
 }
 
 func (u userManager) GetAllPermission() ([]datatypes.User_Customer_CustomerPermission_Permission, error) {
-	permissions, err := u.UserPermissionService.GetAllObjects()
+	permissions, err := u.UserPermissionAction.GetAllObjects()
 	if err != nil {
 		return nil, err
 	}
-	sort.Sort(utils.PermissionsBykeyName(permissions))
-	return permissions, nil
+
+	// parsing permission from datatypes.User_Permission_Action to datatypes.User_Customer_CustomerPermission_Permission
+	parsedPermission := []datatypes.User_Customer_CustomerPermission_Permission{}
+	for _, permission := range permissions {
+		parsedPermission = append(parsedPermission, datatypes.User_Customer_CustomerPermission_Permission{
+			Key:     sl.String(utils.FormatStringPointer(permission.Key)),
+			KeyName: sl.String(utils.FormatStringPointer(permission.KeyName)),
+			Name:    sl.String(utils.FormatStringPointer(permission.Name)),
+		})
+	}
+
+	sort.Sort(utils.PermissionsBykeyName(parsedPermission))
+	return parsedPermission, nil
 }
 
 func (u userManager) AddPermission(userId int, permissions []datatypes.User_Customer_CustomerPermission_Permission) (bool, error) {
@@ -110,6 +134,7 @@ func (u userManager) RemovePermission(userId int, permissions []datatypes.User_C
 
 func (u userManager) PermissionFromUser(userId, fromUserId int) error {
 	fromPermission, err := u.GetUserPermissions(fromUserId)
+
 	if err != nil {
 		return err
 	}
@@ -142,11 +167,20 @@ func (u userManager) PermissionFromUser(userId, fromUserId int) error {
 }
 
 func (u userManager) GetUserPermissions(userId int) ([]datatypes.User_Customer_CustomerPermission_Permission, error) {
-	permissions, err := u.UserCustomerService.Id(userId).GetPermissions()
+	var permissions []datatypes.User_Customer_CustomerPermission_Permission
+	var err error
+	isMasterUser, err := u.UserCustomerService.Id(userId).IsMasterUser()
+	if isMasterUser {
+		permissions, err = u.GetAllPermission()
+	} else {
+		permissions, err = u.UserCustomerService.Id(userId).GetPermissions()
+	}
+
 	if err != nil {
 		return nil, err
 	}
 	sort.Sort(utils.PermissionsBykeyName(permissions))
+
 	return permissions, err
 }
 
@@ -298,4 +332,63 @@ func (u userManager) GetVirtualGuests(userId int, mask string) ([]datatypes.Virt
 		mask = "mask[id,fullyQualifiedDomainName,primaryIpAddress,primaryBackendIpAddress,notes]"
 	}
 	return u.UserCustomerService.Id(userId).GetVirtualGuests()
+}
+
+// Create Softlayer portal user VPN overrides.
+// int userId: The user customer identifier.
+// int subnetId: The subnet identifier.
+func (u userManager) CreateUserVpnOverride(userId int, subnetId int) (bool, error) {
+	vpnOverrideTemplates := []datatypes.Network_Service_Vpn_Overrides{
+		datatypes.Network_Service_Vpn_Overrides{
+			UserId:   sl.Int(userId),
+			SubnetId: sl.Int(subnetId),
+		},
+	}
+	networkServiceVpnOverridesService := services.GetNetworkServiceVpnOverridesService(u.Session)
+	return networkServiceVpnOverridesService.CreateObjects(vpnOverrideTemplates)
+}
+
+// Creates or updates a user’s VPN access privileges.
+// int userId: The user customer identifier.
+func (u userManager) UpdateVpnUser(userId int) (bool, error) {
+	return u.UserCustomerService.Id(userId).UpdateVpnUser()
+}
+
+// Return user’s vpn accessible subnets.
+// int userId: The user customer identifier.
+func (u userManager) GetOverrides(userId int) ([]datatypes.Network_Service_Vpn_Overrides, error) {
+	return u.UserCustomerService.Id(userId).GetOverrides()
+}
+
+// Delete overrides.
+// int overrideId: Override to be deleted.
+func (u userManager) DeleteUserVpnOverride(overrideId int) (bool, error) {
+	networkServiceVpnOverridesService := services.GetNetworkServiceVpnOverridesService(u.Session)
+	return networkServiceVpnOverridesService.Id(overrideId).DeleteObject()
+}
+
+// Update a user’s VPN password.
+// int userID: The user customer identifier.
+// string password: New password
+func (u userManager) UpdateVpnPassword(userID int, password string) (bool, error) {
+	return u.UserCustomerService.Id(userID).UpdateVpnPassword(&password)
+}
+
+// Returns user's API authentication keys.
+// int keyId: The user customer identifier.
+func (u userManager) GetApiAuthenticationKeys(userId int) ([]datatypes.User_Customer_ApiAuthentication, error) {
+	return u.UserCustomerService.Id(userId).GetApiAuthenticationKeys()
+}
+
+// Remove user's API authentication key.
+// int userId: The user customer identifier.
+func (u userManager) RemoveApiAuthenticationKey(userId int) (bool, error) {
+	apiAuthenticationKeys, err := u.GetApiAuthenticationKeys(userId)
+	if err != nil {
+		return false, slErrors.NewAPIError(T("Failed to get user's API authentication keys"), err.Error(), 2)
+	}
+	if len(apiAuthenticationKeys) == 0 {
+		return true, nil
+	}
+	return u.UserCustomerService.RemoveApiAuthenticationKey(apiAuthenticationKeys[0].Id)
 }

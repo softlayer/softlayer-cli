@@ -16,7 +16,6 @@ import (
 
 const (
 	DEFAULT_IP_MASK            = "hardware,virtualGuest,subnet[id,networkIdentifier,cidr,netmask,gateway,subnetType]"
-	DEFAULT_GLOBALIP_MASK      = "id,ipAddress,destinationIpAddress[ipAddress,virtualGuest.fullyQualifiedDomainName,hardware.fullyQualifiedDomainName]"
 	DEFAULT_SUBNET_MASK        = "id,datacenter.name,hardware.id,ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests.id"
 	DEFAULT_SUBNET_DETAIL_MASK = "id,broadcastAddress,cidr,datacenter.name,gateway,hardware[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress],ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress]"
 	DEFAULT_VLAN_MASK          = "firewallInterfaces,hardwareCount,primaryRouter[id, fullyQualifiedDomainName, datacenter],subnetCount,billingItem,totalPrimaryIpAddressCount,virtualGuestCount,networkSpace,networkVlanFirewall[id,fullyQualifiedDomainName,primaryIpAddress],attachedNetworkGateway[id,name,networkFirewall],tagReferences[tag[name]]"
@@ -28,8 +27,8 @@ const (
 		"networkComponentBindings[networkComponent[id,port,guest[id,hostname,primaryBackendIpAddress,primaryIpAddress]]]"
 )
 
-//Manage SoftLayer network objects: VLANs, subnets and GlobalIPs.
-//See product information here: http://www.softlayer.com/networking
+// Manage SoftLayer network objects: VLANs, subnets and GlobalIPs.
+// See product information here: http://www.softlayer.com/networking
 type NetworkManager interface {
 	AddVlan(vlanType string, datacenter string, router string, name string) (datatypes.Container_Product_Order_Receipt, error)
 	AddGlobalIP(version int, test bool) (datatypes.Container_Product_Order_Receipt, error)
@@ -73,8 +72,10 @@ type NetworkManager interface {
 	SetSubnetTags(subnetId int, tags string) (bool, error)
 	SetSubnetNote(subnetId int, note string) (bool, error)
 	GetPods(mask string) ([]datatypes.Network_Pod, error)
+	GetClosingPods() ([]datatypes.Network_Pod, error)
 	GetIpByAddress(ipAddress string) (datatypes.Network_Subnet_IpAddress, error)
 	EditSubnetIpAddress(subnetIpAddressId int, subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress) (bool, error)
+	GetRouters(mask string) ([]datatypes.Hardware, error)
 }
 
 type networkManager struct {
@@ -107,11 +108,11 @@ func NewNetworkManager(session *session.Session) *networkManager {
 	}
 }
 
-//Add a vlan to the account
-//vlanType: type of a vlan, public or private
-//datacenter: short name of datacenter
-//router: full qualified domain name of the router a new vlan is placed to, fcr.XXX means a public vlan router, bcr.xxx means a private vlan router
-//name: vlan name
+// Add a vlan to the account
+// vlanType: type of a vlan, public or private
+// datacenter: short name of datacenter
+// router: full qualified domain name of the router a new vlan is placed to, fcr.XXX means a public vlan router, bcr.xxx means a private vlan router
+// name: vlan name
 func (n networkManager) AddVlan(vlanType string, datacenter string, router string, name string) (datatypes.Container_Product_Order_Receipt, error) {
 	var routerHostname string
 	if router != "" {
@@ -188,9 +189,9 @@ func (n networkManager) AddVlan(vlanType string, datacenter string, router strin
 	return n.OrderService.PlaceOrder(&vlanOrder, sl.Bool(false))
 }
 
-//Edit vlan's name
-//vlanId: ID of vlan
-//name: name of vlan
+// Edit vlan's name
+// vlanId: ID of vlan
+// name: name of vlan
 func (n networkManager) EditVlan(vlanId int, name string) error {
 	vlan := datatypes.Network_Vlan{
 		Name: sl.String(name),
@@ -199,18 +200,18 @@ func (n networkManager) EditVlan(vlanId int, name string) error {
 	return err
 }
 
-//Add a global IP address to the account
-//version: Specifies whether this is IPv4 or IPv6
-//test: If true, this will only verify the order.
+// Add a global IP address to the account
+// version: Specifies whether this is IPv4 or IPv6
+// test: If true, this will only verify the order.
 func (n networkManager) AddGlobalIP(version int, test bool) (datatypes.Container_Product_Order_Receipt, error) {
 	return n.AddSubnet("global", 0, 0, version, test)
 }
 
-//Order a new subnet
-//subnetType: Type of subnet to add: private, public, global
-//quantity: Number of IPs in the subnet
-//version: 4 for IPv4, 6 for IPv6
-//test: If true, this will only verify the order.
+// Order a new subnet
+// subnetType: Type of subnet to add: private, public, global
+// quantity: Number of IPs in the subnet
+// version: 4 for IPv4, 6 for IPv6
+// test: If true, this will only verify the order.
 func (n networkManager) AddSubnet(subnetType string, quantity int, vlanID int, version int, test bool) (datatypes.Container_Product_Order_Receipt, error) {
 	category := "sov_sec_ip_addresses_priv"
 	desc := ""
@@ -282,21 +283,22 @@ func (n networkManager) AddSubnet(subnetType string, quantity int, vlanID int, v
 	return n.OrderService.PlaceOrder(&subnetOrder, sl.Bool(false))
 }
 
-//Assign a global IP address to a specified target
-//globalIPID: The ID of the global IP being assigned
-//targetIPAddress: The IP address to assign
+// Assign a global IP address to a specified target
+// globalIPID: The ID of the global IP being assigned
+// targetIPAddress: The IP address to assign
 func (n networkManager) AssignGlobalIP(globalIPID int, targetIPAddress string) (bool, error) {
-	return n.GlobalIPService.Id(globalIPID).Route(&targetIPAddress)
+	routeType := "SoftLayer_Network_Subnet_IpAddress"
+	return n.SubnetService.Id(globalIPID).Route(&routeType, &targetIPAddress)
 }
 
-//Unassign a global IP address from a target
-//globalIPID: The ID of the global IP to be cancelled.
+// Unassign a global IP address from a target
+// globalIPID: The ID of the global IP to be cancelled.
 func (n networkManager) UnassignGlobalIP(globalIPID int) (bool, error) {
-	return n.GlobalIPService.Id(globalIPID).Unroute()
+	return n.SubnetService.Id(globalIPID).ClearRoute()
 }
 
-//Cancel the specifeid vlan.
-//vlanID: ID of vlan to be cancelled
+// Cancel the specifeid vlan.
+// vlanID: ID of vlan to be cancelled
 func (n networkManager) CancelVLAN(vlanID int) error {
 	vlan, err := n.VlanService.Id(vlanID).Mask("id, billingItem.id").GetObject()
 	if err != nil {
@@ -312,8 +314,8 @@ func (n networkManager) CancelVLAN(vlanID int) error {
 	return err
 }
 
-//Cancel the specifeid global IP address.
-//globalIPID: ID of globalip to be cancelled
+// Cancel the specifeid global IP address.
+// globalIPID: ID of globalip to be cancelled
 func (n networkManager) CancelGlobalIP(globalIPID int) error {
 	IPAddress, err := n.GlobalIPService.Id(globalIPID).Mask("id, billingItem.id").GetObject()
 	if err != nil {
@@ -327,8 +329,8 @@ func (n networkManager) CancelGlobalIP(globalIPID int) error {
 	return err
 }
 
-//Cancel the specifeid subnet
-//subnetId: ID of subnet to be cancelled
+// Cancel the specifeid subnet
+// subnetId: ID of subnet to be cancelled
 func (n networkManager) CancelSubnet(subnetId int) error {
 	subnet, err := n.GetSubnet(subnetId, "id, billingItem.id")
 	if err != nil {
@@ -345,9 +347,9 @@ func (n networkManager) CancelSubnet(subnetId int) error {
 	return err
 }
 
-//Returns information about a signle subnet.
-//subnetId: ID of subnet
-//mask: mask of properties
+// Returns information about a signle subnet.
+// subnetId: ID of subnet
+// mask: mask of properties
 func (n networkManager) GetSubnet(subnetId int, mask string) (datatypes.Network_Subnet, error) {
 	if mask == "" {
 		mask = DEFAULT_SUBNET_DETAIL_MASK
@@ -355,9 +357,9 @@ func (n networkManager) GetSubnet(subnetId int, mask string) (datatypes.Network_
 	return n.SubnetService.Id(subnetId).Mask(mask).GetObject()
 }
 
-//Returns information about a single VLAN
-//vlanId: ID of vlan
-//mask: mask of properties
+// Returns information about a single VLAN
+// vlanId: ID of vlan
+// mask: mask of properties
 func (n networkManager) GetVlan(vlanId int, mask string) (datatypes.Network_Vlan, error) {
 	if mask == "" {
 		mask = DEFAULT_VLAN_DETAIL_MASK
@@ -365,19 +367,19 @@ func (n networkManager) GetVlan(vlanId int, mask string) (datatypes.Network_Vlan
 	return n.VlanService.Id(vlanId).Mask(mask).GetObject()
 }
 
-//Looks up an IP address and returns network information about it.
-//ipAddress: the ip address to be looked up
+// Looks up an IP address and returns network information about it.
+// ipAddress: the ip address to be looked up
 func (n networkManager) IPLookup(ipAddress string) (datatypes.Network_Subnet_IpAddress, error) {
 	return n.IPService.Mask(DEFAULT_IP_MASK).GetByIpAddress(&ipAddress)
 }
 
-//List all subnets on the account
-//identifier: subnet identifier to be filtered
-//datacenter: datacenter shortname to be filtered
-//version: v4 or v6 to be filtered
-//subnetType: type of subnet to be filtered
-//networkSpace: vlan space (public or private) to be filtered
-//orderID: ID of order to be filtered
+// List all subnets on the account
+// identifier: subnet identifier to be filtered
+// datacenter: datacenter shortname to be filtered
+// version: v4 or v6 to be filtered
+// subnetType: type of subnet to be filtered
+// networkSpace: vlan space (public or private) to be filtered
+// orderID: ID of order to be filtered
 func (n networkManager) ListSubnets(identifier string, datacenter string, version int, subnetType string, networkSpace string, orderId int, mask string) ([]datatypes.Network_Subnet, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("subnets.id").OrderBy("ASC"))
@@ -392,8 +394,6 @@ func (n networkManager) ListSubnets(identifier string, datacenter string, versio
 	}
 	if subnetType != "" {
 		filters = append(filters, filter.Path("subnets.subnetType").Eq(subnetType))
-	} else {
-		filters = append(filters, filter.Path("subnets.subnetType").NotEq("GLOBAL_IP"))
 	}
 	if networkSpace != "" {
 		filters = append(filters, filter.Path("subnets.networkVlan.networkSpace").Eq(networkSpace))
@@ -424,40 +424,33 @@ func (n networkManager) ListSubnets(identifier string, datacenter string, versio
 	return resourceList, nil
 }
 
-//List all global ip records on current account
-//version:  4 for IPv4, 6 for IPv6 to be filtered
-//orderId: ID of order to be filtered
+// List all global ip records on current account
+// version:  4 for IPv4, 6 for IPv6 to be filtered
+// orderId: ID of order to be filtered
 func (n networkManager) ListGlobalIPs(version int, orderId int) ([]datatypes.Network_Subnet_IpAddress_Global, error) {
-	ips := []datatypes.Network_Subnet_IpAddress_Global{}
-	var err error
-	if version == 0 {
-		if orderId == 0 {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).GetGlobalIpRecords()
-		} else {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).Filter(filter.Path("globalIpRecords.billingItem.orderItem.order.id").Eq(orderId).Build()).GetGlobalIpRecords()
-		}
+	DEFAULT_GLOBALIP_MASK := `id, ipAddress[id, ipAddress, subnetId],
+destinationIpAddress[ipAddress,virtualGuest.fullyQualifiedDomainName,hardware.fullyQualifiedDomainName]`
 
-	} else if version == 4 {
-		if orderId == 0 {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).GetGlobalIpv4Records()
-		} else {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).Filter(filter.Path("globalIpv4Records.billingItem.orderItem.order.id").Eq(orderId).Build()).GetGlobalIpv4Records()
-		}
-	} else if version == 6 {
-		if orderId == 0 {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).GetGlobalIpv6Records()
-		} else {
-			ips, err = n.AccountService.Mask(DEFAULT_GLOBALIP_MASK).Filter(filter.Path("globalIpv6Records.billingItem.orderItem.order.id").Eq(orderId).Build()).GetGlobalIpv6Records()
-		}
+	orderFilter := filter.Path("globalIpRecords.billingItem.orderItem.order.id").Eq(orderId).Build()
+	gipService := n.AccountService.Mask(DEFAULT_GLOBALIP_MASK)
+	if orderId != 0 {
+		return gipService.Filter(orderFilter).GetGlobalIpRecords()
 	}
-	return ips, err
+	if version == 4 {
+		return gipService.GetGlobalIpv4Records()
+	} else if version == 6 {
+		return gipService.GetGlobalIpv6Records()
+	}
+
+	return gipService.GetGlobalIpRecords()
+
 }
 
-//List all VLANs on the account, filter by datacenter name, vlan number, and vlan name
-//datacenter: datacenter shortname to be filtered
-//vlanNum: number of vlan to be filtered
-//name: name of vlan to be filtered
-//orderId: ID of order to be filtered
+// List all VLANs on the account, filter by datacenter name, vlan number, and vlan name
+// datacenter: datacenter shortname to be filtered
+// vlanNum: number of vlan to be filtered
+// name: name of vlan to be filtered
+// orderId: ID of order to be filtered
 func (n networkManager) ListVlans(datacenter string, vlanNum int, name string, orderId int, mask string) ([]datatypes.Network_Vlan, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("networkVlans.id").OrderBy("ASC"))
@@ -493,7 +486,7 @@ func (n networkManager) ListVlans(datacenter string, vlanNum int, name string, o
 	return resourceList, nil
 }
 
-//List all datacenters, key of the map is datacenter ID, value of the map is datacenter short name
+// List all datacenters, key of the map is datacenter ID, value of the map is datacenter short name
 func (n networkManager) ListDatacenters() (map[int]string, error) {
 	datacenters, err := n.LocationService.GetDatacenters()
 	if err != nil {
@@ -508,8 +501,8 @@ func (n networkManager) ListDatacenters() (map[int]string, error) {
 	return result, nil
 }
 
-//List all routers in given datacenter
-//datacenterId: ID of datacenter
+// List all routers in given datacenter
+// datacenterId: ID of datacenter
 func (n networkManager) ListRouters(datacenterId int, mask string) ([]string, error) {
 	var routers []string
 	rs, err := n.LocationService.Id(datacenterId).Mask(mask).GetHardwareRouters()
@@ -524,8 +517,8 @@ func (n networkManager) ListRouters(datacenterId int, mask string) ([]string, er
 	return routers, nil
 }
 
-//Returns location id of datacenter for ProductOrder::placeOrder().
-//location: shortname of datacenter
+// Returns location id of datacenter for ProductOrder::placeOrder().
+// location: shortname of datacenter
 func (n networkManager) GetLocationId(location string) (int, error) {
 	filters := filter.New(filter.Path("name").Eq(location))
 	datacenters, err := n.LocationService.Mask("longName,id,name").Filter(filters.Build()).GetDatacenters()
@@ -540,14 +533,14 @@ func (n networkManager) GetLocationId(location string) (int, error) {
 	return 0, errors.New(T("Invalid datacenter name specified."))
 }
 
-//List security groups
+// List security groups
 func (n networkManager) ListSecurityGroups() ([]datatypes.Network_SecurityGroup, error) {
 	return n.SecurityGroupService.GetAllObjects()
 }
 
-//Create a security group
-//name: The name of the security group
-//description: The description of the security group
+// Create a security group
+// name: The name of the security group
+// description: The description of the security group
 func (n networkManager) CreateSecurityGroup(name, description string) (datatypes.Network_SecurityGroup, error) {
 	created := datatypes.Network_SecurityGroup{
 		Name:        sl.String(name),
@@ -556,9 +549,9 @@ func (n networkManager) CreateSecurityGroup(name, description string) (datatypes
 	return n.SecurityGroupService.CreateObject(&created)
 }
 
-//Return the information about the given security group
-//groupId: The ID of the security group
-//mask: the properties to be returned
+// Return the information about the given security group
+// groupId: The ID of the security group
+// mask: the properties to be returned
 func (n networkManager) GetSecurityGroup(groupId int, mask string) (datatypes.Network_SecurityGroup, error) {
 	if mask == "" {
 		mask = DEFAULT_SECURITYGROUP_MASK
@@ -566,17 +559,17 @@ func (n networkManager) GetSecurityGroup(groupId int, mask string) (datatypes.Ne
 	return n.SecurityGroupService.Id(groupId).Mask(mask).GetObject()
 }
 
-//Delete th specified security group
-//groupId: The ID of the security group
+// Delete th specified security group
+// groupId: The ID of the security group
 func (n networkManager) DeleteSecurityGroup(groupId int) error {
 	_, err := n.SecurityGroupService.Id(groupId).DeleteObject()
 	return err
 }
 
-//Edit security group details
-//groupId: the ID of the security group
-//name: the name of the security group
-//description: the description of the security group
+// Edit security group details
+// groupId: the ID of the security group
+// name: the name of the security group
+// description: the description of the security group
 func (n networkManager) EditSecurityGroup(groupId int, name, description string) error {
 	updated := datatypes.Network_SecurityGroup{}
 	if name != "" {
@@ -589,45 +582,45 @@ func (n networkManager) EditSecurityGroup(groupId int, name, description string)
 	return err
 }
 
-//Attach a network component to a security group
-//groupId: The ID of the security group
-//componentId: the ID of the network component to attach
+// Attach a network component to a security group
+// groupId: The ID of the security group
+// componentId: the ID of the network component to attach
 func (n networkManager) AttachSecurityGroupComponent(groupId, componentId int) error {
 	return n.AttachSecurityGroupComponents(groupId, []int{componentId})
 }
 
-//Attach network components to a security group
-//groupId: The ID of the security group
-//componentIds: the IDs of the network components to attach
+// Attach network components to a security group
+// groupId: The ID of the security group
+// componentIds: the IDs of the network components to attach
 func (n networkManager) AttachSecurityGroupComponents(groupId int, componentIds []int) error {
 	_, err := n.SecurityGroupService.Id(groupId).AttachNetworkComponents(componentIds)
 	return err
 }
 
-//Detach a network component to a security group
-//groupId: The ID of the security group
-//componentId: the ID of the network component to detach
+// Detach a network component to a security group
+// groupId: The ID of the security group
+// componentId: the ID of the network component to detach
 func (n networkManager) DetachSecurityGroupComponent(groupId, componentId int) error {
 	return n.DetachSecurityGroupComponents(groupId, []int{componentId})
 }
 
-//Detach network components from a security group
-//groupId: The ID of the security group
-//componentIds: the IDs of the network components to detach
+// Detach network components from a security group
+// groupId: The ID of the security group
+// componentIds: the IDs of the network components to detach
 func (n networkManager) DetachSecurityGroupComponents(groupId int, componentIds []int) error {
 	_, err := n.SecurityGroupService.Id(groupId).DetachNetworkComponents(componentIds)
 	return err
 }
 
-//Add a rule to a security group
-//groupId: The ID of the security group to add this rule to
-//remoteIp: the remote IP or CIDR to enforce the rule on
-//remoteGroup: the remote security group ID to enfore the rule on
-//direction: the direction to enforce (egress or ingress)
-//etherType: the etherType to enforce (IPv4 or IPv6)
-//portMax: the upper port bound to enforce
-//portMin: the lower port bound to enforce
-//protocol: the portocol to enforce (icmp, udp, tcp)
+// Add a rule to a security group
+// groupId: The ID of the security group to add this rule to
+// remoteIp: the remote IP or CIDR to enforce the rule on
+// remoteGroup: the remote security group ID to enfore the rule on
+// direction: the direction to enforce (egress or ingress)
+// etherType: the etherType to enforce (IPv4 or IPv6)
+// portMax: the upper port bound to enforce
+// portMin: the lower port bound to enforce
+// protocol: the portocol to enforce (icmp, udp, tcp)
 func (n networkManager) AddSecurityGroupRule(groupId int, remoteIp string, remoteGroup int, direction string, etherType string, portMax, portMin int, protocol string) (datatypes.Network_SecurityGroup_Rule, error) {
 	rule := datatypes.Network_SecurityGroup_Rule{Direction: sl.String(direction)}
 	if etherType != "" {
@@ -655,9 +648,9 @@ func (n networkManager) AddSecurityGroupRule(groupId int, remoteIp string, remot
 	return rule, nil
 }
 
-//Add rules to a security group
-//groupId: The ID of the security group to add rules to
-//rules: rules to be added to the security group
+// Add rules to a security group
+// groupId: The ID of the security group to add rules to
+// rules: rules to be added to the security group
 func (n networkManager) AddSecurityGroupRules(groupId int, rules []datatypes.Network_SecurityGroup_Rule) ([]datatypes.Network_SecurityGroup_Rule, error) {
 	_, err := n.SecurityGroupService.Id(groupId).AddRules(rules)
 	if err != nil {
@@ -666,16 +659,16 @@ func (n networkManager) AddSecurityGroupRules(groupId int, rules []datatypes.Net
 	return rules, err
 }
 
-//Edit a security group rule
-//groupId: The ID of the security group the rule belongs to
-//ruleId: The ID of the rule to edit
-//remoteIp: the remote IP or CIDR to enforce the rule on
-//remoteGroup: the remote security group ID to enfore the rule on
-//direction: the direction to enforce (egress or ingress)
-//etherType: the etherType to enforce (IPv4 or IPv6)
-//portMax: the upper port bound to enforce
-//portMin: the lower port bound to enforce
-//protocol: the portocol to enforce (icmp, udp, tcp)
+// Edit a security group rule
+// groupId: The ID of the security group the rule belongs to
+// ruleId: The ID of the rule to edit
+// remoteIp: the remote IP or CIDR to enforce the rule on
+// remoteGroup: the remote security group ID to enfore the rule on
+// direction: the direction to enforce (egress or ingress)
+// etherType: the etherType to enforce (IPv4 or IPv6)
+// portMax: the upper port bound to enforce
+// portMin: the lower port bound to enforce
+// protocol: the portocol to enforce (icmp, udp, tcp)
 func (n networkManager) EditSecurityGroupRule(groupId, ruleId int, remoteIp string, remoteGroup int, direction string, etherType string, portMax, portMin int, protocol string) error {
 	rule := datatypes.Network_SecurityGroup_Rule{Id: sl.Int(ruleId)}
 	if remoteIp != "" {
@@ -702,38 +695,38 @@ func (n networkManager) EditSecurityGroupRule(groupId, ruleId int, remoteIp stri
 	return n.EditSecurityGroupRules(groupId, []datatypes.Network_SecurityGroup_Rule{rule})
 }
 
-//Edit a security group rule
-//groupId: The ID of the security group the rule belongs to
-//rules: The rules to edit
+// Edit a security group rule
+// groupId: The ID of the security group the rule belongs to
+// rules: The rules to edit
 func (n networkManager) EditSecurityGroupRules(groupId int, rules []datatypes.Network_SecurityGroup_Rule) error {
 	_, err := n.SecurityGroupService.Id(groupId).EditRules(rules)
 	return err
 }
 
-//List security group rules associated with a security group
-//groupId: the ID of the security group to list rules for
+// List security group rules associated with a security group
+// groupId: the ID of the security group to list rules for
 func (n networkManager) ListSecurityGroupRules(groupId int) ([]datatypes.Network_SecurityGroup_Rule, error) {
 	return n.SecurityGroupService.Id(groupId).GetRules()
 }
 
-//Remove a rule from a security group
-//groupId: the ID of the security group
-//ruleId: the ID of the rule to remove
+// Remove a rule from a security group
+// groupId: the ID of the security group
+// ruleId: the ID of the rule to remove
 func (n networkManager) RemoveSecurityGroupRule(groupId, ruleId int) error {
 	return n.RemoveSecurityGroupRules(groupId, []int{ruleId})
 }
 
-//Remove rules from a security group
-//groupId: the ID of the security group
-//ruleIds: the list of Ids of the rules to remove
+// Remove rules from a security group
+// groupId: the ID of the security group
+// ruleIds: the list of Ids of the rules to remove
 func (n networkManager) RemoveSecurityGroupRules(groupId int, ruleIds []int) error {
 	_, err := n.SecurityGroupService.Id(groupId).RemoveRules(ruleIds)
 	return err
 }
 
-//Calls SoftLayer_Network_Vlan::getCancelFailureReasons()
-//vlanId Id for the vlan
-//returns a list of strings for why a vlan can not be cancelled.
+// Calls SoftLayer_Network_Vlan::getCancelFailureReasons()
+// vlanId Id for the vlan
+// returns a list of strings for why a vlan can not be cancelled.
 func (n networkManager) GetCancelFailureReasons(vlanId int) []string {
 	reasons, err := n.VlanService.Id(vlanId).GetCancelFailureReasons()
 	if err != nil {
@@ -742,16 +735,17 @@ func (n networkManager) GetCancelFailureReasons(vlanId int) []string {
 	return reasons
 }
 
-//This interface allows you to change the route of your Account Owned subnets.
-//subnetId int: The subnet identifier.
-//typeRoute string: type value in static routing: e.g. SoftLayer_Network_Subnet_IpAddress.
-//typeId string: The type identifier.
+// This interface allows you to change the route of your subnets.
+// subnetId int: The subnet identifier.
+// typeRoute string: type value in static routing: e.g. SoftLayer_Network_Subnet_IpAddress.
+// typeId string: The type identifier.
+// See Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/
 func (n networkManager) Route(subnetId int, typeRoute string, typeId string) (bool, error) {
 	return n.SubnetService.Id(subnetId).Route(&typeRoute, &typeId)
 }
 
-//This interface allows you to remove the route of your Account Owned subnets.
-//subnetId int: The subnet identifier.
+// This interface allows you to remove the route of your Account Owned subnets.
+// subnetId int: The subnet identifier.
 func (n networkManager) ClearRoute(subnetId int) (bool, error) {
 	return n.SubnetService.Id(subnetId).ClearRoute()
 }
@@ -781,6 +775,15 @@ func (n networkManager) GetPods(mask string) ([]datatypes.Network_Pod, error) {
 	return NetworkPodService.Mask(mask).Filter(filters.Build()).GetAllObjects()
 }
 
+func (n networkManager) GetClosingPods() ([]datatypes.Network_Pod, error) {
+	filters := filter.New()
+	filters = append(filters, filter.Path("networkVlans.id").OrderBy("ASC"))
+	filters = append(filters, filter.Path("capabilities").In("CLOSURE_ANNOUNCED"))
+
+	NetworkPodService := services.GetNetworkPodService(n.Session)
+	return NetworkPodService.Filter(filters.Build()).GetAllObjects()
+}
+
 // Get ip object by address.
 // ipAddress string: ip address to find.
 func (n networkManager) GetIpByAddress(ipAddress string) (datatypes.Network_Subnet_IpAddress, error) {
@@ -792,4 +795,12 @@ func (n networkManager) GetIpByAddress(ipAddress string) (datatypes.Network_Subn
 // subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress: New subnet ip address templatet.
 func (n networkManager) EditSubnetIpAddress(subnetIpAddressId int, subnetIpAddressTemplate datatypes.Network_Subnet_IpAddress) (bool, error) {
 	return n.IPService.Id(subnetIpAddressId).EditObject(&subnetIpAddressTemplate)
+}
+
+// https://sldn.softlayer.com/reference/services/SoftLayer_Account/getRouters/
+func (n networkManager) GetRouters(mask string) ([]datatypes.Hardware, error) {
+	if mask == "" {
+		mask = "topLevelLocation"
+	}
+	return n.AccountService.Mask(mask).GetRouters()
 }

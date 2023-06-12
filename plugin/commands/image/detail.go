@@ -1,9 +1,11 @@
 package image
 
 import (
-	"fmt"
+	"bytes"
 	"strconv"
 
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -55,12 +57,6 @@ func (cmd *DetailCommand) Run(args []string) error {
 		return utils.PrintPrettyJSON(cmd.UI, image)
 	}
 
-	diskspace := 0
-	for _, child := range image.Children {
-		if child.BlockDevicesDiskSpaceTotal != nil {
-			diskspace += int(*child.BlockDevicesDiskSpaceTotal)
-		}
-	}
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add(T("ID"), utils.FormatIntPointer(image.Id))
 	table.Add(T("global_identifier"), utils.FormatStringPointer(image.GlobalIdentifier))
@@ -72,6 +68,13 @@ func (cmd *DetailCommand) Run(args []string) error {
 	}
 
 	table.Add(T("account"), utils.FormatIntPointer(image.AccountId))
+	table.Add(T("created"), utils.FormatSLTimePointer(image.CreateDate))
+
+	diskSpace := "-"
+	if image.FirstChild != nil {
+		diskSpace = utils.B2GB(int(*image.FirstChild.BlockDevicesDiskSpaceTotal))
+	}
+	table.Add(T("disk space"), diskSpace)
 
 	if image.PublicFlag != nil && *image.PublicFlag == 1 {
 		table.Add(T("visibility"), T("Public"))
@@ -86,18 +89,84 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	table.Add(T("flex"), utils.FormatBoolPointer(image.FlexImageFlag))
 	table.Add(T("note"), utils.FormatStringPointer(image.Note))
-	table.Add(T("created"), utils.FormatSLTimePointer(image.CreateDate))
-	table.Add(T("disk_space"), utils.B2GB(diskspace))
-	table.Add(T("datacenter"), "-------------------------------")
-	for _, child := range image.Children {
-		transaction := ""
 
-		if child.Transaction != nil && child.Transaction.TransactionStatus != nil {
-			transaction = fmt.Sprintf("(%s)", utils.FormatStringPointer(child.Transaction.TransactionStatus.Name))
+	os := "-"
+	if image.Children[0].BlockDevices != nil && len(image.Children[0].BlockDevices) != 0 {
+		for _, blockDevice := range image.Children[0].BlockDevices {
+			if blockDevice.DiskImage.SoftwareReferences != nil && len(blockDevice.DiskImage.SoftwareReferences) != 0 {
+				os = *blockDevice.DiskImage.SoftwareReferences[0].SoftwareDescription.LongDescription
+			}
 		}
-		message := fmt.Sprintf("%s %s", utils.B2GB(int(*child.BlockDevicesDiskSpaceTotal)), transaction)
-		table.Add(utils.FormatStringPointer(child.Datacenter.Name), message)
 	}
+	table.Add(T("os"), os)
+	table.Add(T("datacenters"), getDatacenters(image.Children, cmd.UI, outputFormat))
+	table.Add(T("virtual disks"), getVirtualDisks(image.Children, cmd.UI, outputFormat))
+	table.Add(T("share image"), getShareImages(image, cmd.UI, outputFormat))
 	table.Print()
 	return nil
+}
+
+func getDatacenters(childrens []datatypes.Virtual_Guest_Block_Device_Template_Group, ui terminal.UI, outputFormat string) string {
+	bufTable := new(bytes.Buffer)
+	table := terminal.NewTable(bufTable, []string{
+		T("Data Center"),
+		T("Size"),
+	})
+	for _, child := range childrens {
+		table.Add(
+			utils.FormatStringPointer(child.Datacenter.Name),
+			utils.B2GB(int(*child.BlockDevicesDiskSpaceTotal)),
+		)
+	}
+	utils.PrintTable(ui, table, outputFormat)
+	return bufTable.String()
+}
+
+func getVirtualDisks(childrens []datatypes.Virtual_Guest_Block_Device_Template_Group, ui terminal.UI, outputFormat string) string {
+	bufTable := new(bytes.Buffer)
+	table := terminal.NewTable(bufTable, []string{
+		T("Device"),
+		T("Capacity"),
+		T("Size On Disk"),
+	})
+	if childrens != nil && childrens[0].BlockDevices != nil {
+		for _, blockDevice := range childrens[0].BlockDevices {
+			device_name := utils.FormatStringPointer(blockDevice.DiskImage.Name)
+			if len(blockDevice.DiskImage.SoftwareReferences) > 0 {
+				device_name = *blockDevice.DiskImage.SoftwareReferences[0].SoftwareDescription.LongDescription
+			}
+			sizeOnDisk := "N/A"
+			if blockDevice.DiskSpace != nil {
+				sizeOnDisk = utils.B2GB(int(*blockDevice.DiskSpace))
+			}
+
+			table.Add(
+				device_name,
+				utils.FormatIntPointer(blockDevice.DiskImage.Capacity)+
+					utils.FormatStringPointer(blockDevice.DiskImage.Units),
+				sizeOnDisk,
+			)
+		}
+	}
+	utils.PrintTable(ui, table, outputFormat)
+	return bufTable.String()
+}
+
+func getShareImages(image datatypes.Virtual_Guest_Block_Device_Template_Group, ui terminal.UI, outputFormat string) string {
+	bufTable := new(bytes.Buffer)
+	table := terminal.NewTable(bufTable, []string{
+		T("Account"),
+		T("Shared on"),
+	})
+	for _, account := range image.AccountReferences {
+		if *account.AccountId != *image.AccountId {
+			table.Add(
+				utils.FormatIntPointer(account.AccountId),
+				utils.FormatSLTimePointer(account.CreateDate),
+			)
+		}
+
+	}
+	utils.PrintTable(ui, table, outputFormat)
+	return bufTable.String()
 }

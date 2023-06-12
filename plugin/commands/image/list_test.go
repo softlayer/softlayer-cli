@@ -3,6 +3,7 @@ package image_test
 import (
 	"errors"
 	"strings"
+	"time"
 
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -145,6 +146,7 @@ var _ = Describe("Image list", func() {
 
 		Context("Image list without --public or --private and both call succeed", func() {
 			BeforeEach(func() {
+				created, _ := time.Parse(time.RFC3339, "2016-12-29T00:00:00Z")
 				fakeImageManager.ListPublicImagesReturns([]datatypes.Virtual_Guest_Block_Device_Template_Group{
 					datatypes.Virtual_Guest_Block_Device_Template_Group{
 						Id:   sl.Int(1234),
@@ -162,7 +164,26 @@ var _ = Describe("Image list", func() {
 						ImageType: &datatypes.Virtual_Disk_Image_Type{
 							Name: sl.String("SYSTEM"),
 						},
-						AccountId: sl.Int(278444),
+						CreateDate: sl.Time(created),
+						Note:       sl.String("myNote"),
+						AccountId:  sl.Int(278444),
+						Children: []datatypes.Virtual_Guest_Block_Device_Template_Group{
+							datatypes.Virtual_Guest_Block_Device_Template_Group{
+								BlockDevices: []datatypes.Virtual_Guest_Block_Device_Template{
+									datatypes.Virtual_Guest_Block_Device_Template{
+										DiskImage: &datatypes.Virtual_Disk_Image{
+											SoftwareReferences: []datatypes.Virtual_Disk_Image_Software{
+												datatypes.Virtual_Disk_Image_Software{
+													SoftwareDescription: &datatypes.Software_Description{
+														LongDescription: sl.String("Ubuntu 20.04-64 Minimal for VSI"),
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
 					},
 				}, nil)
 			})
@@ -175,12 +196,27 @@ var _ = Describe("Image list", func() {
 				Expect(strings.Contains(results[1], "Public")).To(BeTrue())
 				Expect(strings.Contains(results[1], "SYSTEM")).To(BeTrue())
 				Expect(strings.Contains(results[1], "278444")).To(BeTrue())
+				Expect(strings.Contains(results[1], "-")).To(BeTrue())
 
 				Expect(strings.Contains(results[2], "5678")).To(BeTrue())
 				Expect(strings.Contains(results[2], "image-5678")).To(BeTrue())
 				Expect(strings.Contains(results[2], "Private")).To(BeTrue())
 				Expect(strings.Contains(results[2], "SYSTEM")).To(BeTrue())
-				Expect(strings.Contains(results[2], "278444")).To(BeTrue())
+				Expect(strings.Contains(results[2], "Ubuntu 20.04-64 Minimal for VSI")).To(BeTrue())
+				Expect(strings.Contains(results[2], "2016-12-29T00:00:00Z")).To(BeTrue())
+				Expect(strings.Contains(results[2], "myNote")).To(BeTrue())
+			})
+		})
+
+		Context("Image list without --public or --private and both call succeed without any image", func() {
+			BeforeEach(func() {
+				fakeImageManager.ListPublicImagesReturns([]datatypes.Virtual_Guest_Block_Device_Template_Group{}, nil)
+				fakeImageManager.ListPrivateImagesReturns([]datatypes.Virtual_Guest_Block_Device_Template_Group{}, nil)
+			})
+			It("return no error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("No image found."))
 			})
 		})
 	})

@@ -9,34 +9,33 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
-
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/virtual"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/dedicatedhost"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
 var _ = Describe("VS list", func() {
 	var (
-		fakeUI        *terminal.FakeUI
-		cliCommand    *virtual.ListHostCommand
-		fakeSession   *session.Session
-		slCommand     *metadata.SoftlayerCommand
-		fakeVSManager *testhelpers.FakeVirtualServerManager
+		fakeUI                   *terminal.FakeUI
+		cliCommand               *dedicatedhost.ListCommand
+		fakeSession              *session.Session
+		slCommand                *metadata.SoftlayerCommand
+		FakeDedicatedhostManager *testhelpers.FakeDedicatedHostManager
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-		cliCommand = virtual.NewListHostCommand(slCommand)
+		cliCommand = dedicatedhost.NewListCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-		cliCommand.VirtualServerManager = fakeVSManager
+		FakeDedicatedhostManager = new(testhelpers.FakeDedicatedHostManager)
+		cliCommand.DedicatedHostManager = FakeDedicatedhostManager
 	})
 
 	Describe("list host", func() {
 		Context("list with server fails", func() {
 			BeforeEach(func() {
-				fakeVSManager.ListDedicatedHostReturns([]datatypes.Virtual_DedicatedHost{}, errors.New("Internal Server Error"))
+				FakeDedicatedhostManager.ListDedicatedHostReturns([]datatypes.Virtual_DedicatedHost{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
@@ -45,9 +44,10 @@ var _ = Describe("VS list", func() {
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
+
 		Context("list with nothing found", func() {
 			BeforeEach(func() {
-				fakeVSManager.ListDedicatedHostReturns([]datatypes.Virtual_DedicatedHost{}, nil)
+				FakeDedicatedhostManager.ListDedicatedHostReturns([]datatypes.Virtual_DedicatedHost{}, nil)
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
@@ -55,95 +55,182 @@ var _ = Describe("VS list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("No dedicated hosts are found."))
 			})
 		})
+
+		Context("Set invalid --sortby option", func() {
+			It("Set invalid --sortby option", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby=User")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: Invalid --sortBy option."))
+			})
+		})
+
 		Context("list with hosts found", func() {
 			BeforeEach(func() {
-				fakeVSManager.ListDedicatedHostReturns([]datatypes.Virtual_DedicatedHost{
+				fakerDedicatedHosts := []datatypes.Virtual_DedicatedHost{
 					datatypes.Virtual_DedicatedHost{
-						Id:             sl.Int(52001),
-						Name:           sl.String("wilma-test"),
-						CpuCount:       sl.Int(56),
-						MemoryCapacity: sl.Int(242),
-						DiskCapacity:   sl.Int(1200),
-						GuestCount:     sl.Uint(1),
+						Id:         sl.Int(111111),
+						Name:       sl.String("dedicatedhost01"),
+						GuestCount: sl.Uint(0),
 						BackendRouter: &datatypes.Hardware_Router_Backend{
 							Hardware_Router: datatypes.Hardware_Router{
 								Hardware_Switch: datatypes.Hardware_Switch{
 									Hardware: datatypes.Hardware{
-										Id:       sl.Int(1115295),
-										Hostname: sl.String("bcr01a.wdc07"),
+										Hostname: sl.String("bcr01a.dal13"),
 									},
 								},
 							},
 						},
 						AllocationStatus: &datatypes.Container_Virtual_DedicatedHost_AllocationStatus{
-							CpuAllocated:    sl.Int(2),
-							CpuAvailable:    sl.Int(54),
+							CpuAllocated:    sl.Int(0),
 							CpuCount:        sl.Int(56),
-							GuestCount:      sl.Int(1),
-							DiskAllocated:   sl.Int(102),
-							DiskAvailable:   sl.Int(1097),
+							DiskAllocated:   sl.Int(0),
 							DiskCapacity:    sl.Int(1200),
-							MemoryAllocated: sl.Int(1),
-							MemoryAvailable: sl.Int(241),
+							MemoryAllocated: sl.Int(0),
 							MemoryCapacity:  sl.Int(242),
 						},
 						Datacenter: &datatypes.Location{
-							Id:       sl.Int(2017603),
-							Name:     sl.String("wdc07"),
-							LongName: sl.String("Washington 7"),
+							Name: sl.String("dal13"),
 						},
 					},
-				}, nil)
+					datatypes.Virtual_DedicatedHost{
+						Id:         sl.Int(222222),
+						Name:       sl.String("dedicatedhost02"),
+						GuestCount: sl.Uint(0),
+						BackendRouter: &datatypes.Hardware_Router_Backend{
+							Hardware_Router: datatypes.Hardware_Router{
+								Hardware_Switch: datatypes.Hardware_Switch{
+									Hardware: datatypes.Hardware{
+										Hostname: sl.String("bcr01a.dal13"),
+									},
+								},
+							},
+						},
+						AllocationStatus: &datatypes.Container_Virtual_DedicatedHost_AllocationStatus{
+							CpuAllocated:    sl.Int(0),
+							CpuCount:        sl.Int(56),
+							DiskAllocated:   sl.Int(0),
+							DiskCapacity:    sl.Int(1200),
+							MemoryAllocated: sl.Int(0),
+							MemoryCapacity:  sl.Int(242),
+						},
+						Datacenter: &datatypes.Location{
+							Name: sl.String("dal13"),
+						},
+					},
+				}
+				FakeDedicatedhostManager.ListDedicatedHostReturns(fakerDedicatedHosts, nil)
 			})
 			It("return table", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.wdc07"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("2/56"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("102/1200"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1/242"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("222222"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/56"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/242 "))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/1200"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0"))
 			})
 			It("return table", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "-n", "wilma-test")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby=Name")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.wdc07"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("2/56"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("102/1200"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1/242"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("222222"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/56"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/242 "))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/1200"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0"))
 			})
 			It("return table", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "-d", "wdc07")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby=Datacenter")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.wdc07"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("2/56"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("102/1200"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1/242"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("222222"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/56"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/242 "))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/1200"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0"))
 			})
 			It("return table", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "--owner", "278444_wangjunl@cn.ibm.com")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby=Router")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.wdc07"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("2/56"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("102/1200"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1/242"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("222222"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/56"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/242 "))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/1200"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0"))
 			})
 			It("return table", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "--order", "1234567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby=Cpu")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("No dedicated hosts are found."))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("wilma-test"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.wdc07"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("2/56"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("102/1200"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1/242"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("222222"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/56"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/242 "))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/1200"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0"))
+			})
+			It("return table", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby=Memory")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("222222"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/56"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/242 "))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/1200"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0"))
+			})
+			It("return table", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby=Disk")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("222222"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/56"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/242 "))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/1200"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0"))
+			})
+			It("return table", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby=Guests")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("111111"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("222222"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost02"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("bcr01a.dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/56"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/242 "))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0/1200"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0"))
 			})
 		})
 	})

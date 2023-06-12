@@ -1,0 +1,16 @@
+[
+    {
+        "amountIn": ".23208",
+        "amountOut": ".1013",
+        "type": {
+            "alias": "PUBLIC_SERVER_BW"
+        }
+    },
+    {
+        "amountIn": ".19969",
+        "amountOut": ".0608",
+        "type": {
+            "alias": "PRIVATE_SERVER_BW"
+        }
+    }
+]

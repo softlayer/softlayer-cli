@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -81,7 +80,13 @@ var _ = Describe("Image detail", func() {
 			BeforeEach(func() {
 				created, _ := time.Parse(time.RFC3339, "2016-12-29T00:00:00Z")
 				fakeImage = datatypes.Virtual_Guest_Block_Device_Template_Group{
-					Id:               sl.Int(1234),
+					Id: sl.Int(1234),
+					AccountReferences: []datatypes.Virtual_Guest_Block_Device_Template_Group_Accounts{
+						{
+							AccountId: sl.Int(654),
+							CreateDate: sl.Time(created),
+						},
+					},
 					GlobalIdentifier: sl.String("abcdefghijk"),
 					Name:             sl.String("myimage"),
 					Status: &datatypes.Virtual_Guest_Block_Device_Template_Group_Status{
@@ -106,6 +111,19 @@ var _ = Describe("Image detail", func() {
 									Name: sl.String("Test_Transaction"),
 								},
 							},
+							BlockDevices: []datatypes.Virtual_Guest_Block_Device_Template{
+								datatypes.Virtual_Guest_Block_Device_Template{
+									DiskImage: &datatypes.Virtual_Disk_Image{
+										SoftwareReferences: []datatypes.Virtual_Disk_Image_Software{
+											datatypes.Virtual_Disk_Image_Software{
+												SoftwareDescription: &datatypes.Software_Description{
+													LongDescription: sl.String("Ubuntu 20.04-64 Minimal for VSI"),
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 						datatypes.Virtual_Guest_Block_Device_Template_Group{
 							BlockDevicesDiskSpaceTotal: sl.Float(107374182400),
@@ -120,19 +138,20 @@ var _ = Describe("Image detail", func() {
 				fakeImageManager.GetImageReturns(fakeImage, nil)
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"abcdefghijk"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"myimage"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Finished Import"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"278444"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Public"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"SYSTEM"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"true"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"linux"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2016-12-29T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"200.00G"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dal10"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Test_Transaction"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("abcdefghijk"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("myimage"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Finished Import"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("278444"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Public"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("SYSTEM"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("true"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("linux"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-12-29T00:00:00Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Ubuntu 20.04-64 Minimal for VSI"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("share image"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("654"))
 			})
 			It("Test edge case output", func() {
 				fakeImage.Status = nil

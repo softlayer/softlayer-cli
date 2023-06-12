@@ -8,10 +8,6 @@
     "translation": " Keyname de capacidade (por exemplo C1_2X2_1_YEAR_TERM). [obrigatório]"
   },
   {
-    "id": " Disk ",
-    "translation": " Disco "
-  },
-  {
     "id": " Do not actually create the reserved capacity",
     "translation": " Não criar realmente a capacidade reservada"
   },
@@ -32,6 +28,10 @@
     "translation": "Nº de transações ativas"
   },
   {
+    "id": "${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXEMPLO: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tEsse comando edita notas de um volume.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tEsse comando mostra um detalhe do usuário.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tEsse comando lista guests virtuais."
   },
@@ -46,6 +46,10 @@
   {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
+    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   Para obter a lista de vlans privadas disponíveis, use este comando: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
@@ -89,11 +93,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
-    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
+    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXEMPLO: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
   {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
+    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\nEXEMPLO: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
@@ -105,7 +109,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
-    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n Este comando Inclui / Remove datacenter de uma imagem."
+    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXEMPLO:\n${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n Este comando Inclui/Remove um datacenter de uma imagem."
   },
   {
     "id": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\".",
@@ -121,7 +125,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  List IPSEC VPN tunnel context details.\n\n  Additional resources can be joined using multiple instances of the include\n  option, for which the following choices are available.\n\n  at: address translations\n  is: internal subnets\n  rs: remote subnets\n  sr: statically routed subnets\n  ss: service subnets",
-    "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  Listar detalhes de contexto do túnel VPN IPSEC.\n\n  É possível associar recursos adicionais usando múltiplas instâncias da opção include\n, para a qual as opções a seguir estão disponíveis.\n\n  at: conversões de endereço\n  is: sub-redes internas\n  rs: sub-redes remotas\n  sr: sub-redes encaminhadas estaticamente\n  ss: sub-redes de serviço"
+    "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  Listar detalhes de contexto do túnel VPN IPSEC.\n\n  É possível associar recursos adicionais usando múltiplas instâncias da opção include,\n para a qual as opções a seguir estão disponíveis.\n\n  at: conversões de endereço\n  is: sub-redes internas\n  rs: sub-redes remotas\n  sr: sub-redes encaminhadas estaticamente\n  ss: sub-redes de serviço"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  Add a subnet to an IPSEC tunnel context.\n\n  A subnet id may be specified to link to the existing tunnel context.\n\n  Otherwise, a network identifier in CIDR notation should be specified,\n  indicating that a subnet resource should first be created before\n  associating it with the tunnel context. Note that this is only supported\n  for remote subnets, which are also deleted upon failure to attach to a\n  context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
@@ -146,6 +150,98 @@
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Atualizar propriedades de contexto do túnel.\n\n  As atualizações são feitas atomicamente, portanto, todas são aceitas ou nenhuma.\n\n  Os valores de vida da chave devem estar no intervalo de 120 a 172.800.\n\n  O Perfect Forward Secrecry fase 2 deve estar no intervalo de 0 a 1.\n\n  Será necessário fazer uma solicitação de configuração separada para realizar mudanças em\n dispositivos de rede."
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
+    "translation": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+    "translation": "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policy-delete (--policy-id POLICY_ID) [-f, --force]",
+    "translation": "${COMMAND_NAME} sl loadbal l7policy-delete (--policy-id POLICY_ID) [-f, --force]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+    "translation": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-edit (--pool-uuid L7POOL_UUID) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-edit (--pool-uuid L7POOL_UUID) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]",
+    "translation": "${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]",
+    "translation": "${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7rules (--policy-id Policy_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7rules (--policy-id Policy_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal list",
+    "translation": "${COMMAND_NAME} sl loadbal list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)",
+    "translation": "${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)",
+    "translation": "${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)",
+    "translation": "${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal netscalers",
+    "translation": "${COMMAND_NAME} sl loadbal netscalers"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal order (-n, --name NAME) (-d, --datacenter DATACENTER) (-t, --type PublicToPrivate | PrivateToPrivate | PublicToPublic ) [-l, --label LABEL] [ -s, --subnet SUBNET_ID] [--frontend-protocol PROTOCOL] [--frontend-port PORT] [--backend-protocol PROTOCOL] [--backend-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--use-public-subnet] [--verify]",
+    "translation": "${COMMAND_NAME} sl loadbal order (-n, --name NAME) (-d, --datacenter DATACENTER) (-t, --type PublicToPrivate | PrivateToPrivate | PublicToPublic ) [-l, --label LABEL] [ -s, --subnet SUBNET_ID] [--frontend-protocol PROTOCOL] [--frontend-port PORT] [--backend-protocol PROTOCOL] [--backend-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--use-public-subnet] [--verify]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]",
+    "translation": "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+    "translation": "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)",
+    "translation": "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+    "translation": "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
@@ -177,7 +273,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
-    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
+    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXEMPLO: \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
   },
   {
     "id": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.",
@@ -224,10 +320,6 @@
     "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   Esse comando cancela a sub-rede com o ID 12345678 sem solicitar confirmação."
   },
   {
-    "id": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n   This command allows you to remove the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n   Este comando permite que se remova a rota de suas sub-redes de conta própria."
-  },
-  {
     "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
     "translation": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tIncluir uma nova sub-rede em sua conta. As quantidades válidas variam por tipo.\n\t\n\tTipo   - quantidades válidas (IPv4) \n \tpública  - 4, 8, 16, 32 \n \tprivada  -4, 8, 16, 32, 64 \n\n \tTipo - quantidades válidas (IPv6) \n \tpública  - 64 \n\nEXEMPLO:\n ${COMMAND_NAME} sl subnet create public 16 567 \nEsse comando cria uma sub-rede pública com 16 endereços IPv4 e a coloca na VLAN com o ID 567."
   },
@@ -252,12 +344,8 @@
     "translation": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\nEXEMPLO:\n ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   Este comando localiza o registro de endereço IP com endereço IP 9.125.235.255 e exibe suas informações de sub-rede e dispositivo."
   },
   {
-    "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXEMPLO:\n    ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   Este comando permite mudar a rota de suas sub-redes de conta própria."
-  },
-  {
     "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
-    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
+    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXEMPLO:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
   {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
@@ -285,7 +373,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXAMPLE: \t\n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Remember to set the permissions and access for this new user.",
-    "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXAMPLE: \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Lembre-se de configurar as permissões e o acesso para este novo usuário."
+    "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXEMPLO: \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Lembre-se de configurar as permissões e o acesso para este novo usuário."
   },
   {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
@@ -313,15 +401,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Este comando lista todas as VLANs na conta atual filtradas por data center iguais a dal09 e as classifica por número de VLAN.\n \nNota: no campo Pod, a inclusão de (*) indica encerramento próximo"
+    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Este comando lista todas as VLANs na conta atual filtradas por data center iguais a dal09 e as classifica por número de VLAN.\n \nNota: no campo Pod, a inclusão de (*) indica encerramento próximo"
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
-    "translation": "${COMMAND_NAME} sl vs autorizar-storage [OPTIONS] IDENTIFICADOR \n \nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n  Autorizar arquivo, bloco e armazenamento portátil a um servidor virtual."
+    "translation": "${COMMAND_NAME} sl vs autorizar-storage [OPTIONS] IDENTIFICADOR \n \nEXEMPLO:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n  Autorizar arquivo, bloco e armazenamento portátil a um servidor virtual."
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nEste comando faz o pedido de uma instância Reserved Capacity com nome é myvsi, backendRouterId 1234567, tipo C1_2X2_1_YEAR_TERM e 2 instâncias, \n\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nEste comando testa se o pedido é válida com opções acima antes da ordem é realmente colocada. \n \nAVISO: Reserved Capacity está em um contrato anual e não cancelável até que o contrato seja expirado."
+    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXEMPLO:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nEste comando faz o pedido de uma instância Reserved Capacity com nome myvsi, backendRouterId 1234567, tipo C1_2X2_1_YEAR_TERM e 2 instâncias, \n\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nEste comando testa se o pedido é válida com opções acima antes da ordem é realmente colocada. \n \nAVISO: Reserved Capacity está em um contrato anual e não cancelável até que o contrato seja expirado."
   },
   {
     "id": "${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   This command captures virtual server instance with ID of 12345678 with all disks into an image named \"mycloud\" with note \"testing\".",
@@ -345,11 +433,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.",
-    "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n       \nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Gerenciar VSIs que requerem migração. É possível migrar Instância Dedicada a partir de um host dedicado para outro host dedicado também."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXEMPLO:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nEste comando faz o pedido de uma instância do grupo Placement com nome é myvsi, backendRouterId 1234567 e regra 258369"
+    "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n       \nEXEMPLO:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Gerenciar VSIs que requerem migração. É possível migrar Instância Dedicada a partir de um host dedicado para outro host dedicado também."
   },
   {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
@@ -364,76 +448,100 @@
     "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNota: o serviço de infraestrutura clássica reinicializa automaticamente a instância após a realização da solicitação de\n  \tupgrade. A instância é interrompida até a conclusão da transação de upgrade.\n  \tNo entanto, para a Rede, não é necessária nenhuma reinicialização.\n\nEXEMPLO:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   Esse comando faz upgrade da instância de servidor virtual com o ID 12345678 e configura o número de núcleos da CPU para 8, a memória para 8192 M e a velocidade da porta de rede para 1000 Mbps."
   },
   {
+    "id": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nOs formatos de hora, que são '2006-01-02', '2006-01-02T15:04' ou '2006-01-02T15:04-07:00'\n\nDevido a alguns detalhes de arredondamento e alinhamento de datas, os resultados aqui podem ser um pouco diferentes dos resultados no portal de controle.\nA largura da banda é listada em GB. Se nenhum fuso horário for especificado, GMT+0 será assumido.\n\nExemplo:\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
+  },
+  {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
     "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\n Informações de uso de um servidor virtual.\nExemplo:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   Esse comando autoriza o servidor virtual com o ID 87654321 a acessar o volume com o ID 12345678."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   Esse comando autoriza o servidor virtual com o ID 87654321 a acessar o volume com o ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   Esse comando lista todos os hosts que estão autorizados a acessar o volume com o ID 12345678 e os classifica por ID."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   Esse comando lista todos os hosts que estão autorizados a acessar o volume com o ID 12345678 e os classifica por ID."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\nACCESS_ID é o allowed_host_id a partir de '${COMMAND_NAME} sl {{.storageType}} access-list'"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   Esse comando revoga o acesso do servidor virtual com o ID 87654321 para o volume com o ID 12345678."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   Esse comando revoga o acesso de servidor virtual com o ID 87654321 para o volume com o ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   Esse comando executa a operação de failback para o volume com o ID 12345678."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   Esse comando executa a operação de failback para o volume com o ID 12345678."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   Esse comando executa a operação de failover do volume com o ID 12345678 para o volume de réplica com o ID 87654321."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   Esse comando lista data centers de replicação adequados para o volume de bloco com o ID 12345678."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   Esse comando lista os data centers de replicação adequados para o volume de bloco com o ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   Esse comando pede uma réplica para o volume com o ID 12345678, que executa a replicação DAILY, está localizado em dal09, possui nível de camada 4 e o tipo de SO é Linux."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   Esse comando solicita uma réplica para o volume com o ID 12345678, que executa a replicação DIÁRIA, está localizado em dal09, o nível de camada é 4 e o tipo de S.O. é Linux."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   Esse comando lista os volumes replicantes existentes para o volume de bloco com o ID 12345678."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   Esse comando lista os volumes replicantes existentes para o volume de bloco com o ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   Esse comando cancela a captura instantânea com o ID 12345678 imediatamente sem solicitar confirmação."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   Esse comando cancela a captura instantânea com o ID 12345678 imediatamente sem solicitar confirmação."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   Esse comando cria uma captura instantânea para o volume com o ID 12345678 e com uma nota adicional como snapshotforibmcloud."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   Esse comando cria uma captura instantânea para o volume com o ID 12345678 e com a nota de inclusão como snapshotforibmcloud."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   Esse comando desativa a captura instantânea diária para o volume com o ID 12345678."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   Esse comando desativa a captura instantânea diária para o volume com o ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   Esse comando ativa a captura instantânea para o volume com o ID 12345678 e a captura instantânea é obtida semanalmente todos os sábados às 2h e até 5 capturas instantâneas ficam retidas."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   Esse comando ativa a captura instantânea para o volume com o ID 12345678. A captura é tirada semanalmente todos os domingos às 2h, e até cinco capturas instantâneas são retidas."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   Esse comando lista todas as capturas instantâneas do volume com o ID 12345678 e as classifica por ID."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   Esse comando lista todas as capturas instantâneas do volume com o ID 12345678 e as classifica por ID."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   Esse comando organiza o espaço da captura instantânea para o volume com ID 12345678. O tamanho é 1.000 GB, o nível de camada é de 4 IOPS por GB."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   Esse comando solicita espaço de captura instantânea para o volume com o ID 12345678, o tamanho é 1.000 GB e o nível de camada é 4 IOPS por GB."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n Esse comando restaura o volume com o ID 12345678 da captura instantânea com o ID 87654321."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   Esse comando restaura o volume com o ID 12345678 por meio da captura instantânea com o ID 87654321."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl {{.storageType}} access-list <volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID é o host_id obtido por: ibmcloud sl {{.storageType}} access-list <volume_id>"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID é o host_id obtido por: ibmcloud sl {{.storageType}} access-list <volume_id>"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n Esse comando cancela o volume com o ID 12345678 imediatamente e sem solicitar confirmação."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   Esse comando cancela o volume com o ID 12345678 imediatamente e sem solicitar confirmação."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   Esse comando mostra o pedido de um novo volume duplicando o volume com o ID 12345678."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   Esse comando mostra a solicitação de um novo volume ao duplicar o volume com o ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXEMPLO:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\tEste comando lista os limites de armazenamento por data center para esta conta."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-limits\n     Esse comando lista os limites de armazenamento por data center para esta conta."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
@@ -441,27 +549,31 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXEMPLO:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  Esse comando modifica um volume 12345678, cujo tamanho é 1000 GB e o IOPS é 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  Esse comando modifica um volume 12345678, cujo tamanho é 500 GB e o nível de camada é 4 IOPS por GB."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXEMPLO:\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n  Esse comando modifica um volume 12345678 com o tamanho de 1.000 GB e o IOPS de 4.000.\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n  Esse comando modifica um volume 12345678 com o tamanho de 500 GB e o nível de camada de 4 IOPS por GB."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n Esse comando lista todas as opções para criar um volume de armazenamento de bloco, incluindo o tipo de armazenamento, o tamanho do volume, o tipo de SO, o IOPS, o nível de camada, o data center e o tamanho da captura instantânea."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n    \nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   Esse comando lista todas as opções para criar um volume de armazenamento de bloco, incluindo o tipo de armazenamento, o tamanho do volume, o tipo de S.O., o IOPS, o nível de camada, o data center e o tamanho da captura instantânea."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n    \nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   Esse comando lista todas as opções para criar um volume de armazenamento de arquivo, incluindo o tipo de armazenamento, o tamanho do volume, o IOPS, o nível de camada, o data center e o tamanho da captura instantânea."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   Esse comando pede um volume de desempenho em que o tamanho é 1.000 GB, o IOPS é 4.000, o tipo de SO é LINUX e está localizado em dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n Esse comando pede um volume de resistência cujo tamanho é 500 GB, o nível de camada é 4 IOPS por GB, o tipo de SO é XEN, está localizado em dal09 e o tamanho do espaço de captura instantânea adicional é 500 GB."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   Esse comando solicita um volume de desempenho com o tamanho de 1.000 GB, o IOPS de 4.000, o tipo de S.O. LINUX, localizado em dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   Esse comando solicita um volume de resistência com o tamanho de 500 GB, o nível de camada de 4 IOPS por GB, o tipo de S.O. XEN, localizado em dal09 e com o tamanho do espaço de captura instantânea adicional de 500 GB."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXEMPLO:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tAtualize um VOLUME_ID duplicado com uma captura instantânea de seu SNAPSHOT_ID pai."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXEMPLO:\n ${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n   Atualizar um VOLUME_ID duplicado com uma captura instantânea do respectivo SNAPSHOT_ID pai."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tO ID de LUN entra em vigor apenas durante o processo de autorização do host. É\n\t recomendado (mas não necessário) cancelar a autorização de todos os hosts antes de usar\n\tesse método.\n\tVOLUME_ID - o ID do volume no qual configurar o ID do LUN\n\tLUN_ID - o intervalo recomendado é um número inteiro entre 0 e 255. Os usuários avançados\n\tpodem usar um número inteiro entre 0 e 4095"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n O ID do LUN só entra em vigor durante o processo de Autorização do host. É\n recomendável (mas não necessário) desautorizar todos os hosts antes de usar\n esse método.\n VOLUME_ID - o ID do volume no qual configurar o ID do LUN\n LUN_ID - o intervalo recomendado é um número inteiro entre 0 e 255. Os usuários avançados\n podem usar um número inteiro entre 0 e 4.095"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID \n \nEXAMPLE:\n ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'esta é a minha nota'"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'"
   },
   {
     "id": "%s is not a valid permission",
@@ -486,6 +598,10 @@
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--resize-disk requires capacity and disk number values separated by one comma.",
+    "translation": "--reize-disk requer valores de capacidade e de número de disco separados por uma vírgula."
   },
   {
     "id": "--server needs a port. {{.Server}} improperly formatted",
@@ -668,6 +784,22 @@
     "translation": "Nome <hostname>.<domain.name.tld> formatado para usar. Especifique um fqdn por servidor (múltipla ocorrência permitida) [obrigatório]"
   },
   {
+    "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "Um valor Hardware_Server.id ou UUID do servidor desejado. Um valor correspondente a um nome de domínio exclusivo \ntotalmente qualificado no formato 'hostname<domain>' em que < e > são literais, por exemplo, myhost<mydomain.com>"
+  },
+  {
+    "id": "A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.",
+    "translation": "Um endereço Network_Subnet_IpAddress.id, um endereço IPv4 pontilhado, ou um endereço IPv6 completo ou compactado."
+  },
+  {
+    "id": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ",
+    "translation": "Um valor de Network_Vlan.id do VLAN desejada ou um identificador semântico VLAN do formulário <data center short name>.<router>.<vlan number>, \neg. dal13.fcr01.1234 - opcionalmente, o nome do roteador pode conter o qualificador de redundância 'a' ou 'b' "
+  },
+  {
+    "id": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "Um valor Virtual_Guest.id ou UUID do servidor desejado. Um valor correspondente a um nome de domínio exclusivo \ntotalmente qualificado no formato 'hostname<domain>' em que < e > são literais, por exemplo, myhost<mydomain.com>"
+  },
+  {
     "id": "A custom name to be assigned to the quote (optional)",
     "translation": "Um nome customizado a ser designado para a cotação (opcional)"
   },
@@ -708,6 +840,14 @@
     "translation": "APIKEY"
   },
   {
+    "id": "API_KEY",
+    "translation": "API_KEY"
+  },
+  {
+    "id": "ARGUMENT",
+    "translation": "ARGUMENTO"
+  },
+  {
     "id": "Aborted.",
     "translation": "Interrompido."
   },
@@ -718,6 +858,10 @@
   {
     "id": "Aborting AAAA record sync, found {{.Num}} AAAA records exists!",
     "translation": "Interrompendo a sincronização do registro AAAA, detectada a existência de {{.Num}} registros AAAA!"
+  },
+  {
+    "id": "Access Key ID",
+    "translation": "ID da chave de acesso"
   },
   {
     "id": "Access granted to user {{.userId}} for {{.objectId}}",
@@ -756,6 +900,14 @@
     "translation": "Contabilidade"
   },
   {
+    "id": "Acknowledge Event. Doing so will turn off the popup in the control portal.",
+    "translation": "Reconhecer evento. Isso desativará o pop-up no portal de controle."
+  },
+  {
+    "id": "Acknowledge every upcoming event. Doing so will turn off the popup in the control portal.",
+    "translation": "Reconhecer cada evento futuro. Isso desativará o pop-up no portal de controle."
+  },
+  {
     "id": "Acknowledged",
     "translation": "Reconhecido"
   },
@@ -768,8 +920,8 @@
     "translation": "Registro de data e hora de início de conversão ativa"
   },
   {
-    "id": "Active Guests",
-    "translation": "Guests ativos"
+    "id": "Add Hard disk in GB",
+    "translation": "Incluir disco rígido em GB"
   },
   {
     "id": "Add a new L7 policy",
@@ -816,6 +968,10 @@
     "translation": "Incluir uma sub-rede em um contexto de túnel do Internet Protocol Security"
   },
   {
+    "id": "Add access to subnet.",
+    "translation": "Incluir o acesso à sub-rede."
+  },
+  {
     "id": "Add an address translation to an IPSec tunnel",
     "translation": "Incluir uma conversão de endereço em um túnel do Internet Protocol Security"
   },
@@ -826,6 +982,10 @@
   {
     "id": "Add notes for the image",
     "translation": "Incluir notas para a imagem"
+  },
+  {
+    "id": "Add or remove subnet access for a user.",
+    "translation": "Inclua ou remova o acesso de sub-rede para um usuário."
   },
   {
     "id": "Add resource record in a zone",
@@ -872,6 +1032,14 @@
     "translation": "Alocação"
   },
   {
+    "id": "Allotment",
+    "translation": "Alocação"
+  },
+  {
+    "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
+    "translation": "Permite modificar a rota de suas sub-redes secundárias. \nAs subredes podem ser roteadas como Static ou Portable, e essa designação é ditada pelo destino de roteamento especificado. \nAs estatísticas possuem destino de roteamento de um único endereço IP mas podem não ser roteadas para um endereço IP de sub-rede existente cuja sub-rede é roteirizada como uma Static. \nsubredes portáteis possuem um destino final de roteamento de uma VLAN. \nA sub-rede pode ser encaminhada para qualquer recurso dentro da mesma 'região de roteamento' como a própria sub-rede, geralmente limitado a um único data center. \n \nConsulte também: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n"
+  },
+  {
     "id": "Amount",
     "translation": "Quantia"
   },
@@ -884,12 +1052,12 @@
     "translation": "Um endereço IP a ser autorizado"
   },
   {
-    "id": "An IP address to revoke",
-    "translation": "Um endereço IP a ser revogado"
+    "id": "An IP address to authorize.",
+    "translation": "Um endereço IP a ser autorizado."
   },
   {
-    "id": "An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required].",
-    "translation": "Um identificador apropriado para o $type especificado, por exemplo, o identificador de um SoftLayer_Network_Subnet_IpAddress [obrigatório]."
+    "id": "An IP address to revoke",
+    "translation": "Um endereço IP a ser revogado"
   },
   {
     "id": "An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options",
@@ -964,8 +1132,12 @@
     "translation": "Autorizar arquivo, bloco e armazenamento portátil a um servidor virtual"
   },
   {
-    "id": "Auto Scale Group was deleted successfully",
-    "translation": "O grupo Autoscale foi excluído com sucesso"
+    "id": "Authorize hosts  to access a given volume",
+    "translation": "Autorizar hosts a acessar um determinado volume"
+  },
+  {
+    "id": "Authorize hosts to access a given volume.",
+    "translation": "Autorizar hosts a acessar um determinado volume."
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1092,10 +1264,6 @@
     "translation": "O volume de bloco {{.VolumeId}} está relatando o ID de LUN {{.LunID}}."
   },
   {
-    "id": "Bounces",
-    "translation": "Devoluções"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "Não foi possível fechar o arquivo de buffer: {{.Error}}.\n"
   },
@@ -1106,6 +1274,10 @@
   {
     "id": "CIDR",
     "translation": "CIDR"
+  },
+  {
+    "id": "CONTEXT_ID",
+    "translation": "CONTEXT_ID"
   },
   {
     "id": "CPU",
@@ -1276,8 +1448,8 @@
     "translation": "Capacidade(GB)"
   },
   {
-    "id": "Capture all disks that belong to the virtual server",
-    "translation": "Capturar todos os discos que pertencem ao servidor virtual"
+    "id": "Capture all block devices that belong to the virtual server",
+    "translation": "Capturar todos os dispositivos de bloco que pertencem ao servidor virtual"
   },
   {
     "id": "Capture virtual server instance into an image",
@@ -1316,8 +1488,12 @@
     "translation": "A solicitação de assinatura de certificado não foi localizada"
   },
   {
-    "id": "Changes a password for a volume's access",
-    "translation": "Muda uma senha para acesso de um volume"
+    "id": "Change how a secondary subnet is routed.",
+    "translation": "Modifique como uma sub-rede secundária é roteada."
+  },
+  {
+    "id": "Changes a password for a volume's access.",
+    "translation": "Muda uma senha para o acesso de um volume."
   },
   {
     "id": "Check if a virtual server instance is ready for use",
@@ -1330,10 +1506,6 @@
   {
     "id": "Classic infrastructure Account commands",
     "translation": "Comandos da conta de infraestrutura clássica"
-  },
-  {
-    "id": "Classic infrastructure Autoscale Group",
-    "translation": "Grupo Autoscale de infraestrutura clássica"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1440,10 +1612,6 @@
     "translation": "Grupos de segurança de rede da infraestrutura clássica"
   },
   {
-    "id": "Clicks",
-    "translation": "Cliques"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "Configuração do tempo limite do lado do cliente, em segundos"
   },
@@ -1468,20 +1636,32 @@
     "translation": "Coluna a ser exibida. As opções são: id, hostname, domain, primary_ip, backend_ip. Essa opção pode ser especificada várias vezes"
   },
   {
-    "id": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times",
-    "translation": "Coluna a ser exibida. As opções são: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. Essa opção pode ser especificada várias vezes"
+    "id": "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.",
+    "translation": "Coluna a ser exibida. As opções são: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. Essa opção pode ser especificada múltiplas vezes."
   },
   {
-    "id": "Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times",
-    "translation": "Coluna a ser exibida. As opções são: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. Essa opção pode ser especificada várias vezes"
+    "id": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times",
+    "translation": "Coluna a ser exibida. As opções são: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. Essa opção pode ser especificada várias vezes"
   },
   {
     "id": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times",
     "translation": "Coluna a ser exibida. As opções são: id, username, datacenter, storage_type, capacity_gb, bytes_used, IOPs, ip_addr, lunId, created_by, active_transactions, rep_partner_count, notes. Essa opção pode ser especificada várias vezes"
   },
   {
+    "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state].",
+    "translation": "Coluna a ser exibida. [As opções são: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [padrão: id, hostname, domain, primary_ip, backend_ip, power_state]."
+  },
+  {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
     "translation": "Coluna a ser exibida. opções são: id,username,email,displayName,2FA,classicAPIKey,status, hardwareCount, virtualGuestCount. Essa opção pode ser especificada várias vezes"
+  },
+  {
+    "id": "Column to sort by",
+    "translation": "Coluna pela qual classificar"
+  },
+  {
+    "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
+    "translation": "Coluna para classificar por (Id, Nome, Datacenter, Roteador, Cpu, Memória, Disco, Guests) [padrão: Id]"
   },
   {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
@@ -1498,6 +1678,14 @@
   {
     "id": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by",
     "translation": "Coluna para classificar por, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by"
+  },
+  {
+    "id": "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip",
+    "translation": "Coluna pela qual classificar. As opções são: id, hostname, domain, primary_ip, backend_ip"
+  },
+  {
+    "id": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.",
+    "translation": "Coluna pela qual classificar. As opções são: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
   },
   {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
@@ -1518,10 +1706,6 @@
   {
     "id": "Column to sort by. Options are: id,name,description,created",
     "translation": "Coluna pela qual classificar. As opções são: id,name,description,created"
-  },
-  {
-    "id": "Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id",
-    "translation": "Coluna pela qual classificar. As opções são: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id"
   },
   {
     "id": "Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips",
@@ -1570,14 +1754,6 @@
   {
     "id": "Convert a dependent duplicate volume to an independent volume.",
     "translation": "Converta uma duplicata de volume dependente em um volume independente."
-  },
-  {
-    "id": "Cooldown",
-    "translation": "Arrefecimento"
-  },
-  {
-    "id": "Core",
-    "translation": "Núcleo"
   },
   {
     "id": "Cost",
@@ -1664,6 +1840,10 @@
     "translation": "Counter"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "CPU (alocada/total)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "Contagem de CPU"
   },
@@ -1728,6 +1908,14 @@
     "translation": "Criar um servidor virtual temporário"
   },
   {
+    "id": "Create a user hardware notification entry.",
+    "translation": "Crie uma entrada de notificação de hardware do usuário."
+  },
+  {
+    "id": "Create a user virtual notification entry.",
+    "translation": "Crie uma entrada de notificação virtual do usuário."
+  },
+  {
     "id": "Create a zone",
     "translation": "Criar uma zona"
   },
@@ -1750,6 +1938,10 @@
   {
     "id": "Created Date",
     "translation": "Data Criada"
+  },
+  {
+    "id": "Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "Registro criado: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
   },
   {
     "id": "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
@@ -1776,22 +1968,6 @@
     "translation": "Credencial: {{.credentialID}} foi excluído."
   },
   {
-    "id": "Credit allowed",
-    "translation": "Crédito permitido"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "Créditos excedentes"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "Créditos remanescentes"
-  },
-  {
-    "id": "Credits used",
-    "translation": "Créditos utilizados"
-  },
-  {
     "id": "Critical Max",
     "translation": "Máx. crítico"
   },
@@ -1804,16 +1980,16 @@
     "translation": "cruzada da U.E."
   },
   {
-    "id": "Current Members",
-    "translation": "Membros atuais"
-  },
-  {
     "id": "Current Usage",
     "translation": "Uso atual"
   },
   {
     "id": "Customer Peer IP Address",
     "translation": "Endereço IP de mesmo nível do cliente"
+  },
+  {
+    "id": "DATA",
+    "translation": "DATA"
   },
   {
     "id": "Data Center",
@@ -1852,12 +2028,12 @@
     "translation": "Para remover datacenter"
   },
   {
-    "id": "Datacenter: ",
-    "translation": "Datacenter: "
-  },
-  {
     "id": "Date",
     "translation": "Data"
+  },
+  {
+    "id": "Date time",
+    "translation": "Data e hora"
   },
   {
     "id": "Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday",
@@ -1886,6 +2062,10 @@
   {
     "id": "Dedicated host ID should be a number.",
     "translation": "O ID do host dedicado deve ser um número."
+  },
+  {
+    "id": "Default",
+    "translation": "Padrão"
   },
   {
     "id": "Default Hourly Price Per Instance",
@@ -1930,14 +2110,6 @@
   {
     "id": "Delete the given security group",
     "translation": "Excluir o grupo de segurança especificado"
-  },
-  {
-    "id": "Delete this group and destroy all members of it",
-    "translation": "Excluir este grupo e destruir todos os membros dele"
-  },
-  {
-    "id": "Delivered",
-    "translation": "Entregue"
   },
   {
     "id": "Description",
@@ -1996,6 +2168,10 @@
     "translation": "Desativar a interface IPMI."
   },
   {
+    "id": "Disable vpn subnets manual config.",
+    "translation": "Desative a configuração manual de sub-redes VPN."
+  },
+  {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "Desativado: Limite de uso do espaço de capturas instantâneas é desativado para volume '{{.ID}}'."
   },
@@ -2006,6 +2182,10 @@
   {
     "id": "Disk",
     "translation": "Disco"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "Disco (alocado/total)"
   },
   {
     "id": "Disk Capacity",
@@ -2040,6 +2220,10 @@
     "translation": "Exibir uma lista de razões de cancelamento"
   },
   {
+    "id": "Display details for a cloud object storage.",
+    "translation": "Exibir detalhes para um armazenamento de objeto de nuvem."
+  },
+  {
     "id": "Display details for a specified email.",
     "translation": "Exibir detalhes para um e-mail especificado."
   },
@@ -2072,12 +2256,20 @@
     "translation": "Exibir apenas imagens públicas"
   },
   {
+    "id": "Display permission details for a cloud object storage.",
+    "translation": "Exibir detalhes de permissão para um armazenamento de objeto de nuvem."
+  },
+  {
     "id": "Display permissions assigned to this user. Master users do not show permissions",
     "translation": "Exibir permissões designadas a este usuário. Os usuários principais não mostram permissões"
   },
   {
     "id": "Display virtual guests this user has access to",
     "translation": "Exibir guests virtuais aos quais este usuário tem acesso"
+  },
+  {
+    "id": "Displays bandwidth pool information.",
+    "translation": "Exibe as informações do conjunto de largura da banda."
   },
   {
     "id": "Do not actually create the dedicatedhost",
@@ -2112,8 +2304,8 @@
     "translation": "O registro do domínio não foi localizado"
   },
   {
-    "id": "Domain: ",
-    "translation": "Domínio: "
+    "id": "Domain: {{.Domain}} Id: {{.Id}}",
+    "translation": "Domínio: {{.Domain}} ID: {{.Id}}"
   },
   {
     "id": "Don't actually create records",
@@ -2136,8 +2328,16 @@
     "translation": "Propriedades de volume duplicado"
   },
   {
-    "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
-    "translation": "Primeira data para recuperar eventos para [YYYY-MM-DD]."
+    "id": "EXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
+    "translation": "EXEMPLO: \n${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\nEsse comando solicita uma VSI por hora com 4 CPUs, 16 GB de RAM, 100 GB de disco SAN, Ubuntu 16.04 e um uplink público e privado de 1 Gbps em dal13"
+  },
+  {
+    "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
+    "translation": "EXEMPLO: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    Esse comando faz uma cotação para uma VSI com 4 CPUs, 16 GB de RAM, 100 GB de disco SAN, Ubuntu 16.04 e um uplink público e privado de 1 Gbps no data center dal13"
+  },
+  {
+    "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
+    "translation": "Primeira data para recuperar eventos para [YYYY-MM-DD]. Padrão: 2 dias atrás."
   },
   {
     "id": "Edit SSL certificate",
@@ -2145,7 +2345,7 @@
   },
   {
     "id": "Edit a CDN Account.",
-    "translation": "Editar um Conta do CDN."
+    "translation": "Editar uma conta do CDN."
   },
   {
     "id": "Edit a L7 policy",
@@ -2272,6 +2472,10 @@
     "translation": "Ativar ou desativar permissões específicas"
   },
   {
+    "id": "Enable or disable user vpn subnets manual config.",
+    "translation": "Ative ou desative a configuração manual de sub-redes VPN do usuário."
+  },
+  {
     "id": "Enable snapshot notification.",
     "translation": "Ativar notificação de captura instantânea."
   },
@@ -2282,6 +2486,10 @@
   {
     "id": "Enable the IPMI interface.",
     "translation": "Ativar a interface IPMI."
+  },
+  {
+    "id": "Enable vpn subnets manual config.",
+    "translation": "Ative a configuração manual de sub-redes VPN."
   },
   {
     "id": "Enabled: Snapshots space usage threshold is enabled for volume '{{.ID}}'.",
@@ -2352,6 +2560,10 @@
     "translation": "Camada de resistência por IOPS"
   },
   {
+    "id": "Error occurred while adding note to volume: {{.VolumeID}}",
+    "translation": "Ocorreu um erro ao incluir uma nota no volume: {{.VolumeID}}"
+  },
+  {
     "id": "Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n",
     "translation": "Ocorreu um erro ao criar captura instantânea para o volume {{.VolumeID}}. Certifique-se de que não tenha ocorrido failover do volume ou de que ele esteja em outro estado que evite a obtenção de capturas instantâneas.\n"
   },
@@ -2408,6 +2620,10 @@
     "translation": "COM FALHA"
   },
   {
+    "id": "FILEPATH",
+    "translation": "FILEPATH"
+  },
+  {
     "id": "FQDN",
     "translation": "FQDN"
   },
@@ -2437,7 +2653,11 @@
   },
   {
     "id": "Failed to Order the dedicatedhost.",
-    "translation": "Falha ao fazer o pedido de host dedicado.\n"
+    "translation": "Falha ao solicitar o host dedicado."
+  },
+  {
+    "id": "Failed to acknowledge event.",
+    "translation": "Falha ao reconhecer o evento."
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -2537,7 +2757,7 @@
   },
   {
     "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.",
-    "translation": "Falha ao cancelar todos os guests no host dedicado: {{.HostID}}. \n"
+    "translation": "Falha ao cancelar todos os guests no host dedicado: {{.HostID}}."
   },
   {
     "id": "Failed to cancel block volume: {{.ID}}.\n",
@@ -2565,7 +2785,7 @@
   },
   {
     "id": "Failed to cancel license: {{.key}}.",
-    "translation": "Falha ao cancelar a licença: {{.key}}.\n"
+    "translation": "Falha ao cancelar a licença: {{.key}}."
   },
   {
     "id": "Failed to cancel load balancer {{.LBID}}.\n",
@@ -2590,10 +2810,6 @@
   {
     "id": "Failed to check virtual server instance {{.VsID}} is ready.\n",
     "translation": "Falha ao verificar se a instância de servidor virtual {{.VsID}} está pronta.\n"
-  },
-  {
-    "id": "Failed to clear the route for the subnet: {{.ID}}.\n",
-    "translation": "Falha ao limpar a rota para a sub-rede: {{.ID}}.\n"
   },
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
@@ -2621,15 +2837,11 @@
   },
   {
     "id": "Failed to create placement group",
-    "translation": "Falha ao criar o grupo de posicionamento\n"
+    "translation": "Falha ao criar o grupo de localização"
   },
   {
     "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n",
     "translation": "Falha ao criar registro de recurso na zona {{.Zone}}: tipo={{.RecordType}}, registro={{.Host}}, dados={{.Data}}, ttl={{.Ttl}}.\n"
-  },
-  {
-    "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}",
-    "translation": "Falha ao criar registro de recurso na zona {{.Zone}}: tipo={{.RecordType}}, registro={{.Host}}, dados={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}"
   },
   {
     "id": "Failed to create security group with name {{.Name}}.\n",
@@ -2641,11 +2853,15 @@
   },
   {
     "id": "Failed to create the license.",
-    "translation": "Falha ao criar a licença.\n"
+    "translation": "Falha ao criar a licença."
   },
   {
     "id": "Failed to create translation for IPSec with ID {{.ID}}.\n",
     "translation": "Falha ao criar conversão para IPSec com ID {{.ID}}.\n"
+  },
+  {
+    "id": "Failed to create user vpn override.",
+    "translation": "Falha ao criar substituição de VPN do usuário."
   },
   {
     "id": "Failed to create virtual server instance.\n",
@@ -2664,10 +2880,6 @@
     "translation": "Falha ao decodificar a nota.\n"
   },
   {
-    "id": "Failed to delete AutoScale Group.",
-    "translation": "Falha ao excluir o AutoScale Group.\n"
-  },
-  {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "Falha ao excluir o conjunto da Camada 7 {{.L7PoolID}}: {{.Error}}.\n"
   },
@@ -2680,8 +2892,16 @@
     "translation": "Falha ao excluir o membro da Camada 7 {{.Member}}: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete Tag",
+    "translation": "Falha ao excluir a Tag"
+  },
+  {
     "id": "Failed to delete Tag: {{.tag}}.",
     "translation": "Falha ao excluir a tag: {{.tag}}."
+  },
+  {
+    "id": "Failed to delete User Customer Notification.",
+    "translation": "Falha ao excluir notificação de cliente do usuário."
   },
   {
     "id": "Failed to delete credential: {{.storageID}}.\n",
@@ -2714,6 +2934,10 @@
   {
     "id": "Failed to delete snapshot {{.ID}}.\n",
     "translation": "Falha ao excluir captura instantânea {{.ID}}.\n"
+  },
+  {
+    "id": "Failed to delete user vpn override.",
+    "translation": "Falha ao excluir substituição de VPN do usuário."
   },
   {
     "id": "Failed to delete user.\n",
@@ -2809,19 +3033,11 @@
   },
   {
     "id": "Failed to generate the order template.",
-    "translation": "Falha ao gerar o modelo de pedido.\n"
-  },
-  {
-    "id": "Failed to get Account Overview.",
-    "translation": "Falha ao obter a Visão Geral de Conta."
-  },
-  {
-    "id": "Failed to get AutoScale group.",
-    "translation": "Falha ao obter o grupo AutoScale.\n"
+    "translation": "Falha ao gerar o modelo de solicitação."
   },
   {
     "id": "Failed to get Bandwidth Pool.",
-    "translation": "Falha ao obter o Conjunto da largura de banda. \n"
+    "translation": "Falha ao obter o Conjunto de largura de banda."
   },
   {
     "id": "Failed to get CDN Detail. ",
@@ -2888,8 +3104,20 @@
     "translation": "Falha ao obter Contas de Entrega de Mensagem de Rede."
   },
   {
+    "id": "Failed to get Order.",
+    "translation": "Falha ao obter o pedido."
+  },
+  {
+    "id": "Failed to get Pods.",
+    "translation": "Falha ao obter os pods."
+  },
+  {
     "id": "Failed to get Pods.\n",
     "translation": "Falha ao obter Pods.\n"
+  },
+  {
+    "id": "Failed to get Quote\n",
+    "translation": "Falha ao obter a Cotação\n"
   },
   {
     "id": "Failed to get Quote.\n",
@@ -2904,20 +3132,16 @@
     "translation": "Falha ao obter o Contêiner de pedido recalculado. \n"
   },
   {
+    "id": "Failed to get Routers.",
+    "translation": "Falha ao obter roteadores."
+  },
+  {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
     "translation": "Falha ao obter chave SSH {{.KeyID}}.\n"
   },
   {
-    "id": "Failed to get SSH key.",
-    "translation": "Falha ao obter chave SSH."
-  },
-  {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "Falha ao obter certificado SSL: {{.ID}}.\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "Falha ao obter Estatísticas."
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -2926,6 +3150,10 @@
   {
     "id": "Failed to get Unattached Tags.",
     "translation": "Falha ao obter Tags não anexadas."
+  },
+  {
+    "id": "Failed to get User Customer Notifications.",
+    "translation": "Falha ao obter as Notificações de cliente do usuário."
   },
   {
     "id": "Failed to get VLAN: {{.VLANID}}.\n",
@@ -2948,16 +3176,32 @@
     "translation": "Falha ao obter todos os datacenters.\n"
   },
   {
+    "id": "Failed to get announcement event ID.",
+    "translation": "Falha ao obter ID do evento de anúncio."
+  },
+  {
     "id": "Failed to get announcement events.",
     "translation": "Falha em obter eventos de lançamento."
+  },
+  {
+    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
+    "translation": "Falha ao obter detalhes de colocação de largura de banda para o servidor de hardware {{.ID}}.\n"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Falha em obter servidores bare metal.\n"
   },
   {
+    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
+    "translation": "Falha ao obter uso de largura de banda do ciclo de faturamento para o servidor de hardware {{.ID}}.\n"
+  },
+  {
     "id": "Failed to get billing items.",
     "translation": "Falha ao obter itens de faturamento."
+  },
+  {
+    "id": "Failed to get bucket of storage {{.StorageID}}.",
+    "translation": "Falha ao obter depósito de armazenamento {{.StorageID}}."
   },
   {
     "id": "Failed to get components\n",
@@ -2985,7 +3229,11 @@
   },
   {
     "id": "Failed to get dedicatedhost instance: {{.HostID}}.",
-    "translation": "Falha ao obter a instância de host dedicado: {{.HostID}}.\n"
+    "translation": "Falha ao obter a instância de host dedicado: {{.HostID}}."
+  },
+  {
+    "id": "Failed to get details of storage {{.StorageID}}.",
+    "translation": "Falha ao obter detalhes de armazenamento {{.StorageID}}."
   },
   {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
@@ -2994,6 +3242,10 @@
   {
     "id": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
     "translation": "Falha ao obter status de conversão duplicada de volume {{.VolumeID}}.\n"
+  },
+  {
+    "id": "Failed to get endPoints.",
+    "translation": "Falha ao obter endPoints."
   },
   {
     "id": "Failed to get firewalls on your account.\n",
@@ -3116,12 +3368,16 @@
     "translation": "Falha ao obter pacote para o firewall {{.Type}}.\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "Falha ao obter permissões.\n"
+    "id": "Failed to get permissions.",
+    "translation": "Falha ao obter permissões."
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
-    "translation": "Falha ao obter o grupo de posicionamento: {{.ID}}.\n"
+    "translation": "Falha ao obter o grupo de localização: {{.ID}}."
+  },
+  {
+    "id": "Failed to get planned event ID.",
+    "translation": "Falha ao obter ID de evento planejado."
   },
   {
     "id": "Failed to get planned events.",
@@ -3130,6 +3386,10 @@
   {
     "id": "Failed to get product package for hardware server.",
     "translation": "Falha ao obter o pacote do produto para o servidor de hardware."
+  },
+  {
+    "id": "Failed to get product package for hardware server.\n",
+    "translation": "Falha ao obter o pacote de produto para o servidor de hardware.\n"
   },
   {
     "id": "Failed to get ready status of virtual server instance: {{.VsID}}.\n",
@@ -3142,10 +3402,6 @@
   {
     "id": "Failed to get rules of security group {{.GroupID}}.\n",
     "translation": "Falha ao obter regras do grupo de segurança {{.GroupID}}.\n"
-  },
-  {
-    "id": "Failed to get scale groups.",
-    "translation": "Falha ao obter grupos de escala."
   },
   {
     "id": "Failed to get security group {{.GroupID}}.\n",
@@ -3188,16 +3444,16 @@
     "translation": "Falha ao obter resumo."
   },
   {
+    "id": "Failed to get tag details",
+    "translation": "Falha ao obter os detalhes da tag"
+  },
+  {
     "id": "Failed to get the email {{.emailID}}. ",
     "translation": "Falha ao obter o e-mail {{.emailID}}. "
   },
   {
     "id": "Failed to get the event {{.eventID}}. ",
     "translation": "Falha ao obter o evento {{.eventID}}. "
-  },
-  {
-    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
-    "translation": "Falha ao obter as instâncias dos guests para o servidor de hardware {{.ID}}. \n"
   },
   {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
@@ -3244,6 +3500,10 @@
     "translation": "Falha ao obter conversão com ID {{.TransID}} do IPSec {{.ID}}."
   },
   {
+    "id": "Failed to get unplanned event ID.",
+    "translation": "Falha ao obter ID de evento não planejado."
+  },
+  {
     "id": "Failed to get unplanned events.",
     "translation": "Falha ao obter eventos não planejados."
   },
@@ -3252,8 +3512,12 @@
     "translation": "Falha ao obter permissões de usuário.\n"
   },
   {
-    "id": "Failed to get user.\n",
-    "translation": "Falha ao obter usuário.\n"
+    "id": "Failed to get user vpn overrides.",
+    "translation": "Falha ao obter substituições de VPN do usuário."
+  },
+  {
+    "id": "Failed to get user.",
+    "translation": "Falha ao obter usuário."
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3270,6 +3534,10 @@
   {
     "id": "Failed to get virtual server creation options.\n",
     "translation": "Falha ao obter opções de criação do servidor virtual.\n"
+  },
+  {
+    "id": "Failed to get virtual server instance: {{.VsID}}.",
+    "translation": "Falha ao obter a instância de servidor virtual: {{.VsID}}."
   },
   {
     "id": "Failed to get virtual server instance: {{.VsID}}.\n",
@@ -3293,6 +3561,10 @@
   },
   {
     "id": "Failed to get vlan {{.VlanId}}.",
+    "translation": "Falha ao obter a VLAN {{.VlanId}}."
+  },
+  {
+    "id": "Failed to get vlan {{.VlanId}}.\n",
     "translation": "Falha ao obter a VLAN {{.VlanId}}.\n"
   },
   {
@@ -3301,7 +3573,7 @@
   },
   {
     "id": "Failed to licenses create options.",
-    "translation": "Falha em opções de criação de licença.\n"
+    "translation": "Falha em opções de criação de licenças."
   },
   {
     "id": "Failed to list SSH keys on your account.\n",
@@ -3314,6 +3586,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "Falha ao listar VLANs em sua conta.\n"
+  },
+  {
+    "id": "Failed to list available OS's.",
+    "translation": "Falha ao listar os sistemas operacionais disponíveis."
   },
   {
     "id": "Failed to list categories.\n",
@@ -3349,7 +3625,11 @@
   },
   {
     "id": "Failed to list placement groups",
-    "translation": "Falha ao listar grupos de posicionamento\n"
+    "translation": "Falha ao listar os grupos de localização"
+  },
+  {
+    "id": "Failed to list presets",
+    "translation": "Falha ao listar pré-configurações"
   },
   {
     "id": "Failed to list private images.",
@@ -3365,11 +3645,11 @@
   },
   {
     "id": "Failed to list routers",
-    "translation": "Falha ao listar roteadores\n"
+    "translation": "Falha ao listar roteadores"
   },
   {
     "id": "Failed to list rules",
-    "translation": "Falha ao listar regras\n"
+    "translation": "Falha ao listar regras"
   },
   {
     "id": "Failed to list subnets on your account.\n",
@@ -3377,7 +3657,7 @@
   },
   {
     "id": "Failed to list the host guest on your account.",
-    "translation": "Falha ao listar o guest de host em sua conta.\n"
+    "translation": "Falha ao listar o guest de host em sua conta."
   },
   {
     "id": "Failed to list users.\n",
@@ -3462,10 +3742,6 @@
   {
     "id": "Failed to parse destination port range start. \n",
     "translation": "Falha ao analisar início do intervalo de portas de destino. \n"
-  },
-  {
-    "id": "Failed to parse file.\n",
-    "translation": "Falha ao analisar arquivo.\n"
   },
   {
     "id": "Failed to parse firewall ID : {{.FirewallID}}.\n",
@@ -3581,7 +3857,7 @@
   },
   {
     "id": "Failed to remove placement group: {{.ID}}.",
-    "translation": "Falha ao remover o grupo de posicionamento: {{.ID}}.\n"
+    "translation": "Falha ao remover o grupo de localização: {{.ID}}."
   },
   {
     "id": "Failed to remove rule {{.RuleId}} in security group {{.GroupID}}.\n",
@@ -3628,10 +3904,6 @@
     "translation": "Falha ao revogar acesso ao volume {{.VolumeID}}.\n"
   },
   {
-    "id": "Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
-    "translation": "Falha ao rotear usando o tipo: {{.TYPE}} e identificador: {{.IDENTIFIER}}.\n"
-  },
-  {
     "id": "Failed to save Quote.\n",
     "translation": "Falha ao salvar a aspa. \n"
   },
@@ -3653,7 +3925,7 @@
   },
   {
     "id": "Failed to set tags.",
-    "translation": "Falha ao configurar as tags. \n"
+    "translation": "Falha ao configurar as tags."
   },
   {
     "id": "Failed to set tags: {{.tags}}.\n",
@@ -3716,6 +3988,10 @@
     "translation": "Falha ao atualizar IPSec {{.ContextID}}.\n"
   },
   {
+    "id": "Failed to update VPN user.",
+    "translation": "Falha ao atualizar o usuário da VPN."
+  },
+  {
     "id": "Failed to update access.\n",
     "translation": "Falha ao atualizar o acesso.\n"
   },
@@ -3732,8 +4008,8 @@
     "translation": "Falha ao atualizar o conjunto da Camada 7: {{.Error}}.\n"
   },
   {
-    "id": "Failed to update permissions: %s",
-    "translation": "Falha ao atualizar permissões: %s"
+    "id": "Failed to update permissions",
+    "translation": "Falha ao atualizar as permissões"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -3817,6 +4093,10 @@
   },
   {
     "id": "Failed to verify virtual server creation.",
+    "translation": "Falha ao verificar a criação do servidor virtual."
+  },
+  {
+    "id": "Failed to verify virtual server creation.\n",
     "translation": "Falha ao verificar a criação do servidor virtual.\n"
   },
   {
@@ -3848,8 +4128,12 @@
     "translation": "Falha ao gravar o arquivo de modelo de servidor virtual em: {{.Template}}."
   },
   {
+    "id": "Failed to {{.action}} user vpn subnets manual config",
+    "translation": "Falha na configuração manual de sub-redes de VPN do usuário {{.action}}"
+  },
+  {
     "id": "Failover a {{.storageType}} volume to the given replica volume",
-    "translation": "Fazer failover de um volume de bloco no volume de réplica especificado"
+    "translation": "Causar failover de um {{.storageType}} volume no volume de réplica especificado"
   },
   {
     "id": "Failover an inaccessible volume to its available replicant volume.",
@@ -3920,6 +4204,10 @@
     "translation": "Filtrar pelo ID do proprietário"
   },
   {
+    "id": "Filter by Memory capacity in megabytes.",
+    "translation": "Filtrar por capacidade de memória em megabytes."
+  },
+  {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
     "translation": "Filtrar por TTL (tempo de vida) em segundos, como 86400"
   },
@@ -3952,8 +4240,16 @@
     "translation": "Filtrar por parte do domínio do FQDN"
   },
   {
+    "id": "Filter by domain portion of the FQDN.",
+    "translation": "Filtrar por parte do domínio do FQDN."
+  },
+  {
     "id": "Filter by host portion of the FQDN",
     "translation": "Filtrar por parte do host do FQDN"
+  },
+  {
+    "id": "Filter by host portion of the FQDN.",
+    "translation": "Filtrar por parte do host do FQDN."
   },
   {
     "id": "Filter by host record, such as www",
@@ -4028,6 +4324,10 @@
     "translation": "Filtrar por tags, múltiplas ocorrências permitidas"
   },
   {
+    "id": "Filter by tags.",
+    "translation": "Filtrar por tags."
+  },
+  {
     "id": "Filter by the ID of order that purchased the subnets",
     "translation": "Filtrar pelo ID do pedido que comprou as sub-redes"
   },
@@ -4096,6 +4396,10 @@
     "translation": "Versão do firmware"
   },
   {
+    "id": "First Name",
+    "translation": "Nome"
+  },
+  {
     "id": "Flag denoting whether to verify the order, or not place it",
     "translation": "Sinalização denotando se o pedido deve ser verificado ou se nem deve ser feito"
   },
@@ -4114,6 +4418,10 @@
   {
     "id": "Force operation without confirmation",
     "translation": "Forçar operação sem confirmação"
+  },
+  {
+    "id": "Force the volume refresh, will cancel any ongoing transactions.",
+    "translation": "Forçar a atualização do volume cancelará quaisquer transações em andamento."
   },
   {
     "id": "Forces the virtual server to only have access the private network",
@@ -4137,7 +4445,7 @@
   },
   {
     "id": "Frontend port",
-    "translation": "Porta de front-end [padrão: 80]"
+    "translation": "Porta de front-end"
   },
   {
     "id": "Frontend protocol",
@@ -4168,16 +4476,16 @@
     "translation": "Obter logs de eventos"
   },
   {
-    "id": "Get List options for creating a placement group..",
-    "translation": "Obter opções de lista para criação de um grupo de posicionamento."
-  },
-  {
     "id": "Get Netscaler details.",
     "translation": "Obter detalhes do Netscaler."
   },
   {
     "id": "Get Reserved Capacity Group details.",
     "translation": "Obter detalhes do Reserved Capacity Group."
+  },
+  {
+    "id": "Get all available Operating Systems.",
+    "translation": "Obter todos os sistemas operacionais disponíveis."
   },
   {
     "id": "Get bandwidth pool details.",
@@ -4232,20 +4540,12 @@
     "translation": "Obter detalhes de uma sub-rede"
   },
   {
-    "id": "Get details of an Autoscale group.",
-    "translation": "Obter detalhes de um grupo Autoscale."
-  },
-  {
     "id": "Get information about the resources using the selected tag.",
     "translation": "Obtenha informações sobre os recursos que usam a tag selecionada."
   },
   {
     "id": "Get load balancer details",
     "translation": "Obter detalhes do balanceador de carga"
-  },
-  {
-    "id": "Get placement Group details.",
-    "translation": "Obter detalhes do Grupo de posicionamento."
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
@@ -4436,12 +4736,16 @@
     "translation": "Hora do dia em que as capturas instantâneas devem ser obtidas, número inteiro entre 0 e 23"
   },
   {
-    "id": "How many invoices to get back. [default: 50]",
-    "translation": "Quantas faturas para receber de volta. [padrão: 50]"
+    "id": "Hourly",
+    "translation": "A cada hora"
   },
   {
-    "id": "How many results to get in one api call. [default: 50]",
-    "translation": "Quantos resultados para obter em uma chamada de API. [padrão: 50]"
+    "id": "How many invoices to get back.",
+    "translation": "Quantas faturas receber de volta."
+  },
+  {
+    "id": "How many results to get in one api call.",
+    "translation": "Quantos resultados obter em uma chamada de API."
   },
   {
     "id": "Http Port",
@@ -4478,6 +4782,18 @@
   {
     "id": "ID of the object being tagged  [required]",
     "translation": "ID do objeto em que está sendo colocadas as tags [obrigatório]"
+  },
+  {
+    "id": "IDENTIFIER",
+    "translation": "IDENTIFIER"
+  },
+  {
+    "id": "IDENTIFIER TARGET",
+    "translation": "IDENTIFIER TARGET"
+  },
+  {
+    "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
+    "translation": "IDENTIFIER: ID da imagem\nURI: o URI de um objeto de armazenamento de objeto (arquivo .vhd/.iso) do formato: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: a Chave de API da IBM Cloud com acesso à instância do IBM Cloud Object Storage."
   },
   {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
@@ -4556,12 +4872,24 @@
     "translation": "ID"
   },
   {
+    "id": "Identifier",
+    "translation": "Identificador"
+  },
+  {
+    "id": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "Se um volume (com replicação) se tornar inacessível devido a um evento de desastre, esse método poderá ser usado para\ncausar failover imediatamente em uma réplica disponível em outro local. Esse método não permite failback por meio da API.\nPara ocorrer failback no volume original depois de usar esse método, abra um chamado de suporte.\nPara testar o failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' como alternativa.\n\nEXEMPLO:\n${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\nEsse comando executa a operação de failover do volume com o ID 12345678 para o volume de réplica com o ID 87654321."
+  },
+  {
     "id": "If specified, will only show what the quote will order, will NOT place an order [default: False]",
     "translation": "Se especificado, só mostrará o que a cotação irá solicitar, NÃO fará um pedido [padrão: False]"
   },
   {
     "id": "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type.",
     "translation": "Se essa opção for especificada, o IP público será alocado por meio de uma sub-rede pública nesta conta. Caso contrário, ele será alocado por meio do conjunto do sistema IBM. Disponível apenas no tipo de balanceador de carga PublicToPrivate."
+  },
+  {
+    "id": "Image ID",
+    "translation": "ID da imagem"
   },
   {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
@@ -4596,6 +4924,10 @@
     "translation": "Importar uma imagem de um armazenamento de objeto"
   },
   {
+    "id": "In GB",
+    "translation": "GB de entrada"
+  },
+  {
     "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
     "translation": "Na opção de cache, se você selecionar 'include-specified' ou 'ignore-specified', inclua também uma descrição usando esta opção, por exemplo, a descrição --cache include-specified --cache-description."
   },
@@ -4608,8 +4940,12 @@
     "translation": "Incluir recursos extras. As opções são: at, is, rs, sr, ss"
   },
   {
-    "id": "Include invoices with a CLOSED status. [default: False]",
-    "translation": "Incluir faturas com um status CLOSED. [padrão: False]"
+    "id": "Include invoices with a CLOSED status.",
+    "translation": "Incluir faturas com status FECHADO."
+  },
+  {
+    "id": "Incorrect Usage",
+    "translation": "Uso incorreto."
   },
   {
     "id": "Incorrect Usage.",
@@ -4626,6 +4962,10 @@
   {
     "id": "Init parameter",
     "translation": "Parâmetro de inicialização"
+  },
+  {
+    "id": "Initial Invoice",
+    "translation": "Fatura inicial"
   },
   {
     "id": "Initial object ID number to attach to ticket",
@@ -4656,12 +4996,20 @@
     "translation": "Endereço IP de mesmo nível interno"
   },
   {
+    "id": "Internet side port",
+    "translation": "Porta lateral da Internet"
+  },
+  {
     "id": "Invalid --sortBy option.",
     "translation": "Opção --sortBy inválida."
   },
   {
     "id": "Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID.",
     "translation": "ID inválido {{.ID}}: o ID deve ter o formato xxx:yyy, xxx é o tipo do firewall, yyy é o ID do número inteiro positivo."
+  },
+  {
+    "id": "Invalid SRV record: {{.sub}}.",
+    "translation": "Registro SRV inválido: {{.sub}}."
   },
   {
     "id": "Invalid combination specified for ordering a subnet.",
@@ -4674,6 +5022,10 @@
   {
     "id": "Invalid datacenter name specified. Please provide the lower case short name (e.g.: dal09).",
     "translation": "Especificado nome inválido do datacenter. Forneça o nome abreviado em minúsculas (por exemplo: dal09)."
+  },
+  {
+    "id": "Invalid disk number to this disk capacity",
+    "translation": "Número de disco inválido para esta capacidade de disco"
   },
   {
     "id": "Invalid firewall type {{.Type}}: firewall type should be either vlan, multiVlan, vs or server.",
@@ -4698,6 +5050,10 @@
   {
     "id": "Invalid format date.",
     "translation": "Formato de data inválido."
+  },
+  {
+    "id": "Invalid input for",
+    "translation": "Entrada inválida para"
   },
   {
     "id": "Invalid input for '{{.Name}}'. It must be a positive integer.",
@@ -4736,6 +5092,10 @@
     "translation": "Quantia da fatura"
   },
   {
+    "id": "Invoice Total Amount",
+    "translation": "Quantia total da fatura"
+  },
+  {
     "id": "Invoice details.",
     "translation": "Detalhes da fatura."
   },
@@ -4754,6 +5114,10 @@
   {
     "id": "Item",
     "translation": "Item"
+  },
+  {
+    "id": "Item Description",
+    "translation": "Descrição do item"
   },
   {
     "id": "Item Id",
@@ -4832,16 +5196,24 @@
     "translation": "A regra da Camada 7 {{.L7RuleID}} foi removida"
   },
   {
+    "id": "LABEL",
+    "translation": "LABEL"
+  },
+  {
+    "id": "LOCATION",
+    "translation": "LOCATION"
+  },
+  {
     "id": "LUN Id",
     "translation": "ID de LUN"
   },
   {
-    "id": "Label",
-    "translation": "Rótulo"
+    "id": "LUN_ID",
+    "translation": "LUN_ID"
   },
   {
-    "id": "Last Action",
-    "translation": "Última ação"
+    "id": "Label",
+    "translation": "Rótulo"
   },
   {
     "id": "Last Edited",
@@ -4856,8 +5228,16 @@
     "translation": "Último login"
   },
   {
+    "id": "Last Name",
+    "translation": "Sobrenome"
+  },
+  {
     "id": "Last Updated",
     "translation": "Última atualização"
+  },
+  {
+    "id": "Last transaction",
+    "translation": "Última transação"
   },
   {
     "id": "Legacy",
@@ -4926,10 +5306,6 @@
   {
     "id": "List active load balancers",
     "translation": "Listar balanceadores de carga ativos"
-  },
-  {
-    "id": "List all Autoscale Groups on your account",
-    "translation": "Listar todos os Grupos Autoscale em sua conta"
   },
   {
     "id": "List all CDN accounts.",
@@ -5032,8 +5408,8 @@
     "translation": "Listar servidores de hardware"
   },
   {
-    "id": "List hosts that are authorized to access the volume",
-    "translation": "Listar hosts que estão autorizados a acessar o volume"
+    "id": "List hosts that are authorized to access the volume.",
+    "translation": "Listar os hosts que estão autorizados a acessar o volume."
   },
   {
     "id": "List information about devices using the tag.",
@@ -5044,8 +5420,8 @@
     "translation": "Listar as interfaces associadas ao grupo de segurança"
   },
   {
-    "id": "List invoices",
-    "translation": "Listar faturas"
+    "id": "List invoices.",
+    "translation": "Listar faturas."
   },
   {
     "id": "List l7 rules",
@@ -5104,10 +5480,6 @@
     "translation": "Listar grupos de posicionamento"
   },
   {
-    "id": "List placement groups.",
-    "translation": "Listar grupos de posicionamento."
-  },
-  {
     "id": "List security group rules",
     "translation": "Listar regras do grupo de segurança"
   },
@@ -5152,8 +5524,8 @@
     "translation": "Lista itens de faturamento com algumas outras informações úteis."
   },
   {
-    "id": "Lists the Virtual Guests running on this server.",
-    "translation": "Lista os guests virtuais em execução neste servidor."
+    "id": "Lists the prices for each item in this preset",
+    "translation": "Lista os preços para cada item nesta pré-configuração"
   },
   {
     "id": "Lists the storage limits per datacenter for this account.",
@@ -5212,10 +5584,6 @@
     "translation": "Máximo de IOPS"
   },
   {
-    "id": "Maximum Members",
-    "translation": "Máximo de membros"
-  },
-  {
     "id": "Maximum number of connections to allow",
     "translation": "Número máximo de conexões a serem permitidas"
   },
@@ -5240,6 +5608,10 @@
     "translation": "Memória"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "Memória (alocada/total)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "Capacidade da memória"
   },
@@ -5250,10 +5622,6 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "Memória em megabytes [necessário]"
-  },
-  {
-    "id": "Memory: ",
-    "translation": "Memória: "
   },
   {
     "id": "Metadata",
@@ -5278,14 +5646,6 @@
   {
     "id": "Min IOPS",
     "translation": "Mínimo de IOPS"
-  },
-  {
-    "id": "Min/Max",
-    "translation": "Mín/Máx"
-  },
-  {
-    "id": "Minimum Members",
-    "translation": "Mínimo de membros"
   },
   {
     "id": "Minute of the hour when snapshots should be taken, integer between 0 to 59",
@@ -5324,8 +5684,8 @@
     "translation": "Vários usuários localizados com o nome: %s"
   },
   {
-    "id": "Must provide [--cpu], [--memory], [--network] or [--flavor] to upgrade.",
-    "translation": "Deve-se fornecer [--cpu], [--memory], [--network] ou [--flavor] para fazer upgrade."
+    "id": "Must provide [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] or [--flavor] to upgrade.",
+    "translation": "Deve fornecer [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] ou [--flavor] para fazer o upgrade."
   },
   {
     "id": "Must set either -n|--network-component or both -s|--server and -i|--interface",
@@ -5334,6 +5694,10 @@
   {
     "id": "Must specify [--cpu] when using [--private].",
     "translation": "Deve-se especificar [--cpu] ao usar [--private]."
+  },
+  {
+    "id": "NAME",
+    "translation": "NAME"
   },
   {
     "id": "NETWORK has to be either public or private.",
@@ -5384,14 +5748,6 @@
     "translation": "Identificador de rede"
   },
   {
-    "id": "Network Type",
-    "translation": "Tipo de rede"
-  },
-  {
-    "id": "Network Vlans",
-    "translation": "Vlans de rede"
-  },
-  {
     "id": "Network component {{.ComponentID}} is added to security group {{.GroupID}}.",
     "translation": "O componente de rede {{.ComponentID}} foi incluído no grupo de segurança {{.GroupID}}."
   },
@@ -5434,10 +5790,6 @@
   {
     "id": "No IPSec was found.",
     "translation": "Nenhum IPSec foi localizado."
-  },
-  {
-    "id": "No Virtual Guests found.",
-    "translation": "Nenhum guest virtual localizado."
   },
   {
     "id": "No available router was found.",
@@ -5600,6 +5952,14 @@
     "translation": "Número de atualizações"
   },
   {
+    "id": "OPTIONS",
+    "translation": "OPTIONS"
+  },
+  {
+    "id": "ORDER_ITEM1 ORDER_ITEM2 ORDER_ITEM3 ORDER_ITEM4...",
+    "translation": "ORDER_ITEM1 ORDER_ITEM2 ORDER_ITEM3 ORDER_ITEM4..."
+  },
+  {
     "id": "OS",
     "translation": "SO"
   },
@@ -5668,12 +6028,8 @@
     "translation": "OpenID"
   },
   {
-    "id": "Opens",
-    "translation": "Abre"
-  },
-  {
-    "id": "Operating System Code: ",
-    "translation": "Código do sistema operacional: "
+    "id": "Operating System Code",
+    "translation": "Código do sistema operacional"
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -5708,6 +6064,10 @@
     "translation": "Parâmetro opcional para pedir espaço de captura instantânea junto ao armazenamento de bloco de resistência; especifica o tamanho (em GB) de espaço de captura instantânea a ser pedido"
   },
   {
+    "id": "Optional parameter for ordering snapshot space along with endurance file storage; specifies the size (in GB) of snapshot space to order",
+    "translation": "Parâmetro opcional para solicitar espaço de captura instantânea junto ao armazenamento de arquivo de resistência; especifica o tamanho (em GB) de espaço de captura instantânea a ser solicitado"
+  },
+  {
     "id": "Options for --sortby are: id,name,description,created",
     "translation": "As opções para --sortby são: id, name, description, created"
   },
@@ -5716,12 +6076,20 @@
     "translation": "As opções para -p|--protocol são: icmp, tcp, udp"
   },
   {
+    "id": "Order Approval Date",
+    "translation": "Data de aprovação do pedido"
+  },
+  {
     "id": "Order ID: {{.OrderID}}",
     "translation": "ID do pedido: {{.OrderID}}"
   },
   {
     "id": "Order IPv6 Addresses",
     "translation": "Realizar pedido de endereços IPv6"
+  },
+  {
+    "id": "Order Total Amount",
+    "translation": "Quantia total do pedido"
   },
   {
     "id": "Order a IPSec VPN tunnel",
@@ -5852,8 +6220,24 @@
     "translation": "Outros"
   },
   {
+    "id": "Out GB",
+    "translation": "GB de saída"
+  },
+  {
+    "id": "Override created, but unable to update VPN user.",
+    "translation": "Substituição criada, mas não é possível atualizar o usuário da VPN."
+  },
+  {
     "id": "Owner",
     "translation": "Proprietário"
+  },
+  {
+    "id": "PACKAGE_KEYNAME",
+    "translation": "PACKAGE_KEYNAME"
+  },
+  {
+    "id": "PLACEMENTGROUP_ID",
+    "translation": "PLACEMENTGROUP_ID"
   },
   {
     "id": "POD",
@@ -5888,6 +6272,10 @@
     "translation": "Usuário pai"
   },
   {
+    "id": "Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "Registro analisado: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Password",
     "translation": "Senha"
   },
@@ -5902,6 +6290,10 @@
   {
     "id": "Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol",
     "translation": "Senha a ser configurada para este usuário. Se nenhuma senha for fornecida, será enviado a um e-mail ao usuário para gerar uma, que expirará em 24 horas. Especifique a opção '-p generate' para gerar uma senha para você. As senhas requerem mais de 8 caracteres, maiúsculos e minúsculos, um número e um símbolo"
+  },
+  {
+    "id": "Password you want to set, this command will fail if the password is not strong. [required]",
+    "translation": "A senha que deseja configurar falhará se a senha não for forte. [necessário]"
   },
   {
     "id": "Path",
@@ -5964,8 +6356,8 @@
     "translation": "Permissões"
   },
   {
-    "id": "Permissions updated successfully: %s",
-    "translation": "Permissões atualizadas com êxito: %s"
+    "id": "Permissions updated successfully",
+    "translation": "Permissões atualizadas com sucesso"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -6064,6 +6456,10 @@
     "translation": "O grupo de posicionamento {{.ID}} foi removido."
   },
   {
+    "id": "Plan",
+    "translation": "Plano"
+  },
+  {
     "id": "Please add the '--guest' id too.\n",
     "translation": "Inclua o id '--guest' também.\n"
   },
@@ -6082,14 +6478,6 @@
   {
     "id": "Pod",
     "translation": "Pod"
-  },
-  {
-    "id": "Policies",
-    "translation": "Políticas"
-  },
-  {
-    "id": "Policy",
-    "translation": "Política"
   },
   {
     "id": "Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS",
@@ -6122,10 +6510,6 @@
   {
     "id": "Port speed[required]",
     "translation": "Velocidade da porta [necessária]"
-  },
-  {
-    "id": "Post Install",
-    "translation": "Pós-instalação"
   },
   {
     "id": "Post-install script to download",
@@ -6172,6 +6556,10 @@
     "translation": "O ID de preço não foi localizado"
   },
   {
+    "id": "Price Id",
+    "translation": "ID do preço"
+  },
+  {
     "id": "Price Rate",
     "translation": "Taxa de preço"
   },
@@ -6206,6 +6594,10 @@
   {
     "id": "PrimaryRouter Hostname",
     "translation": "PrimaryRouter Hostname"
+  },
+  {
+    "id": "Print the version of the sl plugin",
+    "translation": "Imprima a versão do plug-in sl"
   },
   {
     "id": "Print zone and resource records in BIND format",
@@ -6269,7 +6661,7 @@
   },
   {
     "id": "Private side port",
-    "translation": "Porta do lado privado. Padrão: 80"
+    "translation": "Porta latreral privada"
   },
   {
     "id": "Private subnet Id to order the load balancer. See '${COMMAND_NAME} sl loadbal order-options'. Only available in PublicToPrivate and PrivateToPrivate load balancer type",
@@ -6310,6 +6702,10 @@
   {
     "id": "Provider",
     "translation": "Provedor"
+  },
+  {
+    "id": "Provides some details related to order owner, date order, cost information, initial invoice.",
+    "translation": "Fornece alguns detalhes relacionados ao proprietário do pedido, data do pedido, informações de custo e fatura inicial."
   },
   {
     "id": "Provisioned",
@@ -6368,12 +6764,24 @@
     "translation": "Quantidade"
   },
   {
+    "id": "RECORD",
+    "translation": "RECORD"
+  },
+  {
+    "id": "RECORD_ID",
+    "translation": "RECORD_ID"
+  },
+  {
+    "id": "REPLICA_ID",
+    "translation": "REPLICA_ID"
+  },
+  {
     "id": "RPM Sensor",
     "translation": "Sensor RPM"
   },
   {
-    "id": "Ram",
-    "translation": "Ram"
+    "id": "RULE_ID",
+    "translation": "RULE_ID"
   },
   {
     "id": "Read Failure: {{.Error}}.\n",
@@ -6430,6 +6838,10 @@
   {
     "id": "Redirect",
     "translation": "Redirecionar"
+  },
+  {
+    "id": "Reference Code",
+    "translation": "Código de referência"
   },
   {
     "id": "Reflash server firmware.",
@@ -6500,8 +6912,20 @@
     "translation": "Remover uma entrada de conversão de um Internet Protocol Security"
   },
   {
+    "id": "Remove a user VS notification entry.",
+    "translation": "Remova uma entrada de notificação de VS de usuário."
+  },
+  {
+    "id": "Remove a user hardware notification entry.",
+    "translation": "Remova uma entrada de notificação de hardware do usuário."
+  },
+  {
     "id": "Remove access from a user to an specific device",
     "translation": "Remover o acesso de um usuário a um dispositivo específico"
+  },
+  {
+    "id": "Remove access to subnet.",
+    "translation": "Remover o acesso à sub-rede."
   },
   {
     "id": "Remove block storage subnets to the given host id.",
@@ -6528,6 +6952,10 @@
     "translation": "Remove uma tag vazia da sua conta."
   },
   {
+    "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
+    "translation": "Remove o roteamento para uma sub-rede especificada, transformando-a em uma sub-rede portátil não roteada."
+  },
+  {
     "id": "Removing Tag: {{.tag}}.",
     "translation": "Removendo a tag: {{.tag}}."
   },
@@ -6552,16 +6980,8 @@
     "translation": "Relata quais recursos ainda estão ativos em Datacenters que estão planejados para serem encerrados."
   },
   {
-    "id": "Reputation",
-    "translation": "Reputação"
-  },
-  {
     "id": "Request configuration of a tunnel context",
     "translation": "Solicitar configuração de um contexto de túnel"
-  },
-  {
-    "id": "Requests",
-    "translation": "Solicitações"
   },
   {
     "id": "Required User",
@@ -6581,11 +7001,15 @@
   },
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
-    "translation": "Respeite os cabeçalhos. O valor 1 é On e 0 é Off."
+    "translation": "Respeitar cabeçalhos. O valor 1 é On e 0 é Off."
   },
   {
     "id": "Restore block volume using a given snapshot",
     "translation": "Restaurar volume de bloco usando uma captura instantânea especificada"
+  },
+  {
+    "id": "Restriction",
+    "translation": "Restrição"
   },
   {
     "id": "Result limit",
@@ -6608,12 +7032,16 @@
     "translation": "Recuperar credenciais usadas para gerar uma assinatura AWS. Máx. de 2."
   },
   {
-    "id": "Return ALL invoices. There may be a lot of these. [default: False]",
-    "translation": "Retornar TODAS as faturas. Pode haver um muitos desses. [padrão: False]"
+    "id": "Return ALL invoices. There may be a lot of these.",
+    "translation": "Retornar TODAS as faturas. Pode haver muitas dessas."
   },
   {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
     "translation": "Revogar a autorização para hosts que estão acessando um volume específico"
+  },
+  {
+    "id": "Revoke authorization for hosts that are accessing a specific volume.",
+    "translation": "Revogar autorização para hosts que estão acessando um volume específico."
   },
   {
     "id": "Role Name",
@@ -6638,6 +7066,10 @@
   {
     "id": "Router Id",
     "translation": "ID do roteador"
+  },
+  {
+    "id": "Routers",
+    "translation": "Roteadores"
   },
   {
     "id": "Rule",
@@ -6668,12 +7100,16 @@
     "translation": "Execute '{{.CommandName}} sl hardware list --order {{.OrderID}}' para localizar esse servidor de hardware após ele estar pronto."
   },
   {
-    "id": "Running",
-    "translation": "Em execução"
+    "id": "SECURITYGROUP_ID",
+    "translation": "SECURITYGROUP_ID"
   },
   {
-    "id": "SSH Key ",
-    "translation": "Chave SSH "
+    "id": "SMTP",
+    "translation": "SMTP"
+  },
+  {
+    "id": "SNAPSHOT_ID",
+    "translation": "SNAPSHOT_ID"
   },
   {
     "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
@@ -6720,6 +7156,14 @@
     "translation": "SUBNET"
   },
   {
+    "id": "SUBNET_ID",
+    "translation": "SUBNET_ID"
+  },
+  {
+    "id": "SUBNET_TYPE",
+    "translation": "SUBNET_TYPE"
+  },
+  {
     "id": "Sales",
     "translation": "Vendas$"
   },
@@ -6742,6 +7186,10 @@
   {
     "id": "Seconds to wait for a connection. [1-59]",
     "translation": "Segundos a esperar por uma conexão. [1 a 59]"
+  },
+  {
+    "id": "Secret Access Key",
+    "translation": "Chave de acesso secreta"
   },
   {
     "id": "Security group ID to associate with the private interface (multiple occurrence permitted)",
@@ -6780,6 +7228,10 @@
     "translation": "Opções de pedido do servidor para um determinado chassi"
   },
   {
+    "id": "Server order options for a given chassis.",
+    "translation": "Opções de pedido do servidor para um determinado chassi."
+  },
+  {
     "id": "Server side timeout setting, in seconds",
     "translation": "Configuração de tempo limite do lado do servidor, em segundos"
   },
@@ -6805,7 +7257,7 @@
   },
   {
     "id": "Set note for an existing {{.storageType}} storage volume.",
-    "translation": "Configurar nota para um volume de armazenamento de bloco existente."
+    "translation": "Configurar nota para um volume de armazenamento de {{.storageType}} existente."
   },
   {
     "id": "Set note successfully",
@@ -6842,6 +7294,10 @@
   {
     "id": "Sets username for this account.",
     "translation": "Configura o nome de usuário para esta conta."
+  },
+  {
+    "id": "Setup",
+    "translation": "Instalação"
   },
   {
     "id": "Short Name",
@@ -6892,12 +7348,20 @@
     "translation": "Mostrar o histórico de login deste usuário pelas últimas 24 horas"
   },
   {
+    "id": "Show only announcement events.",
+    "translation": "Mostrar apenas eventos de anúncio."
+  },
+  {
     "id": "Show only hourly instances",
     "translation": "Mostrar apenas instâncias por hora"
   },
   {
     "id": "Show only monthly instances",
     "translation": "Mostrar apenas instâncias mensais"
+  },
+  {
+    "id": "Show only planned events.",
+    "translation": "Mostrar apenas os eventos planejados."
   },
   {
     "id": "Show only selected datacenter, use shortname (dal13) format",
@@ -6912,6 +7376,10 @@
     "translation": "Mostrar apenas o resumo da largura de banda para cada servidor virtual"
   },
   {
+    "id": "Show only unplanned events.",
+    "translation": "Mostrar apenas eventos não planejados."
+  },
+  {
     "id": "Show passwords (check over your shoulder!)",
     "translation": "Mostrar senhas (verifique se tem alguém olhando!)"
   },
@@ -6922,6 +7390,18 @@
   {
     "id": "Shows a very detailed list of charges",
     "translation": "Mostra uma lista muito detalhada de encargos"
+  },
+  {
+    "id": "Shows a very detailed list of charges.",
+    "translation": "Mostra uma lista muito detalhada de cobranças."
+  },
+  {
+    "id": "Shows who gets notified when the server has a monitoring issues.",
+    "translation": "Mostra quem é notificado quando o servidor tem problemas de monitoramento."
+  },
+  {
+    "id": "Shows who gets notified when the server virtual instance has a monitoring issues",
+    "translation": "Mostra quem é notificado quando a instância virtual do servidor tem problemas de monitoramento"
   },
   {
     "id": "Single",
@@ -7004,10 +7484,6 @@
     "translation": "Software"
   },
   {
-    "id": "Spam reports",
-    "translation": "Relatórios de spam"
-  },
-  {
     "id": "Specifies if image is bring your own license",
     "translation": "Especifica se a imagem é Bring your own license"
   },
@@ -7038,6 +7514,10 @@
   {
     "id": "Specify the type of attachment, hardware or virtual. default is hardware",
     "translation": "Especifique o tipo de anexo, hardware ou virtual. o padrão é hardware"
+  },
+  {
+    "id": "Speed",
+    "translation": "Velocidade"
   },
   {
     "id": "Start",
@@ -7132,8 +7612,16 @@
     "translation": "A sub-rede {{.ID}} foi cancelada."
   },
   {
+    "id": "Subnet {{.subnetID}} is not assigned to User {{.userID}}",
+    "translation": "A sub-rede {{.subnetID}} não está designada ao usuário {{.userID}}"
+  },
+  {
     "id": "Successful Login?",
     "translation": "Login com êxito?"
+  },
+  {
+    "id": "Successfully added subnet access for user.",
+    "translation": "Acesso de sub-rede incluído com sucesso para o usuário."
   },
   {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -7156,6 +7644,14 @@
     "translation": "Reflash do firmware de dispositivo feito reflash com sucesso"
   },
   {
+    "id": "Successfully removed User Customer notification.",
+    "translation": "A notificação de cliente do usuário foi removida com sucesso."
+  },
+  {
+    "id": "Successfully removed subnet access for user.",
+    "translation": "O acesso de sub-rede para o usuário foi removido com sucesso."
+  },
+  {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "ID da sub-rede removido com sucesso: {{.subnetID}} para ID do host permitido: {{.accessID}}"
   },
@@ -7164,8 +7660,12 @@
     "translation": "Envio bem-sucedido da solicitação para alternar a interface IPMI do servidor de hardware '{{.ID}}'."
   },
   {
-    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events",
-    "translation": "Resumo e reconhecimento dos próximos e contínuos eventos de manutenção"
+    "id": "Successfully {{.action}} user vpn subnets manual config",
+    "translation": "Configuração manual de sub-redes de VPN do usuário {{.action}} com sucesso"
+  },
+  {
+    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events.",
+    "translation": "Resumo e reconhecimento de eventos de manutenção futuros e contínuos."
   },
   {
     "id": "Summary info about tickets",
@@ -7212,8 +7712,20 @@
     "translation": "Sistema sendo recarregado para instância de servidor virtual: {{.VsId}} está em andamento. Execute '{{.CommandName}} sl vs ready {{.VsId}}' para verificar se ele estará pronto mais tarde."
   },
   {
+    "id": "TICKETID",
+    "translation": "TICKETID"
+  },
+  {
+    "id": "TRANSLATION_ID",
+    "translation": "TRANSLATION_ID"
+  },
+  {
     "id": "TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200",
     "translation": "TTL (tempo de vida) em segundos, como 86400. O padrão é: 7200"
+  },
+  {
+    "id": "TYPE",
+    "translation": "TYPE"
   },
   {
     "id": "Tag",
@@ -7240,6 +7752,10 @@
     "translation": "Tags a serem configuradas ou sequência de caracteres vazia para remover tudo (múltiplas ocorrências permitidas)."
   },
   {
+    "id": "Target",
+    "translation": "Target"
+  },
+  {
     "id": "Target IP",
     "translation": "IP de Destino"
   },
@@ -7256,16 +7772,16 @@
     "translation": "Arquivo de modelo: o {{.Location}} não existe."
   },
   {
-    "id": "Termination",
-    "translation": "Rescisão"
-  },
-  {
     "id": "Test order",
     "translation": "Ordem do teste"
   },
   {
     "id": "The ID of one IP address to authorize",
     "translation": "O ID de um endereço IP a ser autorizado"
+  },
+  {
+    "id": "The ID of one IP address to authorize.",
+    "translation": "O ID de um endereço IP a ser autorizado."
   },
   {
     "id": "The ID of one IP address to revoke",
@@ -7276,12 +7792,20 @@
     "translation": "O ID de um servidor de hardware a ser autorizado"
   },
   {
+    "id": "The ID of one hardware server to authorize.",
+    "translation": "O ID de um servidor de hardware a ser autorizado."
+  },
+  {
     "id": "The ID of one hardware server to revoke",
     "translation": "O ID de um servidor de hardware a ser revogado"
   },
   {
     "id": "The ID of one virtual server to authorize",
     "translation": "O ID de um servidor virtual a ser autorizado"
+  },
+  {
+    "id": "The ID of one virtual server to authorize.",
+    "translation": "O ID de um servidor virtual a ser autorizado."
   },
   {
     "id": "The ID of one virtual server to revoke",
@@ -7334,6 +7858,10 @@
   {
     "id": "The actual SSH key",
     "translation": "A chave SSH real"
+  },
+  {
+    "id": "The block device ID´s to archive, multiple occurrence allowed",
+    "translation": "Os IDs do dispositivo de bloco a serem arquivados, múltiplas ocorrências permitidas"
   },
   {
     "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
@@ -7476,6 +8004,10 @@
     "translation": "O novo rótulo para a chave"
   },
   {
+    "id": "The note",
+    "translation": "A nota"
+  },
+  {
     "id": "The note of hardware server: {{.ID}} was updated.",
     "translation": "A nota do servidor de hardware: {{.ID}} foi atualizado."
   },
@@ -7486,6 +8018,10 @@
   {
     "id": "The note to be applied to the imported template",
     "translation": "A nota a ser aplicada ao modelo importado"
+  },
+  {
+    "id": "The note was set successfully",
+    "translation": "A nota foi configurada com sucesso"
   },
   {
     "id": "The order is correct.",
@@ -7712,6 +8248,10 @@
     "translation": "Não há nenhum guest no host dedicado {{.ID}}."
   },
   {
+    "id": "There is not available category to this disk size",
+    "translation": "Não há categoria disponível para este tamanho do disco"
+  },
+  {
     "id": "This account is the Master User and has all permissions enabled",
     "translation": "Esta conta é o Usuário principal e tem todas as permissões ativadas"
   },
@@ -7730,6 +8270,14 @@
   {
     "id": "This command requires --add or --remove option.",
     "translation": "Este comando requer a opção --add ou --remove."
+  },
+  {
+    "id": "This command requires --enable or --disable option.",
+    "translation": "Esse comando requer a opção --enable ou --disable."
+  },
+  {
+    "id": "This command requires four arguments.",
+    "translation": "Esse comando requer quatro argumentos."
   },
   {
     "id": "This command requires notification names as arguments and options flags.",
@@ -7752,16 +8300,12 @@
     "translation": "Esse comando requer a opção --title."
   },
   {
+    "id": "This command requires three arguments.",
+    "translation": "Esse comando requer três argumentos."
+  },
+  {
     "id": "This command requires two arguments.",
     "translation": "Esse comando requer dois argumentos."
-  },
-  {
-    "id": "This interface allows you to change the route of your Account Owned subnets.",
-    "translation": "Esta interface permite mudar a rota de suas sub-redes de conta própria."
-  },
-  {
-    "id": "This interface allows you to remove the route of your Account Owned subnets.",
-    "translation": "Esta interface permite remover a rota de suas sub-redes de conta própria."
   },
   {
     "id": "This is the credential id associated with the volume. [Required]",
@@ -7782,10 +8326,6 @@
   {
     "id": "This will cancel all virtual server instances in the dedicatedhost: {{.HostID}} and cannot be undone. Continue?",
     "translation": "Isso cancelará todas as instâncias do servidor virtual no host dedicado: {{.HostID}} e não pode ser desfeito. Continuar?"
-  },
-  {
-    "id": "This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?",
-    "translation": "Isso cancelará a instância AutoScale Group: {{.autoScaleGroupId}} e todos os seus membros, esta ação não pode ser desfeita. Continuar?"
   },
   {
     "id": "This will cancel the IP address: {{.ID}} and cannot be undone. Continue?",
@@ -7945,7 +8485,7 @@
   },
   {
     "id": "Title",
-    "translation": "Title"
+    "translation": "Título"
   },
   {
     "id": "To add Datacenter",
@@ -7976,10 +8516,6 @@
     "translation": "Número total de resultado a retornar. -1 para retornar ALL, pode haver um LOT destes.  [padrão: 50]"
   },
   {
-    "id": "Transaction",
-    "translation": "Transação"
-  },
-  {
     "id": "True",
     "translation": "Sim"
   },
@@ -7996,12 +8532,24 @@
     "translation": "Tipo de volume de armazenamento [necessário], as opções são: desempenho, resistência"
   },
   {
-    "id": "Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required].",
-    "translation": "Valor de tipo em roteamento estático, por exemplo: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [obrigatório]."
-  },
-  {
     "id": "Types",
     "translation": "Tipos"
+  },
+  {
+    "id": "URI",
+    "translation": "URI"
+  },
+  {
+    "id": "URL",
+    "translation": "URL"
+  },
+  {
+    "id": "USERNAME",
+    "translation": "NOME DO USUÁRIO"
+  },
+  {
+    "id": "USER_ID",
+    "translation": "USER_ID"
   },
   {
     "id": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]",
@@ -8078,6 +8626,10 @@
   {
     "id": "Unable to find item with ID: {{.itemID}}.\n",
     "translation": "Não é possível localizar item com o ID: {{.itemID}}.\n"
+  },
+  {
+    "id": "Unable to find license with key: {{.key}}.",
+    "translation": "Não é possível localizar a licença com a chave: {{.key}}."
   },
   {
     "id": "Unable to find location",
@@ -8164,6 +8716,10 @@
     "translation": "Não foi possível incluir a atualização: {{.Error}}\n"
   },
   {
+    "id": "Update disk number to size in GB [capacity,diskNumber]. --resize-disk 250,2",
+    "translation": "Atualize o número do disco para o tamanho em GB [capacity,diskNumber]. --resize-disk 250,2"
+  },
+  {
     "id": "Update resource records in a zone",
     "translation": "Atualizar registros de recurso em uma zona"
   },
@@ -8236,6 +8792,10 @@
     "translation": "O ID do usuário deve ser um número."
   },
   {
+    "id": "User ID to be notified on monitoring failure, multiple occurrence allowed",
+    "translation": "ID do usuário a ser notificado sobre falha de monitoramento, ocorrência múltipla permitida"
+  },
+  {
     "id": "User defined metadata string",
     "translation": "Sequência de metadados definida pelo usuário"
   },
@@ -8258,6 +8818,10 @@
   {
     "id": "VIRTUAL",
     "translation": "VIRTUAL"
+  },
+  {
+    "id": "VLAN",
+    "translation": "VLAN"
   },
   {
     "id": "VLAN type",
@@ -8292,6 +8856,10 @@
     "translation": "Nome do fornecedor"
   },
   {
+    "id": "Version",
+    "translation": "Versão"
+  },
+  {
     "id": "View a quote",
     "translation": "Visualizar uma cotação"
   },
@@ -8316,8 +8884,8 @@
     "translation": "ID de guest virtual"
   },
   {
-    "id": "Virtual Guest Member Template",
-    "translation": "Modelo de membro guest virtual"
+    "id": "Virtual guest ID",
+    "translation": "ID de guest virtual"
   },
   {
     "id": "Virtual guest domain name not found.",
@@ -8384,10 +8952,6 @@
     "translation": "VLAN"
   },
   {
-    "id": "Vlan Name",
-    "translation": "Nome da VLAN"
-  },
-  {
     "id": "Vlan ids",
     "translation": "IDs de Vlan"
   },
@@ -8410,6 +8974,10 @@
   {
     "id": "Volume name",
     "translation": "Nome do volume"
+  },
+  {
+    "id": "Vs",
+    "translation": "Vs"
   },
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning",
@@ -8464,6 +9032,14 @@
     "translation": "É possível executar '{{.CommandName}} sl vs host-list --order {{.OrderID}}' para localizar esse host dedicado após ele estar pronto."
   },
   {
+    "id": "ZONE",
+    "translation": "ZONE"
+  },
+  {
+    "id": "ZONEFILE",
+    "translation": "ZONEFILE"
+  },
+  {
     "id": "Zone {{.Zone}} was created.",
     "translation": "A zona {{.Zone}} foi criada."
   },
@@ -8474,6 +9050,10 @@
   {
     "id": "[--billing] billing rate must be either hourly or monthly.",
     "translation": "[--billing] a taxa de faturamento deve ser por hora ou por mês."
+  },
+  {
+    "id": "[--billing] has to be either hourly or monthly.",
+    "translation": "[--billing] tem que ser por hora ou mensal."
   },
   {
     "id": "[--public] is not allowed with [--private].",
@@ -8512,10 +9092,6 @@
     "translation": "O valor de [-d|--day-of-week] deve estar entre 0 e 6."
   },
   {
-    "id": "[-i/--type-id] is required.",
-    "translation": "[-i/--type-id] é necessário."
-  },
-  {
     "id": "[-k] is not allowed with [-f|--in-file].",
     "translation": "[-k] não é permitido com [-f|--in-file]."
   },
@@ -8552,10 +9128,6 @@
     "translation": "[-s|--snapshot-schedule] é necessário. As opções são: HOURLY, DAILY, WEEKLY."
   },
   {
-    "id": "[-t/--type] is required.",
-    "translation": "[-t/--type] é necessário."
-  },
-  {
     "id": "[-t|--tier] is optional, options are: 0.25,2,4,10.",
     "translation": "[-t|--tier] é opcional. As opções são: 0.25, 2, 4, 10."
   },
@@ -8566,6 +9138,22 @@
   {
     "id": "[-u|--userdata] is not allowed with [-F|--userfile].",
     "translation": "[-u|--userdata] não é permitido com [-F|--userfile]."
+  },
+  {
+    "id": "[TAG NAME]",
+    "translation": "[TAG NAME]"
+  },
+  {
+    "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
+    "translation": "aceita no máximo {{.Limit}} argumentos, recebido {{.Args}}"
+  },
+  {
+    "id": "accepts between {{.Min}} and {{.Max}} arg(s), received {{.Args}}",
+    "translation": "aceita entre {{.Min}} e {{.Max}} argumentos, recebido {{.Args}}"
+  },
+  {
+    "id": "accepts {{.Limit}} arg(s), received {{.Args}}",
+    "translation": "aceita {{.Limit}} argumentos, recebido {{.Args}}"
   },
   {
     "id": "account",
@@ -8582,10 +9170,6 @@
   {
     "id": "active transaction",
     "translation": "transação ativa"
-  },
-  {
-    "id": "all_disks",
-    "translation": "all_disks"
   },
   {
     "id": "assigned",
@@ -8636,6 +9220,10 @@
     "translation": "ID do certificado não localizado"
   },
   {
+    "id": "closing soon: ",
+    "translation": "fechando em breve: "
+  },
+  {
     "id": "common_name",
     "translation": "common_name"
   },
@@ -8646,10 +9234,6 @@
   {
     "id": "cost",
     "translation": "cost"
-  },
-  {
-    "id": "cpu (allocated/total)",
-    "translation": "cpu (alocada/total)"
   },
   {
     "id": "cpu cores",
@@ -8678,10 +9262,6 @@
   {
     "id": "date_of_month",
     "translation": "date_of_month"
-  },
-  {
-    "id": "date_time",
-    "translation": "date_time"
   },
   {
     "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
@@ -8726,10 +9306,6 @@
   {
     "id": "device",
     "translation": "dispositivo"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "disco (alocado/total)"
   },
   {
     "id": "disk_guest",
@@ -8808,10 +9384,6 @@
     "translation": "identificador global"
   },
   {
-    "id": "guests",
-    "translation": "guests"
-  },
-  {
     "id": "guid",
     "translation": "guid"
   },
@@ -8852,6 +9424,10 @@
     "translation": "certificado intermediário não localizado"
   },
   {
+    "id": "invalid argument {{.Arg}} for {{.Path}}",
+    "translation": "argumento inválido {{.Arg}} para {{.Path}}"
+  },
+  {
     "id": "ip",
     "translation": "IP"
   },
@@ -8876,20 +9452,12 @@
     "translation": "Última transação"
   },
   {
-    "id": "lists bandwidth pools",
-    "translation": "lista conjuntos de largura de banda"
-  },
-  {
     "id": "maximum_snapshots",
     "translation": "Máximo de capturas instantâneas"
   },
   {
     "id": "memory",
     "translation": "memória"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "memória (alocada/total)"
   },
   {
     "id": "minute",
@@ -8910,10 +9478,6 @@
   {
     "id": "network space",
     "translation": "espaço de rede"
-  },
-  {
-    "id": "network_space",
-    "translation": "Espaço de rede"
   },
   {
     "id": "none",
@@ -8940,8 +9504,8 @@
     "translation": "as opções para %s são hardware ou virtual"
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "as opções para %s são true, false"
+    "id": "options for --enable are true, false",
+    "translation": "as opções para --enable são true, false"
   },
   {
     "id": "os",
@@ -8960,24 +9524,12 @@
     "translation": "Senha"
   },
   {
-    "id": "pendingMigrationFlag",
-    "translation": "pendingMigrationFlag"
-  },
-  {
     "id": "pool",
     "translation": "conjunto"
   },
   {
-    "id": "powerState",
-    "translation": "powerState"
-  },
-  {
     "id": "preset",
     "translation": "pré-configuração"
-  },
-  {
-    "id": "price rate",
-    "translation": "taxa de preço"
   },
   {
     "id": "primary_router",
@@ -9044,8 +9596,8 @@
     "translation": "replicação"
   },
   {
-    "id": "router",
-    "translation": "roteador"
+    "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
+    "translation": "requer pelo menos {{.Limit}} argumentos, recebido apenas {{.Args}}"
   },
   {
     "id": "routers",
@@ -9108,14 +9660,6 @@
     "translation": "term"
   },
   {
-    "id": "transaction",
-    "translation": "cód."
-  },
-  {
-    "id": "transaction_id",
-    "translation": "transaction_id"
-  },
-  {
     "id": "transient",
     "translation": "temporário"
   },
@@ -9126,6 +9670,10 @@
   {
     "id": "type",
     "translation": "tipo"
+  },
+  {
+    "id": "unknown command {{.Arg}} for {{.Command}}",
+    "translation": "comando desconhecido {{.Arg}} para {{.Command}}"
   },
   {
     "id": "updated",
@@ -9172,20 +9720,8 @@
     "translation": "servidores virtuais"
   },
   {
-    "id": "virtual_servers",
-    "translation": "Servidores virtuais"
-  },
-  {
     "id": "visibility",
     "translation": "visibilidade"
-  },
-  {
-    "id": "vlan_id",
-    "translation": "ID da VLAN"
-  },
-  {
-    "id": "vs_id",
-    "translation": "ID do SV"
   },
   {
     "id": "week",

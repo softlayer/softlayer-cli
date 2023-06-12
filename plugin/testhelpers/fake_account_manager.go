@@ -9,6 +9,19 @@ import (
 )
 
 type FakeAccountManager struct {
+	AckEventStub        func(int) (bool, error)
+	ackEventMutex       sync.RWMutex
+	ackEventArgsForCall []struct {
+		arg1 int
+	}
+	ackEventReturns struct {
+		result1 bool
+		result2 error
+	}
+	ackEventReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	CancelItemStub        func(int) error
 	cancelItemMutex       sync.RWMutex
 	cancelItemArgsForCall []struct {
@@ -19,6 +32,32 @@ type FakeAccountManager struct {
 	}
 	cancelItemReturnsOnCall map[int]struct {
 		result1 error
+	}
+	CreateProvisioningScriptStub        func(datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error)
+	createProvisioningScriptMutex       sync.RWMutex
+	createProvisioningScriptArgsForCall []struct {
+		arg1 datatypes.Provisioning_Hook
+	}
+	createProvisioningScriptReturns struct {
+		result1 datatypes.Provisioning_Hook
+		result2 error
+	}
+	createProvisioningScriptReturnsOnCall map[int]struct {
+		result1 datatypes.Provisioning_Hook
+		result2 error
+	}
+	DeleteProvisioningScriptStub        func(int) (bool, error)
+	deleteProvisioningScriptMutex       sync.RWMutex
+	deleteProvisioningScriptArgsForCall []struct {
+		arg1 int
+	}
+	deleteProvisioningScriptReturns struct {
+		result1 bool
+		result2 error
+	}
+	deleteProvisioningScriptReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
 	}
 	GetAccountAllBillingOrdersStub        func(string, int) ([]datatypes.Billing_Order, error)
 	getAccountAllBillingOrdersMutex       sync.RWMutex
@@ -184,6 +223,19 @@ type FakeAccountManager struct {
 		result1 datatypes.Billing_Item
 		result2 error
 	}
+	GetPostProvisioningHooksStub        func(string) ([]datatypes.Provisioning_Hook, error)
+	getPostProvisioningHooksMutex       sync.RWMutex
+	getPostProvisioningHooksArgsForCall []struct {
+		arg1 string
+	}
+	getPostProvisioningHooksReturns struct {
+		result1 []datatypes.Provisioning_Hook
+		result2 error
+	}
+	getPostProvisioningHooksReturnsOnCall map[int]struct {
+		result1 []datatypes.Provisioning_Hook
+		result2 error
+	}
 	GetSummaryStub        func(string) (datatypes.Account, error)
 	getSummaryMutex       sync.RWMutex
 	getSummaryArgsForCall []struct {
@@ -211,6 +263,70 @@ type FakeAccountManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeAccountManager) AckEvent(arg1 int) (bool, error) {
+	fake.ackEventMutex.Lock()
+	ret, specificReturn := fake.ackEventReturnsOnCall[len(fake.ackEventArgsForCall)]
+	fake.ackEventArgsForCall = append(fake.ackEventArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.AckEventStub
+	fakeReturns := fake.ackEventReturns
+	fake.recordInvocation("AckEvent", []interface{}{arg1})
+	fake.ackEventMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) AckEventCallCount() int {
+	fake.ackEventMutex.RLock()
+	defer fake.ackEventMutex.RUnlock()
+	return len(fake.ackEventArgsForCall)
+}
+
+func (fake *FakeAccountManager) AckEventCalls(stub func(int) (bool, error)) {
+	fake.ackEventMutex.Lock()
+	defer fake.ackEventMutex.Unlock()
+	fake.AckEventStub = stub
+}
+
+func (fake *FakeAccountManager) AckEventArgsForCall(i int) int {
+	fake.ackEventMutex.RLock()
+	defer fake.ackEventMutex.RUnlock()
+	argsForCall := fake.ackEventArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) AckEventReturns(result1 bool, result2 error) {
+	fake.ackEventMutex.Lock()
+	defer fake.ackEventMutex.Unlock()
+	fake.AckEventStub = nil
+	fake.ackEventReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) AckEventReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.ackEventMutex.Lock()
+	defer fake.ackEventMutex.Unlock()
+	fake.AckEventStub = nil
+	if fake.ackEventReturnsOnCall == nil {
+		fake.ackEventReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.ackEventReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) CancelItem(arg1 int) error {
@@ -272,6 +388,134 @@ func (fake *FakeAccountManager) CancelItemReturnsOnCall(i int, result1 error) {
 	fake.cancelItemReturnsOnCall[i] = struct {
 		result1 error
 	}{result1}
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScript(arg1 datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error) {
+	fake.createProvisioningScriptMutex.Lock()
+	ret, specificReturn := fake.createProvisioningScriptReturnsOnCall[len(fake.createProvisioningScriptArgsForCall)]
+	fake.createProvisioningScriptArgsForCall = append(fake.createProvisioningScriptArgsForCall, struct {
+		arg1 datatypes.Provisioning_Hook
+	}{arg1})
+	stub := fake.CreateProvisioningScriptStub
+	fakeReturns := fake.createProvisioningScriptReturns
+	fake.recordInvocation("CreateProvisioningScript", []interface{}{arg1})
+	fake.createProvisioningScriptMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptCallCount() int {
+	fake.createProvisioningScriptMutex.RLock()
+	defer fake.createProvisioningScriptMutex.RUnlock()
+	return len(fake.createProvisioningScriptArgsForCall)
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptCalls(stub func(datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error)) {
+	fake.createProvisioningScriptMutex.Lock()
+	defer fake.createProvisioningScriptMutex.Unlock()
+	fake.CreateProvisioningScriptStub = stub
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptArgsForCall(i int) datatypes.Provisioning_Hook {
+	fake.createProvisioningScriptMutex.RLock()
+	defer fake.createProvisioningScriptMutex.RUnlock()
+	argsForCall := fake.createProvisioningScriptArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptReturns(result1 datatypes.Provisioning_Hook, result2 error) {
+	fake.createProvisioningScriptMutex.Lock()
+	defer fake.createProvisioningScriptMutex.Unlock()
+	fake.CreateProvisioningScriptStub = nil
+	fake.createProvisioningScriptReturns = struct {
+		result1 datatypes.Provisioning_Hook
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) CreateProvisioningScriptReturnsOnCall(i int, result1 datatypes.Provisioning_Hook, result2 error) {
+	fake.createProvisioningScriptMutex.Lock()
+	defer fake.createProvisioningScriptMutex.Unlock()
+	fake.CreateProvisioningScriptStub = nil
+	if fake.createProvisioningScriptReturnsOnCall == nil {
+		fake.createProvisioningScriptReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Provisioning_Hook
+			result2 error
+		})
+	}
+	fake.createProvisioningScriptReturnsOnCall[i] = struct {
+		result1 datatypes.Provisioning_Hook
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScript(arg1 int) (bool, error) {
+	fake.deleteProvisioningScriptMutex.Lock()
+	ret, specificReturn := fake.deleteProvisioningScriptReturnsOnCall[len(fake.deleteProvisioningScriptArgsForCall)]
+	fake.deleteProvisioningScriptArgsForCall = append(fake.deleteProvisioningScriptArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteProvisioningScriptStub
+	fakeReturns := fake.deleteProvisioningScriptReturns
+	fake.recordInvocation("DeleteProvisioningScript", []interface{}{arg1})
+	fake.deleteProvisioningScriptMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptCallCount() int {
+	fake.deleteProvisioningScriptMutex.RLock()
+	defer fake.deleteProvisioningScriptMutex.RUnlock()
+	return len(fake.deleteProvisioningScriptArgsForCall)
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptCalls(stub func(int) (bool, error)) {
+	fake.deleteProvisioningScriptMutex.Lock()
+	defer fake.deleteProvisioningScriptMutex.Unlock()
+	fake.DeleteProvisioningScriptStub = stub
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptArgsForCall(i int) int {
+	fake.deleteProvisioningScriptMutex.RLock()
+	defer fake.deleteProvisioningScriptMutex.RUnlock()
+	argsForCall := fake.deleteProvisioningScriptArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptReturns(result1 bool, result2 error) {
+	fake.deleteProvisioningScriptMutex.Lock()
+	defer fake.deleteProvisioningScriptMutex.Unlock()
+	fake.DeleteProvisioningScriptStub = nil
+	fake.deleteProvisioningScriptReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) DeleteProvisioningScriptReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.deleteProvisioningScriptMutex.Lock()
+	defer fake.deleteProvisioningScriptMutex.Unlock()
+	fake.DeleteProvisioningScriptStub = nil
+	if fake.deleteProvisioningScriptReturnsOnCall == nil {
+		fake.deleteProvisioningScriptReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.deleteProvisioningScriptReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeAccountManager) GetAccountAllBillingOrders(arg1 string, arg2 int) ([]datatypes.Billing_Order, error) {
@@ -1043,6 +1287,70 @@ func (fake *FakeAccountManager) GetItemDetailReturnsOnCall(i int, result1 dataty
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetPostProvisioningHooks(arg1 string) ([]datatypes.Provisioning_Hook, error) {
+	fake.getPostProvisioningHooksMutex.Lock()
+	ret, specificReturn := fake.getPostProvisioningHooksReturnsOnCall[len(fake.getPostProvisioningHooksArgsForCall)]
+	fake.getPostProvisioningHooksArgsForCall = append(fake.getPostProvisioningHooksArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	stub := fake.GetPostProvisioningHooksStub
+	fakeReturns := fake.getPostProvisioningHooksReturns
+	fake.recordInvocation("GetPostProvisioningHooks", []interface{}{arg1})
+	fake.getPostProvisioningHooksMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksCallCount() int {
+	fake.getPostProvisioningHooksMutex.RLock()
+	defer fake.getPostProvisioningHooksMutex.RUnlock()
+	return len(fake.getPostProvisioningHooksArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksCalls(stub func(string) ([]datatypes.Provisioning_Hook, error)) {
+	fake.getPostProvisioningHooksMutex.Lock()
+	defer fake.getPostProvisioningHooksMutex.Unlock()
+	fake.GetPostProvisioningHooksStub = stub
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksArgsForCall(i int) string {
+	fake.getPostProvisioningHooksMutex.RLock()
+	defer fake.getPostProvisioningHooksMutex.RUnlock()
+	argsForCall := fake.getPostProvisioningHooksArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksReturns(result1 []datatypes.Provisioning_Hook, result2 error) {
+	fake.getPostProvisioningHooksMutex.Lock()
+	defer fake.getPostProvisioningHooksMutex.Unlock()
+	fake.GetPostProvisioningHooksStub = nil
+	fake.getPostProvisioningHooksReturns = struct {
+		result1 []datatypes.Provisioning_Hook
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetPostProvisioningHooksReturnsOnCall(i int, result1 []datatypes.Provisioning_Hook, result2 error) {
+	fake.getPostProvisioningHooksMutex.Lock()
+	defer fake.getPostProvisioningHooksMutex.Unlock()
+	fake.GetPostProvisioningHooksStub = nil
+	if fake.getPostProvisioningHooksReturnsOnCall == nil {
+		fake.getPostProvisioningHooksReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Provisioning_Hook
+			result2 error
+		})
+	}
+	fake.getPostProvisioningHooksReturnsOnCall[i] = struct {
+		result1 []datatypes.Provisioning_Hook
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAccountManager) GetSummary(arg1 string) (datatypes.Account, error) {
 	fake.getSummaryMutex.Lock()
 	ret, specificReturn := fake.getSummaryReturnsOnCall[len(fake.getSummaryArgsForCall)]
@@ -1166,8 +1474,14 @@ func (fake *FakeAccountManager) SummaryByDatacenterReturnsOnCall(i int, result1 
 func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.ackEventMutex.RLock()
+	defer fake.ackEventMutex.RUnlock()
 	fake.cancelItemMutex.RLock()
 	defer fake.cancelItemMutex.RUnlock()
+	fake.createProvisioningScriptMutex.RLock()
+	defer fake.createProvisioningScriptMutex.RUnlock()
+	fake.deleteProvisioningScriptMutex.RLock()
+	defer fake.deleteProvisioningScriptMutex.RUnlock()
 	fake.getAccountAllBillingOrdersMutex.RLock()
 	defer fake.getAccountAllBillingOrdersMutex.RUnlock()
 	fake.getActiveAccountLicensesMutex.RLock()
@@ -1192,6 +1506,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getInvoicesMutex.RUnlock()
 	fake.getItemDetailMutex.RLock()
 	defer fake.getItemDetailMutex.RUnlock()
+	fake.getPostProvisioningHooksMutex.RLock()
+	defer fake.getPostProvisioningHooksMutex.RUnlock()
 	fake.getSummaryMutex.RLock()
 	defer fake.getSummaryMutex.RUnlock()
 	fake.summaryByDatacenterMutex.RLock()

@@ -43,10 +43,6 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewMigrateCommand(sl).Command)
 	cobraCmd.AddCommand(NewMonitoringListCommand(sl).Command)
 	cobraCmd.AddCommand(NewPauseCommand(sl).Command)
-	cobraCmd.AddCommand(NewPlacementGroupDetailsCommand(sl).Command)
-	cobraCmd.AddCommand(NewPlacementGroupListCommand(sl).Command)
-	cobraCmd.AddCommand(NewPlacementGroupCreateOptionsCommand(sl).Command)
-	cobraCmd.AddCommand(NewPlacementGroupCreateCommand(sl).Command)
 	cobraCmd.AddCommand(NewPowerOffCommand(sl).Command)
 	cobraCmd.AddCommand(NewPowerOnCommand(sl).Command)
 	cobraCmd.AddCommand(NewReadyCommand(sl).Command)
@@ -58,7 +54,9 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewUpgradeCommand(sl).Command)
 	cobraCmd.AddCommand(NewUsageCommand(sl).Command)
 	cobraCmd.AddCommand(NewNotifiactionsCommand(sl).Command)
-	cobraCmd.AddCommand(NewAddNotificationCommand(sl).Command)
+	cobraCmd.AddCommand(NewNotificationsDeleteCommand(sl).Command)
+	cobraCmd.AddCommand(NewNotificationsAddCommand(sl).Command)
+	cobraCmd.AddCommand(NewOsAvailableCommand(sl).Command)
 
 	return cobraCmd
 }

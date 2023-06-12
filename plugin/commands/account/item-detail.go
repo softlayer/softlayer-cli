@@ -18,28 +18,27 @@ import (
 )
 
 type ItemDetailCommand struct {
-    *metadata.SoftlayerCommand
-    AccountManager managers.AccountManager
-    Command *cobra.Command
+	*metadata.SoftlayerCommand
+	AccountManager managers.AccountManager
+	Command        *cobra.Command
 }
 
 func NewItemDetailCommand(sl *metadata.SoftlayerCommand) *ItemDetailCommand {
-    thisCmd := &ItemDetailCommand{
-        SoftlayerCommand: sl,
-        AccountManager: managers.NewAccountManager(sl.Session),
-    }
-    cobraCmd := &cobra.Command{
-        Use: "item-detail " + T("IDENTIFIER"),
-        Short: T("Gets detailed information about a billing item."),
-        Args: metadata.OneArgs,
-        RunE: func(cmd *cobra.Command, args []string) error {
-            return thisCmd.Run(args)
-        },
-    }
-    thisCmd.Command = cobraCmd
-    return thisCmd
+	thisCmd := &ItemDetailCommand{
+		SoftlayerCommand: sl,
+		AccountManager:   managers.NewAccountManager(sl.Session),
+	}
+	cobraCmd := &cobra.Command{
+		Use:   "item-detail " + T("IDENTIFIER"),
+		Short: T("Gets detailed information about a billing item."),
+		Args:  metadata.OneArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return thisCmd.Run(args)
+		},
+	}
+	thisCmd.Command = cobraCmd
+	return thisCmd
 }
-
 
 func (cmd *ItemDetailCommand) Run(args []string) error {
 	itemID, err := strconv.Atoi(args[0])

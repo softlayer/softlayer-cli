@@ -62,10 +62,15 @@ func (cmd *DetailCommand) Run(args []string) error {
 		return slErr.NewInvalidSoftlayerIdInputError("Subnet ID")
 	}
 
-	mask := "ipAddresses[id, ipAddress,note], datacenter, virtualGuests, hardware,networkVlan[networkSpace], tagReferences"
+	mask := "mask[endPointIpAddress[virtualGuest,hardware],ipAddresses[id, ipAddress,note,hardware,virtualGuest], datacenter, virtualGuests, hardware,networkVlan[networkSpace], tagReferences]"
 	subnet, err := cmd.NetworkManager.GetSubnet(subnetID, mask)
 	if err != nil {
 		return errors.NewAPIError(T("Failed to get subnet: {{.ID}}.\n", map[string]interface{}{"ID": subnetID}), err.Error(), 2)
+	}
+
+	// Remove this once the table library supports more complicated tables
+	if outputFormat == "JSON" {
+		return utils.PrintPrettyJSON(cmd.UI, subnet)
 	}
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
@@ -89,10 +94,44 @@ func (cmd *DetailCommand) Run(args []string) error {
 			table.Add(T("IP address"), T("none"))
 		} else {
 			buf := new(bytes.Buffer)
-			ipTable := terminal.NewTable(buf, []string{T("ID"), T("IP address")})
+			ipTable := terminal.NewTable(buf, []string{T("ID"), T("IP address"), T("Description"), T("Note")})
+			endPointIpAddressDescription := "-"
+			if subnet.EndPointIpAddress != nil {
+				routedSubnet := fmt.Sprintf(
+					"%s/%d",
+					*subnet.EndPointIpAddress.Subnet.NetworkIdentifier,
+					*subnet.EndPointIpAddress.Subnet.Cidr,
+				)
+				if subnet.EndPointIpAddress.Hardware != nil {
+					routedSubnet = *subnet.EndPointIpAddress.Hardware.FullyQualifiedDomainName
+				}
+				if subnet.EndPointIpAddress.VirtualGuest != nil {
+					routedSubnet = *subnet.EndPointIpAddress.VirtualGuest.FullyQualifiedDomainName
+				}
+
+				endPointIpAddressDescription = fmt.Sprintf(
+					"Routed to %s → %s",
+					*subnet.EndPointIpAddress.IpAddress,
+					routedSubnet,
+				)
+			}
 			for _, ip := range subnet.IpAddresses {
-				ipTable.Add(utils.FormatIntPointer(ip.Id),
-					utils.FormatStringPointer(ip.IpAddress))
+				description := "-"
+				if subnet.EndPointIpAddress != nil {
+					description = endPointIpAddressDescription
+				}
+				if ip.Hardware != nil {
+					description = *ip.Hardware.FullyQualifiedDomainName
+				}
+				if ip.VirtualGuest != nil {
+					description = *ip.VirtualGuest.FullyQualifiedDomainName
+				}
+				ipTable.Add(
+					utils.FormatIntPointer(ip.Id),
+					utils.FormatStringPointer(ip.IpAddress),
+					description,
+					utils.FormatStringPointer(ip.Note),
+				)
 			}
 			ipTable.Print()
 			table.Add(T("IP address"), buf.String())

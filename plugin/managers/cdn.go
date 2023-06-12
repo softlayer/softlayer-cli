@@ -8,24 +8,35 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
+	"github.com/softlayer/softlayer-go/sl"
 )
 
 type CdnManager interface {
 	GetNetworkCdnMarketplaceConfigurationMapping() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	RemoveOrigin(uniqueId string, path string) (string, error)
 	GetDetailCDN(uniqueId int, mask string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	GetUsageMetrics(uniqueId int, history int, mask string) (datatypes.Container_Network_CdnMarketplace_Metrics, error)
+	GetOrigins(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error)
 	EditCDN(uniqueId int, header string, httpPort int, httpsPort int, origin string, respectHeaders string, cache string, cacheDescription string, performanceConfiguration string) (datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	CreateCdn(hostname string, originHost string, originType string, http int, https int, bucketName string, cname string, header string, path string, ssl string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
+	OriginAddCdn(uniqueId string, header string, path string, originHost string, originType string, http int, https int, cacheKey string, optimize string, dynamicPath string, dynamicPrefetch bool, dynamicCompression bool, bucketName string, fileExtension string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error)
+	Purge(uniqueId string, path string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, error)
 }
 
 type cdnManager struct {
-	CdnService services.Network_CdnMarketplace_Configuration_Mapping
-	Session    *session.Session
+	CdnService      services.Network_CdnMarketplace_Configuration_Mapping
+	CdnPathService  services.Network_CdnMarketplace_Configuration_Mapping_Path
+	CdnPurgeService services.Network_CdnMarketplace_Configuration_Cache_Purge
+	Session         *session.Session
 }
 
 func NewCdnManager(session *session.Session) *cdnManager {
 	return &cdnManager{
-		CdnService: services.GetNetworkCdnMarketplaceConfigurationMappingService(session),
-		Session:    session,
+		CdnService:      services.GetNetworkCdnMarketplaceConfigurationMappingService(session),
+		CdnPathService:  services.GetNetworkCdnMarketplaceConfigurationMappingPathService(session),
+		CdnPurgeService: services.GetNetworkCdnMarketplaceConfigurationCachePurgeService(session),
+		Session:         session,
 	}
 }
 
@@ -48,6 +59,22 @@ func (a cdnManager) GetDetailCDN(uniqueId int, mask string) (datatypes.Container
 		return datatypes.Container_Network_CdnMarketplace_Configuration_Mapping{}, err
 	}
 	return cdn[0], nil
+}
+
+/*
+Delete CDN domain mapping.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping/deleteDomainMapping/
+*/
+func (a cdnManager) DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
+	return a.CdnService.Mask(mask).DeleteDomainMapping(&uniqueId)
+}
+
+/*
+Removes an origin path for an existing CDN mapping.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping_Path/deleteOriginPath/
+*/
+func (a cdnManager) RemoveOrigin(uniqueId string, path string) (string, error) {
+	return a.CdnPathService.DeleteOriginPath(&uniqueId, &path)
 }
 
 /*
@@ -136,4 +163,121 @@ func (a cdnManager) EditCDN(uniqueId int, header string, httpPort int, httpsPort
 		return datatypes.Container_Network_CdnMarketplace_Configuration_Mapping{}, err
 	}
 	return cdn[0], nil
+}
+
+/*
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping/listDomainMappingByUniqueId/
+*/
+func (a cdnManager) GetOrigins(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error) {
+	return a.CdnPathService.ListOriginPath(&uniqueId)
+}
+
+/*
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping/createDomainMapping/
+*/
+func (a cdnManager) CreateCdn(hostname string, originHost string, originType string, http int, https int, bucketName string, cname string, header string, path string, ssl string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error) {
+	types := map[string]string{
+		"server":  "HOST_SERVER",
+		"storage": "OBJECT_STORAGE",
+	}
+	sslCertificate := map[string]string{
+		"wilcard": "WILDCARD_CERT",
+		"dvSan":   "SHARED_SAN_CERT",
+	}
+
+	NewOrigin := datatypes.Container_Network_CdnMarketplace_Configuration_Input{
+		Domain:     sl.String(hostname),
+		Origin:     sl.String(originHost),
+		OriginType: sl.String(types[originType]),
+		VendorName: sl.String("akamai"),
+	}
+
+	protocol := ""
+	if http != 0 {
+		protocol = "HTTP"
+		NewOrigin.HttpPort = sl.Int(http)
+	}
+	if https != 0 {
+		protocol = "HTTPS"
+		NewOrigin.HttpsPort = sl.Int(https)
+		NewOrigin.CertificateType = sl.String(sslCertificate[ssl])
+	}
+	if http != 0 && https != 0 {
+		protocol = "HTTP_AND_HTTPS"
+	}
+	NewOrigin.Protocol = sl.String(protocol)
+	if types[originType] == "OBJECT_STORAGE" {
+		NewOrigin.BucketName = sl.String(bucketName)
+		NewOrigin.Header = sl.String(originHost)
+	}
+	if cname != "" {
+		NewOrigin.Cname = sl.String(cname + ".cdn.appdomain.cloud")
+	}
+	if header != "" {
+		NewOrigin.Header = sl.String(header)
+	}
+	if path != "" {
+		NewOrigin.Path = sl.String("/" + path)
+	}
+
+	return a.CdnService.CreateDomainMapping(&NewOrigin)
+}
+
+/*
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Mapping_Path/createOriginPath/
+*/
+func (a cdnManager) OriginAddCdn(uniqueId string, header string, path string, originHost string, originType string, http int, https int, cacheKey string, optimize string, dynamicPath string, dynamicPrefetch bool, dynamicCompression bool, bucketName string, fileExtension string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping_Path, error) {
+	types := map[string]string{
+		"server":  "HOST_SERVER",
+		"storage": "OBJECT_STORAGE",
+	}
+	performanceConfig := map[string]string{
+		"web":     "General web delivery",
+		"video":   "Video on demand optimization",
+		"file":    "Large file optimization",
+		"dynamic": "Dynamic content acceleration",
+	}
+
+	NewOrigin := datatypes.Container_Network_CdnMarketplace_Configuration_Input{
+		UniqueId:                 sl.String(uniqueId),
+		Path:                     sl.String("/" + path),
+		Origin:                   sl.String(originHost),
+		OriginType:               sl.String(types[originType]),
+		CacheKeyQueryRule:        sl.String(cacheKey),
+		PerformanceConfiguration: sl.String(performanceConfig[optimize]),
+	}
+
+	if optimize == "dynamic" {
+		NewOrigin.DynamicContentAcceleration = &datatypes.Container_Network_CdnMarketplace_Configuration_Performance_DynamicContentAcceleration{
+			DetectionPath:                 sl.String("/" + dynamicPath),
+			PrefetchEnabled:               sl.Bool(dynamicPrefetch),
+			MobileImageCompressionEnabled: sl.Bool(dynamicCompression),
+		}
+	}
+
+	if originType == "storage" {
+		NewOrigin.BucketName = sl.String(bucketName)
+		NewOrigin.FileExtension = sl.String(fileExtension)
+		NewOrigin.Header = sl.String(originHost)
+	}
+
+	if header != "" {
+		NewOrigin.Header = sl.String(header)
+	}
+	if http != 0 {
+		NewOrigin.HttpPort = sl.Int(http)
+	}
+	if https != 0 {
+		NewOrigin.HttpsPort = sl.Int(https)
+	}
+
+	return a.CdnPathService.CreateOriginPath(&NewOrigin)
+}
+
+/*
+This method creates a purge record in the purge table, and also initiates the create purge call.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_CdnMarketplace_Configuration_Cache_Purge/createPurge/
+*/
+func (a cdnManager) Purge(uniqueId string, path string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Cache_Purge, error) {
+	return a.CdnPurgeService.CreatePurge(&uniqueId, &path)
 }

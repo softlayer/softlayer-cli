@@ -1,6 +1,7 @@
 package metadata
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -12,9 +13,13 @@ import (
 )
 
 var (
-	LIMIT          = 50
-	NS_SL_NAME     = "sl"
-	OutputFlagName = "output"
+	LIMIT                  = 50
+	NS_SL_NAME             = "sl"
+	OutputFlagName         = "output"
+	PLUGIN_VERSION         = "1.4.1"
+	PLUGIN_SOFTLAYER       = "sl"
+	PLUGIN_SOFTLAYER_USAGE = "Classic Infrastructure"
+	UsageAgentHeader       = "ibmcloud sl v" + PLUGIN_VERSION
 )
 
 const OutputJSON = "JSON"
@@ -86,4 +91,33 @@ func (o *CobraOutputFlag) Set(p string) error {
 
 func (o *CobraOutputFlag) Type() string {
 	return "string"
+}
+
+func GetVersion() plugin.VersionType {
+	versionSplit := strings.Split(PLUGIN_VERSION, ".")
+	var err error
+	major, minor, revision := 0, 0, 0
+	// Error checking here seems a bit much, but a mistake in the version string would cause a crash otherwise.
+	if len(versionSplit) == 3 {
+		if major, err = strconv.Atoi(versionSplit[0]); err != nil {
+			major = 99
+		}
+		if minor, err = strconv.Atoi(versionSplit[1]); err != nil {
+			minor = 99
+		}
+		if revision, err = strconv.Atoi(versionSplit[2]); err != nil {
+			revision = 99
+		}
+	}
+	return plugin.VersionType{Major: major, Minor: minor, Build: revision}
+
+}
+
+// Might be a way to read this from go.mod, or something?
+func GetSDKVersion() plugin.VersionType {
+	return plugin.VersionType{Major: 0, Minor: 9, Build: 0}
+}
+
+func GetMinCLI() plugin.VersionType {
+	return plugin.VersionType{Major: 2, Minor: 12, Build: 0}
 }

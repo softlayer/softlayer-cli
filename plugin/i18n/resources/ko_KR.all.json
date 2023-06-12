@@ -8,10 +8,6 @@
     "translation": " 용량 키 이름(예:C1_2X2_1_YEAR_TERM). [필수]"
   },
   {
-    "id": " Disk ",
-    "translation": " 디스크 "
-  },
-  {
     "id": " Do not actually create the reserved capacity",
     "translation": " 예약된 용량을 실제로 작성하지 않음"
   },
@@ -32,8 +28,12 @@
     "translation": "활성 트랜잭션 수"
   },
   {
+    "id": "${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER",
+    "translation": "${COMMAND_NAME} sl  loadbal ns-detail [OPTIONS] IDENTIFIER"
+  },
+  {
     "id": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.",
-    "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n예: \n${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n이 명령을 실행하면 볼륨 참고를 편집합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n이 명령을 실행하면 사용자 세부사항을 표시합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\nThis command list virtual guests."
+    "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [옵션]\n\n예: \n${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n이 명령을 실행하면 볼륨 참고를 편집합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n이 명령을 실행하면 사용자 세부사항을 표시합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\nThis command list virtual guests."
   },
   {
     "id": "${COMMAND_NAME} sl cdn detail",
@@ -48,20 +48,24 @@
     "translation": "${COMMAND_NAME} sl cdn list"
   },
   {
+    "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
+    "translation": "${COMMAND_NAME} sl dedicatedhost create-options [옵션]\n\n예:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   사용 가능한 개인용 VLAN 목록을 가져오려면 다음 명령을 사용하십시오. ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\""
+  },
+  {
     "id": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER[OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n   This command list all Dedicated Host guests in the Account.",
-    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n  이 명령은 계정의 모든 전용 호스트 게스트를 나열합니다."
+    "translation": "${COMMAND_NAME} sl dedicatedhost list-guests IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl dedicatedhost list-guests -d dal09 --sortby hostname 1234567\n  이 명령은 계정의 모든 전용 호스트 게스트를 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns import ~/ibm.com.txt\n   This command imports zone and its resource records from file: ~/ibm.com.txt.",
-    "translation": "${COMMAND_NAME} sl dns import ZONEFILE [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl dns import ~/ibm.com.txt\n   이 명령은 ~/ibm.com.txt 파일에서 구역 및 해당 리소스 레코드를 가져옵니다."
+    "translation": "${COMMAND_NAME} sl dns import ZONEFILE [옵션]\n\n예:\n   ${COMMAND_NAME} sl dns import ~/ibm.com.txt\n   이 명령은 ~/ibm.com.txt 파일에서 구역 및 해당 리소스 레코드를 가져옵니다."
   },
   {
     "id": "${COMMAND_NAME} sl dns record-add ZONE RECORD TYPE DATA [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns record-add ibm.com ftp A 127.0.0.1 --ttl 86400\n   This command adds an A record to zone: ibm.com, its host is \"ftp\", data is \"127.0.0.1\" and ttl is 86400 seconds.",
-    "translation": "${COMMAND_NAME} sl dns record-add ZONE RECORD TYPE DATA [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl dns record-add ibm.com ftp A 127.0.0.1 --ttl 86400\n   이 명령은 A 레코드를 ibm.com 구역에 추가합니다. 해당 호스트는 \"ftp\"이고 데이터는 \"127.0.0.1\"이며 ttl은 86400초입니다."
+    "translation": "${COMMAND_NAME} sl dns record-add ZONE RECORD TYPE DATA [옵션]\n\n예:\n   ${COMMAND_NAME} sl dns record-add ibm.com ftp A 127.0.0.1 --ttl 86400\n   이 명령은 A 레코드를 ibm.com 구역에 추가합니다. 해당 호스트는 \"ftp\"이고 데이터는 \"127.0.0.1\"이며 ttl은 86400초입니다."
   },
   {
     "id": "${COMMAND_NAME} sl dns record-edit ZONE [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl dns record-edit ibm.com --by-id 12345678 --data 127.0.0.2 --ttl 3600\n   This command edits records under the zone: ibm.com, whose ID is 12345678, and sets its data to \"127.0.0.2\" and ttl to 3600.\n   ${COMMAND_NAME} sl dns record-edit ibm.com --by-record kibana --ttl 3600\n   This command edits records under the zone: ibm.com, whose host is \"kibana\", and sets their ttl all to 3600.",
-    "translation": "${COMMAND_NAME} sl dns record-edit ZONE [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl dns record-edit ibm.com --by-id 12345678 --data 127.0.0.2 --ttl 3600\n   이 명령은 해당 ID가 12345678인 ibm.com 구역의 레코드를 편집하고 해당 데이터를 \"127.0.0.2\"로 설정하며 ttl을 3600으로 설정합니다.\n   ${COMMAND_NAME} sl dns record-edit ibm.com --by-record kibana --ttl 3600\n   이 명령은 해당 호스트가 \"kibana\"인 ibm.com 구역의 레코드를 편집하고 해당 ttl을 모두 3600으로 설정합니다."
+    "translation": "${COMMAND_NAME} sl dns record-edit ZONE [옵션]\n\n예:\n   ${COMMAND_NAME} sl dns record-edit ibm.com --by-id 12345678 --data 127.0.0.2 --ttl 3600\n   이 명령은 해당 ID가 12345678인 ibm.com 구역의 레코드를 편집하고 해당 데이터를 \"127.0.0.2\"로 설정하며 ttl을 3600으로 설정합니다.\n   ${COMMAND_NAME} sl dns record-edit ibm.com --by-record kibana --ttl 3600\n   이 명령은 해당 호스트가 \"kibana\"인 ibm.com 구역의 레코드를 편집하고 해당 ttl을 모두 3600으로 설정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl dns record-list ZONE [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl dns record-list ibm.com --record elasticsearch --type A --ttl 900\n   This command lists all A records under the zone: ibm.com, and filters by host is elasticsearch and ttl is 900 seconds.",
@@ -73,7 +77,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl dns zone-create ZONE [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns zone-create ibm.com \n   This command creates a zone that is named ibm.com.",
-    "translation": "${COMMAND_NAME} sl dns zone-create ZONE [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl dns zone-create ibm.com \n   이 명령은 이름이 ibm.com인 구역을 작성합니다."
+    "translation": "${COMMAND_NAME} sl dns zone-create ZONE [옵션]\n\n예:\n   ${COMMAND_NAME} sl dns zone-create ibm.com \n   이 명령은 이름이 ibm.com인 구역을 작성합니다."
   },
   {
     "id": "${COMMAND_NAME} sl dns zone-delete ZONE\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns zone-delete ibm.com \n   This command deletes a zone that is named ibm.com.",
@@ -81,7 +85,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl dns zone-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns zone-list\n   This command lists all zones under current account.",
-    "translation": "${COMMAND_NAME} sl dns zone-list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl dns zone-list\n   이 명령은 현재 계정의 모든 구역을 나열합니다."
+    "translation": "${COMMAND_NAME} sl dns zone-list [옵션]\n\n예:\n   ${COMMAND_NAME} sl dns zone-list\n   이 명령은 현재 계정의 모든 구역을 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl dns zone-print ZONE\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dns zone-print ibm.com\n   This command prints zone that is named ibm.com, and in BIND format.",
@@ -89,27 +93,27 @@
   },
   {
     "id": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31",
-    "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
+    "translation": "${COMMAND_NAME} sl event-log get [옵션]\n\n예: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
   {
     "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\n예: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
+    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFIER [옵션]\n\n예: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
-    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\n예:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\t이 명령은 ID가 12345678인 IP 주소를 해당 IP 주소가 9.111.123.456인 대상 디바이스에 지정합니다."
+    "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [옵션]\n\n예:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n이 명령은 ID가 12345678인 IP 주소를 해당 IP 주소가 9.111.123.456인 대상 디바이스에 지정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip create --v6 \n\tThis command creates an IPv6 address.",
-    "translation": "${COMMAND_NAME} sl globalip create [OPTIONS]\n\n예:\n    ${COMMAND_NAME} sl globalip create --v6 \n\t이 명령은 주소를 작성합니다."
+    "translation": "${COMMAND_NAME} sl globalip create [옵션]\n\n예:\n    ${COMMAND_NAME} sl globalip create --v6 \n이 명령은 IPv6 주소를 작성합니다."
   },
   {
     "id": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\nEXAMPLE:\n\t${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n\tThis command Add/Remove datacenter of an image.",
-    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [OPTIONS] \n\n예:\n${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n이 명령은 이미지의 데이터 센터를 추가/제거합니다."
+    "translation": "${COMMAND_NAME} sl image datacenter IDENTIFIER [옵션] \n\n예:\n${COMMAND_NAME} sl image datacenter 12345678 --add dal05 --remove sjc03\n이 명령은 이미지의 데이터 센터를 추가/제거합니다."
   },
   {
     "id": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   This command edits an image with ID 12345678 and set its name to \"ubuntu16\", note to \"testing\", and tag to \"staging\".",
-    "translation": "${COMMAND_NAME} sl image edit IDENTIFIER [OPTIONS]\n\n예: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   이 명령은 ID가 12345678인 이미지를 편집하고 이름을 \"ubuntu16\"으로, 참조를 \"testing\"으로, 태그를 \"staging\"으로 설정합니다."
+    "translation": "${COMMAND_NAME} sl image edit IDENTIFIER [옵션]\n\n예: \n   ${COMMAND_NAME} sl image edit 12345678 --name ubuntu16 --note testing --tag staging\n   이 명령은 ID가 12345678인 이미지를 편집하고 이름을 \"ubuntu16\"으로, 참조를 \"testing\"으로, 태그를 \"staging\"으로 설정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
@@ -117,15 +121,15 @@
   },
   {
     "id": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  Request configuration of a tunnel context.\n\n  This action will update the advancedConfigurationFlag on the context\n  instance and further modifications against the context will be prevented\n  until all changes can be propagated to network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  터널 컨텍스트의 구성을 요청합니다.\n\n  이 조치는 컨텍스트 인스턴스의 advancedConfigurationFlag를\n  업데이트하며, 모든 변경사항을 네트워크 디바이스로 전파할 수 있게 될 때까지\n  컨텍스트에 대한 추가 수정이 차단됩니다."
+    "translation": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [옵션]\n\n  터널 컨텍스트의 구성을 요청합니다.\n\n  이 조치는 컨텍스트 인스턴스의 advancedConfigurationFlag를\n  업데이트하며, 모든 변경사항을 네트워크 디바이스로 전파할 수 있게 될 때까지\n  컨텍스트에 대한 추가 수정이 차단됩니다."
   },
   {
     "id": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  List IPSEC VPN tunnel context details.\n\n  Additional resources can be joined using multiple instances of the include\n  option, for which the following choices are available.\n\n  at: address translations\n  is: internal subnets\n  rs: remote subnets\n  sr: statically routed subnets\n  ss: service subnets",
-    "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  IPSEC VPN 터널 컨텍스트 세부사항을 나열합니다.\n\n  포함 옵션의 여러 인스턴스를 사용하여 추가 리소스를 결합할 수 있으며\n   이를 위해 다음 선택사항이 사용 가능합니다.\n\n  at: 주소 변환\n  is: 내부 서브넷\n  rs: 원격 서브넷\n  sr: 정적으로 라우팅된 서브넷\n  ss: 서비스 서브넷"
+    "translation": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [옵션]\n\n  IPSEC VPN 터널 컨텍스트 세부사항을 나열합니다.\n\n  포함 옵션의 여러 인스턴스를 사용하여 추가 리소스를 결합할 수 있으며\n   이를 위해 다음 선택사항이 사용 가능합니다.\n\n  at: 주소 변환\n  is: 내부 서브넷\n  rs: 원격 서브넷\n  sr: 정적으로 라우팅된 서브넷\n  ss: 서비스 서브넷"
   },
   {
     "id": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  Add a subnet to an IPSEC tunnel context.\n\n  A subnet id may be specified to link to the existing tunnel context.\n\n  Otherwise, a network identifier in CIDR notation should be specified,\n  indicating that a subnet resource should first be created before\n  associating it with the tunnel context. Note that this is only supported\n  for remote subnets, which are also deleted upon failure to attach to a\n  context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  IPSEC 터널 컨텍스트에 서브넷을 추가합니다.\n\n  서브넷 ID를 기존 터널 컨텍스트에 대한 링크에 지정할 수 있습니다.\n\n  그렇지 않으면 CIDR 표기법의 네트워크 ID를 지정해야 하며\n  이는 터널 컨텍스트와 연관시키기 전에 먼저 서브넷 리소스를\n  작성해야 함을 표시합니다. 이 ID는 원격 서브넷에만\n  지원되며 컨텍스트에 첨부하는 데 실패하면\n  삭제됩니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
+    "translation": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [옵션] \n\n  IPSEC 터널 컨텍스트에 서브넷을 추가합니다.\n\n  서브넷 ID를 기존 터널 컨텍스트에 대한 링크에 지정할 수 있습니다.\n\n  그렇지 않으면 CIDR 표기법의 네트워크 ID를 지정해야 하며\n  이는 터널 컨텍스트와 연관시키기 전에 먼저 서브넷 리소스를\n  작성해야 함을 표시합니다. 이 ID는 원격 서브넷에만\n  지원되며 컨텍스트에 첨부하는 데 실패하면\n  삭제됩니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
   },
   {
     "id": "${COMMAND_NAME} sl ipsec subnet-remove CONTEXT_ID SUBNET_ID SUBNET_TYPE \n\n  Remove a subnet from an IPSEC tunnel context.\n\n  The subnet id to remove must be specified.\n\n  Remote subnets are deleted upon removal from a tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
@@ -133,7 +137,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl ipsec translation-add CONTEXT_ID [OPTIONS]\n\n  Add an address translation to an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec translation-add CONTEXT_ID [OPTIONS]\n\n  IPSEC 터널 컨텍스트에 주소 변환을 추가합니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
+    "translation": "${COMMAND_NAME} sl ipsec translation-add CONTEXT_ID [옵션]\n\n  IPSEC 터널 컨텍스트에 주소 변환을 추가합니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
   },
   {
     "id": "${COMMAND_NAME} sl ipsec translation-remove CONTEXT_ID TRANSLATION_ID \n\n  Remove a translation entry from an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
@@ -141,11 +145,103 @@
   },
   {
     "id": "${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [OPTIONS]\n\n  Update an address translation for an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [OPTIONS]\n\n  IPSEC 터널 컨텍스트에 대한 주소 변환을 업데이트합니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
+    "translation": "${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [옵션]\n\n  IPSEC 터널 컨텍스트에 대한 주소 변환을 업데이트합니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
   },
   {
     "id": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.",
-    "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  터널 컨텍스트 특성을 업데이트합니다.\n\n  업데이트가 원자적으로 이루어지므로 모두 허용되거나 어떤 것도 허용되지 않습니다.\n\n  키 수명 값은 120 - 172800 범위에 있어야 합니다.\n\n  단계(Phase) 2 PFS(Perfect Forward Secrecy)가 0 -1 범위에 있어야 합니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
+    "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [옵션]\n\n  터널 컨텍스트 특성을 업데이트합니다.\n\n  업데이트가 원자적으로 이루어지므로 모두 허용되거나 어떤 것도 허용되지 않습니다.\n\n  키 수명 값은 120 - 172800 범위에 있어야 합니다.\n\n  단계(Phase) 2 PFS(Perfect Forward Secrecy)가 0 -1 범위에 있어야 합니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
+    "translation": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7policies (--protocol-id PROTOCOL_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+    "translation": "${COMMAND_NAME} sl loadbal l7policy-add (--protocol-uuid PROTOCOL_UUID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policy-delete (--policy-id POLICY_ID) [-f, --force]",
+    "translation": "${COMMAND_NAME} sl loadbal l7policy-delete (--policy-id POLICY_ID) [-f, --force]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
+    "translation": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-detail (--pool-id L7POOL_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7pool-edit (--pool-uuid L7POOL_UUID) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
+    "translation": "${COMMAND_NAME} sl loadbal l7pool-edit (--pool-uuid L7POOL_UUID) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]",
+    "translation": "${COMMAND_NAME} sl loadbal l7rule-add (--policy-uuid L7POLICY_UUID) (-t, --type HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH ) (-c, --compare-type EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS) (-v,--value VALUE) [-k,--key KEY] [--invert 0 | 1]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]",
+    "translation": "${COMMAND_NAME} sl loadbal l7rule-delete (--policy-uuid L7POLICY_UUID) (--rule-uuid L7RULE_UUID) [-f, --force]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal l7rules (--policy-id Policy_ID)",
+    "translation": "${COMMAND_NAME} sl loadbal l7rules (--policy-id Policy_ID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal list",
+    "translation": "${COMMAND_NAME} sl loadbal list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)",
+    "translation": "${COMMAND_NAME} sl loadbal member-add (--id LOADBAL_ID) (--ip PRIVATE_IP)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)",
+    "translation": "${COMMAND_NAME} sl loadbal member-add (--pool-uuid L7POOL_UUID) (--address IP_ADDRESS) (--port PORT)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)",
+    "translation": "${COMMAND_NAME} sl loadbal member-del (--lb-id LOADBAL_ID) (-m, --member-uuid MEMBER_UUID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal netscalers",
+    "translation": "${COMMAND_NAME} sl loadbal netscalers"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal order (-n, --name NAME) (-d, --datacenter DATACENTER) (-t, --type PublicToPrivate | PrivateToPrivate | PublicToPublic ) [-l, --label LABEL] [ -s, --subnet SUBNET_ID] [--frontend-protocol PROTOCOL] [--frontend-port PORT] [--backend-protocol PROTOCOL] [--backend-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--use-public-subnet] [--verify]",
+    "translation": "${COMMAND_NAME} sl loadbal order (-n, --name NAME) (-d, --datacenter DATACENTER) (-t, --type PublicToPrivate | PrivateToPrivate | PublicToPublic ) [-l, --label LABEL] [ -s, --subnet SUBNET_ID] [--frontend-protocol PROTOCOL] [--frontend-port PORT] [--backend-protocol PROTOCOL] [--backend-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--use-public-subnet] [--verify]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]",
+    "translation": "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+    "translation": "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)",
+    "translation": "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)"
+  },
+  {
+    "id": "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]",
+    "translation": "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage accounts",
@@ -153,19 +249,19 @@
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-create 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [OPTIONS]\n\n예:\n${COMMAND_NAME} sl object-storage credential-create 123456"
+    "translation": "${COMMAND_NAME} sl object-storage credential-create IDENTIFIER [옵션]\n\n예:\n${COMMAND_NAME} sl object-storage credential-create 123456"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321",
-    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [OPTIONS]\n\n예:\n${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
+    "translation": "${COMMAND_NAME} sl object-storage credential-delete IDENTIFIER [옵션]\n\n예:\n${COMMAND_NAME} sl object-storage credential-delete 123456 --credential-id 654321"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\nExamples:\n\t${COMMAND_NAME} sl object-storage credential-limit 123456",
-    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [OPTIONS]\n\n예:\n${COMMAND_NAME} sl object-storage credential-limit 123456"
+    "translation": "${COMMAND_NAME} sl object-storage credential-limit IDENTIFIER [옵션]\n\n예:\n${COMMAND_NAME} sl object-storage credential-limit 123456"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
-    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+    "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [옵션]"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -173,107 +269,99 @@
   },
   {
     "id": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\nEXAMPLE: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   This command lists the categories of Bare Metal servers.",
-    "translation": "${COMMAND_NAME} sl order category-list [OPTIONS] PACKAGE_KEYNAME\n\t\n예: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   이 명령은 Bare Metal 서버의 카테고리를 나열합니다."
+    "translation": "${COMMAND_NAME} sl order category-list [옵션] PACKAGE_KEYNAME\n\n예: \n   ${COMMAND_NAME} sl order category-list BARE_METAL_SERVER\n   이 명령은 Bare Metal 서버의 카테고리를 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n\t${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server",
-    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]\n\n예: \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
+    "translation": "${COMMAND_NAME} sl order quote IDENTIFIER [옵션]\n\n예: \n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata\n${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server"
   },
   {
     "id": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   This command adds certificate file: ~/ibm.com.cert and private key file ~/ibm.com.key for domain ibm.com.",
-    "translation": "${COMMAND_NAME} sl security cert-add [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   이 명령은 도메인 ibm.com에 대해 인증 파일 ~/ibm.com.cert 및 개인 키 파일 ~/ibm.com.key를 추가합니다."
+    "translation": "${COMMAND_NAME} sl security cert-add [옵션]\n\n예:\n   ${COMMAND_NAME} sl security cert-add --crt ~/ibm.com.cert --key ~/ibm.com.key \n   이 명령은 도메인 ibm.com에 대해 인증 파일 ~/ibm.com.cert 및 개인 키 파일 ~/ibm.com.key를 추가합니다."
   },
   {
     "id": "${COMMAND_NAME} sl security cert-download IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-download 12345678\n   This command downloads four files to current directory for certificate with ID 12345678. The four files are: certificate file, certificate signing request file, intermediate certificate file and private key file.",
-    "translation": "${COMMAND_NAME} sl security cert-download IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl security cert-download 12345678\n   이 명령은 ID 12345678인 인증서에 대해 현재 디렉토리에 4개의 파일을 다운로드합니다. 4개 파일은 인증서 파일, 인증서 서명 요청 파일, 중간 인증서 파일 및 개인 키 파일입니다."
+    "translation": "${COMMAND_NAME} sl security cert-download IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl security cert-download 12345678\n   이 명령은 ID 12345678인 인증서에 대해 현재 디렉토리에 4개의 파일을 다운로드합니다. 4개 파일은 인증서 파일, 인증서 서명 요청 파일, 중간 인증서 파일 및 개인 키 파일입니다."
   },
   {
     "id": "${COMMAND_NAME} sl security cert-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-edit 12345678 --key ~/ibm.com.key \n   This command edits certificate with ID 12345678 and updates its private key with file: ~/ibm.com.key.",
-    "translation": "${COMMAND_NAME} sl security cert-edit IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl security cert-edit 12345678 --key ~/ibm.com.key \n   이 명령은 ID 12345678인 인증서를 편집하고 ~/ibm.com.key 파일에서 해당 개인 키를 업데이트합니다."
+    "translation": "${COMMAND_NAME} sl security cert-edit IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl security cert-edit 12345678 --key ~/ibm.com.key \n   이 명령은 ID 12345678인 인증서를 편집하고 ~/ibm.com.key 파일에서 해당 개인 키를 업데이트합니다."
   },
   {
     "id": "${COMMAND_NAME} sl security cert-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire\n   This command lists all valid certificates on current account and sort them by validity days.",
-    "translation": "${COMMAND_NAME} sl security cert-list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire\n   이 명령은 현재 계정의 모든 유효한 인증서를 나열하고 유효 일수를 기준으로 이를 정렬합니다."
+    "translation": "${COMMAND_NAME} sl security cert-list [옵션]\n\n예:\n   ${COMMAND_NAME} sl security cert-list --status valid --sortby days_until_expire\n   이 명령은 현재 계정의 모든 유효한 인증서를 나열하고 유효 일수를 기준으로 이를 정렬합니다."
   },
   {
     "id": "${COMMAND_NAME} sl security cert-remove IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl security cert-remove 12345678 \n   This command removes certificate with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl security cert-remove IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl security cert-remove 12345678 \n   이 명령은 ID 12345678인 인증서를 제거합니다."
+    "translation": "${COMMAND_NAME} sl security cert-remove IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl security cert-remove 12345678 \n   이 명령은 ID 12345678인 인증서를 제거합니다."
   },
   {
     "id": "${COMMAND_NAME} sl security sshkey-add LABEL [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security sshkey-add my_sshkey -f ~/.ssh/id_rsa.pub --note mykey\n   This command adds an SSH key from file ~/.ssh/id_rsa.pub with a note \"mykey\".",
-    "translation": "${COMMAND_NAME} sl security sshkey-add LABEL [OPTIONS]\n\t\n예: \n   ${COMMAND_NAME} sl security sshkey-add my_sshkey -f ~/.ssh/id_rsa.pub --note mykey\n   이 명령은 참고 \"mykey\"의 ~/.ssh/id_rsa.pub 파일에서 SSH 키를 추가합니다."
+    "translation": "${COMMAND_NAME} sl security sshkey-add LABEL [옵션]\n\n예: \n   ${COMMAND_NAME} sl security sshkey-add my_sshkey -f ~/.ssh/id_rsa.pub --note mykey\n   이 명령은 참고 \"mykey\"의 ~/.ssh/id_rsa.pub 파일에서 SSH 키를 추가합니다."
   },
   {
     "id": "${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security sshkey-edit 12345678 --label IBMCloud --note testing\n   This command updates the SSH key with ID 12345678 and sets label to \"IBMCloud\" and note to \"testing\".",
-    "translation": "${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl security sshkey-edit 12345678 --label IBMCloud --note testing\n   이 명령은 ID 12345678인 SSH 키를 업데이트하고 레이블을 \"IBMCloud\"로, 참고를 \"testing\"으로 설정합니다."
+    "translation": "${COMMAND_NAME} sl security sshkey-edit IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl security sshkey-edit 12345678 --label IBMCloud --note testing\n   이 명령은 ID 12345678인 SSH 키를 업데이트하고 레이블을 \"IBMCloud\"로, 참고를 \"testing\"으로 설정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl security sshkey-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl security sshkey-list --sortby label\n   This command lists all SSH keys on current account and sorts them by label.",
-    "translation": "${COMMAND_NAME} sl security sshkey-list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl security sshkey-list --sortby label\n   이 명령은 현재 계정의 모든 SSH 키를 나열하고 이를 레이블별로 정렬합니다."
+    "translation": "${COMMAND_NAME} sl security sshkey-list [옵션]\n\n예:\n   ${COMMAND_NAME} sl security sshkey-list --sortby label\n   이 명령은 현재 계정의 모든 SSH 키를 나열하고 이를 레이블별로 정렬합니다."
   },
   {
     "id": "${COMMAND_NAME} sl security sshkey-print IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security sshkey-print 12345678 -f ~/mykey.pub\n   This command shows the ID, label and notes of SSH key with ID 12345678 and write the public key to file: ~/mykey.pub.",
-    "translation": "${COMMAND_NAME} sl security sshkey-print IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl security sshkey-print 12345678 -f ~/mykey.pub\n   이 명령은 ID, 레이블 및 ID 12345678인 SSH 키의 참고를 표시하고 공개 키를 ~/mykey.pub 파일에 씁니다."
+    "translation": "${COMMAND_NAME} sl security sshkey-print IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl security sshkey-print 12345678 -f ~/mykey.pub\n   이 명령은 ID, 레이블 및 ID 12345678인 SSH 키의 참고를 표시하고 공개 키를 ~/mykey.pub 파일에 씁니다."
   },
   {
     "id": "${COMMAND_NAME} sl security sshkey-remove IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl security sshkey-remove 12345678 -f \n   This command removes the SSH key with ID 12345678 without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl security sshkey-remove IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl security sshkey-remove 12345678 -f \n   이 명령은 확인 요청 없이 ID 12345678인 SSH 키를 제거합니다."
+    "translation": "${COMMAND_NAME} sl security sshkey-remove IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl security sshkey-remove 12345678 -f \n   이 명령은 확인 요청 없이 ID 12345678인 SSH 키를 제거합니다."
   },
   {
     "id": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   This command cancels subnet with ID 12345678 without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   이 명령은 확인 요청 없이 ID 12345678인 서브넷을 취소합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n   This command allows you to remove the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet clear-route 12345678\n 이 명령을 사용하면 계정 소유 서브넷의 라우트를 제거할 수 있습니다."
+    "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   이 명령은 확인 요청 없이 ID 12345678인 서브넷을 취소합니다."
   },
   {
     "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
-    "translation": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\t새 서브넷을 계정에 추가합니다. 적절한 양은 유형에 따라 달라집니다.\n\t\n\t유형    - 올바른 수량(IPv4)\n  \t공인  - 4, 8, 16, 32\n  \t개인용 - 4, 8, 16, 32, 64\n\n  \t유형    - 올바른 수량(IPv6)\n\t공인  - 64\n\n예:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   이 명령은 16개의 IPv4 주소로 공인 서브넷을 작성하고 이를 ID가 567인 VLAN에 배치합니다."
+    "translation": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [옵션]\n\n새 서브넷을 계정에 추가합니다. 적절한 양은 유형에 따라 달라집니다.\n\n유형    - 올바른 수량(IPv4)\n  공인  - 4, 8, 16, 32\n  개인용 - 4, 8, 16, 32, 64\n\n  유형    - 올바른 수량(IPv6)\n공인  - 64\n\n예:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   이 명령은 16개의 IPv4 주소로 공인 서브넷을 작성하고 이를 ID가 567인 VLAN에 배치합니다."
   },
   {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
-    "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   이 명령은 가상 서버 및 하드웨어 서버 정보를 포함하여 ID 12345678인 서브넷에 대한 자세한 정보를 표시합니다."
+    "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   이 명령은 가상 서버 및 하드웨어 서버 정보를 포함하여 ID 12345678인 서브넷에 대한 자세한 정보를 표시합니다."
   },
   {
     "id": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1",
-    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
+    "translation": "${COMMAND_NAME} sl subnet edit IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl subnet edit 12345678 --note myNote\n   ${COMMAND_NAME} sl subnet edit 12345678 --tags tag1"
   },
   {
     "id": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote",
-    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote"
+    "translation": "${COMMAND_NAME} sl subnet edit-ip IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl subnet edit-ip 11.22.33.44 --note myNote\n   ${COMMAND_NAME} sl subnet edit-ip 12345678 --note myNote"
   },
   {
     "id": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   This command lists IPv4 subnets on the current account, and filters by datacenter is dal09, subnet type is PRIMARY, and network space is PUBLIC.",
-    "translation": "${COMMAND_NAME} sl subnet list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   이 명령은 현재 계정의 IPv4 서브넷을 나열하고, 데이터 센터별 필터는 dal09이며 서브넷 유형은 PRIMARY이며 네트워크 영역은 PUBLIC입니다."
+    "translation": "${COMMAND_NAME} sl subnet list [옵션]\n\n예:\n   ${COMMAND_NAME} sl subnet list -d dal09 -t PRIMARY --network-space PUBLIC --v4\n   이 명령은 현재 계정의 IPv4 서브넷을 나열하고, 데이터 센터별 필터는 dal09이며 서브넷 유형은 PRIMARY이며 네트워크 영역은 PUBLIC입니다."
   },
   {
     "id": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.",
-    "translation": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   이 명령은 IP 주소가 9.125.235.255인 IP 주소 레코드를 찾고 해당 서브넷과 디바이스 정보를 표시합니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n   This command allows you to change the route of your Account Owned subnets.",
-    "translation": "${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678\n 이 명령을 사용하면 계정 소유 서브넷의 라우트를 변경할 수 있습니다."
+    "translation": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [옵션]\n\n예:\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   이 명령은 IP 주소가 9.125.235.255인 IP 주소 레코드를 찾고 해당 서브넷과 디바이스 정보를 표시합니다."
   },
   {
     "id": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n",
-    "translation": "${COMMAND_NAME} sl tags set [OPTIONS]\n\n예:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
+    "translation": "${COMMAND_NAME} sl tags set [옵션]\n\n예:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
   {
     "id": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ",
-    "translation": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \n예:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 "
+    "translation": "${COMMAND_NAME} sl ticket attach TICKETID [옵션]\n  \n예:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 "
   },
   {
     "id": "${COMMAND_NAME} sl ticket create [OPTIONS]\n\nEXAMPLE: \t\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"This is an example ticket. Please disregard.\"\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"This is an example ticket. Please disregard.\" --attachment 8675654 --attachment-type hardware --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"This is an example ticket. Please disregard.\" --attachment 1234567 --attachment-type virtual --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --attachment 8675654 --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522",
-    "translation": "${COMMAND_NAME} sl ticket create [OPTIONS]\n\n예: \t\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"이는 티켓 예제입니다. 무시하십시오.\"\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"이는 티켓 예제입니다. 무시하십시오.\" --attachment 8675654 --attachment-type hardware --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"이는 티켓 예제입니다. 무시하십시오.\" --attachment 1234567 --attachment-type virtual --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --attachment 8675654 --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522"
+    "translation": "${COMMAND_NAME} sl ticket create [옵션]\n\n예: \n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"이는 티켓 예제입니다. 무시하십시오.\"\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"이는 티켓 예제입니다. 무시하십시오.\" --attachment 8675654 --attachment-type hardware --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --body \"이는 티켓 예제입니다. 무시하십시오.\" --attachment 1234567 --attachment-type virtual --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522 --attachment 8675654 --rootpwd passw0rd\n    ${COMMAND_NAME} sl ticket create --title \"Example title\" --subject-id 1522"
   },
   {
     "id": "${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654\n  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567",
-    "translation": "${COMMAND_NAME} sl ticket detach TICKETID [OPTIONS]\n  \n예:\n  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654\n  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567"
+    "translation": "${COMMAND_NAME} sl ticket detach TICKETID [옵션]\n  \n예:\n  ${COMMAND_NAME} sl ticket detach 767676 --hardware 8675654\n  ${COMMAND_NAME} sl ticket detach 767676 --virtual 1234567"
   },
   {
     "id": "${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket detail 767676\n  ${COMMAND_NAME} sl ticket detail 767676 --count 10",
-    "translation": "${COMMAND_NAME} sl ticket detail TICKETID [OPTIONS]\n  \n예:\n  ${COMMAND_NAME} sl ticket detail 767676\n  ${COMMAND_NAME} sl ticket detail 767676 --count 10"
+    "translation": "${COMMAND_NAME} sl ticket detail TICKETID [옵션]\n  \n예:\n  ${COMMAND_NAME} sl ticket detail 767676\n  ${COMMAND_NAME} sl ticket detail 767676 --count 10"
   },
   {
     "id": "${COMMAND_NAME} sl ticket update TICKETID [\"CONTENTS\"] \n  \n    If the second argument is not specified on a non-Windows machine, it will attempt to use either the value stored in the EDITOR environmental variable, or find either nano, vim, or emacs in that order.\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket update 767676 \"A problem has been detected.\"\n  ${COMMAND_NAME} sl ticket update 767667",
@@ -285,183 +373,207 @@
   },
   {
     "id": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\nEXAMPLE: \t\n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Remember to set the permissions and access for this new user.",
-    "translation": "${COMMAND_NAME} sl user create USERNAME [OPTIONS] \n\n예: \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n 이 신규 사용자의 권한 및 액세스를 설정하려면 기억해 두십시오."
+    "translation": "${COMMAND_NAME} sl user create USERNAME [옵션] \n\n예: \n    ${COMMAND_NAME} sl user create my@email.com --email my@email.com --password generate --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n 이 신규 사용자의 권한 및 액세스를 설정하려면 기억해 두십시오."
   },
   {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
-    "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\n예: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    이 명령은 사용자 세부사항을 편집합니다."
+    "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [옵션]\n\n예: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    이 명령은 사용자 세부사항을 편집합니다."
   },
   {
     "id": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'",
-    "translation": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n알림 이름은 인용 부호로 묶어야 합니다. 예:\nslcli user edit-notifications --enable '주문 승인됨'\nslcli user edit-notifications --enable '주문 승인됨' --enable  '재로드 완료'"
+    "translation": "${COMMAND_NAME} sl user edit-notifications [옵션] NOTIFICATIONS\n\n알림 이름은 인용 부호로 묶어야 합니다. 예:\nslcli user edit-notifications --enable '주문 승인됨'\nslcli user edit-notifications --enable '주문 승인됨' --enable  '재로드 완료'"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   이 명령은 확인 요청 없이 ID 12345678인 VLAN을 취소합니다."
+    "translation": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   이 명령은 확인 요청 없이 ID 12345678인 VLAN을 취소합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   This command creates a public vlan located in datacenter dal09 named \"myvlan\".\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   This command creates a vlan on router bcr01a.dal09 named \"myvlan\".",
-    "translation": "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   이 명령은 데이터 센터 dal09에 있고 이름이 \"myvlan\"인 공용 VLAN을 작성합니다.\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   이 명령은 라우터 bcr01a.dal09에 있고 이름이 \"myvlan\"인 VLAN을 작성합니다."
+    "translation": "${COMMAND_NAME} sl vlan create [옵션]\n\n예:\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   이 명령은 데이터 센터 dal09에 있고 이름이 \"myvlan\"인 공용 VLAN을 작성합니다.\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   이 명령은 라우터 bcr01a.dal09에 있고 이름이 \"myvlan\"인 VLAN을 작성합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.",
-    "translation": "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   이 명령은 ID 12345678인 VLAN의 세부사항을 표시하며 가상 서버 또는 하드웨어 서버는 나열하지 않습니다."
+    "translation": "${COMMAND_NAME} sl vlan detail IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vlan detail 12345678--no-vs --no-hardware\n   이 명령은 ID 12345678인 VLAN의 세부사항을 표시하며 가상 서버 또는 하드웨어 서버는 나열하지 않습니다."
   },
   {
     "id": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   This command updates vlan with ID 12345678 and gives it a new name \"myvlan-rename\".",
-    "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   이 명령은 ID 12345678인 VLAN을 업데이트하고 새 이름 \"myvlan-rename\"을 이에 지정합니다."
+    "translation": "${COMMAND_NAME} sl vlan edit IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   이 명령은 ID 12345678인 VLAN을 업데이트하고 새 이름 \"myvlan-rename\"을 이에 지정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon",
-    "translation": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   이 명령은 dal09와 동일한 데이터 센터로 필터링하여 현재 계정의 모든 VLAN을 나열하고 VLAN 번호별로 이를 정렬합니다.\n \n참고: 팟(Pod) 필드에 (*)를 추가하는 경우 곧 닫힘을 나타냅니다."
+    "translation": "${COMMAND_NAME} sl vlan list [옵션]\n\n예:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   이 명령은 dal09와 동일한 데이터 센터로 필터링하여 현재 계정의 모든 VLAN을 나열하고 VLAN 번호별로 이를 정렬합니다.\n \n참고: 팟(Pod) 필드에 (*)를 추가하는 경우 곧 닫힘을 나타냅니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.",
-    "translation": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\n예:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   가상 서버에 파일, 블록 및 휴대용 스토리지 권한을 부여합니다."
+    "translation": "${COMMAND_NAME} sl vs authorize-storage [옵션] IDENTIFIER\n\n예:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   가상 서버에 파일, 블록 및 휴대용 스토리지 권한을 부여합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\nThis command orders a Reserved Capacity instance with name is myvsi, backendRouterId 1234567, flavor C1_2X2_1_YEAR_TERM and 2 instances,\n${COMMAND_NAME} sl vs capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\nThis command tests whether the order is valid with above options before the order is actually placed.\n\nWARNING: Reserved Capacity is on a yearly contract and not cancelable until the contract is expired.",
-    "translation": "${COMMAND_NAME} sl vs capacity-create [OPTIONS]\n예:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\n이 명령은 이름이 myvsi이고, backendRouterId가 1234567, 특징 C1_2X2_1_YEAR_TERM이 있는 하나의 예약 용량 인스턴스와 두 개의 인스턴스를 주문합니다.\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\n이 명령은 실제로 주문하기 전에 위 옵션을 사용하는 주문이 유효한지 여부를 테스트합니다.\n\n경고: 예약 용량은 연도별 계약이므로 계약이 만료될 때까지 취소할 수 없습니다."
+    "translation": "${COMMAND_NAME} sl vs capacity-create [옵션]\n예:\n${COMMAND_NAME} sl vs capacity-create -n myvsi -b 1234567 -fl C1_2X2_1_YEAR_TERM -i 2\n이 명령은 이름이 myvsi이고, backendRouterId가 1234567, 특징 C1_2X2_1_YEAR_TERM이 있는 하나의 예약 용량 인스턴스와 두 개의 인스턴스를 주문합니다.\n${COMMAND_NAME} sl vs Capacity-create --name myvsi --backendRouterId 1234567 --flavor C1_2X2_1_YEAR_TERM --instances 2 --test\n이 명령은 실제로 주문하기 전에 위 옵션을 사용하는 주문이 유효한지 여부를 테스트합니다.\n\n경고: 예약 용량은 연도별 계약이므로 계약이 만료될 때까지 취소할 수 없습니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   This command captures virtual server instance with ID of 12345678 with all disks into an image named \"mycloud\" with note \"testing\".",
-    "translation": "${COMMAND_NAME} sl vs capture IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   이 명령은 모든 디스크에서 ID 12345678인 가상 서버 인스턴스를 참고 \"testing\"의 이름이 \"mycloud\"인 이미지로 캡처합니다."
+    "translation": "${COMMAND_NAME} sl vs capture IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs capture 12345678 -n mycloud --all --note testing\n   이 명령은 모든 디스크에서 ID 12345678인 가상 서버 인스턴스를 참고 \"testing\"의 이름이 \"mycloud\"인 이미지로 캡처합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\tThis command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,\n\toperation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\tThis command tests whether the order is valid with above options before the order is actually placed.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\tThis command exports above options to a file: myvsi.txt under user home directory for later use.",
-    "translation": "${COMMAND_NAME} sl vs create [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\t이 명령은 호스트 이름이 myvsi이고 도메인이 ibm.com이며 4개의 cpu 코어, 4096M 메모리를 포함하고 dal10 데이터 센터에 있으며 \n\t운영 체제가 UBUNTU 16 64비트이고 2개 디스크(1개는 100G, 다른 하나는 1000G)가 있으며 ID 413인 공용 VLAN에 있는 가상 서버 인스턴스를 주문합니다.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\t이 명령은 실제로 주문하기 전에 위의 옵션으로 주문이 올바른지 여부를 테스트합니다.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\t이 명령은 나중에 사용하기 위해 사용자 홈 디렉토리에 있는 myvsi.txt 파일로 상기 옵션을 내보냅니다."
+    "translation": "${COMMAND_NAME} sl vs create [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n이 명령은 호스트 이름이 myvsi이고 도메인이 ibm.com이며 4개의 cpu 코어, 4096M 메모리를 포함하고 dal10 데이터 센터에 있으며 \n운영 체제가 UBUNTU 16 64비트이고 2개 디스크(1개는 100G, 다른 하나는 1000G)가 있으며 ID 413인 공용 VLAN에 있는 가상 서버 인스턴스를 주문합니다.\n${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n이 명령은 실제로 주문하기 전에 위의 옵션으로 주문이 올바른지 여부를 테스트합니다.\n${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n이 명령은 나중에 사용하기 위해 사용자 홈 디렉토리에 있는 myvsi.txt 파일로 상기 옵션을 내보냅니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs dns-sync IDENTIFIER [OPTIONS]\n   Note: If you don't specify any arguments, it will attempt to update both the A\n   and PTR records. If you don't want to update both records, you may use the\n   -a or --ptr arguments to limit the records updated.\n \nEXAMPLE:\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --a-record --ttl 3600\n   This command synchronizes A record(IP V4 address) of virtual server instance with ID 12345678 to DNS server and sets ttl of this A record to 3600.\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --aaaa-record --ptr\n   This command synchronizes both AAAA record(IP V6 address) and PTR record of virtual server instance with ID 12345678 to DNS server.",
-    "translation": "${COMMAND_NAME} sl vs dns-sync IDENTIFIER [OPTIONS]\n   참고: 인수를 지정하지 않은 경우, 이는 A 및 PTR 레코드를 모두\n   업데이트하려고 시도합니다. 두 레코드를 모두 업데이트히지 않으려면 -a 또는\n   --ptr 인수를 사용하여 업데이트된 레코드를 제한할 수 있습니다.\n \n예:\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --a-record --ttl 3600\n   이 명령은 ID 12345678인 가상 서버 인스턴스의 A 레코드(IP V4 주소)를 DNS 서버에 동기화하고 이 A 레코드의 ttl을 3600으로 설정합니다.\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --aaaa-record --ptr\n   이 명령은 ID 12345678인 가상 서버 인스턴스의 AAAA 레코드(IP V6 주소) 및 PTR 레코드를 모두 DNS 서버에 동기화합니다."
+    "translation": "${COMMAND_NAME} sl vs dns-sync IDENTIFIER [옵션]\n   참고: 인수를 지정하지 않은 경우, 이는 A 및 PTR 레코드를 모두\n   업데이트하려고 시도합니다. 두 레코드를 모두 업데이트히지 않으려면 -a 또는\n   --ptr 인수를 사용하여 업데이트된 레코드를 제한할 수 있습니다.\n \n예:\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --a-record --ttl 3600\n   이 명령은 ID 12345678인 가상 서버 인스턴스의 A 레코드(IP V4 주소)를 DNS 서버에 동기화하고 이 A 레코드의 ttl을 3600으로 설정합니다.\n   ${COMMAND_NAME} sl vs dns-sync 12345678 --aaaa-record --ptr\n   이 명령은 ID 12345678인 가상 서버 인스턴스의 AAAA 레코드(IP V6 주소) 및 PTR 레코드를 모두 DNS 서버에 동기화합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs edit 12345678 -D ibm.com -H myapp --tag testcli --public-speed 1000\n   This command updates virtual server instance with ID 12345678 and set its domain to be \"ibm.com\", hostname to \"myapp\", tag to \"testcli\", \n   and public network port speed to 1000 Mbps.",
-    "translation": "${COMMAND_NAME} sl vs edit IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs edit 12345678 -D ibm.com -H myapp --tag testcli --public-speed 1000\n   이 명령은 ID 12345678인 가상 서버 인스턴스를 업데이트하고 해당 도메인을 \"ibm.com\"으로, 호스트 이름을 \"myapp\"으로, 태그를 \"testcli\"로, 그리고 \n   공용 네트워크 포트 속도를 1000Mbps로 설정합니다."
+    "translation": "${COMMAND_NAME} sl vs edit IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs edit 12345678 -D ibm.com -H myapp --tag testcli --public-speed 1000\n   이 명령은 ID 12345678인 가상 서버 인스턴스를 업데이트하고 해당 도메인을 \"ibm.com\"으로, 호스트 이름을 \"myapp\"으로, 태그를 \"testcli\"로, 그리고 \n   공용 네트워크 포트 속도를 1000Mbps로 설정합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs list --domain ibm.com --hourly --sortby memory\n   This command lists all hourly-billing virtual server instances on current account filtering domain equals to \"ibm.com\" and sort them by memory.",
-    "translation": "${COMMAND_NAME} sl vs list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs list --domain ibm.com --hourly --sortby memory\n   이 명령은 \"ibm.com\"과 동일한 도메인을 필터링하여 현재 계정에서 시간별로 청구되는 모든 가상 서버 인스턴스를 나열하고 이를 메모리별로 정렬합니다."
+    "translation": "${COMMAND_NAME} sl vs list [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs list --domain ibm.com --hourly --sortby memory\n   이 명령은 \"ibm.com\"과 동일한 도메인을 필터링하여 현재 계정에서 시간별로 청구되는 모든 가상 서버 인스턴스를 나열하고 이를 메모리별로 정렬합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well.",
-    "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n 마이그레이션이 필요한 VSI를 관리합니다. 전용 인스턴스를 한 전용 호스트에서 다른 전용 호스트로 마이그레이션할 수 있습니다."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\nEXAMPLE:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \nThis command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369",
-    "translation": "${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]\n예:\n${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 \n이 명령은 이름이 myvsi이고, backendRouterId가 1234567이며, 규칙이 258369인 배치 그룹 인스턴스를 주문합니다."
+    "translation": "${COMMAND_NAME} sl vs migrate [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n 마이그레이션이 필요한 VSI를 관리합니다. 전용 인스턴스를 한 전용 호스트에서 다른 전용 호스트로 마이그레이션할 수 있습니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
-    "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\n예:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   이 명령은 계속해서 사용할 준비가 되었는지 확인하기 위해 ID 12345678인 가상 서버 인스턴스 상태를 확인하고 최대 30초 동안 대기합니다."
+    "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   이 명령은 계속해서 사용할 준비가 되었는지 확인하기 위해 ID 12345678인 가상 서버 인스턴스 상태를 확인하고 최대 30초 동안 대기합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl vs reload 12345678\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 현재 운영 체제를 다시 로드합니다.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 ID 1234인 이미지에서 운영 체제를 다시 로드합니다."
+    "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs reload 12345678\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 현재 운영 체제를 다시 로드합니다.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 ID 1234인 이미지에서 운영 체제를 다시 로드합니다."
   },
   {
     "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
-    "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t참고: 일단 업그레이드 요청이 있으면 클래식 인프라 서비스가 자동으로 인스턴스를\n  \t다시 부팅합니다. 인스턴스는 업그레이드 트랜잭션이 완료될 때까지 정지됩니다.\n  \t그러나 네트워크의 경우 재부팅은 필요하지 않습니다.\n\n예:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   이 명령은 ID 12345678인 가상 서버 인스턴스를 업그레이드하고 CPU 코어 수를 8로, 메모리를 8192M로, 네트워크 포트 속도를 1000Mbps로 설정합니다."
+    "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [옵션]\n참고: 일단 업그레이드 요청이 있으면 클래식 인프라 서비스가 자동으로 인스턴스를\n  다시 부팅합니다. 인스턴스는 업그레이드 트랜잭션이 완료될 때까지 정지됩니다.\n  그러나 네트워크의 경우 재부팅은 필요하지 않습니다.\n\n예:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   이 명령은 ID 12345678인 가상 서버 인스턴스를 업그레이드하고 CPU 코어 수를 8로, 메모리를 8192M로, 네트워크 포트 속도를 1000Mbps로 설정합니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
+    "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [옵션]\n'2006-01-02T15:04' 또는 '2006-01-02T15:04-07:00' 중 하나의 시간 형식입니다.\n\n몇몇 반올림 및 날짜 정렬 세부사항으로 인해, 여기 결과는 제어 포털의 결과와 약간 다를 수 있습니다.\n대역폭은 GB 단위로 나열되고, 시간대가 지정되지 않은 경우 GMT+0으로 가정합니다.\n\n예:\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0",
-    "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\n가상 서버의 사용량 정보입니다.\n예:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
+    "translation": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [옵션]\n가상 서버의 사용량 정보입니다.\n예:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   이 명령은 ID 87654321인 가상 서버에 ID 12345678인 볼륨에 대한 액세스 권한을 부여합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   이 명령은 볼륨(ID 12345678)에 액세스하도록 가상 서버(ID 87654321)에 권한을 부여합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   이 명령은 ID 12345678인 볼륨에 액세스할 권한이 있는 모든 호스트를 나열하고 이를 ID별로 정렬합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   이 명령은 볼륨(ID 12345678)에 액세스하도록 권한이 부여된 모든 호스트를 나열하고 ID별로 정렬합니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\nACCESS_ID는 '${COMMAND_NAME} sl {{.storageType}} access-list'의 허용된 호스트 id입니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   이 명령은 ID 12345678인 볼륨에 대해 ID 87654321인 가상 서버의 액세스 권한을 취소합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   이 명령은 볼륨(ID 12345678)에 대한 가상 서버(ID 87654321)의 액세스를 취소합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   이 명령은 ID 12345678인 볼륨에 대해 장애 복구(failback) 조작을 수행합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   이 명령은 볼륨(ID 12345678)에 대한 장애 복구 조작을 수행합니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   이 명령은 복제본 볼륨(ID 87654321)에 대한 볼륨(ID 12345678)의 장애 복구 조작을 수행합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   이 명령은 ID가 12345678인 블록 볼륨에 대해 적합한 복제 데이터 센터를 나열합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   이 명령은 블록 볼륨(ID 12345678)에 적합한 복제 데이터 센터를 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   이 명령은 매일 복제를 수행하고 dal09에 있으며 티어 레벨은 4, OS 유형은 Linux인 ID 12345678인 볼륨에 대한 복제본을 주문합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   이 명령은 볼륨(ID 12345678)에 대한 복제본을 주문하고, 일일 복제를 수행하며, dal09에 위치합니다. 계층 레벨은 4이고, OS 유형은 Linux입니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   이 명령은 ID가 12345678인 블록 볼륨에 대한 기존 복제본 볼륨을 나열합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   이 명령은 블록 볼륨(ID 12345678)에 대한 기존 복제 볼륨을 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 ID 12345678인 스냅샷을 즉시 취소합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 스냅샷(ID 12345678)을 즉시 취소합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   이 명령은 snapshotforibmcloud로서 추가 참고가 있으며 ID가 12345678인 볼륨에 대한 스냅샷을 작성합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   이 명령은 snapshotforibmcloud로 추가 노트를 사용하고 볼륨(ID 12345678)에 대한 스냅샷을 작성합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   이 명령은 ID 12345678인 볼륨에 대해 일별 스냅샷을 사용하지 않습니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   이 명령은 볼륨(ID 12345678)에 대한 일일 스냅샷을 사용할 수 없도록 합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   이 명령은 ID 12345678인 볼륨에 대해 스냅샷을 사용합니다. 스냅샷은 매주 일요일 오후 2시에 작성되며 최대 5개의 스냅샷이 보관됩니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   이 명령은 볼륨(ID 12345678)에 대한 스냅샷을 사용할 수 있도록 하고, 스냅샷은 매주 일요일 2:00에 작성되며, 최대 5개의 스냅샷이 보유됩니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   이 명령은 ID 12345678인 볼륨의 모든 스냅샷을 나열하고 이를 ID별로 정렬합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   이 명령은 볼륨(ID 12345678)의 모든 스냅샷을 나열하고 ID별로 정렬합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   이 명령은 크기가 1000GB이고 티어 레벨이 GB당 4 IOPS이며 ID가 12345678인 볼륨에 대한 스냅샷 영역을 주문합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   이 명령은 볼륨(ID 12345678)에 대한 스냅샷 공간을 주문하고, 크기는 1000GB이고, 계층 레벨은 GB당 4 IOPS입니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   이 명령은 ID 87654321인 스냅샷에서 ID 12345678인 볼륨을 복원합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   이 명령은 스냅샷(ID 87654321)에서 볼륨(ID 12345678)를 복원합니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID는 ibmcloud sl {{.storageType}} access-list <volume_id>로 확보한 host_id입니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 \n   ACCESS_ID는 ibmcloud sl {{.storageType}} access-list <volume_id>로 확보한 host_id입니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} subnets-remove ACCESS_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-remove 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID는 ibmcloud sl {{.storageType}} access-list <volume_id>로 확보한 host_id입니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 ID 12345678인 볼륨을 즉시 취소합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-cancel VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 즉시 볼륨(ID 12345678)을 취소합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   This command shows order a new volume by duplicating the volume with ID 12345678.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   이 명령은 ID 12345678인 볼륨을 복제하여 새 볼륨 주문을 표시합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-duplicate VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-duplicate 12345678 \n   이 명령은 볼륨(ID 12345678)을 복제하여 수행한 새 볼륨 주문을 보여줍니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\tThis command lists the storage limits per datacenter for this account.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [OPTIONS]\n\n예:\n\t${COMMAND_NAME} sl {{.storageType}} volume-limits\n\t이 명령은 이 계정에 해당하는 데이터 센터당 스토리지 한계를 나열합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-limits [옵션]\n\n예:\n${COMMAND_NAME} sl {{.storageType}} volume-limits\n이 명령은 이 계정에 대한 데이터 센터당 스토리지 한계를 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   이 명령은 dal09에 있는 현재 계정의 모든 endurance 볼륨을 나열하고 이를 용량별로 정렬합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-list [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   이 명령은 dal09에 위치한 현재 계정에서 모든 내구성 볼륨을 나열하고 용량별로 정렬합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   예:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  이 명령은 볼륨 12345678을 크기가 1000GB이고 IOPS가 4000이 되도록 수정합니다.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  이 명령은 볼륨 12345678을 크기가 500GB이고 티어 레벨이 GB당 4 IOPS가 되도록 수정합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [옵션]\n\n   예:\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n  이 명령은 볼륨 12345678을 수정합니다. 크기는 1000GB이고, IOPS는 4000입니다.\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n  이 명령은 볼륨 12345678을 수정합니다. 크기는 500GB이고, 계층 레벨은 GB당 4 IOPS입니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   이 명령은 스토리지 유형, 볼륨 크기, OS 유형, IOPS, 티어 레벨, 데이터 센터 및 스냅샷 크기를 포함하여 블록 스토리지 볼륨 작성에 대한 모든 옵션을 나열합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   이 명령은 스토리지 유형, 볼륨 크기, OS 유형, IOPS, 계층 레벨, 데이터 센터 및 스냅샷 크기를 포함하여 블록 스토리지 볼륨 작성을 위한 모든 옵션을 나열합니다."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   이 명령은 스토리지 유형, 볼륨 크기, IOPS, 계층 레벨, 데이터 센터 및 스냅샷 크기를 포함하여 파일 스토리지 볼륨 작성을 위한 모든 옵션을 나열합니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   이 명령은 크기가 1000GB이고 IOPS가 4000이며 OS 유형이 LINUX인 dal09에 있는 performance 볼륨을 주문합니다.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   이 명령은 크기가 500GB, 티어 레벨이 GB당 4 IOPS, OS 유형이 XEN이고 dal09에 있으며 추가 스냅샷 영역 크기가 500GB인 endurance 볼륨을 주문합니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-order [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   이 명령은 성능 볼륨을 주문합니다. 크기는 1000GB이고, IOPS는 4000이고, OS 유형은 LINUX이고, dal09에 위치합니다.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   이 명령은 내구성 볼륨을 주문합니다. 크기는 500GB이고, 계층 레벨은 GB당 4 IOPS이고, OS 유형은 XEN이고, dal09에 위치하고, 추가 스냅샷 공간 크기는 500GB입니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n예:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\t복제 VOLUME_ID를 해당 상위 SNAPSHOT_ID의 스냅샷으로 새로 고칩니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n예:\n${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n상위 SNAPSHOT_ID에서 스냅샷을 포함한 중복 VOLUME_ID를 새로 고치십시오."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tLUN ID만 호스트 권한 부여 프로세스 중에 영향을 줍니다. \n\t이 방법을 사용하기 전에 모든 호스트의 권한을 취소하도록 \n\t권장합니다(필수는 아님).\n\tVOLUME_ID - LUN ID를 설정할 볼륨 ID입니다.\n\tLUN_ID - 권장 범위는 0 - 255 사이의 정수입니다. 고급 사용자는\n\t0 - 4095 사이의 정수를 사용할 수 있습니다."
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\nLUN ID는 호스트 권한 부여 프로세스 중에만 유효합니다. 이\n      메소드를 사용하기 전에 모든 호스트에 대한 권한 부여를 해제하는 것이\n      좋습니다(필수는 아님). \n      VOLUME_ID - LUN ID를 설정하기 위한 볼륨 ID입니다.      \n LUN_ID - 권장되는 범위는 0 - 255 사이의 정수입니다. 고급 사용자는\n        0 - 4095 사이의 정수를 사용할 수 있습니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note '참고사항입니다.'"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [옵션] VOLUME_ID\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'"
   },
   {
     "id": "%s is not a valid permission",
@@ -486,6 +598,10 @@
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--resize-disk requires capacity and disk number values separated by one comma.",
+    "translation": "--resize-disk에는 용량 및 디스크 번호 값이 쉼표로 구분되어 있어야 합니다."
   },
   {
     "id": "--server needs a port. {{.Server}} improperly formatted",
@@ -668,6 +784,22 @@
     "translation": "사용할 <hostname>.<domain.name.tld> 형식의 이름입니다. 서버당 하나의 FQDN을 지정하십시오(다중 발생이 허용됨). [필수]"
   },
   {
+    "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "원하는 서버의 UUID 값 또는 Hardware_Server.id입니다. 'hostname' 형식의 고유\n정규화된 도메인 이름에 해당하는 값입니다. <domain>여기서 < 및 >는 리터럴(예: myhost)입니다.<mydomain.com>"
+  },
+  {
+    "id": "A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.",
+    "translation": "Network_Subnet_IpAddress.id, 점분리 쿼드 IPv4 주소 또는 전체 또는 압축된 IPv6 주소입니다."
+  },
+  {
+    "id": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ",
+    "translation": "원하는 VLAN의 Network_Vlan.id 값 또는 <data center short name>.<router>.<vlan number>,\neg 형식의 시맨틱 VLAN 식별자입니다. dal13.fcr01.1234 -라우터 이름에 'a' 또는 'b' 중복 규정자가 선택적으로 포함될 수 있습니다. "
+  },
+  {
+    "id": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
+    "translation": "원하는 서버의 UUID 값 또는 Virtual_Guest.id입니다. 'hostname' 형식의 고유\n정규화된 도메인 이름에 해당하는 값입니다. <domain>여기서 < 및 >는 리터럴(예: myhost)입니다.<mydomain.com>"
+  },
+  {
     "id": "A custom name to be assigned to the quote (optional)",
     "translation": "견적서에 지정될 사용자 정의 이름(선택사항)"
   },
@@ -708,6 +840,14 @@
     "translation": "APIKEY"
   },
   {
+    "id": "API_KEY",
+    "translation": "API_KEY"
+  },
+  {
+    "id": "ARGUMENT",
+    "translation": "ARGUMENT"
+  },
+  {
     "id": "Aborted.",
     "translation": "중단됨."
   },
@@ -718,6 +858,10 @@
   {
     "id": "Aborting AAAA record sync, found {{.Num}} AAAA records exists!",
     "translation": "AAAA 레코드 동기화 중단 중.{{.Num}}개의 AAAA 레코드가 있습니다!"
+  },
+  {
+    "id": "Access Key ID",
+    "translation": "액세스 키 ID"
   },
   {
     "id": "Access granted to user {{.userId}} for {{.objectId}}",
@@ -756,6 +900,14 @@
     "translation": "계정"
   },
   {
+    "id": "Acknowledge Event. Doing so will turn off the popup in the control portal.",
+    "translation": "이벤트를 확인합니다. 이렇게 하면 제어 포털에서 팝업이 꺼집니다."
+  },
+  {
+    "id": "Acknowledge every upcoming event. Doing so will turn off the popup in the control portal.",
+    "translation": "향후 모든 이벤트를 확인합니다. 이렇게 하면 제어 포털에서 팝업이 꺼집니다."
+  },
+  {
     "id": "Acknowledged",
     "translation": "수신확인"
   },
@@ -768,8 +920,8 @@
     "translation": "활성 변환 시작 시간소인"
   },
   {
-    "id": "Active Guests",
-    "translation": "활성 게스트"
+    "id": "Add Hard disk in GB",
+    "translation": "하드 디스크를 GB 단위로 추가"
   },
   {
     "id": "Add a new L7 policy",
@@ -816,6 +968,10 @@
     "translation": "IPSec 터널 컨텍스트에 서브넷 추가"
   },
   {
+    "id": "Add access to subnet.",
+    "translation": "서브넷에 대한 액세스를 추가합니다."
+  },
+  {
     "id": "Add an address translation to an IPSec tunnel",
     "translation": "IPSec 터널에 주소 변환 추가"
   },
@@ -826,6 +982,10 @@
   {
     "id": "Add notes for the image",
     "translation": "이미지에 대한 참고 추가"
+  },
+  {
+    "id": "Add or remove subnet access for a user.",
+    "translation": "사용자에 대한 서브넷 액세스를 추가하거나 제거합니다."
   },
   {
     "id": "Add resource record in a zone",
@@ -872,6 +1032,14 @@
     "translation": "할당"
   },
   {
+    "id": "Allotment",
+    "translation": "할당량"
+  },
+  {
+    "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
+    "translation": "보조 서브넷의 경로를 변경할 수 있습니다.\n서브넷은 정적 또는 이동식으로 라우팅될 수 있으며 해당 목적지는 지정된 라우팅 목적지에 의해 결정됩니다.\n정적 서브넷에는 단일 IP 주소의 궁극적인 라우팅 목적지가 있지만 서브넷이 고정으로 라우팅되는 기존 서브넷의 IP 주소로 라우팅되지 않을 수 있습니다.\n이동식 서브넷에는 VLAN의 궁극적인 라우팅 목적지가 있습니다.\n서브넷은 일반적으로 단일 데이터 센터로 제한되는 서브넷 자체와 동일한 '라우팅 지역' 내의 모든 리소스로 라우팅될 수 있습니다.\n\n참조:https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n"
+  },
+  {
     "id": "Amount",
     "translation": "양"
   },
@@ -884,12 +1052,12 @@
     "translation": "권한을 부여할 IP 주소"
   },
   {
-    "id": "An IP address to revoke",
-    "translation": "취소할 IP 주소"
+    "id": "An IP address to authorize.",
+    "translation": "권한 부여할 IP 주소입니다."
   },
   {
-    "id": "An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required].",
-    "translation": "지정된 $type에 대한 적절한 식별자. 예: SoftLayer_Network_Subnet_IpAddress의 식별자[필수]."
+    "id": "An IP address to revoke",
+    "translation": "취소할 IP 주소"
   },
   {
     "id": "An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options",
@@ -964,8 +1132,12 @@
     "translation": "가상 서버에 파일, 블록 및 휴대용 스토리지 권한 부여"
   },
   {
-    "id": "Auto Scale Group was deleted successfully",
-    "translation": "자동 스케일 그룹이 삭제됨"
+    "id": "Authorize hosts  to access a given volume",
+    "translation": "지정된 볼륨에 액세스하도록 호스트에 권한 부여"
+  },
+  {
+    "id": "Authorize hosts to access a given volume.",
+    "translation": "제공된 볼륨에 액세스하도록 호스트에 권한을 부여합니다."
   },
   {
     "id": "Available Snapshot Size (GB)",
@@ -1092,10 +1264,6 @@
     "translation": "블록 볼륨 {{.VolumeId}}에서 LUN ID {{.LunID}}을(를) 보고합니다."
   },
   {
-    "id": "Bounces",
-    "translation": "바운스"
-  },
-  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "버퍼 파일을 닫을 수 없음: {{.Error}}.\n"
   },
@@ -1106,6 +1274,10 @@
   {
     "id": "CIDR",
     "translation": "CIDR"
+  },
+  {
+    "id": "CONTEXT_ID",
+    "translation": "CONTEXT_ID"
   },
   {
     "id": "CPU",
@@ -1276,8 +1448,8 @@
     "translation": "용량(GB)"
   },
   {
-    "id": "Capture all disks that belong to the virtual server",
-    "translation": "가상 서버에 속하는 모든 디스크 캡처"
+    "id": "Capture all block devices that belong to the virtual server",
+    "translation": "가상 서버에 속하는 모든 차단 장치를 캡처합니다."
   },
   {
     "id": "Capture virtual server instance into an image",
@@ -1316,8 +1488,12 @@
     "translation": "인증서 서명 요청을 찾을 수 없음"
   },
   {
-    "id": "Changes a password for a volume's access",
-    "translation": "볼륨의 액세스를 위한 비밀번호 변경"
+    "id": "Change how a secondary subnet is routed.",
+    "translation": "보조 서브넷이 라우트되는 방법을 변경합니다."
+  },
+  {
+    "id": "Changes a password for a volume's access.",
+    "translation": "볼륨 액세스를 위한 비밀번호를 변경합니다."
   },
   {
     "id": "Check if a virtual server instance is ready for use",
@@ -1330,10 +1506,6 @@
   {
     "id": "Classic infrastructure Account commands",
     "translation": "클래식 인프라 계정 명령"
-  },
-  {
-    "id": "Classic infrastructure Autoscale Group",
-    "translation": "클래식 인프라 자동 스케일 그룹"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1440,10 +1612,6 @@
     "translation": "클래식 인프라 네트워크 보안 그룹"
   },
   {
-    "id": "Clicks",
-    "translation": "클릭"
-  },
-  {
     "id": "Client side timeout setting, in seconds",
     "translation": "클라이언트측 제한시간 설정(초)"
   },
@@ -1468,20 +1636,32 @@
     "translation": "표시할 열. 옵션은 id, hostname, domain, primary_ip, backend_ip입니다. 이 옵션은 여러 번 지정할 수 있습니다."
   },
   {
-    "id": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times",
-    "translation": "표시할 열. 옵션: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. 이 옵션은 여러 번 지정할 수 있습니다."
+    "id": "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.",
+    "translation": "표시할 열. 옵션: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. 이 옵션은 여러 번 지정할 수 있습니다."
   },
   {
-    "id": "Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times",
-    "translation": "표시할 열. 옵션: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. 이 옵션은 여러 번 지정할 수 있습니다."
+    "id": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times",
+    "translation": "표시할 열. 옵션: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. 이 옵션은 여러 번 지정할 수 있습니다."
   },
   {
     "id": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times",
     "translation": "표시할 열. 옵션은 id, username, datacenter, storage_type, capacity_gb, bytes_used, IOPs, ip_addr, lunId, created_by, active_transactions, rep_partner_count, notes입니다. 이 옵션은 여러 번 지정할 수 있습니다."
   },
   {
+    "id": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state].",
+    "translation": "표시할 열. [옵션: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [기본값: id,hostname,domain,primary_ip,backend_ip,power_state]."
+  },
+  {
     "id": "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times",
     "translation": "표시할 열. 옵션: id,username,email,displayName,2FA, classicAPIKey, status, hardwareCount, virtualGuestCount. 이 옵션은 여러 번 지정할 수 있습니다."
+  },
+  {
+    "id": "Column to sort by",
+    "translation": "정렬 기준 열"
+  },
+  {
+    "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
+    "translation": "다음을 기준으로 정렬할 열(Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests), [기본값: Id]"
   },
   {
     "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
@@ -1498,6 +1678,14 @@
   {
     "id": "Column to sort by, default:id, options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by",
     "translation": "정렬 기준 열, 기본값:id, 옵션: id,username,datacenter,storage_type,capacity_gb,bytes_used,ip_addr,lunId,active_transactions,created_by"
+  },
+  {
+    "id": "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip",
+    "translation": "정렬 기준 열. 옵션: id, hostname, domain, primary_ip, backend_ip"
+  },
+  {
+    "id": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.",
+    "translation": "정렬 기준 열. 옵션: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
   },
   {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
@@ -1518,10 +1706,6 @@
   {
     "id": "Column to sort by. Options are: id,name,description,created",
     "translation": "정렬 기준 열. 옵션: id,name,description,created"
-  },
-  {
-    "id": "Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id",
-    "translation": "정렬 기준 열. 옵션: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id"
   },
   {
     "id": "Column to sort by. Options are: id,number,name,firewall,datacenter,hardware,virtual_servers,public_ips",
@@ -1570,14 +1754,6 @@
   {
     "id": "Convert a dependent duplicate volume to an independent volume.",
     "translation": "종속 복제 볼륨을 독립 볼륨으로 변환합니다."
-  },
-  {
-    "id": "Cooldown",
-    "translation": "쿨다운"
-  },
-  {
-    "id": "Core",
-    "translation": "코어"
   },
   {
     "id": "Cost",
@@ -1664,6 +1840,10 @@
     "translation": "카운터"
   },
   {
+    "id": "Cpu (allocated/total)",
+    "translation": "CPU(할당됨/총계)"
+  },
+  {
     "id": "Cpu Count",
     "translation": "CPU 수"
   },
@@ -1728,6 +1908,14 @@
     "translation": "임시 가상 서버 작성"
   },
   {
+    "id": "Create a user hardware notification entry.",
+    "translation": "사용자 하드웨어 알림 항목을 작성하십시오."
+  },
+  {
+    "id": "Create a user virtual notification entry.",
+    "translation": "사용자 가상 알림 항목을 작성하십시오."
+  },
+  {
     "id": "Create a zone",
     "translation": "구역 작성"
   },
@@ -1750,6 +1938,10 @@
   {
     "id": "Created Date",
     "translation": "작성 날짜"
+  },
+  {
+    "id": "Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "생성된 레코드: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
   },
   {
     "id": "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
@@ -1776,22 +1968,6 @@
     "translation": "인증 정보 {{.credentialID}}이(가) 삭제되었습니다."
   },
   {
-    "id": "Credit allowed",
-    "translation": "크레디트 허용"
-  },
-  {
-    "id": "Credits overage",
-    "translation": "크레디트 초과"
-  },
-  {
-    "id": "Credits remain",
-    "translation": "크레디트 기한"
-  },
-  {
-    "id": "Credits used",
-    "translation": "사용한 크레딧"
-  },
-  {
     "id": "Critical Max",
     "translation": "임계 최대값"
   },
@@ -1804,16 +1980,16 @@
     "translation": "교차 지역"
   },
   {
-    "id": "Current Members",
-    "translation": "현재 멤버"
-  },
-  {
     "id": "Current Usage",
     "translation": "현재 사용량"
   },
   {
     "id": "Customer Peer IP Address",
     "translation": "고객 피어 IP 주소"
+  },
+  {
+    "id": "DATA",
+    "translation": "DATA"
   },
   {
     "id": "Data Center",
@@ -1852,12 +2028,12 @@
     "translation": "데이터 센터 제거 방법"
   },
   {
-    "id": "Datacenter: ",
-    "translation": "데이터 센터: "
-  },
-  {
     "id": "Date",
     "translation": "날짜"
+  },
+  {
+    "id": "Date time",
+    "translation": "날짜 및 시간"
   },
   {
     "id": "Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday",
@@ -1886,6 +2062,10 @@
   {
     "id": "Dedicated host ID should be a number.",
     "translation": "전용 호스트 ID는 숫자여야 합니다."
+  },
+  {
+    "id": "Default",
+    "translation": "기본값"
   },
   {
     "id": "Default Hourly Price Per Instance",
@@ -1930,14 +2110,6 @@
   {
     "id": "Delete the given security group",
     "translation": "제공된 보안 그룹 삭제"
-  },
-  {
-    "id": "Delete this group and destroy all members of it",
-    "translation": "이 그룹을 삭제하고 이 그룹의 모든 멤버를 삭제합니다."
-  },
-  {
-    "id": "Delivered",
-    "translation": "전달됨"
   },
   {
     "id": "Description",
@@ -1996,6 +2168,10 @@
     "translation": "IPMI 인터페이스 사용 안함"
   },
   {
+    "id": "Disable vpn subnets manual config.",
+    "translation": "VPN 서브넷 수동 구성을 사용 안함으로 설정합니다."
+  },
+  {
     "id": "Disabled: Snapshots space usage threshold is disabled for volume '{{.ID}}'.",
     "translation": "사용 안함: '{{.ID}}' 볼륨에 대한 스냅샷 공간 사용 임계값이 사용 안함으로 설정되었습니다."
   },
@@ -2006,6 +2182,10 @@
   {
     "id": "Disk",
     "translation": "디스크"
+  },
+  {
+    "id": "Disk (allocated/total)",
+    "translation": "디스크(할당됨/총계)"
   },
   {
     "id": "Disk Capacity",
@@ -2040,6 +2220,10 @@
     "translation": "취소 이유의 목록 표시"
   },
   {
+    "id": "Display details for a cloud object storage.",
+    "translation": "Cloud Object Storage에 대한 세부 정보를 표시합니다."
+  },
+  {
     "id": "Display details for a specified email.",
     "translation": "지정된 이메일에 대한 세부사항을 표시합니다."
   },
@@ -2072,12 +2256,20 @@
     "translation": "공용 이미지만 표시"
   },
   {
+    "id": "Display permission details for a cloud object storage.",
+    "translation": "Cloud Object Storage에 대한 사용 권한 세부 정보를 표시합니다."
+  },
+  {
     "id": "Display permissions assigned to this user. Master users do not show permissions",
     "translation": "이 사용자에게 지정된 권한을 표시합니다. 마스터 사용자는 권한을 표시하지 않습니다."
   },
   {
     "id": "Display virtual guests this user has access to",
     "translation": "이 사용자가 액세스 권한이 있는 가상 게스트 표시"
+  },
+  {
+    "id": "Displays bandwidth pool information.",
+    "translation": "대역폭 풀 정보를 표시합니다."
   },
   {
     "id": "Do not actually create the dedicatedhost",
@@ -2112,8 +2304,8 @@
     "translation": "도메인 레코드를 찾을 수 없음"
   },
   {
-    "id": "Domain: ",
-    "translation": "도메인: "
+    "id": "Domain: {{.Domain}} Id: {{.Id}}",
+    "translation": "도메인: {{.Domain}} ID: {{.Id}}"
   },
   {
     "id": "Don't actually create records",
@@ -2136,8 +2328,16 @@
     "translation": "복제 볼륨 특성"
   },
   {
-    "id": "Earliest date to retrieve events for [YYYY-MM-DD].",
-    "translation": "[YYYY-MM-DD]에 대한 이벤트를 검색하는 가장 빠른 날짜입니다."
+    "id": "EXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13",
+    "translation": "예: \n${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n이 명령은 dal13에서 4개의 CPU, 16GB RAM, 100GB SanDisk, Ubuntu 16.04, 1Gbps 공용 및 사설 업링크를 포함하여 1시간마다 VSI를 주문합니다."
+  },
+  {
+    "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
+    "translation": "예: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    이 명령은 데이터 센터 dal13에서 4개의 CPU, 16GB RAM, 100GB SanDisk, Ubuntu 16.04, 1Gbps 공용 및 사설 업링크를 포함하여 VSI용 견적을 배치합니다."
+  },
+  {
+    "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
+    "translation": "[YYYY-MM-DD]에 대한 이벤트를 검색하는 가장 빠른 날짜입니다. 기본값: 2일 전."
   },
   {
     "id": "Edit SSL certificate",
@@ -2272,6 +2472,10 @@
     "translation": "특정 권한을 사용하거나 사용 안함으로 설정합니다."
   },
   {
+    "id": "Enable or disable user vpn subnets manual config.",
+    "translation": "사용자 vpn 서브넷 수동 구성을 사용 또는 사용 안함으로 설정합니다."
+  },
+  {
     "id": "Enable snapshot notification.",
     "translation": "스냅샷 알림을 사용으로 설정합니다."
   },
@@ -2282,6 +2486,10 @@
   {
     "id": "Enable the IPMI interface.",
     "translation": "IPMI 인터페이스 사용"
+  },
+  {
+    "id": "Enable vpn subnets manual config.",
+    "translation": "VPN 서브넷 수동 구성을 사용으로 설정합니다."
   },
   {
     "id": "Enabled: Snapshots space usage threshold is enabled for volume '{{.ID}}'.",
@@ -2352,6 +2560,10 @@
     "translation": "IOPS당 Endurance 티어"
   },
   {
+    "id": "Error occurred while adding note to volume: {{.VolumeID}}",
+    "translation": "노트를 볼륨에 추가하는 중에 오류가 발생했습니다. {{.VolumeID}}"
+  },
+  {
     "id": "Error occurred while creating snapshot for volume {{.VolumeID}}.Ensure volume is not failed over or in another state which prevents taking snapshots.\n",
     "translation": "볼륨 {{.VolumeID}}에 대한 스냅샷을 작성하는 중에 오류가 발생했습니다. 볼륨이 장애 조치되지 않았거나 스냅샷을 작성할 수 없는 다른 상태인지 확인하십시오.\n"
   },
@@ -2408,6 +2620,10 @@
     "translation": "실패"
   },
   {
+    "id": "FILEPATH",
+    "translation": "FILEPATH"
+  },
+  {
     "id": "FQDN",
     "translation": "FQDN"
   },
@@ -2437,7 +2653,11 @@
   },
   {
     "id": "Failed to Order the dedicatedhost.",
-    "translation": "전용 호스트를 주문하는 데 실패했습니다. \n"
+    "translation": "전용 호스트를 주문하는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to acknowledge event.",
+    "translation": "이벤트를 확인하는 데 실패했습니다."
   },
   {
     "id": "Failed to add L7 member: {{.Error}}.\n",
@@ -2537,7 +2757,7 @@
   },
   {
     "id": "Failed to cancel all guests in the dedicatedhost: {{.HostID}}.",
-    "translation": "전용 호스트 {{.HostID}}의 모든 게스트를 취소하는 데 실패했습니다. \n"
+    "translation": "전용 호스트의 모든 게스트를 취소하는 데 실패함: {{.HostID}}."
   },
   {
     "id": "Failed to cancel block volume: {{.ID}}.\n",
@@ -2565,7 +2785,7 @@
   },
   {
     "id": "Failed to cancel license: {{.key}}.",
-    "translation": "{{.key}} 라이센스를 취소하는 데 실패했습니다. \n"
+    "translation": "라이센스를 취소하는 데 실패함: {{.key}}."
   },
   {
     "id": "Failed to cancel load balancer {{.LBID}}.\n",
@@ -2590,10 +2810,6 @@
   {
     "id": "Failed to check virtual server instance {{.VsID}} is ready.\n",
     "translation": "가상 서버 인스턴스 {{.VsID}}이(가) 준비되었는지 확인하는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to clear the route for the subnet: {{.ID}}.\n",
-    "translation": "{{.ID}} 서브넷의 라우트를 지우는 데 실패했습니다. \n"
   },
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
@@ -2621,15 +2837,11 @@
   },
   {
     "id": "Failed to create placement group",
-    "translation": "배치 그룹 작성 실패\n"
+    "translation": "배치 그룹을 작성하는 데 실패함"
   },
   {
     "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n",
     "translation": "{{.Zone}} 구역 아래 리소스 레코드 작성 실패: 유형={{.RecordType}}, 레코드={{.Host}}, 데이터={{.Data}}, ttl={{.Ttl}}.\n"
-  },
-  {
-    "id": "Failed to create resource record under zone {{.Zone}}: type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}",
-    "translation": "{{.Zone}} 구역 아래 리소스 레코드 작성 실패: 유형={{.RecordType}}, 레코드={{.Host}}, 데이터={{.Data}}, ttl={{.Ttl}}.\n{{.ErrorMessage}}"
   },
   {
     "id": "Failed to create security group with name {{.Name}}.\n",
@@ -2641,11 +2853,15 @@
   },
   {
     "id": "Failed to create the license.",
-    "translation": "라이센스를 작성하는 데 실패했습니다. \n"
+    "translation": "라이센스를 작성하는 데 실패했습니다."
   },
   {
     "id": "Failed to create translation for IPSec with ID {{.ID}}.\n",
     "translation": "{{.ID}} ID로 IPSec의 변환을 작성하는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to create user vpn override.",
+    "translation": "사용자 vpn 대체를 작성하는 데 실패했습니다."
   },
   {
     "id": "Failed to create virtual server instance.\n",
@@ -2664,10 +2880,6 @@
     "translation": "참고를 디코딩하는 데 실패했습니다. \n"
   },
   {
-    "id": "Failed to delete AutoScale Group.",
-    "translation": "자동 스케일 그룹을 삭제하는 데 실패했습니다. \n"
-  },
-  {
     "id": "Failed to delete L7Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "L7 풀 {{.L7PoolID}} 삭제 실패: {{.Error}}.\n"
   },
@@ -2680,8 +2892,16 @@
     "translation": "L7 멤버 {{.Member}} 삭제 실패: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete Tag",
+    "translation": "태그를 삭제하는 데 실패함"
+  },
+  {
     "id": "Failed to delete Tag: {{.tag}}.",
     "translation": "태그: {{.tag}}을(를) 삭제하는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to delete User Customer Notification.",
+    "translation": "사용자 고객 알림을 삭제하는 데 실패했습니다."
   },
   {
     "id": "Failed to delete credential: {{.storageID}}.\n",
@@ -2714,6 +2934,10 @@
   {
     "id": "Failed to delete snapshot {{.ID}}.\n",
     "translation": "스냅샷 {{.ID}}을(를) 삭제하는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to delete user vpn override.",
+    "translation": "사용자 vpn 대체를 삭제하는 데 실패했습니다."
   },
   {
     "id": "Failed to delete user.\n",
@@ -2809,19 +3033,11 @@
   },
   {
     "id": "Failed to generate the order template.",
-    "translation": "주문 템플리트를 생성하는 데 실패했습니다. \n"
-  },
-  {
-    "id": "Failed to get Account Overview.",
-    "translation": "계정 개요를 가져오는 데 실패했습니다."
-  },
-  {
-    "id": "Failed to get AutoScale group.",
-    "translation": "자동 스케일 그룹을 가져오는 데 실패했습니다. \n"
+    "translation": "주문 템플리트를 생성하는 데 실패했습니다."
   },
   {
     "id": "Failed to get Bandwidth Pool.",
-    "translation": "대역폭 풀을 가져오는 데 실패했습니다.\n"
+    "translation": "대역폭 풀을 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get CDN Detail. ",
@@ -2888,8 +3104,20 @@
     "translation": "네트워크 메시지 전달 계정을 가져오는 데 실패했습니다."
   },
   {
+    "id": "Failed to get Order.",
+    "translation": "주문을 가져오는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to get Pods.",
+    "translation": "팟(Pod)을 가져오는 데 실패했습니다."
+  },
+  {
     "id": "Failed to get Pods.\n",
     "translation": "팟(Pod)을 가져오는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to get Quote\n",
+    "translation": "견적 가져오기 실패 \n"
   },
   {
     "id": "Failed to get Quote.\n",
@@ -2904,20 +3132,16 @@
     "translation": "다시 계산된 주문 컨테이너를 가져오는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to get Routers.",
+    "translation": "라우터를 가져오는 데 실패했습니다."
+  },
+  {
     "id": "Failed to get SSH Key {{.KeyID}}.\n",
     "translation": "SSH 키 {{.KeyID}}을(를) 가져오는 데 실패했습니다.\n"
   },
   {
-    "id": "Failed to get SSH key.",
-    "translation": "SSH 키를 가져오는 데 실패했습니다."
-  },
-  {
     "id": "Failed to get SSL certificate: {{.ID}}.\n",
     "translation": "SSL 인증서 가져오기 실패: {{.ID}}.\n"
-  },
-  {
-    "id": "Failed to get Statistics.",
-    "translation": "통계를 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get Subnet IP by address",
@@ -2926,6 +3150,10 @@
   {
     "id": "Failed to get Unattached Tags.",
     "translation": "연결되지 않은 태그를 가져오는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to get User Customer Notifications.",
+    "translation": "사용자 고객 알림을 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get VLAN: {{.VLANID}}.\n",
@@ -2948,16 +3176,32 @@
     "translation": "모든 데이터 센터를 가져오는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to get announcement event ID.",
+    "translation": "공지 이벤트 ID를 가져오는 데 실패했습니다."
+  },
+  {
     "id": "Failed to get announcement events.",
     "translation": "발표 이벤트를 가져오는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
+    "translation": "하드웨어 서버 {{.ID}}에 대한 대역폭 할당 세부사항을 가져오는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "베어 메탈 서버를 가져오는 데 실패했습니다. \n"
   },
   {
+    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
+    "translation": "하드웨어 서버 {{.ID}}에 대한 비용 청구 주기 대역폭 사용량을 가져오는 데 실패했습니다. \n"
+  },
+  {
     "id": "Failed to get billing items.",
     "translation": "비용 청구 항목을 가져오는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to get bucket of storage {{.StorageID}}.",
+    "translation": "스토리지 {{.StorageID}}의 버킷을 가져오지 못했습니다."
   },
   {
     "id": "Failed to get components\n",
@@ -2985,7 +3229,11 @@
   },
   {
     "id": "Failed to get dedicatedhost instance: {{.HostID}}.",
-    "translation": "전용 호스트 인스턴스를 가져오는 데 실패했습니다. {{.HostID}}\n"
+    "translation": "전용 호스트 인스턴스를 가져오는 데 실패함: {{.HostID}}."
+  },
+  {
+    "id": "Failed to get details of storage {{.StorageID}}.",
+    "translation": "스토리지 {{.StorageID}}에 대한 세부 정보를 가져오지 못했습니다."
   },
   {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
@@ -2994,6 +3242,10 @@
   {
     "id": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
     "translation": "볼륨 {{.VolumeID}}의 중복 변환 상태를 가져오는 데 실패했습니다. \n"
+  },
+  {
+    "id": "Failed to get endPoints.",
+    "translation": "endPoints를 가져오지 못했습니다."
   },
   {
     "id": "Failed to get firewalls on your account.\n",
@@ -3116,12 +3368,16 @@
     "translation": "{{.Type}} 방화벽에 대한 패키지를 가져오는 데 실패했습니다.\n"
   },
   {
-    "id": "Failed to get permissions.\n",
-    "translation": "권한을 가져오는 데 실패했습니다.\n"
+    "id": "Failed to get permissions.",
+    "translation": "권한을 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get placement group: {{.ID}}.",
-    "translation": "배치 그룹 가져오기 실패: {{.ID}}.\n"
+    "translation": "배치 그룹을 가져오는 데 실패함: {{.ID}}."
+  },
+  {
+    "id": "Failed to get planned event ID.",
+    "translation": "계획된 이벤트 ID를 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get planned events.",
@@ -3130,6 +3386,10 @@
   {
     "id": "Failed to get product package for hardware server.",
     "translation": "하드웨어 서버의 제품 패키지를 가져오는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to get product package for hardware server.\n",
+    "translation": "하드웨어 서버용 제품 패키지를 가져오는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to get ready status of virtual server instance: {{.VsID}}.\n",
@@ -3142,10 +3402,6 @@
   {
     "id": "Failed to get rules of security group {{.GroupID}}.\n",
     "translation": "보안 그룹 {{.GroupID}}의 규칙을 가져오는 데 실패했습니다.\n"
-  },
-  {
-    "id": "Failed to get scale groups.",
-    "translation": "스케일 그룹을 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get security group {{.GroupID}}.\n",
@@ -3188,16 +3444,16 @@
     "translation": "요약을 가져오는 데 실패했습니다."
   },
   {
+    "id": "Failed to get tag details",
+    "translation": "태그 세부사항 가져오기 실패"
+  },
+  {
     "id": "Failed to get the email {{.emailID}}. ",
     "translation": "{{.emailID}} 이메일을 가져오는 데 실패했습니다. "
   },
   {
     "id": "Failed to get the event {{.eventID}}. ",
     "translation": "{{.eventID}} 이벤트를 가져오는 데 실패했습니다. "
-  },
-  {
-    "id": "Failed to get the guests instances for the hardware server {{.ID}}.\n",
-    "translation": "하드웨어 서버 {{.ID}}에 대한 게스트 인스턴스를 가져오는 데 실패했습니다. \n"
   },
   {
     "id": "Failed to get the hard drives detail for the hardware server {{.ID}}.\n",
@@ -3244,6 +3500,10 @@
     "translation": "{{.ID}} IPSec에서 {{.TransID}} ID의 변환을 가져오는 데 실패했습니다."
   },
   {
+    "id": "Failed to get unplanned event ID.",
+    "translation": "계획되지 않은 이벤트 ID를 가져오는 데 실패했습니다."
+  },
+  {
     "id": "Failed to get unplanned events.",
     "translation": "계획되지 않은 이벤트를 가져오는 데 실패했습니다."
   },
@@ -3252,8 +3512,12 @@
     "translation": "사용자 권한을 가져오는 데 실패했습니다. \n"
   },
   {
-    "id": "Failed to get user.\n",
-    "translation": "사용자를 가져오는 데 실패했습니다.\n"
+    "id": "Failed to get user vpn overrides.",
+    "translation": "사용자 vpn 대체를 가져오는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to get user.",
+    "translation": "사용자를 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get virtual dedicated racks on your account.\n",
@@ -3270,6 +3534,10 @@
   {
     "id": "Failed to get virtual server creation options.\n",
     "translation": "가상 서버 작성 옵션을 가져오는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to get virtual server instance: {{.VsID}}.",
+    "translation": "가상 서버 인스턴스를 가져오는 데 실패함: {{.VsID}}."
   },
   {
     "id": "Failed to get virtual server instance: {{.VsID}}.\n",
@@ -3293,6 +3561,10 @@
   },
   {
     "id": "Failed to get vlan {{.VlanId}}.",
+    "translation": "VLAN을 가져오는 데 실패했습니다 {{.VlanId}}."
+  },
+  {
+    "id": "Failed to get vlan {{.VlanId}}.\n",
     "translation": "VLAN {{.VlanId}}을(를) 가져오는 데 실패했습니다.\n"
   },
   {
@@ -3301,7 +3573,7 @@
   },
   {
     "id": "Failed to licenses create options.",
-    "translation": "작성 옵션을 라이센싱하는 데 실패했습니다. \n"
+    "translation": "작성 옵션을 라이센싱하는 데 실패했습니다."
   },
   {
     "id": "Failed to list SSH keys on your account.\n",
@@ -3314,6 +3586,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "계정의 VLAN을 나열하는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to list available OS's.",
+    "translation": "사용 가능한 OS를 나열하지 못했습니다."
   },
   {
     "id": "Failed to list categories.\n",
@@ -3349,7 +3625,11 @@
   },
   {
     "id": "Failed to list placement groups",
-    "translation": "배치 그룹 나열 실패\n"
+    "translation": "배치 그룹을 나열하는 데 실패함"
+  },
+  {
+    "id": "Failed to list presets",
+    "translation": "미리 설정을 나열하는 데 실패함"
   },
   {
     "id": "Failed to list private images.",
@@ -3365,11 +3645,11 @@
   },
   {
     "id": "Failed to list routers",
-    "translation": "라우터 나열 실패\n"
+    "translation": "라우터를 나열하는 데 실패함"
   },
   {
     "id": "Failed to list rules",
-    "translation": "규칙 나열 실패\n"
+    "translation": "규칙을 나열하는 데 실패함"
   },
   {
     "id": "Failed to list subnets on your account.\n",
@@ -3377,7 +3657,7 @@
   },
   {
     "id": "Failed to list the host guest on your account.",
-    "translation": "계정에 대한 호스트 게스트를 나열하는 데 실패했습니다. \n"
+    "translation": "계정에 대한 호스트 게스트를 나열하는 데 실패했습니다."
   },
   {
     "id": "Failed to list users.\n",
@@ -3462,10 +3742,6 @@
   {
     "id": "Failed to parse destination port range start. \n",
     "translation": "대상 포트 범위 시작을 구문 분석하는 데 실패했습니다. \n"
-  },
-  {
-    "id": "Failed to parse file.\n",
-    "translation": "파일을 구문 분석하는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to parse firewall ID : {{.FirewallID}}.\n",
@@ -3581,7 +3857,7 @@
   },
   {
     "id": "Failed to remove placement group: {{.ID}}.",
-    "translation": "배치 그룹 제거 실패: {{.ID}}.\n"
+    "translation": "배치 그룹을 제거하는 데 실패함: {{.ID}}."
   },
   {
     "id": "Failed to remove rule {{.RuleId}} in security group {{.GroupID}}.\n",
@@ -3628,10 +3904,6 @@
     "translation": "볼륨 {{.VolumeID}}에 대한 액세스 권한을 취소하는 데 실패했습니다.\n"
   },
   {
-    "id": "Failed to route using the type: {{.TYPE}} and identifier: {{.IDENTIFIER}}.\n",
-    "translation": "{{.TYPE}} 유형 및 ID {{.IDENTIFIER}}을(를) 사용하여 라우팅하는 데 실패했습니다. \n"
-  },
-  {
     "id": "Failed to save Quote.\n",
     "translation": "견적을 저장하는 데 실패했습니다.\n"
   },
@@ -3653,7 +3925,7 @@
   },
   {
     "id": "Failed to set tags.",
-    "translation": "태그를 설정하는 데 실패했습니다.\n"
+    "translation": "태그를 설정하는 데 실패했습니다."
   },
   {
     "id": "Failed to set tags: {{.tags}}.\n",
@@ -3716,6 +3988,10 @@
     "translation": "{{.ContextID}} IPSec을 업데이트하는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to update VPN user.",
+    "translation": "VPN 사용자를 업데이트하는 데 실패했습니다."
+  },
+  {
     "id": "Failed to update access.\n",
     "translation": "액세스를 업데이트하는 데 실패했습니다. \n"
   },
@@ -3732,8 +4008,8 @@
     "translation": "l7 풀 업데이트 실패: {{.Error}}.\n"
   },
   {
-    "id": "Failed to update permissions: %s",
-    "translation": "권한을 업데이트하는 데 실패: %s"
+    "id": "Failed to update permissions",
+    "translation": "권한을 업데이트하는 데 실패함"
   },
   {
     "id": "Failed to update resource record {{.RecordID}} under zone {{.Zone}}.\n{{.ErrorMessage}}",
@@ -3817,6 +4093,10 @@
   },
   {
     "id": "Failed to verify virtual server creation.",
+    "translation": "가상 서버 작성을 확인하는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to verify virtual server creation.\n",
     "translation": "가상 서버 작성을 확인하는 데 실패했습니다.\n"
   },
   {
@@ -3848,8 +4128,12 @@
     "translation": "다음에 가상 서버 템플리트 파일 쓰기 실패: {{.Template}}."
   },
   {
+    "id": "Failed to {{.action}} user vpn subnets manual config",
+    "translation": "{{.action}} 사용자 vpn 서브넷 수동 구성에 실패했습니다."
+  },
+  {
     "id": "Failover a {{.storageType}} volume to the given replica volume",
-    "translation": "블록 볼륨에서 지정된 복제본 볼륨으로 장애 조치(failover)"
+    "translation": "지정된 복제본 볼륨에 대한 {{.storageType}} 볼륨 장애 복구"
   },
   {
     "id": "Failover an inaccessible volume to its available replicant volume.",
@@ -3920,6 +4204,10 @@
     "translation": "소유자 ID별 필터링"
   },
   {
+    "id": "Filter by Memory capacity in megabytes.",
+    "translation": "메모리 용량(MB)별로 필터링하십시오."
+  },
+  {
     "id": "Filter by TTL(Time-To-Live) in seconds, such as 86400",
     "translation": "TTL(Time-To-Live)별 필터링(초), 예: 86400"
   },
@@ -3952,8 +4240,16 @@
     "translation": "FQDN의 도메인 부분별 필터링"
   },
   {
+    "id": "Filter by domain portion of the FQDN.",
+    "translation": "FQDN의 도메인 부분별 필터링."
+  },
+  {
     "id": "Filter by host portion of the FQDN",
     "translation": "FQDN의 호스트 부분별 필터링"
+  },
+  {
+    "id": "Filter by host portion of the FQDN.",
+    "translation": "FQDN의 호스트 부분별 필터링."
   },
   {
     "id": "Filter by host record, such as www",
@@ -4028,6 +4324,10 @@
     "translation": "태그별 필터링(다중 발생 허용)"
   },
   {
+    "id": "Filter by tags.",
+    "translation": "태그별 필터링."
+  },
+  {
     "id": "Filter by the ID of order that purchased the subnets",
     "translation": "서브넷을 구매한 주문 ID별 필터링"
   },
@@ -4096,6 +4396,10 @@
     "translation": "펌웨어 버전"
   },
   {
+    "id": "First Name",
+    "translation": "이름"
+  },
+  {
     "id": "Flag denoting whether to verify the order, or not place it",
     "translation": "주문 확인 여부를 나타내는 플래그"
   },
@@ -4114,6 +4418,10 @@
   {
     "id": "Force operation without confirmation",
     "translation": "확인 없이 조작 강제 실행"
+  },
+  {
+    "id": "Force the volume refresh, will cancel any ongoing transactions.",
+    "translation": "볼륨 새로 고치기를 강제 실행합니다. 이 작업은 진행 중인 모든 트랜잭션을 취소합니다."
   },
   {
     "id": "Forces the virtual server to only have access the private network",
@@ -4137,11 +4445,11 @@
   },
   {
     "id": "Frontend port",
-    "translation": "프론트 엔드 포트[기본값: 80]"
+    "translation": "프론트엔드 포트"
   },
   {
     "id": "Frontend protocol",
-    "translation": "백엔드 프로토콜"
+    "translation": "프론트엔드 프로토콜"
   },
   {
     "id": "Fully qualified name",
@@ -4168,16 +4476,16 @@
     "translation": "이벤트 로그 가져오기"
   },
   {
-    "id": "Get List options for creating a placement group..",
-    "translation": "배치 그룹 작성을 위한 목록 옵션을 가져옵니다."
-  },
-  {
     "id": "Get Netscaler details.",
     "translation": "Netscaler 세부사항을 가져옵니다."
   },
   {
     "id": "Get Reserved Capacity Group details.",
     "translation": "예약 용량 그룹 세부사항을 가져옵니다."
+  },
+  {
+    "id": "Get all available Operating Systems.",
+    "translation": "사용 가능한 모든 운영 체제를 가져옵니다."
   },
   {
     "id": "Get bandwidth pool details.",
@@ -4232,20 +4540,12 @@
     "translation": "서브넷 세부사항 가져오기"
   },
   {
-    "id": "Get details of an Autoscale group.",
-    "translation": "자동 스케일 그룹의 세부사항을 가져옵니다."
-  },
-  {
     "id": "Get information about the resources using the selected tag.",
     "translation": "선택된 태그를 사용하고 있는 리소스에 대한 정보를 가져옵니다."
   },
   {
     "id": "Get load balancer details",
     "translation": "로드 밸런서 세부사항 가져오기"
-  },
-  {
-    "id": "Get placement Group details.",
-    "translation": "배치 그룹 세부사항을 가져옵니다."
   },
   {
     "id": "Get snapshots space usage threshold warning flag setting for a given volume.",
@@ -4436,12 +4736,16 @@
     "translation": "스냅샷을 작성해야 하는 시간, 0 - 23 사이의 정수."
   },
   {
-    "id": "How many invoices to get back. [default: 50]",
-    "translation": "취소할 송장이 몇 개입니까?[기본값: 50]"
+    "id": "Hourly",
+    "translation": "시간당"
   },
   {
-    "id": "How many results to get in one api call. [default: 50]",
-    "translation": "한 번의 api 호출로 확보하는 결과는 몇 개입니까?[기본값: 50]"
+    "id": "How many invoices to get back.",
+    "translation": "반환 받을 송장 수입니다."
+  },
+  {
+    "id": "How many results to get in one api call.",
+    "translation": "하나의 API 호출에서 얻을 수 있는 결과 수입니다."
   },
   {
     "id": "Http Port",
@@ -4478,6 +4782,18 @@
   {
     "id": "ID of the object being tagged  [required]",
     "translation": "태그 지정되는 오브젝트의 ID입니다. [필수]"
+  },
+  {
+    "id": "IDENTIFIER",
+    "translation": "IDENTIFIER"
+  },
+  {
+    "id": "IDENTIFIER TARGET",
+    "translation": "IDENTIFIER TARGET"
+  },
+  {
+    "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
+    "translation": "IDENTIFIER: 이미지의 ID\nURI: f- cos://<regionName>/<bucketName>/<objectPath> 형식의 오브젝트 스토리지 오브젝트(.vhd/.iso file)에 대한 URI입니다.\nAPI_KEY:  IBM Cloud Object Storage 인스턴스에 대한 액세스 권한이 있는 IBM Cloud API 키입니다."
   },
   {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
@@ -4556,12 +4872,24 @@
     "translation": "ID"
   },
   {
+    "id": "Identifier",
+    "translation": "ID"
+  },
+  {
+    "id": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.",
+    "translation": "재해 이벤트로 인해 볼륨(복제 포함)에 액세스할 수 없게 되면 이 메소드를 사용하여 다른 위치에 있는\n 사용 가능한 복제본으로 즉시 복구할 수 있습니다. 이 메소드는 API를 통한 장애 복구를 허용하지 않습니다.\n이 메소드 사용 후 원래의 볼륨에 대한 장애 복구를 수행하려면 지원 티켓을 여십시오.\n장애 조치를 테스트하려면 '${COMMAND_NAME} sl {{.storageType}} replica-failover'를 대신 사용하십시오.\n\nEXAMPLE:\n${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n이 명령은 복제본 볼륨(ID 87654321)에 대한 볼륨(ID 12345678)의 장애 복구 조작을 수행합니다."
+  },
+  {
     "id": "If specified, will only show what the quote will order, will NOT place an order [default: False]",
     "translation": "지정된 경우 견적에서 주문할 항목만 표시하고 주문하지 않습니다. [기본값: False]"
   },
   {
     "id": "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type.",
     "translation": "이 옵션을 지정할 경우 이 계정의 공인 서브넷에서 공인 IP가 할당됩니다. 그렇지 않을 경우 IBM 시스템 풀에서 할당됩니다. PublicToPrivate 로드 밸런서 유형에만 사용할 수 있습니다."
+  },
+  {
+    "id": "Image ID",
+    "translation": "이미지 ID"
   },
   {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
@@ -4596,6 +4924,10 @@
     "translation": "오브젝트 스토리지에서 이미지 가져오기"
   },
   {
+    "id": "In GB",
+    "translation": "GB 단위"
+  },
+  {
     "id": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.",
     "translation": "cache 옵션에서 'include-specified' 또는 'ignore-specified'를 선택하는 경우 이 옵션을 사용하여 설명도 추가하십시오(예: --cache include-specified --cache-description description)."
   },
@@ -4608,8 +4940,12 @@
     "translation": "추가 리소스를 포함합니다. 옵션: at,is,rs,sr,ss"
   },
   {
-    "id": "Include invoices with a CLOSED status. [default: False]",
-    "translation": "마감됨 상태의 송장을 포함합니다.[기본값: 거짓]"
+    "id": "Include invoices with a CLOSED status.",
+    "translation": "마감됨 상태의 송장을 포함합니다."
+  },
+  {
+    "id": "Incorrect Usage",
+    "translation": "올바르지 않은 사용법"
   },
   {
     "id": "Incorrect Usage.",
@@ -4626,6 +4962,10 @@
   {
     "id": "Init parameter",
     "translation": "Init 매개변수"
+  },
+  {
+    "id": "Initial Invoice",
+    "translation": "초기 송장"
   },
   {
     "id": "Initial object ID number to attach to ticket",
@@ -4656,12 +4996,20 @@
     "translation": "내부 피어 IP 주소"
   },
   {
+    "id": "Internet side port",
+    "translation": "인터넷 측 포트"
+  },
+  {
     "id": "Invalid --sortBy option.",
     "translation": "올바르지 않음 -- sortBy 옵션."
   },
   {
     "id": "Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID.",
     "translation": "올바르지 않은 ID {{.ID}}: ID는 xxx:yyy 형식이어야 하며 여기서, xxx는 방화벽의 유형이고, yyy는 양수 ID입니다."
+  },
+  {
+    "id": "Invalid SRV record: {{.sub}}.",
+    "translation": "유효하지 않은 SRV 레코드: {{.sub}}."
   },
   {
     "id": "Invalid combination specified for ordering a subnet.",
@@ -4674,6 +5022,10 @@
   {
     "id": "Invalid datacenter name specified. Please provide the lower case short name (e.g.: dal09).",
     "translation": "올바르지 않은 데이터 센터 이름이 지정되었습니다. 소문자의 짧은 이름을 제공하십시오(예: dal09)."
+  },
+  {
+    "id": "Invalid disk number to this disk capacity",
+    "translation": "이 디스크 용량에 대한 디스크 번호가 올바르지 않습니다."
   },
   {
     "id": "Invalid firewall type {{.Type}}: firewall type should be either vlan, multiVlan, vs or server.",
@@ -4698,6 +5050,10 @@
   {
     "id": "Invalid format date.",
     "translation": "형식 날짜가 올바르지 않습니다."
+  },
+  {
+    "id": "Invalid input for",
+    "translation": "올바르지 않은 입력"
   },
   {
     "id": "Invalid input for '{{.Name}}'. It must be a positive integer.",
@@ -4736,6 +5092,10 @@
     "translation": "송장 금액"
   },
   {
+    "id": "Invoice Total Amount",
+    "translation": "송장 총액"
+  },
+  {
     "id": "Invoice details.",
     "translation": "송장 세부사항."
   },
@@ -4754,6 +5114,10 @@
   {
     "id": "Item",
     "translation": "항목"
+  },
+  {
+    "id": "Item Description",
+    "translation": "품목 설명"
   },
   {
     "id": "Item Id",
@@ -4832,16 +5196,24 @@
     "translation": "L7 규칙 {{.L7RuleID}}이(가) 제거됨"
   },
   {
+    "id": "LABEL",
+    "translation": "LABEL"
+  },
+  {
+    "id": "LOCATION",
+    "translation": "LOCATION"
+  },
+  {
     "id": "LUN Id",
     "translation": "LUN Id"
   },
   {
-    "id": "Label",
-    "translation": "레이블"
+    "id": "LUN_ID",
+    "translation": "LUN_ID"
   },
   {
-    "id": "Last Action",
-    "translation": "마지막 조치"
+    "id": "Label",
+    "translation": "레이블"
   },
   {
     "id": "Last Edited",
@@ -4856,8 +5228,16 @@
     "translation": "마지막 로그인"
   },
   {
+    "id": "Last Name",
+    "translation": "성"
+  },
+  {
     "id": "Last Updated",
     "translation": "마지막 업데이트 날짜"
+  },
+  {
+    "id": "Last transaction",
+    "translation": "마지막 트랜잭션"
   },
   {
     "id": "Legacy",
@@ -4926,10 +5306,6 @@
   {
     "id": "List active load balancers",
     "translation": "활성 로드 밸런서 나열"
-  },
-  {
-    "id": "List all Autoscale Groups on your account",
-    "translation": "계정에 대한 모든 자동 스케일 그룹 나열"
   },
   {
     "id": "List all CDN accounts.",
@@ -5032,8 +5408,8 @@
     "translation": "하드웨어 서버 나열"
   },
   {
-    "id": "List hosts that are authorized to access the volume",
-    "translation": "볼륨에 액세스할 수 있는 권한이 부여된 호스트 나열"
+    "id": "List hosts that are authorized to access the volume.",
+    "translation": "볼륨에 액세스할 수 있는 권한이 부여된 호스트를 나열합니다."
   },
   {
     "id": "List information about devices using the tag.",
@@ -5044,8 +5420,8 @@
     "translation": "보안 그룹과 연관된 인터페이스 나열"
   },
   {
-    "id": "List invoices",
-    "translation": "송장 나열"
+    "id": "List invoices.",
+    "translation": "송장을 나열합니다."
   },
   {
     "id": "List l7 rules",
@@ -5104,10 +5480,6 @@
     "translation": "배치 그룹 나열"
   },
   {
-    "id": "List placement groups.",
-    "translation": "배치 그룹을 나열합니다."
-  },
-  {
     "id": "List security group rules",
     "translation": "보안 그룹 규칙 나열"
   },
@@ -5152,8 +5524,8 @@
     "translation": "다른 유용한 정보와 함께 비용 청구 항목을 나열합니다."
   },
   {
-    "id": "Lists the Virtual Guests running on this server.",
-    "translation": "이 서버에서 실행 중인 가상 게스트를 나열합니다."
+    "id": "Lists the prices for each item in this preset",
+    "translation": "이 사전설정에 있는 각 항목의 가격을 나열합니다."
   },
   {
     "id": "Lists the storage limits per datacenter for this account.",
@@ -5212,10 +5584,6 @@
     "translation": "최대 IOPS"
   },
   {
-    "id": "Maximum Members",
-    "translation": "최대 멤버 수"
-  },
-  {
     "id": "Maximum number of connections to allow",
     "translation": "허용할 최대 연결 수"
   },
@@ -5240,6 +5608,10 @@
     "translation": "메모리"
   },
   {
+    "id": "Memory (allocated/total)",
+    "translation": "메모리(할당됨/총계)"
+  },
+  {
     "id": "Memory Capacity",
     "translation": "메모리 용량"
   },
@@ -5250,10 +5622,6 @@
   {
     "id": "Memory in megabytes [required]",
     "translation": "메모리(MB) [필수]"
-  },
-  {
-    "id": "Memory: ",
-    "translation": "메모리: "
   },
   {
     "id": "Metadata",
@@ -5278,14 +5646,6 @@
   {
     "id": "Min IOPS",
     "translation": "최소 IOPS"
-  },
-  {
-    "id": "Min/Max",
-    "translation": "최소/최대"
-  },
-  {
-    "id": "Minimum Members",
-    "translation": "최소 멤버"
   },
   {
     "id": "Minute of the hour when snapshots should be taken, integer between 0 to 59",
@@ -5324,8 +5684,8 @@
     "translation": "이름이 다음과 같은 사용자를 여러 명 발견: %s"
   },
   {
-    "id": "Must provide [--cpu], [--memory], [--network] or [--flavor] to upgrade.",
-    "translation": "업그레이드하려면 [--cpu], [--memory], [--network] 또는 [--flavor]를 제공해야 합니다."
+    "id": "Must provide [--cpu], [--memory], [--network], [--add-disk], [--resize-disk] or [--flavor] to upgrade.",
+    "translation": "업그레이드하려면 [-- cpu], [-- memory], [-- network], [-- add-disk], [-- resize-disk] 또는 [--flavor]를 제공해야 합니다."
   },
   {
     "id": "Must set either -n|--network-component or both -s|--server and -i|--interface",
@@ -5334,6 +5694,10 @@
   {
     "id": "Must specify [--cpu] when using [--private].",
     "translation": "[--private]를 사용하는 경우 [--cpu]를 지정해야 합니다."
+  },
+  {
+    "id": "NAME",
+    "translation": "NAME"
   },
   {
     "id": "NETWORK has to be either public or private.",
@@ -5384,14 +5748,6 @@
     "translation": "네트워크 ID"
   },
   {
-    "id": "Network Type",
-    "translation": "네트워크 유형"
-  },
-  {
-    "id": "Network Vlans",
-    "translation": "네트워크 Vlan"
-  },
-  {
     "id": "Network component {{.ComponentID}} is added to security group {{.GroupID}}.",
     "translation": "네트워크 컴포넌트 {{.ComponentID}}이(가) 보안 그룹 {{.GroupID}}에 추가되었습니다."
   },
@@ -5434,10 +5790,6 @@
   {
     "id": "No IPSec was found.",
     "translation": "IPSec을 찾을 수 없습니다."
-  },
-  {
-    "id": "No Virtual Guests found.",
-    "translation": "가상 게스트를 찾을 수 없습니다."
   },
   {
     "id": "No available router was found.",
@@ -5600,6 +5952,14 @@
     "translation": "업데이트 수"
   },
   {
+    "id": "OPTIONS",
+    "translation": "옵션"
+  },
+  {
+    "id": "ORDER_ITEM1 ORDER_ITEM2 ORDER_ITEM3 ORDER_ITEM4...",
+    "translation": "ORDER_ITEM1 ORDER_ITEM2 ORDER_ITEM3 ORDER_ITEM4..."
+  },
+  {
     "id": "OS",
     "translation": "OS"
   },
@@ -5668,12 +6028,8 @@
     "translation": "OpenID"
   },
   {
-    "id": "Opens",
-    "translation": "열기"
-  },
-  {
-    "id": "Operating System Code: ",
-    "translation": "운영 체제 코드: "
+    "id": "Operating System Code",
+    "translation": "운영 체제 코드"
   },
   {
     "id": "Operating System Type (eg. LINUX) of the primary volume for which a replica is ordered [optional], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN",
@@ -5708,6 +6064,10 @@
     "translation": "endurance 블록 스토리지와 함께 스냅샷 영역을 주문하기 위한 선택적 매개변수입니다. 주문할 스냅샷 영역의 크기(GB)를 지정하십시오."
   },
   {
+    "id": "Optional parameter for ordering snapshot space along with endurance file storage; specifies the size (in GB) of snapshot space to order",
+    "translation": "내구성 파일 스토리지와 함께 스냅샷 공간을 주문하기 위한 선택적 매개변수입니다. 주문할 스냅샷 공간의 크기(GB)를 지정합니다."
+  },
+  {
     "id": "Options for --sortby are: id,name,description,created",
     "translation": "--sortby에 대한 옵션: id,name,description,created"
   },
@@ -5716,12 +6076,20 @@
     "translation": "-p|--protocol에 대한 옵션: icmp,tcp,udp"
   },
   {
+    "id": "Order Approval Date",
+    "translation": "주문 승인 날짜"
+  },
+  {
     "id": "Order ID: {{.OrderID}}",
     "translation": "주문 ID: {{.OrderID}}"
   },
   {
     "id": "Order IPv6 Addresses",
     "translation": "IPv6 주소 주문"
+  },
+  {
+    "id": "Order Total Amount",
+    "translation": "주문 총액"
   },
   {
     "id": "Order a IPSec VPN tunnel",
@@ -5852,8 +6220,24 @@
     "translation": "기타"
   },
   {
+    "id": "Out GB",
+    "translation": "출력(GB)"
+  },
+  {
+    "id": "Override created, but unable to update VPN user.",
+    "translation": "대체가 작성되었지만 VPN 사용자를 업데이트할 수 없습니다."
+  },
+  {
     "id": "Owner",
     "translation": "소유자"
+  },
+  {
+    "id": "PACKAGE_KEYNAME",
+    "translation": "PACKAGE_KEYNAME"
+  },
+  {
+    "id": "PLACEMENTGROUP_ID",
+    "translation": "PLACEMENTGROUP_ID"
   },
   {
     "id": "POD",
@@ -5888,6 +6272,10 @@
     "translation": "상위 사용자"
   },
   {
+    "id": "Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "구문 분석된 레코드: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Password",
     "translation": "비밀번호"
   },
@@ -5902,6 +6290,10 @@
   {
     "id": "Password to set for this user. If no password is provided, the user is sent an email to generate one, which expires in 24 hours. Specify the '-p generate' option to generate a password for you. Passwords require 8+ characters, uppercase and lowercase, a number and a symbol",
     "translation": "이 사용자에 대해 설정할 비밀번호입니다. 비밀번호가 제공되지 않으면 24시간 내에 만기되는 비밀번호를 생성하도록 사용자에게 이메일을 보냅니다. '-p generate' 옵션을 지정하여 사용자의 비밀번호를 생성하십시오. 비밀번호에는 8자 이상의 문자, 대문자와 소문자, 숫자와 기호가 필요합니다."
+  },
+  {
+    "id": "Password you want to set, this command will fail if the password is not strong. [required]",
+    "translation": "설정하려는 비밀번호입니다. 비밀번호가 강력하지 않으면 이 명령이 실패합니다. [필수]"
   },
   {
     "id": "Path",
@@ -5964,8 +6356,8 @@
     "translation": "권한"
   },
   {
-    "id": "Permissions updated successfully: %s",
-    "translation": "권한이 업데이트됨: %s"
+    "id": "Permissions updated successfully",
+    "translation": "권한 업데이트 성공"
   },
   {
     "id": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5",
@@ -6064,6 +6456,10 @@
     "translation": "배치 그룹 {{.ID}}이(가) 제거되었습니다."
   },
   {
+    "id": "Plan",
+    "translation": "계획"
+  },
+  {
     "id": "Please add the '--guest' id too.\n",
     "translation": "'--guest' id도 추가하십시오.\n"
   },
@@ -6082,14 +6478,6 @@
   {
     "id": "Pod",
     "translation": "팟(Pod)"
-  },
-  {
-    "id": "Policies",
-    "translation": "정책"
-  },
-  {
-    "id": "Policy",
-    "translation": "정책"
   },
   {
     "id": "Policy action: REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS",
@@ -6122,10 +6510,6 @@
   {
     "id": "Port speed[required]",
     "translation": "포트 속도[필수]"
-  },
-  {
-    "id": "Post Install",
-    "translation": "사후 설치"
   },
   {
     "id": "Post-install script to download",
@@ -6172,6 +6556,10 @@
     "translation": "가격 ID를 찾을 수 없음"
   },
   {
+    "id": "Price Id",
+    "translation": "가격 ID"
+  },
+  {
     "id": "Price Rate",
     "translation": "가격 비율"
   },
@@ -6206,6 +6594,10 @@
   {
     "id": "PrimaryRouter Hostname",
     "translation": "기본 라우터 호스트 이름"
+  },
+  {
+    "id": "Print the version of the sl plugin",
+    "translation": "sl 플러그인 버전 인쇄"
   },
   {
     "id": "Print zone and resource records in BIND format",
@@ -6269,7 +6661,7 @@
   },
   {
     "id": "Private side port",
-    "translation": "사설 측 포트입니다. 기본값: 80"
+    "translation": "사설 측 포트"
   },
   {
     "id": "Private subnet Id to order the load balancer. See '${COMMAND_NAME} sl loadbal order-options'. Only available in PublicToPrivate and PrivateToPrivate load balancer type",
@@ -6310,6 +6702,10 @@
   {
     "id": "Provider",
     "translation": "제공자"
+  },
+  {
+    "id": "Provides some details related to order owner, date order, cost information, initial invoice.",
+    "translation": "주문 소유자, 날짜 주문, 비용 정보, 초기 송장과 관련된 일부 세부사항을 제공합니다."
   },
   {
     "id": "Provisioned",
@@ -6368,12 +6764,24 @@
     "translation": "수량"
   },
   {
+    "id": "RECORD",
+    "translation": "RECORD"
+  },
+  {
+    "id": "RECORD_ID",
+    "translation": "RECORD_ID"
+  },
+  {
+    "id": "REPLICA_ID",
+    "translation": "REPLICA_ID"
+  },
+  {
     "id": "RPM Sensor",
     "translation": "RPM 센서"
   },
   {
-    "id": "Ram",
-    "translation": "RAM"
+    "id": "RULE_ID",
+    "translation": "RULE_ID"
   },
   {
     "id": "Read Failure: {{.Error}}.\n",
@@ -6430,6 +6838,10 @@
   {
     "id": "Redirect",
     "translation": "경로 재지정"
+  },
+  {
+    "id": "Reference Code",
+    "translation": "참조 코드"
   },
   {
     "id": "Reflash server firmware.",
@@ -6500,8 +6912,20 @@
     "translation": "IPSec에서 변환 항목 제거"
   },
   {
+    "id": "Remove a user VS notification entry.",
+    "translation": "사용자 VS 알림 항목을 제거합니다."
+  },
+  {
+    "id": "Remove a user hardware notification entry.",
+    "translation": "사용자 하드웨어 알림 항목을 제거합니다."
+  },
+  {
     "id": "Remove access from a user to an specific device",
     "translation": "특정 디바이스에 대한 사용자 액세스 제거"
+  },
+  {
+    "id": "Remove access to subnet.",
+    "translation": "서브넷에 대한 액세스 권한을 제거합니다."
   },
   {
     "id": "Remove block storage subnets to the given host id.",
@@ -6528,6 +6952,10 @@
     "translation": "계정에서 비어 있는 태그를 제거합니다."
   },
   {
+    "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
+    "translation": "지정된 서브넷에 대한 라우팅을 제거하여 라우팅되지 않은 이동식 서브넷으로 전환합니다."
+  },
+  {
     "id": "Removing Tag: {{.tag}}.",
     "translation": "태그: {{.tag}}을(를) 제거합니다."
   },
@@ -6552,16 +6980,8 @@
     "translation": "닫힐 예정인 데이터 센터에서 여전히 활성 상태인 자원을 보고합니다."
   },
   {
-    "id": "Reputation",
-    "translation": "평가"
-  },
-  {
     "id": "Request configuration of a tunnel context",
     "translation": "터널 컨텍스트의 요청 구성"
-  },
-  {
-    "id": "Requests",
-    "translation": "요청"
   },
   {
     "id": "Required User",
@@ -6588,6 +7008,10 @@
     "translation": "지정된 스냅샷을 사용하여 블록 볼륨 복원"
   },
   {
+    "id": "Restriction",
+    "translation": "제한사항"
+  },
+  {
     "id": "Result limit",
     "translation": "결과 한계"
   },
@@ -6608,12 +7032,16 @@
     "translation": "AWS 서명을 생성하는 데 사용되는 인증 정보를 검색합니다. 최대 2개입니다."
   },
   {
-    "id": "Return ALL invoices. There may be a lot of these. [default: False]",
-    "translation": "모든 송장을 반환합니다. 이러한 것들이 많을 수 있습니다. [기본값: 거짓]"
+    "id": "Return ALL invoices. There may be a lot of these.",
+    "translation": "모든 송장을 반환합니다. 다수가 있을 수 있습니다."
   },
   {
     "id": "Revoke authorization for hosts that are accessing a specific volume",
     "translation": "특정 볼륨에 액세스하는 호스트의 권한 취소"
+  },
+  {
+    "id": "Revoke authorization for hosts that are accessing a specific volume.",
+    "translation": "특정 볼륨에 액세스 중인 호스트에 대한 권한을 취소합니다."
   },
   {
     "id": "Role Name",
@@ -6638,6 +7066,10 @@
   {
     "id": "Router Id",
     "translation": "라우터 ID"
+  },
+  {
+    "id": "Routers",
+    "translation": "라우터"
   },
   {
     "id": "Rule",
@@ -6668,12 +7100,16 @@
     "translation": "이 하드웨어 서버가 준비된 후 해당 서버를 찾으려면 '{{.CommandName}} sl hardware list --order {{.OrderID}}'을(를) 실행하십시오."
   },
   {
-    "id": "Running",
-    "translation": "실행 중"
+    "id": "SECURITYGROUP_ID",
+    "translation": "SECURITYGROUP_ID"
   },
   {
-    "id": "SSH Key ",
-    "translation": "SSH 키 "
+    "id": "SMTP",
+    "translation": "SMTP"
+  },
+  {
+    "id": "SNAPSHOT_ID",
+    "translation": "SNAPSHOT_ID"
   },
   {
     "id": "SSH key Id's to add to the root user. See: 'ibmcloud sl security sshkey-list' for reference (multiple occurrence permitted)",
@@ -6720,6 +7156,14 @@
     "translation": "서브넷"
   },
   {
+    "id": "SUBNET_ID",
+    "translation": "SUBNET_ID"
+  },
+  {
+    "id": "SUBNET_TYPE",
+    "translation": "SUBNET_TYPE"
+  },
+  {
     "id": "Sales",
     "translation": "영업"
   },
@@ -6742,6 +7186,10 @@
   {
     "id": "Seconds to wait for a connection. [1-59]",
     "translation": "연결 대기 시간(초)입니다. [1-59]"
+  },
+  {
+    "id": "Secret Access Key",
+    "translation": "시크릿 액세스 키"
   },
   {
     "id": "Security group ID to associate with the private interface (multiple occurrence permitted)",
@@ -6780,6 +7228,10 @@
     "translation": "제공된 섀시에 대한 서버 주문 옵션"
   },
   {
+    "id": "Server order options for a given chassis.",
+    "translation": "제공된 섀시에 대한 서버 주문 옵션입니다."
+  },
+  {
     "id": "Server side timeout setting, in seconds",
     "translation": "서버측 제한시간 설정(초)"
   },
@@ -6805,7 +7257,7 @@
   },
   {
     "id": "Set note for an existing {{.storageType}} storage volume.",
-    "translation": "기존 블록 스토리지 볼륨에 대한 참고사항을 설정합니다."
+    "translation": "기존 {{.storageType}} 스토리지 볼륨에 대한 노트를 설정하십시오."
   },
   {
     "id": "Set note successfully",
@@ -6842,6 +7294,10 @@
   {
     "id": "Sets username for this account.",
     "translation": "이 계정의 사용자 이름을 설정합니다."
+  },
+  {
+    "id": "Setup",
+    "translation": "설정"
   },
   {
     "id": "Short Name",
@@ -6892,12 +7348,20 @@
     "translation": "지난 24시간 동안 이 사용자의 로그인 히스토리 표시"
   },
   {
+    "id": "Show only announcement events.",
+    "translation": "공지 이벤트만 표시합니다."
+  },
+  {
     "id": "Show only hourly instances",
     "translation": "시간별 인스턴스만 표시"
   },
   {
     "id": "Show only monthly instances",
     "translation": "월별 인스턴스만 표시"
+  },
+  {
+    "id": "Show only planned events.",
+    "translation": "계획된 이벤트만 표시합니다."
   },
   {
     "id": "Show only selected datacenter, use shortname (dal13) format",
@@ -6912,6 +7376,10 @@
     "translation": "각 가상 서버의 대역폭 요약만 표시"
   },
   {
+    "id": "Show only unplanned events.",
+    "translation": "계획되지 않은 이벤트만 표시합니다."
+  },
+  {
     "id": "Show passwords (check over your shoulder!)",
     "translation": "비밀번호 표시(유출되지 않도록 주의)"
   },
@@ -6922,6 +7390,18 @@
   {
     "id": "Shows a very detailed list of charges",
     "translation": "요금의 상세 목록을 표시합니다."
+  },
+  {
+    "id": "Shows a very detailed list of charges.",
+    "translation": "매우 상세한 요금 목록을 보여줍니다."
+  },
+  {
+    "id": "Shows who gets notified when the server has a monitoring issues.",
+    "translation": "서버에 모니터링 문제가 있을 때 알림을 받는 사용자를 표시합니다."
+  },
+  {
+    "id": "Shows who gets notified when the server virtual instance has a monitoring issues",
+    "translation": "서버 가상 인스턴스에 모니터링 문제가 있을 때 알림을 받는 사용자를 표시합니다."
   },
   {
     "id": "Single",
@@ -7004,10 +7484,6 @@
     "translation": "소프트웨어"
   },
   {
-    "id": "Spam reports",
-    "translation": "스팸 보고서"
-  },
-  {
     "id": "Specifies if image is bring your own license",
     "translation": "이미지가 BYOL(Bring Your Own License)인지 지정함"
   },
@@ -7038,6 +7514,10 @@
   {
     "id": "Specify the type of attachment, hardware or virtual. default is hardware",
     "translation": "연결의 유형을 지정하십시오(hardware 또는 virtual). 기본값은 hardware입니다."
+  },
+  {
+    "id": "Speed",
+    "translation": "속도"
   },
   {
     "id": "Start",
@@ -7132,8 +7612,16 @@
     "translation": "{{.ID}} 서브넷이 취소되었습니다."
   },
   {
+    "id": "Subnet {{.subnetID}} is not assigned to User {{.userID}}",
+    "translation": "서브넷 {{.subnetID}}이(가) 사용자 {{.userID}}에 지정되지 않았습니다."
+  },
+  {
     "id": "Successful Login?",
     "translation": "정상적으로 로그인되었습니까?"
+  },
+  {
+    "id": "Successfully added subnet access for user.",
+    "translation": "사용자의 서브넷 액세스를 추가했습니다."
   },
   {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
@@ -7156,6 +7644,14 @@
     "translation": "디바이스 펌웨어가 리플래시됨"
   },
   {
+    "id": "Successfully removed User Customer notification.",
+    "translation": "사용자 고객 알림을 제거했습니다."
+  },
+  {
+    "id": "Successfully removed subnet access for user.",
+    "translation": "사용자의 서브넷 액세스를 제거했습니다."
+  },
+  {
     "id": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "서브넷 ID: {{.subnetID}}을(를) 허용되는 호스트 ID: {{.accessID}}에서 제거함"
   },
@@ -7164,8 +7660,12 @@
     "translation": "하드웨어 서버 '{{.ID}}'의 IPMI 인터페이스를 토글하기 위해 요청을 전송했습니다."
   },
   {
-    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events",
-    "translation": "향후 발생 및 진행 중인 유지보수 이벤트의 요약 및 수신확인"
+    "id": "Successfully {{.action}} user vpn subnets manual config",
+    "translation": "성공적으로 {{.action}} 사용자 vpn 서브넷 수동 구성"
+  },
+  {
+    "id": "Summary and acknowledgement of upcoming and ongoing maintenance events.",
+    "translation": "향후 및 진행 중인 유지보수 이벤트에 대한 요약 및 확인."
   },
   {
     "id": "Summary info about tickets",
@@ -7212,8 +7712,20 @@
     "translation": "{{.VsId}} 가상 서버 인스턴스를 위해 시스템을 다시 로드 중입니다. '{{.CommandName}} sl vs ready {{.VsId}}'을(를) 실행하여 나중에 준비되는지 여부를 확인하십시오."
   },
   {
+    "id": "TICKETID",
+    "translation": "TICKETID"
+  },
+  {
+    "id": "TRANSLATION_ID",
+    "translation": "TRANSLATION_ID"
+  },
+  {
     "id": "TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200",
     "translation": "TTL(Time-To-Live)(초), 예를 들면 86400입니다. 기본값은 7200입니다."
+  },
+  {
+    "id": "TYPE",
+    "translation": "TYPE"
   },
   {
     "id": "Tag",
@@ -7240,6 +7752,10 @@
     "translation": "설정할 태그 또는 모두 제거하려면 빈 문자열(다중 발생 허용)."
   },
   {
+    "id": "Target",
+    "translation": "대상"
+  },
+  {
     "id": "Target IP",
     "translation": "대상 IP"
   },
@@ -7256,16 +7772,16 @@
     "translation": "템플리트 파일: {{.Location}}이(가) 없습니다."
   },
   {
-    "id": "Termination",
-    "translation": "종료"
-  },
-  {
     "id": "Test order",
     "translation": "주문 테스트"
   },
   {
     "id": "The ID of one IP address to authorize",
     "translation": "권한 부여할 하나의 IP 주소 ID"
+  },
+  {
+    "id": "The ID of one IP address to authorize.",
+    "translation": "권한 부여할 하나의 IP 주소의 ID입니다."
   },
   {
     "id": "The ID of one IP address to revoke",
@@ -7276,12 +7792,20 @@
     "translation": "권한 부여할 하나의 하드웨어 서버 ID"
   },
   {
+    "id": "The ID of one hardware server to authorize.",
+    "translation": "권한 부여할 하나의 하드웨어 서버의 ID입니다."
+  },
+  {
     "id": "The ID of one hardware server to revoke",
     "translation": "취소할 하나의 하드웨어 서버 ID"
   },
   {
     "id": "The ID of one virtual server to authorize",
     "translation": "권한 부여할 하나의 가상 서버 ID"
+  },
+  {
+    "id": "The ID of one virtual server to authorize.",
+    "translation": "권한 부여할 하나의 가상 서버의 ID입니다."
   },
   {
     "id": "The ID of one virtual server to revoke",
@@ -7334,6 +7858,10 @@
   {
     "id": "The actual SSH key",
     "translation": "실제 SSH 키"
+  },
+  {
+    "id": "The block device ID´s to archive, multiple occurrence allowed",
+    "translation": "보관할 블록 디바이스 ID이며, 다중 발생이 허용됩니다."
   },
   {
     "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
@@ -7476,6 +8004,10 @@
     "translation": "키에 대한 새 레이블"
   },
   {
+    "id": "The note",
+    "translation": "참고입니다."
+  },
+  {
     "id": "The note of hardware server: {{.ID}} was updated.",
     "translation": "하드웨어 서버 {{.ID}}의 참고가 업데이트되었습니다."
   },
@@ -7486,6 +8018,10 @@
   {
     "id": "The note to be applied to the imported template",
     "translation": "가져온 템플리트에 적용될 참고"
+  },
+  {
+    "id": "The note was set successfully",
+    "translation": "노트가 설정됨"
   },
   {
     "id": "The order is correct.",
@@ -7712,6 +8248,10 @@
     "translation": "전용 호스트 {{.ID}}에 게스트가 없습니다."
   },
   {
+    "id": "There is not available category to this disk size",
+    "translation": "이 디스크 크기에 사용 가능한 카테고리가 없습니다."
+  },
+  {
     "id": "This account is the Master User and has all permissions enabled",
     "translation": "이 계정은 마스터 사용자이며 모든 권한이 사용됩니다."
   },
@@ -7730,6 +8270,14 @@
   {
     "id": "This command requires --add or --remove option.",
     "translation": "이 명령에는 -- add 또는 --remove 옵션이 필요합니다."
+  },
+  {
+    "id": "This command requires --enable or --disable option.",
+    "translation": "이 명령에는 -- enable 또는 --disable 옵션이 필요합니다."
+  },
+  {
+    "id": "This command requires four arguments.",
+    "translation": "이 명령에는 4개의 인수가 필요합니다."
   },
   {
     "id": "This command requires notification names as arguments and options flags.",
@@ -7752,16 +8300,12 @@
     "translation": "이 명령에는 --title 옵션이 필요합니다."
   },
   {
+    "id": "This command requires three arguments.",
+    "translation": "이 명령에는 3개의 인수가 필요합니다."
+  },
+  {
     "id": "This command requires two arguments.",
     "translation": "이 명령에는 2개의 인수가 필요합니다."
-  },
-  {
-    "id": "This interface allows you to change the route of your Account Owned subnets.",
-    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 라우트를 변경할 수 있습니다."
-  },
-  {
-    "id": "This interface allows you to remove the route of your Account Owned subnets.",
-    "translation": "이 인터페이스를 사용하면 계정 소유 서브넷의 라우트를 제거할 수 있습니다."
   },
   {
     "id": "This is the credential id associated with the volume. [Required]",
@@ -7782,10 +8326,6 @@
   {
     "id": "This will cancel all virtual server instances in the dedicatedhost: {{.HostID}} and cannot be undone. Continue?",
     "translation": "이렇게 하면 {{.HostID}} 전용 호스트에서 모든 가상 서버 인스턴스가 취소되고 이는 실행 취소할 수 없습니다. 계속하시겠습니까?"
-  },
-  {
-    "id": "This will cancel the AutoScale Group instance: {{.autoScaleGroupId}} and all its members, this action cannot be undone. Continue?",
-    "translation": "그러면 자동 스케일 그룹 인스턴스 {{.autoScaleGroupId}} 및 모든 해당 멤버가 취소되며 이 조치는 실행 취소할 수 없습니다. 계속하시겠습니까?"
   },
   {
     "id": "This will cancel the IP address: {{.ID}} and cannot be undone. Continue?",
@@ -7976,10 +8516,6 @@
     "translation": "리턴할 총 결과 수입니다. 모두를 리턴하려면 -1을 지정하십시오. 이러한 경우가 많습니다. [기본값: 50]"
   },
   {
-    "id": "Transaction",
-    "translation": "트랜잭션"
-  },
-  {
     "id": "True",
     "translation": "예"
   },
@@ -7996,12 +8532,24 @@
     "translation": "스토리지 볼륨의 유형 [필수], 옵션: performance,endurance"
   },
   {
-    "id": "Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required].",
-    "translation": "정적 라우팅에 값을 입력하십시오. 예: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [필수]."
-  },
-  {
     "id": "Types",
     "translation": "유형"
+  },
+  {
+    "id": "URI",
+    "translation": "URI"
+  },
+  {
+    "id": "URL",
+    "translation": "URL"
+  },
+  {
+    "id": "USERNAME",
+    "translation": "USERNAME"
+  },
+  {
+    "id": "USER_ID",
+    "translation": "USER_ID"
   },
   {
     "id": "UTC Offset for searching with dates. +/-HHMM format  [default: -0000]",
@@ -8078,6 +8626,10 @@
   {
     "id": "Unable to find item with ID: {{.itemID}}.\n",
     "translation": "ID가 {{.itemID}}인 항목을 찾을 수 없습니다. \n"
+  },
+  {
+    "id": "Unable to find license with key: {{.key}}.",
+    "translation": "키를 사용하여 라이센스를 찾을 수 없음: {{.key}}."
   },
   {
     "id": "Unable to find location",
@@ -8164,6 +8716,10 @@
     "translation": "업데이트를 추가할 수 없음: {{.Error}}\n"
   },
   {
+    "id": "Update disk number to size in GB [capacity,diskNumber]. --resize-disk 250,2",
+    "translation": "디스크 번호를 GB [용량,diskNumber] 단위로 업데이트합니다. -- --resize-disk 250,2"
+  },
+  {
     "id": "Update resource records in a zone",
     "translation": "구역의 리소스 레코드 업데이트"
   },
@@ -8236,6 +8792,10 @@
     "translation": "사용자 ID는 숫자여야 합니다."
   },
   {
+    "id": "User ID to be notified on monitoring failure, multiple occurrence allowed",
+    "translation": "모니터링 실패 시 알림을 받을 사용자 ID, 다중 발생이 허용됨"
+  },
+  {
     "id": "User defined metadata string",
     "translation": "사용자 정의 메타데이터 문자열"
   },
@@ -8258,6 +8818,10 @@
   {
     "id": "VIRTUAL",
     "translation": "가상"
+  },
+  {
+    "id": "VLAN",
+    "translation": "VLAN"
   },
   {
     "id": "VLAN type",
@@ -8292,6 +8856,10 @@
     "translation": "공급업체 이름"
   },
   {
+    "id": "Version",
+    "translation": "버전"
+  },
+  {
     "id": "View a quote",
     "translation": "견적 보기"
   },
@@ -8316,8 +8884,8 @@
     "translation": "가상 게스트 ID"
   },
   {
-    "id": "Virtual Guest Member Template",
-    "translation": "가상 게스트 멤버 템플리트"
+    "id": "Virtual guest ID",
+    "translation": "가상 게스트 ID"
   },
   {
     "id": "Virtual guest domain name not found.",
@@ -8384,10 +8952,6 @@
     "translation": "VLAN"
   },
   {
-    "id": "Vlan Name",
-    "translation": "VLAN 이름"
-  },
-  {
     "id": "Vlan ids",
     "translation": "VLAN ID"
   },
@@ -8410,6 +8974,10 @@
   {
     "id": "Volume name",
     "translation": "볼륨 이름"
+  },
+  {
+    "id": "Vs",
+    "translation": "VS"
   },
   {
     "id": "Wait until the virtual server is finished provisioning for up to X seconds before returning",
@@ -8464,6 +9032,14 @@
     "translation": "'{{.CommandName}} sl vs host-list --order {{.OrderID}}'을(를) 실행하여 준비된 이후 이 전용 호스트를 찾을 수 있습니다."
   },
   {
+    "id": "ZONE",
+    "translation": "ZONE"
+  },
+  {
+    "id": "ZONEFILE",
+    "translation": "ZONEFILE"
+  },
+  {
     "id": "Zone {{.Zone}} was created.",
     "translation": "{{.Zone}} 구역이 작성되었습니다."
   },
@@ -8474,6 +9050,10 @@
   {
     "id": "[--billing] billing rate must be either hourly or monthly.",
     "translation": "[--billing] 청구 비율은 hourly 또는 monthly여야 합니다."
+  },
+  {
+    "id": "[--billing] has to be either hourly or monthly.",
+    "translation": "[--billing]은 시간별 또는 월별이어야 합니다."
   },
   {
     "id": "[--public] is not allowed with [--private].",
@@ -8512,10 +9092,6 @@
     "translation": "[-d|--day-of-week] 값은 0 - 6 범위에 있어야 합니다."
   },
   {
-    "id": "[-i/--type-id] is required.",
-    "translation": "[-i/--type-id]가 필요합니다."
-  },
-  {
     "id": "[-k] is not allowed with [-f|--in-file].",
     "translation": "[-k]는 [-f|--in-file]과 함께 사용할 수 없습니다."
   },
@@ -8552,10 +9128,6 @@
     "translation": "[-s|--snapshot-schedule]는 필수입니다. 옵션: HOURLY, DAILY, WEEKLY."
   },
   {
-    "id": "[-t/--type] is required.",
-    "translation": "[-t/--type]이 필요합니다."
-  },
-  {
     "id": "[-t|--tier] is optional, options are: 0.25,2,4,10.",
     "translation": "[-t|--tier]는 선택사항입니다. 옵션: 0.25,2,4,10."
   },
@@ -8566,6 +9138,22 @@
   {
     "id": "[-u|--userdata] is not allowed with [-F|--userfile].",
     "translation": "[-u|--userdata]는 [F|--userfile]과 함께 사용할 수 없습니다."
+  },
+  {
+    "id": "[TAG NAME]",
+    "translation": "[TAG NAME]"
+  },
+  {
+    "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
+    "translation": "대부분의 {{.Limit}} 인수를 허용하고 {{.Args}}을(를) 수신함"
+  },
+  {
+    "id": "accepts between {{.Min}} and {{.Max}} arg(s), received {{.Args}}",
+    "translation": "{{.Min}} - {{.Max}} 사이의 인수를 허용하고 {{.Args}}을(를) 수신함"
+  },
+  {
+    "id": "accepts {{.Limit}} arg(s), received {{.Args}}",
+    "translation": "{{.Limit}} 인수를 허용하고 {{.Args}}을(를) 수신함"
   },
   {
     "id": "account",
@@ -8582,10 +9170,6 @@
   {
     "id": "active transaction",
     "translation": "활성 트랜잭션"
-  },
-  {
-    "id": "all_disks",
-    "translation": "all_disks"
   },
   {
     "id": "assigned",
@@ -8636,6 +9220,10 @@
     "translation": "인증서 ID를 찾을 수 없음"
   },
   {
+    "id": "closing soon: ",
+    "translation": "곧 마감됨: "
+  },
+  {
     "id": "common_name",
     "translation": "common_name"
   },
@@ -8646,10 +9234,6 @@
   {
     "id": "cost",
     "translation": "비용"
-  },
-  {
-    "id": "cpu (allocated/total)",
-    "translation": "CPU(할당됨/총계)"
   },
   {
     "id": "cpu cores",
@@ -8678,10 +9262,6 @@
   {
     "id": "date_of_month",
     "translation": "date_of_month"
-  },
-  {
-    "id": "date_time",
-    "translation": "date_time"
   },
   {
     "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
@@ -8726,10 +9306,6 @@
   {
     "id": "device",
     "translation": "디바이스"
-  },
-  {
-    "id": "disk (allocated/total)",
-    "translation": "디스크(할당됨/총계)"
   },
   {
     "id": "disk_guest",
@@ -8808,10 +9384,6 @@
     "translation": "global_identifier"
   },
   {
-    "id": "guests",
-    "translation": "게스트"
-  },
-  {
     "id": "guid",
     "translation": "guid"
   },
@@ -8852,6 +9424,10 @@
     "translation": "중간 인증서를 찾을 수 없음"
   },
   {
+    "id": "invalid argument {{.Arg}} for {{.Path}}",
+    "translation": "{{.Path}}에 대한 올바르지 않은 인수 {{.Arg}}"
+  },
+  {
     "id": "ip",
     "translation": "ip"
   },
@@ -8876,20 +9452,12 @@
     "translation": "마지막 트랜잭션"
   },
   {
-    "id": "lists bandwidth pools",
-    "translation": "대역폭 풀 나열"
-  },
-  {
     "id": "maximum_snapshots",
     "translation": "maximum_snapshots"
   },
   {
     "id": "memory",
     "translation": "메모리"
-  },
-  {
-    "id": "memory (allocated/total)",
-    "translation": "메모리(할당됨/총계)"
   },
   {
     "id": "minute",
@@ -8910,10 +9478,6 @@
   {
     "id": "network space",
     "translation": "네트워크 영역"
-  },
-  {
-    "id": "network_space",
-    "translation": "network_space"
   },
   {
     "id": "none",
@@ -8940,8 +9504,8 @@
     "translation": "%s의 옵션은 hardware 또는 virtual입니다."
   },
   {
-    "id": "options for %s are true, false",
-    "translation": "%s의 옵션은 true, false입니다."
+    "id": "options for --enable are true, false",
+    "translation": "--enable 옵션은 true, false입니다."
   },
   {
     "id": "os",
@@ -8960,24 +9524,12 @@
     "translation": "비밀번호"
   },
   {
-    "id": "pendingMigrationFlag",
-    "translation": "pendingMigrationFlag"
-  },
-  {
     "id": "pool",
     "translation": "풀"
   },
   {
-    "id": "powerState",
-    "translation": "PowerState"
-  },
-  {
     "id": "preset",
     "translation": "사전 설정"
-  },
-  {
-    "id": "price rate",
-    "translation": "가격 비율"
   },
   {
     "id": "primary_router",
@@ -9044,8 +9596,8 @@
     "translation": "복제"
   },
   {
-    "id": "router",
-    "translation": "라우터"
+    "id": "requires at least {{.Limit}} arg(s), only received {{.Args}}",
+    "translation": "{{.Limit}}개 이상의 인수가 필요하지만 {{.Args}}만 수신함"
   },
   {
     "id": "routers",
@@ -9108,14 +9660,6 @@
     "translation": "term"
   },
   {
-    "id": "transaction",
-    "translation": "트랜잭션"
-  },
-  {
-    "id": "transaction_id",
-    "translation": "transaction_id"
-  },
-  {
     "id": "transient",
     "translation": "임시"
   },
@@ -9126,6 +9670,10 @@
   {
     "id": "type",
     "translation": "유형"
+  },
+  {
+    "id": "unknown command {{.Arg}} for {{.Command}}",
+    "translation": "{{.Command}}에 대한 알 수 없는 명령 {{.Arg}}"
   },
   {
     "id": "updated",
@@ -9172,20 +9720,8 @@
     "translation": "가상 서버"
   },
   {
-    "id": "virtual_servers",
-    "translation": "virtual_servers"
-  },
-  {
     "id": "visibility",
     "translation": "가시성"
-  },
-  {
-    "id": "vlan_id",
-    "translation": "vlan_id"
-  },
-  {
-    "id": "vs_id",
-    "translation": "vs_id"
   },
   {
     "id": "week",

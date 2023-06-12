@@ -1,0 +1,20 @@
+$ORIGIN dal06.bluemix.ibmcsf.net.
+$TTL 900
+@ IN SOA ns1.softlayer.com. support.softlayer.com. (
+                    2014121600        ; Serial
+                    7200              ; Refresh
+                    600               ; Retry
+                    1728000           ; Expire
+                    43200)            ; Minimum
+
+@                      900      IN NS ns1.softlayer.com.
+@                      900      IN NS    ns2.softlayer.com.
+
+@                      900      IN MX 10 mail.dal06.bluemix.ibmcsf.net.
+
+txt                    900      IN TXT   bcr01.dal06.bluemix.ibmcsf.net
+@                      900      IN A     127.0.0.1
+ftp                    86400    IN A     127.0.0.1
+mail                   86400    IN A     127.0.0.1
+webmail                86400    IN A     127.0.0.1
+www

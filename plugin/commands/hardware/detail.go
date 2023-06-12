@@ -130,13 +130,21 @@ func (cmd *DetailCommand) Run(args []string) error {
 		hardware.BillingItem.OrderItem.Order.UserRecord != nil {
 		table.Add(T("Owner"), utils.FormatStringPointer(hardware.BillingItem.OrderItem.Order.UserRecord.Username))
 	}
+	transactionGroupName := "-"
+	transactionGroupDate := ""
+	if hardware.LastTransaction != nil {
+		if hardware.LastTransaction.TransactionGroup != nil {
+			transactionGroupName = utils.FormatStringPointer(hardware.LastTransaction.TransactionGroup.Name)
+		}
+		transactionGroupDate = utils.FormatSLTimePointer(hardware.LastTransaction.ModifyDate)
+	}
 	table.Add(T("Last transaction"), fmt.Sprintf(
 		"%s %s",
-		*hardware.LastTransaction.TransactionGroup.Name,
-		*hardware.LastTransaction.ModifyDate,
+		transactionGroupName,
+		transactionGroupDate,
 	))
 	billing := "Monthly"
-	if *hardware.HourlyBillingFlag {
+	if utils.FormatBoolPointer(hardware.HourlyBillingFlag) != "" {
 		billing = "Hourly"
 	}
 	table.Add(T("Billing"), billing)
@@ -204,16 +212,13 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 			totalPrice := hardware.BillingItem.NextInvoiceTotalRecurringAmount
 			priceTable.Add("Total", "-", fmt.Sprintf("%.2f", *totalPrice))
-			sum := *hardware.BillingItem.NextInvoiceTotalRecurringAmount
 			for _, item := range hardware.BillingItem.NextInvoiceChildren {
 				if item.NextInvoiceTotalRecurringAmount != nil {
-					sum += *item.NextInvoiceTotalRecurringAmount
 					priceTable.Add(*item.Description, *item.CategoryCode, fmt.Sprintf("%.2f", *item.NextInvoiceTotalRecurringAmount))
 				}
 			}
 			priceTable.Print()
 			table.Add("Prices", buf.String())
-			table.Add(T("Price rate"), fmt.Sprintf("%.2f", sum))
 		}
 	}
 

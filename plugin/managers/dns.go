@@ -28,6 +28,8 @@ type DNSManager interface {
 	DeleteZone(zoneId int) error
 	DumpZone(zoneId int) (string, error)
 	CreateResourceRecord(zoneId int, host string, recordType string, data string, ttl int) (datatypes.Dns_Domain_ResourceRecord, error)
+	ResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecord) (datatypes.Dns_Domain_ResourceRecord, error)
+	SrvResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecord_SrvType) (datatypes.Dns_Domain_ResourceRecord_SrvType, error)
 	DeleteResourceRecord(recordId int) error
 	GetResourceRecord(recordId int) (datatypes.Dns_Domain_ResourceRecord, error)
 	ListResourceRecords(zoneId int, recordType string, host string, data string, ttl int, mask string) ([]datatypes.Dns_Domain_ResourceRecord, error)
@@ -42,6 +44,7 @@ type DNSmanager struct {
 	ResourceRecordService services.Dns_Domain_ResourceRecord
 	AccountService        services.Account
 	VirtualServerService  services.Virtual_Guest
+	Session               *session.Session
 }
 
 func NewDNSManager(session *session.Session) *DNSmanager {
@@ -50,6 +53,7 @@ func NewDNSManager(session *session.Session) *DNSmanager {
 		services.GetDnsDomainResourceRecordService(session),
 		services.GetAccountService(session),
 		services.GetVirtualGuestService(session),
+		session,
 	}
 }
 
@@ -130,6 +134,39 @@ func (dns DNSmanager) CreateResourceRecord(zoneId int, host string, recordType s
 		Ttl:      sl.Int(ttl),
 	}
 	return dns.ResourceRecordService.CreateObject(&record)
+}
+
+// A "simpler" method than CreateResourceRecord
+func (dns DNSmanager) ResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecord) (datatypes.Dns_Domain_ResourceRecord, error) {
+	// Simply passing in rr to CreateObject passes in an empty object for some reason I can't figure out
+	// So making a new variable here and passing that in seems to work ok.
+	// record := datatypes.Dns_Domain_ResourceRecord{
+	// 	DomainId: rr.DomainId,
+	// 	Host: rr.Host,
+	// 	Type: rr.Type,
+	// 	Data: rr.Data,
+	// 	Ttl: rr.Ttl,
+	// }
+
+	// fmt.Printf("ResourceRecordCreate Host: |%s|\n", *rr.Host)
+	// return rr, nil
+	return dns.ResourceRecordService.CreateObject(&rr)
+}
+
+// A "simpler" method than CreateResourceRecord
+func (dns DNSmanager) SrvResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRecord_SrvType) (datatypes.Dns_Domain_ResourceRecord_SrvType, error) {
+	// Simply passing in rr to CreateObject passes in an empty object for some reason I can't figure out
+	// So making a new variable here and passing that in seems to work ok.
+	// record := datatypes.Dns_Domain_ResourceRecord_SrvType{
+	// 	Dns_Domain_ResourceRecord: rr.Dns_Domain_ResourceRecord,
+
+	// }
+
+	// fmt.Printf("SrvResourceRecordCreate Host: |%s|\n", *rr.Host)
+	// return record, nil
+	service := services.GetDnsDomainResourceRecordSrvTypeService(dns.Session)
+	return service.CreateObject(&rr)
+
 }
 
 //Delete a resource record by its ID

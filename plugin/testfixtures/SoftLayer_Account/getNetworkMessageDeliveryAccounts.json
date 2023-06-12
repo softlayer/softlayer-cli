@@ -19,6 +19,9 @@
             "keyName": "SENDGRID",
             "name": "SendGrid"
         },
+        "billingItem": {
+            "description": "Free TEST email account"
+        },
         "emailAddress": "test.test3@ibm.com",
         "smtpAccess": "1"
     },
@@ -41,6 +44,9 @@
             "id": 1,
             "keyName": "SENDGRID",
             "name": "SendGrid"
+        },
+        "billingItem": {
+            "description": "Free TEST email account"
         },
         "emailAddress": "test.test6@ibm.com",
         "smtpAccess": "1"

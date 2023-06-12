@@ -74,9 +74,8 @@ type VirtualServerManager interface {
 	GetInstance(id int, mask string) (datatypes.Virtual_Guest, error)
 	GetDedicatedHost(hostId int) (datatypes.Virtual_DedicatedHost, error)
 	GetLikedInstance(virtualGuest *datatypes.Virtual_Guest, id int) (*datatypes.Virtual_Guest, error)
-	CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error)
+	CaptureImage(vsId int, imageName string, imageNote string, imageBlockDevices []datatypes.Virtual_Guest_Block_Device) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
 	ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderId int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
-	ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error)
 	GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error)
 	PauseInstance(id int) error
 	PowerOnInstance(id int) error
@@ -85,7 +84,7 @@ type VirtualServerManager interface {
 	ReloadInstance(id int, postURI string, sshKeys []int, imageID int) error
 	ResumeInstance(id int) error
 	RescueInstance(id int) error
-	UpgradeInstance(id int, cpu int, memory int, network int, privateCPU bool, flavor string) (datatypes.Container_Product_Order_Receipt, error)
+	UpgradeInstance(id int, cpu int, memory int, network int, addDisk int, resizeDisk []int, privateCPU bool, flavor string) (datatypes.Container_Product_Order_Receipt, error)
 	InstanceIsReady(id int, until time.Time) (bool, string, error)
 	SetUserMetadata(id int, userdata []string) error
 	SetTags(id int, tags string) error
@@ -111,6 +110,7 @@ type VirtualServerManager interface {
 	GetRules() ([]datatypes.Virtual_PlacementGroup_Rule, error)
 	GetUserCustomerNotificationsByVirtualGuestId(id int, mask string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error)
 	CreateUserCustomerNotification(virtualServerId int, userId int) (datatypes.User_Customer_Notification_Virtual_Guest, error)
+	DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error)
 }
 
 type virtualServerManager struct {
@@ -737,70 +737,9 @@ func (vs virtualServerManager) GetLikedInstance(virtualGuest *datatypes.Virtual_
 //vsId: ID of instance
 //imageName: name of the image to be created
 //imageNote: note of the image to be created
-//allDisk: set to true to include all additional attached storage devices
-func (vs virtualServerManager) CaptureImage(vsId int, imageName string, imageNote string, allDisk bool) (datatypes.Provisioning_Version1_Transaction, error) {
-	vsi, err := vs.GetInstance(vsId, "id,blockDevices[id,device,mountType,diskImage[id,metadataFlag,type[keyName]]]")
-	if err != nil {
-		return datatypes.Provisioning_Version1_Transaction{}, err
-	}
-	return vs.VirtualGuestService.Id(vsId).CreateArchiveTransaction(sl.String(imageName), getDisks(vsi, allDisk), sl.String(imageNote))
-}
-
-func getDisks(vs datatypes.Virtual_Guest, all bool) []datatypes.Virtual_Guest_Block_Device {
-	disks := []datatypes.Virtual_Guest_Block_Device{}
-	for _, disk := range vs.BlockDevices {
-		//We never want metadata disks
-		if disk.DiskImage != nil && disk.DiskImage.MetadataFlag != nil && *disk.DiskImage.MetadataFlag == true {
-			continue
-		}
-		//We never want swap devices
-		if disk.DiskImage != nil && disk.DiskImage.Type != nil && disk.DiskImage.Type.KeyName != nil && *disk.DiskImage.Type.KeyName == "SWAP" {
-			continue
-		}
-		//We never want CD images
-		if disk.MountType != nil && *disk.MountType == "CD" {
-			continue
-		}
-		//Only use the first block device if we don't want additional disks
-		if !all && disk.Device != nil && *disk.Device != "0" {
-			continue
-		}
-		disks = append(disks, disk)
-	}
-	return disks
-}
-
-func (vs virtualServerManager) ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error) {
-	filters := filter.New()
-	filters = append(filters, filter.Path("dedicatedHosts.id").OrderBy("ASC"))
-
-	if name != "" {
-		filters = append(filters, filter.Path("dedicatedHosts.name").Eq(name))
-	}
-	if datacenter != "" {
-		filters = append(filters, filter.Path("dedicatedHosts.datacenter.name").Eq(datacenter))
-	}
-	if owner != "" {
-		filters = append(filters, filter.Path("dedicatedHosts.billingItem.orderItem.order.userRecord.username").Eq(owner))
-	}
-	if orderId != 0 {
-		filters = append(filters, filter.Path("dedicatedHosts.billingItem.orderItem.order.id").Eq(orderId))
-	}
-
-	i := 0
-	resourceList := []datatypes.Virtual_DedicatedHost{}
-	for {
-		resp, err := vs.AccountService.Mask(HOST_DEFAULT_MASK).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetDedicatedHosts()
-		i++
-		if err != nil {
-			return []datatypes.Virtual_DedicatedHost{}, err
-		}
-		resourceList = append(resourceList, resp...)
-		if len(resp) < metadata.LIMIT {
-			break
-		}
-	}
-	return resourceList, nil
+//imageBlockDevices: image block devices to be created
+func (vs virtualServerManager) CaptureImage(vsId int, imageName string, imageNote string, imageBlockDevices []datatypes.Virtual_Guest_Block_Device) (datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
+	return vs.VirtualGuestService.Id(vsId).CreateArchiveTemplate(&imageName, imageBlockDevices, &imageNote)
 }
 
 //Retrieve a list of all virtual servers on the account.
@@ -1023,7 +962,7 @@ func (vs virtualServerManager) RescueInstance(id int) error {
 //memory: RAM of the virtual server to be upgraded to
 //network: The port speed to set
 //privateCPU: CPU will be in Private Node.
-func (vs virtualServerManager) UpgradeInstance(id int, cpu int, memory int, network int, privateCPU bool, flavor string) (datatypes.Container_Product_Order_Receipt, error) {
+func (vs virtualServerManager) UpgradeInstance(id int, cpu int, memory int, network int, addDisk int, resizeDisk []int, privateCPU bool, flavor string) (datatypes.Container_Product_Order_Receipt, error) {
 	upgradeOptions := make(map[string]int)
 	public := true
 	if cpu != 0 {
@@ -1032,7 +971,7 @@ func (vs virtualServerManager) UpgradeInstance(id int, cpu int, memory int, netw
 	if memory != 0 {
 		upgradeOptions["ram"] = memory / 1024
 	}
-	if network != 0 {
+	if network != -1 {
 		upgradeOptions["port_speed"] = network
 	}
 	if privateCPU == true {
@@ -1090,6 +1029,106 @@ func (vs virtualServerManager) UpgradeInstance(id int, cpu int, memory int, netw
 			},
 		},
 	}
+
+	if addDisk != -1 || len(resizeDisk) != 0 {
+		itemPrices := []datatypes.Product_Item_Price{}
+		if addDisk != -1 {
+			//dictionary to match names used by SoftLayer_Virtual_Guest::getUpgradeItemPrices and SoftLayer_Virtual_Guest::getBlockDevices
+			diskKeyNames := map[string]string{
+				"First Disk":  "Disk 1",
+				"Second Disk": "Disk 2",
+				"Third Disk":  "Disk 3",
+				"Fourth Disk": "Disk 4",
+				"Fifth Disk":  "Disk 5",
+			}
+			diskItemId := 0
+			allAvailableDiskCategoriesToNewDisk := []string{}
+			description := strconv.Itoa(addDisk) + " GB (SAN)"
+			for _, item := range packageItems {
+				if *item.Item.Description == description {
+					diskItemId = *item.Id
+					allAvailableDiskCategoriesToNewDisk = append(allAvailableDiskCategoriesToNewDisk, *item.Categories[0].Name)
+				}
+			}
+			virtualGuestDisks, err := vs.GetLocalDisks(id)
+			if err != nil {
+				return datatypes.Container_Product_Order_Receipt{}, err
+			}
+			diskCategoriesUsedByVS := []string{}
+			for _, disk := range virtualGuestDisks {
+				diskCategoriesUsedByVS = append(diskCategoriesUsedByVS, *disk.DiskImage.Name)
+			}
+			availableDiskCategoriesToNewDiskinVS := []string{}
+			for _, diskCategoy := range allAvailableDiskCategoriesToNewDisk {
+				diskCategoyCounter := utils.StringInSlice(diskKeyNames[diskCategoy], diskCategoriesUsedByVS)
+				if diskCategoyCounter == -1 {
+					availableDiskCategoriesToNewDiskinVS = append(availableDiskCategoriesToNewDiskinVS, diskCategoy)
+				}
+			}
+			if len(availableDiskCategoriesToNewDiskinVS) == 0 {
+				return datatypes.Container_Product_Order_Receipt{},
+					errors.New(T("There is not available category to this disk size"))
+			}
+			categoryId := 0
+			for _, item := range packageItems {
+				if *item.Item.Description == description && *item.Categories[0].Name == availableDiskCategoriesToNewDiskinVS[0] {
+					categoryId = *item.Categories[0].Id
+					break
+				}
+			}
+
+			diskItem := datatypes.Product_Item_Price{
+				Categories: []datatypes.Product_Item_Category{
+					datatypes.Product_Item_Category{
+						Id: sl.Int(categoryId),
+					},
+				},
+				Id: sl.Int(diskItemId),
+			}
+			itemPrices = append(itemPrices, diskItem)
+		}
+
+		if len(resizeDisk) != 0 {
+			//disk_key_names dictionary to convert disk numbers (int) to ordinal numbers (string)
+			diskKeyNames := map[int]string{
+				1: "First Disk",
+				2: "Second Disk",
+				3: "Third Disk",
+				4: "Fourth Disk",
+				5: "Fifth Disk",
+			}
+			capacity := resizeDisk[0]
+			diskNumber := resizeDisk[1]
+			categoryToRequest := diskKeyNames[diskNumber]
+			if categoryToRequest == "" {
+				return datatypes.Container_Product_Order_Receipt{}, errors.New(T("Invalid disk number to this disk capacity"))
+			}
+			description := strconv.Itoa(capacity) + " GB (SAN)"
+			diskItemId := 0
+			categoryId := 0
+			for _, item := range packageItems {
+				if *item.Item.Description == description && *item.Categories[0].Name == categoryToRequest {
+					diskItemId = *item.Id
+					categoryId = *item.Categories[0].Id
+					break
+				}
+			}
+			if diskItemId == 0 && categoryId == 0 {
+				return datatypes.Container_Product_Order_Receipt{}, errors.New(T("Invalid disk number to this disk capacity"))
+			}
+			diskItem := datatypes.Product_Item_Price{
+				Categories: []datatypes.Product_Item_Category{
+					datatypes.Product_Item_Category{
+						Id: sl.Int(categoryId),
+					},
+				},
+				Id: sl.Int(diskItemId),
+			}
+			itemPrices = append(itemPrices, diskItem)
+		}
+		upgradeOrder.Container_Product_Order_Virtual_Guest.Container_Product_Order_Hardware_Server.Container_Product_Order.Prices = itemPrices
+	}
+
 	return vs.OrderService.PlaceOrder(&upgradeOrder, sl.Bool(false))
 }
 
@@ -1504,7 +1543,7 @@ func (vs virtualServerManager) PlacementCreate(templateObject *datatypes.Virtual
 func (vs virtualServerManager) GetUserCustomerNotificationsByVirtualGuestId(id int, mask string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error) {
 	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(vs.Session)
 	if mask == "" {
-		mask = "mask[guestId,userId,user[firstName,lastName,email,username]]"
+		mask = "mask[id,guestId,userId,user[firstName,lastName,email,username]]"
 	}
 	return userCustomerNotificationVirtualGuestService.Mask(mask).FindByGuestId(&id)
 }
@@ -1520,4 +1559,16 @@ func (vs virtualServerManager) CreateUserCustomerNotification(virtualServerId in
 	mask := "mask[user]"
 	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(vs.Session)
 	return userCustomerNotificationVirtualGuestService.Mask(mask).CreateObject(&userCustomerNotificationTemplate)
+}
+
+//Delete a user virtual server notification entry
+//int userCustomerNotificationId: The user customer notification identifier.
+func (vs virtualServerManager) DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error) {
+	userCustomerNotificationTemplates := []datatypes.User_Customer_Notification_Virtual_Guest{
+		datatypes.User_Customer_Notification_Virtual_Guest{
+			Id: sl.Int(userCustomerNotificationId),
+		},
+	}
+	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(vs.Session)
+	return userCustomerNotificationVirtualGuestService.Mask(mask).DeleteObjects(userCustomerNotificationTemplates)
 }
