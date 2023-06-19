@@ -860,6 +860,10 @@
     "translation": "AAAA 레코드 동기화 중단 중.{{.Num}}개의 AAAA 레코드가 있습니다!"
   },
   {
+    "id": "Access Key ID",
+    "translation": "액세스 키 ID"
+  },
+  {
     "id": "Access granted to user {{.userId}} for {{.objectId}}",
     "translation": "사용자 {{.userId}}에게 {{.objectId}}에 대한 액세스 권한이 부여됨"
   },
@@ -1444,6 +1448,10 @@
     "translation": "용량(GB)"
   },
   {
+    "id": "Capture all block devices that belong to the virtual server",
+    "translation": "가상 서버에 속하는 모든 차단 장치를 캡처합니다."
+  },
+  {
     "id": "Capture virtual server instance into an image",
     "translation": "가상 서버 인스턴스를 이미지로 캡처"
   },
@@ -1932,6 +1940,10 @@
     "translation": "작성 날짜"
   },
   {
+    "id": "Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "생성된 레코드: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
     "translation": "{{.Zone}} 구역 아래 리소스 레코드 작성됨: ID={{.ID}}, 유형={{.RecordType}}, 레코드={{.Host}}, 데이터={{.Data}}, ttl={{.Ttl}}."
   },
@@ -2018,6 +2030,10 @@
   {
     "id": "Date",
     "translation": "날짜"
+  },
+  {
+    "id": "Date time",
+    "translation": "날짜 및 시간"
   },
   {
     "id": "Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday",
@@ -2204,6 +2220,10 @@
     "translation": "취소 이유의 목록 표시"
   },
   {
+    "id": "Display details for a cloud object storage.",
+    "translation": "Cloud Object Storage에 대한 세부 정보를 표시합니다."
+  },
+  {
     "id": "Display details for a specified email.",
     "translation": "지정된 이메일에 대한 세부사항을 표시합니다."
   },
@@ -2234,6 +2254,10 @@
   {
     "id": "Display only public images",
     "translation": "공용 이미지만 표시"
+  },
+  {
+    "id": "Display permission details for a cloud object storage.",
+    "translation": "Cloud Object Storage에 대한 사용 권한 세부 정보를 표시합니다."
   },
   {
     "id": "Display permissions assigned to this user. Master users do not show permissions",
@@ -2278,6 +2302,10 @@
   {
     "id": "Domain record not found",
     "translation": "도메인 레코드를 찾을 수 없음"
+  },
+  {
+    "id": "Domain: {{.Domain}} Id: {{.Id}}",
+    "translation": "도메인: {{.Domain}} ID: {{.Id}}"
   },
   {
     "id": "Don't actually create records",
@@ -3172,6 +3200,10 @@
     "translation": "비용 청구 항목을 가져오는 데 실패했습니다."
   },
   {
+    "id": "Failed to get bucket of storage {{.StorageID}}.",
+    "translation": "스토리지 {{.StorageID}}의 버킷을 가져오지 못했습니다."
+  },
+  {
     "id": "Failed to get components\n",
     "translation": "구성요소를 가져오는 데 실패함 \n"
   },
@@ -3200,12 +3232,20 @@
     "translation": "전용 호스트 인스턴스를 가져오는 데 실패함: {{.HostID}}."
   },
   {
+    "id": "Failed to get details of storage {{.StorageID}}.",
+    "translation": "스토리지 {{.StorageID}}에 대한 세부 정보를 가져오지 못했습니다."
+  },
+  {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
     "translation": "볼륨 {{.VolumeID}}의 세부사항을 가져오는 데 실패했습니다.\n"
   },
   {
     "id": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
     "translation": "볼륨 {{.VolumeID}}의 중복 변환 상태를 가져오는 데 실패했습니다. \n"
+  },
+  {
+    "id": "Failed to get endPoints.",
+    "translation": "endPoints를 가져오지 못했습니다."
   },
   {
     "id": "Failed to get firewalls on your account.\n",
@@ -3496,6 +3536,10 @@
     "translation": "가상 서버 작성 옵션을 가져오는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to get virtual server instance: {{.VsID}}.",
+    "translation": "가상 서버 인스턴스를 가져오는 데 실패함: {{.VsID}}."
+  },
+  {
     "id": "Failed to get virtual server instance: {{.VsID}}.\n",
     "translation": "가상 서버 인스턴스 가져오기 실패: {{.VsID}}.\n"
   },
@@ -3542,6 +3586,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "계정의 VLAN을 나열하는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to list available OS's.",
+    "translation": "사용 가능한 OS를 나열하지 못했습니다."
   },
   {
     "id": "Failed to list categories.\n",
@@ -4436,6 +4484,10 @@
     "translation": "예약 용량 그룹 세부사항을 가져옵니다."
   },
   {
+    "id": "Get all available Operating Systems.",
+    "translation": "사용 가능한 모든 운영 체제를 가져옵니다."
+  },
+  {
     "id": "Get bandwidth pool details.",
     "translation": "대역폭 풀 세부사항을 가져옵니다."
   },
@@ -4836,6 +4888,10 @@
     "translation": "이 옵션을 지정할 경우 이 계정의 공인 서브넷에서 공인 IP가 할당됩니다. 그렇지 않을 경우 IBM 시스템 풀에서 할당됩니다. PublicToPrivate 로드 밸런서 유형에만 사용할 수 있습니다."
   },
   {
+    "id": "Image ID",
+    "translation": "이미지 ID"
+  },
+  {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
     "translation": "이미지 ID. 참조: '${COMMAND_NAME} sl image list'를 참조하십시오."
   },
@@ -4950,6 +5006,10 @@
   {
     "id": "Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID.",
     "translation": "올바르지 않은 ID {{.ID}}: ID는 xxx:yyy 형식이어야 하며 여기서, xxx는 방화벽의 유형이고, yyy는 양수 ID입니다."
+  },
+  {
+    "id": "Invalid SRV record: {{.sub}}.",
+    "translation": "유효하지 않은 SRV 레코드: {{.sub}}."
   },
   {
     "id": "Invalid combination specified for ordering a subnet.",
@@ -6212,6 +6272,10 @@
     "translation": "상위 사용자"
   },
   {
+    "id": "Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "구문 분석된 레코드: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Password",
     "translation": "비밀번호"
   },
@@ -6390,6 +6454,10 @@
   {
     "id": "Placement group {{.ID}} was removed.",
     "translation": "배치 그룹 {{.ID}}이(가) 제거되었습니다."
+  },
+  {
+    "id": "Plan",
+    "translation": "계획"
   },
   {
     "id": "Please add the '--guest' id too.\n",
@@ -7036,6 +7104,10 @@
     "translation": "SECURITYGROUP_ID"
   },
   {
+    "id": "SMTP",
+    "translation": "SMTP"
+  },
+  {
     "id": "SNAPSHOT_ID",
     "translation": "SNAPSHOT_ID"
   },
@@ -7114,6 +7186,10 @@
   {
     "id": "Seconds to wait for a connection. [1-59]",
     "translation": "연결 대기 시간(초)입니다. [1-59]"
+  },
+  {
+    "id": "Secret Access Key",
+    "translation": "시크릿 액세스 키"
   },
   {
     "id": "Security group ID to associate with the private interface (multiple occurrence permitted)",
@@ -7218,6 +7294,10 @@
   {
     "id": "Sets username for this account.",
     "translation": "이 계정의 사용자 이름을 설정합니다."
+  },
+  {
+    "id": "Setup",
+    "translation": "설정"
   },
   {
     "id": "Short Name",
@@ -7778,6 +7858,10 @@
   {
     "id": "The actual SSH key",
     "translation": "실제 SSH 키"
+  },
+  {
+    "id": "The block device ID´s to archive, multiple occurrence allowed",
+    "translation": "보관할 블록 디바이스 ID이며, 다중 발생이 허용됩니다."
   },
   {
     "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
@@ -8456,6 +8540,10 @@
     "translation": "URI"
   },
   {
+    "id": "URL",
+    "translation": "URL"
+  },
+  {
     "id": "USERNAME",
     "translation": "USERNAME"
   },
@@ -8793,6 +8881,10 @@
   },
   {
     "id": "Virtual Guest ID",
+    "translation": "가상 게스트 ID"
+  },
+  {
+    "id": "Virtual guest ID",
     "translation": "가상 게스트 ID"
   },
   {

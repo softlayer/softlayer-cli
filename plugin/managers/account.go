@@ -81,8 +81,7 @@ func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error)
 
 // https://sldn.softlayer.com/reference/services/SoftLayer_Account/getBandwidthAllotments/
 func (a accountManager) GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error) {
-	mask := "mask[totalBandwidthAllocated,locationGroup, id, name, projectedPublicBandwidthUsage, " +
-		"billingCyclePublicBandwidthUsage[amountOut,amountIn]]"
+	mask := "mask[totalBandwidthAllocated,locationGroup, id, name, projectedPublicBandwidthUsage,billingCyclePublicBandwidthUsage[amountOut,amountIn],billingItem[id,nextInvoiceTotalRecurringAmount],outboundPublicBandwidthUsage,serviceProviderId,bandwidthAllotmentTypeId,activeDetailCount]"
 	pools, err := a.AccountService.Mask(mask).GetBandwidthAllotments()
 	return pools, err
 }

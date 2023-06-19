@@ -11,6 +11,10 @@
             "locationGroupTypeId": 1,
             "name": "MEX"
         },
+        "billingItem": {
+			"id": 123456,
+			"nextInvoiceTotalRecurringAmount": 25
+		},
         "name": "MexRegion",
         "projectedPublicBandwidthUsage": 7.7,
         "totalBandwidthAllocated": 3361
@@ -27,6 +31,10 @@
             "locationGroupTypeId": 1,
             "name": "US/Canada"
         },
+        "billingItem": {
+			"id": 1234567,
+			"nextInvoiceTotalRecurringAmount": 55
+		},
         "name": "TestPool",
         "totalBandwidthAllocated": 0
     }
