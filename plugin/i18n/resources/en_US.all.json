@@ -5676,10 +5676,6 @@
     "translation": "List block storage assigned subnets for the given host id."
   },
   {
-    "id": "List cancelations.",
-    "translation": "List cancelations."
-  },
-  {
     "id": "List cloud block storage.",
     "translation": "List cloud block storage."
   },

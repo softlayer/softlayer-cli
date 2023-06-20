@@ -23,9 +23,11 @@ var (
 )
 
 const OutputJSON = "JSON"
+const OutputCSV = "CSV"
 
 var SupportedOutputFormat = []string{
 	OutputJSON,
+	OutputCSV,
 	//define supported output format here in UPPER case...
 }
 
@@ -116,6 +118,6 @@ func GetSDKVersion() plugin.VersionType {
 	return plugin.VersionType{Major: 0, Minor: 9, Build: 0}
 }
 
-func GetMinCLI()  plugin.VersionType {
+func GetMinCLI() plugin.VersionType {
 	return plugin.VersionType{Major: 2, Minor: 12, Build: 0}
 }

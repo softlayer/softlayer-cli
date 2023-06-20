@@ -42,21 +42,19 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 
 	outputFormat := cmd.GetOutputFlag()
 
-	if outputFormat == "JSON" {
-		return utils.PrintPrettyJSON(cmd.UI, pools)
-	}
-
 	table := cmd.UI.Table([]string{
 		T("ID"),
-		T("Pool Name"),
+		T("Name"),
 		T("Region"),
-		T("Servers"),
+		T("Devices"),
 		T("Allocation"),
 		T("Current Usage"),
 		T("Projected Usage"),
+		T("Cost"),
 	})
+
 	for _, pool := range pools {
-		curr_usage, proj_usage, allocation := "-", "-", "-"
+		curr_usage, proj_usage, allocation, cost := "-", "-", "-", "-"
 		if pool.BillingCyclePublicBandwidthUsage != nil {
 			curr_usage = fmt.Sprintf("%.2f GB", float64(*pool.BillingCyclePublicBandwidthUsage.AmountOut))
 		}
@@ -65,6 +63,9 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 		}
 		if pool.TotalBandwidthAllocated != nil {
 			allocation = fmt.Sprintf("%d GB", uint(*pool.TotalBandwidthAllocated))
+		}
+		if pool.BillingItem != nil {
+			cost = fmt.Sprintf("$%d", uint(*pool.BillingItem.NextInvoiceTotalRecurringAmount))
 		}
 		serverCount, _ := cmd.AccountManager.GetBandwidthPoolServers(*pool.Id)
 		table.Add(
@@ -75,10 +76,11 @@ func (cmd *BandwidthPoolsCommand) Run(args []string) error {
 			allocation,
 			curr_usage,
 			proj_usage,
+			cost,
 		)
 	}
 
-	table.Print()
+	utils.PrintTable(cmd.UI, table, outputFormat)
 
 	return nil
 }
