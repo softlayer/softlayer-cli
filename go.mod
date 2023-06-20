@@ -3,7 +3,7 @@ module github.ibm.com/SoftLayer/softlayer-cli
 go 1.19
 
 require (
-	github.com/IBM-Cloud/ibm-cloud-cli-sdk v1.0.1
+	github.com/IBM-Cloud/ibm-cloud-cli-sdk v1.1.0
 	github.com/Xuanwo/go-locale v1.1.0
 	github.com/miekg/dns v1.1.50
 	github.com/nicksnyder/go-i18n v1.10.1
@@ -21,6 +21,7 @@ require (
 	github.com/fatih/color v1.10.0 // indirect
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
@@ -34,7 +35,6 @@ require (
 	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
 	golang.org/x/net v0.7.0 // indirect
-	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4 // indirect
 	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/term v0.5.0 // indirect
 	golang.org/x/tools v0.1.12 // indirect
