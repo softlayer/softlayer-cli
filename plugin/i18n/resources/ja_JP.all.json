@@ -2628,10 +2628,6 @@
     "translation": "FQDN"
   },
   {
-    "id": "Failback a block volume from replica",
-    "translation": "レプリカからブロック・ボリュームをフェイルバックします"
-  },
-  {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
     "translation": "ボリューム {{.VolumeID}} のフェイルバックは進行中です。"
   },
@@ -5372,10 +5368,6 @@
     "translation": "指定されたホスト ID のブロック・ストレージ割り当てサブネットをリストします。"
   },
   {
-    "id": "List block storage snapshots",
-    "translation": "Block Storage スナップショットをリストします"
-  },
-  {
     "id": "List cloud block storage.",
     "translation": "クラウド・ブロック・ストレージをリストします。"
   },
@@ -6492,10 +6484,6 @@
     "translation": "ポリシーの優先順位"
   },
   {
-    "id": "Pool Name",
-    "translation": "プール名"
-  },
-  {
     "id": "Port Range Max",
     "translation": "ポート範囲上限"
   },
@@ -7002,10 +6990,6 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "ヘッダーを尊重します。 値 1 はオン、0 はオフです。"
-  },
-  {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "指定されたスナップショットを使用してブロック・ボリュームをリストアします"
   },
   {
     "id": "Restriction",
@@ -9310,10 +9294,6 @@
   {
     "id": "disk_guest",
     "translation": "ディスク・ゲスト"
-  },
-  {
-    "id": "disk_space",
-    "translation": "disk_space"
   },
   {
     "id": "domain",

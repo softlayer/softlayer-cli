@@ -36,6 +36,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests."
   },
   {
+    "id": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80",
+    "translation": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn delete",
+    "translation": "${COMMAND_NAME} sl cdn delete"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn detail",
     "translation": "${COMMAND_NAME} sl cdn detail"
   },
@@ -46,6 +54,22 @@
   {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80",
+    "translation": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-list",
+    "translation": "${COMMAND_NAME} sl cdn origin-list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\"",
+    "translation": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\""
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\"",
+    "translation": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
@@ -262,6 +286,10 @@
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation."
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -592,12 +620,28 @@
     "translation": "--billing can only be either hourly or monthly."
   },
   {
+    "id": "--bucket-name can not be empty",
+    "translation": "--bucket-name can not be empty"
+  },
+  {
+    "id": "--cache-key",
+    "translation": "--cache-key"
+  },
+  {
     "id": "--column {{.Column}} is not supported.",
     "translation": "--column {{.Column}} is not supported."
   },
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--optimize",
+    "translation": "--optimize"
+  },
+  {
+    "id": "--origintype",
+    "translation": "--origintype"
   },
   {
     "id": "--resize-disk requires capacity and disk number values separated by one comma.",
@@ -784,6 +828,10 @@
     "translation": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]"
   },
   {
+    "id": "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]",
+    "translation": "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]"
+  },
+  {
     "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
     "translation": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>"
   },
@@ -812,6 +860,10 @@
     "translation": "A json string describing https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/"
   },
   {
+    "id": "A note string stored for this username/password pair.",
+    "translation": "A note string stored for this username/password pair."
+  },
+  {
     "id": "A size or IOPS value must be given to modify this performance volume.",
     "translation": "A size or IOPS value must be given to modify this performance volume."
   },
@@ -834,6 +886,14 @@
   {
     "id": "A word (or string) used to filter presets",
     "translation": "A word (or string) used to filter presets"
+  },
+  {
+    "id": "ACCOUNT ID",
+    "translation": "ACCOUNT ID"
+  },
+  {
+    "id": "API Error.",
+    "translation": "API Error."
   },
   {
     "id": "APIKEY",
@@ -886,6 +946,10 @@
   {
     "id": "Access to {{.VolumeId}} was revoked for virtual server {{.VsID}}.",
     "translation": "Access to {{.VolumeId}} was revoked for virtual server {{.VsID}}."
+  },
+  {
+    "id": "Account",
+    "translation": "Account"
   },
   {
     "id": "Account ID",
@@ -1024,6 +1088,10 @@
     "translation": "Advanced configuration flag"
   },
   {
+    "id": "Akamai CNAME",
+    "translation": "Akamai CNAME"
+  },
+  {
     "id": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.",
     "translation": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials."
   },
@@ -1034,6 +1102,10 @@
   {
     "id": "Allotment",
     "translation": "Allotment"
+  },
+  {
+    "id": "Allows to create, remove or refresh user's API authentication key",
+    "translation": "Allows to create, remove or refresh user's API authentication key"
   },
   {
     "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
@@ -1264,12 +1336,28 @@
     "translation": "Block volume {{.VolumeId}} is reporting LUN ID {{.LunID}}."
   },
   {
+    "id": "Bucket Name",
+    "translation": "Bucket Name"
+  },
+  {
+    "id": "Bucket name",
+    "translation": "Bucket name"
+  },
+  {
+    "id": "Bucket name.",
+    "translation": "Bucket name."
+  },
+  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "Buffer file could not be closed: {{.Error}}.\n"
   },
   {
     "id": "Buffer file could not be created: {{.Error}}.\n",
     "translation": "Buffer file could not be created: {{.Error}}.\n"
+  },
+  {
+    "id": "CDN Unique ID",
+    "translation": "CDN Unique ID"
   },
   {
     "id": "CIDR",
@@ -1300,12 +1388,20 @@
     "translation": "CRN of the root key in your KMS instance"
   },
   {
+    "id": "Cache Key Rule",
+    "translation": "Cache Key Rule"
+  },
+  {
     "id": "Cache key optimization",
     "translation": "Cache key optimization"
   },
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
     "translation": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description."
+  },
+  {
+    "id": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'.",
+    "translation": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'."
   },
   {
     "id": "Calculating for bandwidth pools",
@@ -1376,8 +1472,16 @@
     "translation": "Cancel an existing load balancer"
   },
   {
+    "id": "Cancel an existing object storage instance.",
+    "translation": "Cancel an existing object storage instance."
+  },
+  {
     "id": "Cancel existing snapshot space for a given volume",
     "translation": "Cancel existing snapshot space for a given volume"
+  },
+  {
+    "id": "Cancel immediately instead of on the billing anniversary",
+    "translation": "Cancel immediately instead of on the billing anniversary"
   },
   {
     "id": "Cancel the IPSec immediately instead of on the billing anniversary",
@@ -1472,8 +1576,16 @@
     "translation": "CategoryCode"
   },
   {
+    "id": "Cdn with uniqueId: {{.ID}} was deleted.",
+    "translation": "Cdn with uniqueId: {{.ID}} was deleted."
+  },
+  {
     "id": "Certificate Signing Request file",
     "translation": "Certificate Signing Request file"
+  },
+  {
+    "id": "Certificate Type",
+    "translation": "Certificate Type"
   },
   {
     "id": "Certificate file",
@@ -1880,12 +1992,20 @@
     "translation": "Create a host for dedicated virtual servers"
   },
   {
+    "id": "Create a new CDN domain mapping",
+    "translation": "Create a new CDN domain mapping"
+  },
+  {
     "id": "Create a new VLAN",
     "translation": "Create a new VLAN"
   },
   {
     "id": "Create a new firewall",
     "translation": "Create a new firewall"
+  },
+  {
+    "id": "Create a password for a software component.",
+    "translation": "Create a password for a software component."
   },
   {
     "id": "Create a placement group",
@@ -1918,6 +2038,14 @@
   {
     "id": "Create a zone",
     "translation": "Create a zone"
+  },
+  {
+    "id": "Create an origin path for an existing CDN mapping.",
+    "translation": "Create an origin path for an existing CDN mapping."
+  },
+  {
+    "id": "Create an user's API authentication key",
+    "translation": "Create an user's API authentication key"
   },
   {
     "id": "Create credentials for an IBM Cloud Object Storage Account.",
@@ -1954,6 +2082,10 @@
   {
     "id": "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}.",
     "translation": "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}."
+  },
+  {
+    "id": "Creates a purge record and also initiates the purge call.",
+    "translation": "Creates a purge record and also initiates the purge call."
   },
   {
     "id": "Creates a user",
@@ -2028,6 +2160,10 @@
     "translation": "To remove Datacenter"
   },
   {
+    "id": "Datacenters",
+    "translation": "Datacenters"
+  },
+  {
     "id": "Date",
     "translation": "Date"
   },
@@ -2072,6 +2208,10 @@
     "translation": "Default Hourly Price Per Instance"
   },
   {
+    "id": "Delete a CDN domain mapping.",
+    "translation": "Delete a CDN domain mapping."
+  },
+  {
     "id": "Delete a L7 policy",
     "translation": "Delete a L7 policy"
   },
@@ -2092,6 +2232,10 @@
     "translation": "Delete a protocol"
   },
   {
+    "id": "Delete a provisioning scriptt.",
+    "translation": "Delete a provisioning scriptt."
+  },
+  {
     "id": "Delete a snapshot on a given volume",
     "translation": "Delete a snapshot on a given volume"
   },
@@ -2110,6 +2254,14 @@
   {
     "id": "Delete the given security group",
     "translation": "Delete the given security group"
+  },
+  {
+    "id": "Delete the quote of an order.",
+    "translation": "Delete the quote of an order."
+  },
+  {
+    "id": "Deny sharing of an image template with another account.",
+    "translation": "Deny sharing of an image template with another account."
   },
   {
     "id": "Description",
@@ -2134,6 +2286,10 @@
   {
     "id": "Details of a specific event, and ability to acknowledge event.",
     "translation": "Details of a specific event, and ability to acknowledge event."
+  },
+  {
+    "id": "Device",
+    "translation": "Device"
   },
   {
     "id": "Device Name",
@@ -2336,6 +2492,10 @@
     "translation": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13"
   },
   {
+    "id": "Each user can only have a single API key.",
+    "translation": "Each user can only have a single API key."
+  },
+  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
     "translation": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago."
   },
@@ -2472,6 +2632,14 @@
     "translation": "Enable or Disable specific permissions"
   },
   {
+    "id": "Enable or disable compression of JPEG images for requests over certain network conditions.",
+    "translation": "Enable or disable compression of JPEG images for requests over certain network conditions."
+  },
+  {
+    "id": "Enable or disable the embedded object prefetching feature.",
+    "translation": "Enable or disable the embedded object prefetching feature."
+  },
+  {
     "id": "Enable or disable user vpn subnets manual config.",
     "translation": "Enable or disable user vpn subnets manual config."
   },
@@ -2560,6 +2728,10 @@
     "translation": "Endurance Tier Per IOPS"
   },
   {
+    "id": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you.",
+    "translation": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you."
+  },
+  {
     "id": "Error occurred while adding note to volume: {{.VolumeID}}",
     "translation": "Error occurred while adding note to volume: {{.VolumeID}}"
   },
@@ -2628,8 +2800,8 @@
     "translation": "FQDN"
   },
   {
-    "id": "Failback a block volume from replica",
-    "translation": "Failback a block volume from replica"
+    "id": "Failback a {{.storageType}} volume from replica",
+    "translation": "Failback a {{.storageType}} volume from replica"
   },
   {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
@@ -2712,6 +2884,10 @@
     "translation": "Failed to add subnet.\n"
   },
   {
+    "id": "Failed to add user's API authentication key",
+    "translation": "Failed to add user's API authentication key"
+  },
+  {
     "id": "Failed to add user.\n",
     "translation": "Failed to add user.\n"
   },
@@ -2792,6 +2968,10 @@
     "translation": "Failed to cancel load balancer {{.LBID}}.\n"
   },
   {
+    "id": "Failed to cancel object-storage: {{.objectStorageID}}.",
+    "translation": "Failed to cancel object-storage: {{.objectStorageID}}."
+  },
+  {
     "id": "Failed to cancel snapshot space for volume {{.ID}}.\n",
     "translation": "Failed to cancel snapshot space for volume {{.ID}}.\n"
   },
@@ -2814,6 +2994,22 @@
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "Failed to confirm the new LUN ID on volume {{.VolumeId}}."
+  },
+  {
+    "id": "Failed to create Provisioning Hook.",
+    "translation": "Failed to create Provisioning Hook."
+  },
+  {
+    "id": "Failed to create Software Credential.",
+    "translation": "Failed to create Software Credential."
+  },
+  {
+    "id": "Failed to create a CDN.",
+    "translation": "Failed to create a CDN."
+  },
+  {
+    "id": "Failed to create a Origin.",
+    "translation": "Failed to create a Origin."
   },
   {
     "id": "Failed to create credential. ",
@@ -2892,6 +3088,14 @@
     "translation": "Failed to delete L7member {{.Member}}: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete Provisioning Hook.",
+    "translation": "Failed to delete Provisioning Hook."
+  },
+  {
+    "id": "Failed to delete Quote",
+    "translation": "Failed to delete Quote"
+  },
+  {
     "id": "Failed to delete Tag",
     "translation": "Failed to delete Tag"
   },
@@ -2920,6 +3124,10 @@
     "translation": "Failed to delete load balancer member {{.Member}}: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete origin.",
+    "translation": "Failed to delete origin."
+  },
+  {
     "id": "Failed to delete protocol {{.ProtocolID}}: {{.Error}}.\n",
     "translation": "Failed to delete protocol {{.ProtocolID}}: {{.Error}}.\n"
   },
@@ -2946,6 +3154,14 @@
   {
     "id": "Failed to delete zone: {{.Zone}}.\n",
     "translation": "Failed to delete zone: {{.Zone}}.\n"
+  },
+  {
+    "id": "Failed to deleted a CDN.",
+    "translation": "Failed to deleted a CDN."
+  },
+  {
+    "id": "Failed to deny share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "Failed to deny share image: {{.ImageId}} with account {{.AccountId}}."
   },
   {
     "id": "Failed to disable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n",
@@ -3116,6 +3332,10 @@
     "translation": "Failed to get Pods.\n"
   },
   {
+    "id": "Failed to get Provisioning Hooks.",
+    "translation": "Failed to get Provisioning Hooks."
+  },
+  {
     "id": "Failed to get Quote\n",
     "translation": "Failed to get Quote\n"
   },
@@ -3170,6 +3390,10 @@
   {
     "id": "Failed to get account’s associated Virtual Storage volumes.",
     "translation": "Failed to get account’s associated Virtual Storage volumes."
+  },
+  {
+    "id": "Failed to get all datacenters.",
+    "translation": "Failed to get all datacenters."
   },
   {
     "id": "Failed to get all datacenters.\n",
@@ -3258,6 +3482,10 @@
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "Failed to get hardware server {{.ID}}.\n"
+  },
+  {
+    "id": "Failed to get hardware server: {{.ID}}.",
+    "translation": "Failed to get hardware server: {{.ID}}."
   },
   {
     "id": "Failed to get hardware server: {{.ID}}.\n",
@@ -3362,6 +3590,10 @@
   {
     "id": "Failed to get orders.",
     "translation": "Failed to get orders."
+  },
+  {
+    "id": "Failed to get origins list for CDN: {{.cdnId}}.",
+    "translation": "Failed to get origins list for CDN: {{.cdnId}}."
   },
   {
     "id": "Failed to get package for {{.Type}} firewall.\n",
@@ -3514,6 +3746,10 @@
   {
     "id": "Failed to get user vpn overrides.",
     "translation": "Failed to get user vpn overrides."
+  },
+  {
+    "id": "Failed to get user's API authentication keys",
+    "translation": "Failed to get user's API authentication keys"
   },
   {
     "id": "Failed to get user.",
@@ -3784,6 +4020,10 @@
     "translation": "Failed to power on virtual server instance: {{.VsID}}.\n"
   },
   {
+    "id": "Failed to purge.",
+    "translation": "Failed to purge."
+  },
+  {
     "id": "Failed to reach virtual guest instance {{.Id}}.",
     "translation": "Failed to reach virtual guest instance {{.Id}}."
   },
@@ -3876,6 +4116,10 @@
     "translation": "Failed to remove translation with ID {{.TransID}} from IPSec {{.ID}}."
   },
   {
+    "id": "Failed to remove user's API authentication key",
+    "translation": "Failed to remove user's API authentication key"
+  },
+  {
     "id": "Failed to remove {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.\n",
     "translation": "Failed to remove {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.\n"
   },
@@ -3934,6 +4178,10 @@
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
     "translation": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n"
+  },
+  {
+    "id": "Failed to share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "Failed to share image: {{.ImageId}} with account {{.AccountId}}."
   },
   {
     "id": "Failed to show event log.\n",
@@ -4072,6 +4320,10 @@
     "translation": "Failed to update translation with ID {{.TransID}} in IPSec {{.ID}}."
   },
   {
+    "id": "Failed to update user vpn password.",
+    "translation": "Failed to update user vpn password."
+  },
+  {
     "id": "Failed to update user {{.UserID}}.",
     "translation": "Failed to update user {{.UserID}}."
   },
@@ -4154,6 +4406,10 @@
   {
     "id": "Features",
     "translation": "Features"
+  },
+  {
+    "id": "File Extension",
+    "translation": "File Extension"
   },
   {
     "id": "File volume {{.ID}} has been marked for immediate snapshot cancellation.",
@@ -4568,6 +4824,14 @@
     "translation": "Gets detailed information about a billing item."
   },
   {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video",
+    "translation": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video"
+  },
+  {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]",
+    "translation": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]"
+  },
+  {
     "id": "Grant access from a user to an specific device",
     "translation": "Grant access from a user to an specific device"
   },
@@ -4740,6 +5004,10 @@
     "translation": "Hourly"
   },
   {
+    "id": "Hourly/Monthly",
+    "translation": "Hourly/Monthly"
+  },
+  {
     "id": "How many invoices to get back.",
     "translation": "How many invoices to get back."
   },
@@ -4752,8 +5020,28 @@
     "translation": "Http Port"
   },
   {
+    "id": "Http port",
+    "translation": "Http port"
+  },
+  {
+    "id": "Http port. [http or https is required]",
+    "translation": "Http port. [http or https is required]"
+  },
+  {
     "id": "Https Port",
     "translation": "Https Port"
+  },
+  {
+    "id": "Https port",
+    "translation": "Https port"
+  },
+  {
+    "id": "Https port. [http or https is required]",
+    "translation": "Https port. [http or https is required]"
+  },
+  {
+    "id": "IBM CNAME",
+    "translation": "IBM CNAME"
   },
   {
     "id": "ID",
@@ -4910,6 +5198,14 @@
   {
     "id": "Image {{.ImageID}} was deleted.",
     "translation": "Image {{.ImageID}} was deleted."
+  },
+  {
+    "id": "Image {{.ImageId}} was deny shared with account {{.AccountId}}.",
+    "translation": "Image {{.ImageId}} was deny shared with account {{.AccountId}}."
+  },
+  {
+    "id": "Image {{.ImageId}} was shared with account {{.AccountId}}.",
+    "translation": "Image {{.ImageId}} was shared with account {{.AccountId}}."
   },
   {
     "id": "Immediate cancellation.",
@@ -5372,10 +5668,6 @@
     "translation": "List block storage assigned subnets for the given host id."
   },
   {
-    "id": "List block storage snapshots",
-    "translation": "List block storage snapshots"
-  },
-  {
     "id": "List cloud block storage.",
     "translation": "List cloud block storage."
   },
@@ -5464,6 +5756,10 @@
     "translation": "List options for order a load balancer"
   },
   {
+    "id": "List origin path for an existing CDN mapping.",
+    "translation": "List origin path for an existing CDN mapping."
+  },
+  {
     "id": "List package items that are used for ordering",
     "translation": "List package items that are used for ordering"
   },
@@ -5512,6 +5808,10 @@
     "translation": "List virtual server instances on your account"
   },
   {
+    "id": "List {{.storageType}} storage snapshots",
+    "translation": "List {{.storageType}} storage snapshots"
+  },
+  {
     "id": "Lists Email Delivery Service.",
     "translation": "Lists Email Delivery Service."
   },
@@ -5546,6 +5846,10 @@
   {
     "id": "Location",
     "translation": "Location"
+  },
+  {
+    "id": "Location Conflicts",
+    "translation": "Location Conflicts"
   },
   {
     "id": "Location/Region",
@@ -5908,6 +6212,10 @@
     "translation": "Note:"
   },
   {
+    "id": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC",
+    "translation": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
+  },
+  {
     "id": "Notes",
     "translation": "Notes"
   },
@@ -5990,6 +6298,14 @@
   {
     "id": "Object mask: use to limit fields returned",
     "translation": "Object mask: use to limit fields returned"
+  },
+  {
+    "id": "Object-storage {{.objectStorageID}} has been marked for cancellation.",
+    "translation": "Object-storage {{.objectStorageID}} has been marked for cancellation."
+  },
+  {
+    "id": "Object-storage {{.objectStorageID}} has been marked for immediate cancellation.",
+    "translation": "Object-storage {{.objectStorageID}} has been marked for immediate cancellation."
   },
   {
     "id": "One Time",
@@ -6108,6 +6424,10 @@
     "translation": "Order a block volume by duplicating an existing volume"
   },
   {
+    "id": "Order a file storage replica volume",
+    "translation": "Order a file storage replica volume"
+  },
+  {
     "id": "Order a file storage volume",
     "translation": "Order a file storage volume"
   },
@@ -6156,6 +6476,10 @@
     "translation": "Order/create a hardware server"
   },
   {
+    "id": "Order/create a provisioning script.",
+    "translation": "Order/create a provisioning script."
+  },
+  {
     "id": "Ordered By",
     "translation": "Ordered By"
   },
@@ -6166,6 +6490,10 @@
   {
     "id": "Origin",
     "translation": "Origin"
+  },
+  {
+    "id": "Origin Host",
+    "translation": "Origin Host"
   },
   {
     "id": "Origin Type",
@@ -6234,6 +6562,10 @@
   {
     "id": "PACKAGE_KEYNAME",
     "translation": "PACKAGE_KEYNAME"
+  },
+  {
+    "id": "PATH",
+    "translation": "PATH"
   },
   {
     "id": "PLACEMENTGROUP_ID",
@@ -6342,6 +6674,10 @@
   {
     "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]",
     "translation": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]"
+  },
+  {
+    "id": "Performance configuration. [Permit: web, video, file, dynamic]",
+    "translation": "Performance configuration. [Permit: web, video, file, dynamic]"
   },
   {
     "id": "Permanently removes an SSH key",
@@ -6490,10 +6826,6 @@
   {
     "id": "Policy priority",
     "translation": "Policy priority"
-  },
-  {
-    "id": "Pool Name",
-    "translation": "Pool Name"
   },
   {
     "id": "Port Range Max",
@@ -6764,6 +7096,10 @@
     "translation": "Quantity"
   },
   {
+    "id": "Quote: {{.quoteID}} was deleted.",
+    "translation": "Quote: {{.quoteID}} was deleted."
+  },
+  {
     "id": "RECORD",
     "translation": "RECORD"
   },
@@ -6782,6 +7118,10 @@
   {
     "id": "RULE_ID",
     "translation": "RULE_ID"
+  },
+  {
+    "id": "Range",
+    "translation": "Range"
   },
   {
     "id": "Read Failure: {{.Error}}.\n",
@@ -6850,6 +7190,10 @@
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
     "translation": "Refresh a duplicate volume with a snapshot from its parent."
+  },
+  {
+    "id": "Refresh an user's API authentication key",
+    "translation": "Refresh an user's API authentication key"
   },
   {
     "id": "Region",
@@ -6928,6 +7272,10 @@
     "translation": "Remove access to subnet."
   },
   {
+    "id": "Remove an user's API authentication key",
+    "translation": "Remove an user's API authentication key"
+  },
+  {
     "id": "Remove block storage subnets to the given host id.",
     "translation": "Remove block storage subnets to the given host id."
   },
@@ -6950,6 +7298,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "Removes an empty tag from your account."
+  },
+  {
+    "id": "Removes an origin path for an existing CDN mapping.",
+    "translation": "Removes an origin path for an existing CDN mapping."
   },
   {
     "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
@@ -7004,8 +7356,8 @@
     "translation": "Respect headers. The value 1 is On and 0 is Off."
   },
   {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "Restore block volume using a given snapshot"
+    "id": "Restore {{.storageType}} volume using a given snapshot",
+    "translation": "Restore {{.storageType}} volume using a given snapshot"
   },
   {
     "id": "Restriction",
@@ -7176,6 +7528,10 @@
     "translation": "Save a quote"
   },
   {
+    "id": "Saved",
+    "translation": "Saved"
+  },
+  {
     "id": "Schedule",
     "translation": "Schedule"
   },
@@ -7280,6 +7636,10 @@
     "translation": "Set the note of the ipAddress."
   },
   {
+    "id": "Set the user VPN password.",
+    "translation": "Set the user VPN password."
+  },
+  {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
     "translation": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process"
   },
@@ -7300,6 +7660,14 @@
     "translation": "Setup"
   },
   {
+    "id": "Share an image template with another account.",
+    "translation": "Share an image template with another account."
+  },
+  {
+    "id": "Shared on",
+    "translation": "Shared on"
+  },
+  {
     "id": "Short Name",
     "translation": "Short Name"
   },
@@ -7314,6 +7682,10 @@
   {
     "id": "Show L7 pool details",
     "translation": "Show L7 pool details"
+  },
+  {
+    "id": "Show all Provisioning Scripts.",
+    "translation": "Show all Provisioning Scripts."
   },
   {
     "id": "Show all licenses.",
@@ -7384,6 +7756,10 @@
     "translation": "Show passwords (check over your shoulder!)"
   },
   {
+    "id": "Show prices in the storage, snapshot and iops range tables.",
+    "translation": "Show prices in the storage, snapshot and iops range tables."
+  },
+  {
     "id": "Show the users API key",
     "translation": "Show the users API key"
   },
@@ -7420,6 +7796,10 @@
     "translation": "Size (GB)"
   },
   {
+    "id": "Size On Disk",
+    "translation": "Size On Disk"
+  },
+  {
     "id": "Size of duplicate block volume in GB, if no size is specified, the size of the original volume will be used",
     "translation": "Size of duplicate block volume in GB, if no size is specified, the size of the original volume will be used"
   },
@@ -7438,6 +7818,10 @@
   {
     "id": "Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB",
     "translation": "Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB"
+  },
+  {
+    "id": "Snapshot",
+    "translation": "Snapshot"
   },
   {
     "id": "Snapshot Size (GB)",
@@ -7484,6 +7868,10 @@
     "translation": "Software"
   },
   {
+    "id": "Software not found",
+    "translation": "Software not found"
+  },
+  {
     "id": "Specifies if image is bring your own license",
     "translation": "Specifies if image is bring your own license"
   },
@@ -7506,6 +7894,10 @@
   {
     "id": "Specify output format, only JSON is supported now.",
     "translation": "Specify output format, only JSON is supported now."
+  },
+  {
+    "id": "Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions.",
+    "translation": "Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions."
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
@@ -7576,6 +7968,10 @@
     "translation": "Status:"
   },
   {
+    "id": "Storage",
+    "translation": "Storage"
+  },
+  {
     "id": "Storage Size (GB)",
     "translation": "Storage Size (GB)"
   },
@@ -7624,6 +8020,10 @@
     "translation": "Successfully added subnet access for user."
   },
   {
+    "id": "Successfully added. New API Authentication Key: {{.apiAuthenticationKey}}",
+    "translation": "Successfully added. New API Authentication Key: {{.apiAuthenticationKey}}"
+  },
+  {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}"
   },
@@ -7644,6 +8044,10 @@
     "translation": "Successfully device firmware reflashed"
   },
   {
+    "id": "Successfully removed Provisioning Hook.",
+    "translation": "Successfully removed Provisioning Hook."
+  },
+  {
     "id": "Successfully removed User Customer notification.",
     "translation": "Successfully removed User Customer notification."
   },
@@ -7656,8 +8060,16 @@
     "translation": "Successfully removed subnet id: {{.subnetID}} to allowed host id: {{.accessID}}"
   },
   {
+    "id": "Successfully removed user's API authentication key",
+    "translation": "Successfully removed user's API authentication key"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'."
+  },
+  {
+    "id": "Successfully updated user VPN password.",
+    "translation": "Successfully updated user VPN password."
   },
   {
     "id": "Successfully {{.action}} user vpn subnets manual config",
@@ -7896,6 +8308,14 @@
     "translation": "The earliest date we want to search for event logs [YYYY-MM-DD]."
   },
   {
+    "id": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.",
+    "translation": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname."
+  },
+  {
+    "id": "The endpoint that the script will be downloaded.",
+    "translation": "The endpoint that the script will be downloaded."
+  },
+  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified"
   },
@@ -7980,12 +8400,20 @@
     "translation": "The name of the attachment shown in the ticket"
   },
   {
+    "id": "The name of the hook.",
+    "translation": "The name of the hook."
+  },
+  {
     "id": "The name of the image {{.ID}} is updated.",
     "translation": "The name of the image {{.ID}} is updated."
   },
   {
     "id": "The name of the security group",
     "translation": "The name of the security group"
+  },
+  {
+    "id": "The name of this specific piece of software.",
+    "translation": "The name of this specific piece of software."
   },
   {
     "id": "The netscaler ID has to be a positive integer.",
@@ -8036,8 +8464,28 @@
     "translation": "The order {{.OrderID}} was placed."
   },
   {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint",
+    "translation": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint"
+  },
+  {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint.",
+    "translation": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint."
+  },
+  {
+    "id": "The origin {{.Id}} with path {{.Path}} was deleted.",
+    "translation": "The origin {{.Id}} with path {{.Path}} was deleted."
+  },
+  {
     "id": "The original volume has been cancelled, unable to order duplicate volume",
     "translation": "The original volume has been cancelled, unable to order duplicate volume"
+  },
+  {
+    "id": "The password part of the username/password pair.",
+    "translation": "The password part of the username/password pair."
+  },
+  {
+    "id": "The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html",
+    "translation": "The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html"
   },
   {
     "id": "The port has to be a positive integer.",
@@ -8198,6 +8646,10 @@
   {
     "id": "The user data of virtual server instance: {{.VsId}} was updated.",
     "translation": "The user data of virtual server instance: {{.VsId}} was updated."
+  },
+  {
+    "id": "The username part of the username/password pair.",
+    "translation": "The username part of the username/password pair."
   },
   {
     "id": "The value of option '--quantity' should be greater or equal to 1.",
@@ -8368,6 +8820,10 @@
     "translation": "This will cancel the load balancer: {{.LBID}} and cannot be undone. Continue?"
   },
   {
+    "id": "This will cancel the object-storage: {{.ID}} and cannot be undone. Continue?",
+    "translation": "This will cancel the object-storage: {{.ID}} and cannot be undone. Continue?"
+  },
+  {
     "id": "This will cancel the subnet: {{.ID}} and cannot be undone. Continue?",
     "translation": "This will cancel the subnet: {{.ID}} and cannot be undone. Continue?"
   },
@@ -8490,6 +8946,10 @@
   {
     "id": "To add Datacenter",
     "translation": "To add Datacenter"
+  },
+  {
+    "id": "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]",
+    "translation": "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]"
   },
   {
     "id": "Toggle the IPMI interface on and off. This command is asynchronous.",
@@ -8648,6 +9108,10 @@
     "translation": "Unable to find object-storage with ID: {{.storageID}}.\n"
   },
   {
+    "id": "Unable to find object-storage with objectStorageID {{.objectStorageID}}.",
+    "translation": "Unable to find object-storage with objectStorageID {{.objectStorageID}}."
+  },
+  {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
     "translation": "Unable to find resource record with ID: {{.RecordID}}.\n"
   },
@@ -8758,6 +9222,10 @@
   {
     "id": "Upgrade all hard drives' firmware",
     "translation": "Upgrade all hard drives' firmware"
+  },
+  {
+    "id": "Uri",
+    "translation": "Uri"
   },
   {
     "id": "Url",
@@ -8948,6 +9416,10 @@
     "translation": "Virtual servers"
   },
   {
+    "id": "Visibility",
+    "translation": "Visibility"
+  },
+  {
     "id": "Vlan",
     "translation": "Vlan"
   },
@@ -9030,6 +9502,14 @@
   {
     "id": "You may run '{{.CommandName}} sl vs host-list --order {{.OrderID}}' to find this dedicated host after it is ready.",
     "translation": "You may run '{{.CommandName}} sl vs host-list --order {{.OrderID}}' to find this dedicated host after it is ready."
+  },
+  {
+    "id": "Your new VPN password [required]",
+    "translation": "Your new VPN password [required]"
+  },
+  {
+    "id": "Your server IP address or hostname. [required]",
+    "translation": "Your server IP address or hostname. [required]"
   },
   {
     "id": "ZONE",
@@ -9308,12 +9788,12 @@
     "translation": "device"
   },
   {
-    "id": "disk_guest",
-    "translation": "disk_guest"
+    "id": "disk space",
+    "translation": "disk space"
   },
   {
-    "id": "disk_space",
-    "translation": "disk_space"
+    "id": "disk_guest",
+    "translation": "disk_guest"
   },
   {
     "id": "domain",
@@ -9402,6 +9882,10 @@
   {
     "id": "hour",
     "translation": "hour"
+  },
+  {
+    "id": "http or https",
+    "translation": "http or https"
   },
   {
     "id": "id",
@@ -9612,6 +10096,10 @@
     "translation": "serial"
   },
   {
+    "id": "share image",
+    "translation": "share image"
+  },
+  {
     "id": "size_bytes",
     "translation": "size_bytes"
   },
@@ -9706,6 +10194,10 @@
   {
     "id": "value",
     "translation": "value"
+  },
+  {
+    "id": "virtual disks",
+    "translation": "virtual disks"
   },
   {
     "id": "virtual guest",

@@ -2628,10 +2628,6 @@
     "translation": "FQDN"
   },
   {
-    "id": "Failback a block volume from replica",
-    "translation": "Failback di un volume di blocchi dalla replica"
-  },
-  {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
     "translation": "Il failback del volume {{.VolumeID}} è ora in corso."
   },
@@ -5372,10 +5368,6 @@
     "translation": "Elenca le sottoreti assegnate all'archiviazione a blocchi per l'id host fornito."
   },
   {
-    "id": "List block storage snapshots",
-    "translation": "Elenca le istantanee dell'archivio blocchi"
-  },
-  {
     "id": "List cloud block storage.",
     "translation": "Elenca l'archiviazione a blocchi cloud."
   },
@@ -6492,10 +6484,6 @@
     "translation": "Priorità politica"
   },
   {
-    "id": "Pool Name",
-    "translation": "Nome pool"
-  },
-  {
     "id": "Port Range Max",
     "translation": "Massimo intervallo porte"
   },
@@ -7002,10 +6990,6 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "Rispettare le intestazioni. Il valore 1 è attivo e 0 è disattivo."
-  },
-  {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "Ripristina il volume dei blocchi utilizzando un'istantanea fornita"
   },
   {
     "id": "Restriction",
@@ -9310,10 +9294,6 @@
   {
     "id": "disk_guest",
     "translation": "disk_guest"
-  },
-  {
-    "id": "disk_space",
-    "translation": "disk_space"
   },
   {
     "id": "domain",

@@ -2628,10 +2628,6 @@
     "translation": "FQDN"
   },
   {
-    "id": "Failback a block volume from replica",
-    "translation": "복제본에서 블록 볼륨 장애 복구(failback)"
-  },
-  {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
     "translation": "현재 {{.VolumeID}} 볼륨의 장애 복구(failback)를 진행 중입니다."
   },
@@ -5372,10 +5368,6 @@
     "translation": "지정된 호스트 ID에 대해 블록 스토리지가 지정된 서브넷을 나열합니다."
   },
   {
-    "id": "List block storage snapshots",
-    "translation": "블로 스토리지 스냅샷 나열"
-  },
-  {
     "id": "List cloud block storage.",
     "translation": "Cloud Block Storage를 나열합니다."
   },
@@ -6492,10 +6484,6 @@
     "translation": "정책 우선순위"
   },
   {
-    "id": "Pool Name",
-    "translation": "풀 이름"
-  },
-  {
     "id": "Port Range Max",
     "translation": "포트 범위 최대"
   },
@@ -7002,10 +6990,6 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "헤더를 준수합니다. 값 1은 설정이고 0은 해제입니다."
-  },
-  {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "지정된 스냅샷을 사용하여 블록 볼륨 복원"
   },
   {
     "id": "Restriction",
@@ -9310,10 +9294,6 @@
   {
     "id": "disk_guest",
     "translation": "disk_guest"
-  },
-  {
-    "id": "disk_space",
-    "translation": "disk_space"
   },
   {
     "id": "domain",

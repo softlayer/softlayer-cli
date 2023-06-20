@@ -2628,10 +2628,6 @@
     "translation": "FQDN"
   },
   {
-    "id": "Failback a block volume from replica",
-    "translation": "從抄本進行區塊磁區失效回復"
-  },
-  {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
     "translation": "現在正在進行磁區 {{.VolumeID}} 的失效回復。"
   },
@@ -5372,10 +5368,6 @@
     "translation": "列出給定主機 ID 的區塊儲存空間指派的子網路。"
   },
   {
-    "id": "List block storage snapshots",
-    "translation": "列出區塊儲存空間 Snapshot"
-  },
-  {
     "id": "List cloud block storage.",
     "translation": "列出雲端區塊儲存體。"
   },
@@ -6492,10 +6484,6 @@
     "translation": "原則優先順序"
   },
   {
-    "id": "Pool Name",
-    "translation": "儲存區名稱"
-  },
-  {
     "id": "Port Range Max",
     "translation": "埠範圍上限"
   },
@@ -7002,10 +6990,6 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "遵循標頭。 值 1 是「開啟」，而 0 是「關閉」。"
-  },
-  {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "使用給定的 Snapshot 還原區塊磁區"
   },
   {
     "id": "Restriction",
@@ -9310,10 +9294,6 @@
   {
     "id": "disk_guest",
     "translation": "disk_guest"
-  },
-  {
-    "id": "disk_space",
-    "translation": "disk_space"
   },
   {
     "id": "domain",
