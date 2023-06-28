@@ -250,6 +250,20 @@ type FakeAccountManager struct {
 		result1 datatypes.Account
 		result2 error
 	}
+	GetUpgradeRequestsStub        func(string, int) ([]datatypes.Product_Upgrade_Request, error)
+	getUpgradeRequestsMutex       sync.RWMutex
+	getUpgradeRequestsArgsForCall []struct {
+		arg1 string
+		arg2 int
+	}
+	getUpgradeRequestsReturns struct {
+		result1 []datatypes.Product_Upgrade_Request
+		result2 error
+	}
+	getUpgradeRequestsReturnsOnCall map[int]struct {
+		result1 []datatypes.Product_Upgrade_Request
+		result2 error
+	}
 	SummaryByDatacenterStub        func() (map[string]map[string]int, error)
 	summaryByDatacenterMutex       sync.RWMutex
 	summaryByDatacenterArgsForCall []struct {
@@ -1417,6 +1431,71 @@ func (fake *FakeAccountManager) GetSummaryReturnsOnCall(i int, result1 datatypes
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetUpgradeRequests(arg1 string, arg2 int) ([]datatypes.Product_Upgrade_Request, error) {
+	fake.getUpgradeRequestsMutex.Lock()
+	ret, specificReturn := fake.getUpgradeRequestsReturnsOnCall[len(fake.getUpgradeRequestsArgsForCall)]
+	fake.getUpgradeRequestsArgsForCall = append(fake.getUpgradeRequestsArgsForCall, struct {
+		arg1 string
+		arg2 int
+	}{arg1, arg2})
+	stub := fake.GetUpgradeRequestsStub
+	fakeReturns := fake.getUpgradeRequestsReturns
+	fake.recordInvocation("GetUpgradeRequests", []interface{}{arg1, arg2})
+	fake.getUpgradeRequestsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetUpgradeRequestsCallCount() int {
+	fake.getUpgradeRequestsMutex.RLock()
+	defer fake.getUpgradeRequestsMutex.RUnlock()
+	return len(fake.getUpgradeRequestsArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetUpgradeRequestsCalls(stub func(string, int) ([]datatypes.Product_Upgrade_Request, error)) {
+	fake.getUpgradeRequestsMutex.Lock()
+	defer fake.getUpgradeRequestsMutex.Unlock()
+	fake.GetUpgradeRequestsStub = stub
+}
+
+func (fake *FakeAccountManager) GetUpgradeRequestsArgsForCall(i int) (string, int) {
+	fake.getUpgradeRequestsMutex.RLock()
+	defer fake.getUpgradeRequestsMutex.RUnlock()
+	argsForCall := fake.getUpgradeRequestsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAccountManager) GetUpgradeRequestsReturns(result1 []datatypes.Product_Upgrade_Request, result2 error) {
+	fake.getUpgradeRequestsMutex.Lock()
+	defer fake.getUpgradeRequestsMutex.Unlock()
+	fake.GetUpgradeRequestsStub = nil
+	fake.getUpgradeRequestsReturns = struct {
+		result1 []datatypes.Product_Upgrade_Request
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetUpgradeRequestsReturnsOnCall(i int, result1 []datatypes.Product_Upgrade_Request, result2 error) {
+	fake.getUpgradeRequestsMutex.Lock()
+	defer fake.getUpgradeRequestsMutex.Unlock()
+	fake.GetUpgradeRequestsStub = nil
+	if fake.getUpgradeRequestsReturnsOnCall == nil {
+		fake.getUpgradeRequestsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Product_Upgrade_Request
+			result2 error
+		})
+	}
+	fake.getUpgradeRequestsReturnsOnCall[i] = struct {
+		result1 []datatypes.Product_Upgrade_Request
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAccountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
 	fake.summaryByDatacenterMutex.Lock()
 	ret, specificReturn := fake.summaryByDatacenterReturnsOnCall[len(fake.summaryByDatacenterArgsForCall)]
@@ -1512,6 +1591,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getPostProvisioningHooksMutex.RUnlock()
 	fake.getSummaryMutex.RLock()
 	defer fake.getSummaryMutex.RUnlock()
+	fake.getUpgradeRequestsMutex.RLock()
+	defer fake.getUpgradeRequestsMutex.RUnlock()
 	fake.summaryByDatacenterMutex.RLock()
 	defer fake.summaryByDatacenterMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
