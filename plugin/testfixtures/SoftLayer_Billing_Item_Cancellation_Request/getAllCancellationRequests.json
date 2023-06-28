@@ -1,0 +1,94 @@
+[
+    {
+        "createDate": "2023-04-20T06:53:17-06:00",
+        "id": 21293830,
+        "modifyDate": "2023-04-20T06:53:18-06:00",
+        "ticketId": 153572280,
+        "itemCount": 1,
+        "items": [
+            {
+                "billingItemId": 913865576,
+                "cancellationRequestId": 21293830,
+                "id": 15646500,
+                "immediateCancellationFlag": null,
+                "scheduledCancellationDate": "2023-05-03T23:00:00-06:00",
+                "serviceReclaimStatusCode": "NOT_COMPLETED",
+                "billingItem": {
+                    "cancellationDate": "2023-05-03T22:59:59-06:00",
+                    "categoryCode": "server",
+                    "pendingCancellationFlag": true
+                }
+            }
+        ],
+        "status": {
+            "id": 4,
+            "name": "Approved"
+        },
+        "ticket": {
+            "assignedUserId": 167758,
+            "id": 153572280,
+            "serviceProviderResourceId": "153572280",
+            "attachedDedicatedHosts": [],
+            "attachedHardware": [
+                {
+                    "domain": "softlayer-internal-development-community.cloud",
+                    "hostname": "baremetal01",
+                    "id": 3123796
+                }
+            ],
+            "attachedVirtualGuests": []
+        },
+        "user": {
+            "firstName": "UserTest2",
+            "iamId": "SL-167758",
+            "id": 167758,
+            "lastName": "UserLastName2"
+        }
+    },
+    {
+        "createDate": "2023-04-04T11:54:07-06:00",
+        "id": 21264334,
+        "modifyDate": "2023-04-04T11:54:07-06:00",
+        "ticketId": 153243086,
+        "itemCount": 1,
+        "items": [
+            {
+                "billingItemId": 823152290,
+                "cancellationRequestId": 21264334,
+                "id": 15617114,
+                "immediateCancellationFlag": null,
+                "scheduledCancellationDate": "2023-05-03T23:00:00-06:00",
+                "serviceReclaimStatusCode": "NOT_COMPLETED",
+                "billingItem": {
+                    "cancellationDate": "2023-05-03T22:59:59-06:00",
+                    "categoryCode": "server",
+                    "pendingCancellationFlag": true
+                }
+            }
+        ],
+        "status": {
+            "id": 4,
+            "name": "Approved"
+        },
+        "ticket": {
+            "assignedUserId": 167758,
+            "id": 153243086,
+            "serviceProviderResourceId": "153243086",
+            "attachedDedicatedHosts": [],
+            "attachedHardware": [
+                {
+                    "domain": "softlayer-internal-development-community.cloud",
+                    "hostname": "fotestbaremetal",
+                    "id": 1721429
+                }
+            ],
+            "attachedVirtualGuests": []
+        },
+        "user": {
+            "firstName": "UserTest",
+            "iamId": "SL-167758",
+            "id": 167758,
+            "lastName": "UserLastName"
+        }
+    }
+]
