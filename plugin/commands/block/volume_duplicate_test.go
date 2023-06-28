@@ -85,6 +85,24 @@ var _ = Describe("Volume duplicate", func() {
 				Expect(results).To(ContainSubstring("Order 555 was placed"))
 			})
 		})
+		Context("Volume duplicate witho hourly billing", func() {
+			BeforeEach(func() {
+				FakeStorageManager.OrderDuplicateVolumeReturns(FakeOrderReceipt, nil)
+			})
+			It("No return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345", "--billing=hourly", "-f")
+				Expect(err).NotTo(HaveOccurred())
+				results := fakeUI.Outputs()
+				calledWith := FakeStorageManager.OrderDuplicateVolumeArgsForCall(0)
+				Expect(calledWith.DuplicateSnapshotSize).To(Equal(-1))
+				Expect(results).To(ContainSubstring("Order 555 was placed"))
+			})
+			It("Set invalid billing value", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345", "--billing=hour", "-f")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --billing"))
+			})
+		})
 		Context("Ordering Error", func() {
 			BeforeEach(func() {
 				FakeStorageManager.OrderDuplicateVolumeReturns(FakeOrderReceipt, errors.New("SoftLayer_Exception_ApiError"))

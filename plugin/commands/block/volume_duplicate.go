@@ -23,6 +23,7 @@ type VolumeDuplicateCommand struct {
 	DuplicateSnapshotSize int
 	DependentDuplicate    bool
 	Force                 bool
+	Billing               string
 }
 
 func NewVolumeDuplicateCommand(sl *metadata.SoftlayerStorageCommand) *VolumeDuplicateCommand {
@@ -50,6 +51,7 @@ EXAMPLE:
 	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateSnapshotSize, "duplicate-snapshot-size", "n", -1, T("The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the origin volume will be used"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.DependentDuplicate, "dependent-duplicate", "d", false, T("Whether or not this duplicate will be a dependent duplicate of the origin volume."))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	cobraCmd.Flags().StringVar(&thisCmd.Billing, "billing", "monthly", T("Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
@@ -59,6 +61,14 @@ func (cmd *VolumeDuplicateCommand) Run(args []string) error {
 	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+	}
+
+	billing := cmd.Billing
+	hourlyBillingFlag := false
+	if billing != "monthly" && billing != "hourly" {
+		return slErr.NewInvalidUsageError("--billing")
+	} else if billing == "hourly" {
+		hourlyBillingFlag = true
 	}
 
 	outputFormat := cmd.GetOutputFlag()
@@ -82,6 +92,7 @@ func (cmd *VolumeDuplicateCommand) Run(args []string) error {
 		DuplicateTier:         cmd.DuplicateTier,
 		DuplicateSnapshotSize: cmd.DuplicateSnapshotSize,
 		DependentDuplicate:    cmd.DependentDuplicate,
+		HourlyBillingFlag:     hourlyBillingFlag,
 	}
 	orderReceipt, err := cmd.StorageManager.OrderDuplicateVolume(config)
 	if err != nil {
