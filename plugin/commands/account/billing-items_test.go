@@ -37,12 +37,15 @@ var _ = Describe("Account list BillingItems", func() {
 
 		Context("Account events, correct use", func() {
 			It("return account events", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--category=ssl_certificate", "--create=2016-01-20", "--ordered=TestName")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Billing Items"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Id          Create Date            Cost   Category Code             Ordered By   Description                                             Notes"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("81336973    2016-01-20T17:00:19Z   0.00   ssl_certificate           TestName     RapidSSL - 1 year                                       techbabble.xyz"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("933002170   2022-02-18T18:47:32Z   0.00   dedicated_virtual_hosts   testName2    virtualserver01-0c56.softlayer-internal-developmen...   -"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("81336973"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("2016-01-20T17:00:19Z"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("0.00"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("ssl_certificate"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("TestName"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("RapidSSL - 1 year"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("techbabble.xyz"))
 
 			})
 			It("return account events in format json", func() {

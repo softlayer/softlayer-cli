@@ -15,7 +15,7 @@ type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
-	GetBillingItems(mask string) ([]datatypes.Billing_Item, error)
+	GetBillingItems(objectMask string, objectFilter string) ([]datatypes.Billing_Item, error)
 	GetEvents(typeEvent string, mask string, dateFilter string) ([]datatypes.Notification_Occurrence_Event, error)
 	GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error)
 	AckEvent(identifier int) (bool, error)
@@ -112,15 +112,12 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 Gets All billing items of an account.
 https://sldn.softlayer.com/reference/services/SoftLayer_Account/getAllTopLevelBillingItems/
 */
-func (a accountManager) GetBillingItems(mask string) ([]datatypes.Billing_Item, error) {
-	filters := filter.New()
-	filters = append(filters, filter.Path("allTopLevelBillingItems.id").OrderBy("ASC"))
-	filters = append(filters, filter.Path("allTopLevelBillingItems.cancellationDate").IsNull())
+func (a accountManager) GetBillingItems(objectMask string, objectFilter string) ([]datatypes.Billing_Item, error) {
 
 	i := 0
 	resourceList := []datatypes.Billing_Item{}
 	for {
-		resp, err := a.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetAllTopLevelBillingItems()
+		resp, err := a.AccountService.Mask(objectMask).Filter(objectFilter).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetAllTopLevelBillingItems()
 		i++
 		if err != nil {
 			return []datatypes.Billing_Item{}, err
