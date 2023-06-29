@@ -44,16 +44,19 @@ type OrderManager interface {
 	OrderQuote(quoteId int, extra datatypes.Container_Product_Order) (datatypes.Container_Product_Order_Receipt, error)
 	GetRecalculatedOrderContainer(quoteId int) (datatypes.Container_Product_Order, error)
 	GetOrderDetail(orderId int, mask string) (datatypes.Billing_Order, error)
+	GetAllCancelation(mask string) ([]datatypes.Billing_Item_Cancellation_Request, error)
+	DeleteQuote(quoteId int) (datatypes.Billing_Order_Quote, error)
 }
 
 type orderManager struct {
-	PackageService           services.Product_Package
-	OrderService             services.Product_Order
-	LocationService          services.Location_Datacenter
-	PackagePreset            services.Product_Package_Preset
-	AccountService           services.Account
-	BillingOrderQuoteService services.Billing_Order_Quote
-	Session                  *session.Session
+	PackageService                        services.Product_Package
+	OrderService                          services.Product_Order
+	LocationService                       services.Location_Datacenter
+	PackagePreset                         services.Product_Package_Preset
+	AccountService                        services.Account
+	BillingOrderQuoteService              services.Billing_Order_Quote
+	BillingItemCancellationRequestService services.Billing_Item_Cancellation_Request
+	Session                               *session.Session
 }
 
 func NewOrderManager(session *session.Session) *orderManager {
@@ -64,14 +67,15 @@ func NewOrderManager(session *session.Session) *orderManager {
 		services.GetProductPackagePresetService(session),
 		services.GetAccountService(session),
 		services.GetBillingOrderQuoteService(session),
+		services.GetBillingItemCancellationRequestService(session),
 		session,
 	}
 }
 
-//Get a single package with a given key.
-//If no packages are found, returns None
-//packageKeyname: string representing the package key name we are interested in.
-//mask: Mask to specify the properties we want to retrieve
+// Get a single package with a given key.
+// If no packages are found, returns None
+// packageKeyname: string representing the package key name we are interested in.
+// mask: Mask to specify the properties we want to retrieve
 func (i orderManager) GetPackageByKey(packageKeyname, mask string) (datatypes.Product_Package, error) {
 	filters := filter.New(filter.Path("keyName").Eq(packageKeyname))
 	packages, err := i.PackageService.Filter(filters.Build()).Mask(mask).GetAllObjects()
@@ -84,8 +88,8 @@ func (i orderManager) GetPackageByKey(packageKeyname, mask string) (datatypes.Pr
 	return packages[len(packages)-1], nil
 }
 
-//Get details about an image
-//image: The ID of the image.
+// Get details about an image
+// image: The ID of the image.
 func (i orderManager) ListCategories(packageKeyname string) ([]datatypes.Product_Package_Order_Configuration, error) {
 
 	packages, err := i.GetPackageByKey(packageKeyname, "id")
@@ -398,7 +402,7 @@ func (i orderManager) GetPresetPrices(presetId int) (datatypes.Product_Package_P
 	return prices, nil
 }
 
-//Returns active quotes on your account
+// Returns active quotes on your account
 func (i orderManager) GetActiveQuotes(mask string) ([]datatypes.Billing_Order_Quote, error) {
 	if mask == "" {
 		mask = "mask[order[id,items[id,package[id,keyName]]]]"
@@ -406,7 +410,7 @@ func (i orderManager) GetActiveQuotes(mask string) ([]datatypes.Billing_Order_Qu
 	return i.AccountService.Mask(mask).GetActiveQuotes()
 }
 
-//Returns active quote detail on your account
+// Returns active quote detail on your account
 func (i orderManager) GetQuote(quoteId int, mask string) (datatypes.Billing_Order_Quote, error) {
 	if mask == "" {
 		mask = "mask[order[id,items[package[id,keyName]]]]"
@@ -414,7 +418,7 @@ func (i orderManager) GetQuote(quoteId int, mask string) (datatypes.Billing_Orde
 	return i.BillingOrderQuoteService.Id(quoteId).Mask(mask).GetObject()
 }
 
-//Save quote
+// Save quote
 func (i orderManager) SaveQuote(quoteId int) (datatypes.Billing_Order_Quote, error) {
 	return i.BillingOrderQuoteService.Id(quoteId).SaveQuote()
 }
@@ -442,8 +446,8 @@ func (i orderManager) GetRecalculatedOrderContainer(quoteId int) (datatypes.Cont
 }
 
 // Return order detail
-//int orderId: The order identifier.
-//string mask: The object mask.
+// int orderId: The order identifier.
+// string mask: The object mask.
 func (i orderManager) GetOrderDetail(orderId int, mask string) (datatypes.Billing_Order, error) {
 	if mask == "" {
 		mask = `mask[orderTotalAmount,orderApprovalDate,
@@ -458,4 +462,20 @@ func (i orderManager) GetOrderDetail(orderId int, mask string) (datatypes.Billin
 	}
 	billingOrderService := services.GetBillingOrderService(i.Session)
 	return billingOrderService.Id(orderId).Mask(mask).GetObject()
+}
+
+/*
+Returns all service cancellation requests
+https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Item_Cancellation_Request/getAllCancellationRequests/
+*/
+func (i orderManager) GetAllCancelation(mask string) ([]datatypes.Billing_Item_Cancellation_Request, error) {
+	if mask == "" {
+		mask = "mask[id,itemCount,modifyDate,createDate,ticketId,ticket[assignedUserId,id,attachedHardware[id,hostname,domain],attachedVirtualGuests[id,hostname,domain],attachedDedicatedHosts[id,name],serviceProviderResourceId],status[name,id],user[id,firstName,lastName],items[billingItem[cancellationDate,categoryCode,pendingCancellationFlag]]]"
+	}
+	return i.BillingItemCancellationRequestService.Mask(mask).GetAllCancellationRequests()
+}
+
+// Delete the quote of an order.
+func (i orderManager) DeleteQuote(quoteId int) (datatypes.Billing_Order_Quote, error) {
+	return i.BillingOrderQuoteService.Id(quoteId).DeleteQuote()
 }

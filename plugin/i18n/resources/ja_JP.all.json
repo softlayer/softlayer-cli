@@ -860,6 +860,10 @@
     "translation": "AAAA レコード同期を打ち切ります。{{.Num}} 個の AAAA レコードが存在していることが検出されました。"
   },
   {
+    "id": "Access Key ID",
+    "translation": "アクセス・キー ID"
+  },
+  {
     "id": "Access granted to user {{.userId}} for {{.objectId}}",
     "translation": "{{.objectId}} のユーザー {{.userId}} に付与されたアクセス権限"
   },
@@ -1444,6 +1448,10 @@
     "translation": "容量 (GB)"
   },
   {
+    "id": "Capture all block devices that belong to the virtual server",
+    "translation": "仮想サーバーに属するすべてのブロック・デバイスをキャプチャーします"
+  },
+  {
     "id": "Capture virtual server instance into an image",
     "translation": "Virtual Server インスタンスをイメージにキャプチャーします"
   },
@@ -1932,6 +1940,10 @@
     "translation": "作成日"
   },
   {
+    "id": "Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "作成されたレコード: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
     "translation": "ゾーン {{.Zone}} にリソース・レコードを作成しました: ID={{.ID}}、タイプ={{.RecordType}}、レコード={{.Host}}、データ={{.Data}}、ttl={{.Ttl}}。"
   },
@@ -2018,6 +2030,10 @@
   {
     "id": "Date",
     "translation": "日付"
+  },
+  {
+    "id": "Date time",
+    "translation": "日時"
   },
   {
     "id": "Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday",
@@ -2204,6 +2220,10 @@
     "translation": "取り消しの理由のリストを表示します"
   },
   {
+    "id": "Display details for a cloud object storage.",
+    "translation": "クラウド・オブジェクト・ストレージの詳細を表示します。"
+  },
+  {
     "id": "Display details for a specified email.",
     "translation": "指定された E メールの詳細を表示します。"
   },
@@ -2234,6 +2254,10 @@
   {
     "id": "Display only public images",
     "translation": "パブリック・イメージのみを表示します"
+  },
+  {
+    "id": "Display permission details for a cloud object storage.",
+    "translation": "クラウド・オブジェクト・ストレージの権限の詳細を表示します。"
   },
   {
     "id": "Display permissions assigned to this user. Master users do not show permissions",
@@ -2278,6 +2302,10 @@
   {
     "id": "Domain record not found",
     "translation": "ドメイン・レコードが見つかりませんでした"
+  },
+  {
+    "id": "Domain: {{.Domain}} Id: {{.Id}}",
+    "translation": "ドメイン: {{.Domain}} ID: {{.Id}}"
   },
   {
     "id": "Don't actually create records",
@@ -2598,10 +2626,6 @@
   {
     "id": "FQDN",
     "translation": "FQDN"
-  },
-  {
-    "id": "Failback a block volume from replica",
-    "translation": "レプリカからブロック・ボリュームをフェイルバックします"
   },
   {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
@@ -3172,6 +3196,10 @@
     "translation": "請求アイテムの取得に失敗しました。"
   },
   {
+    "id": "Failed to get bucket of storage {{.StorageID}}.",
+    "translation": "ストレージ {{.StorageID}}のバケットの取得に失敗しました。"
+  },
+  {
     "id": "Failed to get components\n",
     "translation": "コンポーネントの取得に失敗しました \n"
   },
@@ -3200,12 +3228,20 @@
     "translation": "専用ホスト・インスタンスの取得に失敗しました: {{.HostID}}。"
   },
   {
+    "id": "Failed to get details of storage {{.StorageID}}.",
+    "translation": "ストレージ {{.StorageID}}の詳細を取得できませんでした。"
+  },
+  {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
     "translation": "ボリューム {{.VolumeID}} の詳細の取得に失敗しました。\n"
   },
   {
     "id": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
     "translation": "ボリューム {{.VolumeID}}の重複変換状況を取得できませんでした。\n"
+  },
+  {
+    "id": "Failed to get endPoints.",
+    "translation": "endPoints の取得に失敗しました。"
   },
   {
     "id": "Failed to get firewalls on your account.\n",
@@ -3496,6 +3532,10 @@
     "translation": "Virtual Server 作成オプションの取得に失敗しました。\n"
   },
   {
+    "id": "Failed to get virtual server instance: {{.VsID}}.",
+    "translation": "仮想サーバー・インスタンス {{.VsID}}の取得に失敗しました。"
+  },
+  {
     "id": "Failed to get virtual server instance: {{.VsID}}.\n",
     "translation": "Virtual Server インスタンス: {{.VsID}} の取得に失敗しました。\n"
   },
@@ -3542,6 +3582,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "ご使用のアカウントの VLAN のリストに失敗しました。\n"
+  },
+  {
+    "id": "Failed to list available OS's.",
+    "translation": "使用可能な OS をリストできませんでした。"
   },
   {
     "id": "Failed to list categories.\n",
@@ -4436,6 +4480,10 @@
     "translation": "予約済み容量グループの詳細を取得します。"
   },
   {
+    "id": "Get all available Operating Systems.",
+    "translation": "使用可能なすべてのオペレーティング・システムを取得します。"
+  },
+  {
     "id": "Get bandwidth pool details.",
     "translation": "帯域幅プールの詳細を取得します。"
   },
@@ -4836,6 +4884,10 @@
     "translation": "このオプションを指定する場合、このアカウントのパブリック・サブネットからパブリック IP が割り当てられます。 このオプションを指定しない場合は、IBM システム・プールから割り振られます。 PublicToPrivate ロード・バランサー・タイプでのみ使用可能です。"
   },
   {
+    "id": "Image ID",
+    "translation": "イメージ ID"
+  },
+  {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
     "translation": "イメージ ID。 '${COMMAND_NAME} sl image list' を参照してください"
   },
@@ -4950,6 +5002,10 @@
   {
     "id": "Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID.",
     "translation": "無効な ID {{.ID}}: ID の形式は xxx:yyy (xxx はファイアウォールのタイプ、yyy は正整数 ID) でなければなりません。"
+  },
+  {
+    "id": "Invalid SRV record: {{.sub}}.",
+    "translation": "無効な SRV レコード: {{.sub}}。"
   },
   {
     "id": "Invalid combination specified for ordering a subnet.",
@@ -5310,10 +5366,6 @@
   {
     "id": "List block storage assigned subnets for the given host id.",
     "translation": "指定されたホスト ID のブロック・ストレージ割り当てサブネットをリストします。"
-  },
-  {
-    "id": "List block storage snapshots",
-    "translation": "Block Storage スナップショットをリストします"
   },
   {
     "id": "List cloud block storage.",
@@ -6212,6 +6264,10 @@
     "translation": "親ユーザー"
   },
   {
+    "id": "Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "解析済みレコード: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Password",
     "translation": "パスワード"
   },
@@ -6390,6 +6446,10 @@
   {
     "id": "Placement group {{.ID}} was removed.",
     "translation": "配置グループ {{.ID}} は削除されました。"
+  },
+  {
+    "id": "Plan",
+    "translation": "プラン"
   },
   {
     "id": "Please add the '--guest' id too.\n",
@@ -6936,10 +6996,6 @@
     "translation": "ヘッダーを尊重します。 値 1 はオン、0 はオフです。"
   },
   {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "指定されたスナップショットを使用してブロック・ボリュームをリストアします"
-  },
-  {
     "id": "Restriction",
     "translation": "制約事項"
   },
@@ -7036,6 +7092,10 @@
     "translation": "セキュリティー・グループ ID"
   },
   {
+    "id": "SMTP",
+    "translation": "SMTP"
+  },
+  {
     "id": "SNAPSHOT_ID",
     "translation": "SNAPSHOT_ID"
   },
@@ -7114,6 +7174,10 @@
   {
     "id": "Seconds to wait for a connection. [1-59]",
     "translation": "接続待機時間 (秒数)。 [1-59]"
+  },
+  {
+    "id": "Secret Access Key",
+    "translation": "秘密アクセス・キー"
   },
   {
     "id": "Security group ID to associate with the private interface (multiple occurrence permitted)",
@@ -7218,6 +7282,10 @@
   {
     "id": "Sets username for this account.",
     "translation": "このアカウントのユーザー名を設定します。"
+  },
+  {
+    "id": "Setup",
+    "translation": "セットアップ"
   },
   {
     "id": "Short Name",
@@ -7778,6 +7846,10 @@
   {
     "id": "The actual SSH key",
     "translation": "実際の SSH 鍵"
+  },
+  {
+    "id": "The block device ID´s to archive, multiple occurrence allowed",
+    "translation": "アーカイブするブロック・デバイス ID。複数のオカレンスが許可されます。"
   },
   {
     "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
@@ -8456,6 +8528,10 @@
     "translation": "URI"
   },
   {
+    "id": "URL",
+    "translation": "URL"
+  },
+  {
     "id": "USERNAME",
     "translation": "ユーザー名"
   },
@@ -8793,6 +8869,10 @@
   },
   {
     "id": "Virtual Guest ID",
+    "translation": "仮想ゲスト ID"
+  },
+  {
+    "id": "Virtual guest ID",
     "translation": "仮想ゲスト ID"
   },
   {
@@ -9218,10 +9298,6 @@
   {
     "id": "disk_guest",
     "translation": "ディスク・ゲスト"
-  },
-  {
-    "id": "disk_space",
-    "translation": "disk_space"
   },
   {
     "id": "domain",

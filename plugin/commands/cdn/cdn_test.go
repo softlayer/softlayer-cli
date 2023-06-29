@@ -25,6 +25,7 @@ var availableCommands = []string{
 	"list",
 	"origin-list",
 	"create",
+	"purge",
 	"origin-add",
 }
 

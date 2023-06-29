@@ -27,9 +27,11 @@ var availableCommands = []string{
 	"place-quote",
 	"preset-list",
 	"quote",
+	"quote-delete",
 	"quote-detail",
 	"quote-list",
 	"quote-save",
+	"cancelation",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings

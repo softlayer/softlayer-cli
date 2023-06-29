@@ -860,6 +860,10 @@
     "translation": "正在中斷 AAAA 記錄同步，發現有 {{.Num}} 筆 AAAA 記錄存在！"
   },
   {
+    "id": "Access Key ID",
+    "translation": "存取金鑰 ID"
+  },
+  {
     "id": "Access granted to user {{.userId}} for {{.objectId}}",
     "translation": "授與使用者 {{.userId}} 對 {{.objectId}} 的存取權"
   },
@@ -1444,6 +1448,10 @@
     "translation": "容量 (GB)"
   },
   {
+    "id": "Capture all block devices that belong to the virtual server",
+    "translation": "擷取屬於虛擬伺服器的所有區塊裝置"
+  },
+  {
     "id": "Capture virtual server instance into an image",
     "translation": "將虛擬伺服器實例擷取至映像檔"
   },
@@ -1932,6 +1940,10 @@
     "translation": "建立日期"
   },
   {
+    "id": "Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "已建立記錄：{{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
     "translation": "已在區域 {{.Zone}} 下建立資源記錄：ID={{.ID}}、type={{.RecordType}}、record={{.Host}}、data={{.Data}}、ttl={{.Ttl}}。"
   },
@@ -2018,6 +2030,10 @@
   {
     "id": "Date",
     "translation": "日期"
+  },
+  {
+    "id": "Date time",
+    "translation": "日期時間"
   },
   {
     "id": "Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday",
@@ -2204,6 +2220,10 @@
     "translation": "顯示取消原因清單"
   },
   {
+    "id": "Display details for a cloud object storage.",
+    "translation": "顯示雲端物件儲存體的詳細資料。"
+  },
+  {
     "id": "Display details for a specified email.",
     "translation": "顯示指定電子郵件的詳細資料。"
   },
@@ -2234,6 +2254,10 @@
   {
     "id": "Display only public images",
     "translation": "只顯示公用映像檔"
+  },
+  {
+    "id": "Display permission details for a cloud object storage.",
+    "translation": "顯示雲端物件儲存體的許可權詳細資料。"
   },
   {
     "id": "Display permissions assigned to this user. Master users do not show permissions",
@@ -2278,6 +2302,10 @@
   {
     "id": "Domain record not found",
     "translation": "找不到網域記錄"
+  },
+  {
+    "id": "Domain: {{.Domain}} Id: {{.Id}}",
+    "translation": "網域：{{.Domain}} ID：{{.Id}}"
   },
   {
     "id": "Don't actually create records",
@@ -2598,10 +2626,6 @@
   {
     "id": "FQDN",
     "translation": "FQDN"
-  },
-  {
-    "id": "Failback a block volume from replica",
-    "translation": "從抄本進行區塊磁區失效回復"
   },
   {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
@@ -3172,6 +3196,10 @@
     "translation": "無法取得計費項目。"
   },
   {
+    "id": "Failed to get bucket of storage {{.StorageID}}.",
+    "translation": "無法取得儲存體 {{.StorageID}} 的儲存區。"
+  },
+  {
     "id": "Failed to get components\n",
     "translation": "無法取得元件 \n"
   },
@@ -3200,12 +3228,20 @@
     "translation": "無法取得 dedicatedhost 實例：{{.HostID}}。"
   },
   {
+    "id": "Failed to get details of storage {{.StorageID}}.",
+    "translation": "無法取得儲存體 {{.StorageID}} 的詳細資料。"
+  },
+  {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
     "translation": "無法取得磁區 {{.VolumeID}} 的詳細資料。\n"
   },
   {
     "id": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
     "translation": "無法取得磁區 {{.VolumeID}} 的重複轉換狀態。\n"
+  },
+  {
+    "id": "Failed to get endPoints.",
+    "translation": "無法取得 endPoints。"
   },
   {
     "id": "Failed to get firewalls on your account.\n",
@@ -3496,6 +3532,10 @@
     "translation": "無法取得虛擬伺服器建立選項。\n"
   },
   {
+    "id": "Failed to get virtual server instance: {{.VsID}}.",
+    "translation": "無法取得虛擬伺服器實例：{{.VsID}}。"
+  },
+  {
     "id": "Failed to get virtual server instance: {{.VsID}}.\n",
     "translation": "無法取得虛擬伺服器實例：{{.VsID}}。\n"
   },
@@ -3542,6 +3582,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "無法列出您帳戶中的 VLAN。\n"
+  },
+  {
+    "id": "Failed to list available OS's.",
+    "translation": "無法列出可用的 OS。"
   },
   {
     "id": "Failed to list categories.\n",
@@ -4436,6 +4480,10 @@
     "translation": "取得保留容量群組詳細資料。"
   },
   {
+    "id": "Get all available Operating Systems.",
+    "translation": "取得所有可用的作業系統。"
+  },
+  {
     "id": "Get bandwidth pool details.",
     "translation": "取得頻寬儲存區詳細資料。"
   },
@@ -4836,6 +4884,10 @@
     "translation": "如果指定這個選項，將會從這個帳戶中的公用子網路配置公用 IP。否則，將會從 IBM 系統儲存區配置。只提供於 PublicToPrivate 負載平衡器類型。"
   },
   {
+    "id": "Image ID",
+    "translation": "映像檔 ID"
+  },
+  {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
     "translation": "映像檔 ID。如需參考資料，請參閱：'${COMMAND_NAME} sl image list'"
   },
@@ -4950,6 +5002,10 @@
   {
     "id": "Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID.",
     "translation": "無效的 ID {{.ID}}：ID 格式應為 xxx:yyy，xxx 是防火牆的類型，yyy 是正整數的 ID。"
+  },
+  {
+    "id": "Invalid SRV record: {{.sub}}.",
+    "translation": "無效的 SRV 記錄：{{.sub}}。"
   },
   {
     "id": "Invalid combination specified for ordering a subnet.",
@@ -5310,10 +5366,6 @@
   {
     "id": "List block storage assigned subnets for the given host id.",
     "translation": "列出給定主機 ID 的區塊儲存空間指派的子網路。"
-  },
-  {
-    "id": "List block storage snapshots",
-    "translation": "列出區塊儲存空間 Snapshot"
   },
   {
     "id": "List cloud block storage.",
@@ -6212,6 +6264,10 @@
     "translation": "母項使用者"
   },
   {
+    "id": "Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "剖析的記錄：{{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Password",
     "translation": "密碼"
   },
@@ -6390,6 +6446,10 @@
   {
     "id": "Placement group {{.ID}} was removed.",
     "translation": "已移除放置群組 {{.ID}}。"
+  },
+  {
+    "id": "Plan",
+    "translation": "方案"
   },
   {
     "id": "Please add the '--guest' id too.\n",
@@ -6936,10 +6996,6 @@
     "translation": "遵循標頭。 值 1 是「開啟」，而 0 是「關閉」。"
   },
   {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "使用給定的 Snapshot 還原區塊磁區"
-  },
-  {
     "id": "Restriction",
     "translation": "限制"
   },
@@ -7036,6 +7092,10 @@
     "translation": "SECURITYGROUP_ID"
   },
   {
+    "id": "SMTP",
+    "translation": "SMTP"
+  },
+  {
     "id": "SNAPSHOT_ID",
     "translation": "SNAPSHOT_ID"
   },
@@ -7114,6 +7174,10 @@
   {
     "id": "Seconds to wait for a connection. [1-59]",
     "translation": "等待連線的秒數。[1-59]"
+  },
+  {
+    "id": "Secret Access Key",
+    "translation": "秘密存取金鑰"
   },
   {
     "id": "Security group ID to associate with the private interface (multiple occurrence permitted)",
@@ -7218,6 +7282,10 @@
   {
     "id": "Sets username for this account.",
     "translation": "設定此帳戶的使用者名稱。"
+  },
+  {
+    "id": "Setup",
+    "translation": "設定"
   },
   {
     "id": "Short Name",
@@ -7778,6 +7846,10 @@
   {
     "id": "The actual SSH key",
     "translation": "實際的 SSH 金鑰"
+  },
+  {
+    "id": "The block device ID´s to archive, multiple occurrence allowed",
+    "translation": "要保存的區塊裝置 ID，容許多次出現"
   },
   {
     "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
@@ -8456,6 +8528,10 @@
     "translation": "URI"
   },
   {
+    "id": "URL",
+    "translation": "URL"
+  },
+  {
     "id": "USERNAME",
     "translation": "使用者名稱"
   },
@@ -8793,6 +8869,10 @@
   },
   {
     "id": "Virtual Guest ID",
+    "translation": "虛擬訪客 ID"
+  },
+  {
+    "id": "Virtual guest ID",
     "translation": "虛擬訪客 ID"
   },
   {
@@ -9218,10 +9298,6 @@
   {
     "id": "disk_guest",
     "translation": "disk_guest"
-  },
-  {
-    "id": "disk_space",
-    "translation": "disk_space"
   },
   {
     "id": "domain",

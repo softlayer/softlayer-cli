@@ -860,6 +860,10 @@
     "translation": "Terminando anormalmente la sincronización de registros AAAA, se ha detectado que existen registros AAAA {{.Num}}"
   },
   {
+    "id": "Access Key ID",
+    "translation": "ID de clave de acceso"
+  },
+  {
     "id": "Access granted to user {{.userId}} for {{.objectId}}",
     "translation": "Acceso otorgado al usuario {{.userId}} para {{.objectId}}"
   },
@@ -1444,6 +1448,10 @@
     "translation": "Capacidad (GB)"
   },
   {
+    "id": "Capture all block devices that belong to the virtual server",
+    "translation": "Capturar todos los dispositivos de bloque que pertenecen al servidor virtual"
+  },
+  {
     "id": "Capture virtual server instance into an image",
     "translation": "Capturar la instancia de servidor virtual en una imagen"
   },
@@ -1932,6 +1940,10 @@
     "translation": "Fecha de creación"
   },
   {
+    "id": "Created Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "Registro creado: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.",
     "translation": "Se ha creado un registro de recurso en la zona {{.Zone}}: ID={{.ID}}, tipo={{.RecordType}}, registro={{.Host}}, datos={{.Data}}, ttl={{.Ttl}}."
   },
@@ -2018,6 +2030,10 @@
   {
     "id": "Date",
     "translation": "Fecha"
+  },
+  {
+    "id": "Date time",
+    "translation": "Fecha y hora"
   },
   {
     "id": "Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday",
@@ -2204,6 +2220,10 @@
     "translation": "Visualizar una lista de razones de cancelación"
   },
   {
+    "id": "Display details for a cloud object storage.",
+    "translation": "Mostrar detalles para un almacenamiento de objetos en la nube."
+  },
+  {
     "id": "Display details for a specified email.",
     "translation": "Visualizar detalles para un correo electrónico especificado."
   },
@@ -2234,6 +2254,10 @@
   {
     "id": "Display only public images",
     "translation": "Mostrar solo imágenes públicas"
+  },
+  {
+    "id": "Display permission details for a cloud object storage.",
+    "translation": "Visualizar detalles de permiso para un almacenamiento de objetos en la nube."
   },
   {
     "id": "Display permissions assigned to this user. Master users do not show permissions",
@@ -2278,6 +2302,10 @@
   {
     "id": "Domain record not found",
     "translation": "No se ha encontrado el registro de dominio"
+  },
+  {
+    "id": "Domain: {{.Domain}} Id: {{.Id}}",
+    "translation": "Dominio: {{.Domain}} Id: {{.Id}}"
   },
   {
     "id": "Don't actually create records",
@@ -2598,10 +2626,6 @@
   {
     "id": "FQDN",
     "translation": "FQDN"
-  },
-  {
-    "id": "Failback a block volume from replica",
-    "translation": "Restablecimiento de un volumen de bloque a partir de una réplica"
   },
   {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
@@ -3172,6 +3196,10 @@
     "translation": "No se han podido obtener elementos de facturación."
   },
   {
+    "id": "Failed to get bucket of storage {{.StorageID}}.",
+    "translation": "No se ha podido obtener el grupo de almacenamiento {{.StorageID}}."
+  },
+  {
     "id": "Failed to get components\n",
     "translation": "No se han podido obtener componentes\n"
   },
@@ -3200,12 +3228,20 @@
     "translation": "No se ha podido obtener la instancia del host dedicado: {{.HostID}}."
   },
   {
+    "id": "Failed to get details of storage {{.StorageID}}.",
+    "translation": "No se han podido obtener los detalles del almacenamiento {{.StorageID}}."
+  },
+  {
     "id": "Failed to get details of volume {{.VolumeID}}.\n",
     "translation": "No se han podido obtener los detalles del volumen {{.VolumeID}}.\n"
   },
   {
     "id": "Failed to get duplicate conversion status of volume {{.VolumeID}}.\n",
     "translation": "No se ha podido obtener el estado de conversión de duplicados del volumen {{.VolumeID}}.\n"
+  },
+  {
+    "id": "Failed to get endPoints.",
+    "translation": "No se han podido obtener endPoints."
   },
   {
     "id": "Failed to get firewalls on your account.\n",
@@ -3496,6 +3532,10 @@
     "translation": "No se han podido obtener las opciones de creación de servidor virtual.\n"
   },
   {
+    "id": "Failed to get virtual server instance: {{.VsID}}.",
+    "translation": "No se ha podido obtener la instancia de servidor virtual: {{.VsID}}."
+  },
+  {
     "id": "Failed to get virtual server instance: {{.VsID}}.\n",
     "translation": "No se ha podido obtener la instancia de servidor virtual: {{.VsID}}.\n"
   },
@@ -3542,6 +3582,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "No se han podido listar las VLAN de su cuenta.\n"
+  },
+  {
+    "id": "Failed to list available OS's.",
+    "translation": "No se han podido listar los SO disponibles."
   },
   {
     "id": "Failed to list categories.\n",
@@ -4436,6 +4480,10 @@
     "translation": "Obtener detalles del Grupo de capacidad reservada."
   },
   {
+    "id": "Get all available Operating Systems.",
+    "translation": "Obtener todos los sistemas operativos disponibles."
+  },
+  {
     "id": "Get bandwidth pool details.",
     "translation": "Obtener detalles de agrupación de ancho de banda."
   },
@@ -4836,6 +4884,10 @@
     "translation": "Si se especifica esta opción, la ip pública se asignará desde una subred pública en esta cuenta. De lo contrario, se asignara desde una agrupación del sistema de IBM. Solo disponible en el tipo de equilibrador de carga PublicToPrivate."
   },
   {
+    "id": "Image ID",
+    "translation": "ID de imagen"
+  },
+  {
     "id": "Image ID. See: '${COMMAND_NAME} sl image list' for reference",
     "translation": "ID de imagen. Consulte: '${COMMAND_NAME} sl image list' para su referencia"
   },
@@ -4950,6 +5002,10 @@
   {
     "id": "Invalid ID {{.ID}}: ID should be of the form xxx:yyy, xxx is the type of the firewall, yyy is the positive integer ID.",
     "translation": "ID no válido {{.ID}}: el ID debe tener el formato xxx:yyy, xxx es el tipo de cortafuegos, yyy es el ID entero positivo."
+  },
+  {
+    "id": "Invalid SRV record: {{.sub}}.",
+    "translation": "Registro SRV no válido: {{.sub}}."
   },
   {
     "id": "Invalid combination specified for ordering a subnet.",
@@ -5310,10 +5366,6 @@
   {
     "id": "List block storage assigned subnets for the given host id.",
     "translation": "Enumere las subredes asignadas de almacenamiento en bloque para el ID de host proporcionado."
-  },
-  {
-    "id": "List block storage snapshots",
-    "translation": "Listar las instantáneas de almacenamiento en bloque"
   },
   {
     "id": "List cloud block storage.",
@@ -6212,6 +6264,10 @@
     "translation": "Usuario padre"
   },
   {
+    "id": "Parsed Record: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}",
+    "translation": "Registro analizado: {{.Host}} {{.TTL}} {{.Type}} {{.Data}}"
+  },
+  {
     "id": "Password",
     "translation": "Contraseña"
   },
@@ -6390,6 +6446,10 @@
   {
     "id": "Placement group {{.ID}} was removed.",
     "translation": "Se ha eliminado el grupo de colocación {{.ID}}."
+  },
+  {
+    "id": "Plan",
+    "translation": "Plan"
   },
   {
     "id": "Please add the '--guest' id too.\n",
@@ -6936,10 +6996,6 @@
     "translation": "Respetar cabeceras. El valor 1 es Activado y 0 es Desactivado."
   },
   {
-    "id": "Restore block volume using a given snapshot",
-    "translation": "Restaurar volumen de bloque mediante una instantánea determinada"
-  },
-  {
     "id": "Restriction",
     "translation": "Restricción"
   },
@@ -7036,6 +7092,10 @@
     "translation": "ID_GRUPO_SEGURIDAD"
   },
   {
+    "id": "SMTP",
+    "translation": "SMTP"
+  },
+  {
     "id": "SNAPSHOT_ID",
     "translation": "SNAPSHOT_ID"
   },
@@ -7114,6 +7174,10 @@
   {
     "id": "Seconds to wait for a connection. [1-59]",
     "translation": "Segundos a esperar para una conexión. [1-59]"
+  },
+  {
+    "id": "Secret Access Key",
+    "translation": "Clave de acceso secreta"
   },
   {
     "id": "Security group ID to associate with the private interface (multiple occurrence permitted)",
@@ -7218,6 +7282,10 @@
   {
     "id": "Sets username for this account.",
     "translation": "Establece el nombre de usuario de esta cuenta."
+  },
+  {
+    "id": "Setup",
+    "translation": "Configuración"
   },
   {
     "id": "Short Name",
@@ -7778,6 +7846,10 @@
   {
     "id": "The actual SSH key",
     "translation": "La clave SSH real"
+  },
+  {
+    "id": "The block device ID´s to archive, multiple occurrence allowed",
+    "translation": "ID de dispositivo de bloque que archivar, se permiten varios"
   },
   {
     "id": "The complex type of the order. Starts with 'SoftLayer_Container_Product_Order'.  [default: SoftLayer_Container_Product_Order_Hardware_Server]",
@@ -8456,6 +8528,10 @@
     "translation": "URI"
   },
   {
+    "id": "URL",
+    "translation": "URL"
+  },
+  {
     "id": "USERNAME",
     "translation": "Nombre de usuario"
   },
@@ -8793,6 +8869,10 @@
   },
   {
     "id": "Virtual Guest ID",
+    "translation": "ID de invitado virtual"
+  },
+  {
+    "id": "Virtual guest ID",
     "translation": "ID de invitado virtual"
   },
   {
@@ -9218,10 +9298,6 @@
   {
     "id": "disk_guest",
     "translation": "disk_guest"
-  },
-  {
-    "id": "disk_space",
-    "translation": "disk_space"
   },
   {
     "id": "domain",

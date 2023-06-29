@@ -352,25 +352,50 @@ func WordInList(wordList []string, key string) bool {
 	return false
 }
 
-func PrintTableWithTitle(ui terminal.UI, table terminal.Table, bufEvent *bytes.Buffer, title string, outputFormat string) {
+func PrintTableWithTitle(ui terminal.UI, table terminal.Table, bufEvent *bytes.Buffer, title string, outputFormat string) string {
 	tableTitle := ui.Table([]string{T(title)})
 	if outputFormat == "JSON" {
 		table.PrintJson()
 		tableTitle.Add(bufEvent.String())
 		tableTitle.PrintJson()
-	} else {
-		table.Print()
-		tableTitle.Add(bufEvent.String())
-		tableTitle.Print()
+		return ""
 	}
+	if outputFormat == "CSV" {
+		err := table.PrintCsv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return ""
+		}
+		tableTitle.Add(bufEvent.String())
+		err = tableTitle.PrintCsv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return ""
+		}
+		return ""
+	}
+	table.Print()
+	tableTitle.Add(bufEvent.String())
+	tableTitle.Print()
+	return ""
+
 }
 
-func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) {
+func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) string {
 	if outputFormat == "JSON" {
 		table.PrintJson()
-	} else {
-		table.Print()
+		return ""
 	}
+	if outputFormat == "CSV" {
+		err := table.PrintCsv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return ""
+		}
+		return ""
+	}
+	table.Print()
+	return ""
 }
 
 func ShortenString(ugly_string string) string {
@@ -523,4 +548,15 @@ func indexOf(element string, data []string) int {
 		}
 	}
 	return -1 //not found.
+}
+
+func FormatStringToTime(timestamp *string) string {
+	timeInt, err := strconv.ParseInt(*timestamp, 10, 64)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return ""
+	}
+	t := time.Unix(timeInt, 0)
+	return t.Format("2006-01-02 15:04:05")
+
 }
