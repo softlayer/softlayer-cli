@@ -15,7 +15,7 @@ type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (int, error)
-	GetBillingItems(mask string) ([]datatypes.Billing_Item, error)
+	GetBillingItems(objectMask string, objectFilter string) ([]datatypes.Billing_Item, error)
 	GetEvents(typeEvent string, mask string, dateFilter string) ([]datatypes.Notification_Occurrence_Event, error)
 	GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error)
 	AckEvent(identifier int) (bool, error)
@@ -31,6 +31,7 @@ type AccountManager interface {
 	GetPostProvisioningHooks(mask string) ([]datatypes.Provisioning_Hook, error)
 	CreateProvisioningScript(template datatypes.Provisioning_Hook) (datatypes.Provisioning_Hook, error)
 	DeleteProvisioningScript(idProvisioningScript int) (resp bool, err error)
+	GetUpgradeRequests(mask string, limit int) ([]datatypes.Product_Upgrade_Request, error)
 }
 
 type accountManager struct {
@@ -112,15 +113,12 @@ func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
 Gets All billing items of an account.
 https://sldn.softlayer.com/reference/services/SoftLayer_Account/getAllTopLevelBillingItems/
 */
-func (a accountManager) GetBillingItems(mask string) ([]datatypes.Billing_Item, error) {
-	filters := filter.New()
-	filters = append(filters, filter.Path("allTopLevelBillingItems.id").OrderBy("ASC"))
-	filters = append(filters, filter.Path("allTopLevelBillingItems.cancellationDate").IsNull())
+func (a accountManager) GetBillingItems(objectMask string, objectFilter string) ([]datatypes.Billing_Item, error) {
 
 	i := 0
 	resourceList := []datatypes.Billing_Item{}
 	for {
-		resp, err := a.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetAllTopLevelBillingItems()
+		resp, err := a.AccountService.Mask(objectMask).Filter(objectFilter).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetAllTopLevelBillingItems()
 		i++
 		if err != nil {
 			return []datatypes.Billing_Item{}, err
@@ -381,4 +379,12 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Provisioning_Hook/delete
 func (a accountManager) DeleteProvisioningScript(idProvisioningScript int) (resp bool, err error) {
 	provisioningHook := services.GetProvisioningHookService(a.Session)
 	return provisioningHook.Id(idProvisioningScript).DeleteObject()
+}
+
+/*
+Gets account's associated upgrade requests.
+https://sldn.softlayer.com/reference/services/SoftLayer_Account/getUpgradeRequests/
+*/
+func (a accountManager) GetUpgradeRequests(mask string, limit int) ([]datatypes.Product_Upgrade_Request, error) {
+	return a.AccountService.Limit(limit).Mask(mask).GetUpgradeRequests()
 }

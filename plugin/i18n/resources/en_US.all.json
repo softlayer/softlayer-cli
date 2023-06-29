@@ -1560,6 +1560,10 @@
     "translation": "Capture virtual server instance into an image"
   },
   {
+    "id": "Case Number",
+    "translation": "Case Number"
+  },
+  {
     "id": "Category",
     "translation": "Category"
   },
@@ -3822,6 +3826,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "Failed to list VLANs on your account.\n"
+  },
+  {
+    "id": "Failed to list all item cancelations.",
+    "translation": "Failed to list all item cancelations."
   },
   {
     "id": "Failed to list available OS's.",
@@ -6232,6 +6240,10 @@
     "translation": "Number"
   },
   {
+    "id": "Number Of Items Cancelled",
+    "translation": "Number Of Items Cancelled"
+  },
+  {
     "id": "Number of CPU cores",
     "translation": "Number of CPU cores"
   },
@@ -7334,6 +7346,10 @@
   {
     "id": "Request configuration of a tunnel context",
     "translation": "Request configuration of a tunnel context"
+  },
+  {
+    "id": "Requested by",
+    "translation": "Requested by"
   },
   {
     "id": "Required User",

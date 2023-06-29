@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
 	"sort"
 	"strconv"
 	"strings"
@@ -351,25 +352,50 @@ func WordInList(wordList []string, key string) bool {
 	return false
 }
 
-func PrintTableWithTitle(ui terminal.UI, table terminal.Table, bufEvent *bytes.Buffer, title string, outputFormat string) {
+func PrintTableWithTitle(ui terminal.UI, table terminal.Table, bufEvent *bytes.Buffer, title string, outputFormat string) string {
 	tableTitle := ui.Table([]string{T(title)})
 	if outputFormat == "JSON" {
 		table.PrintJson()
 		tableTitle.Add(bufEvent.String())
 		tableTitle.PrintJson()
-	} else {
-		table.Print()
-		tableTitle.Add(bufEvent.String())
-		tableTitle.Print()
+		return ""
 	}
+	if outputFormat == "CSV" {
+		err := table.PrintCsv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return ""
+		}
+		tableTitle.Add(bufEvent.String())
+		err = tableTitle.PrintCsv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return ""
+		}
+		return ""
+	}
+	table.Print()
+	tableTitle.Add(bufEvent.String())
+	tableTitle.Print()
+	return ""
+
 }
 
-func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) {
+func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) string {
 	if outputFormat == "JSON" {
 		table.PrintJson()
-	} else {
-		table.Print()
+		return ""
 	}
+	if outputFormat == "CSV" {
+		err := table.PrintCsv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return ""
+		}
+		return ""
+	}
+	table.Print()
+	return ""
 }
 
 func ShortenString(ugly_string string) string {
@@ -418,6 +444,112 @@ func GetPodWithClosedAnnouncement(key string, pods []datatypes.Network_Pod) stri
 	return "-"
 }
 
+
+/*
+Converts a data storage value to an appropriate unit.
+:param str value: The value to convert.
+:param str unit: The unit of the value ('B', 'KB', 'MB', 'GB', 'TB').
+:param bool round_result: rounded result
+:return: The converted value and its unit.
+*/
+func ConvertSizes(valueString string, unit string, roundResult bool) string {
+	value, _ := strconv.ParseFloat(valueString, 64)
+	if value == 0 {
+		return "0.00 MB"
+	}
+
+	units := []string{"B", "KB", "MB", "GB", "TB"}
+	unit = strings.ToUpper(unit)
+
+	unitIndex := -1
+	for i, u := range units {
+		if u == unit {
+			unitIndex = i
+			break
+		}
+	}
+
+	if unitIndex == -1 {
+		return "Invalid unit. Must be one of 'B', 'KB', 'MB', 'GB', 'TB'"
+	}
+
+	for value > 999 && unitIndex < len(units)-1 {
+		value /= 1024
+		unitIndex++
+	}
+
+	for value < 1 && unitIndex > 0 {
+		value *= 1024
+		unitIndex--
+	}
+
+	if roundResult {
+		value = math.Round(value/5) * 5
+	}
+
+	return fmt.Sprintf("%.2f %s", value, units[unitIndex])
+}
+
+/*
+Sums two data storage values.
+:param str size1: The first value and its unit.
+:param str size2: The second value and its unit.
+:return: The sum of the values and its unit.
+*/
+func SumSizes(size1, size2 string) string {
+	if size1 == "0.00 MB" {
+		return size2
+	}
+	if size2 == "0.00 MB" {
+		return size1
+	}
+
+	value1Str, unit1 := splitSize(size1)
+	value2Str, unit2 := splitSize(size2)
+
+	value1, _ := strconv.ParseFloat(value1Str, 64)
+	value2, _ := strconv.ParseFloat(value2Str, 64)
+
+	units := []string{"B", "KB", "MB", "GB", "TB"}
+	if !isValidUnit(unit1, units) || !isValidUnit(unit2, units) {
+		return "Invalid unit in one of the sizes. Unit must be one of 'B', 'KB', 'MB', 'GB', 'TB'"
+	}
+
+	value1 *= math.Pow(1024, float64(indexOf(unit1, units)))
+	value2 *= math.Pow(1024, float64(indexOf(unit2, units)))
+
+	totalValue := value1 + value2
+	totalUnit := "B"
+	for totalValue > 999 && totalUnit != "TB" {
+		totalValue /= 1024
+		totalUnit = units[indexOf(totalUnit, units)+1]
+	}
+
+	return fmt.Sprintf("%.2f %s", totalValue, totalUnit)
+}
+
+func splitSize(size string) (string, string) {
+	parts := strings.Split(size, " ")
+	return parts[0], parts[1]
+}
+
+func isValidUnit(unit string, units []string) bool {
+	for _, u := range units {
+		if u == unit {
+			return true
+		}
+	}
+	return false
+}
+
+func indexOf(element string, data []string) int {
+	for k, v := range data {
+		if element == v {
+			return k
+		}
+	}
+	return -1 //not found.
+}
 func FormatStringToTime(timestamp *string) string {
 	timeInt, err := strconv.ParseInt(*timestamp, 10, 64)
 	if err != nil {
@@ -426,4 +558,5 @@ func FormatStringToTime(timestamp *string) string {
 	}
 	t := time.Unix(timeInt, 0)
 	return t.Format("2006-01-02 15:04:05")
+
 }

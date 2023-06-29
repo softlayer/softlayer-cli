@@ -142,6 +142,8 @@ type DuplicateOrderConfig struct {
 	DuplicateSnapshotSize int
 	//Create a dependent duplicate volume.
 	DependentDuplicate bool
+	//Set hourly or monthly billing.
+	HourlyBillingFlag bool
 }
 
 func NewStorageManager(session *session.Session) *storageManager {
@@ -615,6 +617,7 @@ func (s storageManager) OrderDuplicateVolume(config DuplicateOrderConfig) (datat
 	if err != nil {
 		return datatypes.Container_Product_Order_Receipt{}, err
 	}
+	order.UseHourlyPricing = &config.HourlyBillingFlag
 	if config.VolumeType == VOLUME_TYPE_BLOCK {
 		order.OsFormatType = &datatypes.Network_Storage_Iscsi_OS_Type{KeyName: sl.String(osType)}
 	}
