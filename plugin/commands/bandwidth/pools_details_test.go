@@ -1,4 +1,4 @@
-package account_test
+package bandwidth_test
 
 import (
 	"errors"
@@ -12,15 +12,15 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/bandwidth"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("account bandwidth_pools_details", func() {
+var _ = Describe("bandwidth pools-details", func() {
 	var (
 		fakeUI             *terminal.FakeUI
-		cliCommand         *account.BandwidthPoolsDetailCommand
+		cliCommand         *bandwidth.PoolsDetailCommand
 		fakeSession        *session.Session
 		slCommand          *metadata.SoftlayerCommand
 		fakeAccountManager *testhelpers.FakeAccountManager
@@ -30,12 +30,12 @@ var _ = Describe("account bandwidth_pools_details", func() {
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		fakeAccountManager = new(testhelpers.FakeAccountManager)
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-		cliCommand = account.NewBandwidthPoolsDetailCommand(slCommand)
+		cliCommand = bandwidth.NewPoolsDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.AccountManager = fakeAccountManager
 	})
 
-	Describe("account bandwidth_pools_details", func() {
+	Describe("bandwidth pools-details", func() {
 		Context("Return error", func() {
 			It("Set command without Id", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)

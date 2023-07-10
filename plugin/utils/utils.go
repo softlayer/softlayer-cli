@@ -444,7 +444,6 @@ func GetPodWithClosedAnnouncement(key string, pods []datatypes.Network_Pod) stri
 	return "-"
 }
 
-
 /*
 Converts a data storage value to an appropriate unit.
 :param str value: The value to convert.
@@ -550,6 +549,7 @@ func indexOf(element string, data []string) int {
 	}
 	return -1 //not found.
 }
+
 func FormatStringToTime(timestamp *string) string {
 	timeInt, err := strconv.ParseInt(*timestamp, 10, 64)
 	if err != nil {

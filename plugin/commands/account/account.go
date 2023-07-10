@@ -15,8 +15,6 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 		Short: T("Classic infrastructure Account commands"),
 		RunE:  nil,
 	}
-	cobraCmd.AddCommand(NewBandwidthPoolsCommand(sl).Command)
-	cobraCmd.AddCommand(NewBandwidthPoolsDetailCommand(sl).Command)
 	cobraCmd.AddCommand(NewBillingItemsCommand(sl).Command)
 	cobraCmd.AddCommand(NewCancelItemCommand(sl).Command)
 	cobraCmd.AddCommand(NewInvoiceDetailCommand(sl).Command)

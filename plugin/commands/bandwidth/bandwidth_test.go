@@ -1,4 +1,4 @@
-package reports_test
+package bandwidth_test
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/bandwidth"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
@@ -19,17 +19,19 @@ func TestManagers(t *testing.T) {
 }
 
 var availableCommands = []string{
-	"datacenter-closures",
+	"pools",
+	"pools-detail",
+	"summary",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
-var _ = Describe("Test report commands", func() {
+var _ = Describe("Test bandwidth commands", func() {
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
 	slMeta := metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 
 	Context("New commands testable", func() {
-		commands := reports.SetupCobraCommands(slMeta)
+		commands := bandwidth.SetupCobraCommands(slMeta)
 
 		var arrayCommands = []string{}
 		for _, command := range commands.Commands() {
@@ -57,9 +59,9 @@ var _ = Describe("Test report commands", func() {
 
 	Context("Report Namespace", func() {
 		It("Report Name Space", func() {
-			Expect(reports.ReportsNamespace().ParentName).To(ContainSubstring("sl"))
-			Expect(reports.ReportsNamespace().Name).To(ContainSubstring("report"))
-			Expect(reports.ReportsNamespace().Description).To(ContainSubstring("Classic Infrastructure Reports"))
+			Expect(bandwidth.BandwidthNamespace().ParentName).To(ContainSubstring("sl"))
+			Expect(bandwidth.BandwidthNamespace().Name).To(ContainSubstring("bandwidth"))
+			Expect(bandwidth.BandwidthNamespace().Description).To(ContainSubstring("Classic Infrastructure Bandwidth commands"))
 		})
 	})
 })

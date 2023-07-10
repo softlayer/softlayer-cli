@@ -1,4 +1,4 @@
-package account_test
+package bandwidth_test
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -7,15 +7,15 @@ import (
 
 	"github.com/softlayer/softlayer-go/session"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/bandwidth"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("Account Bandwidth-Pools", func() {
+var _ = Describe("Bandwidth Pools", func() {
 	var (
 		fakeUI      *terminal.FakeUI
-		cliCommand  *account.BandwidthPoolsCommand
+		cliCommand  *bandwidth.PoolsCommand
 		fakeSession *session.Session
 		slCommand   *metadata.SoftlayerCommand
 	)
@@ -23,11 +23,11 @@ var _ = Describe("Account Bandwidth-Pools", func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
-		cliCommand = account.NewBandwidthPoolsCommand(slCommand)
+		cliCommand = bandwidth.NewPoolsCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})
 
-	Describe("Bandwidth-Pools Testing", func() {
+	Describe("Bandwidth Pools Testing", func() {
 		Context("Happy Path", func() {
 			It("Runs without issue", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
