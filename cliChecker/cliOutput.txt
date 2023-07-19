@@ -1,27 +1,14 @@
 IBMCLOUD SL Command Directory
 ==============================================================
-sl account bandwidth-pools
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: lists bandwidth pools
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl account bandwidth-pools
-
-==============================================================
-sl account bandwidth-pools-detail
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Get bandwidth pool details.
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl account bandwidth-pools-detail IDENTIFIER
-
-==============================================================
 sl account billing-items
+	Flag: category: Category name.
+	Flag: create: The date the billing item was created (YYYY-MM-DD).
+	Flag: ordered: Name that ordered the item.
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
 	Description: Lists billing items with some other useful information.
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl account billing-items
+	Usage: ${COMMAND_NAME} sl account billing-items [OPTIONS] 
 
 ==============================================================
 sl account cancel-item
@@ -33,24 +20,55 @@ sl account cancel-item
 Cancel the resource or service for a billing Item. By default the billing item will be canceled on the next bill date and reclaim of the resource will begin shortly after the cancellation
 ==============================================================
 sl account event-detail
+	Flag: ack: Acknowledge Event. Doing so will turn off the popup in the control portal.
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
 	Description: Details of a specific event, and ability to acknowledge event.
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl account event-detail IDENTIFIER
+	Usage: ${COMMAND_NAME} sl account event-detail IDENTIFIER [OPTIONS] 
 
 ==============================================================
 sl account events
-	Flag: d,date-min: Earliest date to retrieve events for [YYYY-MM-DD].
+	Flag: ack-all: Acknowledge every upcoming event. Doing so will turn off the popup in the control portal.
+	Flag: announcement: Show only announcement events.
+	Flag: d,date-min: Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.
 	Flag: output: Specify output format, only JSON is supported now.
+	Flag: planned: Show only planned events.
+	Flag: unplanned: Show only unplanned events.
 	--------------------------------
-	Description: Summary and acknowledgement of upcoming and ongoing maintenance events
+	Description: Summary and acknowledgement of upcoming and ongoing maintenance events.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl account events [OPTIONS] 
 
 ==============================================================
+sl account hook-create
+	Flag: N,name: The name of the hook.
+	Flag: U,uri: The endpoint that the script will be downloaded.
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Order/create a provisioning script.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl account hook-create [OPTIONS] 
+
+==============================================================
+sl account hook-delete
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Delete a provisioning scriptt.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl account hook-delete IDENTIFIER
+
+==============================================================
+sl account hooks
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Show all Provisioning Scripts.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl account hooks
+
+==============================================================
 sl account invoice-detail
-	Flag: details: Shows a very detailed list of charges
+	Flag: details: Shows a very detailed list of charges.
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
 	Description: Invoice details.
@@ -59,12 +77,12 @@ sl account invoice-detail
 
 ==============================================================
 sl account invoices
-	Flag: all: Return ALL invoices. There may be a lot of these. [default: False]
-	Flag: closed: Include invoices with a CLOSED status. [default: False]
-	Flag: limit: How many invoices to get back. [default: 50] (Default: 50)
+	Flag: all: Return ALL invoices. There may be a lot of these.
+	Flag: closed: Include invoices with a CLOSED status.
+	Flag: limit: How many invoices to get back. (Default: 50)
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
-	Description: List invoices
+	Description: List invoices.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl account invoices [OPTIONS] 
 
@@ -86,8 +104,9 @@ sl account licenses
 
 ==============================================================
 sl account orders
-	Flag: limit: How many results to get in one api call. [default: 50] (Default: 50)
+	Flag: limit: How many results to get in one api call. (Default: 100)
 	Flag: output: Specify output format, only JSON is supported now.
+	Flag: upgrades: Show upgrades orders.
 	--------------------------------
 	Description: Lists account orders.
 	--------------------------------
@@ -102,39 +121,38 @@ sl account summary
 	Usage: ${COMMAND_NAME} sl account summary
 
 ==============================================================
-sl autoscale delete
-	Flag: f,force: Force operation without confirmation
+sl bandwidth pools
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
-	Description: Delete this group and destroy all members of it
+	Description: Displays bandwidth pool information.
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl autoscale delete IDENTIFIER [OPTIONS] 
+	Usage: ${COMMAND_NAME} sl bandwidth pools
 
 ==============================================================
-sl autoscale detail
+sl bandwidth pools-detail
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
-	Description: Get details of an Autoscale group.
+	Description: Get bandwidth pool details.
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl autoscale detail IDENTIFIER
+	Usage: ${COMMAND_NAME} sl bandwidth pools-detail IDENTIFIER
 
 ==============================================================
-sl autoscale list
+sl bandwidth summary
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
-	Description: List all Autoscale Groups on your account
+	Description: Summary report for every pool/server.
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl autoscale list
+	Usage: ${COMMAND_NAME} sl bandwidth summary
 
 ==============================================================
 sl block access-authorize
-	Flag: d,hardware-id: The ID of one hardware server to authorize
-	Flag: i,ip-address-id: The ID of one IP address to authorize
+	Flag: d,hardware-id: The ID of one hardware server to authorize.
+	Flag: i,ip-address-id: The ID of one IP address to authorize.
 	Flag: output: Specify output format, only JSON is supported now.
-	Flag: p,ip-address: An IP address to authorize
-	Flag: v,virtual-id: The ID of one virtual server to authorize
+	Flag: p,ip-address: An IP address to authorize.
+	Flag: v,virtual-id: The ID of one virtual server to authorize.
 	--------------------------------
-	Description: Authorize hosts  to access a given volume
+	Description: Authorize hosts to access a given volume.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl block access-authorize IDENTIFIER [OPTIONS] 
 ${COMMAND_NAME} sl block access-authorize VOLUME_ID [OPTIONS]
@@ -144,11 +162,11 @@ EXAMPLE:
    This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.
 ==============================================================
 sl block access-list
-	Flag: column: Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times
+	Flag: column: Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.
 	Flag: output: Specify output format, only JSON is supported now.
-	Flag: sortby: Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id (Default: id)
+	Flag: sortby: Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. (Default: id)
 	--------------------------------
-	Description: List hosts that are authorized to access the volume
+	Description: List hosts that are authorized to access the volume.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl block access-list IDENTIFIER [OPTIONS] 
 ${COMMAND_NAME} sl block access-list VOLUME_ID [OPTIONS]
@@ -159,11 +177,12 @@ EXAMPLE:
 ==============================================================
 sl block access-password
 	Flag: output: Specify output format, only JSON is supported now.
+	Flag: p,password: Password you want to set, this command will fail if the password is not strong. [required]
 	--------------------------------
-	Description: Changes a password for a volume's access
+	Description: Changes a password for a volume's access.
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl block access-password IDENTIFIER PASSWORD
-${COMMAND_NAME} sl block access-password ACCESS_ID PASSWORD
+	Usage: ${COMMAND_NAME} sl block access-password IDENTIFIER [OPTIONS] 
+${COMMAND_NAME} sl block access-password ACCESS_ID --password PASSWORD
 	
 	ACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl block access-list'
 ==============================================================
@@ -174,7 +193,7 @@ sl block access-revoke
 	Flag: p,ip-address: An IP address to revoke
 	Flag: v,virtual-id: The ID of one virtual server to revoke
 	--------------------------------
-	Description: Revoke authorization for hosts that are accessing a specific volume
+	Description: Revoke authorization for hosts that are accessing a specific volume.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl block access-revoke IDENTIFIER [OPTIONS] 
 ${COMMAND_NAME} sl block access-revoke VOLUME_ID [OPTIONS]
@@ -212,6 +231,22 @@ sl block object-list
 	Description: List cloud block storage.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl block object-list
+
+==============================================================
+sl block object-storage-detail
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Display details for a cloud object storage.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl block object-storage-detail IDENTIFIER
+
+==============================================================
+sl block object-storage-permission
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Display permission details for a cloud object storage.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl block object-storage-permission IDENTIFIER
 
 ==============================================================
 sl block replica-failback
@@ -496,6 +531,7 @@ sl block volume-detail
 
 ==============================================================
 sl block volume-duplicate
+	Flag: billing: Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly (Default: monthly)
 	Flag: d,dependent-duplicate: Whether or not this duplicate will be a dependent duplicate of the origin volume.
 	Flag: f,force: Force operation without confirmation
 	Flag: i,duplicate-iops: Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used
@@ -569,10 +605,11 @@ ${COMMAND_NAME} sl block volume-modify VOLUME_ID [OPTIONS]
 ==============================================================
 sl block volume-options
 	Flag: output: Specify output format, only JSON is supported now.
+	Flag: prices: Show prices in the storage, snapshot and iops range tables.
 	--------------------------------
 	Description: List all options for ordering a block storage
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl block volume-options
+	Usage: ${COMMAND_NAME} sl block volume-options [OPTIONS] 
 ${COMMAND_NAME} sl block volume-options
 	
 EXAMPLE:
@@ -603,11 +640,12 @@ EXAMPLE:
    This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.
 ==============================================================
 sl block volume-refresh
+	Flag: f,force-refresh: Force the volume refresh, will cancel any ongoing transactions.
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
 	Description: Refresh a duplicate volume with a snapshot from its parent.
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl block volume-refresh IDENTIFIER SNAPSHOT_ID
+	Usage: ${COMMAND_NAME} sl block volume-refresh IDENTIFIER SNAPSHOT_ID [OPTIONS] 
 ${COMMAND_NAME} sl block volume-refresh VOLUME_ID SNAPSHOT_ID
 
 EXAMPLE:
@@ -665,6 +703,34 @@ EXAMPLE:
 	${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{"virtualGuests":{"hostname":{"operation":"cli-test"}}}'
 	This command list virtual guests.
 ==============================================================
+sl cdn create
+	Flag: bucket-name: Bucket name
+	Flag: cname: Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you.
+	Flag: header: The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.
+	Flag: hostname: To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]
+	Flag: http: Http port
+	Flag: https: Https port
+	Flag: origin: Your server IP address or hostname. [required]
+	Flag: origin-type: The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint (Default: server)
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: path: Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video
+	Flag: ssl: A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard] (Default: dvSan)
+	--------------------------------
+	Description: Create a new CDN domain mapping
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl cdn create [OPTIONS] 
+${COMMAND_NAME} sl cdn create
+Example:
+${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80
+==============================================================
+sl cdn delete
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Delete a CDN domain mapping.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl cdn delete IDENTIFIER
+${COMMAND_NAME} sl cdn delete
+==============================================================
 sl cdn detail
 	Flag: history: Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum. (Default: 30)
 	Flag: output: Specify output format, only JSON is supported now.
@@ -697,6 +763,57 @@ sl cdn list
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl cdn list
 ${COMMAND_NAME} sl cdn list
+==============================================================
+sl cdn origin-add
+	Flag: bucket-name: Bucket name.
+	Flag: cache-key: Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'. (Default: include-all)
+	Flag: compression: Enable or disable compression of JPEG images for requests over certain network conditions. (Default: true)
+	Flag: dynamic-path: The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html
+	Flag: file-extensions: Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions.
+	Flag: header: The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.
+	Flag: http: Http port. [http or https is required]
+	Flag: https: Https port. [http or https is required]
+	Flag: optimize: Performance configuration. [Permit: web, video, file, dynamic] (Default: web)
+	Flag: origin: Your server IP address or hostname. [required]
+	Flag: origin-type: The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint. (Default: server)
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: path: Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]
+	Flag: prefetching: Enable or disable the embedded object prefetching feature. (Default: true)
+	--------------------------------
+	Description: Create an origin path for an existing CDN mapping.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl cdn origin-add IDENTIFIER [OPTIONS] 
+${COMMAND_NAME} sl cdn origin-add
+Example:
+${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80
+==============================================================
+sl cdn origin-list
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: List origin path for an existing CDN mapping.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl cdn origin-list IDENTIFIER
+${COMMAND_NAME} sl cdn origin-list
+==============================================================
+sl cdn origin-remove
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Removes an origin path for an existing CDN mapping.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl cdn origin-remove IDENTIFIER PATH
+${COMMAND_NAME} sl cdn origin-remove
+Example:
+${COMMAND_NAME} sl cdn origin-remove 123456789 "/path/*"
+==============================================================
+sl cdn purge
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Creates a purge record and also initiates the purge call.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl cdn purge IDENTIFIER PATH
+${COMMAND_NAME} sl cdn purge
+Example:
+${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt"
 ==============================================================
 sl dedicatedhost cancel-guests
 	Flag: f,force: Force operation without confirmation
@@ -746,6 +863,19 @@ sl dedicatedhost detail
 	Description: Get details for a dedicated host.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl dedicatedhost detail IDENTIFIER [OPTIONS] 
+
+==============================================================
+sl dedicatedhost list
+	Flag: d,datacenter: Filter by datacenter of the dedicated host
+	Flag: n,name: Filter by name of the dedicated host
+	Flag: order: Filter by ID of the order which purchased this dedicated host
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: owner: Filter by owner of the dedicated host
+	Flag: sortby: Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]
+	--------------------------------
+	Description: List dedicated hosts on your account
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl dedicatedhost list [OPTIONS] 
 
 ==============================================================
 sl dedicatedhost list-guests
@@ -962,11 +1092,11 @@ EXAMPLE:
    This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.
 ==============================================================
 sl file access-list
-	Flag: column: Column to display. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id. This option can be specified multiple times
+	Flag: column: Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.
 	Flag: output: Specify output format, only JSON is supported now.
-	Flag: sortby: Column to sort by. Options are: id,name,type,private_ip_address,source_subnet,host_iqn,username,password,allowed_host_id (Default: id)
+	Flag: sortby: Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. (Default: id)
 	--------------------------------
-	Description: List hosts that are authorized to access the volume
+	Description: List hosts that are authorized to access the volume.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl file access-list IDENTIFIER [OPTIONS] 
 ${COMMAND_NAME} sl file access-list VOLUME_ID [OPTIONS]
@@ -1018,7 +1148,7 @@ sl file duplicate-convert-status
 sl file replica-failback
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
-	Description: Failback a block volume from replica
+	Description: Failback a file volume from replica
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl file replica-failback IDENTIFIER
 ${COMMAND_NAME} sl file replica-failback VOLUME_ID
@@ -1059,7 +1189,7 @@ sl file replica-order
 	Flag: s,snapshot-schedule: Snapshot schedule to use for replication. Options are: HOURLY,DAILY,WEEKLY [required]
 	Flag: t,tier: Endurance Storage Tier (IOPS per GB) of the primary volume for which a replica is ordered [optional], options are: 0.25,2,4,10,if no tier is specified, the tier of the original volume will be used
 	--------------------------------
-	Description: Order a block storage replica volume
+	Description: Order a file storage replica volume
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl file replica-order IDENTIFIER [OPTIONS] 
 ${COMMAND_NAME} sl file replica-order VOLUME_ID [OPTIONS]
@@ -1159,7 +1289,7 @@ sl file snapshot-list
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: sortby: Column to sort by. Options are: id,name,created,size_bytes
 	--------------------------------
-	Description: List block storage snapshots
+	Description: List file storage snapshots
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl file snapshot-list IDENTIFIER [OPTIONS] 
 ${COMMAND_NAME} sl file snapshot-list VOLUME_ID [OPTIONS]
@@ -1188,7 +1318,7 @@ EXAMPLE:
 sl file snapshot-restore
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
-	Description: Restore block volume using a given snapshot
+	Description: Restore file volume using a given snapshot
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl file snapshot-restore IDENTIFIER SNAPSHOT_ID
 ${COMMAND_NAME} sl file snapshot-restore VOLUME_ID SNAPSHOT_ID
@@ -1362,11 +1492,12 @@ EXAMPLE:
    This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.
 ==============================================================
 sl file volume-refresh
+	Flag: f,force-refresh: Force the volume refresh, will cancel any ongoing transactions.
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
 	Description: Refresh a duplicate volume with a snapshot from its parent.
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl file volume-refresh IDENTIFIER SNAPSHOT_ID
+	Usage: ${COMMAND_NAME} sl file volume-refresh IDENTIFIER SNAPSHOT_ID [OPTIONS] 
 ${COMMAND_NAME} sl file volume-refresh VOLUME_ID SNAPSHOT_ID
 
 EXAMPLE:
@@ -1492,15 +1623,6 @@ sl globalip unassign
 	Usage: ${COMMAND_NAME} sl globalip unassign IDENTIFIER [OPTIONS] 
 
 ==============================================================
-sl hardware add-notification
-	Flag: output: Specify output format, only JSON is supported now.
-	Flag: users: User ID to be notified on monitoring failure, multiple occurrence allowed
-	--------------------------------
-	Description: Create a user hardware notification entry.
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl hardware add-notification IDENTIFIER [OPTIONS] 
-
-==============================================================
 sl hardware authorize-storage
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: u,username-storage: The storage username to be added to the hardware server.
@@ -1581,6 +1703,18 @@ sl hardware create
 	Usage: ${COMMAND_NAME} sl hardware create [OPTIONS] 
 
 ==============================================================
+sl hardware create-credential
+	Flag: P,password: The password part of the username/password pair.
+	Flag: U,username: The username part of the username/password pair.
+	Flag: n,notes: A note string stored for this username/password pair.
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: software: The name of this specific piece of software.
+	--------------------------------
+	Description: Create a password for a software component.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl hardware create-credential IDENTIFIER [OPTIONS] 
+
+==============================================================
 sl hardware create-options
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
@@ -1623,14 +1757,6 @@ sl hardware edit
 	Usage: ${COMMAND_NAME} sl hardware edit IDENTIFIER [OPTIONS] 
 
 ==============================================================
-sl hardware guests
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Lists the Virtual Guests running on this server.
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl hardware guests IDENTIFIER
-
-==============================================================
 sl hardware list
 	Flag: D,domain: Filter by domain
 	Flag: H,hostname: Filter by hostname
@@ -1666,6 +1792,23 @@ sl hardware notifications
 	Description: Shows who gets notified when the server has a monitoring issues.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl hardware notifications IDENTIFIER
+
+==============================================================
+sl hardware notifications-add
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: users: User ID to be notified on monitoring failure, multiple occurrence allowed
+	--------------------------------
+	Description: Create a user hardware notification entry.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl hardware notifications-add IDENTIFIER [OPTIONS] 
+
+==============================================================
+sl hardware notifications-delete
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Remove a user hardware notification entry.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl hardware notifications-delete IDENTIFIER
 
 ==============================================================
 sl hardware power-cycle
@@ -1825,10 +1968,9 @@ sl image export
 	Description: Export an image to an object storage
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY
-"${COMMAND_NAME} sl image export IDENTIFIER URI API_KEY
-  IDENTIFIER: ID of the image
-  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>
-  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.
+IDENTIFIER: ID of the image
+URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>
+API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.
 ==============================================================
 sl image import
 	Flag: byol: Specifies if image is bring your own license
@@ -1857,6 +1999,22 @@ sl image list
 	Description: List all images on your account
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl image list [OPTIONS] 
+
+==============================================================
+sl image share
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Share an image template with another account.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl image share IDENTIFIER ACCOUNT ID
+
+==============================================================
+sl image share-deny
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Deny sharing of an image template with another account.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl image share-deny IDENTIFIER ACCOUNT ID
 
 ==============================================================
 sl ipsec cancel
@@ -2451,6 +2609,21 @@ sl object-storage credential-list
 	Usage: ${COMMAND_NAME} sl object-storage credential-list
 ${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]
 ==============================================================
+sl object-storage delete
+	Flag: f,force: Force operation without confirmation
+	Flag: immediate: Cancel immediately instead of on the billing anniversary
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: reason: An optional reason for cancellation
+	--------------------------------
+	Description: Cancel an existing object storage instance.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl object-storage delete IDENTIFIER [OPTIONS] 
+${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]
+
+EXAMPLE:
+   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f 
+   This command cancels volume with ID 12345678 immediately and without asking for confirmation.
+==============================================================
 sl object-storage endpoints
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
@@ -2458,6 +2631,14 @@ sl object-storage endpoints
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl object-storage endpoints
 ${COMMAND_NAME} sl object-storage endpoints IDENTIFIER
+==============================================================
+sl order cancelation
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: List cancelations.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl order cancelation
+
 ==============================================================
 sl order category-list
 	Flag: output: Specify output format, only JSON is supported now.
@@ -2480,6 +2661,15 @@ sl order item-list
 	Description: List package items that are used for ordering
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl order item-list PACKAGE_KEYNAME [OPTIONS] 
+
+==============================================================
+sl order lookup
+	Flag: details: Shows a very detailed list of charges
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Provides some details related to order owner, date order, cost information, initial invoice.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl order lookup IDENTIFIER [OPTIONS] 
 
 ==============================================================
 sl order package-list
@@ -2512,11 +2702,9 @@ sl order place
 	--------------------------------
 	Description: Place or verify an order
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS] 
-${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]
-	
-	EXAMPLE: 
-	${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{"virtualGuests": [{"hostname": "test", "domain": "softlayer.com"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest
+	Usage: ${COMMAND_NAME} sl order place PACKAGE_KEYNAME LOCATION ORDER_ITEM1 ORDER_ITEM2 ORDER_ITEM3 ORDER_ITEM4... [OPTIONS] 
+EXAMPLE: 
+	${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{"virtualGuests": [{"hostname": "test", "domain": "softlayer.com"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest
 	This command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13
 ==============================================================
 sl order place-quote
@@ -2529,16 +2717,15 @@ sl order place-quote
 	--------------------------------
 	Description: Place a quote
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS] 
-${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1,ORDER_ITEM2,ORDER_ITEM3,ORDER_ITEM4... [OPTIONS]
-
-    EXAMPLE: 
-    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4,RAM_16_GB,REBOOT_REMOTE_CONSOLE,1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS,BANDWIDTH_0_GB_2,1_IP_ADDRESS,GUEST_DISK_100_GB_SAN,OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI,MONITORING_HOST_PING,NOTIFICATION_EMAIL_AND_TICKET,AUTOMATED_NOTIFICATION,UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT,NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{"virtualGuests": [{"hostname": "test", "domain": "softlayer.com"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name "foobar" --send-email
+	Usage: ${COMMAND_NAME} sl order place-quote PACKAGE_KEYNAME LOCATION ORDER_ITEM1 ORDER_ITEM2 ORDER_ITEM3 ORDER_ITEM4... [OPTIONS] 
+EXAMPLE: 
+    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{"virtualGuests": [{"hostname": "test", "domain": "softlayer.com"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name "foobar" --send-email
     This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13
 ==============================================================
 sl order preset-list
 	Flag: keyword: A word (or string) used to filter presets
 	Flag: output: Specify output format, only JSON is supported now.
+	Flag: prices: Lists the prices for each item in this preset
 	--------------------------------
 	Description: List package presets
 	--------------------------------
@@ -2565,6 +2752,14 @@ ${COMMAND_NAME} sl order quote IDENTIFIER [OPTIONS]
 EXAMPLE: 
 	${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --verify --quantity 1 --postinstall https://mypostinstallscript.com --userdata Myuserdata
 	${COMMAND_NAME} sl order quote 123456 --fqdn testquote.test.com --key 111111 --image 222222 --complex-type SoftLayer_Container_Product_Order_Hardware_Server
+==============================================================
+sl order quote-delete
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Delete the quote of an order.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl order quote-delete IDENTIFIER
+
 ==============================================================
 sl order quote-detail
 	Flag: output: Specify output format, only JSON is supported now.
@@ -2611,21 +2806,19 @@ sl placement-group create-options
 ==============================================================
 sl placement-group delete
 	Flag: f,force: Force operation without confirmation
-	Flag: id: ID for the placement group. [required]
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
 	Description: Delete a placement group
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl placement-group delete [OPTIONS] 
+	Usage: ${COMMAND_NAME} sl placement-group delete PLACEMENTGROUP_ID [OPTIONS] 
 
 ==============================================================
 sl placement-group detail
-	Flag: id: ID for the placement group. [required]
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
 	Description: View details of a placement group
 	--------------------------------
-	Usage: ${COMMAND_NAME} sl placement-group detail [OPTIONS] 
+	Usage: ${COMMAND_NAME} sl placement-group detail PLACEMENTGROUP_ID
 
 ==============================================================
 sl placement-group list
@@ -2635,23 +2828,6 @@ sl placement-group list
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl placement-group list
 
-==============================================================
-sl report bandwidth
-	Flag: end: datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'
-	Flag: output: Specify output format, only JSON is supported now.
-	Flag: pool: Show only the bandwidth pool summary.
-	Flag: server: Show only the bandwidth summary for each hardware server 
-	Flag: sortby: Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]
-	Flag: start: datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'
-	Flag: virtual: Show only the bandwidth summary for each virtual server
-	--------------------------------
-	Description: Bandwidth report for every pool/server.
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl report bandwidth [OPTIONS] 
-EXAMPLE: 
-   ${COMMAND_NAME} sl report bandwidth
-   ${COMMAND_NAME} sl report bandwidth --server --start 2022-06-07 --end 2022-06-08
-   ${COMMAND_NAME} sl report bandwidth --start 2022-06-07 --end 2022-06-08 --sortby privateOut
 ==============================================================
 sl report datacenter-closures
 	Flag: output: Specify output format, only JSON is supported now.
@@ -2943,14 +3119,10 @@ EXAMPLE:
 sl subnet clear-route
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
-	Description: This interface allows you to remove the route of your Account Owned subnets.
+	Description: Removes the routing for a specified subnet, turning it into an unrouted portable subnet.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl subnet clear-route IDENTIFIER
-${COMMAND_NAME} sl subnet clear-route IDENTIFIER [OPTIONS]
 
-EXAMPLE:
-   ${COMMAND_NAME} sl subnet clear-route 12345678
-   This command allows you to remove the route of your Account Owned subnets.
 ==============================================================
 sl subnet create
 	Flag: 6,ipv6: Order IPv6 Addresses
@@ -3052,18 +3224,33 @@ EXAMPLE:
    This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.
 ==============================================================
 sl subnet route
-	Flag: i,type-id: An appropriate identifier for the specified $type, e.g. the identifier of a SoftLayer_Network_Subnet_IpAddress [required].
+	Flag: i,ip: A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address.
+	Flag: l,vlan: A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,
+eg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier 
 	Flag: output: Specify output format, only JSON is supported now.
-	Flag: t,type: Type value in static routing e.g.: SoftLayer_Network_Subnet_IpAddress, SoftLayer_Hardware_Server [required].
+	Flag: s,server: A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique
+fully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>
+	Flag: v,vsi: A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique
+fully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>
 	--------------------------------
-	Description: This interface allows you to change the route of your Account Owned subnets.
+	Description: Change how a secondary subnet is routed.
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS] 
-${COMMAND_NAME} sl subnet route IDENTIFIER [OPTIONS]
+Allows you to change the route of your secondary subnets.
+Subnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.
+Static subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.
+Portable subnets have an ultimate routing destination of a VLAN.
+A subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.
+
+See Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/
 
 EXAMPLE:
-   ${COMMAND_NAME} sl subnet route --type-id 1234567 --type SoftLayer_Network_Subnet_IpAddress 12345678
-   This command allows you to change the route of your Account Owned subnets.
+	${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44
+	${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>
+	${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId
+	${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId
+
+
 ==============================================================
 sl tags cleanup
 	Flag: dry-run: Don't delete, just show what will be deleted.
@@ -3229,6 +3416,17 @@ ${COMMAND_NAME} sl ticket upload TICKETID FILEPATH
 EXAMPLE:
 	${COMMAND_NAME} sl ticket upload 767676 "/home/user/screenshot.png"
 ==============================================================
+sl user apikey
+	Flag: add: Create an user's API authentication key
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: refresh: Refresh an user's API authentication key
+	Flag: remove: Remove an user's API authentication key
+	--------------------------------
+	Description: Allows to create, remove or refresh user's API authentication key
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl user apikey IDENTIFIER [OPTIONS] 
+Each user can only have a single API key.
+==============================================================
 sl user create
 	Flag: email: Email address for this user. Required for creation
 	Flag: f,force: Force operation without confirmation
@@ -3334,7 +3532,7 @@ sl user notifications
 
 ==============================================================
 sl user permission-edit
-	Flag: enable: Enable or Disable selected permissions. Accepted inputs are 'true' and 'false'. default is 'true'
+	Flag: enable: Enable or Disable selected permissions. Accepted inputs are 'true' and 'false'. default is 'true' (Default: true)
 	Flag: from-user: Set permissions to match this user's permissions. Adds and removes the appropriate permissions
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: permission: Permission keyName to set. Use keyword ALL to select ALL permissions
@@ -3361,6 +3559,43 @@ sl user remove-access
 	Description: Remove access from a user to an specific device
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl user remove-access IDENTIFIER [OPTIONS] 
+
+==============================================================
+sl user vpn-manual
+	Flag: disable: Disable vpn subnets manual config.
+	Flag: enable: Enable vpn subnets manual config.
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Enable or disable user vpn subnets manual config.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl user vpn-manual USER_ID [OPTIONS] 
+
+==============================================================
+sl user vpn-password
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: password: Your new VPN password [required]
+	--------------------------------
+	Description: Set the user VPN password.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl user vpn-password IDENTIFIER [OPTIONS] 
+
+==============================================================
+sl user vpn-subnet
+	Flag: add: Add access to subnet.
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: remove: Remove access to subnet.
+	--------------------------------
+	Description: Add or remove subnet access for a user.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl user vpn-subnet USER_ID SUBNET_ID [OPTIONS] 
+
+==============================================================
+sl version
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Print the version of the sl plugin
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl version
 
 ==============================================================
 sl vlan cancel
@@ -3447,15 +3682,6 @@ sl vlan options
 	Description: List all the options for creating VLAN
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl vlan options
-
-==============================================================
-sl vs add-notification
-	Flag: output: Specify output format, only JSON is supported now.
-	Flag: users: User ID to be notified on monitoring failure, multiple occurrence allowed
-	--------------------------------
-	Description: Create a user virtual notification entry.
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl vs add-notification IDENTIFIER [OPTIONS] 
 
 ==============================================================
 sl vs authorize-storage
@@ -3557,7 +3783,8 @@ sl vs capacity-list
 
 ==============================================================
 sl vs capture
-	Flag: all: Capture all disks that belong to the virtual server
+	Flag: all: Capture all block devices that belong to the virtual server
+	Flag: device: The block device ID´s to archive, multiple occurrence allowed
 	Flag: n,name: Name of the image [required]
 	Flag: note: Add a note to be associated with the image
 	Flag: output: Specify output format, only JSON is supported now.
@@ -3709,6 +3936,7 @@ sl vs host-list
 	Flag: order: Filter by ID of the order which purchased this dedicated host
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: owner: Filter by owner of the dedicated host
+	Flag: sortby: Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]
 	--------------------------------
 	Description: List dedicated hosts on your account
 	--------------------------------
@@ -3773,12 +4001,37 @@ sl vs notifications
 	Usage: ${COMMAND_NAME} sl vs notifications IDENTIFIER
 
 ==============================================================
+sl vs notifications-add
+	Flag: output: Specify output format, only JSON is supported now.
+	Flag: users: User ID to be notified on monitoring failure, multiple occurrence allowed
+	--------------------------------
+	Description: Create a user virtual notification entry.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl vs notifications-add IDENTIFIER [OPTIONS] 
+
+==============================================================
+sl vs notifications-delete
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Remove a user VS notification entry.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl vs notifications-delete IDENTIFIER
+
+==============================================================
 sl vs options
 	Flag: output: Specify output format, only JSON is supported now.
 	--------------------------------
 	Description: List options for creating virtual server instance
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl vs options
+
+==============================================================
+sl vs os-available
+	Flag: output: Specify output format, only JSON is supported now.
+	--------------------------------
+	Description: Get all available Operating Systems.
+	--------------------------------
+	Usage: ${COMMAND_NAME} sl vs os-available
 
 ==============================================================
 sl vs pause
@@ -3788,44 +4041,6 @@ sl vs pause
 	Description: Pause an active virtual server instance
 	--------------------------------
 	Usage: ${COMMAND_NAME} sl vs pause IDENTIFIER [OPTIONS] 
-
-==============================================================
-sl vs placementgroup-create
-	Flag: b,backend-router-id: Backend router ID. [required]
-	Flag: n,name: Name for this new placement group. [required]
-	Flag: output: Specify output format, only JSON is supported now.
-	Flag: r,rule-id: The ID of the rule to govern this placement group. [required]
-	--------------------------------
-	Description: Create a placement group
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl vs placementgroup-create [OPTIONS] 
-${COMMAND_NAME} sl vs placementgroup-create [OPTIONS]
-EXAMPLE:
-${COMMAND_NAME} sl vs placementgroup-create -n myvsi -b 1234567 -r 258369 
-This command orders a Placement group instance with name is myvsi, backendRouterId 1234567, and rule 258369
-==============================================================
-sl vs placementgroup-create-options
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Get List options for creating a placement group..
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl vs placementgroup-create-options
-
-==============================================================
-sl vs placementgroup-detail
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: Get placement Group details.
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl vs placementgroup-detail IDENTIFIER
-
-==============================================================
-sl vs placementgroup-list
-	Flag: output: Specify output format, only JSON is supported now.
-	--------------------------------
-	Description: List placement groups.
-	--------------------------------
-	Usage: ${COMMAND_NAME} sl vs placementgroup-list
 
 ==============================================================
 sl vs power-off
@@ -3918,6 +4133,7 @@ sl vs storage
 
 ==============================================================
 sl vs upgrade
+	Flag: add-disk: Add Hard disk in GB
 	Flag: c,cpu: Number of CPU cores
 	Flag: f,force: Force operation without confirmation
 	Flag: flavor: Flavor key name
@@ -3925,6 +4141,7 @@ sl vs upgrade
 	Flag: network: Network port speed in Mbps
 	Flag: output: Specify output format, only JSON is supported now.
 	Flag: private: CPU core will be on a dedicated host server
+	Flag: resize-disk: Update disk number to size in GB [capacity,diskNumber]. --resize-disk 250,2
 	--------------------------------
 	Description: Upgrade a virtual server instance
 	--------------------------------

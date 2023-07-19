@@ -6,9 +6,9 @@ It was introduced as part of the CLI refactor project, and might be removed late
 from the softlayer-cli root directory, do the following after making changes.
 
 ```
-cd cliChcker
+cd cliChecker
 go build
-./cliChcker.exe > cliOutput.txt
+./cliChecker > cliOutput.txt
 git diff cliOutput.txt
 ```
 
