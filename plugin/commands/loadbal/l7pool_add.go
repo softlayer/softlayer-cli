@@ -38,7 +38,7 @@ func NewL7PoolAddCommand(sl *metadata.SoftlayerCommand) *L7PoolAddCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "l7pool-add",
 		Short: T("Add a new L7 pool"),
-		Long:  T("${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"),
+		Long:  T("${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]\n\n Adds a new l7 pool \n\n -s is in colon deliminated format to make grouping IP:port:weight a bit easier."),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
