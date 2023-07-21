@@ -214,6 +214,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command {
 
 	slCommand := metadata.NewSoftlayerCommand(ui, session)
+	helpFlag := false;
 	cobraCmd := &cobra.Command{
 		Use:          "sl",
 		Short:        T("Manage Classic infrastructure services"),
@@ -233,6 +234,8 @@ func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 
 	// Persistent Flags
 	cobraCmd.PersistentFlags().Var(slCommand.OutputFlag, "output", T("Specify output format, only JSON is supported now."))
+	// This is needed so we can translate the help text
+	cobraCmd.PersistentFlags().BoolVarP(&helpFlag, "help", "h", false, T("Usage information."))
 
 	// Commands
 	cobraCmd.AddCommand(callapi.NewCallAPICommand(slCommand).Command) // single command
