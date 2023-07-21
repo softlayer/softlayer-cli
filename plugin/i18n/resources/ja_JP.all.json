@@ -152,10 +152,6 @@
     "translation": "${COMMAND_NAME}  sl ipsec update CONTEXT_ID [OPTIONS]\n\n  トンネル・コンテキストのプロパティーを更新します。\n\n  更新は自動的に行われるため、すべてが受け入れられるか、まったく受け入れられないかのいずれかです。\n\n  鍵ライフの値は、120 から 172800 の範囲内でなければなりません。\n\n フェーズ 2 Perfect Forward Secrecy は 0 から 1 の範囲内でなければなりません。\n\n  ネットワーク・デバイス上で変更を実現するためには、別に構成要求を行う必要が\n  あります。"
   },
   {
-    "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
-    "translation": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"
-  },
-  {
     "id": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
     "translation": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
   },
@@ -174,10 +170,6 @@
   {
     "id": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
     "translation": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
-    "translation": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
   },
   {
     "id": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
@@ -1308,18 +1300,6 @@
     "translation": "キャッシュ・キーの最適化。 選択できる有効なオプションは、「include-all」、「ignore-all」、「include-specified」、「ignore-specified」です。 「include-specified」または「ignore-specified」を選択する場合は、オプション cache-description に追加してください。"
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "帯域幅プールの計算"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "ハードウェアの計算"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "仮想の計算"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "任意の API エンドポイントを呼び出します"
   },
@@ -1662,10 +1642,6 @@
   {
     "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
     "translation": "ソート基準の列 (ID、名前、データ・センター、ルーター、CPU、メモリー、ディスク、ゲスト) [デフォルト: Id]"
-  },
-  {
-    "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
-    "translation": "ソートする列 (type、hostname、publicIn、publicOut、privateIn、privateOut、pool) [デフォルト: publicOut]"
   },
   {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
@@ -2400,10 +2376,6 @@
     "translation": "ハードウェア・サーバー詳細を編集します"
   },
   {
-    "id": "Edit load balancer health check",
-    "translation": "ロード・バランサーのヘルス・チェックを編集します"
-  },
-  {
     "id": "Edit load balancer protocol",
     "translation": "ロード・バランサー・プロトコルの編集"
   },
@@ -2510,10 +2482,6 @@
   {
     "id": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]",
     "translation": "終了日。例: 2019 年 4 月 4 日 (yyyy-MM-dd) [必須]"
-  },
-  {
-    "id": "End Date must be greater than Start Date.",
-    "translation": "終了日は開始日より後でなければなりません。"
   },
   {
     "id": "End date for bandwidth reporting",
@@ -2626,6 +2594,10 @@
   {
     "id": "FQDN",
     "translation": "FQDN"
+  },
+  {
+    "id": "Failback a {{.storageType}} volume from replica",
+    "translation": "Failback a {{.storageType}} volume from replica"
   },
   {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
@@ -3324,10 +3296,6 @@
     "translation": "ご使用のアカウントの Load Balancers の取得に失敗しました。"
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "ID {{.MetricTrackingObjectId}}のオブジェクトのメトリック・トラッキング・サマリーの取得に失敗しました。"
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "複数 VLAN ファイアウォールの取得に失敗しました。\n"
   },
@@ -3514,14 +3482,6 @@
   {
     "id": "Failed to get user.",
     "translation": "ユーザーの取得に失敗しました。"
-  },
-  {
-    "id": "Failed to get virtual dedicated racks on your account.\n",
-    "translation": "アカウントの仮想専用ラックの取得に失敗しました。\n"
-  },
-  {
-    "id": "Failed to get virtual guests on your account.\n",
-    "translation": "アカウントの仮想ゲストの取得に失敗しました。\n"
   },
   {
     "id": "Failed to get virtual licenses.",
@@ -4460,10 +4420,6 @@
     "translation": "ゲートウェイ/ファイアウォール"
   },
   {
-    "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
-    "translation": "{{.endDate}} への {{.startDate}} の帯域幅レポートの生成"
-  },
-  {
     "id": "Get Event Log types",
     "translation": "イベント・ログ・タイプの取得"
   },
@@ -5034,14 +4990,6 @@
   {
     "id": "Invalid format date to --date-min.",
     "translation": "日付の形式 --date-min は無効です。"
-  },
-  {
-    "id": "Invalid format date to --end.",
-    "translation": "日付の形式が無効です -- end。"
-  },
-  {
-    "id": "Invalid format date to --start.",
-    "translation": "日付の形式が無効です -- start。"
   },
   {
     "id": "Invalid format date.",
@@ -7352,14 +7300,6 @@
     "translation": "選択したデータ・センターのみを表示し、短縮名 (dal13) の形式を使用します"
   },
   {
-    "id": "Show only the bandwidth summary for each hardware server ",
-    "translation": "各ハードウェア・サーバーの帯域幅の要約のみを表示します "
-  },
-  {
-    "id": "Show only the bandwidth summary for each virtual server",
-    "translation": "各仮想サーバーの帯域幅の要約のみを表示します"
-  },
-  {
     "id": "Show only unplanned events.",
     "translation": "計画外のイベントのみを表示します。"
   },
@@ -9248,10 +9188,6 @@
     "translation": "date_of_month"
   },
   {
-    "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
-    "translation": "「YYYY-MM-DD」または「YYYY-MM-DD HH:MM: SS」形式の日時"
-  },
-  {
     "id": "day",
     "translation": "日"
   },
@@ -9504,10 +9440,6 @@
     "translation": "password"
   },
   {
-    "id": "pool",
-    "translation": "プール"
-  },
-  {
     "id": "preset",
     "translation": "事前設定"
   },
@@ -9532,14 +9464,6 @@
     "translation": "プライベート・ネットワーク"
   },
   {
-    "id": "privateIn",
-    "translation": "プライバシー・イン"
-  },
-  {
-    "id": "privateOut",
-    "translation": "プライバシー・アウト"
-  },
-  {
     "id": "private_ip",
     "translation": "private_ip"
   },
@@ -9554,14 +9478,6 @@
   {
     "id": "public ip",
     "translation": "パブリック ip"
-  },
-  {
-    "id": "publicIn",
-    "translation": "パブリック・イン"
-  },
-  {
-    "id": "publicOut",
-    "translation": "パブリック・アウト"
   },
   {
     "id": "public_ip",
