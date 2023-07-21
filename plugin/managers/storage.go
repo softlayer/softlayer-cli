@@ -693,7 +693,7 @@ func (s storageManager) EnableSnapshot(volumeId int, scheduleType string, retent
 
 // Disables snapshots for a specific block volume at a given schedule.
 // volumeId: The id of the volume
-// scheduleType: 'INTERVAL'|'HOURLY'|'DAILY'|'WEEKLY'
+// scheduleType: 'HOURLY'|'DAILY'|'WEEKLY'
 func (s storageManager) DisableSnapshots(volumeId int, scheduleType string) error {
 	_, err := s.StorageService.Id(volumeId).DisableSnapshots(sl.String(scheduleType))
 	return err
