@@ -29,6 +29,8 @@ func NewSnapshotCreateCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotCre
 		Short: T("Create a snapshot on a given volume"),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]
 
+Creates a snapshot on a given volume.
+
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud
    This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.`, sl.StorageI18n),

@@ -28,6 +28,8 @@ func NewSnapshotDisableCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotDi
 		Short: T("Disable snapshots on the specified schedule for a given volume"),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]
 
+Disables snapshots on the specified schedule for a given volume.
+
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY
    This command disables daily snapshot for volume with ID 12345678.`, sl.StorageI18n),
@@ -36,7 +38,7 @@ EXAMPLE:
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().StringVarP(&thisCmd.Schedule_type, "schedule-type", "s", "", T("Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Schedule_type, "schedule-type", "s", "", T("Snapshot schedule [required], options are: INTERVAL,HOURLY,DAILY,WEEKLY"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
@@ -48,11 +50,11 @@ func (cmd *SnapshotDisableCommand) Run(args []string) error {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
 	if cmd.Schedule_type == "" {
-		return slErr.NewInvalidUsageError(T("[--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY."))
+		return slErr.NewInvalidUsageError(T("[--schedule-type] is required, options are: INTERVAL, HOURLY, DAILY, WEEKLY."))
 	}
 	scheduleType := cmd.Schedule_type
-	if scheduleType != "HOURLY" && scheduleType != "DAILY" && scheduleType != "WEEKLY" {
-		return slErr.NewInvalidUsageError(T("[--schedule-type] must be HOURLY, DAILY, or WEEKLY."))
+	if scheduleType != "HOURLY" && scheduleType != "DAILY" && scheduleType != "WEEKLY" && scheduleType != "INTERVAL" {
+		return slErr.NewInvalidUsageError(T("[--schedule-type] must be INTERVAL, HOURLY, DAILY, or WEEKLY."))
 	}
 	err = cmd.StorageManager.DisableSnapshots(volumeID, scheduleType)
 	subs := map[string]interface{}{"ScheduleType": scheduleType, "VolumeID": volumeID}

@@ -29,7 +29,9 @@ func NewSnapshotCancelCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotCan
 		Use:   "snapshot-cancel " + T("IDENTIFIER"),
 		Short: T("Cancel existing snapshot space for a given volume"),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]
-		
+
+Cancel existing snapshot space for a given volume.
+
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f 
    This command cancels snapshot with ID 12345678 immediately without asking for confirmation.`, sl.StorageI18n),
