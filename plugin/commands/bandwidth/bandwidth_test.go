@@ -21,6 +21,7 @@ func TestManagers(t *testing.T) {
 var availableCommands = []string{
 	"pools",
 	"pools-detail",
+	"pools-create",
 	"summary",
 }
 
