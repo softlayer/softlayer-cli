@@ -84,5 +84,81 @@ var _ = Describe("Replica partners", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("There are no replication partners for volume 1234."))
 			})
 		})
+		Context("Replica partners with correct volume id and --sortby id", func() {
+			BeforeEach(func() {
+				FakeStorageManager.GetReplicationPartnersReturns(nil, nil)
+			})
+			It("return table", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "442707460", "--sortby=id")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("442707460"))
+			})
+		})
+
+		Context("Replica partners with correct volume id and --sortby accountId", func() {
+			BeforeEach(func() {
+				FakeStorageManager.GetReplicationPartnersReturns(nil, nil)
+			})
+			It("return table", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "307608", "--sortby=accountId")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("307608"))
+			})
+		})
+
+		Context("Replica partners with correct volume id and --sortby capacityGb", func() {
+			BeforeEach(func() {
+				FakeStorageManager.GetReplicationPartnersReturns(nil, nil)
+			})
+			It("return table", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "25", "--sortby=capacityGb")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("25"))
+			})
+		})
+
+		Context("Replica partners with correct volume id and --sortby hardwareId", func() {
+			BeforeEach(func() {
+				FakeStorageManager.GetReplicationPartnersReturns(nil, nil)
+			})
+			It("return table", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby=hardwareId")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+			})
+		})
+
+		Context("Replica partners with correct volume id and --sortby guestId", func() {
+			BeforeEach(func() {
+				FakeStorageManager.GetReplicationPartnersReturns(nil, nil)
+			})
+			It("return table", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby=guestId")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+			})
+		})
+
+		Context("Replica partners with correct volume id and --sortby hostId", func() {
+			BeforeEach(func() {
+				FakeStorageManager.GetReplicationPartnersReturns(nil, nil)
+			})
+			It("return table", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby=hostId")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+			})
+		})
+
+		Context("Replica partners with correct volume id and --sortby abcd", func() {
+			BeforeEach(func() {
+				FakeStorageManager.GetReplicationPartnersReturns(nil, nil)
+			})
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby=abcd")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --sortby 'abcd' is not supported."))
+			})
+		})
 	})
 })

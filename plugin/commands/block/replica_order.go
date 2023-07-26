@@ -35,8 +35,6 @@ func NewReplicaOrderCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaOrderC
 		Short: T("Order a block storage replica volume"),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]
 
-Order a block storage replica volume.
-
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX
    This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.`, sl.StorageI18n),

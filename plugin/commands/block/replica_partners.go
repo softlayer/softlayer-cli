@@ -85,7 +85,7 @@ func (cmd *ReplicaPartnersCommand) Run(args []string) error {
 	if len(partners) == 0 {
 		cmd.UI.Print(T("There are no replication partners for volume {{.VolumeID}}.\n", subs))
 	} else {
-		table := cmd.UI.Table([]string{T("id"), T("username"), T("accountId"), T("capacityGb"), T("hardwareId"), T("guestId"), T("hostId")})
+		table := cmd.UI.Table([]string{T("ID"), T("User name"), T("Account ID"), T("Capacity (GB)"), T("Hardware ID"), T("Guest ID"), T("Host ID")})
 		for _, p := range partners {
 			table.Add(
 				utils.FormatIntPointer(p.Id),

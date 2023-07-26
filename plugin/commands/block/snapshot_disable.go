@@ -28,8 +28,6 @@ func NewSnapshotDisableCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotDi
 		Short: T("Disable snapshots on the specified schedule for a given volume"),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]
 
-Disables snapshots on the specified schedule for a given volume.
-
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY
    This command disables daily snapshot for volume with ID 12345678.`, sl.StorageI18n),
