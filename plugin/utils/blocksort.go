@@ -36,66 +36,6 @@ func (a VolumeByUsername) Less(i, j int) bool {
 	return false
 }
 
-type VolumeByAccountId []datatypes.Network_Storage
-
-func (a VolumeByAccountId) Len() int {
-	return len(a)
-}
-func (a VolumeByAccountId) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
-func (a VolumeByAccountId) Less(i, j int) bool {
-	if a[i].AccountId != nil && a[j].AccountId != nil {
-		return *a[i].AccountId < *a[j].AccountId
-	}
-	return false
-}
-
-type VolumeByHardwareById []datatypes.Network_Storage
-
-func (a VolumeByHardwareById) Len() int {
-	return len(a)
-}
-func (a VolumeByHardwareById) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
-func (a VolumeByHardwareById) Less(i, j int) bool {
-	if a[i].HardwareId != nil && a[j].HardwareId != nil {
-		return *a[i].HardwareId < *a[j].HardwareId
-	}
-	return false
-}
-
-type VolumeByGuestId []datatypes.Network_Storage
-
-func (a VolumeByGuestId) Len() int {
-	return len(a)
-}
-func (a VolumeByGuestId) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
-func (a VolumeByGuestId) Less(i, j int) bool {
-	if a[i].GuestId != nil && a[j].GuestId != nil {
-		return *a[i].GuestId < *a[j].GuestId
-	}
-	return false
-}
-
-type VolumeByHostId []datatypes.Network_Storage
-
-func (a VolumeByHostId) Len() int {
-	return len(a)
-}
-func (a VolumeByHostId) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
-func (a VolumeByHostId) Less(i, j int) bool {
-	if a[i].HostId != nil && a[j].HostId != nil {
-		return *a[i].HostId < *a[j].HostId
-	}
-	return false
-}
-
 type VolumeByDatacenter []datatypes.Network_Storage
 
 func (a VolumeByDatacenter) Len() int {
