@@ -35,8 +35,8 @@ func NewHookCreateCommand(sl *metadata.SoftlayerCommand) *HookCreateCommand {
 		},
 	}
 
-	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "N", "", T("The name of the hook.  [required]"))
-	cobraCmd.Flags().StringVarP(&thisCmd.Uri, "uri", "U", "", T("The endpoint that the script will be downloaded.  [required]"))
+	cobraCmd.Flags().StringVarP(&thisCmd.Name, "name", "N", "", T("The name of the hook."+" "+T("[required]")))
+	cobraCmd.Flags().StringVarP(&thisCmd.Uri, "uri", "U", "", T("The endpoint that the script will be downloaded."+" "+T("[required]")))
 
 	//#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("name")
