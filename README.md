@@ -471,3 +471,15 @@ It("return error", func() {
     Expect(err.Error()).To(ContainSubstring("Failed to show hardware."))
 })
 ```
+
+
+# Plugin Support
+After v1.4.1 `sl` will be a normal plugin, so where are the instructions to build the plugin. 
+
+0. Create a new version and tag it in github like normal.
+1. Build the binaries. 
+```bash
+./bin/build-all
+for i in `ls --indicator-style=none out`; do echo "Uploading $i";  ibmcloud.exe cos upload --bucket softlayer-cli-binaries --file ./out/$i --key $i; done;
+```  
+2. Run the Jenkins job https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1/
