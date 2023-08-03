@@ -1,7 +1,6 @@
 package block
 
 import (
-	"sort"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -17,7 +16,6 @@ type ReplicaPartnersCommand struct {
 	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
-	Sortby         string
 }
 
 func NewReplicaPartnersCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaPartnersCommand {
@@ -39,7 +37,6 @@ EXAMPLE:
 		},
 	}
 
-	cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "username", T("Column to sort by. Options are: id, username, accountId, capacityGb, hardwareId, guestId, hostId"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
@@ -50,32 +47,12 @@ func (cmd *ReplicaPartnersCommand) Run(args []string) error {
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	sortby := cmd.Sortby
-
 	outputFormat := cmd.GetOutputFlag()
 
 	partners, err := cmd.StorageManager.GetReplicationPartners(volumeID)
 	subs := map[string]interface{}{"VolumeID": volumeID}
 	if err != nil {
 		return slErr.NewAPIError(T("Failed to get replication partners for volume {{.VolumeID}}.\n", subs), err.Error(), 2)
-	}
-
-	if sortby == "id" {
-		sort.Sort(utils.VolumeById(partners))
-	} else if sortby == "username" {
-		sort.Sort(utils.VolumeByUsername(partners))
-	} else if sortby == "accountId" {
-		sort.Sort(utils.VolumeByAccountId(partners))
-	} else if sortby == "capacityGb" {
-		sort.Sort(utils.VolumeByCapacity(partners))
-	} else if sortby == "hardwareId" {
-		sort.Sort(utils.VolumeByHardwareById(partners))
-	} else if sortby == "guestId" {
-		sort.Sort(utils.VolumeByGuestId(partners))
-	} else if sortby == "hostId" {
-		sort.Sort(utils.VolumeByHostId(partners))
-	} else {
-		return slErr.NewInvalidUsageError(T("--sortby '{{.Column}}' is not supported.", map[string]interface{}{"Column": sortby}))
 	}
 
 	if outputFormat == "JSON" {
