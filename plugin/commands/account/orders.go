@@ -32,6 +32,7 @@ func NewOrdersCommand(sl *metadata.SoftlayerCommand) *OrdersCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "orders",
 		Short: T("Lists account orders."),
+		Long:  T("Lists account orders.") + " " + T("Use `${COMMAND_NAME} sl order lookup <ID>` to find more details about a specific order."),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
