@@ -176,10 +176,6 @@
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
   },
   {
-    "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
-    "translation": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"
-  },
-  {
     "id": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
     "translation": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
   },
@@ -198,10 +194,6 @@
   {
     "id": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
     "translation": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
-    "translation": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
   },
   {
     "id": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
@@ -788,6 +780,10 @@
     "translation": "-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
   },
   {
+    "id": "-s is in colon deliminated format to make grouping IP:port:weight a bit easier.",
+    "translation": "-s is in colon deliminated format to make grouping IP:port:weight a bit easier."
+  },
+  {
     "id": "-s, --subnet is only available in PublicToPrivate and PrivateToPrivate load balancer type.",
     "translation": "-s, --subnet is only available in PublicToPrivate and PrivateToPrivate load balancer type."
   },
@@ -1120,6 +1116,10 @@
     "translation": "An ID of one subnet to authorize"
   },
   {
+    "id": "An ID of one subnet to revoke",
+    "translation": "An ID of one subnet to revoke"
+  },
+  {
     "id": "An IP address to authorize",
     "translation": "An IP address to authorize"
   },
@@ -1404,18 +1404,6 @@
     "translation": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'."
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "Calculating for bandwidth pools"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "Calculating for hardware"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "Calculating for virtual"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "Call arbitrary API endpoints"
   },
@@ -1496,6 +1484,10 @@
     "translation": "Cancel the file storage volume immediately instead of on the billing anniversary"
   },
   {
+    "id": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation",
+    "translation": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation"
+  },
+  {
     "id": "Cancel the snapshot space immediately instead of on the billing anniversary",
     "translation": "Cancel the snapshot space immediately instead of on the billing anniversary"
   },
@@ -1560,6 +1552,10 @@
     "translation": "Capture virtual server instance into an image"
   },
   {
+    "id": "Case",
+    "translation": "Case"
+  },
+  {
     "id": "Case Number",
     "translation": "Case Number"
   },
@@ -1574,6 +1570,10 @@
   {
     "id": "Category code that is used to filter items",
     "translation": "Category code that is used to filter items"
+  },
+  {
+    "id": "Category name.",
+    "translation": "Category name."
   },
   {
     "id": "CategoryCode",
@@ -1616,12 +1616,20 @@
     "translation": "Check if a virtual server instance is ready for use"
   },
   {
+    "id": "Classic Infrastructure Bandwidth commands",
+    "translation": "Classic Infrastructure Bandwidth commands"
+  },
+  {
     "id": "Classic Infrastructure Reports",
     "translation": "Classic Infrastructure Reports"
   },
   {
     "id": "Classic infrastructure Account commands",
     "translation": "Classic infrastructure Account commands"
+  },
+  {
+    "id": "Classic infrastructure Bandwidth commands",
+    "translation": "Classic infrastructure Bandwidth commands"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1778,10 +1786,6 @@
   {
     "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
     "translation": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]"
-  },
-  {
-    "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
-    "translation": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]"
   },
   {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
@@ -2136,6 +2140,14 @@
     "translation": "Data center"
   },
   {
+    "id": "Data in",
+    "translation": "Data in"
+  },
+  {
+    "id": "Data out",
+    "translation": "Data out"
+  },
+  {
     "id": "Datacenter",
     "translation": "Datacenter"
   },
@@ -2302,6 +2314,10 @@
   {
     "id": "Device Type",
     "translation": "Device Type"
+  },
+  {
+    "id": "Device name",
+    "translation": "Device name"
   },
   {
     "id": "Devices",
@@ -2564,10 +2580,6 @@
     "translation": "Edit hardware server details"
   },
   {
-    "id": "Edit load balancer health check",
-    "translation": "Edit load balancer health check"
-  },
-  {
     "id": "Edit load balancer protocol",
     "translation": "Edit load balancer protocol"
   },
@@ -2684,10 +2696,6 @@
     "translation": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]"
   },
   {
-    "id": "End Date must be greater than Start Date.",
-    "translation": "End Date must be greater than Start Date."
-  },
-  {
     "id": "End date for bandwidth reporting",
     "translation": "End date for bandwidth reporting"
   },
@@ -2734,6 +2742,10 @@
   {
     "id": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you.",
     "translation": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you."
+  },
+  {
+    "id": "Error marshalling resource",
+    "translation": "Error marshalling resource"
   },
   {
     "id": "Error occurred while adding note to volume: {{.VolumeID}}",
@@ -3376,6 +3388,10 @@
     "translation": "Failed to get Unattached Tags."
   },
   {
+    "id": "Failed to get Upgrade Requests.",
+    "translation": "Failed to get Upgrade Requests."
+  },
+  {
     "id": "Failed to get User Customer Notifications.",
     "translation": "Failed to get User Customer Notifications."
   },
@@ -3414,6 +3430,10 @@
   {
     "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
     "translation": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n"
+  },
+  {
+    "id": "Failed to get bandwidth summary",
+    "translation": "Failed to get bandwidth summary"
   },
   {
     "id": "Failed to get bare metal servers.\n",
@@ -3558,10 +3578,6 @@
   {
     "id": "Failed to get load balancers on your account.",
     "translation": "Failed to get load balancers on your account."
-  },
-  {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}."
   },
   {
     "id": "Failed to get multi vlan firewall.\n",
@@ -3758,14 +3774,6 @@
   {
     "id": "Failed to get user.",
     "translation": "Failed to get user."
-  },
-  {
-    "id": "Failed to get virtual dedicated racks on your account.\n",
-    "translation": "Failed to get virtual dedicated racks on your account.\n"
-  },
-  {
-    "id": "Failed to get virtual guests on your account.\n",
-    "translation": "Failed to get virtual guests on your account.\n"
   },
   {
     "id": "Failed to get virtual licenses.",
@@ -4728,10 +4736,6 @@
     "translation": "Gateway/Firewall"
   },
   {
-    "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
-    "translation": "Generating bandwidth report for {{.startDate}} to {{.endDate}}"
-  },
-  {
     "id": "Get Event Log types",
     "translation": "Get Event Log types"
   },
@@ -5344,14 +5348,6 @@
     "translation": "Invalid format date to --date-min."
   },
   {
-    "id": "Invalid format date to --end.",
-    "translation": "Invalid format date to --end."
-  },
-  {
-    "id": "Invalid format date to --start.",
-    "translation": "Invalid format date to --start."
-  },
-  {
     "id": "Invalid format date.",
     "translation": "Invalid format date."
   },
@@ -5676,6 +5672,10 @@
     "translation": "List block storage assigned subnets for the given host id."
   },
   {
+    "id": "List cancelations.",
+    "translation": "List cancelations."
+  },
+  {
     "id": "List cloud block storage.",
     "translation": "List cloud block storage."
   },
@@ -5872,8 +5872,16 @@
     "translation": "Mac addresses"
   },
   {
+    "id": "Maintance Window",
+    "translation": "Maintance Window"
+  },
+  {
     "id": "Manage Classic infrastructure services",
     "translation": "Manage Classic infrastructure services"
+  },
+  {
+    "id": "Manage LBaaS health checks.",
+    "translation": "Manage LBaaS health checks."
   },
   {
     "id": "Manage VSIs that require migration",
@@ -6046,6 +6054,10 @@
   {
     "id": "Name of the load balancer L7 pool",
     "translation": "Name of the load balancer L7 pool"
+  },
+  {
+    "id": "Name that ordered the item.",
+    "translation": "Name that ordered the item."
   },
   {
     "id": "Netscaler",
@@ -6382,6 +6394,10 @@
   {
     "id": "Option respect-headers just accept '0' or '1'",
     "translation": "Option respect-headers just accept '0' or '1'"
+  },
+  {
+    "id": "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly",
+    "translation": "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly"
   },
   {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
@@ -6838,6 +6854,10 @@
   {
     "id": "Policy priority",
     "translation": "Policy priority"
+  },
+  {
+    "id": "Pool",
+    "translation": "Pool"
   },
   {
     "id": "Port Range Max",
@@ -7756,14 +7776,6 @@
     "translation": "Show only selected datacenter, use shortname (dal13) format"
   },
   {
-    "id": "Show only the bandwidth summary for each hardware server ",
-    "translation": "Show only the bandwidth summary for each hardware server "
-  },
-  {
-    "id": "Show only the bandwidth summary for each virtual server",
-    "translation": "Show only the bandwidth summary for each virtual server"
-  },
-  {
     "id": "Show only unplanned events.",
     "translation": "Show only unplanned events."
   },
@@ -7778,6 +7790,10 @@
   {
     "id": "Show the users API key",
     "translation": "Show the users API key"
+  },
+  {
+    "id": "Show upgrades orders.",
+    "translation": "Show upgrades orders."
   },
   {
     "id": "Shows a very detailed list of charges",
@@ -8100,6 +8116,10 @@
     "translation": "Summary info about tickets"
   },
   {
+    "id": "Summary report for every pool/server.",
+    "translation": "Summary report for every pool/server."
+  },
+  {
     "id": "Support",
     "translation": "Support"
   },
@@ -8298,6 +8318,10 @@
   {
     "id": "The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'",
     "translation": "The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'"
+  },
+  {
+    "id": "The date the billing item was created (YYYY-MM-DD).",
+    "translation": "The date the billing item was created (YYYY-MM-DD)."
   },
   {
     "id": "The dedicated host is migrating: {{.HostId}}.",
@@ -8992,6 +9016,10 @@
     "translation": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]"
   },
   {
+    "id": "Total usage",
+    "translation": "Total usage"
+  },
+  {
     "id": "True",
     "translation": "True"
   },
@@ -9250,6 +9278,10 @@
   {
     "id": "Url path for HTTP/HTTPS checks",
     "translation": "Url path for HTTP/HTTPS checks"
+  },
+  {
+    "id": "Usage information.",
+    "translation": "Usage information."
   },
   {
     "id": "Use 'cookie' or 'source-ip' to stick",
@@ -9760,10 +9792,6 @@
     "translation": "date_of_month"
   },
   {
-    "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
-    "translation": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"
-  },
-  {
     "id": "day",
     "translation": "day"
   },
@@ -10024,10 +10052,6 @@
     "translation": "password"
   },
   {
-    "id": "pool",
-    "translation": "pool"
-  },
-  {
     "id": "preset",
     "translation": "preset"
   },
@@ -10052,14 +10076,6 @@
     "translation": "private network"
   },
   {
-    "id": "privateIn",
-    "translation": "privateIn"
-  },
-  {
-    "id": "privateOut",
-    "translation": "privateOut"
-  },
-  {
     "id": "private_ip",
     "translation": "private_ip"
   },
@@ -10074,14 +10090,6 @@
   {
     "id": "public ip",
     "translation": "public ip"
-  },
-  {
-    "id": "publicIn",
-    "translation": "publicIn"
-  },
-  {
-    "id": "publicOut",
-    "translation": "publicOut"
   },
   {
     "id": "public_ip",

@@ -152,10 +152,6 @@
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  更新通道環境定義內容。\n\n  會以不可分割的方式進行更新，因此會接受所有項目或完全不接受任何項目。\n\n  金鑰使用期限值的範圍必須為 120-172800。\n\n  階段 2 完全秘密轉遞的範圍必須為 0-1。\n\n  應該提出不同的配置要求，以在網路裝置上\n  實現變更。"
   },
   {
-    "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
-    "translation": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"
-  },
-  {
     "id": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
     "translation": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
   },
@@ -174,10 +170,6 @@
   {
     "id": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
     "translation": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
-    "translation": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
   },
   {
     "id": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
@@ -1308,18 +1300,6 @@
     "translation": "快取金鑰最佳化。 這些是要選擇的有效選項：'include-all'、'ignore-all'、'include-specified'、'ignore-specified'。 如果您選取 'include-specified' 或 'ignore-specified'，請新增至選項 cache-description。"
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "計算頻寬儲存區"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "計算硬體"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "計算虛擬"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "呼叫任意 API 端點"
   },
@@ -1662,10 +1642,6 @@
   {
     "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
     "translation": "直欄排序方式（ID、名稱、資料中心、路由器、CPU、記憶體、磁碟、來賓）[預設值：Id]"
-  },
-  {
-    "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
-    "translation": "直欄排序方式（類型、主機名稱、publicIn、publicOut、privateIn、privateOut、pool） [預設值：publicOut]"
   },
   {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
@@ -2400,10 +2376,6 @@
     "translation": "編輯硬體伺服器詳細資料"
   },
   {
-    "id": "Edit load balancer health check",
-    "translation": "編輯負載平衡器性能檢查"
-  },
-  {
     "id": "Edit load balancer protocol",
     "translation": "編輯負載平衡器通訊協定"
   },
@@ -2510,10 +2482,6 @@
   {
     "id": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]",
     "translation": "結束日期，例如：2019-4-2 (yyyy-MM-dd) [必要]"
-  },
-  {
-    "id": "End Date must be greater than Start Date.",
-    "translation": "結束日期必須大於開始日期。"
   },
   {
     "id": "End date for bandwidth reporting",
@@ -3324,10 +3292,6 @@
     "translation": "無法在您的帳戶中取得負載平衡器。"
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "無法取得 ID 為 {{.MetricTrackingObjectId}} 之物件的計量資料追蹤摘要。"
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "無法取得多重 VLAN 防火牆。\n"
   },
@@ -3514,14 +3478,6 @@
   {
     "id": "Failed to get user.",
     "translation": "無法取得使用者。"
-  },
-  {
-    "id": "Failed to get virtual dedicated racks on your account.\n",
-    "translation": "無法在您的帳戶上取得虛擬專用機架。\n"
-  },
-  {
-    "id": "Failed to get virtual guests on your account.\n",
-    "translation": "無法在您的帳戶上取得虛擬訪客。\n"
   },
   {
     "id": "Failed to get virtual licenses.",
@@ -4460,10 +4416,6 @@
     "translation": "閘道/防火牆"
   },
   {
-    "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
-    "translation": "產生 {{.startDate}} 至 {{.endDate}} 的頻寬報告"
-  },
-  {
     "id": "Get Event Log types",
     "translation": "取得事件日誌類型"
   },
@@ -5034,14 +4986,6 @@
   {
     "id": "Invalid format date to --date-min.",
     "translation": "--date-min 的格式日期無效。"
-  },
-  {
-    "id": "Invalid format date to --end.",
-    "translation": "--end 的格式日期無效。"
-  },
-  {
-    "id": "Invalid format date to --start.",
-    "translation": "--start 的格式日期無效。"
   },
   {
     "id": "Invalid format date.",
@@ -7352,14 +7296,6 @@
     "translation": "只顯示選取的資料中心，使用簡稱 (dal13) 格式"
   },
   {
-    "id": "Show only the bandwidth summary for each hardware server ",
-    "translation": "僅顯示每一個硬體伺服器的頻寬摘要 "
-  },
-  {
-    "id": "Show only the bandwidth summary for each virtual server",
-    "translation": "僅顯示每一個虛擬伺服器的頻寬摘要"
-  },
-  {
     "id": "Show only unplanned events.",
     "translation": "僅顯示未計劃的事件。"
   },
@@ -9248,10 +9184,6 @@
     "translation": "date_of_month"
   },
   {
-    "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
-    "translation": "日期時間，格式為 'YYYY-MM-DD' 或 'YYYY-MM-DD HH:MM:SS'"
-  },
-  {
     "id": "day",
     "translation": "day"
   },
@@ -9504,10 +9436,6 @@
     "translation": "password"
   },
   {
-    "id": "pool",
-    "translation": "儲存區"
-  },
-  {
     "id": "preset",
     "translation": "預設"
   },
@@ -9532,14 +9460,6 @@
     "translation": "private network"
   },
   {
-    "id": "privateIn",
-    "translation": "privateIn"
-  },
-  {
-    "id": "privateOut",
-    "translation": "privateOut"
-  },
-  {
     "id": "private_ip",
     "translation": "private_ip"
   },
@@ -9554,14 +9474,6 @@
   {
     "id": "public ip",
     "translation": "public ip"
-  },
-  {
-    "id": "publicIn",
-    "translation": "publicIn"
-  },
-  {
-    "id": "publicOut",
-    "translation": "publicOut"
   },
   {
     "id": "public_ip",

@@ -47,7 +47,7 @@ EXAMPLE:
 	cobraCmd.Flags().IntSliceVarP(&thisCmd.Virtual_id, "virtual-id", "v", []int{}, T("The ID of one virtual server to revoke"))
 	cobraCmd.Flags().IntSliceVarP(&thisCmd.Ip_address_id, "ip-address-id", "i", []int{}, T("The ID of one IP address to revoke"))
 	cobraCmd.Flags().StringSliceVarP(&thisCmd.Ip_address, "ip-address", "p", []string{}, T("An IP address to revoke"))
-	cobraCmd.Flags().IntSliceVarP(&thisCmd.Subnet_id, "subnet-id", "s", []int{}, ("An ID of one subnet to revoke"))
+	cobraCmd.Flags().IntSliceVarP(&thisCmd.Subnet_id, "subnet-id", "s", []int{}, T("An ID of one subnet to revoke"))
 
 	thisCmd.Command = cobraCmd
 
