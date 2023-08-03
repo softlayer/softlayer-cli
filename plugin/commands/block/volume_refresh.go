@@ -14,8 +14,8 @@ import (
 type VolumeRefreshCommand struct {
 	*metadata.SoftlayerStorageCommand
 	Command        *cobra.Command
-	StorageManager	managers.StorageManager
-	Force 			bool
+	StorageManager managers.StorageManager
+	Force          bool
 }
 
 func NewVolumeRefreshCommand(sl *metadata.SoftlayerStorageCommand) *VolumeRefreshCommand {
@@ -26,7 +26,7 @@ func NewVolumeRefreshCommand(sl *metadata.SoftlayerStorageCommand) *VolumeRefres
 	cobraCmd := &cobra.Command{
 		Use:   "volume-refresh " + T("IDENTIFIER") + " " + T("SNAPSHOT_ID"),
 		Short: T("Refresh a duplicate volume with a snapshot from its parent."),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID
+		Long: T("Refresh a duplicate volume with a snapshot from its parent.") + " " + T(`${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID
 
 EXAMPLE:
 	${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID

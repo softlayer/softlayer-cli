@@ -25,11 +25,11 @@ func NewVolumeLunCommand(sl *metadata.SoftlayerStorageCommand) *VolumeLunCommand
 	cobraCmd := &cobra.Command{
 		Use:   "volume-set-lun-id " + T("IDENTIFIER") + " " + T("LUN_ID"),
 		Short: T("Set the LUN ID on an existing block storage volume"),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID
+		Long: T("Set the LUN ID on an existing block storage volume") + " " + T(`${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID
 
 	The LUN ID only takes effect during the Host Authorization process. It is
 	recommended (but not necessary) to de-authorize all hosts before using
-	this method.
+	this method. See "block access-revoke".
 	VOLUME_ID - the volume ID on which to set the LUN ID
 	LUN_ID - recommended range is an integer between 0 and 255. Advanced users
 	can use an integer between 0 and 4095`, sl.StorageI18n),
