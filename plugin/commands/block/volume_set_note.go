@@ -27,7 +27,7 @@ func NewVolumeSetNoteCommand(sl *metadata.SoftlayerStorageCommand) *VolumeSetNot
 	cobraCmd := &cobra.Command{
 		Use:   "volume-set-note " + T("IDENTIFIER"),
 		Short: T("Set note for an existing {{.storageType}} storage volume.", sl.StorageI18n),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID
+		Long: T("Set note for an existing {{.storageType}} storage volume.", sl.StorageI18n) + " " + T(`${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID
 
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'`, sl.StorageI18n),
