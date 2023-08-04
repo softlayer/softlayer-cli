@@ -38,7 +38,7 @@ var _ = Describe("Device access", func() {
 			It("Set command without identifier", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires one argument"))
 			})
 
 			It("Set command with an invalid identifier", func() {

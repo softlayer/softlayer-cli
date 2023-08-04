@@ -37,7 +37,7 @@ var _ = Describe("GlobalIP unassign", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
+				Expect(strings.Contains(err.Error(), "Incorrect Usage : This command requires one argument")).To(BeTrue())
 			})
 		})
 		Context("GlobalIP unassign with wrong IP ID", func() {

@@ -45,7 +45,7 @@ var _ = Describe("ticket attach", func() {
 			It("return error 1", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires one argument"))
 			})
 
 			It("return error 2", func() {

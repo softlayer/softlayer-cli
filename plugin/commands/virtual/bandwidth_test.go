@@ -1,10 +1,11 @@
 package virtual_test
 
 import (
+	"time"
+
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
@@ -39,7 +40,7 @@ var _ = Describe("VS bandwidth", func() {
 			It("Error on missing ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires one argument"))
 			})
 			It("Rollup specified", func() {
 				testTime := "2021-08-01"

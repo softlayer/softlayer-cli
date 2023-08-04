@@ -39,7 +39,7 @@ var _ = Describe("Image detail", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
+				Expect(strings.Contains(err.Error(), "Incorrect Usage : This command requires one argument")).To(BeTrue())
 			})
 		})
 		Context("Image detail with wrong image id", func() {
@@ -83,7 +83,7 @@ var _ = Describe("Image detail", func() {
 					Id: sl.Int(1234),
 					AccountReferences: []datatypes.Virtual_Guest_Block_Device_Template_Group_Accounts{
 						{
-							AccountId: sl.Int(654),
+							AccountId:  sl.Int(654),
 							CreateDate: sl.Time(created),
 						},
 					},
