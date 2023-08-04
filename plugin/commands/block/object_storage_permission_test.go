@@ -41,7 +41,7 @@ var _ = Describe("block object-storage-permission", func() {
 			It("Object storage permission without ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires one argument"))
 			})
 
 			It("Object storage permission with wrong ID", func() {
