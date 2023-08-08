@@ -84,7 +84,19 @@ func (cmd *PermissionsCommand) Run(args []string) error {
 			}
 
 		}
-		tablePermission.Add(utils.FormatStringPointer(perm.Name), utils.FormatStringPointer(perm.KeyName), strconv.FormatBool(assigned))
+		flag := false
+		arr := []string{"ACCOUNT_SUMMARY_VIEW", "REQUEST_COMPLIANCE_REPORT", "COMPANY_EDIT", "ONE_TIME_PAYMENTS", "UPDATE_PAYMENT_DETAILS",
+			"EU_LIMITED_PROCESSING_MANAGE", "TICKET_ADD", "TICKET_EDIT", "TICKET_SEARCH", "TICKET_VIEW", "TICKET_VIEW_ALL"}
+		for i := 0; i < len(arr); i++ {
+			if *perm.KeyName == arr[i] {
+				flag = true
+			}
+		}
+		if flag == true {
+			tablePermission.Add("", "", "")
+		} else {
+			tablePermission.Add(utils.FormatStringPointer(perm.Name), utils.FormatStringPointer(perm.KeyName), strconv.FormatBool(assigned))
+		}
 	}
 	tablePermission.Print()
 	return nil
