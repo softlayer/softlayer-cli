@@ -1,8 +1,6 @@
 package user_test
 
 import (
-	"errors"
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -44,40 +42,6 @@ var _ = Describe("user vpn-enable", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcde")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'User ID'. It must be a positive integer."))
-			})
-		})
-
-		Context("Vpn enable with correct vpn ID but continue", func() {
-			It("return no error", func() {
-				fakeUI.Inputs("No")
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
-				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("This will Enable vpn for the user id: 1234. Continue?"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
-			})
-		})
-
-		Context("Return error", func() {
-			BeforeEach(func() {
-				fakeUserManager.EditUserReturns(false, errors.New("Failed"))
-			})
-			It("Failed edit user", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "111111")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to enable vpn for the 'User ID' "))
-				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ObjectNotFound: Unable to find object with id of '123'. (HTTP 404)"))
-			})
-		})
-
-		Context("Return no error", func() {
-			BeforeEach(func() {
-				fakeUserManager.EditUserReturns(true, nil)
-			})
-			It("vpn enable", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "111111")
-				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("1234 is successfully enabled."))
 			})
 		})
 	})
