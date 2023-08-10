@@ -21,6 +21,17 @@ build() {
     done
 }
 
+echo "Generating i18n resource file ..."
+if [[ "$OSTYPE" == "msys"* ]]; then
+    # For SO windows
+    ./bin/go-bindata.exe -pkg resources -o plugin/resources/i18n_resources.go plugin/i18n/resources
+else
+    ./bin/go-bindata -pkg resources -o plugin/resources/i18n_resources.go plugin/i18n/resources
+fi
+echo "Done."
+
+
+echo "Building Binaries ..."
 # disable CGO for Linux
 CGO_ENABLED=0 build linux amd64
 CGO_ENABLED=0 build linux 386
@@ -35,4 +46,5 @@ build linux s390x
 build windows amd64
 build windows 386
 
+echo "Generating binary hases ..."
 shasum $ROOT_DIR/out/sl-*

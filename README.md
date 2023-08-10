@@ -473,7 +473,7 @@ It("return error", func() {
 ```
 
 
-# Plugin Support
+# Plugin Support / Release Process
 After v1.4.1 `sl` will be a normal plugin, so where are the instructions to build the plugin. 
 
 0. Create a new version and tag it in github like normal.
