@@ -33,7 +33,7 @@ var _ = Describe("user vpn-enable", func() {
 		cliCommand.UserManager = fakeUserManager
 
 		testUser = datatypes.User_Customer{
-			SslVpnAllowedFlag: sl.Bool(true),
+			SslVpnAllowedFlag: sl.Bool(false),
 		}
 	})
 
