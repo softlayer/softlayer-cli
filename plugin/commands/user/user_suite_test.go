@@ -35,6 +35,7 @@ var availableCommands = []string{
 	"vpn-manual",
 	"vpn-password",
 	"vpn-subnet",
+	"vpn-disable",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the SetupCobraCommands
