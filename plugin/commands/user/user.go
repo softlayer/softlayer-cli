@@ -29,6 +29,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewVpnSubnetCommand(sl).Command)
 	cobraCmd.AddCommand(NewVpnManualCommand(sl).Command)
 	cobraCmd.AddCommand(NewVpnPasswordCommand(sl).Command)
+	cobraCmd.AddCommand(NewVpnEnableCommand(sl).Command)
 	cobraCmd.AddCommand(NewApikeyCommand(sl).Command)
 	return cobraCmd
 }
