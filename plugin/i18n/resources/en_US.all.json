@@ -1,5 +1,9 @@
 [
   {
+    "id": "\nEnter a number",
+    "translation": "\nEnter a number"
+  },
+  {
     "id": "\nLUN name",
     "translation": "\nLUN name"
   },
@@ -176,10 +180,6 @@
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
   },
   {
-    "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
-    "translation": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"
-  },
-  {
     "id": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
     "translation": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
   },
@@ -198,10 +198,6 @@
   {
     "id": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
     "translation": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
-    "translation": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
   },
   {
     "id": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
@@ -516,12 +512,20 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux."
   },
   {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux."
+  },
+  {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
@@ -786,6 +790,10 @@
   {
     "id": "-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS",
     "translation": "-r, --redirect is required with action REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
+  },
+  {
+    "id": "-s is in colon deliminated format to make grouping IP:port:weight a bit easier.",
+    "translation": "-s is in colon deliminated format to make grouping IP:port:weight a bit easier."
   },
   {
     "id": "-s, --subnet is only available in PublicToPrivate and PrivateToPrivate load balancer type.",
@@ -1132,6 +1140,10 @@
     "translation": "An IP address to revoke"
   },
   {
+    "id": "An error occurred when creating log file '{{.Path}}':\n{{.Error}}\n\n",
+    "translation": "An error occurred when creating log file '{{.Path}}':\n{{.Error}}\n\n"
+  },
+  {
     "id": "An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options",
     "translation": "An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options"
   },
@@ -1404,18 +1416,6 @@
     "translation": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'."
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "Calculating for bandwidth pools"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "Calculating for hardware"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "Calculating for virtual"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "Call arbitrary API endpoints"
   },
@@ -1560,6 +1560,10 @@
     "translation": "Capture virtual server instance into an image"
   },
   {
+    "id": "Case",
+    "translation": "Case"
+  },
+  {
     "id": "Case Number",
     "translation": "Case Number"
   },
@@ -1574,6 +1578,10 @@
   {
     "id": "Category code that is used to filter items",
     "translation": "Category code that is used to filter items"
+  },
+  {
+    "id": "Category name.",
+    "translation": "Category name."
   },
   {
     "id": "CategoryCode",
@@ -1616,12 +1624,20 @@
     "translation": "Check if a virtual server instance is ready for use"
   },
   {
+    "id": "Classic Infrastructure Bandwidth commands",
+    "translation": "Classic Infrastructure Bandwidth commands"
+  },
+  {
     "id": "Classic Infrastructure Reports",
     "translation": "Classic Infrastructure Reports"
   },
   {
     "id": "Classic infrastructure Account commands",
     "translation": "Classic infrastructure Account commands"
+  },
+  {
+    "id": "Classic infrastructure Bandwidth commands",
+    "translation": "Classic infrastructure Bandwidth commands"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1780,10 +1796,6 @@
     "translation": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]"
   },
   {
-    "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
-    "translation": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]"
-  },
-  {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
     "translation": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip"
   },
@@ -1802,6 +1814,10 @@
   {
     "id": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.",
     "translation": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
+  },
+  {
+    "id": "Column to sort by. Options are: id, username, accountId, capacityGb, hardwareId, guestId, hostId",
+    "translation": "Column to sort by. Options are: id, username, accountId, capacityGb, hardwareId, guestId, hostId"
   },
   {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
@@ -1940,6 +1956,10 @@
     "translation": "Could not find valid size for: {{.Size}}"
   },
   {
+    "id": "Could not read from input: ",
+    "translation": "Could not read from input: "
+  },
+  {
     "id": "Could not remove device {{.DeviceID}} from ticket. Is it attached, or a virtual guest?",
     "translation": "Could not remove device {{.DeviceID}} from ticket. Is it attached, or a virtual guest?"
   },
@@ -1978,6 +1998,10 @@
   {
     "id": "Create a Reserved Capacity instance.",
     "translation": "Create a Reserved Capacity instance."
+  },
+  {
+    "id": "Create a bandwidth pool.",
+    "translation": "Create a bandwidth pool."
   },
   {
     "id": "Create a dedicated Virtual Server (Private Node)",
@@ -2134,6 +2158,14 @@
   {
     "id": "Data center",
     "translation": "Data center"
+  },
+  {
+    "id": "Data in",
+    "translation": "Data in"
+  },
+  {
+    "id": "Data out",
+    "translation": "Data out"
   },
   {
     "id": "Datacenter",
@@ -2302,6 +2334,10 @@
   {
     "id": "Device Type",
     "translation": "Device Type"
+  },
+  {
+    "id": "Device name",
+    "translation": "Device name"
   },
   {
     "id": "Devices",
@@ -2564,10 +2600,6 @@
     "translation": "Edit hardware server details"
   },
   {
-    "id": "Edit load balancer health check",
-    "translation": "Edit load balancer health check"
-  },
-  {
     "id": "Edit load balancer protocol",
     "translation": "Edit load balancer protocol"
   },
@@ -2684,10 +2716,6 @@
     "translation": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]"
   },
   {
-    "id": "End Date must be greater than Start Date.",
-    "translation": "End Date must be greater than Start Date."
-  },
-  {
     "id": "End date for bandwidth reporting",
     "translation": "End date for bandwidth reporting"
   },
@@ -2736,6 +2764,10 @@
     "translation": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you."
   },
   {
+    "id": "Error marshalling resource",
+    "translation": "Error marshalling resource"
+  },
+  {
     "id": "Error occurred while adding note to volume: {{.VolumeID}}",
     "translation": "Error occurred while adding note to volume: {{.VolumeID}}"
   },
@@ -2778,6 +2810,10 @@
   {
     "id": "Exports options to a template file",
     "translation": "Exports options to a template file"
+  },
+  {
+    "id": "External authentication failed. Error code: {{.ErrorCode}}, message: {{.Message}}",
+    "translation": "External authentication failed. Error code: {{.ErrorCode}}, message: {{.Message}}"
   },
   {
     "id": "Extra note to be associated with the key",
@@ -3276,6 +3312,10 @@
     "translation": "Failed to get Cloud Object Storages.\n"
   },
   {
+    "id": "Failed to get Create Bandwidth Pool.",
+    "translation": "Failed to get Create Bandwidth Pool."
+  },
+  {
     "id": "Failed to get Event Log types.\n",
     "translation": "Failed to get Event Log types.\n"
   },
@@ -3310,6 +3350,10 @@
   {
     "id": "Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to get Location Group.",
+    "translation": "Failed to get Location Group."
   },
   {
     "id": "Failed to get NAS Network Storage.",
@@ -3376,6 +3420,10 @@
     "translation": "Failed to get Unattached Tags."
   },
   {
+    "id": "Failed to get Upgrade Requests.",
+    "translation": "Failed to get Upgrade Requests."
+  },
+  {
     "id": "Failed to get User Customer Notifications.",
     "translation": "Failed to get User Customer Notifications."
   },
@@ -3416,6 +3464,10 @@
     "translation": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n"
   },
   {
+    "id": "Failed to get bandwidth summary",
+    "translation": "Failed to get bandwidth summary"
+  },
+  {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Failed to get bare metal servers.\n"
   },
@@ -3438,6 +3490,10 @@
   {
     "id": "Failed to get credential limit. ",
     "translation": "Failed to get credential limit. "
+  },
+  {
+    "id": "Failed to get currect user.",
+    "translation": "Failed to get currect user."
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -3758,14 +3814,6 @@
   {
     "id": "Failed to get user.",
     "translation": "Failed to get user."
-  },
-  {
-    "id": "Failed to get virtual dedicated racks on your account.\n",
-    "translation": "Failed to get virtual dedicated racks on your account.\n"
-  },
-  {
-    "id": "Failed to get virtual guests on your account.\n",
-    "translation": "Failed to get virtual guests on your account.\n"
   },
   {
     "id": "Failed to get virtual licenses.",
@@ -4392,6 +4440,14 @@
     "translation": "Failed to {{.action}} user vpn subnets manual config"
   },
   {
+    "id": "Failed, header could not convert to csv format",
+    "translation": "Failed, header could not convert to csv format"
+  },
+  {
+    "id": "Failed, rows could not convert to csv format",
+    "translation": "Failed, rows could not convert to csv format"
+  },
+  {
     "id": "Failover a {{.storageType}} volume to the given replica volume",
     "translation": "Failover a {{.storageType}} volume to the given replica volume"
   },
@@ -4726,10 +4782,6 @@
   {
     "id": "Gateway/Firewall",
     "translation": "Gateway/Firewall"
-  },
-  {
-    "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
-    "translation": "Generating bandwidth report for {{.startDate}} to {{.endDate}}"
   },
   {
     "id": "Get Event Log types",
@@ -5344,16 +5396,12 @@
     "translation": "Invalid format date to --date-min."
   },
   {
-    "id": "Invalid format date to --end.",
-    "translation": "Invalid format date to --end."
-  },
-  {
-    "id": "Invalid format date to --start.",
-    "translation": "Invalid format date to --start."
-  },
-  {
     "id": "Invalid format date.",
     "translation": "Invalid format date."
+  },
+  {
+    "id": "Invalid grant type: ",
+    "translation": "Invalid grant type: "
   },
   {
     "id": "Invalid input for",
@@ -5378,6 +5426,10 @@
   {
     "id": "Invalid storage type {{.StorageType}}",
     "translation": "Invalid storage type {{.StorageType}}"
+  },
+  {
+    "id": "Invalid token: ",
+    "translation": "Invalid token: "
   },
   {
     "id": "Invalid volume type",
@@ -5676,6 +5728,10 @@
     "translation": "List block storage assigned subnets for the given host id."
   },
   {
+    "id": "List cancelations.",
+    "translation": "List cancelations."
+  },
+  {
     "id": "List cloud block storage.",
     "translation": "List cloud block storage."
   },
@@ -5872,8 +5928,16 @@
     "translation": "Mac addresses"
   },
   {
+    "id": "Maintance Window",
+    "translation": "Maintance Window"
+  },
+  {
     "id": "Manage Classic infrastructure services",
     "translation": "Manage Classic infrastructure services"
+  },
+  {
+    "id": "Manage LBaaS health checks.",
+    "translation": "Manage LBaaS health checks."
   },
   {
     "id": "Manage VSIs that require migration",
@@ -6046,6 +6110,10 @@
   {
     "id": "Name of the load balancer L7 pool",
     "translation": "Name of the load balancer L7 pool"
+  },
+  {
+    "id": "Name that ordered the item.",
+    "translation": "Name that ordered the item."
   },
   {
     "id": "Netscaler",
@@ -6272,6 +6340,10 @@
     "translation": "Number of updates"
   },
   {
+    "id": "OK",
+    "translation": "OK"
+  },
+  {
     "id": "OPTIONS",
     "translation": "OPTIONS"
   },
@@ -6382,6 +6454,10 @@
   {
     "id": "Option respect-headers just accept '0' or '1'",
     "translation": "Option respect-headers just accept '0' or '1'"
+  },
+  {
+    "id": "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly",
+    "translation": "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly"
   },
   {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
@@ -6812,6 +6888,26 @@
     "translation": "Please add the '--guest' id too.\n"
   },
   {
+    "id": "Please enter 'y', 'n', 'yes' or 'no'.",
+    "translation": "Please enter 'y', 'n', 'yes' or 'no'."
+  },
+  {
+    "id": "Please enter a number between 1 to {{.Count}}.",
+    "translation": "Please enter a number between 1 to {{.Count}}."
+  },
+  {
+    "id": "Please enter a valid floating number.",
+    "translation": "Please enter a valid floating number."
+  },
+  {
+    "id": "Please enter a valid number.",
+    "translation": "Please enter a valid number."
+  },
+  {
+    "id": "Please enter value.",
+    "translation": "Please enter value."
+  },
+  {
     "id": "Please make sure you know all the creation options by running command: '{{.CommandName}} sl vs options'. Continue?",
     "translation": "Please make sure you know all the creation options by running command: '{{.CommandName}} sl vs options'. Continue?"
   },
@@ -6838,6 +6934,14 @@
   {
     "id": "Policy priority",
     "translation": "Policy priority"
+  },
+  {
+    "id": "Pool",
+    "translation": "Pool"
+  },
+  {
+    "id": "Pool name.",
+    "translation": "Pool name."
   },
   {
     "id": "Port Range Max",
@@ -7212,6 +7316,10 @@
     "translation": "Region"
   },
   {
+    "id": "Region selected. Permit:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]",
+    "translation": "Region selected. Permit:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]"
+  },
+  {
     "id": "Reload operating system on a server",
     "translation": "Reload operating system on a server"
   },
@@ -7246,6 +7354,10 @@
   {
     "id": "Remote peer IP address",
     "translation": "Remote peer IP address"
+  },
+  {
+    "id": "Remote server error. Status code: {{.StatusCode}}, error code: {{.ErrorCode}}, message: {{.Message}}",
+    "translation": "Remote server error. Status code: {{.StatusCode}}, error code: {{.ErrorCode}}, message: {{.Message}}"
   },
   {
     "id": "Remove SSL certificate",
@@ -7624,6 +7736,10 @@
     "translation": "Session Stickiness"
   },
   {
+    "id": "Session inactive: ",
+    "translation": "Session inactive: "
+  },
+  {
     "id": "Set Tags.",
     "translation": "Set Tags."
   },
@@ -7756,14 +7872,6 @@
     "translation": "Show only selected datacenter, use shortname (dal13) format"
   },
   {
-    "id": "Show only the bandwidth summary for each hardware server ",
-    "translation": "Show only the bandwidth summary for each hardware server "
-  },
-  {
-    "id": "Show only the bandwidth summary for each virtual server",
-    "translation": "Show only the bandwidth summary for each virtual server"
-  },
-  {
     "id": "Show only unplanned events.",
     "translation": "Show only unplanned events."
   },
@@ -7778,6 +7886,10 @@
   {
     "id": "Show the users API key",
     "translation": "Show the users API key"
+  },
+  {
+    "id": "Show upgrades orders.",
+    "translation": "Show upgrades orders."
   },
   {
     "id": "Shows a very detailed list of charges",
@@ -8100,6 +8212,10 @@
     "translation": "Summary info about tickets"
   },
   {
+    "id": "Summary report for every pool/server.",
+    "translation": "Summary report for every pool/server."
+  },
+  {
     "id": "Support",
     "translation": "Support"
   },
@@ -8298,6 +8414,10 @@
   {
     "id": "The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'",
     "translation": "The complex type of the order. The type begins with 'SoftLayer_Container_Product_Order_'"
+  },
+  {
+    "id": "The date the billing item was created (YYYY-MM-DD).",
+    "translation": "The date the billing item was created (YYYY-MM-DD)."
   },
   {
     "id": "The dedicated host is migrating: {{.HostId}}.",
@@ -8992,6 +9112,10 @@
     "translation": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]"
   },
   {
+    "id": "Total usage",
+    "translation": "Total usage"
+  },
+  {
     "id": "True",
     "translation": "True"
   },
@@ -9162,6 +9286,10 @@
   {
     "id": "Unable to parse zone from BIND file.",
     "translation": "Unable to parse zone from BIND file."
+  },
+  {
+    "id": "Unable to save plugin config: ",
+    "translation": "Unable to save plugin config: "
   },
   {
     "id": "Unable to unmarshal extras json: %s\n",
@@ -9760,10 +9888,6 @@
     "translation": "date_of_month"
   },
   {
-    "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
-    "translation": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'"
-  },
-  {
     "id": "day",
     "translation": "day"
   },
@@ -10024,10 +10148,6 @@
     "translation": "password"
   },
   {
-    "id": "pool",
-    "translation": "pool"
-  },
-  {
     "id": "preset",
     "translation": "preset"
   },
@@ -10052,14 +10172,6 @@
     "translation": "private network"
   },
   {
-    "id": "privateIn",
-    "translation": "privateIn"
-  },
-  {
-    "id": "privateOut",
-    "translation": "privateOut"
-  },
-  {
     "id": "private_ip",
     "translation": "private_ip"
   },
@@ -10074,14 +10186,6 @@
   {
     "id": "public ip",
     "translation": "public ip"
-  },
-  {
-    "id": "publicIn",
-    "translation": "publicIn"
-  },
-  {
-    "id": "publicOut",
-    "translation": "publicOut"
   },
   {
     "id": "public_ip",

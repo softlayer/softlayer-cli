@@ -152,10 +152,6 @@
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [옵션]\n\n  터널 컨텍스트 특성을 업데이트합니다.\n\n  업데이트가 원자적으로 이루어지므로 모두 허용되거나 어떤 것도 허용되지 않습니다.\n\n  키 수명 값은 120 - 172800 범위에 있어야 합니다.\n\n  단계(Phase) 2 PFS(Perfect Forward Secrecy)가 0 -1 범위에 있어야 합니다.\n\n  네트워크 디바이스에서 변경사항을 인식하도록 개별 구성\n  요청을 작성해야 합니다."
   },
   {
-    "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
-    "translation": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]"
-  },
-  {
     "id": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
     "translation": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
   },
@@ -174,10 +170,6 @@
   {
     "id": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
     "translation": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
-    "translation": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]"
   },
   {
     "id": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
@@ -1308,18 +1300,6 @@
     "translation": "캐시 키 최적화. 선택할 수 있는 유효한 옵션은 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'입니다. 'include-specified' 또는 'ignore-specified'를 선택하는 경우 cache-description 옵션에 추가하십시오."
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "대역폭 풀 계산"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "하드웨어 계산"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "가상 계산"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "임의의 API 엔드포인트 호출"
   },
@@ -1662,10 +1642,6 @@
   {
     "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
     "translation": "다음을 기준으로 정렬할 열(Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests), [기본값: Id]"
-  },
-  {
-    "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
-    "translation": "컬럼 정렬 기준(type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[기본값: publicOut]"
   },
   {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
@@ -2400,10 +2376,6 @@
     "translation": "하드웨어 서버 세부사항 편집"
   },
   {
-    "id": "Edit load balancer health check",
-    "translation": "로드 밸런서 상태 검사 편집"
-  },
-  {
     "id": "Edit load balancer protocol",
     "translation": "로드 밸런서 프로토콜 편집"
   },
@@ -2510,10 +2482,6 @@
   {
     "id": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]",
     "translation": "종료 날짜 예: 2019-4-2(yyyy-MM-dd) [필수]"
-  },
-  {
-    "id": "End Date must be greater than Start Date.",
-    "translation": "종료 날짜는 시작 날짜 이후여야 합니다."
   },
   {
     "id": "End date for bandwidth reporting",
@@ -3516,14 +3484,6 @@
     "translation": "사용자를 가져오는 데 실패했습니다."
   },
   {
-    "id": "Failed to get virtual dedicated racks on your account.\n",
-    "translation": "계정의 가상 전용 랙을 가져오는 데 실패했습니다. \n"
-  },
-  {
-    "id": "Failed to get virtual guests on your account.\n",
-    "translation": "계정에 대한 가상 게스트를 가져오는 데 실패했습니다. \n"
-  },
-  {
     "id": "Failed to get virtual licenses.",
     "translation": "가상 라이센스를 가져오는 데 실패했습니다."
   },
@@ -4460,10 +4420,6 @@
     "translation": "게이트웨이/방화벽"
   },
   {
-    "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
-    "translation": "{{.endDate}}에 대한 {{.startDate}}의 대역폭 보고서 생성"
-  },
-  {
     "id": "Get Event Log types",
     "translation": "이벤트 로그 유형 가져오기"
   },
@@ -5034,14 +4990,6 @@
   {
     "id": "Invalid format date to --date-min.",
     "translation": "--date-min에 대한 형식 날짜가 올바르지 않습니다."
-  },
-  {
-    "id": "Invalid format date to --end.",
-    "translation": "--end에 대한 형식 날짜가 올바르지 않습니다."
-  },
-  {
-    "id": "Invalid format date to --start.",
-    "translation": "--start에 대한 형식 날짜가 올바르지 않습니다."
   },
   {
     "id": "Invalid format date.",
@@ -7352,14 +7300,6 @@
     "translation": "선택한 데이터 센터만 표시, 짧은 이름(dal13) 형식 사용"
   },
   {
-    "id": "Show only the bandwidth summary for each hardware server ",
-    "translation": "각 하드웨어 서버에 대한 대역폭 요약만 표시 "
-  },
-  {
-    "id": "Show only the bandwidth summary for each virtual server",
-    "translation": "각 가상 서버의 대역폭 요약만 표시"
-  },
-  {
     "id": "Show only unplanned events.",
     "translation": "계획되지 않은 이벤트만 표시합니다."
   },
@@ -9248,10 +9188,6 @@
     "translation": "date_of_month"
   },
   {
-    "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
-    "translation": "'YYYY-MM-DD' 또는 'YYYY-MM-DD HH:MM:SS' 형식의 날짜 시간"
-  },
-  {
     "id": "day",
     "translation": "일"
   },
@@ -9504,10 +9440,6 @@
     "translation": "비밀번호"
   },
   {
-    "id": "pool",
-    "translation": "풀"
-  },
-  {
     "id": "preset",
     "translation": "사전 설정"
   },
@@ -9532,14 +9464,6 @@
     "translation": "사설 네트워크"
   },
   {
-    "id": "privateIn",
-    "translation": "privateIn"
-  },
-  {
-    "id": "privateOut",
-    "translation": "privateOut"
-  },
-  {
     "id": "private_ip",
     "translation": "private_ip"
   },
@@ -9554,14 +9478,6 @@
   {
     "id": "public ip",
     "translation": "공인 ip"
-  },
-  {
-    "id": "publicIn",
-    "translation": "publicIn"
-  },
-  {
-    "id": "publicOut",
-    "translation": "publicOut"
   },
   {
     "id": "public_ip",

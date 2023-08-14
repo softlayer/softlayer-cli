@@ -152,10 +152,6 @@
     "translation": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONEN]\n\n  Aktualisiert die Eigenschaften eines Tunnelkontextes.\n\n  Aktualisierungen werden atomar durchgeführt, sodass entweder alle akzeptiert oder aber alle abgelehnt werden.\n\n  Die Werte für den Schlüssellebenszyklus müssen im Bereichen zwischen 120 und 172800 liegen.\n\n  Die absolute vorwärts gerichtete Sicherheit für Phase 2 muss im Bereich zwischen 0 und 1 liegen.\n\n  Eine separate Konfigurationsanforderung muss abgesetzt werden, um Änderungen an \n  Netzeinheiten durchzuführen."
   },
   {
-    "id": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid HEALTH_CHECK_UUID) [-i, --interval INTERVAL] [-r, --retry RETRY] [-t, --timeout TIMEOUT] [-u, --url URL]",
-    "translation": "${COMMAND_NAME} sl loadbal health-edit (--lb-id LOADBAL_ID)  (--health-uuid ZUSTANDSPRÜFUNG_UUID) [-i, --interval INTERVALL] [-r, --retry WIEDERHOLEN] [-t, --timeout ZEITLIMIT] [-u, --url URL]"
-  },
-  {
     "id": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)",
     "translation": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
   },
@@ -174,10 +170,6 @@
   {
     "id": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d POLICY_ID) (-n, --name NAME) (-a,--action REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS) [-r,--redirect REDIRECT] [-p,--priority PRIORITY]",
     "translation": "${COMMAND_NAME} sl loadbal l7policy-edit (--policy-d RICHTLINIEN_ID) (-n, --name NAME) (-a,--action ZURÜCKWEISEN | UMLEITUNGS_POOL | UMLEITUNGS_URL | UMLEITUNGS_HTTPS) [-r,--redirect UMLEITEN] [-p,--priority PRIORITÄT]"
-  },
-  {
-    "id": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHOD] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOCOL] [--health-path PATH] [--health-interval INTERVAL] [--health-retry RETRY] [--health-timeout TIMEOUT] [--sticky cookie | source-ip]",
-    "translation": "${COMMAND_NAME} sl loadbal l7pool-add (--id LOADBAL_ID) (-n, --name NAME) [-m, --method METHODE] [-s, --server BACKEND_IP:PORT] [-p, --protocol PROTOKOLL] [--health-path PFAD] [--health-interval INTERVALL] [--health-retry WIEDERHOLEN] [--health-timeout ZEITLIMIT] [--sticky cookie | source-ip]"
   },
   {
     "id": "${COMMAND_NAME} sl loadbal l7pool-delete (--pool-id L7POOL_ID)",
@@ -1308,18 +1300,6 @@
     "translation": "Cacheschlüsseloptimierung. Die folgenden Optionen sind gültig: \"include-all\", \"ignore-all\", \"include-specified\", \"ignore-specified\". Wenn Sie \"'include-specified\" oder \"ignore-specified\" auswählen, fügen Sie die Option \"cache-description\" hinzu."
   },
   {
-    "id": "Calculating for bandwidth pools",
-    "translation": "Berechnung für Bandbreitenpools"
-  },
-  {
-    "id": "Calculating for hardware",
-    "translation": "Berechnung für Hardware"
-  },
-  {
-    "id": "Calculating for virtual",
-    "translation": "Berechnung für virtuell"
-  },
-  {
     "id": "Call arbitrary API endpoints",
     "translation": "Beliebige API-Endpunkte aufrufen"
   },
@@ -1662,10 +1642,6 @@
   {
     "id": "Column to sort by (Id, Name, Datacenter, Router, Cpu, Memory, Disk, Guests)[default: Id]",
     "translation": "Spalte, nach der sortiert werden soll (ID, Name, Rechenzentrum, Router, CPU, Speicher, Platte, Gäste) [Standardwert: ID]"
-  },
-  {
-    "id": "Column to sort by (type, hostname, publicIn, publicOut, privateIn, privateOut, pool)[default: publicOut]",
-    "translation": "Spalte, nach der sortiert werden soll (type, hostname, publicIn, publicOut, privateIn, privateOut, pool) [Standardwert: publicOut]"
   },
   {
     "id": "Column to sort by, default is:hostname, options are:id,hostname,domain,datacenter,cpu,memory,public_ip,private_ip",
@@ -2400,10 +2376,6 @@
     "translation": "Hardware-Server-Details bearbeiten"
   },
   {
-    "id": "Edit load balancer health check",
-    "translation": "Statusprüfung für Lastausgleichsfunktion bearbeiten"
-  },
-  {
     "id": "Edit load balancer protocol",
     "translation": "Protokoll der Lastausgleichsfunktion bearbeiten"
   },
@@ -2510,10 +2482,6 @@
   {
     "id": "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]",
     "translation": "Enddatum, z. B. 2019-4-2 (jjjj-MM-tt) [erforderlich]"
-  },
-  {
-    "id": "End Date must be greater than Start Date.",
-    "translation": "Das Enddatum muss größer als das Anfangsdatum sein."
   },
   {
     "id": "End date for bandwidth reporting",
@@ -3516,14 +3484,6 @@
     "translation": "Abrufen des Benutzers fehlgeschlagen."
   },
   {
-    "id": "Failed to get virtual dedicated racks on your account.\n",
-    "translation": "Es konnten keine virtuellen dedizierten Racks für Ihr Konto abgerufen werden.\n"
-  },
-  {
-    "id": "Failed to get virtual guests on your account.\n",
-    "translation": "Virtuelle Gastmaschinen für Ihr Konto konnten nicht abgerufen werden.\n"
-  },
-  {
     "id": "Failed to get virtual licenses.",
     "translation": "Virtuelle Lizenzen konnten nicht abgerufen werden."
   },
@@ -4460,10 +4420,6 @@
     "translation": "Gateway/Firewall"
   },
   {
-    "id": "Generating bandwidth report for {{.startDate}} to {{.endDate}}",
-    "translation": "Bandbreitenbericht für {{.startDate}} bis {{.endDate}} generieren"
-  },
-  {
     "id": "Get Event Log types",
     "translation": "Ereignisprotokolltypen abrufen"
   },
@@ -5034,14 +4990,6 @@
   {
     "id": "Invalid format date to --date-min.",
     "translation": "Ungültiges Formatdatum für --date-min."
-  },
-  {
-    "id": "Invalid format date to --end.",
-    "translation": "Ungültiges Formatdatum für --end."
-  },
-  {
-    "id": "Invalid format date to --start.",
-    "translation": "Ungültiges Formatdatum für --start."
   },
   {
     "id": "Invalid format date.",
@@ -7352,14 +7300,6 @@
     "translation": "Nur ausgewähltes Rechenzentrum anzeigen, Kurznamenformat (dal13) verwenden"
   },
   {
-    "id": "Show only the bandwidth summary for each hardware server ",
-    "translation": "Nur Bandbreitenzusammenfassung für jeden Hardware-Server anzeigen "
-  },
-  {
-    "id": "Show only the bandwidth summary for each virtual server",
-    "translation": "Nur Bandbreitenzusammenfassung für jeden virtuellen Server anzeigen"
-  },
-  {
     "id": "Show only unplanned events.",
     "translation": "Nur ungeplante Ereignisse anzeigen."
   },
@@ -9248,10 +9188,6 @@
     "translation": "date_of_month"
   },
   {
-    "id": "datetime in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'",
-    "translation": "Datum/Uhrzeit im Format \"JJJJ-MM-TT\" oder \"JJJJ-MM-TT HH:MM: SS\""
-  },
-  {
     "id": "day",
     "translation": "Tag"
   },
@@ -9504,10 +9440,6 @@
     "translation": "Kennwort"
   },
   {
-    "id": "pool",
-    "translation": "Pool"
-  },
-  {
     "id": "preset",
     "translation": "Voreinstellung"
   },
@@ -9532,14 +9464,6 @@
     "translation": "Privates Netz"
   },
   {
-    "id": "privateIn",
-    "translation": "privateIn"
-  },
-  {
-    "id": "privateOut",
-    "translation": "privateOut"
-  },
-  {
     "id": "private_ip",
     "translation": "private_ip"
   },
@@ -9554,14 +9478,6 @@
   {
     "id": "public ip",
     "translation": "Öffentliche IP"
-  },
-  {
-    "id": "publicIn",
-    "translation": "publicIn"
-  },
-  {
-    "id": "publicOut",
-    "translation": "publicOut"
   },
   {
     "id": "public_ip",
