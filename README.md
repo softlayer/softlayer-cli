@@ -326,6 +326,15 @@ anything with `T("some string here")` uses the internationalization system. Defi
 The string passed into the `T()` function serves as the ID when looking these up. So the ID Will need to be present in all i18n files, it will also need a translation string. 
 
 [i18n4go](https://github.com/maximilien/i18n4go) is used to make sure all strings being transalted have translations. To test run this command.
+
+For i18n4go, we specifically use v0.2.4 for now, so we have a prebuilt binary in `./bin/i18n4go`. If that binary needs to be rebuilt, use the SoftLayer fork at https://github.com/softlayer/i18n4go (which is set to the version we need, along with some updates since that version had a bug with --help).
+
+This command will build the Mac (arm64) version. Replace GOOS and GOARCH with the OS/Architecture you need to build for.
+```
+~/go/src/github.ibm.com/softlayer/softlayer-cli/i18n4go (master)
+$> GOOS=darwin GOARCH=arm64 go build -o i18n4go_mac -ldflags "-s -w" i18n4go/i18n4go.go
+```
+
 [go-i18n](https://github.com/nicksnyder/go-i18n/) is what is actually doing the translations, but its using an old v1 version.
 [go-bindata](https://github.com/jteeuwen/go-bindata) takes the json files, and turns them into a go binary.
 
