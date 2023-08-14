@@ -111,7 +111,7 @@ var _ = Describe("User Permissions", func() {
 			It("return not equal user permissions", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(Not(Equal("ACCOUNT_SUMMARY_VIEW")))
+				Expect(fakeUI.Outputs()).NotTo(Equal("ACCOUNT_SUMMARY_VIEW"))
 				Expect(fakeUI.Outputs()).To(Not(Equal("REQUEST_COMPLIANCE_REPORT")))
 				Expect(fakeUI.Outputs()).To(Not(Equal("COMPANY_EDIT")))
 				Expect(fakeUI.Outputs()).To(Not(Equal("ONE_TIME_PAYMENTS")))
