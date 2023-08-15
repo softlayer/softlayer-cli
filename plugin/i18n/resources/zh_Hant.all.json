@@ -3292,10 +3292,6 @@
     "translation": "無法在您的帳戶中取得負載平衡器。"
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "無法取得 ID 為 {{.MetricTrackingObjectId}} 之物件的計量資料追蹤摘要。"
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "無法取得多重 VLAN 防火牆。\n"
   },

@@ -3292,10 +3292,6 @@
     "translation": "Echec de l'obtention d'équilibreurs de charge sur votre compte."
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "Impossible d'obtenir le récapitulatif de suivi des mesures de l'objet avec l'ID {{.MetricTrackingObjectId}}."
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "Impossible d'obtenir le pare-feu multi-vlan. \n"
   },

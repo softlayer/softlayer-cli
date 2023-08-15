@@ -3292,10 +3292,6 @@
     "translation": "Falha ao obter os balanceadores de carga em sua conta."
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "Falha ao obter o resumo de rastreamento da métrica do Objeto com ID {{.MetricTrackingObjectId}}."
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "Falha ao obter firewall de multi vlan.\n"
   },

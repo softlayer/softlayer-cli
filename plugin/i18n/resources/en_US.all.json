@@ -3616,10 +3616,6 @@
     "translation": "Failed to get load balancers on your account."
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}."
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "Failed to get multi vlan firewall.\n"
   },

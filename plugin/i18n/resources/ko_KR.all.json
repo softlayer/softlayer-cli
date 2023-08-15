@@ -3292,10 +3292,6 @@
     "translation": "계정의 로드 밸런서를 가져오는 데 실패했습니다."
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "ID가 {{.MetricTrackingObjectId}}인 오브젝트의 메트릭 추적 요약을 가져오는 데 실패했습니다."
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "다중 vlan 방화벽을 가져오는 데 실패했습니다. \n"
   },

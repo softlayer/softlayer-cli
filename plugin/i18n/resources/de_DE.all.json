@@ -3292,10 +3292,6 @@
     "translation": "Abrufen von Lastausgleichsfunktionen für Ihr Konto fehlgeschlagen."
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "Die Zusammenfassung der Metriküberwachung des Objekts mit der ID {{.MetricTrackingObjectId}} konnte nicht abgerufen werden."
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "Multi-VLAN-Firewall konnte nicht abgerufen werden.\n"
   },

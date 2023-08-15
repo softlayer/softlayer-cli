@@ -3292,10 +3292,6 @@
     "translation": "ご使用のアカウントの Load Balancers の取得に失敗しました。"
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "ID {{.MetricTrackingObjectId}}のオブジェクトのメトリック・トラッキング・サマリーの取得に失敗しました。"
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "複数 VLAN ファイアウォールの取得に失敗しました。\n"
   },

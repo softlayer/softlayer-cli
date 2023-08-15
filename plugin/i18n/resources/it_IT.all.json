@@ -3292,10 +3292,6 @@
     "translation": "Impossibile ottenere i programmi di bilanciamento del carico nel tuo account."
   },
   {
-    "id": "Failed to get metric tracking summary of Object with Id {{.MetricTrackingObjectId}}.",
-    "translation": "Impossibile ottenere il riepilogo della traccia metrica dell'oggetto con Id {{.MetricTrackingObjectId}}."
-  },
-  {
     "id": "Failed to get multi vlan firewall.\n",
     "translation": "Impossibile ottenere il firewall multi vlan. \n"
   },
