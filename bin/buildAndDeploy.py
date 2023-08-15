@@ -27,19 +27,7 @@ def isWindows() -> bool:
         return True
     return False
 
-def genBinData() -> None:
-    """Generates the I18N Binary data required for translations"""
-    goBindata = './bin/go-bindata'
-    if isWindows():
-        goBindata = f'{goBindata}.exe'
-    goBindata = f'{goBindata} -pkg resources -o plugin/resources/i18n_resources.go plugin/i18n/resources'
-    print("[green]Building I18N ...")
-    print(f"\t[yellow]{goBindata}")
-    result = subprocess.run(goBindata, capture_output=True)
-    if result.returncode > 0:
-        print(f"[red]{result.stderr.decode('ascii')}")
-    else:
-        print(f"\t[green]OK")
+
 
 def buildArchs() -> dict:
     """Returns the list of binaries we should build"""
@@ -87,8 +75,8 @@ def runI18n4go(path: str) -> None:
     plugin_dir = os.path.join(path, 'plugin')
     binary = os.path.join(path, 'bin', 'i18n4go')
     # TODO: Support linux too I guess.
-    if not isWindows():
-        binary = f"{binary}_mac"
+    if isWindows():
+        binary = f"{binary}.exe"
     cmd = f"{binary} -c checkup -q i18n -v -d {plugin_dir}"
     print(f"[yellow]Running: {cmd}")
     result = subprocess.run(cmd, capture_output=True, text=True)
@@ -194,16 +182,47 @@ def write_source_data(file_name: str, updates: dict) -> None:
        json.dump(updated_i18n, f, sort_keys=True, separators=(',', ': ',), ensure_ascii=False, indent=2)
     f.close()
 
+def genBinData() -> None:
+    """Generates the I18N Binary data required for translations"""
+    goBindata = './bin/go-bindata'
+    if isWindows():
+        goBindata = f'{goBindata}.exe'
+    goBindata = f'{goBindata} -pkg resources -o plugin/resources/i18n_resources.go plugin/i18n/resources'
+    print("[green]Building I18N ...")
+    print(f"\t[yellow]{goBindata}")
+    result = subprocess.run(goBindata, capture_output=True)
+    if result.returncode > 0:
+        print(f"[red]{result.stderr.decode('ascii')}")
+    else:
+        print(f"\t[green]OK")
+
+
 ### END i18n4go stuff ###
 
 class Builder(object):
     def __init__(self):
         self.cwd = os.getcwd()
+        self.version = 'master'
         if not self.cwd.endswith('softlayer-cli'):
             raise Exception(f"Working Directory should be softlayer-cli, is currently {self.cwd}")
 
-    def getdir(self):
+    def getdir(self) -> str:
         return self.cwd
+
+    def setVersion(self, version: str) -> None:
+        self.version = version
+
+    def commitChanges(self):
+        """Commits any expected changes from the build"""
+        cmds = [
+            f"git add {os.path.join(self.cwd, 'plugin', 'i18n', 'resources', '*.json')}",
+            f"git add {os.path.join(self.cwd, 'plugin', 'resources', '*i18n_resources.go')}"
+            "git commit --message='updating I18N files from buildAndDeploy'",
+        ]
+        
+        for cmd in cmds:
+            print(f"[yellow]{cmd}")
+            subprocess.run(cmd, check=True)
 
 @click.group()
 @click.pass_context
@@ -217,6 +236,7 @@ def cli(ctx):
 def build(ctx, version):
     """Builds the SL binaries"""
     # genBinData()
+
     toBuild = buildArchs()
     for os in toBuild.keys():
         for arch in toBuild[os]:
@@ -245,6 +265,8 @@ def i18n(ctx):
     """Checks and builds the i18n files"""
     click.echo("I18N STUFF ...")
     runI18n4go(ctx.obj.getdir())
+    genBinData()
+    ctx.obj.commitChanges()
 
 if __name__ == '__main__':
     cli()
