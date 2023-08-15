@@ -62,8 +62,41 @@ def goBuild(cwd: str, theOs: str, theArch: str) -> None:
     if theOs == "windows":
         binaryName = f"{binaryName}.exe"
     buildCmd = f"go build -ldflags \"-s -w\" -o {binaryName} ."
-    print(f"[yellow]Running {buildCmd}")
+    print(f"[turquoise2]Running {buildCmd}")
     subprocess.run(buildCmd)
+
+def runTests() -> None:
+    """Runs unit tests"""
+
+    go_ven = 'go mod vendor'
+    print(f"[turquoise2]Running: {go_ven}")
+    subprocess.run(go_ven, check=True)
+    # We can't use the `| grep -v "fixtures" | grep -v "vendor"` stuff because working with pipes in 
+    # subprocess is tricky, doing this is easier to me.
+    go_mods = 'go list ./...'
+    print(f"[turquoise2]Running: {go_mods}")
+    mods = subprocess.run(go_mods, capture_output=True, check=True, text=True)
+    clean_mods = []
+    for mod in mods.stdout.split("\n"):
+        if re.match(r"fixtrues|vendor", mod) is None:
+            clean_mods.append(mod)
+
+    go_vet = f"go vet {' '.join(clean_mods)}"
+    # Not using the 'real' command here because this looks neater.
+    print(f'[turquoise2]Running: go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")')
+    subprocess.run(go_vet, check=True)
+    go_test = f"go test {' '.join(clean_mods)}"
+    print(f'[turquoise2]Running: go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")')
+    subprocess.run(go_test, check=True)
+    go_sec = 'gosec -exclude-dir=fixture -exclude-dir=plugin/resources -quiet ./...'
+    print(f'[turquoise2]Running: {go_sec}')
+    try:
+        subprocess.run(go_sec, check=True)
+    except FileNotFoundError:
+        gosec_instal = "curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $GOPATH/bin"
+        print(f"[red]gosec not found. Try running:\n{gosec_instal}")
+    
+
 
 
 ### Section for i18n4go stuff ###
@@ -78,7 +111,7 @@ def runI18n4go(path: str) -> None:
     if isWindows():
         binary = f"{binary}.exe"
     cmd = f"{binary} -c checkup -q i18n -v -d {plugin_dir}"
-    print(f"[yellow]Running: {cmd}")
+    print(f"[turquoise2]Running: {cmd}")
     result = subprocess.run(cmd, capture_output=True, text=True)
     # We have some mismatching lines, lets fix that.
     missmatch = ""
@@ -99,21 +132,21 @@ def runI18n4go(path: str) -> None:
 
     if result.returncode > 0:
         add_results = add_re.findall(result.stdout)
-        print("[yellow] ====== ADD ========")
+        print("\t[yellow] ====== ADD ========")
         for line in add_results:
-            print(f"[yellow]|{line}|")
+            print(f"\t[yellow]|{line}|")
             # We use the whole line as the key to make search easier.
             add_json[line] = {"id": line, "translation": line}
         del_results = del_re.findall(result.stdout)
-        print("[red] ====== REMOVE ========")
+        print("\t[red] ====== REMOVE ========")
         for line in del_results:
-            print(f"[red]|{line}|")
+            print(f"\t[red]|{line}|")
             del_json[line]= {"id": line, "translation": line}
         
-        print("[blue] ====== MISMATCH (REMOVE PART 2) ========")
+        print("\t[blue] ====== MISMATCH (REMOVE PART 2) ========")
         mxm_results = mxm_re.findall(result.stdout)
         for line in mxm_results:
-            print(f"[blue]|{line[0]}| is missing from {line[1]}")
+            print(f"\t[blue]|{line[0]}| is missing from {line[1]}")
             del_json[line[0]] = {"id": line[0], "translation": line[0]}
         # We only want to ADD things to en_US so that our translators have an easier time figuring out what they need
         # to add to the other languages.
@@ -123,7 +156,7 @@ def runI18n4go(path: str) -> None:
             i18n_path = os.path.join(plugin_dir, 'i18n', 'resources', f)
             del_i18n(i18n_path, del_json)
     else:
-        print(f"[green]I18N files are ok!")
+        print(f"\t[green]OK!")
 
 def add_i18n(file_name: str, updates: dict) -> None:
     """Adds the new translations
@@ -188,13 +221,12 @@ def genBinData() -> None:
     if isWindows():
         goBindata = f'{goBindata}.exe'
     goBindata = f'{goBindata} -pkg resources -o plugin/resources/i18n_resources.go plugin/i18n/resources'
-    print("[green]Building I18N ...")
-    print(f"\t[yellow]{goBindata}")
+    print(f"[turquoise2]Building I18N: {goBindata}")
     result = subprocess.run(goBindata, capture_output=True)
     if result.returncode > 0:
-        print(f"[red]{result.stderr.decode('ascii')}")
+        print(f"\t[red]{result.stderr.decode('ascii')}")
     else:
-        print(f"\t[green]OK")
+        print(f"\t[green]OK!")
 
 
 ### END i18n4go stuff ###
@@ -216,13 +248,21 @@ class Builder(object):
         """Commits any expected changes from the build"""
         cmds = [
             f"git add {os.path.join(self.cwd, 'plugin', 'i18n', 'resources', '*.json')}",
-            f"git add {os.path.join(self.cwd, 'plugin', 'resources', '*i18n_resources.go')}"
-            "git commit --message='updating I18N files from buildAndDeploy'",
+            f"git add {os.path.join(self.cwd, 'plugin', 'resources', '*i18n_resources.go')}",
+            'git commit --message="updating I18N files from buildAndDeploy"',
+
         ]
-        
-        for cmd in cmds:
-            print(f"[yellow]{cmd}")
-            subprocess.run(cmd, check=True)
+        status = 'git status -s --untracked-files=no'
+
+        result = subprocess.run(status, capture_output=True, text=True)
+        print(result.stdout)
+        changes = re.match('resources', result.stdout)
+        if changes:
+            for cmd in cmds:
+                print(f"[turquoise2]{cmd}")
+                subprocess.run(cmd)
+        else:
+            print("[green]No changes to commit!")
 
 @click.group()
 @click.pass_context
@@ -261,9 +301,14 @@ def release(ctx, version):
 
 @cli.command()
 @click.pass_context
+def test(ctx):
+    """Runs the tests"""
+    runTests()
+
+@cli.command()
+@click.pass_context
 def i18n(ctx):
     """Checks and builds the i18n files"""
-    click.echo("I18N STUFF ...")
     runI18n4go(ctx.obj.getdir())
     genBinData()
     ctx.obj.commitChanges()
