@@ -28,7 +28,7 @@ func NewSubnetsListCommand(sl *metadata.SoftlayerStorageCommand) *SubnetsListCom
 		Short: T("List block storage assigned subnets for the given host id."),
 		Long: T(`${COMMAND_NAME} sl {{.storageType}} subnets-list ACCESS_ID [OPTIONS]
 
-access_id is the host_id obtained by: slcli block access-list <volume_id>
+access_id is the host_id obtained by: sl block access-list <volume_id>
 
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} subnets-list 12345678 
