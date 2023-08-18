@@ -27,10 +27,8 @@ func NewSubnetsAssignCommand(sl *metadata.SoftlayerStorageCommand) *SubnetsAssig
 	cobraCmd := &cobra.Command{
 		Use:   "subnets-assign " + T("IDENTIFIER"),
 		Short: T("Assign block storage subnets to the given host id."),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]
-
-access_id is the host_id obtained by: sl block access-list <volume_id>
-SoftLayer_Account::iscsiisolationdisabled must be False to use this command
+		Long: T("access_id is the host_id obtained by: sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled must be False to use this command") +
+			" " + T(`${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]
 
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222
