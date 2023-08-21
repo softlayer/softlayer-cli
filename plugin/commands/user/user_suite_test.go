@@ -35,6 +35,7 @@ var availableCommands = []string{
 	"vpn-manual",
 	"vpn-password",
 	"vpn-subnet",
+	"vpn-disable",
 	"vpn-enable",
 }
 
