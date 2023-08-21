@@ -39,7 +39,7 @@ var _ = Describe("Hardware bandwidth", func() {
 			It("Error on missing ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires one argument"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 			It("Rollup specified", func() {
 				testTime := "2021-08-01"

@@ -39,7 +39,7 @@ var _ = Describe("Authorize block, portable and file storage to a VS", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires one argument"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("Authorize Storage with wrong VS ID", func() {

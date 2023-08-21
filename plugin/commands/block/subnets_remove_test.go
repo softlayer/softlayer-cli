@@ -37,7 +37,7 @@ var _ = Describe("block subnets-remove", func() {
 			It("Set command without Id", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--subnet-id", "111111")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires one argument"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 
 			It("Set command with an invalid Id", func() {

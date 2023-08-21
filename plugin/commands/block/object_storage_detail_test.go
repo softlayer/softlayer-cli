@@ -38,7 +38,7 @@ var _ = Describe("block object-storage-detail", func() {
 			It("Object storage detail without ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires one argument"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 
 			It("Object storage detail with wrong ID", func() {

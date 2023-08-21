@@ -38,14 +38,14 @@ var _ = Describe("Record add", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires four arguments."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires four arguments."))
 			})
 		})
 		Context("Record add with not enough parameters", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc.com")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage : This command requires four arguments."))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires four arguments."))
 			})
 		})
 
