@@ -77,7 +77,7 @@ var _ = Describe("Cdn origin add", func() {
 
 		Context("Cdn origin add, correct use", func() {
 			It("return cdn origin add", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456789", "--origin", "123.123.123.123", "--path", "/example/videos/", "--http", "80", "--origin-type", "storage", "--bucket-name", "bucketName", "--file-extensions", "jpg")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456789", "--origin", "123.123.123.123","--path", "/example/videos/", "--http", "80", "--origin-type", "storage", "--bucket-name", "bucketName", "--file-extensions", "jpg")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("CDN Unique ID"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("354034879028850"))
@@ -95,7 +95,7 @@ var _ = Describe("Cdn origin add", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("RUNNING"))
 			})
 			It("return cdn in format json", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456789", "--origin", "123.123.123.123", "--path", "/example/videos/", "--http", "80", "--output", "json")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456789", "--origin", "123.123.123.123","--path", "/example/videos/", "--http", "80", "--output", "json")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Name": "CDN Unique ID",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Value": "354034879028850"`))

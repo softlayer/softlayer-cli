@@ -2,7 +2,6 @@ package subnet_test
 
 import (
 	"errors"
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
