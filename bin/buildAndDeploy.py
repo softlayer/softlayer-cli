@@ -2,6 +2,7 @@
 
 import click
 import json
+from pathlib import Path
 import os
 import re
 import subprocess
@@ -234,7 +235,8 @@ def genBinData() -> None:
 class Builder(object):
     def __init__(self):
         self.cwd = os.getcwd()
-        self.version = 'master'
+        self.version = '0.0.1'
+        self.debug = True
         if not self.cwd.endswith('softlayer-cli'):
             raise Exception(f"Working Directory should be softlayer-cli, is currently {self.cwd}")
 
@@ -242,7 +244,24 @@ class Builder(object):
         return self.cwd
 
     def setVersion(self, version: str) -> None:
+        if not re.match(r'\d+\.\d+\.\d+', version):
+            raise Exception(f"{version} is not valid, needs to be in the format of Major.Minor.Revision")
         self.version = version
+        sl_go = Path(os.path.join(self.cwd, 'plugin', 'metadata', 'sl.go'))
+        
+        data = sl_go.read_text()
+
+        old_v = re.search(r'^\W+PLUGIN_VERSION\W+= \"([0-9]+\.[0-9]+\.[0-9]+)\"', data, re.M)
+        if old_v is None:
+            raise Exception(f"[red]Can't find old version!")
+        print(f"[turquoise2]Old Version: {old_v[1]}")
+        updated = re.sub(
+            r'PLUGIN_VERSION\W+= \"([0-9]+\.[0-9]+\.[0-9]+)\"',
+            f"PLUGIN_VERSION         = \"{self.version}\"",
+            data)
+        # print(updated)
+        sl_go.write_text(updated)   
+        print(f"[turquoise2]Updated {sl_go} PLUGIN_VERSION {old_v[1]} -> {version}") 
 
     def commitChanges(self):
         """Commits any expected changes from the build"""
@@ -263,6 +282,21 @@ class Builder(object):
                 subprocess.run(cmd)
         else:
             print("[green]No changes to commit!")
+
+    def deploy(self):
+        """Uploads binaries to IBM COS"""
+        apikey = os.getenv("IBMCLOUD_APIKEY")
+        if not apikey:
+            raise Exception("IBMCLOUD_APIKEY needs to be set to the proper API key first.")
+        login_cmd = f"ibmcloud login --apikey {apikey}"
+        print(f"[yellow]Running: ibmcloud login --apikey $IBMCLOUD_APIKEY")
+        # subprocess.run(login_cmd)
+        files = os.listdir(os.path.join(self.cwd, 'out'))
+        for f in files:
+            if os.path.isfile(os.path.join(self.cwd,'out', f)):
+                upload_cmd = f"ibmcloud cos upload --bucket softlayer-cli-binaries --file ./out/{f} --key {f}"
+                print(f"[yellow]Running: {upload_cmd}")
+                # subprocess.run(upload_cmd)
 
 @click.group()
 @click.pass_context
@@ -290,6 +324,8 @@ def build(ctx, version):
 def deploy(ctx, version):
     """Deploys the SL binaries"""
     click.echo("Deploying...")
+    ctx.obj.setVersion(version)
+    ctx.obj.deploy()
 
 
 @cli.command()
@@ -314,6 +350,9 @@ def i18n(ctx):
     ctx.obj.commitChanges()
 
 if __name__ == '__main__':
-    cli()
+    try:
+        cli()
+    except Exception as e:
+        print(f"[red]{e}")
 
 
