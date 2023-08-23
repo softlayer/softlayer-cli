@@ -27,7 +27,7 @@ func NewOriginListCommand(sl *metadata.SoftlayerCommand) *OriginListCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "origin-list " + T("IDENTIFIER"),
 		Short: T("List origin path for an existing CDN mapping."),
-		Long:  T("${COMMAND_NAME} sl cdn origin-list"),
+		Long:  T("List origin path for an existing CDN mapping.") + " " + T("${COMMAND_NAME} sl cdn origin-list"),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
