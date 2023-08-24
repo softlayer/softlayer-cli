@@ -37,7 +37,7 @@ def buildArchs() -> dict:
     """Returns the list of binaries we should build"""
     buildArchs =  {
         'darwin': ['arm64', 'amd64'],
-        'linux': ['amd64', '386', 'arm64', 'ppc64le', 's390x'],
+        'linux': ['amd64', '386', 'arm64'],
         'windows': ['386', 'amd64'],
     }
     return buildArchs
@@ -54,28 +54,29 @@ def cgoEnable(theOs: str, theArch: str) -> int:
 def runTests() -> None:
     """Runs unit tests"""
 
-    go_ven = 'go mod vendor'
-    print(f"[turquoise2]Running: {go_ven}")
+    go_ven = ['go', 'mod', 'vendor']
+    print("[turquoise2]Running: " + " ".join(go_ven))
     subprocess.run(go_ven, check=True)
     # We can't use the `| grep -v "fixtures" | grep -v "vendor"` stuff because working with pipes in 
     # subprocess is tricky, doing this is easier to me.
-    go_mods = 'go list ./...'
-    print(f"[turquoise2]Running: {go_mods}")
+    go_mods = ['go', 'list', './...']
+    print(f"[turquoise2]Running:" + " ".join(go_mods))
     mods = subprocess.run(go_mods, capture_output=True, check=True, text=True)
     clean_mods = []
     for mod in mods.stdout.split("\n"):
         if re.match(r"fixtrues|vendor", mod) is None:
             clean_mods.append(mod)
 
-    go_vet = f"go vet {' '.join(clean_mods)}"
+    go_vet = ['go', 'vet'] +  clean_mods
     # Not using the 'real' command here because this looks neater.
     print(f'[turquoise2]Running: go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")')
     subprocess.run(go_vet, check=True)
-    go_test = f"go test {' '.join(clean_mods)}"
-    print(f'[turquoise2]Running: go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")')
+    go_test = ['go', 'test'] +  clean_mods
+    print(f'[turquoise2]Running:  ' + " ".join(go_test))
     subprocess.run(go_test, check=True)
-    go_sec = 'gosec -exclude-dir=fixture -exclude-dir=plugin/resources -quiet ./...'
-    print(f'[turquoise2]Running: {go_sec}')
+    go_sec = ['gosec', '-exclude-dir=fixture', '-exclude-dir=plugin/resources', '-quiet', './...']
+    # Not using the 'real' command because this is more copy/pasteable.
+    print(f'[turquoise2]Running: go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")')
     try:
         subprocess.run(go_sec, check=True)
     except FileNotFoundError:
@@ -255,13 +256,14 @@ class Builder(object):
         apikey = os.getenv("IBMCLOUD_APIKEY")
         if not apikey:
             raise Exception("IBMCLOUD_APIKEY needs to be set to the proper API key first.")
-        login_cmd = f"ibmcloud login --apikey {apikey}"
+        login_cmd = ["ibmcloud", "login", f"--apikey={apikey}"]
         print(f"[yellow]Running: ibmcloud login --apikey $IBMCLOUD_APIKEY")
         subprocess.run(login_cmd)
         files = glob.glob(os.path.join(self.cwd, 'out', f"sl-{self.version}-*"))
         for f in files:
-            upload_cmd = f"ibmcloud cos upload --bucket softlayer-cli-binaries --file {f} --key {os.path.basename(f)}"
-            print(f"[yellow]Running: {upload_cmd}")
+            upload_cmd = ["ibmcloud", "cos", "upload", "--bucket=softlayer-cli-binaries",
+                          f"--file={f}", f"--key={os.path.basename(f)}"]
+            print(f"[yellow]Running: " + " ".join(upload_cmd))
             subprocess.run(upload_cmd)
 
     def getChecksums(self) -> dict:
