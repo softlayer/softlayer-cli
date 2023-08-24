@@ -96,8 +96,8 @@ def runI18n4go(path: str) -> None:
     # TODO: Support linux too I guess.
     if isWindows():
         binary = f"{binary}.exe"
-    cmd = f"{binary} -c checkup -q i18n -v -d {plugin_dir}"
-    print(f"[turquoise2]Running: {cmd}")
+    cmd = [binary, "-c checkup", "-q i18n", "-v", f"-d {plugin_dir}"]
+    print("[turquoise2]Running: "  + " ".join(cmd))
     result = subprocess.run(cmd, capture_output=True, text=True)
     # We have some mismatching lines, lets fix that.
     missmatch = ""
@@ -206,8 +206,8 @@ def genBinData() -> None:
     goBindata = './bin/go-bindata'
     if isWindows():
         goBindata = f'{goBindata}.exe'
-    goBindata = f'{goBindata} -pkg resources -o plugin/resources/i18n_resources.go plugin/i18n/resources'
-    print(f"[turquoise2]Building I18N: {goBindata}")
+    goBindata = [goBindata, "-pkg=resources", "-o=plugin/resources/i18n_resources.go",  "plugin/i18n/resources"]
+    print("[turquoise2]Building I18N: " + " ".join(goBindata))
     result = subprocess.run(goBindata, capture_output=True)
     if result.returncode > 0:
         print(f"\t[red]{result.stderr.decode('ascii')}")
@@ -249,25 +249,6 @@ class Builder(object):
         sl_go.write_text(updated)   
         print(f"[turquoise2]Updated {sl_go} PLUGIN_VERSION {old_v[1]} -> {version}") 
 
-    def commitChanges(self):
-        """Commits any expected changes from the build"""
-        cmds = [
-            f"git add {os.path.join(self.cwd, 'plugin', 'i18n', 'resources', '*.json')}",
-            f"git add {os.path.join(self.cwd, 'plugin', 'resources', '*i18n_resources.go')}",
-            'git commit --message="updating I18N files from buildAndDeploy"',
-
-        ]
-        status = 'git status -s --untracked-files=no'
-
-        result = subprocess.run(status, capture_output=True, text=True)
-        print(result.stdout)
-        changes = re.match('resources', result.stdout)
-        if changes:
-            for cmd in cmds:
-                print(f"[turquoise2]{cmd}")
-                subprocess.run(cmd)
-        else:
-            print("[green]No changes to commit!")
 
     def deploy(self):
         """Uploads binaries to IBM COS"""
@@ -349,7 +330,8 @@ class Builder(object):
             binaryName = f"{binaryName}.exe"
         buildCmd = f"go build -ldflags \"-s -w\" -o {binaryName} ."
         print(f"[turquoise2]Running {buildCmd}")
-        subprocess.run(buildCmd)
+        # This command basically requires shell=True on mac because -ldflags doesn't get parsed properly withoutit.
+        subprocess.run(buildCmd, shell=True)
 
 @click.group()
 @click.pass_context
@@ -408,7 +390,6 @@ def i18n(ctx):
     """Checks and builds the i18n files"""
     runI18n4go(ctx.obj.getdir())
     genBinData()
-    ctx.obj.commitChanges()
 
 if __name__ == '__main__':
     try:
