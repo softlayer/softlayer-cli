@@ -6,6 +6,9 @@ from pathlib import Path
 import os
 import re
 import subprocess
+import requests
+import hashlib
+import glob
 from rich import print
 
 
@@ -46,25 +49,7 @@ def cgoEnable(theOs: str, theArch: str) -> int:
         return 0
     return 1
 
-def goBuild(cwd: str, theOs: str, theArch: str) -> None:
-    """Runs the go build command
-    
-    :param str cwd: The current working directory
-    :param str theOs: OS to build for
-    :param str theArch: Architecture to build for
-    """
-    envVars = {
-        "GOOS": theOs,
-        "GOARCH": theArch,
-        "CGO_ENABLED": cgoEnable(theOs, theArch)
-    }
-    print(f"[green]Building {theOs}-{theArch}")
-    binaryName = os.path.join(cwd, 'out', f"sl-{theOs}-{theArch}")
-    if theOs == "windows":
-        binaryName = f"{binaryName}.exe"
-    buildCmd = f"go build -ldflags \"-s -w\" -o {binaryName} ."
-    print(f"[turquoise2]Running {buildCmd}")
-    subprocess.run(buildCmd)
+
 
 def runTests() -> None:
     """Runs unit tests"""
@@ -237,6 +222,7 @@ class Builder(object):
         self.cwd = os.getcwd()
         self.version = '0.0.1'
         self.debug = True
+        self.cnd_url = 'https://s3.us-east.cloud-object-storage.appdomain.cloud/softlayer-cli-binaries/'
         if not self.cwd.endswith('softlayer-cli'):
             raise Exception(f"Working Directory should be softlayer-cli, is currently {self.cwd}")
 
@@ -290,13 +276,80 @@ class Builder(object):
             raise Exception("IBMCLOUD_APIKEY needs to be set to the proper API key first.")
         login_cmd = f"ibmcloud login --apikey {apikey}"
         print(f"[yellow]Running: ibmcloud login --apikey $IBMCLOUD_APIKEY")
-        # subprocess.run(login_cmd)
-        files = os.listdir(os.path.join(self.cwd, 'out'))
+        subprocess.run(login_cmd)
+        files = glob.glob(os.path.join(self.cwd, 'out', f"sl-{self.version}-*"))
         for f in files:
-            if os.path.isfile(os.path.join(self.cwd,'out', f)):
-                upload_cmd = f"ibmcloud cos upload --bucket softlayer-cli-binaries --file ./out/{f} --key {f}"
-                print(f"[yellow]Running: {upload_cmd}")
-                # subprocess.run(upload_cmd)
+            upload_cmd = f"ibmcloud cos upload --bucket softlayer-cli-binaries --file {f} --key {os.path.basename(f)}"
+            print(f"[yellow]Running: {upload_cmd}")
+            subprocess.run(upload_cmd)
+
+    def getChecksums(self) -> dict:
+        """Calcs checksums for all files we generated"""
+        checksums = {
+            'Linux_X86': {'file': f"sl-{self.version}-linux-386", 'checksum': ''},
+            'Linux_X64': {'file': f"sl-{self.version}-linux-amd64", 'checksum': ''},
+            'Linux_arm64' : {'file': f"sl-{self.version}-linux-arm64", 'checksum': ''},
+            'MacOS': {'file': f"sl-{self.version}-darwin-amd64", 'checksum': ''},
+            'MacOS_arm64': {'file': f"sl-{self.version}-darwin-arm64", 'checksum': ''},
+            'Win_X86': {'file': f"sl-{self.version}-windows-386.exe", 'checksum': ''},
+            'Win_X64': {'file': f"sl-{self.version}-windows-amd64.exe", 'checksum': ''}
+        }
+
+        for x in checksums.keys():
+            with open(os.path.join(self.cwd, 'out', checksums[x]['file']), "rb") as f:
+                digest = hashlib.file_digest(f, "sha1")
+                print(f"[yellow]{checksums[x]['file']} => {digest.hexdigest()}")
+                checksums[x]['checksum'] = digest.hexdigest()
+        return checksums
+
+    def runJenkins(self):
+        """https://github.ibm.com/coligo/cli/blob/main/script/publish.to.repo.sh"""
+        checksums = self.getChecksums()
+        jenkinsUrl = 'https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1/build'
+        jenkins_token = os.getenv('JENKINS_TOKEN')
+        if not jenkins_token:
+            raise Exception("JENKINS_TOKEN is not set to an API key")
+        auth = f"cgallo@us.ibm.com:{jenkins_token}"
+        form_json = {
+            "parameters": [
+                {"name": "Plugin_Name", "value":"sl"},
+                {"name": "Version", "value":self.version},
+                {"name": "Description", "value":"Manage Classic infrastructure services"},
+                {"name": "min_cli_version", "value":"2.18.0"},
+                {"name": "private_endpoint_supported", "value":True}
+            ]
+        }
+
+        for x in checksums.keys():
+            urlData = {'name': f"Url_{x}", "value": self.cnd_url + checksums[x]['file']}
+            checkData = {'name': f"Checksum_{x}", "value": checksums[x]['checksum']}
+            form_json['parameters'].append(urlData)
+            form_json['parameters'].append(checkData)
+
+        print(f"[yellow]Trying to start jenkins job on {jenkinsUrl}")
+        result = requests.post(jenkinsUrl, auth=('cgallo@us.ibm.com', jenkins_token), data=form_json)
+        print(result)
+
+
+
+    def goBuild(self, theOs: str, theArch: str) -> None:
+        """Runs the go build command
+        
+        :param str cwd: The current working directory
+        :param str theOs: OS to build for
+        :param str theArch: Architecture to build for
+        """
+        os.environ["GOOS"] = theOs
+        os.environ["GOARCH"] = theArch
+        os.environ["CGO_ENABLED"] = str(cgoEnable(theOs, theArch))
+
+        print(f"[green]Building {theOs}-{theArch}")
+        binaryName = os.path.join(self.cwd, 'out', f"sl-{self.version}-{theOs}-{theArch}")
+        if theOs == "windows":
+            binaryName = f"{binaryName}.exe"
+        buildCmd = f"go build -ldflags \"-s -w\" -o {binaryName} ."
+        print(f"[turquoise2]Running {buildCmd}")
+        subprocess.run(buildCmd)
 
 @click.group()
 @click.pass_context
@@ -310,11 +363,11 @@ def cli(ctx):
 def build(ctx, version):
     """Builds the SL binaries"""
     # genBinData()
-
+    ctx.obj.setVersion(version)
     toBuild = buildArchs()
     for os in toBuild.keys():
         for arch in toBuild[os]:
-            goBuild(ctx.obj.getdir(), os, arch)
+            ctx.obj.goBuild(os, arch)
 
     
 
@@ -334,6 +387,14 @@ def deploy(ctx, version):
 def release(ctx, version):
     """Builds, then deploys the release"""
     click.echo("Performing a Release ...")
+
+@cli.command()
+@click.argument("version")
+@click.pass_context
+def jenkins(ctx, version):
+    """Trigger a Jenkins build with existing files."""
+    ctx.obj.setVersion(version)
+    ctx.obj.runJenkins()
 
 @cli.command()
 @click.pass_context
