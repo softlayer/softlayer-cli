@@ -2,7 +2,7 @@ package dedicatedhost
 
 import (
 	"github.com/spf13/cobra"
-	
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
@@ -61,6 +61,8 @@ func (cmd *CancelCommand) Run(args []string) error {
 	if len(listGuest) > 0 {
 		table := cmd.UI.Table([]string{T("Id"), T("Server Name"), T("Status")})
 		for _, guest := range listGuest {
+			//#nosec G601 -- utils.FormatXPointer returns the value of the memory address, so this is not a problem.
+			//Test Issues787 assures this condition.
 			table.Add(utils.FormatIntPointer(&guest.Id), utils.FormatStringPointer(&guest.Fqdn), utils.FormatStringPointer(&guest.Status))
 		}
 		table.Print()
