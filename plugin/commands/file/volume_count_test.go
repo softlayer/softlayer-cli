@@ -19,7 +19,7 @@ import (
 var listVolumeReturns = []datatypes.Network_Storage{
 	datatypes.Network_Storage{
 		ServiceResource: &datatypes.Network_Service_Resource{
-			Datacenter: &datatypes.Location{Name: sl.String("dal10")},
+			Datacenter: &datatypes.Location{Name: sl.String("dal10"), RegionCount: sl.Uint(4)},
 		},
 	},
 }
@@ -78,6 +78,31 @@ var _ = Describe("Volume cancel", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to list volumes on your account."))
+			})
+		})
+		Context("sortby count", func() {
+			BeforeEach(func() {
+				FakeStorageManager.ListVolumesReturns(listVolumeReturns, nil)
+			})
+			It("Sorting the Count Column", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "Count")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Data center   Count"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10         1"))
+			})
+		})
+		Context("sortby blank value passed Error", func() {
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("flag needs an argument: --sortby"))
+			})
+		})
+		Context("sortby wrong value passed Error", func() {
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--sortby", "zc,.//")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --sortby zc,.// is not supported."))
 			})
 		})
 	})

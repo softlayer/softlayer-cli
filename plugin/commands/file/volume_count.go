@@ -9,6 +9,7 @@ import (
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type VolumeCountCommand struct {
@@ -16,6 +17,7 @@ type VolumeCountCommand struct {
 	Command        *cobra.Command
 	StorageManager managers.StorageManager
 	Datacenter     string
+	SortBy         string
 }
 
 func NewVolumeCountCommand(sl *metadata.SoftlayerStorageCommand) (cmd *VolumeCountCommand) {
@@ -32,11 +34,14 @@ func NewVolumeCountCommand(sl *metadata.SoftlayerStorageCommand) (cmd *VolumeCou
 		},
 	}
 	cobraCmd.Flags().StringVarP(&thisCmd.Datacenter, "datacenter", "d", "", T("Filter by datacenter shortname"))
+	cobraCmd.Flags().StringVarP(&thisCmd.SortBy, "sortby", "s", "", T("Column to sort by"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
 
 func (cmd *VolumeCountCommand) Run(args []string) error {
+	sortby := cmd.SortBy
+	flag := false
 	mask := "mask[id,serviceResource.datacenter.name]"
 	volumes, err := cmd.StorageManager.ListVolumes(managers.VOLUME_TYPE_FILE, cmd.Datacenter, "", "", "", 0, mask)
 	if err != nil {
@@ -56,11 +61,36 @@ func (cmd *VolumeCountCommand) Run(args []string) error {
 	var datacenters []string
 	for key, _ := range result {
 		datacenters = append(datacenters, key)
+		flag = true
 	}
 	sort.Strings(datacenters)
+
+	sortColumns := []string{"Datacenter", "Count"}
+
+	keys := make([]string, 0, len(result))
+	_, err = utils.ValidateColumns2(sortby, nil, nil, nil, sortColumns)
+	if err != nil {
+		return err
+	}
+
 	table := cmd.UI.Table([]string{T("Data center"), T("Count")})
-	for _, dc := range datacenters {
-		table.Add(dc, strconv.Itoa(result[dc]))
+
+	if sortby == "Count" || sortby == "count" {
+		for key := range result {
+			keys = append(keys, key)
+		}
+		sort.SliceStable(keys, func(i, j int) bool {
+			return result[keys[i]] < result[keys[j]]
+		})
+		for _, k := range keys {
+			table.Add(k, strconv.Itoa(result[k]))
+		}
+		flag = false
+	}
+	if flag == true {
+		for _, dc := range datacenters {
+			table.Add(dc, strconv.Itoa(result[dc]))
+		}
 	}
 	table.Print()
 	return nil
