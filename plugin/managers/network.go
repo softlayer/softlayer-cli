@@ -220,6 +220,7 @@ func (n networkManager) AddSubnet(subnetType string, quantity int, vlanID int, v
 			quantity = 0
 			category = "global_ipv4"
 		} else if subnetType == "public" {
+			//#nosec G101 -- Not a credential
 			category = "sov_sec_ip_addresses_pub"
 		}
 	} else {

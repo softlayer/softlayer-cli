@@ -91,5 +91,28 @@ var _ = Describe("Dedicated host create", func() {
 			})
 		})
 
+		Context("Dedicatedhost VS cancel vs successfully - multiple", func() {
+			BeforeEach(func() {
+				FakeDedicatedhostManager.CancelGuestsReturns([]managers.StatusInfo{
+					{
+						Id:     *sl.Int(1234567),
+						Fqdn:   *sl.String("test.softlayer"),
+						Status: *sl.String("Cancelled"),
+					},
+					{
+						Id:     *sl.Int(9999),
+						Fqdn:   *sl.String("qqq.aaa"),
+						Status: *sl.String("Cancelled"),
+					},
+				}, nil)
+			})
+			It("return no error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234567"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("9999"))
+			})
+		})
+
 	})
 })
