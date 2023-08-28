@@ -60,7 +60,7 @@ def runTests() -> None:
     # We can't use the `| grep -v "fixtures" | grep -v "vendor"` stuff because working with pipes in 
     # subprocess is tricky, doing this is easier to me.
     go_mods = ['go', 'list', './...']
-    print(f"[turquoise2]Running:" + " ".join(go_mods))
+    print(f"[turquoise2]Running: " + " ".join(go_mods))
     mods = subprocess.run(go_mods, capture_output=True, check=True, text=True)
     clean_mods = []
     for mod in mods.stdout.split("\n"):
@@ -72,11 +72,11 @@ def runTests() -> None:
     print(f'[turquoise2]Running: go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")')
     subprocess.run(go_vet, check=True)
     go_test = ['go', 'test'] +  clean_mods
-    print(f'[turquoise2]Running:  ' + " ".join(go_test))
+    print(f'[turquoise2]Running: go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")')
     subprocess.run(go_test, check=True)
     go_sec = ['gosec', '-exclude-dir=fixture', '-exclude-dir=plugin/resources', '-quiet', './...']
     # Not using the 'real' command because this is more copy/pasteable.
-    print(f'[turquoise2]Running: go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")')
+    print('[turquoise2]Running: ' + " ".join(go_sec)) 
     try:
         subprocess.run(go_sec, check=True)
     except FileNotFoundError:
@@ -286,15 +286,28 @@ class Builder(object):
         return checksums
 
     def runJenkins(self):
-        """https://github.ibm.com/coligo/cli/blob/main/script/publish.to.repo.sh"""
+        """Starts up a Jenkins build.
+        Copied some of the logic from https://github.ibm.com/coligo/cli/blob/main/script/publish.to.repo.sh so this might not be the best solution.
+
+This CURL command works (missing all the OS options but you get the idea). We should be using 'buildWithParameters' I think, but I couldn't get it to work.
+curl -X POST https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1/build \
+--user $JENKINS_USER:$JENKINS_TOKEN \
+--form json='{"parameter": [{"name":"Plugin_Name", "value":"sl"},'\
+'{"name":"Version", "value": "1.4.2"},'\
+'{"name":"Description", "value": "Manage Classic infrastructure services"},'\
+'{"name":"min_cli_version", "value": "2.18.0"},'\
+'{"name":"private_endpoint_supported", "value": true},'\
+'{"name":"Checksum_Linux_X86", "value":"d069b943532f69feadd292d6d1c62eece8ca1112"},'\
+'{"name":"Url_Linux_X86", "value":"https://s3.us-east.cloud-object-storage.appdomain.cloud/softlayer-cli-binaries/sl-1.4.2-linux-386"}]}' -v
+        """
         checksums = self.getChecksums()
-        jenkinsUrl = 'https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1/build'
+        jenkinsUrl = 'https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1'
         jenkins_token = os.getenv('JENKINS_TOKEN')
         if not jenkins_token:
             raise Exception("JENKINS_TOKEN is not set to an API key")
         auth = f"cgallo@us.ibm.com:{jenkins_token}"
         form_json = {
-            "parameters": [
+            "parameter": [
                 {"name": "Plugin_Name", "value":"sl"},
                 {"name": "Version", "value":self.version},
                 {"name": "Description", "value":"Manage Classic infrastructure services"},
@@ -306,12 +319,17 @@ class Builder(object):
         for x in checksums.keys():
             urlData = {'name': f"Url_{x}", "value": self.cnd_url + checksums[x]['file']}
             checkData = {'name': f"Checksum_{x}", "value": checksums[x]['checksum']}
-            form_json['parameters'].append(urlData)
-            form_json['parameters'].append(checkData)
+            form_json['parameter'].append(urlData)
+            form_json['parameter'].append(checkData)
 
         print(f"[yellow]Trying to start jenkins job on {jenkinsUrl}")
-        result = requests.post(jenkinsUrl, auth=('cgallo@us.ibm.com', jenkins_token), data=form_json)
-        print(result)
+        print(form_json)
+        result = requests.post(f"{jenkinsUrl}/build",  auth=('cgallo@us.ibm.com', jenkins_token), data={'json':json.dumps(form_json)})
+        if (reult.status_code == 201 ):
+            print(f"[green] Created Job! Check {jenkinsUrl}" )
+        else:
+            print(f"[red]Error: {result.status_code} {result.reason}")
+            raise Excetion("Error in runJenkins()")
 
 
 
@@ -394,9 +412,10 @@ def i18n(ctx):
     genBinData()
 
 if __name__ == '__main__':
-    try:
-        cli()
-    except Exception as e:
-        print(f"[red]{e}")
+    cli()
+    # try:
+    #     cli()
+    # except Exception as e:
+    #     print(f"[red]{e}")
 
 

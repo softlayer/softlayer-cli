@@ -101,7 +101,7 @@ func pluginI18nResourcesDe_deAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/de_DE.all.json", size: 403150, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/de_DE.all.json", size: 403150, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -121,7 +121,7 @@ func pluginI18nResourcesEn_usAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/en_US.all.json", size: 396301, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/en_US.all.json", size: 396301, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -141,7 +141,7 @@ func pluginI18nResourcesEs_esAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/es_ES.all.json", size: 398074, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/es_ES.all.json", size: 398074, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -161,7 +161,7 @@ func pluginI18nResourcesFr_frAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/fr_FR.all.json", size: 402348, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/fr_FR.all.json", size: 402348, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -181,7 +181,7 @@ func pluginI18nResourcesIt_itAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/it_IT.all.json", size: 393370, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/it_IT.all.json", size: 393370, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -201,7 +201,7 @@ func pluginI18nResourcesJa_jpAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/ja_JP.all.json", size: 434516, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/ja_JP.all.json", size: 434516, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -221,7 +221,7 @@ func pluginI18nResourcesKo_krAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/ko_KR.all.json", size: 398542, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/ko_KR.all.json", size: 398542, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -241,7 +241,7 @@ func pluginI18nResourcesPt_brAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/pt_BR.all.json", size: 391547, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/pt_BR.all.json", size: 391547, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -261,7 +261,7 @@ func pluginI18nResourcesZh_hansAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/zh_Hans.all.json", size: 365622, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/zh_Hans.all.json", size: 365622, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -281,7 +281,7 @@ func pluginI18nResourcesZh_hantAllJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "plugin/i18n/resources/zh_Hant.all.json", size: 368220, mode: os.FileMode(420), modTime: time.Unix(1692915544, 0)}
+	info := bindataFileInfo{name: "plugin/i18n/resources/zh_Hant.all.json", size: 368220, mode: os.FileMode(420), modTime: time.Unix(1693256378, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
