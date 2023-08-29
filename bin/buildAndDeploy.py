@@ -7,6 +7,7 @@ import os
 import re
 import subprocess
 import requests
+import platform
 import hashlib
 import glob
 from rich import print
@@ -95,8 +96,10 @@ def runI18n4go(path: str) -> None:
     plugin_dir = os.path.join(path, 'plugin')
     binary = os.path.join(path, 'bin', 'i18n4go')
     # TODO: Support linux too I guess.
-    if isWindows():
+    if platform.system() == 'Windows':
         binary = f"{binary}.exe"
+    elif platform.system() == "Darwin":
+        binary = f"{binary}_mac"
     cmd = [binary, "-c checkup", "-q i18n", "-v", f"-d {plugin_dir}"]
     print("[turquoise2]Running: "  + " ".join(cmd))
     result = subprocess.run(cmd, capture_output=True, text=True)
@@ -207,6 +210,8 @@ def genBinData() -> None:
     goBindata = './bin/go-bindata'
     if isWindows():
         goBindata = f'{goBindata}.exe'
+    elif platform.system() == "Darwin":
+        goBindata = f'{goBindata}_mac'
     goBindata = [goBindata, "-pkg=resources", "-o=plugin/resources/i18n_resources.go",  "plugin/i18n/resources"]
     print("[turquoise2]Building I18N: " + " ".join(goBindata))
     result = subprocess.run(goBindata, capture_output=True)
