@@ -93,7 +93,7 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	cobraErr := cobraCommand.Execute()
 	if cobraErr != nil {
 		// Since we surpress the help message on errors, lets show the help message if the error is 'unknown flag'
-		helpTextTriggers := []string{"unknown flag", T("Incorrect Usage"), T("Invalid input for")}
+		helpTextTriggers := []string{"unknown flag", T("Incorrect Usage: "), T("Invalid input for")}
 		for _, trigger := range helpTextTriggers {
 			if strings.Contains(fmt.Sprintf("%v", cobraErr), trigger) {
 				realCommand, _, _ := cobraCommand.Find(args)
@@ -214,7 +214,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command {
 
 	slCommand := metadata.NewSoftlayerCommand(ui, session)
-	helpFlag := false;
+	helpFlag := false
 	cobraCmd := &cobra.Command{
 		Use:          "sl",
 		Short:        T("Manage Classic infrastructure services"),
