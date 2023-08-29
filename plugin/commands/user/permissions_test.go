@@ -107,6 +107,24 @@ var _ = Describe("User Permissions", func() {
 			})
 		})
 
+		Context("hide user permissions", func() {
+			It("return not equal user permissions", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).NotTo(Equal("ACCOUNT_SUMMARY_VIEW"))
+				Expect(fakeUI.Outputs()).To(Not(Equal("REQUEST_COMPLIANCE_REPORT")))
+				Expect(fakeUI.Outputs()).To(Not(Equal("COMPANY_EDIT")))
+				Expect(fakeUI.Outputs()).To(Not(Equal("ONE_TIME_PAYMENTS")))
+				Expect(fakeUI.Outputs()).To(Not(Equal("UPDATE_PAYMENT_DETAILS")))
+				Expect(fakeUI.Outputs()).To(Not(Equal("EU_LIMITED_PROCESSING_MANAGE")))
+				Expect(fakeUI.Outputs()).To(Not(Equal("TICKET_ADD")))
+				Expect(fakeUI.Outputs()).To(Not(Equal("TICKET_EDIT")))
+				Expect(fakeUI.Outputs()).To(Not(Equal("TICKET_SEARCH")))
+				Expect(fakeUI.Outputs()).To(Not(Equal("TICKET_VIEW")))
+				Expect(fakeUI.Outputs()).To(Not(Equal("TICKET_VIEW_ALL")))
+			})
+		})
+
 		Context("user permissions - master account", func() {
 			It("return user permissions", func() {
 				fakeUserManager.GetUserReturns(datatypes.User_Customer{
