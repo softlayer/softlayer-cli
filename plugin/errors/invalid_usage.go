@@ -19,7 +19,7 @@ func NewInvalidUsageError(message string) *InvalidUsageError {
 
 func (e *InvalidUsageError) Error() string {
 	if e.Message == "" {
-		return T("Incorrect Usage.")
+		return T("Incorrect Usage: ")
 	}
 
 	return T("Incorrect Usage: ") + e.Message
