@@ -254,6 +254,8 @@ class Builder(object):
     def deploy(self):
         """Uploads binaries to IBM COS"""
         apikey = os.getenv("IBMCLOUD_APIKEY")
+        # if IBMCLOUD_TRACE is true the upload will print out the binary file data to the screen.
+        os.environ["IBMCLOUD_TRACE"] = False
         if not apikey:
             raise Exception("IBMCLOUD_APIKEY needs to be set to the proper API key first.")
         login_cmd = ["ibmcloud", "login", f"--apikey={apikey}"]
