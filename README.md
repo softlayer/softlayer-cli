@@ -326,7 +326,24 @@ anything with `T("some string here")` uses the internationalization system. Defi
 The string passed into the `T()` function serves as the ID when looking these up. So the ID Will need to be present in all i18n files, it will also need a translation string. 
 
 [i18n4go](https://github.com/maximilien/i18n4go) is used to make sure all strings being transalted have translations. To test run this command.
+
+For i18n4go, we specifically use v0.2.4 for now, so we have a prebuilt binary in `./bin/i18n4go`. If that binary needs to be rebuilt, use the SoftLayer fork at https://github.com/softlayer/i18n4go (which is set to the version we need, along with some updates since that version had a bug with --help).
+
+This command will build the Mac (arm64) version. Replace GOOS and GOARCH with the OS/Architecture you need to build for.
+```
+~/go/src/github.ibm.com/softlayer/softlayer-cli/i18n4go (master)
+$> GOOS=darwin GOARCH=arm64 go build -o i18n4go_mac -ldflags "-s -w" i18n4go/i18n4go.go
+```
+
 [go-i18n](https://github.com/nicksnyder/go-i18n/) is what is actually doing the translations, but its using an old v1 version.
+There should be copies of the binary in `./bin` but if you need to rebuild this:
+Make sure you are on the v0.2.4 branch since that is the latest version that works as expected. We need to update this.
+```
+ ~/go/src/github.com/maximilien/i18n4go (v0.2.4_dev)
+$> GOOS=linux GOARCH=amd64   go build -o out/i18n4go ./i18n4go/i18n4go.go
+```
+
+
 [go-bindata](https://github.com/jteeuwen/go-bindata) takes the json files, and turns them into a go binary.
 
 ### Basic Patterns and Tips
@@ -471,3 +488,18 @@ It("return error", func() {
     Expect(err.Error()).To(ContainSubstring("Failed to show hardware."))
 })
 ```
+
+
+# Plugin Support / Release Process
+After v1.4.1 `sl` will be a normal plugin, so where are the instructions to build the plugin. 
+
+0. Create a new version and tag it in github like normal.
+1. Build the binaries. 
+```bash
+./bin/build-all
+for i in `ls --indicator-style=none out`; do echo "Uploading $i";  ibmcloud.exe cos upload --bucket softlayer-cli-binaries --file ./out/$i --key $i; done;
+```  
+2. Run the Jenkins job https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1/
+
+## TODO
+Automate build with https://github.ibm.com/coligo/cli/tree/main/script
