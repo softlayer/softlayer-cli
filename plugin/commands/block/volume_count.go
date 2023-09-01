@@ -75,7 +75,7 @@ func (cmd *VolumeCountCommand) Run(args []string) error {
 
 	table := cmd.UI.Table([]string{T("Data center"), T("Count")})
 
-	if sortby == "Count" || sortby == "count" {
+	if strings.ToLower(sortby) == "count" {
 		for key := range result {
 			keys = append(keys, key)
 		}
