@@ -3,6 +3,7 @@ package block
 import (
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
