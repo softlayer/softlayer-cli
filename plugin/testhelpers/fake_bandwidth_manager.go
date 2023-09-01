@@ -35,6 +35,32 @@ type FakeBandwidthManager struct {
 		result1 []datatypes.Location_Group
 		result2 error
 	}
+	DeleteBandwidthStub        func(int) error
+	deleteBandwidthMutex       sync.RWMutex
+	deleteBandwidthArgsForCall []struct {
+		arg1 int
+	}
+	deleteBandwidthReturnsOnCall map[int]struct {
+		result1 error
+	}
+	deleteBandwidthReturns struct {
+		result1 error
+	}
+	EditBandwidthStub        func(int, int, string) (bool, error)
+	editBandwidthMutex       sync.RWMutex
+	editBandwidthArgsForCall []struct {
+		arg1 int
+		arg2 int
+		arg3 string
+	}
+	editBandwidthReturns struct {
+		result1 bool
+		result2 error
+	}
+	editBandwidthReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -184,6 +210,65 @@ func (fake *FakeBandwidthManager) recordInvocation(key string, args []interface{
 		fake.invocations[key] = [][]interface{}{}
 	}
 	fake.invocations[key] = append(fake.invocations[key], args)
+}
+
+func (fake *FakeBandwidthManager) DeletePool(arg1 int) error {
+	fake.deleteBandwidthMutex.Lock()
+	ret, specificReturn := fake.deleteBandwidthReturnsOnCall[len(fake.deleteBandwidthArgsForCall)]
+	fake.deleteBandwidthArgsForCall = append(fake.deleteBandwidthArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteBandwidthStub
+	fakeReturns := fake.deleteBandwidthReturns
+	fake.recordInvocation("DeleteBandwidth", []interface{}{arg1})
+	fake.deleteBandwidthMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeBandwidthManager) DeleteBandwidthReturns(result1 error) {
+	fake.deleteBandwidthMutex.Lock()
+	defer fake.deleteBandwidthMutex.Unlock()
+	fake.DeleteBandwidthStub = nil
+	fake.deleteBandwidthReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeBandwidthManager) EditPool(arg1 int, arg2 int, arg3 string) (bool, error) {
+	fake.editBandwidthMutex.Lock()
+	ret, specificReturn := fake.editBandwidthReturnsOnCall[len(fake.editBandwidthArgsForCall)]
+	fake.editBandwidthArgsForCall = append(fake.editBandwidthArgsForCall, struct {
+		arg1 int
+		arg2 int
+		arg3 string
+	}{arg1, arg2, arg3})
+	stub := fake.EditBandwidthStub
+	fakeReturns := fake.editBandwidthReturns
+	fake.recordInvocation("EditBandwidth", []interface{}{arg1, arg2, arg3})
+	fake.editBandwidthMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeBandwidthManager) EditBandwidthReturns(result1 bool, result2 error) {
+	fake.editBandwidthMutex.Lock()
+	defer fake.editBandwidthMutex.Unlock()
+	fake.EditBandwidthStub = nil
+	fake.editBandwidthReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
 }
 
 var _ managers.BandwidthManager = new(FakeBandwidthManager)

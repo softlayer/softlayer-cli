@@ -13,6 +13,8 @@ import (
 type BandwidthManager interface {
 	GetLocationGroup() ([]datatypes.Location_Group, error)
 	CreatePool(name string, regionId int) (datatypes.Network_Bandwidth_Version1_Allotment, error)
+	DeletePool(bandwidthPoolID int) error
+	EditPool(bandwidthPoolID int, regionId int, newPoolName string) (bool, error)
 }
 
 type bandwidthManager struct {
@@ -56,4 +58,37 @@ func (a bandwidthManager) CreatePool(name string, regionId int) (datatypes.Netwo
 		Name:                     sl.String(name),
 	}
 	return a.BandwidthService.CreateObject(&template)
+}
+
+/*
+Deletes a Bandwidth Pool.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Bandwidth_Version1_Allotment/requestVdrCancellation/
+*/
+func (a bandwidthManager) DeletePool(bandwidthPoolId int) error {
+
+	_, err := a.BandwidthService.Id(bandwidthPoolId).RequestVdrCancellation()
+	return err
+}
+
+/*
+Edit a Bandwidth Pool.
+https://sldn.softlayer.com/reference/services/SoftLayer_Network_Bandwidth_Version1_Allotment/requestVdrCancellation/
+*/
+
+func (a bandwidthManager) EditPool(bandwidthPoolId int, regionId int, newPoolName string) (bool, error) {
+	mask := ""
+
+	actualBandwidth, err := a.BandwidthService.Id(bandwidthPoolId).Mask(mask).GetObject()
+
+	if err != nil {
+		return false, errors.NewAPIError(T("Failed to get currect user."), err.Error(), 2)
+	}
+
+	var template = datatypes.Network_Bandwidth_Version1_Allotment{
+		AccountId:                sl.Int(*actualBandwidth.AccountId),
+		BandwidthAllotmentTypeId: sl.Int(2),
+		LocationGroupId:          sl.Int(regionId),
+		Name:                     sl.String(newPoolName),
+	}
+	return a.BandwidthService.Id(bandwidthPoolId).EditObject(&template)
 }

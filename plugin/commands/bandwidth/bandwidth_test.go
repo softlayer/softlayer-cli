@@ -22,6 +22,8 @@ var availableCommands = []string{
 	"pools",
 	"pools-detail",
 	"pools-create",
+	"pools-edit",
+	"pools-delete",
 	"summary",
 }
 
