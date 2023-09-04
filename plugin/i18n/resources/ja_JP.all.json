@@ -36,6 +36,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n例: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tこのコマンドは、ボリューム・メモを編集します。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tこのコマンドは、ユーザーの詳細を表示します。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tこのコマンドは、仮想ゲストをリストします。"
   },
   {
+    "id": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80",
+    "translation": "${COMMAND_NAME} sl cdn create \n例: \n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn delete",
+    "translation": "${COMMAND_NAME} sl cdn 削除"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn detail",
     "translation": "${COMMAND_NAME} sl cdn detail"
   },
@@ -46,6 +54,22 @@
   {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME}SL CDN リスト"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80",
+    "translation": "${COMMAND_NAME} sl cdn origin-add\n例: \n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-list",
+    "translation": "${COMMAND_NAME} sl cdn 起点リスト"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\"",
+    "translation": "${COMMAND_NAME} sl cdn origin-remove\n例: \n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/ *\""
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\"",
+    "translation": "${COMMAND_NAME} sl cdn purge \n例: \n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
@@ -254,6 +278,10 @@
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\n例: \n ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n このコマンドは、確認を求めずに、ID 12345678 のボリュームを即時に取り消します。"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -584,12 +612,28 @@
     "translation": "--billing は、hourly または monthly のいずれかのみにできます。"
   },
   {
+    "id": "--bucket-name can not be empty",
+    "translation": "--bucket-name は空にできません"
+  },
+  {
+    "id": "--cache-key",
+    "translation": "--キャッシュ・キー"
+  },
+  {
     "id": "--column {{.Column}} is not supported.",
     "translation": "--column {{.Column}} はサポートされていません。"
   },
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--optimize",
+    "translation": "--optimize"
+  },
+  {
+    "id": "--origintype",
+    "translation": "--origintype"
   },
   {
     "id": "--resize-disk requires capacity and disk number values separated by one comma.",
@@ -736,6 +780,10 @@
     "translation": "アクション REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS では -r, -- redirect が必要です"
   },
   {
+    "id": "-s is in colon deliminated format to make grouping IP:port:weight a bit easier.",
+    "translation": "-s はコロン区切り形式で、IP:port:weight を少し簡単にグループ化できます。"
+  },
+  {
     "id": "-s, --subnet is only available in PublicToPrivate and PrivateToPrivate load balancer type.",
     "translation": "-s, --subnet は、ロード・バランサー・タイプ PublicToPrivate および PrivateToPrivate でのみ使用できます。"
   },
@@ -776,6 +824,10 @@
     "translation": "<hostname>.<domain.name.tld> 使用するフォーマット済みの名前。 サーバーごとに 1 つの fqdn を指定します (複数のオカレンスが許可されます) [必須]"
   },
   {
+    "id": "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]",
+    "translation": "DV SAN 証明書によって、ご自分の個人用ドメインを介した HTTPS トラフィックが許可されます。ただし、所有権を証明するためにドメインの検証が要求されます。 ワイルドカード証明書では、指定された CNAME の使用時に限って HTTPS トラフィックが許可されます。 [許可: dvSan、ワイルドカード]"
+  },
+  {
     "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
     "translation": "目的のサーバーの Hardware_Server.id または UUID 値。 固有の完全修飾ドメイン名に対応する \n 値。形式は「hostname<domain>」です。ここで、< および> はリテラルです。例: myhost<mydomain.com>"
   },
@@ -804,6 +856,10 @@
     "translation": "https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/ を記述する JSON ストリング"
   },
   {
+    "id": "A note string stored for this username/password pair.",
+    "translation": "このユーザー名/パスワードのペアのために保管されたメモ・ストリング。"
+  },
+  {
     "id": "A size or IOPS value must be given to modify this performance volume.",
     "translation": "このパフォーマンス・ボリュームを変更するには、サイズまたは IOPS 値を指定する必要があります。"
   },
@@ -826,6 +882,14 @@
   {
     "id": "A word (or string) used to filter presets",
     "translation": "事前設定をフィルター操作するために使用される単語 (またはストリング)"
+  },
+  {
+    "id": "ACCOUNT ID",
+    "translation": "アカウント ID"
+  },
+  {
+    "id": "API Error.",
+    "translation": "API エラー。"
   },
   {
     "id": "APIKEY",
@@ -878,6 +942,10 @@
   {
     "id": "Access to {{.VolumeId}} was revoked for virtual server {{.VsID}}.",
     "translation": "{{.VolumeId}} へのアクセスは Virtual Server {{.VsID}} では取り消されました。"
+  },
+  {
+    "id": "Account",
+    "translation": "アカウント"
   },
   {
     "id": "Account ID",
@@ -1016,6 +1084,10 @@
     "translation": "拡張構成フラグ"
   },
   {
+    "id": "Akamai CNAME",
+    "translation": "Akamai CNAME"
+  },
+  {
     "id": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.",
     "translation": "すべての複数 VLAN ルールは、提供された資格情報を使用して FortiGate ダッシュボードで管理する必要があります。"
   },
@@ -1028,6 +1100,10 @@
     "translation": "割り当て"
   },
   {
+    "id": "Allows to create, remove or refresh user's API authentication key",
+    "translation": "ユーザーの API 認証キーを作成、削除、または更新することができます"
+  },
+  {
     "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
     "translation": "セカンダリー・サブネットの経路を変更できます。\nサブネットは静的またはポータブルとしてルーティングでき、その指定は指定されたルーティング宛先によって決定されます。\n静的サブネットは、単一の IP アドレスの最終的なルーティング宛先を持ちますが、サブネットが静的として最終的にルーティングされる既存のサブネットの IP アドレスにはルーティングできません。\nポータブル サブネットには、VLAN の最終的なルーティング宛先があります。\nサブネットは、サブネット自体と同じ「ルーティング・リージョン」内の任意のリソースにルーティングできますが、通常は 1 つのデータ・センターに制限されます。\n\n以下も参照してください。https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n"
   },
@@ -1038,6 +1114,10 @@
   {
     "id": "An ID of one subnet to authorize",
     "translation": "許可する 1 つのサブネットの ID"
+  },
+  {
+    "id": "An ID of one subnet to revoke",
+    "translation": "取り消す 1 つのサブネットの ID"
   },
   {
     "id": "An IP address to authorize",
@@ -1256,12 +1336,28 @@
     "translation": "ブロック・ボリューム {{.VolumeId}} は LUN ID {{.LunID}} を報告しています。"
   },
   {
+    "id": "Bucket Name",
+    "translation": "バケット名"
+  },
+  {
+    "id": "Bucket name",
+    "translation": "バケット名"
+  },
+  {
+    "id": "Bucket name.",
+    "translation": "バケット 名。"
+  },
+  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "バッファー・ファイルを閉じることができませんでした: {{.Error}}。\n"
   },
   {
     "id": "Buffer file could not be created: {{.Error}}.\n",
     "translation": "バッファー・ファイルを作成できませんでした: {{.Error}}。\n"
+  },
+  {
+    "id": "CDN Unique ID",
+    "translation": "CDN 固有 ID"
   },
   {
     "id": "CIDR",
@@ -1292,12 +1388,20 @@
     "translation": "KMS インスタンスのルート・キーの CRN。"
   },
   {
+    "id": "Cache Key Rule",
+    "translation": "キャッシュ・キー・ルール"
+  },
+  {
     "id": "Cache key optimization",
     "translation": "キャッシュ・キー最適化"
   },
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
     "translation": "キャッシュ・キーの最適化。 選択できる有効なオプションは、「include-all」、「ignore-all」、「include-specified」、「ignore-specified」です。 「include-specified」または「ignore-specified」を選択する場合は、オプション cache-description に追加してください。"
+  },
+  {
+    "id": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'.",
+    "translation": "次の形式のキャッシュ照会ルール:「include-all」、「ignore-all」、「include: <query-names>」、「ignore: <query-names>」。例: <query-names> =「uuid=1234567 issue=important」。"
   },
   {
     "id": "Call arbitrary API endpoints",
@@ -1356,8 +1460,16 @@
     "translation": "既存のロード・バランサーを取り消します"
   },
   {
+    "id": "Cancel an existing object storage instance.",
+    "translation": "既存のオブジェクト・ストレージ・インスタンスを取り消します。"
+  },
+  {
     "id": "Cancel existing snapshot space for a given volume",
     "translation": "指定されたボリュームの既存スナップショット・スペースを取り消します"
+  },
+  {
+    "id": "Cancel immediately instead of on the billing anniversary",
+    "translation": "請求応当日ではなく即時にキャンセルする"
   },
   {
     "id": "Cancel the IPSec immediately instead of on the billing anniversary",
@@ -1370,6 +1482,10 @@
   {
     "id": "Cancel the file storage volume immediately instead of on the billing anniversary",
     "translation": "請求応答日ではなく即時に、File Storage ボリュームを取り消します"
+  },
+  {
+    "id": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation",
+    "translation": "請求アイテムのリソースまたはサービスをキャンセルします。 デフォルトでは、請求アイテムは次の請求日にキャンセルされ、\n リソースの再利用はキャンセルの直後に開始されます"
   },
   {
     "id": "Cancel the snapshot space immediately instead of on the billing anniversary",
@@ -1436,6 +1552,14 @@
     "translation": "Virtual Server インスタンスをイメージにキャプチャーします"
   },
   {
+    "id": "Case",
+    "translation": "Case"
+  },
+  {
+    "id": "Case Number",
+    "translation": "ケース番号"
+  },
+  {
     "id": "Category",
     "translation": "カテゴリー"
   },
@@ -1448,12 +1572,24 @@
     "translation": "項目のフィルター操作で使用するカテゴリー・コード"
   },
   {
+    "id": "Category name.",
+    "translation": "カテゴリー名。"
+  },
+  {
     "id": "CategoryCode",
     "translation": "カテゴリー・コード"
   },
   {
+    "id": "Cdn with uniqueId: {{.ID}} was deleted.",
+    "translation": "uniqueId: {{.ID}} の cdn が削除されました。"
+  },
+  {
     "id": "Certificate Signing Request file",
     "translation": "証明書署名要求ファイル"
+  },
+  {
+    "id": "Certificate Type",
+    "translation": "証明書タイプ"
   },
   {
     "id": "Certificate file",
@@ -1480,12 +1616,20 @@
     "translation": "Virtual Server インスタンスの使用準備ができているかどうかをチェックします"
   },
   {
+    "id": "Classic Infrastructure Bandwidth commands",
+    "translation": "クラシック・インフラストラクチャー帯域幅コマンド"
+  },
+  {
     "id": "Classic Infrastructure Reports",
     "translation": "クラシック・インフラストラクチャー・レポート"
   },
   {
     "id": "Classic infrastructure Account commands",
     "translation": "クラシック・インフラストラクチャー・アカウント・コマンド"
+  },
+  {
+    "id": "Classic infrastructure Bandwidth commands",
+    "translation": "クラシック・インフラストラクチャー帯域幅コマンド"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1856,12 +2000,20 @@
     "translation": "専用Virtual Server のホストを作成します"
   },
   {
+    "id": "Create a new CDN domain mapping",
+    "translation": "新規 CDN ドメイン・マッピングの作成"
+  },
+  {
     "id": "Create a new VLAN",
     "translation": "新規 VLAN を作成します"
   },
   {
     "id": "Create a new firewall",
     "translation": "新規ファイアウォールを作成します"
+  },
+  {
+    "id": "Create a password for a software component.",
+    "translation": "ソフトウェア・コンポーネントのパスワードを作成します。"
   },
   {
     "id": "Create a placement group",
@@ -1894,6 +2046,14 @@
   {
     "id": "Create a zone",
     "translation": "ゾーンを作成します"
+  },
+  {
+    "id": "Create an origin path for an existing CDN mapping.",
+    "translation": "既存の CDN マッピングの起点パスを作成します。"
+  },
+  {
+    "id": "Create an user's API authentication key",
+    "translation": "ユーザーの API 認証鍵の作成"
   },
   {
     "id": "Create credentials for an IBM Cloud Object Storage Account.",
@@ -1930,6 +2090,10 @@
   {
     "id": "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}.",
     "translation": "{{.StaticIP}} から {{.RemoteIP}} #{{.ID}} への変換を作成しました。"
+  },
+  {
+    "id": "Creates a purge record and also initiates the purge call.",
+    "translation": "パージ・レコードを作成し、パージ呼び出しも開始します。"
   },
   {
     "id": "Creates a user",
@@ -1976,6 +2140,14 @@
     "translation": "データ・センター"
   },
   {
+    "id": "Data in",
+    "translation": "データ"
+  },
+  {
+    "id": "Data out",
+    "translation": "出力データ"
+  },
+  {
     "id": "Datacenter",
     "translation": "データ・センター"
   },
@@ -2002,6 +2174,10 @@
   {
     "id": "Datacenter to remove",
     "translation": "データ・センターを削除するには"
+  },
+  {
+    "id": "Datacenters",
+    "translation": "データ・センター"
   },
   {
     "id": "Date",
@@ -2048,6 +2224,10 @@
     "translation": "インスタンスごとのデフォルトの時間単位価格"
   },
   {
+    "id": "Delete a CDN domain mapping.",
+    "translation": "CDN ドメイン・マッピングを削除します。"
+  },
+  {
     "id": "Delete a L7 policy",
     "translation": "L7 ポリシーを削除します"
   },
@@ -2068,6 +2248,10 @@
     "translation": "プロトコルを削除します"
   },
   {
+    "id": "Delete a provisioning scriptt.",
+    "translation": "プロビジョニング・スクリプトを削除します。"
+  },
+  {
     "id": "Delete a snapshot on a given volume",
     "translation": "指定されたボリュームのスナップショットを削除します"
   },
@@ -2086,6 +2270,14 @@
   {
     "id": "Delete the given security group",
     "translation": "指定されたセキュリティー・グループを削除します"
+  },
+  {
+    "id": "Delete the quote of an order.",
+    "translation": "オーダーの見積もりを削除します。"
+  },
+  {
+    "id": "Deny sharing of an image template with another account.",
+    "translation": "別のアカウントとのイメージ・テンプレートの共有を拒否します。"
   },
   {
     "id": "Description",
@@ -2112,12 +2304,20 @@
     "translation": "特定のイベントの詳細、およびイベントを確認する機能。"
   },
   {
+    "id": "Device",
+    "translation": "デバイス"
+  },
+  {
     "id": "Device Name",
     "translation": "デバイス名"
   },
   {
     "id": "Device Type",
     "translation": "デバイス・タイプ"
+  },
+  {
+    "id": "Device name",
+    "translation": "デバイス名"
   },
   {
     "id": "Devices",
@@ -2312,6 +2512,10 @@
     "translation": "例: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    このコマンドは、4つのCPU、16 GBのRAM、100 GBのSANディスク、Ubuntu 16.04、1 Gbpsのパブリック&プライベート・アップリンク(データセンターdal13内)のVSIに見積もりを配置します"
   },
   {
+    "id": "Each user can only have a single API key.",
+    "translation": "各ユーザーが持つことができる API キーは 1 つのみです。"
+  },
+  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
     "translation": "[YYYY-MM-DD] のイベントを取得する最も早い日付。 デフォルト: 2 日前。"
   },
@@ -2444,6 +2648,14 @@
     "translation": "特定の許可を有効または無効にします"
   },
   {
+    "id": "Enable or disable compression of JPEG images for requests over certain network conditions.",
+    "translation": "特定のネットワーク状況で要求される JPEG イメージの圧縮を有効または無効にします。"
+  },
+  {
+    "id": "Enable or disable the embedded object prefetching feature.",
+    "translation": "埋め込みオブジェクトのプリフェッチ機能を有効または無効にします。"
+  },
+  {
     "id": "Enable or disable user vpn subnets manual config.",
     "translation": "ユーザー VPN サブネットの手動構成を有効または無効にします。"
   },
@@ -2528,6 +2740,14 @@
     "translation": "IOPS 当たりのエンデュランス層"
   },
   {
+    "id": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you.",
+    "translation": "グローバルで固有なサブドメインを入力します。 完全な URL は、DNS の構成に使用する CNAME になります。 値を入力しない場合には、自動的に CNAME が生成されます。"
+  },
+  {
+    "id": "Error marshalling resource",
+    "translation": "リソースのマーシャル中にエラーが発生しました"
+  },
+  {
     "id": "Error occurred while adding note to volume: {{.VolumeID}}",
     "translation": "ボリュームへの注の追加中にエラーが発生しました。{{.VolumeID}}"
   },
@@ -2597,7 +2817,7 @@
   },
   {
     "id": "Failback a {{.storageType}} volume from replica",
-    "translation": "Failback a {{.storageType}} volume from replica"
+    "translation": "レプリカからの {{.storageType}} ボリュームのフェイルバック"
   },
   {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
@@ -2680,6 +2900,10 @@
     "translation": "サブネットの追加に失敗しました。\n"
   },
   {
+    "id": "Failed to add user's API authentication key",
+    "translation": "ユーザーの API 認証鍵の追加に失敗しました"
+  },
+  {
     "id": "Failed to add user.\n",
     "translation": "ユーザーの追加に失敗しました。\n"
   },
@@ -2760,6 +2984,10 @@
     "translation": "ロード・バランサー {{.LBID}} の取り消しに失敗しました。\n"
   },
   {
+    "id": "Failed to cancel object-storage: {{.objectStorageID}}.",
+    "translation": "オブジェクト・ストレージ {{.objectStorageID}}の取り消しに失敗しました。"
+  },
+  {
     "id": "Failed to cancel snapshot space for volume {{.ID}}.\n",
     "translation": "ボリューム {{.ID}} 用のスナップショット・スペースの取り消しに失敗しました。\n"
   },
@@ -2782,6 +3010,22 @@
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "ボリューム {{.VolumeId}} の新規 LUN ID の確認に失敗しました。"
+  },
+  {
+    "id": "Failed to create Provisioning Hook.",
+    "translation": "プロビジョニング・フックの作成に失敗しました。"
+  },
+  {
+    "id": "Failed to create Software Credential.",
+    "translation": "ソフトウェア資格情報の作成に失敗しました。"
+  },
+  {
+    "id": "Failed to create a CDN.",
+    "translation": "CDN の作成に失敗しました。"
+  },
+  {
+    "id": "Failed to create a Origin.",
+    "translation": "オリジンの作成に失敗しました。"
   },
   {
     "id": "Failed to create credential. ",
@@ -2860,6 +3104,14 @@
     "translation": "L7member {{.Member}} の削除に失敗しました: {{.Error}}。\n"
   },
   {
+    "id": "Failed to delete Provisioning Hook.",
+    "translation": "プロビジョニング・フックの削除に失敗しました。"
+  },
+  {
+    "id": "Failed to delete Quote",
+    "translation": "見積の削除に失敗しました"
+  },
+  {
     "id": "Failed to delete Tag",
     "translation": "タグの削除に失敗しました"
   },
@@ -2888,6 +3140,10 @@
     "translation": "ロード・バランサー・メンバー {{.Member}} の削除に失敗しました: {{.Error}}。\n"
   },
   {
+    "id": "Failed to delete origin.",
+    "translation": "起点の削除に失敗しました。"
+  },
+  {
     "id": "Failed to delete protocol {{.ProtocolID}}: {{.Error}}.\n",
     "translation": "プロトコル {{.ProtocolID}} の削除に失敗しました: {{.Error}}。\n"
   },
@@ -2914,6 +3170,14 @@
   {
     "id": "Failed to delete zone: {{.Zone}}.\n",
     "translation": "ゾーン: {{.Zone}} の削除に失敗しました。\n"
+  },
+  {
+    "id": "Failed to deleted a CDN.",
+    "translation": "CDN の削除に失敗しました。"
+  },
+  {
+    "id": "Failed to deny share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "アカウント {{.AccountId}}との共有イメージ {{.ImageId}} の拒否に失敗しました。"
   },
   {
     "id": "Failed to disable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n",
@@ -3084,6 +3348,10 @@
     "translation": "ポッドの取得に失敗しました。\n"
   },
   {
+    "id": "Failed to get Provisioning Hooks.",
+    "translation": "プロビジョニング・フックの取得に失敗しました。"
+  },
+  {
     "id": "Failed to get Quote\n",
     "translation": "見積の取得に失敗しました \n"
   },
@@ -3120,6 +3388,10 @@
     "translation": "未添付タグの取得に失敗しました。"
   },
   {
+    "id": "Failed to get Upgrade Requests.",
+    "translation": "アップグレード要求の取得に失敗しました。"
+  },
+  {
     "id": "Failed to get User Customer Notifications.",
     "translation": "ユーザー・カスタマー通知の取得に失敗しました。"
   },
@@ -3140,6 +3412,10 @@
     "translation": "アカウントの関連仮想ストレージ・ボリュームの取得に失敗しました。"
   },
   {
+    "id": "Failed to get all datacenters.",
+    "translation": "すべてのデータ・センターの取得に失敗しました。"
+  },
+  {
     "id": "Failed to get all datacenters.\n",
     "translation": "すべてのデータ・センターの取得に失敗しました。\n"
   },
@@ -3154,6 +3430,10 @@
   {
     "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
     "translation": "ハードウェア・サーバー{{.ID}}の帯域幅割り当ての詳細を取得できませんでした。\n"
+  },
+  {
+    "id": "Failed to get bandwidth summary",
+    "translation": "帯域幅の要約の取得に失敗しました"
   },
   {
     "id": "Failed to get bare metal servers.\n",
@@ -3226,6 +3506,10 @@
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "ハードウェア・サーバー {{.ID}} の取得に失敗しました。\n"
+  },
+  {
+    "id": "Failed to get hardware server: {{.ID}}.",
+    "translation": "ハードウェア・サーバー {{.ID}}の取得に失敗しました。"
   },
   {
     "id": "Failed to get hardware server: {{.ID}}.\n",
@@ -3326,6 +3610,10 @@
   {
     "id": "Failed to get orders.",
     "translation": "注文の取得に失敗しました。"
+  },
+  {
+    "id": "Failed to get origins list for CDN: {{.cdnId}}.",
+    "translation": "CDN {{.cdnId}}のオリジン・リストの取得に失敗しました。"
   },
   {
     "id": "Failed to get package for {{.Type}} firewall.\n",
@@ -3480,6 +3768,10 @@
     "translation": "ユーザー VPN オーバーライドの取得に失敗しました。"
   },
   {
+    "id": "Failed to get user's API authentication keys",
+    "translation": "ユーザーの API 認証鍵の取得に失敗しました"
+  },
+  {
     "id": "Failed to get user.",
     "translation": "ユーザーの取得に失敗しました。"
   },
@@ -3542,6 +3834,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "ご使用のアカウントの VLAN のリストに失敗しました。\n"
+  },
+  {
+    "id": "Failed to list all item cancelations.",
+    "translation": "すべてのアイテムのキャンセルをリストできませんでした。"
   },
   {
     "id": "Failed to list available OS's.",
@@ -3740,6 +4036,10 @@
     "translation": "Virtual Server インスタンス: {{.VsID}} の電源オンに失敗しました。\n"
   },
   {
+    "id": "Failed to purge.",
+    "translation": "パージに失敗しました。"
+  },
+  {
     "id": "Failed to reach virtual guest instance {{.Id}}.",
     "translation": "仮想ゲスト・インスタンス {{.Id}} に到達できませんでした。"
   },
@@ -3832,6 +4132,10 @@
     "translation": "IPSec {{.ID}} からの ID {{.TransID}} の変換の削除に失敗しました。"
   },
   {
+    "id": "Failed to remove user's API authentication key",
+    "translation": "ユーザーの API 認証鍵の削除に失敗しました"
+  },
+  {
     "id": "Failed to remove {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.\n",
     "translation": "{{.Type}} サブネット #{{.ID}} を IPSec {{.ContextID}} から削除できませんでした。\n"
   },
@@ -3890,6 +4194,10 @@
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
     "translation": "ボリューム '{{.ID}}' の snapshort 通知を設定できませんでした。\n"
+  },
+  {
+    "id": "Failed to share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "イメージ {{.ImageId}} をアカウント {{.AccountId}}と共有できませんでした。"
   },
   {
     "id": "Failed to show event log.\n",
@@ -4028,6 +4336,10 @@
     "translation": "IPSec {{.ID}} 内の ID {{.TransID}} の変換の更新に失敗しました。"
   },
   {
+    "id": "Failed to update user vpn password.",
+    "translation": "ユーザー VPN パスワードの更新に失敗しました。"
+  },
+  {
     "id": "Failed to update user {{.UserID}}.",
     "translation": "ユーザー {{.UserID}} の更新に失敗しました。"
   },
@@ -4110,6 +4422,10 @@
   {
     "id": "Features",
     "translation": "フィーチャー"
+  },
+  {
+    "id": "File Extension",
+    "translation": "ファイル拡張"
   },
   {
     "id": "File volume {{.ID}} has been marked for immediate snapshot cancellation.",
@@ -4520,6 +4836,14 @@
     "translation": "請求アイテムに関する詳細情報を取得します。"
   },
   {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video",
+    "translation": "指定したドメインに対して相対的なパスを指定します。このパスを使用すると、この起点に到達できます。 例: 'articles/video' => 'www.example.com/articles/video"
+  },
+  {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]",
+    "translation": "指定したドメインに対して相対的なパスを指定します。このパスを使用すると、この起点に到達できます。 例: 'articles/video' => 'www.example.com/articles/video [必須]"
+  },
+  {
     "id": "Grant access from a user to an specific device",
     "translation": "ユーザーから特定のデバイスへのアクセス権限を付与します。"
   },
@@ -4692,6 +5016,10 @@
     "translation": "毎時"
   },
   {
+    "id": "Hourly/Monthly",
+    "translation": "毎時/毎月"
+  },
+  {
     "id": "How many invoices to get back.",
     "translation": "返送する請求書の数。"
   },
@@ -4704,8 +5032,28 @@
     "translation": "HTTP ポート"
   },
   {
+    "id": "Http port",
+    "translation": "HTTP ポート"
+  },
+  {
+    "id": "Http port. [http or https is required]",
+    "translation": "HTTP ポート。[http または https が必要です]"
+  },
+  {
     "id": "Https Port",
     "translation": "HTTPS ポート"
+  },
+  {
+    "id": "Https port",
+    "translation": "HTTPS ポート"
+  },
+  {
+    "id": "Https port. [http or https is required]",
+    "translation": "HTTPS ポート。[http または https が必要です]"
+  },
+  {
+    "id": "IBM CNAME",
+    "translation": "IBM CNAME"
   },
   {
     "id": "ID",
@@ -4862,6 +5210,14 @@
   {
     "id": "Image {{.ImageID}} was deleted.",
     "translation": "イメージ {{.ImageID}} は削除されました。"
+  },
+  {
+    "id": "Image {{.ImageId}} was deny shared with account {{.AccountId}}.",
+    "translation": "イメージ {{.ImageId}} は、アカウント {{.AccountId}}と共有された拒否されました。"
+  },
+  {
+    "id": "Image {{.ImageId}} was shared with account {{.AccountId}}.",
+    "translation": "イメージ {{.ImageId}} はアカウント {{.AccountId}}と共有されました。"
   },
   {
     "id": "Immediate cancellation.",
@@ -5316,6 +5672,10 @@
     "translation": "指定されたホスト ID のブロック・ストレージ割り当てサブネットをリストします。"
   },
   {
+    "id": "List cancelations.",
+    "translation": "取り消しをリストします。"
+  },
+  {
     "id": "List cloud block storage.",
     "translation": "クラウド・ブロック・ストレージをリストします。"
   },
@@ -5404,6 +5764,10 @@
     "translation": "ロード・バランサーの注文のためのオプションをリストします"
   },
   {
+    "id": "List origin path for an existing CDN mapping.",
+    "translation": "既存の CDN マッピングの起点パスをリストします。"
+  },
+  {
     "id": "List package items that are used for ordering",
     "translation": "注文に使用されるパッケージ項目をリストします"
   },
@@ -5452,6 +5816,10 @@
     "translation": "ご使用のアカウントの Virtual Server インスタンスをリストします"
   },
   {
+    "id": "List {{.storageType}} storage snapshots",
+    "translation": "{{.storageType}} ストレージ・スナップショットのリスト"
+  },
+  {
     "id": "Lists Email Delivery Service.",
     "translation": "Email Delivery Serviceをリストします。"
   },
@@ -5488,6 +5856,10 @@
     "translation": "ロケーション"
   },
   {
+    "id": "Location Conflicts",
+    "translation": "ロケーションの競合"
+  },
+  {
     "id": "Location/Region",
     "translation": "ロケーション/地域"
   },
@@ -5500,8 +5872,16 @@
     "translation": "MAC アドレス"
   },
   {
+    "id": "Maintance Window",
+    "translation": "保守ウィンドウ"
+  },
+  {
     "id": "Manage Classic infrastructure services",
     "translation": "クラシック・インフラストラクチャー・サービスの管理"
+  },
+  {
+    "id": "Manage LBaaS health checks.",
+    "translation": "LBaaS ヘルス・チェックを管理します。"
   },
   {
     "id": "Manage VSIs that require migration",
@@ -5676,6 +6056,10 @@
     "translation": "ロード・バランサーの L7 プールの名前"
   },
   {
+    "id": "Name that ordered the item.",
+    "translation": "アイテムを注文した名前。"
+  },
+  {
     "id": "Netscaler",
     "translation": "Netscaler"
   },
@@ -5848,6 +6232,10 @@
     "translation": "注:"
   },
   {
+    "id": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC",
+    "translation": "注: 6,000 を超える IOPS は、https://cloud.ibm.com/docs/BlockStorage? topic=BlockStorage-selectDC でのみ使用可能です。"
+  },
+  {
     "id": "Notes",
     "translation": "メモ"
   },
@@ -5862,6 +6250,10 @@
   {
     "id": "Number",
     "translation": "数"
+  },
+  {
+    "id": "Number Of Items Cancelled",
+    "translation": "キャンセルされた項目の数"
   },
   {
     "id": "Number of CPU cores",
@@ -5932,6 +6324,14 @@
     "translation": "オブジェクト・マスク: 返されるフィールドを制限するために使用します"
   },
   {
+    "id": "Object-storage {{.objectStorageID}} has been marked for cancellation.",
+    "translation": "オブジェクト・ストレージ {{.objectStorageID}} に取り消しのマークが付けられました。"
+  },
+  {
+    "id": "Object-storage {{.objectStorageID}} has been marked for immediate cancellation.",
+    "translation": "オブジェクト・ストレージ {{.objectStorageID}} に即時取り消しのマークが付けられました。"
+  },
+  {
     "id": "One Time",
     "translation": "1 回"
   },
@@ -5996,6 +6396,10 @@
     "translation": "オプション respect-headers は「0」または「1」のみを受け入れます"
   },
   {
+    "id": "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly",
+    "translation": "請求レートのオプション・パラメーター (デフォルトは月単位) 選択項目: hourly または monthly"
+  },
+  {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
     "translation": "請求レートのオプション・パラメーター (デフォルトは monthly)。オプションは hourly、monthly です"
   },
@@ -6048,6 +6452,10 @@
     "translation": "既存ボリュームを複製することによってブロック・ボリュームを注文します"
   },
   {
+    "id": "Order a file storage replica volume",
+    "translation": "File Storage レプリカ・ボリュームを注文します"
+  },
+  {
     "id": "Order a file storage volume",
     "translation": "File Storage ボリュームを注文します"
   },
@@ -6096,6 +6504,10 @@
     "translation": "ハードウェア・サーバーを注文/作成します"
   },
   {
+    "id": "Order/create a provisioning script.",
+    "translation": "プロビジョニング・スクリプトを注文/作成します。"
+  },
+  {
     "id": "Ordered By",
     "translation": "発注者"
   },
@@ -6106,6 +6518,10 @@
   {
     "id": "Origin",
     "translation": "起点"
+  },
+  {
+    "id": "Origin Host",
+    "translation": "起点ホスト"
   },
   {
     "id": "Origin Type",
@@ -6174,6 +6590,10 @@
   {
     "id": "PACKAGE_KEYNAME",
     "translation": "PACKAGE_KEYNAME"
+  },
+  {
+    "id": "PATH",
+    "translation": "PATH"
   },
   {
     "id": "PLACEMENTGROUP_ID",
@@ -6282,6 +6702,10 @@
   {
     "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]",
     "translation": "パフォーマンス・ストレージ IOP (100 から 6000 までの範囲内の 100 の倍数) [storage-type が performance の場合は必須]"
+  },
+  {
+    "id": "Performance configuration. [Permit: web, video, file, dynamic]",
+    "translation": "パフォーマンス構成。 [許可: Web、ビデオ、ファイル、動的]"
   },
   {
     "id": "Permanently removes an SSH key",
@@ -6430,6 +6854,10 @@
   {
     "id": "Policy priority",
     "translation": "ポリシーの優先順位"
+  },
+  {
+    "id": "Pool",
+    "translation": "Pool"
   },
   {
     "id": "Port Range Max",
@@ -6700,6 +7128,10 @@
     "translation": "数量"
   },
   {
+    "id": "Quote: {{.quoteID}} was deleted.",
+    "translation": "見積: {{.quoteID}} が削除されました。"
+  },
+  {
     "id": "RECORD",
     "translation": "レコード"
   },
@@ -6718,6 +7150,10 @@
   {
     "id": "RULE_ID",
     "translation": "RULE_ID"
+  },
+  {
+    "id": "Range",
+    "translation": "範囲"
   },
   {
     "id": "Read Failure: {{.Error}}.\n",
@@ -6786,6 +7222,10 @@
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
     "translation": "重複ボリュームを親のスナップショットでリフレッシュします。"
+  },
+  {
+    "id": "Refresh an user's API authentication key",
+    "translation": "ユーザーの API 認証鍵の更新"
   },
   {
     "id": "Region",
@@ -6864,6 +7304,10 @@
     "translation": "サブネットへのアクセス権限を削除します。"
   },
   {
+    "id": "Remove an user's API authentication key",
+    "translation": "ユーザーの API 認証鍵の削除"
+  },
+  {
     "id": "Remove block storage subnets to the given host id.",
     "translation": "指定されたホスト ID のブロック・ストレージ・サブネットを削除します。"
   },
@@ -6886,6 +7330,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "アカウントから空のタグを削除します。"
+  },
+  {
+    "id": "Removes an origin path for an existing CDN mapping.",
+    "translation": "既存の CDN マッピングの起点パスを削除します。"
   },
   {
     "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
@@ -6920,6 +7368,10 @@
     "translation": "トンネル・コンテキストの構成を要求します"
   },
   {
+    "id": "Requested by",
+    "translation": "要求元"
+  },
+  {
     "id": "Required User",
     "translation": "必須ユーザー"
   },
@@ -6938,6 +7390,10 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "ヘッダーを尊重します。 値 1 はオン、0 はオフです。"
+  },
+  {
+    "id": "Restore {{.storageType}} volume using a given snapshot",
+    "translation": "指定されたスナップショットを使用して {{.storageType}} ボリュームをリストアします。"
   },
   {
     "id": "Restriction",
@@ -7108,6 +7564,10 @@
     "translation": "見積もりの保存"
   },
   {
+    "id": "Saved",
+    "translation": "保存"
+  },
+  {
     "id": "Schedule",
     "translation": "スケジュール"
   },
@@ -7212,6 +7672,10 @@
     "translation": "ipAddress のメモを設定します。"
   },
   {
+    "id": "Set the user VPN password.",
+    "translation": "ユーザー VPN パスワードを設定します。"
+  },
+  {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
     "translation": "ユーザーの状況を CANCEL_PENDING に設定します。これにより、そのアカウントは直ちに無効になり、最終的には自動化された内部プロセスによってアカウントから完全に削除されます"
   },
@@ -7232,6 +7696,14 @@
     "translation": "セットアップ"
   },
   {
+    "id": "Share an image template with another account.",
+    "translation": "イメージ・テンプレートを別のアカウントと共有します。"
+  },
+  {
+    "id": "Shared on",
+    "translation": "共有"
+  },
+  {
     "id": "Short Name",
     "translation": "短縮名"
   },
@@ -7246,6 +7718,10 @@
   {
     "id": "Show L7 pool details",
     "translation": "L7 プールの詳細を表示します"
+  },
+  {
+    "id": "Show all Provisioning Scripts.",
+    "translation": "すべてのプロビジョニング・スクリプトを表示します。"
   },
   {
     "id": "Show all licenses.",
@@ -7308,8 +7784,16 @@
     "translation": "パスワードを表示します (関係者以外への表示は推奨されません)"
   },
   {
+    "id": "Show prices in the storage, snapshot and iops range tables.",
+    "translation": "ストレージ・テーブル、スナップショット・テーブル、および IOPS 範囲テーブルに価格を表示します。"
+  },
+  {
     "id": "Show the users API key",
     "translation": "ユーザー API キーを表示します"
+  },
+  {
+    "id": "Show upgrades orders.",
+    "translation": "アップグレード・オーダーを表示します。"
   },
   {
     "id": "Shows a very detailed list of charges",
@@ -7344,6 +7828,10 @@
     "translation": "サイズ (GB)"
   },
   {
+    "id": "Size On Disk",
+    "translation": "ディスク上のサイズ:"
+  },
+  {
     "id": "Size of duplicate block volume in GB, if no size is specified, the size of the original volume will be used",
     "translation": "重複ブロック・ボリュームのサイズ (GB)。サイズが指定されない場合、元のボリュームのサイズが使用されます"
   },
@@ -7362,6 +7850,10 @@
   {
     "id": "Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB",
     "translation": "専用ホストのサイズ。現在、使用可能なサイズは 1 つのみです: 56_CORES_X_242_RAM_X_1_4_TB"
+  },
+  {
+    "id": "Snapshot",
+    "translation": "スナップショット"
   },
   {
     "id": "Snapshot Size (GB)",
@@ -7408,6 +7900,10 @@
     "translation": "ソフトウェア"
   },
   {
+    "id": "Software not found",
+    "translation": "ソフトウェアが見つかりません"
+  },
+  {
     "id": "Specifies if image is bring your own license",
     "translation": "イメージがライセンス持ち込みであるかどうかを指定してください"
   },
@@ -7430,6 +7926,10 @@
   {
     "id": "Specify output format, only JSON is supported now.",
     "translation": "出力形式を指定します。現在、JSON のみがサポートされています。"
+  },
+  {
+    "id": "Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions.",
+    "translation": "CDN サービスに保管できるファイル拡張子をコンマで区切って指定します。 例えば、'jpg, pdf, jpeg, png' は有効なリストです。 すべての拡張を許可するには、フラグを空のままにします。"
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
@@ -7500,6 +8000,10 @@
     "translation": "状況:"
   },
   {
+    "id": "Storage",
+    "translation": "ストレージ"
+  },
+  {
     "id": "Storage Size (GB)",
     "translation": "ストレージ・サイズ (GB)"
   },
@@ -7548,6 +8052,10 @@
     "translation": "ユーザーのサブネット・アクセスが正常に追加されました。"
   },
   {
+    "id": "Successfully added. New API Authentication Key: {{.apiAuthenticationKey}}",
+    "translation": "正常に追加されました。 新しい API 認証鍵: {{.apiAuthenticationKey}}"
+  },
+  {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "サブネット ID {{.subnetID}}が許可されたホスト ID {{.accessID}}に正常に割り当てられました"
   },
@@ -7568,6 +8076,10 @@
     "translation": "デバイス・ファームウェアが正常に再フラッシュされました"
   },
   {
+    "id": "Successfully removed Provisioning Hook.",
+    "translation": "プロビジョニング・フックが正常に削除されました。"
+  },
+  {
     "id": "Successfully removed User Customer notification.",
     "translation": "ユーザー・カスタマー通知が正常に削除されました。"
   },
@@ -7580,8 +8092,16 @@
     "translation": "サブネット ID {{.subnetID}}を許可されたホスト ID {{.accessID}}に正常に削除しました"
   },
   {
+    "id": "Successfully removed user's API authentication key",
+    "translation": "ユーザーの API 認証鍵が正常に削除されました"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "ハードウェア・サーバー '{{.ID}}' の IPMI インターフェースの切り替えの要求を正常に送信しました。"
+  },
+  {
+    "id": "Successfully updated user VPN password.",
+    "translation": "ユーザー VPN パスワードが正常に更新されました。"
   },
   {
     "id": "Successfully {{.action}} user vpn subnets manual config",
@@ -7594,6 +8114,10 @@
   {
     "id": "Summary info about tickets",
     "translation": "チケットに関するサマリー情報"
+  },
+  {
+    "id": "Summary report for every pool/server.",
+    "translation": "すべてのプール/サーバーの要約レポート。"
   },
   {
     "id": "Support",
@@ -7796,6 +8320,10 @@
     "translation": "注文の複合タイプ。 タイプは「SoftLayer_Container_Product_Order_」で始まります"
   },
   {
+    "id": "The date the billing item was created (YYYY-MM-DD).",
+    "translation": "請求項目が作成された日付 (YYYY-MM-DD)。"
+  },
+  {
     "id": "The dedicated host is migrating: {{.HostId}}.",
     "translation": "専用ホストをマイグレーションしています: {{.HostId}}。"
   },
@@ -7818,6 +8346,14 @@
   {
     "id": "The earliest date we want to search for event logs [YYYY-MM-DD].",
     "translation": "イベント・ログを検索する最も早い日付 [YYYY-MM-DD]。"
+  },
+  {
+    "id": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.",
+    "translation": "エッジ・サーバーでは、HTTP ヘッダー内のホスト・ヘッダーを使用して起点ホストと通信します。 デフォルトは「ホスト名」になります。"
+  },
+  {
+    "id": "The endpoint that the script will be downloaded.",
+    "translation": "スクリプトのダウンロード先となるエンドポイント。"
   },
   {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
@@ -7904,12 +8440,20 @@
     "translation": "チケットに記載されている添付ファイルの名前"
   },
   {
+    "id": "The name of the hook.",
+    "translation": "フックの名前です。"
+  },
+  {
     "id": "The name of the image {{.ID}} is updated.",
     "translation": "イメージ {{.ID}} の名前は更新されました。"
   },
   {
     "id": "The name of the security group",
     "translation": "セキュリティー・グループの名前"
+  },
+  {
+    "id": "The name of this specific piece of software.",
+    "translation": "このソフトウェアの特定の部分の名前。"
   },
   {
     "id": "The netscaler ID has to be a positive integer.",
@@ -7960,8 +8504,28 @@
     "translation": "注文 {{.OrderID}} が行われました。"
   },
   {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint",
+    "translation": "起点タイプ。 [許可: サーバー、ストレージ] 注: OriginType が storage の場合、OriginHost はエンドポイントとして使用されます。"
+  },
+  {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint.",
+    "translation": "起点タイプ。 [許可: サーバー、ストレージ] 注: OriginType が storage の場合、OriginHost はエンドポイントとして使用されます。"
+  },
+  {
+    "id": "The origin {{.Id}} with path {{.Path}} was deleted.",
+    "translation": "パス {{.Path}} の起点 {{.Id}} が削除されました。"
+  },
+  {
     "id": "The original volume has been cancelled, unable to order duplicate volume",
     "translation": "元のボリュームは取り消されました。重複ボリュームを注文することはできません"
+  },
+  {
+    "id": "The password part of the username/password pair.",
+    "translation": "ユーザー名/パスワードのペアのパスワード部分。"
+  },
+  {
+    "id": "The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html",
+    "translation": "Akamai エッジ・サーバーが定期的にテスト・オブジェクトを取り出すパス。 例 = /detection-test-object.html"
   },
   {
     "id": "The port has to be a positive integer.",
@@ -8122,6 +8686,10 @@
   {
     "id": "The user data of virtual server instance: {{.VsId}} was updated.",
     "translation": "Virtual Server インスタンス: {{.VsId}} のユーザー・データは更新されました。"
+  },
+  {
+    "id": "The username part of the username/password pair.",
+    "translation": "ユーザー名とパスワードのペアのユーザー名の部分。"
   },
   {
     "id": "The value of option '--quantity' should be greater or equal to 1.",
@@ -8292,6 +8860,10 @@
     "translation": "これを行うと、ロード・バランサー: {{.LBID}} が取り消され、元に戻すことはできません。 続行しますか?"
   },
   {
+    "id": "This will cancel the object-storage: {{.ID}} and cannot be undone. Continue?",
+    "translation": "これを行うと、オブジェクト・ストレージ {{.ID}} が取り消され、元に戻すことはできません。 Continue?"
+  },
+  {
     "id": "This will cancel the subnet: {{.ID}} and cannot be undone. Continue?",
     "translation": "これを行うと、サブネット: {{.ID}} が取り消され、元に戻すことはできません。 続行しますか?"
   },
@@ -8416,6 +8988,10 @@
     "translation": "データ・センターを追加するには"
   },
   {
+    "id": "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]",
+    "translation": "要求を Web サイトに経路指定するには、Web サイトのホスト名 (例えば、www.example.com または app.example.com) を入力します。[必須]"
+  },
+  {
     "id": "Toggle the IPMI interface on and off. This command is asynchronous.",
     "translation": "IPMI インターフェースのオン/オフを切り替えます。 このコマンドは非同期です。"
   },
@@ -8438,6 +9014,10 @@
   {
     "id": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]",
     "translation": "返される結果の総数。 -1 を指定すると、ALL が返されます。これらの LOT が存在する可能性があります。  [デフォルト: 50]"
+  },
+  {
+    "id": "Total usage",
+    "translation": "合計使用量"
   },
   {
     "id": "True",
@@ -8572,6 +9152,10 @@
     "translation": "ID {{.storageID}} のオブジェクト・ストレージが見つかりません。\n"
   },
   {
+    "id": "Unable to find object-storage with objectStorageID {{.objectStorageID}}.",
+    "translation": "objectStorageID {{.objectStorageID}}のオブジ ェクト・ストレージが見つかりません。"
+  },
+  {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
     "translation": "ID: {{.RecordID}} のリソース・レコードが見つかりません。\n"
   },
@@ -8684,12 +9268,20 @@
     "translation": "すべてのハード・ディスクのファームウェアをアップグレードします"
   },
   {
+    "id": "Uri",
+    "translation": "URI"
+  },
+  {
     "id": "Url",
     "translation": "URL"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",
     "translation": "HTTP/HTTPS チェックの URL パス"
+  },
+  {
+    "id": "Usage information.",
+    "translation": "使用法情報。"
   },
   {
     "id": "Use 'cookie' or 'source-ip' to stick",
@@ -8872,6 +9464,10 @@
     "translation": "仮想サーバー"
   },
   {
+    "id": "Visibility",
+    "translation": "表示設定"
+  },
+  {
     "id": "Vlan",
     "translation": "VLAN"
   },
@@ -8954,6 +9550,14 @@
   {
     "id": "You may run '{{.CommandName}} sl vs host-list --order {{.OrderID}}' to find this dedicated host after it is ready.",
     "translation": "'{{.CommandName}} sl vs host-list --order {{.OrderID}}' を実行すると、作動可能になった後にこの専用ホストを見つけることができます。"
+  },
+  {
+    "id": "Your new VPN password [required]",
+    "translation": "新規 VPN パスワード [必須]"
+  },
+  {
+    "id": "Your server IP address or hostname. [required]",
+    "translation": "サーバーの IP アドレスまたはホスト名。 [必須]"
   },
   {
     "id": "ZONE",
@@ -9228,6 +9832,10 @@
     "translation": "device"
   },
   {
+    "id": "disk space",
+    "translation": "ディスク容量"
+  },
+  {
     "id": "disk_guest",
     "translation": "ディスク・ゲスト"
   },
@@ -9318,6 +9926,10 @@
   {
     "id": "hour",
     "translation": "時"
+  },
+  {
+    "id": "http or https",
+    "translation": "http または https"
   },
   {
     "id": "id",
@@ -9508,6 +10120,10 @@
     "translation": "serial"
   },
   {
+    "id": "share image",
+    "translation": "イメージの共有"
+  },
+  {
     "id": "size_bytes",
     "translation": "size_bytes"
   },
@@ -9602,6 +10218,10 @@
   {
     "id": "value",
     "translation": "value"
+  },
+  {
+    "id": "virtual disks",
+    "translation": "仮想ディスク"
   },
   {
     "id": "virtual guest",

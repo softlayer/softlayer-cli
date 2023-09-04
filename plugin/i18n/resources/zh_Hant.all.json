@@ -36,6 +36,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n範例：\n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t這個指令會編輯磁區附註。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t這個指令會顯示使用者詳細資料。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\t這個指令會列出虛擬訪客。"
   },
   {
+    "id": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80",
+    "translation": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn delete",
+    "translation": "${COMMAND_NAME} sl cdn delete"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn detail",
     "translation": "${COMMAND_NAME} sl cdn detail"
   },
@@ -46,6 +54,22 @@
   {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn 清單"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80",
+    "translation": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-list",
+    "translation": "${COMMAND_NAME} sl cdn origin-list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\"",
+    "translation": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\""
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\"",
+    "translation": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
@@ -254,6 +278,10 @@
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   這個指令會立即取消磁區（其 ID 為 12345678），而不要求確認。"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -584,12 +612,28 @@
     "translation": "--billing 只能是每小時或每月。"
   },
   {
+    "id": "--bucket-name can not be empty",
+    "translation": "--bucket-name 不能是空的"
+  },
+  {
+    "id": "--cache-key",
+    "translation": "--cache-key"
+  },
+  {
     "id": "--column {{.Column}} is not supported.",
     "translation": "不支援 --column {{.Column}}。"
   },
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--optimize",
+    "translation": "--optimize"
+  },
+  {
+    "id": "--origintype",
+    "translation": "--origintype"
   },
   {
     "id": "--resize-disk requires capacity and disk number values separated by one comma.",
@@ -736,6 +780,10 @@
     "translation": "-r, --重新導向對於以下動作是必要的：REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
   },
   {
+    "id": "-s is in colon deliminated format to make grouping IP:port:weight a bit easier.",
+    "translation": "-s 是冒號定界格式，可讓分組 IP:port:weight 更容易。"
+  },
+  {
     "id": "-s, --subnet is only available in PublicToPrivate and PrivateToPrivate load balancer type.",
     "translation": "-s, --subnet 只提供於 PublicToPrivate 和 PrivateToPrivate 負載平衡器類型。"
   },
@@ -776,6 +824,10 @@
     "translation": "要使用 <hostname>.<domain.name.tld> 格式化名稱。 每個伺服器指定一個 fqdn（允許多次出現）[必要]"
   },
   {
+    "id": "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]",
+    "translation": "DV SAN 憑證容許經由個人網域的 HTTPS 資料流量，但需要進行網域驗證以證明所有權。 僅在使用給定的 CNAME 時，萬用字元憑證才容許 HTTPS 資料流量。 [允許：dvSan，萬用字元]"
+  },
+  {
     "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
     "translation": "所需伺服器的 Hardware_Server.id 或 UUID 值。 對應於格式為 'hostname<domain>' 的唯一完整網域名稱的值，其中 < 和 > 是文字，例如 myhost<mydomain.com>"
   },
@@ -804,6 +856,10 @@
     "translation": "JSON 字串，說明 https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/"
   },
   {
+    "id": "A note string stored for this username/password pair.",
+    "translation": "為此使用者名稱/密碼配對儲存的附註字串。"
+  },
+  {
     "id": "A size or IOPS value must be given to modify this performance volume.",
     "translation": "必須給定大小或 IOPS 值，才能修改此效能磁區"
   },
@@ -826,6 +882,14 @@
   {
     "id": "A word (or string) used to filter presets",
     "translation": "用來過濾預設值的單字（或字串）"
+  },
+  {
+    "id": "ACCOUNT ID",
+    "translation": "帳戶 ID"
+  },
+  {
+    "id": "API Error.",
+    "translation": "API 錯誤。"
   },
   {
     "id": "APIKEY",
@@ -878,6 +942,10 @@
   {
     "id": "Access to {{.VolumeId}} was revoked for virtual server {{.VsID}}.",
     "translation": "已撤銷虛擬伺服器 {{.VsID}} 對 {{.VolumeId}} 的存取權。"
+  },
+  {
+    "id": "Account",
+    "translation": "帳戶"
   },
   {
     "id": "Account ID",
@@ -1016,6 +1084,10 @@
     "translation": "進階配置旗標"
   },
   {
+    "id": "Akamai CNAME",
+    "translation": "Akamai CNAME"
+  },
+  {
     "id": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.",
     "translation": "所有多重 VLAN 規則都必須使用提供的認證透過 FortiGate 儀表板進行管理。"
   },
@@ -1028,6 +1100,10 @@
     "translation": "配額"
   },
   {
+    "id": "Allows to create, remove or refresh user's API authentication key",
+    "translation": "容許建立、移除或重新整理使用者的 API 鑑別金鑰"
+  },
+  {
     "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
     "translation": "允許您變更次要子網路的路由。\n子網路可以路由為靜態或可攜式，並且該名稱由指定的路由目標決定。\n靜態子網路的最終路由目標是單一 IP 位址，但可能不是路由到現有子網路的 IP 位址，該子網路由為靜態。\n可攜式子網路具有 VLAN 的最終路由目標。\n子網路可以路由到與子網路本身相同的「路由區域」內的任何資源，通常是限制為單一資料中心。\n\n另請參閱：https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\n示例：${COMMAND_NAME}\n sl subnet route 1234567 --ip 11.22.33.44\n ${COMMAND_NAME}sl 子網路由 1234567 --server myUniqueHostname\n<domain.com> ${COMMAND_NAME}sl 子網路由 1234567 --vsi vsiId\n ${COMMAND_NAME}sl 子網路由 1234567 --vlan vlanId\n\n"
   },
@@ -1038,6 +1114,10 @@
   {
     "id": "An ID of one subnet to authorize",
     "translation": "要授權的某個子網路的 ID"
+  },
+  {
+    "id": "An ID of one subnet to revoke",
+    "translation": "要撤銷的某個子網路的 ID"
   },
   {
     "id": "An IP address to authorize",
@@ -1256,12 +1336,28 @@
     "translation": "區塊磁區 {{.VolumeId}} 正在報告 LUN ID {{.LunID}}。"
   },
   {
+    "id": "Bucket Name",
+    "translation": "儲存區名稱"
+  },
+  {
+    "id": "Bucket name",
+    "translation": "儲存區名稱"
+  },
+  {
+    "id": "Bucket name.",
+    "translation": "儲存區名稱。"
+  },
+  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "無法關閉緩衝區檔案：{{.Error}}。\n"
   },
   {
     "id": "Buffer file could not be created: {{.Error}}.\n",
     "translation": "無法建立緩衝區檔案：{{.Error}}。\n"
+  },
+  {
+    "id": "CDN Unique ID",
+    "translation": "CDN 唯一 ID"
   },
   {
     "id": "CIDR",
@@ -1292,12 +1388,20 @@
     "translation": "您 KMS 實例中，根金鑰的 CRN"
   },
   {
+    "id": "Cache Key Rule",
+    "translation": "快取索引鍵規則"
+  },
+  {
     "id": "Cache key optimization",
     "translation": "快取金鑰最佳化"
   },
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
     "translation": "快取金鑰最佳化。 這些是要選擇的有效選項：'include-all'、'ignore-all'、'include-specified'、'ignore-specified'。 如果您選取 'include-specified' 或 'ignore-specified'，請新增至選項 cache-description。"
+  },
+  {
+    "id": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'.",
+    "translation": "具有下列格式的快取查詢規則：'include-all'、'ignore-all'、'include: <query-names>'、'ignore: <query-names>'。範例 <query-names> = 'uuid=1234567 issue=important'。"
   },
   {
     "id": "Call arbitrary API endpoints",
@@ -1356,8 +1460,16 @@
     "translation": "取消現有負載平衡器"
   },
   {
+    "id": "Cancel an existing object storage instance.",
+    "translation": "取消現有的 Object Storage 實例。"
+  },
+  {
     "id": "Cancel existing snapshot space for a given volume",
     "translation": "取消給定磁區的現有 Snapshot 空間"
+  },
+  {
+    "id": "Cancel immediately instead of on the billing anniversary",
+    "translation": "立即取消，而不是在計費週年日"
   },
   {
     "id": "Cancel the IPSec immediately instead of on the billing anniversary",
@@ -1370,6 +1482,10 @@
   {
     "id": "Cancel the file storage volume immediately instead of on the billing anniversary",
     "translation": "立即取消檔案儲存磁區，而不是在計費週年日取消"
+  },
+  {
+    "id": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation",
+    "translation": "取消計費項目的資源或服務。 依預設，計費項目將在下一個帳單日期取消 \n 且資源收回將在取消之後不久開始"
   },
   {
     "id": "Cancel the snapshot space immediately instead of on the billing anniversary",
@@ -1436,6 +1552,14 @@
     "translation": "將虛擬伺服器實例擷取至映像檔"
   },
   {
+    "id": "Case",
+    "translation": "案例"
+  },
+  {
+    "id": "Case Number",
+    "translation": "案例號碼"
+  },
+  {
     "id": "Category",
     "translation": "種類"
   },
@@ -1448,12 +1572,24 @@
     "translation": "用來過濾項目的種類代碼"
   },
   {
+    "id": "Category name.",
+    "translation": "種類名稱。"
+  },
+  {
     "id": "CategoryCode",
     "translation": "種類代碼"
   },
   {
+    "id": "Cdn with uniqueId: {{.ID}} was deleted.",
+    "translation": "已刪除具有 uniqueId: {{.ID}} 的 cdn。"
+  },
+  {
     "id": "Certificate Signing Request file",
     "translation": "憑證簽署要求檔"
+  },
+  {
+    "id": "Certificate Type",
+    "translation": "憑證類型"
   },
   {
     "id": "Certificate file",
@@ -1480,12 +1616,20 @@
     "translation": "檢查是否有虛擬伺服器實例已備妥可供使用"
   },
   {
+    "id": "Classic Infrastructure Bandwidth commands",
+    "translation": "標準基礎架構頻寬指令"
+  },
+  {
     "id": "Classic Infrastructure Reports",
     "translation": "標準基礎架構報告"
   },
   {
     "id": "Classic infrastructure Account commands",
     "translation": "標準基礎架構帳戶指令"
+  },
+  {
+    "id": "Classic infrastructure Bandwidth commands",
+    "translation": "標準基礎架構頻寬指令"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1856,12 +2000,20 @@
     "translation": "建立專用虛擬伺服器的主機"
   },
   {
+    "id": "Create a new CDN domain mapping",
+    "translation": "建立新的 CDN 網域對映"
+  },
+  {
     "id": "Create a new VLAN",
     "translation": "建立新的 VLAN"
   },
   {
     "id": "Create a new firewall",
     "translation": "建立新的防火牆"
+  },
+  {
+    "id": "Create a password for a software component.",
+    "translation": "建立軟體元件的密碼。"
   },
   {
     "id": "Create a placement group",
@@ -1894,6 +2046,14 @@
   {
     "id": "Create a zone",
     "translation": "建立區域"
+  },
+  {
+    "id": "Create an origin path for an existing CDN mapping.",
+    "translation": "建立現有 CDN 對映的原始路徑。"
+  },
+  {
+    "id": "Create an user's API authentication key",
+    "translation": "建立使用者的 API 鑑別金鑰"
   },
   {
     "id": "Create credentials for an IBM Cloud Object Storage Account.",
@@ -1930,6 +2090,10 @@
   {
     "id": "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}.",
     "translation": "已建立從 {{.StaticIP}} 到 {{.RemoteIP}} #{{.ID}} 的轉換。"
+  },
+  {
+    "id": "Creates a purge record and also initiates the purge call.",
+    "translation": "建立清除記錄並同時起始清除呼叫。"
   },
   {
     "id": "Creates a user",
@@ -1976,6 +2140,14 @@
     "translation": "資料中心"
   },
   {
+    "id": "Data in",
+    "translation": "資料輸入"
+  },
+  {
+    "id": "Data out",
+    "translation": "資料輸出"
+  },
+  {
     "id": "Datacenter",
     "translation": "資料中心"
   },
@@ -2002,6 +2174,10 @@
   {
     "id": "Datacenter to remove",
     "translation": "移除資料中心"
+  },
+  {
+    "id": "Datacenters",
+    "translation": "資料中心"
   },
   {
     "id": "Date",
@@ -2048,6 +2224,10 @@
     "translation": "每個實例的預設每小時價格"
   },
   {
+    "id": "Delete a CDN domain mapping.",
+    "translation": "刪除 CDN 網域對映。"
+  },
+  {
     "id": "Delete a L7 policy",
     "translation": "刪除 L7 原則"
   },
@@ -2068,6 +2248,10 @@
     "translation": "刪除通訊協定"
   },
   {
+    "id": "Delete a provisioning scriptt.",
+    "translation": "刪除佈建 Script。"
+  },
+  {
     "id": "Delete a snapshot on a given volume",
     "translation": "在給定的磁區上刪除 Snapshot"
   },
@@ -2086,6 +2270,14 @@
   {
     "id": "Delete the given security group",
     "translation": "刪除給定的安全群組"
+  },
+  {
+    "id": "Delete the quote of an order.",
+    "translation": "刪除訂單的報價。"
+  },
+  {
+    "id": "Deny sharing of an image template with another account.",
+    "translation": "拒絕與另一個帳戶共用映像檔範本。"
   },
   {
     "id": "Description",
@@ -2112,12 +2304,20 @@
     "translation": "特定事件的詳細資料，以及確認事件的能力。"
   },
   {
+    "id": "Device",
+    "translation": "裝置"
+  },
+  {
     "id": "Device Name",
     "translation": "裝置名稱"
   },
   {
     "id": "Device Type",
     "translation": "裝置類型"
+  },
+  {
+    "id": "Device name",
+    "translation": "裝置名稱"
   },
   {
     "id": "Devices",
@@ -2312,6 +2512,10 @@
     "translation": "範例：\n ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email \n 這個指令會針對 VSI 進行報價，其具有 4 CPU、16 GB RAM、100 GB SAN 磁碟、Ubuntu 16.04 及資料中心 dal13 內 1 Gbps 公用及專用上行鏈路"
   },
   {
+    "id": "Each user can only have a single API key.",
+    "translation": "每一個使用者只能有單一 API 金鑰。"
+  },
+  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
     "translation": "擷取事件的最早日期 [YYYY-MM-DD]。 預設值：2 天前。"
   },
@@ -2444,6 +2648,14 @@
     "translation": "啟用或停用特定的許可權"
   },
   {
+    "id": "Enable or disable compression of JPEG images for requests over certain network conditions.",
+    "translation": "針對在特定網路狀況下遞送的要求啟用或停用 JPEG 影像檔的壓縮。"
+  },
+  {
+    "id": "Enable or disable the embedded object prefetching feature.",
+    "translation": "啟用或停用內嵌物件預先提取功能。"
+  },
+  {
     "id": "Enable or disable user vpn subnets manual config.",
     "translation": "啟用或停用使用者 VPN 子網路手動配置。"
   },
@@ -2528,6 +2740,14 @@
     "translation": "每個 IOPS 的耐久性層級"
   },
   {
+    "id": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you.",
+    "translation": "請輸入廣域唯一的子網域。 完整 URL 會變成我們用來配置 DNS 的 CNAME。 如果未輸入任何值，我們將為您產生 CNAME。"
+  },
+  {
+    "id": "Error marshalling resource",
+    "translation": "配置資源時發生錯誤"
+  },
+  {
     "id": "Error occurred while adding note to volume: {{.VolumeID}}",
     "translation": "將附註新增至磁區時發生錯誤：{{.VolumeID}}"
   },
@@ -2594,6 +2814,10 @@
   {
     "id": "FQDN",
     "translation": "FQDN"
+  },
+  {
+    "id": "Failback a {{.storageType}} volume from replica",
+    "translation": "從抄本失效回復 {{.storageType}} 磁區"
   },
   {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
@@ -2676,6 +2900,10 @@
     "translation": "無法新增子網路。\n"
   },
   {
+    "id": "Failed to add user's API authentication key",
+    "translation": "無法新增使用者的 API 鑑別金鑰"
+  },
+  {
     "id": "Failed to add user.\n",
     "translation": "無法新增使用者。\n"
   },
@@ -2756,6 +2984,10 @@
     "translation": "無法取消負載平衡器 {{.LBID}}。\n"
   },
   {
+    "id": "Failed to cancel object-storage: {{.objectStorageID}}.",
+    "translation": "無法取消物件儲存體：{{.objectStorageID}}。"
+  },
+  {
     "id": "Failed to cancel snapshot space for volume {{.ID}}.\n",
     "translation": "無法為磁區 {{.ID}} 取消 Snapshot 空間。\n"
   },
@@ -2778,6 +3010,22 @@
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "無法在磁區 {{.VolumeId}} 上確認新的 LUN ID。"
+  },
+  {
+    "id": "Failed to create Provisioning Hook.",
+    "translation": "無法建立供應連結鉤。"
+  },
+  {
+    "id": "Failed to create Software Credential.",
+    "translation": "無法建立軟體認證。"
+  },
+  {
+    "id": "Failed to create a CDN.",
+    "translation": "無法建立 CDN。"
+  },
+  {
+    "id": "Failed to create a Origin.",
+    "translation": "無法建立原點。"
   },
   {
     "id": "Failed to create credential. ",
@@ -2856,6 +3104,14 @@
     "translation": "無法刪除 L7member {{.Member}}：{{.Error}}。\n"
   },
   {
+    "id": "Failed to delete Provisioning Hook.",
+    "translation": "無法刪除供應連結鉤。"
+  },
+  {
+    "id": "Failed to delete Quote",
+    "translation": "無法刪除報價"
+  },
+  {
     "id": "Failed to delete Tag",
     "translation": "無法刪除標籤"
   },
@@ -2884,6 +3140,10 @@
     "translation": "無法刪除負載平衡器成員 {{.Member}}：{{.Error}}。\n"
   },
   {
+    "id": "Failed to delete origin.",
+    "translation": "無法刪除原點。"
+  },
+  {
     "id": "Failed to delete protocol {{.ProtocolID}}: {{.Error}}.\n",
     "translation": "無法刪除通訊協定 {{.ProtocolID}}：{{.Error}}。\n"
   },
@@ -2910,6 +3170,14 @@
   {
     "id": "Failed to delete zone: {{.Zone}}.\n",
     "translation": "無法刪除區域：{{.Zone}}。\n"
+  },
+  {
+    "id": "Failed to deleted a CDN.",
+    "translation": "無法刪除 CDN。"
+  },
+  {
+    "id": "Failed to deny share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "無法拒絕與帳戶{{.AccountId}}共用映像檔：{{.ImageId}}。"
   },
   {
     "id": "Failed to disable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n",
@@ -3080,6 +3348,10 @@
     "translation": "無法取得 Pod。\n"
   },
   {
+    "id": "Failed to get Provisioning Hooks.",
+    "translation": "無法取得「供應連結鉤」。"
+  },
+  {
     "id": "Failed to get Quote\n",
     "translation": "無法取得報價\n"
   },
@@ -3116,6 +3388,10 @@
     "translation": "未能取得未附加的標籤。"
   },
   {
+    "id": "Failed to get Upgrade Requests.",
+    "translation": "無法取得升級要求。"
+  },
+  {
     "id": "Failed to get User Customer Notifications.",
     "translation": "無法取得「使用者客戶通知」。"
   },
@@ -3136,6 +3412,10 @@
     "translation": "無法取得帳戶的相關聯「虛擬儲存體」磁區。"
   },
   {
+    "id": "Failed to get all datacenters.",
+    "translation": "無法取得所有資料中心。"
+  },
+  {
     "id": "Failed to get all datacenters.\n",
     "translation": "無法取得所有資料中心。\n"
   },
@@ -3150,6 +3430,10 @@
   {
     "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
     "translation": "無法取得硬體伺服器 {{.ID}} 的頻寬配額明細。\n"
+  },
+  {
+    "id": "Failed to get bandwidth summary",
+    "translation": "無法取得頻寬摘要"
   },
   {
     "id": "Failed to get bare metal servers.\n",
@@ -3222,6 +3506,10 @@
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "無法取得硬體伺服器 {{.ID}}。\n"
+  },
+  {
+    "id": "Failed to get hardware server: {{.ID}}.",
+    "translation": "無法取得硬體伺服器：{{.ID}}。"
   },
   {
     "id": "Failed to get hardware server: {{.ID}}.\n",
@@ -3322,6 +3610,10 @@
   {
     "id": "Failed to get orders.",
     "translation": "無法取得訂單。"
+  },
+  {
+    "id": "Failed to get origins list for CDN: {{.cdnId}}.",
+    "translation": "無法取得 CDN {{.cdnId}} 的原點清單。"
   },
   {
     "id": "Failed to get package for {{.Type}} firewall.\n",
@@ -3476,6 +3768,10 @@
     "translation": "無法取得使用者 VPN 置換。"
   },
   {
+    "id": "Failed to get user's API authentication keys",
+    "translation": "無法取得使用者的 API 鑑別金鑰"
+  },
+  {
     "id": "Failed to get user.",
     "translation": "無法取得使用者。"
   },
@@ -3538,6 +3834,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "無法列出您帳戶中的 VLAN。\n"
+  },
+  {
+    "id": "Failed to list all item cancelations.",
+    "translation": "無法列出所有項目取消。"
   },
   {
     "id": "Failed to list available OS's.",
@@ -3736,6 +4036,10 @@
     "translation": "無法啟動虛擬伺服器實例：{{.VsID}}。\n"
   },
   {
+    "id": "Failed to purge.",
+    "translation": "無法清除。"
+  },
+  {
     "id": "Failed to reach virtual guest instance {{.Id}}.",
     "translation": "無法連接虛擬訪客實例 {{.Id}}。"
   },
@@ -3828,6 +4132,10 @@
     "translation": "無法從 IPSec {{.ID}} 移除 ID 為 {{.TransID}} 的轉換。"
   },
   {
+    "id": "Failed to remove user's API authentication key",
+    "translation": "無法移除使用者的 API 鑑別金鑰"
+  },
+  {
     "id": "Failed to remove {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.\n",
     "translation": "無法從 IPSec {{.ContextID}} 移除 {{.Type}} 子網路 #{{.ID}}。\n"
   },
@@ -3886,6 +4194,10 @@
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
     "translation": "無法設定磁區 '{{.ID}}' 的 snapshort 通知。\n"
+  },
+  {
+    "id": "Failed to share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "無法與帳戶{{.AccountId}}共用映像檔：{{.ImageId}}。"
   },
   {
     "id": "Failed to show event log.\n",
@@ -4024,6 +4336,10 @@
     "translation": "無法更新 IPSec {{.ID}} 中 ID 為 {{.TransID}} 的轉換。"
   },
   {
+    "id": "Failed to update user vpn password.",
+    "translation": "無法更新使用者 VPN 密碼。"
+  },
+  {
     "id": "Failed to update user {{.UserID}}.",
     "translation": "無法更新使用者 {{.UserID}}。"
   },
@@ -4106,6 +4422,10 @@
   {
     "id": "Features",
     "translation": "特性"
+  },
+  {
+    "id": "File Extension",
+    "translation": "副檔名"
   },
   {
     "id": "File volume {{.ID}} has been marked for immediate snapshot cancellation.",
@@ -4516,6 +4836,14 @@
     "translation": "取得計費項目的詳細資訊。"
   },
   {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video",
+    "translation": "指定相對於所提供網域的路徑，這可用來存取此原點。 例如 'articles/video' => 'www.example.com/articles/video"
+  },
+  {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]",
+    "translation": "指定相對於所提供網域的路徑，這可用來存取此原點。 例如 'articles/video' => 'www.example.com/articles/video [必要]"
+  },
+  {
     "id": "Grant access from a user to an specific device",
     "translation": "授與使用者對特定裝置的存取權"
   },
@@ -4688,6 +5016,10 @@
     "translation": "每小時"
   },
   {
+    "id": "Hourly/Monthly",
+    "translation": "每小時/每月"
+  },
+  {
     "id": "How many invoices to get back.",
     "translation": "要取回多少發票。"
   },
@@ -4700,8 +5032,28 @@
     "translation": "HTTP 埠"
   },
   {
+    "id": "Http port",
+    "translation": "HTTP 埠"
+  },
+  {
+    "id": "Http port. [http or https is required]",
+    "translation": "HTTP 埠。[需要 http 或 https]"
+  },
+  {
     "id": "Https Port",
     "translation": "HTTPS 埠"
+  },
+  {
+    "id": "Https port",
+    "translation": "HTTPS 埠"
+  },
+  {
+    "id": "Https port. [http or https is required]",
+    "translation": "HTTPS 埠。[需要 http 或 https]"
+  },
+  {
+    "id": "IBM CNAME",
+    "translation": "IBM CNAME"
   },
   {
     "id": "ID",
@@ -4858,6 +5210,14 @@
   {
     "id": "Image {{.ImageID}} was deleted.",
     "translation": "已刪除映像檔 {{.ImageID}}。"
+  },
+  {
+    "id": "Image {{.ImageId}} was deny shared with account {{.AccountId}}.",
+    "translation": "映像檔{{.ImageId}}已被拒絕與帳戶 {{.AccountId}}共用。"
+  },
+  {
+    "id": "Image {{.ImageId}} was shared with account {{.AccountId}}.",
+    "translation": "映像檔 {{.ImageId}} 已與帳戶 {{.AccountId}} 共用。"
   },
   {
     "id": "Immediate cancellation.",
@@ -5312,6 +5672,10 @@
     "translation": "列出給定主機 ID 的區塊儲存空間指派的子網路。"
   },
   {
+    "id": "List cancelations.",
+    "translation": "列出取消。"
+  },
+  {
     "id": "List cloud block storage.",
     "translation": "列出雲端區塊儲存體。"
   },
@@ -5400,6 +5764,10 @@
     "translation": "列出訂購負載平衡器的選項"
   },
   {
+    "id": "List origin path for an existing CDN mapping.",
+    "translation": "列出現有 CDN 對映的原始路徑。"
+  },
+  {
     "id": "List package items that are used for ordering",
     "translation": "列出用於訂購的套件項目"
   },
@@ -5448,6 +5816,10 @@
     "translation": "列出您帳戶中的虛擬伺服器實例"
   },
   {
+    "id": "List {{.storageType}} storage snapshots",
+    "translation": "列出 {{.storageType}} 儲存體 Snapshot"
+  },
+  {
     "id": "Lists Email Delivery Service.",
     "translation": "列出電子郵件遞送服務。"
   },
@@ -5484,6 +5856,10 @@
     "translation": "位置"
   },
   {
+    "id": "Location Conflicts",
+    "translation": "位置衝突"
+  },
+  {
     "id": "Location/Region",
     "translation": "位置/區域"
   },
@@ -5496,8 +5872,16 @@
     "translation": "MAC 位址"
   },
   {
+    "id": "Maintance Window",
+    "translation": "維護時段"
+  },
+  {
     "id": "Manage Classic infrastructure services",
     "translation": "管理標準基礎架構服務"
+  },
+  {
+    "id": "Manage LBaaS health checks.",
+    "translation": "管理 LBaaS 性能檢查。"
   },
   {
     "id": "Manage VSIs that require migration",
@@ -5672,6 +6056,10 @@
     "translation": "負載平衡器 L7 儲存區的名稱"
   },
   {
+    "id": "Name that ordered the item.",
+    "translation": "訂購項目的名稱。"
+  },
+  {
     "id": "Netscaler",
     "translation": "Netscaler"
   },
@@ -5844,6 +6232,10 @@
     "translation": "附註："
   },
   {
+    "id": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC",
+    "translation": "附註：6,000 以上的 IOPS 僅適用於：https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
+  },
+  {
     "id": "Notes",
     "translation": "附註"
   },
@@ -5858,6 +6250,10 @@
   {
     "id": "Number",
     "translation": "號碼"
+  },
+  {
+    "id": "Number Of Items Cancelled",
+    "translation": "已取消的項目數"
   },
   {
     "id": "Number of CPU cores",
@@ -5928,6 +6324,14 @@
     "translation": "物件遮罩：用來限制傳回的欄位"
   },
   {
+    "id": "Object-storage {{.objectStorageID}} has been marked for cancellation.",
+    "translation": "物件儲存體 {{.objectStorageID}} 已標示為取消。"
+  },
+  {
+    "id": "Object-storage {{.objectStorageID}} has been marked for immediate cancellation.",
+    "translation": "物件儲存體 {{.objectStorageID}} 已標示為立即取消。"
+  },
+  {
     "id": "One Time",
     "translation": "一次性"
   },
@@ -5992,6 +6396,10 @@
     "translation": "選項 respect-headers 只接受 '0' 或 '1'"
   },
   {
+    "id": "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly",
+    "translation": "計費費率的選用參數（預設為每月） 選項：每小時或每月"
+  },
+  {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
     "translation": "計費費率的選用性參數（預設為 monthly），選項包含：hourly、monthly"
   },
@@ -6044,6 +6452,10 @@
     "translation": "複製現有磁區，以訂購區塊磁區"
   },
   {
+    "id": "Order a file storage replica volume",
+    "translation": "訂購檔案儲存空間抄本磁區"
+  },
+  {
     "id": "Order a file storage volume",
     "translation": "訂購檔案儲存磁區"
   },
@@ -6092,6 +6504,10 @@
     "translation": "訂購/建立硬體伺服器"
   },
   {
+    "id": "Order/create a provisioning script.",
+    "translation": "訂購/建立佈建 Script。"
+  },
+  {
     "id": "Ordered By",
     "translation": "排序方式"
   },
@@ -6102,6 +6518,10 @@
   {
     "id": "Origin",
     "translation": "原點"
+  },
+  {
+    "id": "Origin Host",
+    "translation": "原始主機"
   },
   {
     "id": "Origin Type",
@@ -6170,6 +6590,10 @@
   {
     "id": "PACKAGE_KEYNAME",
     "translation": "PACKAGE_KEYNAME"
+  },
+  {
+    "id": "PATH",
+    "translation": "路徑"
   },
   {
     "id": "PLACEMENTGROUP_ID",
@@ -6278,6 +6702,10 @@
   {
     "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]",
     "translation": "效能儲存空間 IOPs，此值為 100 的倍數，介於 100 與 6000 之間 [storage-type performance 的必要項目]"
+  },
+  {
+    "id": "Performance configuration. [Permit: web, video, file, dynamic]",
+    "translation": "效能配置。 [允許：Web、視訊、檔案、動態]"
   },
   {
     "id": "Permanently removes an SSH key",
@@ -6426,6 +6854,10 @@
   {
     "id": "Policy priority",
     "translation": "原則優先順序"
+  },
+  {
+    "id": "Pool",
+    "translation": "儲存區"
   },
   {
     "id": "Port Range Max",
@@ -6696,6 +7128,10 @@
     "translation": "數量"
   },
   {
+    "id": "Quote: {{.quoteID}} was deleted.",
+    "translation": "報價：{{.quoteID}} 已刪除。"
+  },
+  {
     "id": "RECORD",
     "translation": "記錄"
   },
@@ -6714,6 +7150,10 @@
   {
     "id": "RULE_ID",
     "translation": "RULE_ID"
+  },
+  {
+    "id": "Range",
+    "translation": "範圍"
   },
   {
     "id": "Read Failure: {{.Error}}.\n",
@@ -6782,6 +7222,10 @@
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
     "translation": "以來自母項的 Snapshot 重新整理重複磁區。"
+  },
+  {
+    "id": "Refresh an user's API authentication key",
+    "translation": "重新整理使用者的 API 鑑別金鑰"
   },
   {
     "id": "Region",
@@ -6860,6 +7304,10 @@
     "translation": "移除對子網路的存取權。"
   },
   {
+    "id": "Remove an user's API authentication key",
+    "translation": "移除使用者的 API 鑑別金鑰"
+  },
+  {
     "id": "Remove block storage subnets to the given host id.",
     "translation": "移除給定主機 ID 的區塊儲存空間子網路。"
   },
@@ -6882,6 +7330,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "從帳戶移除空的標籤。"
+  },
+  {
+    "id": "Removes an origin path for an existing CDN mapping.",
+    "translation": "移除現有 CDN 對映的原始路徑。"
   },
   {
     "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
@@ -6916,6 +7368,10 @@
     "translation": "通道環境定義的要求配置"
   },
   {
+    "id": "Requested by",
+    "translation": "申請者"
+  },
+  {
     "id": "Required User",
     "translation": "必要的使用者"
   },
@@ -6934,6 +7390,10 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "遵循標頭。 值 1 是「開啟」，而 0 是「關閉」。"
+  },
+  {
+    "id": "Restore {{.storageType}} volume using a given snapshot",
+    "translation": "使用給定的 Snapshot 還原{{.storageType}}磁區"
   },
   {
     "id": "Restriction",
@@ -7104,6 +7564,10 @@
     "translation": "儲存報價"
   },
   {
+    "id": "Saved",
+    "translation": "已儲存"
+  },
+  {
     "id": "Schedule",
     "translation": "排程"
   },
@@ -7208,6 +7672,10 @@
     "translation": "設定 ipAddress 的附註。"
   },
   {
+    "id": "Set the user VPN password.",
+    "translation": "設定使用者 VPN 密碼。"
+  },
+  {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
     "translation": "將使用者的狀態設定為 CANCEL_PENDING，這會立即停用帳戶，且最後會由自動化內部處理程序完全從帳戶移除"
   },
@@ -7228,6 +7696,14 @@
     "translation": "設定"
   },
   {
+    "id": "Share an image template with another account.",
+    "translation": "與另一個帳戶共用映像檔範本。"
+  },
+  {
+    "id": "Shared on",
+    "translation": "共用於"
+  },
+  {
     "id": "Short Name",
     "translation": "簡稱"
   },
@@ -7242,6 +7718,10 @@
   {
     "id": "Show L7 pool details",
     "translation": "顯示 L7 儲存區詳細資料"
+  },
+  {
+    "id": "Show all Provisioning Scripts.",
+    "translation": "顯示所有佈建 Script。"
   },
   {
     "id": "Show all licenses.",
@@ -7304,8 +7784,16 @@
     "translation": "顯示密碼（小心背後有人偷窺！）"
   },
   {
+    "id": "Show prices in the storage, snapshot and iops range tables.",
+    "translation": "顯示儲存體、Snapshot 及 iops 範圍表格中的價格。"
+  },
+  {
     "id": "Show the users API key",
     "translation": "顯示使用者 API 金鑰"
+  },
+  {
+    "id": "Show upgrades orders.",
+    "translation": "顯示升級訂單。"
   },
   {
     "id": "Shows a very detailed list of charges",
@@ -7340,6 +7828,10 @@
     "translation": "大小 (GB)"
   },
   {
+    "id": "Size On Disk",
+    "translation": "磁碟大小"
+  },
+  {
     "id": "Size of duplicate block volume in GB, if no size is specified, the size of the original volume will be used",
     "translation": "重複區塊磁區的大小（以 GB 為單位），如果未指定大小，將會使用原始磁區的大小"
   },
@@ -7358,6 +7850,10 @@
   {
     "id": "Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB",
     "translation": "專用主機的大小，目前只有一個大小可用：56_CORES_X_242_RAM_X_1_4_TB"
+  },
+  {
+    "id": "Snapshot",
+    "translation": "Snapshot"
   },
   {
     "id": "Snapshot Size (GB)",
@@ -7404,6 +7900,10 @@
     "translation": "軟體"
   },
   {
+    "id": "Software not found",
+    "translation": "找不到軟體"
+  },
+  {
     "id": "Specifies if image is bring your own license",
     "translation": "指定映像檔是否自攜授權"
   },
@@ -7426,6 +7926,10 @@
   {
     "id": "Specify output format, only JSON is supported now.",
     "translation": "指定輸出格式，目前只支援 JSON。"
+  },
+  {
+    "id": "Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions.",
+    "translation": "指定可以儲存在 CDN 服務上的副檔名（以逗點區隔）。 例如，'jpg, pdf, jpeg, png' 是有效的清單。 將旗標保留空白，以容許所有延伸。"
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
@@ -7496,6 +8000,10 @@
     "translation": "狀態："
   },
   {
+    "id": "Storage",
+    "translation": "儲存空間"
+  },
+  {
     "id": "Storage Size (GB)",
     "translation": "儲存空間大小 (GB)"
   },
@@ -7544,6 +8052,10 @@
     "translation": "已順利新增使用者的子網路存取權。"
   },
   {
+    "id": "Successfully added. New API Authentication Key: {{.apiAuthenticationKey}}",
+    "translation": "已順利新增。 新建 API 鑑別金鑰：{{.apiAuthenticationKey}}"
+  },
+  {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "已順利將子網路 ID {{.subnetID}} 指派給容許的主機 ID：{{.accessID}}"
   },
@@ -7564,6 +8076,10 @@
     "translation": "已順利再更新裝置韌體"
   },
   {
+    "id": "Successfully removed Provisioning Hook.",
+    "translation": "已順利移除供應連結鉤。"
+  },
+  {
     "id": "Successfully removed User Customer notification.",
     "translation": "已順利移除「使用者客戶」通知。"
   },
@@ -7576,8 +8092,16 @@
     "translation": "已順利將子網路 ID {{.subnetID}} 移除至容許的主機 ID：{{.accessID}}"
   },
   {
+    "id": "Successfully removed user's API authentication key",
+    "translation": "已順利移除使用者的 API 鑑別金鑰"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "已順利傳送要求，以切換硬體伺服器 '{{.ID}}' 的 IPMI 介面。"
+  },
+  {
+    "id": "Successfully updated user VPN password.",
+    "translation": "已順利更新使用者 VPN 密碼。"
   },
   {
     "id": "Successfully {{.action}} user vpn subnets manual config",
@@ -7590,6 +8114,10 @@
   {
     "id": "Summary info about tickets",
     "translation": "關於問題單的摘要資訊"
+  },
+  {
+    "id": "Summary report for every pool/server.",
+    "translation": "每個儲存區/伺服器的摘要報告。"
   },
   {
     "id": "Support",
@@ -7792,6 +8320,10 @@
     "translation": "訂單的複式類型。類型以 'SoftLayer_Container_Product_Order_' 開頭"
   },
   {
+    "id": "The date the billing item was created (YYYY-MM-DD).",
+    "translation": "計費項目的建立日期 (YYYY-MM-DD)。"
+  },
+  {
     "id": "The dedicated host is migrating: {{.HostId}}.",
     "translation": "專用主機正在移轉：{{.HostId}}。"
   },
@@ -7814,6 +8346,14 @@
   {
     "id": "The earliest date we want to search for event logs [YYYY-MM-DD].",
     "translation": "我們想要搜尋事件日誌的最早日期 [YYYY-MM-DD]。"
+  },
+  {
+    "id": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.",
+    "translation": "邊緣伺服器會使用 HTTP 標頭中的主機標頭，與原點主機進行通訊。 它會預設為主機名稱。"
+  },
+  {
+    "id": "The endpoint that the script will be downloaded.",
+    "translation": "將下載 Script 的端點。"
   },
   {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
@@ -7900,12 +8440,20 @@
     "translation": "問題單中顯示的附件名稱"
   },
   {
+    "id": "The name of the hook.",
+    "translation": "連結鉤的名稱。"
+  },
+  {
     "id": "The name of the image {{.ID}} is updated.",
     "translation": "已更新映像檔 {{.ID}} 的名稱。"
   },
   {
     "id": "The name of the security group",
     "translation": "安全群組的名稱"
+  },
+  {
+    "id": "The name of this specific piece of software.",
+    "translation": "此特定軟體組件的名稱。"
   },
   {
     "id": "The netscaler ID has to be a positive integer.",
@@ -7956,8 +8504,28 @@
     "translation": "已開出訂單 {{.OrderID}}。"
   },
   {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint",
+    "translation": "原始類型。 [允許：伺服器、儲存體] 附註：如果 OriginType 是儲存體，則 OriginHost 會作為端點"
+  },
+  {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint.",
+    "translation": "原始類型。 [允許：伺服器、儲存體] 附註：如果 OriginType 是儲存體，則 OriginHost 會作為端點。"
+  },
+  {
+    "id": "The origin {{.Id}} with path {{.Path}} was deleted.",
+    "translation": "已刪除路徑為 {{.Path}} 的原點 {{.Id}}。"
+  },
+  {
     "id": "The original volume has been cancelled, unable to order duplicate volume",
     "translation": "已取消原始磁區，無法訂購重複磁區"
+  },
+  {
+    "id": "The password part of the username/password pair.",
+    "translation": "使用者名稱/密碼配對的密碼部分。"
+  },
+  {
+    "id": "The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html",
+    "translation": "Akamai Edge 伺服器定期從中提取測試物件的路徑。 範例 = /detection-test-object.html"
   },
   {
     "id": "The port has to be a positive integer.",
@@ -8118,6 +8686,10 @@
   {
     "id": "The user data of virtual server instance: {{.VsId}} was updated.",
     "translation": "已更新虛擬伺服器實例 {{.VsId}} 的使用者資料。"
+  },
+  {
+    "id": "The username part of the username/password pair.",
+    "translation": "使用者名稱/密碼配對的使用者名稱部分。"
   },
   {
     "id": "The value of option '--quantity' should be greater or equal to 1.",
@@ -8288,6 +8860,10 @@
     "translation": "這會取消負載平衡器：{{.LBID}}，且無法復原。是否繼續？"
   },
   {
+    "id": "This will cancel the object-storage: {{.ID}} and cannot be undone. Continue?",
+    "translation": "這會取消物件儲存體：{{.ID}} ，且無法復原。 是否繼續？"
+  },
+  {
     "id": "This will cancel the subnet: {{.ID}} and cannot be undone. Continue?",
     "translation": "這會取消子網路 {{.ID}}，且無法復原。是否繼續？"
   },
@@ -8412,6 +8988,10 @@
     "translation": "新增資料中心"
   },
   {
+    "id": "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]",
+    "translation": "若要將要求遞送至網站，請輸入網站的主機名稱，例如 www.example.com 或 app.example.com。[必要]"
+  },
+  {
     "id": "Toggle the IPMI interface on and off. This command is asynchronous.",
     "translation": "切換開啟和關閉 IPMI 介面。這個指令為非同步。"
   },
@@ -8434,6 +9014,10 @@
   {
     "id": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]",
     "translation": "要傳回的結果總數。-1 表示傳回所有，可能有很多項目。[預設值：50]"
+  },
+  {
+    "id": "Total usage",
+    "translation": "用量總計"
   },
   {
     "id": "True",
@@ -8568,6 +9152,10 @@
     "translation": "找不到 ID 為 {{.storageID}} 的物件儲存體。\n"
   },
   {
+    "id": "Unable to find object-storage with objectStorageID {{.objectStorageID}}.",
+    "translation": "找不到具有 objectStorageID {{.objectStorageID}} 的物件儲存體。"
+  },
+  {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
     "translation": "找不到 ID 為 {{.RecordID}} 的資源記錄。\n"
   },
@@ -8680,12 +9268,20 @@
     "translation": "升級所有硬碟的韌體"
   },
   {
+    "id": "Uri",
+    "translation": "烏里"
+  },
+  {
     "id": "Url",
     "translation": "URL"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",
     "translation": "HTTP/HTTPS 檢查的 URL 路徑"
+  },
+  {
+    "id": "Usage information.",
+    "translation": "用法資訊。"
   },
   {
     "id": "Use 'cookie' or 'source-ip' to stick",
@@ -8868,6 +9464,10 @@
     "translation": "虛擬伺服器"
   },
   {
+    "id": "Visibility",
+    "translation": "可見性"
+  },
+  {
     "id": "Vlan",
     "translation": "Vlan"
   },
@@ -8950,6 +9550,14 @@
   {
     "id": "You may run '{{.CommandName}} sl vs host-list --order {{.OrderID}}' to find this dedicated host after it is ready.",
     "translation": "在此專用主機備妥之後，您可以執行 '{{.CommandName}} sl vs host-list --order {{.OrderID}}' 來尋找它。"
+  },
+  {
+    "id": "Your new VPN password [required]",
+    "translation": "您的新 VPN 密碼 [必要]"
+  },
+  {
+    "id": "Your server IP address or hostname. [required]",
+    "translation": "您的伺服器 IP 位址或主機名稱。 [必要]"
   },
   {
     "id": "ZONE",
@@ -9224,6 +9832,10 @@
     "translation": "device"
   },
   {
+    "id": "disk space",
+    "translation": "磁碟空間"
+  },
+  {
     "id": "disk_guest",
     "translation": "disk_guest"
   },
@@ -9314,6 +9926,10 @@
   {
     "id": "hour",
     "translation": "hour"
+  },
+  {
+    "id": "http or https",
+    "translation": "http 或 https"
   },
   {
     "id": "id",
@@ -9504,6 +10120,10 @@
     "translation": "serial"
   },
   {
+    "id": "share image",
+    "translation": "共用映像檔"
+  },
+  {
     "id": "size_bytes",
     "translation": "size_bytes"
   },
@@ -9598,6 +10218,10 @@
   {
     "id": "value",
     "translation": "value"
+  },
+  {
+    "id": "virtual disks",
+    "translation": "虛擬磁碟"
   },
   {
     "id": "virtual guest",
