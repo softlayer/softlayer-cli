@@ -102,8 +102,10 @@ def runI18n4go(path: str) -> None:
     elif platform.system() == "Darwin":
         binary = f"{binary}_mac"
     cmd = [binary, "-c=checkup", "-q=i18n", "-v", f"-d={plugin_dir}"]
+    os.chdir(os.path.join(path, 'plugin'))
     print("[turquoise2]Running: "  + " ".join(cmd))
     result = subprocess.run(cmd, capture_output=True, text=True)
+    os.chdir(path)
     # We have some mismatching lines, lets fix that.
     missmatch = ""
     # These strings need to be added

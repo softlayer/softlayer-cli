@@ -1,9 +1,5 @@
 [
   {
-    "id": "\nEnter a number",
-    "translation": "\nEnter a number"
-  },
-  {
     "id": "\nLUN name",
     "translation": "\nLUN name"
   },
@@ -1136,10 +1132,6 @@
     "translation": "An IP address to revoke"
   },
   {
-    "id": "An error occurred when creating log file '{{.Path}}':\n{{.Error}}\n\n",
-    "translation": "An error occurred when creating log file '{{.Path}}':\n{{.Error}}\n\n"
-  },
-  {
     "id": "An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options",
     "translation": "An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options"
   },
@@ -1958,10 +1950,6 @@
   {
     "id": "Could not find valid size for: {{.Size}}",
     "translation": "Could not find valid size for: {{.Size}}"
-  },
-  {
-    "id": "Could not read from input: ",
-    "translation": "Could not read from input: "
   },
   {
     "id": "Could not remove device {{.DeviceID}} from ticket. Is it attached, or a virtual guest?",
@@ -2826,10 +2814,6 @@
   {
     "id": "Exports options to a template file",
     "translation": "Exports options to a template file"
-  },
-  {
-    "id": "External authentication failed. Error code: {{.ErrorCode}}, message: {{.Message}}",
-    "translation": "External authentication failed. Error code: {{.ErrorCode}}, message: {{.Message}}"
   },
   {
     "id": "Extra note to be associated with the key",
@@ -4456,14 +4440,6 @@
     "translation": "Failed to {{.action}} user vpn subnets manual config"
   },
   {
-    "id": "Failed, header could not convert to csv format",
-    "translation": "Failed, header could not convert to csv format"
-  },
-  {
-    "id": "Failed, rows could not convert to csv format",
-    "translation": "Failed, rows could not convert to csv format"
-  },
-  {
     "id": "Failover a {{.storageType}} volume to the given replica volume",
     "translation": "Failover a {{.storageType}} volume to the given replica volume"
   },
@@ -5408,10 +5384,6 @@
     "translation": "Invalid format date."
   },
   {
-    "id": "Invalid grant type: ",
-    "translation": "Invalid grant type: "
-  },
-  {
     "id": "Invalid input for",
     "translation": "Invalid input for"
   },
@@ -5434,10 +5406,6 @@
   {
     "id": "Invalid storage type {{.StorageType}}",
     "translation": "Invalid storage type {{.StorageType}}"
-  },
-  {
-    "id": "Invalid token: ",
-    "translation": "Invalid token: "
   },
   {
     "id": "Invalid volume type",
@@ -6348,10 +6316,6 @@
     "translation": "Number of updates"
   },
   {
-    "id": "OK",
-    "translation": "OK"
-  },
-  {
     "id": "OPTIONS",
     "translation": "OPTIONS"
   },
@@ -6896,26 +6860,6 @@
     "translation": "Please add the '--guest' id too.\n"
   },
   {
-    "id": "Please enter 'y', 'n', 'yes' or 'no'.",
-    "translation": "Please enter 'y', 'n', 'yes' or 'no'."
-  },
-  {
-    "id": "Please enter a number between 1 to {{.Count}}.",
-    "translation": "Please enter a number between 1 to {{.Count}}."
-  },
-  {
-    "id": "Please enter a valid floating number.",
-    "translation": "Please enter a valid floating number."
-  },
-  {
-    "id": "Please enter a valid number.",
-    "translation": "Please enter a valid number."
-  },
-  {
-    "id": "Please enter value.",
-    "translation": "Please enter value."
-  },
-  {
     "id": "Please make sure you know all the creation options by running command: '{{.CommandName}} sl vs options'. Continue?",
     "translation": "Please make sure you know all the creation options by running command: '{{.CommandName}} sl vs options'. Continue?"
   },
@@ -7364,10 +7308,6 @@
     "translation": "Remote peer IP address"
   },
   {
-    "id": "Remote server error. Status code: {{.StatusCode}}, error code: {{.ErrorCode}}, message: {{.Message}}",
-    "translation": "Remote server error. Status code: {{.StatusCode}}, error code: {{.ErrorCode}}, message: {{.Message}}"
-  },
-  {
     "id": "Remove SSL certificate",
     "translation": "Remove SSL certificate"
   },
@@ -7742,10 +7682,6 @@
   {
     "id": "Session Stickiness",
     "translation": "Session Stickiness"
-  },
-  {
-    "id": "Session inactive: ",
-    "translation": "Session inactive: "
   },
   {
     "id": "Set Tags.",
@@ -9290,10 +9226,6 @@
   {
     "id": "Unable to parse zone from BIND file.",
     "translation": "Unable to parse zone from BIND file."
-  },
-  {
-    "id": "Unable to save plugin config: ",
-    "translation": "Unable to save plugin config: "
   },
   {
     "id": "Unable to unmarshal extras json: %s\n",
