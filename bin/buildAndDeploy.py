@@ -120,27 +120,11 @@ def runI18n4go(path: str) -> None:
     mxm_re = re.compile(r"^\"(.+?)\" exists in ([a-zA-Z_]{5,7}), but not in en_US$", flags=re.M | re.DOTALL)
     # This should be the last line
     fin_re = re.compile(r"Could not checkup, err: Strings don't match$")
-    # print(result.stdout)
+
     if result.stderr:
         print(f"[red]Error: {result.stderr}")
-    # to_check = ""
+
     if result.returncode > 0:
-
-        # for line in result.stdout:
-        #     to_check = f"{to_check}{line}"
-        #     if to_check.endswith(" exists in the code, but not in en_US"):
-        #         key = to_check.replace(" exists in the code, but not in en_US", '')
-        #         add_json[key] = {"id": key, "translation": key}
-        #         to_check = ""
-        #     elif to_check.endswith(" exists in en_US, but not in the code"):
-        #         key = to_check.replace(" exists in en_US, but not in the code", '')
-        #         del_json[key] = {"id": key, "translation": key}
-        #         to_check = ""
-        #     elif to_check.endswith(", but not in en_US"):
-        #         key = to_check.replace(" exists in en_US, but not in the code", '')
-        #         del_json[key] = {"id": key, "translation": key}
-        #         to_check = ""
-
         print("\t[yellow] ====== ADD ======== ")
         add_results = add_re.findall(result.stdout)
         for line in add_results:
