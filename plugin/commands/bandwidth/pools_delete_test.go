@@ -2,9 +2,7 @@ package bandwidth_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -37,48 +35,50 @@ var _ = Describe("Bandwidth Pool delete", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring(""))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
+
 			})
 		})
 		Context("Bandwidth Pool delete with wrong bandwidth id", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Bandwidth Pool ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'IDENTIFIER'. It must be a positive integer."))
 			})
 		})
 
 		Context("Bandwidth Pool delete with correct bandwidth id but id not found", func() {
 			BeforeEach(func() {
-				fakeBandwidthManager.DeleteBandwidthReturns(errors.New("SoftLayer_Exception_ObjectNotFound"))
+				fakeBandwidthManager.DeletePoolReturns(errors.New("SoftLayer_Exception_ObjectNotFound"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345678")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "SoftLayer_Exception_ObjectNotFound")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_ObjectNotFound"))
 			})
 		})
 
 		Context("Bandwidth Pool delete with correct bandwidth id but server API call fails", func() {
 			BeforeEach(func() {
-				fakeBandwidthManager.DeleteBandwidthReturns(errors.New("Internal Server Error"))
+				fakeBandwidthManager.DeletePoolReturns(errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345678")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
 		Context("Bandwidth Pool delete with correct bandwidth id", func() {
 			BeforeEach(func() {
-				fakeBandwidthManager.DeleteBandwidthReturns(nil)
+				fakeBandwidthManager.DeletePoolReturns(nil)
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345678")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"BandwidthPool associated with Id 12345678 was deleted."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Bandwidth pool 12345678 was deleted."))
 			})
 		})
 	})

@@ -40,22 +40,19 @@ func NewDeleteCommand(sl *metadata.SoftlayerCommand) (cmd *DeleteCommand) {
 func (cmd *DeleteCommand) Run(args []string) error {
 	bandwidthPoolId, err := strconv.Atoi(args[0])
 	if err != nil {
-		return slErrors.NewInvalidSoftlayerIdInputError("Bandwidth Pool ID")
+		return slErrors.NewInvalidSoftlayerIdInputError("IDENTIFIER")
 	}
 
 	err = cmd.BandwidthManager.DeletePool(bandwidthPoolId)
-	// if err != nil {
-	// 	return slErrors.NewAPIError(T("Failed to delete bandwidth with Id: {{.bandwidthPoolId}}.\n", map[string]interface{}{"bandwidthPoolId": bandwidthPoolId}), err.Error(), 2)
 
-	// }
 	if err != nil {
 		if strings.Contains(err.Error(), slErrors.SL_EXP_OBJ_NOT_FOUND) {
-			return slErrors.NewAPIError(T("Unable to find Bandwidth pool with ID {{.bandwidthPoolId}}.\n", map[string]interface{}{"bandwidthPoolId": bandwidthPoolId}), err.Error(), 0)
+			return slErrors.NewAPIError(T("Unable to find bandwidth pool with ID {{.bandwidthPoolId}}.\n", map[string]interface{}{"bandwidthPoolId": bandwidthPoolId}), err.Error(), 0)
 		}
-		return slErrors.NewAPIError(T("Failed to delete bandwidth with Id: {{.bandwidthPoolId}}.\n", map[string]interface{}{"bandwidthPoolId": bandwidthPoolId}), err.Error(), 2)
+		return slErrors.NewAPIError(T("Failed to delete bandwidth pool with Id: {{.bandwidthPoolId}}.\n", map[string]interface{}{"bandwidthPoolId": bandwidthPoolId}), err.Error(), 2)
 
 	}
 	cmd.UI.Ok()
-	cmd.UI.Print(T("BandwidthPool associated with Id {{.bandwidthPoolId}} was deleted.", map[string]interface{}{"bandwidthPoolId": bandwidthPoolId}))
+	cmd.UI.Print(T("Bandwidth pool {{.bandwidthPoolId}} was deleted.", map[string]interface{}{"bandwidthPoolId": bandwidthPoolId}))
 	return nil
 }

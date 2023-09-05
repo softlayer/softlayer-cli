@@ -48,7 +48,7 @@ func (cmd *VpnEnableCommand) Run(args []string) error {
 	}
 	success, err := cmd.UserManager.EditUser(userTemplate, userID)
 	if err != nil {
-		return slErrors.NewAPIError(T(""), err.Error(), 2)
+		return err
 	}
 	if success {
 		cmd.UI.Ok()

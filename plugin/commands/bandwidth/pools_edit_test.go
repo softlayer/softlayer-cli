@@ -1,8 +1,8 @@
 package bandwidth_test
 
 import (
+
 	"errors"
-	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
@@ -32,22 +32,38 @@ var _ = Describe("Bandwidth Pool edit", func() {
 	})
 
 	Describe("Bandwidth Pool edit", func() {
-		Context("Bandwidth Pool cancel without ID", func() {
+		Context("Bandwidth Pool invalid usage", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
+
+			})
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring(`required flag(s) "name" not set`))
 			})
 		})
-		Context("Bandwidth Pool edit with correct Bandwidth Pool associated with id and --name ibm-internal-test", func() {
+		Context("Happy Path", func() {
 			BeforeEach(func() {
-				fakeBandwidthManager.EditBandwidthReturns(true, errors.New("The Bandwidth Pool associated with Id 12345678 was edited successfully."))
+				fakeBandwidthManager.EditPoolReturns(true, nil)
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345678", "--name", "ibm-internal-test")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("The Bandwidth Pool associated with Id 12345678 was edited successfully."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Bandwidth pool 12345678 was edited successfully."))
+			})
+		})
+		Context("API Errors", func() {
+			BeforeEach(func() {
+				fakeBandwidthManager.EditPoolReturns(false, errors.New("API ERROR"))
+			})
+			It("return error", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "12345678", "--name", "ibm-internal-test")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("API ERROR"))
 			})
 		})
 	})

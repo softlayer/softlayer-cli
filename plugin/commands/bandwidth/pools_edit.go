@@ -6,7 +6,6 @@ import (
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
 
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -61,25 +60,23 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) (cmd *EditCommand) {
 func (cmd *EditCommand) Run(args []string) error {
 	bandwidthPoolId, err := strconv.Atoi(args[0])
 	if err != nil {
-		return slErrors.NewInvalidSoftlayerIdInputError("Bandwidth Pool ID")
+		return slErrors.NewInvalidSoftlayerIdInputError("IDENTIFIER")
 	}
-	if cmd.Name == "" {
-		return slErrors.NewInvalidUsageError(T("--name must be specified."))
-	}
+
 	locationGroup, err := cmd.BandwidthManager.GetLocationGroup()
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get Location Group."), err.Error(), 2)
+		return err
 	}
 	idLocationGroup := finId_LocationGroup(locationGroup, LOCATION_GROUPS1[cmd.Name])
 
 	_, err = cmd.BandwidthManager.EditPool(bandwidthPoolId, idLocationGroup, cmd.Name)
 	if err != nil {
-		return slErrors.NewAPIError(T("Failed to edit bandwidth with Id: {{.bandwidthPoolId}}.\n", map[string]interface{}{"bandwidthPoolId": bandwidthPoolId}), err.Error(), 2)
+		return err
 
 	}
 	cmd.UI.Ok()
 	subs := map[string]interface{}{"bandwidthPoolId": bandwidthPoolId}
-	cmd.UI.Print(T("BandwidthPool associated with Id {{.bandwidthPoolId}} was edited successfully.", subs))
+	cmd.UI.Print(T("Bandwidth pool {{.bandwidthPoolId}} was edited successfully.", subs))
 	return nil
 }
 
