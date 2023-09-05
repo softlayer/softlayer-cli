@@ -1,5 +1,9 @@
 [
   {
+    "id": "\nEnter a number",
+    "translation": "\nEnter a number"
+  },
+  {
     "id": "\nLUN name",
     "translation": "\nLUN name"
   },
@@ -508,12 +512,20 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux."
   },
   {
+    "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux."
+  },
+  {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
@@ -1130,6 +1142,10 @@
   {
     "id": "An IP address to revoke",
     "translation": "An IP address to revoke"
+  },
+  {
+    "id": "An error occurred when creating log file '{{.Path}}':\n{{.Error}}\n\n",
+    "translation": "An error occurred when creating log file '{{.Path}}':\n{{.Error}}\n\n"
   },
   {
     "id": "An optional cancellation reason. See '${COMMAND_NAME} sl hardware cancel-reasons' for a list of available options",
@@ -1808,6 +1824,10 @@
     "translation": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
   },
   {
+    "id": "Column to sort by. Options are: id, username, accountId, capacityGb, hardwareId, guestId, hostId",
+    "translation": "Column to sort by. Options are: id, username, accountId, capacityGb, hardwareId, guestId, hostId"
+  },
+  {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
     "translation": "Column to sort by. Options are: id,common_name,days_until_expire,note"
   },
@@ -1944,6 +1964,10 @@
     "translation": "Could not find valid size for: {{.Size}}"
   },
   {
+    "id": "Could not read from input: ",
+    "translation": "Could not read from input: "
+  },
+  {
     "id": "Could not remove device {{.DeviceID}} from ticket. Is it attached, or a virtual guest?",
     "translation": "Could not remove device {{.DeviceID}} from ticket. Is it attached, or a virtual guest?"
   },
@@ -1982,6 +2006,10 @@
   {
     "id": "Create a Reserved Capacity instance.",
     "translation": "Create a Reserved Capacity instance."
+  },
+  {
+    "id": "Create a bandwidth pool.",
+    "translation": "Create a bandwidth pool."
   },
   {
     "id": "Create a dedicated Virtual Server (Private Node)",
@@ -2792,6 +2820,10 @@
     "translation": "Exports options to a template file"
   },
   {
+    "id": "External authentication failed. Error code: {{.ErrorCode}}, message: {{.Message}}",
+    "translation": "External authentication failed. Error code: {{.ErrorCode}}, message: {{.Message}}"
+  },
+  {
     "id": "Extra note to be associated with the key",
     "translation": "Extra note to be associated with the key"
   },
@@ -3288,6 +3320,10 @@
     "translation": "Failed to get Cloud Object Storages.\n"
   },
   {
+    "id": "Failed to get Create Bandwidth Pool.",
+    "translation": "Failed to get Create Bandwidth Pool."
+  },
+  {
     "id": "Failed to get Event Log types.\n",
     "translation": "Failed to get Event Log types.\n"
   },
@@ -3322,6 +3358,10 @@
   {
     "id": "Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to get Location Group.",
+    "translation": "Failed to get Location Group."
   },
   {
     "id": "Failed to get NAS Network Storage.",
@@ -3458,6 +3498,10 @@
   {
     "id": "Failed to get credential limit. ",
     "translation": "Failed to get credential limit. "
+  },
+  {
+    "id": "Failed to get currect user.",
+    "translation": "Failed to get currect user."
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -4398,6 +4442,14 @@
   {
     "id": "Failed to {{.action}} user vpn subnets manual config",
     "translation": "Failed to {{.action}} user vpn subnets manual config"
+  },
+  {
+    "id": "Failed, header could not convert to csv format",
+    "translation": "Failed, header could not convert to csv format"
+  },
+  {
+    "id": "Failed, rows could not convert to csv format",
+    "translation": "Failed, rows could not convert to csv format"
   },
   {
     "id": "Failover a {{.storageType}} volume to the given replica volume",
@@ -5352,6 +5404,10 @@
     "translation": "Invalid format date."
   },
   {
+    "id": "Invalid grant type: ",
+    "translation": "Invalid grant type: "
+  },
+  {
     "id": "Invalid input for",
     "translation": "Invalid input for"
   },
@@ -5374,6 +5430,10 @@
   {
     "id": "Invalid storage type {{.StorageType}}",
     "translation": "Invalid storage type {{.StorageType}}"
+  },
+  {
+    "id": "Invalid token: ",
+    "translation": "Invalid token: "
   },
   {
     "id": "Invalid volume type",
@@ -6284,6 +6344,10 @@
     "translation": "Number of updates"
   },
   {
+    "id": "OK",
+    "translation": "OK"
+  },
+  {
     "id": "OPTIONS",
     "translation": "OPTIONS"
   },
@@ -6828,6 +6892,26 @@
     "translation": "Please add the '--guest' id too.\n"
   },
   {
+    "id": "Please enter 'y', 'n', 'yes' or 'no'.",
+    "translation": "Please enter 'y', 'n', 'yes' or 'no'."
+  },
+  {
+    "id": "Please enter a number between 1 to {{.Count}}.",
+    "translation": "Please enter a number between 1 to {{.Count}}."
+  },
+  {
+    "id": "Please enter a valid floating number.",
+    "translation": "Please enter a valid floating number."
+  },
+  {
+    "id": "Please enter a valid number.",
+    "translation": "Please enter a valid number."
+  },
+  {
+    "id": "Please enter value.",
+    "translation": "Please enter value."
+  },
+  {
     "id": "Please make sure you know all the creation options by running command: '{{.CommandName}} sl vs options'. Continue?",
     "translation": "Please make sure you know all the creation options by running command: '{{.CommandName}} sl vs options'. Continue?"
   },
@@ -6858,6 +6942,10 @@
   {
     "id": "Pool",
     "translation": "Pool"
+  },
+  {
+    "id": "Pool name.",
+    "translation": "Pool name."
   },
   {
     "id": "Port Range Max",
@@ -7232,6 +7320,10 @@
     "translation": "Region"
   },
   {
+    "id": "Region selected. Permit:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]",
+    "translation": "Region selected. Permit:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]"
+  },
+  {
     "id": "Reload operating system on a server",
     "translation": "Reload operating system on a server"
   },
@@ -7266,6 +7358,10 @@
   {
     "id": "Remote peer IP address",
     "translation": "Remote peer IP address"
+  },
+  {
+    "id": "Remote server error. Status code: {{.StatusCode}}, error code: {{.ErrorCode}}, message: {{.Message}}",
+    "translation": "Remote server error. Status code: {{.StatusCode}}, error code: {{.ErrorCode}}, message: {{.Message}}"
   },
   {
     "id": "Remove SSL certificate",
@@ -7642,6 +7738,10 @@
   {
     "id": "Session Stickiness",
     "translation": "Session Stickiness"
+  },
+  {
+    "id": "Session inactive: ",
+    "translation": "Session inactive: "
   },
   {
     "id": "Set Tags.",
@@ -9190,6 +9290,10 @@
   {
     "id": "Unable to parse zone from BIND file.",
     "translation": "Unable to parse zone from BIND file."
+  },
+  {
+    "id": "Unable to save plugin config: ",
+    "translation": "Unable to save plugin config: "
   },
   {
     "id": "Unable to unmarshal extras json: %s\n",

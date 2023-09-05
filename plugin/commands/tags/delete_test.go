@@ -66,7 +66,7 @@ var _ = Describe("Tags Delete", func() {
 			It("Incorrect Usage", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: "))
 			})
 		})
 	})

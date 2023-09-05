@@ -57,7 +57,7 @@ var _ = Describe("Tags Detail", func() {
 			It("Incorrect Usage", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: "))
 			})
 		})
 		//sl tags list (SLAPI ERROR)
