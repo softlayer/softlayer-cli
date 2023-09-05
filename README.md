@@ -333,15 +333,9 @@ This command will build the Mac (arm64) version. Replace GOOS and GOARCH with th
 ```
 ~/go/src/github.ibm.com/softlayer/softlayer-cli/i18n4go (master)
 $> GOOS=darwin GOARCH=arm64 go build -o i18n4go_mac -ldflags "-s -w" i18n4go/i18n4go.go
-```
-
-[go-i18n](https://github.com/nicksnyder/go-i18n/) is what is actually doing the translations, but its using an old v1 version.
-There should be copies of the binary in `./bin` but if you need to rebuild this:
-Make sure you are on the v0.2.4 branch since that is the latest version that works as expected. We need to update this.
-```
- ~/go/src/github.com/maximilien/i18n4go (v0.2.4_dev)
 $> GOOS=linux GOARCH=amd64   go build -o out/i18n4go ./i18n4go/i18n4go.go
 ```
+
 
 
 [go-bindata](https://github.com/jteeuwen/go-bindata) takes the json files, and turns them into a go binary.

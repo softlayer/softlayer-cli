@@ -560,10 +560,6 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh DATENTRÄGER_ID SNAPSHOT_ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} volume-refresh DATENTRÄGER_ID SNAPSHOT_ID\n Aktualisieren Sie eine doppelte DATENTRÄGER_ID mit einem Snapshot aus ihrer übergeordneten DATENTRÄGER_ID."
   },
   {
-    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id DATENTRÄGER_ID LUN_ID\n\n Die LUN-ID wird nur während des Hostberechtigungsprozesses wirksam. Es wird empfohlen (ist aber nicht notwendig), die Berechtigung für alle Hosts zu\n entziehen, bevor diese Methode verwendet wird.\n DATENTRÄGER_ID - die Datenträger-ID, für die die LUN-ID festgelegt werden soll\n LUN_ID - empfohlener Bereich ist eine ganze Zahl zwischen 0 und 255. Fortgeschrittene Benutzer\n können eine ganze Zahl zwischen 0 und 4095 verwenden."
-  },
-  {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONEN] DATENTRÄGER_ID \n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'"
   },
@@ -4890,14 +4886,6 @@
   {
     "id": "Include invoices with a CLOSED status.",
     "translation": "Rechnungen mit dem Status GESCHLOSSEN einbeziehen."
-  },
-  {
-    "id": "Incorrect Usage",
-    "translation": "Syntaxfehler"
-  },
-  {
-    "id": "Incorrect Usage.",
-    "translation": "Syntaxfehler."
   },
   {
     "id": "Incorrect Usage: ",

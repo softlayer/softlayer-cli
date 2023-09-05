@@ -560,10 +560,6 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n 以來自其母項 SNAPSHOT_ID 的 Snapshot 重新整理重複的 VOLUME_ID。"
   },
   {
-    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n LUN ID 僅在「主機授權」處理程序期間生效。 在使用此方法之前，\n 建議（但非必要）解除所有主機的授權。\n VOLUME_ID - 要設定 LUN ID 的磁區 ID \n LUN_ID - 建議範圍是 0 到 255 之間的整數。 進階使用者 \n 可以使用 0 到 4095 之間的整數"
-  },
-  {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\n範例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'"
   },
@@ -4890,14 +4886,6 @@
   {
     "id": "Include invoices with a CLOSED status.",
     "translation": "包含狀態為「已關閉」的發票。"
-  },
-  {
-    "id": "Incorrect Usage",
-    "translation": "用法不正確"
-  },
-  {
-    "id": "Incorrect Usage.",
-    "translation": "用法不正確。"
   },
   {
     "id": "Incorrect Usage: ",

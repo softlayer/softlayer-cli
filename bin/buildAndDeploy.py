@@ -11,6 +11,7 @@ import platform
 import hashlib
 import glob
 from rich import print
+from rich.markup import escape
 
 
 i18n_files = [
@@ -100,9 +101,11 @@ def runI18n4go(path: str) -> None:
         binary = f"{binary}.exe"
     elif platform.system() == "Darwin":
         binary = f"{binary}_mac"
-    cmd = [binary, "-c checkup", "-q i18n", "-v", f"-d {plugin_dir}"]
+    cmd = [binary, "-c=checkup", "-q=i18n", "-v", f"-d={plugin_dir}"]
+    os.chdir(os.path.join(path, 'plugin'))
     print("[turquoise2]Running: "  + " ".join(cmd))
     result = subprocess.run(cmd, capture_output=True, text=True)
+    os.chdir(path)
     # We have some mismatching lines, lets fix that.
     missmatch = ""
     # These strings need to be added
@@ -120,23 +123,26 @@ def runI18n4go(path: str) -> None:
     # This should be the last line
     fin_re = re.compile(r"Could not checkup, err: Strings don't match$")
 
+    if result.stderr:
+        print(f"[red]Error: {result.stderr}")
+
     if result.returncode > 0:
+        print("\t[yellow] ====== ADD ======== ")
         add_results = add_re.findall(result.stdout)
-        print("\t[yellow] ====== ADD ========")
         for line in add_results:
-            print(f"\t[yellow]|{line}|")
+            print(f"\t[yellow]|{escape(line)}|")
             # We use the whole line as the key to make search easier.
             add_json[line] = {"id": line, "translation": line}
         del_results = del_re.findall(result.stdout)
         print("\t[red] ====== REMOVE ========")
         for line in del_results:
-            print(f"\t[red]|{line}|")
+            print(f"\t[red]|{escape(line)}|")
             del_json[line]= {"id": line, "translation": line}
         
         print("\t[blue] ====== MISMATCH (REMOVE PART 2) ========")
         mxm_results = mxm_re.findall(result.stdout)
         for line in mxm_results:
-            print(f"\t[blue]|{line[0]}| is missing from {line[1]}")
+            print(f"\t[blue]|{escape(line[0])}| is missing from {line[1]}")
             del_json[line[0]] = {"id": line[0], "translation": line[0]}
         # We only want to ADD things to en_US so that our translators have an easier time figuring out what they need
         # to add to the other languages.
@@ -145,8 +151,9 @@ def runI18n4go(path: str) -> None:
         for f in i18n_files:
             i18n_path = os.path.join(plugin_dir, 'i18n', 'resources', f)
             del_i18n(i18n_path, del_json)
+
     else:
-        print(f"\t[green]OK!")
+        print(f"\t[green]No Changes Needed!")
 
 def add_i18n(file_name: str, updates: dict) -> None:
     """Adds the new translations
