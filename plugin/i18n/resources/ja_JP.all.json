@@ -560,10 +560,6 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID \n 親 SNAPSHOT_ID からのスナップショットを使用して重複 VOLUME_ID をリフレッシュします。"
   },
   {
-    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID \n \n LUN ID は、ホスト許可プロセス中にのみ有効になります。 \n この方法を使用する前に、すべてのホストを許可解除することを \n お勧めします (ただし、必須ではありません)。\n VOLUME_ID-LUN ID を設定するボリューム ID \n LUN_ID-推奨範囲は 0 から 255 までの整数です。 上級ユーザーは、\n 0 から 4095 までの整数を使用できます。"
-  },
-  {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\n例:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'"
   },
@@ -4894,14 +4890,6 @@
   {
     "id": "Include invoices with a CLOSED status.",
     "translation": "ステータスが CLOSED の請求書を含めます。"
-  },
-  {
-    "id": "Incorrect Usage",
-    "translation": "誤った使用法"
-  },
-  {
-    "id": "Incorrect Usage.",
-    "translation": "誤った使用法。"
   },
   {
     "id": "Incorrect Usage: ",

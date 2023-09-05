@@ -23,6 +23,32 @@ type FakeBandwidthManager struct {
 		result1 datatypes.Network_Bandwidth_Version1_Allotment
 		result2 error
 	}
+	DeletePoolStub        func(int) error
+	deletePoolMutex       sync.RWMutex
+	deletePoolArgsForCall []struct {
+		arg1 int
+	}
+	deletePoolReturns struct {
+		result1 error
+	}
+	deletePoolReturnsOnCall map[int]struct {
+		result1 error
+	}
+	EditPoolStub        func(int, int, string) (bool, error)
+	editPoolMutex       sync.RWMutex
+	editPoolArgsForCall []struct {
+		arg1 int
+		arg2 int
+		arg3 string
+	}
+	editPoolReturns struct {
+		result1 bool
+		result2 error
+	}
+	editPoolReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
 	GetLocationGroupStub        func() ([]datatypes.Location_Group, error)
 	getLocationGroupMutex       sync.RWMutex
 	getLocationGroupArgsForCall []struct {
@@ -33,32 +59,6 @@ type FakeBandwidthManager struct {
 	}
 	getLocationGroupReturnsOnCall map[int]struct {
 		result1 []datatypes.Location_Group
-		result2 error
-	}
-	DeleteBandwidthStub        func(int) error
-	deleteBandwidthMutex       sync.RWMutex
-	deleteBandwidthArgsForCall []struct {
-		arg1 int
-	}
-	deleteBandwidthReturnsOnCall map[int]struct {
-		result1 error
-	}
-	deleteBandwidthReturns struct {
-		result1 error
-	}
-	EditBandwidthStub        func(int, int, string) (bool, error)
-	editBandwidthMutex       sync.RWMutex
-	editBandwidthArgsForCall []struct {
-		arg1 int
-		arg2 int
-		arg3 string
-	}
-	editBandwidthReturns struct {
-		result1 bool
-		result2 error
-	}
-	editBandwidthReturnsOnCall map[int]struct {
-		result1 bool
 		result2 error
 	}
 	invocations      map[string][][]interface{}
@@ -130,6 +130,133 @@ func (fake *FakeBandwidthManager) CreatePoolReturnsOnCall(i int, result1 datatyp
 	}{result1, result2}
 }
 
+func (fake *FakeBandwidthManager) DeletePool(arg1 int) error {
+	fake.deletePoolMutex.Lock()
+	ret, specificReturn := fake.deletePoolReturnsOnCall[len(fake.deletePoolArgsForCall)]
+	fake.deletePoolArgsForCall = append(fake.deletePoolArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeletePoolStub
+	fakeReturns := fake.deletePoolReturns
+	fake.recordInvocation("DeletePool", []interface{}{arg1})
+	fake.deletePoolMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeBandwidthManager) DeletePoolCallCount() int {
+	fake.deletePoolMutex.RLock()
+	defer fake.deletePoolMutex.RUnlock()
+	return len(fake.deletePoolArgsForCall)
+}
+
+func (fake *FakeBandwidthManager) DeletePoolCalls(stub func(int) error) {
+	fake.deletePoolMutex.Lock()
+	defer fake.deletePoolMutex.Unlock()
+	fake.DeletePoolStub = stub
+}
+
+func (fake *FakeBandwidthManager) DeletePoolArgsForCall(i int) int {
+	fake.deletePoolMutex.RLock()
+	defer fake.deletePoolMutex.RUnlock()
+	argsForCall := fake.deletePoolArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeBandwidthManager) DeletePoolReturns(result1 error) {
+	fake.deletePoolMutex.Lock()
+	defer fake.deletePoolMutex.Unlock()
+	fake.DeletePoolStub = nil
+	fake.deletePoolReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeBandwidthManager) DeletePoolReturnsOnCall(i int, result1 error) {
+	fake.deletePoolMutex.Lock()
+	defer fake.deletePoolMutex.Unlock()
+	fake.DeletePoolStub = nil
+	if fake.deletePoolReturnsOnCall == nil {
+		fake.deletePoolReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.deletePoolReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeBandwidthManager) EditPool(arg1 int, arg2 int, arg3 string) (bool, error) {
+	fake.editPoolMutex.Lock()
+	ret, specificReturn := fake.editPoolReturnsOnCall[len(fake.editPoolArgsForCall)]
+	fake.editPoolArgsForCall = append(fake.editPoolArgsForCall, struct {
+		arg1 int
+		arg2 int
+		arg3 string
+	}{arg1, arg2, arg3})
+	stub := fake.EditPoolStub
+	fakeReturns := fake.editPoolReturns
+	fake.recordInvocation("EditPool", []interface{}{arg1, arg2, arg3})
+	fake.editPoolMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeBandwidthManager) EditPoolCallCount() int {
+	fake.editPoolMutex.RLock()
+	defer fake.editPoolMutex.RUnlock()
+	return len(fake.editPoolArgsForCall)
+}
+
+func (fake *FakeBandwidthManager) EditPoolCalls(stub func(int, int, string) (bool, error)) {
+	fake.editPoolMutex.Lock()
+	defer fake.editPoolMutex.Unlock()
+	fake.EditPoolStub = stub
+}
+
+func (fake *FakeBandwidthManager) EditPoolArgsForCall(i int) (int, int, string) {
+	fake.editPoolMutex.RLock()
+	defer fake.editPoolMutex.RUnlock()
+	argsForCall := fake.editPoolArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeBandwidthManager) EditPoolReturns(result1 bool, result2 error) {
+	fake.editPoolMutex.Lock()
+	defer fake.editPoolMutex.Unlock()
+	fake.EditPoolStub = nil
+	fake.editPoolReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeBandwidthManager) EditPoolReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.editPoolMutex.Lock()
+	defer fake.editPoolMutex.Unlock()
+	fake.EditPoolStub = nil
+	if fake.editPoolReturnsOnCall == nil {
+		fake.editPoolReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.editPoolReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeBandwidthManager) GetLocationGroup() ([]datatypes.Location_Group, error) {
 	fake.getLocationGroupMutex.Lock()
 	ret, specificReturn := fake.getLocationGroupReturnsOnCall[len(fake.getLocationGroupArgsForCall)]
@@ -191,6 +318,10 @@ func (fake *FakeBandwidthManager) Invocations() map[string][][]interface{} {
 	defer fake.invocationsMutex.RUnlock()
 	fake.createPoolMutex.RLock()
 	defer fake.createPoolMutex.RUnlock()
+	fake.deletePoolMutex.RLock()
+	defer fake.deletePoolMutex.RUnlock()
+	fake.editPoolMutex.RLock()
+	defer fake.editPoolMutex.RUnlock()
 	fake.getLocationGroupMutex.RLock()
 	defer fake.getLocationGroupMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
@@ -210,65 +341,6 @@ func (fake *FakeBandwidthManager) recordInvocation(key string, args []interface{
 		fake.invocations[key] = [][]interface{}{}
 	}
 	fake.invocations[key] = append(fake.invocations[key], args)
-}
-
-func (fake *FakeBandwidthManager) DeletePool(arg1 int) error {
-	fake.deleteBandwidthMutex.Lock()
-	ret, specificReturn := fake.deleteBandwidthReturnsOnCall[len(fake.deleteBandwidthArgsForCall)]
-	fake.deleteBandwidthArgsForCall = append(fake.deleteBandwidthArgsForCall, struct {
-		arg1 int
-	}{arg1})
-	stub := fake.DeleteBandwidthStub
-	fakeReturns := fake.deleteBandwidthReturns
-	fake.recordInvocation("DeleteBandwidth", []interface{}{arg1})
-	fake.deleteBandwidthMutex.Unlock()
-	if stub != nil {
-		return stub(arg1)
-	}
-	if specificReturn {
-		return ret.result1
-	}
-	return fakeReturns.result1
-}
-
-func (fake *FakeBandwidthManager) DeleteBandwidthReturns(result1 error) {
-	fake.deleteBandwidthMutex.Lock()
-	defer fake.deleteBandwidthMutex.Unlock()
-	fake.DeleteBandwidthStub = nil
-	fake.deleteBandwidthReturns = struct {
-		result1 error
-	}{result1}
-}
-
-func (fake *FakeBandwidthManager) EditPool(arg1 int, arg2 int, arg3 string) (bool, error) {
-	fake.editBandwidthMutex.Lock()
-	ret, specificReturn := fake.editBandwidthReturnsOnCall[len(fake.editBandwidthArgsForCall)]
-	fake.editBandwidthArgsForCall = append(fake.editBandwidthArgsForCall, struct {
-		arg1 int
-		arg2 int
-		arg3 string
-	}{arg1, arg2, arg3})
-	stub := fake.EditBandwidthStub
-	fakeReturns := fake.editBandwidthReturns
-	fake.recordInvocation("EditBandwidth", []interface{}{arg1, arg2, arg3})
-	fake.editBandwidthMutex.Unlock()
-	if stub != nil {
-		return stub(arg1, arg2, arg3)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeBandwidthManager) EditBandwidthReturns(result1 bool, result2 error) {
-	fake.editBandwidthMutex.Lock()
-	defer fake.editBandwidthMutex.Unlock()
-	fake.EditBandwidthStub = nil
-	fake.editBandwidthReturns = struct {
-		result1 bool
-		result2 error
-	}{result1, result2}
 }
 
 var _ managers.BandwidthManager = new(FakeBandwidthManager)

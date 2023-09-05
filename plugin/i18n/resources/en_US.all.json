@@ -512,20 +512,12 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux."
   },
   {
-    "id": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux."
-  },
-  {
     "id": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation."
-  },
-  {
-    "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.",
@@ -600,8 +592,8 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID."
   },
   {
-    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095"
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
@@ -1290,6 +1282,14 @@
   {
     "id": "Bandwidth data over date range.",
     "translation": "Bandwidth data over date range."
+  },
+  {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was deleted.",
+    "translation": "Bandwidth pool {{.bandwidthPoolId}} was deleted."
+  },
+  {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was edited successfully.",
+    "translation": "Bandwidth pool {{.bandwidthPoolId}} was edited successfully."
   },
   {
     "id": "Bandwidth report for every pool/server.",
@@ -2292,6 +2292,10 @@
     "translation": "Delete an image "
   },
   {
+    "id": "Delete bandwidth pool. ",
+    "translation": "Delete bandwidth pool. "
+  },
+  {
     "id": "Delete the credential of an Object Storage Account.",
     "translation": "Delete the credential of an Object Storage Account."
   },
@@ -2370,6 +2374,10 @@
   {
     "id": "Disable the IPMI interface.",
     "translation": "Disable the IPMI interface."
+  },
+  {
+    "id": "Disable vpn for a user.",
+    "translation": "Disable vpn for a user."
   },
   {
     "id": "Disable vpn subnets manual config.",
@@ -2698,6 +2706,10 @@
   {
     "id": "Enable the IPMI interface.",
     "translation": "Enable the IPMI interface."
+  },
+  {
+    "id": "Enable vpn for a user.",
+    "translation": "Enable vpn for a user."
   },
   {
     "id": "Enable vpn subnets manual config.",
@@ -3154,6 +3166,10 @@
   {
     "id": "Failed to delete User Customer Notification.",
     "translation": "Failed to delete User Customer Notification."
+  },
+  {
+    "id": "Failed to delete bandwidth pool with Id: {{.bandwidthPoolId}}.\n",
+    "translation": "Failed to delete bandwidth pool with Id: {{.bandwidthPoolId}}.\n"
   },
   {
     "id": "Failed to delete credential: {{.storageID}}.\n",
@@ -5302,14 +5318,6 @@
   {
     "id": "Include invoices with a CLOSED status.",
     "translation": "Include invoices with a CLOSED status."
-  },
-  {
-    "id": "Incorrect Usage",
-    "translation": "Incorrect Usage"
-  },
-  {
-    "id": "Incorrect Usage.",
-    "translation": "Incorrect Usage."
   },
   {
     "id": "Incorrect Usage: ",
@@ -8452,10 +8460,6 @@
     "translation": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname."
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "The endpoint that the script will be downloaded."
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified"
   },
@@ -8538,10 +8542,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "The name of the attachment shown in the ticket"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "The name of the hook."
   },
   {
     "id": "The name of the image {{.ID}} is updated.",
@@ -9200,6 +9200,10 @@
     "translation": "Unable to find VLAN with ID {{.ID}}.\n"
   },
   {
+    "id": "Unable to find bandwidth pool with ID {{.bandwidthPoolId}}.\n",
+    "translation": "Unable to find bandwidth pool with ID {{.bandwidthPoolId}}.\n"
+  },
+  {
     "id": "Unable to find category code from this volume.",
     "translation": "Unable to find category code from this volume."
   },
@@ -9394,6 +9398,10 @@
   {
     "id": "Use SAN storage instead of local disk",
     "translation": "Use SAN storage instead of local disk"
+  },
+  {
+    "id": "Use `${COMMAND_NAME} sl order lookup <ID>` to find more details about a specific order.",
+    "translation": "Use `${COMMAND_NAME} sl order lookup <ID>` to find more details about a specific order."
   },
   {
     "id": "Use the configuration from an existing virtual server",
@@ -9776,6 +9784,10 @@
     "translation": "[TAG NAME]"
   },
   {
+    "id": "[required]",
+    "translation": "[required]"
+  },
+  {
     "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
     "translation": "accepts at most {{.Limit}} arg(s), received {{.Args}}"
   },
@@ -9950,6 +9962,10 @@
   {
     "id": "drive",
     "translation": "drive"
+  },
+  {
+    "id": "edit bandwidth pool. ",
+    "translation": "edit bandwidth pool. "
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",

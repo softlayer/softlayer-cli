@@ -11,7 +11,7 @@ fi
 # Switches to plugin directory or exits if it doesn't exist.
 cd "./plugin" 
 
-RESULTS=`../bin/i18n4go -c checkup -q i18n -v`
+RESULTS=`../bin/i18n4go.exe -c checkup -q i18n -v`
 # RESULTS="OKTotal time:"
 OUTPUT=""
 ADD_JSON_OUT=$'[\n'

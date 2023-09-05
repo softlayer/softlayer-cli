@@ -560,10 +560,6 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh ID_VOLUME ID_ISTANTANEA\n\nESEMPIO:\n${COMMAND_NAME} sl {{.storageType}} volume-refresh ID_VOLUME ID_ISTANTANEA\nAggiorna un ID_VOLUME duplicato con un'istantanea dal relativo ID_ISTANTANEA parent."
   },
   {
-    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method.\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id ID_VOLUME ID_LUN\n\nL'ID LUN ha effetto solo durante il processo di autorizzazione host. È\n consigliato (ma non necessario) per annullare l'autorizzazione di tutti gli host prima di utilizzare\nquesto metodo.\nID_VOLUME - l'ID volume su cui impostare l'ID LUN\nID_LUN - l'intervallo consigliato è un intero compreso tra 0 e 255. Gli utenti avanzati\npossono utilizzare un intero compreso tra 0 e 4095"
-  },
-  {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPZIONI] ID_VOLUME\n\nESEMPIO:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'"
   },
@@ -4890,14 +4886,6 @@
   {
     "id": "Include invoices with a CLOSED status.",
     "translation": "Includere le fatture con lo stato CHIUSO."
-  },
-  {
-    "id": "Incorrect Usage",
-    "translation": "Utilizzo non corretto"
-  },
-  {
-    "id": "Incorrect Usage.",
-    "translation": "Utilizzo non corretto."
   },
   {
     "id": "Incorrect Usage: ",
