@@ -45,11 +45,16 @@ EXAMPLE:
 		},
 	}
 	cobraCmd.Flags().IntVarP(&thisCmd.OriginSnapshotId, "origin-snapshot-id", "o", 0, T("ID of an origin volume snapshot to use for duplication"))
-	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateSize, "duplicate-size", "s", 0, T("Size of duplicate block volume in GB, if no size is specified, the size of the original volume will be used"))
-	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateIops, "duplicate-iops", "i", 0, T("Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used"))
-	cobraCmd.Flags().Float64VarP(&thisCmd.DuplicateTier, "duplicate-tier", "t", 0, T("Endurance Storage Tier, if no tier is specified, the tier of the original volume will be used"))
-	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateSnapshotSize, "duplicate-snapshot-size", "n", -1, T("The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the origin volume will be used"))
-	cobraCmd.Flags().BoolVarP(&thisCmd.DependentDuplicate, "dependent-duplicate", "d", false, T("Whether or not this duplicate will be a dependent duplicate of the origin volume."))
+	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateSize, "duplicate-size", "s", 0, T("Size of duplicate block volume in GB, if no size is specified, the size of the original volume will be used")+" "+
+		T("Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000] Minimum: [the size of the origin volume]"))
+	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateIops, "duplicate-iops", "i", 0, T("Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used")+" "+
+		T("Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]"))
+	cobraCmd.Flags().Float64VarP(&thisCmd.DuplicateTier, "duplicate-tier", "t", 0, T("Endurance Storage Tier, if no tier is specified, the tier of the original volume will be used")+" "+
+		T("Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10"))
+	cobraCmd.Flags().IntVarP(&thisCmd.DuplicateSnapshotSize, "duplicate-snapshot-size", "n", -1, T("The size of snapshot space to order for the duplicate, if no snapshot space size is specified, the snapshot space size of the origin volume will be used")+" "+
+		T("Input `0` for this parameter to order a duplicate volume with no snapshot space."))
+	cobraCmd.Flags().BoolVarP(&thisCmd.DependentDuplicate, "dependent-duplicate", "d", false, T("Whether or not this duplicate will be a dependent duplicate of the origin volume.")+" "+
+		T("   [default: False]"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
 	cobraCmd.Flags().StringVar(&thisCmd.Billing, "billing", "monthly", T("Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly"))
 	thisCmd.Command = cobraCmd
