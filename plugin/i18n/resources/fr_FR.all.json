@@ -8340,10 +8340,6 @@
     "translation": "Le serveur de périphérie utilise l'en-tête d'hôte de l'en-tête HTTP pour communiquer avec l'hôte origine. Il prend par défaut le nom d'hôte."
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "Noeud final sur lequel le script sera téléchargé."
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "EtherType (IPv4 ou IPv6) à imposer. Si aucune valeur n'est spécifiée, la valeur par défaut est IPv4"
   },
@@ -8426,10 +8422,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "Nom de la pièce jointe figurant dans le ticket"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "Nom du point d'ancrage."
   },
   {
     "id": "The name of the image {{.ID}} is updated.",

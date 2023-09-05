@@ -8340,10 +8340,6 @@
     "translation": "邊緣伺服器會使用 HTTP 標頭中的主機標頭，與原點主機進行通訊。 它會預設為主機名稱。"
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "將下載 Script 的端點。"
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "要強制執行的 ethertype（IPv4 或 IPv6），如果未指定，則預設值為 IPv4"
   },
@@ -8426,10 +8422,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "問題單中顯示的附件名稱"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "連結鉤的名稱。"
   },
   {
     "id": "The name of the image {{.ID}} is updated.",

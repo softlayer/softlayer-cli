@@ -8340,10 +8340,6 @@
     "translation": "에지 서버는 HTTP 헤더의 호스트 헤더를 사용하여 오리진 호스트와 통신합니다. 기본값은 호스트 이름입니다."
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "스크립트를 다운로드할 엔드포인트입니다."
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "적용할 ethertype(IPv4 또는 IPv6), 지정되지 않으면 IPv4가 기본값임"
   },
@@ -8426,10 +8422,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "티켓에 표시되는 첨부의 이름"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "후크의 이름입니다."
   },
   {
     "id": "The name of the image {{.ID}} is updated.",

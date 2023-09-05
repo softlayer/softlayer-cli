@@ -8340,10 +8340,6 @@
     "translation": "エッジ・サーバーでは、HTTP ヘッダー内のホスト・ヘッダーを使用して起点ホストと通信します。 デフォルトは「ホスト名」になります。"
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "スクリプトのダウンロード先となるエンドポイント。"
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "強制するイーサネット・タイプ (IPv4 または IPv6)。デフォルトは IPv4 です (指定されていない場合)"
   },
@@ -8426,10 +8422,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "チケットに記載されている添付ファイルの名前"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "フックの名前です。"
   },
   {
     "id": "The name of the image {{.ID}} is updated.",

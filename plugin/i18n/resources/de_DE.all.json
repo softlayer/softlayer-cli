@@ -8340,10 +8340,6 @@
     "translation": "Der Edge-Server verwendet den Host -Header im HTTP-Header für die Kommunikation mit dem Ursprungshost. Der Standardwert ist 'Hostname'."
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "Der Endpunkt, an dem das Script heruntergeladen wird."
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "Der zu erzwingende Ethernet-Typ (IPv4 oder IPv6), standardmäßig IPv4, falls keine andere Angabe erfolgt"
   },
@@ -8426,10 +8422,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "Name des Anhangs, der im Ticket angezeigt wird"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "Der Name des Hooks."
   },
   {
     "id": "The name of the image {{.ID}} is updated.",

@@ -8340,10 +8340,6 @@
     "translation": "Il server edge utilizza l'intestazione host nell'intestazione HTTP per comunicare con l'host di origine. Il valore predefinito è Nome host."
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "L'endpoint da cui verrà scaricato lo script."
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "Il tipo di ether (IPv4 o IPv6) da applicare, se non specificato il valore predefinito è IPv4"
   },
@@ -8426,10 +8422,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "Il nome dell'allegato mostrato nel ticket"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "Il nome dell'hook."
   },
   {
     "id": "The name of the image {{.ID}} is updated.",
