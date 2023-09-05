@@ -36,6 +36,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\n示例：\n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\t此命令编辑卷注释。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\t此命令显示用户详细信息。\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\t此命令列出虚拟访客。"
   },
   {
+    "id": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80",
+    "translation": "${COMMAND_NAME} sl cdn create\n示例：\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn delete",
+    "translation": "${COMMAND_NAME} sl cdn delete"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn detail",
     "translation": "${COMMAND_NAME} sl cdn detail"
   },
@@ -46,6 +54,22 @@
   {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80",
+    "translation": "${COMMAND_NAME} sl cdn origin-add\n示例：\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-list",
+    "translation": "${COMMAND_NAME} sl cdn origin-list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\"",
+    "translation": "${COMMAND_NAME} sl cdn origin-remove\n示例：\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\""
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\"",
+    "translation": "${COMMAND_NAME} sl cdn purge\n示例：\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
@@ -254,6 +278,10 @@
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n    此命令可立即取消标识为 12345678 的卷，而不要求确认。"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -580,12 +608,28 @@
     "translation": "--billing 只能是 hourly 或 monthly。"
   },
   {
+    "id": "--bucket-name can not be empty",
+    "translation": "--bucket-name 不能为空"
+  },
+  {
+    "id": "--cache-key",
+    "translation": "--cache-key"
+  },
+  {
     "id": "--column {{.Column}} is not supported.",
     "translation": "不支持 --column {{.Column}}。"
   },
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--optimize",
+    "translation": "--optimize"
+  },
+  {
+    "id": "--origintype",
+    "translation": "--origintype"
   },
   {
     "id": "--resize-disk requires capacity and disk number values separated by one comma.",
@@ -732,6 +776,10 @@
     "translation": "-r, --redirect 需要与以下操作一起执行 REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
   },
   {
+    "id": "-s is in colon deliminated format to make grouping IP:port:weight a bit easier.",
+    "translation": "-s 采用冒号定界格式，使分组 IP:port:weight 更容易一些。"
+  },
+  {
     "id": "-s, --subnet is only available in PublicToPrivate and PrivateToPrivate load balancer type.",
     "translation": "-s, --subnet 仅在 PublicToPrivate 和 PrivateToPrivate 负载均衡器类型中可用。"
   },
@@ -772,6 +820,10 @@
     "translation": "要使用的 <hostname>.<domain.name.tld> 格式化名称。 为每个服务器指定一个 fqdn（允许多次出现）[必需]"
   },
   {
+    "id": "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]",
+    "translation": "DV SAN 证书允许 HTTPS 流量通过个人域，但是需要域验证以证明所有权。 仅在使用给定的 CNAME 时，通配符证书才允许 HTTPS 流量。 [许可：dvSan、通配符]"
+  },
+  {
     "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
     "translation": "所需服务器的 Hardware_Server.id 或 UUID 值。 一个与唯一的完全限定域名\n对应的值，格式为“hostname<domain>”，其中 < 和 > 是字面值，例如 myhost<mydomain.com>"
   },
@@ -800,6 +852,10 @@
     "translation": "描述 https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/ 的 JSON 字符串"
   },
   {
+    "id": "A note string stored for this username/password pair.",
+    "translation": "为此用户名/密码对存储的注释字符串。"
+  },
+  {
     "id": "A size or IOPS value must be given to modify this performance volume.",
     "translation": "必须提供大小或 IOPS 值才能修改此性能卷。"
   },
@@ -822,6 +878,14 @@
   {
     "id": "A word (or string) used to filter presets",
     "translation": "用于过滤预设的字（或字符串）"
+  },
+  {
+    "id": "ACCOUNT ID",
+    "translation": "帐户标识"
+  },
+  {
+    "id": "API Error.",
+    "translation": "API 错误。"
   },
   {
     "id": "APIKEY",
@@ -874,6 +938,10 @@
   {
     "id": "Access to {{.VolumeId}} was revoked for virtual server {{.VsID}}.",
     "translation": "已撤销虚拟服务器 {{.VsID}} 对 {{.VolumeId}} 的访问权。"
+  },
+  {
+    "id": "Account",
+    "translation": "帐户"
   },
   {
     "id": "Account ID",
@@ -1012,6 +1080,10 @@
     "translation": "高级配置标志"
   },
   {
+    "id": "Akamai CNAME",
+    "translation": "Akamai CNAME"
+  },
+  {
     "id": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.",
     "translation": "所有多重 VLAN 规则都必须使用提供的凭证通过 FortiGate 仪表板进行管理。"
   },
@@ -1024,6 +1096,10 @@
     "translation": "分配"
   },
   {
+    "id": "Allows to create, remove or refresh user's API authentication key",
+    "translation": "允许创建、除去或刷新用户的 API 认证密钥"
+  },
+  {
     "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
     "translation": "允许您更改辅助子网的路由。\n子网可以作为“静态”或“可移植”子网进行路由，这种指定是由指定的路由目标决定的。\n静态子网有一个单一 IP 地址的最终路由目标，但可能不会路由到作为“静态”子网进行路由的现有子网的 IP 地址。\n可移植子网具有 VLAN 的最终路由目标。\n子网可以路由到与子网本身相同的“路由区域”内的任何资源，通常限于单个数据中心。\n\n另请参阅：https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\n示例：\n${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n"
   },
@@ -1034,6 +1110,10 @@
   {
     "id": "An ID of one subnet to authorize",
     "translation": "要授权的某个子网的标识"
+  },
+  {
+    "id": "An ID of one subnet to revoke",
+    "translation": "要撤销的某个子网的标识"
   },
   {
     "id": "An IP address to authorize",
@@ -1252,12 +1332,28 @@
     "translation": "块卷 {{.VolumeId}} 正在报告 LUN 标识 {{.LunID}}。"
   },
   {
+    "id": "Bucket Name",
+    "translation": "存储区名称"
+  },
+  {
+    "id": "Bucket name",
+    "translation": "存储区名称"
+  },
+  {
+    "id": "Bucket name.",
+    "translation": "存储区名称。"
+  },
+  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "无法关闭缓冲区文件：{{.Error}}。\n"
   },
   {
     "id": "Buffer file could not be created: {{.Error}}.\n",
     "translation": "无法创建缓冲区文件：{{.Error}}。\n"
+  },
+  {
+    "id": "CDN Unique ID",
+    "translation": "CDN 唯一标识"
   },
   {
     "id": "CIDR",
@@ -1288,12 +1384,20 @@
     "translation": "KMS 实例中根密钥的 CRN"
   },
   {
+    "id": "Cache Key Rule",
+    "translation": "高速缓存键规则"
+  },
+  {
     "id": "Cache key optimization",
     "translation": "高速缓存密钥优化"
   },
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
     "translation": "高速缓存密钥优化。 以下是可选择的有效选项：“include-all”、“ignore-all”、“include-specified”和“ignore-specified”。 如果选择“include-specified”或“ignore-specified”，请添加到选项 cache-description。"
+  },
+  {
+    "id": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'.",
+    "translation": "采用以下格式高速缓存查询规则：'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'。示例 <query-names> = 'uuid=1234567 issue=important'。"
   },
   {
     "id": "Call arbitrary API endpoints",
@@ -1352,8 +1456,16 @@
     "translation": "取消现有负载均衡器"
   },
   {
+    "id": "Cancel an existing object storage instance.",
+    "translation": "取消现有对象存储实例。"
+  },
+  {
     "id": "Cancel existing snapshot space for a given volume",
     "translation": "取消给定卷的现有快照空间"
+  },
+  {
+    "id": "Cancel immediately instead of on the billing anniversary",
+    "translation": "立即取消，而不是在计费周年时取消"
   },
   {
     "id": "Cancel the IPSec immediately instead of on the billing anniversary",
@@ -1366,6 +1478,10 @@
   {
     "id": "Cancel the file storage volume immediately instead of on the billing anniversary",
     "translation": "立即取消文件存储卷，而不是在计费周年日取消"
+  },
+  {
+    "id": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation",
+    "translation": "取消计费项目的资源或服务。 缺省情况下，将在下一个账单日期取消计费项目，\n并且将在取消后立即开始回收资源"
   },
   {
     "id": "Cancel the snapshot space immediately instead of on the billing anniversary",
@@ -1432,6 +1548,14 @@
     "translation": "将虚拟服务器实例捕获到映像中"
   },
   {
+    "id": "Case",
+    "translation": "案例"
+  },
+  {
+    "id": "Case Number",
+    "translation": "案例编号"
+  },
+  {
     "id": "Category",
     "translation": "类别"
   },
@@ -1444,12 +1568,24 @@
     "translation": "用于过滤项的类别代码"
   },
   {
+    "id": "Category name.",
+    "translation": "类别名称。"
+  },
+  {
     "id": "CategoryCode",
     "translation": "CategoryCode"
   },
   {
+    "id": "Cdn with uniqueId: {{.ID}} was deleted.",
+    "translation": "已删除 uniqueId 为 {{.ID}} 的 cdn。"
+  },
+  {
     "id": "Certificate Signing Request file",
     "translation": "证书签名请求文件"
+  },
+  {
+    "id": "Certificate Type",
+    "translation": "证书类型"
   },
   {
     "id": "Certificate file",
@@ -1476,12 +1612,20 @@
     "translation": "检查虚拟服务器实例是否已准备就绪随时可用"
   },
   {
+    "id": "Classic Infrastructure Bandwidth commands",
+    "translation": "经典基础架构带宽命令"
+  },
+  {
     "id": "Classic Infrastructure Reports",
     "translation": "经典基础架构报告"
   },
   {
     "id": "Classic infrastructure Account commands",
     "translation": "经典基础架构帐户命令"
+  },
+  {
+    "id": "Classic infrastructure Bandwidth commands",
+    "translation": "经典基础架构带宽命令"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1852,12 +1996,20 @@
     "translation": "为专用虚拟服务器创建主机"
   },
   {
+    "id": "Create a new CDN domain mapping",
+    "translation": "创建新的 CDN 域映射"
+  },
+  {
     "id": "Create a new VLAN",
     "translation": "创建新 VLAN"
   },
   {
     "id": "Create a new firewall",
     "translation": "创建新防火墙"
+  },
+  {
+    "id": "Create a password for a software component.",
+    "translation": "为软件组件创建密码。"
   },
   {
     "id": "Create a placement group",
@@ -1890,6 +2042,14 @@
   {
     "id": "Create a zone",
     "translation": "创建专区"
+  },
+  {
+    "id": "Create an origin path for an existing CDN mapping.",
+    "translation": "为现有 CDN 映射创建源路径。"
+  },
+  {
+    "id": "Create an user's API authentication key",
+    "translation": "创建用户的 API 认证密钥"
   },
   {
     "id": "Create credentials for an IBM Cloud Object Storage Account.",
@@ -1926,6 +2086,10 @@
   {
     "id": "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}.",
     "translation": "已创建从 {{.StaticIP}} 到 {{.RemoteIP}} #{{.ID}} 的转换。"
+  },
+  {
+    "id": "Creates a purge record and also initiates the purge call.",
+    "translation": "创建清除记录并启动清除调用。"
   },
   {
     "id": "Creates a user",
@@ -1972,6 +2136,14 @@
     "translation": "数据中心"
   },
   {
+    "id": "Data in",
+    "translation": "数据输入"
+  },
+  {
+    "id": "Data out",
+    "translation": "数据输出"
+  },
+  {
     "id": "Datacenter",
     "translation": "数据中心"
   },
@@ -1998,6 +2170,10 @@
   {
     "id": "Datacenter to remove",
     "translation": "要除去数据中心，请执行以下操作："
+  },
+  {
+    "id": "Datacenters",
+    "translation": "数据中心"
   },
   {
     "id": "Date",
@@ -2044,6 +2220,10 @@
     "translation": "每个实例的缺省每小时价格"
   },
   {
+    "id": "Delete a CDN domain mapping.",
+    "translation": "删除 CDN 域映射。"
+  },
+  {
     "id": "Delete a L7 policy",
     "translation": "删除 L7 策略"
   },
@@ -2064,6 +2244,10 @@
     "translation": "删除协议"
   },
   {
+    "id": "Delete a provisioning scriptt.",
+    "translation": "删除供应脚本。"
+  },
+  {
     "id": "Delete a snapshot on a given volume",
     "translation": "删除给定卷的快照"
   },
@@ -2082,6 +2266,14 @@
   {
     "id": "Delete the given security group",
     "translation": "删除给定的安全组"
+  },
+  {
+    "id": "Delete the quote of an order.",
+    "translation": "删除订单的报价。"
+  },
+  {
+    "id": "Deny sharing of an image template with another account.",
+    "translation": "拒绝与其他帐户共享映像模板。"
   },
   {
     "id": "Description",
@@ -2108,12 +2300,20 @@
     "translation": "特定事件的详细信息以及确认事件的能力。"
   },
   {
+    "id": "Device",
+    "translation": "设备"
+  },
+  {
     "id": "Device Name",
     "translation": "设备名"
   },
   {
     "id": "Device Type",
     "translation": "设备类型"
+  },
+  {
+    "id": "Device name",
+    "translation": "设备名"
   },
   {
     "id": "Devices",
@@ -2308,6 +2508,10 @@
     "translation": "示例： \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    此命令为 VSI 设置一个报价，其具有 4 个 CPU、16 GB RAM、100 GB SAN 磁盘、Ubuntu 16.04，以及数据中心 dal13 中的 1 Gbps 公共和专用上行链路"
   },
   {
+    "id": "Each user can only have a single API key.",
+    "translation": "每个用户只能有一个 API 密钥。"
+  },
+  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
     "translation": "检索 [YYYY-MM-DD] 事件的最早日期。 缺省值：2 天前。"
   },
@@ -2440,6 +2644,14 @@
     "translation": "启用或禁用特定许可权"
   },
   {
+    "id": "Enable or disable compression of JPEG images for requests over certain network conditions.",
+    "translation": "为某些网络条件下的请求启用或禁用 JPEG 图像压缩。"
+  },
+  {
+    "id": "Enable or disable the embedded object prefetching feature.",
+    "translation": "启用或禁用嵌入式对象预取功能。"
+  },
+  {
     "id": "Enable or disable user vpn subnets manual config.",
     "translation": "启用或禁用用户 VPN 子网手动配置。"
   },
@@ -2524,6 +2736,14 @@
     "translation": "耐久性层/IOPS"
   },
   {
+    "id": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you.",
+    "translation": "输入全球唯一子域。 完整 URL 将成为用于配置 DNS 的 CNAME。 如果未输入任何值，那么我们将为您生成 CNAME。"
+  },
+  {
+    "id": "Error marshalling resource",
+    "translation": "对资源进行编组时出错"
+  },
+  {
     "id": "Error occurred while adding note to volume: {{.VolumeID}}",
     "translation": "将注释添加到卷时发生错误：{{.VolumeID}}"
   },
@@ -2590,6 +2810,10 @@
   {
     "id": "FQDN",
     "translation": "FQDN"
+  },
+  {
+    "id": "Failback a {{.storageType}} volume from replica",
+    "translation": "从副本故障恢复 {{.storageType}} 卷"
   },
   {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
@@ -2672,6 +2896,10 @@
     "translation": "未能添加子网。\n"
   },
   {
+    "id": "Failed to add user's API authentication key",
+    "translation": "未能添加用户的 API 认证密钥"
+  },
+  {
     "id": "Failed to add user.\n",
     "translation": "未能添加用户。\n"
   },
@@ -2752,6 +2980,10 @@
     "translation": "未能取消负载均衡器 {{.LBID}}。\n"
   },
   {
+    "id": "Failed to cancel object-storage: {{.objectStorageID}}.",
+    "translation": "未能取消对象存储器：{{.objectStorageID}}。"
+  },
+  {
     "id": "Failed to cancel snapshot space for volume {{.ID}}.\n",
     "translation": "未能取消卷 {{.ID}} 的快照空间。\n"
   },
@@ -2774,6 +3006,22 @@
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "未能确认卷 {{.VolumeId}} 上的新 LUN 标识。"
+  },
+  {
+    "id": "Failed to create Provisioning Hook.",
+    "translation": "未能创建供应挂钩。"
+  },
+  {
+    "id": "Failed to create Software Credential.",
+    "translation": "未能创建软件凭证。"
+  },
+  {
+    "id": "Failed to create a CDN.",
+    "translation": "未能创建 CDN。"
+  },
+  {
+    "id": "Failed to create a Origin.",
+    "translation": "未能创建源。"
   },
   {
     "id": "Failed to create credential. ",
@@ -2852,6 +3100,14 @@
     "translation": "未能删除 L7 成员 {{.Member}}：{{.Error}}。\n"
   },
   {
+    "id": "Failed to delete Provisioning Hook.",
+    "translation": "未能删除供应挂钩。"
+  },
+  {
+    "id": "Failed to delete Quote",
+    "translation": "未能删除报价"
+  },
+  {
     "id": "Failed to delete Tag",
     "translation": "未能删除标记"
   },
@@ -2880,6 +3136,10 @@
     "translation": "未能删除负载均衡器成员 {{.Member}}：{{.Error}}。\n"
   },
   {
+    "id": "Failed to delete origin.",
+    "translation": "未能删除源。"
+  },
+  {
     "id": "Failed to delete protocol {{.ProtocolID}}: {{.Error}}.\n",
     "translation": "未能删除协议 {{.ProtocolID}}：{{.Error}}。\n"
   },
@@ -2906,6 +3166,14 @@
   {
     "id": "Failed to delete zone: {{.Zone}}.\n",
     "translation": "未能删除专区：{{.Zone}}。\n"
+  },
+  {
+    "id": "Failed to deleted a CDN.",
+    "translation": "未能删除 CDN。"
+  },
+  {
+    "id": "Failed to deny share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "未能拒绝与帐户 {{.AccountId}} 共享映像 {{.ImageId}}。"
   },
   {
     "id": "Failed to disable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n",
@@ -3076,6 +3344,10 @@
     "translation": "未能获取 Pod。\n"
   },
   {
+    "id": "Failed to get Provisioning Hooks.",
+    "translation": "未能获取供应挂钩。"
+  },
+  {
     "id": "Failed to get Quote\n",
     "translation": "未能获取报价 \n"
   },
@@ -3112,6 +3384,10 @@
     "translation": "未能获取未附加的标记。"
   },
   {
+    "id": "Failed to get Upgrade Requests.",
+    "translation": "未能获取升级请求。"
+  },
+  {
     "id": "Failed to get User Customer Notifications.",
     "translation": "未能获取用户客户通知。"
   },
@@ -3132,6 +3408,10 @@
     "translation": "未能获取帐户的关联虚拟存储器卷。"
   },
   {
+    "id": "Failed to get all datacenters.",
+    "translation": "未能获取所有数据中心。"
+  },
+  {
     "id": "Failed to get all datacenters.\n",
     "translation": "未能获取所有数据中心。\n"
   },
@@ -3146,6 +3426,10 @@
   {
     "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
     "translation": "未能获取硬件服务器 {{.ID}} 的带宽分配详细信息。\n"
+  },
+  {
+    "id": "Failed to get bandwidth summary",
+    "translation": "未能获取带宽摘要"
   },
   {
     "id": "Failed to get bare metal servers.\n",
@@ -3218,6 +3502,10 @@
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "未能获取硬件服务器 {{.ID}}。\n"
+  },
+  {
+    "id": "Failed to get hardware server: {{.ID}}.",
+    "translation": "未能获取硬件服务器：{{.ID}}。"
   },
   {
     "id": "Failed to get hardware server: {{.ID}}.\n",
@@ -3318,6 +3606,10 @@
   {
     "id": "Failed to get orders.",
     "translation": "未能获取订单。"
+  },
+  {
+    "id": "Failed to get origins list for CDN: {{.cdnId}}.",
+    "translation": "未能获取 CDN 的源列表：{{.cdnId}}。"
   },
   {
     "id": "Failed to get package for {{.Type}} firewall.\n",
@@ -3472,6 +3764,10 @@
     "translation": "未能获取用户 VPN 覆盖。"
   },
   {
+    "id": "Failed to get user's API authentication keys",
+    "translation": "未能获取用户的 API 认证密钥"
+  },
+  {
     "id": "Failed to get user.",
     "translation": "未能获取用户。"
   },
@@ -3534,6 +3830,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "未能列出您帐户的 VLAN。\n"
+  },
+  {
+    "id": "Failed to list all item cancelations.",
+    "translation": "未能列出所有取消的项。"
   },
   {
     "id": "Failed to list available OS's.",
@@ -3732,6 +4032,10 @@
     "translation": "未能打开虚拟服务器实例 {{.VsID}} 的电源。\n"
   },
   {
+    "id": "Failed to purge.",
+    "translation": "未能清除。"
+  },
+  {
     "id": "Failed to reach virtual guest instance {{.Id}}.",
     "translation": "未能访问虚拟访客实例 {{.Id}}。"
   },
@@ -3824,6 +4128,10 @@
     "translation": "未能从 IPSec {{.ID}} 中除去标识为 {{.TransID}} 的转换。"
   },
   {
+    "id": "Failed to remove user's API authentication key",
+    "translation": "未能除去用户的 API 认证密钥"
+  },
+  {
     "id": "Failed to remove {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.\n",
     "translation": "未能从 IPSec {{.ContextID}} 中除去 {{.Type}} 子网 #{{.ID}}。\n"
   },
@@ -3882,6 +4190,10 @@
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
     "translation": "无法为卷 \"{{.ID}}\" 设置 snapshort 通知。\n"
+  },
+  {
+    "id": "Failed to share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "未能与帐户 {{.AccountId}} 共享映像 {{.ImageId}} 。"
   },
   {
     "id": "Failed to show event log.\n",
@@ -4020,6 +4332,10 @@
     "translation": "未能更新 IPSec {{.ID}} 中标识为 {{.TransID}} 的转换。"
   },
   {
+    "id": "Failed to update user vpn password.",
+    "translation": "未能更新用户 VPN 密码。"
+  },
+  {
     "id": "Failed to update user {{.UserID}}.",
     "translation": "未能更新用户 {{.UserID}}。"
   },
@@ -4102,6 +4418,10 @@
   {
     "id": "Features",
     "translation": "功能部件"
+  },
+  {
+    "id": "File Extension",
+    "translation": "文件扩展名"
   },
   {
     "id": "File volume {{.ID}} has been marked for immediate snapshot cancellation.",
@@ -4512,6 +4832,14 @@
     "translation": "获取有关计费项的详细信息。"
   },
   {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video",
+    "translation": "指定相对于所提供的域的路径，这可用于访问该源。 例如，'articles/video' => 'www.example.com/articles/video"
+  },
+  {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]",
+    "translation": "指定相对于所提供的域的路径，这可用于访问该源。 例如，'articles/video' => 'www.example.com/articles/video [必需]"
+  },
+  {
     "id": "Grant access from a user to an specific device",
     "translation": "授予用户对特定设备的访问权"
   },
@@ -4684,6 +5012,10 @@
     "translation": "每小时"
   },
   {
+    "id": "Hourly/Monthly",
+    "translation": "每小时/每月"
+  },
+  {
     "id": "How many invoices to get back.",
     "translation": "要返回多少发票。"
   },
@@ -4696,8 +5028,28 @@
     "translation": "HTTP 端口"
   },
   {
+    "id": "Http port",
+    "translation": "HTTP 端口"
+  },
+  {
+    "id": "Http port. [http or https is required]",
+    "translation": "HTTP 端口。[需要使用 http 或 https]"
+  },
+  {
     "id": "Https Port",
     "translation": "HTTPS 端口"
+  },
+  {
+    "id": "Https port",
+    "translation": "HTTPS 端口"
+  },
+  {
+    "id": "Https port. [http or https is required]",
+    "translation": "HTTPS 端口。[需要使用 http 或 https]"
+  },
+  {
+    "id": "IBM CNAME",
+    "translation": "IBM CNAME"
   },
   {
     "id": "ID",
@@ -4854,6 +5206,14 @@
   {
     "id": "Image {{.ImageID}} was deleted.",
     "translation": "映像 {{.ImageID}} 已删除。"
+  },
+  {
+    "id": "Image {{.ImageId}} was deny shared with account {{.AccountId}}.",
+    "translation": "已拒绝与帐户 {{.AccountId}} 共享映像 {{.ImageId}}。"
+  },
+  {
+    "id": "Image {{.ImageId}} was shared with account {{.AccountId}}.",
+    "translation": "已与帐户 {{.AccountId}} 共享映像 {{.ImageId}}。"
   },
   {
     "id": "Immediate cancellation.",
@@ -5300,6 +5660,10 @@
     "translation": "列出块存储器为给定主机标识分配的子网。"
   },
   {
+    "id": "List cancelations.",
+    "translation": "列出取消项。"
+  },
+  {
     "id": "List cloud block storage.",
     "translation": "列示云块存储器。"
   },
@@ -5388,6 +5752,10 @@
     "translation": "列出用于订购负载均衡器的选项"
   },
   {
+    "id": "List origin path for an existing CDN mapping.",
+    "translation": "列出现有 CDN 映射的源路径。"
+  },
+  {
     "id": "List package items that are used for ordering",
     "translation": "列出用于订购的包项"
   },
@@ -5436,6 +5804,10 @@
     "translation": "列出您帐户的虚拟服务器实例"
   },
   {
+    "id": "List {{.storageType}} storage snapshots",
+    "translation": "列出 {{.storageType}} 存储器快照"
+  },
+  {
     "id": "Lists Email Delivery Service.",
     "translation": "列出电子邮件传递服务。"
   },
@@ -5472,6 +5844,10 @@
     "translation": "位置"
   },
   {
+    "id": "Location Conflicts",
+    "translation": "位置冲突"
+  },
+  {
     "id": "Location/Region",
     "translation": "位置/区域"
   },
@@ -5484,8 +5860,16 @@
     "translation": "MAC 地址"
   },
   {
+    "id": "Maintance Window",
+    "translation": "维护时段"
+  },
+  {
     "id": "Manage Classic infrastructure services",
     "translation": "管理经典基础架构服务"
+  },
+  {
+    "id": "Manage LBaaS health checks.",
+    "translation": "管理 LBaaS 运行状况检查。"
   },
   {
     "id": "Manage VSIs that require migration",
@@ -5660,6 +6044,10 @@
     "translation": "负载均衡器 L7 池的名称"
   },
   {
+    "id": "Name that ordered the item.",
+    "translation": "订购项目的名称。"
+  },
+  {
     "id": "Netscaler",
     "translation": "Netscaler"
   },
@@ -5832,6 +6220,10 @@
     "translation": "注释："
   },
   {
+    "id": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC",
+    "translation": "注：高于 6,000 的 IOPS 仅在以下位置可用：https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
+  },
+  {
     "id": "Notes",
     "translation": "注释"
   },
@@ -5846,6 +6238,10 @@
   {
     "id": "Number",
     "translation": "数量"
+  },
+  {
+    "id": "Number Of Items Cancelled",
+    "translation": "已取消的项数"
   },
   {
     "id": "Number of CPU cores",
@@ -5916,6 +6312,14 @@
     "translation": "对象掩码：用于限制返回的字段"
   },
   {
+    "id": "Object-storage {{.objectStorageID}} has been marked for cancellation.",
+    "translation": "对象存储器 {{.objectStorageID}} 已标记为取消。"
+  },
+  {
+    "id": "Object-storage {{.objectStorageID}} has been marked for immediate cancellation.",
+    "translation": "对象存储器 {{.objectStorageID}} 已标记为立即取消。"
+  },
+  {
     "id": "One Time",
     "translation": "一次"
   },
@@ -5980,6 +6384,10 @@
     "translation": "选项 respect-headers 仅接受“0”或“1”"
   },
   {
+    "id": "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly",
+    "translation": "计费费率的可选参数（缺省为每月）选项：每小时或每月"
+  },
+  {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
     "translation": "计费费率的可选参数（缺省值为 monthly），选项为：hourly、monthly"
   },
@@ -6032,6 +6440,10 @@
     "translation": "通过复制现有卷来订购块卷"
   },
   {
+    "id": "Order a file storage replica volume",
+    "translation": "订购文件存储器副本卷"
+  },
+  {
     "id": "Order a file storage volume",
     "translation": "订购文件存储卷"
   },
@@ -6080,6 +6492,10 @@
     "translation": "订购/创建硬件服务器"
   },
   {
+    "id": "Order/create a provisioning script.",
+    "translation": "订购/创建供应脚本。"
+  },
+  {
     "id": "Ordered By",
     "translation": "排序依据"
   },
@@ -6090,6 +6506,10 @@
   {
     "id": "Origin",
     "translation": "源"
+  },
+  {
+    "id": "Origin Host",
+    "translation": "源主机"
   },
   {
     "id": "Origin Type",
@@ -6158,6 +6578,10 @@
   {
     "id": "PACKAGE_KEYNAME",
     "translation": "PACKAGE_KEYNAME"
+  },
+  {
+    "id": "PATH",
+    "translation": "PATH"
   },
   {
     "id": "PLACEMENTGROUP_ID",
@@ -6266,6 +6690,10 @@
   {
     "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]",
     "translation": "性能存储器 IOPs，介于 100 到 6000 之间且为 100 的倍数 [storage-type 为 performance 时是必需的]"
+  },
+  {
+    "id": "Performance configuration. [Permit: web, video, file, dynamic]",
+    "translation": "性能配置。 [许可：web、视频、文件、动态]"
   },
   {
     "id": "Permanently removes an SSH key",
@@ -6414,6 +6842,10 @@
   {
     "id": "Policy priority",
     "translation": "策略优先级"
+  },
+  {
+    "id": "Pool",
+    "translation": "池"
   },
   {
     "id": "Port Range Max",
@@ -6684,6 +7116,10 @@
     "translation": "数量"
   },
   {
+    "id": "Quote: {{.quoteID}} was deleted.",
+    "translation": "已删除报价：{{.quoteID}}。"
+  },
+  {
     "id": "RECORD",
     "translation": "RECORD"
   },
@@ -6702,6 +7138,10 @@
   {
     "id": "RULE_ID",
     "translation": "RULE_ID"
+  },
+  {
+    "id": "Range",
+    "translation": "范围"
   },
   {
     "id": "Read Failure: {{.Error}}.\n",
@@ -6770,6 +7210,10 @@
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
     "translation": "使用其父卷的快照来刷新重复的卷。"
+  },
+  {
+    "id": "Refresh an user's API authentication key",
+    "translation": "刷新用户的 API 认证密钥"
   },
   {
     "id": "Region",
@@ -6848,6 +7292,10 @@
     "translation": "移除对子网的访问权。"
   },
   {
+    "id": "Remove an user's API authentication key",
+    "translation": "除去用户的 API 认证密钥"
+  },
+  {
     "id": "Remove block storage subnets to the given host id.",
     "translation": "将块存储器子网从给定主机标识中除去。"
   },
@@ -6870,6 +7318,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "除去帐户上的空标记。"
+  },
+  {
+    "id": "Removes an origin path for an existing CDN mapping.",
+    "translation": "除去现有 CDN 映射的源路径。"
   },
   {
     "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
@@ -6904,6 +7356,10 @@
     "translation": "请求隧道上下文的配置"
   },
   {
+    "id": "Requested by",
+    "translation": "请求者"
+  },
+  {
     "id": "Required User",
     "translation": "必需的用户"
   },
@@ -6922,6 +7378,10 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "尊重头。 值 1 为“开”，值 0 为“关”。"
+  },
+  {
+    "id": "Restore {{.storageType}} volume using a given snapshot",
+    "translation": "使用给定快照复原 {{.storageType}} 卷"
   },
   {
     "id": "Restriction",
@@ -7092,6 +7552,10 @@
     "translation": "保存报价"
   },
   {
+    "id": "Saved",
+    "translation": "已保存"
+  },
+  {
     "id": "Schedule",
     "translation": "安排"
   },
@@ -7196,6 +7660,10 @@
     "translation": "设置 ipAddress 的注释。"
   },
   {
+    "id": "Set the user VPN password.",
+    "translation": "设置用户 VPN 密码。"
+  },
+  {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
     "translation": "将用户的状态设置为 CANCEL_PENDING，这将立即禁用帐户，并最终通过一个自动化内部过程从帐户中完全除去该用户"
   },
@@ -7216,6 +7684,14 @@
     "translation": "设置"
   },
   {
+    "id": "Share an image template with another account.",
+    "translation": "与其他帐户共享映像模板。"
+  },
+  {
+    "id": "Shared on",
+    "translation": "共享日期"
+  },
+  {
     "id": "Short Name",
     "translation": "短名称"
   },
@@ -7230,6 +7706,10 @@
   {
     "id": "Show L7 pool details",
     "translation": "显示 L7 池详细信息"
+  },
+  {
+    "id": "Show all Provisioning Scripts.",
+    "translation": "显示所有供应脚本。"
   },
   {
     "id": "Show all licenses.",
@@ -7292,8 +7772,16 @@
     "translation": "显示密码（小心身边有人窥探！）"
   },
   {
+    "id": "Show prices in the storage, snapshot and iops range tables.",
+    "translation": "在存储器、快照和 iops 范围表中显示价格。"
+  },
+  {
     "id": "Show the users API key",
     "translation": "显示用户的 API 密钥"
+  },
+  {
+    "id": "Show upgrades orders.",
+    "translation": "显示升级订单。"
   },
   {
     "id": "Shows a very detailed list of charges",
@@ -7328,6 +7816,10 @@
     "translation": "大小 (GB)"
   },
   {
+    "id": "Size On Disk",
+    "translation": "磁盘大小"
+  },
+  {
     "id": "Size of duplicate block volume in GB, if no size is specified, the size of the original volume will be used",
     "translation": "复制块卷的大小 (GB)；如果未指定大小，将使用原始卷的大小"
   },
@@ -7346,6 +7838,10 @@
   {
     "id": "Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB",
     "translation": "专用主机的大小，当前仅可使用一种大小：56_CORES_X_242_RAM_X_1_4_TB"
+  },
+  {
+    "id": "Snapshot",
+    "translation": "快照"
   },
   {
     "id": "Snapshot Size (GB)",
@@ -7392,6 +7888,10 @@
     "translation": "软件"
   },
   {
+    "id": "Software not found",
+    "translation": "找不到软件"
+  },
+  {
     "id": "Specifies if image is bring your own license",
     "translation": "指定映像是否带有您自己的许可证"
   },
@@ -7414,6 +7914,10 @@
   {
     "id": "Specify output format, only JSON is supported now.",
     "translation": "指定输出格式，目前仅支持 JSON。"
+  },
+  {
+    "id": "Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions.",
+    "translation": "指定可以存储在 CDN 服务上的文件扩展名，用逗号分隔。 例如，“jpg, pdf, jpeg, png”是有效列表。 将该标志留空可允许所有扩展名。"
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
@@ -7484,6 +7988,10 @@
     "translation": "状态："
   },
   {
+    "id": "Storage",
+    "translation": "存储器"
+  },
+  {
     "id": "Storage Size (GB)",
     "translation": "存储器大小 (GB)"
   },
@@ -7532,6 +8040,10 @@
     "translation": "已成功为用户添加子网访问权。"
   },
   {
+    "id": "Successfully added. New API Authentication Key: {{.apiAuthenticationKey}}",
+    "translation": "已成功添加。 新建 API 认证密钥：{{.apiAuthenticationKey}}"
+  },
+  {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "已成功将子网标识 {{.subnetID}} 分配至允许的主机标识 {{.accessID}}"
   },
@@ -7552,6 +8064,10 @@
     "translation": "已成功重刷设备固件"
   },
   {
+    "id": "Successfully removed Provisioning Hook.",
+    "translation": "已成功除去供应挂钩。"
+  },
+  {
     "id": "Successfully removed User Customer notification.",
     "translation": "已成功移除用户客户通知。"
   },
@@ -7564,8 +8080,16 @@
     "translation": "已成功将子网标识 {{.subnetID}} 从允许的主机标识 {{.accessID}} 除去"
   },
   {
+    "id": "Successfully removed user's API authentication key",
+    "translation": "已成功除去用户的 API 认证密钥"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "已成功发送切换硬件服务器“{{.ID}}”IPMI 接口的请求。"
+  },
+  {
+    "id": "Successfully updated user VPN password.",
+    "translation": "已成功更新用户 VPN 密码。"
   },
   {
     "id": "Successfully {{.action}} user vpn subnets manual config",
@@ -7578,6 +8102,10 @@
   {
     "id": "Summary info about tickets",
     "translation": "有关凭单的摘要信息"
+  },
+  {
+    "id": "Summary report for every pool/server.",
+    "translation": "每个池/服务器的摘要报告。"
   },
   {
     "id": "Support",
@@ -7780,6 +8308,10 @@
     "translation": "订单的复杂类型。类型以“SoftLayer_Container_Product_Order_”开头"
   },
   {
+    "id": "The date the billing item was created (YYYY-MM-DD).",
+    "translation": "计费项目的创建日期 (YYYY-MM-DD)。"
+  },
+  {
     "id": "The dedicated host is migrating: {{.HostId}}.",
     "translation": "专用主机正在迁移：{{.HostId}}。"
   },
@@ -7802,6 +8334,14 @@
   {
     "id": "The earliest date we want to search for event logs [YYYY-MM-DD].",
     "translation": "要搜索事件日志的最早日期为 [YYYY-MM-DD]。"
+  },
+  {
+    "id": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.",
+    "translation": "边缘服务器在 HTTP 头中使用主机头来与源主机进行通信。 默认为主机名。"
+  },
+  {
+    "id": "The endpoint that the script will be downloaded.",
+    "translation": "将下载脚本的端点。"
   },
   {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
@@ -7888,12 +8428,20 @@
     "translation": "凭单中显示的连接的名称"
   },
   {
+    "id": "The name of the hook.",
+    "translation": "挂钩的名称。"
+  },
+  {
     "id": "The name of the image {{.ID}} is updated.",
     "translation": "映像 {{.ID}} 的名称已更新。"
   },
   {
     "id": "The name of the security group",
     "translation": "安全组的名称"
+  },
+  {
+    "id": "The name of this specific piece of software.",
+    "translation": "此特定软件部分的名称。"
   },
   {
     "id": "The netscaler ID has to be a positive integer.",
@@ -7944,8 +8492,28 @@
     "translation": "已下订单 {{.OrderID}}。"
   },
   {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint",
+    "translation": "源类型。 [许可：服务器、存储器] 注：如果 OriginType 是存储器，那么 OriginHost 作为端点"
+  },
+  {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint.",
+    "translation": "源类型。 [许可：服务器、存储器] 注：如果 OriginType 是存储器，那么 OriginHost 作为端点。"
+  },
+  {
+    "id": "The origin {{.Id}} with path {{.Path}} was deleted.",
+    "translation": "已删除路径为 {{.Path}} 的源 {{.Id}}。"
+  },
+  {
     "id": "The original volume has been cancelled, unable to order duplicate volume",
     "translation": "已取消原始卷，因此无法订购复制卷"
+  },
+  {
+    "id": "The password part of the username/password pair.",
+    "translation": "用户名/密码对的密码部分。"
+  },
+  {
+    "id": "The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html",
+    "translation": "Akamai 边缘服务器定期从中访存测试对象的路径。 示例 = /detection-test-object.html"
   },
   {
     "id": "The port has to be a positive integer.",
@@ -8106,6 +8674,10 @@
   {
     "id": "The user data of virtual server instance: {{.VsId}} was updated.",
     "translation": "虚拟服务器实例 {{.VsId}} 的用户数据已更新。"
+  },
+  {
+    "id": "The username part of the username/password pair.",
+    "translation": "用户名/密码对的用户名部分。"
   },
   {
     "id": "The value of option '--quantity' should be greater or equal to 1.",
@@ -8276,6 +8848,10 @@
     "translation": "这将取消负载均衡器 {{.LBID}}，并且无法撤销。要继续吗？"
   },
   {
+    "id": "This will cancel the object-storage: {{.ID}} and cannot be undone. Continue?",
+    "translation": "这将取消对象存储器 {{.ID}}，并且无法撤销。 继续吗？"
+  },
+  {
     "id": "This will cancel the subnet: {{.ID}} and cannot be undone. Continue?",
     "translation": "这将取消子网 {{.ID}}，并且无法撤销。要继续吗？"
   },
@@ -8400,6 +8976,10 @@
     "translation": "要添加数据中心，请执行以下操作："
   },
   {
+    "id": "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]",
+    "translation": "要将请求路由到 Web 站点，请输入 Web 站点的主机名，例如 www.example.com 或 app.example.com。[必需]"
+  },
+  {
     "id": "Toggle the IPMI interface on and off. This command is asynchronous.",
     "translation": "开启 IPMI 接口，然后将其关闭。这是异步命令。"
   },
@@ -8422,6 +9002,10 @@
   {
     "id": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]",
     "translation": "要返回的结果总数。-1 表示返回全部，可能存在这些值的 LOT。[缺省值：50]"
+  },
+  {
+    "id": "Total usage",
+    "translation": "总使用量"
   },
   {
     "id": "True",
@@ -8556,6 +9140,10 @@
     "translation": "找不到标识为 {{.storageID}} 的对象存储器。\n"
   },
   {
+    "id": "Unable to find object-storage with objectStorageID {{.objectStorageID}}.",
+    "translation": "找不到 objectStorageID 为 {{.objectStorageID}} 的对象存储器。"
+  },
+  {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
     "translation": "找不到标识为 {{.RecordID}} 的资源记录。\n"
   },
@@ -8668,12 +9256,20 @@
     "translation": "升级所有硬盘的固件"
   },
   {
+    "id": "Uri",
+    "translation": "Uri"
+  },
+  {
     "id": "Url",
     "translation": "Url"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",
     "translation": "HTTP/HTTPS 检查的 URL 路径"
+  },
+  {
+    "id": "Usage information.",
+    "translation": "用法信息。"
   },
   {
     "id": "Use 'cookie' or 'source-ip' to stick",
@@ -8856,6 +9452,10 @@
     "translation": "虚拟服务器"
   },
   {
+    "id": "Visibility",
+    "translation": "可视性"
+  },
+  {
     "id": "Vlan",
     "translation": "VLAN"
   },
@@ -8938,6 +9538,14 @@
   {
     "id": "You may run '{{.CommandName}} sl vs host-list --order {{.OrderID}}' to find this dedicated host after it is ready.",
     "translation": "就绪后，可运行“{{.CommandName}} sl vs host-list --order {{.OrderID}}”以查找此专用主机。"
+  },
+  {
+    "id": "Your new VPN password [required]",
+    "translation": "您的新 VPN 密码 [必需]"
+  },
+  {
+    "id": "Your server IP address or hostname. [required]",
+    "translation": "您的服务器 IP 地址或主机名。[必需]"
   },
   {
     "id": "ZONE",
@@ -9212,6 +9820,10 @@
     "translation": "device"
   },
   {
+    "id": "disk space",
+    "translation": "磁盘空间"
+  },
+  {
     "id": "disk_guest",
     "translation": "disk_guest"
   },
@@ -9302,6 +9914,10 @@
   {
     "id": "hour",
     "translation": "hour"
+  },
+  {
+    "id": "http or https",
+    "translation": "http 或 https"
   },
   {
     "id": "id",
@@ -9492,6 +10108,10 @@
     "translation": "序列"
   },
   {
+    "id": "share image",
+    "translation": "共享映像"
+  },
+  {
     "id": "size_bytes",
     "translation": "size_bytes"
   },
@@ -9586,6 +10206,10 @@
   {
     "id": "value",
     "translation": "值"
+  },
+  {
+    "id": "virtual disks",
+    "translation": "虚拟磁盘"
   },
   {
     "id": "virtual guest",

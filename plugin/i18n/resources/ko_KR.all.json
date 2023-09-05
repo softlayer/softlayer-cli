@@ -36,6 +36,14 @@
     "translation": "${COMMAND_NAME} sl call-api SERVICE METHOD [옵션]\n\n예: \n${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n이 명령을 실행하면 볼륨 참고를 편집합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n이 명령을 실행하면 사용자 세부사항을 표시합니다.\n\n${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\nThis command list virtual guests."
   },
   {
+    "id": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80",
+    "translation": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn delete",
+    "translation": "${COMMAND_NAME} sl cdn delete"
+  },
+  {
     "id": "${COMMAND_NAME} sl cdn detail",
     "translation": "${COMMAND_NAME} sl cdn detail"
   },
@@ -46,6 +54,22 @@
   {
     "id": "${COMMAND_NAME} sl cdn list",
     "translation": "${COMMAND_NAME} sl cdn list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80",
+    "translation": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-list",
+    "translation": "${COMMAND_NAME} sl cdn origin-list"
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\"",
+    "translation": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\""
+  },
+  {
+    "id": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\"",
+    "translation": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
@@ -254,6 +278,10 @@
   {
     "id": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [OPTIONS]",
     "translation": "${COMMAND_NAME} sl object-storage credential-list IDENTIFIER [옵션]"
+  },
+  {
+    "id": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
+    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n  이 명령은 확인 요청 없이 즉시 볼륨(ID 12345678)을 취소합니다. "
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -580,12 +608,28 @@
     "translation": "--billing은 hourly 또는 monthly 중 하나만 가능합니다."
   },
   {
+    "id": "--bucket-name can not be empty",
+    "translation": "--bucket-name은 비어 있을 수 없음"
+  },
+  {
+    "id": "--cache-key",
+    "translation": "--cache-key"
+  },
+  {
     "id": "--column {{.Column}} is not supported.",
     "translation": "--column {{.Column}}은(는) 지원되지 않습니다."
   },
   {
     "id": "--note",
     "translation": "--note"
+  },
+  {
+    "id": "--optimize",
+    "translation": "--optimize"
+  },
+  {
+    "id": "--origintype",
+    "translation": "--origintype"
   },
   {
     "id": "--resize-disk requires capacity and disk number values separated by one comma.",
@@ -732,6 +776,10 @@
     "translation": "-r, --redirect는 REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS 조치에서는 필수임"
   },
   {
+    "id": "-s is in colon deliminated format to make grouping IP:port:weight a bit easier.",
+    "translation": "-s는 IP:포트:가중치 그룹화를 좀 더 쉽게 하기 위해 콜론으로 구분된 형식입니다."
+  },
+  {
     "id": "-s, --subnet is only available in PublicToPrivate and PrivateToPrivate load balancer type.",
     "translation": "-s, --subnet은 PublicToPrivate 및 PrivateToPrivate 로드 밸런서 유형에만 사용할 수 있습니다."
   },
@@ -772,6 +820,10 @@
     "translation": "사용할 <hostname>.<domain.name.tld> 형식의 이름입니다. 서버당 하나의 FQDN을 지정하십시오(다중 발생이 허용됨). [필수]"
   },
   {
+    "id": "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]",
+    "translation": "DV SAN 인증서는 개인 도메인에서 HTTPS 트래픽을 허용하지만, 소유권을 입증하기 위해서는 도메인 검증이 필요합니다. 와일드카드 인증서는 제공된 CNAME 사용 시에만 HTTPS 트래픽을 허용합니다. [허가: dvSan, 와일드카드]"
+  },
+  {
     "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
     "translation": "원하는 서버의 UUID 값 또는 Hardware_Server.id입니다. 'hostname' 형식의 고유\n정규화된 도메인 이름에 해당하는 값입니다. <domain>여기서 < 및 >는 리터럴(예: myhost)입니다.<mydomain.com>"
   },
@@ -800,6 +852,10 @@
     "translation": "https://softlayer.github.io/reference/datatypes/SoftLayer_User_Customer/를 설명하는 json 문자열"
   },
   {
+    "id": "A note string stored for this username/password pair.",
+    "translation": "이 사용자 이름/비밀번호 쌍에 대해 저장된 참고 문자열입니다."
+  },
+  {
     "id": "A size or IOPS value must be given to modify this performance volume.",
     "translation": "이 성능 볼륨을 수정하려면 크기 또는 IOPS 값을 지정해야 합니다."
   },
@@ -822,6 +878,14 @@
   {
     "id": "A word (or string) used to filter presets",
     "translation": "사전 설정을 필터링하는 데 사용되는 단어(또는 문자열)"
+  },
+  {
+    "id": "ACCOUNT ID",
+    "translation": "계정 ID"
+  },
+  {
+    "id": "API Error.",
+    "translation": "API 오류입니다."
   },
   {
     "id": "APIKEY",
@@ -874,6 +938,10 @@
   {
     "id": "Access to {{.VolumeId}} was revoked for virtual server {{.VsID}}.",
     "translation": "가상 서버 {{.VsID}}에 대해 {{.VolumeId}}에 대한 액세스가 취소되었습니다."
+  },
+  {
+    "id": "Account",
+    "translation": "계정"
   },
   {
     "id": "Account ID",
@@ -1012,6 +1080,10 @@
     "translation": "고급 구성 플래그"
   },
   {
+    "id": "Akamai CNAME",
+    "translation": "Akamai CNAME"
+  },
+  {
     "id": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.",
     "translation": "모든 다중 vlan 규칙은 제공된 신임 정보를 사용하여 FortiGate 대시보드를 통해 관리해야 합니다."
   },
@@ -1024,6 +1096,10 @@
     "translation": "할당량"
   },
   {
+    "id": "Allows to create, remove or refresh user's API authentication key",
+    "translation": "사용자의 API 인증 키를 작성, 제거 또는 새로 고칠 수 있습니다."
+  },
+  {
     "id": "Allows you to change the route of your secondary subnets.\nSubnets may be routed as either Static or Portable, and that designation is dictated by the routing destination specified.\nStatic subnets have an ultimate routing destination of a single IP address but may not be routed to an existing subnet’s IP address whose subnet is routed as a Static.\nPortable subnets have an ultimate routing destination of a VLAN.\nA subnet can be routed to any resource within the same 'routing region' as the subnet itself, usually limited to a single data center.\n\nSee Also: https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n\t${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n\t${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n\t${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n",
     "translation": "보조 서브넷의 경로를 변경할 수 있습니다.\n서브넷은 정적 또는 이동식으로 라우팅될 수 있으며 해당 목적지는 지정된 라우팅 목적지에 의해 결정됩니다.\n정적 서브넷에는 단일 IP 주소의 궁극적인 라우팅 목적지가 있지만 서브넷이 고정으로 라우팅되는 기존 서브넷의 IP 주소로 라우팅되지 않을 수 있습니다.\n이동식 서브넷에는 VLAN의 궁극적인 라우팅 목적지가 있습니다.\n서브넷은 일반적으로 단일 데이터 센터로 제한되는 서브넷 자체와 동일한 '라우팅 지역' 내의 모든 리소스로 라우팅될 수 있습니다.\n\n참조:https://sldn.softlayer.com/reference/services/SoftLayer_Network_Subnet/route/\n\nEXAMPLE:\n${COMMAND_NAME} sl subnet route 1234567 --ip 11.22.33.44\n${COMMAND_NAME} sl subnet route 1234567 --server myUniqueHostname<domain.com>\n${COMMAND_NAME} sl subnet route 1234567 --vsi vsiId\n${COMMAND_NAME} sl subnet route 1234567 --vlan vlanId\n\n"
   },
@@ -1034,6 +1110,10 @@
   {
     "id": "An ID of one subnet to authorize",
     "translation": "권한 부여할 하나의 서브넷 ID"
+  },
+  {
+    "id": "An ID of one subnet to revoke",
+    "translation": "취소할 하나의 서브넷 ID"
   },
   {
     "id": "An IP address to authorize",
@@ -1252,12 +1332,28 @@
     "translation": "블록 볼륨 {{.VolumeId}}에서 LUN ID {{.LunID}}을(를) 보고합니다."
   },
   {
+    "id": "Bucket Name",
+    "translation": "버킷 이름"
+  },
+  {
+    "id": "Bucket name",
+    "translation": "버킷 이름"
+  },
+  {
+    "id": "Bucket name.",
+    "translation": "버킷 이름."
+  },
+  {
     "id": "Buffer file could not be closed: {{.Error}}.\n",
     "translation": "버퍼 파일을 닫을 수 없음: {{.Error}}.\n"
   },
   {
     "id": "Buffer file could not be created: {{.Error}}.\n",
     "translation": "버퍼 파일을 작성할 수 없음: {{.Error}}.\n"
+  },
+  {
+    "id": "CDN Unique ID",
+    "translation": "CDN 고유 ID"
   },
   {
     "id": "CIDR",
@@ -1288,12 +1384,20 @@
     "translation": "KMS 인스턴스에 있는 루트 키의 CRN"
   },
   {
+    "id": "Cache Key Rule",
+    "translation": "캐시 키 규칙"
+  },
+  {
     "id": "Cache key optimization",
     "translation": "캐시 키 최적화"
   },
   {
     "id": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.",
     "translation": "캐시 키 최적화. 선택할 수 있는 유효한 옵션은 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'입니다. 'include-specified' 또는 'ignore-specified'를 선택하는 경우 cache-description 옵션에 추가하십시오."
+  },
+  {
+    "id": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'.",
+    "translation": "다음 형식의 캐시 조회 규칙: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'."
   },
   {
     "id": "Call arbitrary API endpoints",
@@ -1352,8 +1456,16 @@
     "translation": "기존 로드 밸런서 취소"
   },
   {
+    "id": "Cancel an existing object storage instance.",
+    "translation": "기존 Object Storage 인스턴스를 취소합니다."
+  },
+  {
     "id": "Cancel existing snapshot space for a given volume",
     "translation": "지정된 볼륨에 대한 기존 스냅샷 영역 취소"
+  },
+  {
+    "id": "Cancel immediately instead of on the billing anniversary",
+    "translation": "청구 주기 대신 즉시 취소"
   },
   {
     "id": "Cancel the IPSec immediately instead of on the billing anniversary",
@@ -1366,6 +1478,10 @@
   {
     "id": "Cancel the file storage volume immediately instead of on the billing anniversary",
     "translation": "청구 주기 대신 즉시 파일 스토리지 볼륨 취소"
+  },
+  {
+    "id": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation",
+    "translation": "청구 항목에 대한 자원 또는 서비스를 취소합니다. 기본적으로 청구 항목은 다음 청구 날짜에 취소되며 \n자원의 재확보는 취소 후에 바로 시작됨됨"
   },
   {
     "id": "Cancel the snapshot space immediately instead of on the billing anniversary",
@@ -1432,6 +1548,14 @@
     "translation": "가상 서버 인스턴스를 이미지로 캡처"
   },
   {
+    "id": "Case",
+    "translation": "케이스"
+  },
+  {
+    "id": "Case Number",
+    "translation": "케이스 번호"
+  },
+  {
     "id": "Category",
     "translation": "카테고리"
   },
@@ -1444,12 +1568,24 @@
     "translation": "항목을 필터링하는 데 사용되는 카테고리 코드"
   },
   {
+    "id": "Category name.",
+    "translation": "카테고리 이름."
+  },
+  {
     "id": "CategoryCode",
     "translation": "CategoryCode"
   },
   {
+    "id": "Cdn with uniqueId: {{.ID}} was deleted.",
+    "translation": "uniqueId가 {{.ID}}인 CDN이 삭제되었습니다."
+  },
+  {
     "id": "Certificate Signing Request file",
     "translation": "인증서 서명 요청 파일"
+  },
+  {
+    "id": "Certificate Type",
+    "translation": "인증서 유형"
   },
   {
     "id": "Certificate file",
@@ -1476,12 +1612,20 @@
     "translation": "가상 서버 인스턴스가 사용할 준비가 되었는지 확인"
   },
   {
+    "id": "Classic Infrastructure Bandwidth commands",
+    "translation": "클래식 인프라 대역폭 명령"
+  },
+  {
     "id": "Classic Infrastructure Reports",
     "translation": "클래식 인프라 보고서"
   },
   {
     "id": "Classic infrastructure Account commands",
     "translation": "클래식 인프라 계정 명령"
+  },
+  {
+    "id": "Classic infrastructure Bandwidth commands",
+    "translation": "클래식 인프라 대역폭 명령"
   },
   {
     "id": "Classic infrastructure Block Storage",
@@ -1852,12 +1996,20 @@
     "translation": "전용 가상 서버용 호스트 작성"
   },
   {
+    "id": "Create a new CDN domain mapping",
+    "translation": "새 CDN 도메인 맵핑 작성"
+  },
+  {
     "id": "Create a new VLAN",
     "translation": "새 VLAN 작성"
   },
   {
     "id": "Create a new firewall",
     "translation": "새 방화벽 작성"
+  },
+  {
+    "id": "Create a password for a software component.",
+    "translation": "소프트웨어 구성요소의 비밀번호를 작성하십시오."
   },
   {
     "id": "Create a placement group",
@@ -1890,6 +2042,14 @@
   {
     "id": "Create a zone",
     "translation": "구역 작성"
+  },
+  {
+    "id": "Create an origin path for an existing CDN mapping.",
+    "translation": "기존 CDN 맵핑의 오리진 경로를 작성하십시오."
+  },
+  {
+    "id": "Create an user's API authentication key",
+    "translation": "사용자의 API 인증 키 작성"
   },
   {
     "id": "Create credentials for an IBM Cloud Object Storage Account.",
@@ -1926,6 +2086,10 @@
   {
     "id": "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}.",
     "translation": "{{.StaticIP}}에서 {{.RemoteIP}} #{{.ID}}(으)로의 변환을 작성했습니다."
+  },
+  {
+    "id": "Creates a purge record and also initiates the purge call.",
+    "translation": "제거 레코드를 작성하고 제거 호출도 시작합니다."
   },
   {
     "id": "Creates a user",
@@ -1972,6 +2136,14 @@
     "translation": "데이터 센터"
   },
   {
+    "id": "Data in",
+    "translation": "데이터 입력"
+  },
+  {
+    "id": "Data out",
+    "translation": "데이터 출력"
+  },
+  {
     "id": "Datacenter",
     "translation": "데이터 센터"
   },
@@ -1998,6 +2170,10 @@
   {
     "id": "Datacenter to remove",
     "translation": "데이터 센터 제거 방법"
+  },
+  {
+    "id": "Datacenters",
+    "translation": "데이터 센터"
   },
   {
     "id": "Date",
@@ -2044,6 +2220,10 @@
     "translation": "인스턴스당 기본 시간별 가격"
   },
   {
+    "id": "Delete a CDN domain mapping.",
+    "translation": "CDN 도메인 맵핑을 삭제합니다."
+  },
+  {
     "id": "Delete a L7 policy",
     "translation": "L7 정책 삭제"
   },
@@ -2064,6 +2244,10 @@
     "translation": "프로토콜 삭제"
   },
   {
+    "id": "Delete a provisioning scriptt.",
+    "translation": "프로비저닝 스크립트를 삭제합니다."
+  },
+  {
     "id": "Delete a snapshot on a given volume",
     "translation": "지정된 볼륨에서 스냅샷 삭제"
   },
@@ -2082,6 +2266,14 @@
   {
     "id": "Delete the given security group",
     "translation": "제공된 보안 그룹 삭제"
+  },
+  {
+    "id": "Delete the quote of an order.",
+    "translation": "주문 견적을 삭제합니다."
+  },
+  {
+    "id": "Deny sharing of an image template with another account.",
+    "translation": "다른 계정과의 이미지 템플리트 공유를 거부합니다."
   },
   {
     "id": "Description",
@@ -2108,12 +2300,20 @@
     "translation": "특정 이벤트에 대한 세부사항 및 이벤트 수신확인 기능입니다."
   },
   {
+    "id": "Device",
+    "translation": "디바이스"
+  },
+  {
     "id": "Device Name",
     "translation": "디바이스 이름"
   },
   {
     "id": "Device Type",
     "translation": "디바이스 유형"
+  },
+  {
+    "id": "Device name",
+    "translation": "장치 이름"
   },
   {
     "id": "Devices",
@@ -2308,6 +2508,10 @@
     "translation": "예: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    이 명령은 데이터 센터 dal13에서 4개의 CPU, 16GB RAM, 100GB SanDisk, Ubuntu 16.04, 1Gbps 공용 및 사설 업링크를 포함하여 VSI용 견적을 배치합니다."
   },
   {
+    "id": "Each user can only have a single API key.",
+    "translation": "각 사용자는 단일 API 키만 가질 수 있습니다."
+  },
+  {
     "id": "Earliest date to retrieve events for [YYYY-MM-DD]. Default: 2 days ago.",
     "translation": "[YYYY-MM-DD]에 대한 이벤트를 검색하는 가장 빠른 날짜입니다. 기본값: 2일 전."
   },
@@ -2440,6 +2644,14 @@
     "translation": "특정 권한을 사용하거나 사용 안함으로 설정합니다."
   },
   {
+    "id": "Enable or disable compression of JPEG images for requests over certain network conditions.",
+    "translation": "특정 네트워크 상태에서 요청에 대해 JPEG 이미지의 압축을 사용하거나 사용하지 않습니다."
+  },
+  {
+    "id": "Enable or disable the embedded object prefetching feature.",
+    "translation": "임베드된 오브젝트 프리페치 기능을 사용 또는 사용 안함으로 설정합니다."
+  },
+  {
     "id": "Enable or disable user vpn subnets manual config.",
     "translation": "사용자 vpn 서브넷 수동 구성을 사용 또는 사용 안함으로 설정합니다."
   },
@@ -2524,6 +2736,14 @@
     "translation": "IOPS당 Endurance 티어"
   },
   {
+    "id": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you.",
+    "translation": "전역에서 고유한 하위 도메인을 입력하십시오. 전체 URL은 DNS 구성에 사용되는 CNAME이 됩니다. 값을 입력하지 않으면 당사에서 CNAME을 대신 생성합니다."
+  },
+  {
+    "id": "Error marshalling resource",
+    "translation": "자원 마샬링하는 중 오류 발생"
+  },
+  {
     "id": "Error occurred while adding note to volume: {{.VolumeID}}",
     "translation": "노트를 볼륨에 추가하는 중에 오류가 발생했습니다. {{.VolumeID}}"
   },
@@ -2590,6 +2810,10 @@
   {
     "id": "FQDN",
     "translation": "FQDN"
+  },
+  {
+    "id": "Failback a {{.storageType}} volume from replica",
+    "translation": "복제본에서 {{.storageType}} 볼륨 장애 복구"
   },
   {
     "id": "Failback of volume {{.VolumeID}} is now in progress.",
@@ -2672,6 +2896,10 @@
     "translation": "서브넷을 추가하는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to add user's API authentication key",
+    "translation": "사용자의 API 인증 키 추가 실패"
+  },
+  {
     "id": "Failed to add user.\n",
     "translation": "사용자를 추가하는 데 실패했습니다.\n"
   },
@@ -2752,6 +2980,10 @@
     "translation": "로드 밸런서 {{.LBID}}을(를) 취소하는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to cancel object-storage: {{.objectStorageID}}.",
+    "translation": "오브젝트 스토리지 {{.objectStorageID}}을(를) 취소하는 데 실패했습니다."
+  },
+  {
     "id": "Failed to cancel snapshot space for volume {{.ID}}.\n",
     "translation": "볼륨 {{.ID}}에 대한 스냅샷 영역을 취소하는 데 실패했습니다.\n"
   },
@@ -2774,6 +3006,22 @@
   {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "볼륨 {{.VolumeId}}에서 새 LUN ID를 확인하는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to create Provisioning Hook.",
+    "translation": "프로비저닝 후크를 작성하는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to create Software Credential.",
+    "translation": "소프트웨어 신임 정보를 작성하는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to create a CDN.",
+    "translation": "CDN을 작성하는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to create a Origin.",
+    "translation": "오리진을 작성하는 데 실패했습니다."
   },
   {
     "id": "Failed to create credential. ",
@@ -2852,6 +3100,14 @@
     "translation": "L7 멤버 {{.Member}} 삭제 실패: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete Provisioning Hook.",
+    "translation": "프로비저닝 후크를 삭제하는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to delete Quote",
+    "translation": "견적을 삭제하는 데 실패했습니다"
+  },
+  {
     "id": "Failed to delete Tag",
     "translation": "태그를 삭제하는 데 실패함"
   },
@@ -2880,6 +3136,10 @@
     "translation": "로드 밸런서 멤버 {{.Member}} 삭제 실패: {{.Error}}.\n"
   },
   {
+    "id": "Failed to delete origin.",
+    "translation": "오리진을 삭제하는 데 실패했습니다."
+  },
+  {
     "id": "Failed to delete protocol {{.ProtocolID}}: {{.Error}}.\n",
     "translation": "{{.ProtocolID}} 프로토콜 삭제 실패: {{.Error}}.\n"
   },
@@ -2906,6 +3166,14 @@
   {
     "id": "Failed to delete zone: {{.Zone}}.\n",
     "translation": "구역 삭제 실패: {{.Zone}}.\n"
+  },
+  {
+    "id": "Failed to deleted a CDN.",
+    "translation": "CDN을 삭제하는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to deny share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "{{.AccountId}} 계정과 {{.ImageId}} 이미지 공유를 거부하는 데 실패했습니다."
   },
   {
     "id": "Failed to disable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n",
@@ -3076,6 +3344,10 @@
     "translation": "팟(Pod)을 가져오는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to get Provisioning Hooks.",
+    "translation": "프로비저닝 후크를 가져오는 데 실패했습니다."
+  },
+  {
     "id": "Failed to get Quote\n",
     "translation": "견적 가져오기 실패 \n"
   },
@@ -3112,6 +3384,10 @@
     "translation": "연결되지 않은 태그를 가져오는 데 실패했습니다."
   },
   {
+    "id": "Failed to get Upgrade Requests.",
+    "translation": "업그레이드 요청을 가져오는 데 실패했습니다."
+  },
+  {
     "id": "Failed to get User Customer Notifications.",
     "translation": "사용자 고객 알림을 가져오는 데 실패했습니다."
   },
@@ -3132,6 +3408,10 @@
     "translation": "계정의 연관된 가상 스토리지 볼륨을 가져오는 데 실패했습니다."
   },
   {
+    "id": "Failed to get all datacenters.",
+    "translation": "모든 데이터 센터를 가져오는 데 실패했습니다."
+  },
+  {
     "id": "Failed to get all datacenters.\n",
     "translation": "모든 데이터 센터를 가져오는 데 실패했습니다.\n"
   },
@@ -3146,6 +3426,10 @@
   {
     "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
     "translation": "하드웨어 서버 {{.ID}}에 대한 대역폭 할당 세부사항을 가져오는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to get bandwidth summary",
+    "translation": "대역폭 요약 가져오기 실패"
   },
   {
     "id": "Failed to get bare metal servers.\n",
@@ -3218,6 +3502,10 @@
   {
     "id": "Failed to get hardware server {{.ID}}.\n",
     "translation": "하드웨어 서버 {{.ID}}을(를) 가져오는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to get hardware server: {{.ID}}.",
+    "translation": "하드웨어 서버를 가져오는 데 실패했습니다. {{.ID}}."
   },
   {
     "id": "Failed to get hardware server: {{.ID}}.\n",
@@ -3318,6 +3606,10 @@
   {
     "id": "Failed to get orders.",
     "translation": "주문을 받는 데 실패했습니다."
+  },
+  {
+    "id": "Failed to get origins list for CDN: {{.cdnId}}.",
+    "translation": "CDN에 대한 오리진 목록을 가져오는 데 실패했습니다. {{.cdnId}}."
   },
   {
     "id": "Failed to get package for {{.Type}} firewall.\n",
@@ -3472,6 +3764,10 @@
     "translation": "사용자 vpn 대체를 가져오는 데 실패했습니다."
   },
   {
+    "id": "Failed to get user's API authentication keys",
+    "translation": "사용자의 API 인증 키 가져오기 실패"
+  },
+  {
     "id": "Failed to get user.",
     "translation": "사용자를 가져오는 데 실패했습니다."
   },
@@ -3534,6 +3830,10 @@
   {
     "id": "Failed to list VLANs on your account.\n",
     "translation": "계정의 VLAN을 나열하는 데 실패했습니다.\n"
+  },
+  {
+    "id": "Failed to list all item cancelations.",
+    "translation": "모든 항목 취소를 나열하는 데 실패했습니다."
   },
   {
     "id": "Failed to list available OS's.",
@@ -3732,6 +4032,10 @@
     "translation": "가상 서버 인스턴스 전원 켜기 실패: {{.VsID}}.\n"
   },
   {
+    "id": "Failed to purge.",
+    "translation": "제거하지 못했습니다."
+  },
+  {
     "id": "Failed to reach virtual guest instance {{.Id}}.",
     "translation": "가상 게스트 인스턴스 {{.Id}}에 도달하는 데 실패했습니다."
   },
@@ -3824,6 +4128,10 @@
     "translation": "{{.ID}} IPSec에서 {{.TransID}} ID의 변환을 제거하는 데 실패했습니다."
   },
   {
+    "id": "Failed to remove user's API authentication key",
+    "translation": "사용자의 API 인증 키 제거 실패"
+  },
+  {
     "id": "Failed to remove {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.\n",
     "translation": "IPSec {{.ContextID}}에서 {{.Type}} 서브넷 #{{.ID}}을(를) 제거하는 데 실패했습니다.\n"
   },
@@ -3882,6 +4190,10 @@
   {
     "id": "Failed to set the snapshort notification  for volume '{{.ID}}'.\n",
     "translation": "'{{.ID}}' 볼륨에 대한 스냅샷 알림을 설정하는 데 실패했습니다. \n"
+  },
+  {
+    "id": "Failed to share image: {{.ImageId}} with account {{.AccountId}}.",
+    "translation": "{{.AccountId}} 계정과 {{.ImageId}} 이미지를 공유하는 데 실패했습니다."
   },
   {
     "id": "Failed to show event log.\n",
@@ -4020,6 +4332,10 @@
     "translation": "{{.ID}} IPSec에서 {{.TransID}} ID의 변환을 업데이트하는 데 실패했습니다."
   },
   {
+    "id": "Failed to update user vpn password.",
+    "translation": "사용자 VPN 비밀번호를 업데이트하는 데 실패했습니다."
+  },
+  {
     "id": "Failed to update user {{.UserID}}.",
     "translation": "사용자 {{.UserID}}을(를) 업데이트하는 데 실패했습니다."
   },
@@ -4102,6 +4418,10 @@
   {
     "id": "Features",
     "translation": "기능"
+  },
+  {
+    "id": "File Extension",
+    "translation": "파일 확장자"
   },
   {
     "id": "File volume {{.ID}} has been marked for immediate snapshot cancellation.",
@@ -4512,6 +4832,14 @@
     "translation": "비용 청구 항목에 대한 세부사항을 가져옵니다."
   },
   {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video",
+    "translation": "이 오리진에 도달하는 데 사용될 수 있는 제공된 도메인에 대한 상대 경로를 제공하십시오. 예: 'articles/video' => 'www.example.com/articles/video"
+  },
+  {
+    "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]",
+    "translation": "이 오리진에 도달하는 데 사용될 수 있는 제공된 도메인에 대한 상대 경로를 제공하십시오. 예: 'articles/video' => 'www.example.com/articles/video[필수]"
+  },
+  {
     "id": "Grant access from a user to an specific device",
     "translation": "특정 장치에 대한 사용자 액세스 부여"
   },
@@ -4684,6 +5012,10 @@
     "translation": "시간당"
   },
   {
+    "id": "Hourly/Monthly",
+    "translation": "매시/매월"
+  },
+  {
     "id": "How many invoices to get back.",
     "translation": "반환 받을 송장 수입니다."
   },
@@ -4696,8 +5028,28 @@
     "translation": "HTTP 포트"
   },
   {
+    "id": "Http port",
+    "translation": "HTTP 포트"
+  },
+  {
+    "id": "Http port. [http or https is required]",
+    "translation": "Http 포트. [http 또는 https는 필수임]"
+  },
+  {
     "id": "Https Port",
     "translation": "HTTPS 포트"
+  },
+  {
+    "id": "Https port",
+    "translation": "HTTPS 포트"
+  },
+  {
+    "id": "Https port. [http or https is required]",
+    "translation": "Https 포트. [http 또는 https는 필수임]"
+  },
+  {
+    "id": "IBM CNAME",
+    "translation": "IBM CNAME"
   },
   {
     "id": "ID",
@@ -4854,6 +5206,14 @@
   {
     "id": "Image {{.ImageID}} was deleted.",
     "translation": "{{.ImageID}} 이미지가 삭제되었습니다."
+  },
+  {
+    "id": "Image {{.ImageId}} was deny shared with account {{.AccountId}}.",
+    "translation": "{{.ImageId}} 이미지가 계정 {{.AccountId}}과(와)의 공유가 거부되었습니다."
+  },
+  {
+    "id": "Image {{.ImageId}} was shared with account {{.AccountId}}.",
+    "translation": "{{.ImageId}} 이미지가 계정 {{.AccountId}}과(와) 공유되었습니다."
   },
   {
     "id": "Immediate cancellation.",
@@ -5300,6 +5660,10 @@
     "translation": "지정된 호스트 ID에 대해 블록 스토리지가 지정된 서브넷을 나열합니다."
   },
   {
+    "id": "List cancelations.",
+    "translation": "취소를 나열합니다."
+  },
+  {
     "id": "List cloud block storage.",
     "translation": "Cloud Block Storage를 나열합니다."
   },
@@ -5388,6 +5752,10 @@
     "translation": "로드 밸런서 주문 옵션 나열"
   },
   {
+    "id": "List origin path for an existing CDN mapping.",
+    "translation": "기존 CDN 맵핑의 오리진 경로를 나열합니다."
+  },
+  {
     "id": "List package items that are used for ordering",
     "translation": "주문에 사용된 패키지 항목 나열"
   },
@@ -5436,6 +5804,10 @@
     "translation": "계정의 가상 서버 인스턴스 나열"
   },
   {
+    "id": "List {{.storageType}} storage snapshots",
+    "translation": "{{.storageType}} 스토리지 스냅샷 나열"
+  },
+  {
     "id": "Lists Email Delivery Service.",
     "translation": "이메일 전달 서비스를 나열합니다."
   },
@@ -5472,6 +5844,10 @@
     "translation": "위치"
   },
   {
+    "id": "Location Conflicts",
+    "translation": "위치 충돌"
+  },
+  {
     "id": "Location/Region",
     "translation": "위치/지역"
   },
@@ -5484,8 +5860,16 @@
     "translation": "MAC 주소"
   },
   {
+    "id": "Maintance Window",
+    "translation": "유지보수 기간"
+  },
+  {
     "id": "Manage Classic infrastructure services",
     "translation": "클래식 인프라 서비스 관리"
+  },
+  {
+    "id": "Manage LBaaS health checks.",
+    "translation": "LBaaS 상태 검사를 관리합니다."
   },
   {
     "id": "Manage VSIs that require migration",
@@ -5660,6 +6044,10 @@
     "translation": "로드 밸런서 L7 풀의 이름"
   },
   {
+    "id": "Name that ordered the item.",
+    "translation": "항목을 주문한 이름입니다."
+  },
+  {
     "id": "Netscaler",
     "translation": "Netscaler"
   },
@@ -5832,6 +6220,10 @@
     "translation": "참고:"
   },
   {
+    "id": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC",
+    "translation": "참고: 6,000을 초과하는 IOPS는 다음에서만 사용 가능합니다. https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
+  },
+  {
     "id": "Notes",
     "translation": "참고"
   },
@@ -5846,6 +6238,10 @@
   {
     "id": "Number",
     "translation": "수"
+  },
+  {
+    "id": "Number Of Items Cancelled",
+    "translation": "취소된 항목 수"
   },
   {
     "id": "Number of CPU cores",
@@ -5916,6 +6312,14 @@
     "translation": "오브젝트 마스크: 리턴된 필드를 제한하는 데 사용"
   },
   {
+    "id": "Object-storage {{.objectStorageID}} has been marked for cancellation.",
+    "translation": "오브젝트 스토리지 {{.objectStorageID}}이(가) 취소 대상으로 표시되었습니다."
+  },
+  {
+    "id": "Object-storage {{.objectStorageID}} has been marked for immediate cancellation.",
+    "translation": "오브젝트 스토리지 {{.objectStorageID}}이(가) 즉시 취소되도록 표시되었습니다."
+  },
+  {
     "id": "One Time",
     "translation": "일회성"
   },
@@ -5980,6 +6384,10 @@
     "translation": "respect-headers 옵션에는 '0' 또는 '1'만 허용됩니다."
   },
   {
+    "id": "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly",
+    "translation": "청구 비율(기본값은 매월) 선택사항(시간별 또는 월별)에 대한 선택적 매개변수"
+  },
+  {
     "id": "Optional parameter for Billing rate (default to monthly), options are: hourly, monthly",
     "translation": "청구 비율(기본값: monthly)에 대한 선택적 매개변수, 옵션: hourly, monthly"
   },
@@ -6032,6 +6440,10 @@
     "translation": "기존 볼륨을 복제하여 블록 볼륨 주문"
   },
   {
+    "id": "Order a file storage replica volume",
+    "translation": "파일 스토리지 복제본 볼륨 주문"
+  },
+  {
     "id": "Order a file storage volume",
     "translation": "파일 스토리지 볼륨 주문"
   },
@@ -6080,6 +6492,10 @@
     "translation": "하드웨어 서버 주문/작성"
   },
   {
+    "id": "Order/create a provisioning script.",
+    "translation": "프로비저닝 스크립트를 주문/작성하십시오."
+  },
+  {
     "id": "Ordered By",
     "translation": "정렬 기준"
   },
@@ -6090,6 +6506,10 @@
   {
     "id": "Origin",
     "translation": "기점"
+  },
+  {
+    "id": "Origin Host",
+    "translation": "오리진 호스트"
   },
   {
     "id": "Origin Type",
@@ -6158,6 +6578,10 @@
   {
     "id": "PACKAGE_KEYNAME",
     "translation": "PACKAGE_KEYNAME"
+  },
+  {
+    "id": "PATH",
+    "translation": "PATH"
   },
   {
     "id": "PLACEMENTGROUP_ID",
@@ -6266,6 +6690,10 @@
   {
     "id": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]",
     "translation": "Performance 스토리지 IOPs, 100의 배수이며 100 - 6000 사이 [storage-type performance에 필수]"
+  },
+  {
+    "id": "Performance configuration. [Permit: web, video, file, dynamic]",
+    "translation": "성능 구성. [허용: 웹, 비디오, 파일, 동적]"
   },
   {
     "id": "Permanently removes an SSH key",
@@ -6414,6 +6842,10 @@
   {
     "id": "Policy priority",
     "translation": "정책 우선순위"
+  },
+  {
+    "id": "Pool",
+    "translation": "풀"
   },
   {
     "id": "Port Range Max",
@@ -6684,6 +7116,10 @@
     "translation": "수량"
   },
   {
+    "id": "Quote: {{.quoteID}} was deleted.",
+    "translation": "견적: {{.quoteID}}이(가) 삭제되었습니다."
+  },
+  {
     "id": "RECORD",
     "translation": "RECORD"
   },
@@ -6702,6 +7138,10 @@
   {
     "id": "RULE_ID",
     "translation": "RULE_ID"
+  },
+  {
+    "id": "Range",
+    "translation": "Range"
   },
   {
     "id": "Read Failure: {{.Error}}.\n",
@@ -6770,6 +7210,10 @@
   {
     "id": "Refresh a duplicate volume with a snapshot from its parent.",
     "translation": "복제 볼륨을 해상 상위의 스냅샷으로 새로 고칩니다."
+  },
+  {
+    "id": "Refresh an user's API authentication key",
+    "translation": "사용자의 API 인증 키 새로 고치기"
   },
   {
     "id": "Region",
@@ -6848,6 +7292,10 @@
     "translation": "서브넷에 대한 액세스 권한을 제거합니다."
   },
   {
+    "id": "Remove an user's API authentication key",
+    "translation": "사용자의 API 인증 키 제거"
+  },
+  {
     "id": "Remove block storage subnets to the given host id.",
     "translation": "지정된 호스트 ID에 대한 블록 스토리지 서브넷을 제거합니다."
   },
@@ -6870,6 +7318,10 @@
   {
     "id": "Removes an empty tag from your account.",
     "translation": "계정에서 비어 있는 태그를 제거합니다."
+  },
+  {
+    "id": "Removes an origin path for an existing CDN mapping.",
+    "translation": "기존 CDN 맵핑의 오리진 경로를 제거합니다."
   },
   {
     "id": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.",
@@ -6904,6 +7356,10 @@
     "translation": "터널 컨텍스트의 요청 구성"
   },
   {
+    "id": "Requested by",
+    "translation": "요청자"
+  },
+  {
     "id": "Required User",
     "translation": "필수 사용자"
   },
@@ -6922,6 +7378,10 @@
   {
     "id": "Respect headers. The value 1 is On and 0 is Off.",
     "translation": "헤더를 준수합니다. 값 1은 설정이고 0은 해제입니다."
+  },
+  {
+    "id": "Restore {{.storageType}} volume using a given snapshot",
+    "translation": "지정된 스냅샷을 사용하여 {{.storageType}} 볼륨 복원"
   },
   {
     "id": "Restriction",
@@ -7092,6 +7552,10 @@
     "translation": "견적 저장"
   },
   {
+    "id": "Saved",
+    "translation": "저장됨"
+  },
+  {
     "id": "Schedule",
     "translation": "스케줄"
   },
@@ -7196,6 +7660,10 @@
     "translation": "ipAddress의 참고를 설정합니다."
   },
   {
+    "id": "Set the user VPN password.",
+    "translation": "사용자 VPN 비밀번호를 설정하십시오."
+  },
+  {
     "id": "Sets a user's status to CANCEL_PENDING, which will immediately disable the account, and will eventually be fully removed from the account by an automated internal process",
     "translation": "사용자의 상태를 CANCEL_PENDING으로 설정합니다. 이 경우 해당 계정이 즉시 사용 안함으로 설정되며 결국 자동화된 내부 프로세스를 통해 계정에서 완전히 제거됩니다."
   },
@@ -7216,6 +7684,14 @@
     "translation": "설정"
   },
   {
+    "id": "Share an image template with another account.",
+    "translation": "이미지 템플리트를 다른 계정과 공유합니다."
+  },
+  {
+    "id": "Shared on",
+    "translation": "공유 날짜"
+  },
+  {
     "id": "Short Name",
     "translation": "짧은 이름"
   },
@@ -7230,6 +7706,10 @@
   {
     "id": "Show L7 pool details",
     "translation": "L7 풀 세부사항 표시"
+  },
+  {
+    "id": "Show all Provisioning Scripts.",
+    "translation": "모든 프로비저닝 스크립트를 표시합니다."
   },
   {
     "id": "Show all licenses.",
@@ -7292,8 +7772,16 @@
     "translation": "비밀번호 표시(유출되지 않도록 주의)"
   },
   {
+    "id": "Show prices in the storage, snapshot and iops range tables.",
+    "translation": "스토리지, 스냅샷 및 iops 범위 테이블에 가격을 표시합니다."
+  },
+  {
     "id": "Show the users API key",
     "translation": "사용자 API 키 표시"
+  },
+  {
+    "id": "Show upgrades orders.",
+    "translation": "업그레이드 주문을 표시합니다."
   },
   {
     "id": "Shows a very detailed list of charges",
@@ -7328,6 +7816,10 @@
     "translation": "크기(GB)"
   },
   {
+    "id": "Size On Disk",
+    "translation": "디스크의 크기"
+  },
+  {
     "id": "Size of duplicate block volume in GB, if no size is specified, the size of the original volume will be used",
     "translation": "복제 블록 볼륨 크기(GB).크기가 지정되지 않은 경우 원본 볼륨의 크기가 사용됨"
   },
@@ -7346,6 +7838,10 @@
   {
     "id": "Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB",
     "translation": "전용 호스트의 크기이며, 현재는 하나의 크기(56_CORES_X_242_RAM_X_1_4_TB)만 사용 가능합니다."
+  },
+  {
+    "id": "Snapshot",
+    "translation": "스냅샷"
   },
   {
     "id": "Snapshot Size (GB)",
@@ -7392,6 +7888,10 @@
     "translation": "소프트웨어"
   },
   {
+    "id": "Software not found",
+    "translation": "소프트웨어를 찾을 수 없음"
+  },
+  {
     "id": "Specifies if image is bring your own license",
     "translation": "이미지가 BYOL(Bring Your Own License)인지 지정함"
   },
@@ -7414,6 +7914,10 @@
   {
     "id": "Specify output format, only JSON is supported now.",
     "translation": "출력 형식을 지정합니다. 현재는 JSON만 지원됩니다."
+  },
+  {
+    "id": "Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions.",
+    "translation": "CDN 서비스에 저장될 수 있는 파일 확장자를 쉼표로 분리하여 지정하십시오. 예를 들어, 'jpg, pdf, jpeg, png'은 유효한 목록입니다. 모든 확장자를 허용하려면 플래그를 비워 두십시오."
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
@@ -7484,6 +7988,10 @@
     "translation": "상태:"
   },
   {
+    "id": "Storage",
+    "translation": "스토리지"
+  },
+  {
     "id": "Storage Size (GB)",
     "translation": "스토리지 크기(GB)"
   },
@@ -7532,6 +8040,10 @@
     "translation": "사용자의 서브넷 액세스를 추가했습니다."
   },
   {
+    "id": "Successfully added. New API Authentication Key: {{.apiAuthenticationKey}}",
+    "translation": "추가되었습니다. 새 API 인증 키: {{.apiAuthenticationKey}}"
+  },
+  {
     "id": "Successfully assigned subnet id: {{.subnetID}} to allowed host id: {{.accessID}}",
     "translation": "서브넷 ID: {{.subnetID}}을(를) 허용되는 호스트 ID: {{.accessID}}에 지정함"
   },
@@ -7552,6 +8064,10 @@
     "translation": "디바이스 펌웨어가 리플래시됨"
   },
   {
+    "id": "Successfully removed Provisioning Hook.",
+    "translation": "프로비저닝 후크를 제거했습니다."
+  },
+  {
     "id": "Successfully removed User Customer notification.",
     "translation": "사용자 고객 알림을 제거했습니다."
   },
@@ -7564,8 +8080,16 @@
     "translation": "서브넷 ID: {{.subnetID}}을(를) 허용되는 호스트 ID: {{.accessID}}에서 제거함"
   },
   {
+    "id": "Successfully removed user's API authentication key",
+    "translation": "사용자의 API 인증 키 제거 완료"
+  },
+  {
     "id": "Successfully send request to toggle IPMI interface of hardware server '{{.ID}}'.",
     "translation": "하드웨어 서버 '{{.ID}}'의 IPMI 인터페이스를 토글하기 위해 요청을 전송했습니다."
+  },
+  {
+    "id": "Successfully updated user VPN password.",
+    "translation": "사용자 VPN 비밀번호를 업데이트했습니다."
   },
   {
     "id": "Successfully {{.action}} user vpn subnets manual config",
@@ -7578,6 +8102,10 @@
   {
     "id": "Summary info about tickets",
     "translation": "티켓에 대한 요약 정보"
+  },
+  {
+    "id": "Summary report for every pool/server.",
+    "translation": "모든 풀/서버에 대한 요약 보고서."
   },
   {
     "id": "Support",
@@ -7780,6 +8308,10 @@
     "translation": "복합 유형의 주문입니다. 이 유형은 'SoftLayer_Container_Product_Order_'로 시작합니다."
   },
   {
+    "id": "The date the billing item was created (YYYY-MM-DD).",
+    "translation": "청구 항목이 작성된 날짜(YYYY-MM-DD)입니다."
+  },
+  {
     "id": "The dedicated host is migrating: {{.HostId}}.",
     "translation": "{{.HostId}} 전용 호스트가 마이그레이션 중입니다."
   },
@@ -7802,6 +8334,14 @@
   {
     "id": "The earliest date we want to search for event logs [YYYY-MM-DD].",
     "translation": "이벤트 로그를 검색하는 가장 빠른 날짜[YYYY-MM-DD]입니다."
+  },
+  {
+    "id": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.",
+    "translation": "에지 서버는 HTTP 헤더의 호스트 헤더를 사용하여 오리진 호스트와 통신합니다. 기본값은 호스트 이름입니다."
+  },
+  {
+    "id": "The endpoint that the script will be downloaded.",
+    "translation": "스크립트를 다운로드할 엔드포인트입니다."
   },
   {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
@@ -7888,12 +8428,20 @@
     "translation": "티켓에 표시되는 첨부의 이름"
   },
   {
+    "id": "The name of the hook.",
+    "translation": "후크의 이름입니다."
+  },
+  {
     "id": "The name of the image {{.ID}} is updated.",
     "translation": "{{.ID}} 이미지의 이름이 업데이트되었습니다."
   },
   {
     "id": "The name of the security group",
     "translation": "보안 그룹의 이름"
+  },
+  {
+    "id": "The name of this specific piece of software.",
+    "translation": "이 특정 소프트웨어 부분의 이름입니다."
   },
   {
     "id": "The netscaler ID has to be a positive integer.",
@@ -7944,8 +8492,28 @@
     "translation": "{{.OrderID}}을(를) 주문했습니다."
   },
   {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint",
+    "translation": "오리진 유형입니다. [허용: 서버, 스토리지] 참고: OriginType이 스토리지인 경우 OriginHost가 엔드포인트로 사용됨"
+  },
+  {
+    "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint.",
+    "translation": "오리진 유형입니다. [허용: 서버, 스토리지] 참고: OriginType이 스토리지인 경우 OriginHost가 엔드포인트로 사용됩니다."
+  },
+  {
+    "id": "The origin {{.Id}} with path {{.Path}} was deleted.",
+    "translation": "경로가 {{.Path}}인 오리진 {{.Id}}이(가) 삭제되었습니다."
+  },
+  {
     "id": "The original volume has been cancelled, unable to order duplicate volume",
     "translation": "원본 볼륨이 취소되었으며 복제 볼륨을 주문할 수 없음"
+  },
+  {
+    "id": "The password part of the username/password pair.",
+    "translation": "사용자 이름/비밀번호 쌍의 비밀번호 파트입니다."
+  },
+  {
+    "id": "The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html",
+    "translation": "Akamai 에지 서버가 주기적으로 테스트 오브젝트를 페치하는 경로입니다. 예 = /detection-test-object.html"
   },
   {
     "id": "The port has to be a positive integer.",
@@ -8106,6 +8674,10 @@
   {
     "id": "The user data of virtual server instance: {{.VsId}} was updated.",
     "translation": "{{.VsId}} 가상 서버 인스턴스의 사용자 데이터가 업데이트되었습니다."
+  },
+  {
+    "id": "The username part of the username/password pair.",
+    "translation": "사용자 이름/비밀번호 쌍의 사용자 이름 파트입니다."
   },
   {
     "id": "The value of option '--quantity' should be greater or equal to 1.",
@@ -8276,6 +8848,10 @@
     "translation": "이 작업은 로드 밸런서 {{.LBID}}을(를) 취소하며 이를 실행 취소할 수 없습니다. 계속하시겠습니까?"
   },
   {
+    "id": "This will cancel the object-storage: {{.ID}} and cannot be undone. Continue?",
+    "translation": "이를 수행하면 오브젝트 스토리지 {{.ID}}이(가) 취소되며 실행 취소할 수 없습니다. 계속하시겠습니까?"
+  },
+  {
     "id": "This will cancel the subnet: {{.ID}} and cannot be undone. Continue?",
     "translation": "이 작업은 {{.ID}} 서브넷을 취소하며 이를 실행 취소할 수 없습니다. 계속하시겠습니까?"
   },
@@ -8400,6 +8976,10 @@
     "translation": "데이터 센터 추가"
   },
   {
+    "id": "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]",
+    "translation": "웹 사이트로 요청을 라우트하려면 웹 사이트의 호스트 이름을 입력하십시오(예: www.example.com 또는 app.example.com). [필수]"
+  },
+  {
     "id": "Toggle the IPMI interface on and off. This command is asynchronous.",
     "translation": "IPMI 인터페이스를 설정하거나 해제하십시오. 이 명령은 비동기 명령입니다."
   },
@@ -8422,6 +9002,10 @@
   {
     "id": "Total number of result to return. -1 to return ALL, there may be a LOT of these.  [default: 50]",
     "translation": "리턴할 총 결과 수입니다. 모두를 리턴하려면 -1을 지정하십시오. 이러한 경우가 많습니다. [기본값: 50]"
+  },
+  {
+    "id": "Total usage",
+    "translation": "총 사용량"
   },
   {
     "id": "True",
@@ -8556,6 +9140,10 @@
     "translation": "ID가 {{.storageID}}인 오브젝트 스토리지를 찾을 수 없습니다.\n"
   },
   {
+    "id": "Unable to find object-storage with objectStorageID {{.objectStorageID}}.",
+    "translation": "objectStorageID {{.objectStorageID}}의 오브젝트 스토리지를 찾을 수 없습니다."
+  },
+  {
     "id": "Unable to find resource record with ID: {{.RecordID}}.\n",
     "translation": "ID가 {{.RecordID}}인 리소스 레코드를 찾을 수 없습니다.\n"
   },
@@ -8668,12 +9256,20 @@
     "translation": "모든 하드 드라이브 펌웨어 업그레이드"
   },
   {
+    "id": "Uri",
+    "translation": "URI"
+  },
+  {
     "id": "Url",
     "translation": "Url"
   },
   {
     "id": "Url path for HTTP/HTTPS checks",
     "translation": "HTTP/HTTPS 검사의 URL 경로"
+  },
+  {
+    "id": "Usage information.",
+    "translation": "사용법 정보."
   },
   {
     "id": "Use 'cookie' or 'source-ip' to stick",
@@ -8856,6 +9452,10 @@
     "translation": "가상 서버"
   },
   {
+    "id": "Visibility",
+    "translation": "가시성"
+  },
+  {
     "id": "Vlan",
     "translation": "VLAN"
   },
@@ -8938,6 +9538,14 @@
   {
     "id": "You may run '{{.CommandName}} sl vs host-list --order {{.OrderID}}' to find this dedicated host after it is ready.",
     "translation": "'{{.CommandName}} sl vs host-list --order {{.OrderID}}'을(를) 실행하여 준비된 이후 이 전용 호스트를 찾을 수 있습니다."
+  },
+  {
+    "id": "Your new VPN password [required]",
+    "translation": "새 VPN 비밀번호[필수]"
+  },
+  {
+    "id": "Your server IP address or hostname. [required]",
+    "translation": "서버 IP 주소 또는 호스트 이름입니다. [필수]"
   },
   {
     "id": "ZONE",
@@ -9212,6 +9820,10 @@
     "translation": "디바이스"
   },
   {
+    "id": "disk space",
+    "translation": "디스크 공간"
+  },
+  {
     "id": "disk_guest",
     "translation": "disk_guest"
   },
@@ -9302,6 +9914,10 @@
   {
     "id": "hour",
     "translation": "시간"
+  },
+  {
+    "id": "http or https",
+    "translation": "HTTP 또는 HTTPS"
   },
   {
     "id": "id",
@@ -9492,6 +10108,10 @@
     "translation": "시리얼"
   },
   {
+    "id": "share image",
+    "translation": "이미지 공유"
+  },
+  {
     "id": "size_bytes",
     "translation": "size_bytes"
   },
@@ -9586,6 +10206,10 @@
   {
     "id": "value",
     "translation": "값"
+  },
+  {
+    "id": "virtual disks",
+    "translation": "가상 디스크"
   },
   {
     "id": "virtual guest",
