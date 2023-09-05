@@ -1824,10 +1824,6 @@
     "translation": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
   },
   {
-    "id": "Column to sort by. Options are: id, username, accountId, capacityGb, hardwareId, guestId, hostId",
-    "translation": "Column to sort by. Options are: id, username, accountId, capacityGb, hardwareId, guestId, hostId"
-  },
-  {
     "id": "Column to sort by. Options are: id,common_name,days_until_expire,note",
     "translation": "Column to sort by. Options are: id,common_name,days_until_expire,note"
   },
