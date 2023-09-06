@@ -8340,10 +8340,6 @@
     "translation": "边缘服务器在 HTTP 头中使用主机头来与源主机进行通信。 默认为主机名。"
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "将下载脚本的端点。"
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "要强制实施的 ethertype（IPv4 或 IPv6），如果未指定，那么缺省值为 IPv4"
   },
@@ -8426,10 +8422,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "凭单中显示的连接的名称"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "挂钩的名称。"
   },
   {
     "id": "The name of the image {{.ID}} is updated.",

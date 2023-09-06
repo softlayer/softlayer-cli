@@ -8340,10 +8340,6 @@
     "translation": "O servidor de extremidade usa o cabeçalho do host no cabeçalho HTTP para se comunicar com o host de Origem. Ele é padronizado com o Nome do Host."
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "O terminal em que o script será transferido por download."
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "O ethertype (IPv4 ou IPv6) a ser aplicado, o padrão será IPv4 se não especificado"
   },
@@ -8426,10 +8422,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "O nome do anexo mostrado no chamado"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "O nome do gancho."
   },
   {
     "id": "The name of the image {{.ID}} is updated.",

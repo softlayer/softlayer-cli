@@ -8340,10 +8340,6 @@
     "translation": "El servidor periférico utiliza la cabecera de host de la cabecera HTTP para comunicarse con el host de origen. El valor predeterminado es el nombre de host."
   },
   {
-    "id": "The endpoint that the script will be downloaded.",
-    "translation": "El punto final desde el que se descargará el script."
-  },
-  {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
     "translation": "El ethertype (IPv4 o IPv6) a imponer, el valor predeterminado es IPv4 si no se especifica"
   },
@@ -8426,10 +8422,6 @@
   {
     "id": "The name of the attachment shown in the ticket",
     "translation": "El nombre del archivo adjunto que se muestra en la incidencia"
-  },
-  {
-    "id": "The name of the hook.",
-    "translation": "El nombre del gancho."
   },
   {
     "id": "The name of the image {{.ID}} is updated.",
