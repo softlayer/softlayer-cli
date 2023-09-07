@@ -5096,10 +5096,6 @@
     "translation": "Die IDs der SSH-Schlüssel, die dem Rootbenutzer hinzugefügt werden sollen, Mehrfachvorkommen zulässig"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "IDs der zuzuordnenden Teilnetze"
-  },
-  {
     "id": "IDs of the subnets to remove",
     "translation": "IDs der zu entfernenden Teilnetze"
   },

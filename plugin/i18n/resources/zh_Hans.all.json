@@ -5096,10 +5096,6 @@
     "translation": "要添加到 root 用户的 SSH 密钥的标识，允许多次出现"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "要分配的子网的标识"
-  },
-  {
     "id": "IDs of the subnets to remove",
     "translation": "要除去的子网的标识"
   },

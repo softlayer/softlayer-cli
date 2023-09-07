@@ -5144,8 +5144,8 @@
     "translation": "IDs of SSH key to add to the root user, multiple occurrence allowed"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "IDs of the subnets to assign"
+    "id": "IDs of the subnets to assign; e.g.: --subnet-id 1234",
+    "translation": "IDs of the subnets to assign; e.g.: --subnet-id 1234"
   },
   {
     "id": "IDs of the subnets to remove",
@@ -9746,6 +9746,14 @@
   {
     "id": "accepts {{.Limit}} arg(s), received {{.Args}}",
     "translation": "accepts {{.Limit}} arg(s), received {{.Args}}"
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id>",
+    "translation": "access_id is the host_id obtained by: sl block access-list <volume_id>"
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled must be False to use this command",
+    "translation": "access_id is the host_id obtained by: sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled must be False to use this command"
   },
   {
     "id": "account",

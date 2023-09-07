@@ -5096,10 +5096,6 @@
     "translation": "root ユーザーに追加する SSH 鍵の ID (複数のオカレンスが許可されます)"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "割り当てようとするサブネットの ID"
-  },
-  {
     "id": "IDs of the subnets to remove",
     "translation": "削除対象のサブネットの ID"
   },

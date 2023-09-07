@@ -5096,10 +5096,6 @@
     "translation": "ID de la clave SSH para añadir al usuario root, se permiten varias apariciones"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "ID de las subredes que asignar"
-  },
-  {
     "id": "IDs of the subnets to remove",
     "translation": "ID de las subredes que eliminar"
   },

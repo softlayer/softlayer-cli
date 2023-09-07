@@ -5096,10 +5096,6 @@
     "translation": "IDs de chave SSH para incluir o usuário raiz, múltiplas ocorrências permitidas"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "IDs das sub-redes para designar"
-  },
-  {
     "id": "IDs of the subnets to remove",
     "translation": "IDs das sub-redes para remover"
   },

@@ -5096,10 +5096,6 @@
     "translation": "要新增至 root 使用者的 SSH 金鑰 ID，容許多次出現的項目"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "要指派的子網路 ID"
-  },
-  {
     "id": "IDs of the subnets to remove",
     "translation": "要移除的子網路 ID"
   },
