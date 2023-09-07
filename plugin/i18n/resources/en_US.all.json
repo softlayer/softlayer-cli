@@ -2112,6 +2112,10 @@
     "translation": "Creates a purge record and also initiates the purge call."
   },
   {
+    "id": "Creates a purge record and also initiates the purge call. For more information see the following documentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content",
+    "translation": "Creates a purge record and also initiates the purge call. For more information see the following documentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content"
+  },
+  {
     "id": "Creates a user",
     "translation": "Creates a user"
   },
