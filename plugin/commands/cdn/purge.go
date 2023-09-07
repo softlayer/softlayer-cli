@@ -24,7 +24,8 @@ func NewPurgeCommand(sl *metadata.SoftlayerCommand) *PurgeCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "purge " + T("IDENTIFIER") + " " + T("PATH"),
 		Short: T("Creates a purge record and also initiates the purge call."),
-		Long: T(`${COMMAND_NAME} sl cdn purge
+		Long: T("Creates a purge record and also initiates the purge call. For more information see the following documentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content") +
+			" " + T(`${COMMAND_NAME} sl cdn purge
 Example:
 ${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt"`),
 		Args: metadata.TwoArgs,
