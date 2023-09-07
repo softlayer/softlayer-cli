@@ -5096,10 +5096,6 @@
     "translation": "루트 사용자에게 추가할 SSH 키의 ID(다중 발생 허용)"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "지정할 서브넷의 ID"
-  },
-  {
     "id": "IDs of the subnets to remove",
     "translation": "제거할 서브넷의 ID"
   },

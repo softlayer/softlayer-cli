@@ -5096,10 +5096,6 @@
     "translation": "Gli ID della chiave SSH da aggiungere all'utente root, più ricorrenze consentite"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "ID delle sottoreti da assegnare"
-  },
-  {
     "id": "IDs of the subnets to remove",
     "translation": "ID delle sottoreti da rimuovere"
   },

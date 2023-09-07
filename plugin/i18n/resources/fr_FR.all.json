@@ -5096,10 +5096,6 @@
     "translation": "ID de la clé SSH à ajouter au superutilisateur, plusieurs occurrences autorisées"
   },
   {
-    "id": "IDs of the subnets to assign",
-    "translation": "ID des sous-réseaux à affecter"
-  },
-  {
     "id": "IDs of the subnets to remove",
     "translation": "ID des sous-réseaux à retirer"
   },
