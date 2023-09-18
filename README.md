@@ -1,35 +1,18 @@
-[![Build Status](https://travis.ibm.com/SoftLayer/softlayer-cli.svg?token=pYVqatXcXJaVqayApo1Y&branch=master)](https://travis.ibm.com/SoftLayer/softlayer-cli)
+[![Build Status](https://v3.travis.ibm.com/SoftLayer/softlayer-cli.svg?token=96jYRp3ei3sE2H3zUgDN&branch=master)](https://travis.ibm.com/SoftLayer/softlayer-cli)
 
 
 # softlayer-cli
 
-This repository houses the code that powers the [ibmcloud-cli sl](https://github.ibm.com/Bluemix/bluemix-cli) command. Altough this project is packaged as a plugin, it is built directly into the ibmcloud-cli.
-
+This repository houses the code that powers the [ibmcloud-cli sl](https://github.ibm.com/Bluemix/bluemix-cli) command.
 
 # Project Setup
 
-Your golang source directory should be setup as follows
-
-```
-~/go/src/github.ibm.com/ibmcloud-cli/bluemix-cli
-~/go/src/github.ibm.com/SoftLayer/softlayer-cli
-```
-
-github.ibm.com/ibmcloud-cli/bluemix-cli should be branched off from the `dev` branch
-github.ibm.com/SoftLayer/softlayer-cli should be branched off from the `master` branch
-
-Edit github.ibm.com/Bluemix/bluemix-cli/go.mod and add this line to the `replace` section. This will force `go mod vendor` to read changes from your local directory instead of off github.ibm.com. You may also need to change `github.ibm.com/SoftLayer/softlayer-cli v0.0.1` to `github.ibm.com/SoftLayer/softlayer-cli latest` in the require section.
-
-```
-github.ibm.com/SoftLayer/softlayer-cli => ../../SoftLayer/softlayer-cli
-```
-
-From there, make any changes you need to the code in `github.ibm.com/SoftLayer/softlayer-cli`. To actually see those changes apparent in `ibmcloud sl`  you will need to switch directories to `github.ibm.com/Bluemix/bluemix-cli` and run `go build`
+Clone the repo, then just run `go mod vendor` and `go build` and you should have a running binary for the `sl` plugin.
 
 
 # Testing
 Before making a pull request, make sure everything looks good with these tools.
-Working directory: `github.ibm.com/SoftLayer/softlayer-cli`
+Working directory: `$GO_PATH/src/github.ibm.com/SoftLayer/softlayer-cli`
 
 ### What the build runs
 
@@ -42,7 +25,8 @@ go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")
 
 This will test all the block commands, with verbose output
 ```
-go test -v  github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/block
+go test -v github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/<command_group>
+go test -v github.ibm.com/SoftLayer/softlayer-cli/plugin/managers
 ```
 
 This will test only the block commands that have "Access Password" in their test name, and stop after 1 failure
@@ -335,10 +319,8 @@ This command will build the Mac (arm64) version. Replace GOOS and GOARCH with th
 $> GOOS=darwin GOARCH=arm64 go build -o i18n4go_mac -ldflags "-s -w" i18n4go/i18n4go.go
 $> GOOS=linux GOARCH=amd64   go build -o out/i18n4go ./i18n4go/i18n4go.go
 ```
-
-
-
 [go-bindata](https://github.com/jteeuwen/go-bindata) takes the json files, and turns them into a go binary.
+
 
 ### Basic Patterns and Tips
 
@@ -358,67 +340,17 @@ T("This is some output for a {{.CMDTYPE}} command", subs)
 
 ### Useful Scripts
 
-#### `./bin/catch-i18n-mismatch.sh`
+#### `./bin/buildAndDeploy.py i18n`
 
-If you get the following output, everything is fine
+Should in general take care of all these steps for you. The binaries for win/mac/linux should be in the repo.
 ```
-$ ./bin/catch-i18n-mismatch.sh  
-OKTotal time: 372.753966ms
-```
-
-If you get the following output, you need to edit the translation files
-```
-$> ./bin/catch-i18n-mismatch.sh
->>> |"IP address {{.IP}} is not found on your account. Please confirm IP and try again.\n" exists in the code, but not in en_US| <<<
->>> |" The server ID to remove from the security group" exists in the code, but not in en_US| <<<
->>> |" The test ID to remove from the security group" exists in en_US, but not in the code| <<<
-====== ADD THESE =======
-[
-        {"id": "IP address {{.IP}} is not found on your account. Please confirm IP and try again.\n", "translation": "IP address {{.IP}} is not found on your account. Please confirm IP and try again.\n"},
-        {"id": " The server ID to remove from the security group", "translation": " The server ID to remove from the security group"}
-]
-====== DEL THESE =======
-[
-        {"id": " The test ID to remove from the security group", "translation": " The test ID to remove from the security group"}
-]
+$> python bin/buildAndDeploy.py i18n
+Running: C:\Users\allmi\go\src\github.ibm.com\softlayer\softlayer-cli\bin\i18n4go.exe -c=checkup -q=i18n -v -d=C:\Users\allmi\go\src\github.ibm.com\softlayer\softlayer-cli\plugin
+        No Changes Needed!
+Building I18N: ./bin/go-bindata.exe -pkg=resources -o=plugin/resources/i18n_resources.go plugin/i18n/resources
+        OK!
 ```
 
-
-#### `./bin/fixeverything_i18n.sh`
-
-You can either do so manually, or run the following command which will do almost all the work for you
-
-```
-$> sh bin/fixeverything_i18n.sh
-Running: ./bin/catch-i18n-mismatch.sh
-Running: python ./bin/split_i18n.py
-Running: ./bin/generate-i18n-resources.sh
-Running: git add ./plugin/i18n/resources/*.json
-Running: git add ./plugin/resources/i18n_resources.go
-Running: git commit --message="Translation fixes from ./bin/fixeverything_i18n.sh"
-[badBranch c12f1d7] Translation fixes from ./bin/fixeverything_i18n.sh
- 11 files changed, 40 insertions(+), 20 deletions(-)
-Running: git checkout ./old-i18n/*.json
-Done
-```
-
-
-### Manually
-If you decided to edit the i18n files manually, make sure to run `bin/generate-i18n-resources` to build the required go source files. These sources files are what actually get built into the command, otherwise your translation additions wont show up.
-
-```
-# This command will generate/update i18n_resources.go file
-$ ./bin/generate-i18n-resources 
-Generating i18n resource file ...
-Done.
-```
-
-
-Removing and Adding translations automatically.
-
-There are 2 files in `old-i18n` called `old-i18n/add_these.json` and `old-i18n/remove_these.json`. Dont commit changes to them, but do use them help automatically modify the translation files. 
-
-Run `./bin/split_i18n.py` (with python3.8 at least) to add everything in `add_these.json` and remove everything in `remove_these.json`.
 
 
 # Vendor
@@ -487,13 +419,34 @@ It("return error", func() {
 # Plugin Support / Release Process
 After v1.4.1 `sl` will be a normal plugin, so where are the instructions to build the plugin. 
 
-0. Create a new version and tag it in github like normal.
-1. Build the binaries. 
-```bash
-./bin/build-all
-for i in `ls --indicator-style=none out`; do echo "Uploading $i";  ibmcloud.exe cos upload --bucket softlayer-cli-binaries --file ./out/$i --key $i; done;
-```  
-2. Run the Jenkins job https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1/
+Use the `./bin/buildAndDeploy.py` script to do a release:
+```
+$> python bin/buildAndDeploy.py
+Usage: buildAndDeploy.py [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  build    Builds the SL binaries
+  deploy   Deploys the SL binaries
+  i18n     Checks and builds the i18n files
+  jenkins  Trigger a Jenkins build with existing files.
+  release  Builds, then deploys the release
+  test     Runs the tests
+```
+
+1. `./bin/buildAndDeploy.py test` : Runs all the tests, required to pass
+2. `./bin/buildAndDeploy.py i18n` : Fixing missing i18n problems, builds the i18n gobindata
+3. `./bin/buildAndDeploy.py build` : Generates binaries for all architectures in `./out`
+4. `./bin/buildAndDeploy.py deploy` : Uploads binaries to our object storage account [softlayer-cli-binaries](https://s3.us-east.cloud-object-storage.appdomain.cloud/softlayer-cli-binaries/index.html): 
+5. `./bin/buildAndDeploy.py release` : Spins up the [Jenkins](https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1/build ) job to publish a release
+
+
+ENV Variables that need to be set:
+1. `JENKINS_TOKEN` : Auth token to run Jenkins. Username is hardcoded for me at the moment.
+2. `IBMCLOUD_APIKEY` : API key for using `ibmcloud`. This is how we upload to COS. The COS plugin needs to be installed as well. `ibmcloud plugin install cloud-object-storage`
+
 
 ## TODO
 Automate build with https://github.ibm.com/coligo/cli/tree/main/script
