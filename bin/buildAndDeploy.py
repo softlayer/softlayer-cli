@@ -267,11 +267,11 @@ class Builder(object):
         """Uploads binaries to IBM COS"""
         apikey = os.getenv("IBMCLOUD_APIKEY")
         # if IBMCLOUD_TRACE is true the upload will print out the binary file data to the screen.
-        os.environ["IBMCLOUD_TRACE"] = False
+        os.environ["IBMCLOUD_TRACE"] = "False"
         if not apikey:
             raise Exception("IBMCLOUD_APIKEY needs to be set to the proper API key first.")
-        login_cmd = ["ibmcloud", "login", f"--apikey={apikey}"]
-        print(f"[yellow]Running: ibmcloud login --apikey $IBMCLOUD_APIKEY")
+        login_cmd = ["ibmcloud", "login", f"--apikey={apikey}", "-r=us-east"]
+        print(f"[yellow]Running: ibmcloud login --apikey $IBMCLOUD_APIKEY -r us-east")
         subprocess.run(login_cmd)
         files = glob.glob(os.path.join(self.cwd, 'out', f"sl-{self.version}-*"))
         for f in files:
@@ -339,7 +339,7 @@ curl -X POST https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plug
         print(f"[yellow]Trying to start jenkins job on {jenkinsUrl}")
         print(form_json)
         result = requests.post(f"{jenkinsUrl}/build",  auth=('cgallo@us.ibm.com', jenkins_token), data={'json':json.dumps(form_json)})
-        if (reult.status_code == 201 ):
+        if (result.status_code == 201 ):
             print(f"[green] Created Job! Check {jenkinsUrl}" )
         else:
             print(f"[red]Error: {result.status_code} {result.reason}")
