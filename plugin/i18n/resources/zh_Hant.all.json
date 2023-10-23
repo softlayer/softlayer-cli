@@ -2708,8 +2708,8 @@
     "translation": "耐久性儲存空間層級（每 GB 的 IOP）[storage-type endurance 的必要項目]，選項包含：0.25、2、4、10"
   },
   {
-    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is 0.25, new IOPS/GB for the volume must also be 0.25. If original IOPS/GB for the volume is greater than 0.25, new IOPS/GB for the volume must also be greater than 0.25.]",
-    "translation": "耐久性儲存體層級（每 GB 的 IOPS）[僅適用於耐久性磁區] ***如果不指定層級，將會使用磁區的原始層級。***\n需求：[如果磁區的原始 IOPS/GB 是 0.25，磁區的新 IOPS/GB 必須也是 0.25。如果磁區的原始 IOPS/GB 大於 0.25，磁區的新 IOPS/GB 也必須大於 0.25。]"
+    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***",
+    "translation": "耐久性儲存體層級（每 GB 的 IOPS）[僅適用於耐久性磁區] ***如果不指定層級，將會使用磁區的原始層級。***"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10",
@@ -6672,8 +6672,8 @@
     "translation": "效能配置"
   },
   {
-    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
-    "translation": "效能儲存空間 IOPS，此值為 100 的倍數，介於 100 與 6000 之間 [僅適用於效能磁區] ***如果未指定 IOPS 值，將會使用磁區的原始 IOPS 值。***\n需求：[如果磁區的原始 IOPS/GB 小於 0.3，則新的 IOPS/GB 也必須小於 0.3。如果磁區的原始 IOPS/GB 大於或等於 0.3，磁區的新 IOPS/GB 也必須大於或等於 0.3。]"
+    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***",
+    "translation": "效能儲存空間 IOPS，此值為 100 的倍數，介於 100 與 6000 之間 [僅適用於效能磁區] ***如果未指定 IOPS 值，將會使用磁區的原始 IOPS 值。***"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used",
