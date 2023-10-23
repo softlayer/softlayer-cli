@@ -2708,8 +2708,8 @@
     "translation": "耐久性存储器层 (IOPS/GB) [storage-type 是 endurance 时为必需]，选项为：0.25、2、4 或 10"
   },
   {
-    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is 0.25, new IOPS/GB for the volume must also be 0.25. If original IOPS/GB for the volume is greater than 0.25, new IOPS/GB for the volume must also be greater than 0.25.]",
-    "translation": "耐久性存储层 (IOPS/GB) [仅适用于耐久性卷] ***如果未指定层，那么将使用卷的原始层。*** \n需求：[如果卷的原始 IOPS/GB 为 0.25，那么卷的新 IOPS/GB 也必须为 0.25。如果卷的原始 IOPS/GB 大于 0.25，那么卷的新 IOPS/GB 也必须大于 0.25。]"
+    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***",
+    "translation": "耐久性存储层 (IOPS/GB) [仅适用于耐久性卷] ***如果未指定层，那么将使用卷的原始层。***"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10",
@@ -6672,8 +6672,8 @@
     "translation": "性能配置"
   },
   {
-    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
-    "translation": "性能存储器 IOPS，介于 100 到 6000 之间且为 100 的倍数 [仅限性能卷] ***如果未指定 IOPS 值，那么将使用卷的原始 IOPS 值。***\n需求：[如果卷的原始 IOPS/GB 小于 0.3，那么卷的新 IOPS/GB 也必须小于 0.3。如果卷的原始 IOPS/GB 大于或等于 0.3，那么卷的新 IOPS/GB 也必须大于或等于 0.3。]"
+    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***",
+    "translation": "性能存储器 IOPS，介于 100 到 6000 之间且为 100 的倍数 [仅限性能卷] ***如果未指定 IOPS 值，那么将使用卷的原始 IOPS 值。***"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used",

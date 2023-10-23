@@ -2708,8 +2708,8 @@
     "translation": "Endurance-Speichertier (E/A-Operationen pro Sekunde/GB) [erforderlich für Endurance-Speichertyp], Optionen: 0.25,2,4,10"
   },
   {
-    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is 0.25, new IOPS/GB for the volume must also be 0.25. If original IOPS/GB for the volume is greater than 0.25, new IOPS/GB for the volume must also be greater than 0.25.]",
-    "translation": "Endurance-Speichertier (E/A-Operationen pro Sekunde/GB) [nur für Endurance-Datenträger] ***Ist kein Tier angegeben, wird das ursprüngliche Tier des Datenträgers verwendet.***\nAnforderungen: [Beträgt der ursprüngliche IOPS/GB-Wert für den Datenträger 0,25, muss der neue IOPS/GB-Wert für den Datenträger ebenfalls 0,25 betragen. Liegt der ursprüngliche IOPS/GB-Wert für den Datenträger über 0,25, muss der neue IOPS/GB-Wert für den Datenträger ebenfalls über 0,25 liegen.]"
+    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***",
+    "translation": "Endurance-Speichertier (E/A-Operationen pro Sekunde/GB) [nur für Endurance-Datenträger] ***Ist kein Tier angegeben, wird das ursprüngliche Tier des Datenträgers verwendet.***"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10",
@@ -6672,8 +6672,8 @@
     "translation": "Leistungskonfiguration"
   },
   {
-    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
-    "translation": "E/A-Operationen pro Sekunde (IOPS) für Performance-Speicher, zwischen 100 und 6000 als Vielfaches von 100 [nur für Performance-Datenträger] ***Ist kein IOPS-Wert angegeben, wird der ursprüngliche IOPS-Wert des Datenträgers verwendet.*** \nAnforderungen: [Liegt der ursprüngliche Wert für IOPS/GB für den Datenträger unter 0,3, muss der neue Wert für IOPS/GB ebenfalls unter 0,3 liegen. Ist der ursprüngliche Wert für IOPS/GB für den Datenträger größer-gleich 0,3, muss der neue Wert für IOPS/GB ebenfalls größer-gleich 0,3 sein.]"
+    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***",
+    "translation": "E/A-Operationen pro Sekunde (IOPS) für Performance-Speicher, zwischen 100 und 6000 als Vielfaches von 100 [nur für Performance-Datenträger] ***Ist kein IOPS-Wert angegeben, wird der ursprüngliche IOPS-Wert des Datenträgers verwendet.***"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used",

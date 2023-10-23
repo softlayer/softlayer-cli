@@ -2708,8 +2708,8 @@
     "translation": "Livello archiviazione durata (IOP per GB) [obbligatorio per storage-type endurance], le opzioni sono: 0.25,2,4,10"
   },
   {
-    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is 0.25, new IOPS/GB for the volume must also be 0.25. If original IOPS/GB for the volume is greater than 0.25, new IOPS/GB for the volume must also be greater than 0.25.]",
-    "translation": "Livello archiviazione durata (IOPS per GB) [solo per i volumi di durata] ***Se non viene specificato un livello, sarà utilizzato il livello originale del volume.***\nRequisiti: [Se l'IOPS/GB del volume è 0.25, anche il nuovo IOPS/GB del volume deve essere 0.25. Se l'IOPS/GB originale del volume è maggiore di 0.25, lo deve essere anche il nuovo IOPS/GB.]"
+    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***",
+    "translation": "Livello archiviazione durata (IOPS per GB) [solo per i volumi di durata] ***Se non viene specificato un livello, sarà utilizzato il livello originale del volume.***"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10",
@@ -6672,8 +6672,8 @@
     "translation": "Configurazione delle prestazioni"
   },
   {
-    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
-    "translation": "IOPS archiviazione prestazioni, compreso tra 100 e 6000 in multipli di 100 [solo per i volumi di prestazioni] ***Se non viene specificato il valore IOPS, sarà utilizzato il valore originale del volume.***\nRequisiti: [Se l'IOPS/GB del volume è inferiore di 0.3, lo deve essere anche il nuovo IOPS/GB. Se l'IOPS/GB originale del volume è maggiore o uguale a 0.3, lo deve essere anche il nuovo IOPS/GB.]"
+    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***",
+    "translation": "IOPS archiviazione prestazioni, compreso tra 100 e 6000 in multipli di 100 [solo per i volumi di prestazioni] ***Se non viene specificato il valore IOPS, sarà utilizzato il valore originale del volume.***"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used",

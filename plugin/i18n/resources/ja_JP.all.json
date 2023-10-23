@@ -2708,8 +2708,8 @@
     "translation": "エンデュランス・ストレージ層 (GB 当たりの IOP) [storage-type が endurance の場合は必須]。オプションは、0.25、2、4、10 です"
   },
   {
-    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is 0.25, new IOPS/GB for the volume must also be 0.25. If original IOPS/GB for the volume is greater than 0.25, new IOPS/GB for the volume must also be greater than 0.25.]",
-    "translation": "エンデュランス・ストレージ層 (IOPS/GB) [エンデュランス・ボリュームの場合のみ] ***層が指定されていない場合は、ボリュームの元の層が使用されます。***\n      要件: [ボリュームの元の IOPS/GB が 0.25 の場合、ボリュームの新しい IOPS/GB も 0.25 でなければなりません。 ボリュームの元の IOPS/GB が 0.25 より大きい場合、ボリュームの新しい IOPS/GB も 0.25 より大きくなければなりません。]"
+    "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***",
+    "translation": "エンデュランス・ストレージ層 (IOPS/GB) [エンデュランス・ボリュームの場合のみ] ***層が指定されていない場合は、ボリュームの元の層が使用されます。***"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10",
@@ -6672,8 +6672,8 @@
     "translation": "パフォーマンス構成"
   },
   {
-    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***\n      Requirements: [If original IOPS/GB for the volume is less than 0.3, new IOPS/GB must also be less than 0.3. If original IOPS/GB for the volume is greater than or equal to 0.3, new IOPS/GB for the volume must also be greater than or equal to 0.3.]",
-    "translation": "パフォーマンス・ストレージ IOPS (100 から 6000 までの範囲内の 100 の倍数) [パフォーマンス・ボリュームの場合のみ] ***IOPS 値が指定されていない場合は、ボリュームの元の IOPS 値が使用されます。***\n      要件: [ボリュームの元の IOPS/GB が 0.3 より小さい場合、新しい IOPS/GB も 0.3 より小さくなければなりません。 ボリュームの元の IOPS/GB が 0.3 以上の場合、ボリュームの新しい IOPS/GB も 0.3 以上でなければなりません。]"
+    "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***",
+    "translation": "パフォーマンス・ストレージ IOPS (100 から 6000 までの範囲内の 100 の倍数) [パフォーマンス・ボリュームの場合のみ] ***IOPS 値が指定されていない場合は、ボリュームの元の IOPS 値が使用されます。***"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used",
