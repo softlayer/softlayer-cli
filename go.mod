@@ -1,6 +1,8 @@
 module github.ibm.com/SoftLayer/softlayer-cli
 
-go 1.19
+go 1.21
+
+replace golang.org/x/net => golang.org/x/net v0.17.0
 
 require (
 	github.com/IBM-Cloud/ibm-cloud-cli-sdk v1.1.0
