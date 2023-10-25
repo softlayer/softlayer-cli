@@ -2,16 +2,15 @@ package vlan
 
 import (
 	"bytes"
-
-	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/spf13/cobra"
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+
+	"github.com/softlayer/softlayer-go/datatypes"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
 type DetailCommand struct {
@@ -49,7 +48,7 @@ EXAMPLE:
 func (cmd *DetailCommand) Run(args []string) error {
 	id, err := utils.ResolveVlanId(args[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("VLAN ID")
+		return errors.NewInvalidSoftlayerIdInputError("VLAN ID")
 	}
 
 	outputFormat := cmd.GetOutputFlag()
@@ -116,12 +115,20 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	if !cmd.Hardware {
 		hw := vlan.Hardware
-		if len(hw) == 0 {
+		hw_trunk := filter_trunks(vlan.NetworkComponentTrunks)
+		if len(hw) + len(hw_trunk) == 0 {
 			table.Add(T("hardware"), T("none"))
 		} else {
 			buf := new(bytes.Buffer)
 			hwTable := terminal.NewTable(buf, []string{T("Hostname"), T("domain"), T("public_ip"), T("private_ip")})
 			for _, h := range hw {
+				hwTable.Add(utils.FormatStringPointer(h.Hostname),
+					utils.FormatStringPointer(h.Domain),
+					utils.FormatStringPointer(h.PrimaryIpAddress),
+					utils.FormatStringPointer(h.PrimaryBackendIpAddress))
+			}
+			for _, h := range hw_trunk {
+
 				hwTable.Add(utils.FormatStringPointer(h.Hostname),
 					utils.FormatStringPointer(h.Domain),
 					utils.FormatStringPointer(h.PrimaryIpAddress),
@@ -133,4 +140,18 @@ func (cmd *DetailCommand) Run(args []string) error {
 	}
 	utils.PrintTable(cmd.UI, table, outputFormat)
 	return nil
+}
+
+func filter_trunks(trunks []datatypes.Network_Component_Network_Vlan_Trunk) map[int]datatypes.Hardware {
+	var found_ids map[int]datatypes.Hardware
+	found_ids = make(map[int]datatypes.Hardware)
+
+	for _, t := range trunks {
+		server := t.NetworkComponent.DownlinkComponent.Hardware
+		_, ok := found_ids[*server.Id]
+		if !ok {
+			found_ids[*server.Id] = *server
+		}
+	}
+	return found_ids
 }
