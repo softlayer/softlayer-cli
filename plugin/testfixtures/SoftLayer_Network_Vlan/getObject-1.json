@@ -1,0 +1,127 @@
+{
+    "id": 1404267,
+    "vlanNumber": 1455,
+    "firewallInterfaces": [],
+    "hardware": [{
+        "domain": "ibm.com",
+        "hostname": "host16.vmware",
+        "primaryBackendIpAddress": "10.177.211.35",
+        "primaryIpAddress": "169.46.22.119"
+    }, {
+        "domain": "ibm.com",
+        "hostname": "host17.vmware",
+        "primaryBackendIpAddress": "10.177.211.41",
+        "primaryIpAddress": "169.46.22.118"
+    }, {
+        "domain": "ibm.com",
+        "hostname": "gpu.vmware",
+        "primaryBackendIpAddress": "10.177.211.31",
+        "primaryIpAddress": "169.46.22.117"
+    }],
+    "networkComponentTrunks": [{
+        "networkComponentId": 7045599,
+        "networkVlanId": 1404267,
+        "networkComponent": {
+            "duplexModeId": "3",
+            "hardwareId": 917543,
+            "id": 7045599,
+            "maxSpeed": 10000,
+            "modifyDate": "2021-05-19T13:56:14-06:00",
+            "name": "Ethernet",
+            "networkVlanId": 3029824,
+            "port": 17,
+            "speed": 100,
+            "status": "ACTIVE",
+            "downlinkComponent": {
+                "duplexModeId": "3",
+                "hardwareId": 1907356,
+                "id": 13765658,
+                "macAddress": "ac:1f:6b:c7:ee:2b",
+                "maxSpeed": 1000,
+                "modifyDate": "2021-05-19T13:56:14-06:00",
+                "name": "eth",
+                "networkVlanId": null,
+                "port": 1,
+                "primaryIpAddress": "52.118.38.246",
+                "speed": 100,
+                "status": "ACTIVE",
+                "hardware": {
+                    "domain": "softlayer-internal-development-community.testcloud",
+                    "hostname": "testibm",
+                    "id": 1907356,
+                    "primaryBackendIpAddress": "10.221.68.227",
+                    "primaryIpAddress": "52.118.38.246"
+                }
+            }
+        }
+    }, {
+        "networkComponentId": 7042479,
+        "networkVlanId": 1404267,
+        "networkComponent": {
+            "duplexModeId": "3",
+            "hardwareId": 917483,
+            "id": 7042479,
+            "maxSpeed": 10000,
+            "modifyDate": "2021-05-19T13:56:16-06:00",
+            "name": "Ethernet",
+            "networkVlanId": 3029824,
+            "port": 17,
+            "speed": 0,
+            "status": "USER_OFF",
+            "downlinkComponent": {
+                "duplexModeId": "3",
+                "hardwareId": 1907356,
+                "id": 13765662,
+                "macAddress": "ac:1f:6b:c7:ee:2d",
+                "maxSpeed": 1000,
+                "modifyDate": "2021-05-19T13:56:16-06:00",
+                "name": "eth",
+                "networkVlanId": null,
+                "port": 3,
+                "speed": 0,
+                "status": "USER_OFF",
+                "hardware": {
+                    "domain": "softlayer-internal-development-community.testcloud",
+                    "hostname": "testibm",
+                    "id": 1907356,
+                    "primaryBackendIpAddress": "10.221.68.227",
+                    "primaryIpAddress": "52.118.38.246"
+                }
+            }
+        }
+    }],
+    "primaryRouter": {
+        "fullyQualifiedDomainName": "fcr01a.dal10.softlayer.com",
+        "datacenterName": "Dallas 10"
+    },
+    "subnets": [{
+        "gateway": "169.46.22.113",
+        "id": 1804813,
+        "netmask": "255.255.255.240",
+        "networkIdentifier": "169.46.22.112",
+        "subnetType": "ADDITIONAL_PRIMARY",
+        "usableIpAddressCount": "13"
+    }, {
+        "gateway": "150.239.7.161",
+        "id": 2415982,
+        "netmask": "255.255.255.224",
+        "networkIdentifier": "150.239.7.160",
+        "subnetType": "SECONDARY_ON_VLAN",
+        "usableIpAddressCount": "29"
+    }, {
+        "gateway": "169.46.7.161",
+        "id": 1240505,
+        "netmask": "255.255.255.224",
+        "networkIdentifier": "169.46.7.160",
+        "subnetType": "SECONDARY_ON_VLAN",
+        "usableIpAddressCount": "29"
+    }, {
+        "gateway": "",
+        "id": 2000519,
+        "netmask": "255.255.255.255",
+        "networkIdentifier": "169.48.37.202",
+        "subnetType": "GLOBAL_IP",
+        "usableIpAddressCount": "1"
+    }],
+    "virtualGuests": []
+}

@@ -161,8 +161,8 @@ func GetSessionHandler(sess *session.Session) *FakeTransportHandler {
 // This function tries to find an appropriate JSON file to use as a response object.
 // Fixtures are placed in the plugin/testfixtures directory in this patter:
 // testfixtures/SoftLayer_Service/method.json : For general use
-// testfixtures/SoftLayer_Service/method_id.json : Will be used if the ID in the request matches, otherwise fallback to general method
-// testfixtures/SoftLayer_Service/method_specialCase.json : Will be used if this is in the fileNames array
+// testfixtures/SoftLayer_Service/method-id.json : Will be used if the ID in the request matches, otherwise fallback to general method
+// testfixtures/SoftLayer_Service/method-specialCase.json : Will be used if this is in the fileNames array
 func readJsonTestFixtures(service string, method string, fileNames []string, identifier int) ([]byte, error) {
 	wd, _ := os.Getwd()
 	var fixture, workingPath string
