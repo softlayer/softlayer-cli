@@ -3,6 +3,7 @@ package managers
 import (
 	"errors"
 	"time"
+	"sync"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
@@ -20,7 +21,8 @@ const (
 	DETAIL_HARDWARE_MASK  = "id,globalIdentifier,fullyQualifiedDomainName,hostname,domain,provisionDate,hardwareStatus,processorPhysicalCoreAmount," +
 		"memoryCapacity,notes,privateNetworkOnlyFlag,primaryBackendIpAddress,primaryIpAddress,networkManagementIpAddress,userData,datacenter," +
 		"networkComponents[id,status,speed,maxSpeed,name,ipmiMacAddress,ipmiIpAddress,macAddress,primaryIpAddress,port," +
-		"primarySubnet[id,netmask,broadcastAddress,networkIdentifier,gateway]],hardwareChassis[id,name],activeTransaction[id,transactionStatus[friendlyName,name]]," +
+		"primarySubnet[id,netmask,broadcastAddress,networkIdentifier,gateway],uplinkComponent[networkVlanTrunks[networkVlan[networkSpace,vlanNumber,id,fullyQualifiedName]]]]" +
+		",hardwareChassis[id,name],activeTransaction[id,transactionStatus[friendlyName,name]]," +
 		"operatingSystem[softwareLicense[softwareDescription[manufacturer,name,version,referenceCode]],passwords[username,password]]," +
 		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
 		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password],lastTransaction[transactionGroup],activeComponents"
@@ -42,6 +44,7 @@ type HardwareServerManager interface {
 	CancelHardware(hardwareId int, reason string, comment string, immediate bool) error
 	ListHardware(tags []string, cpus int, memory int, hostname string, domain string, datacenter string, nicSpeed int, publicIP string, privateIP string, owner string, orderId int, mask string) ([]datatypes.Hardware_Server, error)
 	GetHardware(hardwareId int, mask string) (datatypes.Hardware_Server, error)
+	GetHardwareFast(hardwareId int) (datatypes.Hardware_Server, error)
 	GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error)
 	Reload(hardwareId int, postInstallURL string, sshKeys []int, upgradeBIOS bool, upgradeFirmware bool) error
 	Rescure(hardwareId int) error
@@ -251,6 +254,98 @@ func (hw hardwareServerManager) GetHardware(hardwareId int, mask string) (dataty
 		mask = DETAIL_HARDWARE_MASK
 	}
 	return hw.HardwareService.Id(hardwareId).Mask(mask).GetObject()
+}
+
+
+//Uses Sync to get all the details of a hardware server asap. Uses a multithreaded approach
+//hardwareId: the ID of the hardware
+func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardware_Server, error) {
+
+
+	hw_mask := `mask[id, globalIdentifier, fullyQualifiedDomainName, hostname, domain, provisionDate, hardwareStatus,
+				processorPhysicalCoreAmount, memoryCapacity, notes, primaryBackendIpAddress, primaryIpAddress, networkManagementIpAddress, datacenter,
+				hourlyBillingFlag, lastTransaction[transactionGroup]]`
+
+	// Get the base Hardware first, if this doesn't error, unlikely the others will.
+	hardware, error := hw.HardwareService.Id(hardwareId).Mask(hw_mask).GetObject()
+	if error != nil {
+		fmt.Printf("Hey therew as an error. returning.\n")
+		return hardware, error
+	}
+	var wg sync.WaitGroup
+	
+	wg.Add(10)
+	go func() {
+		defer wg.Done()
+		mask := "id, status, speed, maxSpeed, name, ipmiMacAddress, ipmiIpAddress, macAddress, primaryIpAddress," +
+                "port, primarySubnet[id, netmask, broadcastAddress, networkIdentifier, gateway]," +
+                "uplinkComponent[networkVlanTrunks[networkVlan[networkSpace]]]"
+		hardware.NetworkComponents, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetNetworkComponents()
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "id,hardwareComponentModel[hardwareGenericComponentModel[id,hardwareComponentType[keyName]]]"
+		hardware.ActiveComponents, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetActiveComponents()
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "mask[softwareLicense[softwareDescription[manufacturer, name, version, referenceCode]],passwords[id,username,password]]"
+		operatingSystem, error := hw.HardwareService.Id(hardwareId).Mask(mask).GetOperatingSystem()
+		if &operatingSystem != nil && error == nil {
+			hardware.OperatingSystem = &operatingSystem
+		}
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "id,nextInvoiceTotalRecurringAmount,nextInvoiceChildren[id,nextInvoiceTotalRecurringAmount]," +
+                "orderItem[id,order[id,userRecord[id,username]]]"
+		billingItem, error := hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingItem()
+		if &billingItem != nil && error == nil {
+			hardware.BillingItem = &billingItem
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "id,tag[name,id]"
+		hardware.TagReferences, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetTagReferences()
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "id,vlanNumber,networkSpace,fullyQualifiedName,primarySubnets[ipAddresses]"
+		hardware.NetworkVlans, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetNetworkVlans()
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "username,password"
+		hardware.RemoteManagementAccounts, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetRemoteManagementAccounts()
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "mask[id,serialNumber,hardwareComponentModel[manufacturer,name,hardwareGenericComponentModel[id,capacity,units]]]"
+		hardware.HardDrives, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetHardDrives()
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "mask[allocation[amount]]"
+		bw_detail, error := hw.HardwareService.Id(hardwareId).Mask(mask).GetBandwidthAllotmentDetail()
+		if &bw_detail != nil && error == nil {
+			hardware.BandwidthAllotmentDetail = &bw_detail
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "mask[amountIn,amountOut,type]"
+		hardware.BillingCycleBandwidthUsage, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingCycleBandwidthUsage()
+	}()
+
+	wg.Wait()
+	return hardware, error
 }
 
 //Perform an OS reload of a server with its current configuration.
