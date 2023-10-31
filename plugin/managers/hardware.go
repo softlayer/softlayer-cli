@@ -269,7 +269,6 @@ func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardw
 	// Get the base Hardware first, if this doesn't error, unlikely the others will.
 	hardware, error := hw.HardwareService.Id(hardwareId).Mask(hw_mask).GetObject()
 	if error != nil {
-		fmt.Printf("Hey therew as an error. returning.\n")
 		return hardware, error
 	}
 	var wg sync.WaitGroup

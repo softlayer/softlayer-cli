@@ -51,7 +51,7 @@ var _ = Describe("hardware detail", func() {
 
 		Context("hardware detail with server fails", func() {
 			BeforeEach(func() {
-				fakeHardwareManager.GetHardwareReturns(datatypes.Hardware_Server{}, errors.New("Internal Server Error"))
+				fakeHardwareManager.GetHardwareFastReturns(datatypes.Hardware_Server{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
@@ -63,8 +63,8 @@ var _ = Describe("hardware detail", func() {
 
 		Context("Failed to get the hard drives detail", func() {
 			BeforeEach(func() {
-				fakeHardwareManager.GetHardwareReturns(datatypes.Hardware_Server{}, nil)
-				fakeHardwareManager.GetHardDrivesReturns([]datatypes.Hardware_Component{}, errors.New("Failed to get the hard drives detail"))
+				
+				fakeHardwareManager.GetHardwareFastReturns(datatypes.Hardware_Server{}, errors.New("Failed to get the hard drives detail"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
@@ -75,9 +75,8 @@ var _ = Describe("hardware detail", func() {
 
 		Context("Failed to get bandwidth allotment detail", func() {
 			BeforeEach(func() {
-				fakeHardwareManager.GetHardwareReturns(datatypes.Hardware_Server{}, nil)
-				fakeHardwareManager.GetHardDrivesReturns([]datatypes.Hardware_Component{}, nil)
-				fakeHardwareManager.GetBandwidthAllotmentDetailReturns(datatypes.Network_Bandwidth_Version1_Allotment_Detail{}, errors.New("Failed to get bandwidth allotment detail"))
+
+				fakeHardwareManager.GetHardwareFastReturns(datatypes.Hardware_Server{}, errors.New("Failed to get bandwidth allotment detail"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
@@ -88,10 +87,7 @@ var _ = Describe("hardware detail", func() {
 
 		Context("Failed to get billing cycle bandwidth usage", func() {
 			BeforeEach(func() {
-				fakeHardwareManager.GetHardwareReturns(datatypes.Hardware_Server{}, nil)
-				fakeHardwareManager.GetHardDrivesReturns([]datatypes.Hardware_Component{}, nil)
-				fakeHardwareManager.GetBandwidthAllotmentDetailReturns(datatypes.Network_Bandwidth_Version1_Allotment_Detail{}, nil)
-				fakeHardwareManager.GetBillingCycleBandwidthUsageReturns([]datatypes.Network_Bandwidth_Usage{}, errors.New("Failed to get billing cycle bandwidth usage"))
+				fakeHardwareManager.GetHardwareFastReturns(datatypes.Hardware_Server{}, errors.New("Failed to get billing cycle bandwidth usage"))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
@@ -101,10 +97,11 @@ var _ = Describe("hardware detail", func() {
 		})
 
 		Context("hardware detail with correct hardware ID ", func() {
+			// TODO: Redo this test with a fixture.
 			created, _ := time.Parse(time.RFC3339, "2017-11-08T00:00:00Z")
 			firmwareCreated, _ := time.Parse(time.RFC3339, "2015-10-09T00:00:00Z")
 			BeforeEach(func() {
-				fakeHardwareManager.GetHardwareReturns(
+				fakeHardwareManager.GetHardwareFastReturns(
 					datatypes.Hardware_Server{
 						Hardware: datatypes.Hardware{
 							Id:                       sl.Int(1234),

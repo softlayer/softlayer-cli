@@ -278,6 +278,19 @@ type FakeHardwareServerManager struct {
 		result1 []datatypes.Hardware_Component
 		result2 error
 	}
+	GetHardwareFastStub        func(int) (datatypes.Hardware_Server, error)
+	getHardwareFastMutex       sync.RWMutex
+	getHardwareFastArgsForCall []struct {
+		arg1 int
+	}
+	getHardwareFastReturns struct {
+		result1 datatypes.Hardware_Server
+		result2 error
+	}
+	getHardwareFastReturnsOnCall map[int]struct {
+		result1 datatypes.Hardware_Server
+		result2 error
+	}
 	GetOSPriceIdStub        func([]datatypes.Product_Item, string, datatypes.Location_Region) (int, error)
 	getOSPriceIdMutex       sync.RWMutex
 	getOSPriceIdArgsForCall []struct {
@@ -1772,6 +1785,70 @@ func (fake *FakeHardwareServerManager) GetHardwareComponentsReturnsOnCall(i int,
 	}{result1, result2}
 }
 
+func (fake *FakeHardwareServerManager) GetHardwareFast(arg1 int) (datatypes.Hardware_Server, error) {
+	fake.getHardwareFastMutex.Lock()
+	ret, specificReturn := fake.getHardwareFastReturnsOnCall[len(fake.getHardwareFastArgsForCall)]
+	fake.getHardwareFastArgsForCall = append(fake.getHardwareFastArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetHardwareFastStub
+	fakeReturns := fake.getHardwareFastReturns
+	fake.recordInvocation("GetHardwareFast", []interface{}{arg1})
+	fake.getHardwareFastMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastCallCount() int {
+	fake.getHardwareFastMutex.RLock()
+	defer fake.getHardwareFastMutex.RUnlock()
+	return len(fake.getHardwareFastArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastCalls(stub func(int) (datatypes.Hardware_Server, error)) {
+	fake.getHardwareFastMutex.Lock()
+	defer fake.getHardwareFastMutex.Unlock()
+	fake.GetHardwareFastStub = stub
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastArgsForCall(i int) int {
+	fake.getHardwareFastMutex.RLock()
+	defer fake.getHardwareFastMutex.RUnlock()
+	argsForCall := fake.getHardwareFastArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastReturns(result1 datatypes.Hardware_Server, result2 error) {
+	fake.getHardwareFastMutex.Lock()
+	defer fake.getHardwareFastMutex.Unlock()
+	fake.GetHardwareFastStub = nil
+	fake.getHardwareFastReturns = struct {
+		result1 datatypes.Hardware_Server
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastReturnsOnCall(i int, result1 datatypes.Hardware_Server, result2 error) {
+	fake.getHardwareFastMutex.Lock()
+	defer fake.getHardwareFastMutex.Unlock()
+	fake.GetHardwareFastStub = nil
+	if fake.getHardwareFastReturnsOnCall == nil {
+		fake.getHardwareFastReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Hardware_Server
+			result2 error
+		})
+	}
+	fake.getHardwareFastReturnsOnCall[i] = struct {
+		result1 datatypes.Hardware_Server
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeHardwareServerManager) GetOSPriceId(arg1 []datatypes.Product_Item, arg2 string, arg3 datatypes.Location_Region) (int, error) {
 	var arg1Copy []datatypes.Product_Item
 	if arg1 != nil {
@@ -2984,6 +3061,8 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.getHardwareMutex.RUnlock()
 	fake.getHardwareComponentsMutex.RLock()
 	defer fake.getHardwareComponentsMutex.RUnlock()
+	fake.getHardwareFastMutex.RLock()
+	defer fake.getHardwareFastMutex.RUnlock()
 	fake.getOSPriceIdMutex.RLock()
 	defer fake.getOSPriceIdMutex.RUnlock()
 	fake.getPackageMutex.RLock()
