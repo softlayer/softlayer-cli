@@ -60,10 +60,6 @@ func (cmd *DetailCommand) Run(args []string) error {
 		return errors.NewAPIError(T("Failed to get hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
 	}
 
-	if err != nil {
-		return errors.NewAPIError(T("Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
-	}
-
 	if outputFormat == "JSON" {
 		return utils.PrintPrettyJSON(cmd.UI, hardware)
 	}
@@ -246,6 +242,8 @@ func (cmd *DetailCommand) Run(args []string) error {
 		}
 	}
 
+	// For some reason, the API response here has a hardwareComponent for EACH firmware, each with the whole list of firmwares
+	// There should be a better way to get this from the API.
 	if cmd.Components {
 		components, err := cmd.HardwareManager.GetHardwareComponents(hardwareId)
 		componentIds := []int{}

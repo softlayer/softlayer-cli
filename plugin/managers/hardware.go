@@ -260,16 +260,16 @@ func (hw hardwareServerManager) GetHardware(hardwareId int, mask string) (dataty
 //Uses Sync to get all the details of a hardware server asap. Uses a multithreaded approach
 //hardwareId: the ID of the hardware
 func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardware_Server, error) {
-
-
+	// We'll use errors.Join to combine all API errors we get in multithreading. This variable tracks all that.
+	var all_err error
 	hw_mask := `mask[id, globalIdentifier, fullyQualifiedDomainName, hostname, domain, provisionDate, hardwareStatus,
 				processorPhysicalCoreAmount, memoryCapacity, notes, primaryBackendIpAddress, primaryIpAddress, networkManagementIpAddress, datacenter,
 				hourlyBillingFlag, lastTransaction[transactionGroup]]`
 
 	// Get the base Hardware first, if this doesn't error, unlikely the others will.
-	hardware, error := hw.HardwareService.Id(hardwareId).Mask(hw_mask).GetObject()
-	if error != nil {
-		return hardware, error
+	hardware, err := hw.HardwareService.Id(hardwareId).Mask(hw_mask).GetObject()
+	if err != nil {
+		return hardware, err
 	}
 	var wg sync.WaitGroup
 	
@@ -279,20 +279,23 @@ func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardw
 		mask := "id, status, speed, maxSpeed, name, ipmiMacAddress, ipmiIpAddress, macAddress, primaryIpAddress," +
                 "port, primarySubnet[id, netmask, broadcastAddress, networkIdentifier, gateway]," +
                 "uplinkComponent[networkVlanTrunks[networkVlan[networkSpace]]]"
-		hardware.NetworkComponents, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetNetworkComponents()
+		hardware.NetworkComponents, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetNetworkComponents()
+		all_err = errors.Join(all_err, err)
 
 	}()
 	go func() {
 		defer wg.Done()
 		mask := "id,hardwareComponentModel[hardwareGenericComponentModel[id,hardwareComponentType[keyName]]]"
-		hardware.ActiveComponents, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetActiveComponents()
+		hardware.ActiveComponents, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetActiveComponents()
+		all_err = errors.Join(all_err, err)
 
 	}()
 	go func() {
 		defer wg.Done()
 		mask := "mask[softwareLicense[softwareDescription[manufacturer, name, version, referenceCode]],passwords[id,username,password]]"
-		operatingSystem, error := hw.HardwareService.Id(hardwareId).Mask(mask).GetOperatingSystem()
-		if &operatingSystem != nil && error == nil {
+		operatingSystem, err := hw.HardwareService.Id(hardwareId).Mask(mask).GetOperatingSystem()
+		all_err = errors.Join(all_err, err)
+		if &operatingSystem != nil && err == nil {
 			hardware.OperatingSystem = &operatingSystem
 		}
 
@@ -301,50 +304,58 @@ func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardw
 		defer wg.Done()
 		mask := "id,nextInvoiceTotalRecurringAmount,nextInvoiceChildren[id,nextInvoiceTotalRecurringAmount]," +
                 "orderItem[id,order[id,userRecord[id,username]]]"
-		billingItem, error := hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingItem()
-		if &billingItem != nil && error == nil {
+		billingItem, err := hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingItem()
+		all_err = errors.Join(all_err, err)
+		if &billingItem != nil && err == nil {
 			hardware.BillingItem = &billingItem
 		}
 	}()
 	go func() {
 		defer wg.Done()
 		mask := "id,tag[name,id]"
-		hardware.TagReferences, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetTagReferences()
+		hardware.TagReferences, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetTagReferences()
+		all_err = errors.Join(all_err, err)
 
 	}()
 	go func() {
 		defer wg.Done()
-		mask := "id,vlanNumber,networkSpace,fullyQualifiedName,primarySubnets[ipAddresses]"
-		hardware.NetworkVlans, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetNetworkVlans()
+		mask := "id,vlanNumber,networkSpace,fullyQualifiedName"
+		hardware.NetworkVlans, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetNetworkVlans()
+		all_err = errors.Join(all_err, err)
 
 	}()
 	go func() {
 		defer wg.Done()
 		mask := "username,password"
-		hardware.RemoteManagementAccounts, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetRemoteManagementAccounts()
+		hardware.RemoteManagementAccounts, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetRemoteManagementAccounts()
+		all_err = errors.Join(all_err, err)
 
 	}()
 	go func() {
 		defer wg.Done()
 		mask := "mask[id,serialNumber,hardwareComponentModel[manufacturer,name,hardwareGenericComponentModel[id,capacity,units]]]"
-		hardware.HardDrives, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetHardDrives()
+		hardware.HardDrives, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetHardDrives()
+		all_err = errors.Join(all_err, err)
 	}()
+
 	go func() {
 		defer wg.Done()
 		mask := "mask[allocation[amount]]"
-		bw_detail, error := hw.HardwareService.Id(hardwareId).Mask(mask).GetBandwidthAllotmentDetail()
-		if &bw_detail != nil && error == nil {
+		bw_detail, err := hw.HardwareService.Id(hardwareId).Mask(mask).GetBandwidthAllotmentDetail()
+		all_err = errors.Join(all_err, err)
+		if &bw_detail != nil && err == nil {
 			hardware.BandwidthAllotmentDetail = &bw_detail
 		}
 	}()
 	go func() {
 		defer wg.Done()
 		mask := "mask[amountIn,amountOut,type]"
-		hardware.BillingCycleBandwidthUsage, error = hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingCycleBandwidthUsage()
+		hardware.BillingCycleBandwidthUsage, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingCycleBandwidthUsage()
+		all_err = errors.Join(all_err, err)
 	}()
 
 	wg.Wait()
-	return hardware, error
+	return hardware, all_err
 }
 
 //Perform an OS reload of a server with its current configuration.

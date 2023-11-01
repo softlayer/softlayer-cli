@@ -1,0 +1,296 @@
+[
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                },
+                {
+                    "createDate": "2019-10-14T16:51:12-06:00",
+                    "version": "5.10"
+                },
+                {
+                    "createDate": "2021-09-08T07:22:44-06:00",
+                    "version": "5.90"
+                },
+                {
+                    "createDate": "2022-05-17T07:47:50-06:00",
+                    "version": " 4.03(4.03)"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2019-12-16T06:01:41-06:00",
+                    "version": "2.40 9-6-2018"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "Intel Xeon SingleProc",
+                "hardwareComponentType": {
+                    "keyName": "MOTHERBOARD"
+                }
+            },
+            "longDescription": "Lenovo / 3943PAJ / Systemx3250-M6 / Intel Xeon SingleProc SATA / 1"
+        },
+        "id": 16617733
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2019-12-16T06:01:41-06:00",
+                    "version": "2.40 9-6-2018"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "Intel Xeon SingleProc",
+                "hardwareComponentType": {
+                    "keyName": "MOTHERBOARD"
+                }
+            },
+            "longDescription": "Lenovo / 3943PAJ / Systemx3250-M6 / Intel Xeon SingleProc SATA / 1"
+        },
+        "id": 16617733
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2019-12-16T06:01:41-06:00",
+                    "version": "2.40 9-6-2018"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "Intel Xeon SingleProc",
+                "hardwareComponentType": {
+                    "keyName": "MOTHERBOARD"
+                }
+            },
+            "longDescription": "Lenovo / 3943PAJ / Systemx3250-M6 / Intel Xeon SingleProc SATA / 1"
+        },
+        "id": 16617733
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2023-02-19T00:00:07-06:00",
+                    "version": "SN06 "
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "SATAIII",
+                "hardwareComponentType": {
+                    "keyName": "HARD_DRIVE"
+                }
+            },
+            "longDescription": "Seagate /  / Constellation ES / ST1000NM0033 / 1000"
+        },
+        "id": 11237577
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2020-09-24T13:46:29-06:00",
+                    "version": "5.60"
+                },
+                {
+                    "createDate": "2019-10-14T16:51:12-06:00",
+                    "version": "5.10"
+                },
+                {
+                    "createDate": "2021-09-08T07:22:44-06:00",
+                    "version": "5.90"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "MGMT-KVM",
+                "hardwareComponentType": {
+                    "keyName": "REMOTE_MGMT_CARD"
+                }
+            },
+            "longDescription": "Lenovo / IMM2 - Onboard / IPMI-KVM / Remote Management Count1"
+        },
+        "id": 16617735
+    },
+    {
+        "hardwareComponentModel": {
+            "firmwares": [
+                {
+                    "createDate": "2019-12-16T06:01:41-06:00",
+                    "version": "2.40 9-6-2018"
+                },
+                {
+                    "createDate": "2023-04-10T11:33:37-06:00",
+                    "version": "3.50 1-12-2023"
+                }
+            ],
+            "hardwareGenericComponentModel": {
+                "description": "Intel Xeon SingleProc",
+                "hardwareComponentType": {
+                    "keyName": "MOTHERBOARD"
+                }
+            },
+            "longDescription": "Lenovo / 3943PAJ / Systemx3250-M6 / Intel Xeon SingleProc SATA / 1"
+        },
+        "id": 16617733
+    }
+]

@@ -9,7 +9,6 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -19,7 +18,6 @@ var _ = Describe("VLAN Detail", func() {
 		cliCommand         *vlan.DetailCommand
 		fakeSession        *session.Session
 		slCommand          *metadata.SoftlayerCommand
-		fakeNetworkManager managers.NetworkManager
 		fakeHandler        *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
@@ -29,8 +27,6 @@ var _ = Describe("VLAN Detail", func() {
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = vlan.NewDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-		fakeNetworkManager = managers.NewNetworkManager(fakeSession)
-		cliCommand.NetworkManager = fakeNetworkManager
 	})
 	AfterEach(func() {
 		fakeHandler.ClearApiCallLogs()
