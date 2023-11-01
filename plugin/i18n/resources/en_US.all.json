@@ -3472,20 +3472,12 @@
     "translation": "Failed to get announcement events."
   },
   {
-    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n"
-  },
-  {
     "id": "Failed to get bandwidth summary",
     "translation": "Failed to get bandwidth summary"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Failed to get bare metal servers.\n"
-  },
-  {
-    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n"
   },
   {
     "id": "Failed to get billing items.",

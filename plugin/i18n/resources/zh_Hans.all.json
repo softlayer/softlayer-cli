@@ -3424,20 +3424,12 @@
     "translation": "未能获取声明事件。"
   },
   {
-    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "未能获取硬件服务器 {{.ID}} 的带宽分配详细信息。\n"
-  },
-  {
     "id": "Failed to get bandwidth summary",
     "translation": "未能获取带宽摘要"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "未能获取 Bare Metal Server。\n"
-  },
-  {
-    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "未能获取硬件服务器 {{.ID}} 的计费周期带宽使用情况。\n"
   },
   {
     "id": "Failed to get billing items.",

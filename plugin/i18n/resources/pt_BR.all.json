@@ -3424,20 +3424,12 @@
     "translation": "Falha em obter eventos de lançamento."
   },
   {
-    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "Falha ao obter detalhes de colocação de largura de banda para o servidor de hardware {{.ID}}.\n"
-  },
-  {
     "id": "Failed to get bandwidth summary",
     "translation": "Falha ao obter o resumo de largura da banda"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Falha em obter servidores bare metal.\n"
-  },
-  {
-    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "Falha ao obter uso de largura de banda do ciclo de faturamento para o servidor de hardware {{.ID}}.\n"
   },
   {
     "id": "Failed to get billing items.",

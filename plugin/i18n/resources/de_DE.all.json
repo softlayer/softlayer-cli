@@ -3424,20 +3424,12 @@
     "translation": "Abrufen von Ankündigungsereignissen fehlgeschlagen."
   },
   {
-    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "Die Details zum Bandbreitenkontingent für den Hardwareserver {{.ID}} konnten nicht abgerufen werden.\n"
-  },
-  {
     "id": "Failed to get bandwidth summary",
     "translation": "Bandbreitenzusammenfassung konnte nicht abgerufen werden"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Bare-Metal-Server konnten nicht abgerufen werden.\n"
-  },
-  {
-    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "Die Bandbreitennutzung im Abrechnungszyklus für den Hardwareserver {{.ID}} konnte nicht abgerufen werden.\n"
   },
   {
     "id": "Failed to get billing items.",

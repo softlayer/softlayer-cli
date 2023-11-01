@@ -3424,20 +3424,12 @@
     "translation": "アナウンス・イベントの取得に失敗しました。"
   },
   {
-    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "ハードウェア・サーバー{{.ID}}の帯域幅割り当ての詳細を取得できませんでした。\n"
-  },
-  {
     "id": "Failed to get bandwidth summary",
     "translation": "帯域幅の要約の取得に失敗しました"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "ベアメタル・サーバーを取得できませんでした。\n"
-  },
-  {
-    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "ハードウェア・サーバー{{.ID}}の請求サイクル帯域幅使用量を取得できませんでした。\n"
   },
   {
     "id": "Failed to get billing items.",
