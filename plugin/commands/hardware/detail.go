@@ -7,7 +7,7 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/spf13/cobra"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -57,7 +57,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	hardware, err := cmd.HardwareManager.GetHardwareFast(hardwareId)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to get hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {
@@ -248,7 +248,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 		components, err := cmd.HardwareManager.GetHardwareComponents(hardwareId)
 		componentIds := []int{}
 		if err != nil {
-			return errors.NewAPIError(T("Failed to get components\n"), err.Error(), 2)
+			return slErr.NewAPIError(T("Failed to get components\n"), err.Error(), 2)
 		}
 		buf := new(bytes.Buffer)
 		componentTable := terminal.NewTable(buf, []string{T("Name"), T("Firmware version"), T("Firmware build date"), T("Type")})

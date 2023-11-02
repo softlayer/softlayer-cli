@@ -78,6 +78,7 @@ type HardwareServerManager interface {
 	GetBandwidthAllotmentDetail(hardwareId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error)
 	GetBillingCycleBandwidthUsage(hardwareId int, mask string) ([]datatypes.Network_Bandwidth_Usage, error)
 	CreateSoftwareCredential(softwareComponentPasswordTemplate datatypes.Software_Component_Password) (datatypes.Software_Component_Password, error)
+	TrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)
 }
 
 type hardwareServerManager struct {
@@ -970,4 +971,10 @@ func (hw hardwareServerManager) GetBillingCycleBandwidthUsage(hardwareId int, ma
 func (hw hardwareServerManager) CreateSoftwareCredential(softwareComponentPasswordTemplate datatypes.Software_Component_Password) (datatypes.Software_Component_Password, error) {
 	softwareComponentPasswordService := services.GetSoftwareComponentPasswordService(hw.Session)
 	return softwareComponentPasswordService.CreateObject(&softwareComponentPasswordTemplate)
+}
+
+// https://sldn.softlayer.com/reference/services/SoftLayer_Network_Component/addNetworkVlanTrunks/
+func (hw hardwareServerManager) TrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error) {
+	ncService := services.GetNetworkComponentService(hw.Session)
+	return ncService.Id(componentId).AddNetworkVlanTrunks(vlans)
 }

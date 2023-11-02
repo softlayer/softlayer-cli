@@ -381,21 +381,21 @@ func PrintTableWithTitle(ui terminal.UI, table terminal.Table, bufEvent *bytes.B
 
 }
 
-func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) string {
+func PrintTable(ui terminal.UI, table terminal.Table, outputFormat string) {
 	if outputFormat == "JSON" {
 		table.PrintJson()
-		return ""
+		return
 	}
 	if outputFormat == "CSV" {
 		err := table.PrintCsv()
 		if err != nil {
 			fmt.Println("Error:", err)
-			return ""
+
 		}
-		return ""
+		return
 	}
 	table.Print()
-	return ""
+	return
 }
 
 func ShortenString(ugly_string string) string {

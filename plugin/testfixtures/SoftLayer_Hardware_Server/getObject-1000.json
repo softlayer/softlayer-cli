@@ -1,0 +1,40 @@
+{
+	"domain": "ibm.com",
+	"hostname": "ibmtest01",
+	"id": 1000,
+	"backendNetworkComponents": [
+		{
+			"id": 16528124,
+			"name": "mgmt",
+			"port": 0
+		},
+		{
+			"id": 90099,
+			"macAddress": "3c:fd:fe:98:eb:28",
+			"name": "eth",
+			"port": 0,
+			"primaryIpAddress": "10.160.139.19"
+		},
+		{
+			"id": 16528120,
+			"macAddress": "3c:fd:fe:98:eb:2a",
+			"name": "eth",
+			"port": 2
+		}
+	],
+	"frontendNetworkComponents": [
+		{
+			"id": 10011,
+			"macAddress": "3c:fd:fe:98:eb:29",
+			"name": "eth",
+			"port": 1,
+			"primaryIpAddress": "169.45.75.170"
+		},
+		{
+			"id": 16528122,
+			"macAddress": "3c:fd:fe:98:eb:2b",
+			"name": "eth",
+			"port": 3
+		}
+	]
+}
