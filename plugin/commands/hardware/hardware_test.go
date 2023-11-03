@@ -45,6 +45,8 @@ var availableCommands = []string{
 	"storage",
 	"toggle-ipmi",
 	"update-firmware",
+	"vlan-add",
+	"vlan-remove",
 }
 
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings

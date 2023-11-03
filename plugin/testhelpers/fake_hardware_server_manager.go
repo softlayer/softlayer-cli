@@ -524,6 +524,20 @@ type FakeHardwareServerManager struct {
 		result1 []datatypes.Network_Vlan
 		result2 error
 	}
+	UnTrunkVlansStub        func(int, []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)
+	unTrunkVlansMutex       sync.RWMutex
+	unTrunkVlansArgsForCall []struct {
+		arg1 int
+		arg2 []datatypes.Network_Vlan
+	}
+	unTrunkVlansReturns struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}
+	unTrunkVlansReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}
 	UpdateFirmwareStub        func(int, bool, bool, bool, bool, bool) error
 	updateFirmwareMutex       sync.RWMutex
 	updateFirmwareArgsForCall []struct {
@@ -2974,6 +2988,76 @@ func (fake *FakeHardwareServerManager) TrunkVlansReturnsOnCall(i int, result1 []
 	}{result1, result2}
 }
 
+func (fake *FakeHardwareServerManager) UnTrunkVlans(arg1 int, arg2 []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error) {
+	var arg2Copy []datatypes.Network_Vlan
+	if arg2 != nil {
+		arg2Copy = make([]datatypes.Network_Vlan, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.unTrunkVlansMutex.Lock()
+	ret, specificReturn := fake.unTrunkVlansReturnsOnCall[len(fake.unTrunkVlansArgsForCall)]
+	fake.unTrunkVlansArgsForCall = append(fake.unTrunkVlansArgsForCall, struct {
+		arg1 int
+		arg2 []datatypes.Network_Vlan
+	}{arg1, arg2Copy})
+	stub := fake.UnTrunkVlansStub
+	fakeReturns := fake.unTrunkVlansReturns
+	fake.recordInvocation("UnTrunkVlans", []interface{}{arg1, arg2Copy})
+	fake.unTrunkVlansMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansCallCount() int {
+	fake.unTrunkVlansMutex.RLock()
+	defer fake.unTrunkVlansMutex.RUnlock()
+	return len(fake.unTrunkVlansArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansCalls(stub func(int, []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)) {
+	fake.unTrunkVlansMutex.Lock()
+	defer fake.unTrunkVlansMutex.Unlock()
+	fake.UnTrunkVlansStub = stub
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansArgsForCall(i int) (int, []datatypes.Network_Vlan) {
+	fake.unTrunkVlansMutex.RLock()
+	defer fake.unTrunkVlansMutex.RUnlock()
+	argsForCall := fake.unTrunkVlansArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansReturns(result1 []datatypes.Network_Vlan, result2 error) {
+	fake.unTrunkVlansMutex.Lock()
+	defer fake.unTrunkVlansMutex.Unlock()
+	fake.UnTrunkVlansStub = nil
+	fake.unTrunkVlansReturns = struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansReturnsOnCall(i int, result1 []datatypes.Network_Vlan, result2 error) {
+	fake.unTrunkVlansMutex.Lock()
+	defer fake.unTrunkVlansMutex.Unlock()
+	fake.UnTrunkVlansStub = nil
+	if fake.unTrunkVlansReturnsOnCall == nil {
+		fake.unTrunkVlansReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Vlan
+			result2 error
+		})
+	}
+	fake.unTrunkVlansReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeHardwareServerManager) UpdateFirmware(arg1 int, arg2 bool, arg3 bool, arg4 bool, arg5 bool, arg6 bool) error {
 	fake.updateFirmwareMutex.Lock()
 	ret, specificReturn := fake.updateFirmwareReturnsOnCall[len(fake.updateFirmwareArgsForCall)]
@@ -3181,6 +3265,8 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.toggleIPMIMutex.RUnlock()
 	fake.trunkVlansMutex.RLock()
 	defer fake.trunkVlansMutex.RUnlock()
+	fake.unTrunkVlansMutex.RLock()
+	defer fake.unTrunkVlansMutex.RUnlock()
 	fake.updateFirmwareMutex.RLock()
 	defer fake.updateFirmwareMutex.RUnlock()
 	fake.verifyOrderMutex.RLock()

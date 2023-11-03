@@ -33,7 +33,7 @@ func NewVlanAddCommand(sl *metadata.SoftlayerCommand) (cmd *VlanAddCommand) {
 		Use:   "vlan-add " + T("IDENTIFIER") + " " + T("VLAN") + "...",
 		Short: T("Trunks a VLAN to the this server."),
 		Long: T(`IDENTIFIER is the id of the server
-VLANS is the ID of the VLANs you want to add. Multiple vlans can be added at the same time.`),
+VLANS is the ID of the VLANs. Multiple vlans can be added at the same time.`),
 		Args:  metadata.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
