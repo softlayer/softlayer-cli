@@ -1,7 +1,6 @@
 package hardware
 
 import (
-
 	"strconv"
 
 	// "github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -18,7 +17,7 @@ import (
 type VlanAddCommand struct {
 	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
-	NetworkManager 	managers.NetworkManager
+	NetworkManager  managers.NetworkManager
 	Command         *cobra.Command
 }
 
@@ -26,7 +25,7 @@ func NewVlanAddCommand(sl *metadata.SoftlayerCommand) (cmd *VlanAddCommand) {
 	thisCmd := &VlanAddCommand{
 		SoftlayerCommand: sl,
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
-		NetworkManager: managers.NewNetworkManager(sl.Session),
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
 
 	cobraCmd := &cobra.Command{
@@ -34,7 +33,7 @@ func NewVlanAddCommand(sl *metadata.SoftlayerCommand) (cmd *VlanAddCommand) {
 		Short: T("Trunks a VLAN to the this server."),
 		Long: T(`IDENTIFIER is the id of the server
 VLANS is the ID of the VLANs. Multiple vlans can be added at the same time.`),
-		Args:  metadata.MinimumNArgs(2),
+		Args: metadata.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -58,7 +57,7 @@ func (cmd *VlanAddCommand) Run(args []string) error {
 	hardware, err := cmd.HardwareManager.GetHardware(hardwareId, h_mask)
 	// I18N Subs go in here.
 	subs := map[string]string{
-		"ID": args[0],
+		"ID":     args[0],
 		"VLANID": "none",
 	}
 	if err != nil {
@@ -87,14 +86,18 @@ func (cmd *VlanAddCommand) Run(args []string) error {
 	// If we need to add vlans, find the first Frontend/Backend Network Component with a primary IP,
 	// and add the appropriate vlans there.
 	if len(pub_vlans) > 0 {
-		for _ , component := range hardware.FrontendNetworkComponents {
+		for _, component := range hardware.FrontendNetworkComponents {
 			if component.PrimaryIpAddress != nil {
 				added_vlans, err := cmd.HardwareManager.TrunkVlans(*component.Id, pub_vlans)
 				if err != nil {
 					return err
 				}
 				for _, v := range added_vlans {
-					table.Add(utils.FormatIntPointer(v.Id), utils.FormatIntPointer(v.VlanNumber), *v.NetworkSpace)
+					table.Add(
+						utils.FormatIntPointer(v.Id),
+						utils.FormatIntPointer(v.VlanNumber),
+						utils.FormatStringPointer(v.Name),
+					)
 				}
 				break
 			}
@@ -108,7 +111,11 @@ func (cmd *VlanAddCommand) Run(args []string) error {
 					return err
 				}
 				for _, v := range added_vlans {
-					table.Add(utils.FormatIntPointer(v.Id), utils.FormatIntPointer(v.VlanNumber), *v.NetworkSpace)
+					table.Add(
+						utils.FormatIntPointer(v.Id),
+						utils.FormatIntPointer(v.VlanNumber),
+						utils.FormatStringPointer(v.Name),
+					)
 				}
 				break
 			}

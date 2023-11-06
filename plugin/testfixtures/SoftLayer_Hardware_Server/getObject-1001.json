@@ -1,0 +1,81 @@
+{
+	"accountId": 307608,
+	"bareMetalInstanceFlag": 0,
+	"domain": "softlayer-internal-development-community.testcloud",
+	"fullyQualifiedDomainName": "testibm.softlayer-internal-development-community.testcloud",
+	"hardwareStatusId": 5,
+	"hostname": "testibm",
+	"id": 1001,
+	"manufacturerSerialNumber": "C819UAI27CD0678",
+	"notes": "",
+	"provisionDate": "2021-02-03T11:00:09-06:00",
+	"serialNumber": "SL01INPG",
+	"serviceProviderId": 1,
+	"serviceProviderResourceId": null,
+	"globalIdentifier": "ec3a60fc-fb36-46a7-8d25-76751d504cca",
+	"hardwareStatus": {
+		"id": 5,
+		"status": "ACTIVE"
+	},
+	"managedResourceFlag": false,
+	"networkComponents": [{
+		"id": 13765664,
+		"name": "mgmt",
+		"port": 0,
+		"networkVlansTrunkable": []
+	}, {
+		"id": 14278876,
+		"macAddress": "ac:1f:6b:c7:ee:2a",
+		"name": "eth",
+		"port": 0,
+		"primaryIpAddress": "10.221.68.227",
+		"networkVlansTrunkable": [{
+			"fullyQualifiedName": "dal10.bcr01.1632",
+			"id": 1404269,
+			"name": "ibm iSCSI DAL10",
+			"vlanNumber": 1632,
+			"networkSpace": "PRIVATE"
+		}]
+	}, {
+		"id": 13765658,
+		"macAddress": "ac:1f:6b:c7:ee:2b",
+		"name": "eth",
+		"port": 1,
+		"primaryIpAddress": "52.118.38.246",
+		"networkVlansTrunkable": [{
+			"fullyQualifiedName": "dal10.fcr01.1163",
+			"id": 2282899,
+			"name": "fmirPublic",
+			"vlanNumber": 1163,
+			"networkSpace": "PUBLIC"
+		}]
+	}, {
+		"id": 13765660,
+		"macAddress": "ac:1f:6b:c7:ee:2c",
+		"name": "eth",
+		"port": 2,
+		"networkVlansTrunkable": [{
+			"fullyQualifiedName": "dal10.bcr01.1632",
+			"id": 1404269,
+			"name": "ibm iSCSI DAL10",
+			"vlanNumber": 1632,
+			"networkSpace": "PRIVATE"
+		}]
+	}, {
+		"id": 13765662,
+		"macAddress": "ac:1f:6b:c7:ee:2d",
+		"name": "eth",
+		"port": 3,
+		"networkVlansTrunkable": [{
+			"fullyQualifiedName": "dal10.fcr01.1163",
+			"id": 2282899,
+			"name": "fmirPublic",
+			"vlanNumber": 1163,
+			"networkSpace": "PUBLIC"
+		}]
+	}],
+	"networkManagementIpAddress": "10.221.68.228",
+	"primaryBackendIpAddress": "10.221.68.227",
+	"primaryIpAddress": "52.118.38.246",
+	"privateIpAddress": "10.221.68.227"
+}

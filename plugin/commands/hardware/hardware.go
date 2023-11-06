@@ -44,6 +44,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewCreateCredentialCommand(sl).Command)
 	cobraCmd.AddCommand(NewVlanAddCommand(sl).Command)
 	cobraCmd.AddCommand(NewVlanRemoveCommand(sl).Command)
+	cobraCmd.AddCommand(NewVlanTrunkableCommand(sl).Command)
 	return cobraCmd
 }
 

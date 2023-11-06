@@ -142,11 +142,15 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	if vlans := hardware.NetworkVlans; len(vlans) > 0 {
 		buf := new(bytes.Buffer)
-		vlanTable := terminal.NewTable(buf, []string{T("Type"), T("Number"), T("ID")})
+		vlanTable := terminal.NewTable(buf, []string{T("Network"), T("Number"), T("ID"), T("Name"), T("Type")})
 		for _, vlan := range vlans {
-			vlanTable.Add(utils.FormatStringPointer(vlan.NetworkSpace),
+			vlanTable.Add(
+				utils.FormatStringPointer(vlan.NetworkSpace),
 				utils.FormatIntPointer(vlan.VlanNumber),
-				utils.FormatIntPointer(vlan.Id))
+				utils.FormatIntPointer(vlan.Id),
+				utils.FormatStringPointer(vlan.FullyQualifiedName),
+				T("Primary"),
+			)
 		}
 		for _, component := range hardware.NetworkComponents {
 			if component.PrimaryIpAddress != nil {
@@ -157,6 +161,8 @@ func (cmd *DetailCommand) Run(args []string) error {
 						utils.FormatStringPointer(t_vlan.NetworkSpace),
 						utils.FormatIntPointer(t_vlan.VlanNumber),
 						utils.FormatIntPointer(t_vlan.Id),
+						utils.FormatStringPointer(t_vlan.FullyQualifiedName),
+						T("Trunked"),
 					)
 				}
 			}

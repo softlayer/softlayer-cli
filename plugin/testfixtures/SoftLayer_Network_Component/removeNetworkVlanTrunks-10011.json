@@ -1,7 +1,9 @@
-[
-    {
-        "id": 9999,
-        "vlanNumber": 112233,
-        "networkSpace": "PUBLIC"
-    }
-]
+[{
+    "accountId": 12345,
+    "fullyQualifiedName": "dal10.fcr01.1163",
+    "id": 10011,
+    "modifyDate": "2023-10-03T12:50:01-07:00",
+    "name": "fmirPublic",
+    "primarySubnetId": 1272173,
+    "vlanNumber": 1163
+}]

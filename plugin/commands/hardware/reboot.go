@@ -27,7 +27,6 @@ func NewRebootCommand(sl *metadata.SoftlayerCommand) (cmd *RebootCommand) {
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
-
 	cobraCmd := &cobra.Command{
 		Use:   "reboot " + T("IDENTIFIER"),
 		Short: T("Reboot an active server"),

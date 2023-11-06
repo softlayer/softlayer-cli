@@ -1,7 +1,6 @@
 package hardware
 
 import (
-
 	"strconv"
 
 	// "github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -18,7 +17,7 @@ import (
 type VlanRemoveCommand struct {
 	*metadata.SoftlayerCommand
 	HardwareManager managers.HardwareServerManager
-	NetworkManager 	managers.NetworkManager
+	NetworkManager  managers.NetworkManager
 	Command         *cobra.Command
 }
 
@@ -26,7 +25,7 @@ func NewVlanRemoveCommand(sl *metadata.SoftlayerCommand) (cmd *VlanRemoveCommand
 	thisCmd := &VlanRemoveCommand{
 		SoftlayerCommand: sl,
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
-		NetworkManager: managers.NewNetworkManager(sl.Session),
+		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
 
 	cobraCmd := &cobra.Command{
@@ -34,7 +33,7 @@ func NewVlanRemoveCommand(sl *metadata.SoftlayerCommand) (cmd *VlanRemoveCommand
 		Short: T("Remove VLANs trunked to this server."),
 		Long: T(`IDENTIFIER is the id of the server
 VLANS is the ID of the VLANs. Multiple vlans can be added at the same time.`),
-		Args:  metadata.MinimumNArgs(2),
+		Args: metadata.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -58,7 +57,7 @@ func (cmd *VlanRemoveCommand) Run(args []string) error {
 	hardware, err := cmd.HardwareManager.GetHardware(hardwareId, h_mask)
 	// I18N Subs go in here.
 	subs := map[string]string{
-		"ID": args[0],
+		"ID":     args[0],
 		"VLANID": "none",
 	}
 	if err != nil {
@@ -67,7 +66,7 @@ func (cmd *VlanRemoveCommand) Run(args []string) error {
 	// API will return an error if you try to add a public vlan to a private network component
 	pub_vlans := []datatypes.Network_Vlan{}
 	pri_vlans := []datatypes.Network_Vlan{}
-	table := cmd.UI.Table([]string{T("Id"), T("VLAN"), T("Network")})
+	table := cmd.UI.Table([]string{T("Id"), T("VLAN"), T("Name")})
 	for i := 1; i < len(args); i++ {
 		vlan_id, err := strconv.Atoi(args[i])
 		if err != nil {
@@ -87,14 +86,18 @@ func (cmd *VlanRemoveCommand) Run(args []string) error {
 	// If we need to add vlans, find the first Frontend/Backend Network Component with a primary IP,
 	// and add the appropriate vlans there.
 	if len(pub_vlans) > 0 {
-		for _ , component := range hardware.FrontendNetworkComponents {
+		for _, component := range hardware.FrontendNetworkComponents {
 			if component.PrimaryIpAddress != nil {
 				added_vlans, err := cmd.HardwareManager.UnTrunkVlans(*component.Id, pub_vlans)
 				if err != nil {
 					return err
 				}
 				for _, v := range added_vlans {
-					table.Add(utils.FormatIntPointer(v.Id), utils.FormatIntPointer(v.VlanNumber), *v.NetworkSpace)
+					table.Add(
+						utils.FormatIntPointer(v.Id),
+						utils.FormatIntPointer(v.VlanNumber),
+						utils.FormatStringPointer(v.Name),
+					)
 				}
 				break
 			}
@@ -108,7 +111,11 @@ func (cmd *VlanRemoveCommand) Run(args []string) error {
 					return err
 				}
 				for _, v := range added_vlans {
-					table.Add(utils.FormatIntPointer(v.Id), utils.FormatIntPointer(v.VlanNumber), *v.NetworkSpace)
+					table.Add(
+						utils.FormatIntPointer(v.Id),
+						utils.FormatIntPointer(v.VlanNumber),
+						utils.FormatStringPointer(v.Name),
+					)
 				}
 				break
 			}

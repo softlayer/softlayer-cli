@@ -10,16 +10,15 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-
 )
 
 var _ = Describe("VLAN-REMOVE Tests", func() {
 	var (
-		fakeUI              *terminal.FakeUI
-		cliCommand          *hardware.VlanRemoveCommand
-		fakeSession         *session.Session
-		fakeHandler         *testhelpers.FakeTransportHandler
-		slCommand           *metadata.SoftlayerCommand
+		fakeUI      *terminal.FakeUI
+		cliCommand  *hardware.VlanRemoveCommand
+		fakeSession *session.Session
+		fakeHandler *testhelpers.FakeTransportHandler
+		slCommand   *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
@@ -81,38 +80,38 @@ var _ = Describe("VLAN-REMOVE Tests", func() {
 			It("1 Pub 1 Pri", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1000", "9999", "9990")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("9990   445566   PRIVATE"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("9999   112233   PUBLIC"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("9990    445566   fmirPublic"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("10011   1163     fmirPublic"))
 				apiCalls := fakeHandler.ApiCallLogs
 
 				Expect(len(apiCalls)).To(Equal(5))
 				// Trying out https://pkg.go.dev/github.com/onsi/gomega/gstruct for matching API calls
 				Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
 					"Service": Equal("SoftLayer_Hardware_Server"),
-					"Method": Equal("getObject"),
+					"Method":  Equal("getObject"),
 					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(1000))})),
 				}))
 				Expect(apiCalls[1]).To(MatchFields(IgnoreExtras, Fields{
 					"Service": Equal("SoftLayer_Network_Vlan"),
-					"Method": Equal("getObject"),
+					"Method":  Equal("getObject"),
 					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(9999))})),
 				}))
 				Expect(apiCalls[2]).To(MatchFields(IgnoreExtras, Fields{
 					"Service": Equal("SoftLayer_Network_Vlan"),
-					"Method": Equal("getObject"),
+					"Method":  Equal("getObject"),
 					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(9990))})),
 				}))
 				Expect(apiCalls[3]).To(MatchFields(IgnoreExtras, Fields{
 					"Service": Equal("SoftLayer_Network_Component"),
-					"Method": Equal("removeNetworkVlanTrunks"),
+					"Method":  Equal("removeNetworkVlanTrunks"),
 					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(10011))})),
 				}))
 				Expect(apiCalls[4]).To(MatchFields(IgnoreExtras, Fields{
 					"Service": Equal("SoftLayer_Network_Component"),
-					"Method": Equal("removeNetworkVlanTrunks"),
+					"Method":  Equal("removeNetworkVlanTrunks"),
 					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(90099))})),
 				}))
 			})
-		})	
+		})
 	})
 })

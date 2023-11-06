@@ -9,16 +9,15 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-
 )
 
 var _ = Describe("hardware detail", func() {
 	var (
-		fakeUI              *terminal.FakeUI
-		cliCommand          *hardware.DetailCommand
-		fakeSession         *session.Session
-		fakeHandler         *testhelpers.FakeTransportHandler
-		slCommand           *metadata.SoftlayerCommand
+		fakeUI      *terminal.FakeUI
+		cliCommand  *hardware.DetailCommand
+		fakeSession *session.Session
+		fakeHandler *testhelpers.FakeTransportHandler
+		slCommand   *metadata.SoftlayerCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
