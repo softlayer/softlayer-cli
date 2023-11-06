@@ -79,6 +79,7 @@ type HardwareServerManager interface {
 	GetBillingCycleBandwidthUsage(hardwareId int, mask string) ([]datatypes.Network_Bandwidth_Usage, error)
 	CreateSoftwareCredential(softwareComponentPasswordTemplate datatypes.Software_Component_Password) (datatypes.Software_Component_Password, error)
 	TrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)
+	UnTrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)
 }
 
 type hardwareServerManager struct {
@@ -977,4 +978,10 @@ func (hw hardwareServerManager) CreateSoftwareCredential(softwareComponentPasswo
 func (hw hardwareServerManager) TrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error) {
 	ncService := services.GetNetworkComponentService(hw.Session)
 	return ncService.Id(componentId).AddNetworkVlanTrunks(vlans)
+}
+
+// https://sldn.softlayer.com/reference/services/SoftLayer_Network_Component/removeNetworkVlanTrunks/
+func (hw hardwareServerManager) UnTrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error) {
+	ncService := services.GetNetworkComponentService(hw.Session)
+	return ncService.Id(componentId).RemoveNetworkVlanTrunks(vlans)
 }
