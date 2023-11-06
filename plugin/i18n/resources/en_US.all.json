@@ -5132,6 +5132,10 @@
     "translation": "IDENTIFIER TARGET"
   },
   {
+    "id": "IDENTIFIER is the id of the server\nVLANS is the ID of the VLANs. Multiple vlans can be added at the same time.",
+    "translation": "IDENTIFIER is the id of the server\nVLANS is the ID of the VLANs. Multiple vlans can be added at the same time."
+  },
+  {
     "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
     "translation": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
   },
@@ -5858,6 +5862,10 @@
   {
     "id": "Lists Email Delivery Service.",
     "translation": "Lists Email Delivery Service."
+  },
+  {
+    "id": "Lists VLANs this server can be given access to.",
+    "translation": "Lists VLANs this server can be given access to."
   },
   {
     "id": "Lists account orders.",
@@ -6988,6 +6996,10 @@
     "translation": "Prices:"
   },
   {
+    "id": "Primary",
+    "translation": "Primary"
+  },
+  {
     "id": "Primary IP",
     "translation": "Primary IP"
   },
@@ -7318,6 +7330,10 @@
   {
     "id": "Remove SSL certificate",
     "translation": "Remove SSL certificate"
+  },
+  {
+    "id": "Remove VLANs trunked to this server.",
+    "translation": "Remove VLANs trunked to this server."
   },
   {
     "id": "Remove a load balancer member",
@@ -8848,6 +8864,10 @@
     "translation": "This command requires two arguments."
   },
   {
+    "id": "This command will only show VLANs not yet trunked to this server.",
+    "translation": "This command will only show VLANs not yet trunked to this server."
+  },
+  {
     "id": "This is the credential id associated with the volume. [Required]",
     "translation": "This is the credential id associated with the volume. [Required]"
   },
@@ -9070,6 +9090,14 @@
   {
     "id": "True",
     "translation": "True"
+  },
+  {
+    "id": "Trunked",
+    "translation": "Trunked"
+  },
+  {
+    "id": "Trunks a VLAN to the this server.",
+    "translation": "Trunks a VLAN to the this server."
   },
   {
     "id": "Type",
