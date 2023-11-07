@@ -72,6 +72,12 @@ var _ = Describe("VLAN-ADD Tests", func() {
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Trunk Error: Trunk Error (HTTP 500)"))
 			})
+			It("Trunk Fail Private", func() {
+				fakeHandler.AddApiError("SoftLayer_Network_Component", "addNetworkVlanTrunks", 500, "Trunk Error")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1000", "9990")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Trunk Error: Trunk Error (HTTP 500)"))
+			})
 			AfterEach(func() {
 				fakeHandler.ClearErrors()
 			})
