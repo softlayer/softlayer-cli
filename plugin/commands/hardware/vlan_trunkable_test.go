@@ -12,7 +12,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
-var _ = Describe("VLAN-REMOVE Tests", func() {
+var _ = Describe("VLAN-TRUNKABLE Tests", func() {
 	var (
 		fakeUI      *terminal.FakeUI
 		cliCommand  *hardware.VlanTrunkableCommand

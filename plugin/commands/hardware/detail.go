@@ -7,7 +7,7 @@ import (
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/spf13/cobra"
-
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -55,9 +55,24 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	outputFormat := cmd.GetOutputFlag()
 
-	hardware, err := cmd.HardwareManager.GetHardwareFast(hardwareId)
+	hardware, err := cmd.HardwareManager.GetHardware(hardwareId, "")
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to get hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+		return errors.NewAPIError(T("Failed to get hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+	}
+
+	hardDrives, err := cmd.HardwareManager.GetHardDrives(hardwareId)
+	if err != nil {
+		return err
+	}
+
+	bandwidthAllotmentDetail, err := cmd.HardwareManager.GetBandwidthAllotmentDetail(hardwareId, "")
+	if err != nil {
+		return err
+	}
+
+	billingCycleBandwidthUsage, err := cmd.HardwareManager.GetBillingCycleBandwidthUsage(hardwareId, "")
+	if err != nil {
+		return err
 	}
 
 	if outputFormat == "JSON" {
@@ -79,10 +94,10 @@ func (cmd *DetailCommand) Run(args []string) error {
 	table.Add(T("CPU cores"), utils.FormatUIntPointer(hardware.ProcessorPhysicalCoreAmount))
 	table.Add(T("Memory"), utils.FormatUIntPointer(hardware.MemoryCapacity)+"G")
 
-	if len(hardware.HardDrives) > 0 {
+	if len(hardDrives) > 0 {
 		buf := new(bytes.Buffer)
 		hardDriveTable := terminal.NewTable(buf, []string{T("Name"), T("Capacity"), T("Serial #")})
-		for _, hardDrive := range hardware.HardDrives {
+		for _, hardDrive := range hardDrives {
 			name := *hardDrive.HardwareComponentModel.Manufacturer + " " + *hardDrive.HardwareComponentModel.Name
 			capacity := fmt.Sprintf(
 				"%.2f %s",
@@ -155,6 +170,9 @@ func (cmd *DetailCommand) Run(args []string) error {
 		for _, component := range hardware.NetworkComponents {
 			if component.PrimaryIpAddress != nil {
 				uplink := component.UplinkComponent
+				if uplink == nil {
+					continue
+				}
 				for _, trunk := range uplink.NetworkVlanTrunks {
 					t_vlan := trunk.NetworkVlan
 					vlanTable.Add(
@@ -171,18 +189,18 @@ func (cmd *DetailCommand) Run(args []string) error {
 		table.Add("Vlans", buf.String())
 	}
 
-	if len(hardware.BillingCycleBandwidthUsage) > 0 {
+	if len(billingCycleBandwidthUsage) > 0 {
 		buf := new(bytes.Buffer)
 		bandwithTable := terminal.NewTable(buf, []string{T("Type"), T("In GB"), T("Out GB"), T("Allotment")})
-		for _, billingCycle := range hardware.BillingCycleBandwidthUsage {
+		for _, billingCycle := range billingCycleBandwidthUsage {
 			bw_type := "Private"
 			allotment := "N/A"
 			if *billingCycle.Type.Alias == "PUBLIC_SERVER_BW" {
 				bw_type = "Public"
-				if hardware.BandwidthAllotmentDetail.Allocation == nil {
+				if bandwidthAllotmentDetail.Allocation == nil {
 					allotment = "-"
 				} else {
-					allotment = utils.FormatSLFloatPointerToInt(hardware.BandwidthAllotmentDetail.Allocation.Amount)
+					allotment = utils.FormatSLFloatPointerToInt(bandwidthAllotmentDetail.Allocation.Amount)
 				}
 			}
 			bandwithTable.Add(
@@ -248,13 +266,11 @@ func (cmd *DetailCommand) Run(args []string) error {
 		}
 	}
 
-	// For some reason, the API response here has a hardwareComponent for EACH firmware, each with the whole list of firmwares
-	// There should be a better way to get this from the API.
 	if cmd.Components {
 		components, err := cmd.HardwareManager.GetHardwareComponents(hardwareId)
 		componentIds := []int{}
 		if err != nil {
-			return slErr.NewAPIError(T("Failed to get components\n"), err.Error(), 2)
+			return errors.NewAPIError(T("Failed to get components\n"), err.Error(), 2)
 		}
 		buf := new(bytes.Buffer)
 		componentTable := terminal.NewTable(buf, []string{T("Name"), T("Firmware version"), T("Firmware build date"), T("Type")})

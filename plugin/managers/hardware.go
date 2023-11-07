@@ -20,12 +20,12 @@ const (
 	DEFAULT_SERVER_MASK   = "mask[" + DEFAULT_HARDWARE_MASK + ",mask(SoftLayer_Hardware_Server)[activeTransaction[id,transactionStatus[name,friendlyName]]]]"
 	DETAIL_HARDWARE_MASK  = "id,globalIdentifier,fullyQualifiedDomainName,hostname,domain,provisionDate,hardwareStatus,processorPhysicalCoreAmount," +
 		"memoryCapacity,notes,privateNetworkOnlyFlag,primaryBackendIpAddress,primaryIpAddress,networkManagementIpAddress,userData,datacenter," +
-		"networkComponents[id,status,speed,maxSpeed,name,ipmiMacAddress,ipmiIpAddress,macAddress,primaryIpAddress,port," +
+		"networkComponents[id,status,speed,maxSpeed,name,ipmiMacAddress,ipmiIpAddress,macAddress,primaryIpAddress,port,uplinkComponent[id,networkVlanTrunks[networkVlan]]," +
 		"primarySubnet[id,netmask,broadcastAddress,networkIdentifier,gateway],uplinkComponent[networkVlanTrunks[networkVlan[networkSpace,vlanNumber,id,fullyQualifiedName]]]]" +
 		",hardwareChassis[id,name],activeTransaction[id,transactionStatus[friendlyName,name]]," +
 		"operatingSystem[softwareLicense[softwareDescription[manufacturer,name,version,referenceCode]],passwords[username,password]]," +
 		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
-		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password],lastTransaction[transactionGroup],activeComponents"
+		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace,fullyQualifiedName],remoteManagementAccounts[username,password],lastTransaction[transactionGroup],activeComponents"
 
 	KEY_SIZES                  = "sizes"
 	KEY_OS                     = "operating_systems"
@@ -304,7 +304,7 @@ func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardw
 	}()
 	go func() {
 		defer wg.Done()
-		mask := "id,nextInvoiceTotalRecurringAmount,nextInvoiceChildren[id,nextInvoiceTotalRecurringAmount]," +
+		mask := "id,nextInvoiceTotalRecurringAmount,nextInvoiceChildren[id,description,categoryCode,nextInvoiceTotalRecurringAmount]," +
                 "orderItem[id,order[id,userRecord[id,username]]]"
 		billingItem, err := hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingItem()
 		all_err = errors.Join(all_err, err)

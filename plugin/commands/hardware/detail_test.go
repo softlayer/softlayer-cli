@@ -101,12 +101,11 @@ var _ = Describe("hardware detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Owner              SL123456"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Note               My golang note"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Public    0.232080   0.101300   20000"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("RAM                Micron / 8GB DDR4 1Rx8 / 2400 ECC NON Reg"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("RAM                Hynix / 16GB DDR4 "))
 			})
 			It("Price, Passwords, and Components", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--passwords", "--price", "--components")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Administrator   ThisPasswordISFake"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("root            FakePassword"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("SN06               2023-02-19T06:00:07Z   HARD_DRIVE"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Lenovo / 3943PAJ / Systemx3250-M6 / Intel Xeon SingleProc SATA / 1"))
@@ -114,6 +113,12 @@ var _ = Describe("hardware detail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("FQDN               bardcabero.testedit.com"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Datacenter         dal10"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("ID                 218027"))
+			})
+			It("Trunkable Vlans", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1001")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("PUBLIC    974      3249384   dal10.fcr01.974    Trunked"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("PRIVATE   886      2848186   -                  Primary"))
 			})
 		})
 

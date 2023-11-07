@@ -35,7 +35,32 @@
 			"name": "ibm iSCSI DAL10",
 			"vlanNumber": 1632,
 			"networkSpace": "PRIVATE"
-		}]
+		}],
+        "uplinkComponent": {
+            "id": 7042479,
+            "networkVlanTrunks": [
+                {
+                    "networkComponentId": 7042479,
+                    "networkVlan": {
+                        "fullyQualifiedName": "dal10.fcr01.1455",
+                        "id": 1404267,
+                        "networkSpace": "PUBLIC",
+                        "vlanNumber": 1455
+                    },
+                    "networkVlanId": 1404267
+                },
+                {
+                    "networkComponentId": 7042479,
+                    "networkVlan": {
+                        "fullyQualifiedName": "dal10.fcr01.974",
+                        "id": 3249384,
+                        "networkSpace": "PUBLIC",
+                        "vlanNumber": 974
+                    },
+                    "networkVlanId": 3249384
+                }
+            ]
+        }
 	}, {
 		"id": 13765658,
 		"macAddress": "ac:1f:6b:c7:ee:2b",
@@ -77,5 +102,17 @@
 	"networkManagementIpAddress": "10.221.68.228",
 	"primaryBackendIpAddress": "10.221.68.227",
 	"primaryIpAddress": "52.118.38.246",
-	"privateIpAddress": "10.221.68.227"
+	"privateIpAddress": "10.221.68.227",
+    "networkVlans": [
+        {
+            "id": 2848186,
+            "vlanNumber": 886,
+            "networkSpace": "PRIVATE"
+        },
+        {
+            "id": 2848184,
+            "vlanNumber": 1236,
+            "networkSpace": "PUBLIC"
+        }
+    ]
 }

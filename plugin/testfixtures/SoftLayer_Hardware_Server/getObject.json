@@ -815,7 +815,7 @@
                 "status": "APPROVED",
                 "userRecordId": 7650493,
                 "userRecord": {
-                    "username": "sl307608-dcabero"
+                    "username": "SL123456"
                 }
             }
         }
@@ -943,7 +943,7 @@
         "manufacturerLicenseInstance": "",
         "passwords": [
             {
-                "password": "ppx772A5dZUL",
+                "password": "FakePassword",
                 "username": "root"
             }
         ],
@@ -964,7 +964,7 @@
     "processorPhysicalCoreAmount": 4,
     "remoteManagementAccounts": [
         {
-            "password": "abc1234",
+            "password": "FakePassword",
             "username": "root"
         }
     ],
