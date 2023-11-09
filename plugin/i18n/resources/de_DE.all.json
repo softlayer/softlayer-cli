@@ -4,6 +4,10 @@
     "translation": "\nLUN-Name"
   },
   {
+    "id": "   [default: False]",
+    "translation": "   [Standardwert: False]"
+  },
+  {
     "id": " Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]",
     "translation": " Name des Kapazitätsschlüssels (z. B. C1_2X2_1_YEAR_TERM). [erforderlich]"
   },
@@ -588,6 +592,10 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh DATENTRÄGER_ID SNAPSHOT_ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} volume-refresh DATENTRÄGER_ID SNAPSHOT_ID\n Aktualisieren Sie eine doppelte DATENTRÄGER_ID mit einem Snapshot aus ihrer übergeordneten DATENTRÄGER_ID."
   },
   {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id DATENTRÄGER_ID LUN_ID\n\n Die LUN-ID wird nur während des Hostberechtigungsprozesses wirksam. Es wird\n empfohlen (ist aber nicht notwendig), alle Hosts zu deaktivieren, bevor diese Methode\n verwendet wird. Siehe „block access-revoke“.\n DATENTRÄGER_ID – die Datenträger-ID, für die die LUN-ID festgelegt werden soll\n LUN_ID – empfohlener Bereich ist eine ganze Zahl zwischen 0 und 255. Fortgeschrittene Benutzer\n können eine ganze Zahl zwischen 0 und 4095 verwenden."
+  },
+  {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONEN] DATENTRÄGER_ID \n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'"
   },
@@ -821,7 +829,7 @@
   },
   {
     "id": "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]",
-    "translation": "Ein DV-SAN-Zertifikat ermöglicht HTTPS-Datenverkehr über Ihre persönliche Domäne, erfordert jedoch eine Domänenvalidierung, um sicherzustellen, dass die Domänensteuerung bei Ihnen liegt. Ein Wildcard-Zertifikat ermöglicht HTTPS-Datenverkehr nur bei Angabe eines CNAME. [Berechtigung: dvSan, Platzhalterzeichen]"
+    "translation": "Ein DV-SAN-Zertifikat ermöglicht HTTPS-Datenverkehr über Ihre persönliche Domäne, erfordert jedoch eine Domänenvalidierung, um sicherzustellen, dass die Domänensteuerung bei Ihnen liegt. Ein Platzhalterzertifikat ermöglicht HTTPS-Datenverkehr nur bei Angabe eines CNAME. [Berechtigung: dvSan, Platzhalterzeichen]"
   },
   {
     "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
@@ -1272,6 +1280,14 @@
     "translation": "Bandbreitendaten über Datumsbereich."
   },
   {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was deleted.",
+    "translation": "Bandbreitenpool {{.bandwidthPoolId}} wurde gelöscht."
+  },
+  {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was edited successfully.",
+    "translation": "Bandbreitenpool {{.bandwidthPoolId}} wurde erfolgreich bearbeitet."
+  },
+  {
     "id": "Bandwidth report for every pool/server.",
     "translation": "Bandbreitenbericht für jeden Pool/Server."
   },
@@ -1481,7 +1497,7 @@
   },
   {
     "id": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation",
-    "translation": "Stornieren Sie die Ressource oder den Service für eine Rechnungsposition ab. Standardmäßig wird die Rechnungsposition storniert,\nwenn das nächste Rechnungsdatum erreicht ist, und die Rückforderung der Ressource beginnt kurz nach der Stornierung"
+    "translation": "Storniert die Ressource oder den Service für eine Rechnungsposition. Standardmäßig wird die Rechnungsposition storniert,\nwenn das nächste Rechnungsdatum erreicht ist, und die Rückforderung der Ressource beginnt kurz nach der Stornierung"
   },
   {
     "id": "Cancel the snapshot space immediately instead of on the billing anniversary",
@@ -1980,6 +1996,10 @@
     "translation": "Erstellen Sie eine Instanz für reservierte Kapazität."
   },
   {
+    "id": "Create a bandwidth pool.",
+    "translation": "Erstellen Sie einen Bandbreitenpool."
+  },
+  {
     "id": "Create a dedicated Virtual Server (Private Node)",
     "translation": "Dedizierten virtuellen Server erstellen (privater Knoten)"
   },
@@ -2090,6 +2110,10 @@
   {
     "id": "Creates a purge record and also initiates the purge call.",
     "translation": "Erstellt einen Bereinigungsdatensatz und leitet außerdem den Aufruf zur Bereinigung ein."
+  },
+  {
+    "id": "Creates a purge record and also initiates the purge call. For more information see the following documentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content",
+    "translation": "Erstellt einen Bereinigungsdatensatz und leitet außerdem den Aufruf zur Bereinigung ein. Weitere Informationen finden Sie in der folgenden Dokumentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content"
   },
   {
     "id": "Creates a user",
@@ -2245,7 +2269,7 @@
   },
   {
     "id": "Delete a provisioning scriptt.",
-    "translation": "Löschen Sie ein Bereitstellungsscript."
+    "translation": "Löscht ein Bereitstellungsscript."
   },
   {
     "id": "Delete a snapshot on a given volume",
@@ -2260,6 +2284,10 @@
     "translation": "Image löschen "
   },
   {
+    "id": "Delete bandwidth pool. ",
+    "translation": "Bandbreitenpool löschen. "
+  },
+  {
     "id": "Delete the credential of an Object Storage Account.",
     "translation": "Berechtigungsnachweis eines Object Storage-Kontos löschen."
   },
@@ -2269,11 +2297,11 @@
   },
   {
     "id": "Delete the quote of an order.",
-    "translation": "Löschen Sie das Angebot eines Auftrags."
+    "translation": "Löscht das Angebot eines Auftrags."
   },
   {
     "id": "Deny sharing of an image template with another account.",
-    "translation": "Verweigern Sie die gemeinsame Nutzung einer Imagevorlage mit einem anderen Konto."
+    "translation": "Verweigert die gemeinsame Nutzung einer Imagevorlage mit einem anderen Konto."
   },
   {
     "id": "Description",
@@ -2338,6 +2366,10 @@
   {
     "id": "Disable the IPMI interface.",
     "translation": "IPMI-Schnittstelle inaktivieren."
+  },
+  {
+    "id": "Disable vpn for a user.",
+    "translation": "VPN für einen Benutzer inaktivieren."
   },
   {
     "id": "Disable vpn subnets manual config.",
@@ -2668,6 +2700,10 @@
     "translation": "IPMI-Schnittstelle aktivieren."
   },
   {
+    "id": "Enable vpn for a user.",
+    "translation": "VPN für einen Benutzer aktivieren."
+  },
+  {
     "id": "Enable vpn subnets manual config.",
     "translation": "Manuelle Konfiguration für VPN-Teilnetze aktivieren."
   },
@@ -2709,7 +2745,7 @@
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***",
-    "translation": "Endurance-Speichertier (E/A-Operationen pro Sekunde/GB) [nur für Endurance-Datenträger] ***Ist kein Tier angegeben, wird das ursprüngliche Tier des Datenträgers verwendet.***"
+    "translation": "Endurance-Speichertier (E/A-Operationen pro Sekunde pro GB) [nur für Endurance-Datenträger] ***Wird kein Tier angegeben, wird das ursprüngliche Tier des Datenträgers verwendet.***"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10",
@@ -3120,6 +3156,10 @@
     "translation": "Benutzerkundenbenachrichtigung konnte nicht gelöscht werden."
   },
   {
+    "id": "Failed to delete bandwidth pool with Id: {{.bandwidthPoolId}}.\n",
+    "translation": "Löschen des Bandbreitenpools mit der ID {{.bandwidthPoolId}} fehlgeschlagen.\n"
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "Berechtigungsnachweis konnte nicht gelöscht werden: {{.storageID}}. \n"
   },
@@ -3284,6 +3324,10 @@
     "translation": "Abrufen von Cloud Object Storages fehlgeschlagen. \n"
   },
   {
+    "id": "Failed to get Create Bandwidth Pool.",
+    "translation": "„Erstellen des Bandbreitenpools“ konnte nicht abgerufen werden."
+  },
+  {
     "id": "Failed to get Event Log types.\n",
     "translation": "Ereignisprotokolltypen konnten nicht abgerufen werden.\n"
   },
@@ -3318,6 +3362,10 @@
   {
     "id": "Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "Abrufen des L7-Pools {{.L7PoolID}} fehlgeschlagen: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to get Location Group.",
+    "translation": "„Standortgruppe“ konnte nicht abgerufen werden."
   },
   {
     "id": "Failed to get NAS Network Storage.",
@@ -3454,6 +3502,10 @@
   {
     "id": "Failed to get credential limit. ",
     "translation": "Abrufen des Grenzwerts für Berechtigungsnachweise fehlgeschlagen. "
+  },
+  {
+    "id": "Failed to get currect user.",
+    "translation": "Aktueller Benutzer konnte nicht abgerufen werden."
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -5096,6 +5148,10 @@
     "translation": "Die IDs der SSH-Schlüssel, die dem Rootbenutzer hinzugefügt werden sollen, Mehrfachvorkommen zulässig"
   },
   {
+    "id": "IDs of the subnets to assign; e.g.: --subnet-id 1234",
+    "translation": "IDs der zuzuweisenden Teilnetze, z. B.: --subnet-id 1234"
+  },
+  {
     "id": "IDs of the subnets to remove",
     "translation": "IDs der zu entfernenden Teilnetze"
   },
@@ -5262,6 +5318,10 @@
   {
     "id": "Initial object ID number to attach to ticket",
     "translation": "Erste Objekt-ID-Nummer für die Zuordnung zum Ticket"
+  },
+  {
+    "id": "Input `0` for this parameter to order a duplicate volume with no snapshot space.",
+    "translation": "Geben Sie „0“ für diesen Parameter ein, um einen Duplikatdatenträger ohne Momentaufnahmespeicherplatz zu bestellen."
   },
   {
     "id": "Instance {{.ServerID}} has {{.Count}} {{.Interface}} interface.",
@@ -5749,7 +5809,7 @@
   },
   {
     "id": "List origin path for an existing CDN mapping.",
-    "translation": "Listen Sie einen Ursprungspfad für eine vorhandene CDN-Zuordnung auf."
+    "translation": "Listet Ursprungspfad für eine vorhandene CDN-Zuordnung auf."
   },
   {
     "id": "List package items that are used for ordering",
@@ -6489,7 +6549,7 @@
   },
   {
     "id": "Order/create a provisioning script.",
-    "translation": "Bestellen oder erstellen Sie ein Bereitstellungsscript."
+    "translation": "Bestellt oder erstellt ein Bereitstellungsscript."
   },
   {
     "id": "Ordered By",
@@ -6673,7 +6733,7 @@
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***",
-    "translation": "E/A-Operationen pro Sekunde (IOPS) für Performance-Speicher, zwischen 100 und 6000 als Vielfaches von 100 [nur für Performance-Datenträger] ***Ist kein IOPS-Wert angegeben, wird der ursprüngliche IOPS-Wert des Datenträgers verwendet.***"
+    "translation": "Performance Storage-E/A-Operationen pro Sekunde, zwischen 100 und 6000 als Vielfaches von 100 [nur für Performance-Datenträger] ***Wird kein IOPS-Wert angegeben, wird der ursprüngliche IOPS-Wert des Datenträgers verwendet.***"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used",
@@ -6844,6 +6904,10 @@
     "translation": "pool"
   },
   {
+    "id": "Pool name.",
+    "translation": "Poolname."
+  },
+  {
     "id": "Port Range Max",
     "translation": "Portbereich (max.)"
   },
@@ -6866,6 +6930,10 @@
   {
     "id": "Post-install script to download, only HTTPS executes, HTTP leaves file in /root",
     "translation": "Nachinstallationsscript zum Herunterladen, nur HTTPS wird ausgeführt, HTTP lässt Datei in /root"
+  },
+  {
+    "id": "Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000] Minimum: [the size of the origin volume]",
+    "translation": "Mögliche Größen: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000] Minimum: [die Größe des Ursprungsvolumens]"
   },
   {
     "id": "Power cycle a server",
@@ -7216,6 +7284,10 @@
     "translation": "Bereich"
   },
   {
+    "id": "Region selected. Permit:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]",
+    "translation": "Region ausgewählt. Genehmigung: [SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]"
+  },
+  {
     "id": "Reload operating system on a server",
     "translation": "Betriebssystem auf Server neu laden"
   },
@@ -7358,6 +7430,14 @@
   {
     "id": "Required User",
     "translation": "Erforderlicher Benutzer"
+  },
+  {
+    "id": "Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10",
+    "translation": "Voraussetzungen: [Wenn E/A-Operationen pro Sekunde/GB für den Ursprungsdatenträger 0,25 ist, muss E/A-Operationen pro Sekunde/GB für das Duplikat ebenfalls 0,25 sein. Wenn der                                   IOPS/GB-Wert für den Ausgangsdatenträger größer                                   als 0,25 ist, muss der IOPS/GB-Wert für das Duplikat                                   ebenfalls größer als 0,25 sein.] Auswahlmöglichkeiten: 0,25, 2, 4, 10"
+  },
+  {
+    "id": "Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]",
+    "translation": "Voraussetzungen: [ Wenn E/A-Operationen pro Sekunde/GB für den Ursprungsdatenträger kleiner als 0,3 ist, muss E/A-Operationen pro Sekunde/GB für das Duplikat ebenfalls kleiner als 0,3 sein. Wenn der IOPS/GB-Wert für den                                   Ausgangsdatenträger größer-gleich 0,3 ist,                                   muss der IOPS/GB-Wert für das Duplikat ebenfalls                                   größer-gleich 0,3 sein.]"
   },
   {
     "id": "Resource",
@@ -7681,7 +7761,7 @@
   },
   {
     "id": "Share an image template with another account.",
-    "translation": "Teilen Sie eine Imagevorlage mit einem anderen Konto."
+    "translation": "Teilt eine Imagevorlage mit einem anderen Konto."
   },
   {
     "id": "Shared on",
@@ -9076,6 +9156,10 @@
     "translation": "Das VLAN mit der ID {{.ID}} wurde nicht gefunden.\n"
   },
   {
+    "id": "Unable to find bandwidth pool with ID {{.bandwidthPoolId}}.\n",
+    "translation": "Der Bandbreitenpool mit der ID {{.bandwidthPoolId}} wurde nicht gefunden.\n"
+  },
+  {
     "id": "Unable to find category code from this volume.",
     "translation": "Der Kategoriecode von diesem Datenträger wurde nicht gefunden."
   },
@@ -9266,6 +9350,10 @@
   {
     "id": "Use SAN storage instead of local disk",
     "translation": "SAN-Speicher anstelle der lokalen Festplatte verwenden"
+  },
+  {
+    "id": "Use `${COMMAND_NAME} sl order lookup <ID>` to find more details about a specific order.",
+    "translation": "Verwenden Sie „${COMMAND_NAME} sl order lookup <ID>“, um weitere Details zu einer bestimmten Bestellung zu finden."
   },
   {
     "id": "Use the configuration from an existing virtual server",
@@ -9648,6 +9736,10 @@
     "translation": "[TAGNAME]"
   },
   {
+    "id": "[required]",
+    "translation": "[erforderlich]"
+  },
+  {
     "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
     "translation": "akzeptiert höchstens {{.Limit}} Argument(e), empfangen {{.Args}}"
   },
@@ -9658,6 +9750,14 @@
   {
     "id": "accepts {{.Limit}} arg(s), received {{.Args}}",
     "translation": "akzeptiert {{.Limit}} Argument(e), empfangen {{.Args}}"
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id>",
+    "translation": "zugangs_id ist die host_id, die von sl block access-list <volume_id> abgerufen wird."
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled must be False to use this command",
+    "translation": "zugangs_id ist die host_id, die von sl block access-list <volume_id> abgerufen wird SoftLayer_Account::iscsiisolationdisabled muss für die Verwendung dieses Befehls „False“ sein"
   },
   {
     "id": "account",
@@ -9822,6 +9922,10 @@
   {
     "id": "drive",
     "translation": "Laufwerk"
+  },
+  {
+    "id": "edit bandwidth pool. ",
+    "translation": "Bandbreitenpool bearbeiten. "
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",

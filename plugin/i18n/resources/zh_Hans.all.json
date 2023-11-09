@@ -4,6 +4,10 @@
     "translation": "\nLUN 名称"
   },
   {
+    "id": "   [default: False]",
+    "translation": "   [缺省值：False]"
+  },
+  {
     "id": " Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]",
     "translation": " 容量密钥名称（例如C1_2X2_1_YEAR_TERM）。[必需]"
   },
@@ -281,7 +285,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n    此命令可立即取消标识为 12345678 的卷，而不要求确认。"
+    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [选项]\n\n示例：\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n    此命令会立即取消标识为 12345678 的卷，而不要求确认。"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -588,6 +592,10 @@
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n示例：\n ${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n 使用来自其父 SNAPSHOT_ID 的快照刷新重复的 VOLUME_ID。"
   },
   {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n LUN 标识仅在主机授权过程中生效。 建议\n（但非必要）在使用此方法之前取消对所有主机的授权。\n 请参阅“block access-revoke”。\n VOLUME_ID - 要设置 LUN 标识的卷标识\n LUN_ID - 建议的范围是 0 到 255 之间的整数。 高级用户 \n 可以使用介于 0 与 4095 之间的整数"
+  },
+  {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\n示例：\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'"
   },
@@ -821,7 +829,7 @@
   },
   {
     "id": "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]",
-    "translation": "DV SAN 证书允许 HTTPS 流量通过个人域，但是需要域验证以证明所有权。 仅在使用给定的 CNAME 时，通配符证书才允许 HTTPS 流量。 [许可：dvSan、通配符]"
+    "translation": "DV SAN 证书允许通过您的个人域传输 HTTPS 流量，但需要域验证以证明所有权。 仅在使用给定的 CNAME 时，通配符证书才允许 HTTPS 流量。 [允许：dvSan、wilcard]"
   },
   {
     "id": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>",
@@ -1272,6 +1280,14 @@
     "translation": "日期范围内的带宽数据。"
   },
   {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was deleted.",
+    "translation": "已删除带宽池 {{.bandwidthPoolId}}。"
+  },
+  {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was edited successfully.",
+    "translation": "已成功编辑带宽池 {{.bandwidthPoolId}}。"
+  },
+  {
     "id": "Bandwidth report for every pool/server.",
     "translation": "每个池/服务器的带宽报告。"
   },
@@ -1397,7 +1413,7 @@
   },
   {
     "id": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'.",
-    "translation": "采用以下格式高速缓存查询规则：'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'。示例 <query-names> = 'uuid=1234567 issue=important'。"
+    "translation": "采用以下格式的高速缓存查询规则：'include-all'、'ignore-all'、'include: <query-names>'、'ignore: <query-names>'。示例 <query-names> = 'uuid=1234567 issue=important'。"
   },
   {
     "id": "Call arbitrary API endpoints",
@@ -1481,7 +1497,7 @@
   },
   {
     "id": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation",
-    "translation": "取消计费项目的资源或服务。 缺省情况下，将在下一个账单日期取消计费项目，\n并且将在取消后立即开始回收资源"
+    "translation": "取消计费项目的资源或服务。 缺省情况下，将在下一个帐单日期取消计费项目，\n并且将在取消后立即开始回收资源"
   },
   {
     "id": "Cancel the snapshot space immediately instead of on the billing anniversary",
@@ -1980,6 +1996,10 @@
     "translation": "创建保留容量实例。"
   },
   {
+    "id": "Create a bandwidth pool.",
+    "translation": "创建带宽池。"
+  },
+  {
     "id": "Create a dedicated Virtual Server (Private Node)",
     "translation": "创建专用虚拟服务器（专用节点）"
   },
@@ -2090,6 +2110,10 @@
   {
     "id": "Creates a purge record and also initiates the purge call.",
     "translation": "创建清除记录并启动清除调用。"
+  },
+  {
+    "id": "Creates a purge record and also initiates the purge call. For more information see the following documentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content",
+    "translation": "创建清除记录并启动清除调用。 有关更多信息，请参阅以下文档：https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content"
   },
   {
     "id": "Creates a user",
@@ -2260,6 +2284,10 @@
     "translation": "删除映像"
   },
   {
+    "id": "Delete bandwidth pool. ",
+    "translation": "删除带宽池。 "
+  },
+  {
     "id": "Delete the credential of an Object Storage Account.",
     "translation": "删除 Object Storage 帐户的凭证。"
   },
@@ -2338,6 +2366,10 @@
   {
     "id": "Disable the IPMI interface.",
     "translation": "禁用 IPMI 接口。"
+  },
+  {
+    "id": "Disable vpn for a user.",
+    "translation": "为用户禁用 VPN。"
   },
   {
     "id": "Disable vpn subnets manual config.",
@@ -2645,7 +2677,7 @@
   },
   {
     "id": "Enable or disable compression of JPEG images for requests over certain network conditions.",
-    "translation": "为某些网络条件下的请求启用或禁用 JPEG 图像压缩。"
+    "translation": "对在特定网络条件下传输的请求启用或禁用 JPEG 图像压缩。"
   },
   {
     "id": "Enable or disable the embedded object prefetching feature.",
@@ -2666,6 +2698,10 @@
   {
     "id": "Enable the IPMI interface.",
     "translation": "启用 IPMI 接口。"
+  },
+  {
+    "id": "Enable vpn for a user.",
+    "translation": "为用户启用 VPN。"
   },
   {
     "id": "Enable vpn subnets manual config.",
@@ -2709,7 +2745,7 @@
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***",
-    "translation": "耐久性存储层 (IOPS/GB) [仅适用于耐久性卷] ***如果未指定层，那么将使用卷的原始层。***"
+    "translation": "耐久性存储器层 (IOPS/GB) [仅适用于耐久性卷] ***如果未指定层，那么将使用卷的原始层。***"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10",
@@ -3120,6 +3156,10 @@
     "translation": "未能删除用户客户通知。"
   },
   {
+    "id": "Failed to delete bandwidth pool with Id: {{.bandwidthPoolId}}.\n",
+    "translation": "未能删除标识为 {{.bandwidthPoolId}} 的带宽池。\n"
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "未能删除凭证：{{.storageID}}。\n"
   },
@@ -3284,6 +3324,10 @@
     "translation": "未能获取 Cloud Object Storage。\n"
   },
   {
+    "id": "Failed to get Create Bandwidth Pool.",
+    "translation": "未能获取“创建带宽池”。"
+  },
+  {
     "id": "Failed to get Event Log types.\n",
     "translation": "未能获取事件日志类型。\n"
   },
@@ -3318,6 +3362,10 @@
   {
     "id": "Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "未能获取 L7 池 {{.L7PoolID}}：{{.Error}}。\n"
+  },
+  {
+    "id": "Failed to get Location Group.",
+    "translation": "未能获取位置组。"
   },
   {
     "id": "Failed to get NAS Network Storage.",
@@ -3454,6 +3502,10 @@
   {
     "id": "Failed to get credential limit. ",
     "translation": "未能获取凭证限制。 "
+  },
+  {
+    "id": "Failed to get currect user.",
+    "translation": "未能获取当前用户。"
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -4837,7 +4889,7 @@
   },
   {
     "id": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]",
-    "translation": "指定相对于所提供的域的路径，这可用于访问该源。 例如，'articles/video' => 'www.example.com/articles/video [必需]"
+    "translation": "指定相对于所提供的域的路径，这可用于访问此源。 例如，'articles/video' => 'www.example.com/articles/video [必需]"
   },
   {
     "id": "Grant access from a user to an specific device",
@@ -5033,7 +5085,7 @@
   },
   {
     "id": "Http port. [http or https is required]",
-    "translation": "HTTP 端口。[需要使用 http 或 https]"
+    "translation": "HTTP 端口。[HTTP 或 HTTPS 是必需的]"
   },
   {
     "id": "Https Port",
@@ -5045,7 +5097,7 @@
   },
   {
     "id": "Https port. [http or https is required]",
-    "translation": "HTTPS 端口。[需要使用 http 或 https]"
+    "translation": "HTTPS 端口。[HTTP 或 HTTPS 是必需的]"
   },
   {
     "id": "IBM CNAME",
@@ -5094,6 +5146,10 @@
   {
     "id": "IDs of SSH key to add to the root user, multiple occurrence allowed",
     "translation": "要添加到 root 用户的 SSH 密钥的标识，允许多次出现"
+  },
+  {
+    "id": "IDs of the subnets to assign; e.g.: --subnet-id 1234",
+    "translation": "要分配的子网的标识；例如： -- subnet-id 1234"
   },
   {
     "id": "IDs of the subnets to remove",
@@ -5262,6 +5318,10 @@
   {
     "id": "Initial object ID number to attach to ticket",
     "translation": "用于连接到凭单的初始对象标识号"
+  },
+  {
+    "id": "Input `0` for this parameter to order a duplicate volume with no snapshot space.",
+    "translation": "为此参数输入“0”以订购没有快照空间的重复卷。"
   },
   {
     "id": "Instance {{.ServerID}} has {{.Count}} {{.Interface}} interface.",
@@ -6673,7 +6733,7 @@
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***",
-    "translation": "性能存储器 IOPS，介于 100 到 6000 之间且为 100 的倍数 [仅限性能卷] ***如果未指定 IOPS 值，那么将使用卷的原始 IOPS 值。***"
+    "translation": "性能存储器 IOPS，介于 100 到 6000 之间，是 100 的倍数[仅适用于性能卷] ***如果未指定 IOPS 值，那么将使用卷的原始 IOPS 值。***"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used",
@@ -6689,7 +6749,7 @@
   },
   {
     "id": "Performance configuration. [Permit: web, video, file, dynamic]",
-    "translation": "性能配置。 [许可：web、视频、文件、动态]"
+    "translation": "性能配置。 [允许：web、video、file、dynamic]"
   },
   {
     "id": "Permanently removes an SSH key",
@@ -6844,6 +6904,10 @@
     "translation": "池"
   },
   {
+    "id": "Pool name.",
+    "translation": "池名称。"
+  },
+  {
     "id": "Port Range Max",
     "translation": "端口范围最大值"
   },
@@ -6866,6 +6930,10 @@
   {
     "id": "Post-install script to download, only HTTPS executes, HTTP leaves file in /root",
     "translation": "要下载的安装后脚本，仅执行 HTTPS，HTTP 将文件保留在 /root 中"
+  },
+  {
+    "id": "Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000] Minimum: [the size of the origin volume]",
+    "translation": "潜在大小：[20、40、80、100、250、500、1000、2000、4000、8000、12000] 最小值：[源卷的大小]"
   },
   {
     "id": "Power cycle a server",
@@ -7216,6 +7284,10 @@
     "translation": "区域"
   },
   {
+    "id": "Region selected. Permit:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]",
+    "translation": "已选择区域。 许可：[SJC/DAL/WDC/TOR/MON、AMS/LON/MAD/PAR、SNG/HKG/OSA/TOK、SYD、MEX、SAO、CHE、MIL、SEO、FRA]"
+  },
+  {
     "id": "Reload operating system on a server",
     "translation": "在服务器上重新装入操作系统"
   },
@@ -7358,6 +7430,14 @@
   {
     "id": "Required User",
     "translation": "必需的用户"
+  },
+  {
+    "id": "Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10",
+    "translation": "要求：[如果源卷的 IOPS/GB 为 0.25，那么重复卷的 IOPS/GB 也必须为 0.25。 如果原始卷的 IOPS/GB\n                                  大于 0.25，那么复制卷的 IOPS/GB 也必须大于 0.25。] 选项：0.25、2、4 和 10"
+  },
+  {
+    "id": "Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]",
+    "translation": "要求：[如果源卷的 IOPS/GB 小于 0.3，那么重复卷的 IOPS/GB 也必须小于 0.3。 如果原始卷的 IOPS/GB 大于或者等于 0.3，\n                                  那么复制卷的 IOPS/GB 也必须大于或者等于 0.3。]"
   },
   {
     "id": "Resource",
@@ -8333,7 +8413,7 @@
   },
   {
     "id": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.",
-    "translation": "边缘服务器在 HTTP 头中使用主机头来与源主机进行通信。 默认为主机名。"
+    "translation": "边缘服务器使用 HTTP 头中的主机头与源主机进行通信。 缺省值为主机名。"
   },
   {
     "id": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified",
@@ -8481,7 +8561,7 @@
   },
   {
     "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint",
-    "translation": "源类型。 [许可：服务器、存储器] 注：如果 OriginType 是存储器，那么 OriginHost 作为端点"
+    "translation": "源类型。 [允许：server、storage] 注：如果 OriginType 为 storage，那么将 OriginHost 作为端点"
   },
   {
     "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint.",
@@ -9076,6 +9156,10 @@
     "translation": "找不到标识为 {{.ID}} 的 VLAN。\n"
   },
   {
+    "id": "Unable to find bandwidth pool with ID {{.bandwidthPoolId}}.\n",
+    "translation": "找不到标识为 {{.bandwidthPoolId}} 的带宽池。\n"
+  },
+  {
     "id": "Unable to find category code from this volume.",
     "translation": "找不到此卷的类别代码。"
   },
@@ -9266,6 +9350,10 @@
   {
     "id": "Use SAN storage instead of local disk",
     "translation": "使用 SAN 存储器，而不使用本地磁盘"
+  },
+  {
+    "id": "Use `${COMMAND_NAME} sl order lookup <ID>` to find more details about a specific order.",
+    "translation": "使用 `${COMMAND_NAME} sl order lookup <ID>` 来查找有关特定顺序的更多信息。"
   },
   {
     "id": "Use the configuration from an existing virtual server",
@@ -9648,6 +9736,10 @@
     "translation": "[标记名称]"
   },
   {
+    "id": "[required]",
+    "translation": "[必需]"
+  },
+  {
     "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
     "translation": "最多接受 {{.Limit}} 个参数，已收到 {{.Args}} 个"
   },
@@ -9658,6 +9750,14 @@
   {
     "id": "accepts {{.Limit}} arg(s), received {{.Args}}",
     "translation": "接受 {{.Limit}} 个参数，已收到 {{.Args}} 个"
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id>",
+    "translation": "access_id 是由 sl block access-list 获取的 host_id<volume_id>"
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled must be False to use this command",
+    "translation": "access_id 是由 sl block access-list 获取的 host_id<volume_id>  SoftLayer_Account::iscsiisolationdisabled 必须为 False 才能使用此命令"
   },
   {
     "id": "account",
@@ -9822,6 +9922,10 @@
   {
     "id": "drive",
     "translation": "驱动器"
+  },
+  {
+    "id": "edit bandwidth pool. ",
+    "translation": "编辑带宽池。 "
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",
