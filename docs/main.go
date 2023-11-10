@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
+	"io/ioutil"
+	"path/filepath"
 	// "sort"
 	"github.com/spf13/cobra/doc"
 	// "github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
@@ -22,14 +25,32 @@ func main() {
 	fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 	slMeta := sl_plugin.GetTopCobraCommand(fakeUI, fakeSession)
 
-	err := doc.GenMarkdownTree(slMeta, "./")
+	cwd, err := os.Getwd()
 	if err != nil {
-		fmt.Errorf(err.Error())
+		fmt.Printf(err.Error())
 	}
-	err = os.Rename("./sl.md", "./index.md")
+	if !strings.HasSuffix(filepath.ToSlash(cwd), "softlayer-cli/docs") {
+		fmt.Printf("%v is the wrong directory, you need to run this command in the softlayer-cli/docs directory.\n", cwd)
+
+		return
+	} 
+	err = doc.GenMarkdownTree(slMeta, "./")
 	if err != nil {
-		fmt.Errorf(err.Error())
+		fmt.Printf(err.Error())
 	}
+	// err = os.Rename("./sl.md", "./index.md")
+	// if err != nil {
+	// 	fmt.Errorf(err.Error())
+	// }
+	// Need to make sure we have an index file
+	bytesRead, err := ioutil.ReadFile("./sl.md")
+    if err != nil {
+        fmt.Printf(err.Error())
+    }
+    err = ioutil.WriteFile("./index.md", bytesRead, 0755)
+    if err != nil {
+        fmt.Printf(err.Error())
+    }
 	fmt.Printf("Jobs done.\n")
 
 }
