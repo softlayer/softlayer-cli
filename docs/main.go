@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	// "sort"
 	"github.com/spf13/cobra/doc"
 	// "github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
@@ -21,7 +22,11 @@ func main() {
 	fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
 	slMeta := sl_plugin.GetTopCobraCommand(fakeUI, fakeSession)
 
-	err := doc.GenMarkdownTree(slMeta, "./markdown")
+	err := doc.GenMarkdownTree(slMeta, "./")
+	if err != nil {
+		fmt.Errorf(err.Error())
+	}
+	err = os.Rename("./sl.md", "./index.md")
 	if err != nil {
 		fmt.Errorf(err.Error())
 	}
