@@ -4,6 +4,7 @@
 # softlayer-cli
 
 This repository houses the code that powers the [ibmcloud-cli sl](https://github.ibm.com/Bluemix/bluemix-cli) command.
+[CLI Documentation](https://pages.github.ibm.com/SoftLayer/softlayer-cli)
 
 # Project Setup
 
