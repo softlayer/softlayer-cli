@@ -67,7 +67,11 @@ def runTests() -> None:
     subprocess.run(go_vet, check=True)
     go_test = ['go', 'test'] +  clean_mods
     print(f'[turquoise2]Running: go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")')
-    subprocess.run(go_test, check=True)
+    try:
+        subprocess.run(go_test, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"[red]Unit tests failed")
+        sys.exit(e.returncode)
     go_sec = ['gosec', '-exclude-dir=fixture', '-exclude-dir=plugin/resources', '-quiet', './...']
     # Not using the 'real' command because this is more copy/pasteable.
     print('[turquoise2]Running: ' + " ".join(go_sec)) 
