@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"sort"
+	"encoding/json"
 	"io/ioutil"
 	"path/filepath"
 	// "sort"
 	"github.com/spf13/cobra/doc"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	// "github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	sl_plugin "github.ibm.com/SoftLayer/softlayer-cli/plugin"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -35,48 +36,81 @@ func main() {
 	return
 }
 
-// This function builds the documentation for IBMCLOUD docs
-func CliDocs() {
-	fmt.Printf("IBMCLOUD SL Command Directory\n")
-
-	slPlugin := new(sl_plugin.SoftlayerPlugin)
-	slMeta := slPlugin.GetMetadata()
-	sort.Slice(slMeta.Commands, func(i, j int) bool {
-		one := fmt.Sprintf("%s %s", slMeta.Commands[i].Namespace, slMeta.Commands[i].Name)
-		two := fmt.Sprintf("%s %s", slMeta.Commands[j].Namespace, slMeta.Commands[j].Name)
-		return one < two
-	})
-	fmt.Printf("==============================================================\n")
-	fileName := ""
-	fileContent := ""
-	// TODO: call-api, version and metadata need a special case or something for filename...
-	for _, slCmd := range slMeta.Commands {
-		thisFileName := fmt.Sprintf("cli_%s.md", slCmd.Namespace)
-		thisFileName = strings.ReplaceAll(thisFileName, " ", "_")
-		if thisFileName != fileName {
-			fileName = thisFileName
-			fmt.Printf("NameSpace: %s  Name: %s FIleName: %s\n", slCmd.Namespace, slCmd.Name, fileName)
-			if fileContent != "" {
-				fmt.Printf("Here is where I would write out to a file...\n")
-				fileContent = ""
-			}
-		} 
-		
-		sort.Slice(slCmd.Flags, func(i, j int) bool {
-			return slCmd.Flags[i].Name < slCmd.Flags[j].Name
-		})
-		// for _, slCmdFlag := range slCmd.Flags {
-			// fmt.Printf("\tFlag: %s: %s\n", slCmdFlag.Name, slCmdFlag.Description)
-
-		// }
-		// fmt.Printf("\t--------------------------------\n")
-		// fmt.Printf("\tDescription: %s\n", slCmd.Description)
-		// fmt.Printf("\t--------------------------------\n")
-		// fmt.Printf("\tUsage: %s\n", slCmd.Usage)
-		// fmt.Printf("==============================================================\n")
-	}
+// For top level commands, like `sl account` or `sl hardware`
+type SlCmdGroup struct {
+	Name string
+	Commands []SlCmdDoc
+	Help string
 }
 
+// For specific commands
+type SlCmdDoc struct {
+	Name string
+	Use string
+	Flags []SlCmdFlag
+	Help string
+	LongHelp string
+}
+
+// For a commands flags
+type SlCmdFlag struct {
+	Name string
+	Help string
+}
+
+// This function builds the documentation for IBMCLOUD docs
+func CliDocs() {
+	// fmt.Printf("IBMCLOUD SL Command Directory\n")
+	SlCommands := sl_plugin.GetTopCobraCommand(nil, nil)
+	CmdGroups := []SlCmdGroup{}
+	for _, iCmd := range SlCommands.Commands() {
+		thisCmdGroup := SlCmdGroup{
+			Name: iCmd.Name(),
+			Commands: nil,
+			Help: iCmd.Short,
+		}
+		if len(iCmd.Commands()) > 0 {
+			thisCmdGroup.Commands = buildSlCmdDoc(iCmd)
+		}
+		CmdGroups = append(CmdGroups, thisCmdGroup)
+	}
+	jOut, err := json.Marshal(CmdGroups)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(string(jOut))
+}
+
+func buildSlCmdDoc(topCommand *cobra.Command) []SlCmdDoc {
+	docs := []SlCmdDoc{}
+	for _, iCmd := range topCommand.Commands() {
+		thisDoc := SlCmdDoc{
+			Name: iCmd.Name(),
+			Use: iCmd.Use,
+			Flags: nil,
+			Help: iCmd.Short,
+			LongHelp: iCmd.Long,
+		}
+		thisDoc.Flags = buildSlCmdFlag(iCmd)
+
+		docs = append(docs, thisDoc)
+	}
+	return docs
+}
+
+func buildSlCmdFlag(topCommand *cobra.Command) []SlCmdFlag {
+	flags := []SlCmdFlag{}
+	flagSet := topCommand.Flags()
+	flagSet.VisitAll(func(pflag *pflag.Flag) {
+		thisFlag := SlCmdFlag{
+			Name: pflag.Name,
+			Help: pflag.Usage,
+		}
+		flags = append(flags, thisFlag)
+	})
+	return flags
+}
 
 // This function uses the build in Cobra documentation generator, its fine.
 func CobraDocs() {
