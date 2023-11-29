@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"path/filepath"
+	"text/template"
 	// "sort"
 	"github.com/spf13/cobra/doc"
 	"github.com/spf13/cobra"
@@ -30,15 +31,20 @@ var rootCmd = &cobra.Command{
 
 func main() {
 	err := rootCmd.Execute()
-	if err != nil {
-		fmt.Printf(err.Error())
-	}
+	checkError(err)
 	return
+}
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
 
 // For top level commands, like `sl account` or `sl hardware`
 type SlCmdGroup struct {
 	Name string
+	CommandShortLink string
 	Commands []SlCmdDoc
 	Help string
 }
@@ -46,6 +52,7 @@ type SlCmdGroup struct {
 // For specific commands
 type SlCmdDoc struct {
 	Name string
+	CommandShortLink string
 	Use string
 	Flags []SlCmdFlag
 	Help string
@@ -58,35 +65,77 @@ type SlCmdFlag struct {
 	Help string
 }
 
+
+
 // This function builds the documentation for IBMCLOUD docs
 func CliDocs() {
 	// fmt.Printf("IBMCLOUD SL Command Directory\n")
 	SlCommands := sl_plugin.GetTopCobraCommand(nil, nil)
 	CmdGroups := []SlCmdGroup{}
 	for _, iCmd := range SlCommands.Commands() {
+		shortName := strings.ReplaceAll(iCmd.Name(), " ", "_")
+		shortName = strings.ReplaceAll(iCmd.Name(), "-", "_")
 		thisCmdGroup := SlCmdGroup{
 			Name: iCmd.Name(),
+			CommandShortLink: fmt.Sprintf("sl_%v", shortName),
 			Commands: nil,
 			Help: iCmd.Short,
 		}
 		if len(iCmd.Commands()) > 0 {
 			thisCmdGroup.Commands = buildSlCmdDoc(iCmd)
 		}
+		PrintMakrdown(thisCmdGroup)
 		CmdGroups = append(CmdGroups, thisCmdGroup)
 	}
 	jOut, err := json.Marshal(CmdGroups)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(string(jOut))
+	os.WriteFile("sl.json", jOut, 0755)
+	checkError(err)
+	// fmt.Println(string(jOut))
 }
+
+// Generates the Markdown
+func PrintMakrdown(cmd SlCmdGroup) {
+
+	var cmdTemplate = `
+## {{.Name}}
+{: #{{.CommandShortLink}}}
+
+{{.Help}}
+
+{{range .Commands}}
+#### {{.Name}}
+{: #{{.CommandShortLink}}}
+
+{{.Help}}
+
+**Command options**:
+	{{range .Flags}}
+	--{{.Name}} {{.Help}}
+	{{end}}
+
+{{.LongHelp}}
+{{end}}
+
+`
+	mdTemplate, err := template.New("cmd template").Parse(cmdTemplate)
+	checkError(err)
+	filename := fmt.Sprintf("%v.md", cmd.CommandShortLink)
+	outfile, err := os.Create(filename)
+	defer outfile.Close()
+	err = mdTemplate.Execute(outfile, cmd)
+	checkError(err)
+
+}
+
 
 func buildSlCmdDoc(topCommand *cobra.Command) []SlCmdDoc {
 	docs := []SlCmdDoc{}
 	for _, iCmd := range topCommand.Commands() {
+		shortName := strings.ReplaceAll(iCmd.Name(), " ", "_")
+		shortName = strings.ReplaceAll(iCmd.Name(), "-", "_")
 		thisDoc := SlCmdDoc{
 			Name: iCmd.Name(),
+			CommandShortLink: shortName,
 			Use: iCmd.Use,
 			Flags: nil,
 			Help: iCmd.Short,
@@ -123,31 +172,23 @@ func CobraDocs() {
 	slMeta := sl_plugin.GetTopCobraCommand(fakeUI, fakeSession)
 
 	cwd, err := os.Getwd()
-	if err != nil {
-		fmt.Printf(err.Error())
-	}
+	checkError(err)
 	if !strings.HasSuffix(filepath.ToSlash(cwd), "softlayer-cli/docs") {
 		fmt.Printf("%v is the wrong directory, you need to run this command in the softlayer-cli/docs directory.\n", cwd)
 
 		return
 	} 
 	err = doc.GenMarkdownTree(slMeta, "./")
-	if err != nil {
-		fmt.Printf(err.Error())
-	}
+	checkError(err)
 	// err = os.Rename("./sl.md", "./index.md")
 	// if err != nil {
 	// 	fmt.Errorf(err.Error())
 	// }
 	// Need to make sure we have an index file
 	bytesRead, err := ioutil.ReadFile("./sl.md")
-    if err != nil {
-        fmt.Printf(err.Error())
-    }
+    checkError(err)
     err = ioutil.WriteFile("./index.md", bytesRead, 0755)
-    if err != nil {
-        fmt.Printf(err.Error())
-    }
+    checkError(err)
 	fmt.Printf("Jobs done.\n")
 
 }
