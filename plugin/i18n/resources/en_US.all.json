@@ -2716,6 +2716,10 @@
     "translation": "Enables/Disables snapshot space usage threshold warning for a given volume."
   },
   {
+    "id": "Encrypted",
+    "translation": "Encrypted"
+  },
+  {
     "id": "End",
     "translation": "End"
   },

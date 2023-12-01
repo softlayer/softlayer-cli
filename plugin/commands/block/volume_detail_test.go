@@ -66,7 +66,7 @@ var _ = Describe("Block Volume-Detail Tests", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("User name                  IBM01SEL278444-16"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Endurance Tier             WRITEHEAVY_TIER"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Notes                      -"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Encrypted                  false"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Encrypted                  False"))
 			})
 		})
 	})

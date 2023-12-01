@@ -135,9 +135,9 @@ func (cmd *VolumeDetailCommand) Run(args []string) error {
 		return slErr.NewAPIError(T("Failed to decoded the note.\n"), err.Error(), 2)
 	}
 	table.Add(T("Notes"), decodedValue)
-	hasEncryption := T("false")
-	if (blockVolume.HasEncryptionAtRest != nil) {
-		hasEncryption = T(fmt.Sprintf("%v", *blockVolume.HasEncryptionAtRest))
+	hasEncryption := T("False")
+	if (blockVolume.HasEncryptionAtRest != nil && *blockVolume.HasEncryptionAtRest == true) {
+		hasEncryption := T("True")
 	}	
 	table.Add(T("Encrypted"), hasEncryption)
 	table.Print()
