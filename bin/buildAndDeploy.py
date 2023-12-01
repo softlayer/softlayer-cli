@@ -4,6 +4,7 @@ import click
 import json
 from pathlib import Path
 import os
+import sys
 import re
 import subprocess
 import requests
