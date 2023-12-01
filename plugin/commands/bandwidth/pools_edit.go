@@ -41,7 +41,7 @@ func NewEditCommand(sl *metadata.SoftlayerCommand) (cmd *EditCommand) {
 
 	cobraCmd := &cobra.Command{
 		Use:   "pools-edit " + T("IDENTIFIER"),
-		Short: T("edit bandwidth pool. "),
+		Short: T("Edit bandwidth pool."),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
