@@ -137,8 +137,8 @@ func (cmd *VolumeDetailCommand) Run(args []string) error {
 	}
 	table.Add(T("Notes"), decodedValue)
 	hasEncryption := T("False")
-	if (blockVolume.HasEncryptionAtRest != nil && *blockVolume.HasEncryptionAtRest == true) {
-		hasEncryption := T("True")
+	if (fileVolume.HasEncryptionAtRest != nil && *fileVolume.HasEncryptionAtRest == true) {
+		hasEncryption = T("True")
 	}	
 	table.Add(T("Encrypted"), hasEncryption)
 	table.Print()
