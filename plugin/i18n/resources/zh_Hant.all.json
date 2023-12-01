@@ -4,6 +4,10 @@
     "translation": "\nLUN 名稱"
   },
   {
+    "id": "   [default: False]",
+    "translation": "   [預設值：False]"
+  },
+  {
     "id": " Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]",
     "translation": " 容量索引鍵名稱（例如 C1_2X2_1_YEAR_TERM）。[必要]"
   },
@@ -37,7 +41,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80",
-    "translation": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
+    "translation": "${COMMAND_NAME} sl cdn create\n範例：：\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
   },
   {
     "id": "${COMMAND_NAME} sl cdn delete",
@@ -57,7 +61,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80",
-    "translation": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
+    "translation": "${COMMAND_NAME} sl cdn origin-add\n範例：\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
   },
   {
     "id": "${COMMAND_NAME} sl cdn origin-list",
@@ -65,11 +69,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\"",
-    "translation": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\""
+    "translation": "${COMMAND_NAME} sl cdn origin-remove\n範例：\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\""
   },
   {
     "id": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\"",
-    "translation": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
+    "translation": "${COMMAND_NAME} sl cdn purge\n範例：\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
@@ -281,7 +285,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   這個指令會立即取消磁區（其 ID 為 12345678），而不要求確認。"
+    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   此指令會立即取消磁區（其 ID 為 12345678），而不要求確認。"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -586,6 +590,10 @@
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n 以來自其母項 SNAPSHOT_ID 的 Snapshot 重新整理重複的 VOLUME_ID。"
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n LUN ID 僅在「主機授權」處理程序期間生效。 建議（但非必要）先取消所有 \n 主機的授權，\n再使用此方法。 請參閱 \"block access-revoke\"。\n VOLUME_ID - 若要設定 LUN ID 的磁區 ID \n LUN_ID - 建議範圍是 0 到 255 之間的整數。 進階使用者 \n 可以使用 0 到 4095 之間的整數"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
@@ -1272,6 +1280,14 @@
     "translation": "日期範圍內的頻寬資料。"
   },
   {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was deleted.",
+    "translation": "已刪除頻寬儲存區 {{.bandwidthPoolId}}。"
+  },
+  {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was edited successfully.",
+    "translation": "已順利編輯頻寬儲存區 {{.bandwidthPoolId}}。"
+  },
+  {
     "id": "Bandwidth report for every pool/server.",
     "translation": "每個儲存區/伺服器的頻寬報告。"
   },
@@ -1481,7 +1497,7 @@
   },
   {
     "id": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation",
-    "translation": "取消計費項目的資源或服務。 依預設，計費項目將在下一個帳單日期取消 \n 且資源收回將在取消之後不久開始"
+    "translation": "取消計費項目的資源或服務。 依預設，計費項目將在下一個計費日期取消 \n且資源收回將在取消之後不久開始"
   },
   {
     "id": "Cancel the snapshot space immediately instead of on the billing anniversary",
@@ -1980,6 +1996,10 @@
     "translation": "建立「保留容量」實例。"
   },
   {
+    "id": "Create a bandwidth pool.",
+    "translation": "建立頻寬儲存區。"
+  },
+  {
     "id": "Create a dedicated Virtual Server (Private Node)",
     "translation": "建立專用虛擬伺服器（專用節點）"
   },
@@ -2090,6 +2110,10 @@
   {
     "id": "Creates a purge record and also initiates the purge call.",
     "translation": "建立清除記錄並同時起始清除呼叫。"
+  },
+  {
+    "id": "Creates a purge record and also initiates the purge call. For more information see the following documentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content",
+    "translation": "建立清除記錄並同時起始清除呼叫。 如需相關資訊，請參閱下列文件：https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content"
   },
   {
     "id": "Creates a user",
@@ -2260,6 +2284,10 @@
     "translation": "刪除映像檔"
   },
   {
+    "id": "Delete bandwidth pool. ",
+    "translation": "刪除頻寬儲存區。 "
+  },
+  {
     "id": "Delete the credential of an Object Storage Account.",
     "translation": "刪除 Object Storage 帳戶的認證。"
   },
@@ -2338,6 +2366,10 @@
   {
     "id": "Disable the IPMI interface.",
     "translation": "停用 IPMI 介面。"
+  },
+  {
+    "id": "Disable vpn for a user.",
+    "translation": "停用使用者的 VPN。"
   },
   {
     "id": "Disable vpn subnets manual config.",
@@ -2645,7 +2677,7 @@
   },
   {
     "id": "Enable or disable compression of JPEG images for requests over certain network conditions.",
-    "translation": "針對在特定網路狀況下遞送的要求啟用或停用 JPEG 影像檔的壓縮。"
+    "translation": "針對特定網路條件下的要求啟用或停用 JPEG 影像壓縮。"
   },
   {
     "id": "Enable or disable the embedded object prefetching feature.",
@@ -2666,6 +2698,10 @@
   {
     "id": "Enable the IPMI interface.",
     "translation": "啟用 IPMI 介面。"
+  },
+  {
+    "id": "Enable vpn for a user.",
+    "translation": "啟用使用者的 VPN。"
   },
   {
     "id": "Enable vpn subnets manual config.",
@@ -2709,7 +2745,7 @@
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***",
-    "translation": "耐久性儲存體層級（每 GB 的 IOPS）[僅適用於耐久性磁區] ***如果不指定層級，將會使用磁區的原始層級。***"
+    "translation": "耐久性儲存體層級（每 GB 的 IOPS）[僅適用於耐久性磁區] ***如果未指定層級，將使用磁區的原始層級。***"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10",
@@ -2737,7 +2773,7 @@
   },
   {
     "id": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you.",
-    "translation": "請輸入廣域唯一的子網域。 完整 URL 會變成我們用來配置 DNS 的 CNAME。 如果未輸入任何值，我們將為您產生 CNAME。"
+    "translation": "請輸入廣域唯一的子網域。 完整 URL 會變成我們用來配置您的 DNS 的 CNAME。 如果未輸入任何值，我們將為您產生一個 CNAME。"
   },
   {
     "id": "Error marshalling resource",
@@ -3120,6 +3156,10 @@
     "translation": "無法刪除「使用者客戶通知」。"
   },
   {
+    "id": "Failed to delete bandwidth pool with Id: {{.bandwidthPoolId}}.\n",
+    "translation": "無法刪除 ID 為 {{.bandwidthPoolId}} 的頻寬儲存區。\n"
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "無法刪除認證：{{.storageID}}。\n"
   },
@@ -3284,6 +3324,10 @@
     "translation": "無法取得「雲端物件儲存體」。\n"
   },
   {
+    "id": "Failed to get Create Bandwidth Pool.",
+    "translation": "無法取得「建立頻寬儲存區」。"
+  },
+  {
     "id": "Failed to get Event Log types.\n",
     "translation": "無法取得事件日誌類型。\n"
   },
@@ -3318,6 +3362,10 @@
   {
     "id": "Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "無法取得 L7 儲存區 {{.L7PoolID}}：{{.Error}}。\n"
+  },
+  {
+    "id": "Failed to get Location Group.",
+    "translation": "無法取得位置群組。"
   },
   {
     "id": "Failed to get NAS Network Storage.",
@@ -3446,6 +3494,10 @@
   {
     "id": "Failed to get credential limit. ",
     "translation": "無法取得認證限制。 "
+  },
+  {
+    "id": "Failed to get currect user.",
+    "translation": "無法取得現行使用者。"
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -5088,6 +5140,10 @@
     "translation": "要新增至 root 使用者的 SSH 金鑰 ID，容許多次出現的項目"
   },
   {
+    "id": "IDs of the subnets to assign; e.g.: --subnet-id 1234",
+    "translation": "要指派的子網路 ID；例如：--subnet-id 1234"
+  },
+  {
     "id": "IDs of the subnets to remove",
     "translation": "要移除的子網路 ID"
   },
@@ -5254,6 +5310,10 @@
   {
     "id": "Initial object ID number to attach to ticket",
     "translation": "要連接至問題單的起始物件 ID 號碼"
+  },
+  {
+    "id": "Input `0` for this parameter to order a duplicate volume with no snapshot space.",
+    "translation": "為此參數輸入 \"0\" 以排序沒有 Snapshot 空間的重複磁區。"
   },
   {
     "id": "Instance {{.ServerID}} has {{.Count}} {{.Interface}} interface.",
@@ -6665,7 +6725,7 @@
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***",
-    "translation": "效能儲存空間 IOPS，此值為 100 的倍數，介於 100 與 6000 之間 [僅適用於效能磁區] ***如果未指定 IOPS 值，將會使用磁區的原始 IOPS 值。***"
+    "translation": "效能儲存體 IOPS，介於 100 到 6000 之間的（100 的倍數）[僅適用於效能磁區] ***如果未指定 IOPS 值，將使用磁區的原始 IOPS 值。***"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used",
@@ -6836,6 +6896,10 @@
     "translation": "儲存區"
   },
   {
+    "id": "Pool name.",
+    "translation": "儲存區名稱。"
+  },
+  {
     "id": "Port Range Max",
     "translation": "埠範圍上限"
   },
@@ -6858,6 +6922,10 @@
   {
     "id": "Post-install script to download, only HTTPS executes, HTTP leaves file in /root",
     "translation": "要下載的後置安裝 Script，只有 HTTPS 才會執行，HTTP 則會將檔案留在 /root 中"
+  },
+  {
+    "id": "Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000] Minimum: [the size of the origin volume]",
+    "translation": "潛在大小：[20、40、80、100、250、500、1000、2000、4000、8000、12000] 最小值：[原始磁區的大小]"
   },
   {
     "id": "Power cycle a server",
@@ -7208,6 +7276,10 @@
     "translation": "區域"
   },
   {
+    "id": "Region selected. Permit:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]",
+    "translation": "已選取區域。 允許：[SJC/DAL/WDC/TOR/MON、AMS/LON/MAD/PAR、SNG/HKG/OSA/TOK、SYD、MEX、SAO、CHE、MIL、SEO、FRA]"
+  },
+  {
     "id": "Reload operating system on a server",
     "translation": "在伺服器上重新載入作業系統"
   },
@@ -7350,6 +7422,14 @@
   {
     "id": "Required User",
     "translation": "必要的使用者"
+  },
+  {
+    "id": "Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10",
+    "translation": "需求：[如果原始磁區的 IOPS/GB 是 0.25，則重複磁區的 IOPS/GB 也必須是 0.25。 If IOPS/GB\n                                  for the origin volume is greater than 0.25,\n                                  IOPS/GB for the duplicate must also be\n                                  greater than 0.25.] 選項：0.25、2、4、10"
+  },
+  {
+    "id": "Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]",
+    "translation": "需求：[如果原始磁區的 IOPS/GB 小於 0.3，則重複磁區的 IOPS/GB 也必須小於 0.3。 If IOPS/GB for the origin\n                                  volume is greater than or equal to 0.3,\n                                  IOPS/GB for the duplicate must also be\n                                  greater than or equal to 0.3.]"
   },
   {
     "id": "Resource",
@@ -7905,7 +7985,7 @@
   },
   {
     "id": "Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions.",
-    "translation": "指定可以儲存在 CDN 服務上的副檔名（以逗點區隔）。 例如，'jpg, pdf, jpeg, png' 是有效的清單。 將旗標保留空白，以容許所有延伸。"
+    "translation": "指定可以儲存在 CDN 服務上的副檔名（以逗點區隔）。 例如，'jpg, pdf, jpeg, png' 是有效的清單。 將旗標留空，以容許所有延伸。"
   },
   {
     "id": "Specify the mode to boot the OS in. Supported modes are HVM and PV.",
@@ -8473,7 +8553,7 @@
   },
   {
     "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint",
-    "translation": "原始類型。 [允許：伺服器、儲存體] 附註：如果 OriginType 是儲存體，則 OriginHost 會作為端點"
+    "translation": "原點類型。 [允許：伺服器、儲存體] 附註：如果 OriginType 是儲存體，則 OriginHost 會作為端點"
   },
   {
     "id": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint.",
@@ -8957,7 +9037,7 @@
   },
   {
     "id": "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]",
-    "translation": "若要將要求遞送至網站，請輸入網站的主機名稱，例如 www.example.com 或 app.example.com。[必要]"
+    "translation": "若要將要求遞送至您的網站，請輸入您的網站的主機名稱，例如 www.example.com 或 app.example.com。[必要]"
   },
   {
     "id": "Toggle the IPMI interface on and off. This command is asynchronous.",
@@ -9066,6 +9146,10 @@
   {
     "id": "Unable to find VLAN with ID {{.ID}}.\n",
     "translation": "找不到 ID 為 {{.ID}} 的 VLAN。\n"
+  },
+  {
+    "id": "Unable to find bandwidth pool with ID {{.bandwidthPoolId}}.\n",
+    "translation": "找不到 ID 為 {{.bandwidthPoolId}} 的頻寬儲存區。\n"
   },
   {
     "id": "Unable to find category code from this volume.",
@@ -9258,6 +9342,10 @@
   {
     "id": "Use SAN storage instead of local disk",
     "translation": "使用 SAN 儲存空間，而不是本端磁碟"
+  },
+  {
+    "id": "Use `${COMMAND_NAME} sl order lookup <ID>` to find more details about a specific order.",
+    "translation": "使用 \"${COMMAND_NAME} sl order lookup <ID>\" 尋找有關特定排序的更多詳細資訊。"
   },
   {
     "id": "Use the configuration from an existing virtual server",
@@ -9640,6 +9728,10 @@
     "translation": "[標籤名稱]"
   },
   {
+    "id": "[required]",
+    "translation": "[必要]"
+  },
+  {
     "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
     "translation": "最多接受 {{.Limit}} 個引數，已收到 {{.Args}} 個"
   },
@@ -9650,6 +9742,14 @@
   {
     "id": "accepts {{.Limit}} arg(s), received {{.Args}}",
     "translation": "接受 {{.Limit}} 個引數，已收到 {{.Args}} 個"
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id>",
+    "translation": "access_id 是透過下列指令取得的 host_id：sl block access-list <volume_id>"
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled must be False to use this command",
+    "translation": "access_id 是透過下列指令取得的 host_id：sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled 必須為 False 才能使用此指令"
   },
   {
     "id": "account",
@@ -9814,6 +9914,10 @@
   {
     "id": "drive",
     "translation": "磁碟機"
+  },
+  {
+    "id": "edit bandwidth pool. ",
+    "translation": "編輯頻寬儲存區。 "
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",

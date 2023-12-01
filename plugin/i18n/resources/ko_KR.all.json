@@ -4,6 +4,10 @@
     "translation": "\nLUN 이름"
   },
   {
+    "id": "   [default: False]",
+    "translation": "   [기본값: False]"
+  },
+  {
     "id": " Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]",
     "translation": " 용량 키 이름(예:C1_2X2_1_YEAR_TERM). [필수]"
   },
@@ -37,7 +41,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80",
-    "translation": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
+    "translation": "${COMMAND_NAME} sl cdn create\n예제:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
   },
   {
     "id": "${COMMAND_NAME} sl cdn delete",
@@ -57,7 +61,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80",
-    "translation": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
+    "translation": "${COMMAND_NAME} sl cdn origin-add\n예제:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
   },
   {
     "id": "${COMMAND_NAME} sl cdn origin-list",
@@ -65,11 +69,11 @@
   },
   {
     "id": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\"",
-    "translation": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\""
+    "translation": "${COMMAND_NAME} sl cdn origin-remove\n예제:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\""
   },
   {
     "id": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\"",
-    "translation": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
+    "translation": "${COMMAND_NAME} sl cdn purge\n예제:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
   },
   {
     "id": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"",
@@ -281,7 +285,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n  이 명령은 확인 요청 없이 즉시 볼륨(ID 12345678)을 취소합니다. "
+    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\n예제:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n  이 명령은 확인 요청 없이 즉시 볼륨(ID 12345678)을 취소합니다."
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -586,6 +590,10 @@
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.",
     "translation": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\n예:\n${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n상위 SNAPSHOT_ID에서 스냅샷을 포함한 중복 VOLUME_ID를 새로 고치십시오."
+  },
+  {
+    "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\nLUN ID는 호스트 권한 부여 프로세스 중에만 유효합니다. 이 메소드를 \n사용하기 전에 모든 호스트의 권한을 취소하는 것이 \n좋습니다(필수는 아님). \"블록 액세스-취소\"를 참조하십시오.\n VOLUME_ID - LUN ID를 설정할 볼륨 ID\n LUN_ID - 권장 범위는 0-255 사이의 정수입니다. 고급 사용자는\n        0 - 4095 사이의 정수를 사용할 수 있습니다."
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
@@ -1272,6 +1280,14 @@
     "translation": "날짜 범위에 대한 대역폭 데이터입니다."
   },
   {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was deleted.",
+    "translation": "대역폭 풀 {{.bandwidthPoolId}}이(가) 삭제되었습니다."
+  },
+  {
+    "id": "Bandwidth pool {{.bandwidthPoolId}} was edited successfully.",
+    "translation": "대역폭 풀 {{.bandwidthPoolId}}이(가) 편집되었습니다."
+  },
+  {
     "id": "Bandwidth report for every pool/server.",
     "translation": "모든 풀/서버에 대한 대역폭 보고서입니다."
   },
@@ -1481,7 +1497,7 @@
   },
   {
     "id": "Cancel the resource or service for a billing Item. By default the billing item will be canceled\non the next bill date and reclaim of the resource will begin shortly after the cancellation",
-    "translation": "청구 항목에 대한 자원 또는 서비스를 취소합니다. 기본적으로 청구 항목은 다음 청구 날짜에 취소되며 \n자원의 재확보는 취소 후에 바로 시작됨됨"
+    "translation": "청구 항목에 대한 자원 또는 서비스를 취소합니다. 기본적으로 청구 항목은 다음 청구 날짜에 취소되며 \n자원의 재확보는 취소 후에 바로 시작됩니다."
   },
   {
     "id": "Cancel the snapshot space immediately instead of on the billing anniversary",
@@ -1980,6 +1996,10 @@
     "translation": "예약 용량 인스턴스를 작성합니다."
   },
   {
+    "id": "Create a bandwidth pool.",
+    "translation": "대역폭 풀을 작성하십시오."
+  },
+  {
     "id": "Create a dedicated Virtual Server (Private Node)",
     "translation": "전용 가상 서버 작성(프라이빗 노드)"
   },
@@ -1997,7 +2017,7 @@
   },
   {
     "id": "Create a new CDN domain mapping",
-    "translation": "새 CDN 도메인 맵핑 작성"
+    "translation": "새 CDN 도메인 맵핑을 작성합니다."
   },
   {
     "id": "Create a new VLAN",
@@ -2045,7 +2065,7 @@
   },
   {
     "id": "Create an origin path for an existing CDN mapping.",
-    "translation": "기존 CDN 맵핑의 오리진 경로를 작성하십시오."
+    "translation": "기존 CDN 맵핑의 오리진 경로를 작성합니다."
   },
   {
     "id": "Create an user's API authentication key",
@@ -2090,6 +2110,10 @@
   {
     "id": "Creates a purge record and also initiates the purge call.",
     "translation": "제거 레코드를 작성하고 제거 호출도 시작합니다."
+  },
+  {
+    "id": "Creates a purge record and also initiates the purge call. For more information see the following documentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content",
+    "translation": "제거 레코드를 작성하고 제거 호출도 시작합니다. 자세한 정보는 https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content 문서를 참조하십시오."
   },
   {
     "id": "Creates a user",
@@ -2260,6 +2284,10 @@
     "translation": "이미지 삭제 "
   },
   {
+    "id": "Delete bandwidth pool. ",
+    "translation": "대역폭 풀을 삭제합니다. "
+  },
+  {
     "id": "Delete the credential of an Object Storage Account.",
     "translation": "Object Storage 계정의 인증 정보를 삭제합니다."
   },
@@ -2269,7 +2297,7 @@
   },
   {
     "id": "Delete the quote of an order.",
-    "translation": "주문 견적을 삭제합니다."
+    "translation": "주문 견적 삭제"
   },
   {
     "id": "Deny sharing of an image template with another account.",
@@ -2338,6 +2366,10 @@
   {
     "id": "Disable the IPMI interface.",
     "translation": "IPMI 인터페이스 사용 안함"
+  },
+  {
+    "id": "Disable vpn for a user.",
+    "translation": "사용자에 대해 VPN을 사용 안함으로 설정합니다."
   },
   {
     "id": "Disable vpn subnets manual config.",
@@ -2668,6 +2700,10 @@
     "translation": "IPMI 인터페이스 사용"
   },
   {
+    "id": "Enable vpn for a user.",
+    "translation": "사용자에 대해 VPN을 사용으로 설정합니다."
+  },
+  {
     "id": "Enable vpn subnets manual config.",
     "translation": "VPN 서브넷 수동 구성을 사용으로 설정합니다."
   },
@@ -2709,7 +2745,7 @@
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***",
-    "translation": "Endurance 스토리지 티어(GB당 IOPS)[Endurance 볼륨에만 해당] ***티어가 지정되지 않은 경우 볼륨의 원본 티어가 사용됩니다.***"
+    "translation": "Endurance 스토리지 계층(GB당 IOPS)[내구성 볼륨에만 해당] ***티어가 지정되지 않은 경우 볼륨의 원래 티어가 사용됩니다.***"
   },
   {
     "id": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10",
@@ -3120,6 +3156,10 @@
     "translation": "사용자 고객 알림을 삭제하는 데 실패했습니다."
   },
   {
+    "id": "Failed to delete bandwidth pool with Id: {{.bandwidthPoolId}}.\n",
+    "translation": "ID가 {{.bandwidthPoolId}}인 대역폭 풀을 삭제하는 데 실패했습니다.\n"
+  },
+  {
     "id": "Failed to delete credential: {{.storageID}}.\n",
     "translation": "인증 정보 삭제 실패: {{.storageID}}.\n"
   },
@@ -3284,6 +3324,10 @@
     "translation": "Cloud Object Storage를 가져오는 데 실패했습니다.\n"
   },
   {
+    "id": "Failed to get Create Bandwidth Pool.",
+    "translation": "대역폭 풀 작성을 가져오는 데 실패했습니다."
+  },
+  {
     "id": "Failed to get Event Log types.\n",
     "translation": "이벤트 로그 유형을 가져오는 데 실패했습니다. \n"
   },
@@ -3318,6 +3362,10 @@
   {
     "id": "Failed to get L7 Pool {{.L7PoolID}}: {{.Error}}.\n",
     "translation": "L7 풀 {{.L7PoolID}} 가져오기 실패: {{.Error}}.\n"
+  },
+  {
+    "id": "Failed to get Location Group.",
+    "translation": "위치 그룹을 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get NAS Network Storage.",
@@ -3446,6 +3494,10 @@
   {
     "id": "Failed to get credential limit. ",
     "translation": "인증 정보 한계를 가져오는 데 실패했습니다. "
+  },
+  {
+    "id": "Failed to get currect user.",
+    "translation": "현재 사용자를 가져오는 데 실패했습니다."
   },
   {
     "id": "Failed to get datacenters for volume {{.VolumeID}}.\n",
@@ -5088,6 +5140,10 @@
     "translation": "루트 사용자에게 추가할 SSH 키의 ID(다중 발생 허용)"
   },
   {
+    "id": "IDs of the subnets to assign; e.g.: --subnet-id 1234",
+    "translation": "지정할 서브넷의 ID(예: --subnet-id 1234)"
+  },
+  {
     "id": "IDs of the subnets to remove",
     "translation": "제거할 서브넷의 ID"
   },
@@ -5254,6 +5310,10 @@
   {
     "id": "Initial object ID number to attach to ticket",
     "translation": "티켓에 첨부할 초기 오브젝트 ID 번호"
+  },
+  {
+    "id": "Input `0` for this parameter to order a duplicate volume with no snapshot space.",
+    "translation": "스냅샷 영역이 없는 중복 볼륨을 주문하려면 이 매개변수에 `0`을 입력하십시오."
   },
   {
     "id": "Instance {{.ServerID}} has {{.Count}} {{.Interface}} interface.",
@@ -5649,7 +5709,7 @@
   },
   {
     "id": "List cancelations.",
-    "translation": "취소를 나열합니다."
+    "translation": "취소 목록 나열"
   },
   {
     "id": "List cloud block storage.",
@@ -6665,7 +6725,7 @@
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***",
-    "translation": "Performance 스토리지 IOPS는 100과 6000 사이에 있는 100의 배수임[성능 볼륨에만 해당] ***IOPS 값이 지정되지 않은 경우 볼륨의 원본 IOPS 값이 지정되지 않은 경우 볼륨의 원본 IOPS 값이 사용됩니다.***"
+    "translation": "Performance 스토리지 IOPS, 100의 배수인 100~6000[성능 볼륨에만 해당] ***IOPS 값이 지정되지 않으면 볼륨의 원래 IOPS 값이 사용됩니다.***"
   },
   {
     "id": "Performance Storage IOPS, between 100 and 6000 in multiples of 100, if no IOPS value is specified, the IOPS value of the original volume will be used",
@@ -6836,6 +6896,10 @@
     "translation": "풀"
   },
   {
+    "id": "Pool name.",
+    "translation": "풀 이름입니다."
+  },
+  {
     "id": "Port Range Max",
     "translation": "포트 범위 최대"
   },
@@ -6858,6 +6922,10 @@
   {
     "id": "Post-install script to download, only HTTPS executes, HTTP leaves file in /root",
     "translation": "다운로드할 사후 설치 스크립트, HTTPS만 실행됨, HTTP는 파일을 /root에 배치함"
+  },
+  {
+    "id": "Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000] Minimum: [the size of the origin volume]",
+    "translation": "잠재 크기: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000] 최소: [원본 볼륨의 크기]"
   },
   {
     "id": "Power cycle a server",
@@ -7208,6 +7276,10 @@
     "translation": "지역"
   },
   {
+    "id": "Region selected. Permit:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]",
+    "translation": "지역이 선택되었습니다. 허용:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]"
+  },
+  {
     "id": "Reload operating system on a server",
     "translation": "서버에서 운영 체제 다시 로드"
   },
@@ -7350,6 +7422,14 @@
   {
     "id": "Required User",
     "translation": "필수 사용자"
+  },
+  {
+    "id": "Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10",
+    "translation": "요구사항: [원본 볼륨에 대한 IOPS/GB가 0.25인 경우, 중복에 대한 IOPS/GB도 0.25여야 합니다. If IOPS/GB                                   for the origin volume is greater than 0.25,                                   IOPS/GB for the duplicate must also be                                   greater than 0.25.] 선택사항: 0.25, 2, 4, 10"
+  },
+  {
+    "id": "Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]",
+    "translation": "요구사항: [원본 볼륨의 IOPS/GB가 0.3 미만인 경우 중복의 IOPS/GB도 0.3 미만이어야 합니다. If IOPS/GB for the origin                                   volume is greater than or equal to 0.3,                                   IOPS/GB for the duplicate must also be                                   greater than or equal to 0.3.]"
   },
   {
     "id": "Resource",
@@ -9068,6 +9148,10 @@
     "translation": "ID가 {{.ID}}인 VLAN을 찾을 수 없습니다.\n"
   },
   {
+    "id": "Unable to find bandwidth pool with ID {{.bandwidthPoolId}}.\n",
+    "translation": "ID가 {{.bandwidthPoolId}}인 대역폭 풀을 찾을 수 없습니다.\n"
+  },
+  {
     "id": "Unable to find category code from this volume.",
     "translation": "이 볼륨에서 카테고리 코드를 찾을 수 없습니다."
   },
@@ -9258,6 +9342,10 @@
   {
     "id": "Use SAN storage instead of local disk",
     "translation": "로컬 디스크 대신 SAN 스토리지 사용"
+  },
+  {
+    "id": "Use `${COMMAND_NAME} sl order lookup <ID>` to find more details about a specific order.",
+    "translation": "특정 주문에 대한 세부사항을 찾으려면`${COMMAND_NAME} sl order lookup <ID>`을(를) 사용하십시오."
   },
   {
     "id": "Use the configuration from an existing virtual server",
@@ -9640,6 +9728,10 @@
     "translation": "[TAG NAME]"
   },
   {
+    "id": "[required]",
+    "translation": "[필수]"
+  },
+  {
     "id": "accepts at most {{.Limit}} arg(s), received {{.Args}}",
     "translation": "대부분의 {{.Limit}} 인수를 허용하고 {{.Args}}을(를) 수신함"
   },
@@ -9650,6 +9742,14 @@
   {
     "id": "accepts {{.Limit}} arg(s), received {{.Args}}",
     "translation": "{{.Limit}} 인수를 허용하고 {{.Args}}을(를) 수신함"
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id>",
+    "translation": "access_id는 sl block access-list <volume_id>을(를) 통해 얻은 호스트 ID입니다."
+  },
+  {
+    "id": "access_id is the host_id obtained by: sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled must be False to use this command",
+    "translation": "access_id는 다음을 통해 얻은 호스트 ID입니다. sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled는 이 명령을 사용하려면 False여야 합니다."
   },
   {
     "id": "account",
@@ -9814,6 +9914,10 @@
   {
     "id": "drive",
     "translation": "드라이브"
+  },
+  {
+    "id": "edit bandwidth pool. ",
+    "translation": "대역폭 풀을 편집하십시오. "
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",

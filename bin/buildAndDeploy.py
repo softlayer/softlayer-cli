@@ -10,7 +10,6 @@ import requests
 import platform
 import hashlib
 import glob
-import sys
 from rich import print
 from rich.markup import escape
 
@@ -40,18 +39,10 @@ def buildArchs() -> dict:
     """Returns the list of binaries we should build"""
     buildArchs =  {
         'darwin': ['arm64', 'amd64'],
-        'linux': ['amd64', '386', 'arm64'],
+        'linux': ['amd64', '386', 'arm64', 'ppc64le', 's390x'],
         'windows': ['386', 'amd64'],
     }
     return buildArchs
-
-def cgoEnable(theOs: str, theArch: str) -> int:
-    """Disable cgo for these archs"""
-    cgo_disable = ["amd64", "386", "arm64"]
-    if theOs == "linux" and theArch in cgo_disable:
-        return 0
-    return 1
-
 
 
 def runTests() -> None:
@@ -94,9 +85,6 @@ def runTests() -> None:
     except FileNotFoundError:
         gosec_instal = "curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $GOPATH/bin"
         print(f"[red]gosec not found. Try running:\n{gosec_instal}")
-    
-
-
 
 ### Section for i18n4go stuff ###
 def runI18n4go(path: str) -> None:
@@ -182,7 +170,6 @@ def add_i18n(file_name: str, updates: dict) -> None:
 
     write_source_data(file_name, source_i18n)
 
-
 def del_i18n(file_name: str, updates: dict) -> None:
     """Removes unneeded translations
 
@@ -199,7 +186,6 @@ def del_i18n(file_name: str, updates: dict) -> None:
             source_i18n.pop(key, None)
 
     write_source_data(file_name, source_i18n)
-
 
 def get_source_data(file_name: str) -> dict:
     """Reads from the i18n files and returns a formatted dict"""
@@ -277,11 +263,11 @@ class Builder(object):
         """Uploads binaries to IBM COS"""
         apikey = os.getenv("IBMCLOUD_APIKEY")
         # if IBMCLOUD_TRACE is true the upload will print out the binary file data to the screen.
-        os.environ["IBMCLOUD_TRACE"] = "False"
+        os.environ["IBMCLOUD_TRACE"] = "false"
         if not apikey:
             raise Exception("IBMCLOUD_APIKEY needs to be set to the proper API key first.")
-        login_cmd = ["ibmcloud", "login", f"--apikey={apikey}", "-r=us-east"]
-        print(f"[yellow]Running: ibmcloud login --apikey $IBMCLOUD_APIKEY -r us-east")
+        login_cmd = ["ibmcloud", "login", f"--apikey={apikey}"]
+        print(f"[yellow]Running: ibmcloud login --apikey $IBMCLOUD_APIKEY")
         subprocess.run(login_cmd)
         files = glob.glob(os.path.join(self.cwd, 'out', f"sl-{self.version}-*"))
         for f in files:
@@ -296,6 +282,8 @@ class Builder(object):
             'Linux_X86': {'file': f"sl-{self.version}-linux-386", 'checksum': ''},
             'Linux_X64': {'file': f"sl-{self.version}-linux-amd64", 'checksum': ''},
             'Linux_arm64' : {'file': f"sl-{self.version}-linux-arm64", 'checksum': ''},
+            'Linux_Ppc64le': {'file': f"sl-{self.version}-linux-ppc64le", 'checksum': ''},
+            'Linux_s390x': {'file': f"sl-{self.version}-linux-s390x", 'checksum': ''},
             'MacOS': {'file': f"sl-{self.version}-darwin-amd64", 'checksum': ''},
             'MacOS_arm64': {'file': f"sl-{self.version}-darwin-arm64", 'checksum': ''},
             'Win_X86': {'file': f"sl-{self.version}-windows-386.exe", 'checksum': ''},
@@ -325,7 +313,14 @@ curl -X POST https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plug
 '{"name":"Url_Linux_X86", "value":"https://s3.us-east.cloud-object-storage.appdomain.cloud/softlayer-cli-binaries/sl-1.4.2-linux-386"}]}' -v
         """
         checksums = self.getChecksums()
+        # Set this to true if you want to use the Refresh-Plugin-Version-on-YS1 job
+        refresh = False
+        # This create a new version
         jenkinsUrl = 'https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1'
+        
+        if refresh:
+            # This updates an existing version
+            jenkinsUrl = 'https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Refresh-Plugin-Version-on-YS1'
         jenkins_token = os.getenv('JENKINS_TOKEN')
         if not jenkins_token:
             raise Exception("JENKINS_TOKEN is not set to an API key")
@@ -342,7 +337,11 @@ curl -X POST https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plug
 
         for x in checksums.keys():
             urlData = {'name': f"Url_{x}", "value": self.cnd_url + checksums[x]['file']}
-            checkData = {'name': f"Checksum_{x}", "value": checksums[x]['checksum']}
+            # This one doesn't follow the normal pattern so it needs a special case.
+            if x == "Linux_s390x" and not refresh:
+                checkData = {'name': f"Checksum_Linux_S390x", "value": checksums[x]['checksum']}
+            else:
+                checkData = {'name': f"Checksum_{x}", "value": checksums[x]['checksum']}
             form_json['parameter'].append(urlData)
             form_json['parameter'].append(checkData)
 
@@ -353,7 +352,10 @@ curl -X POST https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plug
             print(f"[green] Created Job! Check {jenkinsUrl}" )
         else:
             print(f"[red]Error: {result.status_code} {result.reason}")
-            raise Excetion("Error in runJenkins()")
+            print(f"[yellow] {result.text}")
+            print(f"[yellow] {result.url}")
+            print(f"[yellow] {result.request}")
+            raise Exception("Error in runJenkins()")
 
 
 
@@ -364,16 +366,17 @@ curl -X POST https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plug
         :param str theOs: OS to build for
         :param str theArch: Architecture to build for
         """
+        cgo_enabled = 0
         os.environ["GOOS"] = theOs
         os.environ["GOARCH"] = theArch
-        os.environ["CGO_ENABLED"] = str(cgoEnable(theOs, theArch))
+        os.environ["CGO_ENABLED"] = str(cgo_enabled)
 
         print(f"[green]Building {theOs}-{theArch}")
         binaryName = os.path.join(self.cwd, 'out', f"sl-{self.version}-{theOs}-{theArch}")
         if theOs == "windows":
             binaryName = f"{binaryName}.exe"
-        buildCmd = f"go build -ldflags \"-s -w\" -o {binaryName} ."
-        print(f"[turquoise2]Running {buildCmd}")
+        buildCmd = f" go build -ldflags \"-s -w\" -o {binaryName} ."
+        print(f"[turquoise2]Running GOOS={theOs} GOARCH={theArch} CGO_ENABLED={cgo_enabled} {buildCmd}")
         # This command basically requires shell=True on mac because -ldflags doesn't get parsed properly withoutit.
         subprocess.run(buildCmd, shell=True)
 
@@ -441,5 +444,4 @@ if __name__ == '__main__':
     #     cli()
     # except Exception as e:
     #     print(f"[red]{e}")
-
 
