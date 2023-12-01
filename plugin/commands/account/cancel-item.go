@@ -24,7 +24,7 @@ func NewCancelItemCommand(sl *metadata.SoftlayerCommand) *CancelItemCommand {
 		AccountManager:   managers.NewAccountManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "cancel-item",
+		Use:   "cancel-item " + T("IDENTIFIER"),
 		Short: T("Cancels a billing item."),
 		Long: T(`Cancel the resource or service for a billing Item. By default the billing item will be canceled
 on the next bill date and reclaim of the resource will begin shortly after the cancellation`),
