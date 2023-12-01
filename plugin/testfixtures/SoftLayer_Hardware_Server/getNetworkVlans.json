@@ -1,0 +1,14 @@
+[
+        {
+                "fullyQualifiedName": "sjc03.fcr01.893",
+                "id": 3367772,
+                "vlanNumber": 893,
+                "networkSpace": "PUBLIC"
+        },
+        {
+                "fullyQualifiedName": "sjc03.bcr01.887",
+                "id": 3367774,
+                "vlanNumber": 887,
+                "networkSpace": "PRIVATE"
+        }
+]

@@ -22,7 +22,8 @@ const (
 	DEFAULT_VLAN_DETAIL_MASK   = "id,vlanNumber,primaryRouter[datacenterName,fullyQualifiedDomainName],firewallInterfaces," +
 		"subnets[id,networkIdentifier,netmask,gateway,subnetType,usableIpAddressCount]," +
 		"virtualGuests[hostname,domain,primaryIpAddress,primaryBackendIpAddress]," +
-		"hardware[hostname,domain,primaryIpAddress,primaryBackendIpAddress]"
+		"hardware[hostname,domain,primaryIpAddress,primaryBackendIpAddress]," +
+		"networkComponentTrunks[networkComponent[downlinkComponent[hardware[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress]]]]"
 	DEFAULT_SECURITYGROUP_MASK = "id,name,description,rules[id,remoteIp,remoteGroupId,direction,ethertype,portRangeMin,portRangeMax,protocol]," +
 		"networkComponentBindings[networkComponent[id,port,guest[id,hostname,primaryBackendIpAddress,primaryIpAddress]]]"
 )

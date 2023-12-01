@@ -1,0 +1,400 @@
+[
+	{
+		"id": 16617745,
+		"hardwareComponentModel": {
+			"capacity": "4",
+			"description": "ServeRAID M1210",
+			"hardwareGenericComponentModelId": 281,
+			"id": 2321,
+			"longDescription": "Lenovo \/ DRIVE CONTROLLER \/ ServeRAID M1210 \/ SATA\/SAS RAID M Series \/ 4",
+			"manufacturer": "Lenovo",
+			"name": "ServeRAID M1210",
+			"version": "SATA\/SAS RAID M Series",
+			"hardwareGenericComponentModel": {
+				"id": 281,
+				"hardwareComponentType": {
+					"keyName": "DRIVE_CONTROLLER"
+				}
+			}
+		}
+	},
+	{
+		"id": 11237577,
+		"hardwareComponentModel": {
+			"capacity": "1000",
+			"description": "SATAIII:1000:7200:Constellation",
+			"hardwareGenericComponentModelId": 462,
+			"id": 892,
+			"longDescription": "Seagate \/  \/ Constellation ES \/ ST1000NM0033 \/ 1000",
+			"manufacturer": "Seagate",
+			"name": "Constellation ES",
+			"version": "ST1000NM0033",
+			"hardwareGenericComponentModel": {
+				"id": 462,
+				"hardwareComponentType": {
+					"keyName": "HARD_DRIVE"
+				}
+			}
+		}
+	},
+	{
+		"id": 16617735,
+		"hardwareComponentModel": {
+			"capacity": "1",
+			"hardwareGenericComponentModelId": 231,
+			"id": 1799,
+			"longDescription": "Lenovo \/ IMM2 - Onboard \/ IPMI-KVM \/ Remote Management Count1",
+			"manufacturer": "Lenovo",
+			"name": "IMM2 - Onboard",
+			"version": "IPMI-KVM",
+			"attributes": [
+				{
+					"attributeTypeId": 3,
+					"hardwareComponentModelId": 1799,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Has a browser-accessible web interface",
+						"id": 3,
+						"keyName": "WEB_INTERFACE",
+						"name": "Web Interface"
+					}
+				},
+				{
+					"attributeTypeId": 5,
+					"hardwareComponentModelId": 1799,
+					"value": "IPMI",
+					"hardwareComponentAttributeType": {
+						"description": "Protocol used by the remote management component",
+						"id": 5,
+						"keyName": "REMOTE_MANAGEMENT_PROTOCOL",
+						"name": "Remote Management Protocol"
+					}
+				},
+				{
+					"attributeTypeId": 2,
+					"hardwareComponentModelId": 1799,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Remote management count",
+						"id": 2,
+						"keyName": "REMOTE_MANAGEMENT_COUNT",
+						"name": "Remote Management Count"
+					}
+				},
+				{
+					"attributeTypeId": 162,
+					"hardwareComponentModelId": 1799,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Use the lanplus IPMI Interface type",
+						"id": 162,
+						"keyName": "LAN_PLUS_IMPI_INTERFACE",
+						"name": "LAN PLUS IPMI Interface"
+					}
+				},
+				{
+					"attributeTypeId": 121,
+					"hardwareComponentModelId": 1799,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Onboard identifier",
+						"id": 121,
+						"keyName": "ONBOARD",
+						"name": "Onboard"
+					}
+				}
+			],
+			"hardwareGenericComponentModel": {
+				"id": 231,
+				"hardwareComponentType": {
+					"keyName": "REMOTE_MGMT_CARD"
+				}
+			}
+		}
+	},
+	{
+		"id": 16617741,
+		"hardwareComponentModel": {
+			"capacity": "8",
+			"description": "DDR4:8:2400 ECC NON Reg",
+			"hardwareGenericComponentModelId": 769,
+			"id": 2011,
+			"longDescription": "Micron \/ 8GB DDR4 1Rx8 \/ 2400 ECC NON Reg",
+			"manufacturer": "Micron",
+			"name": "8GB DDR4 1Rx8",
+			"version": "8GB DDR4 1Rx8",
+			"hardwareGenericComponentModel": {
+				"id": 769,
+				"hardwareComponentType": {
+					"keyName": "RAM"
+				}
+			}
+		}
+	},
+	{
+		"id": 16617755,
+		"hardwareComponentModel": {
+			"capacity": "4",
+			"description": "Backplane",
+			"hardwareGenericComponentModelId": 731,
+			"id": 1847,
+			"longDescription": "Lenovo \/ BACKPLANE \/ 00MU417 \/ 4 Port Expander \/ 4",
+			"manufacturer": "Lenovo",
+			"name": "00MU417",
+			"version": "4 Port Expander",
+			"hardwareGenericComponentModel": {
+				"id": 731,
+				"hardwareComponentType": {
+					"keyName": "BACKPLANE"
+				}
+			}
+		}
+	},
+	{
+		"id": 16617749,
+		"hardwareComponentModel": {
+			"capacity": "4",
+			"description": "4Port:PE310G4i40-T",
+			"hardwareGenericComponentModelId": 634,
+			"id": 2043,
+			"longDescription": "Silicom \/  \/ PE310G4i40-T \/ 4 Port 10G Network Adapter \/ 4",
+			"manufacturer": "Silicom",
+			"name": "PE310G4i40-T",
+			"version": "4 Port 10G Network Adapter",
+			"hardwareGenericComponentModel": {
+				"id": 634,
+				"hardwareComponentType": {
+					"keyName": "NETWORK_CARD"
+				}
+			}
+		}
+	},
+	{
+		"id": 16617733,
+		"hardwareComponentModel": {
+			"architectureTypeId": "4",
+			"capacity": "1",
+			"description": "RAM slots:4",
+			"hardwareGenericComponentModelId": 382,
+			"id": 2303,
+			"longDescription": "Lenovo \/ 3943PAJ \/ Systemx3250-M6 \/ Intel Xeon SingleProc SATA \/ 1",
+			"manufacturer": "Lenovo",
+			"name": "Systemx3250-M6",
+			"version": "Intel Xeon SingleProc SATA",
+			"attributes": [
+				{
+					"attributeTypeId": 302,
+					"hardwareComponentModelId": 2303,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Allow TPM Module.",
+						"id": 302,
+						"keyName": "ALLOW_TPM_MODULE",
+						"name": "TPM Module"
+					}
+				},
+				{
+					"attributeTypeId": 306,
+					"hardwareComponentModelId": 2303,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Network Port Offset",
+						"id": 306,
+						"keyName": "NETWORK_PORT_OFFSET",
+						"name": "Network Port Offset"
+					}
+				},
+				{
+					"attributeTypeId": 7,
+					"hardwareComponentModelId": 2303,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Motherboards that have DCMI functionality",
+						"id": 7,
+						"keyName": "DCMI_MOTHERBOARD",
+						"name": "DCMI Capable"
+					}
+				},
+				{
+					"attributeTypeId": 1,
+					"hardwareComponentModelId": 2303,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Network component count",
+						"id": 1,
+						"keyName": "NETWORK_COMPONENT_COUNT",
+						"name": "Network Component Count"
+					}
+				},
+				{
+					"attributeTypeId": 298,
+					"hardwareComponentModelId": 2303,
+					"value": "4",
+					"hardwareComponentAttributeType": {
+						"description": "Ram Capacity for modules",
+						"id": 298,
+						"keyName": "RAM_CAPACITY",
+						"name": "Ram Capacity"
+					}
+				},
+				{
+					"attributeTypeId": 282,
+					"hardwareComponentModelId": 2303,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Auto provision the TPM\/TXT Bios setting",
+						"id": 282,
+						"keyName": "TPM_AUTO_PROVISION",
+						"name": "TPM Auto Provision"
+					}
+				}
+			],
+			"hardwareGenericComponentModel": {
+				"id": 382,
+				"hardwareComponentType": {
+					"keyName": "MOTHERBOARD"
+				}
+			}
+		}
+	},
+	{
+		"id": 16617739,
+		"hardwareComponentModel": {
+			"capacity": "3.8",
+			"description": "3.8GHz:2144FSB",
+			"hardwareGenericComponentModelId": 883,
+			"id": 2419,
+			"longDescription": "Xeon-KabyLake \/ E3-1270-V6-Quadcore \/ 3.8GHz:2144FSB",
+			"manufacturer": "Intel",
+			"name": "Xeon-KabyLake",
+			"version": "E3-1270-V6-Quadcore",
+			"hardwareGenericComponentModel": {
+				"id": 883,
+				"hardwareComponentType": {
+					"keyName": "PROCESSOR"
+				}
+			}
+		}
+	},
+	{
+		"id": 16617751,
+		"hardwareComponentModel": {
+			"capacity": "460",
+			"description": "Lenovo System X M6",
+			"hardwareGenericComponentModelId": 421,
+			"id": 2311,
+			"longDescription": "Lenovo \/  \/ 94Y8348 \/ 460W AC PS \/ 460",
+			"manufacturer": "Lenovo",
+			"name": "94Y8348",
+			"version": "460W AC PS",
+			"attributes": [
+				{
+					"attributeTypeId": 8,
+					"hardwareComponentModelId": 2311,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Power supplies that have PMBUS functionality",
+						"id": 8,
+						"keyName": "PMBUS_POWER_SUPPLY",
+						"name": "PMBUS Capable"
+					}
+				}
+			],
+			"hardwareGenericComponentModel": {
+				"id": 421,
+				"hardwareComponentType": {
+					"keyName": "POWER_SUPPLY"
+				}
+			}
+		}
+	},
+	{
+		"id": 16617753,
+		"hardwareComponentModel": {
+			"capacity": "460",
+			"description": "Lenovo System X M6",
+			"hardwareGenericComponentModelId": 421,
+			"id": 2311,
+			"longDescription": "Lenovo \/  \/ 94Y8348 \/ 460W AC PS \/ 460",
+			"manufacturer": "Lenovo",
+			"name": "94Y8348",
+			"version": "460W AC PS",
+			"attributes": [
+				{
+					"attributeTypeId": 8,
+					"hardwareComponentModelId": 2311,
+					"value": "1",
+					"hardwareComponentAttributeType": {
+						"description": "Power supplies that have PMBUS functionality",
+						"id": 8,
+						"keyName": "PMBUS_POWER_SUPPLY",
+						"name": "PMBUS Capable"
+					}
+				}
+			],
+			"hardwareGenericComponentModel": {
+				"id": 421,
+				"hardwareComponentType": {
+					"keyName": "POWER_SUPPLY"
+				}
+			}
+		}
+	},
+	{
+		"id": 17474467,
+		"hardwareComponentModel": {
+			"capacity": "8",
+			"description": "DDR4:8:2400 ECC NON Reg",
+			"hardwareGenericComponentModelId": 769,
+			"id": 2011,
+			"longDescription": "Micron \/ 8GB DDR4 1Rx8 \/ 2400 ECC NON Reg",
+			"manufacturer": "Micron",
+			"name": "8GB DDR4 1Rx8",
+			"version": "8GB DDR4 1Rx8",
+			"hardwareGenericComponentModel": {
+				"id": 769,
+				"hardwareComponentType": {
+					"keyName": "RAM"
+				}
+			}
+		}
+	},
+	{
+		"id": 16617743,
+		"hardwareComponentModel": {
+			"capacity": "8",
+			"description": "DDR4:8:2400 ECC NON Reg",
+			"hardwareGenericComponentModelId": 769,
+			"id": 2011,
+			"longDescription": "Micron \/ 8GB DDR4 1Rx8 \/ 2400 ECC NON Reg",
+			"manufacturer": "Micron",
+			"name": "8GB DDR4 1Rx8",
+			"version": "8GB DDR4 1Rx8",
+			"hardwareGenericComponentModel": {
+				"id": 769,
+				"hardwareComponentType": {
+					"keyName": "RAM"
+				}
+			}
+		}
+	},
+	{
+		"id": 17474465,
+		"hardwareComponentModel": {
+			"capacity": "8",
+			"description": "DDR4:8:2400 ECC NON Reg",
+			"hardwareGenericComponentModelId": 769,
+			"id": 2011,
+			"longDescription": "Micron \/ 8GB DDR4 1Rx8 \/ 2400 ECC NON Reg",
+			"manufacturer": "Micron",
+			"name": "8GB DDR4 1Rx8",
+			"version": "8GB DDR4 1Rx8",
+			"hardwareGenericComponentModel": {
+				"id": 769,
+				"hardwareComponentType": {
+					"keyName": "RAM"
+				}
+			}
+		}
+	}
+]

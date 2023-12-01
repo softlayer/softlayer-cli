@@ -3,6 +3,7 @@ package managers
 import (
 	"errors"
 	"time"
+	"sync"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
@@ -19,11 +20,12 @@ const (
 	DEFAULT_SERVER_MASK   = "mask[" + DEFAULT_HARDWARE_MASK + ",mask(SoftLayer_Hardware_Server)[activeTransaction[id,transactionStatus[name,friendlyName]]]]"
 	DETAIL_HARDWARE_MASK  = "id,globalIdentifier,fullyQualifiedDomainName,hostname,domain,provisionDate,hardwareStatus,processorPhysicalCoreAmount," +
 		"memoryCapacity,notes,privateNetworkOnlyFlag,primaryBackendIpAddress,primaryIpAddress,networkManagementIpAddress,userData,datacenter," +
-		"networkComponents[id,status,speed,maxSpeed,name,ipmiMacAddress,ipmiIpAddress,macAddress,primaryIpAddress,port," +
-		"primarySubnet[id,netmask,broadcastAddress,networkIdentifier,gateway]],hardwareChassis[id,name],activeTransaction[id,transactionStatus[friendlyName,name]]," +
+		"networkComponents[id,status,speed,maxSpeed,name,ipmiMacAddress,ipmiIpAddress,macAddress,primaryIpAddress,port,uplinkComponent[id,networkVlanTrunks[networkVlan]]," +
+		"primarySubnet[id,netmask,broadcastAddress,networkIdentifier,gateway],uplinkComponent[networkVlanTrunks[networkVlan[networkSpace,vlanNumber,id,fullyQualifiedName]]]]" +
+		",hardwareChassis[id,name],activeTransaction[id,transactionStatus[friendlyName,name]]," +
 		"operatingSystem[softwareLicense[softwareDescription[manufacturer,name,version,referenceCode]],passwords[username,password]]," +
 		"billingItem[id,nextInvoiceTotalRecurringAmount,children[nextInvoiceTotalRecurringAmount],nextInvoiceChildren[description,categoryCode,nextInvoiceTotalRecurringAmount],orderItem.order.userRecord[username]]," +
-		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace],remoteManagementAccounts[username,password],lastTransaction[transactionGroup],activeComponents"
+		"hourlyBillingFlag,tagReferences[id,tag[name,id]],networkVlans[id,vlanNumber,networkSpace,fullyQualifiedName],remoteManagementAccounts[username,password],lastTransaction[transactionGroup],activeComponents"
 
 	KEY_SIZES                  = "sizes"
 	KEY_OS                     = "operating_systems"
@@ -42,6 +44,7 @@ type HardwareServerManager interface {
 	CancelHardware(hardwareId int, reason string, comment string, immediate bool) error
 	ListHardware(tags []string, cpus int, memory int, hostname string, domain string, datacenter string, nicSpeed int, publicIP string, privateIP string, owner string, orderId int, mask string) ([]datatypes.Hardware_Server, error)
 	GetHardware(hardwareId int, mask string) (datatypes.Hardware_Server, error)
+	GetHardwareFast(hardwareId int) (datatypes.Hardware_Server, error)
 	GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error)
 	Reload(hardwareId int, postInstallURL string, sshKeys []int, upgradeBIOS bool, upgradeFirmware bool) error
 	Rescure(hardwareId int) error
@@ -75,6 +78,8 @@ type HardwareServerManager interface {
 	GetBandwidthAllotmentDetail(hardwareId int, mask string) (datatypes.Network_Bandwidth_Version1_Allotment_Detail, error)
 	GetBillingCycleBandwidthUsage(hardwareId int, mask string) ([]datatypes.Network_Bandwidth_Usage, error)
 	CreateSoftwareCredential(softwareComponentPasswordTemplate datatypes.Software_Component_Password) (datatypes.Software_Component_Password, error)
+	TrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)
+	UnTrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)
 }
 
 type hardwareServerManager struct {
@@ -251,6 +256,108 @@ func (hw hardwareServerManager) GetHardware(hardwareId int, mask string) (dataty
 		mask = DETAIL_HARDWARE_MASK
 	}
 	return hw.HardwareService.Id(hardwareId).Mask(mask).GetObject()
+}
+
+
+//Uses Sync to get all the details of a hardware server asap. Uses a multithreaded approach
+//hardwareId: the ID of the hardware
+func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardware_Server, error) {
+	// We'll use errors.Join to combine all API errors we get in multithreading. This variable tracks all that.
+	var all_err error
+	hw_mask := `mask[id, globalIdentifier, fullyQualifiedDomainName, hostname, domain, provisionDate, hardwareStatus,
+				processorPhysicalCoreAmount, memoryCapacity, notes, primaryBackendIpAddress, primaryIpAddress, networkManagementIpAddress, datacenter,
+				hourlyBillingFlag, lastTransaction[transactionGroup]]`
+
+	// Get the base Hardware first, if this doesn't error, unlikely the others will.
+	hardware, err := hw.HardwareService.Id(hardwareId).Mask(hw_mask).GetObject()
+	if err != nil {
+		return hardware, err
+	}
+	var wg sync.WaitGroup
+	
+	wg.Add(10)
+	go func() {
+		defer wg.Done()
+		mask := "id, status, speed, maxSpeed, name, ipmiMacAddress, ipmiIpAddress, macAddress, primaryIpAddress," +
+                "port, primarySubnet[id, netmask, broadcastAddress, networkIdentifier, gateway]," +
+                "uplinkComponent[networkVlanTrunks[networkVlan[networkSpace]]]"
+		hardware.NetworkComponents, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetNetworkComponents()
+		all_err = errors.Join(all_err, err)
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "id,hardwareComponentModel[hardwareGenericComponentModel[id,hardwareComponentType[keyName]]]"
+		hardware.ActiveComponents, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetActiveComponents()
+		all_err = errors.Join(all_err, err)
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "mask[softwareLicense[softwareDescription[manufacturer, name, version, referenceCode]],passwords[id,username,password]]"
+		operatingSystem, err := hw.HardwareService.Id(hardwareId).Mask(mask).GetOperatingSystem()
+		all_err = errors.Join(all_err, err)
+		if &operatingSystem != nil && err == nil {
+			hardware.OperatingSystem = &operatingSystem
+		}
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "id,nextInvoiceTotalRecurringAmount,nextInvoiceChildren[id,description,categoryCode,nextInvoiceTotalRecurringAmount]," +
+                "orderItem[id,order[id,userRecord[id,username]]]"
+		billingItem, err := hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingItem()
+		all_err = errors.Join(all_err, err)
+		if &billingItem != nil && err == nil {
+			hardware.BillingItem = &billingItem
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "id,tag[name,id]"
+		hardware.TagReferences, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetTagReferences()
+		all_err = errors.Join(all_err, err)
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "id,vlanNumber,networkSpace,fullyQualifiedName"
+		hardware.NetworkVlans, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetNetworkVlans()
+		all_err = errors.Join(all_err, err)
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "username,password"
+		hardware.RemoteManagementAccounts, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetRemoteManagementAccounts()
+		all_err = errors.Join(all_err, err)
+
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "mask[id,serialNumber,hardwareComponentModel[manufacturer,name,hardwareGenericComponentModel[id,capacity,units]]]"
+		hardware.HardDrives, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetHardDrives()
+		all_err = errors.Join(all_err, err)
+	}()
+
+	go func() {
+		defer wg.Done()
+		mask := "mask[allocation[amount]]"
+		bw_detail, err := hw.HardwareService.Id(hardwareId).Mask(mask).GetBandwidthAllotmentDetail()
+		all_err = errors.Join(all_err, err)
+		if &bw_detail != nil && err == nil {
+			hardware.BandwidthAllotmentDetail = &bw_detail
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		mask := "mask[amountIn,amountOut,type]"
+		hardware.BillingCycleBandwidthUsage, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingCycleBandwidthUsage()
+		all_err = errors.Join(all_err, err)
+	}()
+
+	wg.Wait()
+	return hardware, all_err
 }
 
 //Perform an OS reload of a server with its current configuration.
@@ -865,4 +972,16 @@ func (hw hardwareServerManager) GetBillingCycleBandwidthUsage(hardwareId int, ma
 func (hw hardwareServerManager) CreateSoftwareCredential(softwareComponentPasswordTemplate datatypes.Software_Component_Password) (datatypes.Software_Component_Password, error) {
 	softwareComponentPasswordService := services.GetSoftwareComponentPasswordService(hw.Session)
 	return softwareComponentPasswordService.CreateObject(&softwareComponentPasswordTemplate)
+}
+
+// https://sldn.softlayer.com/reference/services/SoftLayer_Network_Component/addNetworkVlanTrunks/
+func (hw hardwareServerManager) TrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error) {
+	ncService := services.GetNetworkComponentService(hw.Session)
+	return ncService.Id(componentId).AddNetworkVlanTrunks(vlans)
+}
+
+// https://sldn.softlayer.com/reference/services/SoftLayer_Network_Component/removeNetworkVlanTrunks/
+func (hw hardwareServerManager) UnTrunkVlans(componentId int, vlans []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error) {
+	ncService := services.GetNetworkComponentService(hw.Session)
+	return ncService.Id(componentId).RemoveNetworkVlanTrunks(vlans)
 }

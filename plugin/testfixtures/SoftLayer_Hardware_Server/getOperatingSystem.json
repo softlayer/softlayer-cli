@@ -1,0 +1,22 @@
+{
+    "hardwareId": 1580685,
+    "id": 79814770,
+    "manufacturerLicenseInstance": "",
+    "passwords": [
+        {
+            "id": 85030804,
+            "password": "ThisPasswordISFake",
+            "username": "Administrator"
+        }
+    ],
+    "softwareLicense": {
+        "id": 31718,
+        "softwareDescriptionId": 3012,
+        "softwareDescription": {
+            "manufacturer": "Microsoft",
+            "name": "Windows 2022 FULL STD 64 bit",
+            "referenceCode": "WIN_2022-STD_64",
+            "version": "2022 FULL STD x64"
+        }
+    }
+}

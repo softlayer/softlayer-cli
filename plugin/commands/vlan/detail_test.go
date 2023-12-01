@@ -1,15 +1,12 @@
 package vlan_test
 
 import (
-	"errors"
-
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/datatypes"
+
 	"github.com/softlayer/softlayer-go/session"
-	"github.com/softlayer/softlayer-go/sl"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
@@ -21,21 +18,24 @@ var _ = Describe("VLAN Detail", func() {
 		cliCommand         *vlan.DetailCommand
 		fakeSession        *session.Session
 		slCommand          *metadata.SoftlayerCommand
-		fakeNetworkManager *testhelpers.FakeNetworkManager
+		fakeHandler        *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeSession = testhelpers.NewFakeSoftlayerSession(nil)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSession)
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = vlan.NewDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-		fakeNetworkManager = new(testhelpers.FakeNetworkManager)
-		cliCommand.NetworkManager = fakeNetworkManager
+	})
+	AfterEach(func() {
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
 	})
 
 	Describe("VLAN detail", func() {
 		Context("VLAN detail without ID", func() {
-			It("return error", func() {
+			It("Error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstrings())
@@ -43,7 +43,7 @@ var _ = Describe("VLAN Detail", func() {
 			})
 		})
 		Context("VLAN detail with wrong vlan id", func() {
-			It("error resolving vlan ID", func() {
+			It("Error resolving vlan ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'VLAN ID'. It must be a positive integer."))
@@ -52,9 +52,9 @@ var _ = Describe("VLAN Detail", func() {
 
 		Context("VLAN detail with correct vlan id but server API call fails", func() {
 			BeforeEach(func() {
-				fakeNetworkManager.GetVlanReturns(datatypes.Network_Vlan{}, errors.New("Internal Server Error"))
+				fakeHandler.AddApiError("SoftLayer_Network_Vlan", "getObject", 500, "Internal Server Error")
 			})
-			It("return error", func() {
+			It("Error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get VLAN: 1234."))
@@ -62,18 +62,28 @@ var _ = Describe("VLAN Detail", func() {
 			})
 		})
 
-		Context("VLAN detail with correct vlan id", func() {
-			BeforeEach(func() {
-				fakeNetworkManager.GetVlanReturns(datatypes.Network_Vlan{
-					Id:         sl.Int(1234),
-					VlanNumber: sl.Int(100),
-				}, nil)
-			})
-			It("return no error", func() {
+		Context("VLAN Happy Path", func() {
+			It("Success", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"100"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1262125"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("169.55.16.48"))
+			})
+		})
+		Context("VLAN Happy Path", func() {
+			It("Success", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--output=JSON")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`domain": "stage1.ng.bluemix.net"`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"subnetType": "ADDITIONAL_PRIMARY"`))
+			})
+		})
+		Context("VLAN Happy Path: trunk details", func() {
+			It("Success", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("testibm"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("SECONDARY_ON_VLAN"))
 			})
 		})
 	})
