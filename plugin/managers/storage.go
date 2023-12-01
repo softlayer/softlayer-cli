@@ -34,7 +34,7 @@ const (
 	BLOCK_VOLUME_DEFAULT_MASK = "id,username,lunId,capacityGb,bytesUsed,serviceResource.datacenter.name,serviceResourceBackendIpAddress,storageType.keyName,activeTransactionCount,billingItem.orderItem.order[id,userRecord.username],notes,iops," + "activeTransactionCount,replicationPartnerCount"
 	BLOCK_VOLUME_DETAIL_MASK  = "id,username,password,capacityGb,snapshotCapacityGb,parentVolume.snapshotSizeBytes,storageType.keyName," +
 		"serviceResource.datacenter.name,serviceResourceBackendIpAddress,storageTierLevel,iops,lunId," +
-		"originalVolumeName,originalSnapshotName,originalVolumeSize," +
+		"originalVolumeName,originalSnapshotName,originalVolumeSize,hasEncryptionAtRest," +
 		"activeTransactionCount,activeTransactions.transactionStatus.friendlyName," +
 		"replicationPartnerCount,replicationStatus," +
 		"replicationPartners[id,username,serviceResourceBackendIpAddress,serviceResource.datacenter.name,replicationSchedule.type.keyname],notes"
