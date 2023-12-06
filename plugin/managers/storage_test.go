@@ -3,19 +3,27 @@ package managers_test
 import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	. "github.com/onsi/gomega/gstruct"
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
+	"fmt"
 )
 
 var _ = Describe("StorageManager", func() {
 	var (
 		fakeSLSession  *session.Session
+		fakeHandler *testhelpers.FakeTransportHandler
 		StorageManager managers.StorageManager
 	)
 	BeforeEach(func() {
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSLSession)
 		StorageManager = managers.NewStorageManager(fakeSLSession)
+	})
+	AfterEach(func() {
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
 	})
 
 	Describe("GetBlockVolumeAccessList", func() {
@@ -99,14 +107,65 @@ var _ = Describe("StorageManager", func() {
 
 	Describe("ListBlockVolumes", func() {
 		Context("ListBlockVolumes under current account", func() {
-			It("Return no error", func() {
+			It("Block Happy Path", func() {
 				volumes, err := StorageManager.ListVolumes("block", "", "", "", "", 0, "")
 				Expect(err).ToNot(HaveOccurred())
-				Expect(len(volumes) > 0).To(BeTrue())
+				Expect(len(volumes)).Should(BeNumerically(">", 0))
 				for _, volume := range volumes {
 					Expect(volume.Id).NotTo(Equal(nil))
 					Expect(*volume.StorageType.KeyName).To(Equal("ENDURANCE_BLOCK_STORAGE"))
 				}
+				apiCalls := fakeHandler.ApiCallLogs
+				Expect(len(apiCalls)).To(Equal(1))
+				Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
+					"Service": Equal("SoftLayer_Account"),
+					"Method":  Equal("getIscsiNetworkStorage"),
+					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Limit": PointTo(Equal(50))})),
+				}))
+			})
+			It("File Happy Path", func() {
+				volumes, err := StorageManager.ListVolumes("file", "", "", "", "", 0, "")
+				Expect(err).ToNot(HaveOccurred())
+				Expect(len(volumes)).Should(BeNumerically(">", 0))
+				for _, volume := range volumes {
+					Expect(volume.Id).NotTo(Equal(nil))
+					Expect(*volume.StorageType.KeyName).To(Equal("ENDURANCE_FILE_STORAGE"))
+				}
+				apiCalls := fakeHandler.ApiCallLogs
+				Expect(len(apiCalls)).To(Equal(1))
+				Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
+					"Service": Equal("SoftLayer_Account"),
+					"Method":  Equal("getNasNetworkStorage"),
+					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Limit": PointTo(Equal(50))})),
+				}))
+			})
+		})
+		Context("Issue822 - Special case for ListVolumes with a datacenter filter", func() {
+			It("Block: No Result Limit", func() {
+				_, err := StorageManager.ListVolumes("block", "dal10", "", "", "", 0, "")
+				Expect(err).ToNot(HaveOccurred())
+				apiCalls := fakeHandler.ApiCallLogs
+				Expect(len(apiCalls)).To(Equal(1))
+				// See https://pkg.go.dev/github.com/onsi/gomega/gstruct for this stuff
+				fmt.Printf("APICALL: %+v", apiCalls[0].Options)
+				Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
+					"Service": Equal("SoftLayer_Account"),
+					"Method":  Equal("getIscsiNetworkStorage"),
+					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Limit": BeNil()})),
+				}))
+			})
+			It("File: No Result Limit", func() {
+				_, err := StorageManager.ListVolumes("file", "dal10", "", "", "", 0, "")
+				Expect(err).ToNot(HaveOccurred())
+				apiCalls := fakeHandler.ApiCallLogs
+				Expect(len(apiCalls)).To(Equal(1))
+				// See https://pkg.go.dev/github.com/onsi/gomega/gstruct for this stuff
+				fmt.Printf("APICALL: %+v", apiCalls[0].Options)
+				Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
+					"Service": Equal("SoftLayer_Account"),
+					"Method":  Equal("getNasNetworkStorage"),
+					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Limit": BeNil()})),
+				}))
 			})
 		})
 	})
