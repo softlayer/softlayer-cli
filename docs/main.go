@@ -5,18 +5,13 @@ import (
 	"os"
 	"strings"
 	"encoding/json"
-	"io/ioutil"
-	"path/filepath"
+
 	"text/template"
 	// "sort"
-	"github.com/spf13/cobra/doc"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	// "github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	sl_plugin "github.ibm.com/SoftLayer/softlayer-cli/plugin"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-	"github.com/softlayer/softlayer-go/session"
 )
 
 var fileName string
@@ -65,6 +60,7 @@ type SlCmdDoc struct {
 type SlCmdFlag struct {
 	Name string
 	Help string
+	Default string
 }
 
 
@@ -90,7 +86,7 @@ func CliDocs() {
 		PrintMakrdown(thisCmdGroup)
 		CmdGroups = append(CmdGroups, thisCmdGroup)
 	}
-	jOut, err := json.Marshal(CmdGroups)
+	jOut, err := json.MarshalIndent(CmdGroups, "", "  ")
 	os.WriteFile("sl.json", jOut, 0755)
 	checkError(err)
 	// fmt.Println(string(jOut))
@@ -119,9 +115,10 @@ ibmcloud {{.Use}}
 {: codeblock}
 
 {{if .Flags}}
-**Flags**:
+**Command options**:
 {{range .Flags}}
-	--{{.Name}} {{.Help}}
+--{{.Name}}
+:    {{.Help}}
 {{end}}
 {{end}}
 {{end}}
@@ -137,6 +134,11 @@ ibmcloud {{.Use}}
 
 }
 
+func getLongHelp(helpString string) string {
+	helpString = strings.ReplaceAll(helpString, "${COMMAND_NAME}", "ibmcloud")
+	helpString = strings.ReplaceAll(helpString, "EXAMPLE:", "**Examples**:\n")
+	return helpString
+}
 
 func buildSlCmdDoc(topCommand *cobra.Command) []SlCmdDoc {
 	docs := []SlCmdDoc{}
@@ -144,7 +146,7 @@ func buildSlCmdDoc(topCommand *cobra.Command) []SlCmdDoc {
 		shortName := fmt.Sprintf("sl_%s_%s", topCommand.Name(), iCmd.Name())
 		shortName = strings.ReplaceAll(shortName, " ", "_")
 		shortName = strings.ReplaceAll(shortName, "-", "_")
-
+		longHelp := getLongHelp(iCmd.Long)
 		thisDoc := SlCmdDoc{
 			Name: iCmd.Name(),
 			CommandShortLink: shortName,
@@ -152,7 +154,7 @@ func buildSlCmdDoc(topCommand *cobra.Command) []SlCmdDoc {
 			Use: iCmd.UseLine(),
 			Flags: nil,
 			Help: iCmd.Short,
-			LongHelp: strings.ReplaceAll(iCmd.Long, "${COMMAND_NAME}", "ibmcloud"),
+			LongHelp: longHelp,
 			Backtick:  "```",
 		}
 		thisDoc.Flags = buildSlCmdFlag(iCmd)
@@ -166,43 +168,16 @@ func buildSlCmdFlag(topCommand *cobra.Command) []SlCmdFlag {
 	flags := []SlCmdFlag{}
 	flagSet := topCommand.Flags()
 	flagSet.VisitAll(func(pflag *pflag.Flag) {
+		flagName := pflag.Name
+		if pflag.Shorthand != "" {
+			flagName = fmt.Sprintf("%s, %s", pflag.Shorthand, flagName)
+		}
 		thisFlag := SlCmdFlag{
-			Name: pflag.Name,
+			Name:flagName,
 			Help: pflag.Usage,
+			Default: pflag.DefValue,
 		}
 		flags = append(flags, thisFlag)
 	})
 	return flags
-}
-
-// This function uses the build in Cobra documentation generator, its fine.
-func CobraDocs() {
-	fmt.Printf("Generating Documentation\n")
-
-	var fakeUI              *terminal.FakeUI
-	var fakeSession         *session.Session
-	fakeUI = terminal.NewFakeUI()
-	fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
-	slMeta := sl_plugin.GetTopCobraCommand(fakeUI, fakeSession)
-
-	cwd, err := os.Getwd()
-	checkError(err)
-	if !strings.HasSuffix(filepath.ToSlash(cwd), "softlayer-cli/docs") {
-		fmt.Printf("%v is the wrong directory, you need to run this command in the softlayer-cli/docs directory.\n", cwd)
-
-		return
-	} 
-	err = doc.GenMarkdownTree(slMeta, "./")
-	checkError(err)
-	// err = os.Rename("./sl.md", "./index.md")
-	// if err != nil {
-	// 	fmt.Errorf(err.Error())
-	// }
-	// Need to make sure we have an index file
-	bytesRead, err := ioutil.ReadFile("./sl.md")
-    checkError(err)
-    err = ioutil.WriteFile("./index.md", bytesRead, 0755)
-    checkError(err)
-	fmt.Printf("Jobs done.\n")
-
 }
