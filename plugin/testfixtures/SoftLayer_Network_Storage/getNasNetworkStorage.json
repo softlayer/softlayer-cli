@@ -1,0 +1,46 @@
+[
+    {
+        "activeTransactionCount": 0,
+        "bytesUsed": "14381056",
+        "capacityGb": 20,
+        "id": 4917309,
+        "notes": "a random notes",
+        "replicationPartnerCount": 1,
+        "serviceResource": {
+            "backendIpAddress": "nfsdal0901a-fz.service.softlayer.com",
+            "datacenter": {
+                "name": "dal09"
+            },
+            "id": 41528,
+            "name": "Storage Type 01M Aggregate staasdal0901i_ssd01",
+            "type": {
+                "type": "NETAPP_STOR_AGGR"
+            }
+        },
+        "serviceResourceBackendIpAddress": "nfsdal0901a-fz.service.softlayer.com",
+        "storageType": {
+            "keyName": "ENDURANCE_FILE_STORAGE"
+        },
+        "username": "SL012345_1"
+    },
+    {
+        "activeTransactionCount": 0,
+        "bytesUsed": "7458816",
+        "capacityGb": 20,
+        "id": 21021427,
+        "replicationPartnerCount": 0,
+        "serviceResource": {
+            "backendIpAddress": "nfswdc0401a-fz.service.softlayer.com",
+            "id": 5373,
+            "name": "Storage Type 01 Aggregate staaswdc0401_hp01",
+            "type": {
+                "type": "NETAPP_STOR_AGGR"
+            }
+        },
+        "serviceResourceBackendIpAddress": "nfswdc0401a-fz.service.softlayer.com",
+        "storageType": {
+            "keyName": "ENDURANCE_FILE_STORAGE_REPLICANT"
+        },
+        "username": "SL12345_1_REP_1"
+    }
+]

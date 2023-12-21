@@ -3472,20 +3472,12 @@
     "translation": "Echec de l'obtention des événements d'annonce."
   },
   {
-    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "Impossible d'obtenir les détails d'allocation de bande passante pour le serveur matériel {{.ID}}.\n"
-  },
-  {
     "id": "Failed to get bandwidth summary",
     "translation": "Echec de l'obtention du récapitulatif de la bande passante"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Echec de l'obtention des serveurs bare metal. \n"
-  },
-  {
-    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "Impossible d'obtenir l'utilisation de la bande passante du cycle de facturation pour le serveur matériel {{.ID}}.\n"
   },
   {
     "id": "Failed to get billing items.",
@@ -9924,7 +9916,7 @@
     "translation": "unité"
   },
   {
-    "id": "edit bandwidth pool. ",
+    "id": "Edit bandwidth pool.",
     "translation": "Modifiez le pool de bande passante. "
   },
   {

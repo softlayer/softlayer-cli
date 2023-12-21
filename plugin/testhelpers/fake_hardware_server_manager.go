@@ -278,6 +278,19 @@ type FakeHardwareServerManager struct {
 		result1 []datatypes.Hardware_Component
 		result2 error
 	}
+	GetHardwareFastStub        func(int) (datatypes.Hardware_Server, error)
+	getHardwareFastMutex       sync.RWMutex
+	getHardwareFastArgsForCall []struct {
+		arg1 int
+	}
+	getHardwareFastReturns struct {
+		result1 datatypes.Hardware_Server
+		result2 error
+	}
+	getHardwareFastReturnsOnCall map[int]struct {
+		result1 datatypes.Hardware_Server
+		result2 error
+	}
 	GetOSPriceIdStub        func([]datatypes.Product_Item, string, datatypes.Location_Region) (int, error)
 	getOSPriceIdMutex       sync.RWMutex
 	getOSPriceIdArgsForCall []struct {
@@ -496,6 +509,34 @@ type FakeHardwareServerManager struct {
 	}
 	toggleIPMIReturnsOnCall map[int]struct {
 		result1 error
+	}
+	TrunkVlansStub        func(int, []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)
+	trunkVlansMutex       sync.RWMutex
+	trunkVlansArgsForCall []struct {
+		arg1 int
+		arg2 []datatypes.Network_Vlan
+	}
+	trunkVlansReturns struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}
+	trunkVlansReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}
+	UnTrunkVlansStub        func(int, []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)
+	unTrunkVlansMutex       sync.RWMutex
+	unTrunkVlansArgsForCall []struct {
+		arg1 int
+		arg2 []datatypes.Network_Vlan
+	}
+	unTrunkVlansReturns struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}
+	unTrunkVlansReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
 	}
 	UpdateFirmwareStub        func(int, bool, bool, bool, bool, bool) error
 	updateFirmwareMutex       sync.RWMutex
@@ -1772,6 +1813,70 @@ func (fake *FakeHardwareServerManager) GetHardwareComponentsReturnsOnCall(i int,
 	}{result1, result2}
 }
 
+func (fake *FakeHardwareServerManager) GetHardwareFast(arg1 int) (datatypes.Hardware_Server, error) {
+	fake.getHardwareFastMutex.Lock()
+	ret, specificReturn := fake.getHardwareFastReturnsOnCall[len(fake.getHardwareFastArgsForCall)]
+	fake.getHardwareFastArgsForCall = append(fake.getHardwareFastArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetHardwareFastStub
+	fakeReturns := fake.getHardwareFastReturns
+	fake.recordInvocation("GetHardwareFast", []interface{}{arg1})
+	fake.getHardwareFastMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastCallCount() int {
+	fake.getHardwareFastMutex.RLock()
+	defer fake.getHardwareFastMutex.RUnlock()
+	return len(fake.getHardwareFastArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastCalls(stub func(int) (datatypes.Hardware_Server, error)) {
+	fake.getHardwareFastMutex.Lock()
+	defer fake.getHardwareFastMutex.Unlock()
+	fake.GetHardwareFastStub = stub
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastArgsForCall(i int) int {
+	fake.getHardwareFastMutex.RLock()
+	defer fake.getHardwareFastMutex.RUnlock()
+	argsForCall := fake.getHardwareFastArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastReturns(result1 datatypes.Hardware_Server, result2 error) {
+	fake.getHardwareFastMutex.Lock()
+	defer fake.getHardwareFastMutex.Unlock()
+	fake.GetHardwareFastStub = nil
+	fake.getHardwareFastReturns = struct {
+		result1 datatypes.Hardware_Server
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) GetHardwareFastReturnsOnCall(i int, result1 datatypes.Hardware_Server, result2 error) {
+	fake.getHardwareFastMutex.Lock()
+	defer fake.getHardwareFastMutex.Unlock()
+	fake.GetHardwareFastStub = nil
+	if fake.getHardwareFastReturnsOnCall == nil {
+		fake.getHardwareFastReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Hardware_Server
+			result2 error
+		})
+	}
+	fake.getHardwareFastReturnsOnCall[i] = struct {
+		result1 datatypes.Hardware_Server
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeHardwareServerManager) GetOSPriceId(arg1 []datatypes.Product_Item, arg2 string, arg3 datatypes.Location_Region) (int, error) {
 	var arg1Copy []datatypes.Product_Item
 	if arg1 != nil {
@@ -2813,6 +2918,146 @@ func (fake *FakeHardwareServerManager) ToggleIPMIReturnsOnCall(i int, result1 er
 	}{result1}
 }
 
+func (fake *FakeHardwareServerManager) TrunkVlans(arg1 int, arg2 []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error) {
+	var arg2Copy []datatypes.Network_Vlan
+	if arg2 != nil {
+		arg2Copy = make([]datatypes.Network_Vlan, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.trunkVlansMutex.Lock()
+	ret, specificReturn := fake.trunkVlansReturnsOnCall[len(fake.trunkVlansArgsForCall)]
+	fake.trunkVlansArgsForCall = append(fake.trunkVlansArgsForCall, struct {
+		arg1 int
+		arg2 []datatypes.Network_Vlan
+	}{arg1, arg2Copy})
+	stub := fake.TrunkVlansStub
+	fakeReturns := fake.trunkVlansReturns
+	fake.recordInvocation("TrunkVlans", []interface{}{arg1, arg2Copy})
+	fake.trunkVlansMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) TrunkVlansCallCount() int {
+	fake.trunkVlansMutex.RLock()
+	defer fake.trunkVlansMutex.RUnlock()
+	return len(fake.trunkVlansArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) TrunkVlansCalls(stub func(int, []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)) {
+	fake.trunkVlansMutex.Lock()
+	defer fake.trunkVlansMutex.Unlock()
+	fake.TrunkVlansStub = stub
+}
+
+func (fake *FakeHardwareServerManager) TrunkVlansArgsForCall(i int) (int, []datatypes.Network_Vlan) {
+	fake.trunkVlansMutex.RLock()
+	defer fake.trunkVlansMutex.RUnlock()
+	argsForCall := fake.trunkVlansArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeHardwareServerManager) TrunkVlansReturns(result1 []datatypes.Network_Vlan, result2 error) {
+	fake.trunkVlansMutex.Lock()
+	defer fake.trunkVlansMutex.Unlock()
+	fake.TrunkVlansStub = nil
+	fake.trunkVlansReturns = struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) TrunkVlansReturnsOnCall(i int, result1 []datatypes.Network_Vlan, result2 error) {
+	fake.trunkVlansMutex.Lock()
+	defer fake.trunkVlansMutex.Unlock()
+	fake.TrunkVlansStub = nil
+	if fake.trunkVlansReturnsOnCall == nil {
+		fake.trunkVlansReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Vlan
+			result2 error
+		})
+	}
+	fake.trunkVlansReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlans(arg1 int, arg2 []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error) {
+	var arg2Copy []datatypes.Network_Vlan
+	if arg2 != nil {
+		arg2Copy = make([]datatypes.Network_Vlan, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.unTrunkVlansMutex.Lock()
+	ret, specificReturn := fake.unTrunkVlansReturnsOnCall[len(fake.unTrunkVlansArgsForCall)]
+	fake.unTrunkVlansArgsForCall = append(fake.unTrunkVlansArgsForCall, struct {
+		arg1 int
+		arg2 []datatypes.Network_Vlan
+	}{arg1, arg2Copy})
+	stub := fake.UnTrunkVlansStub
+	fakeReturns := fake.unTrunkVlansReturns
+	fake.recordInvocation("UnTrunkVlans", []interface{}{arg1, arg2Copy})
+	fake.unTrunkVlansMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansCallCount() int {
+	fake.unTrunkVlansMutex.RLock()
+	defer fake.unTrunkVlansMutex.RUnlock()
+	return len(fake.unTrunkVlansArgsForCall)
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansCalls(stub func(int, []datatypes.Network_Vlan) ([]datatypes.Network_Vlan, error)) {
+	fake.unTrunkVlansMutex.Lock()
+	defer fake.unTrunkVlansMutex.Unlock()
+	fake.UnTrunkVlansStub = stub
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansArgsForCall(i int) (int, []datatypes.Network_Vlan) {
+	fake.unTrunkVlansMutex.RLock()
+	defer fake.unTrunkVlansMutex.RUnlock()
+	argsForCall := fake.unTrunkVlansArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansReturns(result1 []datatypes.Network_Vlan, result2 error) {
+	fake.unTrunkVlansMutex.Lock()
+	defer fake.unTrunkVlansMutex.Unlock()
+	fake.UnTrunkVlansStub = nil
+	fake.unTrunkVlansReturns = struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeHardwareServerManager) UnTrunkVlansReturnsOnCall(i int, result1 []datatypes.Network_Vlan, result2 error) {
+	fake.unTrunkVlansMutex.Lock()
+	defer fake.unTrunkVlansMutex.Unlock()
+	fake.UnTrunkVlansStub = nil
+	if fake.unTrunkVlansReturnsOnCall == nil {
+		fake.unTrunkVlansReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Vlan
+			result2 error
+		})
+	}
+	fake.unTrunkVlansReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Vlan
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeHardwareServerManager) UpdateFirmware(arg1 int, arg2 bool, arg3 bool, arg4 bool, arg5 bool, arg6 bool) error {
 	fake.updateFirmwareMutex.Lock()
 	ret, specificReturn := fake.updateFirmwareReturnsOnCall[len(fake.updateFirmwareArgsForCall)]
@@ -2984,6 +3229,8 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.getHardwareMutex.RUnlock()
 	fake.getHardwareComponentsMutex.RLock()
 	defer fake.getHardwareComponentsMutex.RUnlock()
+	fake.getHardwareFastMutex.RLock()
+	defer fake.getHardwareFastMutex.RUnlock()
 	fake.getOSPriceIdMutex.RLock()
 	defer fake.getOSPriceIdMutex.RUnlock()
 	fake.getPackageMutex.RLock()
@@ -3016,6 +3263,10 @@ func (fake *FakeHardwareServerManager) Invocations() map[string][][]interface{} 
 	defer fake.rescureMutex.RUnlock()
 	fake.toggleIPMIMutex.RLock()
 	defer fake.toggleIPMIMutex.RUnlock()
+	fake.trunkVlansMutex.RLock()
+	defer fake.trunkVlansMutex.RUnlock()
+	fake.unTrunkVlansMutex.RLock()
+	defer fake.unTrunkVlansMutex.RUnlock()
 	fake.updateFirmwareMutex.RLock()
 	defer fake.updateFirmwareMutex.RUnlock()
 	fake.verifyOrderMutex.RLock()

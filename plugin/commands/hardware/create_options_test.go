@@ -33,13 +33,13 @@ var _ = Describe("hardware create options", func() {
 		Context("hardware create options", func() {
 			BeforeEach(func() {
 				fakeHardwareManager.GetCreateOptionsReturns(map[string]map[string]string{
-					managers.KEY_LOCATIONS:  map[string]string{"dal10": "Dallas 10"},
-					managers.KEY_SIZES:      map[string]string{"D2620_128GB_2X1T_SATA_RAID_1xM60_GPU": "Dual Xeon 2620v4, 128GB Ram, 2x800GB SSD disks, RAID1"},
-					managers.KEY_OS:         map[string]string{"CENTOS_6_32": "CentOS 6.5-32"},
-					managers.KEY_NAME_OS:         map[string]string{"CENTOS_6_32": "OS_CENTOS_6_X_32_BIT"},
-					managers.KEY_PORT_SPEED: map[string]string{"100_MBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS": "10000"},
+					managers.KEY_LOCATIONS:              map[string]string{"dal10": "Dallas 10"},
+					managers.KEY_SIZES:                  map[string]string{"D2620_128GB_2X1T_SATA_RAID_1xM60_GPU": "Dual Xeon 2620v4, 128GB Ram, 2x800GB SSD disks, RAID1"},
+					managers.KEY_OS:                     map[string]string{"CENTOS_6_32": "CentOS 6.5-32"},
+					managers.KEY_NAME_OS:                map[string]string{"CENTOS_6_32": "OS_CENTOS_6_X_32_BIT"},
+					managers.KEY_PORT_SPEED:             map[string]string{"100_MBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS": "10000"},
 					managers.KEY_PORT_SPEED_DESCRIPTION: map[string]string{"100_MBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS": "10 Gbps Redundant Public & Private Network Uplinks"},
-					managers.KEY_EXTRAS:     map[string]string{"8_PUBLIC_IP_ADDRESSES": "8 Public IP Addresses"},
+					managers.KEY_EXTRAS:                 map[string]string{"8_PUBLIC_IP_ADDRESSES": "8 Public IP Addresses"},
 				})
 			})
 			It("return error", func() {

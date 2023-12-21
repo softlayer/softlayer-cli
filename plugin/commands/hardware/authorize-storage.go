@@ -25,7 +25,6 @@ func NewAuthorizeStorageCommand(sl *metadata.SoftlayerCommand) (cmd *AuthorizeSt
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
-
 	cobraCmd := &cobra.Command{
 		Use:   "authorize-storage " + T("IDENTIFIER"),
 		Short: T("Authorize File and Block Storage to a Hardware Server"),

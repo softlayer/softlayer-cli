@@ -27,7 +27,6 @@ func NewBillingCommand(sl *metadata.SoftlayerCommand) (cmd *BillingCommand) {
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
-
 	cobraCmd := &cobra.Command{
 		Use:   "billing " + T("IDENTIFIER"),
 		Short: T("Get billing for a hardware device."),

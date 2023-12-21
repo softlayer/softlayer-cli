@@ -59,7 +59,10 @@ func MinimumNArgs(n int) cobra.PositionalArgs {
 				"Limit": n,
 				"Args":  len(args),
 			}
-			return fmt.Errorf(T("requires at least {{.Limit}} arg(s), only received {{.Args}}", subs))
+			return fmt.Errorf("%s%s", 
+				T("Incorrect Usage: "),
+				T("requires at least {{.Limit}} arg(s), only received {{.Args}}", subs),
+			)
 		}
 		return nil
 	}
@@ -73,7 +76,10 @@ func MaximumNArgs(n int) cobra.PositionalArgs {
 				"Limit": n,
 				"Args":  len(args),
 			}
-			return fmt.Errorf(T("accepts at most {{.Limit}} arg(s), received {{.Args}}", subs))
+			return fmt.Errorf("%s%s",
+			  	T("Incorrect Usage: "),
+				T("accepts at most {{.Limit}} arg(s), received {{.Args}}", subs),
+			)
 		}
 		return nil
 	}

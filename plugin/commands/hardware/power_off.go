@@ -24,7 +24,6 @@ func NewPowerOffCommand(sl *metadata.SoftlayerCommand) (cmd *PowerOffCommand) {
 		HardwareManager:  managers.NewHardwareServerManager(sl.Session),
 	}
 
-
 	cobraCmd := &cobra.Command{
 		Use:   "power-off " + T("IDENTIFIER"),
 		Short: T("Power off an active server"),

@@ -3472,20 +3472,12 @@
     "translation": "Impossibile ottenere gli eventi di annuncio."
   },
   {
-    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "Impossibile ottenere i dettagli di assegnazione della larghezza di banda per il server hardware {{.ID}}. \n"
-  },
-  {
     "id": "Failed to get bandwidth summary",
     "translation": "Impossibile ottenere il riepilogo della larghezza di banda"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "Impossibile ottenere server bare metal. \n"
-  },
-  {
-    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "Impossibile ottenere l'utilizzo della larghezza di banda del ciclo di fatturazione per il server hardware {{.ID}}. \n"
   },
   {
     "id": "Failed to get billing items.",
@@ -9924,7 +9916,7 @@
     "translation": "unità"
   },
   {
-    "id": "edit bandwidth pool. ",
+    "id": "Edit bandwidth pool.",
     "translation": "modificare il pool di larghezza di banda. "
   },
   {

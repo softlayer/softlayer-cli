@@ -13,7 +13,6 @@ type UnassignCommand struct {
 	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
 	Command        *cobra.Command
-	Details        bool
 }
 
 func NewUnassignCommand(sl *metadata.SoftlayerCommand) *UnassignCommand {
@@ -29,7 +28,6 @@ func NewUnassignCommand(sl *metadata.SoftlayerCommand) *UnassignCommand {
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().BoolVar(&thisCmd.Details, "details", false, T("Shows a very detailed list of charges"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }

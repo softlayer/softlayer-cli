@@ -1,0 +1,145 @@
+[
+	{
+		"id": 11711363,
+		"ipmiIpAddress": "10.160.139.28",
+		"ipmiMacAddress": "6e:0b:84:f1:fa:ef",
+		"maxSpeed": 100,
+		"name": "mgmt",
+		"port": 0,
+		"speed": 100,
+		"status": "ACTIVE",
+		"primarySubnet": {
+			"broadcastAddress": "10.160.139.63",
+			"gateway": "10.160.139.1",
+			"id": 1043883,
+			"netmask": "255.255.255.192",
+			"networkIdentifier": "10.160.139.0"
+		},
+		"uplinkComponent": {
+			"duplexModeId": "3",
+			"hardwareId": 779465,
+			"id": 5833121,
+			"maxSpeed": 100,
+			"modifyDate": "2023-10-19T12:34:40-06:00",
+			"name": "FastEthernet0",
+			"networkVlanId": 3367774,
+			"port": 3,
+			"speed": 100,
+			"status": "ACTIVE",
+			"networkVlanTrunks": []
+		}
+	},
+	{
+		"id": 11711353,
+		"macAddress": "6c:0b:84:f1:fa:ef",
+		"maxSpeed": 10000,
+		"name": "eth",
+		"port": 0,
+		"speed": 10000,
+		"status": "ACTIVE"
+	},
+	{
+		"id": 11711355,
+		"macAddress": "00:e0:ed:73:94:a8",
+		"maxSpeed": 100,
+		"name": "eth",
+		"port": 1,
+		"primaryIpAddress": "10.160.139.26",
+		"speed": 100,
+		"status": "ACTIVE",
+		"primarySubnet": {
+			"broadcastAddress": "10.160.139.63",
+			"gateway": "10.160.139.1",
+			"id": 1043883,
+			"netmask": "255.255.255.192",
+			"networkIdentifier": "10.160.139.0"
+		},
+		"uplinkComponent": {
+			"duplexModeId": "3",
+			"hardwareId": 762619,
+			"id": 5705479,
+			"maxSpeed": 10000,
+			"modifyDate": "2023-10-19T12:34:40-06:00",
+			"name": "Ethernet",
+			"networkVlanId": 3367774,
+			"port": 3,
+			"speed": 100,
+			"status": "ACTIVE",
+			"networkVlanTrunks": []
+		}
+	},
+	{
+		"id": 11711357,
+		"macAddress": "00:e0:ed:73:94:a9",
+		"maxSpeed": 100,
+		"name": "eth",
+		"port": 2,
+		"primaryIpAddress": "169.45.75.169",
+		"speed": 100,
+		"status": "ACTIVE",
+		"primarySubnet": {
+			"broadcastAddress": "169.45.75.175",
+			"gateway": "169.45.75.161",
+			"id": 1452297,
+			"netmask": "255.255.255.240",
+			"networkIdentifier": "169.45.75.160"
+		},
+		"uplinkComponent": {
+			"duplexModeId": "3",
+			"hardwareId": 762635,
+			"id": 5706371,
+			"maxSpeed": 10000,
+			"modifyDate": "2023-10-19T12:34:40-06:00",
+			"name": "Ethernet",
+			"networkVlanId": 3367772,
+			"port": 3,
+			"speed": 100,
+			"status": "ACTIVE",
+			"networkVlanTrunks": []
+		}
+	},
+	{
+		"id": 11711359,
+		"macAddress": "00:e0:ed:73:94:aa",
+		"maxSpeed": 100,
+		"name": "eth",
+		"port": 3,
+		"speed": 100,
+		"status": "ACTIVE",
+		"uplinkComponent": {
+			"duplexModeId": "3",
+			"hardwareId": 763057,
+			"id": 5711555,
+			"maxSpeed": 10000,
+			"modifyDate": "2023-10-19T12:34:40-06:00",
+			"name": "Ethernet",
+			"networkVlanId": 3367774,
+			"port": 3,
+			"speed": 100,
+			"status": "ACTIVE",
+			"networkVlanTrunks": []
+		}
+	},
+	{
+		"id": 11711361,
+		"macAddress": "00:e0:ed:73:94:ab",
+		"maxSpeed": 100,
+		"name": "eth",
+		"port": 4,
+		"speed": 100,
+		"status": "ACTIVE",
+		"uplinkComponent": {
+			"duplexModeId": "3",
+			"hardwareId": 762645,
+			"id": 5706891,
+			"maxSpeed": 10000,
+			"modifyDate": "2023-10-19T12:34:40-06:00",
+			"name": "Ethernet",
+			"networkVlanId": 3367772,
+			"port": 3,
+			"speed": 100,
+			"status": "ACTIVE",
+			"networkVlanTrunks": []
+		}
+	}
+]

@@ -34,7 +34,7 @@ const (
 	BLOCK_VOLUME_DEFAULT_MASK = "id,username,lunId,capacityGb,bytesUsed,serviceResource.datacenter.name,serviceResourceBackendIpAddress,storageType.keyName,activeTransactionCount,billingItem.orderItem.order[id,userRecord.username],notes,iops," + "activeTransactionCount,replicationPartnerCount"
 	BLOCK_VOLUME_DETAIL_MASK  = "id,username,password,capacityGb,snapshotCapacityGb,parentVolume.snapshotSizeBytes,storageType.keyName," +
 		"serviceResource.datacenter.name,serviceResourceBackendIpAddress,storageTierLevel,iops,lunId," +
-		"originalVolumeName,originalSnapshotName,originalVolumeSize," +
+		"originalVolumeName,originalSnapshotName,originalVolumeSize,hasEncryptionAtRest," +
 		"activeTransactionCount,activeTransactions.transactionStatus.friendlyName," +
 		"replicationPartnerCount,replicationStatus," +
 		"replicationPartners[id,username,serviceResourceBackendIpAddress,serviceResource.datacenter.name,replicationSchedule.type.keyname],notes"
@@ -343,6 +343,10 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 
 		i := 0
 		resourceList := []datatypes.Network_Storage{}
+		// Shortcut the pagination because filtering by DC is bugged, remove this when CORE-1820 is released.
+		if (datacenter != "") {
+			return s.AccountService.Mask(mask).Filter(filters.Build()).GetIscsiNetworkStorage()
+		}
 		for {
 			resp, err := s.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetIscsiNetworkStorage()
 			i++
@@ -384,6 +388,10 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 
 		i := 0
 		var resourceList []datatypes.Network_Storage
+		// Shortcut the pagination because filtering by DC is bugged, remove this when CORE-1820 is released.
+		if (datacenter != "") {
+			return s.AccountService.Mask(mask).Filter(filters.Build()).GetNasNetworkStorage()
+		}
 		for {
 			resp, err := s.AccountService.Mask(mask).Filter(filters.Build()).Limit(metadata.LIMIT).Offset(i * metadata.LIMIT).GetNasNetworkStorage()
 			i++

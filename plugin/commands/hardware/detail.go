@@ -62,17 +62,17 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	hardDrives, err := cmd.HardwareManager.GetHardDrives(hardwareId)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get the hard drives detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+		return err
 	}
 
 	bandwidthAllotmentDetail, err := cmd.HardwareManager.GetBandwidthAllotmentDetail(hardwareId, "")
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+		return err
 	}
 
 	billingCycleBandwidthUsage, err := cmd.HardwareManager.GetBillingCycleBandwidthUsage(hardwareId, "")
 	if err != nil {
-		return errors.NewAPIError(T("Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+		return err
 	}
 
 	if outputFormat == "JSON" {
@@ -157,11 +157,33 @@ func (cmd *DetailCommand) Run(args []string) error {
 
 	if vlans := hardware.NetworkVlans; len(vlans) > 0 {
 		buf := new(bytes.Buffer)
-		vlanTable := terminal.NewTable(buf, []string{T("Type"), T("Number"), T("ID")})
+		vlanTable := terminal.NewTable(buf, []string{T("Network"), T("Number"), T("ID"), T("Name"), T("Type")})
 		for _, vlan := range vlans {
-			vlanTable.Add(utils.FormatStringPointer(vlan.NetworkSpace),
+			vlanTable.Add(
+				utils.FormatStringPointer(vlan.NetworkSpace),
 				utils.FormatIntPointer(vlan.VlanNumber),
-				utils.FormatIntPointer(vlan.Id))
+				utils.FormatIntPointer(vlan.Id),
+				utils.FormatStringPointer(vlan.FullyQualifiedName),
+				T("Primary"),
+			)
+		}
+		for _, component := range hardware.NetworkComponents {
+			if component.PrimaryIpAddress != nil {
+				uplink := component.UplinkComponent
+				if uplink == nil {
+					continue
+				}
+				for _, trunk := range uplink.NetworkVlanTrunks {
+					t_vlan := trunk.NetworkVlan
+					vlanTable.Add(
+						utils.FormatStringPointer(t_vlan.NetworkSpace),
+						utils.FormatIntPointer(t_vlan.VlanNumber),
+						utils.FormatIntPointer(t_vlan.Id),
+						utils.FormatStringPointer(t_vlan.FullyQualifiedName),
+						T("Trunked"),
+					)
+				}
+			}
 		}
 		vlanTable.Print()
 		table.Add("Vlans", buf.String())

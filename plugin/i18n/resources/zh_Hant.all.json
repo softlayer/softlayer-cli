@@ -3472,20 +3472,12 @@
     "translation": "無法取得公告事件。"
   },
   {
-    "id": "Failed to get bandwidth allotment detail for the hardware server {{.ID}}.\n",
-    "translation": "無法取得硬體伺服器 {{.ID}} 的頻寬配額明細。\n"
-  },
-  {
     "id": "Failed to get bandwidth summary",
     "translation": "無法取得頻寬摘要"
   },
   {
     "id": "Failed to get bare metal servers.\n",
     "translation": "無法取得裸機伺服器。\n"
-  },
-  {
-    "id": "Failed to get billing cycle bandwidth usage for the hardware server {{.ID}}.\n",
-    "translation": "無法取得硬體伺服器 {{.ID}} 的計費週期頻寬使用情形。\n"
   },
   {
     "id": "Failed to get billing items.",
@@ -9924,7 +9916,7 @@
     "translation": "磁碟機"
   },
   {
-    "id": "edit bandwidth pool. ",
+    "id": "Edit bandwidth pool.",
     "translation": "編輯頻寬儲存區。 "
   },
   {

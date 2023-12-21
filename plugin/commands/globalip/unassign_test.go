@@ -2,9 +2,7 @@ package globalip_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -37,14 +35,14 @@ var _ = Describe("GlobalIP unassign", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("GlobalIP unassign with wrong IP ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Globalip ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Globalip ID'. It must be a positive integer."))
 			})
 		})
 
@@ -55,8 +53,8 @@ var _ = Describe("GlobalIP unassign", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to unassign global IP 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to unassign global IP 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -67,8 +65,8 @@ var _ = Describe("GlobalIP unassign", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"The transaction to unroute a global IP address is created, routes will be updated in one or two minutes."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("The transaction to unroute a global IP address is created, routes will be updated in one or two minutes."))
 			})
 		})
 	})
