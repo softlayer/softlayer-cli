@@ -57,6 +57,8 @@ type SlCmdDoc struct {
 	Flags []SlCmdFlag
 	Help string
 	LongHelp string
+	Backtick string
+	CommandPath string
 }
 
 // For a commands flags
@@ -80,6 +82,7 @@ func CliDocs() {
 			CommandShortLink: fmt.Sprintf("sl_%v", shortName),
 			Commands: nil,
 			Help: iCmd.Short,
+
 		}
 		if len(iCmd.Commands()) > 0 {
 			thisCmdGroup.Commands = buildSlCmdDoc(iCmd)
@@ -97,23 +100,30 @@ func CliDocs() {
 func PrintMakrdown(cmd SlCmdGroup) {
 
 	var cmdTemplate = `
-## {{.Name}}
+# ibmcloud sl {{.Name}}
 {: #{{.CommandShortLink}}}
 
 {{.Help}}
 
 {{range .Commands}}
-#### {{.Name}}
+## ibmcloud {{.CommandPath}}
 {: #{{.CommandShortLink}}}
 
 {{.Help}}
 
-**Command options**:
-	{{range .Flags}}
-	--{{.Name}} {{.Help}}
-	{{end}}
-
 {{.LongHelp}}
+
+{{.Backtick}}bash
+ibmcloud {{.Use}}
+{{.Backtick}}
+{: codeblock}
+
+{{if .Flags}}
+**Flags**:
+{{range .Flags}}
+	--{{.Name}} {{.Help}}
+{{end}}
+{{end}}
 {{end}}
 
 `
@@ -131,15 +141,19 @@ func PrintMakrdown(cmd SlCmdGroup) {
 func buildSlCmdDoc(topCommand *cobra.Command) []SlCmdDoc {
 	docs := []SlCmdDoc{}
 	for _, iCmd := range topCommand.Commands() {
-		shortName := strings.ReplaceAll(iCmd.Name(), " ", "_")
-		shortName = strings.ReplaceAll(iCmd.Name(), "-", "_")
+		shortName := fmt.Sprintf("sl_%s_%s", topCommand.Name(), iCmd.Name())
+		shortName = strings.ReplaceAll(shortName, " ", "_")
+		shortName = strings.ReplaceAll(shortName, "-", "_")
+
 		thisDoc := SlCmdDoc{
 			Name: iCmd.Name(),
 			CommandShortLink: shortName,
-			Use: iCmd.Use,
+			CommandPath: iCmd.CommandPath(),
+			Use: iCmd.UseLine(),
 			Flags: nil,
 			Help: iCmd.Short,
-			LongHelp: iCmd.Long,
+			LongHelp: strings.ReplaceAll(iCmd.Long, "${COMMAND_NAME}", "ibmcloud"),
+			Backtick:  "```",
 		}
 		thisDoc.Flags = buildSlCmdFlag(iCmd)
 

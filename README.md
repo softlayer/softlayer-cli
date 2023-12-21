@@ -449,5 +449,24 @@ ENV Variables that need to be set:
 2. `IBMCLOUD_APIKEY` : API key for using `ibmcloud`. This is how we upload to COS. The COS plugin needs to be installed as well. `ibmcloud plugin install cloud-object-storage`
 
 
+# Documentation
+
+`/docs/docs` is a command that will generate markdown documentation. This documentation needs to be copied and updated in the https://github.ibm.com/cloud-docs/cli repo (draft branch).
+
+To build the full docs locally, see https://test.cloud.ibm.com/docs-internal/writing?topic=writing-transform-local
+
+```bash
+➜  md-source pwd
+/Users/chris/Code/md-source
+➜  md-source ls -lh
+total 0
+drwxr-xr-x  3 chris  staff    96B Nov 30 12:58 build
+drwxr-xr-x  3 chris  staff    96B Nov 30 13:01 input
+drwxr-xr-x  4 chris  staff   128B Nov 30 13:01 output
+
+➜ marked-it-cli input --output=output --footer-file=build/markdown/footer.txt --extension-file=build/markdown/headerFooterExt.js --extension-file=build/markdown/generateSectionsExt.js --extension-file=build/markdown/accessibilityExt.js --extension-file=build/markdown/jsonTocExt.js --keyref-file=build/markdown/cloudoekeyrefs.yml --overwrite --verbose --toc-json --extension-file=build/markdown/videoExt.js --extension-file=build/markdown/terraformExt.js --extension-file=build/markdown/includesExt.js --extension-file=build/markdown/glossaryExt.js --@glossary:definitions-file=/Users/chris/Code/md-source/build/markdown/glossary.json
+```
+
+
 ## TODO
 Automate build with https://github.ibm.com/coligo/cli/tree/main/script
