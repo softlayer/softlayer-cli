@@ -2,7 +2,10 @@ module github.ibm.com/SoftLayer/softlayer-cli
 
 go 1.21
 
-replace golang.org/x/net => golang.org/x/net v0.17.0
+replace (
+	golang.org/x/crypto => golang.org/x/crypto v0.17.0
+	golang.org/x/net => golang.org/x/net v0.17.0
+)
 
 require (
 	github.com/IBM-Cloud/ibm-cloud-cli-sdk v1.1.0
@@ -24,7 +27,6 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
@@ -42,7 +44,6 @@ require (
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/term v0.15.0 // indirect
 	golang.org/x/tools v0.12.0 // indirect
-	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
