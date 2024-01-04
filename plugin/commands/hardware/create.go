@@ -180,7 +180,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 				return nil
 			}
 		}
-		fmt.Printf("ORDER TEMPLATE: %v\n\n", orderTemplate)
+
 		orderReceipt, err := cmd.HardwareManager.PlaceOrder(orderTemplate)
 		if err != nil {
 			return errors.NewAPIError(T("Failed to place this order.\n"), err.Error(), 2)
