@@ -123,7 +123,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 			params["noPublic"] = true
 		}
 		params["postInstallURL"] = cmd.PostInstall
-		params["ssheKeys"] = cmd.Key
+		params["sshKeys"] = cmd.Key
 		params["extras"] = cmd.Extra
 	}
 
@@ -180,6 +180,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 				return nil
 			}
 		}
+
 		orderReceipt, err := cmd.HardwareManager.PlaceOrder(orderTemplate)
 		if err != nil {
 			return errors.NewAPIError(T("Failed to place this order.\n"), err.Error(), 2)
