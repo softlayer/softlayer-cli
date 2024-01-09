@@ -4,8 +4,6 @@ import (
 	"errors"
 	"os"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -167,13 +165,13 @@ var _ = Describe("hardware create", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "-s", "S1270_32GB_2X960GBSSD_NORAID", "-H", "ibmcloud-cli", "-D", "ibm.com", "-o", "UBUNTU_16_64", "-d", "dal10", "-p", "1000", "-b", "hourly")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Run 'ibmcloud sl hardware list --order 123456' to find this hardware server after it is ready."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Run 'ibmcloud sl hardware list --order 123456' to find this hardware server after it is ready."))
 			})
 			It("return order receipt", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "-s", "S1270_32GB_2X960GBSSD_NORAID", "-H", "ibmcloud-cli", "-D", "ibm.com", "-o", "UBUNTU_16_64", "-d", "dal10", "-p", "1000", "-b", "hourly", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Run 'ibmcloud sl hardware list --order 123456' to find this hardware server after it is ready."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Run 'ibmcloud sl hardware list --order 123456' to find this hardware server after it is ready."))
 			})
 			It("return order receipt", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "-s", "S1270_32GB_2X960GBSSD_NORAID", "-H", "ibmcloud-cli", "-D", "ibm.com", "-o", "UBUNTU_16_64", "-d", "dal10", "-p", "1000", "-b", "monthly", "-f")
@@ -193,11 +191,16 @@ var _ = Describe("hardware create", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Run 'ibmcloud sl hardware list --order 123456' to find this hardware server after it is ready."))
 			})
-			It("return order receipt", func() {
+			It("Success with SSH keys", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "-s", "S1270_32GB_2X960GBSSD_NORAID", "-H", "ibmcloud-cli", "-D", "ibm.com", "-o", "UBUNTU_16_64", "-d", "dal10", "-p", "1000", "-b", "monthly", "-i", "https://postinstall.sh", "-n", "-k", "123", "-k", "234", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Run 'ibmcloud sl hardware list --order 123456' to find this hardware server after it is ready."))
+				_, callData := fakeHardwareManager.GenerateCreateTemplateArgsForCall(0)
+				sshKeys := callData["sshKeys"]
+				// Expect(len(callData.SshKeys[0].SshKeyIds)).To(Equal(1))
+				Expect(sshKeys).To(Equal([]int{123, 234}))
+				
 			})
 			It("return order receipt", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "-s", "S1270_32GB_2X960GBSSD_NORAID", "-H", "ibmcloud-cli", "-D", "ibm.com", "-o", "UBUNTU_16_64", "-d", "dal10", "-p", "1000", "-b", "monthly", "-i", "https://postinstall.sh", "-n", "-k", "123", "-k", "234", "-e", "1_IPV6_ADDRESS", "-e", "64_BLOCK_STATIC_PUBLIC_IPV6_ADDRESSES", "-f")
