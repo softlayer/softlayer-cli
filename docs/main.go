@@ -91,8 +91,9 @@ func CliDocs() {
 		CmdGroups = append(CmdGroups, thisCmdGroup)
 	}
 	jOut, err := json.MarshalIndent(CmdGroups, "", "  ")
-	os.WriteFile("sl.json", jOut, 0755)
 	checkError(err)
+	err = os.WriteFile("sl.json", jOut, 0755) //#nosec G306 -- This is a false positive
+	checkError(err)	
 	// fmt.Println(string(jOut))
 }
 
@@ -124,7 +125,7 @@ ibmcloud {{.Use}}
 	mdTemplate, err := template.New("cmd template").Parse(cmdTemplate)
 	checkError(err)
 	filename := fmt.Sprintf("%v.md", cmd.CommandShortLink)
-	outfile, err := os.Create(filename)
+	outfile, err := os.Create(filename) //#nosec G304 -- This is a false positive
 	defer outfile.Close()
 	err = mdTemplate.Execute(outfile, cmd)
 	checkError(err)
