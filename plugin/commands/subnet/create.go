@@ -1,8 +1,7 @@
 package subnet
 
 import (
-	"strconv"
-
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -10,6 +9,9 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
+	"strconv"
+	"strings"
+
 )
 
 type CreateCommand struct {
@@ -22,27 +24,22 @@ type CreateCommand struct {
 }
 
 func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
-	thisCmd := &CreateCommand{
+    thisCmd := &CreateCommand{
 		SoftlayerCommand: sl,
 		NetworkManager:   managers.NewNetworkManager(sl.Session),
 	}
 	cobraCmd := &cobra.Command{
-		Use:   "create",
+		Use:   "create" + strings.ToUpper(fmt.Sprintf(" %s %s %s", T("Network"), T("Quantity"), T("VLAN"))),
 		Short: T("Add a new subnet to your account"),
-		Long: T(`${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]
-	
-	Add a new subnet to your account. Valid quantities vary by type.
-	
-	Type    - Valid Quantities (IPv4)
-  	public  - 4, 8, 16, 32
-  	private - 4, 8, 16, 32, 64
+		Long: T(`Valid quantities vary by type.
 
-  	Type    - Valid Quantities (IPv6)
-	public  - 64
+	- public IPv4: 4, 8, 16, 32
+	- private IPv4: 4, 8, 16, 32, 64 
+	- public IPv6: 64
 
 EXAMPLE:
-   ${COMMAND_NAME} sl subnet create public 16 567 
-   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.`),
+	${COMMAND_NAME} sl subnet create public 16 567 
+	This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.`),
 		Args: metadata.ThreeArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
