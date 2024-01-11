@@ -344,10 +344,6 @@
     "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   This command cancels subnet with ID 12345678 without asking for confirmation."
   },
   {
-    "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
-    "translation": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567."
-  },
-  {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information."
   },
@@ -402,10 +398,6 @@
   {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
     "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details."
-  },
-  {
-    "id": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'",
-    "translation": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -2582,6 +2574,10 @@
   {
     "id": "Edit an SSH key",
     "translation": "Edit an SSH key"
+  },
+  {
+    "id": "Edit bandwidth pool.",
+    "translation": "Edit bandwidth pool."
   },
   {
     "id": "Edit by host record, such as www",
@@ -6284,12 +6280,20 @@
     "translation": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
   },
   {
+    "id": "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
+    "translation": "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps."
+  },
+  {
     "id": "Notes",
     "translation": "Notes"
   },
   {
     "id": "Notes to set on the new snapshot",
     "translation": "Notes to set on the new snapshot"
+  },
+  {
+    "id": "Notification names should be enclosed in quotation marks.\nEXAMPLE:\n\tslcli user edit-notifications --enable 'Order Approved'\n\tslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'",
+    "translation": "Notification names should be enclosed in quotation marks.\nEXAMPLE:\n\tslcli user edit-notifications --enable 'Order Approved'\n\tslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'"
   },
   {
     "id": "Notify",
@@ -9444,6 +9448,10 @@
     "translation": "VPN password to set for this user."
   },
   {
+    "id": "Valid quantities vary by type.\n\t- public IPv4: 4, 8, 16, 32\n\t- private IPv4: 4, 8, 16, 32, 64\n\t- public IPv6: 64\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet create public 16 567\n\tThis command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
+    "translation": "Valid quantities vary by type.\n\t- public IPv4: 4, 8, 16, 32\n\t- private IPv4: 4, 8, 16, 32, 64\n\t- public IPv6: 64\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet create public 16 567\n\tThis command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567."
+  },
+  {
     "id": "Value",
     "translation": "Value"
   },
@@ -9946,10 +9954,6 @@
   {
     "id": "drive",
     "translation": "drive"
-  },
-  {
-    "id": "Edit bandwidth pool.",
-    "translation": "Edit bandwidth pool."
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",

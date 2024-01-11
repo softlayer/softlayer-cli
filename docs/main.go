@@ -140,7 +140,7 @@ func getLongHelp(helpString string) string {
 	example_regex := regexp.MustCompile(`(?i)Example:+`)
 	helpString = example_regex.ReplaceAllString(helpString, "**Examples**:\n")
 	// for 'indented-by-two'
-	indent_regex := regexp.MustCompile(`(?m)^\s{2}(\S)`)
+	indent_regex := regexp.MustCompile(`(?m)^ {2}(\S)`)
 	helpString = indent_regex.ReplaceAllString(helpString, "    $1")
 
 	return getFlagHelp(helpString)

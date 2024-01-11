@@ -344,10 +344,6 @@
     "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   このコマンドは、ID 12345678 のサブネットを、確認を求めずに取り消します。"
   },
   {
-    "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
-    "translation": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tご使用のアカウントに新規サブネットを追加します。 有効な QUANTITY は、タイプによって異なります。\n\t\n\tタイプ    - 有効な QUANTITY (IPv4)\n  \tpublic  - 4、8、16、32\n  \tprivate - 4、8、16、32、64\n\n  \tタイプ    - 有効な QUANTITY (IPv6)\n\tpublic  - 64\n\n例:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   このコマンドは、16 個の IPv4 アドレスのあるパブリック・サブネットを作成し、それを ID 567 の vlan に置きます。"
-  },
-  {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   このコマンドは、ID 12345678 のサブネットに関する詳細情報 (Virtual Server およびハードウェア・サーバーの情報を含む) を表示します。"
   },
@@ -402,10 +398,6 @@
   {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
     "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\n例: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    このコマンドは、ユーザーの詳細を編集します。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'",
-    "translation": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS \n \n 通知名は引用符で囲む必要があります。 \n 例: \n slcli user edit-notifications -- enable 'Order Approved' \n slcli user edit-notifications -- enable 'Order Approved' -- enable 'Reload Complete'"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -2582,6 +2574,10 @@
   {
     "id": "Edit an SSH key",
     "translation": "SSH 鍵を編集します"
+  },
+  {
+    "id": "Edit bandwidth pool.",
+    "translation": "帯域幅プールの編集。 "
   },
   {
     "id": "Edit by host record, such as www",
@@ -9914,10 +9910,6 @@
   {
     "id": "drive",
     "translation": "ドライブ"
-  },
-  {
-    "id": "Edit bandwidth pool.",
-    "translation": "帯域幅プールの編集。 "
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",

@@ -344,10 +344,6 @@
     "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONS]\n\nEJEMPLO:\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   Este mandato cancela la subred con el ID 12345678 sin solicitar confirmación."
   },
   {
-    "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
-    "translation": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAñadir una nueva subred a su cuenta. Las cantidades válidas varían según el tipo.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEJEMPLO:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   Este mandato crea una subred pública con direcciones 16 IPv4 y la coloca en la vlan con el ID 567."
-  },
-  {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEJEMPLO:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   Este mandato muestra información detallada sobre la subred con el ID 12345678, incluyendo información de servidores de hardware y servidores virtuales."
   },
@@ -402,10 +398,6 @@
   {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
     "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEJEMPLO: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Este mandato edita los detalles de un usuario."
-  },
-  {
-    "id": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'",
-    "translation": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS \n\n Los nombres de notificación deben ir entre comillas. Ejemplos:\nslcli user edit-notifications --enable 'Order Approved'\nslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -2582,6 +2574,10 @@
   {
     "id": "Edit an SSH key",
     "translation": "Editar una clave SSH"
+  },
+  {
+    "id": "Edit bandwidth pool.",
+    "translation": "editar agrupación de ancho de banda. "
   },
   {
     "id": "Edit by host record, such as www",
@@ -9914,10 +9910,6 @@
   {
     "id": "drive",
     "translation": "unidad"
-  },
-  {
-    "id": "Edit bandwidth pool.",
-    "translation": "editar agrupación de ancho de banda. "
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",
