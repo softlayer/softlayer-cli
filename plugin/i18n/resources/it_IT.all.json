@@ -344,10 +344,6 @@
     "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   Questo comando annulla la sottorete con ID 12345678 senza chiedere conferma."
   },
   {
-    "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
-    "translation": "${COMMAND_NAME} sl subnet create RETE QUANTITÀ ID_VLAN [OPZIONI]\n\t\n\tAggiunge una nuova sottorete al tuo account. Le quantità valide variano in base al tipo.\n\t\n\tTipo    - Quantità valide (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tTipo    - Quantità valide (IPv6)\n\tpublic  - 64\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   Questo comando crea una sottorete pubblica con 16 indirizzi IPv4 e la posiziona nella vlan con ID 567."
-  },
-  {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   Questo comando mostra le informazioni dettagliate sulla sottorete con ID 12345678, inclusi i server virtuali e le informazioni sui server hardware."
   },
@@ -402,10 +398,6 @@
   {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
     "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFICATIVO [OPZIONI]\n\nESEMPIO: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    Questo comando modifica i dettagli di un utente."
-  },
-  {
-    "id": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'",
-    "translation": "${COMMAND_NAME} sl user edit-notifications [OPZIONI] NOTIFICHE\n\nI nomi delle notifiche devono essere racchiusi tra virgolette. Esempi:\nslcli user edit-notifications --enable 'Order Approved'\nslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -466,10 +458,6 @@
   {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFICATIVO [OPZIONI]\n\nESEMPIO:\n   ${COMMAND_NAME} sl vs reload 12345678\n   Questo comando ricarica il sistema operativo corrente dell'istanza del server virtuale con ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   Questo comando ricarica il sistema operativo dall'immagine con ID 1234 per l'istanza del server virtuale con ID 12345678."
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
-    "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFICATIVO [OPZIONI]\n\tNota: il servizio dell'infrastruttura classica riavvia automaticamente l'istanza quando viene inserita una richiesta\n  \tdi aggiornamento. L'istanza viene arrestata finché la transazione di aggiornamento non viene completata.\n  \tTuttavia per la rete, non è richiesto alcun riavvio.\n\nESEMPIO:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   Questo comando aggiorna l'istanza del server virtuale con ID 12345678 e imposta il numero di core CPU su 8, la memoria su 8192M, la velocità della porta di rete su 1000 Mbps."
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
@@ -2582,6 +2570,10 @@
   {
     "id": "Edit an SSH key",
     "translation": "Modifica una chiave SSH"
+  },
+  {
+    "id": "Edit bandwidth pool.",
+    "translation": "modificare il pool di larghezza di banda. "
   },
   {
     "id": "Edit by host record, such as www",
@@ -9914,10 +9906,6 @@
   {
     "id": "drive",
     "translation": "unità"
-  },
-  {
-    "id": "Edit bandwidth pool.",
-    "translation": "modificare il pool di larghezza di banda. "
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",

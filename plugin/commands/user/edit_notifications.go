@@ -29,11 +29,10 @@ func NewEditNotificationsCommand(sl *metadata.SoftlayerCommand) (cmd *EditNotifi
 	cobraCmd := &cobra.Command{
 		Use:   "edit-notifications",
 		Short: T("Enable or Disable specific notifications for the active user."),
-		Long: T(`${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS
-
-		Notification names should be enclosed in quotation marks. Examples:
-			slcli user edit-notifications --enable 'Order Approved'
-			slcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'`),
+		Long: T(`Notification names should be enclosed in quotation marks.
+EXAMPLE:
+	slcli user edit-notifications --enable 'Order Approved'
+	slcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'`),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

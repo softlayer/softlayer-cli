@@ -62,7 +62,7 @@ func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 		Name:       metadata.NS_SL_NAME,
 		Namespaces: Namespaces(),
 		// TODO change this to convert cobra commands to pluginCommands... maybe see if another plugin does this already???
-		Commands:      cobraToCLIMeta(getTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
+		Commands:      cobraToCLIMeta(GetTopCobraCommand(sl.ui, sl.session), metadata.NS_SL_NAME),
 		Version:       metadata.GetVersion(),
 		SDKVersion:    metadata.GetSDKVersion(),
 		MinCliVersion: metadata.GetMinCLI(),
@@ -81,7 +81,7 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	sl.ui = terminal.NewStdUI()
 	sl.session, _ = client.NewSoftlayerClientSessionFromConfig(context)
 
-	cobraCommand := getTopCobraCommand(sl.ui, sl.session)
+	cobraCommand := GetTopCobraCommand(sl.ui, sl.session)
 
 	// When the command comes in from the ibmcloud-cli it has `sl` in the Namespace, which we need to remove
 	args = append(strings.Split(context.CommandNamespace(), " "), args...)
@@ -211,7 +211,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 	return pluginCommands
 }
 
-func getTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command {
+func GetTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command {
 
 	slCommand := metadata.NewSoftlayerCommand(ui, session)
 	helpFlag := false

@@ -344,10 +344,6 @@
     "translation": "${COMMAND_NAME} sl subnet cancel IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl subnet cancel 12345678 -f\n   這個指令會取消子網路（其 ID 為 12345678），而不會要求確認。"
   },
   {
-    "id": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\tAdd a new subnet to your account. Valid quantities vary by type.\n\t\n\tType    - Valid Quantities (IPv4)\n  \tpublic  - 4, 8, 16, 32\n  \tprivate - 4, 8, 16, 32, 64\n\n  \tType    - Valid Quantities (IPv6)\n\tpublic  - 64\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   This command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
-    "translation": "${COMMAND_NAME} sl subnet create NETWORK QUANTITY VLAN_ID [OPTIONS]\n\t\n\t將新的子網路新增至您的帳戶。有效數量會依類型而不同。\n\t\n\t類型    - 有效數量 (IPv4)\n  \tpublic  - 4、8、16、32\n  \tprivate - 4、8、16、32、64\n\n  \t類型    - 有效數量 (IPv6)\n\tpublic  - 64\n\n範例：\n   ${COMMAND_NAME} sl subnet create public 16 567 \n   這個指令會建立含有 16 個 IPv4 位址的公用子網路，並將其放在 VLAN（其 ID 為 567）上。"
-  },
-  {
     "id": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   This command shows detailed information about subnet with ID 12345678, including virtual servers and hardware servers information.",
     "translation": "${COMMAND_NAME} sl subnet detail IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl subnet detail 12345678 \n   這個指令會顯示子網路（其 ID 為 12345678）的詳細資訊，包括虛擬伺服器及硬體伺服器資訊。"
   },
@@ -402,10 +398,6 @@
   {
     "id": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\nEXAMPLE: \n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    This command edit a users details.",
     "translation": "${COMMAND_NAME} sl user detail-edit IDENTIFIER [OPTIONS]\n\n範例：\n    ${COMMAND_NAME} sl user detail-edit USER_ID --template '{\"firstName\": \"Test\", \"lastName\": \"Testerson\"}'\n    這個指令會編輯使用者詳細資料。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n\t\tNotification names should be enclosed in quotation marks. Examples:\n\t\t\tslcli user edit-notifications --enable 'Order Approved'\n\t\t\tslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'",
-    "translation": "${COMMAND_NAME} sl user edit-notifications [OPTIONS] NOTIFICATIONS\n\n通知名稱應該以引號括住。 範例：\nslcli user edit-notifications --enable 'Order Approved'\nslcli user edit-notifications --enable 'Order Approved' --enable  'Reload Complete'"
   },
   {
     "id": "${COMMAND_NAME} sl vlan cancel IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan cancel 12345678 -f\n   This command cancels vlan with ID 12345678 without asking for confirmation.",
@@ -466,10 +458,6 @@
   {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl vs reload 12345678\n   這個指令會為虛擬伺服器實例（其 ID 為 12345678）重新載入現行作業系統。\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   這個指令會從映像檔（其 ID 為 1234）為虛擬伺服器實例（其 ID 為 12345678）重新載入作業系統。"
-  },
-  {
-    "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
-    "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t附註：一旦提出升級要求，標準基礎架構服務就會自動將實例重新開機。\n  \t實例會先停止，直到升級交易完成。\n  \t不過，若為網路，則不需要重新開機。\n\n範例：\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   這個指令會升級虛擬伺服器實例（其 ID 為12345678），並將 CPU 核心數目設為 8、將記憶體設為 8192M、將網路埠速度設為 1000 Mbps。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
@@ -2582,6 +2570,10 @@
   {
     "id": "Edit an SSH key",
     "translation": "編輯 SSH 金鑰"
+  },
+  {
+    "id": "Edit bandwidth pool.",
+    "translation": "編輯頻寬儲存區。 "
   },
   {
     "id": "Edit by host record, such as www",
@@ -9914,10 +9906,6 @@
   {
     "id": "drive",
     "translation": "磁碟機"
-  },
-  {
-    "id": "Edit bandwidth pool.",
-    "translation": "編輯頻寬儲存區。 "
   },
   {
     "id": "either [--label] or [--note] must be specified to edit SSH key.",

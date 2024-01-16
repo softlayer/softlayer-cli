@@ -35,14 +35,12 @@ func NewUpgradeCommand(sl *metadata.SoftlayerCommand) (cmd *UpgradeCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "upgrade " + T("IDENTIFIER"),
 		Short: T("Upgrade a virtual server instance"),
-		Long: T(`${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]
-	Note: Classic infrastructure service automatically reboots the instance once upgrade request is
-  	placed. The instance is halted until the upgrade transaction is completed.
-  	However for Network, no reboot is required.
+		Long: T(`Note: This virtual server will be rebooted once the upgrade order is placed.
+The instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.
 
 EXAMPLE:
-   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000
-   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.`),
+	${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000
+	This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
