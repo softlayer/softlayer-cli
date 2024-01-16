@@ -460,10 +460,6 @@
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl vs reload 12345678\n   此命令为标识为 12345678 的虚拟服务器实例重新装入当前操作系统。\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   此命令为标识为 12345678 的虚拟服务器实例从标识为 1234 的映像重新装入操作系统。"
   },
   {
-    "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
-    "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n注：一旦发出升级请求后，经典基础架构服务会自动重新引导实例。此实例在升级事务完成之前会一直停止。\n  但是，对于网络，无需重新引导。\n\n示例：\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   此命令升级标识为 12345678 的虚拟服务器实例，并将 CPU 核心数设置为 8，内存设置为 8192M，网络端口速度设置为 1000 Mbps。"
-  },
-  {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
     "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\n时间格式为“2006-01-02”、“2006-01-02T15:04”或“2006-01-02T15:04-07:00”\n\n由于某些舍入和日期对齐详细信息，此处的结果可能与控制门户网站中的结果略有不同。\n以 GB 为单位列出带宽，如果未指定时区，则采用 GMT+0。\n\n示例：\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },

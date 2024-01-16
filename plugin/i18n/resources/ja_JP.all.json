@@ -460,10 +460,6 @@
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl vs reload 12345678\n   このコマンドは、ID 12345678 の Virtual Server インスタンスのために現行オペレーティング・システムを再ロードします。\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   このコマンドは、ID 12345678 の Virtual Server インスタンスのために ID 1234 のイメージからオペレーティング・システムを再ロードします。"
   },
   {
-    "id": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\tNote: Classic infrastructure service automatically reboots the instance once upgrade request is\n  \tplaced. The instance is halted until the upgrade transaction is completed.\n  \tHowever for Network, no reboot is required.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
-    "translation": "${COMMAND_NAME} sl vs upgrade IDENTIFIER [OPTIONS]\n\t注: クラシック・インフラストラクチャー・サービスは、アップグレード要求が行われると、インスタンスを自動的にリブートします。\n  \t インスタンスは、アップグレード・トランザクションが完了するまで停止されます。\n  \tただし、ネットワークにはリブートは不要です。\n\n例:\n   ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n   このコマンドは、ID 12345678 の Virtual Server インスタンスをアップグレードし、CPU コアの数を 8 に、メモリーを 8192 M に、ネットワーク・ポート速度を 1000 Mbps に設定します。"
-  },
-  {
     "id": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\nTime formats that are either '2006-01-02', '2006-01-02T15:04' or '2006-01-02T15:04-07:00'\n\nDue to some rounding and date alignment details, results here might be slightly different than results in the control portal.\nBandwidth is listed in GB, if no time zone is specified, GMT+0 is assumed.\n\nExample::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00",
     "translation": "${COMMAND_NAME} sl {{.Command}} bandwidth IDENTIFIER [OPTIONS]\n日時形式は「2006-01-02」、「2006-01-02T15:04」、「2006-01-02T15:04-07:00」のいずれかです。\n\n一部の丸めと日付配置の詳細により、結果はコントロール・ポータルの結果と若干異なる場合があります。\n帯域幅はGB単位でリストされ、タイム・ゾーンが指定されていない場合はGMT+0とみなされます。\n\n例::\n\n   ${COMMAND_NAME} sl {{.Command}} bandwidth 1234 -s 2006-01-02T15:04 -e 2006-01-02T15:04-07:00"
   },
