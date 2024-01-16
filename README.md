@@ -441,7 +441,7 @@ Commands:
 3. `./bin/buildAndDeploy.py build` : Generates binaries for all architectures in `./out`
 4. `./bin/buildAndDeploy.py deploy` : Uploads binaries to our object storage account [softlayer-cli-binaries](https://s3.us-east.cloud-object-storage.appdomain.cloud/softlayer-cli-binaries/index.html): 
 5. `./bin/buildAndDeploy.py release` : Spins up the [Jenkins](https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1/build ) job to publish a release
-
+6. Test then manually promote from staging to production to actually release the plugin. [Pomotion Jenkins](https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Promote%20Plugin%20from%20staging%20to%20production/)
 
 ENV Variables that need to be set:
 1. `JENKINS_TOKEN` : Auth token to run Jenkins. Username is hardcoded for me at the moment.
