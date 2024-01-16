@@ -6,12 +6,37 @@
 This repository houses the code that powers the [ibmcloud-cli sl](https://github.ibm.com/Bluemix/bluemix-cli) command.
 [CLI Documentation](https://pages.github.ibm.com/SoftLayer/softlayer-cli)
 
-# Project Setup
+## Installation (official)
+
+The Classic Infrastructure commands are a plugin for the `ibmcloud` cli. First you need to [Install the IBMCLOUD CLI](https://cloud.ibm.com/docs/cli?topic=cli-install-ibmcloud-cli). Then simply install the `sl` plugin with the following command:
+
+```bash
+ibmcloud plugin install sl
+```
+
+To update, simply run
+
+```bash
+ibmcloud plugin update sl
+```
+
+## Installation (source build)
+
+To install a version of the plugin built locally, you can do the following:
+
+1. Build the `sl` plugin binary
+2. `go build`
+3. Install the new `softlayer` binary
+4. `ibmcloud plugin install ./softlayer` (might need to put `./softlayer.exe` for windows installs)
+
+When building from source, the plugin gets its version information from `plugin/metadata/sl.go`. You may want to update that number to not get confused with official versions.
+
+# Development Project Setup
 
 Clone the repo, then just run `go mod vendor` and `go build` and you should have a running binary for the `sl` plugin.
 
 
-# Testing
+## Testing
 Before making a pull request, make sure everything looks good with these tools.
 Working directory: `$GO_PATH/src/github.ibm.com/SoftLayer/softlayer-cli`
 
