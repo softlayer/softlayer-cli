@@ -2,10 +2,9 @@ package hardware_test
 
 import (
 	"errors"
-	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
@@ -36,14 +35,14 @@ var _ = Describe("hardware updatefirmware", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 		Context("hardware update firmware with wrong ID", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Hardware server ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Hardware server ID'. It must be a positive integer."))
 			})
 		})
 
@@ -64,8 +63,7 @@ var _ = Describe("hardware updatefirmware", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Failed to update firmware for hardware server: 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 
@@ -76,16 +74,37 @@ var _ = Describe("hardware updatefirmware", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Started to update firmware for hardware server: 1234."))
 			})
 			It("return no error", func() {
 				fakeUI.Inputs("Yes")
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Started to update firmware for hardware server: 1234."))
 			})
 		})
+		
 	})
+	DescribeTable("Testing Flags",
+			func(cliOptions []string, expected []bool) {
+				// Adds in the Server ID and --force flag to the options
+				cliOptions = append([]string{"1234", "-f"}, cliOptions...)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, cliOptions...)
+				Expect(err).NotTo(HaveOccurred())
+				hwid, ipmiFlag, raidFlag, biosFlag, hdFlag, nicFlag := fakeHardwareManager.UpdateFirmwareArgsForCall(0)
+				Expect(hwid).To(Equal(1234))
+				Expect(ipmiFlag).To(Equal(expected[0]))
+				Expect(raidFlag).To(Equal(expected[1]))
+				Expect(biosFlag).To(Equal(expected[2]))
+				Expect(hdFlag).To(Equal(expected[3]))
+				Expect(nicFlag).To(Equal(expected[4]))
+		},
+		Entry("IPMI Flag", []string{"--ipmi"}, []bool{true,false,false,false,false}),
+		Entry("RAID Flag", []string{"--raid"}, []bool{false,true,false,false,false}),
+		Entry("BIOS Flag", []string{"--bios"}, []bool{false,false,true,false,false}),
+		Entry("HD Flag", []string{"--harddrive"}, []bool{false,false,false,true,false}),
+		Entry("Network Flag", []string{"--network"}, []bool{false,false,false,false,true}),
+		Entry("ALL Flags", []string{"--ipmi", "--raid", "--bios", "--harddrive", "--network"}, []bool{true,true,true,true,true}),
+		Entry("No Flags (AKA All Flags", []string{}, []bool{true,true,true,true,true}),
+	)
 })

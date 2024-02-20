@@ -2,7 +2,7 @@ package licenses_test
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"

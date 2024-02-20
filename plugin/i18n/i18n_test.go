@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"regexp"
 	"encoding/json"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	gomegaFormat "github.com/onsi/gomega/format"
 	"testing"

@@ -8,7 +8,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	bxmodel "github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/models"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/client"
 )

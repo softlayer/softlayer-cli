@@ -2,7 +2,6 @@ package hardware
 
 import (
 	"strconv"
-
 	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -15,6 +14,11 @@ type UpdateFirmwareCommand struct {
 	HardwareManager managers.HardwareServerManager
 	Command         *cobra.Command
 	ForceFlag       bool
+	IPMIFlag bool
+	RAIDFlag bool
+	BIOSFlag bool
+	HDFlag bool
+	NetworkFlag bool
 }
 
 func NewUpdateFirmwareCommand(sl *metadata.SoftlayerCommand) (cmd *UpdateFirmwareCommand) {
@@ -26,6 +30,7 @@ func NewUpdateFirmwareCommand(sl *metadata.SoftlayerCommand) (cmd *UpdateFirmwar
 	cobraCmd := &cobra.Command{
 		Use:   "update-firmware " + T("IDENTIFIER"),
 		Short: T("Update server firmware"),
+		Long: T("Update server firmware. By default will update all available server components."),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -33,6 +38,11 @@ func NewUpdateFirmwareCommand(sl *metadata.SoftlayerCommand) (cmd *UpdateFirmwar
 	}
 
 	cobraCmd.Flags().BoolVarP(&thisCmd.ForceFlag, "force", "f", false, T("Force operation without confirmation"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.IPMIFlag, "ipmi", "i", false, T("Update IPMI firmware"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.RAIDFlag, "raid", "r", false, T("Update RAID firmware"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.BIOSFlag, "bios", "b", false, T("Update BIOS firmware"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.HDFlag, "harddrive", "d", false, T("Update Hard Drive firmware"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.NetworkFlag, "network", "n", false, T("Update Network Card firmware"))
 
 	thisCmd.Command = cobraCmd
 	return thisCmd
@@ -42,6 +52,15 @@ func (cmd *UpdateFirmwareCommand) Run(args []string) error {
 	hardwareId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return errors.NewInvalidSoftlayerIdInputError("Hardware server ID")
+	}
+
+	// No options specified, set them all to true
+	if !(cmd.IPMIFlag || cmd.RAIDFlag || cmd.BIOSFlag || cmd.HDFlag || cmd.NetworkFlag) {
+		cmd.IPMIFlag = true
+		cmd.RAIDFlag = true
+		cmd.BIOSFlag = true
+		cmd.HDFlag = true
+		cmd.NetworkFlag = true
 	}
 
 	if !cmd.ForceFlag {
@@ -55,11 +74,10 @@ func (cmd *UpdateFirmwareCommand) Run(args []string) error {
 		}
 	}
 
-	err = cmd.HardwareManager.UpdateFirmware(hardwareId, true, true, true, true, true)
+	err = cmd.HardwareManager.UpdateFirmware(hardwareId, cmd.IPMIFlag, cmd.RAIDFlag, cmd.BIOSFlag, cmd.HDFlag, cmd.NetworkFlag)
 	if err != nil {
-		return errors.NewAPIError(T("Failed to update firmware for hardware server: {{.ID}}.\n", map[string]interface{}{"ID": hardwareId}), err.Error(), 2)
+		return err
 	}
-	cmd.UI.Ok()
 	cmd.UI.Print(T("Started to update firmware for hardware server: {{.ID}}.", map[string]interface{}{"ID": hardwareId}))
 	return nil
 }
