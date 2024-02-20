@@ -4296,10 +4296,6 @@
     "translation": "Failed to update access.\n"
   },
   {
-    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
-    "translation": "Failed to update firmware for hardware server: {{.ID}}.\n"
-  },
-  {
     "id": "Failed to update health check: ",
     "translation": "Failed to update health check: "
   },
@@ -9296,8 +9292,28 @@
     "translation": "Unique id"
   },
   {
+    "id": "Update BIOS firmware",
+    "translation": "Update BIOS firmware"
+  },
+  {
+    "id": "Update Hard Drive firmware",
+    "translation": "Update Hard Drive firmware"
+  },
+  {
     "id": "Update ID",
     "translation": "Update ID"
+  },
+  {
+    "id": "Update IPMI firmware",
+    "translation": "Update IPMI firmware"
+  },
+  {
+    "id": "Update Network Card firmware",
+    "translation": "Update Network Card firmware"
+  },
+  {
+    "id": "Update RAID firmware",
+    "translation": "Update RAID firmware"
   },
   {
     "id": "Update an address translation for an IPSec",
@@ -9318,6 +9334,10 @@
   {
     "id": "Update server firmware",
     "translation": "Update server firmware"
+  },
+  {
+    "id": "Update server firmware. By default will update all available server components.",
+    "translation": "Update server firmware. By default will update all available server components."
   },
   {
     "id": "Update tunnel context properties",

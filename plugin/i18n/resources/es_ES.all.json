@@ -4292,10 +4292,6 @@
     "translation": "No se ha podido actualizar el acceso.\n"
   },
   {
-    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
-    "translation": "No se ha podido actualizar el firmware para el servidor hardware: {{.ID}}.\n"
-  },
-  {
     "id": "Failed to update health check: ",
     "translation": "No se ha podido actualizar la comprobación de estado: "
   },
