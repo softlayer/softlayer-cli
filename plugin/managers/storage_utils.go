@@ -512,7 +512,7 @@ func PrepareSaaSReplicantOrderObject(productPackage datatypes.Product_Package, s
 		}
 		prices = append(prices, spacePrice)
 		prices = append(prices, iopsPrice)
-	// ENDURANCE Prices
+		// ENDURANCE Prices
 	} else if tier != 0 && iops == 0 {
 		spacePrice, err := FindSaasEnduranceSpacePrice(productPackage, size, tier)
 		if err != nil {
@@ -524,7 +524,7 @@ func PrepareSaaSReplicantOrderObject(productPackage datatypes.Product_Package, s
 		}
 		prices = append(prices, spacePrice)
 		prices = append(prices, tierPrice)
-	// BAD INPUT
+		// BAD INPUT
 	} else {
 		return datatypes.Container_Product_Order_Network_Storage_AsAService{}, errors.New(T("Specify either iops or tier, cannot specify both."))
 	}

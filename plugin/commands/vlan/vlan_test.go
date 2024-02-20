@@ -57,7 +57,7 @@ var _ = Describe("Test vlan commands", func() {
 			})
 		}
 	})
-	
+
 	Context("Vlan Namespace", func() {
 		It("Vlan Name Space", func() {
 			Expect(vlan.VlanNamespace().ParentName).To(ContainSubstring("sl"))

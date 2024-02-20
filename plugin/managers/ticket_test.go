@@ -71,7 +71,7 @@ var _ = Describe("Ticket", func() {
 	Describe("GetText", func() {
 		Context("GetText succ", func() {
 			It("Edit Text", func() {
-				if os.Getenv("OS") == "Windows_NT"  {
+				if os.Getenv("OS") == "Windows_NT" {
 					Skip("Test doesn't work in windows.")
 				}
 				tmp, err := ioutil.TempFile("", "ibmcloudsl-test")
@@ -93,7 +93,7 @@ var _ = Describe("Ticket", func() {
 
 		Context("GetText fail", func() {
 			It("Edit Text getpath notfound", func() {
-				if os.Getenv("OS") == "Windows_NT"  {
+				if os.Getenv("OS") == "Windows_NT" {
 					Skip("Test doesn't work in windows.")
 				}
 				os.Setenv("EDITOR", "shouldnotbearealfile")
@@ -104,7 +104,7 @@ var _ = Describe("Ticket", func() {
 			})
 
 			It("Edit Text getpath found", func() {
-				if os.Getenv("OS") == "Windows_NT"  {
+				if os.Getenv("OS") == "Windows_NT" {
 					Skip("Test doesn't work in windows.")
 				}
 				os.Setenv("EDITOR", "ed")

@@ -196,7 +196,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 	}
 	orderReceipt, err := cmd.LoadBalancerManager.CreateLoadBalancer(dataCenter, name, lbTypeRequest, label, protocols, subnet, cmd.UsePublicSubnet)
 	if err != nil {
-		return  errors.NewAPIError(T("Failed to create load balancer with name {{.Name}} on {{.Location}}.\n",
+		return errors.NewAPIError(T("Failed to create load balancer with name {{.Name}} on {{.Location}}.\n",
 			map[string]interface{}{"Name": name, "Location": dataCenter}), err.Error(), 2)
 	}
 	cmd.UI.Ok()

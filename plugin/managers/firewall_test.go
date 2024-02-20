@@ -97,7 +97,7 @@ var _ = Describe("FirewallManager", func() {
 	Describe("GetFirewalls", func() {
 		Context("GetFirewalls", func() {
 			BeforeEach(func() {
-				filenames := []string{"getNetworkVlans_firewall",}
+				filenames := []string{"getNetworkVlans_firewall"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})
@@ -160,7 +160,7 @@ var _ = Describe("FirewallManager", func() {
 	Describe("GetStandardPackage", func() {
 		Context("GetStandardPackage given server id and virtual=true", func() {
 			BeforeEach(func() {
-				filenames := []string{"getItems_100MFirewall",}
+				filenames := []string{"getItems_100MFirewall"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})
@@ -173,7 +173,7 @@ var _ = Describe("FirewallManager", func() {
 		})
 		Context("GetStandardPackage given server id and virtual=false", func() {
 			BeforeEach(func() {
-				filenames := []string{"getItems_1000MFirewall",}
+				filenames := []string{"getItems_1000MFirewall"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})
@@ -189,7 +189,7 @@ var _ = Describe("FirewallManager", func() {
 	Describe("GetDedicatedPackage", func() {
 		Context("GetDedicatedPackage with HA=false", func() {
 			BeforeEach(func() {
-				filenames := []string{"getItems_dedicatedFirewallNonHA",}
+				filenames := []string{"getItems_dedicatedFirewallNonHA"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})
@@ -212,7 +212,7 @@ var _ = Describe("FirewallManager", func() {
 		})
 		Context("GetDedicatedPackage with HA=true", func() {
 			BeforeEach(func() {
-				filenames := []string{"getItems_dedicatedFirewallHA",}
+				filenames := []string{"getItems_dedicatedFirewallHA"}
 				fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 				fwManager = managers.NewFirewallManager(fakeSLSession)
 			})

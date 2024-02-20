@@ -10,8 +10,8 @@ import (
 
 var _ = Describe("AccountManager", func() {
 	var (
-		fakeSLSession 	 *session.Session
-		accountManager    managers.AccountManager
+		fakeSLSession  *session.Session
+		accountManager managers.AccountManager
 	)
 
 	BeforeEach(func() {

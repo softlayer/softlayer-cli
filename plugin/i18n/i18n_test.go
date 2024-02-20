@@ -1,18 +1,18 @@
 package i18n_test
 
 import (
-	"os"
-	"fmt"
-	"strings"
-	"io/ioutil"
-	"regexp"
 	"encoding/json"
+	"fmt"
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	gomegaFormat "github.com/onsi/gomega/format"
-	"testing"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"io/ioutil"
+	"os"
+	"regexp"
+	"strings"
+	"testing"
 )
 
 func TestI18N(t *testing.T) {
@@ -31,25 +31,25 @@ func prepareConfigForCLI(cliConfigContent string) core_config.Repository {
 var xlationMap map[string]string
 
 type I18nXlation struct {
-	Id 			string `json:"id"`
+	Id          string `json:"id"`
 	Translation string `json:"translation"`
 }
 
 var _ = Describe("I18NTests", func() {
 	// gomegaFormat.TruncateThreshold = 200
-	gomegaFormat.CharactersAroundMismatchToInclude  = 80
+	gomegaFormat.CharactersAroundMismatchToInclude = 80
 	coreConfig := prepareConfigForCLI(`{"UsageStatsEnabled": true}`)
-	xlationMap = map[string]string {
-		"de_DE": "Wiederkehrender Preis",
-		"es_ES": "Precio recurrente",
-		"fr_FR": "Prix récurrent",
-		"it_IT": "Prezzo ricorrente",
-		"ja_JP": "定期払い価格",
-		"ko_KR": "반복 가격",
-		"pt_BR": "Preço recorrente",
+	xlationMap = map[string]string{
+		"de_DE":   "Wiederkehrender Preis",
+		"es_ES":   "Precio recurrente",
+		"fr_FR":   "Prix récurrent",
+		"it_IT":   "Prezzo ricorrente",
+		"ja_JP":   "定期払い価格",
+		"ko_KR":   "반복 가격",
+		"pt_BR":   "Preço recorrente",
 		"zh_Hans": "重复出价",
 		"zh_Hant": "循環價格",
-		"en_US": "Recurring Price",
+		"en_US":   "Recurring Price",
 	}
 	Describe("Language Init Tests", func() {
 		Context("Tests All Languages", func() {
@@ -57,12 +57,12 @@ var _ = Describe("I18NTests", func() {
 			for _, language := range i18n.SUPPORTED_LOCALES {
 				language := language
 
-				It("Testing " + language, func() {
+				It("Testing "+language, func() {
 					coreConfig.SetLocale(language)
 					translator := i18n.Init(coreConfig)
 					Expect(translator("Recurring Price")).To(Equal(xlationMap[language]))
 				})
-				It("Testing " + language + " everything", func() {
+				It("Testing "+language+" everything", func() {
 					// If these fails as untranslated, try running ./bin/generate-i18n-resources.sh
 					regex, _ := regexp.Compile("{{.([[:alnum:]])*}}")
 					coreConfig.SetLocale(language)
@@ -70,10 +70,10 @@ var _ = Describe("I18NTests", func() {
 					file, err := ioutil.ReadFile("resources/" + language + ".all.json")
 					Expect(err).NotTo(HaveOccurred())
 					xlations := []I18nXlation{}
-					jsonErr  := json.Unmarshal([]byte(file), &xlations)
+					jsonErr := json.Unmarshal([]byte(file), &xlations)
 					Expect(jsonErr).NotTo(HaveOccurred())
 					for i := 0; i < len(xlations); i++ {
-						subs := regex.ReplaceAllString(xlations[i].Translation,"<no value>")
+						subs := regex.ReplaceAllString(xlations[i].Translation, "<no value>")
 						Expect(translator(xlations[i].Id)).To(Equal(subs))
 					}
 				})
@@ -89,7 +89,7 @@ var _ = Describe("I18NTests", func() {
 			for _, language := range i18n.SUPPORTED_LOCALES {
 				language := language
 				envLang := strings.Replace(language, "_", "-", 1)
-				It("LANGUAGE=" + envLang, func() {
+				It("LANGUAGE="+envLang, func() {
 					os.Setenv("LANGUAGE", envLang)
 					translator := i18n.Init(coreConfig)
 					locale := i18n.DetectLocal()
@@ -100,7 +100,7 @@ var _ = Describe("I18NTests", func() {
 		})
 
 		AfterEach(func() {
-			defer os.Setenv("LANGUAGE", oldLang)	
+			defer os.Setenv("LANGUAGE", oldLang)
 		})
 	})
 	AfterEach(func() {
@@ -108,4 +108,3 @@ var _ = Describe("I18NTests", func() {
 		defer os.Remove("cf_config.json")
 	})
 })
-

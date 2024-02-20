@@ -1,7 +1,6 @@
 package email
 
 import (
-
 	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -61,7 +60,7 @@ func (cmd *ListCommand) Run(args []string) error {
 			utils.FormatStringPointer(email.BillingItem.Description),
 			utils.FormatSLTimePointer(email.CreateDate),
 			utils.FormatSLTimePointer(email.ModifyDate),
-			utils.FormatStringPointer(email.SmtpAccess),		
+			utils.FormatStringPointer(email.SmtpAccess),
 		)
 	}
 

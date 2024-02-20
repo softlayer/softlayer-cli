@@ -20,7 +20,7 @@ var globalIpReturn = []datatypes.Network_Subnet_IpAddress_Global{
 		Id: sl.Int(123456),
 		IpAddress: &datatypes.Network_Subnet_IpAddress{
 			IpAddress: sl.String("5.6.7.8"),
-			SubnetId: sl.Int(998877),
+			SubnetId:  sl.Int(998877),
 		},
 	},
 }

@@ -81,7 +81,7 @@ var _ = Describe("TOGGLE-IPMI Tests", func() {
 					"Service": Equal("SoftLayer_Hardware_Server"),
 					"Method":  Equal("toggleManagementInterface"),
 					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(1000))})),
-					"Args":  MatchAllElementsWithIndex(IndexIdentity, Elements{"0": PointTo(Equal(true))}),
+					"Args":    MatchAllElementsWithIndex(IndexIdentity, Elements{"0": PointTo(Equal(true))}),
 				}))
 			})
 			It("Success UnToggle", func() {
@@ -96,7 +96,7 @@ var _ = Describe("TOGGLE-IPMI Tests", func() {
 					"Service": Equal("SoftLayer_Hardware_Server"),
 					"Method":  Equal("toggleManagementInterface"),
 					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(1000))})),
-					"Args":  MatchAllElementsWithIndex(IndexIdentity, Elements{"0": PointTo(Equal(false))}),
+					"Args":    MatchAllElementsWithIndex(IndexIdentity, Elements{"0": PointTo(Equal(false))}),
 				}))
 			})
 		})

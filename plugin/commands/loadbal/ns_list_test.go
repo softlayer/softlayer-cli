@@ -93,7 +93,7 @@ var _ = Describe("Load balancer edit policies", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`]`))
-				
+
 			})
 		})
 

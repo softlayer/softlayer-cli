@@ -7,7 +7,6 @@ import (
 	sl_plugin "github.ibm.com/SoftLayer/softlayer-cli/plugin"
 )
 
-
 func main() {
 	fmt.Printf("IBMCLOUD SL Command Directory\n")
 

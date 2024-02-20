@@ -1,12 +1,12 @@
 package hardware
 
 import (
-	"strconv"
 	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"strconv"
 )
 
 type UpdateFirmwareCommand struct {
@@ -14,11 +14,11 @@ type UpdateFirmwareCommand struct {
 	HardwareManager managers.HardwareServerManager
 	Command         *cobra.Command
 	ForceFlag       bool
-	IPMIFlag bool
-	RAIDFlag bool
-	BIOSFlag bool
-	HDFlag bool
-	NetworkFlag bool
+	IPMIFlag        bool
+	RAIDFlag        bool
+	BIOSFlag        bool
+	HDFlag          bool
+	NetworkFlag     bool
 }
 
 func NewUpdateFirmwareCommand(sl *metadata.SoftlayerCommand) (cmd *UpdateFirmwareCommand) {
@@ -30,7 +30,7 @@ func NewUpdateFirmwareCommand(sl *metadata.SoftlayerCommand) (cmd *UpdateFirmwar
 	cobraCmd := &cobra.Command{
 		Use:   "update-firmware " + T("IDENTIFIER"),
 		Short: T("Update server firmware"),
-		Long: T("Update server firmware. By default will update all available server components."),
+		Long:  T("Update server firmware. By default will update all available server components."),
 		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

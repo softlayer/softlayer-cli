@@ -7,7 +7,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	"github.com/spf13/cobra"
-	
+
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 )

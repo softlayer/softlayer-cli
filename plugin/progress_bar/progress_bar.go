@@ -104,7 +104,7 @@ func (p *ProgressBar) initValues() {
 	}
 
 	if p.config.increment == 0 {
-		if p.config.sizeProgressBar != 0 && p.config.sizeUser != 0{
+		if p.config.sizeProgressBar != 0 && p.config.sizeUser != 0 {
 			p.config.increment = p.config.sizeProgressBar / p.config.sizeUser
 		}
 	}

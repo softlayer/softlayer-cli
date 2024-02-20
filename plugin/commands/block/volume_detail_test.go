@@ -14,11 +14,11 @@ import (
 
 var _ = Describe("Block Volume-Detail Tests", func() {
 	var (
-		fakeUI             *terminal.FakeUI
-		cliCommand         *block.VolumeDetailCommand
+		fakeUI      *terminal.FakeUI
+		cliCommand  *block.VolumeDetailCommand
 		fakeSession *session.Session
 		fakeHandler *testhelpers.FakeTransportHandler
-		slCommand          *metadata.SoftlayerStorageCommand
+		slCommand   *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()

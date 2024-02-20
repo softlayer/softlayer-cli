@@ -14,11 +14,11 @@ import (
 
 var _ = Describe("VLAN Detail", func() {
 	var (
-		fakeUI             *terminal.FakeUI
-		cliCommand         *vlan.DetailCommand
-		fakeSession        *session.Session
-		slCommand          *metadata.SoftlayerCommand
-		fakeHandler        *testhelpers.FakeTransportHandler
+		fakeUI      *terminal.FakeUI
+		cliCommand  *vlan.DetailCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
+		fakeHandler *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()

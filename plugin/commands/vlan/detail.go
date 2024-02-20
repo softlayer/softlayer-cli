@@ -2,15 +2,15 @@ package vlan
 
 import (
 	"bytes"
-	"github.com/spf13/cobra"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
+	"github.com/spf13/cobra"
 
 	"github.com/softlayer/softlayer-go/datatypes"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
 type DetailCommand struct {
@@ -62,7 +62,6 @@ func (cmd *DetailCommand) Run(args []string) error {
 	if outputFormat == "JSON" {
 		return utils.PrintPrettyJSON(cmd.UI, vlan)
 	}
-
 
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add(T("id"), utils.FormatIntPointer(vlan.Id))
@@ -116,7 +115,7 @@ func (cmd *DetailCommand) Run(args []string) error {
 	if !cmd.Hardware {
 		hw := vlan.Hardware
 		hw_trunk := filter_trunks(vlan.NetworkComponentTrunks)
-		if len(hw) + len(hw_trunk) == 0 {
+		if len(hw)+len(hw_trunk) == 0 {
 			table.Add(T("hardware"), T("none"))
 		} else {
 			buf := new(bytes.Buffer)

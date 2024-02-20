@@ -83,28 +83,28 @@ var _ = Describe("hardware updatefirmware", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Started to update firmware for hardware server: 1234."))
 			})
 		})
-		
+
 	})
 	DescribeTable("Testing Flags",
-			func(cliOptions []string, expected []bool) {
-				// Adds in the Server ID and --force flag to the options
-				cliOptions = append([]string{"1234", "-f"}, cliOptions...)
-				err := testhelpers.RunCobraCommand(cliCommand.Command, cliOptions...)
-				Expect(err).NotTo(HaveOccurred())
-				hwid, ipmiFlag, raidFlag, biosFlag, hdFlag, nicFlag := fakeHardwareManager.UpdateFirmwareArgsForCall(0)
-				Expect(hwid).To(Equal(1234))
-				Expect(ipmiFlag).To(Equal(expected[0]))
-				Expect(raidFlag).To(Equal(expected[1]))
-				Expect(biosFlag).To(Equal(expected[2]))
-				Expect(hdFlag).To(Equal(expected[3]))
-				Expect(nicFlag).To(Equal(expected[4]))
+		func(cliOptions []string, expected []bool) {
+			// Adds in the Server ID and --force flag to the options
+			cliOptions = append([]string{"1234", "-f"}, cliOptions...)
+			err := testhelpers.RunCobraCommand(cliCommand.Command, cliOptions...)
+			Expect(err).NotTo(HaveOccurred())
+			hwid, ipmiFlag, raidFlag, biosFlag, hdFlag, nicFlag := fakeHardwareManager.UpdateFirmwareArgsForCall(0)
+			Expect(hwid).To(Equal(1234))
+			Expect(ipmiFlag).To(Equal(expected[0]))
+			Expect(raidFlag).To(Equal(expected[1]))
+			Expect(biosFlag).To(Equal(expected[2]))
+			Expect(hdFlag).To(Equal(expected[3]))
+			Expect(nicFlag).To(Equal(expected[4]))
 		},
-		Entry("IPMI Flag", []string{"--ipmi"}, []bool{true,false,false,false,false}),
-		Entry("RAID Flag", []string{"--raid"}, []bool{false,true,false,false,false}),
-		Entry("BIOS Flag", []string{"--bios"}, []bool{false,false,true,false,false}),
-		Entry("HD Flag", []string{"--harddrive"}, []bool{false,false,false,true,false}),
-		Entry("Network Flag", []string{"--network"}, []bool{false,false,false,false,true}),
-		Entry("ALL Flags", []string{"--ipmi", "--raid", "--bios", "--harddrive", "--network"}, []bool{true,true,true,true,true}),
-		Entry("No Flags (AKA All Flags", []string{}, []bool{true,true,true,true,true}),
+		Entry("IPMI Flag", []string{"--ipmi"}, []bool{true, false, false, false, false}),
+		Entry("RAID Flag", []string{"--raid"}, []bool{false, true, false, false, false}),
+		Entry("BIOS Flag", []string{"--bios"}, []bool{false, false, true, false, false}),
+		Entry("HD Flag", []string{"--harddrive"}, []bool{false, false, false, true, false}),
+		Entry("Network Flag", []string{"--network"}, []bool{false, false, false, false, true}),
+		Entry("ALL Flags", []string{"--ipmi", "--raid", "--bios", "--harddrive", "--network"}, []bool{true, true, true, true, true}),
+		Entry("No Flags (AKA All Flags", []string{}, []bool{true, true, true, true, true}),
 	)
 })

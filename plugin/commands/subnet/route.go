@@ -14,10 +14,10 @@ type RouteCommand struct {
 	*metadata.SoftlayerCommand
 	NetworkManager managers.NetworkManager
 	Command        *cobra.Command
-	Ip					string
-	Server			string
-	Vsi				string
-	Vlan				string
+	Ip             string
+	Server         string
+	Vsi            string
+	Vlan           string
 }
 
 func NewRouteCommand(sl *metadata.SoftlayerCommand) *RouteCommand {
@@ -50,7 +50,7 @@ EXAMPLE:
 	}
 	cobraCmd.Flags().StringVarP(&thisCmd.Ip, "ip", "i", "",
 		T("A Network_Subnet_IpAddress.id, A dotted-quad IPv4 address, or A full or compressed IPv6 address."))
-	cobraCmd.Flags().StringVarP(&thisCmd.Server, "server", "s", "", 
+	cobraCmd.Flags().StringVarP(&thisCmd.Server, "server", "s", "",
 		T(`A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique
 fully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>`))
 	cobraCmd.Flags().StringVarP(&thisCmd.Vsi, "vsi", "v", "",
@@ -71,10 +71,9 @@ func (cmd *RouteCommand) Run(args []string) error {
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Subnet ID")
 	}
-	if cmd.Ip + cmd.Server + cmd.Vsi + cmd.Vlan == "" {
+	if cmd.Ip+cmd.Server+cmd.Vsi+cmd.Vlan == "" {
 		return slErr.NewMissingInputError("--ip, --server, --vsi or --vlan")
 	}
-
 
 	if cmd.Ip != "" {
 		_, err = cmd.NetworkManager.Route(subnetId, "SoftLayer_Network_Subnet_IpAddress", cmd.Ip)
@@ -82,7 +81,7 @@ func (cmd *RouteCommand) Run(args []string) error {
 		_, err = cmd.NetworkManager.Route(subnetId, "SoftLayer_Hardware_Server", cmd.Server)
 	} else if cmd.Vsi != "" {
 		_, err = cmd.NetworkManager.Route(subnetId, "SoftLayer_Virtual_Guest", cmd.Vsi)
-	}  else if cmd.Vlan != "" {
+	} else if cmd.Vlan != "" {
 		_, err = cmd.NetworkManager.Route(subnetId, "SoftLayer_Network_Vlan", cmd.Vlan)
 	}
 	if err != nil {

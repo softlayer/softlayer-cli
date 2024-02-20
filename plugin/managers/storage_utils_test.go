@@ -34,7 +34,7 @@ var _ = Describe("Storage Utils", func() {
 		12000: []int{1000, 6000}}
 
 	BeforeEach(func() {
-		filenames := []string{"getAllObjects_saas", }
+		filenames := []string{"getAllObjects_saas"}
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 		storageManager = managers.NewStorageManager(fakeSLSession)
 		_ = storageManager
@@ -168,18 +168,18 @@ var _ = Describe("Storage Utils", func() {
 			}
 			originalVolume, get_volume_err := storageManager.GetVolumeDetails("block", 12345, "")
 			Expect(get_volume_err).ToNot(HaveOccurred())
-			result, err := managers.PrepareDuplicateOrderObject(productPackage, originalVolume, configuration)	
+			result, err := managers.PrepareDuplicateOrderObject(productPackage, originalVolume, configuration)
 			Expect(err).ToNot(HaveOccurred())
 			Expect(*result.VolumeSize).To(Equal(20))
 		})
 		It("Test 10g sized duplicateSnapshotSize", func() {
 			configuration := managers.DuplicateOrderConfig{
-				VolumeType: "block",
+				VolumeType:            "block",
 				DuplicateSnapshotSize: 10,
 			}
 			originalVolume, get_volume_err := storageManager.GetVolumeDetails("block", 12345, "")
 			Expect(get_volume_err).ToNot(HaveOccurred())
-			result, err := managers.PrepareDuplicateOrderObject(productPackage, originalVolume, configuration)	
+			result, err := managers.PrepareDuplicateOrderObject(productPackage, originalVolume, configuration)
 			Expect(err).ToNot(HaveOccurred())
 			Expect(*result.VolumeSize).To(Equal(20))
 			snapshot_found := false
@@ -194,12 +194,12 @@ var _ = Describe("Storage Utils", func() {
 		})
 		It("Test Default sized duplicateSnapshotSize", func() {
 			configuration := managers.DuplicateOrderConfig{
-				VolumeType: "block",
+				VolumeType:            "block",
 				DuplicateSnapshotSize: -1,
 			}
 			originalVolume, get_volume_err := storageManager.GetVolumeDetails("block", 12345, "")
 			Expect(get_volume_err).ToNot(HaveOccurred())
-			result, err := managers.PrepareDuplicateOrderObject(productPackage, originalVolume, configuration)	
+			result, err := managers.PrepareDuplicateOrderObject(productPackage, originalVolume, configuration)
 			Expect(err).ToNot(HaveOccurred())
 			Expect(*result.VolumeSize).To(Equal(20))
 			snapshot_found := false
@@ -218,12 +218,12 @@ var _ = Describe("Storage Utils", func() {
 		})
 		It("Test Zero sized duplicateSnapshotSize", func() {
 			configuration := managers.DuplicateOrderConfig{
-				VolumeType: "block",
+				VolumeType:            "block",
 				DuplicateSnapshotSize: 0,
 			}
 			originalVolume, get_volume_err := storageManager.GetVolumeDetails("block", 12345, "")
 			Expect(get_volume_err).ToNot(HaveOccurred())
-			result, err := managers.PrepareDuplicateOrderObject(productPackage, originalVolume, configuration)	
+			result, err := managers.PrepareDuplicateOrderObject(productPackage, originalVolume, configuration)
 			Expect(err).ToNot(HaveOccurred())
 			Expect(*result.VolumeSize).To(Equal(20))
 			snapshot_found := false
@@ -251,13 +251,13 @@ var _ = Describe("Storage Utils", func() {
 		productPackage := datatypes.Product_Package{
 			Items: []datatypes.Product_Item{
 				datatypes.Product_Item{
-					KeyName: &endurance_key,
+					KeyName:         &endurance_key,
 					CapacityMaximum: &maxCapacity,
 					CapacityMinimum: &minCapacity,
-					ItemCategory: &itemCategory,
+					ItemCategory:    &itemCategory,
 					Prices: []datatypes.Product_Item_Price{
 						datatypes.Product_Item_Price{
-							Id: &priceId,
+							Id:              &priceId,
 							LocationGroupId: nil,
 							Categories: []datatypes.Product_Item_Category{
 								itemCategory,

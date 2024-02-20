@@ -1,11 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
-	"strings"
-	"encoding/json"
 	"regexp"
+	"strings"
 
 	"text/template"
 	// "sort"
@@ -17,7 +17,7 @@ import (
 
 var fileName string
 var rootCmd = &cobra.Command{
-	Use: "doc-gen",
+	Use:   "doc-gen",
 	Short: "Generate the documentation for the sl plugin",
 	RunE: func(Cmd *cobra.Command, args []string) error {
 		CliDocs()
@@ -39,32 +39,30 @@ func checkError(err error) {
 
 // For top level commands, like `sl account` or `sl hardware`
 type SlCmdGroup struct {
-	Name string
+	Name             string
 	CommandShortLink string
-	Commands []SlCmdDoc
-	Help string
+	Commands         []SlCmdDoc
+	Help             string
 }
 
 // For specific commands
 type SlCmdDoc struct {
-	Name string
+	Name             string
 	CommandShortLink string
-	Use string
-	Flags []SlCmdFlag
-	Help string
-	LongHelp string
-	Backtick string
-	CommandPath string
+	Use              string
+	Flags            []SlCmdFlag
+	Help             string
+	LongHelp         string
+	Backtick         string
+	CommandPath      string
 }
 
 // For a commands flags
 type SlCmdFlag struct {
-	Name string
-	Help string
+	Name    string
+	Help    string
 	Default string
 }
-
-
 
 // This function builds the documentation for IBMCLOUD docs
 func CliDocs() {
@@ -75,11 +73,10 @@ func CliDocs() {
 		shortName := strings.ReplaceAll(iCmd.Name(), " ", "_")
 		shortName = strings.ReplaceAll(iCmd.Name(), "-", "_")
 		thisCmdGroup := SlCmdGroup{
-			Name: iCmd.Name(),
+			Name:             iCmd.Name(),
 			CommandShortLink: fmt.Sprintf("sl_%v", shortName),
-			Commands: nil,
-			Help: iCmd.Short,
-
+			Commands:         nil,
+			Help:             iCmd.Short,
 		}
 		if len(iCmd.Commands()) > 0 {
 			thisCmdGroup.Commands = buildSlCmdDoc(iCmd)
@@ -93,7 +90,7 @@ func CliDocs() {
 	jOut, err := json.MarshalIndent(CmdGroups, "", "  ")
 	checkError(err)
 	err = os.WriteFile("sl.json", jOut, 0755) //#nosec G306 -- This is a false positive
-	checkError(err)	
+	checkError(err)
 	// fmt.Println(string(jOut))
 }
 
@@ -172,14 +169,14 @@ func cobraToSl(iCmd *cobra.Command, tlcmd string) SlCmdDoc {
 	shortName = strings.ReplaceAll(shortName, "-", "_")
 	longHelp := getLongHelp(iCmd.Long)
 	thisDoc := SlCmdDoc{
-		Name: iCmd.Name(),
+		Name:             iCmd.Name(),
 		CommandShortLink: shortName,
-		CommandPath: iCmd.CommandPath(),
-		Use: iCmd.UseLine(),
-		Flags: nil,
-		Help: iCmd.Short,
-		LongHelp: longHelp,
-		Backtick:  "```",
+		CommandPath:      iCmd.CommandPath(),
+		Use:              iCmd.UseLine(),
+		Flags:            nil,
+		Help:             iCmd.Short,
+		LongHelp:         longHelp,
+		Backtick:         "```",
 	}
 	thisDoc.Flags = buildSlCmdFlag(iCmd)
 
@@ -196,8 +193,8 @@ func buildSlCmdFlag(topCommand *cobra.Command) []SlCmdFlag {
 			flagName = fmt.Sprintf("%s, %s", pflag.Shorthand, flagName)
 		}
 		thisFlag := SlCmdFlag{
-			Name:flagName,
-			Help: getFlagHelp(pflag.Usage),
+			Name:    flagName,
+			Help:    getFlagHelp(pflag.Usage),
 			Default: pflag.DefValue,
 		}
 		flags = append(flags, thisFlag)

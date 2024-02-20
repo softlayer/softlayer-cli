@@ -6,8 +6,8 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/datatypes"
+	"github.com/softlayer/softlayer-go/session"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/user"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"

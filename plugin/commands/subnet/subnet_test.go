@@ -60,7 +60,7 @@ var _ = Describe("Test subnet commands", func() {
 			})
 		}
 	})
-	
+
 	Context("Subnet Namespace", func() {
 		It("Subnet Name Space", func() {
 			Expect(subnet.SubnetNamespace().ParentName).To(ContainSubstring("sl"))

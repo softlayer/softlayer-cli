@@ -67,7 +67,7 @@ func (cmd *EditPermissionCommand) Run(args []string) error {
 	} else if strings.ToLower(cmd.Enable) == "false" {
 		_, err = cmd.UserManager.RemovePermission(id, permissions)
 	} else {
-		 return errors.NewInvalidUsageError(T("options for --enable are true, false"))
+		return errors.NewInvalidUsageError(T("options for --enable are true, false"))
 	}
 
 	if err != nil {

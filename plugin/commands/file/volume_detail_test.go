@@ -13,12 +13,11 @@ import (
 
 var _ = Describe("Volume detail", func() {
 	var (
-		fakeUI             *terminal.FakeUI
-		cliCommand         *file.VolumeDetailCommand
+		fakeUI      *terminal.FakeUI
+		cliCommand  *file.VolumeDetailCommand
 		fakeSession *session.Session
 		fakeHandler *testhelpers.FakeTransportHandler
-		slCommand          *metadata.SoftlayerStorageCommand
-
+		slCommand   *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()

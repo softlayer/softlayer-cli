@@ -55,8 +55,6 @@ func (cmd *ObjectStorageDetailCommand) Run(args []string) error {
 			map[string]interface{}{"StorageID": storageID}), err.Error(), 2)
 	}
 
-
-
 	table := cmd.UI.Table([]string{
 		T("Name"),
 		T("Value"),

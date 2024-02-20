@@ -60,7 +60,7 @@ var _ = Describe("Test ticket commands", func() {
 			})
 		}
 	})
-	
+
 	Context("Ticket Namespace", func() {
 		It("Ticket Name Space", func() {
 			Expect(ticket.TicketNamespace().ParentName).To(ContainSubstring("sl"))

@@ -1,7 +1,6 @@
 package bandwidth_test
 
 import (
-
 	"errors"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"

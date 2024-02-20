@@ -37,7 +37,7 @@ var _ = Describe("Test cdn commands", func() {
 
 	Context("New commands testable", func() {
 		commands := cdn.SetupCobraCommands(slMeta)
-		
+
 		var arrayCommands = []string{}
 		for _, command := range commands.Commands() {
 			commandName := command.Name()

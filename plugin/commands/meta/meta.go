@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/softlayer/softlayer-go/sl"
 	"github.com/spf13/cobra"
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -15,25 +15,23 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
-
-
 type MetaCommand struct {
 	*metadata.SoftlayerCommand
 	Manager managers.MetadataManager
-	Command              *cobra.Command
+	Command *cobra.Command
 }
 
 func NewMetaCommand(sl *metadata.SoftlayerCommand) *MetaCommand {
 	thisCmd := &MetaCommand{
-		SoftlayerCommand:     sl,
-		Manager: managers.NewMetadataManager(sl.Session),
+		SoftlayerCommand: sl,
+		Manager:          managers.NewMetadataManager(sl.Session),
 	}
 	validOptions := availableMetadataOptions()
 	cobraCmd := &cobra.Command{
-		Use:   "metadata " + T("ARGUMENT"),
-		Short: T("Find details about the machine making these API calls."),
-		Long: T("ARGUMENT Choices: " + strings.Join(validOptions, ", ")),
-		Args:  cobra.MatchAll(metadata.OneArgs, cobra.OnlyValidArgs),
+		Use:       "metadata " + T("ARGUMENT"),
+		Short:     T("Find details about the machine making these API calls."),
+		Long:      T("ARGUMENT Choices: " + strings.Join(validOptions, ", ")),
+		Args:      cobra.MatchAll(metadata.OneArgs, cobra.OnlyValidArgs),
 		ValidArgs: validOptions,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -42,8 +40,6 @@ func NewMetaCommand(sl *metadata.SoftlayerCommand) *MetaCommand {
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
-
-
 
 func (cmd *MetaCommand) Run(args []string) error {
 

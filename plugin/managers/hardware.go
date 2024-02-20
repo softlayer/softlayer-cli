@@ -2,8 +2,8 @@ package managers
 
 import (
 	"errors"
-	"time"
 	"sync"
+	"time"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/filter"
@@ -258,7 +258,6 @@ func (hw hardwareServerManager) GetHardware(hardwareId int, mask string) (dataty
 	return hw.HardwareService.Id(hardwareId).Mask(mask).GetObject()
 }
 
-
 //Uses Sync to get all the details of a hardware server asap. Uses a multithreaded approach
 //hardwareId: the ID of the hardware
 func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardware_Server, error) {
@@ -274,13 +273,13 @@ func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardw
 		return hardware, err
 	}
 	var wg sync.WaitGroup
-	
+
 	wg.Add(10)
 	go func() {
 		defer wg.Done()
 		mask := "id, status, speed, maxSpeed, name, ipmiMacAddress, ipmiIpAddress, macAddress, primaryIpAddress," +
-                "port, primarySubnet[id, netmask, broadcastAddress, networkIdentifier, gateway]," +
-                "uplinkComponent[networkVlanTrunks[networkVlan[networkSpace]]]"
+			"port, primarySubnet[id, netmask, broadcastAddress, networkIdentifier, gateway]," +
+			"uplinkComponent[networkVlanTrunks[networkVlan[networkSpace]]]"
 		hardware.NetworkComponents, err = hw.HardwareService.Id(hardwareId).Mask(mask).GetNetworkComponents()
 		all_err = errors.Join(all_err, err)
 
@@ -305,7 +304,7 @@ func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardw
 	go func() {
 		defer wg.Done()
 		mask := "id,nextInvoiceTotalRecurringAmount,nextInvoiceChildren[id,description,categoryCode,nextInvoiceTotalRecurringAmount]," +
-                "orderItem[id,order[id,userRecord[id,username]]]"
+			"orderItem[id,order[id,userRecord[id,username]]]"
 		billingItem, err := hw.HardwareService.Id(hardwareId).Mask(mask).GetBillingItem()
 		all_err = errors.Join(all_err, err)
 		if &billingItem != nil && err == nil {

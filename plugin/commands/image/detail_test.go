@@ -83,7 +83,7 @@ var _ = Describe("Image detail", func() {
 					Id: sl.Int(1234),
 					AccountReferences: []datatypes.Virtual_Guest_Block_Device_Template_Group_Accounts{
 						{
-							AccountId: sl.Int(654),
+							AccountId:  sl.Int(654),
 							CreateDate: sl.Time(created),
 						},
 					},
