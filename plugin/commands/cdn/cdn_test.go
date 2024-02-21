@@ -2,7 +2,7 @@ package cdn_test
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/cdn"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -37,7 +37,7 @@ var _ = Describe("Test cdn commands", func() {
 
 	Context("New commands testable", func() {
 		commands := cdn.SetupCobraCommands(slMeta)
-		
+
 		var arrayCommands = []string{}
 		for _, command := range commands.Commands() {
 			commandName := command.Name()

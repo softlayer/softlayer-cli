@@ -20,7 +20,7 @@ type Search_Result struct {
 	datatypes.Entity
 	MatchedTerms   []string                `json:"matchedTerms,omitempty" xmlrpc:"matchedTerms,omitempty"`
 	RelevanceScore *datatypes.Float64      `json:"relevanceScore,omitempty" xmlrpc:"relevanceScore,omitempty"`
-	Resource       *datatypes.Network_Vlan  `json:"resource,omitempty" xmlrpc:"resource,omitempty"`
+	Resource       *datatypes.Network_Vlan `json:"resource,omitempty" xmlrpc:"resource,omitempty"`
 	ResourceType   *string                 `json:"resourceType,omitempty" xmlrpc:"resourceType,omitempty"`
 }
 

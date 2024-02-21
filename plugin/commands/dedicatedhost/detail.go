@@ -30,7 +30,7 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "detail " + T("IDENTIFIER"),
 		Short: T("Get details for a dedicated host."),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

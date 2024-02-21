@@ -32,7 +32,7 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) *CreateCommand {
 	}
 	cobraCmd.Flags().StringVar(&thisCmd.Key, "key", "", T("The VMware License Key. To get the required package you can use the command sl licenses create-options Package. E.g VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2  [required]"))
 	cobraCmd.Flags().StringVar(&thisCmd.Datacenter, "datacenter", "", T("Datacenter shortname  [required]"))
-	
+
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }

@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
@@ -83,7 +83,7 @@ var _ = Describe("Image detail", func() {
 					Id: sl.Int(1234),
 					AccountReferences: []datatypes.Virtual_Guest_Block_Device_Template_Group_Accounts{
 						{
-							AccountId: sl.Int(654),
+							AccountId:  sl.Int(654),
 							CreateDate: sl.Time(created),
 						},
 					},

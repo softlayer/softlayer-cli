@@ -4,8 +4,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Xuanwo/go-locale"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
+	"github.com/Xuanwo/go-locale"
 	goi18n "github.com/nicksnyder/go-i18n/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/resources"
 )
@@ -66,13 +66,13 @@ func loadFromAsset(locale string) (err error) {
 
 // Tries to determine the system locale, when local isn't set, default to en_US
 func DetectLocal() string {
-    tag, err := locale.Detect()
-    if err != nil {
-        return DEFAULT_LOCALE
-    }
-    // tag is en-US, needs to be en_US
-    locale := strings.Replace(tag.String(), "-", "_", 1)
-    return locale
+	tag, err := locale.Detect()
+	if err != nil {
+		return DEFAULT_LOCALE
+	}
+	// tag is en-US, needs to be en_US
+	locale := strings.Replace(tag.String(), "-", "_", 1)
+	return locale
 }
 
 // Tries to match the system locale with a supported locale, otherwise sets a DEFAULT_LOCALE
@@ -93,10 +93,10 @@ func supportedLocale(configLocal string) string {
 		}
 	}
 	switch strings.ToLower(locale) {
-		case "zh_cn", "zh_sg":
-			return "zh_Hans"
-		case "zh_hk", "zh_tw":
-			return "zh_Hant"
+	case "zh_cn", "zh_sg":
+		return "zh_Hans"
+	case "zh_hk", "zh_tw":
+		return "zh_Hant"
 	}
 	return DEFAULT_LOCALE
 }

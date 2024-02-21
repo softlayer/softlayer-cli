@@ -4,7 +4,7 @@ import (
 	"reflect"
 	// "fmt"
 
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
@@ -76,7 +76,7 @@ var _ = Describe("Order", func() {
 	})
 	Describe("GenerateOrder", func() {
 		BeforeEach(func() {
-			filenames := []string{"getDatacenters_1",}
+			filenames := []string{"getDatacenters_1"}
 			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			OrderManager = managers.NewOrderManager(fakeSLSession)
 		})
@@ -101,7 +101,7 @@ var _ = Describe("Order", func() {
 
 	Describe("VerifyPlaceOrder", func() {
 		BeforeEach(func() {
-			filenames := []string{"getDatacenters_1",}
+			filenames := []string{"getDatacenters_1"}
 			fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
 			OrderManager = managers.NewOrderManager(fakeSLSession)
 		})
@@ -220,7 +220,7 @@ var _ = Describe("Order", func() {
 			})
 		})
 	})
-	Describe("GetPriceIdList", func(){
+	Describe("GetPriceIdList", func() {
 		Items := []string{
 			"PRIVATE_NETWORK_VLAN",
 			"DOMAIN_INFO_1_YEAR",
@@ -230,21 +230,21 @@ var _ = Describe("Order", func() {
 			OrderManager = managers.NewOrderManager(fakeSLSession)
 		})
 		Context("Price Id selection", func() {
-			It("Basic Price selection", func(){
+			It("Basic Price selection", func() {
 				prices, err := OrderManager.GetPriceIdList("Test", Items, 0)
 				Expect(err).ToNot(HaveOccurred())
 				Expect(len(prices)).To(Equal(2))
 				Expect(prices[0]).To(Equal(2727099)) // Term Price check
-				Expect(prices[1]).To(Equal(26835))  // Normal Price (nil TermLength)
+				Expect(prices[1]).To(Equal(26835))   // Normal Price (nil TermLength)
 			})
-			It("Capacity restriction checking", func(){
+			It("Capacity restriction checking", func() {
 				Items[1] = "CDN_25_GB_STORAGE"
 				prices, err := OrderManager.GetPriceIdList("Test", Items, 25)
 				Expect(err).ToNot(HaveOccurred())
 				Expect(len(prices)).To(Equal(2))
-				Expect(prices[1]).To(Equal(230623))  // Normal Price (nil TermLength)
+				Expect(prices[1]).To(Equal(230623)) // Normal Price (nil TermLength)
 			})
-			It("Error: No matching Keyname", func(){
+			It("Error: No matching Keyname", func() {
 				Items[1] = "FAKE"
 				_, err := OrderManager.GetPriceIdList("Test", Items, 25)
 				Expect(err).To(HaveOccurred())

@@ -2,7 +2,7 @@ package hardware_test
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/gomega/gstruct"
 
@@ -81,7 +81,7 @@ var _ = Describe("TOGGLE-IPMI Tests", func() {
 					"Service": Equal("SoftLayer_Hardware_Server"),
 					"Method":  Equal("toggleManagementInterface"),
 					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(1000))})),
-					"Args":  MatchAllElementsWithIndex(IndexIdentity, Elements{"0": PointTo(Equal(true))}),
+					"Args":    MatchAllElementsWithIndex(IndexIdentity, Elements{"0": PointTo(Equal(true))}),
 				}))
 			})
 			It("Success UnToggle", func() {
@@ -96,7 +96,7 @@ var _ = Describe("TOGGLE-IPMI Tests", func() {
 					"Service": Equal("SoftLayer_Hardware_Server"),
 					"Method":  Equal("toggleManagementInterface"),
 					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(1000))})),
-					"Args":  MatchAllElementsWithIndex(IndexIdentity, Elements{"0": PointTo(Equal(false))}),
+					"Args":    MatchAllElementsWithIndex(IndexIdentity, Elements{"0": PointTo(Equal(false))}),
 				}))
 			})
 		})

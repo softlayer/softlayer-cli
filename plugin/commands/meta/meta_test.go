@@ -1,11 +1,11 @@
 package meta_test
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 
@@ -21,10 +21,10 @@ func TestManagers(t *testing.T) {
 
 var _ = Describe("Metadata list Metadata", func() {
 	var (
-		fakeUI        *terminal.FakeUI
-		cliCommand    *meta.MetaCommand
-		fakeSession   *session.Session
-		slCommand     *metadata.SoftlayerCommand
+		fakeUI      *terminal.FakeUI
+		cliCommand  *meta.MetaCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
 		// fakeManager   *testhelpers.FakeMetadataManager
 	)
 	BeforeEach(func() {
@@ -116,7 +116,7 @@ var _ = Describe("Metadata list Metadata", func() {
 			It("return tags", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "tags")
 				Expect(err).NotTo(HaveOccurred())
-				fmt.Println("tagss:",fakeUI.Outputs())
+				fmt.Println("tagss:", fakeUI.Outputs())
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"testTags"`))
 			})
 			It("return user data", func() {

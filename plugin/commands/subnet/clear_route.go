@@ -25,7 +25,7 @@ func NewClearRouteCommand(sl *metadata.SoftlayerCommand) *ClearRouteCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "clear-route " + T("IDENTIFIER"),
 		Short: T("Removes the routing for a specified subnet, turning it into an unrouted portable subnet."),
-		Args: metadata.OneArgs,
+		Args:  metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

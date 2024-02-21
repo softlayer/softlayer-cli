@@ -24,7 +24,7 @@ func NewTypesCommand(sl *metadata.SoftlayerCommand) (cmd *TypesCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "types",
 		Short: T("Get Event Log types"),
-		Args: metadata.NoArgs,
+		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},

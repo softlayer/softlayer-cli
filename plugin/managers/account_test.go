@@ -1,7 +1,7 @@
 package managers_test
 
 import (
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
@@ -10,8 +10,8 @@ import (
 
 var _ = Describe("AccountManager", func() {
 	var (
-		fakeSLSession 	 *session.Session
-		accountManager    managers.AccountManager
+		fakeSLSession  *session.Session
+		accountManager managers.AccountManager
 	)
 
 	BeforeEach(func() {

@@ -33,6 +33,7 @@ func CollapseErrors(multiErrors []error) error {
 type InvalidSoftlayerIdInputError struct {
 	InputName string
 }
+
 func NewInvalidSoftlayerIdInputError(inputName string) *InvalidSoftlayerIdInputError {
 	return &InvalidSoftlayerIdInputError{
 		InputName: inputName,
@@ -46,14 +47,14 @@ func (err *InvalidSoftlayerIdInputError) Error() string {
 type APIError struct {
 	CliMessage string
 	APIMessage string
-	ErrorCode int
+	ErrorCode  int
 }
 
 func NewAPIError(cliMessage string, apiMessage string, errorCode int) *APIError {
 	return &APIError{
 		CliMessage: cliMessage,
 		APIMessage: apiMessage,
-		ErrorCode: errorCode,
+		ErrorCode:  errorCode,
 	}
 }
 

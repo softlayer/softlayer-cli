@@ -2,7 +2,7 @@ package subnet_test
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -60,7 +60,7 @@ var _ = Describe("Test subnet commands", func() {
 			})
 		}
 	})
-	
+
 	Context("Subnet Namespace", func() {
 		It("Subnet Name Space", func() {
 			Expect(subnet.SubnetNamespace().ParentName).To(ContainSubstring("sl"))

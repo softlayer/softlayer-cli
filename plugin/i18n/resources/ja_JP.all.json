@@ -4292,10 +4292,6 @@
     "translation": "アクセスの更新に失敗しました。\n"
   },
   {
-    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
-    "translation": "ハードウェア・サーバー: {{.ID}} のファームウェアの更新に失敗しました。\n"
-  },
-  {
     "id": "Failed to update health check: ",
     "translation": "ヘルス・チェックの更新に失敗しました: "
   },

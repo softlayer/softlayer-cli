@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/email"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -31,7 +31,7 @@ var _ = Describe("Test eventlog commands", func() {
 
 	Context("New commands testable", func() {
 		commands := email.SetupCobraCommands(slMeta)
-		
+
 		var arrayCommands = []string{}
 		for _, command := range commands.Commands() {
 			commandName := command.Name()

@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/session"
@@ -20,7 +20,7 @@ var globalIpReturn = []datatypes.Network_Subnet_IpAddress_Global{
 		Id: sl.Int(123456),
 		IpAddress: &datatypes.Network_Subnet_IpAddress{
 			IpAddress: sl.String("5.6.7.8"),
-			SubnetId: sl.Int(998877),
+			SubnetId:  sl.Int(998877),
 		},
 	},
 }

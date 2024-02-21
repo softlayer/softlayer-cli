@@ -206,4 +206,3 @@ func (i imageManager) ShareImage(imageId int, accountId int) (bool, error) {
 func (i imageManager) ShareDenyImage(imageId int, accountId int) (bool, error) {
 	return i.ImageService.Id(imageId).DenySharingAccess(&accountId)
 }
-

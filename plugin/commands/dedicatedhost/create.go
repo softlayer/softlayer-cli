@@ -2,7 +2,6 @@ package dedicatedhost
 
 import (
 	"github.com/spf13/cobra"
-	
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"

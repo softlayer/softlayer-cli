@@ -2,7 +2,7 @@ package block_test
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
 	"github.com/softlayer/softlayer-go/session"
@@ -14,11 +14,11 @@ import (
 
 var _ = Describe("Block Volume-Detail Tests", func() {
 	var (
-		fakeUI             *terminal.FakeUI
-		cliCommand         *block.VolumeDetailCommand
+		fakeUI      *terminal.FakeUI
+		cliCommand  *block.VolumeDetailCommand
 		fakeSession *session.Session
 		fakeHandler *testhelpers.FakeTransportHandler
-		slCommand          *metadata.SoftlayerStorageCommand
+		slCommand   *metadata.SoftlayerStorageCommand
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()

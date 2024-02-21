@@ -2,7 +2,7 @@ package vlan_test
 
 import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -57,7 +57,7 @@ var _ = Describe("Test vlan commands", func() {
 			})
 		}
 	})
-	
+
 	Context("Vlan Namespace", func() {
 		It("Vlan Name Space", func() {
 			Expect(vlan.VlanNamespace().ParentName).To(ContainSubstring("sl"))

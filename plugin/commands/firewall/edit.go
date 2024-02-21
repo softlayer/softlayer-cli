@@ -138,7 +138,7 @@ func openEditor(file string) error {
 
 func OpenEditorForComponentRules(origRules []datatypes.Network_Component_Firewall_Rule, filePath string) (*os.File, error) {
 	tempFile := filePath
-	f, err := os.Create(tempFile)  // #nosec
+	f, err := os.Create(tempFile) // #nosec
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +181,7 @@ func OpenEditorForComponentRules(origRules []datatypes.Network_Component_Firewal
 }
 func OpenEditorForVlanRules(origRules []datatypes.Network_Vlan_Firewall_Rule, filePath string) (*os.File, error) {
 	tempFile := filePath
-	f, err := os.Create(tempFile)  // #nosec
+	f, err := os.Create(tempFile) // #nosec
 	if err != nil {
 		return nil, err
 	}

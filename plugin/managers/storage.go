@@ -344,7 +344,7 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 		i := 0
 		resourceList := []datatypes.Network_Storage{}
 		// Shortcut the pagination because filtering by DC is bugged, remove this when CORE-1820 is released.
-		if (datacenter != "") {
+		if datacenter != "" {
 			return s.AccountService.Mask(mask).Filter(filters.Build()).GetIscsiNetworkStorage()
 		}
 		for {
@@ -389,7 +389,7 @@ func (s storageManager) ListVolumes(volumeType string, datacenter string, userna
 		i := 0
 		var resourceList []datatypes.Network_Storage
 		// Shortcut the pagination because filtering by DC is bugged, remove this when CORE-1820 is released.
-		if (datacenter != "") {
+		if datacenter != "" {
 			return s.AccountService.Mask(mask).Filter(filters.Build()).GetNasNetworkStorage()
 		}
 		for {

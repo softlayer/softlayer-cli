@@ -3,7 +3,7 @@ package vlan_test
 import (
 	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
 	"github.com/softlayer/softlayer-go/session"
@@ -14,11 +14,11 @@ import (
 
 var _ = Describe("VLAN Detail", func() {
 	var (
-		fakeUI             *terminal.FakeUI
-		cliCommand         *vlan.DetailCommand
-		fakeSession        *session.Session
-		slCommand          *metadata.SoftlayerCommand
-		fakeHandler        *testhelpers.FakeTransportHandler
+		fakeUI      *terminal.FakeUI
+		cliCommand  *vlan.DetailCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
+		fakeHandler *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()

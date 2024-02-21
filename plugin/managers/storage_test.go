@@ -1,19 +1,19 @@
 package managers_test
 
 import (
-	. "github.com/onsi/ginkgo"
+	"fmt"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/gomega/gstruct"
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
-	"fmt"
 )
 
 var _ = Describe("StorageManager", func() {
 	var (
 		fakeSLSession  *session.Session
-		fakeHandler *testhelpers.FakeTransportHandler
+		fakeHandler    *testhelpers.FakeTransportHandler
 		StorageManager managers.StorageManager
 	)
 	BeforeEach(func() {

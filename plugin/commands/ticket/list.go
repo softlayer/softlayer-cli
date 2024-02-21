@@ -5,9 +5,9 @@ import (
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/spf13/cobra"
-	
-	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
+	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"

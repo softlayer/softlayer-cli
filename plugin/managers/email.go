@@ -45,7 +45,7 @@ func (a emailManager) GetNetworkMessageDeliveryAccounts(mask string) ([]datatype
 	options.Filter = filters.Build()
 	options.Limit = &metadata.LIMIT
 	options.Offset = &offset
-	
+
 	resourceList := []datatypes.Network_Message_Delivery_Email_Sendgrid{}
 	resp := []datatypes.Network_Message_Delivery_Email_Sendgrid{}
 	for {

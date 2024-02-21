@@ -32,7 +32,7 @@ func NewCancelItemCommand(sl *metadata.SoftlayerCommand) *CancelItemCommand {
 		},
 	}
 	cobraCmd.Flags().BoolVar(&thisCmd.Immediate, "immediate", false, T("Immediate cancellation."))
-	
+
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
