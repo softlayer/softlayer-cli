@@ -581,7 +581,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id ID_VOLUME ID_LUN\n\nL'ID LUN ha effetto solo durante il processo di autorizzazione host. Si consiglia \n (ma non è necessario) di annullare l'autorizzazione di tutti gli host\n prima di utilizzare questo metodo. Vedere \"block access-revoke\". \n VOLUME_ID - l'ID volume su cui impostare l'ID LUN \n LUN_ID - l'intervallo consigliato è un numero intero compreso tra 0 e 255. Gli utenti avanzati\npossono utilizzare un intero compreso tra 0 e 4095"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id ID_VOLUME ID_LUN\n\nL'ID LUN ha effetto solo durante il processo di autorizzazione host. Si consiglia \n (ma non è necessario) di annullare l'autorizzazione di tutti gli host\n prima di utilizzare questo metodo. Vedere \"block access-revoke\". \n VOLUME_ID - l'ID volume su cui impostare l'ID LUN \n LUN_ID - l'intervallo consigliato è un numero intero compreso tra 0 e 255. Gli utenti avanzati\n possono utilizzare un intero compreso tra 0 e 4095"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
@@ -2573,7 +2573,7 @@
   },
   {
     "id": "Edit bandwidth pool.",
-    "translation": "modificare il pool di larghezza di banda. "
+    "translation": "Modificare il pool di larghezza di banda."
   },
   {
     "id": "Edit by host record, such as www",
@@ -2706,6 +2706,10 @@
   {
     "id": "Enables/Disables snapshot space usage threshold warning for a given volume.",
     "translation": "Abilita/Disabilita la soglia di soglia di utilizzo dello spazio dell'istantanea di un determinato volume."
+  },
+  {
+    "id": "Encrypted",
+    "translation": "Crittografato"
   },
   {
     "id": "End",
@@ -4292,6 +4296,10 @@
     "translation": "Impossibile aggiornare l'accesso. \n"
   },
   {
+    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
+    "translation": "Impossibile salvare il firmware del server hardware: {{.ID}}.\n"
+  },
+  {
     "id": "Failed to update health check: ",
     "translation": "Impossibile aggiornare il controllo di integrità: "
   },
@@ -5120,6 +5128,10 @@
     "translation": "DESTINAZIONE IDENTIFICATIVO"
   },
   {
+    "id": "IDENTIFIER is the id of the server\nVLANS is the ID of the VLANs. Multiple vlans can be added at the same time.",
+    "translation": "IDENTIFIER è l'id del server \nVLANS sono gli ID delle VLAN. È possibile aggiungere più vlan contemporaneamente."
+  },
+  {
     "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
     "translation": "IDENTIFICATIVO: ID dell'immagine\nURI: L'URI di un oggetto object storage (file .vhd/.iso) in formato: cos://<regionName>/<bucketName>/<objectPath>\nCHIAVE_API: La chiave API IBM Cloud con accesso all'istanza IBM Cloud Object Storage."
   },
@@ -5848,6 +5860,10 @@
     "translation": "Elenca il servizio di recapito email."
   },
   {
+    "id": "Lists VLANs this server can be given access to.",
+    "translation": "Elenca le VLAN a cui questo server può avere accesso."
+  },
+  {
     "id": "Lists account orders.",
     "translation": "Elenca gli ordini dell'account."
   },
@@ -6260,12 +6276,20 @@
     "translation": "Nota: IOPS oltre 6.000 disponibili solo in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
   },
   {
+    "id": "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
+    "translation": "Nota: questo server virtuale verrà riavviato una volta effettuato l'ordine di aggiornamento.\n L'istanza viene arrestata fino a quando non viene completata la transazione di aggiornamento. Tuttavia, per la rete, non è richiesto alcun riavvio.\n\nESEMPIO:\n ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n Questo comando aggiorna l'istanza del server virtuale con ID 12345678 e imposta il numero di core CPU su 8, la memoria su 8192M, la velocità della porta di rete su 1000 Mbps."
+  },
+  {
     "id": "Notes",
     "translation": "Note"
   },
   {
     "id": "Notes to set on the new snapshot",
     "translation": "Note da impostare nella nuova istantanea"
+  },
+  {
+    "id": "Notification names should be enclosed in quotation marks.\nEXAMPLE:\n\tslcli user edit-notifications --enable 'Order Approved'\n\tslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'",
+    "translation": "I nomi delle notifiche devono essere racchiusi tra virgolette.\nESEMPIO:\n slcli user edit-notifications --enable 'Order Approved'\n slcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'"
   },
   {
     "id": "Notify",
@@ -6976,6 +7000,10 @@
     "translation": "Prezzi:"
   },
   {
+    "id": "Primary",
+    "translation": "Primario"
+  },
+  {
     "id": "Primary IP",
     "translation": "IP primario"
   },
@@ -7308,6 +7336,10 @@
     "translation": "Rimuovi il certificato SSL"
   },
   {
+    "id": "Remove VLANs trunked to this server.",
+    "translation": "Rimuovere le VLAN con trunk su questo server."
+  },
+  {
     "id": "Remove a load balancer member",
     "translation": "Rimuovi un membro del programma di bilanciamento del carico"
   },
@@ -7413,11 +7445,11 @@
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10",
-    "translation": "Requisiti: [se IOPS/GB per il volume di origine è 0,25, anche IOPS/GB per il duplicato deve essere 0,25. If IOPS/GB\n                                  for the origin volume is greater than 0.25,\n                                  IOPS/GB for the duplicate must also be\n                                  greater than 0.25.] Scelte: 0,25, 2, 4, 10"
+    "translation": "Requisiti: [se IOPS/GB per il volume di origine è 0,25, anche IOPS/GB per il duplicato deve essere 0,25. If IOPS/GB                                  for the origin volume is greater than 0.25,                                  IOPS/GB for the duplicate must also be                                  greater than 0.25.] Scelte: 0,25, 2, 4, 10"
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]",
-    "translation": "Requisiti: [se IOPS/GB per il volume origine è inferiore a 0,3, anche IOPS/GB per il duplicato deve essere inferiore a 0,3. If IOPS/GB for the origin\n                                  volume is greater than or equal to 0.3,\n                                  IOPS/GB for the duplicate must also be\n                                  greater than or equal to 0.3.]"
+    "translation": "Requisiti: [se IOPS/GB per il volume origine è inferiore a 0,3, anche IOPS/GB per il duplicato deve essere inferiore a 0,3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]"
   },
   {
     "id": "Resource",
@@ -8836,6 +8868,10 @@
     "translation": "Questo comando richiede due argomenti."
   },
   {
+    "id": "This command will only show VLANs not yet trunked to this server.",
+    "translation": "Questo comando mostra solo le VLAN ancora senza trunk su questo server."
+  },
+  {
     "id": "This is the credential id associated with the volume. [Required]",
     "translation": "Questo è l'id credenziale associato al volume. [Obbligatorio]"
   },
@@ -9058,6 +9094,14 @@
   {
     "id": "True",
     "translation": "Vero"
+  },
+  {
+    "id": "Trunked",
+    "translation": "Con trunk"
+  },
+  {
+    "id": "Trunks a VLAN to the this server.",
+    "translation": "Imposta il trunk di una VLAN su questo server."
   },
   {
     "id": "Type",
@@ -9398,6 +9442,10 @@
   {
     "id": "VPN password to set for this user.",
     "translation": "Password VPN da impostare per questo utente."
+  },
+  {
+    "id": "Valid quantities vary by type.\n\t- public IPv4: 4, 8, 16, 32\n\t- private IPv4: 4, 8, 16, 32, 64\n\t- public IPv6: 64\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet create public 16 567\n\tThis command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
+    "translation": "Le quantità valide variano in base al tipo.\n - IPv4 pubblico: 4, 8, 16, 32\n - IPv4 privato: 4, 8, 16, 32, 64\n - IPv6 pubblico: 64\n\nESEMPIO:\n ${COMMAND_NAME} sl subnet create public 16 567\n Questo comando crea una sottorete pubblica con 16 indirizzi IPv4 e la colloca sulla vlan con ID 567."
   },
   {
     "id": "Value",

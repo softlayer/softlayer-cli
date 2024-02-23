@@ -581,7 +581,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID \n \n LUN ID は、ホスト許可プロセス中にのみ有効になります。 この\n メソッドを使用する前に、すべてのホストを許可解除することをお推奨 \n (ただし、必須ではありません)します。 「block access-revoke」を参照してください。\n VOLUME_ID - LUN ID を設定するボリューム ID \n LUN_ID - 推奨範囲は 0 から 255 までの整数です。 上級ユーザーは、\n 0 から 4095 までの整数を使用できます。"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID \n \n LUN IDは、ホスト許可プロセス中のみ有効です。 このメソッドを\n 使用する前に、すべてのホストを許可解除するようお勧めします\n (ただし、必須ではありません)。 「block access-revoke」を参照してください。\n VOLUME_ID - LUN ID を設定するボリュームID \n LUN_ID - 推奨範囲は0から255までの整数です。 上級ユーザーであれば、\n 0から4095までの整数を使用できます。"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
@@ -2573,7 +2573,7 @@
   },
   {
     "id": "Edit bandwidth pool.",
-    "translation": "帯域幅プールの編集。 "
+    "translation": "帯域幅プールの編集。"
   },
   {
     "id": "Edit by host record, such as www",
@@ -2706,6 +2706,10 @@
   {
     "id": "Enables/Disables snapshot space usage threshold warning for a given volume.",
     "translation": "指定されたボリュームのスナップショット・スペース使用量しきい値の警告を有効/無効にします。"
+  },
+  {
+    "id": "Encrypted",
+    "translation": "暗号化済み"
   },
   {
     "id": "End",
@@ -4292,6 +4296,10 @@
     "translation": "アクセスの更新に失敗しました。\n"
   },
   {
+    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
+    "translation": "ハードウェア・サーバー: {{.ID}} のファームウェアの更新に失敗しました。\n"
+  },
+  {
     "id": "Failed to update health check: ",
     "translation": "ヘルス・チェックの更新に失敗しました: "
   },
@@ -5120,6 +5128,10 @@
     "translation": "IDENTIFIER TARGET"
   },
   {
+    "id": "IDENTIFIER is the id of the server\nVLANS is the ID of the VLANs. Multiple vlans can be added at the same time.",
+    "translation": "IDENTIFIER はサーバーの ID です。\nVLANS は VLAN の ID です。 複数の VLAN を同時に追加することができます。"
+  },
+  {
     "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
     "translation": "IDENTIFIER: イメージの ID \nURI: 次の形式のオブジェクト・ストレージ・オブジェクト (.vhd/.iso ファイル) の URI: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: IBM Cloud Object Storage インスタンスへのアクセス権限を持つ IBM Cloud API キー。"
   },
@@ -5848,6 +5860,10 @@
     "translation": "Email Delivery Serviceをリストします。"
   },
   {
+    "id": "Lists VLANs this server can be given access to.",
+    "translation": "このサーバーにアクセス権限を付与できる VLAN をリストします。"
+  },
+  {
     "id": "Lists account orders.",
     "translation": "アカウントの注文をリストします。"
   },
@@ -6113,7 +6129,7 @@
   },
   {
     "id": "New Size of block volume in GB. ***If no size is given, the original size of volume is used.***\n      Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n      Minimum: [the original size of the volume]",
-    "translation": "ブロック・ボリュームの新しいサイズ (GB)。 ***サイズが指定されない場合は、ボリュームの元のサイズが使用されます。***\n      可能なサイズ: [20、40、80、100、250、500、1000、2000、4000、8000、12000]\n      最小: [ボリュームの元のサイズ]"
+    "translation": "ブロック・ボリュームの新しいサイズ(GB)。***サイズが指定されない場合は、ボリュームの元のサイズが使用されます。***\n      可能なサイズ: [20、40、80、100、250、500、1000、2000、4000、8000、12000]\n      最小: [ボリュームの元のサイズ]"
   },
   {
     "id": "New Size of file volume in GB. ***If no size is given, the original size of volume is used.***\n      Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n      Minimum: [the original size of the volume]",
@@ -6260,12 +6276,20 @@
     "translation": "注: 6,000 を超える IOPS は、https://cloud.ibm.com/docs/BlockStorage? topic=BlockStorage-selectDC でのみ使用可能です。"
   },
   {
+    "id": "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
+    "translation": "注: この仮想サーバーは、アップグレード注文が placed.\nThe インスタンスは、アップグレード・トランザクションが完了するまで停止されます。 ただし、ネットワークの場合、リブートは行われません。required.\n\nEXAMPLE:\n ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n このコマンドは、ID 12345678 の仮想サーバー・インスタンスをアップグレードし、CPU コアの数を 8、メモリーを 8192M、ネットワーク・ポート速度を 1000 Mbps に設定します。"
+  },
+  {
     "id": "Notes",
     "translation": "メモ"
   },
   {
     "id": "Notes to set on the new snapshot",
     "translation": "新規スナップショットに設定するメモ"
+  },
+  {
+    "id": "Notification names should be enclosed in quotation marks.\nEXAMPLE:\n\tslcli user edit-notifications --enable 'Order Approved'\n\tslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'",
+    "translation": "通知名は引用符で囲む必要があります。\nEXAMPLE:\n slcli user edit-notifications --enable 'Order Approved'\nslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'"
   },
   {
     "id": "Notify",
@@ -6976,6 +7000,10 @@
     "translation": "価格:"
   },
   {
+    "id": "Primary",
+    "translation": "1 次"
+  },
+  {
     "id": "Primary IP",
     "translation": "1 次 IP"
   },
@@ -7308,6 +7336,10 @@
     "translation": "SSL Certificates を削除します"
   },
   {
+    "id": "Remove VLANs trunked to this server.",
+    "translation": "このサーバーにトランキングされている VLAN を削除します。"
+  },
+  {
     "id": "Remove a load balancer member",
     "translation": "ロード・バランサー・メンバーを削除します"
   },
@@ -7413,11 +7445,11 @@
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10",
-    "translation": "要件: [起点ボリュームの IOPS/GB が 0.25 の場合、重複の IOPS/GB も 0.25 でなければなりません。 If IOPS/GB\n                                  for the origin volume is greater than 0.25,\n                                  IOPS/GB for the duplicate must also be\n                                  greater than 0.25.] 選択項目: 0.25、2、4、10"
+    "translation": "要件: [起点ボリュームのIOPS/GBが0.25である場合、重複のIOPS/GBも0.25でなければなりません。 元のボリュームのIOPS/GBが0.25より大きい場合は、重複のIOPS/GBも0.25より大きくなければなりません。] 選択項目: 0.25、2、4、10"
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]",
-    "translation": "要件: [起点ボリュームの IOPS/GB が 0.3 より小さい場合、重複の IOPS/GB も 0.3 未満でなければなりません。 If IOPS/GB for the origin\n                                  volume is greater than or equal to 0.3,\n                                  IOPS/GB for the duplicate must also be\n                                  greater than or equal to 0.3.]"
+    "translation": "要件: [起点ボリュームのIOPS/GBが0.3より小さい場合、重複のIOPS/GBも0.3より小さくなければなりません。 元のボリュームのIOPS/GBが0.3以上である場合は、重複のIOPS/GBも0.3以上でなければなりません。]"
   },
   {
     "id": "Resource",
@@ -8836,6 +8868,10 @@
     "translation": "このコマンドには 2 個の引数が必要です。"
   },
   {
+    "id": "This command will only show VLANs not yet trunked to this server.",
+    "translation": "このコマンドは、このサーバーにまだトランキングされていない VLAN のみを表示します。"
+  },
+  {
     "id": "This is the credential id associated with the volume. [Required]",
     "translation": "これは、ボリュームに関連付けられた資格情報 ID です。 [必須]"
   },
@@ -9058,6 +9094,14 @@
   {
     "id": "True",
     "translation": "真"
+  },
+  {
+    "id": "Trunked",
+    "translation": "トランキング"
+  },
+  {
+    "id": "Trunks a VLAN to the this server.",
+    "translation": "VLAN をこのサーバーにトランクします。"
   },
   {
     "id": "Type",
@@ -9400,6 +9444,10 @@
     "translation": "このユーザーに設定する VPN パスワード。"
   },
   {
+    "id": "Valid quantities vary by type.\n\t- public IPv4: 4, 8, 16, 32\n\t- private IPv4: 4, 8, 16, 32, 64\n\t- public IPv6: 64\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet create public 16 567\n\tThis command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
+    "translation": "有効な数量は種類によって異なります。\n - public IPv4: 4、8、16、32\n - private IPv4: 4、8、16、32、64\n - public IPv6: 64\n\nEXAMPLE:\n ${COMMAND_NAME} sl subnet create public 16 567\n このコマンドは、16 の IPv4 アドレスでパブリックサブネットを作成し、vlan上にid 567 を配置します。"
+  },
+  {
     "id": "Value",
     "translation": "値"
   },
@@ -9733,11 +9781,11 @@
   },
   {
     "id": "access_id is the host_id obtained by: sl block access-list <volume_id>",
-    "translation": "access_id は、sl block access-list <volume_id> によって取得される host_id です"
+    "translation": "access_idは、sl block access-list <volume_id>によって取得されるhost_idです"
   },
   {
     "id": "access_id is the host_id obtained by: sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled must be False to use this command",
-    "translation": "access_id は、以下によって取得される host_id です。sl block access-list <volume_id> SoftLayer_Account::iscsiisolationdisabled このコマンドを使用するには、False でなければなりません"
+    "translation": "access_idは、sl block access-list <volume_id>によって取得されるhost_idです。このコマンドを使用するには、SoftLayer_Account::iscsiisolationdisabledがFalseでなければなりません"
   },
   {
     "id": "account",
