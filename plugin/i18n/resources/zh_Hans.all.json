@@ -285,7 +285,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n   This command cancels volume with ID 12345678 immediately and without asking for confirmation.",
-    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [选项]\n\n示例：\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n    此命令会立即取消标识为 12345678 的卷，而不要求确认。"
+    "translation": "${COMMAND_NAME} sl object-storage delete VOLUME_ID [OPTIONS]\n\n示例：\n   ${COMMAND_NAME} sl object-storage delete 12345678 --immediate -f \n    此命令会立即取消标识为 12345678 的卷，而不要求确认。"
   },
   {
     "id": "${COMMAND_NAME} sl object-storage endpoints IDENTIFIER",
@@ -581,7 +581,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n LUN 标识仅在主机授权过程中生效。 建议\n（但非必要）在使用此方法之前取消对所有主机的授权。\n 请参阅“block access-revoke”。\n VOLUME_ID - 要设置 LUN 标识的卷标识\n LUN_ID - 建议的范围是 0 到 255 之间的整数。 高级用户 \n 可以使用介于 0 与 4095 之间的整数"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n LUN 标识仅在主机授权过程中生效。 建议\n（但非必要）在使用此方法之前取消对所有主机的授权。\n 请参阅“block access-revoke”。\n VOLUME_ID - 要设置 LUN 标识的卷标识\n LUN_ID - 建议的范围是 0 到 255 之间的整数。 高级用户 \n 可以使用 0 到 4095 之间的整数"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
@@ -2573,7 +2573,7 @@
   },
   {
     "id": "Edit bandwidth pool.",
-    "translation": "编辑带宽池。 "
+    "translation": "编辑带宽池。"
   },
   {
     "id": "Edit by host record, such as www",
@@ -2706,6 +2706,10 @@
   {
     "id": "Enables/Disables snapshot space usage threshold warning for a given volume.",
     "translation": "对给定卷启用/禁用快照空间使用阈值警告。"
+  },
+  {
+    "id": "Encrypted",
+    "translation": "已加密"
   },
   {
     "id": "End",
@@ -5120,6 +5124,10 @@
     "translation": "IDENTIFIER TARGET"
   },
   {
+    "id": "IDENTIFIER is the id of the server\nVLANS is the ID of the VLANs. Multiple vlans can be added at the same time.",
+    "translation": "IDENTIFIER 是服务器的标识\nVLANS 是 VLAN 的标识。 可以同时添加多个 vlan。"
+  },
+  {
     "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
     "translation": "IDENTIFIER：映像的标识\nURI：对象存储对象（.vhd/.iso 文件）的 URI，格式为：cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY：IBM Cloud API 密钥，用于访问 IBM Cloud Object Storage 实例。"
   },
@@ -5301,7 +5309,7 @@
   },
   {
     "id": "Input `0` for this parameter to order a duplicate volume with no snapshot space.",
-    "translation": "为此参数输入“0”以订购没有快照空间的重复卷。"
+    "translation": "为此参数输入“0”以订购没有快照空间的复制卷。"
   },
   {
     "id": "Instance {{.ServerID}} has {{.Count}} {{.Interface}} interface.",
@@ -5848,6 +5856,10 @@
     "translation": "列出电子邮件传递服务。"
   },
   {
+    "id": "Lists VLANs this server can be given access to.",
+    "translation": "列出可授予此服务器访问权的 VLAN。"
+  },
+  {
     "id": "Lists account orders.",
     "translation": "列出帐户订单。"
   },
@@ -6113,7 +6125,7 @@
   },
   {
     "id": "New Size of block volume in GB. ***If no size is given, the original size of volume is used.***\n      Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n      Minimum: [the original size of the volume]",
-    "translation": "块卷的新大小（以 GB 为单位）。***如果没有提供大小，那么将使用卷的原始大小。***\n可能的大小：[20、40、80、100、250、500、1000、2000、4000、8000、12000] \n最小值：[卷的原始大小]"
+    "translation": "块卷的新大小 (GB)。***如果未提供大小，将使用卷的原始大小。***\n      可能的大小：[20、40、80、100、250、500、1000、2000、4000、8000、12000]\n      最小值：[卷的原始大小]"
   },
   {
     "id": "New Size of file volume in GB. ***If no size is given, the original size of volume is used.***\n      Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n      Minimum: [the original size of the volume]",
@@ -6260,12 +6272,20 @@
     "translation": "注：高于 6,000 的 IOPS 仅在以下位置可用：https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
   },
   {
+    "id": "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
+    "translation": "注：下达升级订单后，将重新启动该虚拟服务器。\n将暂停该实例，直到升级事务完成为止。 但是对于网络，不需要重新引导。\n\n示例：\n${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n 此命令将升级标识为 12345678 的虚拟服务器实例，并将 CPU 核心数设置为 8，将内存设置为 8192M，将网络端口速度设置为 1000 Mbps。"
+  },
+  {
     "id": "Notes",
     "translation": "注释"
   },
   {
     "id": "Notes to set on the new snapshot",
     "translation": "要在新快照上设置的注释"
+  },
+  {
+    "id": "Notification names should be enclosed in quotation marks.\nEXAMPLE:\n\tslcli user edit-notifications --enable 'Order Approved'\n\tslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'",
+    "translation": "通知名称应括在引号中。\n示例：\nslcli user edit-notifications --enable 'Order Approved'\nslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'"
   },
   {
     "id": "Notify",
@@ -6913,7 +6933,7 @@
   },
   {
     "id": "Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000] Minimum: [the size of the origin volume]",
-    "translation": "潜在大小：[20、40、80、100、250、500、1000、2000、4000、8000、12000] 最小值：[源卷的大小]"
+    "translation": "可能的大小：[20、40、80、100、250、500、1000、2000、4000、8000、12000] 最小值：[源卷的大小]"
   },
   {
     "id": "Power cycle a server",
@@ -6974,6 +6994,10 @@
   {
     "id": "Prices:",
     "translation": "价格："
+  },
+  {
+    "id": "Primary",
+    "translation": "主要"
   },
   {
     "id": "Primary IP",
@@ -7308,6 +7332,10 @@
     "translation": "除去 SSL 证书"
   },
   {
+    "id": "Remove VLANs trunked to this server.",
+    "translation": "除去中继到此服务器的 VLAN。"
+  },
+  {
     "id": "Remove a load balancer member",
     "translation": "除去负载均衡器成员"
   },
@@ -7413,11 +7441,11 @@
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10",
-    "translation": "要求：[如果源卷的 IOPS/GB 为 0.25，那么重复卷的 IOPS/GB 也必须为 0.25。 如果原始卷的 IOPS/GB\n                                  大于 0.25，那么复制卷的 IOPS/GB 也必须大于 0.25。] 选项：0.25、2、4 和 10"
+    "translation": "要求：[如果源卷的 IOPS/GB 为 0.25，那么复制卷的 IOPS/GB 也必须为 0.25。 如果源卷的 IOPS/GB 大于 0.25，那么复制卷的 IOPS/GB 也必须大于 0.25。] 选项：0.25、2、4 和 10"
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]",
-    "translation": "要求：[如果源卷的 IOPS/GB 小于 0.3，那么重复卷的 IOPS/GB 也必须小于 0.3。 如果原始卷的 IOPS/GB 大于或者等于 0.3，\n                                  那么复制卷的 IOPS/GB 也必须大于或者等于 0.3。]"
+    "translation": "要求：[如果源卷的 IOPS/GB 小于 0.3，那么复制卷的 IOPS/GB 也必须小于 0.3。 如果源卷的 IOPS/GB 大于或等于 0.3，那么复制卷的 IOPS/GB 也必须大于或等于 0.3。]"
   },
   {
     "id": "Resource",
@@ -8836,6 +8864,10 @@
     "translation": "此命令需要 2 个自变量。"
   },
   {
+    "id": "This command will only show VLANs not yet trunked to this server.",
+    "translation": "此命令将仅显示尚未中继到此服务器的 VLAN。"
+  },
+  {
     "id": "This is the credential id associated with the volume. [Required]",
     "translation": "这是与该卷关联的凭证标识。 [必需]"
   },
@@ -9058,6 +9090,14 @@
   {
     "id": "True",
     "translation": "True"
+  },
+  {
+    "id": "Trunked",
+    "translation": "已中继"
+  },
+  {
+    "id": "Trunks a VLAN to the this server.",
+    "translation": "将 VLAN 中继到此服务器。"
   },
   {
     "id": "Type",
@@ -9398,6 +9438,10 @@
   {
     "id": "VPN password to set for this user.",
     "translation": "要为此用户设置的 VPN 密码。"
+  },
+  {
+    "id": "Valid quantities vary by type.\n\t- public IPv4: 4, 8, 16, 32\n\t- private IPv4: 4, 8, 16, 32, 64\n\t- public IPv6: 64\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet create public 16 567\n\tThis command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
+    "translation": "有效数量因类型而异。\n- 公用 IPv4： 4, 8, 16, 32\n- 专用  IPv4：4, 8, 16, 32, 64\n- 公用 IPv6： 64\n\n示例：\n${COMMAND_NAME} sl subnett create public 16 567\n 此命令将创建具有 16 个 IPv4 地址的公用子网，并将其放在标识为 567 的 VLAN 上。"
   },
   {
     "id": "Value",

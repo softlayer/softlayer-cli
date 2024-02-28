@@ -2573,7 +2573,7 @@
   },
   {
     "id": "Edit bandwidth pool.",
-    "translation": "대역폭 풀을 편집하십시오. "
+    "translation": "대역폭 풀을 편집하십시오."
   },
   {
     "id": "Edit by host record, such as www",
@@ -2706,6 +2706,10 @@
   {
     "id": "Enables/Disables snapshot space usage threshold warning for a given volume.",
     "translation": "지정된 볼륨에 대한 스냅샷 공간 사용 임계값 경고를 사용/사용 안함으로 설정합니다."
+  },
+  {
+    "id": "Encrypted",
+    "translation": "암호화됨"
   },
   {
     "id": "End",
@@ -5120,6 +5124,10 @@
     "translation": "IDENTIFIER TARGET"
   },
   {
+    "id": "IDENTIFIER is the id of the server\nVLANS is the ID of the VLANs. Multiple vlans can be added at the same time.",
+    "translation": "IDENTIFIER는 서버의 ID입니다.\nVLANS는 VLAN의 ID입니다. 동시에 여러 개의 VLAN을 추가할 수 있습니다."
+  },
+  {
     "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
     "translation": "IDENTIFIER: 이미지의 ID\nURI: f- cos://<regionName>/<bucketName>/<objectPath> 형식의 오브젝트 스토리지 오브젝트(.vhd/.iso file)에 대한 URI입니다.\nAPI_KEY:  IBM Cloud Object Storage 인스턴스에 대한 액세스 권한이 있는 IBM Cloud API 키입니다."
   },
@@ -5848,6 +5856,10 @@
     "translation": "이메일 전달 서비스를 나열합니다."
   },
   {
+    "id": "Lists VLANs this server can be given access to.",
+    "translation": "이 서버에 액세스 권한을 부여할 수 있는 VLAN을 나열합니다."
+  },
+  {
     "id": "Lists account orders.",
     "translation": "계정 주문을 나열합니다."
   },
@@ -6260,12 +6272,20 @@
     "translation": "참고: 6,000을 초과하는 IOPS는 다음에서만 사용 가능합니다. https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
   },
   {
+    "id": "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
+    "translation": "참고: 업그레이드 주문이 완료되면 이 가상 서버가 재부팅됩니다.\n업그레이드 트랜잭션이 완료될 때까지 인스턴스가 중지됩니다. 그러나 네트워크의 경우 재부팅이 필요하지 않습니다.\n\n예:\n ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n 이 명령은 ID가 12345678인 가상 서버 인스턴스를 업그레이드하고 CPU 코어 수를 8로, 메모리는 8192M, 네트워크 포트 속도는 1000Mbps로 설정합니다."
+  },
+  {
     "id": "Notes",
     "translation": "참고"
   },
   {
     "id": "Notes to set on the new snapshot",
     "translation": "새 스냅샷에 설정할 참고"
+  },
+  {
+    "id": "Notification names should be enclosed in quotation marks.\nEXAMPLE:\n\tslcli user edit-notifications --enable 'Order Approved'\n\tslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'",
+    "translation": "알림 이름은 따옴표로 묶어야 합니다.\n예:\nslcli user edit-notifications --enable 'Order Approved'\n slcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'"
   },
   {
     "id": "Notify",
@@ -6976,6 +6996,10 @@
     "translation": "가격:"
   },
   {
+    "id": "Primary",
+    "translation": "기본"
+  },
+  {
     "id": "Primary IP",
     "translation": "기본 IP"
   },
@@ -7308,6 +7332,10 @@
     "translation": "SSL 인증서 제거"
   },
   {
+    "id": "Remove VLANs trunked to this server.",
+    "translation": "이 서버에 대해 트렁크된 VLAN을 제거하십시오."
+  },
+  {
     "id": "Remove a load balancer member",
     "translation": "로드 밸런서 멤버 제거"
   },
@@ -7413,11 +7441,11 @@
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10",
-    "translation": "요구사항: [원본 볼륨에 대한 IOPS/GB가 0.25인 경우, 중복에 대한 IOPS/GB도 0.25여야 합니다. If IOPS/GB                                   for the origin volume is greater than 0.25,                                   IOPS/GB for the duplicate must also be                                   greater than 0.25.] 선택사항: 0.25, 2, 4, 10"
+    "translation": "요구사항: [원본 볼륨에 대한 IOPS/GB가 0.25인 경우, 중복에 대한 IOPS/GB도 0.25여야 합니다. 원본 볼륨의 IOPS/GB가 0.25보다 큰 경우 복제본의 IOPS/GB도 0.25보다 커야 합니다.] 선택사항: 0.25, 2, 4, 10"
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]",
-    "translation": "요구사항: [원본 볼륨의 IOPS/GB가 0.3 미만인 경우 중복의 IOPS/GB도 0.3 미만이어야 합니다. If IOPS/GB for the origin                                   volume is greater than or equal to 0.3,                                   IOPS/GB for the duplicate must also be                                   greater than or equal to 0.3.]"
+    "translation": "요구사항: [원본 볼륨의 IOPS/GB가 0.3 미만인 경우 중복의 IOPS/GB도 0.3 미만이어야 합니다. 원본 볼륨의 IOPS/GB가 0.3보다 크거나 같으면 중복 볼륨의 IOPS/GB도 0.3보다 크거나 같아야 합니다.]"
   },
   {
     "id": "Resource",
@@ -8836,6 +8864,10 @@
     "translation": "이 명령에는 2개의 인수가 필요합니다."
   },
   {
+    "id": "This command will only show VLANs not yet trunked to this server.",
+    "translation": "이 명령은 이 서버에 아직 트렁크되지 않은 VLAN만 표시합니다."
+  },
+  {
     "id": "This is the credential id associated with the volume. [Required]",
     "translation": "볼륨과 연관된 인증 정보 ID입니다. [필수]"
   },
@@ -9058,6 +9090,14 @@
   {
     "id": "True",
     "translation": "예"
+  },
+  {
+    "id": "Trunked",
+    "translation": "절단됨"
+  },
+  {
+    "id": "Trunks a VLAN to the this server.",
+    "translation": "이 서버에 VLAN을 트렁크합니다."
   },
   {
     "id": "Type",
@@ -9398,6 +9438,10 @@
   {
     "id": "VPN password to set for this user.",
     "translation": "이 사용자에 대해 설정할 VPM 비밀번호입니다."
+  },
+  {
+    "id": "Valid quantities vary by type.\n\t- public IPv4: 4, 8, 16, 32\n\t- private IPv4: 4, 8, 16, 32, 64\n\t- public IPv6: 64\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet create public 16 567\n\tThis command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
+    "translation": "유효한 수량은 유형에 따라 다릅니다.\n - public IPv4: 4, 8, 16, 32\n- private IPv4: 4, 8, 16, 32, 64\n - public IPv6: 64\n\n예:\n${COMMAND_NAME} sl subnet create public 16 567\n 이 명령은 16개의 IPv4 주소로 공용 서브넷을 생성하고 이를 ID 567의 VLAN에 배치합니다."
   },
   {
     "id": "Value",

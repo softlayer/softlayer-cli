@@ -581,7 +581,7 @@
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n\tThe LUN ID only takes effect during the Host Authorization process. It is\n\trecommended (but not necessary) to de-authorize all hosts before using\n\tthis method. See \"block access-revoke\".\n\tVOLUME_ID - the volume ID on which to set the LUN ID\n\tLUN_ID - recommended range is an integer between 0 and 255. Advanced users\n\tcan use an integer between 0 and 4095",
-    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n LUN ID 僅在「主機授權」處理程序期間生效。 建議（但非必要）先取消所有 \n 主機的授權，\n再使用此方法。 請參閱 \"block access-revoke\"。\n VOLUME_ID - 若要設定 LUN ID 的磁區 ID \n LUN_ID - 建議範圍是 0 到 255 之間的整數。 進階使用者 \n 可以使用 0 到 4095 之間的整數"
+    "translation": "${COMMAND_NAME} sl {{.storageType}} volume-set-lun-id VOLUME_ID LUN_ID\n\n LUN ID 僅在「主機授權」程序期間生效。 建議（但非必要）先取消所有 \n 主機的授權，再使用此方法\n。 請參閱 \"block access-revoke\"。\n VOLUME_ID - 要在其上設定 LUN ID 的磁區 ID \n LUN_ID - 建議範圍是一個 0 到 255 之間的整數。 進階使用者 \n 可以使用一個 0 到 4095 之間的整數"
   },
   {
     "id": "${COMMAND_NAME} sl {{.storageType}} volume-set-note [OPTIONS] VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-set-note 12345678 --note 'this is my note'",
@@ -2573,7 +2573,7 @@
   },
   {
     "id": "Edit bandwidth pool.",
-    "translation": "編輯頻寬儲存區。 "
+    "translation": "編輯頻寬儲存區。"
   },
   {
     "id": "Edit by host record, such as www",
@@ -2706,6 +2706,10 @@
   {
     "id": "Enables/Disables snapshot space usage threshold warning for a given volume.",
     "translation": "啟用/停用給定磁區的 Snapshot 空間使用情形臨界值警告。"
+  },
+  {
+    "id": "Encrypted",
+    "translation": "已加密"
   },
   {
     "id": "End",
@@ -5120,6 +5124,10 @@
     "translation": "IDENTIFIER TARGET"
   },
   {
+    "id": "IDENTIFIER is the id of the server\nVLANS is the ID of the VLANs. Multiple vlans can be added at the same time.",
+    "translation": "IDENTIFIER 是伺服器的 ID\nVLANS 是 VLAN 的 ID。 可以同時新增多個 VLAN。"
+  },
+  {
     "id": "IDENTIFIER: ID of the image\nURI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.",
     "translation": "IDENTIFIER：映像檔的 ID\nURI： Object Storage 物件的 URI（.vhd/.iso 檔案），格式為：cos://<regionName>/<bucketName>/<objectPath>\nAPI_KEY：IBM Cloud API 金鑰，其具有對 IBM Cloud Object Storage 實例的存取權。"
   },
@@ -5301,7 +5309,7 @@
   },
   {
     "id": "Input `0` for this parameter to order a duplicate volume with no snapshot space.",
-    "translation": "為此參數輸入 \"0\" 以排序沒有 Snapshot 空間的重複磁區。"
+    "translation": "針對此參數輸入 \"0\" 以佈置一個無 Snapshot 空間的複製磁區。"
   },
   {
     "id": "Instance {{.ServerID}} has {{.Count}} {{.Interface}} interface.",
@@ -5848,6 +5856,10 @@
     "translation": "列出電子郵件遞送服務。"
   },
   {
+    "id": "Lists VLANs this server can be given access to.",
+    "translation": "列出可授與此伺服器存取權的 VLAN。"
+  },
+  {
     "id": "Lists account orders.",
     "translation": "列出帳戶訂單。"
   },
@@ -6113,7 +6125,7 @@
   },
   {
     "id": "New Size of block volume in GB. ***If no size is given, the original size of volume is used.***\n      Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n      Minimum: [the original size of the volume]",
-    "translation": "區塊磁區的新大小（以 GB 為單位）。***如果未給定大小，則會使用磁區的原始大小。***\n可能的大小：[20、40、80、100、250、500、1000、2000、4000、8000、12000]\n下限：[磁區的原始大小]"
+    "translation": "區塊磁區的新大小（以 GB 為單位）。***如果未指定大小，則會使用磁區的原始大小。***\n可能的大小：[20、40、80、100、250、500、1000、2000、4000、8000、12000]\n下限：[磁區的原始大小]"
   },
   {
     "id": "New Size of file volume in GB. ***If no size is given, the original size of volume is used.***\n      Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n      Minimum: [the original size of the volume]",
@@ -6260,12 +6272,20 @@
     "translation": "附註：6,000 以上的 IOPS 僅適用於：https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
   },
   {
+    "id": "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.",
+    "translation": "附註：下達升級訂單後，該虛擬伺服器將重新啟動。\n 實例會中止，直到升級交易完成為止。 不過，針對網路，不需要重新開機。\n\n範例：\n ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n 此指令會升級 ID 為 12345678 的虛擬伺服器實例，並將 CPU 核心數目設為 8，將記憶體設為 8192M，將網路埠速度設為 1000 Mbps。"
+  },
+  {
     "id": "Notes",
     "translation": "附註"
   },
   {
     "id": "Notes to set on the new snapshot",
     "translation": "要設定於新 Snapshot 的附註"
+  },
+  {
+    "id": "Notification names should be enclosed in quotation marks.\nEXAMPLE:\n\tslcli user edit-notifications --enable 'Order Approved'\n\tslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'",
+    "translation": "通知名稱應該以引號括住。\n範例：\n slcli user edit-notifications --enable 'Order Approved'\nslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'"
   },
   {
     "id": "Notify",
@@ -6976,6 +6996,10 @@
     "translation": "價格："
   },
   {
+    "id": "Primary",
+    "translation": "主要"
+  },
+  {
     "id": "Primary IP",
     "translation": "主要 IP"
   },
@@ -7265,7 +7289,7 @@
   },
   {
     "id": "Region selected. Permit:[SJC/DAL/WDC/TOR/MON, AMS/LON/MAD/PAR, SNG/HKG/OSA/TOK, SYD, MEX, SAO, CHE, MIL, SEO, FRA]",
-    "translation": "已選取區域。 允許：[SJC/DAL/WDC/TOR/MON、AMS/LON/MAD/PAR、SNG/HKG/OSA/TOK、SYD、MEX、SAO、CHE、MIL、SEO、FRA]"
+    "translation": "已選取地區。 允許：[SJC/DAL/WDC/TOR/MON、AMS/LON/MAD/PAR、SNG/HKG/OSA/TOK、SYD、MEX、SAO、CHE、MIL、SEO、FRA]"
   },
   {
     "id": "Reload operating system on a server",
@@ -7306,6 +7330,10 @@
   {
     "id": "Remove SSL certificate",
     "translation": "移除 SSL 憑證"
+  },
+  {
+    "id": "Remove VLANs trunked to this server.",
+    "translation": "移除中繼至此伺服器的 VLAN。"
   },
   {
     "id": "Remove a load balancer member",
@@ -7413,11 +7441,11 @@
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is 0.25, IOPS/GB for the duplicate must also be 0.25. If IOPS/GB for the origin volume is greater than 0.25, IOPS/GB for the duplicate must also be greater than 0.25.] Choices: 0.25, 2, 4, 10",
-    "translation": "需求：[如果原始磁區的 IOPS/GB 是 0.25，則重複磁區的 IOPS/GB 也必須是 0.25。 If IOPS/GB\n                                  for the origin volume is greater than 0.25,\n                                  IOPS/GB for the duplicate must also be\n                                  greater than 0.25.] 選項：0.25、2、4、10"
+    "translation": "需求：[如果原始磁區的 IOPS/GB 是 0.25，則複製磁區的 IOPS/GB 也必須是 0.25。 如果原始磁區的 IOPS/GB 大於 0.25，則複製磁區的 IOPS/GB 也必須大於 0.25。] 選項：0.25、2、4、10"
   },
   {
     "id": "Requirements: [If IOPS/GB for the origin volume is less than 0.3, IOPS/GB for the duplicate must also be less than 0.3. If IOPS/GB for the origin volume is greater than or equal to 0.3, IOPS/GB for the duplicate must also be greater than or equal to 0.3.]",
-    "translation": "需求：[如果原始磁區的 IOPS/GB 小於 0.3，則重複磁區的 IOPS/GB 也必須小於 0.3。 If IOPS/GB for the origin\n                                  volume is greater than or equal to 0.3,\n                                  IOPS/GB for the duplicate must also be\n                                  greater than or equal to 0.3.]"
+    "translation": "需求：[如果原始磁區的 IOPS/GB 小於 0.3，則複製磁區的 IOPS/GB 也必須小於 0.3。 如果原始磁區的 IOPS/GB 大於或等於 0.3，則複製磁區的 IOPS/GB 也必須大於或等於 0.3。]"
   },
   {
     "id": "Resource",
@@ -8836,6 +8864,10 @@
     "translation": "這個指令需要兩個引數。"
   },
   {
+    "id": "This command will only show VLANs not yet trunked to this server.",
+    "translation": "此指令只會顯示尚未中繼至此伺服器的 VLAN。"
+  },
+  {
     "id": "This is the credential id associated with the volume. [Required]",
     "translation": "這是與磁區相關聯的認證 ID。 [必要]"
   },
@@ -9058,6 +9090,14 @@
   {
     "id": "True",
     "translation": "True"
+  },
+  {
+    "id": "Trunked",
+    "translation": "已中繼"
+  },
+  {
+    "id": "Trunks a VLAN to the this server.",
+    "translation": "將 VLAN 中繼至此伺服器。"
   },
   {
     "id": "Type",
@@ -9398,6 +9438,10 @@
   {
     "id": "VPN password to set for this user.",
     "translation": "要為這個使用者設定的 VPN 密碼。"
+  },
+  {
+    "id": "Valid quantities vary by type.\n\t- public IPv4: 4, 8, 16, 32\n\t- private IPv4: 4, 8, 16, 32, 64\n\t- public IPv6: 64\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet create public 16 567\n\tThis command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.",
+    "translation": "有效數量會因類型而有所不同。\n- public IPv4: 4, 8, 16, 32\n- private IPv4: 4, 8, 16, 32, 64\n- public IPv6: 64\n\nEXAMPLE:\n${COMMAND_NAME} sl subnet create public 16 567\n 此指令會建立具有 16 個 IPv4 位址的公用子網路，並將其放置在 ID 為 567 的 VLAN 上。"
   },
   {
     "id": "Value",
