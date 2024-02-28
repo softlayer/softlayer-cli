@@ -4296,10 +4296,6 @@
     "translation": "未能更新访问权。\n"
   },
   {
-    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
-    "translation": "未能更新硬件服务器 {{.ID}} 的固件。\n"
-  },
-  {
     "id": "Failed to update health check: ",
     "translation": "未能更新运行状况检查："
   },

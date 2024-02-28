@@ -4296,10 +4296,6 @@
     "translation": "Echec de la mise à jour de l'accès. \n"
   },
   {
-    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
-    "translation": "Echec de la mise à jour du microprogramme pour le serveur matériel : {{.ID}}.\n"
-  },
-  {
     "id": "Failed to update health check: ",
     "translation": "Echec de la mise à jour du diagnostic d'intégrité "
   },

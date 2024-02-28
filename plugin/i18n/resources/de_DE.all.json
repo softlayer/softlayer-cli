@@ -4296,10 +4296,6 @@
     "translation": "Der Zugriff konnte nicht aktualisiert werden.\n"
   },
   {
-    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
-    "translation": "Aktualisieren der Firmware für den Hardware-Server {{.ID}} fehlgeschlagen.\n"
-  },
-  {
     "id": "Failed to update health check: ",
     "translation": "Aktualisieren der Statusprüfung fehlgeschlagen: "
   },

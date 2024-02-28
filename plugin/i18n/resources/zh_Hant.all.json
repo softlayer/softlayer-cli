@@ -4296,10 +4296,6 @@
     "translation": "無法更新存取權。\n"
   },
   {
-    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
-    "translation": "無法更新硬體伺服器 {{.ID}} 的韌體。\n"
-  },
-  {
     "id": "Failed to update health check: ",
     "translation": "無法更新性能檢查："
   },

@@ -4296,10 +4296,6 @@
     "translation": "Impossibile aggiornare l'accesso. \n"
   },
   {
-    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
-    "translation": "Impossibile salvare il firmware del server hardware: {{.ID}}.\n"
-  },
-  {
     "id": "Failed to update health check: ",
     "translation": "Impossibile aggiornare il controllo di integrità: "
   },

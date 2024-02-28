@@ -4296,10 +4296,6 @@
     "translation": "액세스를 업데이트하는 데 실패했습니다. \n"
   },
   {
-    "id": "Failed to update firmware for hardware server: {{.ID}}.\n",
-    "translation": "하드웨어 서버 {{.ID}}의 펌웨어를 업데이트하는 데 실패했습니다.\n"
-  },
-  {
     "id": "Failed to update health check: ",
     "translation": "상태 검사 업데이트 실패: "
   },
