@@ -247,7 +247,7 @@ class Builder(object):
         
         data = sl_go.read_text()
 
-        old_v = re.search(r'^\W+PLUGIN_VERSION\W+= \"([0-9]+\.[0-9]+\.[0-9]+)\"', data, re.M)
+        old_v = re.search(r'^\W+PLUGIN_VERSION\W+= \"([0-9]+\.[0-9]+\.[0-9]+(-[a-z]+)?)\"', data, re.M)
         if old_v is None:
             raise Exception(f"[red]Can't find old version!")
         print(f"[turquoise2]Old Version: {old_v[1]}")
