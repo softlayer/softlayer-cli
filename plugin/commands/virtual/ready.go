@@ -52,7 +52,7 @@ func (cmd *ReadyCommand) Run(args []string) error {
 	ready, message, err := cmd.VirtualServerManager.InstanceIsReady(vsID, until)
 	subs := map[string]interface{}{"VsID": vsID, "VsId": vsID}
 	if err != nil {
-		return slErrors.NewAPIError(T("Failed to check virtual server instance {{.VsID}} is ready.\n", subs), err.Error(), 2)
+		return err
 	}
 	if ready {
 		cmd.UI.Print(T("Virtual server instance: {{.VsId}} is ready.", subs))

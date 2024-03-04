@@ -1170,41 +1170,35 @@ func getPriceIdForUpgrade(packageItems []datatypes.Product_Item_Price, option st
 	return -1
 }
 
-//Check the virtual server instance is ready for use
-//param1: bool, indicate whether the instance is ready
-//param2: string, indicate a possible reason if the instance is not ready
-//param3: error, any error may happen when getting the status of the instance
+// Check the virtual server instance is ready for use
+// A Virtual server is ready when there are no active transaction, and it is not doing an OS reload.
 func (vs virtualServerManager) InstanceIsReady(id int, until time.Time) (bool, string, error) {
+	mask := `mask[id, lastOperatingSystemReload[id,modifyDate], activeTransaction[id,transactionStatus[name]]
+provisionDate, powerState[keyName]`
 	for {
-		virtualGuest, err := vs.GetInstance(id, "id, lastOperatingSystemReload[id,modifyDate], activeTransaction[id,transactionStatus.name], provisionDate, powerState.keyName")
+		virtualGuest, err := vs.GetInstance(id, mask)
 		if err != nil {
-			return false, T("Failed to get this virtual guest instance."), err
+			return false, "", err
 		}
 
 		lastReload := virtualGuest.LastOperatingSystemReload
 		activeTxn := virtualGuest.ActiveTransaction
 		provisionDate := virtualGuest.ProvisionDate
 
-		// if lastReload != nil && lastReload.ModifyDate != nil {
-		// 	fmt.Println("lastReload: ", (*lastReload.ModifyDate).Format(time.RFC3339))
-		// }
-		// if activeTxn != nil && activeTxn.TransactionStatus != nil && activeTxn.TransactionStatus.Name != nil {
-		// 	fmt.Println("activeTxn: ", *activeTxn.TransactionStatus.Name)
-		// }
-		// if provisionDate != nil {
-		// 	fmt.Println("provisionDate: ", (*provisionDate).Format(time.RFC3339))
-		// }
 		var reloading bool
 		if activeTxn != nil && activeTxn.Id != nil && lastReload != nil && lastReload.Id != nil {
 			reloading = activeTxn != nil && lastReload != nil && *activeTxn.Id == *lastReload.Id
 		}
 		if provisionDate != nil && !reloading {
 			//fmt.Println("power state:", *virtualGuest.PowerState.KeyName)
-			if virtualGuest.PowerState != nil && virtualGuest.PowerState.KeyName != nil && *virtualGuest.PowerState.KeyName == "HALTED" {
-				return false, T("Virtual guest instance {{.Id}} is power off.", map[string]interface{}{"Id": id}), nil
-			}
-			if virtualGuest.PowerState != nil && virtualGuest.PowerState.KeyName != nil && *virtualGuest.PowerState.KeyName == "PAUSED" {
-				return false, T("Virtual guest instance {{.Id}} is paused.", map[string]interface{}{"Id": id}), nil
+			if virtualGuest.PowerState != nil && virtualGuest.PowerState.KeyName != nil {
+				sub_map := map[string]interface{}{"Id": id, "State": *virtualGuest.PowerState.KeyName}
+				if *virtualGuest.PowerState.KeyName == "HALTED" {
+					return false, T("Virtual guest instance {{.Id}} is {{.State}}.", sub_map), nil
+				}
+				if *virtualGuest.PowerState.KeyName == "PAUSED" {
+					return false, T("Virtual guest instance {{.Id}} is {{.State}}.", sub_map), nil
+				}
 			}
 
 			pingable, err := vs.VirtualGuestService.Id(id).IsPingable()
