@@ -452,10 +452,6 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl vs migrate -- guest 1234567\n マイグレーションが必要な VSI を管理します。 専用インスタンスを 1 つの専用ホストから別の専用ホストにマイグレーションすることもできます。"
   },
   {
-    "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
-    "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\n例:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   このコマンドは、ID 12345678 の Virtual Server インスタンスの状況をチェックして、継続的な使用のために作動可能かどうかを確認し、最大 30 秒待機します。"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl vs reload 12345678\n   このコマンドは、ID 12345678 の Virtual Server インスタンスのために現行オペレーティング・システムを再ロードします。\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   このコマンドは、ID 12345678 の Virtual Server インスタンスのために ID 1234 のイメージからオペレーティング・システムを再ロードします。"
   },
@@ -3032,10 +3028,6 @@
     "translation": "Virtual Server インスタンス: {{.VsID}} のイメージをキャプチャーできませんでした。\n"
   },
   {
-    "id": "Failed to check virtual server instance {{.VsID}} is ready.\n",
-    "translation": "Virtual Server インスタンス {{.VsID}} が作動可能であることを確認できませんでした。\n"
-  },
-  {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "ボリューム {{.VolumeId}} の新規 LUN ID の確認に失敗しました。"
   },
@@ -3780,10 +3772,6 @@
     "translation": "データ・センター {{.DATACENTER}} およびフレーバー {{.FLAVOR}}に使用可能な VLAN の取得に失敗しました。"
   },
   {
-    "id": "Failed to get this virtual guest instance.",
-    "translation": "この仮想ゲスト・インスタンスの取得に失敗しました。"
-  },
-  {
     "id": "Failed to get translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "IPSec {{.ID}} からの ID {{.TransID}} の変換の取得に失敗しました。"
   },
@@ -4074,10 +4062,6 @@
   {
     "id": "Failed to purge.",
     "translation": "パージに失敗しました。"
-  },
-  {
-    "id": "Failed to reach virtual guest instance {{.Id}}.",
-    "translation": "仮想ゲスト・インスタンス {{.Id}} に到達できませんでした。"
   },
   {
     "id": "Failed to read SSH key from file: {{.File}}.\n",
@@ -9498,18 +9482,6 @@
   {
     "id": "Virtual guest instance {{.Id}} is loading operating system.",
     "translation": "仮想ゲスト・インスタンス {{.Id}} はオペレーティング・システムをロードしています。"
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is not reachable.",
-    "translation": "仮想ゲスト・インスタンス {{.Id}} は到達不能です。"
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is paused.",
-    "translation": "仮想ゲスト・インスタンス {{.Id}} は一時停止されました。"
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is power off.",
-    "translation": "仮想ゲスト・インスタンス {{.Id}} は電源オフされています。"
   },
   {
     "id": "Virtual server ID should be a number.",

@@ -452,10 +452,6 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Manage VSIs that require migration. Can migrate Dedicated Instance from one dedicated host to another dedicated host as well."
   },
   {
-    "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
-    "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678."
   },
@@ -3032,10 +3028,6 @@
     "translation": "Failed to capture image for virtual server instance: {{.VsID}}.\n"
   },
   {
-    "id": "Failed to check virtual server instance {{.VsID}} is ready.\n",
-    "translation": "Failed to check virtual server instance {{.VsID}} is ready.\n"
-  },
-  {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "Failed to confirm the new LUN ID on volume {{.VolumeId}}."
   },
@@ -3780,10 +3772,6 @@
     "translation": "Failed to get the vlans available for datacener: {{.DATACENTER}} and flavor: {{.FLAVOR}}."
   },
   {
-    "id": "Failed to get this virtual guest instance.",
-    "translation": "Failed to get this virtual guest instance."
-  },
-  {
     "id": "Failed to get translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "Failed to get translation with ID {{.TransID}} from IPSec {{.ID}}."
   },
@@ -4074,10 +4062,6 @@
   {
     "id": "Failed to purge.",
     "translation": "Failed to purge."
-  },
-  {
-    "id": "Failed to reach virtual guest instance {{.Id}}.",
-    "translation": "Failed to reach virtual guest instance {{.Id}}."
   },
   {
     "id": "Failed to read SSH key from file: {{.File}}.\n",
@@ -9524,18 +9508,6 @@
     "translation": "Virtual guest instance {{.Id}} is loading operating system."
   },
   {
-    "id": "Virtual guest instance {{.Id}} is not reachable.",
-    "translation": "Virtual guest instance {{.Id}} is not reachable."
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is paused.",
-    "translation": "Virtual guest instance {{.Id}} is paused."
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is power off.",
-    "translation": "Virtual guest instance {{.Id}} is power off."
-  },
-  {
     "id": "Virtual server ID should be a number.",
     "translation": "Virtual server ID should be a number."
   },
@@ -9626,6 +9598,10 @@
   {
     "id": "Whether or not this duplicate will be a dependent duplicate of the origin volume.",
     "translation": "Whether or not this duplicate will be a dependent duplicate of the origin volume."
+  },
+  {
+    "id": "Will periodically check the status of a virtual server's active transaction.\nWhen the transcation is finished the virtual server should be ready for use.",
+    "translation": "Will periodically check the status of a virtual server's active transaction.\nWhen the transcation is finished the virtual server should be ready for use."
   },
   {
     "id": "Would you like to submit the rules. Continue?",

@@ -452,10 +452,6 @@
     "translation": "${COMMAND_NAME} sl vs migrate [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n 마이그레이션이 필요한 VSI를 관리합니다. 전용 인스턴스를 한 전용 호스트에서 다른 전용 호스트로 마이그레이션할 수 있습니다."
   },
   {
-    "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
-    "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   이 명령은 계속해서 사용할 준비가 되었는지 확인하기 위해 ID 12345678인 가상 서버 인스턴스 상태를 확인하고 최대 30초 동안 대기합니다."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [옵션]\n\n예:\n   ${COMMAND_NAME} sl vs reload 12345678\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 현재 운영 체제를 다시 로드합니다.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   이 명령은 ID 12345678인 가상 서버 인스턴스에 대해 ID 1234인 이미지에서 운영 체제를 다시 로드합니다."
   },
@@ -3032,10 +3028,6 @@
     "translation": "가상 서버 인스턴스에 대한 이미지 캡처 실패: {{.VsID}}.\n"
   },
   {
-    "id": "Failed to check virtual server instance {{.VsID}} is ready.\n",
-    "translation": "가상 서버 인스턴스 {{.VsID}}이(가) 준비되었는지 확인하는 데 실패했습니다.\n"
-  },
-  {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "볼륨 {{.VolumeId}}에서 새 LUN ID를 확인하는 데 실패했습니다."
   },
@@ -3780,10 +3772,6 @@
     "translation": "{{.DATACENTER}} 데이터 센터에 사용 가능한 vlan 및 {{.FLAVOR}} 특징을 가져오는 데 실패했습니다."
   },
   {
-    "id": "Failed to get this virtual guest instance.",
-    "translation": "이 가상 게스트 인스턴스를 가져오는 데 실패했습니다."
-  },
-  {
     "id": "Failed to get translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "{{.ID}} IPSec에서 {{.TransID}} ID의 변환을 가져오는 데 실패했습니다."
   },
@@ -4074,10 +4062,6 @@
   {
     "id": "Failed to purge.",
     "translation": "제거하지 못했습니다."
-  },
-  {
-    "id": "Failed to reach virtual guest instance {{.Id}}.",
-    "translation": "가상 게스트 인스턴스 {{.Id}}에 도달하는 데 실패했습니다."
   },
   {
     "id": "Failed to read SSH key from file: {{.File}}.\n",
@@ -9498,18 +9482,6 @@
   {
     "id": "Virtual guest instance {{.Id}} is loading operating system.",
     "translation": "가상 게스트 인스턴스 {{.Id}}이(가) 운영 체제를 로드 중입니다."
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is not reachable.",
-    "translation": "가상 게스트 인스턴스 {{.Id}}에 연결할 수 없습니다."
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is paused.",
-    "translation": "가상 게스트 인스턴스 {{.Id}}이(가) 일시정지되었습니다."
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is power off.",
-    "translation": "가상 게스트 인스턴스 {{.Id}}의 전원이 꺼져 있습니다."
   },
   {
     "id": "Virtual server ID should be a number.",
