@@ -266,8 +266,32 @@ var _ = Describe("VirtualServerManager", func() {
 			It("It returns it is ready", func() {
 				ready, msg, err := vsManager.InstanceIsReady(123456, time.Now())
 				Expect(err).ToNot(HaveOccurred())
-				Expect(ready).To(Equal(true))
+				Expect(ready).To(BeTrue())
 				Expect(msg).To(Equal(""))
+			})
+		})
+		Context("API Error", func() {
+			It("Error is returned", func() {
+				fakeHandler.AddApiError("SoftLayer_Virtual_Guest", "getObject", 200, `{"error":"Internal Error","code":"SoftLayer_Exception_Public"}`)
+				ready, msg, err := vsManager.InstanceIsReady(123456, time.Now())
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("SoftLayer_Exception_Public"))
+				Expect(ready).To(BeFalse())
+				Expect(msg).To(Equal(""))
+			})
+		})		
+		Context("VS not ready", func() {
+			It("vs is HALTED", func() {
+				ready, msg, err := vsManager.InstanceIsReady(41111, time.Now())
+				Expect(err).ToNot(HaveOccurred())
+				Expect(ready).To(BeFalse())
+				Expect(msg).To(Equal("HALTED"))
+			})
+			It("vs is transactioning", func() {
+				ready, msg, err := vsManager.InstanceIsReady(41112, time.Now())
+				Expect(err).ToNot(HaveOccurred())
+				Expect(ready).To(BeFalse())
+				Expect(msg).To(Equal("TESTTXN"))
 			})
 		})
 	})

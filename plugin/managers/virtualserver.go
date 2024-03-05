@@ -3,7 +3,7 @@ package managers
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
+
 	"io/ioutil"
 	"math"
 	"os"
@@ -664,7 +664,7 @@ func getPresetCost(preset datatypes.Product_Package_Preset, items []datatypes.Pr
 func printAsJsonFormat(data interface{}) {
 	jsonData, jsonErr := json.MarshalIndent(data, "", "    ")
 	if jsonErr != nil {
-		fmt.Println(jsonErr)
+
 		return
 	}
 	println(string(jsonData))

@@ -1,8 +1,6 @@
 package managers_test
 
 import (
-	"fmt"
-
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/softlayer/softlayer-go/session"
@@ -30,7 +28,6 @@ var _ = Describe("DedicatedhostManager", func() {
 			})
 			It("it returns dedicatedhost order template", func() {
 				_, err := dedicatedhostManager.GenerateOrderTemplate("56_CORES_X_242_RAM_X_1_4_TB", "test", "test.com", "ams01", "hourly", 1234567)
-				fmt.Println(err)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Ordering package is not found"))
 			})

@@ -1,7 +1,6 @@
 package managers_test
 
 import (
-	"fmt"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/gomega/gstruct"
@@ -147,7 +146,7 @@ var _ = Describe("StorageManager", func() {
 				apiCalls := fakeHandler.ApiCallLogs
 				Expect(len(apiCalls)).To(Equal(1))
 				// See https://pkg.go.dev/github.com/onsi/gomega/gstruct for this stuff
-				fmt.Printf("APICALL: %+v", apiCalls[0].Options)
+				// fmt.Printf("APICALL: %+v", apiCalls[0].Options)
 				Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
 					"Service": Equal("SoftLayer_Account"),
 					"Method":  Equal("getIscsiNetworkStorage"),
@@ -160,7 +159,7 @@ var _ = Describe("StorageManager", func() {
 				apiCalls := fakeHandler.ApiCallLogs
 				Expect(len(apiCalls)).To(Equal(1))
 				// See https://pkg.go.dev/github.com/onsi/gomega/gstruct for this stuff
-				fmt.Printf("APICALL: %+v", apiCalls[0].Options)
+				// fmt.Printf("APICALL: %+v", apiCalls[0].Options)
 				Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
 					"Service": Equal("SoftLayer_Account"),
 					"Method":  Equal("getNasNetworkStorage"),
