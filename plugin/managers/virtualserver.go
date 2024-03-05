@@ -1173,8 +1173,8 @@ func getPriceIdForUpgrade(packageItems []datatypes.Product_Item_Price, option st
 // Check the virtual server instance is ready for use
 // A Virtual server is ready when there are no active transaction, and it is not doing an OS reload.
 func (vs virtualServerManager) InstanceIsReady(id int, until time.Time) (bool, string, error) {
-	mask := `mask[id, lastOperatingSystemReload[id,modifyDate], activeTransaction[id,transactionStatus[name]]
-provisionDate, powerState[keyName]`
+	mask := `mask[id, lastOperatingSystemReload[id,modifyDate], activeTransaction[id,transactionStatus[name]],
+provisionDate, powerState[keyName]]`
 	for {
 		virtualGuest, err := vs.GetInstance(id, mask)
 		if err != nil {
@@ -1184,37 +1184,26 @@ provisionDate, powerState[keyName]`
 		lastReload := virtualGuest.LastOperatingSystemReload
 		activeTxn := virtualGuest.ActiveTransaction
 		provisionDate := virtualGuest.ProvisionDate
-
+		txnMessage := "-"
+		if activeTxn != nil && activeTxn.TransactionStatus != nil && activeTxn.TransactionStatus.Name != nil {
+			txnMessage = *activeTxn.TransactionStatus.Name
+		}
 		var reloading bool
 		if activeTxn != nil && activeTxn.Id != nil && lastReload != nil && lastReload.Id != nil {
 			reloading = activeTxn != nil && lastReload != nil && *activeTxn.Id == *lastReload.Id
 		}
 		if provisionDate != nil && !reloading {
-			//fmt.Println("power state:", *virtualGuest.PowerState.KeyName)
 			if virtualGuest.PowerState != nil && virtualGuest.PowerState.KeyName != nil {
-				sub_map := map[string]interface{}{"Id": id, "State": *virtualGuest.PowerState.KeyName}
-				if *virtualGuest.PowerState.KeyName == "HALTED" {
-					return false, T("Virtual guest instance {{.Id}} is {{.State}}.", sub_map), nil
+				if *virtualGuest.PowerState.KeyName == "HALTED" || *virtualGuest.PowerState.KeyName == "PAUSED" {
+					return false, *virtualGuest.PowerState.KeyName , nil
 				}
-				if *virtualGuest.PowerState.KeyName == "PAUSED" {
-					return false, T("Virtual guest instance {{.Id}} is {{.State}}.", sub_map), nil
-				}
-			}
-
-			pingable, err := vs.VirtualGuestService.Id(id).IsPingable()
-			if err != nil {
-				return false, T("Failed to reach virtual guest instance {{.Id}}.", map[string]interface{}{"Id": id}), err
-			}
-			//fmt.Println("pingable:", pingable)
-			if pingable == false {
-				return false, T("Virtual guest instance {{.Id}} is not reachable.", map[string]interface{}{"Id": id}), nil
 			}
 			return true, "", nil
 		}
 
 		now := time.Now()
 		if now.After(until) {
-			return false, T("Virtual guest instance {{.Id}} is loading operating system.", map[string]interface{}{"Id": id}), nil
+			return false, txnMessage, nil
 		}
 
 		min := math.Min(float64(1.0), float64(until.Sub(now)))
