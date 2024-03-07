@@ -9480,10 +9480,6 @@
     "translation": "Domänenname des virtuellen Gastsystems nicht gefunden."
   },
   {
-    "id": "Virtual guest instance {{.Id}} is loading operating system.",
-    "translation": "Die virtuelle Gastinstanz {{.Id}} lädt das Betriebssystem."
-  },
-  {
     "id": "Virtual server ID should be a number.",
     "translation": "Die ID des virtuellen Servers muss eine Zahl sein."
   },

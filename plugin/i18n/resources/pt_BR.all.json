@@ -9480,10 +9480,6 @@
     "translation": "O nome do domínio do guest virtual não foi localizado."
   },
   {
-    "id": "Virtual guest instance {{.Id}} is loading operating system.",
-    "translation": "A instância de guest virtual {{.Id}} está carregando o sistema operacional."
-  },
-  {
     "id": "Virtual server ID should be a number.",
     "translation": "O ID do servidor virtual deve ser um número."
   },

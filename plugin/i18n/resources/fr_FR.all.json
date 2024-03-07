@@ -9480,10 +9480,6 @@
     "translation": "Nom de domaine invité virtuel introuvable."
   },
   {
-    "id": "Virtual guest instance {{.Id}} is loading operating system.",
-    "translation": "L'instance d'invité virtuel {{.Id}} charge le système d'exploitation."
-  },
-  {
     "id": "Virtual server ID should be a number.",
     "translation": "L'ID du serveur virtuel doit être un nombre."
   },

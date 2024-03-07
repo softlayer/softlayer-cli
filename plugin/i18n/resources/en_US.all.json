@@ -9504,10 +9504,6 @@
     "translation": "Virtual guest domain name not found."
   },
   {
-    "id": "Virtual guest instance {{.Id}} is loading operating system.",
-    "translation": "Virtual guest instance {{.Id}} is loading operating system."
-  },
-  {
     "id": "Virtual server ID should be a number.",
     "translation": "Virtual server ID should be a number."
   },

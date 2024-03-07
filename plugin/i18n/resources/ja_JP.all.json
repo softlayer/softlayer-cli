@@ -9480,10 +9480,6 @@
     "translation": "仮想ゲストのドメイン・ネームが見つかりませんでした。"
   },
   {
-    "id": "Virtual guest instance {{.Id}} is loading operating system.",
-    "translation": "仮想ゲスト・インスタンス {{.Id}} はオペレーティング・システムをロードしています。"
-  },
-  {
     "id": "Virtual server ID should be a number.",
     "translation": "仮想サーバー ID は数値でなければなりません。"
   },

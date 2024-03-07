@@ -9480,10 +9480,6 @@
     "translation": "가상 게스트 도메인 이름을 찾을 수 없습니다."
   },
   {
-    "id": "Virtual guest instance {{.Id}} is loading operating system.",
-    "translation": "가상 게스트 인스턴스 {{.Id}}이(가) 운영 체제를 로드 중입니다."
-  },
-  {
     "id": "Virtual server ID should be a number.",
     "translation": "가상 서버 ID는 숫자여야 합니다."
   },

@@ -9480,10 +9480,6 @@
     "translation": "找不到虛擬訪客網域名稱。"
   },
   {
-    "id": "Virtual guest instance {{.Id}} is loading operating system.",
-    "translation": "虛擬訪客實例 {{.Id}} 正在載入作業系統。"
-  },
-  {
     "id": "Virtual server ID should be a number.",
     "translation": "虛擬伺服器 ID 應該是數字。"
   },
