@@ -470,7 +470,6 @@ func (s storageManager) OrderModifiedVolume(volumeType string, volumeID int, new
 	if strings.Contains(volumeStorageType, "PERFORMANCE") {
 		volumeIsPerformance = true
 		if size == 0 && iops == 0 {
-			fmt.Println(iops)
 			return datatypes.Container_Product_Order_Receipt{}, errors.New(T("A size or IOPS value must be given to modify this performance volume."))
 		}
 		if size == 0 && volume.CapacityGb != nil {

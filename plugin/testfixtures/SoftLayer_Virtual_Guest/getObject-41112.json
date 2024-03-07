@@ -1,0 +1,14 @@
+{
+	"id": 41112,
+
+	"powerState": {
+		"keyName": "RUNNING"
+	},
+	"activeTransaction": {
+		"transactionStatus" : {
+			"name": "TESTTXN"
+		},
+		"id": 99999
+	},
+	"lastOperatingSystemReload":{"id":294366820,"modifyDate":"2022-08-30T12:57:05-07:00"}
+}

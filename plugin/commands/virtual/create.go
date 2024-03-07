@@ -3,7 +3,7 @@ package virtual
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
+
 	"io/ioutil"
 	"strconv"
 	"time"
@@ -363,7 +363,6 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 
 	if cmd.Flavor != "" {
 		if cmd.CPU != 0 {
-			fmt.Printf("Returning an error....\n")
 			return nil, slErrors.NewExclusiveFlagsError("[-c|--cpu]", "[--flavor]")
 		}
 		if cmd.Memory != 0 {
@@ -488,12 +487,10 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 	}
 
 	if len(cmd.PubSecGroup) > 0 {
-		fmt.Printf("PubSecGroup(%v): %v\n", cmd.Domain, cmd.PubSecGroup)
 		params["public-security-group"] = cmd.PubSecGroup
 	}
 
 	if len(cmd.PriSecGroup) > 0 {
-		fmt.Printf("PriSecGroup: %v\n", cmd.PriSecGroup)
 		params["private-security-group"] = cmd.PriSecGroup
 	}
 

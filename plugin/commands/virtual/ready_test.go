@@ -54,7 +54,6 @@ var _ = Describe("VS ready", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to check virtual server instance 1234 is ready."))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})

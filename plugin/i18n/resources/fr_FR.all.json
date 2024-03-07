@@ -452,10 +452,6 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   Gérer les VSI qui requièrent une migration. Possibilité de migrer une instance dédiée d'un hôte dédié vers un autre hôte dédié également."
   },
   {
-    "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
-    "translation": "${COMMAND_NAME} sl vs ready IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs ready 12345678 --wait 30\n   Cette commande vérifie l'état de l'instance de serveur virtuel dont l'ID est 12345678 pour savoir si elle est prête à être utilisée en continu, et patiente pendant 30 secondes."
-  },
-  {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME}  sl vs reload 12345678\n   Cette commande recharge le système d'exploitation en cours pour l'instance de serveur virtuel dont l'ID est 12345678.\n   ${COMMAND_NAME}  sl vs reload 12345678 --image 1234\n   Cette commande recharge le système d'exploitation à partir de l'image dont l'ID est 1234 pour l'instance de serveur virtuel dont l'ID est 12345678."
   },
@@ -3032,10 +3028,6 @@
     "translation": "Echec de la capture d'image pour l'instance de serveur virtuel : {{.VsID}}.\n"
   },
   {
-    "id": "Failed to check virtual server instance {{.VsID}} is ready.\n",
-    "translation": "Echec de la vérification permettant de savoir si l'instance de serveur virtuel {{.VsID}} est opérationnelle.\n"
-  },
-  {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "Echec de confirmation du nouvel ID LUN sur le volume {{.VolumeId}}."
   },
@@ -3780,10 +3772,6 @@
     "translation": "Echec de l'obtention des réseaux locaux virtuels disponibles pour le centre de données {{.DATACENTER}} et la version {{.FLAVOR}}."
   },
   {
-    "id": "Failed to get this virtual guest instance.",
-    "translation": "Echec de l'obtention cette instance d'invité virtuel."
-  },
-  {
     "id": "Failed to get translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "Echec de l'obtention de la conversion avec l'ID {{.TransID}} depuis l'IPSec {{.ID}}."
   },
@@ -4074,10 +4062,6 @@
   {
     "id": "Failed to purge.",
     "translation": "Echec de la purge."
-  },
-  {
-    "id": "Failed to reach virtual guest instance {{.Id}}.",
-    "translation": "Echec de la tentative d'atteindre l'instance d'invité virtuel {{.Id}}."
   },
   {
     "id": "Failed to read SSH key from file: {{.File}}.\n",
@@ -9494,22 +9478,6 @@
   {
     "id": "Virtual guest domain name not found.",
     "translation": "Nom de domaine invité virtuel introuvable."
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is loading operating system.",
-    "translation": "L'instance d'invité virtuel {{.Id}} charge le système d'exploitation."
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is not reachable.",
-    "translation": "L'instance d'invité virtuel {{.Id}} est inatteignable."
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is paused.",
-    "translation": "L'instance d'invité virtuel {{.Id}} est en pause."
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is power off.",
-    "translation": "L'instance invitée virtuelle {{.Id}} est hors tension."
   },
   {
     "id": "Virtual server ID should be a number.",

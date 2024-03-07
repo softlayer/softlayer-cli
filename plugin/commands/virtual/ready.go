@@ -27,11 +27,8 @@ func NewReadyCommand(sl *metadata.SoftlayerCommand) (cmd *ReadyCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "ready " + T("IDENTIFIER"),
 		Short: T("Check if a virtual server instance is ready for use"),
-		Long: T(`${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]
-	
-EXAMPLE:
-   ${COMMAND_NAME} sl vs ready 12345678 --wait 30
-   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.`),
+		Long: T(`Will periodically check the status of a virtual server's active transaction.
+When the transcation is finished the virtual server should be ready for use.`),
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
@@ -52,7 +49,7 @@ func (cmd *ReadyCommand) Run(args []string) error {
 	ready, message, err := cmd.VirtualServerManager.InstanceIsReady(vsID, until)
 	subs := map[string]interface{}{"VsID": vsID, "VsId": vsID}
 	if err != nil {
-		return slErrors.NewAPIError(T("Failed to check virtual server instance {{.VsID}} is ready.\n", subs), err.Error(), 2)
+		return err
 	}
 	if ready {
 		cmd.UI.Print(T("Virtual server instance: {{.VsId}} is ready.", subs))

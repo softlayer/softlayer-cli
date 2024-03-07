@@ -452,10 +452,6 @@
     "translation": "${COMMAND_NAME} sl vs migrate [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl vs migrate --guest 1234567\n   管理需要移轉的 VSI。 也可以將「專用實例」從一個專用主機移轉至另一個專用主機。"
   },
   {
-    "id": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   This command checks virtual server instance with ID 12345678 status to see if it is ready for use continuously and waits up to 30 seconds.",
-    "translation": "${COMMAND_NAME} sl vs ready IDENTIFIER [OPTIONS]\n\t\n範例：\n   ${COMMAND_NAME} sl vs ready 12345678 --wait 30\n   這個指令會檢查虛擬伺服器實例（其 ID 為12345678）狀態，以查看它是否準備好繼續使用，最多等待 30 秒。"
-  },
-  {
     "id": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs reload 12345678\n   This command reloads current operating system for virtual server instance with ID 12345678.\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   This command reloads operating system from image with ID 1234 for virtual server instance with ID 12345678.",
     "translation": "${COMMAND_NAME} sl vs reload IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl vs reload 12345678\n   這個指令會為虛擬伺服器實例（其 ID 為 12345678）重新載入現行作業系統。\n   ${COMMAND_NAME} sl vs reload 12345678 --image 1234\n   這個指令會從映像檔（其 ID 為 1234）為虛擬伺服器實例（其 ID 為 12345678）重新載入作業系統。"
   },
@@ -3032,10 +3028,6 @@
     "translation": "無法為虛擬伺服器實例 {{.VsID}} 擷取映像檔。\n"
   },
   {
-    "id": "Failed to check virtual server instance {{.VsID}} is ready.\n",
-    "translation": "無法確認虛擬伺服器實例 {{.VsID}} 已備妥。\n"
-  },
-  {
     "id": "Failed to confirm the new LUN ID on volume {{.VolumeId}}.",
     "translation": "無法在磁區 {{.VolumeId}} 上確認新的 LUN ID。"
   },
@@ -3780,10 +3772,6 @@
     "translation": "無法取得適用於資料中心 {{.DATACENTER}} 及特性 {{.FLAVOR}} 的 VLAN。"
   },
   {
-    "id": "Failed to get this virtual guest instance.",
-    "translation": "無法取得此虛擬訪客實例。"
-  },
-  {
     "id": "Failed to get translation with ID {{.TransID}} from IPSec {{.ID}}.",
     "translation": "無法從 IPSec {{.ID}} 取得 ID 為 {{.TransID}} 的轉換。"
   },
@@ -4074,10 +4062,6 @@
   {
     "id": "Failed to purge.",
     "translation": "無法清除。"
-  },
-  {
-    "id": "Failed to reach virtual guest instance {{.Id}}.",
-    "translation": "無法連接虛擬訪客實例 {{.Id}}。"
   },
   {
     "id": "Failed to read SSH key from file: {{.File}}.\n",
@@ -9494,22 +9478,6 @@
   {
     "id": "Virtual guest domain name not found.",
     "translation": "找不到虛擬訪客網域名稱。"
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is loading operating system.",
-    "translation": "虛擬訪客實例 {{.Id}} 正在載入作業系統。"
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is not reachable.",
-    "translation": "無法連接虛擬訪客實例 {{.Id}}。"
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is paused.",
-    "translation": "虛擬訪客實例 {{.Id}} 已暫停。"
-  },
-  {
-    "id": "Virtual guest instance {{.Id}} is power off.",
-    "translation": "虛擬訪客實例 {{.Id}} 已關閉。"
   },
   {
     "id": "Virtual server ID should be a number.",
