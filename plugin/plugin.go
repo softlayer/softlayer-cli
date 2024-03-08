@@ -43,6 +43,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/order"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/placementgroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/reports"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/search"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/security"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/securitygroup"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/subnet"
@@ -122,6 +123,7 @@ func Namespaces() []plugin.Namespace {
 		licenses.LicensesNamespace(),
 		loadbal.LoadbalNamespace(),
 		nas.NasNetworkStorageNamespace(),
+		search.SearchNamespace(),
 		security.SecurityNamespace(),
 		securitygroup.SecurityGroupNamespace(),
 		subnet.SubnetNamespace(),
@@ -252,6 +254,7 @@ func GetTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(cdn.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(dns.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(order.SetupCobraCommands(slCommand))
+	cobraCmd.AddCommand(search.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(security.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(ticket.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(placementgroup.SetupCobraCommands(slCommand))
