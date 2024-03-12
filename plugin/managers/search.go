@@ -8,6 +8,7 @@ import (
 
 type SearchManager interface {
 	AdvancedSearch(mask string, params string) ([]datatypes.Container_Search_Result, error)
+	GetTypes() ([]datatypes.Container_Search_ObjectType, error)
 }
 
 type searchManager struct {
@@ -28,4 +29,9 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Search/advancedSearch/
 func (s searchManager) AdvancedSearch(mask string, params string) ([]datatypes.Container_Search_Result, error) {
 
 	return s.SearchService.Mask(mask).AdvancedSearch(&params)
+}
+
+
+func (s searchManager) GetTypes() ([]datatypes.Container_Search_ObjectType, error) {
+	return s.SearchService.GetObjectTypes()
 }
