@@ -54,7 +54,7 @@ var _ = Describe("bandwidth summary", func() {
 
 		Context("Advanced search to bandwidth summary", func() {
 			BeforeEach(func() {
-				filename := []string{"bandwidth"}
+				filename := []string{"advancedSearch-bandwidth"}
 				fakeSession = testhelpers.NewFakeSoftlayerSession(filename)
 				slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 				cliCommand = bandwidth.NewSummaryCommand(slCommand)
