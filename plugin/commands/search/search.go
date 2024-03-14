@@ -105,7 +105,7 @@ func parseVirtual_Guest(resource datatypes.Virtual_Guest) string {
 	return fmt.Sprintf(T("ID") + ": %d\n" + T("FQDN") + ": %s\n", *resource.Id, *resource.FullyQualifiedDomainName)
 }
 func parseEvent_Log(resource datatypes.Event_Log) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("Event")  + ": %s\n", *resource.TraceId, *resource.EventName)
+	return fmt.Sprintf(T("ID") + ": %s\n" + T("Event")  + ": %s\n", *resource.TraceId, *resource.EventName)
 }
 func parseVirtual_DedicatedHost(resource datatypes.Virtual_DedicatedHost) string {
 	return fmt.Sprintf(T("ID") + ": %d\n" + T("Name") + ": %s\n", *resource.Id, *resource.Name)
@@ -120,7 +120,7 @@ func parseNetwork_Subnet_IpAddress(resource datatypes.Network_Subnet_IpAddress) 
 	return fmt.Sprintf(T("ID") + ": %d\n" + T("Ip Address") +  ": %s\n", *resource.Id, *resource.IpAddress)
 }
 func parseNetwork_Vlan(resource datatypes.Network_Vlan) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("VLAN")  + ": %s\n", *resource.Id, *resource.VlanNumber)
+	return fmt.Sprintf(T("ID") + ": %d\n" + T("VLAN")  + ": %d\n", *resource.Id, *resource.VlanNumber)
 }
 func parseNetwork_Vlan_Firewall(resource datatypes.Network_Vlan_Firewall) string {
 	return fmt.Sprintf(T("ID") + ": %d\n" + T("Ip Address")  + ": %s\n", *resource.Id, *resource.PrimaryIpAddress)

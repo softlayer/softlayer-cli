@@ -6,6 +6,7 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . SearchManager
 type SearchManager interface {
 	AdvancedSearch(mask string, params string) ([]datatypes.Container_Search_Result, error)
 	GetTypes() ([]datatypes.Container_Search_ObjectType, error)

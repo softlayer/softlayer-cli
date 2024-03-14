@@ -183,8 +183,15 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 			// If the file exists as is, just load and return it.
 			// actual path should be of the format testfixtures/SoftLayer_Service/method-string.json
 			workingPath = service + "/" + filename + ".json"
+			// Make sure the filepath starts with the service/method combo
+			if !strings.HasPrefix(workingPath, service + "/" + method) {
+				fmt.Printf("OK %v doesn't start with %v\n", workingPath, service + "/" + method)
+				continue
+			}
+			fmt.Printf("OK %v DOES INFACT start with %v\n", workingPath, service + "/" + method)
 			if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", workingPath)); err == nil {
 				fixture = filepath.Join(wd, scope, "testfixtures", workingPath)
+				fmt.Printf("LOADED %v OK!\n", fixture)
 				return ioutil.ReadFile(fixture) // #nosec
 			}
 		}

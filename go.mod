@@ -34,6 +34,7 @@ require (
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mattn/go-runewidth v0.0.12 // indirect
+	github.com/maxbrunsfeld/counterfeiter/v6 v6.8.1 // indirect
 	github.com/nicksnyder/go-i18n/v2 v2.2.0 // indirect
 	github.com/pelletier/go-toml v1.2.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect

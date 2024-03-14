@@ -1,0 +1,84 @@
+[
+    {
+        "matchedTerms": ["prwetwasdvxvvb"],
+        "relevanceScore": "5.4415264",
+        "resource": {
+            "id": 999,
+            "fullyQualifiedDomainName": "mex01.fcr01.858"
+        },
+        "resourceType": "SoftLayer_Virtual_Guest"
+    },
+    {
+        "matchedTerms": ["prsdfsdfsdf sdf "],
+        "relevanceScore": "5.4415264",
+        "resource": {
+            "EventName": "Test Name",
+            "traceId": "aaabbb-999-000"
+        },
+        "resourceType": "SoftLayer_Event_Log"
+    },
+    {
+        "matchedTerms": ["xxxxxxxxxx"],
+        "relevanceScore": "5.4415264",
+        "resource": {
+            "Name": "mex01.fcr01.858",
+            "Id": 858
+        },
+        "resourceType": "SoftLayer_Virtual_DedicatedHost"
+    },
+    {
+        "matchedTerms": ["dfg dfg |"],
+        "relevanceScore": "5.4415264",
+        "resource": {
+            "fullyQualifiedDomainName": "a.b.com",
+            "Id": 1122334455
+        },
+        "resourceType": "SoftLayer_Hardware"
+    },
+    {
+        "matchedTerms": ["asdasd"],
+        "relevanceScore": "5.4415264",
+        "resource": {
+            "Name": "sdfsdfmex01.fcr01.858",
+            "Id": 851238
+        },
+        "resourceType": "SoftLayer_Network_Application_Delivery_Controller"
+    },
+    {
+        "matchedTerms": ["IP |123.2.2.2|"],
+        "relevanceScore": "5.4415264",
+        "resource": {
+            "IpAddress": "1.2.3.4",
+            "Id": 123125346858
+        },
+        "resourceType": "SoftLayer_Network_Subnet_IpAddress"
+    },
+    {
+        "matchedTerms": ["VLAN |match|"],
+        "relevanceScore": "5.4415264",
+        "resource": {
+            "fullyQualifiedName": "mex01.fcr01.858",
+            "vlanNumber": 858,
+            "Id": 675037
+        },
+        "resourceType": "SoftLayer_Network_Vlan"
+    },
+    {
+        "matchedTerms": ["VLAN_|Firewall|"],
+        "relevanceScore": "5.4415264",
+        "resource": {
+            "primaryIpAddress": "2.3.4.5",
+            "Id": 83468258
+        },
+        "resourceType": "SoftLayer_Network_Vlan_Firewall"
+    },
+    {
+        "matchedTerms": ["A test |ticket|"],
+        "relevanceScore": "5.4415264",
+        "resource": {
+            "Title": "Test Ticket",
+            "Id": 85346218
+        },
+        "resourceType": "SoftLayer_Ticket"
+    }
+]
