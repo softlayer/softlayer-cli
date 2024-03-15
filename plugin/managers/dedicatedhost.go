@@ -32,7 +32,7 @@ const (
 
 var existDatacenter = false
 
-//Manages SoftLayer Dedicated host.
+// Manages SoftLayer Dedicated host.
 type DedicatedHostManager interface {
 	ListGuests(identifier int, cpu int, domain string, hostname string, memory int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
 	GenerateOrderTemplate(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error)
@@ -64,8 +64,8 @@ func NewDedicatedhostManager(session *session.Session) *dedicatedhostManager {
 	}
 }
 
-//Cancel an instance immediately, deleting all its data.
-//id: the instance ID to cancel
+// Cancel an instance immediately, deleting all its data.
+// id: the instance ID to cancel
 func (d dedicatedhostManager) CancelGuests(id int) ([]StatusInfo, error) {
 	guests, err := d.VirtualDedicatedHost.Id(id).GetGuests()
 	var listCaneledGuests []StatusInfo
@@ -88,7 +88,7 @@ func (d dedicatedhostManager) CancelGuests(id int) ([]StatusInfo, error) {
 	return listCaneledGuests, nil
 }
 
-//Deletes a guest and returns 'Cancelled' or and Exception message
+// Deletes a guest and returns 'Cancelled' or and Exception message
 func (d dedicatedhostManager) DeleteGuest(Id int) (string, error) {
 	status := "Cancelled"
 	_, err := d.VirtualGuestService.Id(Id).DeleteObject()
@@ -98,13 +98,13 @@ func (d dedicatedhostManager) DeleteGuest(Id int) (string, error) {
 	return status, nil
 }
 
-//Retrieve a list of all virtual servers on the dedicated host.
-//integer identifier: The identifier of a dedicated host.
-//integer cpus: filter based on number of CPUS.
-//string domain: filter based on domain.
-//string hostname: filter based on hostname.
-//integer memory: filter based on amount of memory.
-//list tags: filter based on list of tags.
+// Retrieve a list of all virtual servers on the dedicated host.
+// integer identifier: The identifier of a dedicated host.
+// integer cpus: filter based on number of CPUS.
+// string domain: filter based on domain.
+// string hostname: filter based on hostname.
+// integer memory: filter based on amount of memory.
+// list tags: filter based on list of tags.
 func (d dedicatedhostManager) ListGuests(identifier int, cpu int, domain string, hostname string, memory int, tags []string, mask string) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
 	if cpu != 0 {
@@ -134,9 +134,9 @@ func (d dedicatedhostManager) ListGuests(identifier int, cpu int, domain string,
 	return guestList, nil
 }
 
-//Get details about a dedicatedhost instance.
-//id: the instance ID
-//mask: mask of properties
+// Get details about a dedicatedhost instance.
+// id: the instance ID
+// mask: mask of properties
 func (d dedicatedhostManager) GetInstance(id int, mask string) (datatypes.Virtual_DedicatedHost, error) {
 	if mask == "" {
 		mask = DEDICATEDHOST_DETAIL_MASK
@@ -144,7 +144,7 @@ func (d dedicatedhostManager) GetInstance(id int, mask string) (datatypes.Virtua
 	return d.VirtualDedicatedHost.Id(id).Mask(mask).GetObject()
 }
 
-//Generate dedicated host payload.
+// Generate dedicated host payload.
 func (d dedicatedhostManager) GenerateOrderTemplate(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error) {
 	mask := "items[keyName,capacity,description,attributes[id,attributeTypeKeyName],itemCategory[id,categoryCode],softwareDescription[id,referenceCode,longDescription],prices],activePresets,regions[location[location[priceGroups]]]"
 	packages, err := d.PackageService.Mask(mask).Filter(filter.Path("keyName").Eq("DEDICATED_HOST").Build()).GetAllObjects()
@@ -187,17 +187,17 @@ func (d dedicatedhostManager) GenerateOrderTemplate(size, hostname, domain, data
 	return order, nil
 }
 
-//Verify the dedicated host order.
+// Verify the dedicated host order.
 func (d dedicatedhostManager) VerifyInstanceCreation(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order, error) {
 	return d.OrderService.VerifyOrder(&orderTemplate)
 }
 
-//Order a dedicated host.
+// Order a dedicated host.
 func (d dedicatedhostManager) OrderInstance(orderTemplate datatypes.Container_Product_Order_Virtual_DedicatedHost) (datatypes.Container_Product_Order_Receipt, error) {
 	return d.OrderService.PlaceOrder(&orderTemplate, sl.Bool(false))
 }
 
-//Get the package related to simple dedicatedhost ordering
+// Get the package related to simple dedicatedhost ordering
 func (d dedicatedhostManager) GetPackage() (datatypes.Product_Package, error) {
 	mask := "items[id,description,prices,capacity,keyName,itemCategory[categoryCode],bundleItems[capacity,keyName,categories[categoryCode],hardwareGenericComponentModel[id,hardwareComponentType[keyName]]]],regions[location[location[priceGroups]]]"
 	filters := filter.New()
@@ -212,7 +212,7 @@ func (d dedicatedhostManager) GetPackage() (datatypes.Product_Package, error) {
 	return packages[0], nil
 }
 
-//Returns valid options for ordering hardware.
+// Returns valid options for ordering hardware.
 func (d dedicatedhostManager) GetCreateOptions(productPackage datatypes.Product_Package) map[string]map[string]string {
 	//locations
 	locations := make(map[string]string)
@@ -237,7 +237,7 @@ func (d dedicatedhostManager) GetCreateOptions(productPackage datatypes.Product_
 	}
 }
 
-//Get the private vlans in the account.
+// Get the private vlans in the account.
 func (d dedicatedhostManager) GetVlansOptions(datacenter string, flavor string, productPackage datatypes.Product_Package) ([]datatypes.Network_Vlan, error) {
 	maskVlans := "primaryRouter[datacenter]"
 	maskItemPrices := "pricingLocationGroup[locations]"

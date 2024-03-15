@@ -159,16 +159,21 @@ Check testhelpers/fake_softlayer_session.go for all the fields that get recorded
 
 ### Fake Managers
 
-CLI calls to manager functions need an entry in `bluemix-cli\bluemix\slplugin\testhelpers\fake_manager.go`
-
-
+CLI calls to manager functions need an entry in `plugin\testhelpers\fake_manager.go` 
 Managers have a fake/test interface that is autogenerate with a program called [couterfieter](https://github.com/maxbrunsfeld/counterfeiter)
 
 ```
-# From /github.ibm.com/SoftLayer/softlayer-cli
-cd plugin/managers
-counterfeiter.exe -o ../testhelpers/fake_storage_manager.go . StorageManager
+go generate ./...
 ```
+
+
+each manager and defined interface should have this line in it to be automatically generated. After the imports, before any interfaces
+
+```
+//counterfeiter:generate -o ../testhelpers/ . <Whatever>Manager
+```
+
+
 
 If you want to use the real manager but fixture API data, just initialize the manager like this in the CLI test
 

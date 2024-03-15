@@ -23,6 +23,18 @@ type FakeSearchManager struct {
 		result1 []datatypes.Container_Search_Result
 		result2 error
 	}
+	GetTypesStub        func() ([]datatypes.Container_Search_ObjectType, error)
+	getTypesMutex       sync.RWMutex
+	getTypesArgsForCall []struct {
+	}
+	getTypesReturns struct {
+		result1 []datatypes.Container_Search_ObjectType
+		result2 error
+	}
+	getTypesReturnsOnCall map[int]struct {
+		result1 []datatypes.Container_Search_ObjectType
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -92,11 +104,69 @@ func (fake *FakeSearchManager) AdvancedSearchReturnsOnCall(i int, result1 []data
 	}{result1, result2}
 }
 
+func (fake *FakeSearchManager) GetTypes() ([]datatypes.Container_Search_ObjectType, error) {
+	fake.getTypesMutex.Lock()
+	ret, specificReturn := fake.getTypesReturnsOnCall[len(fake.getTypesArgsForCall)]
+	fake.getTypesArgsForCall = append(fake.getTypesArgsForCall, struct {
+	}{})
+	stub := fake.GetTypesStub
+	fakeReturns := fake.getTypesReturns
+	fake.recordInvocation("GetTypes", []interface{}{})
+	fake.getTypesMutex.Unlock()
+	if stub != nil {
+		return stub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSearchManager) GetTypesCallCount() int {
+	fake.getTypesMutex.RLock()
+	defer fake.getTypesMutex.RUnlock()
+	return len(fake.getTypesArgsForCall)
+}
+
+func (fake *FakeSearchManager) GetTypesCalls(stub func() ([]datatypes.Container_Search_ObjectType, error)) {
+	fake.getTypesMutex.Lock()
+	defer fake.getTypesMutex.Unlock()
+	fake.GetTypesStub = stub
+}
+
+func (fake *FakeSearchManager) GetTypesReturns(result1 []datatypes.Container_Search_ObjectType, result2 error) {
+	fake.getTypesMutex.Lock()
+	defer fake.getTypesMutex.Unlock()
+	fake.GetTypesStub = nil
+	fake.getTypesReturns = struct {
+		result1 []datatypes.Container_Search_ObjectType
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSearchManager) GetTypesReturnsOnCall(i int, result1 []datatypes.Container_Search_ObjectType, result2 error) {
+	fake.getTypesMutex.Lock()
+	defer fake.getTypesMutex.Unlock()
+	fake.GetTypesStub = nil
+	if fake.getTypesReturnsOnCall == nil {
+		fake.getTypesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Container_Search_ObjectType
+			result2 error
+		})
+	}
+	fake.getTypesReturnsOnCall[i] = struct {
+		result1 []datatypes.Container_Search_ObjectType
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSearchManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
 	fake.advancedSearchMutex.RLock()
 	defer fake.advancedSearchMutex.RUnlock()
+	fake.getTypesMutex.RLock()
+	defer fake.getTypesMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

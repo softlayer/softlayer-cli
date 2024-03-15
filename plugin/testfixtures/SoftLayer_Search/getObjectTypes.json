@@ -1,0 +1,202 @@
+[
+    {
+        "name": "SoftLayer_Event_Log",
+        "properties": [
+            {
+                "name": "accountId",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "userId",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "userType",
+                "sortableFlag": true,
+                "type": "string"
+            },
+            {
+                "name": "username",
+                "sortableFlag": true,
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "name": "SoftLayer_Virtual_DedicatedHost",
+        "properties": [
+            {
+                "name": "accountId",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "internalTagReferences.tag.name",
+                "sortableFlag": true,
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "name": "SoftLayer_Hardware",
+        "properties": [
+            {
+                "name": "accountId",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "datacenter.longName",
+                "sortableFlag": true,
+                "type": "string"
+            },
+            {
+                "name": "deviceStatus.name",
+                "sortableFlag": true,
+                "type": "string"
+            },
+            {
+                "name": "tagReferences.tag.name",
+                "sortableFlag": false,
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "name": "SoftLayer_Network_Application_Delivery_Controller",
+        "properties": [
+            {
+                "name": "accountId",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "tagReferences.tag.name",
+                "sortableFlag": false,
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "name": "SoftLayer_Network_Subnet_IpAddress",
+        "properties": [
+            {
+                "name": "endpointSubnetCount",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "guestNetworkComponent.id",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "hardware.fullyQualifiedDomainName",
+                "sortableFlag": true,
+                "type": "string"
+            },
+            {
+                "name": "hardware.id",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "ipAddress",
+                "sortableFlag": true,
+                "type": "string"
+            },
+            {
+                "name": "isBroadcast",
+                "sortableFlag": true,
+                "type": "boolean"
+            },
+            {
+                "name": "isGateway",
+                "sortableFlag": true,
+                "type": "boolean"
+            },
+            {
+                "name": "isNetwork",
+                "sortableFlag": true,
+                "type": "boolean"
+            },
+            {
+                "name": "virtualGuest.id",
+                "sortableFlag": true,
+                "type": "integer"
+            }
+        ]
+    },
+    {
+        "name": "SoftLayer_Network_Vlan",
+        "properties": [
+            {
+                "name": "accountId",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "name",
+                "sortableFlag": false,
+                "type": "string"
+            },
+            {
+                "name": "vlanNumber",
+                "sortableFlag": true,
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "name": "SoftLayer_Network_Vlan_Firewall",
+        "properties": [
+            {
+                "name": "primaryIpAddress",
+                "sortableFlag": true,
+                "type": "string"
+            },
+            {
+                "name": "tagReferences.tag.name",
+                "sortableFlag": false,
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "name": "SoftLayer_Ticket",
+        "properties": [
+            {
+                "name": "accountId",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "assignedUser.username",
+                "sortableFlag": true,
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "name": "SoftLayer_Virtual_Guest",
+        "properties": [
+            {
+                "name": "accountId",
+                "sortableFlag": true,
+                "type": "integer"
+            },
+            {
+                "name": "datacenter.longName",
+                "sortableFlag": true,
+                "type": "string"
+            },
+            {
+                "name": "domain",
+                "sortableFlag": true,
+                "type": "string"
+            }
+        ]
+    }
+]

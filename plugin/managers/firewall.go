@@ -66,7 +66,7 @@ func NewFirewallManager(session *session.Session) *firewallManager {
 	}
 }
 
-//Creates a firewall for the specified vlan.
+// Creates a firewall for the specified vlan.
 func (fw firewallManager) AddVlanFirewall(vlanId int, HAenabled bool) (datatypes.Container_Product_Order_Receipt, error) {
 	packages, err := fw.GetDedicatedPackage(HAenabled)
 	if err != nil {
@@ -128,7 +128,7 @@ func (fw firewallManager) AddStandardFirewall(serverId int, isVirtual bool) (dat
 	return fw.OrderService.PlaceOrder(&firewallOrder, sl.Bool(false))
 }
 
-//Returns a list of all firewalls on the account.
+// Returns a list of all firewalls on the account.
 func (fw firewallManager) GetFirewalls() ([]datatypes.Network_Vlan, error) {
 	firewalls := []datatypes.Network_Vlan{}
 	vlans, err := fw.AccountService.Mask(FIREWALL_DEFAULT_MASK).GetNetworkVlans()
@@ -143,7 +143,7 @@ func (fw firewallManager) GetFirewalls() ([]datatypes.Network_Vlan, error) {
 	return firewalls, nil
 }
 
-//Returns a list of multi vlan firewalls on the account.
+// Returns a list of multi vlan firewalls on the account.
 func (fw firewallManager) GetMultiVlanFirewalls(mask string) ([]datatypes.Network_Gateway, error) {
 	if mask == "" {
 		mask = `mask[id,networkSpace,name,networkFirewall[id,firewallType,datacenter[name]],status[keyName],insideVlans[id],
@@ -162,7 +162,7 @@ func (fw firewallManager) HasFirewall(vlan datatypes.Network_Vlan) bool {
 		len(vlan.FirewallGuestNetworkComponents) > 0
 }
 
-//Retrieves the billing item of the firewall.
+// Retrieves the billing item of the firewall.
 func (fw firewallManager) GetFirewallBillingItem(fwId int, dedicated bool) (datatypes.Billing_Item, error) {
 	mask := "id,billingItem.id"
 	if dedicated {
@@ -185,17 +185,17 @@ func (fw firewallManager) GetFirewallBillingItem(fwId int, dedicated bool) (data
 	return datatypes.Billing_Item{}, errors.New(T("Billing item not found"))
 }
 
-//Get the rules of a standard firewall.
+// Get the rules of a standard firewall.
 func (fw firewallManager) GetStandardFirewallRules(fwId int) ([]datatypes.Network_Component_Firewall_Rule, error) {
 	return fw.ComponentFirewallService.Id(fwId).Mask(RULE_MASK).GetRules()
 }
 
-//Get the rules of a dedicated firewall.
+// Get the rules of a dedicated firewall.
 func (fw firewallManager) GetDedicatedFirewallRules(fwId int) ([]datatypes.Network_Vlan_Firewall_Rule, error) {
 	return fw.VlanFirewallService.Id(fwId).Mask(RULE_MASK).GetRules()
 }
 
-//Get a multi vlan firewall.
+// Get a multi vlan firewall.
 func (fw firewallManager) GetMultiVlanFirewall(fwId int, mask string) (datatypes.Network_Vlan_Firewall, error) {
 	if mask == "" {
 		mask = "mask[firewallType,networkGateway[insideVlans, members,privateIpAddress,publicIpAddress,publicIpv6Address,privateVlan,publicVlan],datacenter,rules,managementCredentials]"
@@ -203,7 +203,7 @@ func (fw firewallManager) GetMultiVlanFirewall(fwId int, mask string) (datatypes
 	return fw.VlanFirewallService.Id(fwId).Mask(mask).GetObject()
 }
 
-//Cancels the specified firewall.
+// Cancels the specified firewall.
 func (fw firewallManager) CancelFirewall(fwId int, dedicated bool) error {
 	firewallBillingItem, err := fw.GetFirewallBillingItem(fwId, dedicated)
 	if err != nil {
@@ -220,7 +220,7 @@ func (fw firewallManager) CancelFirewall(fwId int, dedicated bool) error {
 	return err
 }
 
-//Retrieves the standard firewall package for the virtual server or hardware server.
+// Retrieves the standard firewall package for the virtual server or hardware server.
 func (fw firewallManager) GetStandardPackage(serverId int, isVirtual bool) ([]datatypes.Product_Item, error) {
 	firewallPortSpeed, err := fw.GetFirewallPortSpeed(serverId, isVirtual)
 	if err != nil {
@@ -231,7 +231,7 @@ func (fw firewallManager) GetStandardPackage(serverId int, isVirtual bool) ([]da
 	return fw.PackageService.Id(0).Filter(filters.Build()).GetItems()
 }
 
-//Retrieves the dedicated firewall package.
+// Retrieves the dedicated firewall package.
 func (fw firewallManager) GetDedicatedPackage(HAEnabled bool) ([]datatypes.Product_Item, error) {
 	fwFilter := "Hardware Firewall (Dedicated)"
 	hafwFilter := "Hardware Firewall (High Availability)"
@@ -244,7 +244,7 @@ func (fw firewallManager) GetDedicatedPackage(HAEnabled bool) ([]datatypes.Produ
 	return fw.PackageService.Id(0).Filter(filters.Build()).GetItems()
 }
 
-//Determines the appropriate speed for a firewall.
+// Determines the appropriate speed for a firewall.
 func (fw firewallManager) GetFirewallPortSpeed(serverId int, isVirtual bool) (int, error) {
 	firewallPortSpeed := 0
 	if isVirtual {
@@ -316,7 +316,7 @@ func (fw firewallManager) ParseFirewallID(inputString string) (string, int, erro
 	return firewallType, firewallID, nil
 }
 
-//Edit the rules for dedicated firewall.
+// Edit the rules for dedicated firewall.
 func (fw firewallManager) EditDedicatedFirewallRules(firewallId int, rules []datatypes.Network_Vlan_Firewall_Rule) (datatypes.Network_Firewall_Update_Request, error) {
 	mask := "networkVlan.firewallInterfaces.firewallContextAccessControlLists"
 	firewall, err := fw.VlanFirewallService.Id(firewallId).Mask(mask).GetObject()
@@ -343,7 +343,7 @@ func (fw firewallManager) EditDedicatedFirewallRules(firewallId int, rules []dat
 	return fw.UpdateService.CreateObject(&template)
 }
 
-//Edit the rules for standard firewall.
+// Edit the rules for standard firewall.
 func (fw firewallManager) EditStandardFirewallRules(firewallId int, rules []datatypes.Network_Component_Firewall_Rule) (datatypes.Network_Firewall_Update_Request, error) {
 	template := datatypes.Network_Firewall_Update_Request{
 		NetworkComponentFirewallId: sl.Int(firewallId),

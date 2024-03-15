@@ -106,9 +106,9 @@ func NewHardwareServerManager(session *session.Session) *hardwareServerManager {
 	}
 }
 
-//Authorize File or Block Storage to a Hardware Server.
-//int id: Hardware server id.
-//string storageUsername: Storage username.
+// Authorize File or Block Storage to a Hardware Server.
+// int id: Hardware server id.
+// string storageUsername: Storage username.
 func (hw hardwareServerManager) AuthorizeStorage(id int, storageUsername string) (bool, error) {
 	storageResult, err := hw.StorageManager.GetVolumeByUsername(storageUsername)
 	if err != nil {
@@ -125,31 +125,31 @@ func (hw hardwareServerManager) AuthorizeStorage(id int, storageUsername string)
 	return hw.HardwareService.Id(id).AllowAccessToNetworkStorageList(networkStorageTemplate)
 }
 
-//Returns the hardware server storage credentials.
-//int id: Id of the hardware server
+// Returns the hardware server storage credentials.
+// int id: Id of the hardware server
 func (hw hardwareServerManager) GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error) {
 	mask := "mask[credential]"
 	return hw.HardwareService.Id(id).Mask(mask).GetAllowedHost()
 }
 
-//Returns the hardware server hard drives.
-//int id: Id of the hardware server
+// Returns the hardware server hard drives.
+// int id: Id of the hardware server
 func (hw hardwareServerManager) GetHardDrives(id int) ([]datatypes.Hardware_Component, error) {
 	return hw.HardwareService.Id(id).GetHardDrives()
 }
 
-//Returns the hardware server attached network storage.
-//int id: Id of the hardware server
-//nas_type: storage type.
+// Returns the hardware server attached network storage.
+// int id: Id of the hardware server
+// nas_type: storage type.
 func (hw hardwareServerManager) GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error) {
 	mask := "mask[id,username,capacityGb,notes,serviceResourceBackendIpAddress,allowedHardware[id,datacenter]]"
 	return hw.HardwareService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
 }
 
-//Cancels the specified dedicated server.
-//hardwareId: The ID of the hardware to be cancelled.
-//reason: The reason code for the cancellation. This should come from :func:`GetCancellationReasons`.
-//comment: An optional comment to include with the cancellation.
+// Cancels the specified dedicated server.
+// hardwareId: The ID of the hardware to be cancelled.
+// reason: The reason code for the cancellation. This should come from :func:`GetCancellationReasons`.
+// comment: An optional comment to include with the cancellation.
 func (hw hardwareServerManager) CancelHardware(hardwareId int, reason string, comment string, immediate bool) error {
 	reasons := hw.GetCancellationReasons()
 	cancelReason := reasons[reason]
@@ -168,17 +168,17 @@ func (hw hardwareServerManager) CancelHardware(hardwareId int, reason string, co
 	return err
 }
 
-//List all hardware (servers and bare metal computing instances).
-//tags: filter based on tags
-//cpus: filter based on number of CPUs
-//memory: filter based on amount of memory in gigabytes
-//hostname: filter based on hostname
-//domain: filter based on domain
-//datacenter: filter based on datacenter
-//nicSpeed: filter on network speed(in MBPS)
-//publicIP: filter based on public IP address
-//privateIP: filter based on private IP adress
-//mask: mask to control what properties are returned
+// List all hardware (servers and bare metal computing instances).
+// tags: filter based on tags
+// cpus: filter based on number of CPUs
+// memory: filter based on amount of memory in gigabytes
+// hostname: filter based on hostname
+// domain: filter based on domain
+// datacenter: filter based on datacenter
+// nicSpeed: filter on network speed(in MBPS)
+// publicIP: filter based on public IP address
+// privateIP: filter based on private IP adress
+// mask: mask to control what properties are returned
 func (hw hardwareServerManager) ListHardware(tags []string, cpus int, memory int, hostname string, domain string, datacenter string, nicSpeed int, publicIP string, privateIP string, owner string, orderId int, mask string) ([]datatypes.Hardware_Server, error) {
 	if mask == "" {
 		mask = DEFAULT_HARDWARE_MASK
@@ -248,9 +248,9 @@ func (hw hardwareServerManager) ListHardware(tags []string, cpus int, memory int
 	return servers, nil
 }
 
-//Get details about a hardware device
-//hardwareId: the ID of the hardware
-//mask: mask to control what properties are returned
+// Get details about a hardware device
+// hardwareId: the ID of the hardware
+// mask: mask to control what properties are returned
 func (hw hardwareServerManager) GetHardware(hardwareId int, mask string) (datatypes.Hardware_Server, error) {
 	if mask == "" {
 		mask = DETAIL_HARDWARE_MASK
@@ -258,8 +258,8 @@ func (hw hardwareServerManager) GetHardware(hardwareId int, mask string) (dataty
 	return hw.HardwareService.Id(hardwareId).Mask(mask).GetObject()
 }
 
-//Uses Sync to get all the details of a hardware server asap. Uses a multithreaded approach
-//hardwareId: the ID of the hardware
+// Uses Sync to get all the details of a hardware server asap. Uses a multithreaded approach
+// hardwareId: the ID of the hardware
 func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardware_Server, error) {
 	// We'll use errors.Join to combine all API errors we get in multithreading. This variable tracks all that.
 	var all_err error
@@ -359,12 +359,12 @@ func (hw hardwareServerManager) GetHardwareFast(hardwareId int) (datatypes.Hardw
 	return hardware, all_err
 }
 
-//Perform an OS reload of a server with its current configuration.
-//hardwareId: the instance ID to reload
-//postInstallURL: The URI of the post-install script to run after reload
-//sshKeys: The ID of SSH keys to add to the root user
-//upgradeBIOS: upgrade BIOS
-//upgradeFirmware: upgrade hard drive's firmware
+// Perform an OS reload of a server with its current configuration.
+// hardwareId: the instance ID to reload
+// postInstallURL: The URI of the post-install script to run after reload
+// sshKeys: The ID of SSH keys to add to the root user
+// upgradeBIOS: upgrade BIOS
+// upgradeFirmware: upgrade hard drive's firmware
 func (hw hardwareServerManager) Reload(hardwareId int, postInstallURL string, sshKeys []int, upgradeBIOS bool, upgradeFirmware bool) error {
 	config := datatypes.Container_Hardware_Server_Configuration{
 		UpgradeBios:              sl.Int(utils.Bool2Int(upgradeBIOS)),
@@ -380,8 +380,8 @@ func (hw hardwareServerManager) Reload(hardwareId int, postInstallURL string, ss
 	return err
 }
 
-//Reboot a server into the a recsue kernel.
-//hardwareId: the instance ID to rescure
+// Reboot a server into the a recsue kernel.
+// hardwareId: the instance ID to rescure
 func (hw hardwareServerManager) Rescure(hardwareId int) error {
 	_, err := hw.HardwareService.Id(hardwareId).BootToRescueLayer(nil)
 	return err
@@ -413,17 +413,17 @@ func (hw hardwareServerManager) Reboot(hardwareId int, hard bool, soft bool) err
 	return err
 }
 
-//size: server size name
-//hostname: server hostname
-//domain: server domain name
-//location: datacenter name
-//os: operating system name
-//portSpeed, port speed in Mbps
-//sshKeys: list of IDs of SSH key
-//postInstallURL: The URI of the post-install script to run after reload
-//hourly:  True if using hourly pricing (default). False for monthly
-//noPublic: True if this server should only have private interfaces
-//extras: List of extra feature names
+// size: server size name
+// hostname: server hostname
+// domain: server domain name
+// location: datacenter name
+// os: operating system name
+// portSpeed, port speed in Mbps
+// sshKeys: list of IDs of SSH key
+// postInstallURL: The URI of the post-install script to run after reload
+// hourly:  True if using hourly pricing (default). False for monthly
+// noPublic: True if this server should only have private interfaces
+// extras: List of extra feature names
 func (hw hardwareServerManager) GenerateCreateTemplate(productPackage datatypes.Product_Package, params map[string]interface{}) (datatypes.Container_Product_Order, error) {
 	hourly := params["billing"].(string) == "hourly"
 	noPublic := false
@@ -499,17 +499,17 @@ func (hw hardwareServerManager) GenerateCreateTemplate(productPackage datatypes.
 	return order, nil
 }
 
-//Places an order for a hardware
+// Places an order for a hardware
 func (hw hardwareServerManager) PlaceOrder(orderTemplate datatypes.Container_Product_Order) (datatypes.Container_Product_Order_Receipt, error) {
 	return hw.OrderService.PlaceOrder(&orderTemplate, sl.Bool(false))
 }
 
-//Verify an order for a hardware
+// Verify an order for a hardware
 func (hw hardwareServerManager) VerifyOrder(orderTemplate datatypes.Container_Product_Order) (datatypes.Container_Product_Order, error) {
 	return hw.OrderService.VerifyOrder(&orderTemplate)
 }
 
-//Returns a dictionary of valid cancellation reasons.
+// Returns a dictionary of valid cancellation reasons.
 func (hw hardwareServerManager) GetCancellationReasons() map[string]string {
 	return map[string]string{
 		"unneeded":        "No longer needed",
@@ -525,7 +525,7 @@ func (hw hardwareServerManager) GetCancellationReasons() map[string]string {
 	}
 }
 
-//Returns valid options for ordering hardware.
+// Returns valid options for ordering hardware.
 func (hw hardwareServerManager) GetCreateOptions(productPackage datatypes.Product_Package) map[string]map[string]string {
 	//locations
 	locations := make(map[string]string)
@@ -574,7 +574,7 @@ func (hw hardwareServerManager) GetCreateOptions(productPackage datatypes.Produc
 	}
 }
 
-//Get the package related to simple hardware ordering
+// Get the package related to simple hardware ordering
 func (hw hardwareServerManager) GetPackage() (datatypes.Product_Package, error) {
 	mask := "items[keyName,capacity,description,attributes[id,attributeTypeKeyName],itemCategory[id,categoryCode],softwareDescription[id,referenceCode,longDescription],prices],activePresets,regions[location[location[priceGroups]]]"
 	filters := filter.New()
@@ -589,13 +589,13 @@ func (hw hardwareServerManager) GetPackage() (datatypes.Product_Package, error) 
 	return packages[0], nil
 }
 
-//Edit hostname, domain name, notes, user data of the hardware.
-//hardwareId: the instance ID to edit
-//userdata: user data on the hardware to edit. If none exist it will be created
-//hostname: valid hostname
-//domain: valid domain name
-//notes: notes about this particular hardware
-//tags: tags to set on the hardware as a comma separated list. Use the empty string to remove all tags.
+// Edit hostname, domain name, notes, user data of the hardware.
+// hardwareId: the instance ID to edit
+// userdata: user data on the hardware to edit. If none exist it will be created
+// hostname: valid hostname
+// domain: valid domain name
+// notes: notes about this particular hardware
+// tags: tags to set on the hardware as a comma separated list. Use the empty string to remove all tags.
 func (hw hardwareServerManager) Edit(hardwareId int, userdata, hostname, domain, notes string, tags string, publicPortSpeed, privatePortSpeed int) ([]bool, []string) {
 	var successes []bool
 	var messages []string
@@ -675,13 +675,13 @@ func (hw hardwareServerManager) Edit(hardwareId int, userdata, hostname, domain,
 	return successes, messages
 }
 
-//Update hardware firmware
-//hardwareId: The ID of the hardware to have its firmware updatd
-//ipmi: update the ipmi firmware
-//raidController: update the raid controller firmware
-//bios: update the bios firmware
-//hardDrive: update the hard drive firmware
-//network: update the network card firmware
+// Update hardware firmware
+// hardwareId: The ID of the hardware to have its firmware updatd
+// ipmi: update the ipmi firmware
+// raidController: update the raid controller firmware
+// bios: update the bios firmware
+// hardDrive: update the hard drive firmware
+// network: update the network card firmware
 func (hw hardwareServerManager) UpdateFirmware(hardwareId int, ipmi bool, raidController bool, bios bool, hardDrive bool, network bool) error {
 	_, err := hw.HardwareService.Id(hardwareId).CreateFirmwareUpdateTransaction(
 		sl.Int(utils.Bool2Int(ipmi)),
@@ -692,7 +692,7 @@ func (hw hardwareServerManager) UpdateFirmware(hardwareId int, ipmi bool, raidCo
 	return err
 }
 
-//Return a price ID attached to item with the given keyName
+// Return a price ID attached to item with the given keyName
 func (hw hardwareServerManager) GetExtraPriceId(items []datatypes.Product_Item, keyName string, hourly bool, location datatypes.Location_Region) (int, error) {
 	for _, item := range items {
 		if item.KeyName != nil && *item.KeyName != keyName {
@@ -711,7 +711,7 @@ func (hw hardwareServerManager) GetExtraPriceId(items []datatypes.Product_Item, 
 	return 0, errors.New(T("Could not find valid price for extra option {{.KeyName}}", map[string]interface{}{"KeyName": keyName}))
 }
 
-//Returns a 'free' price id given an option
+// Returns a 'free' price id given an option
 func (hw hardwareServerManager) GetDefaultPriceId(items []datatypes.Product_Item, option string, hourly bool, location datatypes.Location_Region) (int, error) {
 	for _, item := range items {
 		if item.ItemCategory == nil || item.ItemCategory.CategoryCode == nil || *item.ItemCategory.CategoryCode != option {
@@ -729,7 +729,7 @@ func (hw hardwareServerManager) GetDefaultPriceId(items []datatypes.Product_Item
 	return 0, errors.New(T("Could not find valid price for {{.KeyName}} option", map[string]interface{}{"KeyName": option}))
 }
 
-//Choose a valid price id for bandwidth.
+// Choose a valid price id for bandwidth.
 func (hw hardwareServerManager) GetBandwidthPriceId(items []datatypes.Product_Item, hourly bool, noPublic bool, location datatypes.Location_Region) (int, error) {
 	for _, item := range items {
 		var capacity float64
@@ -756,7 +756,7 @@ func (hw hardwareServerManager) GetBandwidthPriceId(items []datatypes.Product_It
 	return 0, errors.New(T("Could not find valid price for bandwidth option"))
 }
 
-//Returns the price id matching
+// Returns the price id matching
 func (hw hardwareServerManager) GetOSPriceId(items []datatypes.Product_Item, os string, location datatypes.Location_Region) (int, error) {
 	for _, item := range items {
 		if item.ItemCategory == nil || item.ItemCategory.CategoryCode == nil || *item.ItemCategory.CategoryCode != "os" ||
@@ -773,7 +773,7 @@ func (hw hardwareServerManager) GetOSPriceId(items []datatypes.Product_Item, os 
 	return 0, errors.New(T("Could not find valid price for os {{.OS}}", map[string]interface{}{"OS": os}))
 }
 
-//Choose a valid price id for port speed
+// Choose a valid price id for port speed
 func (hw hardwareServerManager) GetPortSpeedPriceId(items []datatypes.Product_Item, portSpeed int, noPublic bool, location datatypes.Location_Region) (int, error) {
 	for _, item := range items {
 		if item.ItemCategory == nil || item.ItemCategory.CategoryCode == nil || *item.ItemCategory.CategoryCode != "port_speed" {
@@ -815,7 +815,7 @@ func (hw hardwareServerManager) GetBandwidthData(id int, startDate time.Time, en
 	return bandwidthData, err
 }
 
-//Return True if the price object is hourly and/or monthly
+// Return True if the price object is hourly and/or monthly
 func matchesBilling(price datatypes.Product_Item_Price, hourly bool) bool {
 	if hourly && price.HourlyRecurringFee != nil {
 		return true
@@ -826,7 +826,7 @@ func matchesBilling(price datatypes.Product_Item_Price, hourly bool) bool {
 	return false
 }
 
-//Return True if the price object matches the location.
+// Return True if the price object matches the location.
 func matchesLocation(price datatypes.Product_Item_Price, location datatypes.Location_Region) bool {
 	if price.LocationGroupId == nil {
 		return true
@@ -839,7 +839,7 @@ func matchesLocation(price datatypes.Product_Item_Price, location datatypes.Loca
 	return false
 }
 
-//Determine if the port speed item is private network only
+// Determine if the port speed item is private network only
 func IsPrivatePortSpeedItem(item datatypes.Product_Item) bool {
 	for _, attribute := range item.Attributes {
 		if attribute.AttributeTypeKeyName != nil && *attribute.AttributeTypeKeyName == "IS_PRIVATE_NETWORK_ONLY" {
@@ -849,7 +849,7 @@ func IsPrivatePortSpeedItem(item datatypes.Product_Item) bool {
 	return false
 }
 
-//Determine if the item refers to a bonded port
+// Determine if the item refers to a bonded port
 func IsBonded(item datatypes.Product_Item) bool {
 	for _, attribute := range item.Attributes {
 		if attribute.AttributeTypeKeyName != nil && *attribute.AttributeTypeKeyName == "NON_LACP" {
@@ -869,7 +869,7 @@ func GetLocation(productPackage datatypes.Product_Package, location string) (dat
 	return datatypes.Location_Region{}, errors.New(T("Invalid datacenter name specified."))
 }
 
-//Get the preset id given the keyName of the preset
+// Get the preset id given the keyName of the preset
 func GetPresetId(productPackage datatypes.Product_Package, size string) (int, error) {
 	for _, preset := range productPackage.ActivePresets {
 		if preset.KeyName != nil && *preset.KeyName == size {
@@ -879,8 +879,8 @@ func GetPresetId(productPackage datatypes.Product_Package, size string) (int, er
 	return 0, errors.New(T("Could not find valid size for: {{.Size}}", map[string]interface{}{"Size": size}))
 }
 
-//Returns hardware server components.
-//int id: The hardware server identifier.
+// Returns hardware server components.
+// int id: The hardware server identifier.
 func (hw hardwareServerManager) GetHardwareComponents(id int) ([]datatypes.Hardware_Component, error) {
 	objectMask := "mask[id,hardwareComponentModel[longDescription,hardwareGenericComponentModel[description,hardwareComponentType[keyName]],firmwares[createDate,version]]]"
 	objectFilter := filter.New()
@@ -888,9 +888,9 @@ func (hw hardwareServerManager) GetHardwareComponents(id int) ([]datatypes.Hardw
 	return hw.HardwareService.Id(id).Mask(objectMask).Filter(objectFilter.Build()).GetComponents()
 }
 
-//Returns hardware server sensor data.
-//int id: The hardware server identifier.
-//string mask: Object mask.
+// Returns hardware server sensor data.
+// int id: The hardware server identifier.
+// string mask: Object mask.
 func (hw hardwareServerManager) GetSensorData(id int, mask string) ([]datatypes.Container_RemoteManagement_SensorReading, error) {
 	if mask == "" {
 		mask = "mask[sensorId,status,sensorReading,lowerCritical,lowerNonCritical,upperNonCritical,upperCritical]"
@@ -898,8 +898,8 @@ func (hw hardwareServerManager) GetSensorData(id int, mask string) ([]datatypes.
 	return hw.HardwareService.Id(id).Mask(mask).GetSensorData()
 }
 
-//Create a transaction to reflash firmware.
-//int id: The hardware server identifier.
+// Create a transaction to reflash firmware.
+// int id: The hardware server identifier.
 func (hw hardwareServerManager) CreateFirmwareReflashTransaction(id int) (bool, error) {
 	// int ipmi: Reflash the ipmi firmware.
 	// int raid_controller: Reflash the raid controller firmware.
@@ -911,9 +911,9 @@ func (hw hardwareServerManager) CreateFirmwareReflashTransaction(id int) (bool, 
 	return hw.HardwareService.Id(id).CreateFirmwareReflashTransaction(&ipmi, &raidController, &bios)
 }
 
-//Return all hardware notifications associated with the passed hardware ID
-//int id: The hardware server identifier.
-//string mask: Object mask.
+// Return all hardware notifications associated with the passed hardware ID
+// int id: The hardware server identifier.
+// string mask: Object mask.
 func (hw hardwareServerManager) GetUserCustomerNotificationsByHardwareId(id int, mask string) ([]datatypes.User_Customer_Notification_Hardware, error) {
 	UserCustomerNotificationHardwareService := services.GetUserCustomerNotificationHardwareService(hw.Session)
 	if mask == "" {
@@ -922,9 +922,9 @@ func (hw hardwareServerManager) GetUserCustomerNotificationsByHardwareId(id int,
 	return UserCustomerNotificationHardwareService.Mask(mask).FindByHardwareId(&id)
 }
 
-//Create a user hardware notification entry
-//int hardwareId: The hardware server identifier.
-//int userId: The user identifier.
+// Create a user hardware notification entry
+// int hardwareId: The hardware server identifier.
+// int userId: The user identifier.
 func (hw hardwareServerManager) CreateUserCustomerNotification(hardwareId int, userId int) (datatypes.User_Customer_Notification_Hardware, error) {
 	userCustomerNotificationTemplate := datatypes.User_Customer_Notification_Hardware{
 		HardwareId: sl.Int(hardwareId),
@@ -934,8 +934,8 @@ func (hw hardwareServerManager) CreateUserCustomerNotification(hardwareId int, u
 	return userCustomerNotificationHardwareService.CreateObject(&userCustomerNotificationTemplate)
 }
 
-//Delete a user server notification entry
-//int userCustomerNotificationId: The user customer notification identifier.
+// Delete a user server notification entry
+// int userCustomerNotificationId: The user customer notification identifier.
 func (hw hardwareServerManager) DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error) {
 	userCustomerNotificationTemplates := []datatypes.User_Customer_Notification_Hardware{
 		datatypes.User_Customer_Notification_Hardware{

@@ -57,8 +57,8 @@ var (
 	}
 )
 
-//Manages SoftLayer Virtual Servers.
-//See product information here: http://www.softlayer.com/virtual-servers
+// Manages SoftLayer Virtual Servers.
+// See product information here: http://www.softlayer.com/virtual-servers
 type VirtualServerManager interface {
 	AttachPortableStorage(id int, portableStorageId int) (datatypes.Provisioning_Version1_Transaction, error)
 	AuthorizeStorage(id int, storageId string) (bool, error)
@@ -155,16 +155,16 @@ func NewVirtualServerManager(session *session.Session) *virtualServerManager {
 	}
 }
 
-//Attach portable storage to a Virtual Server.
-//int id: Virtual server id.
-//int portableStorageId: Portable storage id.
+// Attach portable storage to a Virtual Server.
+// int id: Virtual server id.
+// int portableStorageId: Portable storage id.
 func (vs virtualServerManager) AttachPortableStorage(id int, portableStorageId int) (datatypes.Provisioning_Version1_Transaction, error) {
 	return vs.VirtualGuestService.Id(id).AttachDiskImage(&portableStorageId)
 }
 
-//Authorize File or Block Storage to a Virtual Server.
-//int id: Virtual server id.
-//string storageUsername: Storage username.
+// Authorize File or Block Storage to a Virtual Server.
+// int id: Virtual server id.
+// string storageUsername: Storage username.
 func (vs virtualServerManager) AuthorizeStorage(id int, storageUsername string) (bool, error) {
 	storageResult, err := vs.StorageManager.GetVolumeByUsername(storageUsername)
 	if err != nil {
@@ -181,21 +181,21 @@ func (vs virtualServerManager) AuthorizeStorage(id int, storageUsername string) 
 	return vs.VirtualGuestService.Id(id).AllowAccessToNetworkStorageList(networkStorageTemplate)
 }
 
-//Cancel an instance immediately, deleting all its data.
-//id: the instance ID to cancel
+// Cancel an instance immediately, deleting all its data.
+// id: the instance ID to cancel
 func (vs virtualServerManager) CancelInstance(id int) error {
 	_, err := vs.VirtualGuestService.Id(id).DeleteObject()
 	return err
 }
 
-//Migrate an instance.
-//id: the instance ID to migrate.
+// Migrate an instance.
+// id: the instance ID to migrate.
 func (vs virtualServerManager) MigrateInstance(id int) (datatypes.Provisioning_Version1_Transaction, error) {
 	resourceList, err := vs.VirtualGuestService.Id(id).Migrate()
 	return resourceList, err
 }
 
-//Migrate a dedicated Host instance.
+// Migrate a dedicated Host instance.
 func (vs virtualServerManager) MigrateDedicatedHost(id int, hostId int) (err error) {
 	return vs.VirtualGuestService.Id(id).MigrateDedicatedHost(&hostId)
 }
@@ -222,7 +222,7 @@ func GetDedicatedHostPriceId(items []datatypes.Product_Item, size string, hourly
 	return 0, errors.New(T("Could not find valid price for dedicated host with size= {{.KeyName}}", map[string]interface{}{"KeyName": size}))
 }
 
-//Create a dedicated host for dedicated virtual server
+// Create a dedicated host for dedicated virtual server
 func (vs virtualServerManager) CreateDedicatedHost(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Receipt, error) {
 	mask := "items[keyName,capacity,description,attributes[id,attributeTypeKeyName],itemCategory[id,categoryCode],softwareDescription[id,referenceCode,longDescription],prices],activePresets,regions[location[location[priceGroups]]]"
 	packages, err := vs.PackageService.Mask(mask).Filter(filter.Path("keyName").Eq("DEDICATED_HOST").Build()).GetAllObjects()
@@ -265,8 +265,8 @@ func (vs virtualServerManager) CreateDedicatedHost(size, hostname, domain, datac
 	return vs.OrderService.PlaceOrder(&order, sl.Bool(false))
 }
 
-//Creates a new virtual server instance.
-//template: the template virtual service instance to be created
+// Creates a new virtual server instance.
+// template: the template virtual service instance to be created
 func (vs virtualServerManager) CreateInstance(template *datatypes.Virtual_Guest) (datatypes.Virtual_Guest, error) {
 	return vs.VirtualGuestService.CreateObject(template)
 }
@@ -275,7 +275,7 @@ func (vs virtualServerManager) CreateInstances(template []datatypes.Virtual_Gues
 	return vs.VirtualGuestService.CreateObjects(template)
 }
 
-//Generate a new virtual server instance template from parameters for creation
+// Generate a new virtual server instance template from parameters for creation
 func (vs virtualServerManager) GenerateInstanceCreationTemplate(virtualGuest *datatypes.Virtual_Guest, params map[string]interface{}) (*datatypes.Virtual_Guest, error) {
 	var err error
 	if params["template"] != nil {
@@ -538,13 +538,13 @@ func getParamsFromTemplate(virtualGuest *datatypes.Virtual_Guest, templateFile s
 	return virtualGuest, nil
 }
 
-//Verifies an instance creation command, without actually placing an order.
-//template: the template virtual service instance to be verified
+// Verifies an instance creation command, without actually placing an order.
+// template: the template virtual service instance to be verified
 func (vs virtualServerManager) VerifyInstanceCreation(template datatypes.Virtual_Guest) (datatypes.Container_Product_Order, error) {
 	return vs.VirtualGuestService.GenerateOrderTemplate(&template)
 }
 
-//Retrieves the available options for creating a virtual server instance
+// Retrieves the available options for creating a virtual server instance
 func (vs virtualServerManager) GetCreateOptions(vsiType string, datacenter string) (map[string]map[string]string, error) {
 
 	virtualCreateOptionsResult := virtualCreateOptions{}
@@ -692,9 +692,9 @@ func (vs virtualServerManager) GetPackage(packageName string) (datatypes.Product
 	return packageData, nil
 }
 
-//Get details about a virtual server instance.
-//id: the instance ID
-//mask: mask of properties
+// Get details about a virtual server instance.
+// id: the instance ID
+// mask: mask of properties
 func (vs virtualServerManager) GetInstance(id int, mask string) (datatypes.Virtual_Guest, error) {
 	if mask == "" {
 		mask = INSTANCE_DEFAULT_MASK
@@ -706,9 +706,9 @@ func (vs virtualServerManager) GetDedicatedHost(hostId int) (datatypes.Virtual_D
 	return vs.DedicatedHostService.Id(hostId).GetObject()
 }
 
-//Assgin template properties from liked instance
-//virtualGuest: template instance to be assigned
-//id: the ID of liked instance
+// Assgin template properties from liked instance
+// virtualGuest: template instance to be assigned
+// id: the ID of liked instance
 func (vs virtualServerManager) GetLikedInstance(virtualGuest *datatypes.Virtual_Guest, id int) (*datatypes.Virtual_Guest, error) {
 	mask := "id, hostname, domain, datacenter.name, maxCpu, maxMemory, hourlyBillingFlag, localDiskFlag, " +
 		"dedicatedAccountHostOnlyFlag, privateNetworkOnlyFlag, postInstallScriptUri, userData, networkComponents[maxSpeed], operatingSystemReferenceCode"
@@ -733,29 +733,29 @@ func (vs virtualServerManager) GetLikedInstance(virtualGuest *datatypes.Virtual_
 	return virtualGuest, nil
 }
 
-//Capture one or all disks from a VS to a SoftLayer image.
-//vsId: ID of instance
-//imageName: name of the image to be created
-//imageNote: note of the image to be created
-//imageBlockDevices: image block devices to be created
+// Capture one or all disks from a VS to a SoftLayer image.
+// vsId: ID of instance
+// imageName: name of the image to be created
+// imageNote: note of the image to be created
+// imageBlockDevices: image block devices to be created
 func (vs virtualServerManager) CaptureImage(vsId int, imageName string, imageNote string, imageBlockDevices []datatypes.Virtual_Guest_Block_Device) (datatypes.Virtual_Guest_Block_Device_Template_Group, error) {
 	return vs.VirtualGuestService.Id(vsId).CreateArchiveTemplate(&imageName, imageBlockDevices, &imageNote)
 }
 
-//Retrieve a list of all virtual servers on the account.
-//hourly: include hourly instances
-//monthly: include monthly instances
-//domain: filter based on domain
-//hostname: filter based on hostname
-//datacenter: filter based on datacenter
-//publicIP: filter based on public IP address
-//privateIP: filter based on private IP address
-//createdby: filter based on ID of creator
-//cpu: filter based on number of CPUS
-//memory: filter based on amount of memory
-//network: filter based on network speed (in MBPS)
-//orderId: filter based on the ID of the order which purchased this instance
-//tags: filter based on list of tags
+// Retrieve a list of all virtual servers on the account.
+// hourly: include hourly instances
+// monthly: include monthly instances
+// domain: filter based on domain
+// hostname: filter based on hostname
+// datacenter: filter based on datacenter
+// publicIP: filter based on public IP address
+// privateIP: filter based on private IP address
+// createdby: filter based on ID of creator
+// cpu: filter based on number of CPUS
+// memory: filter based on amount of memory
+// network: filter based on network speed (in MBPS)
+// orderId: filter based on the ID of the order which purchased this instance
+// tags: filter based on list of tags
 func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain string, hostname string, datacenter string, publicIP string, privateIP string, owner string, cpu int, memory int, network int, orderID int, tags []string, mask string) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("virtualGuests.id").OrderBy("DESC"))
@@ -851,7 +851,7 @@ func (vs virtualServerManager) ListInstances(hourly bool, monthly bool, domain s
 
 }
 
-//This method support a mask and a filter as parameters to retrieve a list of all virtual servers on the account.
+// This method support a mask and a filter as parameters to retrieve a list of all virtual servers on the account.
 func (vs virtualServerManager) GetInstances(mask string, objFilter filter.Filters) ([]datatypes.Virtual_Guest, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("virtualGuests.id").OrderBy("ASC"))
@@ -878,24 +878,24 @@ func (vs virtualServerManager) GetInstances(mask string, objFilter filter.Filter
 	return resourceList, nil
 }
 
-//Pause an active virtual server.
-//id: ID of virtual server instance
+// Pause an active virtual server.
+// id: ID of virtual server instance
 func (vs virtualServerManager) PauseInstance(id int) error {
 	_, err := vs.VirtualGuestService.Id(id).Pause()
 	return err
 }
 
-//Power on a virtual server.
-//id: ID of virtual server instance
+// Power on a virtual server.
+// id: ID of virtual server instance
 func (vs virtualServerManager) PowerOnInstance(id int) error {
 	_, err := vs.VirtualGuestService.Id(id).PowerOn()
 	return err
 }
 
-//Power off an active virtual server.
-//id: ID of virtual server instance
-//sort: perform a soft poweroff
-//hard: perform a hard poweroff
+// Power off an active virtual server.
+// id: ID of virtual server instance
+// sort: perform a soft poweroff
+// hard: perform a hard poweroff
 func (vs virtualServerManager) PowerOffInstance(id int, soft bool, hard bool) error {
 	var err error
 	if soft == true && hard == false {
@@ -906,10 +906,10 @@ func (vs virtualServerManager) PowerOffInstance(id int, soft bool, hard bool) er
 	return err
 }
 
-//Reboot an active virtual server.
-//id: ID of virtual server instance
-//sort: perform a soft reboot
-//hard: perform a hard reboot
+// Reboot an active virtual server.
+// id: ID of virtual server instance
+// sort: perform a soft reboot
+// hard: perform a hard reboot
 func (vs virtualServerManager) RebootInstance(id int, soft bool, hard bool) error {
 	var err error
 	if soft == false && hard == false {
@@ -922,11 +922,11 @@ func (vs virtualServerManager) RebootInstance(id int, soft bool, hard bool) erro
 	return err
 }
 
-//Reload operating system on a virtual server
-//id: ID of virtual server instance
-//postURI:The URI of the post-install script to run after reload
-//sshKeys: The SSH key IDs to add to the root user
-//imageID: The ID of the image to load onto the server
+// Reload operating system on a virtual server
+// id: ID of virtual server instance
+// postURI:The URI of the post-install script to run after reload
+// sshKeys: The SSH key IDs to add to the root user
+// imageID: The ID of the image to load onto the server
 func (vs virtualServerManager) ReloadInstance(id int, postURI string, sshKeys []int, imageID int) error {
 	config := datatypes.Container_Hardware_Server_Configuration{}
 	if postURI != "" {
@@ -942,26 +942,26 @@ func (vs virtualServerManager) ReloadInstance(id int, postURI string, sshKeys []
 	return err
 }
 
-//Resumes a paused virtual server.
-//id: ID of virtual server instance
+// Resumes a paused virtual server.
+// id: ID of virtual server instance
 func (vs virtualServerManager) ResumeInstance(id int) error {
 	_, err := vs.VirtualGuestService.Id(id).Resume()
 	return err
 }
 
-//Reboot a virtual server into a rescue image.
-//id: ID of virtual server instance
+// Reboot a virtual server into a rescue image.
+// id: ID of virtual server instance
 func (vs virtualServerManager) RescueInstance(id int) error {
 	_, err := vs.VirtualGuestService.Id(id).ExecuteRescueLayer()
 	return err
 }
 
-//Upgrades a virtual server instance
-//id: ID of virtual server instance
-//cpu: The number of virtual CPUs to upgrade to
-//memory: RAM of the virtual server to be upgraded to
-//network: The port speed to set
-//privateCPU: CPU will be in Private Node.
+// Upgrades a virtual server instance
+// id: ID of virtual server instance
+// cpu: The number of virtual CPUs to upgrade to
+// memory: RAM of the virtual server to be upgraded to
+// network: The port speed to set
+// privateCPU: CPU will be in Private Node.
 func (vs virtualServerManager) UpgradeInstance(id int, cpu int, memory int, network int, addDisk int, resizeDisk []int, privateCPU bool, flavor string) (datatypes.Container_Product_Order_Receipt, error) {
 	upgradeOptions := make(map[string]int)
 	public := true
@@ -1195,7 +1195,7 @@ provisionDate, powerState[keyName]]`
 		if provisionDate != nil && !reloading {
 			if virtualGuest.PowerState != nil && virtualGuest.PowerState.KeyName != nil {
 				if *virtualGuest.PowerState.KeyName == "HALTED" || *virtualGuest.PowerState.KeyName == "PAUSED" {
-					return false, *virtualGuest.PowerState.KeyName , nil
+					return false, *virtualGuest.PowerState.KeyName, nil
 				}
 			}
 			return true, "", nil
@@ -1211,26 +1211,26 @@ provisionDate, powerState[keyName]]`
 	}
 }
 
-//Set user metadata for a virtual server
-//id: ID of virtual server instance
-//userdata: array of user data
+// Set user metadata for a virtual server
+// id: ID of virtual server instance
+// userdata: array of user data
 func (vs virtualServerManager) SetUserMetadata(id int, userdata []string) error {
 	_, err := vs.VirtualGuestService.Id(id).SetUserMetadata(userdata)
 	return err
 }
 
-//Set tags for a virtual server
-//id: ID of virtual server instance
-//tags: tags to set on the VS as a comma separated list. Use the empty string to remove all tags.
+// Set tags for a virtual server
+// id: ID of virtual server instance
+// tags: tags to set on the VS as a comma separated list. Use the empty string to remove all tags.
 func (vs virtualServerManager) SetTags(id int, tags string) error {
 	_, err := vs.VirtualGuestService.Id(id).SetTags(&tags)
 	return err
 }
 
-//Set network port speed for a virtual server
-//id: ID of virtual server instance
-//public: public network port
-//portSpeed: the network port speed to be set
+// Set network port speed for a virtual server
+// id: ID of virtual server instance
+// public: public network port
+// portSpeed: the network port speed to be set
 func (vs virtualServerManager) SetNetworkPortSpeed(id int, public bool, portSpeed int) error {
 	var err error
 	if public {
@@ -1241,14 +1241,14 @@ func (vs virtualServerManager) SetNetworkPortSpeed(id int, public bool, portSpee
 	return err
 }
 
-//Edit hostname, domain name, notes, and/or the user data of a virtual server
-//id: ID of virtual server instance
-//hostname: hostname of virtual server to be updated
-//domain: domain of virtual server to be updated
-//userdata: userdata of virtual server to be updated
-//tags: tags of virtual server to be updated
-//publicSpeed: public network port spped to be updated
-//privateSpeed: private network port spped to be updated
+// Edit hostname, domain name, notes, and/or the user data of a virtual server
+// id: ID of virtual server instance
+// hostname: hostname of virtual server to be updated
+// domain: domain of virtual server to be updated
+// userdata: userdata of virtual server to be updated
+// tags: tags of virtual server to be updated
+// publicSpeed: public network port spped to be updated
+// privateSpeed: private network port spped to be updated
 func (vs virtualServerManager) EditInstance(id int, hostname string, domain string, userdata string, tags string, publicSpeed *int, privateSpeed *int) ([]bool, []string) {
 	var successes []bool
 	var messages []string
@@ -1347,15 +1347,15 @@ func (vs virtualServerManager) GetBandwidthData(id int, startDate time.Time, end
 	return bandwidthData, err
 }
 
-//Returns the virtual server storage credentials.
-//int id: Id of the virtual server
+// Returns the virtual server storage credentials.
+// int id: Id of the virtual server
 func (vs virtualServerManager) GetStorageCredentials(id int) (datatypes.Network_Storage_Allowed_Host, error) {
 	mask := "mask[credential]"
 	return vs.VirtualGuestService.Id(id).Mask(mask).GetAllowedHost()
 }
 
-//Returns the virtual server portable storage.
-//int id: Id of the virtual server
+// Returns the virtual server portable storage.
+// int id: Id of the virtual server
 func (vs virtualServerManager) GetPortableStorage(id int) ([]datatypes.Virtual_Disk_Image, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("portableStorageVolumes.blockDevices.guest.id").Eq(id))
@@ -1363,16 +1363,16 @@ func (vs virtualServerManager) GetPortableStorage(id int) ([]datatypes.Virtual_D
 	return vs.AccountService.Mask(mask).Filter(filters.Build()).GetPortableStorageVolumes()
 }
 
-//Returns the virtual server local disks.
-//int id: Id of the virtual server
+// Returns the virtual server local disks.
+// int id: Id of the virtual server
 func (vs virtualServerManager) GetLocalDisks(id int) ([]datatypes.Virtual_Guest_Block_Device, error) {
 	mask := "mask[diskImage]"
 	return vs.VirtualGuestService.Id(id).Mask(mask).GetBlockDevices()
 }
 
-//Returns the virtual server attached network storage.
-//int id: Id of the virtual server
-//nas_type: storage type.
+// Returns the virtual server attached network storage.
+// int id: Id of the virtual server
+// nas_type: storage type.
 func (vs virtualServerManager) GetStorageDetails(id int, nasType string) ([]datatypes.Network_Storage, error) {
 	mask := "mask[id,username,capacityGb,notes,serviceResourceBackendIpAddress,allowedVirtualGuests[id,datacenter]]"
 	return vs.VirtualGuestService.Id(id).Mask(mask).GetAttachedNetworkStorages(&nasType)
@@ -1395,8 +1395,8 @@ func (vs virtualServerManager) CapacityList(mask string) ([]datatypes.Virtual_Re
 	return vs.AccountService.Mask(mask).GetReservedCapacityGroups()
 }
 
-//Pulls down all backendRouterIds that are available
-//A list of locations where product_package
+// Pulls down all backendRouterIds that are available
+// A list of locations where product_package
 func (vs virtualServerManager) GetRouters(packageName string) ([]datatypes.Location_Region, error) {
 	productPackage, err := vs.OrderManager.GetPackageByKey(packageName, "mask[id,locations]")
 	if err != nil {
@@ -1406,7 +1406,7 @@ func (vs virtualServerManager) GetRouters(packageName string) ([]datatypes.Locat
 	return regions, err
 }
 
-//List available reserved capacity plans
+// List available reserved capacity plans
 func (vs virtualServerManager) GetCapacityCreateOptions(packageName string) ([]datatypes.Product_Item, error) {
 	productPackage, err := vs.OrderManager.GetPackageByKey(packageName, "mask[id,locations]")
 	if err != nil {
@@ -1416,7 +1416,7 @@ func (vs virtualServerManager) GetCapacityCreateOptions(packageName string) ([]d
 	return items, err
 }
 
-//Get the pod details, which contains the router id
+// Get the pod details, which contains the router id
 func (vs virtualServerManager) GetPods() ([]datatypes.Network_Pod, error) {
 	podService := services.GetNetworkPodService(vs.Session)
 	return podService.GetAllObjects()
@@ -1520,9 +1520,9 @@ func (vs virtualServerManager) PlacementCreate(templateObject *datatypes.Virtual
 	return placementService.CreateObject(templateObject)
 }
 
-//Return all virtual guest notifications associated with the passed hardware ID
-//int id: The virtual guest identifier.
-//string mask: Object mask.
+// Return all virtual guest notifications associated with the passed hardware ID
+// int id: The virtual guest identifier.
+// string mask: Object mask.
 func (vs virtualServerManager) GetUserCustomerNotificationsByVirtualGuestId(id int, mask string) ([]datatypes.User_Customer_Notification_Virtual_Guest, error) {
 	userCustomerNotificationVirtualGuestService := services.GetUserCustomerNotificationVirtualGuestService(vs.Session)
 	if mask == "" {
@@ -1531,9 +1531,9 @@ func (vs virtualServerManager) GetUserCustomerNotificationsByVirtualGuestId(id i
 	return userCustomerNotificationVirtualGuestService.Mask(mask).FindByGuestId(&id)
 }
 
-//Create a user virtual server notification entry
-//int virtualServerId: The vietual server identifier.
-//int userId: The user identifier.
+// Create a user virtual server notification entry
+// int virtualServerId: The vietual server identifier.
+// int userId: The user identifier.
 func (vs virtualServerManager) CreateUserCustomerNotification(virtualServerId int, userId int) (datatypes.User_Customer_Notification_Virtual_Guest, error) {
 	userCustomerNotificationTemplate := datatypes.User_Customer_Notification_Virtual_Guest{
 		GuestId: sl.Int(virtualServerId),
@@ -1544,8 +1544,8 @@ func (vs virtualServerManager) CreateUserCustomerNotification(virtualServerId in
 	return userCustomerNotificationVirtualGuestService.Mask(mask).CreateObject(&userCustomerNotificationTemplate)
 }
 
-//Delete a user virtual server notification entry
-//int userCustomerNotificationId: The user customer notification identifier.
+// Delete a user virtual server notification entry
+// int userCustomerNotificationId: The user customer notification identifier.
 func (vs virtualServerManager) DeleteUserCustomerNotification(userCustomerNotificationId int) (resp bool, err error) {
 	userCustomerNotificationTemplates := []datatypes.User_Customer_Notification_Virtual_Guest{
 		datatypes.User_Customer_Notification_Virtual_Guest{

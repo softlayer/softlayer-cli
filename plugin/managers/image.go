@@ -193,9 +193,9 @@ func (i imageManager) GetDatacenters(imageId int) ([]datatypes.Location, error) 
 	return i.ImageService.Id(imageId).GetStorageLocations()
 }
 
-//Permit sharing image template with another account.
-//imageId: The ID of the image.
-//accountId: The ID of the another account to share the image.
+// Permit sharing image template with another account.
+// imageId: The ID of the image.
+// accountId: The ID of the another account to share the image.
 func (i imageManager) ShareImage(imageId int, accountId int) (bool, error) {
 	return i.ImageService.Id(imageId).PermitSharingAccess(&accountId)
 }

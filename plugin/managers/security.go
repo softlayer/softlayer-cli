@@ -11,10 +11,10 @@ import (
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
-//Manages account SSH keys and SSL certificates in SoftLayer.
-//See product information here:
-//https://knowledgelayer.softlayer.com/procedure/ssh-keys and
-//http://www.softlayer.com/ssl-certificates
+// Manages account SSH keys and SSL certificates in SoftLayer.
+// See product information here:
+// https://knowledgelayer.softlayer.com/procedure/ssh-keys and
+// http://www.softlayer.com/ssl-certificates
 type SecurityManager interface {
 	AddSSHKey(key string, label string, notes string) (datatypes.Security_Ssh_Key, error)
 	DeleteSSHKey(keyID int) error
@@ -43,10 +43,10 @@ func NewSecurityManager(session *session.Session) *securityManager {
 	}
 }
 
-//Adds a new SSH key to the account.
-//key: The SSH key to add
-//label: The label for the key
-//notes: The Notes for the key
+// Adds a new SSH key to the account.
+// key: The SSH key to add
+// label: The label for the key
+// notes: The Notes for the key
 func (sm securityManager) AddSSHKey(key string, label string, notes string) (datatypes.Security_Ssh_Key, error) {
 	template := datatypes.Security_Ssh_Key{
 		Key:   sl.String(key),
@@ -56,8 +56,8 @@ func (sm securityManager) AddSSHKey(key string, label string, notes string) (dat
 	return sm.SSHKeyService.CreateObject(&template)
 }
 
-//Permanently deletes an SSH key from the account.
-//keyID: The ID of the key to delete
+// Permanently deletes an SSH key from the account.
+// keyID: The ID of the key to delete
 func (sm securityManager) DeleteSSHKey(keyID int) error {
 	_, err := sm.SSHKeyService.Id(keyID).DeleteObject()
 	if err != nil {
@@ -66,10 +66,10 @@ func (sm securityManager) DeleteSSHKey(keyID int) error {
 	return nil
 }
 
-//Edits information about an SSH key.
-//keyID: The ID of the key to delete
-//label: The label for the key
-//notes: The Notes for the key
+// Edits information about an SSH key.
+// keyID: The ID of the key to delete
+// label: The label for the key
+// notes: The Notes for the key
 func (sm securityManager) EditSSHKey(keyID int, label string, notes string) error {
 	template := datatypes.Security_Ssh_Key{}
 	if label != "" {
@@ -85,14 +85,14 @@ func (sm securityManager) EditSSHKey(keyID int, label string, notes string) erro
 	return nil
 }
 
-//Returns full information about a single SSH key.
-//keyID: The ID of the key to delete
+// Returns full information about a single SSH key.
+// keyID: The ID of the key to delete
 func (sm securityManager) GetSSHKey(keyID int) (datatypes.Security_Ssh_Key, error) {
 	return sm.SSHKeyService.Id(keyID).GetObject()
 }
 
-//Lists all SSH keys on the account.
-//label: The label for the key to be filtered
+// Lists all SSH keys on the account.
+// label: The label for the key to be filtered
 func (sm securityManager) ListSSHKeys(label string) ([]datatypes.Security_Ssh_Key, error) {
 	if label != "" {
 		filters := filter.New(filter.Path("sshKeys.label").Eq(label))
@@ -101,8 +101,8 @@ func (sm securityManager) ListSSHKeys(label string) ([]datatypes.Security_Ssh_Ke
 	return sm.AccountService.GetSshKeys()
 }
 
-//Return sshkey IDs which match the given label.
-//label: The label for the key
+// Return sshkey IDs which match the given label.
+// label: The label for the key
 func (sm securityManager) GetSSHKeyIDsFromLabel(label string) ([]int, error) {
 	keys, err := sm.ListSSHKeys(label)
 	if err != nil {
@@ -117,8 +117,8 @@ func (sm securityManager) GetSSHKeyIDsFromLabel(label string) ([]int, error) {
 	return result, nil
 }
 
-//List all certificates.
-//method: The type of certificates to list. Options are: 'all', 'expired', and 'valid'.
+// List all certificates.
+// method: The type of certificates to list. Options are: 'all', 'expired', and 'valid'.
 func (sm securityManager) ListCertificates(method string) ([]datatypes.Security_Certificate, error) {
 	mask := "mask[id,commonName,validityDays,notes]"
 	if method == "" || method == "all" {
@@ -131,14 +131,14 @@ func (sm securityManager) ListCertificates(method string) ([]datatypes.Security_
 	return []datatypes.Security_Certificate{}, errors.New(T("Invalid method."))
 }
 
-//Creates a new certificate.
-//cert: a template certificate object to be created
+// Creates a new certificate.
+// cert: a template certificate object to be created
 func (sm securityManager) AddCertificate(cert datatypes.Security_Certificate) (datatypes.Security_Certificate, error) {
 	return sm.CertificateService.CreateObject(&cert)
 }
 
-//Removes a certificate.
-//certID: a certificate ID to remove
+// Removes a certificate.
+// certID: a certificate ID to remove
 func (sm securityManager) RemoveCertificate(certID int) error {
 	_, err := sm.CertificateService.Id(certID).DeleteObject()
 	if err != nil {
@@ -147,8 +147,8 @@ func (sm securityManager) RemoveCertificate(certID int) error {
 	return nil
 }
 
-//Updates a certificate with the included options.
-//cert: the certificate to be updated
+// Updates a certificate with the included options.
+// cert: the certificate to be updated
 func (sm securityManager) EditCertificate(cert datatypes.Security_Certificate) error {
 	if cert.Id != nil {
 		_, err := sm.CertificateService.Id(*cert.Id).EditObject(&cert)
@@ -160,8 +160,8 @@ func (sm securityManager) EditCertificate(cert datatypes.Security_Certificate) e
 	return errors.New(T("certificate ID not found"))
 }
 
-//Gets a certificate with the ID specified.
-//certID: a certificate ID to retrieve
+// Gets a certificate with the ID specified.
+// certID: a certificate ID to retrieve
 func (sm securityManager) GetCertificate(certID int) (datatypes.Security_Certificate, error) {
 	return sm.CertificateService.Id(certID).GetObject()
 }

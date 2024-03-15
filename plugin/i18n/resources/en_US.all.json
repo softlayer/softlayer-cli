@@ -2452,6 +2452,10 @@
     "translation": "Display permissions assigned to this user. Master users do not show permissions"
   },
   {
+    "id": "Display searchable types.",
+    "translation": "Display searchable types."
+  },
+  {
     "id": "Display virtual guests this user has access to",
     "translation": "Display virtual guests this user has access to"
   },
@@ -5416,6 +5420,10 @@
     "translation": "Invoice details."
   },
   {
+    "id": "Ip Address",
+    "translation": "Ip Address"
+  },
+  {
     "id": "IpAddress",
     "translation": "IpAddress"
   },
@@ -6704,6 +6712,10 @@
     "translation": "Perform a hard shutdown"
   },
   {
+    "id": "Perform a query against the SoftLayer search database.",
+    "translation": "Perform a query against the SoftLayer search database."
+  },
+  {
     "id": "Perform a soft reboot",
     "translation": "Perform a soft reboot"
   },
@@ -7076,6 +7088,14 @@
     "translation": "Projected Usage"
   },
   {
+    "id": "Properties",
+    "translation": "Properties"
+  },
+  {
+    "id": "Property",
+    "translation": "Property"
+  },
+  {
     "id": "Protocol",
     "translation": "Protocol"
   },
@@ -7198,6 +7218,10 @@
   {
     "id": "Read Failure: {{.Error}}.\n",
     "translation": "Read Failure: {{.Error}}.\n"
+  },
+  {
+    "id": "Read More: https://sldn.softlayer.com/reference/services/SoftLayer_Search/search/\nExamples::\n\n    sl search --query 'test.com'\n    sl search --query '_objectType:SoftLayer_Virtual_Guest test.com'\n",
+    "translation": "Read More: https://sldn.softlayer.com/reference/services/SoftLayer_Search/search/\nExamples::\n\n    sl search --query 'test.com'\n    sl search --query '_objectType:SoftLayer_Virtual_Guest test.com'\n"
   },
   {
     "id": "Read userdata from file",
@@ -7960,6 +7984,10 @@
     "translation": "Software not found"
   },
   {
+    "id": "Sortable",
+    "translation": "Sortable"
+  },
+  {
     "id": "Specifies if image is bring your own license",
     "translation": "Specifies if image is bring your own license"
   },
@@ -8638,6 +8666,10 @@
   {
     "id": "The requested duplicate volume size is too small. Duplicate volumes must be at least as large as their origin volumes.",
     "translation": "The requested duplicate volume size is too small. Duplicate volumes must be at least as large as their origin volumes."
+  },
+  {
+    "id": "The search query you want to use.",
+    "translation": "The search query you want to use."
   },
   {
     "id": "The short name of the datacenter",

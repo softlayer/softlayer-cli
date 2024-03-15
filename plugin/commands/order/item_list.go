@@ -63,7 +63,7 @@ func (cmd *ItemListCommand) Run(args []string) error {
 	return nil
 }
 
-//"""sorts the items into a dictionary of categories, with a list of items"""
+// """sorts the items into a dictionary of categories, with a list of items"""
 func sortItems(items []datatypes.Product_Item) map[string][]datatypes.Product_Item {
 
 	sortedItems := make(map[string][]datatypes.Product_Item)

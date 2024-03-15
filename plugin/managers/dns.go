@@ -18,8 +18,8 @@ const (
 	RECORD_DETAIL_MASK  = "id,expire,domainId,host,minimum,refresh,retry,mxPriority,ttl,type,data,responsiblePerson"
 )
 
-//Manage SoftLayer DNS.
-//See product information here: http://www.softlayer.com/DOMAIN-SERVICES
+// Manage SoftLayer DNS.
+// See product information here: http://www.softlayer.com/DOMAIN-SERVICES
 type DNSManager interface {
 	GetZoneIdFromName(zoneName string) (int, error)
 	ListZones() ([]datatypes.Dns_Domain, error)
@@ -57,7 +57,7 @@ func NewDNSManager(session *session.Session) *DNSmanager {
 	}
 }
 
-//Return zoen ID based on a zone name.
+// Return zoen ID based on a zone name.
 func (dns DNSmanager) GetZoneIdFromName(zoneName string) (int, error) {
 	domains, err := dns.AccountService.Mask("id").Filter(filter.New(filter.Path("domains.name").Eq(zoneName)).Build()).GetDomains()
 	if err != nil {
@@ -69,14 +69,14 @@ func (dns DNSmanager) GetZoneIdFromName(zoneName string) (int, error) {
 	return *domains[0].Id, nil
 }
 
-//Retrieve a list of all DNS zones in current account.
+// Retrieve a list of all DNS zones in current account.
 func (dns DNSmanager) ListZones() ([]datatypes.Dns_Domain, error) {
 	return dns.AccountService.GetDomains()
 }
 
-//Get a zone and its resource records.
-//zone: the zone name
-//getRecords: whether to return resource records
+// Get a zone and its resource records.
+// zone: the zone name
+// getRecords: whether to return resource records
 func (dns DNSmanager) GetZone(zoneId int, getRecords bool) (datatypes.Dns_Domain, error) {
 	if getRecords == true {
 		return dns.DomainService.Mask("resourceRecords").GetObject()
@@ -84,8 +84,8 @@ func (dns DNSmanager) GetZone(zoneId int, getRecords bool) (datatypes.Dns_Domain
 	return dns.DomainService.Id(zoneId).GetObject()
 }
 
-//Create a zone from the specified parameters, with default SOA and NS records
-//zone: the zone name to create
+// Create a zone from the specified parameters, with default SOA and NS records
+// zone: the zone name to create
 func (dns DNSmanager) CreateZone(zoneName string) (datatypes.Dns_Domain, error) {
 	dnsDomain := datatypes.Dns_Domain{}
 	dnsDomain.Name = sl.String(zoneName)
@@ -109,19 +109,19 @@ func (dns DNSmanager) CreateZone(zoneName string) (datatypes.Dns_Domain, error) 
 	return dns.DomainService.CreateObject(&dnsDomain)
 }
 
-//Delete a zone by its ID
-//zoneId: the zone ID to delete
+// Delete a zone by its ID
+// zoneId: the zone ID to delete
 func (dns DNSmanager) DeleteZone(zoneId int) error {
 	_, err := dns.DomainService.Id(zoneId).DeleteObject()
 	return err
 }
 
-//Create a resource record on a domain
-//zoneId: the zone's ID
-//host: the name of the record to add
-//recordType: the type of record (A, AAAA, CNAME, MX, TXT, etc.)
-//data: the record's value
-//ttl: the TTL or time-to-live value (default: 60)
+// Create a resource record on a domain
+// zoneId: the zone's ID
+// host: the name of the record to add
+// recordType: the type of record (A, AAAA, CNAME, MX, TXT, etc.)
+// data: the record's value
+// ttl: the TTL or time-to-live value (default: 60)
 func (dns DNSmanager) CreateResourceRecord(zoneId int, host string, recordType string, data string, ttl int) (datatypes.Dns_Domain_ResourceRecord, error) {
 	if ttl == 0 {
 		ttl = 60
@@ -169,26 +169,26 @@ func (dns DNSmanager) SrvResourceRecordCreate(rr datatypes.Dns_Domain_ResourceRe
 
 }
 
-//Delete a resource record by its ID
-//recordId: the record's ID
+// Delete a resource record by its ID
+// recordId: the record's ID
 func (dns DNSmanager) DeleteResourceRecord(recordId int) error {
 	_, err := dns.ResourceRecordService.Id(recordId).DeleteObject()
 	return err
 }
 
-//Get a DNS resource record
-//recordId: the record's ID
+// Get a DNS resource record
+// recordId: the record's ID
 func (dns DNSmanager) GetResourceRecord(recordId int) (datatypes.Dns_Domain_ResourceRecord, error) {
 	return dns.ResourceRecordService.Id(recordId).GetObject()
 }
 
-//List resource records within a zone
-//zoneId: the zone name in which to search.
-//recordType: the type of record
-//host: record's host
-//data: the records data
-//ttl: time in seconds
-//mask: mask of properties
+// List resource records within a zone
+// zoneId: the zone name in which to search.
+// recordType: the type of record
+// host: record's host
+// data: the records data
+// ttl: time in seconds
+// mask: mask of properties
 func (dns DNSmanager) ListResourceRecords(zoneId int, recordType string, host string, data string, ttl int, mask string) ([]datatypes.Dns_Domain_ResourceRecord, error) {
 	filters := filter.New()
 	if data != "" {
@@ -209,23 +209,23 @@ func (dns DNSmanager) ListResourceRecords(zoneId int, recordType string, host st
 	return dns.DomainService.Id(zoneId).Filter(filters.Build()).GetResourceRecords()
 }
 
-//Update an existing record with specified options
-//record: the record to update, it must include id
+// Update an existing record with specified options
+// record: the record to update, it must include id
 func (dns DNSmanager) EditResourceRecord(record datatypes.Dns_Domain_ResourceRecord) error {
 	_, err := dns.ResourceRecordService.Id(*record.Id).EditObject(&record)
 	return err
 }
 
-//Retrieve a zone dump in BIND format
-//zoneId: The zone ID to dump
+// Retrieve a zone dump in BIND format
+// zoneId: The zone ID to dump
 func (dns DNSmanager) DumpZone(zoneId int) (string, error) {
 	return dns.DomainService.Id(zoneId).GetZoneFileContents()
 }
 
-//Sync A record.
-//vs: virtual server the A record is belong to
-//zoneId: The zone ID to be added/updated
-//ttl: Time-To-Live to be updated
+// Sync A record.
+// vs: virtual server the A record is belong to
+// zoneId: The zone ID to be added/updated
+// ttl: Time-To-Live to be updated
 func (dns DNSmanager) SyncARecord(vs datatypes.Virtual_Guest, zoneId int, ttl int) error {
 	if vs.PrimaryIpAddress == nil {
 		return errors.New(T("No primary IP address associated with virtual server instance: {{.VsId}}.", map[string]interface{}{"VsId": *vs.Id}))
@@ -261,10 +261,10 @@ func (dns DNSmanager) SyncARecord(vs datatypes.Virtual_Guest, zoneId int, ttl in
 	return nil
 }
 
-//Sync AAAA record.
-//vs: virtual server the A record is belong to
-//zoneId: The zone ID to be added/updated
-//ttl: Time-To-Live to be updated
+// Sync AAAA record.
+// vs: virtual server the A record is belong to
+// zoneId: The zone ID to be added/updated
+// ttl: Time-To-Live to be updated
 func (dns DNSmanager) SyncAAAARecord(vs datatypes.Virtual_Guest, zoneId int, ttl int) error {
 	if vs.PrimaryNetworkComponent == nil ||
 		vs.PrimaryNetworkComponent.PrimaryVersion6IpAddressRecord == nil ||
@@ -302,9 +302,9 @@ func (dns DNSmanager) SyncAAAARecord(vs datatypes.Virtual_Guest, zoneId int, ttl
 	return nil
 }
 
-//Sync PTR record.
-//vs: virtual server the PTR record is belong to
-//ttl: Time-To-Live to be updated
+// Sync PTR record.
+// vs: virtual server the PTR record is belong to
+// ttl: Time-To-Live to be updated
 func (dns DNSmanager) SyncPTRRecord(vs datatypes.Virtual_Guest, ttl int) error {
 	var hostRecords []string
 	if vs.PrimaryIpAddress != nil {

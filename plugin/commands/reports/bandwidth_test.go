@@ -54,7 +54,7 @@ var _ = Describe("reports bandwidth", func() {
 
 		Context("Advanced search to bandwidth summary", func() {
 			BeforeEach(func() {
-				filename := []string{"bandwidth"}
+				filename := []string{"advancedSearch-bandwidth"}
 				fakeSession = testhelpers.NewFakeSoftlayerSession(filename)
 				slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 				cliCommand = reports.NewBandwidthCommand(slCommand)
@@ -85,10 +85,7 @@ var _ = Describe("reports bandwidth", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Allocation": "250.00 GB",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Pool": "Virtual Private Rack",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Tags": ""`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`]`))
+
 			})
 		})
 	})

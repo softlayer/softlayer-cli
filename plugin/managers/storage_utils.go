@@ -23,9 +23,9 @@ func HasCategory(categories []datatypes.Product_Item_Category, categoryCode stri
 	return false
 }
 
-//Find the snapshot schedule ID for the given volume and keyname
-//volume: The volume for which the snapshot ID is desired
-//scheduleKeyName: The keyname of the snapshot schedule
+// Find the snapshot schedule ID for the given volume and keyname
+// volume: The volume for which the snapshot ID is desired
+// scheduleKeyName: The keyname of the snapshot schedule
 func FindSnapshotScheduleId(volume datatypes.Network_Storage, scheduleKeyName string) (int, error) {
 	for _, s := range volume.Schedules {
 		if s.Type != nil && s.Type.Keyname != nil {
@@ -37,11 +37,11 @@ func FindSnapshotScheduleId(volume datatypes.Network_Storage, scheduleKeyName st
 	return 0, errors.New(T("The given snapshot schedule name was not found for the given storage volume."))
 }
 
-//Populate the given host_templates array with the IDs provided
-//hardwareIds: A List of SoftLayer_Hardware ids
-//vsIds A List of SoftLayer_Virtual_Guest ids
-//IPIds: A List of SoftLayer_Network_Subnet_IpAddress ids
-//subnetIds: A List of SoftLayer_Network_Subnet ids
+// Populate the given host_templates array with the IDs provided
+// hardwareIds: A List of SoftLayer_Hardware ids
+// vsIds A List of SoftLayer_Virtual_Guest ids
+// IPIds: A List of SoftLayer_Network_Subnet_IpAddress ids
+// subnetIds: A List of SoftLayer_Network_Subnet ids
 func PopulateHostTemplates(hardwareIds []int, vsIds []int, IPIds []int, subnetIds []int) []datatypes.Container_Network_Storage_Host {
 	templates := []datatypes.Container_Network_Storage_Host{}
 	for _, hardwareId := range hardwareIds {
@@ -149,8 +149,8 @@ func ValidateDuplicateEnduranceTier(originalVolume datatypes.Network_Storage, du
 	return duplicateTier, nil
 }
 
-//Find the tier for the given endurance volume (IOPS per GB)
-//volume: The volume for which the tier level is desired
+// Find the tier for the given endurance volume (IOPS per GB)
+// volume: The volume for which the tier level is desired
 func FindEnduranceTierIOPSPerGB(volume datatypes.Network_Storage) (float64, error) {
 	if volume.StorageTierLevel != nil {
 		tier := TIER_PER_IOPS[*volume.StorageTierLevel]
@@ -161,9 +161,9 @@ func FindEnduranceTierIOPSPerGB(volume datatypes.Network_Storage) (float64, erro
 	return 0.0, errors.New(T("Could not find tier IOPS per GB for this volume."))
 }
 
-//Find a price in the SaaS package with the specified category
-//productPackage: The product package (performance_storage_iscsi,storage_service_enterprise,storage_endurance,storage_as_a_service,storage_block,storage_file )
-//priceCategory: The price category to search for
+// Find a price in the SaaS package with the specified category
+// productPackage: The product package (performance_storage_iscsi,storage_service_enterprise,storage_endurance,storage_as_a_service,storage_block,storage_file )
+// priceCategory: The price category to search for
 func FindPriceByCategory(productPackage datatypes.Product_Package, priceCategory string) (datatypes.Product_Item_Price, error) {
 	for _, item := range productPackage.Items {
 		for _, price := range item.Prices {
@@ -179,10 +179,10 @@ func FindPriceByCategory(productPackage datatypes.Product_Package, priceCategory
 	return datatypes.Product_Item_Price{}, errors.New(T("Could not find price with the category: {{.PriceCategory}}", map[string]interface{}{"PriceCategory": priceCategory}))
 }
 
-//Find the SaaS endurance storage space price for the size and tier
-//productPackage: The Storage As A Service product package
-//size: The volume size for which a price is desired
-//tier: The endurance tier for which a price is desired
+// Find the SaaS endurance storage space price for the size and tier
+// productPackage: The Storage As A Service product package
+// size: The volume size for which a price is desired
+// tier: The endurance tier for which a price is desired
 func FindSaasEnduranceSpacePrice(productPackage datatypes.Product_Package, size int, tier float64) (datatypes.Product_Item_Price, error) {
 	var keyName string
 	if tier == 0.25 {
@@ -222,9 +222,9 @@ func FindSaasEnduranceSpacePrice(productPackage datatypes.Product_Package, size 
 	return datatypes.Product_Item_Price{}, errors.New(T("Could not find price for endurance storage space, size={{.Size}} tier={{.Tier}}", map[string]interface{}{"Size": size, "Tier": tier}))
 }
 
-//Find the SaaS storage tier level price for the specified tier level
-//productPackage: The Storage As A Service product package
-//tier: The endurance tier for which a price is desired
+// Find the SaaS storage tier level price for the specified tier level
+// productPackage: The Storage As A Service product package
+// tier: The endurance tier for which a price is desired
 func FindSaasEnduranceTierPrice(productPacakge datatypes.Product_Package, tier float64) (datatypes.Product_Item_Price, error) {
 	targetCapacity := ENDURANCE_TIERS[tier]
 	for _, item := range productPacakge.Items {
@@ -247,9 +247,9 @@ func FindSaasEnduranceTierPrice(productPacakge datatypes.Product_Package, tier f
 	return datatypes.Product_Item_Price{}, errors.New(T("Could not find price for endurance tier level, tier={{.Tier}}", map[string]interface{}{"Tier": tier}))
 }
 
-//Find the SaaS performance storage space price for the given size
-//productPackage: The Storage As A Service product package
-//size: The volume size for which a price is desired
+// Find the SaaS performance storage space price for the given size
+// productPackage: The Storage As A Service product package
+// size: The volume size for which a price is desired
 func FindSaasPerformanceSpacePrice(productPacakge datatypes.Product_Package, size int) (datatypes.Product_Item_Price, error) {
 	for _, item := range productPacakge.Items {
 		if item.ItemCategory == nil || item.ItemCategory.CategoryCode == nil || *item.ItemCategory.CategoryCode != Space_Category {
@@ -286,10 +286,10 @@ func FindSaasPerformanceSpacePrice(productPacakge datatypes.Product_Package, siz
 	return datatypes.Product_Item_Price{}, errors.New(T("Could not find price for performance storage space, size={{.Size}}", map[string]interface{}{"Size": size}))
 }
 
-//Find the SaaS IOPS price for the specified size and iops
-//productPackage: The Storage As A Service product package
-//size: The volume size for which a price is desired
-//iops: The number of IOPS for which a price is desired
+// Find the SaaS IOPS price for the specified size and iops
+// productPackage: The Storage As A Service product package
+// size: The volume size for which a price is desired
+// iops: The number of IOPS for which a price is desired
 func FindSaasPerformanceIopsPrice(productPacakge datatypes.Product_Package, size int, iops int) (datatypes.Product_Item_Price, error) {
 	for _, item := range productPacakge.Items {
 		if item.ItemCategory == nil || item.ItemCategory.CategoryCode == nil || *item.ItemCategory.CategoryCode != Iops_Category {
@@ -336,11 +336,11 @@ func FindSaasPerformanceIopsPrice(productPacakge datatypes.Product_Package, size
 	return datatypes.Product_Item_Price{}, errors.New(T("Could not find price for iops for the given volume, size={{.Size}},,Iops={{.IOPS}}", map[string]interface{}{"Size": size, "IOPS": iops}))
 }
 
-//Find the price in the SaaS package for the desired snapshot space size
-//productPackage: The Storage As A Service product package
-//size: The volume size for which a price is desired
-//tier: The tier of the volume for which space is being ordered
-//iops: The number of IOPS for which a price is desired
+// Find the price in the SaaS package for the desired snapshot space size
+// productPackage: The Storage As A Service product package
+// size: The volume size for which a price is desired
+// tier: The tier of the volume for which space is being ordered
+// iops: The number of IOPS for which a price is desired
 func FindSaasSnapshotSpacePrice(productPacakge datatypes.Product_Package, size int, tier float64, iops int) (datatypes.Product_Item_Price, error) {
 	var targetValue int
 	var targetRestrictionType string
@@ -384,10 +384,10 @@ func FindSaasSnapshotSpacePrice(productPacakge datatypes.Product_Package, size i
 	return datatypes.Product_Item_Price{}, errors.New(T("Could not find price for snapshot space,size={{.Size}},tier={{.Tier}},Iops={{.IOPS}}", map[string]interface{}{"Size": size, "Tier": tier, "IOPS": iops}))
 }
 
-//Find the price in the SaaS package for the desired replication  price
-//productPackage: The Storage As A Service product package
-//tier: The tier of the volume for which space is being ordered
-//iops: The number of IOPS for which a price is desired
+// Find the price in the SaaS package for the desired replication  price
+// productPackage: The Storage As A Service product package
+// tier: The tier of the volume for which space is being ordered
+// iops: The number of IOPS for which a price is desired
 func FindSaasReplicationPrice(productPacakge datatypes.Product_Package, tier float64, iops int) (datatypes.Product_Item_Price, error) {
 	var targetValue int
 	var targetRestrictionType string
@@ -557,8 +557,8 @@ func PrepareSaaSReplicantOrderObject(productPackage datatypes.Product_Package, s
 	return replicantOrder, nil
 }
 
-//Returns a product packaged based on type of storage.
-//categoryCode: Category code of product package.
+// Returns a product packaged based on type of storage.
+// categoryCode: Category code of product package.
 func GetPackage(packageService services.Product_Package, categoryCode string) (datatypes.Product_Package, error) {
 	filters := filter.New()
 	filters = append(filters, filter.Path("categories.categoryCode").Eq(categoryCode))
@@ -576,8 +576,8 @@ func GetPackage(packageService services.Product_Package, categoryCode string) (d
 	return packages[0], nil
 }
 
-//Returns location id of datacenter for ProductOrder::placeOrder().
-//location: Datacenter short name
+// Returns location id of datacenter for ProductOrder::placeOrder().
+// location: Datacenter short name
 func GetLocationId(locationService services.Location_Datacenter, location string) (int, error) {
 	filter := filter.New(filter.Path("name").Eq(location))
 	datacenters, err := locationService.Mask("longName,id,name").Filter(filter.Build()).GetDatacenters()
@@ -592,13 +592,13 @@ func GetLocationId(locationService services.Location_Datacenter, location string
 	return 0, errors.New(T("Invalid datacenter name specified."))
 }
 
-//Prepare the duplicate order to submit to SoftLayer_Product.PlaceOrder()
-//originalVolume: The origin volume which is being duplicated
-//iops: The IOPS per GB for the duplicant volume (performance)
-//tier: The tier level for the duplicant volume (endurance)
-//duplicateSize: The requested size for the duplicate volume
-//duplicateSnapshotSize: The size for the duplicate snapshot space. -1 will use originalVolumes snapshotSize.
-//volumeType: The type of the origin volume ('file' or 'block')
+// Prepare the duplicate order to submit to SoftLayer_Product.PlaceOrder()
+// originalVolume: The origin volume which is being duplicated
+// iops: The IOPS per GB for the duplicant volume (performance)
+// tier: The tier level for the duplicant volume (endurance)
+// duplicateSize: The requested size for the duplicate volume
+// duplicateSnapshotSize: The size for the duplicate snapshot space. -1 will use originalVolumes snapshotSize.
+// volumeType: The type of the origin volume ('file' or 'block')
 func PrepareDuplicateOrderObject(productPackage datatypes.Product_Package, originalVolume datatypes.Network_Storage, config DuplicateOrderConfig) (datatypes.Container_Product_Order_Network_Storage_AsAService, error) {
 	// iops int, tier float64, duplicateSize int, duplicateSnapshotSize int, volumeType string
 	iops := config.DuplicateIops
@@ -677,8 +677,8 @@ func PrepareDuplicateOrderObject(productPackage datatypes.Product_Package, origi
 	return duplicateOrder, nil
 }
 
-//volumeType: block or file
-//storageType: performance or endurance
+// volumeType: block or file
+// storageType: performance or endurance
 func FindVolumePrices(productPackage datatypes.Product_Package, volumeType string, storageType string, size int, tier float64, iops int, snapshotSize int) ([]datatypes.Product_Item_Price, error) {
 	var prices []datatypes.Product_Item_Price
 	servicePrice, err := FindPriceByCategory(productPackage, SaaS_Category)
@@ -726,8 +726,8 @@ func FindVolumePrices(productPackage datatypes.Product_Package, volumeType strin
 	return prices, nil
 }
 
-//volumeType: block or file
-//storageType: performance or endurance
+// volumeType: block or file
+// storageType: performance or endurance
 func FindVolumePricesUpgrade(productPackage datatypes.Product_Package, volumeType string, storageType string, size int, tier float64, iops int) ([]datatypes.Product_Item_Price, error) {
 	var prices []datatypes.Product_Item_Price
 	servicePrice, err := FindPriceByCategory(productPackage, SaaS_Category)

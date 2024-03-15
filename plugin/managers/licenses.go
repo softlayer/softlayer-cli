@@ -36,10 +36,10 @@ func (l licensesManager) CreateLicensesOptions() ([]datatypes.Product_Package, e
 	return l.LicensesService.Mask("id,keyName,name,items[prices],regions[location[location[groups]]]").Filter(filters.Build()).GetAllObjects()
 }
 
-//Add a license to the account using the request placeOrder.
-//datacenter: short name of datacenter.
-//itemKeyName: name from a specific item price.
-//https://sldn.softlayer.com/reference/services/SoftLayer_Product_Order/placeOrder/
+// Add a license to the account using the request placeOrder.
+// datacenter: short name of datacenter.
+// itemKeyName: name from a specific item price.
+// https://sldn.softlayer.com/reference/services/SoftLayer_Product_Order/placeOrder/
 func (l licensesManager) CreateLicense(datacenter string, itemKeyName string) (datatypes.Container_Product_Order_Receipt, error) {
 	BillingOrderService := services.GetProductOrderService(l.Session)
 	orderManager := NewOrderManager(l.Session)
@@ -78,8 +78,8 @@ func (l licensesManager) CreateLicense(datacenter string, itemKeyName string) (d
 	return BillingOrderService.PlaceOrder(&licenseOrder, sl.Bool(false))
 }
 
-//Cancels a license using the request cancel item
-//https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Item/cancelItem/
+// Cancels a license using the request cancel item
+// https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Item/cancelItem/
 func (l licensesManager) CancelItem(key string, immediate bool) error {
 	SoftwareAccountLicenseService := services.GetSoftwareAccountLicenseService(l.Session)
 	BillingItemService := services.GetBillingItemService(l.Session)
