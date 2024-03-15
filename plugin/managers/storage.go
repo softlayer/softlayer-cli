@@ -61,6 +61,7 @@ var (
 
 // Manages SoftLayer Block and File Storage volumes.
 // See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
+//counterfeiter:generate -o ../testhelpers/ . StorageManager
 type StorageManager interface {
 	SetSnapshotNotification(volumeID int, enabled bool) error
 	GetSnapshotNotificationStatus(volumeId int) (int, error)

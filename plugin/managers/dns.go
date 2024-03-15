@@ -19,7 +19,7 @@ const (
 )
 
 // Manage SoftLayer DNS.
-// See product information here: http://www.softlayer.com/DOMAIN-SERVICES
+//counterfeiter:generate -o ../testhelpers/ . DNSManager
 type DNSManager interface {
 	GetZoneIdFromName(zoneName string) (int, error)
 	ListZones() ([]datatypes.Dns_Domain, error)

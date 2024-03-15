@@ -19,7 +19,8 @@ children[transaction, blockDevicesDiskSpaceTotal, datacenter.name, blockDevices[
 )
 
 // Manages SoftLayer server images.
-// See product information here: https://knowledgelayer.softlayer.com/topic/image-templates
+
+//counterfeiter:generate -o ../testhelpers/ . ImageManager
 type ImageManager interface {
 	GetImage(imageId int) (datatypes.Virtual_Guest_Block_Device_Template_Group, error)
 	AddLocation(imageId int, locations []datatypes.Location) (bool, error)

@@ -10,6 +10,7 @@ import (
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . BandwidthManager
 type BandwidthManager interface {
 	GetLocationGroup() ([]datatypes.Location_Group, error)
 	CreatePool(name string, regionId int) (datatypes.Network_Bandwidth_Version1_Allotment, error)

@@ -182,15 +182,16 @@ func (fake *FakeTicketManager) AddUpdate(arg1 int, arg2 string) error {
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.AddUpdateStub
+	fakeReturns := fake.addUpdateReturns
 	fake.recordInvocation("AddUpdate", []interface{}{arg1, arg2})
 	fake.addUpdateMutex.Unlock()
-	if fake.AddUpdateStub != nil {
-		return fake.AddUpdateStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.addUpdateReturns
 	return fakeReturns.result1
 }
 
@@ -244,15 +245,16 @@ func (fake *FakeTicketManager) AttachDeviceToTicket(arg1 int, arg2 int, arg3 boo
 		arg2 int
 		arg3 bool
 	}{arg1, arg2, arg3})
+	stub := fake.AttachDeviceToTicketStub
+	fakeReturns := fake.attachDeviceToTicketReturns
 	fake.recordInvocation("AttachDeviceToTicket", []interface{}{arg1, arg2, arg3})
 	fake.attachDeviceToTicketMutex.Unlock()
-	if fake.AttachDeviceToTicketStub != nil {
-		return fake.AttachDeviceToTicketStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.attachDeviceToTicketReturns
 	return fakeReturns.result1
 }
 
@@ -306,15 +308,16 @@ func (fake *FakeTicketManager) AttachFileToTicket(arg1 int, arg2 string, arg3 st
 		arg2 string
 		arg3 string
 	}{arg1, arg2, arg3})
+	stub := fake.AttachFileToTicketStub
+	fakeReturns := fake.attachFileToTicketReturns
 	fake.recordInvocation("AttachFileToTicket", []interface{}{arg1, arg2, arg3})
 	fake.attachFileToTicketMutex.Unlock()
-	if fake.AttachFileToTicketStub != nil {
-		return fake.AttachFileToTicketStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.attachFileToTicketReturns
 	return fakeReturns.result1
 }
 
@@ -366,15 +369,16 @@ func (fake *FakeTicketManager) CreateStandardTicket(arg1 *managers.TicketArgumen
 	fake.createStandardTicketArgsForCall = append(fake.createStandardTicketArgsForCall, struct {
 		arg1 *managers.TicketArguments
 	}{arg1})
+	stub := fake.CreateStandardTicketStub
+	fakeReturns := fake.createStandardTicketReturns
 	fake.recordInvocation("CreateStandardTicket", []interface{}{arg1})
 	fake.createStandardTicketMutex.Unlock()
-	if fake.CreateStandardTicketStub != nil {
-		return fake.CreateStandardTicketStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createStandardTicketReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -429,15 +433,16 @@ func (fake *FakeTicketManager) GetAllUpdates(arg1 int) ([]datatypes.Ticket_Updat
 	fake.getAllUpdatesArgsForCall = append(fake.getAllUpdatesArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetAllUpdatesStub
+	fakeReturns := fake.getAllUpdatesReturns
 	fake.recordInvocation("GetAllUpdates", []interface{}{arg1})
 	fake.getAllUpdatesMutex.Unlock()
-	if fake.GetAllUpdatesStub != nil {
-		return fake.GetAllUpdatesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getAllUpdatesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -491,15 +496,16 @@ func (fake *FakeTicketManager) GetSubjects() (*[]datatypes.Ticket_Subject, error
 	ret, specificReturn := fake.getSubjectsReturnsOnCall[len(fake.getSubjectsArgsForCall)]
 	fake.getSubjectsArgsForCall = append(fake.getSubjectsArgsForCall, struct {
 	}{})
+	stub := fake.GetSubjectsStub
+	fakeReturns := fake.getSubjectsReturns
 	fake.recordInvocation("GetSubjects", []interface{}{})
 	fake.getSubjectsMutex.Unlock()
-	if fake.GetSubjectsStub != nil {
-		return fake.GetSubjectsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getSubjectsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -546,15 +552,16 @@ func (fake *FakeTicketManager) GetText() (string, error) {
 	ret, specificReturn := fake.getTextReturnsOnCall[len(fake.getTextArgsForCall)]
 	fake.getTextArgsForCall = append(fake.getTextArgsForCall, struct {
 	}{})
+	stub := fake.GetTextStub
+	fakeReturns := fake.getTextReturns
 	fake.recordInvocation("GetText", []interface{}{})
 	fake.getTextMutex.Unlock()
-	if fake.GetTextStub != nil {
-		return fake.GetTextStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getTextReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -602,15 +609,16 @@ func (fake *FakeTicketManager) GetTicket(arg1 int) (datatypes.Ticket, error) {
 	fake.getTicketArgsForCall = append(fake.getTicketArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetTicketStub
+	fakeReturns := fake.getTicketReturns
 	fake.recordInvocation("GetTicket", []interface{}{arg1})
 	fake.getTicketMutex.Unlock()
-	if fake.GetTicketStub != nil {
-		return fake.GetTicketStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getTicketReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -664,15 +672,16 @@ func (fake *FakeTicketManager) ListCloseTickets() ([]datatypes.Ticket, error) {
 	ret, specificReturn := fake.listCloseTicketsReturnsOnCall[len(fake.listCloseTicketsArgsForCall)]
 	fake.listCloseTicketsArgsForCall = append(fake.listCloseTicketsArgsForCall, struct {
 	}{})
+	stub := fake.ListCloseTicketsStub
+	fakeReturns := fake.listCloseTicketsReturns
 	fake.recordInvocation("ListCloseTickets", []interface{}{})
 	fake.listCloseTicketsMutex.Unlock()
-	if fake.ListCloseTicketsStub != nil {
-		return fake.ListCloseTicketsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listCloseTicketsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -719,15 +728,16 @@ func (fake *FakeTicketManager) ListOpenTickets() ([]datatypes.Ticket, error) {
 	ret, specificReturn := fake.listOpenTicketsReturnsOnCall[len(fake.listOpenTicketsArgsForCall)]
 	fake.listOpenTicketsArgsForCall = append(fake.listOpenTicketsArgsForCall, struct {
 	}{})
+	stub := fake.ListOpenTicketsStub
+	fakeReturns := fake.listOpenTicketsReturns
 	fake.recordInvocation("ListOpenTickets", []interface{}{})
 	fake.listOpenTicketsMutex.Unlock()
-	if fake.ListOpenTicketsStub != nil {
-		return fake.ListOpenTicketsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listOpenTicketsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -774,15 +784,16 @@ func (fake *FakeTicketManager) ListTickets() ([]datatypes.Ticket, error) {
 	ret, specificReturn := fake.listTicketsReturnsOnCall[len(fake.listTicketsArgsForCall)]
 	fake.listTicketsArgsForCall = append(fake.listTicketsArgsForCall, struct {
 	}{})
+	stub := fake.ListTicketsStub
+	fakeReturns := fake.listTicketsReturns
 	fake.recordInvocation("ListTickets", []interface{}{})
 	fake.listTicketsMutex.Unlock()
-	if fake.ListTicketsStub != nil {
-		return fake.ListTicketsStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listTicketsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -832,15 +843,16 @@ func (fake *FakeTicketManager) RemoveDeviceFromTicket(arg1 int, arg2 int, arg3 b
 		arg2 int
 		arg3 bool
 	}{arg1, arg2, arg3})
+	stub := fake.RemoveDeviceFromTicketStub
+	fakeReturns := fake.removeDeviceFromTicketReturns
 	fake.recordInvocation("RemoveDeviceFromTicket", []interface{}{arg1, arg2, arg3})
 	fake.removeDeviceFromTicketMutex.Unlock()
-	if fake.RemoveDeviceFromTicketStub != nil {
-		return fake.RemoveDeviceFromTicketStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.removeDeviceFromTicketReturns
 	return fakeReturns.result1
 }
 
@@ -891,15 +903,16 @@ func (fake *FakeTicketManager) Summary() (*managers.TicketSummary, error) {
 	ret, specificReturn := fake.summaryReturnsOnCall[len(fake.summaryArgsForCall)]
 	fake.summaryArgsForCall = append(fake.summaryArgsForCall, struct {
 	}{})
+	stub := fake.SummaryStub
+	fakeReturns := fake.summaryReturns
 	fake.recordInvocation("Summary", []interface{}{})
 	fake.summaryMutex.Unlock()
-	if fake.SummaryStub != nil {
-		return fake.SummaryStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.summaryReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 

@@ -21,6 +21,7 @@ const (
 	FIREWALL_DEFAULT_MASK = "firewallNetworkComponents,networkVlanFirewall,dedicatedFirewallFlag,firewallGuestNetworkComponents,firewallInterfaces,firewallRules,highAvailabilityFirewallFlag"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . FirewallManager
 type FirewallManager interface {
 	AddVlanFirewall(vlanId int, HAenabled bool) (datatypes.Container_Product_Order_Receipt, error)
 	AddStandardFirewall(serverId int, isVirtual bool) (datatypes.Container_Product_Order_Receipt, error)

@@ -12,6 +12,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . LicensesManager
 type LicensesManager interface {
 	CreateLicensesOptions() ([]datatypes.Product_Package, error)
 	CreateLicense(datacenter string, itemKeyName string) (datatypes.Container_Product_Order_Receipt, error)

@@ -22,6 +22,7 @@ const (
 	PRESET_MASK   = "id, name, keyName, description, categories, prices, locations"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . OrderManager
 type OrderManager interface {
 	ListCategories(packageKeyname string) ([]datatypes.Product_Package_Order_Configuration, error)
 	ListItems(packageKeyname string, keyword, category string) ([]datatypes.Product_Item, error)

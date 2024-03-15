@@ -10,6 +10,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . ObjectStorageManager
 type ObjectStorageManager interface {
 	GetAccounts(mask string) ([]datatypes.Network_Storage, error)
 	GetEndpoints(HubNetworkStorageId int) ([]datatypes.Container_Network_Storage_Hub_ObjectStorage_Endpoint, error)
@@ -18,6 +19,7 @@ type ObjectStorageManager interface {
 	DeleteCredential(StorageId int, CredentialId int) error
 	LimitCredential(StorageId int) (int, error)
 }
+
 
 type objectStorageManager struct {
 	ObjectStorageService services.Network_Storage_Hub_Cleversafe_Account

@@ -11,6 +11,7 @@ const (
 	DEFAULT_LOADBAL_MASK = "loadBalancerHardware[datacenter],ipAddress,virtualServers[serviceGroups[routingMethod,routingType,services[healthChecks[type],groupReferences,ipAddress]]]"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . LoadBalancerManager
 type LoadBalancerManager interface {
 	GetADCs() ([]datatypes.Network_Application_Delivery_Controller, error)
 	GetADC(identifier int) (datatypes.Network_Application_Delivery_Controller, error)

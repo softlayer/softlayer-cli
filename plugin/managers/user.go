@@ -26,6 +26,7 @@ const (
 
 // Manages SoftLayer Block and File Storage volumes.
 // See product information here: https://www.ibm.com/cloud-computing/bluemix/block-storage, https://www.ibm.com/cloud-computing/bluemix/file-storage
+//counterfeiter:generate -o ../testhelpers/ . UserManager
 type UserManager interface {
 	ListUsers(mask string) ([]datatypes.User_Customer, error)
 	GetUser(userId int, mask string) (datatypes.User_Customer, error)

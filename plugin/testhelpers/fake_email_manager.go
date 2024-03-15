@@ -97,15 +97,16 @@ func (fake *FakeEmailManager) EditObject(arg1 int, arg2 datatypes.Network_Messag
 		arg1 int
 		arg2 datatypes.Network_Message_Delivery
 	}{arg1, arg2})
+	stub := fake.EditObjectStub
+	fakeReturns := fake.editObjectReturns
 	fake.recordInvocation("EditObject", []interface{}{arg1, arg2})
 	fake.editObjectMutex.Unlock()
-	if fake.EditObjectStub != nil {
-		return fake.EditObjectStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.editObjectReturns
 	return fakeReturns.result1
 }
 
@@ -157,15 +158,16 @@ func (fake *FakeEmailManager) GetAccountOverview(arg1 int) (datatypes.Container_
 	fake.getAccountOverviewArgsForCall = append(fake.getAccountOverviewArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetAccountOverviewStub
+	fakeReturns := fake.getAccountOverviewReturns
 	fake.recordInvocation("GetAccountOverview", []interface{}{arg1})
 	fake.getAccountOverviewMutex.Unlock()
-	if fake.GetAccountOverviewStub != nil {
-		return fake.GetAccountOverviewStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getAccountOverviewReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -221,15 +223,16 @@ func (fake *FakeEmailManager) GetInstance(arg1 int, arg2 string) (datatypes.Netw
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetInstanceStub
+	fakeReturns := fake.getInstanceReturns
 	fake.recordInvocation("GetInstance", []interface{}{arg1, arg2})
 	fake.getInstanceMutex.Unlock()
-	if fake.GetInstanceStub != nil {
-		return fake.GetInstanceStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getInstanceReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -284,15 +287,16 @@ func (fake *FakeEmailManager) GetNetworkMessageDeliveryAccounts(arg1 string) ([]
 	fake.getNetworkMessageDeliveryAccountsArgsForCall = append(fake.getNetworkMessageDeliveryAccountsArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.GetNetworkMessageDeliveryAccountsStub
+	fakeReturns := fake.getNetworkMessageDeliveryAccountsReturns
 	fake.recordInvocation("GetNetworkMessageDeliveryAccounts", []interface{}{arg1})
 	fake.getNetworkMessageDeliveryAccountsMutex.Unlock()
-	if fake.GetNetworkMessageDeliveryAccountsStub != nil {
-		return fake.GetNetworkMessageDeliveryAccountsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getNetworkMessageDeliveryAccountsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -347,15 +351,16 @@ func (fake *FakeEmailManager) GetStatistics(arg1 int) ([]datatypes.Container_Net
 	fake.getStatisticsArgsForCall = append(fake.getStatisticsArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetStatisticsStub
+	fakeReturns := fake.getStatisticsReturns
 	fake.recordInvocation("GetStatistics", []interface{}{arg1})
 	fake.getStatisticsMutex.Unlock()
-	if fake.GetStatisticsStub != nil {
-		return fake.GetStatisticsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getStatisticsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -411,15 +416,16 @@ func (fake *FakeEmailManager) UpdateEmail(arg1 int, arg2 string) error {
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.UpdateEmailStub
+	fakeReturns := fake.updateEmailReturns
 	fake.recordInvocation("UpdateEmail", []interface{}{arg1, arg2})
 	fake.updateEmailMutex.Unlock()
-	if fake.UpdateEmailStub != nil {
-		return fake.UpdateEmailStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.updateEmailReturns
 	return fakeReturns.result1
 }
 

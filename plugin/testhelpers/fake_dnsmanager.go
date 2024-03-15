@@ -233,15 +233,16 @@ func (fake *FakeDNSManager) CreateResourceRecord(arg1 int, arg2 string, arg3 str
 		arg4 string
 		arg5 int
 	}{arg1, arg2, arg3, arg4, arg5})
+	stub := fake.CreateResourceRecordStub
+	fakeReturns := fake.createResourceRecordReturns
 	fake.recordInvocation("CreateResourceRecord", []interface{}{arg1, arg2, arg3, arg4, arg5})
 	fake.createResourceRecordMutex.Unlock()
-	if fake.CreateResourceRecordStub != nil {
-		return fake.CreateResourceRecordStub(arg1, arg2, arg3, arg4, arg5)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createResourceRecordReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -296,15 +297,16 @@ func (fake *FakeDNSManager) CreateZone(arg1 string) (datatypes.Dns_Domain, error
 	fake.createZoneArgsForCall = append(fake.createZoneArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.CreateZoneStub
+	fakeReturns := fake.createZoneReturns
 	fake.recordInvocation("CreateZone", []interface{}{arg1})
 	fake.createZoneMutex.Unlock()
-	if fake.CreateZoneStub != nil {
-		return fake.CreateZoneStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createZoneReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -359,15 +361,16 @@ func (fake *FakeDNSManager) DeleteResourceRecord(arg1 int) error {
 	fake.deleteResourceRecordArgsForCall = append(fake.deleteResourceRecordArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.DeleteResourceRecordStub
+	fakeReturns := fake.deleteResourceRecordReturns
 	fake.recordInvocation("DeleteResourceRecord", []interface{}{arg1})
 	fake.deleteResourceRecordMutex.Unlock()
-	if fake.DeleteResourceRecordStub != nil {
-		return fake.DeleteResourceRecordStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.deleteResourceRecordReturns
 	return fakeReturns.result1
 }
 
@@ -419,15 +422,16 @@ func (fake *FakeDNSManager) DeleteZone(arg1 int) error {
 	fake.deleteZoneArgsForCall = append(fake.deleteZoneArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.DeleteZoneStub
+	fakeReturns := fake.deleteZoneReturns
 	fake.recordInvocation("DeleteZone", []interface{}{arg1})
 	fake.deleteZoneMutex.Unlock()
-	if fake.DeleteZoneStub != nil {
-		return fake.DeleteZoneStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.deleteZoneReturns
 	return fakeReturns.result1
 }
 
@@ -479,15 +483,16 @@ func (fake *FakeDNSManager) DumpZone(arg1 int) (string, error) {
 	fake.dumpZoneArgsForCall = append(fake.dumpZoneArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.DumpZoneStub
+	fakeReturns := fake.dumpZoneReturns
 	fake.recordInvocation("DumpZone", []interface{}{arg1})
 	fake.dumpZoneMutex.Unlock()
-	if fake.DumpZoneStub != nil {
-		return fake.DumpZoneStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.dumpZoneReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -542,15 +547,16 @@ func (fake *FakeDNSManager) EditResourceRecord(arg1 datatypes.Dns_Domain_Resourc
 	fake.editResourceRecordArgsForCall = append(fake.editResourceRecordArgsForCall, struct {
 		arg1 datatypes.Dns_Domain_ResourceRecord
 	}{arg1})
+	stub := fake.EditResourceRecordStub
+	fakeReturns := fake.editResourceRecordReturns
 	fake.recordInvocation("EditResourceRecord", []interface{}{arg1})
 	fake.editResourceRecordMutex.Unlock()
-	if fake.EditResourceRecordStub != nil {
-		return fake.EditResourceRecordStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.editResourceRecordReturns
 	return fakeReturns.result1
 }
 
@@ -602,15 +608,16 @@ func (fake *FakeDNSManager) GetResourceRecord(arg1 int) (datatypes.Dns_Domain_Re
 	fake.getResourceRecordArgsForCall = append(fake.getResourceRecordArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetResourceRecordStub
+	fakeReturns := fake.getResourceRecordReturns
 	fake.recordInvocation("GetResourceRecord", []interface{}{arg1})
 	fake.getResourceRecordMutex.Unlock()
-	if fake.GetResourceRecordStub != nil {
-		return fake.GetResourceRecordStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getResourceRecordReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -666,15 +673,16 @@ func (fake *FakeDNSManager) GetZone(arg1 int, arg2 bool) (datatypes.Dns_Domain, 
 		arg1 int
 		arg2 bool
 	}{arg1, arg2})
+	stub := fake.GetZoneStub
+	fakeReturns := fake.getZoneReturns
 	fake.recordInvocation("GetZone", []interface{}{arg1, arg2})
 	fake.getZoneMutex.Unlock()
-	if fake.GetZoneStub != nil {
-		return fake.GetZoneStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getZoneReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -729,15 +737,16 @@ func (fake *FakeDNSManager) GetZoneIdFromName(arg1 string) (int, error) {
 	fake.getZoneIdFromNameArgsForCall = append(fake.getZoneIdFromNameArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.GetZoneIdFromNameStub
+	fakeReturns := fake.getZoneIdFromNameReturns
 	fake.recordInvocation("GetZoneIdFromName", []interface{}{arg1})
 	fake.getZoneIdFromNameMutex.Unlock()
-	if fake.GetZoneIdFromNameStub != nil {
-		return fake.GetZoneIdFromNameStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getZoneIdFromNameReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -797,15 +806,16 @@ func (fake *FakeDNSManager) ListResourceRecords(arg1 int, arg2 string, arg3 stri
 		arg5 int
 		arg6 string
 	}{arg1, arg2, arg3, arg4, arg5, arg6})
+	stub := fake.ListResourceRecordsStub
+	fakeReturns := fake.listResourceRecordsReturns
 	fake.recordInvocation("ListResourceRecords", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6})
 	fake.listResourceRecordsMutex.Unlock()
-	if fake.ListResourceRecordsStub != nil {
-		return fake.ListResourceRecordsStub(arg1, arg2, arg3, arg4, arg5, arg6)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listResourceRecordsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -859,15 +869,16 @@ func (fake *FakeDNSManager) ListZones() ([]datatypes.Dns_Domain, error) {
 	ret, specificReturn := fake.listZonesReturnsOnCall[len(fake.listZonesArgsForCall)]
 	fake.listZonesArgsForCall = append(fake.listZonesArgsForCall, struct {
 	}{})
+	stub := fake.ListZonesStub
+	fakeReturns := fake.listZonesReturns
 	fake.recordInvocation("ListZones", []interface{}{})
 	fake.listZonesMutex.Unlock()
-	if fake.ListZonesStub != nil {
-		return fake.ListZonesStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.listZonesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -915,15 +926,16 @@ func (fake *FakeDNSManager) ResourceRecordCreate(arg1 datatypes.Dns_Domain_Resou
 	fake.resourceRecordCreateArgsForCall = append(fake.resourceRecordCreateArgsForCall, struct {
 		arg1 datatypes.Dns_Domain_ResourceRecord
 	}{arg1})
+	stub := fake.ResourceRecordCreateStub
+	fakeReturns := fake.resourceRecordCreateReturns
 	fake.recordInvocation("ResourceRecordCreate", []interface{}{arg1})
 	fake.resourceRecordCreateMutex.Unlock()
-	if fake.ResourceRecordCreateStub != nil {
-		return fake.ResourceRecordCreateStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.resourceRecordCreateReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -978,15 +990,16 @@ func (fake *FakeDNSManager) SrvResourceRecordCreate(arg1 datatypes.Dns_Domain_Re
 	fake.srvResourceRecordCreateArgsForCall = append(fake.srvResourceRecordCreateArgsForCall, struct {
 		arg1 datatypes.Dns_Domain_ResourceRecord_SrvType
 	}{arg1})
+	stub := fake.SrvResourceRecordCreateStub
+	fakeReturns := fake.srvResourceRecordCreateReturns
 	fake.recordInvocation("SrvResourceRecordCreate", []interface{}{arg1})
 	fake.srvResourceRecordCreateMutex.Unlock()
-	if fake.SrvResourceRecordCreateStub != nil {
-		return fake.SrvResourceRecordCreateStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.srvResourceRecordCreateReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1043,15 +1056,16 @@ func (fake *FakeDNSManager) SyncAAAARecord(arg1 datatypes.Virtual_Guest, arg2 in
 		arg2 int
 		arg3 int
 	}{arg1, arg2, arg3})
+	stub := fake.SyncAAAARecordStub
+	fakeReturns := fake.syncAAAARecordReturns
 	fake.recordInvocation("SyncAAAARecord", []interface{}{arg1, arg2, arg3})
 	fake.syncAAAARecordMutex.Unlock()
-	if fake.SyncAAAARecordStub != nil {
-		return fake.SyncAAAARecordStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.syncAAAARecordReturns
 	return fakeReturns.result1
 }
 
@@ -1105,15 +1119,16 @@ func (fake *FakeDNSManager) SyncARecord(arg1 datatypes.Virtual_Guest, arg2 int, 
 		arg2 int
 		arg3 int
 	}{arg1, arg2, arg3})
+	stub := fake.SyncARecordStub
+	fakeReturns := fake.syncARecordReturns
 	fake.recordInvocation("SyncARecord", []interface{}{arg1, arg2, arg3})
 	fake.syncARecordMutex.Unlock()
-	if fake.SyncARecordStub != nil {
-		return fake.SyncARecordStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.syncARecordReturns
 	return fakeReturns.result1
 }
 
@@ -1166,15 +1181,16 @@ func (fake *FakeDNSManager) SyncPTRRecord(arg1 datatypes.Virtual_Guest, arg2 int
 		arg1 datatypes.Virtual_Guest
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.SyncPTRRecordStub
+	fakeReturns := fake.syncPTRRecordReturns
 	fake.recordInvocation("SyncPTRRecord", []interface{}{arg1, arg2})
 	fake.syncPTRRecordMutex.Unlock()
-	if fake.SyncPTRRecordStub != nil {
-		return fake.SyncPTRRecordStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.syncPTRRecordReturns
 	return fakeReturns.result1
 }
 

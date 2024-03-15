@@ -9,6 +9,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . CallAPIManager
 type CallAPIManager interface {
 	CallAPI(string, string, sl.Options, string) ([]byte, error)
 }

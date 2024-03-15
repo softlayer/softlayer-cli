@@ -6,6 +6,7 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . NasNetworkStorageManager
 type NasNetworkStorageManager interface {
 	ListNasNetworkStorages(mask string) ([]datatypes.Network_Storage, error)
 	GetNasNetworkStorage(netwokStorageId int, mask string) (datatypes.Network_Storage, error)

@@ -6,6 +6,7 @@ import (
 	"github.com/softlayer/softlayer-go/session"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . ReportManager
 type ReportManager interface {
 	GetVirtualGuests(mask string) ([]datatypes.Virtual_Guest, error)
 	GetHardwareServers(mask string) ([]datatypes.Hardware, error)
