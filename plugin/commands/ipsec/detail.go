@@ -113,13 +113,13 @@ func (cmd *DetailCommand) Run(args []string) error {
 	return nil
 }
 
-//Yields a mask for a tunnel context
-//All exposed properties on the tunnel context service are included inthe constructed mask. Additional joins may be requested.
-//addressTranslations: Whether to join the context's address translation entries.
-//internalSubnets: Whether to join the context's internal subnet associations.
-//remoteSubnets: Whether to join the context's remote subnet associations.
-//staticSubnets: Whether to join the context's statically routed subnet associations.
-//serviceSubnets: Whether to join the SoftLayer service network subnets.
+// Yields a mask for a tunnel context
+// All exposed properties on the tunnel context service are included inthe constructed mask. Additional joins may be requested.
+// addressTranslations: Whether to join the context's address translation entries.
+// internalSubnets: Whether to join the context's internal subnet associations.
+// remoteSubnets: Whether to join the context's remote subnet associations.
+// staticSubnets: Whether to join the context's statically routed subnet associations.
+// serviceSubnets: Whether to join the SoftLayer service network subnets.
 func GetTunnelContextMask(addressTranslation, internalSubnets, remoteSubnets, statusSubnets, serviceSubnets bool) string {
 	mask := "id,accountId,advancedConfigurationFlag,createDate,customerPeerIpAddress,modifyDate,name,friendlyName,internalPeerIpAddress" +
 		",phaseOneAuthentication,phaseOneDiffieHellmanGroup,phaseOneEncryption,phaseOneKeylife" +

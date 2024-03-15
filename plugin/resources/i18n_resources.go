@@ -329,14 +329,14 @@ func AssetNames() []string {
 
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
-	"plugin/i18n/resources/de_DE.all.json": pluginI18nResourcesDe_deAllJson,
-	"plugin/i18n/resources/en_US.all.json": pluginI18nResourcesEn_usAllJson,
-	"plugin/i18n/resources/es_ES.all.json": pluginI18nResourcesEs_esAllJson,
-	"plugin/i18n/resources/fr_FR.all.json": pluginI18nResourcesFr_frAllJson,
-	"plugin/i18n/resources/it_IT.all.json": pluginI18nResourcesIt_itAllJson,
-	"plugin/i18n/resources/ja_JP.all.json": pluginI18nResourcesJa_jpAllJson,
-	"plugin/i18n/resources/ko_KR.all.json": pluginI18nResourcesKo_krAllJson,
-	"plugin/i18n/resources/pt_BR.all.json": pluginI18nResourcesPt_brAllJson,
+	"plugin/i18n/resources/de_DE.all.json":   pluginI18nResourcesDe_deAllJson,
+	"plugin/i18n/resources/en_US.all.json":   pluginI18nResourcesEn_usAllJson,
+	"plugin/i18n/resources/es_ES.all.json":   pluginI18nResourcesEs_esAllJson,
+	"plugin/i18n/resources/fr_FR.all.json":   pluginI18nResourcesFr_frAllJson,
+	"plugin/i18n/resources/it_IT.all.json":   pluginI18nResourcesIt_itAllJson,
+	"plugin/i18n/resources/ja_JP.all.json":   pluginI18nResourcesJa_jpAllJson,
+	"plugin/i18n/resources/ko_KR.all.json":   pluginI18nResourcesKo_krAllJson,
+	"plugin/i18n/resources/pt_BR.all.json":   pluginI18nResourcesPt_brAllJson,
 	"plugin/i18n/resources/zh_Hans.all.json": pluginI18nResourcesZh_hansAllJson,
 	"plugin/i18n/resources/zh_Hant.all.json": pluginI18nResourcesZh_hantAllJson,
 }
@@ -345,11 +345,13 @@ var _bindata = map[string]func() (*asset, error){
 // directory embedded in the file by go-bindata.
 // For example if you run go-bindata on data/... and data contains the
 // following hierarchy:
-//     data/
-//       foo.txt
-//       img/
-//         a.png
-//         b.png
+//
+//	data/
+//	  foo.txt
+//	  img/
+//	    a.png
+//	    b.png
+//
 // then AssetDir("data") would return []string{"foo.txt", "img"}
 // AssetDir("data/img") would return []string{"a.png", "b.png"}
 // AssetDir("foo.txt") and AssetDir("notexist") would return an error
@@ -380,18 +382,19 @@ type bintree struct {
 	Func     func() (*asset, error)
 	Children map[string]*bintree
 }
+
 var _bintree = &bintree{nil, map[string]*bintree{
 	"plugin": &bintree{nil, map[string]*bintree{
 		"i18n": &bintree{nil, map[string]*bintree{
 			"resources": &bintree{nil, map[string]*bintree{
-				"de_DE.all.json": &bintree{pluginI18nResourcesDe_deAllJson, map[string]*bintree{}},
-				"en_US.all.json": &bintree{pluginI18nResourcesEn_usAllJson, map[string]*bintree{}},
-				"es_ES.all.json": &bintree{pluginI18nResourcesEs_esAllJson, map[string]*bintree{}},
-				"fr_FR.all.json": &bintree{pluginI18nResourcesFr_frAllJson, map[string]*bintree{}},
-				"it_IT.all.json": &bintree{pluginI18nResourcesIt_itAllJson, map[string]*bintree{}},
-				"ja_JP.all.json": &bintree{pluginI18nResourcesJa_jpAllJson, map[string]*bintree{}},
-				"ko_KR.all.json": &bintree{pluginI18nResourcesKo_krAllJson, map[string]*bintree{}},
-				"pt_BR.all.json": &bintree{pluginI18nResourcesPt_brAllJson, map[string]*bintree{}},
+				"de_DE.all.json":   &bintree{pluginI18nResourcesDe_deAllJson, map[string]*bintree{}},
+				"en_US.all.json":   &bintree{pluginI18nResourcesEn_usAllJson, map[string]*bintree{}},
+				"es_ES.all.json":   &bintree{pluginI18nResourcesEs_esAllJson, map[string]*bintree{}},
+				"fr_FR.all.json":   &bintree{pluginI18nResourcesFr_frAllJson, map[string]*bintree{}},
+				"it_IT.all.json":   &bintree{pluginI18nResourcesIt_itAllJson, map[string]*bintree{}},
+				"ja_JP.all.json":   &bintree{pluginI18nResourcesJa_jpAllJson, map[string]*bintree{}},
+				"ko_KR.all.json":   &bintree{pluginI18nResourcesKo_krAllJson, map[string]*bintree{}},
+				"pt_BR.all.json":   &bintree{pluginI18nResourcesPt_brAllJson, map[string]*bintree{}},
 				"zh_Hans.all.json": &bintree{pluginI18nResourcesZh_hansAllJson, map[string]*bintree{}},
 				"zh_Hant.all.json": &bintree{pluginI18nResourcesZh_hantAllJson, map[string]*bintree{}},
 			}},
@@ -445,4 +448,3 @@ func _filePath(dir, name string) string {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
 }
-

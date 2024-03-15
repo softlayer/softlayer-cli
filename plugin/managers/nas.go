@@ -23,8 +23,8 @@ func NewNasNetworkStorageManager(session *session.Session) *nasNetworkStorageMan
 	}
 }
 
-//List all NAS Network Storages
-//mask: object mask
+// List all NAS Network Storages
+// mask: object mask
 func (nas nasNetworkStorageManager) ListNasNetworkStorages(mask string) ([]datatypes.Network_Storage, error) {
 	if mask == "" {
 		mask = "mask[eventCount,serviceResource[datacenter.name]]"
@@ -32,9 +32,9 @@ func (nas nasNetworkStorageManager) ListNasNetworkStorages(mask string) ([]datat
 	return nas.AccountService.Mask(mask).GetNasNetworkStorage()
 }
 
-//Get NAS Network Storage object
-//netwokStorageId: Id of Network Storage object
-//mask: object mask
+// Get NAS Network Storage object
+// netwokStorageId: Id of Network Storage object
+// mask: object mask
 func (nas nasNetworkStorageManager) GetNasNetworkStorage(netwokStorageId int, mask string) (datatypes.Network_Storage, error) {
 	if mask == "" {
 		mask = "mask[accountId,capacityGb,createDate,id,nasType]"

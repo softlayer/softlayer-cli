@@ -1,10 +1,9 @@
 package search
 
 import (
-
 	"bytes"
-	"strconv"
 	"github.com/spf13/cobra"
+	"strconv"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 
@@ -12,7 +11,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
-
 )
 
 type SearchTypesCommand struct {

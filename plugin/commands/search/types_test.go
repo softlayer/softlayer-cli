@@ -1,7 +1,6 @@
 package search_test
 
 import (
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -15,11 +14,11 @@ import (
 
 var _ = Describe("search types", func() {
 	var (
-		fakeUI            *terminal.FakeUI
-		cliCommand        *search.SearchTypesCommand
-		fakeSession       *session.Session
-		slCommand         *metadata.SoftlayerCommand
-		fakeHandler 	  *testhelpers.FakeTransportHandler
+		fakeUI      *terminal.FakeUI
+		cliCommand  *search.SearchTypesCommand
+		fakeSession *session.Session
+		slCommand   *metadata.SoftlayerCommand
+		fakeHandler *testhelpers.FakeTransportHandler
 		// fakeSearchManager *testhelpers.FakeSearchManager
 	)
 	BeforeEach(func() {

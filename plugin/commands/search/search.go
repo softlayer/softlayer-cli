@@ -2,15 +2,15 @@ package search
 
 import (
 	"fmt"
-	"strings"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
 	"github.com/spf13/cobra"
+	"strings"
 
 	"github.com/softlayer/softlayer-go/datatypes"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
-	
+
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
@@ -18,7 +18,7 @@ type SearchCommand struct {
 	*metadata.SoftlayerCommand
 	SearchManager managers.SearchManager
 	Command       *cobra.Command
-	Query		  string
+	Query         string
 }
 
 func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
@@ -35,8 +35,8 @@ Examples::
     sl search --query 'test.com'
     sl search --query '_objectType:SoftLayer_Virtual_Guest test.com'
 `),
-		Args:  metadata.NoArgs,
-		RunE:  func(cmd *cobra.Command, args []string) error {
+		Args: metadata.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
 	}
@@ -56,7 +56,9 @@ func SearchNamespace() plugin.Namespace {
 func (cmd *SearchCommand) Run(args []string) error {
 
 	results, err := cmd.SearchManager.AdvancedSearch("", cmd.Query)
-	if err != nil { return err}
+	if err != nil {
+		return err
+	}
 	if cmd.GetOutputFlag() == "JSON" {
 		return utils.PrintPrettyJSON(cmd.UI, results)
 	}
@@ -102,29 +104,29 @@ func parseMatchedTerms(searchResult datatypes.Container_Search_Result) string {
 	return strings.Join(searchResult.MatchedTerms, "\n")
 }
 func parseVirtual_Guest(resource datatypes.Virtual_Guest) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("FQDN") + ": %s\n", *resource.Id, *resource.FullyQualifiedDomainName)
+	return fmt.Sprintf(T("ID")+": %d\n"+T("FQDN")+": %s\n", *resource.Id, *resource.FullyQualifiedDomainName)
 }
 func parseEvent_Log(resource datatypes.Event_Log) string {
-	return fmt.Sprintf(T("ID") + ": %s\n" + T("Event")  + ": %s\n", *resource.TraceId, *resource.EventName)
+	return fmt.Sprintf(T("ID")+": %s\n"+T("Event")+": %s\n", *resource.TraceId, *resource.EventName)
 }
 func parseVirtual_DedicatedHost(resource datatypes.Virtual_DedicatedHost) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("Name") + ": %s\n", *resource.Id, *resource.Name)
+	return fmt.Sprintf(T("ID")+": %d\n"+T("Name")+": %s\n", *resource.Id, *resource.Name)
 }
 func parseHardware(resource datatypes.Hardware) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("FQDN")  + ": %s\n", *resource.Id, *resource.FullyQualifiedDomainName)
+	return fmt.Sprintf(T("ID")+": %d\n"+T("FQDN")+": %s\n", *resource.Id, *resource.FullyQualifiedDomainName)
 }
 func parseNetwork_Application_Delivery_Controller(resource datatypes.Network_Application_Delivery_Controller) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("Name") +  ": %s\n", *resource.Id, *resource.Name)
+	return fmt.Sprintf(T("ID")+": %d\n"+T("Name")+": %s\n", *resource.Id, *resource.Name)
 }
 func parseNetwork_Subnet_IpAddress(resource datatypes.Network_Subnet_IpAddress) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("Ip Address") +  ": %s\n", *resource.Id, *resource.IpAddress)
+	return fmt.Sprintf(T("ID")+": %d\n"+T("Ip Address")+": %s\n", *resource.Id, *resource.IpAddress)
 }
 func parseNetwork_Vlan(resource datatypes.Network_Vlan) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("VLAN")  + ": %d\n", *resource.Id, *resource.VlanNumber)
+	return fmt.Sprintf(T("ID")+": %d\n"+T("VLAN")+": %d\n", *resource.Id, *resource.VlanNumber)
 }
 func parseNetwork_Vlan_Firewall(resource datatypes.Network_Vlan_Firewall) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("Ip Address")  + ": %s\n", *resource.Id, *resource.PrimaryIpAddress)
+	return fmt.Sprintf(T("ID")+": %d\n"+T("Ip Address")+": %s\n", *resource.Id, *resource.PrimaryIpAddress)
 }
 func parseTicket(resource datatypes.Ticket) string {
-	return fmt.Sprintf(T("ID") + ": %d\n" + T("Subject")  + ": %s\n", *resource.Id, *resource.Title)
+	return fmt.Sprintf(T("ID")+": %d\n"+T("Subject")+": %s\n", *resource.Id, *resource.Title)
 }

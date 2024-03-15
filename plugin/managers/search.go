@@ -32,7 +32,6 @@ func (s searchManager) AdvancedSearch(mask string, params string) ([]datatypes.C
 	return s.SearchService.Mask(mask).AdvancedSearch(&params)
 }
 
-
 func (s searchManager) GetTypes() ([]datatypes.Container_Search_ObjectType, error) {
 	return s.SearchService.GetObjectTypes()
 }

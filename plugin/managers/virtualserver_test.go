@@ -279,7 +279,7 @@ var _ = Describe("VirtualServerManager", func() {
 				Expect(ready).To(BeFalse())
 				Expect(msg).To(Equal(""))
 			})
-		})		
+		})
 		Context("VS not ready", func() {
 			It("vs is HALTED", func() {
 				ready, msg, err := vsManager.InstanceIsReady(41111, time.Now())

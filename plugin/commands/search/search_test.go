@@ -53,7 +53,7 @@ var _ = Describe("Test search commands", func() {
 				if utils.StringInSlice(commandName, arrayCommands) != -1 {
 					available = true
 				}
-				Expect(available).To(BeTrue(), commandName + " not found in ibmcloud sl " + commands.Name())
+				Expect(available).To(BeTrue(), commandName+" not found in ibmcloud sl "+commands.Name())
 			})
 		}
 	})
@@ -83,7 +83,7 @@ var _ = Describe("Test search commands", func() {
 			Expect(err.Error()).To(ContainSubstring("Search Error: Search Error (HTTP 500)"))
 		})
 		It("Basic Search Command with query", func() {
-			err := testhelpers.RunCobraCommand(cliCommand , "-q", `"_objectTpye:SoftLayer_Virtual_Guest test.com`)
+			err := testhelpers.RunCobraCommand(cliCommand, "-q", `"_objectTpye:SoftLayer_Virtual_Guest test.com`)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(fakeUI.Outputs()).To(ContainSubstring("SoftLayer_Network_Vlan"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("VLAN |match|       ID: 675037"))
