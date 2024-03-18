@@ -15,6 +15,7 @@ import (
 // See product information here:
 // https://knowledgelayer.softlayer.com/procedure/ssh-keys and
 // http://www.softlayer.com/ssl-certificates
+//counterfeiter:generate -o ../testhelpers/ . SecurityManager
 type SecurityManager interface {
 	AddSSHKey(key string, label string, notes string) (datatypes.Security_Ssh_Key, error)
 	DeleteSSHKey(keyID int) error

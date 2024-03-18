@@ -39,6 +39,7 @@ const (
 var DEFAULT_CATEGORIES = []string{"pri_ip_addresses", "vpn_management", "remote_management"}
 var EXTRA_CATEGORIES = []string{"pri_ipv6_addresses", "static_ipv6_addresses", "sec_ip_addresses", "trusted_platform_module", "software_guard_extensions"}
 
+//counterfeiter:generate -o ../testhelpers/ . HardwareServerManager
 type HardwareServerManager interface {
 	AuthorizeStorage(id int, storageId string) (bool, error)
 	CancelHardware(hardwareId int, reason string, comment string, immediate bool) error

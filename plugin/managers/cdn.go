@@ -11,6 +11,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . CdnManager
 type CdnManager interface {
 	GetNetworkCdnMarketplaceConfigurationMapping() ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)
 	DeleteCDN(uniqueId string) ([]datatypes.Container_Network_CdnMarketplace_Configuration_Mapping, error)

@@ -12,6 +12,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . TagsManager
 type TagsManager interface {
 	GetTagByTagName(tagName string) ([]datatypes.Tag, error)
 	ListTags() ([]datatypes.Tag, error)

@@ -29,7 +29,7 @@ const (
 )
 
 // Manage SoftLayer network objects: VLANs, subnets and GlobalIPs.
-// See product information here: http://www.softlayer.com/networking
+//counterfeiter:generate -o ../testhelpers/ . NetworkManager
 type NetworkManager interface {
 	AddVlan(vlanType string, datacenter string, router string, name string) (datatypes.Container_Product_Order_Receipt, error)
 	AddGlobalIP(version int, test bool) (datatypes.Container_Product_Order_Receipt, error)

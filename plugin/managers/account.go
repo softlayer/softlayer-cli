@@ -11,6 +11,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/utils"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . AccountManager
 type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)

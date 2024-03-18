@@ -57,6 +57,7 @@ var (
 	}
 )
 
+//counterfeiter:generate -o ../testhelpers/ . VirtualServerManager
 // Manages SoftLayer Virtual Servers.
 // See product information here: http://www.softlayer.com/virtual-servers
 type VirtualServerManager interface {

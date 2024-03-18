@@ -8,6 +8,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . MetadataManager
 type MetadataManager interface {
 	CallAPIService(string, string, sl.Options, string) (string, error)
 }

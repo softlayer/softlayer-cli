@@ -8,6 +8,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . PlaceGroupManager
 type PlaceGroupManager interface {
 	List(mask string) ([]datatypes.Virtual_PlacementGroup, error)
 	Create(templateObject *datatypes.Virtual_PlacementGroup) (datatypes.Virtual_PlacementGroup, error)

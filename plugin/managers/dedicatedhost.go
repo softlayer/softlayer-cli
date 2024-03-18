@@ -33,6 +33,7 @@ const (
 var existDatacenter = false
 
 // Manages SoftLayer Dedicated host.
+//counterfeiter:generate -o ../testhelpers/ . DedicatedHostManager
 type DedicatedHostManager interface {
 	ListGuests(identifier int, cpu int, domain string, hostname string, memory int, tags []string, mask string) ([]datatypes.Virtual_Guest, error)
 	GenerateOrderTemplate(size, hostname, domain, datacenter string, billing string, routerId int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error)

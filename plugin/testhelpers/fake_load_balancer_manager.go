@@ -9,264 +9,11 @@ import (
 )
 
 type FakeLoadBalancerManager struct {
-	GetADCsStub        func() ([]datatypes.Network_Application_Delivery_Controller, error)
-	getADCsMutex       sync.RWMutex
-	getADCsArgsForCall []struct{}
-	getADCsReturns     struct {
-		result1 []datatypes.Network_Application_Delivery_Controller
-		result2 error
-	}
-	getADCsReturnsOnCall map[int]struct {
-		result1 []datatypes.Network_Application_Delivery_Controller
-		result2 error
-	}
-	GetADCStub        func(identifier int) (datatypes.Network_Application_Delivery_Controller, error)
-	getADCMutex       sync.RWMutex
-	getADCArgsForCall []struct {
-		identifier int
-	}
-	getADCReturns struct {
-		result1 datatypes.Network_Application_Delivery_Controller
-		result2 error
-	}
-	getADCReturnsOnCall map[int]struct {
-		result1 datatypes.Network_Application_Delivery_Controller
-		result2 error
-	}
-	CreateLoadBalancerStub        func(datacenter, name string, lbtype int, desc string, protocols []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, subnet_id int, publicSubnetIP bool) (datatypes.Container_Product_Order_Receipt, error)
-	createLoadBalancerMutex       sync.RWMutex
-	createLoadBalancerArgsForCall []struct {
-		datacenter     string
-		name           string
-		lbtype         int
-		desc           string
-		protocols      []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-		subnet_id      int
-		publicSubnetIP bool
-	}
-	createLoadBalancerReturns struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}
-	createLoadBalancerReturnsOnCall map[int]struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}
-	CreateLoadBalancerVerifyStub        func(datacenter, name string, lbtype int, desc string, protocols []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, subnet_id int, publicSubnetIP bool) (datatypes.Container_Product_Order, error)
-	createLoadBalancerVerifyMutex       sync.RWMutex
-	createLoadBalancerVerifyArgsForCall []struct {
-		datacenter     string
-		name           string
-		lbtype         int
-		desc           string
-		protocols      []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-		subnet_id      int
-		publicSubnetIP bool
-	}
-	createLoadBalancerVerifyReturns struct {
-		result1 datatypes.Container_Product_Order
-		result2 error
-	}
-	createLoadBalancerVerifyReturnsOnCall map[int]struct {
-		result1 datatypes.Container_Product_Order
-		result2 error
-	}
-	CreateLoadBalancerOptionsStub        func() ([]datatypes.Product_Package, error)
-	createLoadBalancerOptionsMutex       sync.RWMutex
-	createLoadBalancerOptionsArgsForCall []struct{}
-	createLoadBalancerOptionsReturns     struct {
-		result1 []datatypes.Product_Package
-		result2 error
-	}
-	createLoadBalancerOptionsReturnsOnCall map[int]struct {
-		result1 []datatypes.Product_Package
-		result2 error
-	}
-	CancelLoadBalancerStub        func(uuid *string) (bool, error)
-	cancelLoadBalancerMutex       sync.RWMutex
-	cancelLoadBalancerArgsForCall []struct {
-		uuid *string
-	}
-	cancelLoadBalancerReturns struct {
-		result1 bool
-		result2 error
-	}
-	cancelLoadBalancerReturnsOnCall map[int]struct {
-		result1 bool
-		result2 error
-	}
-	GetLoadBalancersStub        func() ([]datatypes.Network_LBaaS_LoadBalancer, error)
-	getLoadBalancersMutex       sync.RWMutex
-	getLoadBalancersArgsForCall []struct{}
-	getLoadBalancersReturns     struct {
-		result1 []datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	getLoadBalancersReturnsOnCall map[int]struct {
-		result1 []datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	GetLoadBalancerStub        func(identifier int, mask string) (datatypes.Network_LBaaS_LoadBalancer, error)
-	getLoadBalancerMutex       sync.RWMutex
-	getLoadBalancerArgsForCall []struct {
-		identifier int
-		mask       string
-	}
-	getLoadBalancerReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	getLoadBalancerReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	GetLoadBalancerUUIDStub        func(id int) (string, error)
-	getLoadBalancerUUIDMutex       sync.RWMutex
-	getLoadBalancerUUIDArgsForCall []struct {
-		id int
-	}
-	getLoadBalancerUUIDReturns struct {
-		result1 string
-		result2 error
-	}
-	getLoadBalancerUUIDReturnsOnCall map[int]struct {
-		result1 string
-		result2 error
-	}
-	UpdateLBHealthMonitorsStub        func(loadBalancerUuid *string, healthMonitorConfigurations []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error)
-	updateLBHealthMonitorsMutex       sync.RWMutex
-	updateLBHealthMonitorsArgsForCall []struct {
-		loadBalancerUuid            *string
-		healthMonitorConfigurations []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration
-	}
-	updateLBHealthMonitorsReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	updateLBHealthMonitorsReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	AddLoadBalancerListenerStub        func(loadBalancerUuid *string, protocolConfigurations []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error)
-	addLoadBalancerListenerMutex       sync.RWMutex
-	addLoadBalancerListenerArgsForCall []struct {
-		loadBalancerUuid       *string
-		protocolConfigurations []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-	}
-	addLoadBalancerListenerReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	addLoadBalancerListenerReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	DeleteLoadBalancerListenerStub        func(loadBalancerUuid *string, listenerUuids []string) (resp datatypes.Network_LBaaS_LoadBalancer, err error)
-	deleteLoadBalancerListenerMutex       sync.RWMutex
-	deleteLoadBalancerListenerArgsForCall []struct {
-		loadBalancerUuid *string
-		listenerUuids    []string
-	}
-	deleteLoadBalancerListenerReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	deleteLoadBalancerListenerReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	DeleteLoadBalancerMemberStub        func(loadBalancerUuid *string, memberUuids []string) (datatypes.Network_LBaaS_LoadBalancer, error)
-	deleteLoadBalancerMemberMutex       sync.RWMutex
-	deleteLoadBalancerMemberArgsForCall []struct {
-		loadBalancerUuid *string
-		memberUuids      []string
-	}
-	deleteLoadBalancerMemberReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	deleteLoadBalancerMemberReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	AddLoadBalancerMemberStub        func(loadBalancerUuid *string, instanceInfo []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo) (datatypes.Network_LBaaS_LoadBalancer, error)
-	addLoadBalancerMemberMutex       sync.RWMutex
-	addLoadBalancerMemberArgsForCall []struct {
-		loadBalancerUuid *string
-		instanceInfo     []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo
-	}
-	addLoadBalancerMemberReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	addLoadBalancerMemberReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	AddLoadBalancerL7PoolStub        func(loadBalancerUuid *string, l7Pool *datatypes.Network_LBaaS_L7Pool, l7Members []datatypes.Network_LBaaS_L7Member, l7HealthMonitor *datatypes.Network_LBaaS_L7HealthMonitor, l7SessionAffinity *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error)
-	addLoadBalancerL7PoolMutex       sync.RWMutex
-	addLoadBalancerL7PoolArgsForCall []struct {
-		loadBalancerUuid  *string
-		l7Pool            *datatypes.Network_LBaaS_L7Pool
-		l7Members         []datatypes.Network_LBaaS_L7Member
-		l7HealthMonitor   *datatypes.Network_LBaaS_L7HealthMonitor
-		l7SessionAffinity *datatypes.Network_LBaaS_L7SessionAffinity
-	}
-	addLoadBalancerL7PoolReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	addLoadBalancerL7PoolReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	DeleteLoadBalancerL7PoolStub        func(identifier int) (datatypes.Network_LBaaS_LoadBalancer, error)
-	deleteLoadBalancerL7PoolMutex       sync.RWMutex
-	deleteLoadBalancerL7PoolArgsForCall []struct {
-		identifier int
-	}
-	deleteLoadBalancerL7PoolReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	deleteLoadBalancerL7PoolReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	GetLoadBalancerL7PoolStub        func(indentifier int) (datatypes.Network_LBaaS_L7Pool, error)
-	getLoadBalancerL7PoolMutex       sync.RWMutex
-	getLoadBalancerL7PoolArgsForCall []struct {
-		indentifier int
-	}
-	getLoadBalancerL7PoolReturns struct {
-		result1 datatypes.Network_LBaaS_L7Pool
-		result2 error
-	}
-	getLoadBalancerL7PoolReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_L7Pool
-		result2 error
-	}
-	UpdateLoadBalancerL7PoolStub        func(l7pooluuid *string, l7Pool *datatypes.Network_LBaaS_L7Pool, l7HealthMonitor *datatypes.Network_LBaaS_L7HealthMonitor, l7SessionAffinity *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error)
-	updateLoadBalancerL7PoolMutex       sync.RWMutex
-	updateLoadBalancerL7PoolArgsForCall []struct {
-		l7pooluuid        *string
-		l7Pool            *datatypes.Network_LBaaS_L7Pool
-		l7HealthMonitor   *datatypes.Network_LBaaS_L7HealthMonitor
-		l7SessionAffinity *datatypes.Network_LBaaS_L7SessionAffinity
-	}
-	updateLoadBalancerL7PoolReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	updateLoadBalancerL7PoolReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	AddL7MemberStub        func(l7PoolUuid *string, memberInstances []datatypes.Network_LBaaS_L7Member) (resp datatypes.Network_LBaaS_LoadBalancer, err error)
+	AddL7MemberStub        func(*string, []datatypes.Network_LBaaS_L7Member) (datatypes.Network_LBaaS_LoadBalancer, error)
 	addL7MemberMutex       sync.RWMutex
 	addL7MemberArgsForCall []struct {
-		l7PoolUuid      *string
-		memberInstances []datatypes.Network_LBaaS_L7Member
+		arg1 *string
+		arg2 []datatypes.Network_LBaaS_L7Member
 	}
 	addL7MemberReturns struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
@@ -276,64 +23,11 @@ type FakeLoadBalancerManager struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
 		result2 error
 	}
-	DeleteL7MemberStub        func(l7PoolUuid *string, memberUuids string) (resp datatypes.Network_LBaaS_LoadBalancer, err error)
-	deleteL7MemberMutex       sync.RWMutex
-	deleteL7MemberArgsForCall []struct {
-		l7PoolUuid  *string
-		memberUuids string
-	}
-	deleteL7MemberReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	deleteL7MemberReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	ListL7MembersStub        func(l7PoolId int) ([]datatypes.Network_LBaaS_L7Member, error)
-	listL7MembersMutex       sync.RWMutex
-	listL7MembersArgsForCall []struct {
-		l7PoolId int
-	}
-	listL7MembersReturns struct {
-		result1 []datatypes.Network_LBaaS_L7Member
-		result2 error
-	}
-	listL7MembersReturnsOnCall map[int]struct {
-		result1 []datatypes.Network_LBaaS_L7Member
-		result2 error
-	}
-	GetL7SessionAffinityStub        func(l7PoolId int) (datatypes.Network_LBaaS_L7SessionAffinity, error)
-	getL7SessionAffinityMutex       sync.RWMutex
-	getL7SessionAffinityArgsForCall []struct {
-		l7PoolId int
-	}
-	getL7SessionAffinityReturns struct {
-		result1 datatypes.Network_LBaaS_L7SessionAffinity
-		result2 error
-	}
-	getL7SessionAffinityReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_L7SessionAffinity
-		result2 error
-	}
-	GetL7HealthMonitorStub        func(l7PoolId int) (datatypes.Network_LBaaS_L7HealthMonitor, error)
-	getL7HealthMonitorMutex       sync.RWMutex
-	getL7HealthMonitorArgsForCall []struct {
-		l7PoolId int
-	}
-	getL7HealthMonitorReturns struct {
-		result1 datatypes.Network_LBaaS_L7HealthMonitor
-		result2 error
-	}
-	getL7HealthMonitorReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_L7HealthMonitor
-		result2 error
-	}
-	AddL7PolicyStub        func(listenerUuid *string, policiesRules datatypes.Network_LBaaS_PolicyRule) (datatypes.Network_LBaaS_LoadBalancer, error)
+	AddL7PolicyStub        func(*string, datatypes.Network_LBaaS_PolicyRule) (datatypes.Network_LBaaS_LoadBalancer, error)
 	addL7PolicyMutex       sync.RWMutex
 	addL7PolicyArgsForCall []struct {
-		listenerUuid  *string
-		policiesRules datatypes.Network_LBaaS_PolicyRule
+		arg1 *string
+		arg2 datatypes.Network_LBaaS_PolicyRule
 	}
 	addL7PolicyReturns struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
@@ -343,64 +37,11 @@ type FakeLoadBalancerManager struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
 		result2 error
 	}
-	GetL7PoliciesStub        func(protocolId int) ([]datatypes.Network_LBaaS_L7Policy, error)
-	getL7PoliciesMutex       sync.RWMutex
-	getL7PoliciesArgsForCall []struct {
-		protocolId int
-	}
-	getL7PoliciesReturns struct {
-		result1 []datatypes.Network_LBaaS_L7Policy
-		result2 error
-	}
-	getL7PoliciesReturnsOnCall map[int]struct {
-		result1 []datatypes.Network_LBaaS_L7Policy
-		result2 error
-	}
-	GetL7PolicyStub        func(policyId int) (datatypes.Network_LBaaS_L7Policy, error)
-	getL7PolicyMutex       sync.RWMutex
-	getL7PolicyArgsForCall []struct {
-		policyId int
-	}
-	getL7PolicyReturns struct {
-		result1 datatypes.Network_LBaaS_L7Policy
-		result2 error
-	}
-	getL7PolicyReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_L7Policy
-		result2 error
-	}
-	DeleteL7PolicyStub        func(policy int) (datatypes.Network_LBaaS_LoadBalancer, error)
-	deleteL7PolicyMutex       sync.RWMutex
-	deleteL7PolicyArgsForCall []struct {
-		policy int
-	}
-	deleteL7PolicyReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	deleteL7PolicyReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	EditL7PolicyStub        func(policy int, templateObject *datatypes.Network_LBaaS_L7Policy) (datatypes.Network_LBaaS_LoadBalancer, error)
-	editL7PolicyMutex       sync.RWMutex
-	editL7PolicyArgsForCall []struct {
-		policy         int
-		templateObject *datatypes.Network_LBaaS_L7Policy
-	}
-	editL7PolicyReturns struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	editL7PolicyReturnsOnCall map[int]struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}
-	AddL7RuleStub        func(policyUuid *string, rule datatypes.Network_LBaaS_L7Rule) (resp datatypes.Network_LBaaS_LoadBalancer, err error)
+	AddL7RuleStub        func(*string, datatypes.Network_LBaaS_L7Rule) (datatypes.Network_LBaaS_LoadBalancer, error)
 	addL7RuleMutex       sync.RWMutex
 	addL7RuleArgsForCall []struct {
-		policyUuid *string
-		rule       datatypes.Network_LBaaS_L7Rule
+		arg1 *string
+		arg2 datatypes.Network_LBaaS_L7Rule
 	}
 	addL7RuleReturns struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
@@ -410,11 +51,146 @@ type FakeLoadBalancerManager struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
 		result2 error
 	}
-	DeleteL7RuleStub        func(policyUuid *string, ruleUuids string) (resp datatypes.Network_LBaaS_LoadBalancer, err error)
+	AddLoadBalancerL7PoolStub        func(*string, *datatypes.Network_LBaaS_L7Pool, []datatypes.Network_LBaaS_L7Member, *datatypes.Network_LBaaS_L7HealthMonitor, *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error)
+	addLoadBalancerL7PoolMutex       sync.RWMutex
+	addLoadBalancerL7PoolArgsForCall []struct {
+		arg1 *string
+		arg2 *datatypes.Network_LBaaS_L7Pool
+		arg3 []datatypes.Network_LBaaS_L7Member
+		arg4 *datatypes.Network_LBaaS_L7HealthMonitor
+		arg5 *datatypes.Network_LBaaS_L7SessionAffinity
+	}
+	addLoadBalancerL7PoolReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	addLoadBalancerL7PoolReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	AddLoadBalancerListenerStub        func(*string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error)
+	addLoadBalancerListenerMutex       sync.RWMutex
+	addLoadBalancerListenerArgsForCall []struct {
+		arg1 *string
+		arg2 []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+	}
+	addLoadBalancerListenerReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	addLoadBalancerListenerReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	AddLoadBalancerMemberStub        func(*string, []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo) (datatypes.Network_LBaaS_LoadBalancer, error)
+	addLoadBalancerMemberMutex       sync.RWMutex
+	addLoadBalancerMemberArgsForCall []struct {
+		arg1 *string
+		arg2 []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo
+	}
+	addLoadBalancerMemberReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	addLoadBalancerMemberReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	CancelLoadBalancerStub        func(*string) (bool, error)
+	cancelLoadBalancerMutex       sync.RWMutex
+	cancelLoadBalancerArgsForCall []struct {
+		arg1 *string
+	}
+	cancelLoadBalancerReturns struct {
+		result1 bool
+		result2 error
+	}
+	cancelLoadBalancerReturnsOnCall map[int]struct {
+		result1 bool
+		result2 error
+	}
+	CreateLoadBalancerStub        func(string, string, int, string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, int, bool) (datatypes.Container_Product_Order_Receipt, error)
+	createLoadBalancerMutex       sync.RWMutex
+	createLoadBalancerArgsForCall []struct {
+		arg1 string
+		arg2 string
+		arg3 int
+		arg4 string
+		arg5 []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+		arg6 int
+		arg7 bool
+	}
+	createLoadBalancerReturns struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}
+	createLoadBalancerReturnsOnCall map[int]struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}
+	CreateLoadBalancerOptionsStub        func() ([]datatypes.Product_Package, error)
+	createLoadBalancerOptionsMutex       sync.RWMutex
+	createLoadBalancerOptionsArgsForCall []struct {
+	}
+	createLoadBalancerOptionsReturns struct {
+		result1 []datatypes.Product_Package
+		result2 error
+	}
+	createLoadBalancerOptionsReturnsOnCall map[int]struct {
+		result1 []datatypes.Product_Package
+		result2 error
+	}
+	CreateLoadBalancerVerifyStub        func(string, string, int, string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, int, bool) (datatypes.Container_Product_Order, error)
+	createLoadBalancerVerifyMutex       sync.RWMutex
+	createLoadBalancerVerifyArgsForCall []struct {
+		arg1 string
+		arg2 string
+		arg3 int
+		arg4 string
+		arg5 []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+		arg6 int
+		arg7 bool
+	}
+	createLoadBalancerVerifyReturns struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}
+	createLoadBalancerVerifyReturnsOnCall map[int]struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}
+	DeleteL7MemberStub        func(*string, string) (datatypes.Network_LBaaS_LoadBalancer, error)
+	deleteL7MemberMutex       sync.RWMutex
+	deleteL7MemberArgsForCall []struct {
+		arg1 *string
+		arg2 string
+	}
+	deleteL7MemberReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	deleteL7MemberReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	DeleteL7PolicyStub        func(int) (datatypes.Network_LBaaS_LoadBalancer, error)
+	deleteL7PolicyMutex       sync.RWMutex
+	deleteL7PolicyArgsForCall []struct {
+		arg1 int
+	}
+	deleteL7PolicyReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	deleteL7PolicyReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	DeleteL7RuleStub        func(*string, string) (datatypes.Network_LBaaS_LoadBalancer, error)
 	deleteL7RuleMutex       sync.RWMutex
 	deleteL7RuleArgsForCall []struct {
-		policyUuid *string
-		ruleUuids  string
+		arg1 *string
+		arg2 string
 	}
 	deleteL7RuleReturns struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
@@ -424,10 +200,207 @@ type FakeLoadBalancerManager struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
 		result2 error
 	}
-	ListL7RuleStub        func(policyid int) ([]datatypes.Network_LBaaS_L7Rule, error)
+	DeleteLoadBalancerL7PoolStub        func(int) (datatypes.Network_LBaaS_LoadBalancer, error)
+	deleteLoadBalancerL7PoolMutex       sync.RWMutex
+	deleteLoadBalancerL7PoolArgsForCall []struct {
+		arg1 int
+	}
+	deleteLoadBalancerL7PoolReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	deleteLoadBalancerL7PoolReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	DeleteLoadBalancerListenerStub        func(*string, []string) (datatypes.Network_LBaaS_LoadBalancer, error)
+	deleteLoadBalancerListenerMutex       sync.RWMutex
+	deleteLoadBalancerListenerArgsForCall []struct {
+		arg1 *string
+		arg2 []string
+	}
+	deleteLoadBalancerListenerReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	deleteLoadBalancerListenerReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	DeleteLoadBalancerMemberStub        func(*string, []string) (datatypes.Network_LBaaS_LoadBalancer, error)
+	deleteLoadBalancerMemberMutex       sync.RWMutex
+	deleteLoadBalancerMemberArgsForCall []struct {
+		arg1 *string
+		arg2 []string
+	}
+	deleteLoadBalancerMemberReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	deleteLoadBalancerMemberReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	EditL7PolicyStub        func(int, *datatypes.Network_LBaaS_L7Policy) (datatypes.Network_LBaaS_LoadBalancer, error)
+	editL7PolicyMutex       sync.RWMutex
+	editL7PolicyArgsForCall []struct {
+		arg1 int
+		arg2 *datatypes.Network_LBaaS_L7Policy
+	}
+	editL7PolicyReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	editL7PolicyReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	GetADCStub        func(int) (datatypes.Network_Application_Delivery_Controller, error)
+	getADCMutex       sync.RWMutex
+	getADCArgsForCall []struct {
+		arg1 int
+	}
+	getADCReturns struct {
+		result1 datatypes.Network_Application_Delivery_Controller
+		result2 error
+	}
+	getADCReturnsOnCall map[int]struct {
+		result1 datatypes.Network_Application_Delivery_Controller
+		result2 error
+	}
+	GetADCsStub        func() ([]datatypes.Network_Application_Delivery_Controller, error)
+	getADCsMutex       sync.RWMutex
+	getADCsArgsForCall []struct {
+	}
+	getADCsReturns struct {
+		result1 []datatypes.Network_Application_Delivery_Controller
+		result2 error
+	}
+	getADCsReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_Application_Delivery_Controller
+		result2 error
+	}
+	GetL7HealthMonitorStub        func(int) (datatypes.Network_LBaaS_L7HealthMonitor, error)
+	getL7HealthMonitorMutex       sync.RWMutex
+	getL7HealthMonitorArgsForCall []struct {
+		arg1 int
+	}
+	getL7HealthMonitorReturns struct {
+		result1 datatypes.Network_LBaaS_L7HealthMonitor
+		result2 error
+	}
+	getL7HealthMonitorReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_L7HealthMonitor
+		result2 error
+	}
+	GetL7PoliciesStub        func(int) ([]datatypes.Network_LBaaS_L7Policy, error)
+	getL7PoliciesMutex       sync.RWMutex
+	getL7PoliciesArgsForCall []struct {
+		arg1 int
+	}
+	getL7PoliciesReturns struct {
+		result1 []datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}
+	getL7PoliciesReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}
+	GetL7PolicyStub        func(int) (datatypes.Network_LBaaS_L7Policy, error)
+	getL7PolicyMutex       sync.RWMutex
+	getL7PolicyArgsForCall []struct {
+		arg1 int
+	}
+	getL7PolicyReturns struct {
+		result1 datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}
+	getL7PolicyReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}
+	GetL7SessionAffinityStub        func(int) (datatypes.Network_LBaaS_L7SessionAffinity, error)
+	getL7SessionAffinityMutex       sync.RWMutex
+	getL7SessionAffinityArgsForCall []struct {
+		arg1 int
+	}
+	getL7SessionAffinityReturns struct {
+		result1 datatypes.Network_LBaaS_L7SessionAffinity
+		result2 error
+	}
+	getL7SessionAffinityReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_L7SessionAffinity
+		result2 error
+	}
+	GetLoadBalancerStub        func(int, string) (datatypes.Network_LBaaS_LoadBalancer, error)
+	getLoadBalancerMutex       sync.RWMutex
+	getLoadBalancerArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getLoadBalancerReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	getLoadBalancerReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	GetLoadBalancerL7PoolStub        func(int) (datatypes.Network_LBaaS_L7Pool, error)
+	getLoadBalancerL7PoolMutex       sync.RWMutex
+	getLoadBalancerL7PoolArgsForCall []struct {
+		arg1 int
+	}
+	getLoadBalancerL7PoolReturns struct {
+		result1 datatypes.Network_LBaaS_L7Pool
+		result2 error
+	}
+	getLoadBalancerL7PoolReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_L7Pool
+		result2 error
+	}
+	GetLoadBalancerUUIDStub        func(int) (string, error)
+	getLoadBalancerUUIDMutex       sync.RWMutex
+	getLoadBalancerUUIDArgsForCall []struct {
+		arg1 int
+	}
+	getLoadBalancerUUIDReturns struct {
+		result1 string
+		result2 error
+	}
+	getLoadBalancerUUIDReturnsOnCall map[int]struct {
+		result1 string
+		result2 error
+	}
+	GetLoadBalancersStub        func() ([]datatypes.Network_LBaaS_LoadBalancer, error)
+	getLoadBalancersMutex       sync.RWMutex
+	getLoadBalancersArgsForCall []struct {
+	}
+	getLoadBalancersReturns struct {
+		result1 []datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	getLoadBalancersReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	ListL7MembersStub        func(int) ([]datatypes.Network_LBaaS_L7Member, error)
+	listL7MembersMutex       sync.RWMutex
+	listL7MembersArgsForCall []struct {
+		arg1 int
+	}
+	listL7MembersReturns struct {
+		result1 []datatypes.Network_LBaaS_L7Member
+		result2 error
+	}
+	listL7MembersReturnsOnCall map[int]struct {
+		result1 []datatypes.Network_LBaaS_L7Member
+		result2 error
+	}
+	ListL7RuleStub        func(int) ([]datatypes.Network_LBaaS_L7Rule, error)
 	listL7RuleMutex       sync.RWMutex
 	listL7RuleArgsForCall []struct {
-		policyid int
+		arg1 int
 	}
 	listL7RuleReturns struct {
 		result1 []datatypes.Network_LBaaS_L7Rule
@@ -437,990 +410,63 @@ type FakeLoadBalancerManager struct {
 		result1 []datatypes.Network_LBaaS_L7Rule
 		result2 error
 	}
+	UpdateLBHealthMonitorsStub        func(*string, []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error)
+	updateLBHealthMonitorsMutex       sync.RWMutex
+	updateLBHealthMonitorsArgsForCall []struct {
+		arg1 *string
+		arg2 []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration
+	}
+	updateLBHealthMonitorsReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	updateLBHealthMonitorsReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	UpdateLoadBalancerL7PoolStub        func(*string, *datatypes.Network_LBaaS_L7Pool, *datatypes.Network_LBaaS_L7HealthMonitor, *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error)
+	updateLoadBalancerL7PoolMutex       sync.RWMutex
+	updateLoadBalancerL7PoolArgsForCall []struct {
+		arg1 *string
+		arg2 *datatypes.Network_LBaaS_L7Pool
+		arg3 *datatypes.Network_LBaaS_L7HealthMonitor
+		arg4 *datatypes.Network_LBaaS_L7SessionAffinity
+	}
+	updateLoadBalancerL7PoolReturns struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
+	updateLoadBalancerL7PoolReturnsOnCall map[int]struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeLoadBalancerManager) GetADCs() ([]datatypes.Network_Application_Delivery_Controller, error) {
-	fake.getADCsMutex.Lock()
-	ret, specificReturn := fake.getADCsReturnsOnCall[len(fake.getADCsArgsForCall)]
-	fake.getADCsArgsForCall = append(fake.getADCsArgsForCall, struct{}{})
-	fake.recordInvocation("GetADCs", []interface{}{})
-	fake.getADCsMutex.Unlock()
-	if fake.GetADCsStub != nil {
-		return fake.GetADCsStub()
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getADCsReturns.result1, fake.getADCsReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetADCsCallCount() int {
-	fake.getADCsMutex.RLock()
-	defer fake.getADCsMutex.RUnlock()
-	return len(fake.getADCsArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetADCsReturns(result1 []datatypes.Network_Application_Delivery_Controller, result2 error) {
-	fake.GetADCsStub = nil
-	fake.getADCsReturns = struct {
-		result1 []datatypes.Network_Application_Delivery_Controller
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetADCsReturnsOnCall(i int, result1 []datatypes.Network_Application_Delivery_Controller, result2 error) {
-	fake.GetADCsStub = nil
-	if fake.getADCsReturnsOnCall == nil {
-		fake.getADCsReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Network_Application_Delivery_Controller
-			result2 error
-		})
-	}
-	fake.getADCsReturnsOnCall[i] = struct {
-		result1 []datatypes.Network_Application_Delivery_Controller
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetADC(identifier int) (datatypes.Network_Application_Delivery_Controller, error) {
-	fake.getADCMutex.Lock()
-	ret, specificReturn := fake.getADCReturnsOnCall[len(fake.getADCArgsForCall)]
-	fake.getADCArgsForCall = append(fake.getADCArgsForCall, struct {
-		identifier int
-	}{identifier})
-	fake.recordInvocation("GetADC", []interface{}{identifier})
-	fake.getADCMutex.Unlock()
-	if fake.GetADCStub != nil {
-		return fake.GetADCStub(identifier)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getADCReturns.result1, fake.getADCReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetADCCallCount() int {
-	fake.getADCMutex.RLock()
-	defer fake.getADCMutex.RUnlock()
-	return len(fake.getADCArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetADCArgsForCall(i int) int {
-	fake.getADCMutex.RLock()
-	defer fake.getADCMutex.RUnlock()
-	return fake.getADCArgsForCall[i].identifier
-}
-
-func (fake *FakeLoadBalancerManager) GetADCReturns(result1 datatypes.Network_Application_Delivery_Controller, result2 error) {
-	fake.GetADCStub = nil
-	fake.getADCReturns = struct {
-		result1 datatypes.Network_Application_Delivery_Controller
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetADCReturnsOnCall(i int, result1 datatypes.Network_Application_Delivery_Controller, result2 error) {
-	fake.GetADCStub = nil
-	if fake.getADCReturnsOnCall == nil {
-		fake.getADCReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_Application_Delivery_Controller
-			result2 error
-		})
-	}
-	fake.getADCReturnsOnCall[i] = struct {
-		result1 datatypes.Network_Application_Delivery_Controller
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancer(datacenter string, name string, lbtype int, desc string, protocols []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, subnet_id int, publicSubnetIP bool) (datatypes.Container_Product_Order_Receipt, error) {
-	var protocolsCopy []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-	if protocols != nil {
-		protocolsCopy = make([]datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, len(protocols))
-		copy(protocolsCopy, protocols)
-	}
-	fake.createLoadBalancerMutex.Lock()
-	ret, specificReturn := fake.createLoadBalancerReturnsOnCall[len(fake.createLoadBalancerArgsForCall)]
-	fake.createLoadBalancerArgsForCall = append(fake.createLoadBalancerArgsForCall, struct {
-		datacenter     string
-		name           string
-		lbtype         int
-		desc           string
-		protocols      []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-		subnet_id      int
-		publicSubnetIP bool
-	}{datacenter, name, lbtype, desc, protocolsCopy, subnet_id, publicSubnetIP})
-	fake.recordInvocation("CreateLoadBalancer", []interface{}{datacenter, name, lbtype, desc, protocolsCopy, subnet_id, publicSubnetIP})
-	fake.createLoadBalancerMutex.Unlock()
-	if fake.CreateLoadBalancerStub != nil {
-		return fake.CreateLoadBalancerStub(datacenter, name, lbtype, desc, protocols, subnet_id, publicSubnetIP)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.createLoadBalancerReturns.result1, fake.createLoadBalancerReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerCallCount() int {
-	fake.createLoadBalancerMutex.RLock()
-	defer fake.createLoadBalancerMutex.RUnlock()
-	return len(fake.createLoadBalancerArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerArgsForCall(i int) (string, string, int, string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, int, bool) {
-	fake.createLoadBalancerMutex.RLock()
-	defer fake.createLoadBalancerMutex.RUnlock()
-	return fake.createLoadBalancerArgsForCall[i].datacenter, fake.createLoadBalancerArgsForCall[i].name, fake.createLoadBalancerArgsForCall[i].lbtype, fake.createLoadBalancerArgsForCall[i].desc, fake.createLoadBalancerArgsForCall[i].protocols, fake.createLoadBalancerArgsForCall[i].subnet_id, fake.createLoadBalancerArgsForCall[i].publicSubnetIP
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerReturns(result1 datatypes.Container_Product_Order_Receipt, result2 error) {
-	fake.CreateLoadBalancerStub = nil
-	fake.createLoadBalancerReturns = struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerReturnsOnCall(i int, result1 datatypes.Container_Product_Order_Receipt, result2 error) {
-	fake.CreateLoadBalancerStub = nil
-	if fake.createLoadBalancerReturnsOnCall == nil {
-		fake.createLoadBalancerReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Container_Product_Order_Receipt
-			result2 error
-		})
-	}
-	fake.createLoadBalancerReturnsOnCall[i] = struct {
-		result1 datatypes.Container_Product_Order_Receipt
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerify(datacenter string, name string, lbtype int, desc string, protocols []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, subnet_id int, publicSubnetIP bool) (datatypes.Container_Product_Order, error) {
-	var protocolsCopy []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-	if protocols != nil {
-		protocolsCopy = make([]datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, len(protocols))
-		copy(protocolsCopy, protocols)
-	}
-	fake.createLoadBalancerVerifyMutex.Lock()
-	ret, specificReturn := fake.createLoadBalancerVerifyReturnsOnCall[len(fake.createLoadBalancerVerifyArgsForCall)]
-	fake.createLoadBalancerVerifyArgsForCall = append(fake.createLoadBalancerVerifyArgsForCall, struct {
-		datacenter     string
-		name           string
-		lbtype         int
-		desc           string
-		protocols      []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-		subnet_id      int
-		publicSubnetIP bool
-	}{datacenter, name, lbtype, desc, protocolsCopy, subnet_id, publicSubnetIP})
-	fake.recordInvocation("CreateLoadBalancerVerify", []interface{}{datacenter, name, lbtype, desc, protocolsCopy, subnet_id, publicSubnetIP})
-	fake.createLoadBalancerVerifyMutex.Unlock()
-	if fake.CreateLoadBalancerVerifyStub != nil {
-		return fake.CreateLoadBalancerVerifyStub(datacenter, name, lbtype, desc, protocols, subnet_id, publicSubnetIP)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.createLoadBalancerVerifyReturns.result1, fake.createLoadBalancerVerifyReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerifyCallCount() int {
-	fake.createLoadBalancerVerifyMutex.RLock()
-	defer fake.createLoadBalancerVerifyMutex.RUnlock()
-	return len(fake.createLoadBalancerVerifyArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerifyArgsForCall(i int) (string, string, int, string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, int, bool) {
-	fake.createLoadBalancerVerifyMutex.RLock()
-	defer fake.createLoadBalancerVerifyMutex.RUnlock()
-	return fake.createLoadBalancerVerifyArgsForCall[i].datacenter, fake.createLoadBalancerVerifyArgsForCall[i].name, fake.createLoadBalancerVerifyArgsForCall[i].lbtype, fake.createLoadBalancerVerifyArgsForCall[i].desc, fake.createLoadBalancerVerifyArgsForCall[i].protocols, fake.createLoadBalancerVerifyArgsForCall[i].subnet_id, fake.createLoadBalancerVerifyArgsForCall[i].publicSubnetIP
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerifyReturns(result1 datatypes.Container_Product_Order, result2 error) {
-	fake.CreateLoadBalancerVerifyStub = nil
-	fake.createLoadBalancerVerifyReturns = struct {
-		result1 datatypes.Container_Product_Order
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerifyReturnsOnCall(i int, result1 datatypes.Container_Product_Order, result2 error) {
-	fake.CreateLoadBalancerVerifyStub = nil
-	if fake.createLoadBalancerVerifyReturnsOnCall == nil {
-		fake.createLoadBalancerVerifyReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Container_Product_Order
-			result2 error
-		})
-	}
-	fake.createLoadBalancerVerifyReturnsOnCall[i] = struct {
-		result1 datatypes.Container_Product_Order
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerOptions() ([]datatypes.Product_Package, error) {
-	fake.createLoadBalancerOptionsMutex.Lock()
-	ret, specificReturn := fake.createLoadBalancerOptionsReturnsOnCall[len(fake.createLoadBalancerOptionsArgsForCall)]
-	fake.createLoadBalancerOptionsArgsForCall = append(fake.createLoadBalancerOptionsArgsForCall, struct{}{})
-	fake.recordInvocation("CreateLoadBalancerOptions", []interface{}{})
-	fake.createLoadBalancerOptionsMutex.Unlock()
-	if fake.CreateLoadBalancerOptionsStub != nil {
-		return fake.CreateLoadBalancerOptionsStub()
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.createLoadBalancerOptionsReturns.result1, fake.createLoadBalancerOptionsReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerOptionsCallCount() int {
-	fake.createLoadBalancerOptionsMutex.RLock()
-	defer fake.createLoadBalancerOptionsMutex.RUnlock()
-	return len(fake.createLoadBalancerOptionsArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerOptionsReturns(result1 []datatypes.Product_Package, result2 error) {
-	fake.CreateLoadBalancerOptionsStub = nil
-	fake.createLoadBalancerOptionsReturns = struct {
-		result1 []datatypes.Product_Package
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) CreateLoadBalancerOptionsReturnsOnCall(i int, result1 []datatypes.Product_Package, result2 error) {
-	fake.CreateLoadBalancerOptionsStub = nil
-	if fake.createLoadBalancerOptionsReturnsOnCall == nil {
-		fake.createLoadBalancerOptionsReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Product_Package
-			result2 error
-		})
-	}
-	fake.createLoadBalancerOptionsReturnsOnCall[i] = struct {
-		result1 []datatypes.Product_Package
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) CancelLoadBalancer(uuid *string) (bool, error) {
-	fake.cancelLoadBalancerMutex.Lock()
-	ret, specificReturn := fake.cancelLoadBalancerReturnsOnCall[len(fake.cancelLoadBalancerArgsForCall)]
-	fake.cancelLoadBalancerArgsForCall = append(fake.cancelLoadBalancerArgsForCall, struct {
-		uuid *string
-	}{uuid})
-	fake.recordInvocation("CancelLoadBalancer", []interface{}{uuid})
-	fake.cancelLoadBalancerMutex.Unlock()
-	if fake.CancelLoadBalancerStub != nil {
-		return fake.CancelLoadBalancerStub(uuid)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.cancelLoadBalancerReturns.result1, fake.cancelLoadBalancerReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) CancelLoadBalancerCallCount() int {
-	fake.cancelLoadBalancerMutex.RLock()
-	defer fake.cancelLoadBalancerMutex.RUnlock()
-	return len(fake.cancelLoadBalancerArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) CancelLoadBalancerArgsForCall(i int) *string {
-	fake.cancelLoadBalancerMutex.RLock()
-	defer fake.cancelLoadBalancerMutex.RUnlock()
-	return fake.cancelLoadBalancerArgsForCall[i].uuid
-}
-
-func (fake *FakeLoadBalancerManager) CancelLoadBalancerReturns(result1 bool, result2 error) {
-	fake.CancelLoadBalancerStub = nil
-	fake.cancelLoadBalancerReturns = struct {
-		result1 bool
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) CancelLoadBalancerReturnsOnCall(i int, result1 bool, result2 error) {
-	fake.CancelLoadBalancerStub = nil
-	if fake.cancelLoadBalancerReturnsOnCall == nil {
-		fake.cancelLoadBalancerReturnsOnCall = make(map[int]struct {
-			result1 bool
-			result2 error
-		})
-	}
-	fake.cancelLoadBalancerReturnsOnCall[i] = struct {
-		result1 bool
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancers() ([]datatypes.Network_LBaaS_LoadBalancer, error) {
-	fake.getLoadBalancersMutex.Lock()
-	ret, specificReturn := fake.getLoadBalancersReturnsOnCall[len(fake.getLoadBalancersArgsForCall)]
-	fake.getLoadBalancersArgsForCall = append(fake.getLoadBalancersArgsForCall, struct{}{})
-	fake.recordInvocation("GetLoadBalancers", []interface{}{})
-	fake.getLoadBalancersMutex.Unlock()
-	if fake.GetLoadBalancersStub != nil {
-		return fake.GetLoadBalancersStub()
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getLoadBalancersReturns.result1, fake.getLoadBalancersReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancersCallCount() int {
-	fake.getLoadBalancersMutex.RLock()
-	defer fake.getLoadBalancersMutex.RUnlock()
-	return len(fake.getLoadBalancersArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancersReturns(result1 []datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.GetLoadBalancersStub = nil
-	fake.getLoadBalancersReturns = struct {
-		result1 []datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancersReturnsOnCall(i int, result1 []datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.GetLoadBalancersStub = nil
-	if fake.getLoadBalancersReturnsOnCall == nil {
-		fake.getLoadBalancersReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.getLoadBalancersReturnsOnCall[i] = struct {
-		result1 []datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancer(identifier int, mask string) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	fake.getLoadBalancerMutex.Lock()
-	ret, specificReturn := fake.getLoadBalancerReturnsOnCall[len(fake.getLoadBalancerArgsForCall)]
-	fake.getLoadBalancerArgsForCall = append(fake.getLoadBalancerArgsForCall, struct {
-		identifier int
-		mask       string
-	}{identifier, mask})
-	fake.recordInvocation("GetLoadBalancer", []interface{}{identifier, mask})
-	fake.getLoadBalancerMutex.Unlock()
-	if fake.GetLoadBalancerStub != nil {
-		return fake.GetLoadBalancerStub(identifier, mask)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getLoadBalancerReturns.result1, fake.getLoadBalancerReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerCallCount() int {
-	fake.getLoadBalancerMutex.RLock()
-	defer fake.getLoadBalancerMutex.RUnlock()
-	return len(fake.getLoadBalancerArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerArgsForCall(i int) (int, string) {
-	fake.getLoadBalancerMutex.RLock()
-	defer fake.getLoadBalancerMutex.RUnlock()
-	return fake.getLoadBalancerArgsForCall[i].identifier, fake.getLoadBalancerArgsForCall[i].mask
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.GetLoadBalancerStub = nil
-	fake.getLoadBalancerReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.GetLoadBalancerStub = nil
-	if fake.getLoadBalancerReturnsOnCall == nil {
-		fake.getLoadBalancerReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.getLoadBalancerReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerUUID(id int) (string, error) {
-	fake.getLoadBalancerUUIDMutex.Lock()
-	ret, specificReturn := fake.getLoadBalancerUUIDReturnsOnCall[len(fake.getLoadBalancerUUIDArgsForCall)]
-	fake.getLoadBalancerUUIDArgsForCall = append(fake.getLoadBalancerUUIDArgsForCall, struct {
-		id int
-	}{id})
-	fake.recordInvocation("GetLoadBalancerUUID", []interface{}{id})
-	fake.getLoadBalancerUUIDMutex.Unlock()
-	if fake.GetLoadBalancerUUIDStub != nil {
-		return fake.GetLoadBalancerUUIDStub(id)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getLoadBalancerUUIDReturns.result1, fake.getLoadBalancerUUIDReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerUUIDCallCount() int {
-	fake.getLoadBalancerUUIDMutex.RLock()
-	defer fake.getLoadBalancerUUIDMutex.RUnlock()
-	return len(fake.getLoadBalancerUUIDArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerUUIDArgsForCall(i int) int {
-	fake.getLoadBalancerUUIDMutex.RLock()
-	defer fake.getLoadBalancerUUIDMutex.RUnlock()
-	return fake.getLoadBalancerUUIDArgsForCall[i].id
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerUUIDReturns(result1 string, result2 error) {
-	fake.GetLoadBalancerUUIDStub = nil
-	fake.getLoadBalancerUUIDReturns = struct {
-		result1 string
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerUUIDReturnsOnCall(i int, result1 string, result2 error) {
-	fake.GetLoadBalancerUUIDStub = nil
-	if fake.getLoadBalancerUUIDReturnsOnCall == nil {
-		fake.getLoadBalancerUUIDReturnsOnCall = make(map[int]struct {
-			result1 string
-			result2 error
-		})
-	}
-	fake.getLoadBalancerUUIDReturnsOnCall[i] = struct {
-		result1 string
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitors(loadBalancerUuid *string, healthMonitorConfigurations []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	var healthMonitorConfigurationsCopy []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration
-	if healthMonitorConfigurations != nil {
-		healthMonitorConfigurationsCopy = make([]datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration, len(healthMonitorConfigurations))
-		copy(healthMonitorConfigurationsCopy, healthMonitorConfigurations)
-	}
-	fake.updateLBHealthMonitorsMutex.Lock()
-	ret, specificReturn := fake.updateLBHealthMonitorsReturnsOnCall[len(fake.updateLBHealthMonitorsArgsForCall)]
-	fake.updateLBHealthMonitorsArgsForCall = append(fake.updateLBHealthMonitorsArgsForCall, struct {
-		loadBalancerUuid            *string
-		healthMonitorConfigurations []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration
-	}{loadBalancerUuid, healthMonitorConfigurationsCopy})
-	fake.recordInvocation("UpdateLBHealthMonitors", []interface{}{loadBalancerUuid, healthMonitorConfigurationsCopy})
-	fake.updateLBHealthMonitorsMutex.Unlock()
-	if fake.UpdateLBHealthMonitorsStub != nil {
-		return fake.UpdateLBHealthMonitorsStub(loadBalancerUuid, healthMonitorConfigurations)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.updateLBHealthMonitorsReturns.result1, fake.updateLBHealthMonitorsReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitorsCallCount() int {
-	fake.updateLBHealthMonitorsMutex.RLock()
-	defer fake.updateLBHealthMonitorsMutex.RUnlock()
-	return len(fake.updateLBHealthMonitorsArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitorsArgsForCall(i int) (*string, []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration) {
-	fake.updateLBHealthMonitorsMutex.RLock()
-	defer fake.updateLBHealthMonitorsMutex.RUnlock()
-	return fake.updateLBHealthMonitorsArgsForCall[i].loadBalancerUuid, fake.updateLBHealthMonitorsArgsForCall[i].healthMonitorConfigurations
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitorsReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.UpdateLBHealthMonitorsStub = nil
-	fake.updateLBHealthMonitorsReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitorsReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.UpdateLBHealthMonitorsStub = nil
-	if fake.updateLBHealthMonitorsReturnsOnCall == nil {
-		fake.updateLBHealthMonitorsReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.updateLBHealthMonitorsReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerListener(loadBalancerUuid *string, protocolConfigurations []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	var protocolConfigurationsCopy []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-	if protocolConfigurations != nil {
-		protocolConfigurationsCopy = make([]datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, len(protocolConfigurations))
-		copy(protocolConfigurationsCopy, protocolConfigurations)
-	}
-	fake.addLoadBalancerListenerMutex.Lock()
-	ret, specificReturn := fake.addLoadBalancerListenerReturnsOnCall[len(fake.addLoadBalancerListenerArgsForCall)]
-	fake.addLoadBalancerListenerArgsForCall = append(fake.addLoadBalancerListenerArgsForCall, struct {
-		loadBalancerUuid       *string
-		protocolConfigurations []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
-	}{loadBalancerUuid, protocolConfigurationsCopy})
-	fake.recordInvocation("AddLoadBalancerListener", []interface{}{loadBalancerUuid, protocolConfigurationsCopy})
-	fake.addLoadBalancerListenerMutex.Unlock()
-	if fake.AddLoadBalancerListenerStub != nil {
-		return fake.AddLoadBalancerListenerStub(loadBalancerUuid, protocolConfigurations)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.addLoadBalancerListenerReturns.result1, fake.addLoadBalancerListenerReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerListenerCallCount() int {
-	fake.addLoadBalancerListenerMutex.RLock()
-	defer fake.addLoadBalancerListenerMutex.RUnlock()
-	return len(fake.addLoadBalancerListenerArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerListenerArgsForCall(i int) (*string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration) {
-	fake.addLoadBalancerListenerMutex.RLock()
-	defer fake.addLoadBalancerListenerMutex.RUnlock()
-	return fake.addLoadBalancerListenerArgsForCall[i].loadBalancerUuid, fake.addLoadBalancerListenerArgsForCall[i].protocolConfigurations
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerListenerReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.AddLoadBalancerListenerStub = nil
-	fake.addLoadBalancerListenerReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerListenerReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.AddLoadBalancerListenerStub = nil
-	if fake.addLoadBalancerListenerReturnsOnCall == nil {
-		fake.addLoadBalancerListenerReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.addLoadBalancerListenerReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListener(loadBalancerUuid *string, listenerUuids []string) (resp datatypes.Network_LBaaS_LoadBalancer, err error) {
-	var listenerUuidsCopy []string
-	if listenerUuids != nil {
-		listenerUuidsCopy = make([]string, len(listenerUuids))
-		copy(listenerUuidsCopy, listenerUuids)
-	}
-	fake.deleteLoadBalancerListenerMutex.Lock()
-	ret, specificReturn := fake.deleteLoadBalancerListenerReturnsOnCall[len(fake.deleteLoadBalancerListenerArgsForCall)]
-	fake.deleteLoadBalancerListenerArgsForCall = append(fake.deleteLoadBalancerListenerArgsForCall, struct {
-		loadBalancerUuid *string
-		listenerUuids    []string
-	}{loadBalancerUuid, listenerUuidsCopy})
-	fake.recordInvocation("DeleteLoadBalancerListener", []interface{}{loadBalancerUuid, listenerUuidsCopy})
-	fake.deleteLoadBalancerListenerMutex.Unlock()
-	if fake.DeleteLoadBalancerListenerStub != nil {
-		return fake.DeleteLoadBalancerListenerStub(loadBalancerUuid, listenerUuids)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteLoadBalancerListenerReturns.result1, fake.deleteLoadBalancerListenerReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListenerCallCount() int {
-	fake.deleteLoadBalancerListenerMutex.RLock()
-	defer fake.deleteLoadBalancerListenerMutex.RUnlock()
-	return len(fake.deleteLoadBalancerListenerArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListenerArgsForCall(i int) (*string, []string) {
-	fake.deleteLoadBalancerListenerMutex.RLock()
-	defer fake.deleteLoadBalancerListenerMutex.RUnlock()
-	return fake.deleteLoadBalancerListenerArgsForCall[i].loadBalancerUuid, fake.deleteLoadBalancerListenerArgsForCall[i].listenerUuids
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListenerReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteLoadBalancerListenerStub = nil
-	fake.deleteLoadBalancerListenerReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListenerReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteLoadBalancerListenerStub = nil
-	if fake.deleteLoadBalancerListenerReturnsOnCall == nil {
-		fake.deleteLoadBalancerListenerReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.deleteLoadBalancerListenerReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMember(loadBalancerUuid *string, memberUuids []string) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	var memberUuidsCopy []string
-	if memberUuids != nil {
-		memberUuidsCopy = make([]string, len(memberUuids))
-		copy(memberUuidsCopy, memberUuids)
-	}
-	fake.deleteLoadBalancerMemberMutex.Lock()
-	ret, specificReturn := fake.deleteLoadBalancerMemberReturnsOnCall[len(fake.deleteLoadBalancerMemberArgsForCall)]
-	fake.deleteLoadBalancerMemberArgsForCall = append(fake.deleteLoadBalancerMemberArgsForCall, struct {
-		loadBalancerUuid *string
-		memberUuids      []string
-	}{loadBalancerUuid, memberUuidsCopy})
-	fake.recordInvocation("DeleteLoadBalancerMember", []interface{}{loadBalancerUuid, memberUuidsCopy})
-	fake.deleteLoadBalancerMemberMutex.Unlock()
-	if fake.DeleteLoadBalancerMemberStub != nil {
-		return fake.DeleteLoadBalancerMemberStub(loadBalancerUuid, memberUuids)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteLoadBalancerMemberReturns.result1, fake.deleteLoadBalancerMemberReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMemberCallCount() int {
-	fake.deleteLoadBalancerMemberMutex.RLock()
-	defer fake.deleteLoadBalancerMemberMutex.RUnlock()
-	return len(fake.deleteLoadBalancerMemberArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMemberArgsForCall(i int) (*string, []string) {
-	fake.deleteLoadBalancerMemberMutex.RLock()
-	defer fake.deleteLoadBalancerMemberMutex.RUnlock()
-	return fake.deleteLoadBalancerMemberArgsForCall[i].loadBalancerUuid, fake.deleteLoadBalancerMemberArgsForCall[i].memberUuids
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMemberReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteLoadBalancerMemberStub = nil
-	fake.deleteLoadBalancerMemberReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMemberReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteLoadBalancerMemberStub = nil
-	if fake.deleteLoadBalancerMemberReturnsOnCall == nil {
-		fake.deleteLoadBalancerMemberReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.deleteLoadBalancerMemberReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerMember(loadBalancerUuid *string, instanceInfo []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	var instanceInfoCopy []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo
-	if instanceInfo != nil {
-		instanceInfoCopy = make([]datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo, len(instanceInfo))
-		copy(instanceInfoCopy, instanceInfo)
-	}
-	fake.addLoadBalancerMemberMutex.Lock()
-	ret, specificReturn := fake.addLoadBalancerMemberReturnsOnCall[len(fake.addLoadBalancerMemberArgsForCall)]
-	fake.addLoadBalancerMemberArgsForCall = append(fake.addLoadBalancerMemberArgsForCall, struct {
-		loadBalancerUuid *string
-		instanceInfo     []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo
-	}{loadBalancerUuid, instanceInfoCopy})
-	fake.recordInvocation("AddLoadBalancerMember", []interface{}{loadBalancerUuid, instanceInfoCopy})
-	fake.addLoadBalancerMemberMutex.Unlock()
-	if fake.AddLoadBalancerMemberStub != nil {
-		return fake.AddLoadBalancerMemberStub(loadBalancerUuid, instanceInfo)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.addLoadBalancerMemberReturns.result1, fake.addLoadBalancerMemberReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerMemberCallCount() int {
-	fake.addLoadBalancerMemberMutex.RLock()
-	defer fake.addLoadBalancerMemberMutex.RUnlock()
-	return len(fake.addLoadBalancerMemberArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerMemberArgsForCall(i int) (*string, []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo) {
-	fake.addLoadBalancerMemberMutex.RLock()
-	defer fake.addLoadBalancerMemberMutex.RUnlock()
-	return fake.addLoadBalancerMemberArgsForCall[i].loadBalancerUuid, fake.addLoadBalancerMemberArgsForCall[i].instanceInfo
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerMemberReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.AddLoadBalancerMemberStub = nil
-	fake.addLoadBalancerMemberReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerMemberReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.AddLoadBalancerMemberStub = nil
-	if fake.addLoadBalancerMemberReturnsOnCall == nil {
-		fake.addLoadBalancerMemberReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.addLoadBalancerMemberReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerL7Pool(loadBalancerUuid *string, l7Pool *datatypes.Network_LBaaS_L7Pool, l7Members []datatypes.Network_LBaaS_L7Member, l7HealthMonitor *datatypes.Network_LBaaS_L7HealthMonitor, l7SessionAffinity *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	var l7MembersCopy []datatypes.Network_LBaaS_L7Member
-	if l7Members != nil {
-		l7MembersCopy = make([]datatypes.Network_LBaaS_L7Member, len(l7Members))
-		copy(l7MembersCopy, l7Members)
-	}
-	fake.addLoadBalancerL7PoolMutex.Lock()
-	ret, specificReturn := fake.addLoadBalancerL7PoolReturnsOnCall[len(fake.addLoadBalancerL7PoolArgsForCall)]
-	fake.addLoadBalancerL7PoolArgsForCall = append(fake.addLoadBalancerL7PoolArgsForCall, struct {
-		loadBalancerUuid  *string
-		l7Pool            *datatypes.Network_LBaaS_L7Pool
-		l7Members         []datatypes.Network_LBaaS_L7Member
-		l7HealthMonitor   *datatypes.Network_LBaaS_L7HealthMonitor
-		l7SessionAffinity *datatypes.Network_LBaaS_L7SessionAffinity
-	}{loadBalancerUuid, l7Pool, l7MembersCopy, l7HealthMonitor, l7SessionAffinity})
-	fake.recordInvocation("AddLoadBalancerL7Pool", []interface{}{loadBalancerUuid, l7Pool, l7MembersCopy, l7HealthMonitor, l7SessionAffinity})
-	fake.addLoadBalancerL7PoolMutex.Unlock()
-	if fake.AddLoadBalancerL7PoolStub != nil {
-		return fake.AddLoadBalancerL7PoolStub(loadBalancerUuid, l7Pool, l7Members, l7HealthMonitor, l7SessionAffinity)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.addLoadBalancerL7PoolReturns.result1, fake.addLoadBalancerL7PoolReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerL7PoolCallCount() int {
-	fake.addLoadBalancerL7PoolMutex.RLock()
-	defer fake.addLoadBalancerL7PoolMutex.RUnlock()
-	return len(fake.addLoadBalancerL7PoolArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerL7PoolArgsForCall(i int) (*string, *datatypes.Network_LBaaS_L7Pool, []datatypes.Network_LBaaS_L7Member, *datatypes.Network_LBaaS_L7HealthMonitor, *datatypes.Network_LBaaS_L7SessionAffinity) {
-	fake.addLoadBalancerL7PoolMutex.RLock()
-	defer fake.addLoadBalancerL7PoolMutex.RUnlock()
-	return fake.addLoadBalancerL7PoolArgsForCall[i].loadBalancerUuid, fake.addLoadBalancerL7PoolArgsForCall[i].l7Pool, fake.addLoadBalancerL7PoolArgsForCall[i].l7Members, fake.addLoadBalancerL7PoolArgsForCall[i].l7HealthMonitor, fake.addLoadBalancerL7PoolArgsForCall[i].l7SessionAffinity
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerL7PoolReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.AddLoadBalancerL7PoolStub = nil
-	fake.addLoadBalancerL7PoolReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) AddLoadBalancerL7PoolReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.AddLoadBalancerL7PoolStub = nil
-	if fake.addLoadBalancerL7PoolReturnsOnCall == nil {
-		fake.addLoadBalancerL7PoolReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.addLoadBalancerL7PoolReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7Pool(identifier int) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	fake.deleteLoadBalancerL7PoolMutex.Lock()
-	ret, specificReturn := fake.deleteLoadBalancerL7PoolReturnsOnCall[len(fake.deleteLoadBalancerL7PoolArgsForCall)]
-	fake.deleteLoadBalancerL7PoolArgsForCall = append(fake.deleteLoadBalancerL7PoolArgsForCall, struct {
-		identifier int
-	}{identifier})
-	fake.recordInvocation("DeleteLoadBalancerL7Pool", []interface{}{identifier})
-	fake.deleteLoadBalancerL7PoolMutex.Unlock()
-	if fake.DeleteLoadBalancerL7PoolStub != nil {
-		return fake.DeleteLoadBalancerL7PoolStub(identifier)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteLoadBalancerL7PoolReturns.result1, fake.deleteLoadBalancerL7PoolReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7PoolCallCount() int {
-	fake.deleteLoadBalancerL7PoolMutex.RLock()
-	defer fake.deleteLoadBalancerL7PoolMutex.RUnlock()
-	return len(fake.deleteLoadBalancerL7PoolArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7PoolArgsForCall(i int) int {
-	fake.deleteLoadBalancerL7PoolMutex.RLock()
-	defer fake.deleteLoadBalancerL7PoolMutex.RUnlock()
-	return fake.deleteLoadBalancerL7PoolArgsForCall[i].identifier
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7PoolReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteLoadBalancerL7PoolStub = nil
-	fake.deleteLoadBalancerL7PoolReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7PoolReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteLoadBalancerL7PoolStub = nil
-	if fake.deleteLoadBalancerL7PoolReturnsOnCall == nil {
-		fake.deleteLoadBalancerL7PoolReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.deleteLoadBalancerL7PoolReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerL7Pool(indentifier int) (datatypes.Network_LBaaS_L7Pool, error) {
-	fake.getLoadBalancerL7PoolMutex.Lock()
-	ret, specificReturn := fake.getLoadBalancerL7PoolReturnsOnCall[len(fake.getLoadBalancerL7PoolArgsForCall)]
-	fake.getLoadBalancerL7PoolArgsForCall = append(fake.getLoadBalancerL7PoolArgsForCall, struct {
-		indentifier int
-	}{indentifier})
-	fake.recordInvocation("GetLoadBalancerL7Pool", []interface{}{indentifier})
-	fake.getLoadBalancerL7PoolMutex.Unlock()
-	if fake.GetLoadBalancerL7PoolStub != nil {
-		return fake.GetLoadBalancerL7PoolStub(indentifier)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getLoadBalancerL7PoolReturns.result1, fake.getLoadBalancerL7PoolReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerL7PoolCallCount() int {
-	fake.getLoadBalancerL7PoolMutex.RLock()
-	defer fake.getLoadBalancerL7PoolMutex.RUnlock()
-	return len(fake.getLoadBalancerL7PoolArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerL7PoolArgsForCall(i int) int {
-	fake.getLoadBalancerL7PoolMutex.RLock()
-	defer fake.getLoadBalancerL7PoolMutex.RUnlock()
-	return fake.getLoadBalancerL7PoolArgsForCall[i].indentifier
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerL7PoolReturns(result1 datatypes.Network_LBaaS_L7Pool, result2 error) {
-	fake.GetLoadBalancerL7PoolStub = nil
-	fake.getLoadBalancerL7PoolReturns = struct {
-		result1 datatypes.Network_LBaaS_L7Pool
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetLoadBalancerL7PoolReturnsOnCall(i int, result1 datatypes.Network_LBaaS_L7Pool, result2 error) {
-	fake.GetLoadBalancerL7PoolStub = nil
-	if fake.getLoadBalancerL7PoolReturnsOnCall == nil {
-		fake.getLoadBalancerL7PoolReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_L7Pool
-			result2 error
-		})
-	}
-	fake.getLoadBalancerL7PoolReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_L7Pool
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7Pool(l7pooluuid *string, l7Pool *datatypes.Network_LBaaS_L7Pool, l7HealthMonitor *datatypes.Network_LBaaS_L7HealthMonitor, l7SessionAffinity *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	fake.updateLoadBalancerL7PoolMutex.Lock()
-	ret, specificReturn := fake.updateLoadBalancerL7PoolReturnsOnCall[len(fake.updateLoadBalancerL7PoolArgsForCall)]
-	fake.updateLoadBalancerL7PoolArgsForCall = append(fake.updateLoadBalancerL7PoolArgsForCall, struct {
-		l7pooluuid        *string
-		l7Pool            *datatypes.Network_LBaaS_L7Pool
-		l7HealthMonitor   *datatypes.Network_LBaaS_L7HealthMonitor
-		l7SessionAffinity *datatypes.Network_LBaaS_L7SessionAffinity
-	}{l7pooluuid, l7Pool, l7HealthMonitor, l7SessionAffinity})
-	fake.recordInvocation("UpdateLoadBalancerL7Pool", []interface{}{l7pooluuid, l7Pool, l7HealthMonitor, l7SessionAffinity})
-	fake.updateLoadBalancerL7PoolMutex.Unlock()
-	if fake.UpdateLoadBalancerL7PoolStub != nil {
-		return fake.UpdateLoadBalancerL7PoolStub(l7pooluuid, l7Pool, l7HealthMonitor, l7SessionAffinity)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.updateLoadBalancerL7PoolReturns.result1, fake.updateLoadBalancerL7PoolReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7PoolCallCount() int {
-	fake.updateLoadBalancerL7PoolMutex.RLock()
-	defer fake.updateLoadBalancerL7PoolMutex.RUnlock()
-	return len(fake.updateLoadBalancerL7PoolArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7PoolArgsForCall(i int) (*string, *datatypes.Network_LBaaS_L7Pool, *datatypes.Network_LBaaS_L7HealthMonitor, *datatypes.Network_LBaaS_L7SessionAffinity) {
-	fake.updateLoadBalancerL7PoolMutex.RLock()
-	defer fake.updateLoadBalancerL7PoolMutex.RUnlock()
-	return fake.updateLoadBalancerL7PoolArgsForCall[i].l7pooluuid, fake.updateLoadBalancerL7PoolArgsForCall[i].l7Pool, fake.updateLoadBalancerL7PoolArgsForCall[i].l7HealthMonitor, fake.updateLoadBalancerL7PoolArgsForCall[i].l7SessionAffinity
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7PoolReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.UpdateLoadBalancerL7PoolStub = nil
-	fake.updateLoadBalancerL7PoolReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7PoolReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.UpdateLoadBalancerL7PoolStub = nil
-	if fake.updateLoadBalancerL7PoolReturnsOnCall == nil {
-		fake.updateLoadBalancerL7PoolReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.updateLoadBalancerL7PoolReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) AddL7Member(l7PoolUuid *string, memberInstances []datatypes.Network_LBaaS_L7Member) (resp datatypes.Network_LBaaS_LoadBalancer, err error) {
-	var memberInstancesCopy []datatypes.Network_LBaaS_L7Member
-	if memberInstances != nil {
-		memberInstancesCopy = make([]datatypes.Network_LBaaS_L7Member, len(memberInstances))
-		copy(memberInstancesCopy, memberInstances)
+func (fake *FakeLoadBalancerManager) AddL7Member(arg1 *string, arg2 []datatypes.Network_LBaaS_L7Member) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	var arg2Copy []datatypes.Network_LBaaS_L7Member
+	if arg2 != nil {
+		arg2Copy = make([]datatypes.Network_LBaaS_L7Member, len(arg2))
+		copy(arg2Copy, arg2)
 	}
 	fake.addL7MemberMutex.Lock()
 	ret, specificReturn := fake.addL7MemberReturnsOnCall[len(fake.addL7MemberArgsForCall)]
 	fake.addL7MemberArgsForCall = append(fake.addL7MemberArgsForCall, struct {
-		l7PoolUuid      *string
-		memberInstances []datatypes.Network_LBaaS_L7Member
-	}{l7PoolUuid, memberInstancesCopy})
-	fake.recordInvocation("AddL7Member", []interface{}{l7PoolUuid, memberInstancesCopy})
+		arg1 *string
+		arg2 []datatypes.Network_LBaaS_L7Member
+	}{arg1, arg2Copy})
+	stub := fake.AddL7MemberStub
+	fakeReturns := fake.addL7MemberReturns
+	fake.recordInvocation("AddL7Member", []interface{}{arg1, arg2Copy})
 	fake.addL7MemberMutex.Unlock()
-	if fake.AddL7MemberStub != nil {
-		return fake.AddL7MemberStub(l7PoolUuid, memberInstances)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.addL7MemberReturns.result1, fake.addL7MemberReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeLoadBalancerManager) AddL7MemberCallCount() int {
@@ -1429,13 +475,22 @@ func (fake *FakeLoadBalancerManager) AddL7MemberCallCount() int {
 	return len(fake.addL7MemberArgsForCall)
 }
 
+func (fake *FakeLoadBalancerManager) AddL7MemberCalls(stub func(*string, []datatypes.Network_LBaaS_L7Member) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.addL7MemberMutex.Lock()
+	defer fake.addL7MemberMutex.Unlock()
+	fake.AddL7MemberStub = stub
+}
+
 func (fake *FakeLoadBalancerManager) AddL7MemberArgsForCall(i int) (*string, []datatypes.Network_LBaaS_L7Member) {
 	fake.addL7MemberMutex.RLock()
 	defer fake.addL7MemberMutex.RUnlock()
-	return fake.addL7MemberArgsForCall[i].l7PoolUuid, fake.addL7MemberArgsForCall[i].memberInstances
+	argsForCall := fake.addL7MemberArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
 }
 
 func (fake *FakeLoadBalancerManager) AddL7MemberReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addL7MemberMutex.Lock()
+	defer fake.addL7MemberMutex.Unlock()
 	fake.AddL7MemberStub = nil
 	fake.addL7MemberReturns = struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
@@ -1444,6 +499,8 @@ func (fake *FakeLoadBalancerManager) AddL7MemberReturns(result1 datatypes.Networ
 }
 
 func (fake *FakeLoadBalancerManager) AddL7MemberReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addL7MemberMutex.Lock()
+	defer fake.addL7MemberMutex.Unlock()
 	fake.AddL7MemberStub = nil
 	if fake.addL7MemberReturnsOnCall == nil {
 		fake.addL7MemberReturnsOnCall = make(map[int]struct {
@@ -1457,227 +514,24 @@ func (fake *FakeLoadBalancerManager) AddL7MemberReturnsOnCall(i int, result1 dat
 	}{result1, result2}
 }
 
-func (fake *FakeLoadBalancerManager) DeleteL7Member(l7PoolUuid *string, memberUuids string) (resp datatypes.Network_LBaaS_LoadBalancer, err error) {
-	fake.deleteL7MemberMutex.Lock()
-	ret, specificReturn := fake.deleteL7MemberReturnsOnCall[len(fake.deleteL7MemberArgsForCall)]
-	fake.deleteL7MemberArgsForCall = append(fake.deleteL7MemberArgsForCall, struct {
-		l7PoolUuid  *string
-		memberUuids string
-	}{l7PoolUuid, memberUuids})
-	fake.recordInvocation("DeleteL7Member", []interface{}{l7PoolUuid, memberUuids})
-	fake.deleteL7MemberMutex.Unlock()
-	if fake.DeleteL7MemberStub != nil {
-		return fake.DeleteL7MemberStub(l7PoolUuid, memberUuids)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteL7MemberReturns.result1, fake.deleteL7MemberReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) DeleteL7MemberCallCount() int {
-	fake.deleteL7MemberMutex.RLock()
-	defer fake.deleteL7MemberMutex.RUnlock()
-	return len(fake.deleteL7MemberArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) DeleteL7MemberArgsForCall(i int) (*string, string) {
-	fake.deleteL7MemberMutex.RLock()
-	defer fake.deleteL7MemberMutex.RUnlock()
-	return fake.deleteL7MemberArgsForCall[i].l7PoolUuid, fake.deleteL7MemberArgsForCall[i].memberUuids
-}
-
-func (fake *FakeLoadBalancerManager) DeleteL7MemberReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteL7MemberStub = nil
-	fake.deleteL7MemberReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) DeleteL7MemberReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteL7MemberStub = nil
-	if fake.deleteL7MemberReturnsOnCall == nil {
-		fake.deleteL7MemberReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.deleteL7MemberReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) ListL7Members(l7PoolId int) ([]datatypes.Network_LBaaS_L7Member, error) {
-	fake.listL7MembersMutex.Lock()
-	ret, specificReturn := fake.listL7MembersReturnsOnCall[len(fake.listL7MembersArgsForCall)]
-	fake.listL7MembersArgsForCall = append(fake.listL7MembersArgsForCall, struct {
-		l7PoolId int
-	}{l7PoolId})
-	fake.recordInvocation("ListL7Members", []interface{}{l7PoolId})
-	fake.listL7MembersMutex.Unlock()
-	if fake.ListL7MembersStub != nil {
-		return fake.ListL7MembersStub(l7PoolId)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.listL7MembersReturns.result1, fake.listL7MembersReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) ListL7MembersCallCount() int {
-	fake.listL7MembersMutex.RLock()
-	defer fake.listL7MembersMutex.RUnlock()
-	return len(fake.listL7MembersArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) ListL7MembersArgsForCall(i int) int {
-	fake.listL7MembersMutex.RLock()
-	defer fake.listL7MembersMutex.RUnlock()
-	return fake.listL7MembersArgsForCall[i].l7PoolId
-}
-
-func (fake *FakeLoadBalancerManager) ListL7MembersReturns(result1 []datatypes.Network_LBaaS_L7Member, result2 error) {
-	fake.ListL7MembersStub = nil
-	fake.listL7MembersReturns = struct {
-		result1 []datatypes.Network_LBaaS_L7Member
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) ListL7MembersReturnsOnCall(i int, result1 []datatypes.Network_LBaaS_L7Member, result2 error) {
-	fake.ListL7MembersStub = nil
-	if fake.listL7MembersReturnsOnCall == nil {
-		fake.listL7MembersReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Network_LBaaS_L7Member
-			result2 error
-		})
-	}
-	fake.listL7MembersReturnsOnCall[i] = struct {
-		result1 []datatypes.Network_LBaaS_L7Member
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetL7SessionAffinity(l7PoolId int) (datatypes.Network_LBaaS_L7SessionAffinity, error) {
-	fake.getL7SessionAffinityMutex.Lock()
-	ret, specificReturn := fake.getL7SessionAffinityReturnsOnCall[len(fake.getL7SessionAffinityArgsForCall)]
-	fake.getL7SessionAffinityArgsForCall = append(fake.getL7SessionAffinityArgsForCall, struct {
-		l7PoolId int
-	}{l7PoolId})
-	fake.recordInvocation("GetL7SessionAffinity", []interface{}{l7PoolId})
-	fake.getL7SessionAffinityMutex.Unlock()
-	if fake.GetL7SessionAffinityStub != nil {
-		return fake.GetL7SessionAffinityStub(l7PoolId)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getL7SessionAffinityReturns.result1, fake.getL7SessionAffinityReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetL7SessionAffinityCallCount() int {
-	fake.getL7SessionAffinityMutex.RLock()
-	defer fake.getL7SessionAffinityMutex.RUnlock()
-	return len(fake.getL7SessionAffinityArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetL7SessionAffinityArgsForCall(i int) int {
-	fake.getL7SessionAffinityMutex.RLock()
-	defer fake.getL7SessionAffinityMutex.RUnlock()
-	return fake.getL7SessionAffinityArgsForCall[i].l7PoolId
-}
-
-func (fake *FakeLoadBalancerManager) GetL7SessionAffinityReturns(result1 datatypes.Network_LBaaS_L7SessionAffinity, result2 error) {
-	fake.GetL7SessionAffinityStub = nil
-	fake.getL7SessionAffinityReturns = struct {
-		result1 datatypes.Network_LBaaS_L7SessionAffinity
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetL7SessionAffinityReturnsOnCall(i int, result1 datatypes.Network_LBaaS_L7SessionAffinity, result2 error) {
-	fake.GetL7SessionAffinityStub = nil
-	if fake.getL7SessionAffinityReturnsOnCall == nil {
-		fake.getL7SessionAffinityReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_L7SessionAffinity
-			result2 error
-		})
-	}
-	fake.getL7SessionAffinityReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_L7SessionAffinity
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetL7HealthMonitor(l7PoolId int) (datatypes.Network_LBaaS_L7HealthMonitor, error) {
-	fake.getL7HealthMonitorMutex.Lock()
-	ret, specificReturn := fake.getL7HealthMonitorReturnsOnCall[len(fake.getL7HealthMonitorArgsForCall)]
-	fake.getL7HealthMonitorArgsForCall = append(fake.getL7HealthMonitorArgsForCall, struct {
-		l7PoolId int
-	}{l7PoolId})
-	fake.recordInvocation("GetL7HealthMonitor", []interface{}{l7PoolId})
-	fake.getL7HealthMonitorMutex.Unlock()
-	if fake.GetL7HealthMonitorStub != nil {
-		return fake.GetL7HealthMonitorStub(l7PoolId)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getL7HealthMonitorReturns.result1, fake.getL7HealthMonitorReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetL7HealthMonitorCallCount() int {
-	fake.getL7HealthMonitorMutex.RLock()
-	defer fake.getL7HealthMonitorMutex.RUnlock()
-	return len(fake.getL7HealthMonitorArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetL7HealthMonitorArgsForCall(i int) int {
-	fake.getL7HealthMonitorMutex.RLock()
-	defer fake.getL7HealthMonitorMutex.RUnlock()
-	return fake.getL7HealthMonitorArgsForCall[i].l7PoolId
-}
-
-func (fake *FakeLoadBalancerManager) GetL7HealthMonitorReturns(result1 datatypes.Network_LBaaS_L7HealthMonitor, result2 error) {
-	fake.GetL7HealthMonitorStub = nil
-	fake.getL7HealthMonitorReturns = struct {
-		result1 datatypes.Network_LBaaS_L7HealthMonitor
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetL7HealthMonitorReturnsOnCall(i int, result1 datatypes.Network_LBaaS_L7HealthMonitor, result2 error) {
-	fake.GetL7HealthMonitorStub = nil
-	if fake.getL7HealthMonitorReturnsOnCall == nil {
-		fake.getL7HealthMonitorReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_L7HealthMonitor
-			result2 error
-		})
-	}
-	fake.getL7HealthMonitorReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_L7HealthMonitor
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) AddL7Policy(listenerUuid *string, policiesRules datatypes.Network_LBaaS_PolicyRule) (datatypes.Network_LBaaS_LoadBalancer, error) {
+func (fake *FakeLoadBalancerManager) AddL7Policy(arg1 *string, arg2 datatypes.Network_LBaaS_PolicyRule) (datatypes.Network_LBaaS_LoadBalancer, error) {
 	fake.addL7PolicyMutex.Lock()
 	ret, specificReturn := fake.addL7PolicyReturnsOnCall[len(fake.addL7PolicyArgsForCall)]
 	fake.addL7PolicyArgsForCall = append(fake.addL7PolicyArgsForCall, struct {
-		listenerUuid  *string
-		policiesRules datatypes.Network_LBaaS_PolicyRule
-	}{listenerUuid, policiesRules})
-	fake.recordInvocation("AddL7Policy", []interface{}{listenerUuid, policiesRules})
+		arg1 *string
+		arg2 datatypes.Network_LBaaS_PolicyRule
+	}{arg1, arg2})
+	stub := fake.AddL7PolicyStub
+	fakeReturns := fake.addL7PolicyReturns
+	fake.recordInvocation("AddL7Policy", []interface{}{arg1, arg2})
 	fake.addL7PolicyMutex.Unlock()
-	if fake.AddL7PolicyStub != nil {
-		return fake.AddL7PolicyStub(listenerUuid, policiesRules)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.addL7PolicyReturns.result1, fake.addL7PolicyReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeLoadBalancerManager) AddL7PolicyCallCount() int {
@@ -1686,13 +540,22 @@ func (fake *FakeLoadBalancerManager) AddL7PolicyCallCount() int {
 	return len(fake.addL7PolicyArgsForCall)
 }
 
+func (fake *FakeLoadBalancerManager) AddL7PolicyCalls(stub func(*string, datatypes.Network_LBaaS_PolicyRule) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.addL7PolicyMutex.Lock()
+	defer fake.addL7PolicyMutex.Unlock()
+	fake.AddL7PolicyStub = stub
+}
+
 func (fake *FakeLoadBalancerManager) AddL7PolicyArgsForCall(i int) (*string, datatypes.Network_LBaaS_PolicyRule) {
 	fake.addL7PolicyMutex.RLock()
 	defer fake.addL7PolicyMutex.RUnlock()
-	return fake.addL7PolicyArgsForCall[i].listenerUuid, fake.addL7PolicyArgsForCall[i].policiesRules
+	argsForCall := fake.addL7PolicyArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
 }
 
 func (fake *FakeLoadBalancerManager) AddL7PolicyReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addL7PolicyMutex.Lock()
+	defer fake.addL7PolicyMutex.Unlock()
 	fake.AddL7PolicyStub = nil
 	fake.addL7PolicyReturns = struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
@@ -1701,6 +564,8 @@ func (fake *FakeLoadBalancerManager) AddL7PolicyReturns(result1 datatypes.Networ
 }
 
 func (fake *FakeLoadBalancerManager) AddL7PolicyReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addL7PolicyMutex.Lock()
+	defer fake.addL7PolicyMutex.Unlock()
 	fake.AddL7PolicyStub = nil
 	if fake.addL7PolicyReturnsOnCall == nil {
 		fake.addL7PolicyReturnsOnCall = make(map[int]struct {
@@ -1714,227 +579,24 @@ func (fake *FakeLoadBalancerManager) AddL7PolicyReturnsOnCall(i int, result1 dat
 	}{result1, result2}
 }
 
-func (fake *FakeLoadBalancerManager) GetL7Policies(protocolId int) ([]datatypes.Network_LBaaS_L7Policy, error) {
-	fake.getL7PoliciesMutex.Lock()
-	ret, specificReturn := fake.getL7PoliciesReturnsOnCall[len(fake.getL7PoliciesArgsForCall)]
-	fake.getL7PoliciesArgsForCall = append(fake.getL7PoliciesArgsForCall, struct {
-		protocolId int
-	}{protocolId})
-	fake.recordInvocation("GetL7Policies", []interface{}{protocolId})
-	fake.getL7PoliciesMutex.Unlock()
-	if fake.GetL7PoliciesStub != nil {
-		return fake.GetL7PoliciesStub(protocolId)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getL7PoliciesReturns.result1, fake.getL7PoliciesReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetL7PoliciesCallCount() int {
-	fake.getL7PoliciesMutex.RLock()
-	defer fake.getL7PoliciesMutex.RUnlock()
-	return len(fake.getL7PoliciesArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetL7PoliciesArgsForCall(i int) int {
-	fake.getL7PoliciesMutex.RLock()
-	defer fake.getL7PoliciesMutex.RUnlock()
-	return fake.getL7PoliciesArgsForCall[i].protocolId
-}
-
-func (fake *FakeLoadBalancerManager) GetL7PoliciesReturns(result1 []datatypes.Network_LBaaS_L7Policy, result2 error) {
-	fake.GetL7PoliciesStub = nil
-	fake.getL7PoliciesReturns = struct {
-		result1 []datatypes.Network_LBaaS_L7Policy
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetL7PoliciesReturnsOnCall(i int, result1 []datatypes.Network_LBaaS_L7Policy, result2 error) {
-	fake.GetL7PoliciesStub = nil
-	if fake.getL7PoliciesReturnsOnCall == nil {
-		fake.getL7PoliciesReturnsOnCall = make(map[int]struct {
-			result1 []datatypes.Network_LBaaS_L7Policy
-			result2 error
-		})
-	}
-	fake.getL7PoliciesReturnsOnCall[i] = struct {
-		result1 []datatypes.Network_LBaaS_L7Policy
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetL7Policy(policyId int) (datatypes.Network_LBaaS_L7Policy, error) {
-	fake.getL7PolicyMutex.Lock()
-	ret, specificReturn := fake.getL7PolicyReturnsOnCall[len(fake.getL7PolicyArgsForCall)]
-	fake.getL7PolicyArgsForCall = append(fake.getL7PolicyArgsForCall, struct {
-		policyId int
-	}{policyId})
-	fake.recordInvocation("GetL7Policy", []interface{}{policyId})
-	fake.getL7PolicyMutex.Unlock()
-	if fake.GetL7PolicyStub != nil {
-		return fake.GetL7PolicyStub(policyId)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getL7PolicyReturns.result1, fake.getL7PolicyReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) GetL7PolicyCallCount() int {
-	fake.getL7PolicyMutex.RLock()
-	defer fake.getL7PolicyMutex.RUnlock()
-	return len(fake.getL7PolicyArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) GetL7PolicyArgsForCall(i int) int {
-	fake.getL7PolicyMutex.RLock()
-	defer fake.getL7PolicyMutex.RUnlock()
-	return fake.getL7PolicyArgsForCall[i].policyId
-}
-
-func (fake *FakeLoadBalancerManager) GetL7PolicyReturns(result1 datatypes.Network_LBaaS_L7Policy, result2 error) {
-	fake.GetL7PolicyStub = nil
-	fake.getL7PolicyReturns = struct {
-		result1 datatypes.Network_LBaaS_L7Policy
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) GetL7PolicyReturnsOnCall(i int, result1 datatypes.Network_LBaaS_L7Policy, result2 error) {
-	fake.GetL7PolicyStub = nil
-	if fake.getL7PolicyReturnsOnCall == nil {
-		fake.getL7PolicyReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_L7Policy
-			result2 error
-		})
-	}
-	fake.getL7PolicyReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_L7Policy
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) DeleteL7Policy(policy int) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	fake.deleteL7PolicyMutex.Lock()
-	ret, specificReturn := fake.deleteL7PolicyReturnsOnCall[len(fake.deleteL7PolicyArgsForCall)]
-	fake.deleteL7PolicyArgsForCall = append(fake.deleteL7PolicyArgsForCall, struct {
-		policy int
-	}{policy})
-	fake.recordInvocation("DeleteL7Policy", []interface{}{policy})
-	fake.deleteL7PolicyMutex.Unlock()
-	if fake.DeleteL7PolicyStub != nil {
-		return fake.DeleteL7PolicyStub(policy)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteL7PolicyReturns.result1, fake.deleteL7PolicyReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) DeleteL7PolicyCallCount() int {
-	fake.deleteL7PolicyMutex.RLock()
-	defer fake.deleteL7PolicyMutex.RUnlock()
-	return len(fake.deleteL7PolicyArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) DeleteL7PolicyArgsForCall(i int) int {
-	fake.deleteL7PolicyMutex.RLock()
-	defer fake.deleteL7PolicyMutex.RUnlock()
-	return fake.deleteL7PolicyArgsForCall[i].policy
-}
-
-func (fake *FakeLoadBalancerManager) DeleteL7PolicyReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteL7PolicyStub = nil
-	fake.deleteL7PolicyReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) DeleteL7PolicyReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.DeleteL7PolicyStub = nil
-	if fake.deleteL7PolicyReturnsOnCall == nil {
-		fake.deleteL7PolicyReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.deleteL7PolicyReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) EditL7Policy(policy int, templateObject *datatypes.Network_LBaaS_L7Policy) (datatypes.Network_LBaaS_LoadBalancer, error) {
-	fake.editL7PolicyMutex.Lock()
-	ret, specificReturn := fake.editL7PolicyReturnsOnCall[len(fake.editL7PolicyArgsForCall)]
-	fake.editL7PolicyArgsForCall = append(fake.editL7PolicyArgsForCall, struct {
-		policy         int
-		templateObject *datatypes.Network_LBaaS_L7Policy
-	}{policy, templateObject})
-	fake.recordInvocation("EditL7Policy", []interface{}{policy, templateObject})
-	fake.editL7PolicyMutex.Unlock()
-	if fake.EditL7PolicyStub != nil {
-		return fake.EditL7PolicyStub(policy, templateObject)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.editL7PolicyReturns.result1, fake.editL7PolicyReturns.result2
-}
-
-func (fake *FakeLoadBalancerManager) EditL7PolicyCallCount() int {
-	fake.editL7PolicyMutex.RLock()
-	defer fake.editL7PolicyMutex.RUnlock()
-	return len(fake.editL7PolicyArgsForCall)
-}
-
-func (fake *FakeLoadBalancerManager) EditL7PolicyArgsForCall(i int) (int, *datatypes.Network_LBaaS_L7Policy) {
-	fake.editL7PolicyMutex.RLock()
-	defer fake.editL7PolicyMutex.RUnlock()
-	return fake.editL7PolicyArgsForCall[i].policy, fake.editL7PolicyArgsForCall[i].templateObject
-}
-
-func (fake *FakeLoadBalancerManager) EditL7PolicyReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.EditL7PolicyStub = nil
-	fake.editL7PolicyReturns = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) EditL7PolicyReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
-	fake.EditL7PolicyStub = nil
-	if fake.editL7PolicyReturnsOnCall == nil {
-		fake.editL7PolicyReturnsOnCall = make(map[int]struct {
-			result1 datatypes.Network_LBaaS_LoadBalancer
-			result2 error
-		})
-	}
-	fake.editL7PolicyReturnsOnCall[i] = struct {
-		result1 datatypes.Network_LBaaS_LoadBalancer
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeLoadBalancerManager) AddL7Rule(policyUuid *string, rule datatypes.Network_LBaaS_L7Rule) (resp datatypes.Network_LBaaS_LoadBalancer, err error) {
+func (fake *FakeLoadBalancerManager) AddL7Rule(arg1 *string, arg2 datatypes.Network_LBaaS_L7Rule) (datatypes.Network_LBaaS_LoadBalancer, error) {
 	fake.addL7RuleMutex.Lock()
 	ret, specificReturn := fake.addL7RuleReturnsOnCall[len(fake.addL7RuleArgsForCall)]
 	fake.addL7RuleArgsForCall = append(fake.addL7RuleArgsForCall, struct {
-		policyUuid *string
-		rule       datatypes.Network_LBaaS_L7Rule
-	}{policyUuid, rule})
-	fake.recordInvocation("AddL7Rule", []interface{}{policyUuid, rule})
+		arg1 *string
+		arg2 datatypes.Network_LBaaS_L7Rule
+	}{arg1, arg2})
+	stub := fake.AddL7RuleStub
+	fakeReturns := fake.addL7RuleReturns
+	fake.recordInvocation("AddL7Rule", []interface{}{arg1, arg2})
 	fake.addL7RuleMutex.Unlock()
-	if fake.AddL7RuleStub != nil {
-		return fake.AddL7RuleStub(policyUuid, rule)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.addL7RuleReturns.result1, fake.addL7RuleReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeLoadBalancerManager) AddL7RuleCallCount() int {
@@ -1943,13 +605,22 @@ func (fake *FakeLoadBalancerManager) AddL7RuleCallCount() int {
 	return len(fake.addL7RuleArgsForCall)
 }
 
+func (fake *FakeLoadBalancerManager) AddL7RuleCalls(stub func(*string, datatypes.Network_LBaaS_L7Rule) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.addL7RuleMutex.Lock()
+	defer fake.addL7RuleMutex.Unlock()
+	fake.AddL7RuleStub = stub
+}
+
 func (fake *FakeLoadBalancerManager) AddL7RuleArgsForCall(i int) (*string, datatypes.Network_LBaaS_L7Rule) {
 	fake.addL7RuleMutex.RLock()
 	defer fake.addL7RuleMutex.RUnlock()
-	return fake.addL7RuleArgsForCall[i].policyUuid, fake.addL7RuleArgsForCall[i].rule
+	argsForCall := fake.addL7RuleArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
 }
 
 func (fake *FakeLoadBalancerManager) AddL7RuleReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addL7RuleMutex.Lock()
+	defer fake.addL7RuleMutex.Unlock()
 	fake.AddL7RuleStub = nil
 	fake.addL7RuleReturns = struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
@@ -1958,6 +629,8 @@ func (fake *FakeLoadBalancerManager) AddL7RuleReturns(result1 datatypes.Network_
 }
 
 func (fake *FakeLoadBalancerManager) AddL7RuleReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addL7RuleMutex.Lock()
+	defer fake.addL7RuleMutex.Unlock()
 	fake.AddL7RuleStub = nil
 	if fake.addL7RuleReturnsOnCall == nil {
 		fake.addL7RuleReturnsOnCall = make(map[int]struct {
@@ -1971,22 +644,636 @@ func (fake *FakeLoadBalancerManager) AddL7RuleReturnsOnCall(i int, result1 datat
 	}{result1, result2}
 }
 
-func (fake *FakeLoadBalancerManager) DeleteL7Rule(policyUuid *string, ruleUuids string) (resp datatypes.Network_LBaaS_LoadBalancer, err error) {
-	fake.deleteL7RuleMutex.Lock()
-	ret, specificReturn := fake.deleteL7RuleReturnsOnCall[len(fake.deleteL7RuleArgsForCall)]
-	fake.deleteL7RuleArgsForCall = append(fake.deleteL7RuleArgsForCall, struct {
-		policyUuid *string
-		ruleUuids  string
-	}{policyUuid, ruleUuids})
-	fake.recordInvocation("DeleteL7Rule", []interface{}{policyUuid, ruleUuids})
-	fake.deleteL7RuleMutex.Unlock()
-	if fake.DeleteL7RuleStub != nil {
-		return fake.DeleteL7RuleStub(policyUuid, ruleUuids)
+func (fake *FakeLoadBalancerManager) AddLoadBalancerL7Pool(arg1 *string, arg2 *datatypes.Network_LBaaS_L7Pool, arg3 []datatypes.Network_LBaaS_L7Member, arg4 *datatypes.Network_LBaaS_L7HealthMonitor, arg5 *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	var arg3Copy []datatypes.Network_LBaaS_L7Member
+	if arg3 != nil {
+		arg3Copy = make([]datatypes.Network_LBaaS_L7Member, len(arg3))
+		copy(arg3Copy, arg3)
+	}
+	fake.addLoadBalancerL7PoolMutex.Lock()
+	ret, specificReturn := fake.addLoadBalancerL7PoolReturnsOnCall[len(fake.addLoadBalancerL7PoolArgsForCall)]
+	fake.addLoadBalancerL7PoolArgsForCall = append(fake.addLoadBalancerL7PoolArgsForCall, struct {
+		arg1 *string
+		arg2 *datatypes.Network_LBaaS_L7Pool
+		arg3 []datatypes.Network_LBaaS_L7Member
+		arg4 *datatypes.Network_LBaaS_L7HealthMonitor
+		arg5 *datatypes.Network_LBaaS_L7SessionAffinity
+	}{arg1, arg2, arg3Copy, arg4, arg5})
+	stub := fake.AddLoadBalancerL7PoolStub
+	fakeReturns := fake.addLoadBalancerL7PoolReturns
+	fake.recordInvocation("AddLoadBalancerL7Pool", []interface{}{arg1, arg2, arg3Copy, arg4, arg5})
+	fake.addLoadBalancerL7PoolMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.deleteL7RuleReturns.result1, fake.deleteL7RuleReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerL7PoolCallCount() int {
+	fake.addLoadBalancerL7PoolMutex.RLock()
+	defer fake.addLoadBalancerL7PoolMutex.RUnlock()
+	return len(fake.addLoadBalancerL7PoolArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerL7PoolCalls(stub func(*string, *datatypes.Network_LBaaS_L7Pool, []datatypes.Network_LBaaS_L7Member, *datatypes.Network_LBaaS_L7HealthMonitor, *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.addLoadBalancerL7PoolMutex.Lock()
+	defer fake.addLoadBalancerL7PoolMutex.Unlock()
+	fake.AddLoadBalancerL7PoolStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerL7PoolArgsForCall(i int) (*string, *datatypes.Network_LBaaS_L7Pool, []datatypes.Network_LBaaS_L7Member, *datatypes.Network_LBaaS_L7HealthMonitor, *datatypes.Network_LBaaS_L7SessionAffinity) {
+	fake.addLoadBalancerL7PoolMutex.RLock()
+	defer fake.addLoadBalancerL7PoolMutex.RUnlock()
+	argsForCall := fake.addLoadBalancerL7PoolArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerL7PoolReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addLoadBalancerL7PoolMutex.Lock()
+	defer fake.addLoadBalancerL7PoolMutex.Unlock()
+	fake.AddLoadBalancerL7PoolStub = nil
+	fake.addLoadBalancerL7PoolReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerL7PoolReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addLoadBalancerL7PoolMutex.Lock()
+	defer fake.addLoadBalancerL7PoolMutex.Unlock()
+	fake.AddLoadBalancerL7PoolStub = nil
+	if fake.addLoadBalancerL7PoolReturnsOnCall == nil {
+		fake.addLoadBalancerL7PoolReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.addLoadBalancerL7PoolReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerListener(arg1 *string, arg2 []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	var arg2Copy []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+	if arg2 != nil {
+		arg2Copy = make([]datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.addLoadBalancerListenerMutex.Lock()
+	ret, specificReturn := fake.addLoadBalancerListenerReturnsOnCall[len(fake.addLoadBalancerListenerArgsForCall)]
+	fake.addLoadBalancerListenerArgsForCall = append(fake.addLoadBalancerListenerArgsForCall, struct {
+		arg1 *string
+		arg2 []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+	}{arg1, arg2Copy})
+	stub := fake.AddLoadBalancerListenerStub
+	fakeReturns := fake.addLoadBalancerListenerReturns
+	fake.recordInvocation("AddLoadBalancerListener", []interface{}{arg1, arg2Copy})
+	fake.addLoadBalancerListenerMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerListenerCallCount() int {
+	fake.addLoadBalancerListenerMutex.RLock()
+	defer fake.addLoadBalancerListenerMutex.RUnlock()
+	return len(fake.addLoadBalancerListenerArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerListenerCalls(stub func(*string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.addLoadBalancerListenerMutex.Lock()
+	defer fake.addLoadBalancerListenerMutex.Unlock()
+	fake.AddLoadBalancerListenerStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerListenerArgsForCall(i int) (*string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration) {
+	fake.addLoadBalancerListenerMutex.RLock()
+	defer fake.addLoadBalancerListenerMutex.RUnlock()
+	argsForCall := fake.addLoadBalancerListenerArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerListenerReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addLoadBalancerListenerMutex.Lock()
+	defer fake.addLoadBalancerListenerMutex.Unlock()
+	fake.AddLoadBalancerListenerStub = nil
+	fake.addLoadBalancerListenerReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerListenerReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addLoadBalancerListenerMutex.Lock()
+	defer fake.addLoadBalancerListenerMutex.Unlock()
+	fake.AddLoadBalancerListenerStub = nil
+	if fake.addLoadBalancerListenerReturnsOnCall == nil {
+		fake.addLoadBalancerListenerReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.addLoadBalancerListenerReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerMember(arg1 *string, arg2 []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	var arg2Copy []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo
+	if arg2 != nil {
+		arg2Copy = make([]datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.addLoadBalancerMemberMutex.Lock()
+	ret, specificReturn := fake.addLoadBalancerMemberReturnsOnCall[len(fake.addLoadBalancerMemberArgsForCall)]
+	fake.addLoadBalancerMemberArgsForCall = append(fake.addLoadBalancerMemberArgsForCall, struct {
+		arg1 *string
+		arg2 []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo
+	}{arg1, arg2Copy})
+	stub := fake.AddLoadBalancerMemberStub
+	fakeReturns := fake.addLoadBalancerMemberReturns
+	fake.recordInvocation("AddLoadBalancerMember", []interface{}{arg1, arg2Copy})
+	fake.addLoadBalancerMemberMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerMemberCallCount() int {
+	fake.addLoadBalancerMemberMutex.RLock()
+	defer fake.addLoadBalancerMemberMutex.RUnlock()
+	return len(fake.addLoadBalancerMemberArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerMemberCalls(stub func(*string, []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.addLoadBalancerMemberMutex.Lock()
+	defer fake.addLoadBalancerMemberMutex.Unlock()
+	fake.AddLoadBalancerMemberStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerMemberArgsForCall(i int) (*string, []datatypes.Network_LBaaS_LoadBalancerServerInstanceInfo) {
+	fake.addLoadBalancerMemberMutex.RLock()
+	defer fake.addLoadBalancerMemberMutex.RUnlock()
+	argsForCall := fake.addLoadBalancerMemberArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerMemberReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addLoadBalancerMemberMutex.Lock()
+	defer fake.addLoadBalancerMemberMutex.Unlock()
+	fake.AddLoadBalancerMemberStub = nil
+	fake.addLoadBalancerMemberReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) AddLoadBalancerMemberReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.addLoadBalancerMemberMutex.Lock()
+	defer fake.addLoadBalancerMemberMutex.Unlock()
+	fake.AddLoadBalancerMemberStub = nil
+	if fake.addLoadBalancerMemberReturnsOnCall == nil {
+		fake.addLoadBalancerMemberReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.addLoadBalancerMemberReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) CancelLoadBalancer(arg1 *string) (bool, error) {
+	fake.cancelLoadBalancerMutex.Lock()
+	ret, specificReturn := fake.cancelLoadBalancerReturnsOnCall[len(fake.cancelLoadBalancerArgsForCall)]
+	fake.cancelLoadBalancerArgsForCall = append(fake.cancelLoadBalancerArgsForCall, struct {
+		arg1 *string
+	}{arg1})
+	stub := fake.CancelLoadBalancerStub
+	fakeReturns := fake.cancelLoadBalancerReturns
+	fake.recordInvocation("CancelLoadBalancer", []interface{}{arg1})
+	fake.cancelLoadBalancerMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) CancelLoadBalancerCallCount() int {
+	fake.cancelLoadBalancerMutex.RLock()
+	defer fake.cancelLoadBalancerMutex.RUnlock()
+	return len(fake.cancelLoadBalancerArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) CancelLoadBalancerCalls(stub func(*string) (bool, error)) {
+	fake.cancelLoadBalancerMutex.Lock()
+	defer fake.cancelLoadBalancerMutex.Unlock()
+	fake.CancelLoadBalancerStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) CancelLoadBalancerArgsForCall(i int) *string {
+	fake.cancelLoadBalancerMutex.RLock()
+	defer fake.cancelLoadBalancerMutex.RUnlock()
+	argsForCall := fake.cancelLoadBalancerArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) CancelLoadBalancerReturns(result1 bool, result2 error) {
+	fake.cancelLoadBalancerMutex.Lock()
+	defer fake.cancelLoadBalancerMutex.Unlock()
+	fake.CancelLoadBalancerStub = nil
+	fake.cancelLoadBalancerReturns = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) CancelLoadBalancerReturnsOnCall(i int, result1 bool, result2 error) {
+	fake.cancelLoadBalancerMutex.Lock()
+	defer fake.cancelLoadBalancerMutex.Unlock()
+	fake.CancelLoadBalancerStub = nil
+	if fake.cancelLoadBalancerReturnsOnCall == nil {
+		fake.cancelLoadBalancerReturnsOnCall = make(map[int]struct {
+			result1 bool
+			result2 error
+		})
+	}
+	fake.cancelLoadBalancerReturnsOnCall[i] = struct {
+		result1 bool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancer(arg1 string, arg2 string, arg3 int, arg4 string, arg5 []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, arg6 int, arg7 bool) (datatypes.Container_Product_Order_Receipt, error) {
+	var arg5Copy []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+	if arg5 != nil {
+		arg5Copy = make([]datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, len(arg5))
+		copy(arg5Copy, arg5)
+	}
+	fake.createLoadBalancerMutex.Lock()
+	ret, specificReturn := fake.createLoadBalancerReturnsOnCall[len(fake.createLoadBalancerArgsForCall)]
+	fake.createLoadBalancerArgsForCall = append(fake.createLoadBalancerArgsForCall, struct {
+		arg1 string
+		arg2 string
+		arg3 int
+		arg4 string
+		arg5 []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+		arg6 int
+		arg7 bool
+	}{arg1, arg2, arg3, arg4, arg5Copy, arg6, arg7})
+	stub := fake.CreateLoadBalancerStub
+	fakeReturns := fake.createLoadBalancerReturns
+	fake.recordInvocation("CreateLoadBalancer", []interface{}{arg1, arg2, arg3, arg4, arg5Copy, arg6, arg7})
+	fake.createLoadBalancerMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerCallCount() int {
+	fake.createLoadBalancerMutex.RLock()
+	defer fake.createLoadBalancerMutex.RUnlock()
+	return len(fake.createLoadBalancerArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerCalls(stub func(string, string, int, string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, int, bool) (datatypes.Container_Product_Order_Receipt, error)) {
+	fake.createLoadBalancerMutex.Lock()
+	defer fake.createLoadBalancerMutex.Unlock()
+	fake.CreateLoadBalancerStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerArgsForCall(i int) (string, string, int, string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, int, bool) {
+	fake.createLoadBalancerMutex.RLock()
+	defer fake.createLoadBalancerMutex.RUnlock()
+	argsForCall := fake.createLoadBalancerArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerReturns(result1 datatypes.Container_Product_Order_Receipt, result2 error) {
+	fake.createLoadBalancerMutex.Lock()
+	defer fake.createLoadBalancerMutex.Unlock()
+	fake.CreateLoadBalancerStub = nil
+	fake.createLoadBalancerReturns = struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerReturnsOnCall(i int, result1 datatypes.Container_Product_Order_Receipt, result2 error) {
+	fake.createLoadBalancerMutex.Lock()
+	defer fake.createLoadBalancerMutex.Unlock()
+	fake.CreateLoadBalancerStub = nil
+	if fake.createLoadBalancerReturnsOnCall == nil {
+		fake.createLoadBalancerReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Container_Product_Order_Receipt
+			result2 error
+		})
+	}
+	fake.createLoadBalancerReturnsOnCall[i] = struct {
+		result1 datatypes.Container_Product_Order_Receipt
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerOptions() ([]datatypes.Product_Package, error) {
+	fake.createLoadBalancerOptionsMutex.Lock()
+	ret, specificReturn := fake.createLoadBalancerOptionsReturnsOnCall[len(fake.createLoadBalancerOptionsArgsForCall)]
+	fake.createLoadBalancerOptionsArgsForCall = append(fake.createLoadBalancerOptionsArgsForCall, struct {
+	}{})
+	stub := fake.CreateLoadBalancerOptionsStub
+	fakeReturns := fake.createLoadBalancerOptionsReturns
+	fake.recordInvocation("CreateLoadBalancerOptions", []interface{}{})
+	fake.createLoadBalancerOptionsMutex.Unlock()
+	if stub != nil {
+		return stub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerOptionsCallCount() int {
+	fake.createLoadBalancerOptionsMutex.RLock()
+	defer fake.createLoadBalancerOptionsMutex.RUnlock()
+	return len(fake.createLoadBalancerOptionsArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerOptionsCalls(stub func() ([]datatypes.Product_Package, error)) {
+	fake.createLoadBalancerOptionsMutex.Lock()
+	defer fake.createLoadBalancerOptionsMutex.Unlock()
+	fake.CreateLoadBalancerOptionsStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerOptionsReturns(result1 []datatypes.Product_Package, result2 error) {
+	fake.createLoadBalancerOptionsMutex.Lock()
+	defer fake.createLoadBalancerOptionsMutex.Unlock()
+	fake.CreateLoadBalancerOptionsStub = nil
+	fake.createLoadBalancerOptionsReturns = struct {
+		result1 []datatypes.Product_Package
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerOptionsReturnsOnCall(i int, result1 []datatypes.Product_Package, result2 error) {
+	fake.createLoadBalancerOptionsMutex.Lock()
+	defer fake.createLoadBalancerOptionsMutex.Unlock()
+	fake.CreateLoadBalancerOptionsStub = nil
+	if fake.createLoadBalancerOptionsReturnsOnCall == nil {
+		fake.createLoadBalancerOptionsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Product_Package
+			result2 error
+		})
+	}
+	fake.createLoadBalancerOptionsReturnsOnCall[i] = struct {
+		result1 []datatypes.Product_Package
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerify(arg1 string, arg2 string, arg3 int, arg4 string, arg5 []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, arg6 int, arg7 bool) (datatypes.Container_Product_Order, error) {
+	var arg5Copy []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+	if arg5 != nil {
+		arg5Copy = make([]datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, len(arg5))
+		copy(arg5Copy, arg5)
+	}
+	fake.createLoadBalancerVerifyMutex.Lock()
+	ret, specificReturn := fake.createLoadBalancerVerifyReturnsOnCall[len(fake.createLoadBalancerVerifyArgsForCall)]
+	fake.createLoadBalancerVerifyArgsForCall = append(fake.createLoadBalancerVerifyArgsForCall, struct {
+		arg1 string
+		arg2 string
+		arg3 int
+		arg4 string
+		arg5 []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration
+		arg6 int
+		arg7 bool
+	}{arg1, arg2, arg3, arg4, arg5Copy, arg6, arg7})
+	stub := fake.CreateLoadBalancerVerifyStub
+	fakeReturns := fake.createLoadBalancerVerifyReturns
+	fake.recordInvocation("CreateLoadBalancerVerify", []interface{}{arg1, arg2, arg3, arg4, arg5Copy, arg6, arg7})
+	fake.createLoadBalancerVerifyMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerifyCallCount() int {
+	fake.createLoadBalancerVerifyMutex.RLock()
+	defer fake.createLoadBalancerVerifyMutex.RUnlock()
+	return len(fake.createLoadBalancerVerifyArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerifyCalls(stub func(string, string, int, string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, int, bool) (datatypes.Container_Product_Order, error)) {
+	fake.createLoadBalancerVerifyMutex.Lock()
+	defer fake.createLoadBalancerVerifyMutex.Unlock()
+	fake.CreateLoadBalancerVerifyStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerifyArgsForCall(i int) (string, string, int, string, []datatypes.Network_LBaaS_LoadBalancerProtocolConfiguration, int, bool) {
+	fake.createLoadBalancerVerifyMutex.RLock()
+	defer fake.createLoadBalancerVerifyMutex.RUnlock()
+	argsForCall := fake.createLoadBalancerVerifyArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerifyReturns(result1 datatypes.Container_Product_Order, result2 error) {
+	fake.createLoadBalancerVerifyMutex.Lock()
+	defer fake.createLoadBalancerVerifyMutex.Unlock()
+	fake.CreateLoadBalancerVerifyStub = nil
+	fake.createLoadBalancerVerifyReturns = struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) CreateLoadBalancerVerifyReturnsOnCall(i int, result1 datatypes.Container_Product_Order, result2 error) {
+	fake.createLoadBalancerVerifyMutex.Lock()
+	defer fake.createLoadBalancerVerifyMutex.Unlock()
+	fake.CreateLoadBalancerVerifyStub = nil
+	if fake.createLoadBalancerVerifyReturnsOnCall == nil {
+		fake.createLoadBalancerVerifyReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Container_Product_Order
+			result2 error
+		})
+	}
+	fake.createLoadBalancerVerifyReturnsOnCall[i] = struct {
+		result1 datatypes.Container_Product_Order
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7Member(arg1 *string, arg2 string) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	fake.deleteL7MemberMutex.Lock()
+	ret, specificReturn := fake.deleteL7MemberReturnsOnCall[len(fake.deleteL7MemberArgsForCall)]
+	fake.deleteL7MemberArgsForCall = append(fake.deleteL7MemberArgsForCall, struct {
+		arg1 *string
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.DeleteL7MemberStub
+	fakeReturns := fake.deleteL7MemberReturns
+	fake.recordInvocation("DeleteL7Member", []interface{}{arg1, arg2})
+	fake.deleteL7MemberMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7MemberCallCount() int {
+	fake.deleteL7MemberMutex.RLock()
+	defer fake.deleteL7MemberMutex.RUnlock()
+	return len(fake.deleteL7MemberArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7MemberCalls(stub func(*string, string) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.deleteL7MemberMutex.Lock()
+	defer fake.deleteL7MemberMutex.Unlock()
+	fake.DeleteL7MemberStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7MemberArgsForCall(i int) (*string, string) {
+	fake.deleteL7MemberMutex.RLock()
+	defer fake.deleteL7MemberMutex.RUnlock()
+	argsForCall := fake.deleteL7MemberArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7MemberReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteL7MemberMutex.Lock()
+	defer fake.deleteL7MemberMutex.Unlock()
+	fake.DeleteL7MemberStub = nil
+	fake.deleteL7MemberReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7MemberReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteL7MemberMutex.Lock()
+	defer fake.deleteL7MemberMutex.Unlock()
+	fake.DeleteL7MemberStub = nil
+	if fake.deleteL7MemberReturnsOnCall == nil {
+		fake.deleteL7MemberReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.deleteL7MemberReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7Policy(arg1 int) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	fake.deleteL7PolicyMutex.Lock()
+	ret, specificReturn := fake.deleteL7PolicyReturnsOnCall[len(fake.deleteL7PolicyArgsForCall)]
+	fake.deleteL7PolicyArgsForCall = append(fake.deleteL7PolicyArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteL7PolicyStub
+	fakeReturns := fake.deleteL7PolicyReturns
+	fake.recordInvocation("DeleteL7Policy", []interface{}{arg1})
+	fake.deleteL7PolicyMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7PolicyCallCount() int {
+	fake.deleteL7PolicyMutex.RLock()
+	defer fake.deleteL7PolicyMutex.RUnlock()
+	return len(fake.deleteL7PolicyArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7PolicyCalls(stub func(int) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.deleteL7PolicyMutex.Lock()
+	defer fake.deleteL7PolicyMutex.Unlock()
+	fake.DeleteL7PolicyStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7PolicyArgsForCall(i int) int {
+	fake.deleteL7PolicyMutex.RLock()
+	defer fake.deleteL7PolicyMutex.RUnlock()
+	argsForCall := fake.deleteL7PolicyArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7PolicyReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteL7PolicyMutex.Lock()
+	defer fake.deleteL7PolicyMutex.Unlock()
+	fake.DeleteL7PolicyStub = nil
+	fake.deleteL7PolicyReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7PolicyReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteL7PolicyMutex.Lock()
+	defer fake.deleteL7PolicyMutex.Unlock()
+	fake.DeleteL7PolicyStub = nil
+	if fake.deleteL7PolicyReturnsOnCall == nil {
+		fake.deleteL7PolicyReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.deleteL7PolicyReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteL7Rule(arg1 *string, arg2 string) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	fake.deleteL7RuleMutex.Lock()
+	ret, specificReturn := fake.deleteL7RuleReturnsOnCall[len(fake.deleteL7RuleArgsForCall)]
+	fake.deleteL7RuleArgsForCall = append(fake.deleteL7RuleArgsForCall, struct {
+		arg1 *string
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.DeleteL7RuleStub
+	fakeReturns := fake.deleteL7RuleReturns
+	fake.recordInvocation("DeleteL7Rule", []interface{}{arg1, arg2})
+	fake.deleteL7RuleMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeLoadBalancerManager) DeleteL7RuleCallCount() int {
@@ -1995,13 +1282,22 @@ func (fake *FakeLoadBalancerManager) DeleteL7RuleCallCount() int {
 	return len(fake.deleteL7RuleArgsForCall)
 }
 
+func (fake *FakeLoadBalancerManager) DeleteL7RuleCalls(stub func(*string, string) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.deleteL7RuleMutex.Lock()
+	defer fake.deleteL7RuleMutex.Unlock()
+	fake.DeleteL7RuleStub = stub
+}
+
 func (fake *FakeLoadBalancerManager) DeleteL7RuleArgsForCall(i int) (*string, string) {
 	fake.deleteL7RuleMutex.RLock()
 	defer fake.deleteL7RuleMutex.RUnlock()
-	return fake.deleteL7RuleArgsForCall[i].policyUuid, fake.deleteL7RuleArgsForCall[i].ruleUuids
+	argsForCall := fake.deleteL7RuleArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
 }
 
 func (fake *FakeLoadBalancerManager) DeleteL7RuleReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteL7RuleMutex.Lock()
+	defer fake.deleteL7RuleMutex.Unlock()
 	fake.DeleteL7RuleStub = nil
 	fake.deleteL7RuleReturns = struct {
 		result1 datatypes.Network_LBaaS_LoadBalancer
@@ -2010,6 +1306,8 @@ func (fake *FakeLoadBalancerManager) DeleteL7RuleReturns(result1 datatypes.Netwo
 }
 
 func (fake *FakeLoadBalancerManager) DeleteL7RuleReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteL7RuleMutex.Lock()
+	defer fake.deleteL7RuleMutex.Unlock()
 	fake.DeleteL7RuleStub = nil
 	if fake.deleteL7RuleReturnsOnCall == nil {
 		fake.deleteL7RuleReturnsOnCall = make(map[int]struct {
@@ -2023,21 +1321,981 @@ func (fake *FakeLoadBalancerManager) DeleteL7RuleReturnsOnCall(i int, result1 da
 	}{result1, result2}
 }
 
-func (fake *FakeLoadBalancerManager) ListL7Rule(policyid int) ([]datatypes.Network_LBaaS_L7Rule, error) {
-	fake.listL7RuleMutex.Lock()
-	ret, specificReturn := fake.listL7RuleReturnsOnCall[len(fake.listL7RuleArgsForCall)]
-	fake.listL7RuleArgsForCall = append(fake.listL7RuleArgsForCall, struct {
-		policyid int
-	}{policyid})
-	fake.recordInvocation("ListL7Rule", []interface{}{policyid})
-	fake.listL7RuleMutex.Unlock()
-	if fake.ListL7RuleStub != nil {
-		return fake.ListL7RuleStub(policyid)
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7Pool(arg1 int) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	fake.deleteLoadBalancerL7PoolMutex.Lock()
+	ret, specificReturn := fake.deleteLoadBalancerL7PoolReturnsOnCall[len(fake.deleteLoadBalancerL7PoolArgsForCall)]
+	fake.deleteLoadBalancerL7PoolArgsForCall = append(fake.deleteLoadBalancerL7PoolArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteLoadBalancerL7PoolStub
+	fakeReturns := fake.deleteLoadBalancerL7PoolReturns
+	fake.recordInvocation("DeleteLoadBalancerL7Pool", []interface{}{arg1})
+	fake.deleteLoadBalancerL7PoolMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.listL7RuleReturns.result1, fake.listL7RuleReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7PoolCallCount() int {
+	fake.deleteLoadBalancerL7PoolMutex.RLock()
+	defer fake.deleteLoadBalancerL7PoolMutex.RUnlock()
+	return len(fake.deleteLoadBalancerL7PoolArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7PoolCalls(stub func(int) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.deleteLoadBalancerL7PoolMutex.Lock()
+	defer fake.deleteLoadBalancerL7PoolMutex.Unlock()
+	fake.DeleteLoadBalancerL7PoolStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7PoolArgsForCall(i int) int {
+	fake.deleteLoadBalancerL7PoolMutex.RLock()
+	defer fake.deleteLoadBalancerL7PoolMutex.RUnlock()
+	argsForCall := fake.deleteLoadBalancerL7PoolArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7PoolReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteLoadBalancerL7PoolMutex.Lock()
+	defer fake.deleteLoadBalancerL7PoolMutex.Unlock()
+	fake.DeleteLoadBalancerL7PoolStub = nil
+	fake.deleteLoadBalancerL7PoolReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerL7PoolReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteLoadBalancerL7PoolMutex.Lock()
+	defer fake.deleteLoadBalancerL7PoolMutex.Unlock()
+	fake.DeleteLoadBalancerL7PoolStub = nil
+	if fake.deleteLoadBalancerL7PoolReturnsOnCall == nil {
+		fake.deleteLoadBalancerL7PoolReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.deleteLoadBalancerL7PoolReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListener(arg1 *string, arg2 []string) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	var arg2Copy []string
+	if arg2 != nil {
+		arg2Copy = make([]string, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.deleteLoadBalancerListenerMutex.Lock()
+	ret, specificReturn := fake.deleteLoadBalancerListenerReturnsOnCall[len(fake.deleteLoadBalancerListenerArgsForCall)]
+	fake.deleteLoadBalancerListenerArgsForCall = append(fake.deleteLoadBalancerListenerArgsForCall, struct {
+		arg1 *string
+		arg2 []string
+	}{arg1, arg2Copy})
+	stub := fake.DeleteLoadBalancerListenerStub
+	fakeReturns := fake.deleteLoadBalancerListenerReturns
+	fake.recordInvocation("DeleteLoadBalancerListener", []interface{}{arg1, arg2Copy})
+	fake.deleteLoadBalancerListenerMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListenerCallCount() int {
+	fake.deleteLoadBalancerListenerMutex.RLock()
+	defer fake.deleteLoadBalancerListenerMutex.RUnlock()
+	return len(fake.deleteLoadBalancerListenerArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListenerCalls(stub func(*string, []string) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.deleteLoadBalancerListenerMutex.Lock()
+	defer fake.deleteLoadBalancerListenerMutex.Unlock()
+	fake.DeleteLoadBalancerListenerStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListenerArgsForCall(i int) (*string, []string) {
+	fake.deleteLoadBalancerListenerMutex.RLock()
+	defer fake.deleteLoadBalancerListenerMutex.RUnlock()
+	argsForCall := fake.deleteLoadBalancerListenerArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListenerReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteLoadBalancerListenerMutex.Lock()
+	defer fake.deleteLoadBalancerListenerMutex.Unlock()
+	fake.DeleteLoadBalancerListenerStub = nil
+	fake.deleteLoadBalancerListenerReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerListenerReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteLoadBalancerListenerMutex.Lock()
+	defer fake.deleteLoadBalancerListenerMutex.Unlock()
+	fake.DeleteLoadBalancerListenerStub = nil
+	if fake.deleteLoadBalancerListenerReturnsOnCall == nil {
+		fake.deleteLoadBalancerListenerReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.deleteLoadBalancerListenerReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMember(arg1 *string, arg2 []string) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	var arg2Copy []string
+	if arg2 != nil {
+		arg2Copy = make([]string, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.deleteLoadBalancerMemberMutex.Lock()
+	ret, specificReturn := fake.deleteLoadBalancerMemberReturnsOnCall[len(fake.deleteLoadBalancerMemberArgsForCall)]
+	fake.deleteLoadBalancerMemberArgsForCall = append(fake.deleteLoadBalancerMemberArgsForCall, struct {
+		arg1 *string
+		arg2 []string
+	}{arg1, arg2Copy})
+	stub := fake.DeleteLoadBalancerMemberStub
+	fakeReturns := fake.deleteLoadBalancerMemberReturns
+	fake.recordInvocation("DeleteLoadBalancerMember", []interface{}{arg1, arg2Copy})
+	fake.deleteLoadBalancerMemberMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMemberCallCount() int {
+	fake.deleteLoadBalancerMemberMutex.RLock()
+	defer fake.deleteLoadBalancerMemberMutex.RUnlock()
+	return len(fake.deleteLoadBalancerMemberArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMemberCalls(stub func(*string, []string) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.deleteLoadBalancerMemberMutex.Lock()
+	defer fake.deleteLoadBalancerMemberMutex.Unlock()
+	fake.DeleteLoadBalancerMemberStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMemberArgsForCall(i int) (*string, []string) {
+	fake.deleteLoadBalancerMemberMutex.RLock()
+	defer fake.deleteLoadBalancerMemberMutex.RUnlock()
+	argsForCall := fake.deleteLoadBalancerMemberArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMemberReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteLoadBalancerMemberMutex.Lock()
+	defer fake.deleteLoadBalancerMemberMutex.Unlock()
+	fake.DeleteLoadBalancerMemberStub = nil
+	fake.deleteLoadBalancerMemberReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) DeleteLoadBalancerMemberReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.deleteLoadBalancerMemberMutex.Lock()
+	defer fake.deleteLoadBalancerMemberMutex.Unlock()
+	fake.DeleteLoadBalancerMemberStub = nil
+	if fake.deleteLoadBalancerMemberReturnsOnCall == nil {
+		fake.deleteLoadBalancerMemberReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.deleteLoadBalancerMemberReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) EditL7Policy(arg1 int, arg2 *datatypes.Network_LBaaS_L7Policy) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	fake.editL7PolicyMutex.Lock()
+	ret, specificReturn := fake.editL7PolicyReturnsOnCall[len(fake.editL7PolicyArgsForCall)]
+	fake.editL7PolicyArgsForCall = append(fake.editL7PolicyArgsForCall, struct {
+		arg1 int
+		arg2 *datatypes.Network_LBaaS_L7Policy
+	}{arg1, arg2})
+	stub := fake.EditL7PolicyStub
+	fakeReturns := fake.editL7PolicyReturns
+	fake.recordInvocation("EditL7Policy", []interface{}{arg1, arg2})
+	fake.editL7PolicyMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) EditL7PolicyCallCount() int {
+	fake.editL7PolicyMutex.RLock()
+	defer fake.editL7PolicyMutex.RUnlock()
+	return len(fake.editL7PolicyArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) EditL7PolicyCalls(stub func(int, *datatypes.Network_LBaaS_L7Policy) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.editL7PolicyMutex.Lock()
+	defer fake.editL7PolicyMutex.Unlock()
+	fake.EditL7PolicyStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) EditL7PolicyArgsForCall(i int) (int, *datatypes.Network_LBaaS_L7Policy) {
+	fake.editL7PolicyMutex.RLock()
+	defer fake.editL7PolicyMutex.RUnlock()
+	argsForCall := fake.editL7PolicyArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeLoadBalancerManager) EditL7PolicyReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.editL7PolicyMutex.Lock()
+	defer fake.editL7PolicyMutex.Unlock()
+	fake.EditL7PolicyStub = nil
+	fake.editL7PolicyReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) EditL7PolicyReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.editL7PolicyMutex.Lock()
+	defer fake.editL7PolicyMutex.Unlock()
+	fake.EditL7PolicyStub = nil
+	if fake.editL7PolicyReturnsOnCall == nil {
+		fake.editL7PolicyReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.editL7PolicyReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetADC(arg1 int) (datatypes.Network_Application_Delivery_Controller, error) {
+	fake.getADCMutex.Lock()
+	ret, specificReturn := fake.getADCReturnsOnCall[len(fake.getADCArgsForCall)]
+	fake.getADCArgsForCall = append(fake.getADCArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetADCStub
+	fakeReturns := fake.getADCReturns
+	fake.recordInvocation("GetADC", []interface{}{arg1})
+	fake.getADCMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetADCCallCount() int {
+	fake.getADCMutex.RLock()
+	defer fake.getADCMutex.RUnlock()
+	return len(fake.getADCArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetADCCalls(stub func(int) (datatypes.Network_Application_Delivery_Controller, error)) {
+	fake.getADCMutex.Lock()
+	defer fake.getADCMutex.Unlock()
+	fake.GetADCStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetADCArgsForCall(i int) int {
+	fake.getADCMutex.RLock()
+	defer fake.getADCMutex.RUnlock()
+	argsForCall := fake.getADCArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) GetADCReturns(result1 datatypes.Network_Application_Delivery_Controller, result2 error) {
+	fake.getADCMutex.Lock()
+	defer fake.getADCMutex.Unlock()
+	fake.GetADCStub = nil
+	fake.getADCReturns = struct {
+		result1 datatypes.Network_Application_Delivery_Controller
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetADCReturnsOnCall(i int, result1 datatypes.Network_Application_Delivery_Controller, result2 error) {
+	fake.getADCMutex.Lock()
+	defer fake.getADCMutex.Unlock()
+	fake.GetADCStub = nil
+	if fake.getADCReturnsOnCall == nil {
+		fake.getADCReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_Application_Delivery_Controller
+			result2 error
+		})
+	}
+	fake.getADCReturnsOnCall[i] = struct {
+		result1 datatypes.Network_Application_Delivery_Controller
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetADCs() ([]datatypes.Network_Application_Delivery_Controller, error) {
+	fake.getADCsMutex.Lock()
+	ret, specificReturn := fake.getADCsReturnsOnCall[len(fake.getADCsArgsForCall)]
+	fake.getADCsArgsForCall = append(fake.getADCsArgsForCall, struct {
+	}{})
+	stub := fake.GetADCsStub
+	fakeReturns := fake.getADCsReturns
+	fake.recordInvocation("GetADCs", []interface{}{})
+	fake.getADCsMutex.Unlock()
+	if stub != nil {
+		return stub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetADCsCallCount() int {
+	fake.getADCsMutex.RLock()
+	defer fake.getADCsMutex.RUnlock()
+	return len(fake.getADCsArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetADCsCalls(stub func() ([]datatypes.Network_Application_Delivery_Controller, error)) {
+	fake.getADCsMutex.Lock()
+	defer fake.getADCsMutex.Unlock()
+	fake.GetADCsStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetADCsReturns(result1 []datatypes.Network_Application_Delivery_Controller, result2 error) {
+	fake.getADCsMutex.Lock()
+	defer fake.getADCsMutex.Unlock()
+	fake.GetADCsStub = nil
+	fake.getADCsReturns = struct {
+		result1 []datatypes.Network_Application_Delivery_Controller
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetADCsReturnsOnCall(i int, result1 []datatypes.Network_Application_Delivery_Controller, result2 error) {
+	fake.getADCsMutex.Lock()
+	defer fake.getADCsMutex.Unlock()
+	fake.GetADCsStub = nil
+	if fake.getADCsReturnsOnCall == nil {
+		fake.getADCsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_Application_Delivery_Controller
+			result2 error
+		})
+	}
+	fake.getADCsReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_Application_Delivery_Controller
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetL7HealthMonitor(arg1 int) (datatypes.Network_LBaaS_L7HealthMonitor, error) {
+	fake.getL7HealthMonitorMutex.Lock()
+	ret, specificReturn := fake.getL7HealthMonitorReturnsOnCall[len(fake.getL7HealthMonitorArgsForCall)]
+	fake.getL7HealthMonitorArgsForCall = append(fake.getL7HealthMonitorArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetL7HealthMonitorStub
+	fakeReturns := fake.getL7HealthMonitorReturns
+	fake.recordInvocation("GetL7HealthMonitor", []interface{}{arg1})
+	fake.getL7HealthMonitorMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetL7HealthMonitorCallCount() int {
+	fake.getL7HealthMonitorMutex.RLock()
+	defer fake.getL7HealthMonitorMutex.RUnlock()
+	return len(fake.getL7HealthMonitorArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetL7HealthMonitorCalls(stub func(int) (datatypes.Network_LBaaS_L7HealthMonitor, error)) {
+	fake.getL7HealthMonitorMutex.Lock()
+	defer fake.getL7HealthMonitorMutex.Unlock()
+	fake.GetL7HealthMonitorStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetL7HealthMonitorArgsForCall(i int) int {
+	fake.getL7HealthMonitorMutex.RLock()
+	defer fake.getL7HealthMonitorMutex.RUnlock()
+	argsForCall := fake.getL7HealthMonitorArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) GetL7HealthMonitorReturns(result1 datatypes.Network_LBaaS_L7HealthMonitor, result2 error) {
+	fake.getL7HealthMonitorMutex.Lock()
+	defer fake.getL7HealthMonitorMutex.Unlock()
+	fake.GetL7HealthMonitorStub = nil
+	fake.getL7HealthMonitorReturns = struct {
+		result1 datatypes.Network_LBaaS_L7HealthMonitor
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetL7HealthMonitorReturnsOnCall(i int, result1 datatypes.Network_LBaaS_L7HealthMonitor, result2 error) {
+	fake.getL7HealthMonitorMutex.Lock()
+	defer fake.getL7HealthMonitorMutex.Unlock()
+	fake.GetL7HealthMonitorStub = nil
+	if fake.getL7HealthMonitorReturnsOnCall == nil {
+		fake.getL7HealthMonitorReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_L7HealthMonitor
+			result2 error
+		})
+	}
+	fake.getL7HealthMonitorReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_L7HealthMonitor
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetL7Policies(arg1 int) ([]datatypes.Network_LBaaS_L7Policy, error) {
+	fake.getL7PoliciesMutex.Lock()
+	ret, specificReturn := fake.getL7PoliciesReturnsOnCall[len(fake.getL7PoliciesArgsForCall)]
+	fake.getL7PoliciesArgsForCall = append(fake.getL7PoliciesArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetL7PoliciesStub
+	fakeReturns := fake.getL7PoliciesReturns
+	fake.recordInvocation("GetL7Policies", []interface{}{arg1})
+	fake.getL7PoliciesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PoliciesCallCount() int {
+	fake.getL7PoliciesMutex.RLock()
+	defer fake.getL7PoliciesMutex.RUnlock()
+	return len(fake.getL7PoliciesArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PoliciesCalls(stub func(int) ([]datatypes.Network_LBaaS_L7Policy, error)) {
+	fake.getL7PoliciesMutex.Lock()
+	defer fake.getL7PoliciesMutex.Unlock()
+	fake.GetL7PoliciesStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PoliciesArgsForCall(i int) int {
+	fake.getL7PoliciesMutex.RLock()
+	defer fake.getL7PoliciesMutex.RUnlock()
+	argsForCall := fake.getL7PoliciesArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PoliciesReturns(result1 []datatypes.Network_LBaaS_L7Policy, result2 error) {
+	fake.getL7PoliciesMutex.Lock()
+	defer fake.getL7PoliciesMutex.Unlock()
+	fake.GetL7PoliciesStub = nil
+	fake.getL7PoliciesReturns = struct {
+		result1 []datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PoliciesReturnsOnCall(i int, result1 []datatypes.Network_LBaaS_L7Policy, result2 error) {
+	fake.getL7PoliciesMutex.Lock()
+	defer fake.getL7PoliciesMutex.Unlock()
+	fake.GetL7PoliciesStub = nil
+	if fake.getL7PoliciesReturnsOnCall == nil {
+		fake.getL7PoliciesReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_LBaaS_L7Policy
+			result2 error
+		})
+	}
+	fake.getL7PoliciesReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetL7Policy(arg1 int) (datatypes.Network_LBaaS_L7Policy, error) {
+	fake.getL7PolicyMutex.Lock()
+	ret, specificReturn := fake.getL7PolicyReturnsOnCall[len(fake.getL7PolicyArgsForCall)]
+	fake.getL7PolicyArgsForCall = append(fake.getL7PolicyArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetL7PolicyStub
+	fakeReturns := fake.getL7PolicyReturns
+	fake.recordInvocation("GetL7Policy", []interface{}{arg1})
+	fake.getL7PolicyMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PolicyCallCount() int {
+	fake.getL7PolicyMutex.RLock()
+	defer fake.getL7PolicyMutex.RUnlock()
+	return len(fake.getL7PolicyArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PolicyCalls(stub func(int) (datatypes.Network_LBaaS_L7Policy, error)) {
+	fake.getL7PolicyMutex.Lock()
+	defer fake.getL7PolicyMutex.Unlock()
+	fake.GetL7PolicyStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PolicyArgsForCall(i int) int {
+	fake.getL7PolicyMutex.RLock()
+	defer fake.getL7PolicyMutex.RUnlock()
+	argsForCall := fake.getL7PolicyArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PolicyReturns(result1 datatypes.Network_LBaaS_L7Policy, result2 error) {
+	fake.getL7PolicyMutex.Lock()
+	defer fake.getL7PolicyMutex.Unlock()
+	fake.GetL7PolicyStub = nil
+	fake.getL7PolicyReturns = struct {
+		result1 datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetL7PolicyReturnsOnCall(i int, result1 datatypes.Network_LBaaS_L7Policy, result2 error) {
+	fake.getL7PolicyMutex.Lock()
+	defer fake.getL7PolicyMutex.Unlock()
+	fake.GetL7PolicyStub = nil
+	if fake.getL7PolicyReturnsOnCall == nil {
+		fake.getL7PolicyReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_L7Policy
+			result2 error
+		})
+	}
+	fake.getL7PolicyReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_L7Policy
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetL7SessionAffinity(arg1 int) (datatypes.Network_LBaaS_L7SessionAffinity, error) {
+	fake.getL7SessionAffinityMutex.Lock()
+	ret, specificReturn := fake.getL7SessionAffinityReturnsOnCall[len(fake.getL7SessionAffinityArgsForCall)]
+	fake.getL7SessionAffinityArgsForCall = append(fake.getL7SessionAffinityArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetL7SessionAffinityStub
+	fakeReturns := fake.getL7SessionAffinityReturns
+	fake.recordInvocation("GetL7SessionAffinity", []interface{}{arg1})
+	fake.getL7SessionAffinityMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetL7SessionAffinityCallCount() int {
+	fake.getL7SessionAffinityMutex.RLock()
+	defer fake.getL7SessionAffinityMutex.RUnlock()
+	return len(fake.getL7SessionAffinityArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetL7SessionAffinityCalls(stub func(int) (datatypes.Network_LBaaS_L7SessionAffinity, error)) {
+	fake.getL7SessionAffinityMutex.Lock()
+	defer fake.getL7SessionAffinityMutex.Unlock()
+	fake.GetL7SessionAffinityStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetL7SessionAffinityArgsForCall(i int) int {
+	fake.getL7SessionAffinityMutex.RLock()
+	defer fake.getL7SessionAffinityMutex.RUnlock()
+	argsForCall := fake.getL7SessionAffinityArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) GetL7SessionAffinityReturns(result1 datatypes.Network_LBaaS_L7SessionAffinity, result2 error) {
+	fake.getL7SessionAffinityMutex.Lock()
+	defer fake.getL7SessionAffinityMutex.Unlock()
+	fake.GetL7SessionAffinityStub = nil
+	fake.getL7SessionAffinityReturns = struct {
+		result1 datatypes.Network_LBaaS_L7SessionAffinity
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetL7SessionAffinityReturnsOnCall(i int, result1 datatypes.Network_LBaaS_L7SessionAffinity, result2 error) {
+	fake.getL7SessionAffinityMutex.Lock()
+	defer fake.getL7SessionAffinityMutex.Unlock()
+	fake.GetL7SessionAffinityStub = nil
+	if fake.getL7SessionAffinityReturnsOnCall == nil {
+		fake.getL7SessionAffinityReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_L7SessionAffinity
+			result2 error
+		})
+	}
+	fake.getL7SessionAffinityReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_L7SessionAffinity
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancer(arg1 int, arg2 string) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	fake.getLoadBalancerMutex.Lock()
+	ret, specificReturn := fake.getLoadBalancerReturnsOnCall[len(fake.getLoadBalancerArgsForCall)]
+	fake.getLoadBalancerArgsForCall = append(fake.getLoadBalancerArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetLoadBalancerStub
+	fakeReturns := fake.getLoadBalancerReturns
+	fake.recordInvocation("GetLoadBalancer", []interface{}{arg1, arg2})
+	fake.getLoadBalancerMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerCallCount() int {
+	fake.getLoadBalancerMutex.RLock()
+	defer fake.getLoadBalancerMutex.RUnlock()
+	return len(fake.getLoadBalancerArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerCalls(stub func(int, string) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.getLoadBalancerMutex.Lock()
+	defer fake.getLoadBalancerMutex.Unlock()
+	fake.GetLoadBalancerStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerArgsForCall(i int) (int, string) {
+	fake.getLoadBalancerMutex.RLock()
+	defer fake.getLoadBalancerMutex.RUnlock()
+	argsForCall := fake.getLoadBalancerArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.getLoadBalancerMutex.Lock()
+	defer fake.getLoadBalancerMutex.Unlock()
+	fake.GetLoadBalancerStub = nil
+	fake.getLoadBalancerReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.getLoadBalancerMutex.Lock()
+	defer fake.getLoadBalancerMutex.Unlock()
+	fake.GetLoadBalancerStub = nil
+	if fake.getLoadBalancerReturnsOnCall == nil {
+		fake.getLoadBalancerReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.getLoadBalancerReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerL7Pool(arg1 int) (datatypes.Network_LBaaS_L7Pool, error) {
+	fake.getLoadBalancerL7PoolMutex.Lock()
+	ret, specificReturn := fake.getLoadBalancerL7PoolReturnsOnCall[len(fake.getLoadBalancerL7PoolArgsForCall)]
+	fake.getLoadBalancerL7PoolArgsForCall = append(fake.getLoadBalancerL7PoolArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetLoadBalancerL7PoolStub
+	fakeReturns := fake.getLoadBalancerL7PoolReturns
+	fake.recordInvocation("GetLoadBalancerL7Pool", []interface{}{arg1})
+	fake.getLoadBalancerL7PoolMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerL7PoolCallCount() int {
+	fake.getLoadBalancerL7PoolMutex.RLock()
+	defer fake.getLoadBalancerL7PoolMutex.RUnlock()
+	return len(fake.getLoadBalancerL7PoolArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerL7PoolCalls(stub func(int) (datatypes.Network_LBaaS_L7Pool, error)) {
+	fake.getLoadBalancerL7PoolMutex.Lock()
+	defer fake.getLoadBalancerL7PoolMutex.Unlock()
+	fake.GetLoadBalancerL7PoolStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerL7PoolArgsForCall(i int) int {
+	fake.getLoadBalancerL7PoolMutex.RLock()
+	defer fake.getLoadBalancerL7PoolMutex.RUnlock()
+	argsForCall := fake.getLoadBalancerL7PoolArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerL7PoolReturns(result1 datatypes.Network_LBaaS_L7Pool, result2 error) {
+	fake.getLoadBalancerL7PoolMutex.Lock()
+	defer fake.getLoadBalancerL7PoolMutex.Unlock()
+	fake.GetLoadBalancerL7PoolStub = nil
+	fake.getLoadBalancerL7PoolReturns = struct {
+		result1 datatypes.Network_LBaaS_L7Pool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerL7PoolReturnsOnCall(i int, result1 datatypes.Network_LBaaS_L7Pool, result2 error) {
+	fake.getLoadBalancerL7PoolMutex.Lock()
+	defer fake.getLoadBalancerL7PoolMutex.Unlock()
+	fake.GetLoadBalancerL7PoolStub = nil
+	if fake.getLoadBalancerL7PoolReturnsOnCall == nil {
+		fake.getLoadBalancerL7PoolReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_L7Pool
+			result2 error
+		})
+	}
+	fake.getLoadBalancerL7PoolReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_L7Pool
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerUUID(arg1 int) (string, error) {
+	fake.getLoadBalancerUUIDMutex.Lock()
+	ret, specificReturn := fake.getLoadBalancerUUIDReturnsOnCall[len(fake.getLoadBalancerUUIDArgsForCall)]
+	fake.getLoadBalancerUUIDArgsForCall = append(fake.getLoadBalancerUUIDArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.GetLoadBalancerUUIDStub
+	fakeReturns := fake.getLoadBalancerUUIDReturns
+	fake.recordInvocation("GetLoadBalancerUUID", []interface{}{arg1})
+	fake.getLoadBalancerUUIDMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerUUIDCallCount() int {
+	fake.getLoadBalancerUUIDMutex.RLock()
+	defer fake.getLoadBalancerUUIDMutex.RUnlock()
+	return len(fake.getLoadBalancerUUIDArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerUUIDCalls(stub func(int) (string, error)) {
+	fake.getLoadBalancerUUIDMutex.Lock()
+	defer fake.getLoadBalancerUUIDMutex.Unlock()
+	fake.GetLoadBalancerUUIDStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerUUIDArgsForCall(i int) int {
+	fake.getLoadBalancerUUIDMutex.RLock()
+	defer fake.getLoadBalancerUUIDMutex.RUnlock()
+	argsForCall := fake.getLoadBalancerUUIDArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerUUIDReturns(result1 string, result2 error) {
+	fake.getLoadBalancerUUIDMutex.Lock()
+	defer fake.getLoadBalancerUUIDMutex.Unlock()
+	fake.GetLoadBalancerUUIDStub = nil
+	fake.getLoadBalancerUUIDReturns = struct {
+		result1 string
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancerUUIDReturnsOnCall(i int, result1 string, result2 error) {
+	fake.getLoadBalancerUUIDMutex.Lock()
+	defer fake.getLoadBalancerUUIDMutex.Unlock()
+	fake.GetLoadBalancerUUIDStub = nil
+	if fake.getLoadBalancerUUIDReturnsOnCall == nil {
+		fake.getLoadBalancerUUIDReturnsOnCall = make(map[int]struct {
+			result1 string
+			result2 error
+		})
+	}
+	fake.getLoadBalancerUUIDReturnsOnCall[i] = struct {
+		result1 string
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancers() ([]datatypes.Network_LBaaS_LoadBalancer, error) {
+	fake.getLoadBalancersMutex.Lock()
+	ret, specificReturn := fake.getLoadBalancersReturnsOnCall[len(fake.getLoadBalancersArgsForCall)]
+	fake.getLoadBalancersArgsForCall = append(fake.getLoadBalancersArgsForCall, struct {
+	}{})
+	stub := fake.GetLoadBalancersStub
+	fakeReturns := fake.getLoadBalancersReturns
+	fake.recordInvocation("GetLoadBalancers", []interface{}{})
+	fake.getLoadBalancersMutex.Unlock()
+	if stub != nil {
+		return stub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancersCallCount() int {
+	fake.getLoadBalancersMutex.RLock()
+	defer fake.getLoadBalancersMutex.RUnlock()
+	return len(fake.getLoadBalancersArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancersCalls(stub func() ([]datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.getLoadBalancersMutex.Lock()
+	defer fake.getLoadBalancersMutex.Unlock()
+	fake.GetLoadBalancersStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancersReturns(result1 []datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.getLoadBalancersMutex.Lock()
+	defer fake.getLoadBalancersMutex.Unlock()
+	fake.GetLoadBalancersStub = nil
+	fake.getLoadBalancersReturns = struct {
+		result1 []datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) GetLoadBalancersReturnsOnCall(i int, result1 []datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.getLoadBalancersMutex.Lock()
+	defer fake.getLoadBalancersMutex.Unlock()
+	fake.GetLoadBalancersStub = nil
+	if fake.getLoadBalancersReturnsOnCall == nil {
+		fake.getLoadBalancersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.getLoadBalancersReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) ListL7Members(arg1 int) ([]datatypes.Network_LBaaS_L7Member, error) {
+	fake.listL7MembersMutex.Lock()
+	ret, specificReturn := fake.listL7MembersReturnsOnCall[len(fake.listL7MembersArgsForCall)]
+	fake.listL7MembersArgsForCall = append(fake.listL7MembersArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.ListL7MembersStub
+	fakeReturns := fake.listL7MembersReturns
+	fake.recordInvocation("ListL7Members", []interface{}{arg1})
+	fake.listL7MembersMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) ListL7MembersCallCount() int {
+	fake.listL7MembersMutex.RLock()
+	defer fake.listL7MembersMutex.RUnlock()
+	return len(fake.listL7MembersArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) ListL7MembersCalls(stub func(int) ([]datatypes.Network_LBaaS_L7Member, error)) {
+	fake.listL7MembersMutex.Lock()
+	defer fake.listL7MembersMutex.Unlock()
+	fake.ListL7MembersStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) ListL7MembersArgsForCall(i int) int {
+	fake.listL7MembersMutex.RLock()
+	defer fake.listL7MembersMutex.RUnlock()
+	argsForCall := fake.listL7MembersArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeLoadBalancerManager) ListL7MembersReturns(result1 []datatypes.Network_LBaaS_L7Member, result2 error) {
+	fake.listL7MembersMutex.Lock()
+	defer fake.listL7MembersMutex.Unlock()
+	fake.ListL7MembersStub = nil
+	fake.listL7MembersReturns = struct {
+		result1 []datatypes.Network_LBaaS_L7Member
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) ListL7MembersReturnsOnCall(i int, result1 []datatypes.Network_LBaaS_L7Member, result2 error) {
+	fake.listL7MembersMutex.Lock()
+	defer fake.listL7MembersMutex.Unlock()
+	fake.ListL7MembersStub = nil
+	if fake.listL7MembersReturnsOnCall == nil {
+		fake.listL7MembersReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.Network_LBaaS_L7Member
+			result2 error
+		})
+	}
+	fake.listL7MembersReturnsOnCall[i] = struct {
+		result1 []datatypes.Network_LBaaS_L7Member
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) ListL7Rule(arg1 int) ([]datatypes.Network_LBaaS_L7Rule, error) {
+	fake.listL7RuleMutex.Lock()
+	ret, specificReturn := fake.listL7RuleReturnsOnCall[len(fake.listL7RuleArgsForCall)]
+	fake.listL7RuleArgsForCall = append(fake.listL7RuleArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.ListL7RuleStub
+	fakeReturns := fake.listL7RuleReturns
+	fake.recordInvocation("ListL7Rule", []interface{}{arg1})
+	fake.listL7RuleMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeLoadBalancerManager) ListL7RuleCallCount() int {
@@ -2046,13 +2304,22 @@ func (fake *FakeLoadBalancerManager) ListL7RuleCallCount() int {
 	return len(fake.listL7RuleArgsForCall)
 }
 
+func (fake *FakeLoadBalancerManager) ListL7RuleCalls(stub func(int) ([]datatypes.Network_LBaaS_L7Rule, error)) {
+	fake.listL7RuleMutex.Lock()
+	defer fake.listL7RuleMutex.Unlock()
+	fake.ListL7RuleStub = stub
+}
+
 func (fake *FakeLoadBalancerManager) ListL7RuleArgsForCall(i int) int {
 	fake.listL7RuleMutex.RLock()
 	defer fake.listL7RuleMutex.RUnlock()
-	return fake.listL7RuleArgsForCall[i].policyid
+	argsForCall := fake.listL7RuleArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeLoadBalancerManager) ListL7RuleReturns(result1 []datatypes.Network_LBaaS_L7Rule, result2 error) {
+	fake.listL7RuleMutex.Lock()
+	defer fake.listL7RuleMutex.Unlock()
 	fake.ListL7RuleStub = nil
 	fake.listL7RuleReturns = struct {
 		result1 []datatypes.Network_LBaaS_L7Rule
@@ -2061,6 +2328,8 @@ func (fake *FakeLoadBalancerManager) ListL7RuleReturns(result1 []datatypes.Netwo
 }
 
 func (fake *FakeLoadBalancerManager) ListL7RuleReturnsOnCall(i int, result1 []datatypes.Network_LBaaS_L7Rule, result2 error) {
+	fake.listL7RuleMutex.Lock()
+	defer fake.listL7RuleMutex.Unlock()
 	fake.ListL7RuleStub = nil
 	if fake.listL7RuleReturnsOnCall == nil {
 		fake.listL7RuleReturnsOnCall = make(map[int]struct {
@@ -2074,67 +2343,208 @@ func (fake *FakeLoadBalancerManager) ListL7RuleReturnsOnCall(i int, result1 []da
 	}{result1, result2}
 }
 
+func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitors(arg1 *string, arg2 []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	var arg2Copy []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration
+	if arg2 != nil {
+		arg2Copy = make([]datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration, len(arg2))
+		copy(arg2Copy, arg2)
+	}
+	fake.updateLBHealthMonitorsMutex.Lock()
+	ret, specificReturn := fake.updateLBHealthMonitorsReturnsOnCall[len(fake.updateLBHealthMonitorsArgsForCall)]
+	fake.updateLBHealthMonitorsArgsForCall = append(fake.updateLBHealthMonitorsArgsForCall, struct {
+		arg1 *string
+		arg2 []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration
+	}{arg1, arg2Copy})
+	stub := fake.UpdateLBHealthMonitorsStub
+	fakeReturns := fake.updateLBHealthMonitorsReturns
+	fake.recordInvocation("UpdateLBHealthMonitors", []interface{}{arg1, arg2Copy})
+	fake.updateLBHealthMonitorsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitorsCallCount() int {
+	fake.updateLBHealthMonitorsMutex.RLock()
+	defer fake.updateLBHealthMonitorsMutex.RUnlock()
+	return len(fake.updateLBHealthMonitorsArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitorsCalls(stub func(*string, []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.updateLBHealthMonitorsMutex.Lock()
+	defer fake.updateLBHealthMonitorsMutex.Unlock()
+	fake.UpdateLBHealthMonitorsStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitorsArgsForCall(i int) (*string, []datatypes.Network_LBaaS_LoadBalancerHealthMonitorConfiguration) {
+	fake.updateLBHealthMonitorsMutex.RLock()
+	defer fake.updateLBHealthMonitorsMutex.RUnlock()
+	argsForCall := fake.updateLBHealthMonitorsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitorsReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.updateLBHealthMonitorsMutex.Lock()
+	defer fake.updateLBHealthMonitorsMutex.Unlock()
+	fake.UpdateLBHealthMonitorsStub = nil
+	fake.updateLBHealthMonitorsReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLBHealthMonitorsReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.updateLBHealthMonitorsMutex.Lock()
+	defer fake.updateLBHealthMonitorsMutex.Unlock()
+	fake.UpdateLBHealthMonitorsStub = nil
+	if fake.updateLBHealthMonitorsReturnsOnCall == nil {
+		fake.updateLBHealthMonitorsReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.updateLBHealthMonitorsReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7Pool(arg1 *string, arg2 *datatypes.Network_LBaaS_L7Pool, arg3 *datatypes.Network_LBaaS_L7HealthMonitor, arg4 *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error) {
+	fake.updateLoadBalancerL7PoolMutex.Lock()
+	ret, specificReturn := fake.updateLoadBalancerL7PoolReturnsOnCall[len(fake.updateLoadBalancerL7PoolArgsForCall)]
+	fake.updateLoadBalancerL7PoolArgsForCall = append(fake.updateLoadBalancerL7PoolArgsForCall, struct {
+		arg1 *string
+		arg2 *datatypes.Network_LBaaS_L7Pool
+		arg3 *datatypes.Network_LBaaS_L7HealthMonitor
+		arg4 *datatypes.Network_LBaaS_L7SessionAffinity
+	}{arg1, arg2, arg3, arg4})
+	stub := fake.UpdateLoadBalancerL7PoolStub
+	fakeReturns := fake.updateLoadBalancerL7PoolReturns
+	fake.recordInvocation("UpdateLoadBalancerL7Pool", []interface{}{arg1, arg2, arg3, arg4})
+	fake.updateLoadBalancerL7PoolMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7PoolCallCount() int {
+	fake.updateLoadBalancerL7PoolMutex.RLock()
+	defer fake.updateLoadBalancerL7PoolMutex.RUnlock()
+	return len(fake.updateLoadBalancerL7PoolArgsForCall)
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7PoolCalls(stub func(*string, *datatypes.Network_LBaaS_L7Pool, *datatypes.Network_LBaaS_L7HealthMonitor, *datatypes.Network_LBaaS_L7SessionAffinity) (datatypes.Network_LBaaS_LoadBalancer, error)) {
+	fake.updateLoadBalancerL7PoolMutex.Lock()
+	defer fake.updateLoadBalancerL7PoolMutex.Unlock()
+	fake.UpdateLoadBalancerL7PoolStub = stub
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7PoolArgsForCall(i int) (*string, *datatypes.Network_LBaaS_L7Pool, *datatypes.Network_LBaaS_L7HealthMonitor, *datatypes.Network_LBaaS_L7SessionAffinity) {
+	fake.updateLoadBalancerL7PoolMutex.RLock()
+	defer fake.updateLoadBalancerL7PoolMutex.RUnlock()
+	argsForCall := fake.updateLoadBalancerL7PoolArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7PoolReturns(result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.updateLoadBalancerL7PoolMutex.Lock()
+	defer fake.updateLoadBalancerL7PoolMutex.Unlock()
+	fake.UpdateLoadBalancerL7PoolStub = nil
+	fake.updateLoadBalancerL7PoolReturns = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeLoadBalancerManager) UpdateLoadBalancerL7PoolReturnsOnCall(i int, result1 datatypes.Network_LBaaS_LoadBalancer, result2 error) {
+	fake.updateLoadBalancerL7PoolMutex.Lock()
+	defer fake.updateLoadBalancerL7PoolMutex.Unlock()
+	fake.UpdateLoadBalancerL7PoolStub = nil
+	if fake.updateLoadBalancerL7PoolReturnsOnCall == nil {
+		fake.updateLoadBalancerL7PoolReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Network_LBaaS_LoadBalancer
+			result2 error
+		})
+	}
+	fake.updateLoadBalancerL7PoolReturnsOnCall[i] = struct {
+		result1 datatypes.Network_LBaaS_LoadBalancer
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeLoadBalancerManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.getADCsMutex.RLock()
-	defer fake.getADCsMutex.RUnlock()
-	fake.getADCMutex.RLock()
-	defer fake.getADCMutex.RUnlock()
-	fake.createLoadBalancerMutex.RLock()
-	defer fake.createLoadBalancerMutex.RUnlock()
-	fake.createLoadBalancerVerifyMutex.RLock()
-	defer fake.createLoadBalancerVerifyMutex.RUnlock()
-	fake.createLoadBalancerOptionsMutex.RLock()
-	defer fake.createLoadBalancerOptionsMutex.RUnlock()
-	fake.cancelLoadBalancerMutex.RLock()
-	defer fake.cancelLoadBalancerMutex.RUnlock()
-	fake.getLoadBalancersMutex.RLock()
-	defer fake.getLoadBalancersMutex.RUnlock()
-	fake.getLoadBalancerUUIDMutex.RLock()
-	defer fake.getLoadBalancerUUIDMutex.RUnlock()
-	fake.updateLBHealthMonitorsMutex.RLock()
-	defer fake.updateLBHealthMonitorsMutex.RUnlock()
+	fake.addL7MemberMutex.RLock()
+	defer fake.addL7MemberMutex.RUnlock()
+	fake.addL7PolicyMutex.RLock()
+	defer fake.addL7PolicyMutex.RUnlock()
+	fake.addL7RuleMutex.RLock()
+	defer fake.addL7RuleMutex.RUnlock()
+	fake.addLoadBalancerL7PoolMutex.RLock()
+	defer fake.addLoadBalancerL7PoolMutex.RUnlock()
 	fake.addLoadBalancerListenerMutex.RLock()
 	defer fake.addLoadBalancerListenerMutex.RUnlock()
+	fake.addLoadBalancerMemberMutex.RLock()
+	defer fake.addLoadBalancerMemberMutex.RUnlock()
+	fake.cancelLoadBalancerMutex.RLock()
+	defer fake.cancelLoadBalancerMutex.RUnlock()
+	fake.createLoadBalancerMutex.RLock()
+	defer fake.createLoadBalancerMutex.RUnlock()
+	fake.createLoadBalancerOptionsMutex.RLock()
+	defer fake.createLoadBalancerOptionsMutex.RUnlock()
+	fake.createLoadBalancerVerifyMutex.RLock()
+	defer fake.createLoadBalancerVerifyMutex.RUnlock()
+	fake.deleteL7MemberMutex.RLock()
+	defer fake.deleteL7MemberMutex.RUnlock()
+	fake.deleteL7PolicyMutex.RLock()
+	defer fake.deleteL7PolicyMutex.RUnlock()
+	fake.deleteL7RuleMutex.RLock()
+	defer fake.deleteL7RuleMutex.RUnlock()
+	fake.deleteLoadBalancerL7PoolMutex.RLock()
+	defer fake.deleteLoadBalancerL7PoolMutex.RUnlock()
 	fake.deleteLoadBalancerListenerMutex.RLock()
 	defer fake.deleteLoadBalancerListenerMutex.RUnlock()
 	fake.deleteLoadBalancerMemberMutex.RLock()
 	defer fake.deleteLoadBalancerMemberMutex.RUnlock()
-	fake.addLoadBalancerMemberMutex.RLock()
-	defer fake.addLoadBalancerMemberMutex.RUnlock()
-	fake.addLoadBalancerL7PoolMutex.RLock()
-	defer fake.addLoadBalancerL7PoolMutex.RUnlock()
-	fake.deleteLoadBalancerL7PoolMutex.RLock()
-	defer fake.deleteLoadBalancerL7PoolMutex.RUnlock()
-	fake.getLoadBalancerL7PoolMutex.RLock()
-	defer fake.getLoadBalancerL7PoolMutex.RUnlock()
-	fake.updateLoadBalancerL7PoolMutex.RLock()
-	defer fake.updateLoadBalancerL7PoolMutex.RUnlock()
-	fake.addL7MemberMutex.RLock()
-	defer fake.addL7MemberMutex.RUnlock()
-	fake.deleteL7MemberMutex.RLock()
-	defer fake.deleteL7MemberMutex.RUnlock()
-	fake.listL7MembersMutex.RLock()
-	defer fake.listL7MembersMutex.RUnlock()
-	fake.getL7SessionAffinityMutex.RLock()
-	defer fake.getL7SessionAffinityMutex.RUnlock()
-	fake.getL7HealthMonitorMutex.RLock()
-	defer fake.getL7HealthMonitorMutex.RUnlock()
-	fake.addL7PolicyMutex.RLock()
-	defer fake.addL7PolicyMutex.RUnlock()
-	fake.getL7PoliciesMutex.RLock()
-	defer fake.getL7PoliciesMutex.RUnlock()
-	fake.deleteL7PolicyMutex.RLock()
-	defer fake.deleteL7PolicyMutex.RUnlock()
 	fake.editL7PolicyMutex.RLock()
 	defer fake.editL7PolicyMutex.RUnlock()
-	fake.addL7RuleMutex.RLock()
-	defer fake.addL7RuleMutex.RUnlock()
-	fake.deleteL7RuleMutex.RLock()
-	defer fake.deleteL7RuleMutex.RUnlock()
+	fake.getADCMutex.RLock()
+	defer fake.getADCMutex.RUnlock()
+	fake.getADCsMutex.RLock()
+	defer fake.getADCsMutex.RUnlock()
+	fake.getL7HealthMonitorMutex.RLock()
+	defer fake.getL7HealthMonitorMutex.RUnlock()
+	fake.getL7PoliciesMutex.RLock()
+	defer fake.getL7PoliciesMutex.RUnlock()
+	fake.getL7PolicyMutex.RLock()
+	defer fake.getL7PolicyMutex.RUnlock()
+	fake.getL7SessionAffinityMutex.RLock()
+	defer fake.getL7SessionAffinityMutex.RUnlock()
+	fake.getLoadBalancerMutex.RLock()
+	defer fake.getLoadBalancerMutex.RUnlock()
+	fake.getLoadBalancerL7PoolMutex.RLock()
+	defer fake.getLoadBalancerL7PoolMutex.RUnlock()
+	fake.getLoadBalancerUUIDMutex.RLock()
+	defer fake.getLoadBalancerUUIDMutex.RUnlock()
+	fake.getLoadBalancersMutex.RLock()
+	defer fake.getLoadBalancersMutex.RUnlock()
+	fake.listL7MembersMutex.RLock()
+	defer fake.listL7MembersMutex.RUnlock()
 	fake.listL7RuleMutex.RLock()
 	defer fake.listL7RuleMutex.RUnlock()
+	fake.updateLBHealthMonitorsMutex.RLock()
+	defer fake.updateLBHealthMonitorsMutex.RUnlock()
+	fake.updateLoadBalancerL7PoolMutex.RLock()
+	defer fake.updateLoadBalancerL7PoolMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

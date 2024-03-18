@@ -281,15 +281,16 @@ func (fake *FakeIPSECManager) AddInternalSubnet(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.AddInternalSubnetStub
+	fakeReturns := fake.addInternalSubnetReturns
 	fake.recordInvocation("AddInternalSubnet", []interface{}{arg1, arg2})
 	fake.addInternalSubnetMutex.Unlock()
-	if fake.AddInternalSubnetStub != nil {
-		return fake.AddInternalSubnetStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.addInternalSubnetReturns
 	return fakeReturns.result1
 }
 
@@ -342,15 +343,16 @@ func (fake *FakeIPSECManager) AddRemoteSubnet(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.AddRemoteSubnetStub
+	fakeReturns := fake.addRemoteSubnetReturns
 	fake.recordInvocation("AddRemoteSubnet", []interface{}{arg1, arg2})
 	fake.addRemoteSubnetMutex.Unlock()
-	if fake.AddRemoteSubnetStub != nil {
-		return fake.AddRemoteSubnetStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.addRemoteSubnetReturns
 	return fakeReturns.result1
 }
 
@@ -403,15 +405,16 @@ func (fake *FakeIPSECManager) AddServiceSubnet(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.AddServiceSubnetStub
+	fakeReturns := fake.addServiceSubnetReturns
 	fake.recordInvocation("AddServiceSubnet", []interface{}{arg1, arg2})
 	fake.addServiceSubnetMutex.Unlock()
-	if fake.AddServiceSubnetStub != nil {
-		return fake.AddServiceSubnetStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.addServiceSubnetReturns
 	return fakeReturns.result1
 }
 
@@ -463,15 +466,16 @@ func (fake *FakeIPSECManager) ApplyConfiguration(arg1 int) error {
 	fake.applyConfigurationArgsForCall = append(fake.applyConfigurationArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.ApplyConfigurationStub
+	fakeReturns := fake.applyConfigurationReturns
 	fake.recordInvocation("ApplyConfiguration", []interface{}{arg1})
 	fake.applyConfigurationMutex.Unlock()
-	if fake.ApplyConfigurationStub != nil {
-		return fake.ApplyConfigurationStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.applyConfigurationReturns
 	return fakeReturns.result1
 }
 
@@ -525,15 +529,16 @@ func (fake *FakeIPSECManager) CancelTunnelContext(arg1 int, arg2 bool, arg3 stri
 		arg2 bool
 		arg3 string
 	}{arg1, arg2, arg3})
+	stub := fake.CancelTunnelContextStub
+	fakeReturns := fake.cancelTunnelContextReturns
 	fake.recordInvocation("CancelTunnelContext", []interface{}{arg1, arg2, arg3})
 	fake.cancelTunnelContextMutex.Unlock()
-	if fake.CancelTunnelContextStub != nil {
-		return fake.CancelTunnelContextStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.cancelTunnelContextReturns
 	return fakeReturns.result1
 }
 
@@ -587,15 +592,16 @@ func (fake *FakeIPSECManager) CreateRemoteSubnet(arg1 int, arg2 string, arg3 int
 		arg2 string
 		arg3 int
 	}{arg1, arg2, arg3})
+	stub := fake.CreateRemoteSubnetStub
+	fakeReturns := fake.createRemoteSubnetReturns
 	fake.recordInvocation("CreateRemoteSubnet", []interface{}{arg1, arg2, arg3})
 	fake.createRemoteSubnetMutex.Unlock()
-	if fake.CreateRemoteSubnetStub != nil {
-		return fake.CreateRemoteSubnetStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createRemoteSubnetReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -653,15 +659,16 @@ func (fake *FakeIPSECManager) CreateTranslation(arg1 int, arg2 string, arg3 stri
 		arg3 string
 		arg4 string
 	}{arg1, arg2, arg3, arg4})
+	stub := fake.CreateTranslationStub
+	fakeReturns := fake.createTranslationReturns
 	fake.recordInvocation("CreateTranslation", []interface{}{arg1, arg2, arg3, arg4})
 	fake.createTranslationMutex.Unlock()
-	if fake.CreateTranslationStub != nil {
-		return fake.CreateTranslationStub(arg1, arg2, arg3, arg4)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.createTranslationReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -717,15 +724,16 @@ func (fake *FakeIPSECManager) DeleteRemoteSubnet(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.DeleteRemoteSubnetStub
+	fakeReturns := fake.deleteRemoteSubnetReturns
 	fake.recordInvocation("DeleteRemoteSubnet", []interface{}{arg1, arg2})
 	fake.deleteRemoteSubnetMutex.Unlock()
-	if fake.DeleteRemoteSubnetStub != nil {
-		return fake.DeleteRemoteSubnetStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.deleteRemoteSubnetReturns
 	return fakeReturns.result1
 }
 
@@ -778,15 +786,16 @@ func (fake *FakeIPSECManager) GetTranslation(arg1 int, arg2 int) (datatypes.Netw
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.GetTranslationStub
+	fakeReturns := fake.getTranslationReturns
 	fake.recordInvocation("GetTranslation", []interface{}{arg1, arg2})
 	fake.getTranslationMutex.Unlock()
-	if fake.GetTranslationStub != nil {
-		return fake.GetTranslationStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getTranslationReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -841,15 +850,16 @@ func (fake *FakeIPSECManager) GetTranslations(arg1 int) ([]datatypes.Network_Tun
 	fake.getTranslationsArgsForCall = append(fake.getTranslationsArgsForCall, struct {
 		arg1 int
 	}{arg1})
+	stub := fake.GetTranslationsStub
+	fakeReturns := fake.getTranslationsReturns
 	fake.recordInvocation("GetTranslations", []interface{}{arg1})
 	fake.getTranslationsMutex.Unlock()
-	if fake.GetTranslationsStub != nil {
-		return fake.GetTranslationsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getTranslationsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -905,15 +915,16 @@ func (fake *FakeIPSECManager) GetTunnelContext(arg1 int, arg2 string) (datatypes
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetTunnelContextStub
+	fakeReturns := fake.getTunnelContextReturns
 	fake.recordInvocation("GetTunnelContext", []interface{}{arg1, arg2})
 	fake.getTunnelContextMutex.Unlock()
-	if fake.GetTunnelContextStub != nil {
-		return fake.GetTunnelContextStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getTunnelContextReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -969,15 +980,16 @@ func (fake *FakeIPSECManager) GetTunnelContexts(arg1 int, arg2 string) ([]dataty
 		arg1 int
 		arg2 string
 	}{arg1, arg2})
+	stub := fake.GetTunnelContextsStub
+	fakeReturns := fake.getTunnelContextsReturns
 	fake.recordInvocation("GetTunnelContexts", []interface{}{arg1, arg2})
 	fake.getTunnelContextsMutex.Unlock()
-	if fake.GetTunnelContextsStub != nil {
-		return fake.GetTunnelContextsStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getTunnelContextsReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1032,15 +1044,16 @@ func (fake *FakeIPSECManager) OrderTunnelContext(arg1 string) (datatypes.Contain
 	fake.orderTunnelContextArgsForCall = append(fake.orderTunnelContextArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.OrderTunnelContextStub
+	fakeReturns := fake.orderTunnelContextReturns
 	fake.recordInvocation("OrderTunnelContext", []interface{}{arg1})
 	fake.orderTunnelContextMutex.Unlock()
-	if fake.OrderTunnelContextStub != nil {
-		return fake.OrderTunnelContextStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.orderTunnelContextReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1096,15 +1109,16 @@ func (fake *FakeIPSECManager) RemoveInternalSubnet(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.RemoveInternalSubnetStub
+	fakeReturns := fake.removeInternalSubnetReturns
 	fake.recordInvocation("RemoveInternalSubnet", []interface{}{arg1, arg2})
 	fake.removeInternalSubnetMutex.Unlock()
-	if fake.RemoveInternalSubnetStub != nil {
-		return fake.RemoveInternalSubnetStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.removeInternalSubnetReturns
 	return fakeReturns.result1
 }
 
@@ -1157,15 +1171,16 @@ func (fake *FakeIPSECManager) RemoveRemoteSubnet(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.RemoveRemoteSubnetStub
+	fakeReturns := fake.removeRemoteSubnetReturns
 	fake.recordInvocation("RemoveRemoteSubnet", []interface{}{arg1, arg2})
 	fake.removeRemoteSubnetMutex.Unlock()
-	if fake.RemoveRemoteSubnetStub != nil {
-		return fake.RemoveRemoteSubnetStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.removeRemoteSubnetReturns
 	return fakeReturns.result1
 }
 
@@ -1218,15 +1233,16 @@ func (fake *FakeIPSECManager) RemoveServiceSubnet(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.RemoveServiceSubnetStub
+	fakeReturns := fake.removeServiceSubnetReturns
 	fake.recordInvocation("RemoveServiceSubnet", []interface{}{arg1, arg2})
 	fake.removeServiceSubnetMutex.Unlock()
-	if fake.RemoveServiceSubnetStub != nil {
-		return fake.RemoveServiceSubnetStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.removeServiceSubnetReturns
 	return fakeReturns.result1
 }
 
@@ -1279,15 +1295,16 @@ func (fake *FakeIPSECManager) RemoveTranslation(arg1 int, arg2 int) error {
 		arg1 int
 		arg2 int
 	}{arg1, arg2})
+	stub := fake.RemoveTranslationStub
+	fakeReturns := fake.removeTranslationReturns
 	fake.recordInvocation("RemoveTranslation", []interface{}{arg1, arg2})
 	fake.removeTranslationMutex.Unlock()
-	if fake.RemoveTranslationStub != nil {
-		return fake.RemoveTranslationStub(arg1, arg2)
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.removeTranslationReturns
 	return fakeReturns.result1
 }
 
@@ -1343,15 +1360,16 @@ func (fake *FakeIPSECManager) UpdateTranslation(arg1 int, arg2 int, arg3 string,
 		arg4 string
 		arg5 string
 	}{arg1, arg2, arg3, arg4, arg5})
+	stub := fake.UpdateTranslationStub
+	fakeReturns := fake.updateTranslationReturns
 	fake.recordInvocation("UpdateTranslation", []interface{}{arg1, arg2, arg3, arg4, arg5})
 	fake.updateTranslationMutex.Unlock()
-	if fake.UpdateTranslationStub != nil {
-		return fake.UpdateTranslationStub(arg1, arg2, arg3, arg4, arg5)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.updateTranslationReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -1418,15 +1436,16 @@ func (fake *FakeIPSECManager) UpdateTunnelContext(arg1 int, arg2 string, arg3 st
 		arg12 int
 		arg13 int
 	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13})
+	stub := fake.UpdateTunnelContextStub
+	fakeReturns := fake.updateTunnelContextReturns
 	fake.recordInvocation("UpdateTunnelContext", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13})
 	fake.updateTunnelContextMutex.Unlock()
-	if fake.UpdateTunnelContextStub != nil {
-		return fake.UpdateTunnelContextStub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13)
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.updateTunnelContextReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 

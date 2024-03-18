@@ -17,6 +17,7 @@ const (
 )
 
 // This provides helpers to manage IPSEC contexts, private and remote subnets, and NAT translations.
+//counterfeiter:generate -o ../testhelpers/ . IPSECManager
 type IPSECManager interface {
 	AddInternalSubnet(contextId, subnetId int) error
 	AddRemoteSubnet(contextId, subnetId int) error

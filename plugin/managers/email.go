@@ -9,6 +9,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 )
 
+//counterfeiter:generate -o ../testhelpers/ . EmailManager
 type EmailManager interface {
 	GetNetworkMessageDeliveryAccounts(mask string) ([]datatypes.Network_Message_Delivery_Email_Sendgrid, error)
 	GetAccountOverview(emailId int) (datatypes.Container_Network_Message_Delivery_Email_Sendgrid_Account, error)

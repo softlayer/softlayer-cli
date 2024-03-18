@@ -18,6 +18,7 @@ import (
 
 const mask = "mask[id, title, assignedUser[firstName, lastName], priority, createDate, lastEditDate, accountId, status, updateCount]"
 
+//counterfeiter:generate -o ../testhelpers/ . TicketManager
 type TicketManager interface {
 	CreateStandardTicket(ticketArgs *TicketArguments) (*int, error)
 	AttachDeviceToTicket(ticketId int, deviceId int, ishardware bool) error
