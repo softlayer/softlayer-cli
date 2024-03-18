@@ -124,8 +124,8 @@
     "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXEMPLE : \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
   {
-    "id": "${COMMAND_NAME} sl firewall detail IDENTIFIER [OPTIONS]\n\t\t\nEXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "${COMMAND_NAME} sl firewall detail IDENTIFICATEUR [OPTIONS]\n\nEXEMPLE : \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
+    "id": "EXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
+    "translation": "EXEMPLE : \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
