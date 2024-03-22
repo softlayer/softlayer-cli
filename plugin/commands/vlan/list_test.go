@@ -13,6 +13,7 @@ import (
 	"github.com/softlayer/softlayer-go/sl"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
+	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
 )
 
@@ -23,10 +24,11 @@ var _ = Describe("VLAN List", func() {
 		fakeSession        *session.Session
 		slCommand          *metadata.SoftlayerCommand
 		fakeNetworkManager *testhelpers.FakeNetworkManager
+
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{""})
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = vlan.NewListCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
@@ -239,6 +241,18 @@ var _ = Describe("VLAN List", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`]`))
+			})
+		})
+		Context("Issues844", func() {
+			BeforeEach(func() {
+				fakeSession = testhelpers.NewFakeSoftlayerSession([]string{"getNetworkVlans_844"})
+				cliCommand.NetworkManager = managers.NewNetworkManager(fakeSession)
+			})
+			It("Handle empty Datacenter Name for some routers", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13.fcr01.1362"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("3087"))
 			})
 		})
 	})
