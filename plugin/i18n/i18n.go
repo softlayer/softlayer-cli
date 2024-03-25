@@ -32,6 +32,18 @@ var SUPPORTED_LOCALES = []string{
 var resourcePath = filepath.Join("plugin", "i18n", "resources")
 var localizer = Init()
 
+
+// var matcher = InitMatcher()
+
+
+// func InitMatcher() language.Matcher {
+// 	var supported []language.Tag
+// 	for _, lang := range SUPPORTED_LOCALES {
+// 		supported = append(supported, language.MustParse(lang))
+// 	}
+// 	return language.NewMatcher(supported)
+// }
+
 func GetResourcePath() string {
 	return resourcePath
 }
@@ -49,7 +61,7 @@ func T(text string, subs ...interface{}) string {
 	config := &goi18n.LocalizeConfig{DefaultMessage: message}
 	l_string, err := localizer.Localize(config)
 	if err != nil {
-		fmt.Printf("ERROR i18n\n")
+		fmt.Printf("ERROR i18n\n%v\n", err.Error())
 		return err.Error()
 	}
 	return l_string
@@ -63,19 +75,23 @@ func Init() *goi18n.Localizer {
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 	bundle.MustLoadMessageFile("plugin/i18n/resources/en_US.json")
 	bundle.MustLoadMessageFile("plugin/i18n/resources/ja_JP.json")
-	loc := goi18n.NewLocalizer(bundle, language.English.String())
+	loc := goi18n.NewLocalizer(bundle, "ja_JP")
 	return loc
 }
 
-/*
-func initWithLocale(locale string) goi18n.TranslateFunc {
-	err := loadFromAsset(locale)
-	if err != nil {
-		locale = DEFAULT_LOCALE
+
+func InitWithLocale(locale string)  {
+	bundle := goi18n.NewBundle(language.English)
+	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
+	bundle.MustLoadMessageFile("plugin/i18n/resources/en_US.json")
+	if locale != "en_US" {
+		bundle.MustLoadMessageFile(fmt.Sprintf("plugin/i18n/resources/%s.json", locale))	
 	}
-	return goi18n.MustTfunc(locale)
+	loc := goi18n.NewLocalizer(bundle, locale)
+	localizer = loc
 }
 
+/*
 func loadFromAsset(locale string) (err error) {
 	assetName := locale + ".all.json"
 	assetKey := filepath.Join(resourcePath, assetName)
