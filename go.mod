@@ -12,7 +12,7 @@ require (
 	github.com/Xuanwo/go-locale v1.1.0
 	github.com/maxbrunsfeld/counterfeiter/v6 v6.8.1
 	github.com/miekg/dns v1.1.58
-	github.com/nicksnyder/go-i18n v1.10.3
+	github.com/nicksnyder/go-i18n/v2 v2.4.0
 	github.com/onsi/ginkgo/v2 v2.17.0
 	github.com/onsi/gomega v1.31.1
 	github.com/softlayer/softlayer-go v1.1.3
@@ -36,8 +36,6 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
-	github.com/nicksnyder/go-i18n/v2 v2.4.0 // indirect
-	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/softlayer/xmlrpc v0.0.0-20200409220501-5f089df7cb7e // indirect
