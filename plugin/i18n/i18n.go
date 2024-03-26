@@ -2,6 +2,7 @@ package i18n
 
 import (
 	"path/filepath"
+	"embed"
 	"strings"
 	"golang.org/x/text/language"
 	"encoding/json"
@@ -11,6 +12,9 @@ import (
 	goi18n "github.com/nicksnyder/go-i18n/v2/i18n"
 	// "github.ibm.com/SoftLayer/softlayer-cli/plugin/resources"
 )
+
+//go:embed resources/*.json
+var LocaleFS embed.FS
 
 const (
 	DEFAULT_LOCALE = "en_US"
@@ -73,8 +77,8 @@ func T(text string, subs ...interface{}) string {
 func Init() *goi18n.Localizer {
 	bundle := goi18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
-	bundle.MustLoadMessageFile("plugin/i18n/resources/en_US.json")
-	bundle.MustLoadMessageFile("plugin/i18n/resources/ja_JP.json")
+	bundle.LoadMessageFileFS(LocaleFS, "resources/en_US.json")
+	bundle.LoadMessageFileFS(LocaleFS, "resources/ja_JP.json")
 	loc := goi18n.NewLocalizer(bundle, "ja_JP")
 	return loc
 }
@@ -83,9 +87,9 @@ func Init() *goi18n.Localizer {
 func InitWithLocale(locale string)  {
 	bundle := goi18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
-	bundle.MustLoadMessageFile("plugin/i18n/resources/en_US.json")
+	bundle.LoadMessageFileFS(LocaleFS, "resources/en_US.json")
 	if locale != "en_US" {
-		bundle.MustLoadMessageFile(fmt.Sprintf("plugin/i18n/resources/%s.json", locale))	
+		bundle.LoadMessageFileFS(LocaleFS, fmt.Sprintf("resources/%s.json", locale))
 	}
 	loc := goi18n.NewLocalizer(bundle, locale)
 	localizer = loc
