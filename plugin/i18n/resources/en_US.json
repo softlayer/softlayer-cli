@@ -124,10 +124,6 @@
     "translation": "${COMMAND_NAME} sl event-log get [OPTIONS]\n\nEXAMPLE: \n   ${COMMAND_NAME} sl event-log get \n   ${COMMAND_NAME} sl event-log get --limit 5 --obj-id 123456 --obj-event Create --metadata\n   ${COMMAND_NAME} sl event-log get --date-min 2021-03-31 --date-max 2021-04-31"
   },
   {
-    "id": "EXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
-    "translation": "EXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
-  },
-  {
     "id": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456.",
     "translation": "${COMMAND_NAME} sl globalip assign IDENTIFIER TARGET [OPTIONS]\n\nEXAMPLE:\n    ${COMMAND_NAME} sl globalip assign 12345678 9.111.123.456\n\tThis command assigns IP address with ID 12345678 to a target device whose IP address is 9.111.123.456."
   },
@@ -2526,6 +2522,10 @@
   {
     "id": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13",
     "translation": "EXAMPLE: \n    ${COMMAND_NAME} sl order place-quote CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest --name \"foobar\" --send-email\n    This command places a quote for a VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in datacenter dal13"
+  },
+  {
+    "id": "EXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789",
+    "translation": "EXAMPLE: \n${COMMAND_NAME} sl firewall detail vs:12345\n${COMMAND_NAME} sl firewall detail server:234567\n${COMMAND_NAME} sl firewall detail vlan:345678\n${COMMAND_NAME} sl firewall detail multiVlan:456789"
   },
   {
     "id": "Each user can only have a single API key.",

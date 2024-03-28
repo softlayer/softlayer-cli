@@ -16,16 +16,16 @@ from rich.markup import escape
 
 
 i18n_files = [
-'en_US.all.json',
-'de_DE.all.json',
-'es_ES.all.json',
-'fr_FR.all.json',
-'it_IT.all.json',
-'ja_JP.all.json',
-'ko_KR.all.json',
-'pt_BR.all.json',
-'zh_Hans.all.json',
-'zh_Hant.all.json',
+'en_US.json',
+'de_DE.json',
+'es_ES.json',
+'fr_FR.json',
+'it_IT.json',
+'ja_JP.json',
+'ko_KR.json',
+'pt_BR.json',
+'zh_Hans.json',
+'zh_Hant.json',
 ]
 
 def isWindows() -> bool:
@@ -159,7 +159,7 @@ def runI18n4go(path: str) -> None:
             del_json[line[0]] = {"id": line[0], "translation": line[0]}
         # We only want to ADD things to en_US so that our translators have an easier time figuring out what they need
         # to add to the other languages.
-        en_us = os.path.join(plugin_dir, 'i18n', 'resources', 'en_US.all.json')
+        en_us = os.path.join(plugin_dir, 'i18n', 'resources', 'en_US.json')
         add_i18n(en_us, add_json)
         for f in i18n_files:
             i18n_path = os.path.join(plugin_dir, 'i18n', 'resources', f)
