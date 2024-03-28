@@ -59,14 +59,14 @@ var _ = Describe("I18NTests", func() {
 
 				It("Testing "+language, func() {
 					coreConfig.SetLocale(language)
-					i18n.InitWithLocale(language)
+					i18n.SetLocalizer(i18n.InitWithLocale(language))
 					Expect(i18n.T("Recurring Price")).To(Equal(xlationMap[language]))
 				})
 				It("Testing "+language+" everything", func() {
 					// If these fails as untranslated, try running ./bin/generate-i18n-resources.sh
 					regex, _ := regexp.Compile("{{.([[:alnum:]])*}}")
 					coreConfig.SetLocale(language)
-					i18n.InitWithLocale(language)
+					i18n.SetLocalizer(i18n.InitWithLocale(language))
 					file, err := ioutil.ReadFile("resources/" + language + ".json")
 					Expect(err).NotTo(HaveOccurred())
 					xlations := []I18nXlation{}
@@ -91,7 +91,7 @@ var _ = Describe("I18NTests", func() {
 				envLang := strings.Replace(language, "_", "-", 1)
 				It("LANGUAGE="+envLang, func() {
 					os.Setenv("LANGUAGE", envLang)
-					i18n.InitWithLocale(language)
+					i18n.SetLocalizer(i18n.InitWithLocale(language))
 					locale := i18n.DetectLocal()
 					Expect(locale).To(Equal(language))
 					Expect(i18n.T("Recurring Price")).To(Equal(xlationMap[language]))
