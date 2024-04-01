@@ -56,7 +56,7 @@ func (cmd *NotificationsAddCommand) Run(args []string) error {
 		UserCustomerNotification, err := cmd.HardwareManager.CreateUserCustomerNotification(hardwareId, userId)
 		if err != nil {
 			userIdMap := map[string]interface{}{"userID": userId}
-			cmd.UI.Failed(T("Failed to create User Customer Notification with user ID: {{.userID}}."+"\n"+err.Error(), userIdMap))
+			cmd.UI.Failed(T("Failed to create User Customer Notification with user ID: {{.userID}}."), userIdMap)
 		} else {
 			printTable = true
 			table.Add(

@@ -16,16 +16,16 @@ from rich.markup import escape
 
 
 i18n_files = [
-'en_US.all.json',
-'de_DE.all.json',
-'es_ES.all.json',
-'fr_FR.all.json',
-'it_IT.all.json',
-'ja_JP.all.json',
-'ko_KR.all.json',
-'pt_BR.all.json',
-'zh_Hans.all.json',
-'zh_Hant.all.json',
+'en_US.json',
+'de_DE.json',
+'es_ES.json',
+'fr_FR.json',
+'it_IT.json',
+'ja_JP.json',
+'ko_KR.json',
+'pt_BR.json',
+'zh_Hans.json',
+'zh_Hant.json',
 ]
 
 def isWindows() -> bool:

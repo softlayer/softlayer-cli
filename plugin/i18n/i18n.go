@@ -5,7 +5,7 @@ import (
 	"embed"
 	"strings"
 	"golang.org/x/text/language"
-	"encoding/json"
+	// "encoding/json"
 	"fmt"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/Xuanwo/go-locale"
@@ -13,7 +13,7 @@ import (
 	// "github.ibm.com/SoftLayer/softlayer-cli/plugin/resources"
 )
 
-//go:embed resources/*.json
+//go:embed v2Resources/active.*.json
 var LocaleFS embed.FS
 
 const (
@@ -33,7 +33,7 @@ var SUPPORTED_LOCALES = []string{
 	"zh_Hant",
 }
 
-var resourcePath = filepath.Join("plugin", "i18n", "resources")
+var resourcePath = filepath.Join("plugin", "i18n", "v2Resources")
 var localizer = Init()
 
 
@@ -95,10 +95,10 @@ func Init() *goi18n.Localizer {
 func InitWithLocale(locale string) *goi18n.Localizer {
 	
 	bundle := goi18n.NewBundle(language.English)
-	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
-	bundle.LoadMessageFileFS(LocaleFS, "resources/en_US.json")
+	// bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
+	bundle.LoadMessageFileFS(LocaleFS, "v2Resources/active.en_US.json")
 	if locale != "en_US" {
-		bundle.LoadMessageFileFS(LocaleFS, fmt.Sprintf("resources/%s.json", locale))
+		bundle.LoadMessageFileFS(LocaleFS, fmt.Sprintf("v2Resources/active.%s.json", locale))
 	}
 	loc := goi18n.NewLocalizer(bundle, locale)
 	return loc

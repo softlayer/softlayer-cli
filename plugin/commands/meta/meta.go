@@ -30,7 +30,7 @@ func NewMetaCommand(sl *metadata.SoftlayerCommand) *MetaCommand {
 	cobraCmd := &cobra.Command{
 		Use:       "metadata " + T("ARGUMENT"),
 		Short:     T("Find details about the machine making these API calls."),
-		Long:      T("ARGUMENT Choices: " + strings.Join(validOptions, ", ")),
+		Long:      T("ARGUMENT Choices: ") + strings.Join(validOptions, ", "),
 		Args:      cobra.MatchAll(metadata.OneArgs, cobra.OnlyValidArgs),
 		ValidArgs: validOptions,
 		RunE: func(cmd *cobra.Command, args []string) error {
