@@ -11,7 +11,6 @@ addons:
 install:
   # Required to install detect-secrets
   - echo -e "machine github.ibm.com\n  login $CI_USER_TOKEN" > ~/.netrc
-  #- sudo chmod o+rwx /usr/lib/python3/dist-packages/
   - sudo python3 -m pip install -U pip
   - sudo pip3 install pyOpenSSL --upgrade
   - sudo pip3 install --upgrade "git+https://github.com/ibm/detect-secrets.git@master#egg=detect-secrets"
@@ -21,8 +20,8 @@ before_script:
   - bash bin/generate-i18n-resources.sh
   - go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")
   - go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")
-  - python3 bin/detect_secrets.py
-  
+  - detect-secrets scan --update .secrets.baseline
+  - detect-secrets audit .secrets.baseline --report --fail-on-unaudited --omit-instructions  
   - gosec -exclude-dir=fixture -exclude-dir=plugin/resources -quiet ./...
 script:
   - go build
