@@ -337,20 +337,9 @@ cobraCmd.AddCommand(NewActionNameCommand(sl).Command)
 
 ## i18n stuff
 
-anything with `T("some string here")` uses the internationalization system. Definitions are located in `plugin\i18n\en_US.all.json` for english.
-The string passed into the `T()` function serves as the ID when looking these up. So the ID Will need to be present in all i18n files, it will also need a translation string. 
+anything with `T("some string here")` uses the internationalization system. Specifically we use the [goi18n/v2](https://github.com/nicksnyder/go-i18n) library for most work here.
 
-[i18n4go](https://github.com/maximilien/i18n4go) is used to make sure all strings being transalted have translations. To test run this command.
-
-For i18n4go, we specifically use v0.2.4 for now, so we have a prebuilt binary in `./bin/i18n4go`. If that binary needs to be rebuilt, use the SoftLayer fork at https://github.com/softlayer/i18n4go (which is set to the version we need, along with some updates since that version had a bug with --help).
-
-This command will build the Mac (arm64) version. Replace GOOS and GOARCH with the OS/Architecture you need to build for.
-```
-~/go/src/github.ibm.com/softlayer/softlayer-cli/i18n4go (master)
-$> GOOS=darwin GOARCH=arm64 go build -o i18n4go_mac -ldflags "-s -w" i18n4go/i18n4go.go
-$> GOOS=linux GOARCH=amd64   go build -o out/i18n4go ./i18n4go/i18n4go.go
-```
-[go-bindata](https://github.com/jteeuwen/go-bindata) takes the json files, and turns them into a go binary.
+Currently we use a custom version of [goi18n](https://github.com/allmightyspiff/go-i18n/tree/Tfunctions) which can parse `T()` functions like we use (an artiface of migrating from v1 to v2). 
 
 
 ### Basic Patterns and Tips
@@ -368,6 +357,8 @@ GOOD:
 subs := map[string]interface{}{"CMDTYPE": "block"}
 T("This is some output for a {{.CMDTYPE}} command", subs)
 ```
+
+*NOTICE* goi18n/v2 has some newer features that can make this a bit easier to deal with, but I'm not sure they are currently supported, so procede with caution in you make use of them.
 
 ### Useful Scripts
 
