@@ -131,6 +131,11 @@ func (h *FakeTransportHandler) ClearErrors() {
 	h.ErrorMap = make(map[string]sl.Error)
 }
 
+func (h *FakeTransportHandler) SetFileNames(files []string) {
+	h.FileNames = files
+	// fmt.Printf("SetFileNames: %v\n", h.FileNames)
+}
+
 func NewFakeSoftlayerSession(fileNames []string) *session.Session {
 
 	sess := &session.Session{}
@@ -174,24 +179,25 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 	}
 	// fmt.Printf("WD: %v, Scope: %v", wd, scope)
 	baseFixture := filepath.Join(wd, scope, "testfixtures", service+"/"+method+".json")
+	// fmt.Printf("BASE FIXTURE: %v\n", baseFixture)
 
 	// If we specified a file name, check there first
 	if len(fileNames) > 0 {
 		//find the file name that matches the service and method name
 		for _, filename := range fileNames {
-			//fmt.Println("check file:" + filename)
+			// fmt.Println("check file:" + filename)
 			// If the file exists as is, just load and return it.
 			// actual path should be of the format testfixtures/SoftLayer_Service/method-string.json
 			workingPath = service + "/" + filename + ".json"
 			// Make sure the filepath starts with the service/method combo
 			if !strings.HasPrefix(workingPath, service + "/" + method) {
-				fmt.Printf("OK %v doesn't start with %v\n", workingPath, service + "/" + method)
+				// fmt.Printf("OK %v doesn't start with %v\n", workingPath, service + "/" + method)
 				continue
 			}
-			fmt.Printf("OK %v DOES INFACT start with %v\n", workingPath, service + "/" + method)
+			// fmt.Printf("OK %v DOES INFACT start with %v\n", workingPath, service + "/" + method)
 			if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", workingPath)); err == nil {
 				fixture = filepath.Join(wd, scope, "testfixtures", workingPath)
-				fmt.Printf("LOADED %v OK!\n", fixture)
+				// fmt.Printf("LOADED %v OK!\n", fixture)
 				return ioutil.ReadFile(fixture) // #nosec
 			}
 		}

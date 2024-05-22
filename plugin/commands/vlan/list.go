@@ -106,13 +106,17 @@ func (cmd *ListCommand) Run(args []string) error {
 		} else {
 			premium = T("No")
 		}
+		datacenterName := ""
+		if vlan.PrimaryRouter != nil && vlan.PrimaryRouter.Datacenter != nil && vlan.PrimaryRouter.Datacenter.Name != nil {
+			datacenterName = utils.FormatStringPointer(vlan.PrimaryRouter.Datacenter.Name)
+		}
 		table.Add(
 			utils.FormatIntPointer(vlan.Id),
 			utils.FormatIntPointer(vlan.VlanNumber),
 			utils.FormatStringPointer(vlan.FullyQualifiedName),
 			utils.FormatStringPointer(vlan.Name),
 			cases.Title(language.Und).String(utils.FormatStringPointer(vlan.NetworkSpace)),
-			utils.FormatStringPointer(vlan.PrimaryRouter.Datacenter.Name),
+			datacenterName,
 			getPodWithClosedAnnouncement(vlan, pods),
 			getFirewallGateway(vlan),
 			utils.FormatUIntPointer(vlan.HardwareCount),
