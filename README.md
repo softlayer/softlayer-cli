@@ -339,8 +339,45 @@ cobraCmd.AddCommand(NewActionNameCommand(sl).Command)
 
 anything with `T("some string here")` uses the internationalization system. Specifically we use the [goi18n/v2](https://github.com/nicksnyder/go-i18n) library for most work here.
 
-Currently we use a custom version of [goi18n](https://github.com/allmightyspiff/go-i18n/tree/Tfunctions) which can parse `T()` functions like we use (an artiface of migrating from v1 to v2). 
+Currently we use a custom version of [goi18n](https://github.com/allmightyspiff/go-i18n/tree/Tfunctions) which can parse `T()` functions like we use (an artiface of migrating from v1 to v2). The custom binary (`bin/goi18n2*`) has some code that forces the .json file it generates to be like the following, because otherwise the translations don't get loaded properly.
 
+```json
+{
+    "words you want translated" : {
+        "other": "words you want translated"
+    }
+}
+```
+
+The changes are this for future reference:
+
+```
+ ~/go/src/github.com/allmightyspiff/go-i18n (Tfunctions)
+$> git diff goi18n/marshal.go
+diff --git a/goi18n/marshal.go b/goi18n/marshal.go
+index a6cc762..a256f2b 100644
+--- a/goi18n/marshal.go
++++ b/goi18n/marshal.go
+@@ -28,7 +28,9 @@ func marshalValue(messageTemplates map[string]*i18n.MessageTemplate, sourceLangu
+        for id, template := range messageTemplates {
+                if other := template.PluralTemplates[plural.Other]; sourceLanguage && len(template.PluralTemplates) == 1 &&
+                        other != nil && template.Description == "" && template.LeftDelim == "" && template.RightDelim == "" {
+-                       v[id] = other.Src
++                       m := map[string]string{}
++                       m["other"] = other.Src
++                       v[id] = m
+                } else {
+                        m := map[string]string{}
+                        if template.Description != "" {
+```
+
+To generate the en-US.json file, just run
+
+```bash
+python bin/buildAndDeploy.py i18n
+```
+
+The `plugin/i18n/v2Resources/active.*.json` files are all compiled into the binary automatically.
 
 ### Basic Patterns and Tips
 
@@ -491,3 +528,17 @@ drwxr-xr-x  4 chris  staff   128B Nov 30 13:01 output
 
 ## TODO
 Automate build with https://github.ibm.com/coligo/cli/tree/main/script
+
+
+## Detect Secrets
+Make sure to add the pre-commit hook by running  `pre-commit install`
+
+To run a scan do:
+```bash
+detect-secrets scan --update .secrets.baseline
+```
+
+If we need to update the excluded files (these are saved in the .secrets.baseline file) do this:
+```bash
+detect-secrets -v scan --update .secrets.baseline  --exclude-files "plugin/i18n/v1Resources/|plugin/i18n/v2Resources/|(.*test.*)|(vendor)|(go.sum)|bin/"
+```
