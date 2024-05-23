@@ -665,6 +665,9 @@
   "ARGUMENT": {
     "other": "ARGUMENT"
   },
+  "ARGUMENT Choices: ": {
+    "other": "ARGUMENT Choices: "
+  },
   "Aborted.": {
     "other": "Aborted."
   },
@@ -1629,7 +1632,7 @@
     "other": "Datacenter shortname[required]"
   },
   "Datacenter to remove": {
-    "other": "To remove Datacenter"
+    "other": "Datacenter to remove"
   },
   "Datacenters": {
     "other": "Datacenters"
@@ -2281,6 +2284,12 @@
   },
   "Failed to create Software Credential.": {
     "other": "Failed to create Software Credential."
+  },
+  "Failed to create User Customer Notification with user ID: {{.userID}}": {
+    "other": "Failed to create User Customer Notification with user ID: {{.userID}}"
+  },
+  "Failed to create User Customer Notification with user ID: {{.userID}}.": {
+    "other": "Failed to create User Customer Notification with user ID: {{.userID}}."
   },
   "Failed to create a CDN.": {
     "other": "Failed to create a CDN."
@@ -3218,6 +3227,9 @@
   "Failed to update l7 pool: {{.Error}}.\n": {
     "other": "Failed to update l7 pool: {{.Error}}.\n"
   },
+  "Failed to update notifications: ": {
+    "other": "Failed to update notifications: "
+  },
   "Failed to update permissions": {
     "other": "Failed to update permissions"
   },
@@ -3269,6 +3281,9 @@
   "Failed to update user vpn password.": {
     "other": "Failed to update user vpn password."
   },
+  "Failed to update user vpn subnets manual config": {
+    "other": "Failed to update user vpn subnets manual config"
+  },
   "Failed to update user {{.UserID}}.": {
     "other": "Failed to update user {{.UserID}}."
   },
@@ -3310,9 +3325,6 @@
   },
   "Failed to write virtual server template file to: {{.Template}}.": {
     "other": "Failed to write virtual server template file to: {{.Template}}."
-  },
-  "Failed to {{.action}} user vpn subnets manual config": {
-    "other": "Failed to {{.action}} user vpn subnets manual config"
   },
   "Failover a {{.storageType}} volume to the given replica volume": {
     "other": "Failover a {{.storageType}} volume to the given replica volume"
@@ -4709,6 +4721,12 @@
   "Notification names should be enclosed in quotation marks.\nEXAMPLE:\n\tslcli user edit-notifications --enable 'Order Approved'\n\tslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'": {
     "other": "Notification names should be enclosed in quotation marks.\nEXAMPLE:\n\tslcli user edit-notifications --enable 'Order Approved'\n\tslcli user edit-notifications --enable 'Order Approved' --enable 'Reload Complete'"
   },
+  "Notifications updated successfully: ": {
+    "other": "Notifications updated successfully: "
+  },
+  "Notifications updated unsuccessfully: ": {
+    "other": "Notifications updated unsuccessfully: "
+  },
   "Notify": {
     "other": "Notify"
   },
@@ -4819,6 +4837,12 @@
   },
   "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].": {
     "other": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private]."
+  },
+  "Option cache just accept: ": {
+    "other": "Option cache just accept: "
+  },
+  "Option performance-configuration just accept: ": {
+    "other": "Option performance-configuration just accept: "
   },
   "Option respect-headers just accept '0' or '1'": {
     "other": "Option respect-headers just accept '0' or '1'"
@@ -5627,6 +5651,9 @@
   "Return ALL invoices. There may be a lot of these.": {
     "other": "Return ALL invoices. There may be a lot of these."
   },
+  "Review if already set or if the name is correct.": {
+    "other": "Review if already set or if the name is correct."
+  },
   "Revoke authorization for hosts that are accessing a specific volume": {
     "other": "Revoke authorization for hosts that are accessing a specific volume"
   },
@@ -6140,8 +6167,8 @@
   "Successfully updated user VPN password.": {
     "other": "Successfully updated user VPN password."
   },
-  "Successfully {{.action}} user vpn subnets manual config": {
-    "other": "Successfully {{.action}} user vpn subnets manual config"
+  "Successfully updated user vpn subnets manual config": {
+    "other": "Successfully updated user vpn subnets manual config"
   },
   "Summary and acknowledgement of upcoming and ongoing maintenance events.": {
     "other": "Summary and acknowledgement of upcoming and ongoing maintenance events."
@@ -6326,6 +6353,9 @@
   "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.": {
     "other": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname."
   },
+  "The endpoint that the script will be downloaded.": {
+    "other": "The endpoint that the script will be downloaded."
+  },
   "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified": {
     "other": "The ethertype (IPv4 or IPv6) to enforce, default is IPv4 if not specified"
   },
@@ -6388,6 +6418,9 @@
   },
   "The name of the attachment shown in the ticket": {
     "other": "The name of the attachment shown in the ticket"
+  },
+  "The name of the hook.": {
+    "other": "The name of the hook."
   },
   "The name of the image {{.ID}} is updated.": {
     "other": "The name of the image {{.ID}} is updated."

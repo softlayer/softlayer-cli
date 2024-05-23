@@ -5,7 +5,7 @@ import (
 	"embed"
 	"strings"
 	"golang.org/x/text/language"
-	// "encoding/json"
+	"encoding/json"
 	"fmt"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/Xuanwo/go-locale"
@@ -64,8 +64,9 @@ func SetResourcePath(path string) {
 func T(text string, subs ...interface{}) string {
 
 	// fmt.Printf("SUBS: %v\n", subs)
-	message := &goi18n.Message{ID: text, Other: text}
-	config := &goi18n.LocalizeConfig{DefaultMessage: message}
+	config := &goi18n.LocalizeConfig{
+		DefaultMessage: &goi18n.Message{ID: text, Other: text, One: text},
+	}
 	// Need to use `subs ...interface{}` so that we can have 0 or 1 subs.
 	// Should never have 2
 	if subs != nil && len(subs) == 1 {
@@ -74,7 +75,7 @@ func T(text string, subs ...interface{}) string {
 
 	l_string, err := localizer.Localize(config)
 	if err != nil {
-		fmt.Printf("ERROR i18n\n%v\n", err.Error())
+		fmt.Printf("ERROR i18n: %v\n", err.Error())
 		// return err.Error()
 	}
 	return l_string
@@ -95,8 +96,8 @@ func Init() *goi18n.Localizer {
 func InitWithLocale(locale string) *goi18n.Localizer {
 	
 	bundle := goi18n.NewBundle(language.English)
-	// bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
-	bundle.LoadMessageFileFS(LocaleFS, "v2Resources/active.en_US.json")
+	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
+	bundle.LoadMessageFileFS(LocaleFS, "v2Resources/active.en-US.json")
 	if locale != "en_US" {
 		bundle.LoadMessageFileFS(LocaleFS, fmt.Sprintf("v2Resources/active.%s.json", locale))
 	}
