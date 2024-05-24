@@ -1,7 +1,6 @@
 package i18n
 
 import (
-	"path/filepath"
 	"embed"
 	"strings"
 	"golang.org/x/text/language"
@@ -10,7 +9,6 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/Xuanwo/go-locale"
 	goi18n "github.com/nicksnyder/go-i18n/v2/i18n"
-	// "github.ibm.com/SoftLayer/softlayer-cli/plugin/resources"
 )
 
 //go:embed v2Resources/active.*.json
@@ -33,37 +31,14 @@ var SUPPORTED_LOCALES = []string{
 	"zh_Hant",
 }
 
-var resourcePath = filepath.Join("plugin", "i18n", "v2Resources")
 var localizer = Init()
 
-
-// var matcher = InitMatcher()
-
-
-// func InitMatcher() language.Matcher {
-// 	var supported []language.Tag
-// 	for _, lang := range SUPPORTED_LOCALES {
-// 		supported = append(supported, language.MustParse(lang))
-// 	}
-// 	return language.NewMatcher(supported)
-// }
-
-func GetResourcePath() string {
-	return resourcePath
-}
-
-func SetResourcePath(path string) {
-	resourcePath = path
-}
-
-// var T goi18n.TranslateFunc = Init(core_config.NewCoreConfig(func(error) {}))
 
 // Translates a string, with any substitutions needed
 // text: string to be translated
 // subs: A single map[string]interface{}
 func T(text string, subs ...interface{}) string {
 
-	// fmt.Printf("SUBS: %v\n", subs)
 	config := &goi18n.LocalizeConfig{
 		DefaultMessage: &goi18n.Message{ID: text, Other: text, One: text},
 	}
@@ -75,13 +50,11 @@ func T(text string, subs ...interface{}) string {
 
 	l_string, err := localizer.Localize(config)
 	if err != nil {
-		fmt.Printf("ERROR i18n: %v\n", err.Error())
+		// fmt.Printf("ERROR i18n: %v\n", err.Error())
 		// return err.Error()
 	}
 	return l_string
 }
-
-
 
 // Sets the localizer, reads local from config/system
 func Init() *goi18n.Localizer {
@@ -117,7 +90,6 @@ func SetLocalizer(new_localizer *goi18n.Localizer) {
 	localizer = new_localizer
 }
 
-
 // Tries to determine the system locale, when local isn't set, default to en_US
 func DetectLocal() string {
 	tag, err := locale.Detect()
@@ -128,7 +100,6 @@ func DetectLocal() string {
 	locale := strings.Replace(tag.String(), "-", "_", 1)
 	return locale
 }
-
 
 // Tries to match the system locale with a supported locale, otherwise sets a DEFAULT_LOCALE
 func supportedLocale(configLocal string) string {
