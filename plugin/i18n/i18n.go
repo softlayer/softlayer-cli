@@ -97,9 +97,16 @@ func InitWithLocale(locale string) *goi18n.Localizer {
 	
 	bundle := goi18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
-	bundle.LoadMessageFileFS(LocaleFS, "v2Resources/active.en-US.json")
+	err := bundle.LoadMessageFileFS(LocaleFS, "v2Resources/active.en-US.json")
+	if err != nil {
+		fmt.Printf("Unable to load language from v2Resources/active.en-US.json\n", lang_file)
+	}	
 	if locale != "en_US" {
-		bundle.LoadMessageFileFS(LocaleFS, fmt.Sprintf("v2Resources/active.%s.json", locale))
+		lang_file := fmt.Sprintf("v2Resources/active.%s.json", locale)
+		err = bundle.LoadMessageFileFS(LocaleFS, lang_file)
+		if err != nil {
+			fmt.Printf("Unable to load language from %s\n", lang_file)
+		}
 	}
 	loc := goi18n.NewLocalizer(bundle, locale)
 	return loc
