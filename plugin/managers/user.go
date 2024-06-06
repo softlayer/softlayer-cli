@@ -32,6 +32,7 @@ type UserManager interface {
 	GetUser(userId int, mask string) (datatypes.User_Customer, error)
 	GetCurrentUser() (datatypes.User_Customer, error)
 	GetAllPermission() ([]datatypes.User_Customer_CustomerPermission_Permission, error)
+	GetAllPermissionDepartments() ([]datatypes.User_Permission_Department, error)
 	AddPermission(userId int, permissions []datatypes.User_Customer_CustomerPermission_Permission) (bool, error)
 	RemovePermission(userId int, permissions []datatypes.User_Customer_CustomerPermission_Permission) (bool, error)
 	PermissionFromUser(userId, fromUserId int) error
@@ -124,6 +125,18 @@ func (u userManager) GetAllPermission() ([]datatypes.User_Customer_CustomerPermi
 	sort.Sort(utils.PermissionsBykeyName(parsedPermission))
 	return parsedPermission, nil
 }
+
+func (u userManager) GetAllPermissionDepartments() ([]datatypes.User_Permission_Department, error) {
+	permissionService := services.GetUserPermissionDepartmentService(u.Session)
+	mask := "mask[permissions[id,description,name,keyName]]"
+	permissions, err := permissionService.Mask(mask).GetAllObjects()
+	if err != nil {
+		return nil, err
+	}
+
+	return permissions, nil
+}
+
 
 func (u userManager) AddPermission(userId int, permissions []datatypes.User_Customer_CustomerPermission_Permission) (bool, error) {
 	return u.UserCustomerService.Id(userId).AddBulkPortalPermission(permissions)

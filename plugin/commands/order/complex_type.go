@@ -21,7 +21,6 @@ var TYPEMAP = map[string]interface{}{
 	"SoftLayer_Container_Product_Order_Network_Interconnect_Upgrade":                     &datatypes.Container_Product_Order_Network_Interconnect_Upgrade{},
 	"SoftLayer_Container_Product_Order_Network_LoadBalancer":                             &datatypes.Container_Product_Order_Network_LoadBalancer{},
 	"SoftLayer_Container_Product_Order_Network_LoadBalancer_AsAService":                  &datatypes.Container_Product_Order_Network_LoadBalancer_AsAService{},
-	"SoftLayer_Container_Product_Order_Network_LoadBalancer_Global":                      &datatypes.Container_Product_Order_Network_LoadBalancer_Global{},
 	"SoftLayer_Container_Product_Order_Network_Message_Delivery":                         &datatypes.Container_Product_Order_Network_Message_Delivery{},
 	"SoftLayer_Container_Product_Order_Network_PerformanceStorage":                       &datatypes.Container_Product_Order_Network_PerformanceStorage{},
 	"SoftLayer_Container_Product_Order_Network_PerformanceStorage_Iscsi":                 &datatypes.Container_Product_Order_Network_PerformanceStorage_Iscsi{},
