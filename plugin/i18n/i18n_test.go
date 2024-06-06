@@ -1,7 +1,7 @@
 package i18n_test
 
 import (
-	"encoding/json"
+
 	"fmt"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	. "github.com/onsi/ginkgo/v2"
@@ -10,7 +10,7 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"io/ioutil"
 	"os"
-	"regexp"
+
 	"strings"
 	"testing"
 )
@@ -59,23 +59,8 @@ var _ = Describe("I18NTests", func() {
 
 				It("Testing "+language, func() {
 					coreConfig.SetLocale(language)
-					translator := i18n.Init(coreConfig)
-					Expect(translator("Recurring Price")).To(Equal(xlationMap[language]))
-				})
-				It("Testing "+language+" everything", func() {
-					// If these fails as untranslated, try running ./bin/generate-i18n-resources.sh
-					regex, _ := regexp.Compile("{{.([[:alnum:]])*}}")
-					coreConfig.SetLocale(language)
-					translator := i18n.Init(coreConfig)
-					file, err := ioutil.ReadFile("resources/" + language + ".all.json")
-					Expect(err).NotTo(HaveOccurred())
-					xlations := []I18nXlation{}
-					jsonErr := json.Unmarshal([]byte(file), &xlations)
-					Expect(jsonErr).NotTo(HaveOccurred())
-					for i := 0; i < len(xlations); i++ {
-						subs := regex.ReplaceAllString(xlations[i].Translation, "<no value>")
-						Expect(translator(xlations[i].Id)).To(Equal(subs))
-					}
+					i18n.SetLocalizer(i18n.InitWithLocale(language))
+					Expect(i18n.T("Recurring Price")).To(Equal(xlationMap[language]))
 				})
 			}
 		})
@@ -91,10 +76,10 @@ var _ = Describe("I18NTests", func() {
 				envLang := strings.Replace(language, "_", "-", 1)
 				It("LANGUAGE="+envLang, func() {
 					os.Setenv("LANGUAGE", envLang)
-					translator := i18n.Init(coreConfig)
+					i18n.SetLocalizer(i18n.InitWithLocale(language))
 					locale := i18n.DetectLocal()
 					Expect(locale).To(Equal(language))
-					Expect(translator("Recurring Price")).To(Equal(xlationMap[language]))
+					Expect(i18n.T("Recurring Price")).To(Equal(xlationMap[language]))
 				})
 			}
 		})

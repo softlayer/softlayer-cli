@@ -56,7 +56,7 @@ func (cmd *NotificationsAddCommand) Run(args []string) error {
 		UserCustomerNotification, err := cmd.VirtualServerManager.CreateUserCustomerNotification(virtualServerId, userId)
 		if err != nil {
 			userIdMap := map[string]interface{}{"userID": userId}
-			cmd.UI.Failed(T("Failed to create User Customer Notification with user ID: {{.userID}}."+"\n"+err.Error(), userIdMap))
+			cmd.UI.Failed(T("Failed to create User Customer Notification with user ID: {{.userID}}", userIdMap), err.Error(), 2)
 		} else {
 			printTable = true
 			table.Add(

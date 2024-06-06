@@ -89,7 +89,7 @@ var _ = Describe("User Edit Notifications", func() {
 			It("Enable notification that does not exist", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--enable='Order Email'")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Notifications updated unsuccessfully: 'Order Email'. Review if already set or if the name is correct."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Notifications updated unsuccessfully: 'Order Email'"))
 			})
 
 			It("Enable notification that does not exist in json output format", func() {
@@ -107,7 +107,7 @@ var _ = Describe("User Edit Notifications", func() {
 			It("Disable notification that does not exist", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--disable='Order Email'")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Notifications updated unsuccessfully: 'Order Email'. Review if already set or if the name is correct."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Notifications updated unsuccessfully: 'Order Email'"))
 			})
 		})
 	})

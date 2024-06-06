@@ -331,7 +331,7 @@ func (n networkManager) CancelGlobalIP(globalIPID int) error {
 	return err
 }
 
-// Cancel the specifeid subnet
+// Cancel the specifeid subnet		
 // subnetId: ID of subnet to be cancelled
 func (n networkManager) CancelSubnet(subnetId int) error {
 	subnet, err := n.GetSubnet(subnetId, "id, billingItem.id")
@@ -339,8 +339,7 @@ func (n networkManager) CancelSubnet(subnetId int) error {
 		return err
 	}
 	if subnet.BillingItem == nil || subnet.BillingItem.Id == nil {
-		message := T("{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will "+
-			"automatically be removed from your account when it is empty",
+		message := T("{{.TYPE}} {{.ID}} is automatically assigned and free of charge. It will automatically be removed from your account when it is empty",
 			map[string]interface{}{"TYPE": "Subnet", "ID": subnetId})
 		return errors.New(message)
 	}

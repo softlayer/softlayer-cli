@@ -1,14 +1,18 @@
 package i18n
 
 import (
-	"path/filepath"
+	"embed"
 	"strings"
-
+	"golang.org/x/text/language"
+	"encoding/json"
+	"fmt"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/configuration/core_config"
 	"github.com/Xuanwo/go-locale"
-	goi18n "github.com/nicksnyder/go-i18n/i18n"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/resources"
+	goi18n "github.com/nicksnyder/go-i18n/v2/i18n"
 )
+
+//go:embed v2Resources/active.*.json
+var LocaleFS embed.FS
 
 const (
 	DEFAULT_LOCALE = "en_US"
@@ -27,41 +31,63 @@ var SUPPORTED_LOCALES = []string{
 	"zh_Hant",
 }
 
-var resourcePath = filepath.Join("plugin", "i18n", "resources")
+var localizer = Init()
 
-func GetResourcePath() string {
-	return resourcePath
+
+// Translates a string, with any substitutions needed
+// text: string to be translated
+// subs: A single map[string]interface{}
+func T(text string, subs ...interface{}) string {
+
+	config := &goi18n.LocalizeConfig{
+		DefaultMessage: &goi18n.Message{ID: text, Other: text, One: text},
+	}
+	// Need to use `subs ...interface{}` so that we can have 0 or 1 subs.
+	// Should never have 2
+	if subs != nil && len(subs) == 1 {
+		config.TemplateData = subs[0]
+	}
+
+	l_string, err := localizer.Localize(config)
+	if err != nil {
+		// fmt.Printf("ERROR i18n: %v\n", err.Error())
+		// return err.Error()
+	}
+	return l_string
 }
 
-func SetResourcePath(path string) {
-	resourcePath = path
-}
-
-var T goi18n.TranslateFunc = Init(core_config.NewCoreConfig(func(error) {}))
-
-func Init(coreConfig core_config.Repository) goi18n.TranslateFunc {
+// Sets the localizer, reads local from config/system
+func Init() *goi18n.Localizer {
+	
+	coreConfig := core_config.NewCoreConfig(func(error) {})
 	userLocale := coreConfig.Locale()
 	locale := supportedLocale(userLocale)
-	return initWithLocale(locale)
+	return InitWithLocale(locale)
 }
 
-func initWithLocale(locale string) goi18n.TranslateFunc {
-	err := loadFromAsset(locale)
+// Sets the localizer with the proper language
+func InitWithLocale(locale string) *goi18n.Localizer {
+	
+	bundle := goi18n.NewBundle(language.English)
+	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
+	_, err := bundle.LoadMessageFileFS(LocaleFS, "v2Resources/active.en-US.json")
 	if err != nil {
-		locale = DEFAULT_LOCALE
+		fmt.Printf("Unable to load language from v2Resources/active.en-US.json\n")
+	}	
+	if locale != "en_US" {
+		lang_file := fmt.Sprintf("v2Resources/active.%s.json", locale)
+		_, err = bundle.LoadMessageFileFS(LocaleFS, lang_file)
+		if err != nil {
+			fmt.Printf("Unable to load language from %s\n", lang_file)
+		}
 	}
-	return goi18n.MustTfunc(locale)
+	loc := goi18n.NewLocalizer(bundle, locale)
+	return loc
 }
 
-func loadFromAsset(locale string) (err error) {
-	assetName := locale + ".all.json"
-	assetKey := filepath.Join(resourcePath, assetName)
-	bytes, err := resources.Asset(assetKey)
-	if err != nil {
-		return
-	}
-	err = goi18n.ParseTranslationFileBytes(assetName, bytes)
-	return
+// Used for testing and changing the language output dynamically
+func SetLocalizer(new_localizer *goi18n.Localizer) {
+	localizer = new_localizer
 }
 
 // Tries to determine the system locale, when local isn't set, default to en_US

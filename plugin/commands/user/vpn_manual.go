@@ -55,25 +55,22 @@ func (cmd *VpnManualCommand) Run(args []string) error {
 	}
 
 	vpnManualConfig := false
-	action := "disable"
 	if cmd.Enable {
 		vpnManualConfig = true
-		action = "enable"
 	}
 
 	userTemplate := datatypes.User_Customer{
 		VpnManualConfig: sl.Bool(vpnManualConfig),
 	}
 
-	mapValue := map[string]interface{}{"action": T(action)}
 
 	success, err := cmd.UserManager.EditUser(userTemplate, userID)
 	if err != nil {
-		return errors.NewInvalidUsageError(T("Failed to {{.action}} user vpn subnets manual config", mapValue))
+		return errors.NewInvalidUsageError(T("Failed to update user vpn subnets manual config"))
 	}
 	if success {
 		cmd.UI.Ok()
-		cmd.UI.Print(T("Successfully {{.action}} user vpn subnets manual config", mapValue))
+		cmd.UI.Print(T("Successfully updated user vpn subnets manual config"))
 	}
 	return nil
 }

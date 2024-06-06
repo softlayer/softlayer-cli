@@ -75,7 +75,7 @@ func (cmd *EditCommand) Run(args []string) error {
 	if cmd.Cache != "" {
 		allowCache := []string{"include-all", "ignore-all", "include-specified", "ignore-specified"}
 		if !utils.WordInList(allowCache, cmd.Cache) {
-			return slErr.NewInvalidUsageError(T("Option cache just accept: " + utils.ArrayStringToString(allowCache)))
+			return slErr.NewInvalidUsageError(T("Option cache just accept: ") + utils.ArrayStringToString(allowCache))
 		}
 		if cmd.Cache == "include-specified" || cmd.Cache == "ignore-specified" {
 			if cmd.CacheDescription == "" {
@@ -93,7 +93,7 @@ func (cmd *EditCommand) Run(args []string) error {
 	if cmd.PerformanceConfiguration != "" {
 		allowPerformanceConfiguration := []string{"General web delivery", "Large file optimization", "Video on demand optimization"}
 		if !utils.WordInList(allowPerformanceConfiguration, cmd.PerformanceConfiguration) {
-			return slErr.NewInvalidUsageError(T("Option performance-configuration just accept: " + utils.ArrayStringToString(allowPerformanceConfiguration)))
+			return slErr.NewInvalidUsageError(T("Option performance-configuration just accept: ") + utils.ArrayStringToString(allowPerformanceConfiguration))
 		}
 	}
 

@@ -337,21 +337,47 @@ cobraCmd.AddCommand(NewActionNameCommand(sl).Command)
 
 ## i18n stuff
 
-anything with `T("some string here")` uses the internationalization system. Definitions are located in `plugin\i18n\en_US.all.json` for english.
-The string passed into the `T()` function serves as the ID when looking these up. So the ID Will need to be present in all i18n files, it will also need a translation string. 
+anything with `T("some string here")` uses the internationalization system. Specifically we use the [goi18n/v2](https://github.com/nicksnyder/go-i18n) library for most work here.
 
-[i18n4go](https://github.com/maximilien/i18n4go) is used to make sure all strings being transalted have translations. To test run this command.
+Currently we use a custom version of [goi18n](https://github.com/allmightyspiff/go-i18n/tree/Tfunctions) which can parse `T()` functions like we use (an artiface of migrating from v1 to v2). The custom binary (`bin/goi18n2*`) has some code that forces the .json file it generates to be like the following, because otherwise the translations don't get loaded properly.
 
-For i18n4go, we specifically use v0.2.4 for now, so we have a prebuilt binary in `./bin/i18n4go`. If that binary needs to be rebuilt, use the SoftLayer fork at https://github.com/softlayer/i18n4go (which is set to the version we need, along with some updates since that version had a bug with --help).
-
-This command will build the Mac (arm64) version. Replace GOOS and GOARCH with the OS/Architecture you need to build for.
+```json
+{
+    "words you want translated" : {
+        "other": "words you want translated"
+    }
+}
 ```
-~/go/src/github.ibm.com/softlayer/softlayer-cli/i18n4go (master)
-$> GOOS=darwin GOARCH=arm64 go build -o i18n4go_mac -ldflags "-s -w" i18n4go/i18n4go.go
-$> GOOS=linux GOARCH=amd64   go build -o out/i18n4go ./i18n4go/i18n4go.go
-```
-[go-bindata](https://github.com/jteeuwen/go-bindata) takes the json files, and turns them into a go binary.
 
+The changes are this for future reference:
+
+```
+ ~/go/src/github.com/allmightyspiff/go-i18n (Tfunctions)
+$> git diff goi18n/marshal.go
+diff --git a/goi18n/marshal.go b/goi18n/marshal.go
+index a6cc762..a256f2b 100644
+--- a/goi18n/marshal.go
++++ b/goi18n/marshal.go
+@@ -28,7 +28,9 @@ func marshalValue(messageTemplates map[string]*i18n.MessageTemplate, sourceLangu
+        for id, template := range messageTemplates {
+                if other := template.PluralTemplates[plural.Other]; sourceLanguage && len(template.PluralTemplates) == 1 &&
+                        other != nil && template.Description == "" && template.LeftDelim == "" && template.RightDelim == "" {
+-                       v[id] = other.Src
++                       m := map[string]string{}
++                       m["other"] = other.Src
++                       v[id] = m
+                } else {
+                        m := map[string]string{}
+                        if template.Description != "" {
+```
+
+To generate the en-US.json file, just run
+
+```bash
+python bin/buildAndDeploy.py i18n
+```
+
+The `plugin/i18n/v2Resources/active.*.json` files are all compiled into the binary automatically.
 
 ### Basic Patterns and Tips
 
@@ -368,6 +394,8 @@ GOOD:
 subs := map[string]interface{}{"CMDTYPE": "block"}
 T("This is some output for a {{.CMDTYPE}} command", subs)
 ```
+
+*NOTICE* goi18n/v2 has some newer features that can make this a bit easier to deal with, but I'm not sure they are currently supported, so procede with caution in you make use of them.
 
 ### Useful Scripts
 
@@ -500,3 +528,17 @@ drwxr-xr-x  4 chris  staff   128B Nov 30 13:01 output
 
 ## TODO
 Automate build with https://github.ibm.com/coligo/cli/tree/main/script
+
+
+## Detect Secrets
+Make sure to add the pre-commit hook by running  `pre-commit install`
+
+To run a scan do:
+```bash
+detect-secrets scan --update .secrets.baseline
+```
+
+If we need to update the excluded files (these are saved in the .secrets.baseline file) do this:
+```bash
+detect-secrets -v scan --update .secrets.baseline  --exclude-files "plugin/i18n/v1Resources/|plugin/i18n/v2Resources/|(.*test.*)|(vendor)|(go.sum)|bin/"
+```

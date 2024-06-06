@@ -67,7 +67,7 @@ func (cmd *EditNotificationsCommand) Run(args []string) error {
 
 	allNotifications, err := cmd.UserManager.GetAllNotifications("mask[id,name]")
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to update notifications: "+printNotifications(notificationsInput)+"\n"), err.Error(), 2)
+		return slErr.NewAPIError(T("Failed to update notifications: ") + printNotifications(notificationsInput), err.Error(), 2)
 	}
 
 	if len(cmd.Disable) != 0 {
@@ -91,11 +91,12 @@ func (cmd *EditNotificationsCommand) Run(args []string) error {
 
 	if len(succesNotifications) > 0 {
 		cmd.UI.Ok()
-		cmd.UI.Print(T("Notifications updated successfully: " + printNotifications(succesNotifications)))
+		cmd.UI.Print(T("Notifications updated successfully: ") + printNotifications(succesNotifications))
 	}
 
 	if len(failedNotifications) > 0 {
-		cmd.UI.Print(T("Notifications updated unsuccessfully: " + printNotifications(failedNotifications) + ". Review if already set or if the name is correct."))
+		cmd.UI.Print(T("Notifications updated unsuccessfully: ") + printNotifications(failedNotifications))
+		cmd.UI.Print(T("Review if already set or if the name is correct."))
 	}
 
 	return nil

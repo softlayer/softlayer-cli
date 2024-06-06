@@ -16,16 +16,16 @@ from rich.markup import escape
 
 
 i18n_files = [
-'en_US.all.json',
-'de_DE.all.json',
-'es_ES.all.json',
-'fr_FR.all.json',
-'it_IT.all.json',
-'ja_JP.all.json',
-'ko_KR.all.json',
-'pt_BR.all.json',
-'zh_Hans.all.json',
-'zh_Hant.all.json',
+'en_US.json',
+'de_DE.json',
+'es_ES.json',
+'fr_FR.json',
+'it_IT.json',
+'ja_JP.json',
+'ko_KR.json',
+'pt_BR.json',
+'zh_Hans.json',
+'zh_Hant.json',
 ]
 
 def isWindows() -> bool:
@@ -108,99 +108,23 @@ def runI18n4go(path: str) -> None:
     :param str path: Base path of the repo
     """
     plugin_dir = os.path.join(path, 'plugin')
-    binary = os.path.join(path, 'bin', 'i18n4go')
-    # TODO: Support linux too I guess.
+    binary = os.path.join(path, 'bin', 'goi18n2')
     if platform.system() == 'Windows':
         binary = f"{binary}.exe"
     elif platform.system() == "Darwin":
         binary = f"{binary}_mac"
-    cmd = [binary, "-c=checkup", "-q=i18n", "-v", f"-d={plugin_dir}"]
-    os.chdir(os.path.join(path, 'plugin'))
+    cmd = [binary, "extract", "-outdir=plugin/i18n/v2Resources/", "-format=json",
+           "-sourceLanguage=en_US", plugin_dir]
+    # os.chdir(os.path.join(path, 'plugin'))
     print("[turquoise2]Running: "  + " ".join(cmd))
     result = subprocess.run(cmd, capture_output=True, text=True)
-    os.chdir(path)
-    # We have some mismatching lines, lets fix that.
-    missmatch = ""
-    # These strings need to be added
-    # The ? at the end of `(.+?)` makes the search NON-greedy, which is required for this regex to work
-    # https://docs.python.org/3/library/re.html#regular-expression-syntax
-    add_re = re.compile(r"^\"(.+?)\" exists in the code, but not in en_US$", flags=re.M | re.DOTALL)
-    add_json = {}
-    # These strings need to be removed
-    del_re = re.compile(r"^\"(.+?)\" exists in en_US, but not in the code$", flags=re.M | re.DOTALL)
-    del_json = {}
-    # These strings need to remain missing until they are translated.
-    unt_re = re.compile(r"^\"(.+?)\" exists in en_US, but not in ([a-zA-Z_]{5,7})$", flags=re.M | re.DOTALL)
-    # These also need to be removed
-    mxm_re = re.compile(r"^\"(.+?)\" exists in ([a-zA-Z_]{5,7}), but not in en_US$", flags=re.M | re.DOTALL)
-    # This should be the last line
-    fin_re = re.compile(r"Could not checkup, err: Strings don't match$")
+    # os.chdir(path)
 
     if result.stderr:
         print(f"[red]Error: {result.stderr}")
-
-    if result.returncode > 0:
-        print("\t[yellow] ====== ADD ======== ")
-        add_results = add_re.findall(result.stdout)
-        for line in add_results:
-            print(f"\t[yellow]|{escape(line)}|")
-            # We use the whole line as the key to make search easier.
-            add_json[line] = {"id": line, "translation": line}
-        del_results = del_re.findall(result.stdout)
-        print("\t[red] ====== REMOVE ========")
-        for line in del_results:
-            print(f"\t[red]|{escape(line)}|")
-            del_json[line]= {"id": line, "translation": line}
-        
-        print("\t[blue] ====== MISMATCH (REMOVE PART 2) ========")
-        mxm_results = mxm_re.findall(result.stdout)
-        for line in mxm_results:
-            print(f"\t[blue]|{escape(line[0])}| is missing from {line[1]}")
-            del_json[line[0]] = {"id": line[0], "translation": line[0]}
-        # We only want to ADD things to en_US so that our translators have an easier time figuring out what they need
-        # to add to the other languages.
-        en_us = os.path.join(plugin_dir, 'i18n', 'resources', 'en_US.all.json')
-        add_i18n(en_us, add_json)
-        for f in i18n_files:
-            i18n_path = os.path.join(plugin_dir, 'i18n', 'resources', f)
-            del_i18n(i18n_path, del_json)
-
     else:
-        print(f"\t[green]No Changes Needed!")
+        print(f"\t[green]Generated en-US translation file")
 
-def add_i18n(file_name: str, updates: dict) -> None:
-    """Adds the new translations
-
-    :param str file_name: file_name we are going to add translations to
-    :param dict new_i18n: A dictionary, the key of each entry is the 'id' of the line to be added
-    """
-    # The original data
-    print(f"Adding to {file_name}...")
-    source_i18n = get_source_data(file_name)
-
-    # This ensures we don't accidently update a translation file if there is already a translation for this key
-    for key in updates.keys():
-        if key not in source_i18n:
-            source_i18n[key] = updates[key]
-
-    write_source_data(file_name, source_i18n)
-
-def del_i18n(file_name: str, updates: dict) -> None:
-    """Removes unneeded translations
-
-    :param str file_name: file_name we are going to remove translations froms
-    :param dict new_i18n: A dictionary, the key of each entry is the 'id' of the line to be added
-    """
-    # The original data
-    print(f"Removing from {file_name}...")
-    source_i18n = get_source_data(file_name)
-
-    # Remove any matches we find
-    for key in updates.keys():
-        if key in source_i18n:
-            source_i18n.pop(key, None)
-
-    write_source_data(file_name, source_i18n)
 
 def get_source_data(file_name: str) -> dict:
     """Reads from the i18n files and returns a formatted dict"""
@@ -451,7 +375,7 @@ def test(ctx):
 def i18n(ctx):
     """Checks and builds the i18n files"""
     runI18n4go(ctx.obj.getdir())
-    genBinData()
+    # genBinData()
 
 if __name__ == '__main__':
     cli()
