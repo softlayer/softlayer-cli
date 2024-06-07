@@ -1,0 +1,33 @@
+{
+	"id": 123,
+	"permissions": [
+		{
+			"createDate": null,
+			"departmentId": 1,
+			"description": "Permission to access account billing system type determination endpoint",
+			"id": 5088,
+			"key": null,
+			"keyName": "ACCOUNT_BILLING_SYSTEM",
+			"modifyDate": null,
+			"name": "Account Billing System"
+		},
+		{
+			"createDate": null,
+			"departmentId": 2,
+			"description": "Add new servers to the account.",
+			"id": 1267,
+			"key": "XX_1",
+			"keyName": "SERVER_ADD",
+			"modifyDate": null,
+			"name": "Add Server"
+		}
+	],
+	"roles": [
+		{
+			"id": 2,
+			"Name" : "role name",
+			"Description": "description of the role"
+		}
+	],
+	"isMasterUserFlag": true
+}

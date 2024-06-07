@@ -2,7 +2,6 @@ package user_test
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
@@ -374,7 +373,6 @@ var _ = Describe("Detail", func() {
 
 		Context("user detail with correct id and logins", func() {
 			It("return a user with logins", func() {
-				fmt.Println("**")
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--logins")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name                value"))
@@ -401,7 +399,6 @@ var _ = Describe("Detail", func() {
 
 		Context("user detail with correct id and events", func() {
 			It("return a user with events", func() {
-				fmt.Println("**")
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--events")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("name                value"))

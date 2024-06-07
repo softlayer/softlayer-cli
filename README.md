@@ -218,9 +218,15 @@ By default, every API call made to the SoftLayer API will load in the approprait
 To force errors:
 
 ```go
-fakeHandler := testhelpers.FakeTransportHandler{}
-fakeHandler.AddApiError("SoftLayer_Tag", "getAttachedTagsForCurrentUser", 500, "BAD")
-fakeSLSession := &session.Session{TransportHandler: fakeHandler,}
+// In the Top level BeforeEach
+fakeSession = testhelpers.NewFakeSoftlayerSession(nil)
+fakeHandler = testhelpers.GetSessionHandler(fakeSession)
+
+// Then in a BeforeEach for the specific test...
+BeforeEach(func() {
+    fakeHandler.AddApiError("SoftLayer_User_Customer", "getObject",
+                            500, "Internal Server Error")
+})
 ```
 
 To force a non-default JSON file to be loaded
