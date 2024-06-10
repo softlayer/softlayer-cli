@@ -1715,6 +1715,9 @@
   "Deny sharing of an image template with another account.": {
     "other": "Deny sharing of an image template with another account."
   },
+  "Department": {
+    "other": "Department"
+  },
   "Description": {
     "other": "Description"
   },
@@ -6013,6 +6016,9 @@
   },
   "Software not found": {
     "other": "Software not found"
+  },
+  "Some permissions here may also be managed by the IBM IAM service.\nSee {{.HelpUrl}} for more details.": {
+    "other": "Some permissions here may also be managed by the IBM IAM service.\nSee {{.HelpUrl}} for more details."
   },
   "Sortable": {
     "other": "Sortable"

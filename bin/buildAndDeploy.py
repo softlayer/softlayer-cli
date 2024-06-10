@@ -62,6 +62,17 @@ def runTests() -> None:
         if re.match(r"fixtrues|vendor", mod) is None:
             clean_mods.append(mod)
 
+    ## GO GENERATE
+    go_generate = ['go', 'generate', './...']
+    # Not using the 'real' command here because this looks neater.
+
+    print(f'[turquoise2]Running: go generate ./...')
+    try:
+        subprocess.run(go_generate, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"[red]>>> Go Generate failed <<<")
+        sys.exit(e.returncode)
+
     ## GO VET
     go_vet = ['go', 'vet'] +  clean_mods
     # Not using the 'real' command here because this looks neater.
@@ -73,16 +84,7 @@ def runTests() -> None:
         print(f"[red]>>> Go Vet failed <<<")
         sys.exit(e.returncode)
 
-    ## GO GENERATE
-    go_generate = ['go', 'generate', './...']
-    # Not using the 'real' command here because this looks neater.
 
-    print(f'[turquoise2]Running: go generate ./...')
-    try:
-        subprocess.run(go_generate, check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"[red]>>> Go Generate failed <<<")
-        sys.exit(e.returncode)
 
     ## GO TEST
     go_test = ['go', 'test'] +  clean_mods

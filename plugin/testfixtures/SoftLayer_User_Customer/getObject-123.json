@@ -1,0 +1,43 @@
+{
+	"id": 123,
+	"permissions": [
+		{
+			"createDate": null,
+			"departmentId": 1,
+			"description": "Permission to access account billing system type determination endpoint",
+			"id": 5088,
+			"key": null,
+			"keyName": "ACCOUNT_BILLING_SYSTEM",
+			"modifyDate": null,
+			"name": "Account Billing System"
+		},
+		{
+			"createDate": null,
+			"departmentId": 3,
+			"description": "Add new support tickets.",
+			"id": 3,
+			"key": "T_7",
+			"keyName": "TICKET_ADD",
+			"modifyDate": null,
+			"name": "Add Tickets"
+		},
+		{
+			"createDate": null,
+			"departmentId": 4,
+			"description": "Create, edit and delete SAML authentication records.",
+			"id": 3664,
+			"key": "SM_1",
+			"keyName": "SAML_AUTHENTICATION_MANAGE",
+			"modifyDate": null,
+			"name": "Manage SAML Authentication"
+		}
+	],
+	"roles": [
+		{
+			"id": 2,
+			"Name" : "role name",
+			"Description": "description of the role"
+		}
+	],
+	"isMasterUserFlag": false
+}

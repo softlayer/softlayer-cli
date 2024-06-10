@@ -199,6 +199,18 @@ type FakeUserManager struct {
 		result1 []datatypes.User_Customer_CustomerPermission_Permission
 		result2 error
 	}
+	GetAllPermissionDepartmentsStub        func() ([]datatypes.User_Permission_Department, error)
+	getAllPermissionDepartmentsMutex       sync.RWMutex
+	getAllPermissionDepartmentsArgsForCall []struct {
+	}
+	getAllPermissionDepartmentsReturns struct {
+		result1 []datatypes.User_Permission_Department
+		result2 error
+	}
+	getAllPermissionDepartmentsReturnsOnCall map[int]struct {
+		result1 []datatypes.User_Permission_Department
+		result2 error
+	}
 	GetApiAuthenticationKeysStub        func(int) ([]datatypes.User_Customer_ApiAuthentication, error)
 	getApiAuthenticationKeysMutex       sync.RWMutex
 	getApiAuthenticationKeysArgsForCall []struct {
@@ -1387,6 +1399,62 @@ func (fake *FakeUserManager) GetAllPermissionReturnsOnCall(i int, result1 []data
 	}
 	fake.getAllPermissionReturnsOnCall[i] = struct {
 		result1 []datatypes.User_Customer_CustomerPermission_Permission
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetAllPermissionDepartments() ([]datatypes.User_Permission_Department, error) {
+	fake.getAllPermissionDepartmentsMutex.Lock()
+	ret, specificReturn := fake.getAllPermissionDepartmentsReturnsOnCall[len(fake.getAllPermissionDepartmentsArgsForCall)]
+	fake.getAllPermissionDepartmentsArgsForCall = append(fake.getAllPermissionDepartmentsArgsForCall, struct {
+	}{})
+	stub := fake.GetAllPermissionDepartmentsStub
+	fakeReturns := fake.getAllPermissionDepartmentsReturns
+	fake.recordInvocation("GetAllPermissionDepartments", []interface{}{})
+	fake.getAllPermissionDepartmentsMutex.Unlock()
+	if stub != nil {
+		return stub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeUserManager) GetAllPermissionDepartmentsCallCount() int {
+	fake.getAllPermissionDepartmentsMutex.RLock()
+	defer fake.getAllPermissionDepartmentsMutex.RUnlock()
+	return len(fake.getAllPermissionDepartmentsArgsForCall)
+}
+
+func (fake *FakeUserManager) GetAllPermissionDepartmentsCalls(stub func() ([]datatypes.User_Permission_Department, error)) {
+	fake.getAllPermissionDepartmentsMutex.Lock()
+	defer fake.getAllPermissionDepartmentsMutex.Unlock()
+	fake.GetAllPermissionDepartmentsStub = stub
+}
+
+func (fake *FakeUserManager) GetAllPermissionDepartmentsReturns(result1 []datatypes.User_Permission_Department, result2 error) {
+	fake.getAllPermissionDepartmentsMutex.Lock()
+	defer fake.getAllPermissionDepartmentsMutex.Unlock()
+	fake.GetAllPermissionDepartmentsStub = nil
+	fake.getAllPermissionDepartmentsReturns = struct {
+		result1 []datatypes.User_Permission_Department
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeUserManager) GetAllPermissionDepartmentsReturnsOnCall(i int, result1 []datatypes.User_Permission_Department, result2 error) {
+	fake.getAllPermissionDepartmentsMutex.Lock()
+	defer fake.getAllPermissionDepartmentsMutex.Unlock()
+	fake.GetAllPermissionDepartmentsStub = nil
+	if fake.getAllPermissionDepartmentsReturnsOnCall == nil {
+		fake.getAllPermissionDepartmentsReturnsOnCall = make(map[int]struct {
+			result1 []datatypes.User_Permission_Department
+			result2 error
+		})
+	}
+	fake.getAllPermissionDepartmentsReturnsOnCall[i] = struct {
+		result1 []datatypes.User_Permission_Department
 		result2 error
 	}{result1, result2}
 }
@@ -2772,6 +2840,8 @@ func (fake *FakeUserManager) Invocations() map[string][][]interface{} {
 	defer fake.getAllNotificationsMutex.RUnlock()
 	fake.getAllPermissionMutex.RLock()
 	defer fake.getAllPermissionMutex.RUnlock()
+	fake.getAllPermissionDepartmentsMutex.RLock()
+	defer fake.getAllPermissionDepartmentsMutex.RUnlock()
 	fake.getApiAuthenticationKeysMutex.RLock()
 	defer fake.getApiAuthenticationKeysMutex.RUnlock()
 	fake.getCurrentUserMutex.RLock()
