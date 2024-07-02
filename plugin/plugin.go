@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"regexp"
 	"strings"
 
 	trace "github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/trace"
@@ -76,6 +77,7 @@ type SoftlayerPlugin struct {
 }
 
 func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
+
 	trace.Logger = trace.NewLogger(context.Trace())
 	terminal.UserAskedForColors = context.ColorEnabled()
 	terminal.InitColorSupport()
@@ -93,17 +95,49 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 	cobraCommand.SetArgs(args)
 	cobraErr := cobraCommand.Execute()
 	if cobraErr != nil {
+		cobraErrorString := fmt.Sprintf("%v", cobraErr)
 		// Since we surpress the help message on errors, lets show the help message if the error is 'unknown flag'
-		helpTextTriggers := []string{"unknown flag", T("Incorrect Usage: "), T("Invalid input for")}
+		helpTextTriggers := []string{
+			"unknown flag",
+			"unknown command",
+			"unknown shorthand flag",
+			T("Incorrect Usage: "),
+			T("Invalid input for")}
 		for _, trigger := range helpTextTriggers {
-			if strings.Contains(fmt.Sprintf("%v", cobraErr), trigger) {
+			if strings.Contains(cobraErrorString, trigger) {
 				realCommand, _, _ := cobraCommand.Find(args)
 				_ = realCommand.Help()
 			}
 		}
+		sl.ui.Failed(terminal.FailureColor(TranslateError(cobraErrorString)))
 		os.Exit(1)
 	}
 
+}
+
+// This function helps to translate errors coming from Cobra, the common ones in any case.
+func TranslateError(errorMessage string) string {
+	if strings.HasPrefix(errorMessage, "unknown command") {
+		r, _ := regexp.Compile(`unknown command "(\w+)"`)
+		matches := r.FindStringSubmatch(errorMessage)
+		fmt.Println(matches)
+		subs := map[string]interface{}{"CMD": matches[1]}
+		return T("Unknown Command '{{.CMD}}'",subs)
+	} else if strings.HasPrefix(errorMessage, "unknown flag") {
+		r, _ := regexp.Compile(`unknown flag: (\S+)`)
+		matches := r.FindStringSubmatch(errorMessage)
+		fmt.Println(matches)
+		subs := map[string]interface{}{"CMD": matches[1]}
+		return T("Unknown Flag '{{.CMD}}'", subs)
+	} else if strings.HasPrefix(errorMessage, "unknown shorthand flag") {
+		r, _ := regexp.Compile(`unknown shorthand flag: '(\S+)'`)
+		matches := r.FindStringSubmatch(errorMessage)
+		fmt.Println(matches)
+		subs := map[string]interface{}{"CMD": matches[1]}
+		return T("Unknown Flag '{{.CMD}}'", subs)
+	} else {
+		return T(errorMessage)
+	}
 }
 
 func Namespaces() []plugin.Namespace {
@@ -218,11 +252,12 @@ func GetTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	slCommand := metadata.NewSoftlayerCommand(ui, session)
 	helpFlag := false
 	cobraCmd := &cobra.Command{
-		Use:          "sl",
-		Short:        T("Manage Classic infrastructure services"),
-		Long:         T("Manage Classic infrastructure services"),
-		RunE:         nil,
-		SilenceUsage: true, // Surpresses help text on errors
+		Use:           "sl",
+		Short:         T("Manage Classic infrastructure services"),
+		Long:          T("Manage Classic infrastructure services"),
+		RunE:          nil,
+		SilenceUsage:  true, // Surpresses help text on errors
+		SilenceErrors: true,
 	}
 
 	versionCommand := &cobra.Command{
