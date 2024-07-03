@@ -23,7 +23,7 @@ func TestI18N(t *testing.T) {
 func prepareConfigForCLI(cliConfigContent string) core_config.Repository {
 	ioutil.WriteFile("config.json", []byte(cliConfigContent), 0644)
 	ioutil.WriteFile("cf_config.json", []byte(""), 0644)
-	return core_config.NewCoreConfigFromPath("cf_config.json", "config.json", func(err error) {
+	return core_config.NewCoreConfigFromPath("config.json", func(err error) {
 		fmt.Printf("prepareConfigForCLI() Error: %v", err)
 	})
 }
