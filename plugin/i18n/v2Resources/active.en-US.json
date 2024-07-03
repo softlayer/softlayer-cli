@@ -7019,6 +7019,12 @@
   "Unique id": {
     "other": "Unique id"
   },
+  "Unknown Command '{{.CMD}}'": {
+    "other": "Unknown Command '{{.CMD}}'"
+  },
+  "Unknown Flag '{{.CMD}}'": {
+    "other": "Unknown Flag '{{.CMD}}'"
+  },
   "Update BIOS firmware": {
     "other": "Update BIOS firmware"
   },
