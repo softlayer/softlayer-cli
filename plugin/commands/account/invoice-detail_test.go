@@ -13,18 +13,24 @@ import (
 
 var _ = Describe("Account list InvoiceDetail", func() {
 	var (
-		fakeUI      *terminal.FakeUI
-		cliCommand  *account.InvoiceDetailCommand
-		fakeSession *session.Session
-		slCommand   *metadata.SoftlayerCommand
+		fakeUI      	*terminal.FakeUI
+		cliCommand  	*account.InvoiceDetailCommand
+		fakeSession 	*session.Session
+		slCommand  		*metadata.SoftlayerCommand
+		fakeHandler     *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeSession = testhelpers.NewFakeSoftlayerSession(nil)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSession)
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = account.NewInvoiceDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 	})
+    AfterEach(func() {
+        fakeHandler.ClearApiCallLogs()
+        fakeHandler.ClearErrors()
+    })
 
 	Describe("Account invoice detail", func() {
 		Context("Account invoice detail, Invalid Usage", func() {
@@ -73,10 +79,21 @@ var _ = Describe("Account list InvoiceDetail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Single": "10.23",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Monthly": "20.34",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Location": "mex01"`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`[`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`]`))
+			})
+		})
+		Context("issues856", func() {
+			It("Handle large int invoices", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "999")
+				Expect(err).NotTo(HaveOccurred())
+				output := fakeUI.Outputs()
+				Expect(output).To(ContainSubstring("testlb-307608-dal13.lb.bluemix.net"))
+			})
+			It("Missing properties dont break", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "888")
+				Expect(err).NotTo(HaveOccurred())
+				output := fakeUI.Outputs()
+				Expect(output).To(ContainSubstring("2020-05-04T05:11:25Z   None"))
+				Expect(output).To(ContainSubstring("2020-05-04T05:11:25Z   tok02"))
 			})
 		})
 	})

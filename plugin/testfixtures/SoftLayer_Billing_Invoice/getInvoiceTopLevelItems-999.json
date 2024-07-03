@@ -1,0 +1,168 @@
+[
+    {
+        "category": {
+            "name": "Server"
+        },
+        "categoryCode": "server",
+        "children": [
+            {
+                "category": {
+                    "name": "Public Network Port"
+                },
+                "description": "10 Gbps Dual Public Uplinks (Unbonded)",
+                "id": 21957603637,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Operating System"
+                },
+                "description": "Ubuntu Linux 16.04 LTS Xenial Xerus (64 bit)",
+                "id": 29157601113641,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "RAM"
+                },
+                "description": "32 GB RAM",
+                "id": 29576013645,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Disk Controller"
+                },
+                "description": "Non-RAID",
+                "id": 2957603647,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "First Hard Drive"
+                },
+                "description": "960 GB SSD (3 DWPD)",
+                "id": 2957603651,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Second Hard Drive"
+                },
+                "description": "960 GB SSD (3 DWPD)",
+                "id": 2957603655,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Public Bandwidth"
+                },
+                "description": "0 GB Bandwidth",
+                "id": 2957603657,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Uplink Port Speeds"
+                },
+                "description": "10 Gbps Dual Public & Private Network Uplinks (Unbonded)",
+                "id": 2957603661,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Primary IP Addresses"
+                },
+                "description": "1 IP Address",
+                "id": 2957603665,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            }
+        ],
+        "createDate": "2024-06-03T23:08:08-06:00",
+        "description": "Single Intel Xeon E3-1270 v3 (4 Cores, 3.50 GHz)",
+        "domainName": "hans.chechu.com",
+        "hostName": "ceph1",
+        "id": 2957601113633,
+        "location": {
+            "name": "par01"
+        },
+        "oneTimeAfterTaxAmount": "0",
+        "recurringAfterTaxAmount": "0"
+    },
+    {
+        "category": {
+            "name": "Network Vlan"
+        },
+        "categoryCode": "network_vlan",
+        "children": [],
+        "createDate": "2024-06-03T23:08:19-06:00",
+        "description": "Public Network Vlan",
+        "id": 2957614027,
+        "location": {
+            "name": "dal10"
+        },
+        "oneTimeAfterTaxAmount": "0",
+        "recurringAfterTaxAmount": "0"
+    },
+    {
+        "category": {
+            "name": "Load Balancer As A Service"
+        },
+        "categoryCode": "load_balancer_as_a_service",
+        "children": [
+            {
+                "category": {
+                    "name": "Load Balancer Data Processed Usage"
+                },
+                "description": " ($0.008/ GIGABYTE ) - Total 0.00000 GIGABYTE used",
+                "id": 2957614035,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Load Balancer Bandwidth"
+                },
+                "description": "Load Balancer Bandwidth",
+                "id": 2957614039,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Load Balancer Uptime"
+                },
+                "description": "Load Balancer Uptime",
+                "id": 2957614043,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Load Balancer Data Processed"
+                },
+                "description": "Load Balancer Data Processed ",
+                "id": 2957614047,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            }
+        ],
+        "createDate": "2024-06-03T23:08:19-06:00",
+        "description": "testlb-307608-dal13.lb.bluemix.net",
+        "id": 2957614031,
+        "location": {
+            "name": "dal13"
+        },
+        "oneTimeAfterTaxAmount": "0",
+        "recurringAfterTaxAmount": "0"
+    }
+]

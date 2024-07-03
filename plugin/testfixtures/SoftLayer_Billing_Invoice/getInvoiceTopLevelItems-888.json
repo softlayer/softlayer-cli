@@ -1,0 +1,81 @@
+[
+    {
+        "category": {
+            "name": "Network Vlan"
+        },
+        "categoryCode": "network_vlan",
+        "children": [],
+        "createDate": "2020-05-03T23:11:25-06:00",
+        "description": "Private Network Vlan",
+        "id": 1531470222,
+        "location": {
+            "name": "tok02"
+        },
+        "oneTimeAfterTaxAmount": "0",
+        "recurringAfterTaxAmount": "0"
+    },
+    {
+        "category": {
+            "name": "Network Vlan"
+        },
+        "categoryCode": "network_vlan",
+        "children": [],
+        "createDate": "2020-05-03T23:11:25-06:00",
+        "description": "Public Network Vlan",
+        "id": 1531470240,
+        "oneTimeAfterTaxAmount": "0",
+        "recurringAfterTaxAmount": "0"
+    },
+    {
+        "category": {
+            "name": "Endurance"
+        },
+        "categoryCode": "storage_service_enterprise",
+        "children": [
+            {
+                "category": {
+                    "name": "Block Storage"
+                },
+                "description": "Block Storage",
+                "id": 1531470258,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Storage Tier Level"
+                },
+                "description": "0.25 IOPS per GB",
+                "id": 1531470268,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Storage Space"
+                },
+                "description": "20 GB Storage Space",
+                "id": 1531470274,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Storage Snapshot Space"
+                },
+                "description": "10 GB Storage Space (Snapshot Space)",
+                "id": 1531470282,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            }
+        ],
+        "createDate": "2020-05-03T23:11:25-06:00",
+        "description": "Endurance Storage",
+        "id": 1531470246,
+        "location": {
+            "name": "ams01"
+        },
+        "oneTimeAfterTaxAmount": "0",
+        "recurringAfterTaxAmount": "0"
+    }
+]

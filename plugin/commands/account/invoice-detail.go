@@ -82,6 +82,10 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 		if fqdn != "." {
 			Description = fmt.Sprintf("%s (%s)", Description, fqdn)
 		}
+		location := "None"
+		if invoiceDetail.Location != nil {
+			location = utils.FormatStringPointer(invoiceDetail.Location.Name)
+		}
 		table.Add(
 			utils.FormatIntPointer(invoiceDetail.Id),
 			Category,
@@ -89,7 +93,7 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 			fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
 			fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
 			utils.FormatSLTimePointer(invoiceDetail.CreateDate),
-			utils.FormatStringPointer(invoiceDetail.Location.Name),
+			location,
 		)
 		if details {
 			for _, child := range invoiceDetail.Children {
