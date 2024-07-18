@@ -1,10 +1,18 @@
 [
     {
         "id":123,
-        "hostname":"ibmcloud-cli-dev"
+        "hostname":"ibmcloud-cli-dev1",
+        "fullyQualifiedDomainName": "ibmcloud-cli-dev1.ibm.com",
+        "primaryIpAddress": "1.2.3.4",
+        "primaryBackendIpAddress": "9.0.0.1",
+        "provisionDate": "2024-02-23T21:22:39-06:00"
     },
     {
         "id":234,
-        "hostname":"ibmcloud-cli-dev"
+        "hostname":"ibmcloud-cli-dev2",
+        "fullyQualifiedDomainName": "ibmcloud-cli-dev2.ibm.com",
+        "primaryIpAddress": "1.2.3.4",
+        "primaryBackendIpAddress": "9.0.0.1",
+        "provisionDate": "2024-02-23T21:22:39-06:00"
     }
 ]
