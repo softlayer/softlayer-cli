@@ -51,7 +51,6 @@ var _ = Describe("sl user detail", func() {
 	})
 
 	Describe("API Errors", func() {
-
 		It("SoftLayer_User_Customer::getObject Exception", func() {
 			fakeHandler.AddApiError("SoftLayer_User_Customer", "getObject", 500, "Internal Server Error")
 			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555")
@@ -75,31 +74,6 @@ var _ = Describe("sl user detail", func() {
 			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--events")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Failed to show event log."))
-		})
-	})
-
-	Describe("Tests needing a fake UserManager", func() {
-		var testUser datatypes.User_Customer
-		BeforeEach(func() {
-			testUser = datatypes.User_Customer{}
-			txError := fakeHandler.DoRequest(
-				fakeSession, "SoftLayer_User_Customer", "getObject", nil, nil, &testUser,
-			)
-			Expect(txError).NotTo(HaveOccurred())
-			fakeUserManager.GetUserReturnsOnCall(0, testUser, nil)
-			cliCommand.UserManager = fakeUserManager
-		})
-		It("SoftLayer_User_Customer::getObject Second Exception Hardware", func() {
-			fakeUserManager.GetUserReturnsOnCall(1, datatypes.User_Customer{}, errors.New("BAD HARDWARE"))
-			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--hardware")
-			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("Failed to show hardware."))
-		})
-		It("SoftLayer_User_Customer::getObject Second Exception Virtual", func() {
-			fakeUserManager.GetUserReturnsOnCall(1, datatypes.User_Customer{}, errors.New("BAD VIRTUAL"))
-			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--virtual")
-			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("Failed to show virual server."))
 		})
 	})
 
@@ -139,6 +113,32 @@ var _ = Describe("sl user detail", func() {
 			Expect(fakeUI.Outputs()).To(ContainSubstring("IAM Token validation successful"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("169.1.98.6"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("123_scaparro@ibm.com"))
+		})
+	})
+
+	// Since this CLI makes 2 calls to the same API, we need to use the Fake Manager to handle that.
+	Describe("API Errors with a Fake Manager", func() {
+		var testUser datatypes.User_Customer
+		BeforeEach(func() {
+			testUser = datatypes.User_Customer{}
+			txError := fakeHandler.DoRequest(
+				fakeSession, "SoftLayer_User_Customer", "getObject", nil, nil, &testUser,
+			)
+			Expect(txError).NotTo(HaveOccurred())
+			fakeUserManager.GetUserReturnsOnCall(0, testUser, nil)
+			cliCommand.UserManager = fakeUserManager
+		})
+		It("SoftLayer_User_Customer::getObject Second Exception Hardware", func() {
+			fakeUserManager.GetUserReturnsOnCall(1, datatypes.User_Customer{}, errors.New("BAD HARDWARE"))
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--hardware")
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(ContainSubstring("Failed to show hardware."))
+		})
+		It("SoftLayer_User_Customer::getObject Second Exception Virtual", func() {
+			fakeUserManager.GetUserReturnsOnCall(1, datatypes.User_Customer{}, errors.New("BAD VIRTUAL"))
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--virtual")
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(ContainSubstring("Failed to show virual server."))
 		})
 	})
 
@@ -182,6 +182,44 @@ var _ = Describe("sl user detail", func() {
 			Expect(fakeUI.Outputs()).To(ContainSubstring("3263-10-1-stemcell-bluemix.softlayer.com"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("3263-10-2-stemcell-bluemix.softlayer.com"))
 		})
+		It("JSON with --hardware", func() {
+			userHardware := []datatypes.Hardware{}
+			txError := fakeHandler.DoRequest(
+				fakeSession, "SoftLayer_Account", "getHardware", nil, nil, &userHardware,
+			)
+			testUser.Hardware = userHardware
+			fakeUserManager.GetUserReturnsOnCall(1, testUser, nil)
+			Expect(txError).NotTo(HaveOccurred())
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--output=json", "--hardware")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"User": {`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"email": "XXX.ASD@ibm.com",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Virtual": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"hostname": "ibmcloud-cli-dev1"`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Events": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Permissions": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Logins": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"DedicatedHosts": null`))
+		})
+		It("JSON with --virtual", func() {
+			userGuests := []datatypes.Virtual_Guest{}
+			txError := fakeHandler.DoRequest(
+				fakeSession, "SoftLayer_Account", "getVirtualGuests", nil, nil, &userGuests,
+			)
+			testUser.VirtualGuests = userGuests
+			fakeUserManager.GetUserReturnsOnCall(1, testUser, nil)
+			Expect(txError).NotTo(HaveOccurred())
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--output=json", "--virtual")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"User": {`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"email": "XXX.ASD@ibm.com",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"hostName": "3169-2-stemcell-for-dirtycow",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Hardware": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Events": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Permissions": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Logins": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"DedicatedHosts": null`))
+		})
 		It("return a user without apikey", func() {
 			testUser.ApiAuthenticationKeys = []datatypes.User_Customer_ApiAuthentication{}
 			fakeUserManager.GetUserReturnsOnCall(0, testUser, nil)
@@ -190,6 +228,58 @@ var _ = Describe("sl user detail", func() {
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Status         Active"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("APIKEY         No"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("Username       test"))
+		})
+	})
+	Describe("JSON Output tests", func() {
+		It("Just user details", func() {
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--output=json")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"User": {`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"email": "XXX.ASD@ibm.com",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Virtual": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Hardware": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Events": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Permissions": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Logins": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"DedicatedHosts": null`))
+		})
+		It("JSON with --permissions", func() {
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--output=json", "--permissions")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"User": {`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"email": "XXX.ASD@ibm.com",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Virtual": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Hardware": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Events": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"keyName": "ACCESS_ALL_DEDICATEDHOSTS",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Logins": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"DedicatedHosts": null`))
+		})
+
+		It("JSON with --logins", func() {
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--output=json", "--logins")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"User": {`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"email": "XXX.ASD@ibm.com",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Virtual": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Hardware": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Events": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Permissions": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"ipAddress": "169.60.96.34",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Logins": [`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"DedicatedHosts": null`))
+		})
+		It("JSON with --events", func() {
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "5555", "--output=json", "--events")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"User": {`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"email": "XXX.ASD@ibm.com",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Virtual": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Hardware": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"eventName": "IAM Token validation successful",`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Permissions": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"Logins": null,`))
+			Expect(fakeUI.Outputs()).To(ContainSubstring(`"DedicatedHosts": null`))
 		})
 	})
 })
