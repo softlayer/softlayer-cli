@@ -212,7 +212,8 @@ func (cmd *DetailsCommand) Run(args []string) error {
 	}
 
 	if outputFormat == "JSON" {
-		utils.PrintPrettyJSON(cmd.UI, userInfo)
+		err := utils.PrintPrettyJSON(cmd.UI, userInfo)
+		return err
 	}
 	return nil
 
