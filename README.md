@@ -157,7 +157,8 @@ Check testhelpers/fake_softlayer_session.go for all the fields that get recorded
 
 
 
-### Fake Managers
+### Test Fakes
+
 
 CLI calls to manager functions need an entry in `plugin\testhelpers\fake_manager.go` 
 Managers have a fake/test interface that is autogenerate with a program called [couterfieter](https://github.com/maxbrunsfeld/counterfeiter)
@@ -177,24 +178,37 @@ each manager and defined interface should have this line in it to be automatical
 
 If you want to use the real manager but fixture API data, just initialize the manager like this in the CLI test
 
-(filenames here is optional of course)
+This example is from `plugin\commands\account\invoice-detail_test.go`
 ```go
-BeforeEach(func() {
-
-    filenames := []string{"getDatacenters_1",}
-    fakeSLSession = testhelpers.NewFakeSoftlayerSession(filenames)
-    OrderManager = managers.NewOrderManager(fakeSLSession)
-    fakeUI = terminal.NewFakeUI()
-    cmd = order.NewPlaceCommand(fakeUI, OrderManager, nil)
-    cliCommand = cli.Command{
-        Name:        metadata.OrderPlaceMetaData().Name,
-        Description: metadata.OrderPlaceMetaData().Description,
-        Usage:       metadata.OrderPlaceMetaData().Usage,
-        Flags:       metadata.OrderPlaceMetaData().Flags,
-        Action:      cmd.Run,
-    }
-})
+var _ = Describe("<COMMAND> Tests", func() {
+    var (
+        fakeUI          *terminal.FakeUI
+        cliCommand      *account.InvoiceDetailCommand
+        fakeSession     *session.Session
+        slCommand       *metadata.SoftlayerCommand
+        fakeHandler     *testhelpers.FakeTransportHandler
+    )
+    BeforeEach(func() {
+        // Fake UI to capture output of comamnds
+        fakeUI = terminal.NewFakeUI()
+        // Fake session to handle loading data from testfixtures
+        fakeSession = testhelpers.NewFakeSoftlayerSession(nil)
+        // Fake handler to control error generation
+        fakeHandler = testhelpers.GetSessionHandler(fakeSession)
+        // Real parent command, with fake UI and Fake Session being passed in
+        slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
+        // Real actual command
+        cliCommand = account.NewInvoiceDetailCommand(slCommand)
+        // Need to set output flag since its set manually in the parent command normally.
+        cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+    })
+    AfterEach(func() {
+        // Clear API call logs and any errors that might have been set after every test
+        fakeHandler.ClearApiCallLogs()
+        fakeHandler.ClearErrors()
+    })
 ```
+`plugin\commands\user\details_test.go` is also a good example test file for CLI commands.
 
 ### `[no tests to run]`
 New commands needs a `command_test.go` file in the CLI directory.
@@ -224,8 +238,7 @@ fakeHandler = testhelpers.GetSessionHandler(fakeSession)
 
 // Then in a BeforeEach for the specific test...
 BeforeEach(func() {
-    fakeHandler.AddApiError("SoftLayer_User_Customer", "getObject",
-                            500, "Internal Server Error")
+    fakeHandler.AddApiError("SoftLayer_User_Customer", "getObject", 500, "Internal Server Error")
 })
 ```
 

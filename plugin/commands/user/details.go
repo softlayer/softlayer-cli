@@ -52,6 +52,16 @@ func NewDetailsCommand(sl *metadata.SoftlayerCommand) (cmd *DetailsCommand) {
 	return thisCmd
 }
 
+type UserInformation struct {
+	User           datatypes.User_Customer
+	Hardware       []datatypes.Hardware
+	Virtual        []datatypes.Virtual_Guest
+	Events         []datatypes.Event_Log
+	Permissions    []datatypes.User_Customer_CustomerPermission_Permission
+	Logins         []datatypes.User_Customer_Access_Authentication
+	DedicatedHosts []datatypes.Virtual_DedicatedHost
+}
+
 func (cmd *DetailsCommand) Run(args []string) error {
 	userId := args[0]
 	id, err := strconv.Atoi(userId)
@@ -59,6 +69,8 @@ func (cmd *DetailsCommand) Run(args []string) error {
 		return errors.NewInvalidUsageError(T("User ID should be a number."))
 	}
 
+	outputFormat := cmd.GetOutputFlag()
+	userInfo := UserInformation{}
 	keys := cmd.Keys
 	permissions := cmd.Permissions
 	hardware := cmd.Hardware
@@ -68,11 +80,14 @@ func (cmd *DetailsCommand) Run(args []string) error {
 
 	object_mask := "userStatus[name],parent[id,username],apiAuthenticationKeys[authenticationKey]"
 	user, err := cmd.UserManager.GetUser(id, object_mask)
+	userInfo.User = user
 	if err != nil {
 		return errors.NewAPIError(T("Failed to show user detail.\n"), err.Error(), 2)
 	}
 
-	baseUserPrint(user, keys, cmd.UI)
+	if outputFormat != "JSON" {
+		baseUserPrint(user, keys, cmd.UI)
+	}
 
 	if permissions {
 		perms, err := cmd.UserManager.GetUserPermissions(id)
@@ -84,7 +99,10 @@ func (cmd *DetailsCommand) Run(args []string) error {
 			table.Add(utils.FormatStringPointer(perm.KeyName), utils.FormatStringPointer(perm.Name))
 		}
 		table.Add("", "")
-		table.Print()
+		if outputFormat != "JSON" {
+			table.Print()
+		}
+		userInfo.Permissions = perms
 	}
 
 	if hardware {
@@ -105,7 +123,6 @@ func (cmd *DetailsCommand) Run(args []string) error {
 			table.Add(hostId, hostFqdn, hostCpu, hostMem, hostDisk, hostCreated)
 		}
 		table.Add("", "")
-		table.Print()
 
 		tableAccess := cmd.UI.Table([]string{T("ID"), T("Hostname"), T("Primary Public IP"), T("Primary Private IP"), T("Created")})
 		for _, host := range access.Hardware {
@@ -117,7 +134,12 @@ func (cmd *DetailsCommand) Run(args []string) error {
 			tableAccess.Add(hostId, hostFqdn, hostPrimary, hostPrivate, hostCreated)
 		}
 		tableAccess.Add("", "")
-		tableAccess.Print()
+		if outputFormat != "JSON" {
+			table.Print()
+			tableAccess.Print()
+		}
+		userInfo.Hardware = access.Hardware
+		userInfo.DedicatedHosts = access.DedicatedHosts
 	}
 
 	if virtual {
@@ -137,7 +159,10 @@ func (cmd *DetailsCommand) Run(args []string) error {
 			tableAccess.Add(hostId, hostFqdn, hostPrimary, hostPrivate, hostCreated)
 		}
 		tableAccess.Add("", "")
-		tableAccess.Print()
+		if outputFormat != "JSON" {
+			tableAccess.Print()
+		}
+		userInfo.Virtual = access.VirtualGuests
 	}
 
 	if logins {
@@ -156,7 +181,11 @@ func (cmd *DetailsCommand) Run(args []string) error {
 			table.Add(loginData, loginIp, loginSucc)
 		}
 		table.Add("", "")
-		table.Print()
+		if outputFormat != "JSON" {
+			table.Print()
+		}
+		userInfo.Logins = loginLog
+
 	}
 
 	if events {
@@ -176,9 +205,16 @@ func (cmd *DetailsCommand) Run(args []string) error {
 			table.Add(eventData, eventName, eventIp, eventLabel, eventUsername)
 		}
 		table.Add("", "")
-		table.Print()
+		if outputFormat != "JSON" {
+			table.Print()
+		}
+		userInfo.Events = events
 	}
 
+	if outputFormat == "JSON" {
+		err := utils.PrintPrettyJSON(cmd.UI, userInfo)
+		return err
+	}
 	return nil
 
 }
