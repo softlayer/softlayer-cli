@@ -1,6 +1,9 @@
 package user
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/spf13/cobra"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -20,6 +23,19 @@ type ListCommand struct {
 	Column      []string
 }
 
+var maskMap = map[string]string{
+	"id":                "id",
+	"username":          "username",
+	"email":             "email",
+	"displayName":       "displayName",
+	"status":            "userStatus.name",
+	"hardwareCount":     "hardwareCount",
+	"virtualGuestCount": "virtualGuestCount",
+	"2FA":               "externalBindingCount",
+	"classicAPIKey":     "apiAuthenticationKeyCount",
+	"vpn":               "sslVpnAllowedFlag",
+}
+
 func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
 	thisCmd := &ListCommand{
 		SoftlayerCommand: sl,
@@ -35,29 +51,24 @@ func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
 		},
 	}
 
-	cobraCmd.Flags().StringSliceVar(&thisCmd.Column, "column", []string{}, T("Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times"))
+	columns := ""
+	for key, _ := range maskMap {
+		columns = fmt.Sprintf("%s %s,", columns, key)
+	}
+	columns = strings.TrimSuffix(columns, ",")
+	subs := map[string]interface{}{"Columns": columns}
+	cobraCmd.Flags().StringSliceVar(&thisCmd.Column, "column", []string{},
+		T("Column to display. options are: {{.Columns}}. This option can be specified multiple times", subs))
 
 	thisCmd.Command = cobraCmd
 	return thisCmd
-}
-
-var maskMap = map[string]string{
-	"id":                "id",
-	"username":          "username",
-	"email":             "email",
-	"displayName":       "displayName",
-	"status":            "userStatus.name",
-	"hardwareCount":     "hardwareCount",
-	"virtualGuestCount": "virtualGuestCount",
-	"2FA":               "externalBindingCount",
-	"classicAPIKey":     "apiAuthenticationKeyCount",
 }
 
 func (cmd *ListCommand) Run(args []string) error {
 
 	columns := cmd.Column
 
-	defaultColumns := []string{"id", "username", "email", "displayName", "2FA", "classicAPIKey"}
+	defaultColumns := []string{"id", "username", "email", "displayName", "2FA", "classicAPIKey", "vpn"}
 	optionalColumns := []string{"status", "hardwareCount", "virtualGuestCount"}
 
 	showColumns, err := utils.ValidateColumns2("", columns, defaultColumns, optionalColumns, []string{})
@@ -89,6 +100,7 @@ func (cmd *ListCommand) Run(args []string) error {
 
 		values["2FA"] = utils.ReplaceUIntPointerValue(user.ExternalBindingCount, NO_ZERO_VALUE)
 		values["classicAPIKey"] = utils.ReplaceUIntPointerValue(user.ApiAuthenticationKeyCount, NO_ZERO_VALUE)
+		values["vpn"] = utils.FormatBoolPointerToYN(user.SslVpnAllowedFlag)
 
 		if user.UserStatus != nil {
 			values["status"] = utils.FormatStringPointer(user.UserStatus.Name)

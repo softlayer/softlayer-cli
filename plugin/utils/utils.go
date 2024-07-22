@@ -185,6 +185,16 @@ func FormatBoolPointer(value *bool) string {
 	return strconv.FormatBool(sl.Get(value).(bool))
 }
 
+func FormatBoolPointerToYN(value *bool) string {
+	if value == nil {
+		return EMPTY_VALUE
+	}
+	if *value == true {
+		return T("Yes")
+	}
+	return T("No")
+}
+
 func FormatStringPointer(value *string) string {
 	if value == nil {
 		return EMPTY_VALUE

@@ -1325,8 +1325,8 @@
   "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state].": {
     "other": "Colonna da visualizzare. [Le opzioni sono: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [valore predefinito: id,hostname,domain,primary_ip,backend_ip,power_state]."
   },
-  "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times": {
-    "other": "Colonna da visualizzare. Le opzioni sono: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. Questa opzione può essere specificata più volte."
+  "Column to display. options are: {{.Columns}}. This option can be specified multiple times": {
+    "other": "Colonna da visualizzare. Le opzioni sono: {{.Columns}}. Questa opzione può essere specificata più volte."
   },
   "Column to sort by": {
     "other": "Colonna in base alla quale ordinare"

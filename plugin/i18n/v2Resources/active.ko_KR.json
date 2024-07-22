@@ -1325,8 +1325,8 @@
   "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state].": {
     "other": "표시할 열. [옵션: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [기본값: id,hostname,domain,primary_ip,backend_ip,power_state]."
   },
-  "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times": {
-    "other": "표시할 열. 옵션: id,username,email,displayName,2FA, classicAPIKey, status, hardwareCount, virtualGuestCount. 이 옵션은 여러 번 지정할 수 있습니다."
+  "Column to display. options are: {{.Columns}}. This option can be specified multiple times": {
+    "other": "표시할 열. 옵션: {{.Columns}}. 이 옵션은 여러 번 지정할 수 있습니다."
   },
   "Column to sort by": {
     "other": "정렬 기준 열"
