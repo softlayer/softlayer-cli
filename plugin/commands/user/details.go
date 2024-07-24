@@ -78,7 +78,7 @@ func (cmd *DetailsCommand) Run(args []string) error {
 	logins := cmd.Logins
 	events := cmd.Events
 
-	object_mask := "userStatus[name],parent[id,username],apiAuthenticationKeys[authenticationKey]"
+	object_mask := "userStatus[name],parent[id,username],apiAuthenticationKeys[authenticationKey],sslVpnAllowedFlag"
 	user, err := cmd.UserManager.GetUser(id, object_mask)
 	userInfo.User = user
 	if err != nil {
@@ -249,8 +249,6 @@ func baseUserPrint(user datatypes.User_Customer, keys bool, ui terminal.UI) {
 	if user.UserStatus != nil {
 		table.Add(T("Status"), utils.FormatStringPointer(user.UserStatus.Name))
 	}
-
-	table.Add(T("PPTP VPN"), utils.FormatBoolPointer(user.PptpVpnAllowedFlag))
 	table.Add(T("SSL VPN"), utils.FormatBoolPointer(user.SslVpnAllowedFlag))
 
 	if len(user.SuccessfulLogins) != 0 {

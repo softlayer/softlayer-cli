@@ -33,8 +33,8 @@ var _ = Describe("User", func() {
 			It("Return users", func() {
 				users, err := UserManager.ListUsers("")
 				Expect(err).ToNot(HaveOccurred())
-				Expect(*users[0].Username).To(Equal("IBM2782"))
-				Expect(*users[0].HardwareCount).To(Equal(uint(177)))
+				Expect(*users[0].Username).To(Equal("IBM27821"))
+				Expect(*users[0].HardwareCount).To(Equal(uint(1111)))
 			})
 		})
 	})

@@ -1325,8 +1325,8 @@
   "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state].": {
     "other": "表示する列。 [オプション: guid、cpu、memory、datacenter、primary_ip、backend_ip、created_by、power_state、tags] [デフォルト: id、hostname、domain、primary_ip、backend_ip、power_state]。"
   },
-  "Column to display. options are: id,username,email,displayName,2FA,classicAPIKey,status,hardwareCount,virtualGuestCount. This option can be specified multiple times": {
-    "other": "表示する列。 オプション: id,username,email,displayName,2FA、classicAPIKey、status、hardwareCount、virtualGuestCount。 このオプションは複数回指定できます"
+  "Column to display. options are: {{.Columns}}. This option can be specified multiple times": {
+    "other": "表示する列。 オプション: {{.Columns}}。 このオプションは複数回指定できます"
   },
   "Column to sort by": {
     "other": "ソート基準の列"
