@@ -91,7 +91,7 @@ func (h *FakeTransportHandler) DoRequest(sess *session.Session, service string, 
 		identifier = *options.Id
 	}
 
-	fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
+	// fmt.Printf("%s::%s(id=%d)\n", service, method, identifier)
 
 	h.AddApiLog(service, method, args, options)
 
