@@ -41,11 +41,11 @@ var _ = Describe("Place", func() {
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.OrderManager = OrderManager
 	})
-    AfterEach(func() {
-        // Clear API call logs and any errors that might have been set after every test
-        fakeHandler.ClearApiCallLogs()
-        fakeHandler.ClearErrors()
-    })
+	AfterEach(func() {
+		// Clear API call logs and any errors that might have been set after every test
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
+	})
 
 	Describe("order verify", func() {
 		for k, _ := range order.TYPEMAP {
@@ -246,7 +246,7 @@ var _ = Describe("Place", func() {
 	Describe("softlayer-cli/issues/863", func() {
 		BeforeEach(func() {
 			fakeHandler.ClearApiCallLogs()
-			fakeHandler.SetFileNames([]string{"getItems-835", "getDatacenters_mad02"})
+			fakeHandler.SetFileNames([]string{"getItems-835", "getDatacenters_mad02", "getActivePresets-835"})
 		})
 		It("Finds the correct price IDs", func() {
 			err := testhelpers.RunCobraCommand(
@@ -261,14 +261,14 @@ var _ = Describe("Place", func() {
 				"--preset=BL2_8x32x100", "--verify",
 			)
 			Expect(err).NotTo(HaveOccurred())
-			
+
 			callLog := fakeHandler.ApiCallLogs
 			Expect(len(callLog)).To(Equal(9))
 			fmt.Printf(callLog[8].String())
 			Expect(callLog[8].String()).To(Equal(`SoftLayer_Product_Order::verifyOrder(id=0, mask='', filter='', ` +
 				`{"parameters":[{"complexType":"SoftLayer_Container_Product_Order_Virtual_Guest",` +
-				`"location":"3460412","packageId":865,"presetId":785,"prices":[{"id":899},{"id":21},{"id":204637},` +
-				`{"id":314158},{"id":55},{"id":57},{"id":58},{"id":420},{"id":905},{"id":22505}],"quantity":1,` +
+				`"location":"3460412","packageId":865,"presetId":281,"prices":[{"id":899},{"id":21},{"id":204637},` +
+				`{"id":314142},{"id":55},{"id":57},{"id":58},{"id":420},{"id":905},{"id":22505}],"quantity":1,` +
 				`"useHourlyPricing":false,"virtualGuests":[{"domain":"ibm.com","hostname":"testServer"}]}]}`,
 			))
 		})
