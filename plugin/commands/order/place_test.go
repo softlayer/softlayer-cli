@@ -27,11 +27,13 @@ var _ = Describe("Place", func() {
 		slCommand        *metadata.SoftlayerCommand
 		OrderManager     managers.OrderManager
 		fakeOrderManager *testhelpers.FakeOrderManager
+		fakeHandler      *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		filenames := []string{"getDatacenters_1"}
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession(filenames)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSession)
 		OrderManager = managers.NewOrderManager(fakeSession)
 		fakeOrderManager = new(testhelpers.FakeOrderManager)
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
@@ -39,6 +41,11 @@ var _ = Describe("Place", func() {
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.OrderManager = OrderManager
 	})
+    AfterEach(func() {
+        // Clear API call logs and any errors that might have been set after every test
+        fakeHandler.ClearApiCallLogs()
+        fakeHandler.ClearErrors()
+    })
 
 	Describe("order verify", func() {
 		for k, _ := range order.TYPEMAP {
@@ -234,6 +241,36 @@ var _ = Describe("Place", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("This action will incur charges on your account. Continue?"))
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Aborted."))
 			})
+		})
+	})
+	Describe("softlayer-cli/issues/863", func() {
+		BeforeEach(func() {
+			fakeHandler.ClearApiCallLogs()
+			fakeHandler.SetFileNames([]string{"getItems-835", "getDatacenters_mad02"})
+		})
+		It("Finds the correct price IDs", func() {
+			err := testhelpers.RunCobraCommand(
+				cliCommand.Command,
+				"PUBLIC_CLOUD_SERVER", "MADRID02", "1_GBPS_PRIVATE_NETWORK_UPLINK", "1_IP_ADDRESS",
+				"GUEST_DISK_100_GB_LOCAL", "OS_RED_HAT_ENTERPRISE_LINUX_9_X_MINIMAL_INSTALL_64_BIT",
+				"MONITORING_HOST_PING", "NOTIFICATION_EMAIL_AND_TICKET", "AUTOMATED_NOTIFICATION",
+				"UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT", "REBOOT_REMOTE_CONSOLE", "BANDWIDTH_0_GB",
+				"--billing=monthly",
+				`--extras={"virtualGuests":[{"hostname":"testServer","domain":"ibm.com"}]}`,
+				"--complex-type=SoftLayer_Container_Product_Order_Virtual_Guest",
+				"--preset=BL2_8x32x100", "--verify",
+			)
+			Expect(err).NotTo(HaveOccurred())
+			
+			callLog := fakeHandler.ApiCallLogs
+			Expect(len(callLog)).To(Equal(9))
+			fmt.Printf(callLog[8].String())
+			Expect(callLog[8].String()).To(Equal(`SoftLayer_Product_Order::verifyOrder(id=0, mask='', filter='', ` +
+				`{"parameters":[{"complexType":"SoftLayer_Container_Product_Order_Virtual_Guest",` +
+				`"location":"3460412","packageId":865,"presetId":785,"prices":[{"id":899},{"id":21},{"id":204637},` +
+				`{"id":314158},{"id":55},{"id":57},{"id":58},{"id":420},{"id":905},{"id":22505}],"quantity":1,` +
+				`"useHourlyPricing":false,"virtualGuests":[{"domain":"ibm.com","hostname":"testServer"}]}]}`,
+			))
 		})
 	})
 })
