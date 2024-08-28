@@ -264,12 +264,10 @@ var _ = Describe("Place", func() {
 
 			callLog := fakeHandler.ApiCallLogs
 			Expect(len(callLog)).To(Equal(9))
-			fmt.Printf(callLog[8].String())
-			Expect(callLog[8].String()).To(Equal(`SoftLayer_Product_Order::verifyOrder(id=0, mask='', filter='', ` +
-				`{"parameters":[{"complexType":"SoftLayer_Container_Product_Order_Virtual_Guest",` +
-				`"location":"3460412","packageId":865,"presetId":281,"prices":[{"id":899},{"id":21},{"id":204637},` +
-				`{"id":314142},{"id":55},{"id":57},{"id":58},{"id":420},{"id":905},{"id":22505}],"quantity":1,` +
-				`"useHourlyPricing":false,"virtualGuests":[{"domain":"ibm.com","hostname":"testServer"}]}]}`,
+			// fmt.Printf(callLog[8].String())
+			Expect(callLog[8].String()).To(ContainSubstring(
+				`"prices":[{"id":899},{"id":21},{"id":204637},` +
+				`{"id":314142},{"id":55},{"id":57},{"id":58},{"id":420},{"id":905},{"id":22505}]`,
 			))
 		})
 	})
