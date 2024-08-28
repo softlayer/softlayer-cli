@@ -1,0 +1,599 @@
+[
+    {
+        "categories": [
+            {
+                "categoryCode": "guest_disk3",
+                "id": 93,
+                "name": "Fourth Disk",
+                "quantityLimit": 0,
+                "sortOrder": null
+            },
+            {
+                "categoryCode": "guest_disk4",
+                "id": 116,
+                "name": "Fifth Disk",
+                "quantityLimit": 0,
+                "sortOrder": null
+            },
+            {
+                "categoryCode": "ram",
+                "id": 3,
+                "name": "RAM",
+                "quantityLimit": 0,
+                "sortOrder": 3
+            },
+            {
+                "categoryCode": "guest_disk0",
+                "id": 81,
+                "name": "First Disk",
+                "quantityLimit": 0,
+                "sortOrder": null
+            },
+            {
+                "categoryCode": "guest_disk2",
+                "id": 92,
+                "name": "Third Disk",
+                "quantityLimit": 0,
+                "sortOrder": null
+            },
+            {
+                "categoryCode": "guest_core",
+                "id": 80,
+                "name": "Computing Instance",
+                "quantityLimit": 20,
+                "sortOrder": null
+            },
+            {
+                "categoryCode": "guest_disk1",
+                "id": 82,
+                "name": "Second Disk",
+                "quantityLimit": 0,
+                "sortOrder": null
+            }
+        ],
+        "description": "BL2.8x32x500",
+        "id": 281,
+        "keyName": "BL2_8X32X100",
+        "locations": [
+            {
+                "id": 1004995,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "San Jose 3",
+                "name": "sjc03",
+                "statusId": 2
+            },
+            {
+                "id": 2017603,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Washington 7",
+                "name": "wdc07",
+                "statusId": 2
+            },
+            {
+                "id": 2178495,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "San Jose 4",
+                "name": "sjc04",
+                "statusId": 2
+            },
+            {
+                "id": 2434695,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Frankfurt 4",
+                "name": "fra04",
+                "statusId": 2
+            },
+            {
+                "id": 358694,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "London 2",
+                "name": "lon02",
+                "statusId": 2
+            },
+            {
+                "id": 449506,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Frankfurt 2",
+                "name": "fra02",
+                "statusId": 2
+            },
+            {
+                "id": 449610,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Montreal 1",
+                "name": "mon01",
+                "statusId": 2
+            },
+            {
+                "id": 1854795,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Dallas 12",
+                "name": "dal12",
+                "statusId": 2
+            },
+            {
+                "id": 2017395,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "London 4",
+                "name": "lon04",
+                "statusId": 2
+            },
+            {
+                "id": 2017695,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Washington 6",
+                "name": "wdc06",
+                "statusId": 2
+            },
+            {
+                "id": 3023812,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Osaka 21",
+                "name": "osa21",
+                "statusId": 2
+            },
+            {
+                "id": 3079212,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Toronto 4",
+                "name": "tor04",
+                "statusId": 2
+            },
+            {
+                "id": 449494,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Dallas 9",
+                "name": "dal09",
+                "statusId": 2
+            },
+            {
+                "id": 449500,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Paris 1",
+                "name": "par01",
+                "statusId": 2
+            },
+            {
+                "id": 449604,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Tokyo 2",
+                "name": "tok02",
+                "statusId": 2
+            },
+            {
+                "id": 1004997,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Chennai 1",
+                "name": "che01",
+                "statusId": 2
+            },
+            {
+                "id": 1541257,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Oslo 1",
+                "name": "osl01",
+                "statusId": 2
+            },
+            {
+                "id": 1854895,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Dallas 13",
+                "name": "dal13",
+                "statusId": 2
+            },
+            {
+                "id": 2979912,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Paris 5",
+                "name": "par05",
+                "statusId": 2
+            },
+            {
+                "id": 3023912,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Osaka 23",
+                "name": "osa23",
+                "statusId": 2
+            },
+            {
+                "id": 3083212,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Sao Paulo 5",
+                "name": "sao05",
+                "statusId": 2
+            },
+            {
+                "id": 814994,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Amsterdam 3",
+                "name": "ams03",
+                "statusId": 2
+            },
+            {
+                "id": 957095,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Washington 4",
+                "name": "wdc04",
+                "statusId": 2
+            },
+            {
+                "id": 983497,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Sao Paulo 1",
+                "name": "sao01",
+                "statusId": 2
+            },
+            {
+                "id": 1441195,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Dallas 10",
+                "name": "dal10",
+                "statusId": 2
+            },
+            {
+                "id": 2954997,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Paris 4",
+                "name": "par04",
+                "statusId": 2
+            },
+            {
+                "id": 2979914,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Paris 6",
+                "name": "par06",
+                "statusId": 2
+            },
+            {
+                "id": 1555995,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Seoul 1",
+                "name": "seo01",
+                "statusId": 2
+            },
+            {
+                "id": 2123995,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "London 5",
+                "name": "lon05",
+                "statusId": 2
+            },
+            {
+                "id": 2124095,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "London 6",
+                "name": "lon06",
+                "statusId": 2
+            },
+            {
+                "id": 2417495,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Frankfurt 5",
+                "name": "fra05",
+                "statusId": 2
+            },
+            {
+                "id": 3460612,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Madrid 4",
+                "name": "mad04",
+                "statusId": 2
+            },
+            {
+                "id": 449612,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Sydney 1",
+                "name": "syd01",
+                "statusId": 2
+            },
+            {
+                "id": 815394,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Milan 1",
+                "name": "mil01",
+                "statusId": 2
+            },
+            {
+                "id": 2344395,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Tokyo 4",
+                "name": "tok04",
+                "statusId": 2
+            },
+            {
+                "id": 2344397,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Tokyo 5",
+                "name": "tok05",
+                "statusId": 2
+            },
+            {
+                "id": 3079312,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Toronto 5",
+                "name": "tor05",
+                "statusId": 2
+            },
+            {
+                "id": 3083112,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Sao Paulo 4",
+                "name": "sao04",
+                "statusId": 2
+            },
+            {
+                "id": 3460712,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Madrid 5",
+                "name": "mad05",
+                "statusId": 2
+            },
+            {
+                "id": 448994,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Toronto 1",
+                "name": "tor01",
+                "statusId": 2
+            },
+            {
+                "id": 449596,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Melbourne 1",
+                "name": "mel01",
+                "statusId": 2
+            },
+            {
+                "id": 2013295,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Sydney 4",
+                "name": "syd04",
+                "statusId": 2
+            },
+            {
+                "id": 3023712,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Osaka 22",
+                "name": "osa22",
+                "statusId": 2
+            },
+            {
+                "id": 3460412,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                },
+                "longName": "Madrid 2",
+                "name": "mad02",
+                "statusId": 2
+            }
+        ],
+        "name": "BL2.8x32x500",
+        "prices": [
+            {
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".00627",
+                "id": 204637,
+                "itemId": 3876,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "4.16",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".01568",
+                "id": 204781,
+                "itemId": 3916,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "10.4",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": "0",
+                "id": 204853,
+                "itemId": 8195,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "0",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".01881",
+                "id": 204757,
+                "itemId": 3890,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "12.49",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".15153",
+                "id": 204301,
+                "itemId": 1155,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "100.32",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".24976",
+                "id": 234804,
+                "itemId": 13756,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "166.16",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    }
+]

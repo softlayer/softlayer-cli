@@ -1,0 +1,1004 @@
+[
+    {
+        "id": 498,
+        "itemCategory": {
+            "categoryCode": "port_speed",
+            "id": 26,
+            "name": "Uplink Port Speeds",
+            "quantityLimit": 0,
+            "sortOrder": 30
+        },
+        "keyName": "1_GBPS_PRIVATE_NETWORK_UPLINK",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "port_speed",
+                        "id": 26,
+                        "name": "Uplink Port Speeds",
+                        "quantityLimit": 0,
+                        "sortOrder": 30
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".01568",
+                "id": 899,
+                "itemId": 498,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "10.45",
+                "setupFee": "0",
+                "sort": 53,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "port_speed",
+                        "id": 26,
+                        "name": "Uplink Port Speeds",
+                        "quantityLimit": 0,
+                        "sortOrder": 30
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".01721",
+                "id": 52425,
+                "itemId": 498,
+                "laborFee": "0",
+                "locationGroupId": 503,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "11.08",
+                "setupFee": "0",
+                "sort": 53,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "port_speed",
+                        "id": 26,
+                        "name": "Uplink Port Speeds",
+                        "quantityLimit": 0,
+                        "sortOrder": 30
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".01767",
+                "id": 52427,
+                "itemId": 498,
+                "laborFee": "0",
+                "locationGroupId": 505,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "11.81",
+                "setupFee": "0",
+                "sort": 53,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "port_speed",
+                        "id": 26,
+                        "name": "Uplink Port Speeds",
+                        "quantityLimit": 0,
+                        "sortOrder": 30
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".01872",
+                "id": 52429,
+                "itemId": 498,
+                "laborFee": "0",
+                "locationGroupId": 507,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "12.12",
+                "setupFee": "0",
+                "sort": 53,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "port_speed",
+                        "id": 26,
+                        "name": "Uplink Port Speeds",
+                        "quantityLimit": 0,
+                        "sortOrder": 30
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".01886",
+                "id": 52431,
+                "itemId": 498,
+                "laborFee": "0",
+                "locationGroupId": 509,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "12.54",
+                "setupFee": "0",
+                "sort": 53,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "port_speed",
+                        "id": 26,
+                        "name": "Uplink Port Speeds",
+                        "quantityLimit": 0,
+                        "sortOrder": 30
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".02022",
+                "id": 52433,
+                "itemId": 498,
+                "laborFee": "0",
+                "locationGroupId": 545,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "13.48",
+                "setupFee": "0",
+                "sort": 53,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "port_speed",
+                        "id": 26,
+                        "name": "Uplink Port Speeds",
+                        "quantityLimit": 0,
+                        "sortOrder": 30
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".02195",
+                "id": 151877,
+                "itemId": 498,
+                "laborFee": "0",
+                "locationGroupId": 583,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "14.42",
+                "setupFee": "0",
+                "sort": 53,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "itemCategory": {
+            "categoryCode": "pri_ip_addresses",
+            "id": 13,
+            "name": "Primary IP Addresses",
+            "quantityLimit": 0,
+            "sortOrder": 32
+        },
+        "keyName": "1_IP_ADDRESS",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "pri_ip_addresses",
+                        "id": 13,
+                        "name": "Primary IP Addresses",
+                        "quantityLimit": 0,
+                        "sortOrder": 32
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": "0",
+                "id": 21,
+                "itemId": 15,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "0",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 3876,
+        "itemCategory": {
+            "categoryCode": "guest_disk0",
+            "id": 81,
+            "name": "First Disk",
+            "quantityLimit": 0,
+            "sortOrder": null
+        },
+        "keyName": "GUEST_DISK_100_GB_LOCAL",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "guest_disk0",
+                        "id": 81,
+                        "name": "First Disk",
+                        "quantityLimit": 0,
+                        "sortOrder": null
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".00627",
+                "id": 204637,
+                "itemId": 3876,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "4.16",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "guest_disk0",
+                        "id": 81,
+                        "name": "First Disk",
+                        "quantityLimit": 0,
+                        "sortOrder": null
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".00646",
+                "id": 204639,
+                "itemId": 3876,
+                "laborFee": "0",
+                "locationGroupId": 503,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "4.41",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "guest_disk0",
+                        "id": 81,
+                        "name": "First Disk",
+                        "quantityLimit": 0,
+                        "sortOrder": null
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".00662",
+                "id": 204641,
+                "itemId": 3876,
+                "laborFee": "0",
+                "locationGroupId": 505,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "4.7",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "guest_disk0",
+                        "id": 81,
+                        "name": "First Disk",
+                        "quantityLimit": 0,
+                        "sortOrder": null
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".00771",
+                "id": 204643,
+                "itemId": 3876,
+                "laborFee": "0",
+                "locationGroupId": 507,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "4.83",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "guest_disk0",
+                        "id": 81,
+                        "name": "First Disk",
+                        "quantityLimit": 0,
+                        "sortOrder": null
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".00777",
+                "id": 204645,
+                "itemId": 3876,
+                "laborFee": "0",
+                "locationGroupId": 509,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "4.99",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "categories": [
+                    {
+                        "categoryCode": "guest_disk0",
+                        "id": 81,
+                        "name": "First Disk",
+                        "quantityLimit": 0,
+                        "sortOrder": null
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".00787",
+                "id": 204647,
+                "itemId": 3876,
+                "laborFee": "0",
+                "locationGroupId": 545,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "5.38",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 26421,
+        "itemCategory": {
+            "categoryCode": "os",
+            "id": 12,
+            "name": "Operating System",
+            "quantityLimit": 0,
+            "sortOrder": 1
+        },
+        "keyName": "OS_RED_HAT_ENTERPRISE_LINUX_9_X_MINIMAL_INSTALL_64_BIT",
+        "prices": [
+            {
+                "capacityRestrictionMaximum": "1",
+                "capacityRestrictionMinimum": "1",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".017",
+                "id": 314136,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "12.58",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "2",
+                "capacityRestrictionMinimum": "2",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".034",
+                "id": 314138,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "25.16",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "4",
+                "capacityRestrictionMinimum": "4",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".068",
+                "id": 314140,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "50.32",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "8",
+                "capacityRestrictionMinimum": "8",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".136",
+                "id": 314142,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "100.64",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "12",
+                "capacityRestrictionMinimum": "12",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".132",
+                "id": 314144,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "105.96",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "16",
+                "capacityRestrictionMinimum": "16",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".176",
+                "id": 314146,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "141.28",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "30",
+                "capacityRestrictionMinimum": "30",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".33",
+                "id": 314148,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "264.9",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "32",
+                "capacityRestrictionMinimum": "32",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".352",
+                "id": 314150,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "282.56",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "48",
+                "capacityRestrictionMinimum": "48",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".528",
+                "id": 314152,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "423.84",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "56",
+                "capacityRestrictionMinimum": "56",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".616",
+                "id": 314154,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "494.48",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "62",
+                "capacityRestrictionMinimum": "62",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".682",
+                "id": 314156,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "547.46",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            },
+            {
+                "capacityRestrictionMaximum": "64",
+                "capacityRestrictionMinimum": "64",
+                "capacityRestrictionType": "CORE",
+                "categories": [
+                    {
+                        "categoryCode": "os",
+                        "id": 12,
+                        "name": "Operating System",
+                        "quantityLimit": 0,
+                        "sortOrder": 1
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": ".704",
+                "id": 314158,
+                "itemId": 26421,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "565.12",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 49,
+        "itemCategory": {
+            "categoryCode": "monitoring",
+            "id": 20,
+            "name": "Monitoring",
+            "quantityLimit": 0,
+            "sortOrder": 109
+        },
+        "keyName": "MONITORING_HOST_PING",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "monitoring",
+                        "id": 20,
+                        "name": "Monitoring",
+                        "quantityLimit": 0,
+                        "sortOrder": 109
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": "0",
+                "id": 55,
+                "itemId": 49,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "0",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 51,
+        "itemCategory": {
+            "categoryCode": "notification",
+            "id": 21,
+            "name": "Notification",
+            "quantityLimit": 0,
+            "sortOrder": 110
+        },
+        "keyName": "NOTIFICATION_EMAIL_AND_TICKET",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "notification",
+                        "id": 21,
+                        "name": "Notification",
+                        "quantityLimit": 0,
+                        "sortOrder": 110
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": "0",
+                "id": 57,
+                "itemId": 51,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "0",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 52,
+        "itemCategory": {
+            "categoryCode": "response",
+            "id": 22,
+            "name": "Response",
+            "quantityLimit": 0,
+            "sortOrder": 112
+        },
+        "keyName": "AUTOMATED_NOTIFICATION",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "response",
+                        "id": 22,
+                        "name": "Response",
+                        "quantityLimit": 0,
+                        "sortOrder": 112
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": "0",
+                "id": 58,
+                "itemId": 52,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "0",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 309,
+        "itemCategory": {
+            "categoryCode": "vpn_management",
+            "id": 31,
+            "name": "VPN Management - Private Network",
+            "quantityLimit": 0,
+            "sortOrder": 115
+        },
+        "keyName": "UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "vpn_management",
+                        "id": 31,
+                        "name": "VPN Management - Private Network",
+                        "quantityLimit": 0,
+                        "sortOrder": 115
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": "0",
+                "id": 420,
+                "itemId": 309,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "0",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 503,
+        "itemCategory": {
+            "categoryCode": "remote_management",
+            "id": 46,
+            "name": "Remote Management",
+            "quantityLimit": 0,
+            "sortOrder": 31
+        },
+        "keyName": "REBOOT_REMOTE_CONSOLE",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "remote_management",
+                        "id": 46,
+                        "name": "Remote Management",
+                        "quantityLimit": 0,
+                        "sortOrder": 31
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": "0",
+                "id": 905,
+                "itemId": 503,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "0",
+                "setupFee": "0",
+                "sort": 0,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 439,
+        "itemCategory": {
+            "categoryCode": "bandwidth",
+            "id": 10,
+            "name": "Public Bandwidth",
+            "quantityLimit": 0,
+            "sortOrder": 29
+        },
+        "keyName": "BANDWIDTH_0_GB_2",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "bandwidth",
+                        "id": 10,
+                        "name": "Public Bandwidth",
+                        "quantityLimit": 0,
+                        "sortOrder": 29
+                    }
+                ],
+                "currentPriceFlag": null,
+                "hourlyRecurringFee": "0",
+                "id": 1800,
+                "itemId": 439,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "setupFee": "0",
+                "sort": 99,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    },
+    {
+        "id": 4481,
+        "itemCategory": {
+            "categoryCode": "bandwidth",
+            "id": 10,
+            "name": "Public Bandwidth",
+            "quantityLimit": 0,
+            "sortOrder": 29
+        },
+        "keyName": "BANDWIDTH_0_GB",
+        "prices": [
+            {
+                "categories": [
+                    {
+                        "categoryCode": "bandwidth",
+                        "id": 10,
+                        "name": "Public Bandwidth",
+                        "quantityLimit": 0,
+                        "sortOrder": 29
+                    }
+                ],
+                "currentPriceFlag": null,
+                "id": 22505,
+                "itemId": 4481,
+                "laborFee": "0",
+                "locationGroupId": null,
+                "onSaleFlag": null,
+                "oneTimeFee": "0",
+                "quantity": null,
+                "recurringFee": "0",
+                "setupFee": "0",
+                "sort": 98,
+                "termLength": null,
+                "tierMinimumThreshold": null
+            }
+        ]
+    }
+]

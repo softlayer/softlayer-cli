@@ -232,7 +232,9 @@ func (i orderManager) GenerateOrder(packageKeyname, location string, itemKeyname
 		}
 
 		for _, item := range presetItems.Prices {
-			if item.Item != nil && item.Item.ItemCategory != nil && item.Item.ItemCategory.CategoryCode != nil && *item.Item.ItemCategory.CategoryCode == "guest_core" {
+			if item.Item != nil && item.Item.ItemCategory != nil &&
+				item.Item.ItemCategory.CategoryCode != nil &&
+				*item.Item.ItemCategory.CategoryCode == "guest_core" {
 				if item.Item.Capacity != nil {
 					presetCore = float64(*item.Item.Capacity)
 				}
@@ -317,8 +319,9 @@ func (i orderManager) GetPresetbyKey(packageKeyname, presetKeyname string) (data
 	return activePresets[0], nil
 }
 
+// Makes an API call to get packageKeyName
+// Finds the given itemKeynames in the result, checking any capacity restrictions for the items if needed
 func (i orderManager) GetPriceIdList(packageKeyname string, itemKeynames []string, presetCore float64) ([]int, error) {
-
 	mask := "id, itemCategory, keyName, prices[categories]"
 	packages, err := i.GetPackageByKey(packageKeyname, "id")
 	if err != nil {
@@ -343,16 +346,22 @@ func (i orderManager) GetPriceIdList(packageKeyname string, itemKeynames []strin
 		if len(newItems) != 0 {
 			matchingItem = newItems[0]
 		} else {
-			return nil, errors.New(T("Item {{.Item}} does not exist for package {{.Package}}", map[string]interface{}{"Item": itemKeyname, "Package": packageKeyname}))
+			subs := map[string]interface{}{"Item": itemKeyname, "Package": packageKeyname}
+			return nil, errors.New(T("Item {{.Item}} does not exist for package {{.Package}}", subs))
 		}
+
 		var itemCategory string
 		if matchingItem.ItemCategory != nil && matchingItem.ItemCategory.CategoryCode != nil {
 			itemCategory = *matchingItem.ItemCategory.CategoryCode
 		}
+
 		if _, ok := categoryDict[itemCategory]; !ok {
 			for _, p := range matchingItem.Prices {
-				if ((p.LocationGroupId != nil && *p.LocationGroupId == 0) || p.LocationGroupId == nil) && p.Id != nil {
-					var capacityMin, capacityMax int
+				if ((p.LocationGroupId != nil && *p.LocationGroupId == 0) ||
+					p.LocationGroupId == nil) && p.Id != nil {
+
+					capacityMin := -1
+					capacityMax := -1
 					if p.CapacityRestrictionMinimum != nil {
 						capacityMin, err = strconv.Atoi(*p.CapacityRestrictionMinimum)
 						if err != nil {
@@ -375,7 +384,6 @@ func (i orderManager) GetPriceIdList(packageKeyname string, itemKeynames []strin
 							priceId = *p.Id
 						}
 					}
-
 				}
 			}
 		} else {
@@ -383,7 +391,10 @@ func (i orderManager) GetPriceIdList(packageKeyname string, itemKeynames []strin
 			categoryDict[itemCategory] += 1
 			categoryCode := itemCategory[:len(itemCategory)-1] + strconv.Itoa(categoryDict[itemCategory])
 			for _, p := range matchingItem.Prices {
-				if p.LocationGroupId != nil && *p.LocationGroupId == 0 && len(p.Categories) > 0 && p.Categories[0].CategoryCode != nil && *p.Categories[0].CategoryCode == categoryCode {
+				if p.LocationGroupId != nil && *p.LocationGroupId == 0 &&
+					len(p.Categories) > 0 && p.Categories[0].CategoryCode != nil &&
+					*p.Categories[0].CategoryCode == categoryCode {
+
 					PriceIdList = append(PriceIdList, *p.Id)
 				}
 			}

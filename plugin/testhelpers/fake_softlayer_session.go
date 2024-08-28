@@ -43,6 +43,41 @@ type ApiCallLog struct {
 	Options *sl.Options
 }
 
+func (call *ApiCallLog) String() string {
+	if call.Options == nil {
+		call.Options = new(sl.Options)
+	}
+	default_id := 0
+	default_mask := "''"
+	default_filter := "''"
+	default_args := ""
+	if call.Options.Id != nil {
+		default_id = *call.Options.Id
+	}
+	if call.Options.Mask != "" {
+		default_mask = call.Options.Mask
+	}
+	if call.Options.Filter != "" {
+		default_filter = call.Options.Filter
+	}
+	if len(call.Args) > 0 {
+		// This is what softlayer-go/session/rest.go does
+		parameters, err := json.Marshal(
+			map[string]interface{}{
+				"parameters": call.Args,
+			})
+		default_args = string(parameters)
+		if err != nil {
+			default_args = err.Error()
+		}
+
+	}
+	return fmt.Sprintf(
+		"%s::%s(id=%d, mask=%s, filter=%s, %s",
+		call.Service, call.Method, default_id, default_mask, default_filter, default_args,
+	)
+}
+
 func (h *FakeTransportHandler) DoRequest(sess *session.Session, service string, method string, args []interface{}, options *sl.Options, pResult interface{}) error {
 
 	if options == nil {
