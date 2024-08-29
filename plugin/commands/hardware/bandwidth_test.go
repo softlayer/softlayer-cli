@@ -127,12 +127,19 @@ var _ = Describe("Hardware bandwidth", func() {
 			})
 			It("Quiet output", func() {
 				fakeHardwareManager.GetBandwidthDataReturns(returnData, nil)
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime, "-q")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime, "--quiet")
 				Expect(err).NotTo(HaveOccurred())
 				outputs := fakeUI.Outputs()
 				Expect(outputs).To(ContainSubstring("Pub In    0.0032   0.2689         0.0016   2021-07-31 23:00"))
 				Expect(outputs).NotTo(ContainSubstring("2021-07-31 23:00   0.0016   0.0017    0.0000   0.0000"))
-
+			})
+			It("Quiet output, misspelled flag", func() {
+				fakeHardwareManager.GetBandwidthDataReturns(returnData, nil)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "-s", testTime, "-e", testTime, "--quite")
+				Expect(err).NotTo(HaveOccurred())
+				outputs := fakeUI.Outputs()
+				Expect(outputs).To(ContainSubstring("Pub In    0.0032   0.2689         0.0016   2021-07-31 23:00"))
+				Expect(outputs).NotTo(ContainSubstring("2021-07-31 23:00   0.0016   0.0017    0.0000   0.0000"))
 			})
 			It("Empty Response", func() {
 				fakeHardwareManager.GetBandwidthDataReturns([]datatypes.Metric_Tracking_Object_Data{}, nil)

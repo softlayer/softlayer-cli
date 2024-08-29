@@ -20,7 +20,7 @@ type BandwidthCommand struct {
 	Start           string
 	End             string
 	Rollup          int
-	quite           bool
+	quiet           bool
 }
 
 func NewBandwidthCommand(sl *metadata.SoftlayerCommand) (cmd *BandwidthCommand) {
@@ -50,7 +50,8 @@ Example::
 	cobraCmd.Flags().StringVarP(&thisCmd.Start, "start", "s", "", T("Start date for bandwdith reporting"))
 	cobraCmd.Flags().StringVarP(&thisCmd.End, "end", "e", "", T("End date for bandwidth reporting"))
 	cobraCmd.Flags().IntVarP(&thisCmd.Rollup, "rollup", "r", 0, T("Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds"))
-	cobraCmd.Flags().BoolVarP(&thisCmd.quite, "quite", "q", false, T("Only show the summary table."))
+	cobraCmd.Flags().BoolVarP(&thisCmd.quiet, "quiet", "q", false, T("Only show the summary table."))
+	cobraCmd.Flags().SetNormalizeFunc(utils.NormalizeQuietFlag)
 
 	thisCmd.Command = cobraCmd
 	return thisCmd
@@ -98,7 +99,7 @@ func (cmd *BandwidthCommand) Run(args []string) error {
 
 	summaryTable, bandwidthTable := virtual.BuildOutputTable(bandwidthData, cmd.UI)
 	summaryTable.Print()
-	if !cmd.quite {
+	if !cmd.quiet {
 		bandwidthTable.Print()
 	}
 
