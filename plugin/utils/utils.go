@@ -11,14 +11,14 @@ import (
 	"strings"
 	"time"
 
-	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
-
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/trace"
 	"github.com/softlayer/softlayer-go/datatypes"
 	"github.com/softlayer/softlayer-go/services"
 	"github.com/softlayer/softlayer-go/session"
 	"github.com/softlayer/softlayer-go/sl"
+	"github.com/spf13/pflag"
+	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/progress_bar"
 )
@@ -569,4 +569,16 @@ func FormatStringToTime(timestamp *string) string {
 	t := time.Unix(timeInt, 0)
 	return t.Format("2006-01-02 15:04:05")
 
+}
+
+// I always mix these up
+// QUIET => SHHHHHH
+// QUITE => absolutely; completely
+func NormalizeQuietFlag(f *pflag.FlagSet, name string) pflag.NormalizedName {
+	switch name {
+	case "quite":
+		name = "quiet"
+		break
+	}
+	return pflag.NormalizedName(name)
 }
