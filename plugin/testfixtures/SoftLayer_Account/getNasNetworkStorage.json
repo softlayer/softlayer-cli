@@ -21,7 +21,13 @@
         "storageType": {
             "keyName": "ENDURANCE_FILE_STORAGE"
         },
-        "username": "SL012345_1"
+        "username": "SL012345_1",
+        "billingItem": {
+            "orderItem": {
+                "order":{ "userRecord": { "username": "testUser"}}
+            }
+        },
+        "fileNetworkMountAddress": "SomePathGoesHere"
     },
     {
         "activeTransactionCount": 0,
@@ -30,17 +36,84 @@
         "id": 21021427,
         "replicationPartnerCount": 0,
         "serviceResource": {
-            "backendIpAddress": "nfswdc0401a-fz.service.softlayer.com",
+            "backendIpAddress": "cccccc-fz.service.softlayer.com",
             "id": 5373,
             "name": "Storage Type 01 Aggregate staaswdc0401_hp01",
             "type": {
                 "type": "NETAPP_STOR_AGGR"
+            },
+            "datacenter": {
+                "name": "dal19"
             }
         },
-        "serviceResourceBackendIpAddress": "nfswdc0401a-fz.service.softlayer.com",
+        "serviceResourceBackendIpAddress": "cccccc-fz.service.softlayer.com",
         "storageType": {
-            "keyName": "ENDURANCE_FILE_STORAGE"
+            "keyName": "ENDU56RANCE_FILE_STORAGE"
         },
-        "username": "SL12345_1_REP_1"
+        "username": "3SL12345_1_REP_1",
+        "billingItem": {
+            "orderItem": {
+                "order":{ "userRecord": { "username": "fffwww"}}
+            }
+        },
+        "fileNetworkMountAddress": "SomePathGoesHere"
+    },
+    {
+        "activeTransactionCount": 1,
+        "bytesUsed": "534636456",
+        "capacityGb": 120,
+        "id": 123,
+        "replicationPartnerCount": 0,
+        "serviceResource": {
+            "backendIpAddress": "bbbb-fz.service.softlayer.com",
+            "id": 5373,
+            "name": "Storage Type 01 Aggregate staaswdc0401_hp01",
+            "type": {
+                "type": "ZZZNETAPP_STOR_AGGR"
+            },
+            "datacenter": {
+                "name": "hou01"
+            }
+        },
+        "serviceResourceBackendIpAddress": "bbbb-fz.service.softlayer.com",
+        "storageType": {
+            "keyName": "E1NDURANCE_FILE_STORAGE"
+        },
+        "username": "SL112345_1_REP_1",
+        "billingItem": {
+            "orderItem": {
+                "order":{ "userRecord": { "username": "sssdddd"}}
+            }
+        },
+        "fileNetworkMountAddress": "podfgoicvbur"
+    },
+    {
+        "activeTransactionCount": 1,
+        "bytesUsed": "534636456",
+        "capacityGb": 12430,
+        "id": 154123,
+        "replicationPartnerCount": 0,
+        "serviceResource": {
+            "backendIpAddress": "nfswdc0401a-fz.service.softlayer.com",
+            "id": 53373,
+            "name": "Storage Type 01 Aggregate staaswdc0401_hp01",
+            "type": {
+                "type": "aZZZNETAPP_STOR_AGGR"
+            },
+            "datacenter": {
+                "name": "zou01"
+            }
+        },
+        "serviceResourceBackendIpAddress": "aaaaa-fz.service.softlayer.com",
+        "storageType": {
+            "keyName": "aE1NDURANCE_FILE_STORAGE"
+        },
+        "username": "SL1123445_1_REP_1",
+        "billingItem": {
+            "orderItem": {
+                "order":{ "userRecord": { "username": "zzzaaa"}}
+            }
+        },
+        "fileNetworkMountAddress": "eryexv"
     }
 ]

@@ -149,7 +149,7 @@ func (a VolumeByTxnCount) Swap(i, j int) {
 }
 func (a VolumeByTxnCount) Less(i, j int) bool {
 	if a[i].ActiveTransactionCount != nil && a[j].ActiveTransactionCount != nil {
-		return int(*a[i].ActiveTransactionCount) < int(*a[j].ActiveTransactionCount)
+		return uint(*a[i].ActiveTransactionCount) < uint(*a[j].ActiveTransactionCount)
 	}
 	return false
 }
