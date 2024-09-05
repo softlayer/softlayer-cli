@@ -1,8 +1,8 @@
 package ticket
 
 import (
-	"strconv"
 
+	"fmt"
 	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -45,15 +45,15 @@ func (cmd *SummaryTicketCommand) Run(args []string) error {
 		table := cmd.UI.Table([]string{T("Status:"), T("Count")})
 
 		table.Add(T("Open:"), "")
-		table.Add(T("Accounting"), strconv.Itoa(int(summary.Accounting)))
-		table.Add(T("Billing"), strconv.Itoa(int(summary.Billing)))
-		table.Add(T("Sales"), strconv.Itoa(int(summary.Sales)))
-		table.Add(T("Support"), strconv.Itoa(int(summary.Support)))
-		table.Add(T("Other"), strconv.Itoa(int(summary.Other)))
-		table.Add(T("Total"), strconv.Itoa(int(summary.Open)))
+		table.Add(T("Accounting"), fmt.Sprintf("%d", summary.Accounting))
+		table.Add(T("Billing"), fmt.Sprintf("%d", summary.Billing))
+		table.Add(T("Sales"), fmt.Sprintf("%d", summary.Sales))
+		table.Add(T("Support"), fmt.Sprintf("%d", summary.Support))
+		table.Add(T("Other"), fmt.Sprintf("%d", summary.Other))
+		table.Add(T("Total"), fmt.Sprintf("%d", summary.Open))
 		table.Add("", "")
 		table.Add(T("Closed:"), "")
-		table.Add(T("Total"), strconv.Itoa(int(summary.Closed)))
+		table.Add(T("Total"), fmt.Sprintf("%d", summary.Closed))
 
 		table.Print()
 

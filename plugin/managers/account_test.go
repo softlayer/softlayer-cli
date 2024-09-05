@@ -42,7 +42,7 @@ var _ = Describe("AccountManager", func() {
 			It("Returns no errors", func() {
 				totals, err := accountManager.GetBandwidthPoolServers(12345)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(totals).To(Equal(3))
+				Expect(totals).To(Equal(uint(3)))
 			})
 		})
 	})

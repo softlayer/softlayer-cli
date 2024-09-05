@@ -113,17 +113,17 @@ type FakeAccountManager struct {
 		result1 datatypes.Network_Bandwidth_Version1_Allotment
 		result2 error
 	}
-	GetBandwidthPoolServersStub        func(int) (int, error)
+	GetBandwidthPoolServersStub        func(int) (uint, error)
 	getBandwidthPoolServersMutex       sync.RWMutex
 	getBandwidthPoolServersArgsForCall []struct {
 		arg1 int
 	}
 	getBandwidthPoolServersReturns struct {
-		result1 int
+		result1 uint
 		result2 error
 	}
 	getBandwidthPoolServersReturnsOnCall map[int]struct {
-		result1 int
+		result1 uint
 		result2 error
 	}
 	GetBandwidthPoolsStub        func() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
@@ -791,7 +791,7 @@ func (fake *FakeAccountManager) GetBandwidthPoolDetailReturnsOnCall(i int, resul
 	}{result1, result2}
 }
 
-func (fake *FakeAccountManager) GetBandwidthPoolServers(arg1 int) (int, error) {
+func (fake *FakeAccountManager) GetBandwidthPoolServers(arg1 int) (uint, error) {
 	fake.getBandwidthPoolServersMutex.Lock()
 	ret, specificReturn := fake.getBandwidthPoolServersReturnsOnCall[len(fake.getBandwidthPoolServersArgsForCall)]
 	fake.getBandwidthPoolServersArgsForCall = append(fake.getBandwidthPoolServersArgsForCall, struct {
@@ -816,7 +816,7 @@ func (fake *FakeAccountManager) GetBandwidthPoolServersCallCount() int {
 	return len(fake.getBandwidthPoolServersArgsForCall)
 }
 
-func (fake *FakeAccountManager) GetBandwidthPoolServersCalls(stub func(int) (int, error)) {
+func (fake *FakeAccountManager) GetBandwidthPoolServersCalls(stub func(int) (uint, error)) {
 	fake.getBandwidthPoolServersMutex.Lock()
 	defer fake.getBandwidthPoolServersMutex.Unlock()
 	fake.GetBandwidthPoolServersStub = stub
@@ -829,28 +829,28 @@ func (fake *FakeAccountManager) GetBandwidthPoolServersArgsForCall(i int) int {
 	return argsForCall.arg1
 }
 
-func (fake *FakeAccountManager) GetBandwidthPoolServersReturns(result1 int, result2 error) {
+func (fake *FakeAccountManager) GetBandwidthPoolServersReturns(result1 uint, result2 error) {
 	fake.getBandwidthPoolServersMutex.Lock()
 	defer fake.getBandwidthPoolServersMutex.Unlock()
 	fake.GetBandwidthPoolServersStub = nil
 	fake.getBandwidthPoolServersReturns = struct {
-		result1 int
+		result1 uint
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeAccountManager) GetBandwidthPoolServersReturnsOnCall(i int, result1 int, result2 error) {
+func (fake *FakeAccountManager) GetBandwidthPoolServersReturnsOnCall(i int, result1 uint, result2 error) {
 	fake.getBandwidthPoolServersMutex.Lock()
 	defer fake.getBandwidthPoolServersMutex.Unlock()
 	fake.GetBandwidthPoolServersStub = nil
 	if fake.getBandwidthPoolServersReturnsOnCall == nil {
 		fake.getBandwidthPoolServersReturnsOnCall = make(map[int]struct {
-			result1 int
+			result1 uint
 			result2 error
 		})
 	}
 	fake.getBandwidthPoolServersReturnsOnCall[i] = struct {
-		result1 int
+		result1 uint
 		result2 error
 	}{result1, result2}
 }

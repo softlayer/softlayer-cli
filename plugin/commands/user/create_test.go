@@ -2,7 +2,6 @@ package user_test
 
 import (
 	"errors"
-	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
