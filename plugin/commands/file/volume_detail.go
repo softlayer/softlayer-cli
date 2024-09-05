@@ -103,6 +103,7 @@ func (cmd *VolumeDetailCommand) Run(args []string) error {
 	}
 
 	table.Add(T("Replicant Count"), utils.FormatUIntPointer(fileVolume.ReplicationPartnerCount))
+	// #nosec G115 -- Should never be > 2^32
 	if fileVolume.ReplicationPartnerCount != nil && int(*fileVolume.ReplicationPartnerCount) > 0 {
 		table.Add(T("Replication Status"), utils.FormatStringPointer(fileVolume.ReplicationStatus))
 		buf := new(bytes.Buffer)

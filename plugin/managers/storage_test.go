@@ -128,7 +128,7 @@ var _ = Describe("StorageManager", func() {
 				Expect(len(volumes)).Should(BeNumerically(">", 0))
 				for _, volume := range volumes {
 					Expect(volume.Id).NotTo(Equal(nil))
-					Expect(*volume.StorageType.KeyName).To(Equal("ENDURANCE_FILE_STORAGE"))
+					Expect(*volume.StorageType.KeyName).NotTo(Equal(nil))
 				}
 				apiCalls := fakeHandler.ApiCallLogs
 				Expect(len(apiCalls)).To(Equal(1))

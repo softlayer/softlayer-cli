@@ -1,15 +1,11 @@
 package user
 
 import (
-	crand "crypto/rand"
-	"encoding/binary"
 	"encoding/json"
 	"fmt"
-	"log"
-	"math/rand"
 	"reflect"
-	"strings"
 
+	gopass "github.com/sethvargo/go-password/password"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -92,7 +88,7 @@ func (cmd *CreateCommand) Run(args []string) error {
 
 	password := cmd.Password
 	if password == "generate" {
-		password = string(GeneratePassword(23, 4))
+		password = gopass.MustGenerate(18, 4, 4, false, false)
 	}
 
 	vpnPassword := cmd.VpnPassword
@@ -139,54 +135,9 @@ func printUser(user datatypes.User_Customer, password string, ui terminal.UI) {
 	table.Print()
 }
 
-// random source leveraging crypto/rand to provide
-// true non-determinstic
-type cryptoSource struct{}
-
-func (s cryptoSource) Seed(seed int64) {}
-
-func (s cryptoSource) Int63() int64 {
-	return int64(s.Uint64() & ^uint64(1<<63))
-}
-
-func (s cryptoSource) Uint64() (v uint64) {
-	err := binary.Read(crand.Reader, binary.BigEndian, &v)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return v
-}
-
-// GeneratePassword will create a random password
-// Returns a 23 character random string
-// 0  only number
-// 1  lower and upper
-// 2   upper
-// 3   special
-// 4  all
-func GeneratePassword(size int, kind int) []byte {
-	ikind, kinds, result := kind, [][]int{{10, 48}, {26, 97}, {26, 65}, {10, 38}}, make([]byte, size)
-	isAll := kind > 3 || kind < 0
-
-	// #nosec G404: Use "crypto/rand" as the seed, which should resolve the pseudo "math/rand"
-	rnd := rand.New(&cryptoSource{})
-	generate := true
-	for generate {
-		result = make([]byte, size)
-		for i := 0; i < size; i++ {
-			if isAll { // random ikind
-				ikind = rnd.Intn(4)
-			}
-			scope, base := kinds[ikind][0], kinds[ikind][1]
-			result[i] = uint8(base + rnd.Intn(scope))
-		}
-		generate = !IsValidPassword(string(result))
-	}
-	return result
-}
-
+// Values of B get copied into A
+// A <--- B
 func StructAssignment(A, B interface{}) { //a =b
-
 	av := reflect.ValueOf(A).Elem()
 	at := av.Type()
 
@@ -201,35 +152,4 @@ func StructAssignment(A, B interface{}) { //a =b
 			}
 		}
 	}
-}
-
-func IsValidPassword(output string) bool {
-	output = strings.TrimSpace(output)
-	var uppercase, lowercase, number, simbol, lenght bool
-	//Verify lenght is 23
-	if len(output) == 23 {
-		lenght = true
-	}
-	for _, char := range output {
-		//Verify exist uppercase
-		if int(char) >= 65 && int(char) <= 90 {
-			uppercase = true
-		}
-		//Verify exist lowercase
-		if int(char) >= 97 && int(char) <= 122 {
-			lowercase = true
-		}
-		//Verify exist number
-		if int(char) >= 48 && int(char) <= 57 {
-			number = true
-		}
-		//Verify exist simbol
-		if int(char) >= 33 && int(char) <= 47 {
-			simbol = true
-		}
-	}
-	if uppercase && lowercase && number && simbol && lenght {
-		return true
-	}
-	return false
 }

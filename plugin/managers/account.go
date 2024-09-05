@@ -15,7 +15,7 @@ import (
 type AccountManager interface {
 	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
-	GetBandwidthPoolServers(identifier int) (int, error)
+	GetBandwidthPoolServers(identifier int) (uint, error)
 	GetBillingItems(objectMask string, objectFilter string) ([]datatypes.Billing_Item, error)
 	GetEvents(typeEvent string, mask string, dateFilter string) ([]datatypes.Notification_Occurrence_Event, error)
 	GetEventDetail(identifier int, mask string) (datatypes.Notification_Occurrence_Event, error)
@@ -65,16 +65,16 @@ func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error)
 			}
 			datacenters[name]["vlan_count"]++
 			if vlan.TotalPrimaryIpAddressCount != nil {
-				datacenters[name]["public_ip_count"] += int(*vlan.TotalPrimaryIpAddressCount)
+				datacenters[name]["public_ip_count"] += int(*vlan.TotalPrimaryIpAddressCount) // #nosec G115 -- Should never be > 2^32
 			}
 			if vlan.SubnetCount != nil {
-				datacenters[name]["subnet_count"] += int(*vlan.SubnetCount)
+				datacenters[name]["subnet_count"] += int(*vlan.SubnetCount) // #nosec G115 -- Should never be > 2^32
 			}
 			if vlan.HardwareCount != nil {
-				datacenters[name]["hardware_count"] += int(*vlan.HardwareCount)
+				datacenters[name]["hardware_count"] += int(*vlan.HardwareCount) // #nosec G115 -- Should never be > 2^32
 			}
 			if vlan.VirtualGuestCount != nil {
-				datacenters[name]["virtual_guest_count"] += int(*vlan.VirtualGuestCount)
+				datacenters[name]["virtual_guest_count"] += int(*vlan.VirtualGuestCount) // #nosec G115 -- Should never be > 2^32
 			}
 		}
 	}
@@ -93,19 +93,20 @@ Gets a count of all servers in a bandwidth pool
 Getting the server counts individually is significantly faster than pulling them in
 with the GetBandwidthPools api call.
 */
-func (a accountManager) GetBandwidthPoolServers(identifier int) (int, error) {
+func (a accountManager) GetBandwidthPoolServers(identifier int) (uint, error) {
 	mask := "mask[id, bareMetalInstanceCount, hardwareCount, virtualGuestCount]"
 	allotmentService := services.GetNetworkBandwidthVersion1AllotmentService(a.Session)
 	counts, err := allotmentService.Mask(mask).Id(identifier).GetObject()
-	total := 0
+	var total uint
+	total = 0
 	if counts.BareMetalInstanceCount != nil {
-		total += int(*counts.BareMetalInstanceCount)
+		total += *counts.BareMetalInstanceCount
 	}
 	if counts.HardwareCount != nil {
-		total += int(*counts.HardwareCount)
+		total += *counts.HardwareCount
 	}
 	if counts.VirtualGuestCount != nil {
-		total += int(*counts.VirtualGuestCount)
+		total += *counts.VirtualGuestCount
 	}
 	return total, err
 }
