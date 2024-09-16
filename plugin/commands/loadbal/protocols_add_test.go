@@ -87,6 +87,17 @@ var _ = Describe("LoadBal_protocol-add_Test", func() {
 			Expect(*argsForCall[0].LoadBalancingMethod).To(Equal("ROUNDROBIN"))
 			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 		})
+		It("--ssl-id option", func() {
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--ssl-id=9999", "--front-protocol=HTTPS")
+			Expect(err).NotTo(HaveOccurred())
+			lbUUID, argsForCall := fakeLBManager.AddLoadBalancerListenerArgsForCall(0)
+			Expect(*lbUUID).To(Equal("aaa-bbb-111"))
+			Expect(len(argsForCall)).To(Equal(1))
+			Expect(*argsForCall[0].FrontendProtocol).To(Equal("HTTPS"))
+			Expect(*argsForCall[0].BackendProtocol).To(Equal("HTTP"))
+			Expect(*argsForCall[0].TlsCertificateId).To(Equal(9999))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
+		})
 		It("with sticky as cookie", func() {
 			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--sticky", "cookie")
 			Expect(err).NotTo(HaveOccurred())

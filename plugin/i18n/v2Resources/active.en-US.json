@@ -185,9 +185,6 @@
   "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]": {
     "other": "${COMMAND_NAME} sl loadbal order-options [-d, --datacenter DATACENTER]"
   },
-  "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]": {
-    "other": "${COMMAND_NAME} sl loadbal protocol-add (--id LOADBAL_ID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"
-  },
   "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)": {
     "other": "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)"
   },
@@ -1567,6 +1564,9 @@
   },
   "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}.": {
     "other": "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}."
+  },
+  "Creates a new mapping between incoming traffic to the loadbalancer and the backend servers.\nUse '{COMMAND_NAME}  sl security cert-list' to get IDs for the --ssl-id option.\nSee: https://cloud.ibm.com/docs/loadbalancer-service?topic=loadbalancer-service-about-ibm-cloud-load-balancer for more details\n\nExample:\n\t${COMMAND_NAME} sl loadbal protocol-add --id 1115129 --front-port 443 --front-protocol HTTPS --back-port 80 --back-protocol HTTP --ssl-id 335659 --client-timeout 60 --connections 100\n\tCreates a new protocol on Load Balancer 1115129 that terminates SSL on port 443, mapping to a backend port 80 HTTP. Using SSL cert 335659\n": {
+    "other": "Creates a new mapping between incoming traffic to the loadbalancer and the backend servers.\nUse '{COMMAND_NAME}  sl security cert-list' to get IDs for the --ssl-id option.\nSee: https://cloud.ibm.com/docs/loadbalancer-service?topic=loadbalancer-service-about-ibm-cloud-load-balancer for more details\n\nExample:\n\t${COMMAND_NAME} sl loadbal protocol-add --id 1115129 --front-port 443 --front-protocol HTTPS --back-port 80 --back-protocol HTTP --ssl-id 335659 --client-timeout 60 --connections 100\n\tCreates a new protocol on Load Balancer 1115129 that terminates SSL on port 443, mapping to a backend port 80 HTTP. Using SSL cert 335659\n"
   },
   "Creates a purge record and also initiates the purge call.": {
     "other": "Creates a purge record and also initiates the purge call."
@@ -3914,6 +3914,9 @@
   "Identifier": {
     "other": "Identifier"
   },
+  "Identifier of the SSL certificate to attach to this protocol. Only valid for HTTPS.": {
+    "other": "Identifier of the SSL certificate to attach to this protocol. Only valid for HTTPS."
+  },
   "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.": {
     "other": "If a volume (with replication) becomes inaccessible due to a disaster event, this method can be used to immediately\nfailover to an available replica in another location. This method does not allow for fail back via the API.\nTo fail back to the original volume after using this method, open a support ticket.\nTo test failover, use '${COMMAND_NAME} sl {{.storageType}} replica-failover' instead.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} disaster-recovery-failover 12345678 87654321\n\tThis command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321."
   },
@@ -5008,9 +5011,6 @@
   },
   "POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action": {
     "other": "POOL_UUID, URL or HTTPS_PROTOCOL_UUID . It's only available in REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS action"
-  },
-  "PPTP VPN": {
-    "other": "PPTP VPN"
   },
   "Package": {
     "other": "Package"
