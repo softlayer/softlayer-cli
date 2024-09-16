@@ -188,9 +188,6 @@
   "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)": {
     "other": "${COMMAND_NAME} sl loadbal protocol-delete (--lb-id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID)"
   },
-  "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]": {
-    "other": "${COMMAND_NAME} sl loadbal protocol-edit (--id LOADBAL_ID) (--protocol-uuid PROTOCOL_UUID) [--front-protocol PROTOCOL] [back-protocol PROTOCOL] [--front-port PORT] [--back-port PORT] [-m, --method METHOD] [-c, --connections CONNECTIONS] [--sticky cookie | source-ip] [--client-timeout SECONDS] [--server-timeout SECONDS]"
-  },
   "${COMMAND_NAME} sl object-storage accounts": {
     "other": "${COMMAND_NAME} sl object-storage accounts"
   },
@@ -7096,6 +7093,9 @@
   },
   "Usage information.": {
     "other": "Usage information."
+  },
+  "Use '${COMMAND_NAME} sl loadbal detail' to find the --protocol-uuid values for a loadbalancer\nExample:\n\t${COMMAND_NAME} sl loadbal protocol-add --id 1115129 --protocol-uuid 8ec8911a-c32d-4678-89fe-979f182c822f --ssl-id 123\n\tThis command changes the SSL certificate\n": {
+    "other": "Use '${COMMAND_NAME} sl loadbal detail' to find the --protocol-uuid values for a loadbalancer\nExample:\n\t${COMMAND_NAME} sl loadbal protocol-add --id 1115129 --protocol-uuid 8ec8911a-c32d-4678-89fe-979f182c822f --ssl-id 123\n\tThis command changes the SSL certificate\n"
   },
   "Use 'cookie' or 'source-ip' to stick": {
     "other": "Use 'cookie' or 'source-ip' to stick"

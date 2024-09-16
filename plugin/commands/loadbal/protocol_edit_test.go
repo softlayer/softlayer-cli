@@ -2,7 +2,7 @@ package loadbal_test
 
 import (
 	"errors"
-
+	"fmt"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -41,11 +41,11 @@ var _ = Describe("LoadBal_protocol-edit_Test", func() {
 		It("Error No Id", func() {
 			err := testhelpers.RunCobraCommand(cliCommand.Command)
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--id' is required"))
+			Expect(err.Error()).To(ContainSubstring(`required flag(s) "id", "protocol-uuid" not set`))
 		})
 		It("Error unable to find Id", func() {
 			fakeLBManager.GetLoadBalancerUUIDReturns("-", errors.New("SoftLayer_Exception_ApiError"))
-			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345")
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--protocol-uuid=aaaa")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Failed to get load balancer: SoftLayer_Exception_ApiError"))
 		})
@@ -55,11 +55,14 @@ var _ = Describe("LoadBal_protocol-edit_Test", func() {
 		It("Error no UUID", func() {
 			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345")
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("'--protocol-uuid' is required"))
+			Expect(err.Error()).To(ContainSubstring(`required flag(s) "protocol-uuid" not set`))
 		})
 	})
 
 	Context("Testing Options", func() {
+		BeforeEach(func() {
+			fakeLBManager.GetLoadBalancerUUIDReturns("aaa-bbb-111", nil)
+		})
 		It("with all arguments", func() {
 			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--protocol-uuid", "abc123", "--front-protocol", "HTTP", "--back-protocol", "HTTP", "--front-port", "80", "--back-port", "80", "--method", "ROUNDROBIN", "--client-timeout", "100", "--server-timeout", "100", "--sticky", "cookie", "--connections", "5")
 			Expect(err).NotTo(HaveOccurred())
@@ -76,6 +79,19 @@ var _ = Describe("LoadBal_protocol-edit_Test", func() {
 			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--protocol-uuid", "abc123", "--sticky", "abc")
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Value of option '--sticky' should be cookie or source-ip"))
+		})
+		It("--ssl-id option", func() {
+			err := testhelpers.RunCobraCommand(cliCommand.Command, "--id", "12345", "--protocol-uuid=aaaa", "--ssl-id=9999", "--front-protocol=HTTPS")
+			Expect(err).NotTo(HaveOccurred())
+			lbUUID, argsForCall := fakeLBManager.AddLoadBalancerListenerArgsForCall(0)
+			Expect(*lbUUID).To(Equal("aaa-bbb-111"))
+			Expect(len(argsForCall)).To(Equal(1))
+			// Making sure we are not sending in options we did not specify
+			Expect(argsForCall[0].BackendProtocol).To(BeNil())
+
+			Expect(*argsForCall[0].FrontendProtocol).To(Equal("HTTPS"))
+			Expect(*argsForCall[0].TlsCertificateId).To(Equal(9999))
+			Expect(fakeUI.Outputs()).To(ContainSubstring("OK"))
 		})
 	})
 

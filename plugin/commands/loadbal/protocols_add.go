@@ -26,7 +26,7 @@ type ProtocolAddCommand struct {
 	Sticky              string
 	ClientTimeout       int
 	ServerTimeout       int
-	SslId				int
+	SslId               int
 }
 
 func NewProtocolAddCommand(sl *metadata.SoftlayerCommand) *ProtocolAddCommand {
@@ -37,7 +37,7 @@ func NewProtocolAddCommand(sl *metadata.SoftlayerCommand) *ProtocolAddCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "protocol-add",
 		Short: T("Add a new load balancer protocol"),
-		Long:  T(`Creates a new mapping between incoming traffic to the loadbalancer and the backend servers.
+		Long: T(`Creates a new mapping between incoming traffic to the loadbalancer and the backend servers.
 Use '{COMMAND_NAME}  sl security cert-list' to get IDs for the --ssl-id option.
 See: https://cloud.ibm.com/docs/loadbalancer-service?topic=loadbalancer-service-about-ibm-cloud-load-balancer for more details
 
@@ -45,7 +45,7 @@ Example:
 	${COMMAND_NAME} sl loadbal protocol-add --id 1115129 --front-port 443 --front-protocol HTTPS --back-port 80 --back-protocol HTTP --ssl-id 335659 --client-timeout 60 --connections 100
 	Creates a new protocol on Load Balancer 1115129 that terminates SSL on port 443, mapping to a backend port 80 HTTP. Using SSL cert 335659
 `),
-		Args:  metadata.NoArgs,
+		Args: metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
 		},
@@ -70,7 +70,6 @@ func (cmd *ProtocolAddCommand) Run(args []string) error {
 	if loadbalID == 0 {
 		return errors.NewMissingInputError("--id")
 	}
-
 
 	loadbalancerUUID, err := cmd.LoadBalancerManager.GetLoadBalancerUUID(loadbalID)
 	if err != nil {
