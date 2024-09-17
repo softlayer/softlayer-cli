@@ -26,8 +26,7 @@ func NewReplicaLocationsCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaLo
 	cobraCmd := &cobra.Command{
 		Use:   "replica-locations " + T("IDENTIFIER"),
 		Short: T("List suitable replication datacenters for the given volume"),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]
-		
+		Long: T(`
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678
    This command lists suitable replication data centers for block volume with ID 12345678.`, sl.StorageI18n),
