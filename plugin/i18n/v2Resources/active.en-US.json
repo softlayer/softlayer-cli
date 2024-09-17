@@ -374,9 +374,6 @@
   "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678."
   },
-  "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-enable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained."
-  },
   "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID."
   },
@@ -1640,8 +1637,8 @@
   "Date time": {
     "other": "Date time"
   },
-  "Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday": {
-    "other": "Day of the week when snapshots should be taken, integer between 0 to 6. \n      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday"
+  "Day of the week when snapshots should be taken, integer between 0 to 6. \n\t      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday": {
+    "other": "Day of the week when snapshots should be taken, integer between 0 to 6. \n\t      0 means Sunday,1 means Monday,2 means Tuesday,3 means Wendesday,4 means Thursday,5 means Friday,6 means Saturday"
   },
   "Dedicated Access": {
     "other": "Dedicated Access"
@@ -4751,8 +4748,8 @@
   "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds": {
     "other": "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds"
   },
-  "Number of snapshots to retain [required]": {
-    "other": "Number of snapshots to retain [required]"
+  "Number of snapshots to retain": {
+    "other": "Number of snapshots to retain"
   },
   "Number of times before marking as DOWN. [1-10]": {
     "other": "Number of times before marking as DOWN. [1-10]"
@@ -5786,6 +5783,9 @@
   "Security group {{.ID}} is updated.": {
     "other": "Security group {{.ID}} is updated."
   },
+  "See https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage/enableSnapshots/ for more details about these options.\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.": {
+    "other": "See https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage/enableSnapshots/ for more details about these options.\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained."
+  },
   "Serial #": {
     "other": "Serial #"
   },
@@ -5992,6 +5992,9 @@
   },
   "Snapshot schedule to use for replication. Options are: HOURLY,DAILY,WEEKLY [required]": {
     "other": "Snapshot schedule to use for replication. Options are: HOURLY,DAILY,WEEKLY [required]"
+  },
+  "Snapshot schedule, options are: {{.ScheduleTypes}}": {
+    "other": "Snapshot schedule, options are: {{.ScheduleTypes}}"
   },
   "Snapshot space not found for original volume, origin snapshot space is needed for duplication": {
     "other": "Snapshot space not found for original volume, origin snapshot space is needed for duplication"
@@ -7361,8 +7364,8 @@
   "[-s|--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY.": {
     "other": "[-s|--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY."
   },
-  "[-s|--schedule-type] must be HOURLY, DAILY, or WEEKLY.": {
-    "other": "[-s|--schedule-type] must be HOURLY, DAILY, or WEEKLY."
+  "[-s|--schedule-type] needs to be one of {{.ScheduleTypes}}, not {{.Selected}}.": {
+    "other": "[-s|--schedule-type] needs to be one of {{.ScheduleTypes}}, not {{.Selected}}."
   },
   "[-s|--size] is required.\nRun '{{.CommandName}} sl block volume-options' to get available options.": {
     "other": "[-s|--size] is required.\nRun '{{.CommandName}} sl block volume-options' to get available options."
