@@ -60,8 +60,8 @@ Example:
 	cobraCmd.Flags().IntVar(&thisCmd.ClientTimeout, "client-timeout", -1, T("Client side timeout setting, in seconds"))
 	cobraCmd.Flags().IntVar(&thisCmd.ServerTimeout, "server-timeout", -1, T("Server side timeout setting, in seconds"))
 	cobraCmd.Flags().IntVar(&thisCmd.SslId, "ssl-id", -1, T("Identifier of the SSL certificate to attach to this protocol. Only valid for HTTPS."))
-	cobraCmd.MarkFlagRequired("id")
-	cobraCmd.MarkFlagRequired("protocol-uuid")
+	cobraCmd.MarkFlagRequired("id") //#nosec G104
+	cobraCmd.MarkFlagRequired("protocol-uuid") //#nosec G104
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }

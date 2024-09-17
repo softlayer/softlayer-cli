@@ -2,7 +2,6 @@ package loadbal_test
 
 import (
 	"errors"
-	"fmt"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
