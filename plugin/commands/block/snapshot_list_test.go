@@ -56,27 +56,19 @@ var _ = Describe("Snapshot list", func() {
 		cliCommand.StorageManager = FakeStorageManager
 	})
 
-	Describe("Snapshot list", func() {
-		Context("Snapshot list without volume id", func() {
-			It("return error", func() {
+	Describe("Snapshot list tests", func() {
+		Context("Usage Errors", func() {
+			It("No volumeid", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
-		})
-		Context("Snapshot list with wrong volume id", func() {
-			It("return error", func() {
+			It("Bad volume id", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
-		})
-
-		Context("Snapshot list with wrong --sortby", func() {
-			BeforeEach(func() {
-				FakeStorageManager.GetVolumeSnapshotListReturns(nil, nil)
-			})
-			It("return error", func() {
+			It("Bad --sortby", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "bcd")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: --sortby bcd is not supported."))
@@ -87,7 +79,7 @@ var _ = Describe("Snapshot list", func() {
 			BeforeEach(func() {
 				FakeStorageManager.GetVolumeSnapshotListReturns(nil, errors.New("Internal Server Error"))
 			})
-			It("return error", func() {
+			It("SL API ERROR", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get snapshot list on your account."))
@@ -99,7 +91,7 @@ var _ = Describe("Snapshot list", func() {
 			BeforeEach(func() {
 				FakeStorageManager.GetVolumeSnapshotListReturns(fakeReturn, nil)
 			})
-			It("return no error", func() {
+			It("Happy Path", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
 				// I don't like ContainSubstrings, but its useful for checking for multiple strings in a single line
@@ -109,13 +101,7 @@ var _ = Describe("Snapshot list", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"3", "sp-0003", "2016-12-28T00:12:00", "100"}))
 
 			})
-		})
-
-		Context("Snapshot list with correct volume id and --sortby=size_bytes", func() {
-			BeforeEach(func() {
-				FakeStorageManager.GetVolumeSnapshotListReturns(fakeReturn, nil)
-			})
-			It("return no error", func() {
+			It("Sorted by size_bytes", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "size_bytes")
 				Expect(err).NotTo(HaveOccurred())
 				rows := strings.Split(fakeUI.Outputs(), "\n")
@@ -123,13 +109,7 @@ var _ = Describe("Snapshot list", func() {
 				Expect(rows[2]).To(ContainSubstring("500"))
 				Expect(rows[3]).To(ContainSubstring("540"))
 			})
-		})
-
-		Context("Snapshot list with correct volume id and --sortby=created", func() {
-			BeforeEach(func() {
-				FakeStorageManager.GetVolumeSnapshotListReturns(fakeReturn, nil)
-			})
-			It("return no error", func() {
+			It("Sorted by created", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "created")
 				Expect(err).NotTo(HaveOccurred())
 				rows := strings.Split(fakeUI.Outputs(), "\n")
@@ -137,13 +117,7 @@ var _ = Describe("Snapshot list", func() {
 				Expect(rows[2]).To(ContainSubstring("2016-12-26T00:12:00"))
 				Expect(rows[3]).To(ContainSubstring("2016-12-28T00:12:00"))
 			})
-		})
-
-		Context("Snapshot list with correct volume id and --sortby=created", func() {
-			BeforeEach(func() {
-				FakeStorageManager.GetVolumeSnapshotListReturns(fakeReturn, nil)
-			})
-			It("return no error", func() {
+			It("Sorted by name", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "name")
 				Expect(err).NotTo(HaveOccurred())
 				rows := strings.Split(fakeUI.Outputs(), "\n")

@@ -28,8 +28,7 @@ func NewSnapshotListCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotListC
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-list " + T("IDENTIFIER"),
 		Short: T("List {{.storageType}} storage snapshots", sl.StorageI18n),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]
-
+		Long: T(`
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id 
    This command lists all snapshots of volume with ID 12345678 and sorts them by ID.`, sl.StorageI18n),

@@ -2,6 +2,7 @@ package block
 
 import (
 	"fmt"
+	"slices"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -24,6 +25,8 @@ type SnapshotOrderCommand struct {
 	Force          bool
 }
 
+var TIERS = []float64{0.25, 2, 4, 10}
+
 func NewSnapshotOrderCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotOrderCommand {
 	thisCmd := &SnapshotOrderCommand{
 		SoftlayerStorageCommand: sl,
@@ -32,7 +35,8 @@ func NewSnapshotOrderCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotOrde
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-order " + T("IDENTIFIER"),
 		Short: T("Order snapshot space for a block storage volume"),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]
+		Long: T(`See https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-getting-started for sizing options.
+${COMMAND_NAME} sl block volume-options' to get available options.
 
 EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 
@@ -42,11 +46,15 @@ EXAMPLE:
 			return thisCmd.Run(args)
 		},
 	}
-	cobraCmd.Flags().IntVarP(&thisCmd.Size, "size", "s", 0, T("Size of snapshot space to create in GB  [required]"))
-	cobraCmd.Flags().Float64VarP(&thisCmd.Tier, "tier", "t", 0, T("Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10"))
-	cobraCmd.Flags().IntVarP(&thisCmd.Iops, "iops", "i", 0, T("Performance Storage IOPs, between 100 and 6000 in multiples of 100"))
-	cobraCmd.Flags().BoolVarP(&thisCmd.Upgrade, "upgrade", "u", false, T("Flag to indicate that the order is an upgrade"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Size, "size", "s", 0, T("Size of snapshot space to create in GB"))
+	cobraCmd.Flags().Float64VarP(&thisCmd.Tier, "tier", "t", 0,
+		T("Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10"))
+	cobraCmd.Flags().IntVarP(&thisCmd.Iops, "iops", "i", 0,
+		T("Performance Storage IOPs, between 100 and 6000 in multiples of 100"))
+	cobraCmd.Flags().BoolVarP(&thisCmd.Upgrade, "upgrade", "u", false,
+		T("Flag to indicate that the order is an upgrade"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
+	cobraCmd.MarkFlagRequired("size") // #nosec G104 -- Doesn't matter if this errors
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
@@ -57,27 +65,16 @@ func (cmd *SnapshotOrderCommand) Run(args []string) error {
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
 	}
-	subs := map[string]interface{}{"CommandName": "ibmcloud"}
-	if cmd.Size == 0 {
-		return slErr.NewInvalidUsageError(T("[-s|--size] is required.\nRun '{{.CommandName}} sl block volume-options' to get available options.", subs))
-	}
-	size := cmd.Size
 
-	tier := cmd.Tier
-	if tier > 0 {
-		if tier != 0 && tier != 0.25 && tier != 2 && tier != 4 && tier != 10 {
+	if cmd.Tier > 0 {
+		if !slices.Contains(TIERS, cmd.Tier) {
 			return slErr.NewInvalidUsageError(T("[-t|--tier] is optional, options are: 0.25,2,4,10."))
 		}
 	}
-	iops := cmd.Iops
-	if iops > 0 {
-		if iops < 100 || iops > 6000 {
-			return slErr.NewInvalidUsageError(T("-i|--iops must be between 100 and 6000, inclusive.\nRun '{{.CommandName}} sl block volume-options' to check available options.", subs))
 
-		}
-		if iops%100 != 0 {
-			return slErr.NewInvalidUsageError(T("-i|--iops must be a multiple of 100.\nRun '{{.CommandName}} sl block volume-options' to check available options.", subs))
-
+	if cmd.Iops > 0 {
+		if cmd.Iops%100 != 0 {
+			return slErr.NewInvalidUsageError(T("-i|--iops must be a multiple of 100."))
 		}
 	}
 
@@ -93,10 +90,12 @@ func (cmd *SnapshotOrderCommand) Run(args []string) error {
 			return nil
 		}
 	}
-	orderReceipt, err := cmd.StorageManager.OrderSnapshotSpace("block", volumeID, size, tier, iops, cmd.Upgrade)
+	orderReceipt, err := cmd.StorageManager.OrderSnapshotSpace(
+		cmd.GetStorageType(), volumeID, cmd.Size, cmd.Tier, cmd.Iops, cmd.Upgrade)
 	if err != nil {
-		return slErr.NewAPIError(T("Failed to order snapshot space for volume {{.VolumeID}}.Please verify your options and try again.\n",
-			map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
+		return slErr.NewAPIError(
+			T("Failed to order snapshot space for volume {{.VolumeID}}.Please verify your options and try again.\n",
+				map[string]interface{}{"VolumeID": volumeID}), err.Error(), 2)
 	}
 
 	if outputFormat == "JSON" {

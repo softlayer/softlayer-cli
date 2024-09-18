@@ -32,29 +32,23 @@ var _ = Describe("Snapshot restore", func() {
 	})
 
 	Describe("Snapshot restore", func() {
-		Context("Snapshot restore without volume id", func() {
-			It("return error", func() {
+		Context("Input Validation", func() {
+			It("No arguments", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires two arguments."))
 			})
-		})
-		Context("Snapshot order without snapshot id", func() {
-			It("return error", func() {
+			It("Missing snapshot", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires two arguments."))
 			})
-		})
-		Context("Snapshot order with wrong volume id", func() {
-			It("return error", func() {
+			It("Bad VolumeID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
-		})
-		Context("Snapshot order with wrong snapshot id", func() {
-			It("return error", func() {
+			It("Bad SnapshotId", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "abc")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Snapshot ID'. It must be a positive integer."))
@@ -65,7 +59,7 @@ var _ = Describe("Snapshot restore", func() {
 			BeforeEach(func() {
 				FakeStorageManager.RestoreFromSnapshotReturns(nil)
 			})
-			It("return no error", func() {
+			It("Happy path", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "456")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Block volume 123 is being restored using snapshot 456."))
@@ -76,7 +70,7 @@ var _ = Describe("Snapshot restore", func() {
 			BeforeEach(func() {
 				FakeStorageManager.RestoreFromSnapshotReturns(errors.New("Internal Server Error"))
 			})
-			It("return error", func() {
+			It("API Error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "456")
 				Expect(err).To(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("OK"))

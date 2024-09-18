@@ -2,6 +2,12 @@
   "\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.": {
     "other": "\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678."
   },
+  "\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.": {
+    "other": "\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID."
+  },
+  "\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.": {
+    "other": "\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321."
+  },
   "\nLUN name": {
     "other": "\nLUN name"
   },
@@ -374,15 +380,6 @@
   "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-disable VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-disable 12345678 -s DAILY\n   This command disables daily snapshot for volume with ID 12345678."
   },
-  "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-list VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-list 12345678 --sortby id \n   This command lists all snapshots of volume with ID 12345678 and sorts them by ID."
-  },
-  "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-order VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB."
-  },
-  "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-restore VOLUME_ID SNAPSHOT_ID\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-restore 12345678 87654321\n   This command restores volume with ID 12345678 from snapshot with ID 87654321."
-  },
   "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>": {
     "other": "${COMMAND_NAME} sl {{.storageType}} subnets-assign ACCESS_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222\n   ${COMMAND_NAME} sl {{.storageType}} subnets-assign 111111 --subnet-id 222222 --subnet-id 333333\n   ACCESS_ID is the host_id obtained by: ibmcloud sl {{.storageType}} access-list <volume_id>"
   },
@@ -529,6 +526,9 @@
   },
   "-i|--iops is required with performance volume.\nRun '{{.CommandName}} sl file volume-options' to check available options.": {
     "other": "-i|--iops is required with performance volume.\nRun '{{.CommandName}} sl file volume-options' to check available options."
+  },
+  "-i|--iops must be a multiple of 100.": {
+    "other": "-i|--iops must be a multiple of 100."
   },
   "-i|--iops must be a multiple of 100.\nRun '{{.CommandName}} sl block volume-options' to check available options.": {
     "other": "-i|--iops must be a multiple of 100.\nRun '{{.CommandName}} sl block volume-options' to check available options."
@@ -2059,9 +2059,6 @@
   },
   "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10": {
     "other": "Endurance Storage Tier (IOPS per GB) of the block volume for which space is ordered [optional], options are: 0.25,2,4,10"
-  },
-  "Endurance Storage Tier (IOPS per GB) of the file volume for which space is ordered [optional], options are: 0.25,2,4,10": {
-    "other": "Endurance Storage Tier (IOPS per GB) of the file volume for which space is ordered [optional], options are: 0.25,2,4,10"
   },
   "Endurance Storage Tier (IOPS per GB) of the primary volume for which a replica is ordered [optional], options are: 0.25,2,4,10,if no tier is specified, the tier of the original volume will be used": {
     "other": "Endurance Storage Tier (IOPS per GB) of the primary volume for which a replica is ordered [optional], options are: 0.25,2,4,10,if no tier is specified, the tier of the original volume will be used"
@@ -4907,9 +4904,6 @@
   "Order snapshot space for a block storage volume": {
     "other": "Order snapshot space for a block storage volume"
   },
-  "Order snapshot space for a file storage volume": {
-    "other": "Order snapshot space for a file storage volume"
-  },
   "Order {{.ID}} was placed to create a firewall.": {
     "other": "Order {{.ID}} was placed to create a firewall."
   },
@@ -5783,6 +5777,9 @@
   "Security group {{.ID}} is updated.": {
     "other": "Security group {{.ID}} is updated."
   },
+  "See https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-getting-started for sizing options.\n${COMMAND_NAME} sl block volume-options' to get available options.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.": {
+    "other": "See https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-getting-started for sizing options.\n${COMMAND_NAME} sl block volume-options' to get available options.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB."
+  },
   "See https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage/enableSnapshots/ for more details about these options.\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained.": {
     "other": "See https://sldn.softlayer.com/reference/services/SoftLayer_Network_Storage/enableSnapshots/ for more details about these options.\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-enable 12345678 -s WEEKLY -c 5 -m 0 --hour 2 -d 0\n   This command enables snapshot for volume with ID 12345678, snapshot is taken weekly on every Sunday at 2:00, and up to 5 snapshots are retained."
   },
@@ -5966,8 +5963,8 @@
   "Size of duplicate file volume in GB, if no size is specified, the size of the original volume will be used": {
     "other": "Size of duplicate file volume in GB, if no size is specified, the size of the original volume will be used"
   },
-  "Size of snapshot space to create in GB  [required]": {
-    "other": "Size of snapshot space to create in GB  [required]"
+  "Size of snapshot space to create in GB": {
+    "other": "Size of snapshot space to create in GB"
   },
   "Size of storage volume in GB [required]": {
     "other": "Size of storage volume in GB [required]"
@@ -7366,12 +7363,6 @@
   },
   "[-s|--schedule-type] needs to be one of {{.ScheduleTypes}}, not {{.Selected}}.": {
     "other": "[-s|--schedule-type] needs to be one of {{.ScheduleTypes}}, not {{.Selected}}."
-  },
-  "[-s|--size] is required.\nRun '{{.CommandName}} sl block volume-options' to get available options.": {
-    "other": "[-s|--size] is required.\nRun '{{.CommandName}} sl block volume-options' to get available options."
-  },
-  "[-s|--size] is required.\nRun '{{.CommandName}} sl file volume-options' to get available options.": {
-    "other": "[-s|--size] is required.\nRun '{{.CommandName}} sl file volume-options' to get available options."
   },
   "[-s|--snapshot-schedule] is required, options are: HOURLY, DAILY, WEEKLY.": {
     "other": "[-s|--snapshot-schedule] is required, options are: HOURLY, DAILY, WEEKLY."
