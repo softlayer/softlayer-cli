@@ -32,63 +32,38 @@ var _ = Describe("Snapshot enable", func() {
 	})
 
 	Describe("Snapshot enable", func() {
-		Context("Snapshot enable without volume id", func() {
-			It("return error", func() {
+		Context("Incorrect Usage Tests", func() {
+			It("No arguments", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
-		})
-		Context("Snapshot enable with wrong volume id", func() {
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
+			It("Bad Volume ID", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "a1234", "-c=100", "-s=INTERVAL")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
-		})
-
-		Context("Snapshot enable without -s", func() {
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
+			It("Bad Interval", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--schedule-type=FAKE", "-c=100")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-s|--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY."))
+				Expect(err.Error()).To(ContainSubstring("needs to be one of INTERVAL, HOURLY, DAILY, WEEKLY, not FAKE."))
 			})
-		})
-
-		Context("Snapshot enable with wrong -s", func() {
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "MONTHLY")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-s|--schedule-type] must be HOURLY, DAILY, or WEEKLY."))
-			})
-		})
-
-		Context("Snapshot enable without -c", func() {
-			It("return error", func() {
+			It("No Retention Count", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "HOURLY")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '-c|--retention-count' is required"))
+				Expect(err.Error()).To(ContainSubstring(`required flag(s) "retention-count" not set`))
 			})
-		})
-
-		Context("Snapshot enable with wrong -m", func() {
-			It("return error", func() {
+			It("Bad Minutes Value", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "HOURLY", "-c", "3", "-m", "100")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-m|--minute] value must be between 0 and 59."))
 			})
-		})
-
-		Context("Snapshot enable with wrong --hour", func() {
-			It("return error", func() {
+			It("Wrong Hour", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "HOURLY", "-c", "3", "-m", "20", "--hour", "50")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-r|--hour] value must be between 0 and 23."))
 			})
-		})
-
-		Context("Snapshot enable with wrong -d", func() {
-			It("return error", func() {
+			It("Wrong Days of the Week", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "HOURLY", "-c", "3", "-m", "20", "--hour", "10", "-d", "10")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-d|--day-of-week] value must be between 0 and 6."))
@@ -99,10 +74,15 @@ var _ = Describe("Snapshot enable", func() {
 			BeforeEach(func() {
 				FakeStorageManager.EnableSnapshotReturns(nil)
 			})
-			It("return no error", func() {
+			It("Happy Path All Options", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "HOURLY", "-c", "3", "-m", "20", "--hour", "10", "-d", "0")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("HOURLY snapshots have been enabled for volume 1234."))
+			})
+			It("Happy Path min Options", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "9999", "-s", "INTERVAL", "-c", "500")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("INTERVAL snapshots have been enabled for volume 9999."))
 			})
 		})
 
@@ -110,11 +90,10 @@ var _ = Describe("Snapshot enable", func() {
 			BeforeEach(func() {
 				FakeStorageManager.EnableSnapshotReturns(errors.New("Internal Server Error"))
 			})
-			It("return error", func() {
+			It("API error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "HOURLY", "-c", "3", "-m", "20", "--hour", "10", "-d", "0")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to enable HOURLY snapshot for volume 1234."))
-
 			})
 		})
 	})

@@ -31,6 +31,7 @@ var SupportedOutputFormat = []string{
 	//define supported output format here in UPPER case...
 }
 
+// SoftLayer Base Command
 type SoftlayerCommand struct {
 	UI         terminal.UI
 	Session    *session.Session
@@ -44,21 +45,27 @@ func NewSoftlayerCommand(ui terminal.UI, session *session.Session) *SoftlayerCom
 		OutputFlag: &CobraOutputFlag{""},
 	}
 }
+func (slcmd *SoftlayerCommand) GetOutputFlag() string {
+	return slcmd.OutputFlag.String()
+}
 
+// SoftLayer Storage Command
 type SoftlayerStorageCommand struct {
 	*SoftlayerCommand
 	StorageI18n map[string]interface{}
+	StorageType string
 }
 
 func NewSoftlayerStorageCommand(ui terminal.UI, session *session.Session, storageType string) *SoftlayerStorageCommand {
 	return &SoftlayerStorageCommand{
 		SoftlayerCommand: NewSoftlayerCommand(ui, session),
 		StorageI18n:      map[string]interface{}{"storageType": storageType},
+		StorageType:      storageType,
 	}
 }
 
-func (slcmd *SoftlayerCommand) GetOutputFlag() string {
-	return slcmd.OutputFlag.String()
+func (slcmd *SoftlayerStorageCommand) GetStorageType() string {
+	return slcmd.StorageType
 }
 
 func SoftlayerNamespace() plugin.Namespace {
