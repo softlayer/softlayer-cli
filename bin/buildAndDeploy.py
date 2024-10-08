@@ -321,6 +321,25 @@ curl -X POST https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plug
         # This command basically requires shell=True on mac because -ldflags doesn't get parsed properly withoutit.
         subprocess.run(buildCmd, shell=True)
 
+    def buildDocs(self, out_path: str) -> None:
+        """Generates the IBM Cloud CLI Documentation
+
+        :param str out_path: location of https://github.ibm.com/cloud-docs/cli repositry
+        """
+
+        # Step 1, build the builder:
+        buildCmd = f" go build -o docBuilder docs/main.go"
+        print(f"[turquoise2] Building documentation builder: {buildCmd}")
+        subprocess.run(buildCmd, shell=True)
+
+        # Check if out_dir is good:
+        if os.path.isdir(f"{out_path}/_include-segments") == False:
+            raise Exception(f"{out_path}/_include-segments does not exist, or not reachable from {self.cwd}")
+
+        docsCmd = f"./docBuilder -o {out_path}/_include-segments -v"
+        print(f"[turquoise2] Building documentation: {docsCmd}")
+        subprocess.run(docsCmd)
+
 @click.group()
 @click.pass_context
 def cli(ctx):
@@ -378,6 +397,17 @@ def i18n(ctx):
     """Checks and builds the i18n files"""
     runI18n4go(ctx.obj.getdir())
     # genBinData()
+
+@cli.command()
+@click.argument("out_path")
+@click.pass_context
+def docs(ctx, out_path):
+    """Generate the documentation files.
+
+    Requires a copy of https://github.ibm.com/cloud-docs/cli checked out.
+    out_path should point to the root directory of the cli repository.
+    """
+    ctx.obj.buildDocs(out_path)
 
 if __name__ == '__main__':
     cli()

@@ -16,6 +16,8 @@ import (
 )
 
 var fileName string
+var outputPath string
+var debug bool
 var rootCmd = &cobra.Command{
 	Use:   "doc-gen",
 	Short: "Generate the documentation for the sl plugin",
@@ -25,7 +27,10 @@ var rootCmd = &cobra.Command{
 	},
 }
 
+
 func main() {
+	rootCmd.Flags().StringVarP(&outputPath, "output", "o", "./docs", "Output path, default to ./docs .")
+	rootCmd.Flags().BoolVarP(&debug, "verbose", "v", false, "Enable Debug logging.")
 	err := rootCmd.Execute()
 	checkError(err)
 	return
@@ -84,6 +89,7 @@ func CliDocs() {
 			// This is a single command, like 'call-api' and doesn't have sub-commands
 			thisCmdGroup.Commands = []SlCmdDoc{cobraToSl(iCmd, "")}
 		}
+		printDebug(fmt.Sprintf("Working on command group %s\n", shortName))
 		PrintMakrdown(thisCmdGroup)
 		CmdGroups = append(CmdGroups, thisCmdGroup)
 	}
@@ -121,7 +127,8 @@ ibmcloud {{.Use}}
 
 	mdTemplate, err := template.New("cmd template").Parse(cmdTemplate)
 	checkError(err)
-	filename := fmt.Sprintf("%v.md", cmd.CommandShortLink)
+	filename := fmt.Sprintf("%s/%v.md", outputPath, cmd.CommandShortLink)
+	printDebug(fmt.Sprintf("\tCreating file %s\n", filename))
 	outfile, err := os.Create(filename) //#nosec G304 -- This is a false positive
 	defer outfile.Close()
 	err = mdTemplate.Execute(outfile, cmd)
@@ -200,4 +207,10 @@ func buildSlCmdFlag(topCommand *cobra.Command) []SlCmdFlag {
 		flags = append(flags, thisFlag)
 	})
 	return flags
+}
+
+func printDebug(output string) {
+	if debug {
+		fmt.Printf(output)
+	}
 }
