@@ -467,6 +467,16 @@ ALSO:
 ## CLI Documentation
 To make changes to the cli documentation, do so here: https://github.ibm.com/cloud-docs/cli/tree/draft/reference/ibmcloud
 
+Docs for the `sl` plugin specifically live in this repo: https://github.ibm.com/cloud-docs/cli
+
+in `docs/` there is a utility that will generate the appropriate pages for the sl plugin.
+
+(assuming `~/Code/ibm-cloud-docs-cl` is where the cloud-docs have been checked out to.)
+```
+./bin/buildAndDeploy.py docs ~/Code/ibm-cloud-docs-cli
+ Building documentation builder:  go build -o docBuilder docs/main.go
+ Building documentation: ./docBuilder -o C:/Users/allmi/Code/ibm-cloud-docs-cli/_include-segments -v
+```
 
 # Code Patterns
 

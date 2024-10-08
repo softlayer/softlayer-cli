@@ -1,7 +1,7 @@
 package user
 
 import (
-	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -51,12 +51,12 @@ func NewListCommand(sl *metadata.SoftlayerCommand) (cmd *ListCommand) {
 		},
 	}
 
-	columns := ""
+	columns := []string{}
 	for key, _ := range maskMap {
-		columns = fmt.Sprintf("%s %s,", columns, key)
+		columns = append(columns, key)
 	}
-	columns = strings.TrimSuffix(columns, ",")
-	subs := map[string]interface{}{"Columns": columns}
+	sort.Strings(columns)
+	subs := map[string]interface{}{"Columns": strings.Join(columns, ", ")}
 	cobraCmd.Flags().StringSliceVar(&thisCmd.Column, "column", []string{},
 		T("Column to display. options are: {{.Columns}}. This option can be specified multiple times", subs))
 
