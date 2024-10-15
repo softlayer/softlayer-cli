@@ -45,7 +45,19 @@ func (cmd *VolumeDetailCommand) Run(args []string) error {
 
 	volumeID, err := strconv.Atoi(args[0])
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		// Maybe this is a volume username
+		volumes, err := cmd.StorageManager.ListVolumes(cmd.StorageType, "", args[0], "", "", 0, "mask[id,username]")
+		if err != nil {
+			fmt.Printf("=============== ERROR: %s\n", err.Error())
+			return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		}
+		if len(volumes) != 1 {
+			subs := map[string]interface{}{"VolumeName": args[0], "VolumeCount": len(volumes)}
+			return slErr.New(
+				T("Search for volume {{.VolumeName}} found {{.VolumeCount}} volumes, expected 1.", subs),
+			)
+		}
+		volumeID = *volumes[0].Id
 	}
 
 	outputFormat := cmd.GetOutputFlag()
