@@ -365,11 +365,11 @@
   "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n 這個指令會列出區塊磁區（其 ID 為 12345678）的適當抄寫資料中心。"
   },
-  "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n 這個指令會為磁區（其 ID 為 12345678）訂購抄本（執行每日抄寫），位於 dal09，層級層次為 4，OS 類型為 Linux。"
   },
-  "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n 這個指令會列出區塊磁區（其 ID 為 12345678）的現有抄本磁區。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.": {
+    "other": "範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n 這個指令會列出區塊磁區（其 ID 為 12345678）的現有抄本磁區。"
   },
   "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n 這個指令會立即取消 Snapshot（其 ID 為 12345678），而不要求確認。"

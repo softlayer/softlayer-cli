@@ -1,8 +1,6 @@
 package block
 
 import (
-	"strconv"
-
 	"github.com/spf13/cobra"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -26,9 +24,7 @@ func NewReplicaPartnersCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaPar
 	cobraCmd := &cobra.Command{
 		Use:   "replica-partners " + T("IDENTIFIER"),
 		Short: T("List existing replicant volumes for a block volume"),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]
-		
-EXAMPLE:
+		Long: T(`EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678
    This command lists existing replicant volumes for block volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
@@ -43,10 +39,11 @@ EXAMPLE:
 
 func (cmd *ReplicaPartnersCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
+
 	outputFormat := cmd.GetOutputFlag()
 
 	partners, err := cmd.StorageManager.GetReplicationPartners(volumeID)

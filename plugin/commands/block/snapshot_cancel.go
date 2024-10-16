@@ -1,8 +1,6 @@
 package block
 
 import (
-	"strconv"
-
 	"github.com/spf13/cobra"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -28,9 +26,7 @@ func NewSnapshotCancelCommand(sl *metadata.SoftlayerStorageCommand) *SnapshotCan
 	cobraCmd := &cobra.Command{
 		Use:   "snapshot-cancel " + T("IDENTIFIER"),
 		Short: T("Cancel existing snapshot space for a given volume"),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]
-		
-EXAMPLE:
+		Long: T(`EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f 
    This command cancels snapshot with ID 12345678 immediately without asking for confirmation.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
@@ -48,9 +44,9 @@ EXAMPLE:
 
 func (cmd *SnapshotCancelCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 	subs := map[string]interface{}{"ID": volumeID}
 	if !cmd.Force {
