@@ -384,6 +384,20 @@ type FakeStorageManager struct {
 		result1 datatypes.Network_Storage
 		result2 error
 	}
+	GetVolumeIdStub        func(string, string) (int, error)
+	getVolumeIdMutex       sync.RWMutex
+	getVolumeIdArgsForCall []struct {
+		arg1 string
+		arg2 string
+	}
+	getVolumeIdReturns struct {
+		result1 int
+		result2 error
+	}
+	getVolumeIdReturnsOnCall map[int]struct {
+		result1 int
+		result2 error
+	}
 	GetVolumeSnapshotListStub        func(int) ([]datatypes.Network_Storage, error)
 	getVolumeSnapshotListMutex       sync.RWMutex
 	getVolumeSnapshotListArgsForCall []struct {
@@ -2457,6 +2471,71 @@ func (fake *FakeStorageManager) GetVolumeDetailsReturnsOnCall(i int, result1 dat
 	}{result1, result2}
 }
 
+func (fake *FakeStorageManager) GetVolumeId(arg1 string, arg2 string) (int, error) {
+	fake.getVolumeIdMutex.Lock()
+	ret, specificReturn := fake.getVolumeIdReturnsOnCall[len(fake.getVolumeIdArgsForCall)]
+	fake.getVolumeIdArgsForCall = append(fake.getVolumeIdArgsForCall, struct {
+		arg1 string
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetVolumeIdStub
+	fakeReturns := fake.getVolumeIdReturns
+	fake.recordInvocation("GetVolumeId", []interface{}{arg1, arg2})
+	fake.getVolumeIdMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStorageManager) GetVolumeIdCallCount() int {
+	fake.getVolumeIdMutex.RLock()
+	defer fake.getVolumeIdMutex.RUnlock()
+	return len(fake.getVolumeIdArgsForCall)
+}
+
+func (fake *FakeStorageManager) GetVolumeIdCalls(stub func(string, string) (int, error)) {
+	fake.getVolumeIdMutex.Lock()
+	defer fake.getVolumeIdMutex.Unlock()
+	fake.GetVolumeIdStub = stub
+}
+
+func (fake *FakeStorageManager) GetVolumeIdArgsForCall(i int) (string, string) {
+	fake.getVolumeIdMutex.RLock()
+	defer fake.getVolumeIdMutex.RUnlock()
+	argsForCall := fake.getVolumeIdArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeStorageManager) GetVolumeIdReturns(result1 int, result2 error) {
+	fake.getVolumeIdMutex.Lock()
+	defer fake.getVolumeIdMutex.Unlock()
+	fake.GetVolumeIdStub = nil
+	fake.getVolumeIdReturns = struct {
+		result1 int
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStorageManager) GetVolumeIdReturnsOnCall(i int, result1 int, result2 error) {
+	fake.getVolumeIdMutex.Lock()
+	defer fake.getVolumeIdMutex.Unlock()
+	fake.GetVolumeIdStub = nil
+	if fake.getVolumeIdReturnsOnCall == nil {
+		fake.getVolumeIdReturnsOnCall = make(map[int]struct {
+			result1 int
+			result2 error
+		})
+	}
+	fake.getVolumeIdReturnsOnCall[i] = struct {
+		result1 int
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeStorageManager) GetVolumeSnapshotList(arg1 int) ([]datatypes.Network_Storage, error) {
 	fake.getVolumeSnapshotListMutex.Lock()
 	ret, specificReturn := fake.getVolumeSnapshotListReturnsOnCall[len(fake.getVolumeSnapshotListArgsForCall)]
@@ -3633,6 +3712,8 @@ func (fake *FakeStorageManager) Invocations() map[string][][]interface{} {
 	defer fake.getVolumeCountLimitsMutex.RUnlock()
 	fake.getVolumeDetailsMutex.RLock()
 	defer fake.getVolumeDetailsMutex.RUnlock()
+	fake.getVolumeIdMutex.RLock()
+	defer fake.getVolumeIdMutex.RUnlock()
 	fake.getVolumeSnapshotListMutex.RLock()
 	defer fake.getVolumeSnapshotListMutex.RUnlock()
 	fake.getVolumeSnapshotSchedulesMutex.RLock()

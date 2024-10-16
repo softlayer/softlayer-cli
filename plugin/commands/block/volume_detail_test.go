@@ -27,10 +27,9 @@ var _ = Describe("Block Volume-Detail Tests", func() {
 		slCommand = metadata.NewSoftlayerStorageCommand(fakeUI, fakeSession, "block")
 		cliCommand = block.NewVolumeDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-
 	})
 
-	Describe("Volume detail", func() {
+	Describe("Volume detail usage tests", func() {
 		Context("Volume detail without volume id", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
@@ -38,14 +37,8 @@ var _ = Describe("Block Volume-Detail Tests", func() {
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
-		Context("Volume detail with wrong volume id", func() {
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
-			})
-		})
-
+	})
+	Describe("Volume Detail API response tests", func() {
 		Context("Volume detail with correct volume id but server API call fails", func() {
 			BeforeEach(func() {
 				fakeHandler.AddApiError("SoftLayer_Network_Storage", "getObject", 500, "Internal Server Error")
