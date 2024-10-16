@@ -28,6 +28,7 @@ var _ = Describe("Disaster Recovery Failover", func() {
 		cliCommand = block.NewDisasterRecoveryFailoverCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Replicant failover", func() {
@@ -43,13 +44,6 @@ var _ = Describe("Disaster Recovery Failover", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires two arguments."))
-			})
-		})
-		Context("Replicant fail over with wrong volume id", func() {
-			It("error resolving volume ID", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "123")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 		Context("Replicant fail over with wrong replica id", func() {

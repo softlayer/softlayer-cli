@@ -344,10 +344,10 @@
   "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0": {
     "other": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nInformación de uso de un servidor virtual.\nEjemplo:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\nEJEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   Este mandato autoriza al servidor virtual con ID 87654321 a acceder al volumen con ID 12345678."
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.": {
+    "other": "EJEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   Este mandato autoriza al servidor virtual con ID 87654321 a acceder al volumen con ID 12345678."
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} access-list ID_VOLUME [OPTIONS]\n\nEJEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   Este mandato lista todos los hosts autorizados a acceder al volumen con ID 12345678 y los ordena por ID."
   },
   "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'": {
@@ -359,7 +359,7 @@
   "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-failback ID_VOLUMEN\n\nEJEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   Este mandato realiza una operación de restablecimiento para el volumen con ID 12345678."
   },
-  "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-failover ID_VOLUMEN ID_REPLICA\n\nEJEMPLO:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   Este mandato realiza una operación de migración tras error para el volumen con ID 12345678 a la réplica de volumen con ID 87654321."
   },
   "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.": {

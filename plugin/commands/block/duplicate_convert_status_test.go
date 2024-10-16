@@ -42,12 +42,6 @@ var _ = Describe("block duplicate-convert-status", func() {
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 
-			It("Set command with an invalid Id", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcde")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
-			})
-
 			It("Set invalid output", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123456", "--output=xml")
 				Expect(err).To(HaveOccurred())

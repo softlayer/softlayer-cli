@@ -344,11 +344,11 @@
   "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0": {
     "other": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS] \n 仮想サーバーの使用法情報。\n 例: \n ${COMMAND_NAME} sl {{.Command}} usage 1234 -- start 2006-01-02 -- end 2006-01-02 -- valid-data cpu0"
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 -- virtual-id 87654321\n このコマンドは、ID 87654321 の仮想サーバーに ID 12345678 のボリュームへのアクセスを許可します。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.": {
+    "other": " \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 -- virtual-id 87654321\n このコマンドは、ID 87654321 の仮想サーバーに ID 12345678 のボリュームへのアクセスを許可します。"
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 -- sortby id \n このコマンドは、ID 12345678 のボリュームへのアクセスを許可されているすべてのホストをリストし、ID でソートします。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.": {
+    "other": "例: \n ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 -- sortby id \n このコマンドは、ID 12345678 のボリュームへのアクセスを許可されているすべてのホストをリストし、ID でソートします。"
   },
   "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'": {
     "other": "${COMMAND_NAME}sl {{.storageType}} access-password ACCESS_ID--password PASSWORD \n \n ACCESS_ID は、「${COMMAND_NAME} sl {{.storageType}} access-list」からの allowed_host_id です。"
@@ -359,8 +359,8 @@
   "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n このコマンドは、ID 12345678 のボリュームのフェイルバック操作を実行します。"
   },
-  "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n このコマンドは、ID 12345678 のボリュームから ID 87654321 のレプリカ・ボリュームへのフェイルオーバー操作を実行します。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.": {
+    "other": "例: \n ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n このコマンドは、ID 12345678 のボリュームから ID 87654321 のレプリカ・ボリュームへのフェイルオーバー操作を実行します。"
   },
   "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS] \n \n 例: \n ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n このコマンドは、ID 12345678 のブロック・ボリュームの適切なレプリケーション・データ・センターをリストします。"

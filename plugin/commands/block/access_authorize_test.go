@@ -36,6 +36,7 @@ var _ = Describe("Access Authorize", func() {
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
 		cliCommand.NetworkManager = fakeNetworkManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Access Authorize", func() {
@@ -47,14 +48,6 @@ var _ = Describe("Access Authorize", func() {
 				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
 			})
 		})
-		Context("Access Authorize with wrong volume id", func() {
-			It("error resolving volume ID", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
-			})
-		})
-
 		Context("Access Authorize with correct volume id and virtual server id", func() {
 			BeforeEach(func() {
 				FakeStorageManager.AuthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)

@@ -344,11 +344,11 @@
   "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0": {
     "other": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\n虛擬伺服器的用法資訊。\n範例：\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n 這個指令會授權虛擬伺服器（其 ID 為 87654321）存取磁區（其 ID 為 12345678）。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.": {
+    "other": "範例：\n ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n 這個指令會授權虛擬伺服器（其 ID 為 87654321）存取磁區（其 ID 為 12345678）。"
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n 這個指令會列出獲授權存取磁區（其 ID 為 12345678）的所有主機，並依 ID 排序。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.": {
+    "other": "範例：\n ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n 這個指令會列出獲授權存取磁區（其 ID 為 12345678）的所有主機，並依 ID 排序。"
   },
   "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'": {
     "other": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\nACCESS_ID 是來自 '${COMMAND_NAME} sl {{.storageType}} access-list' 的 allowed_host_id"
@@ -359,8 +359,8 @@
   "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n 這個指令會針對磁區（其 ID 為 12345678）執行失效回復作業。"
   },
-  "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n 這個指令會針對磁區（其 ID 為 12345678）對抄本磁區（其 ID 為 87654321）執行失效接手作業。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.": {
+    "other": "範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n 這個指令會針對磁區（其 ID 為 12345678）對抄本磁區（其 ID 為 87654321）執行失效接手作業。"
   },
   "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n 這個指令會列出區塊磁區（其 ID 為 12345678）的適當抄寫資料中心。"

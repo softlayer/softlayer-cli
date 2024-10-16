@@ -2,9 +2,7 @@ package block_test
 
 import (
 	"errors"
-	"strings"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -36,6 +34,7 @@ var _ = Describe("Access Revoke", func() {
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
 		cliCommand.NetworkManager = fakeNetworkManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Access Revoke", func() {
@@ -43,14 +42,7 @@ var _ = Describe("Access Revoke", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Incorrect Usage: This command requires one argument")).To(BeTrue())
-			})
-		})
-		Context("Access revoke with wrong volume id", func() {
-			It("error resolving volume ID", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'Volume ID'. It must be a positive integer.")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 
@@ -61,8 +53,7 @@ var _ = Describe("Access Revoke", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--virtual-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Access to 1234 was revoked for virtual server 5678"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for virtual server 5678"))
 			})
 		})
 
@@ -73,8 +64,7 @@ var _ = Describe("Access Revoke", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--hardware-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Access to 1234 was revoked for hardware server 5678."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for hardware server 5678."))
 			})
 		})
 
@@ -85,8 +75,7 @@ var _ = Describe("Access Revoke", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--ip-address-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Access to 1234 was revoked for IP address 5678."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for IP address 5678."))
 			})
 		})
 
@@ -98,8 +87,7 @@ var _ = Describe("Access Revoke", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--ip-address", "1.2.3.4")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"OK"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"Access to 1234 was revoked for IP address 5678."}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for IP address 5678."))
 			})
 		})
 
@@ -111,22 +99,23 @@ var _ = Describe("Access Revoke", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--ip-address", "1.2.3.4")
 				Expect(err).To(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"OK"}))
-				Expect(strings.Contains(err.Error(), "IP address 1.2.3.4 is not found on your account.Please confirm IP and try again.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Not Found")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("IP address 1.2.3.4 is not found on your account.Please confirm IP and try again."))
+				Expect(err.Error()).To(ContainSubstring("Not Found"))
 			})
 		})
 
 		Context("Access Authorize with correct volume id but server API call fails", func() {
 			BeforeEach(func() {
-				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, errors.New("Internal Server Error"))
+				FakeStorageManager.DeauthorizeHostToVolumeReturns(
+					[]datatypes.Network_Storage_Allowed_Host{},
+					errors.New("Internal Server Error"),
+				)
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--virtual-id", "5678")
 				Expect(err).To(HaveOccurred())
-				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"OK"}))
-				Expect(strings.Contains(err.Error(), "Failed to revoke access to volume 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to revoke access to volume 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 	})

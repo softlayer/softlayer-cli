@@ -2,7 +2,6 @@ package block_test
 
 import (
 	"errors"
-	"strings"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -31,7 +30,6 @@ var _ = Describe("Access Password", func() {
 		cliCommand = block.NewAccessPasswordCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
-
 	})
 
 	Describe("Access password", func() {
@@ -49,13 +47,6 @@ var _ = Describe("Access Password", func() {
 				Expect(err.Error()).To(ContainSubstring(`required flag(s) "password" not set`))
 			})
 		})
-		Context("Access password with wrong hostId", func() {
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "--password", "abcdefg")
-				Expect(err).To(HaveOccurred())
-				Expect(strings.Contains(err.Error(), "Invalid input for 'allowed access host ID'. It must be a positive integer.")).To(BeTrue())
-			})
-		})
 		Context("Access password with server fails", func() {
 			BeforeEach(func() {
 				FakeStorageManager.SetCredentialPasswordReturns(errors.New("Internal Server Error"))
@@ -64,8 +55,8 @@ var _ = Describe("Access Password", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--password", "abcdefg")
 				Expect(err).To(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("OK"))
-				Expect(strings.Contains(err.Error(), "Failed to set password for host 1234.")).To(BeTrue())
-				Expect(strings.Contains(err.Error(), "Internal Server Error")).To(BeTrue())
+				Expect(err.Error()).To(ContainSubstring("Failed to set password for host 1234."))
+				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
 		Context("Access password", func() {

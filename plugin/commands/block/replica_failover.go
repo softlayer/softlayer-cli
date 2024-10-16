@@ -25,9 +25,7 @@ func NewReplicaFailoverCommand(sl *metadata.SoftlayerStorageCommand) *ReplicaFai
 	cobraCmd := &cobra.Command{
 		Use:   "replica-failover " + T("IDENTIFIER") + " " + T("REPLICA_ID"),
 		Short: T("Failover a {{.storageType}} volume to the given replica volume", sl.StorageI18n),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID
-
-EXAMPLE:
+		Long: T(`EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321
    This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.`, sl.StorageI18n),
 		Args: metadata.TwoArgs,
@@ -42,9 +40,9 @@ EXAMPLE:
 
 func (cmd *ReplicaFailoverCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 	replicaID, err := strconv.Atoi(args[1])
 	if err != nil {
