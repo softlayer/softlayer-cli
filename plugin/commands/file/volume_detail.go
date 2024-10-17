@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"net/url"
-	"strconv"
 	"strings"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/terminal"
@@ -43,9 +42,9 @@ func NewVolumeDetailCommand(sl *metadata.SoftlayerStorageCommand) *VolumeDetailC
 
 func (cmd *VolumeDetailCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 
 	outputFormat := cmd.GetOutputFlag()

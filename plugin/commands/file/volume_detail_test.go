@@ -38,9 +38,10 @@ var _ = Describe("Volume detail", func() {
 		})
 		Context("Volume detail with wrong volume id", func() {
 			It("return error", func() {
+				fakeHandler.AddApiError("SoftLayer_Account", "getNasNetworkStorage", 500, "BAD Volume ID")
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 		})
 

@@ -1,8 +1,6 @@
 package file
 
 import (
-	"strconv"
-
 	"github.com/spf13/cobra"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -55,9 +53,9 @@ EXAMPLE:
 }
 
 func (cmd *AccessRevokeCommand) Run(args []string) error {
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 
 	if len(cmd.Hardware_id) == 0 && len(cmd.Virtual_id) == 0 && len(cmd.Ip_address_id) == 0 && len(cmd.Ip_address) == 0 && len(cmd.Subnet_id) == 0 {

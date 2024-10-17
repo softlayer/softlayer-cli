@@ -371,7 +371,7 @@
   "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-partners DATENTRÄGER_ID [OPTIONEN]\n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n Dieser Befehl listet vorhandene Replikatdatenträger für Blockdatenträger mit der ID 12345678 auf."
   },
-  "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONEN]\n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n Dieser Befehl bricht den Snapshot mit der ID 12345678 sofort ab, ohne eine Bestätigung anzufordern."
   },
   "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.": {
