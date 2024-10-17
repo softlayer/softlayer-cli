@@ -31,6 +31,7 @@ var _ = Describe("Snapshot Create", func() {
 		cliCommand = block.NewSnapshotCreateCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Snapshot create", func() {
@@ -41,14 +42,6 @@ var _ = Describe("Snapshot Create", func() {
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
-		Context("Snapshot create with wrong volume id", func() {
-			It("error resolving volume ID", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
-			})
-		})
-
 		Context("Snapshot create with correct volume id", func() {
 			BeforeEach(func() {
 				FakeStorageManager.CreateSnapshotReturns(datatypes.Network_Storage{Id: sl.Int(5678)}, nil)

@@ -1,8 +1,8 @@
 package block
 
 import (
-	"sort"
 	"github.com/spf13/cobra"
+	"sort"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"

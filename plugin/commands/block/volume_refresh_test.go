@@ -29,6 +29,7 @@ var _ = Describe("Block Volume Refresh", func() {
 		cliCommand = block.NewVolumeRefreshCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Block Volume Refresh", func() {
@@ -41,9 +42,10 @@ var _ = Describe("Block Volume Refresh", func() {
 		})
 		Context("Bad VolumeId", func() {
 			It("error resolving volume ID", func() {
+				FakeStorageManager.GetVolumeIdReturns(0, errors.New("BAD Volume ID"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 		})
 		Context("Bad SnapshotId", func() {

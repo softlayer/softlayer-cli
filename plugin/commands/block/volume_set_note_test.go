@@ -56,11 +56,12 @@ var _ = Describe("Block Volume Set Note", func() {
 		Context("Bad VolumeId", func() {
 			BeforeEach(func() {
 				FakeStorageManager.VolumeSetNoteReturns(false, errors.New("Invalid input for 'Volume ID'. It must be a positive integer."))
+				FakeStorageManager.GetVolumeIdReturns(0, errors.New("BAD Volume ID"))
 			})
 			It("error resolving volume ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "--note=thisismynote")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 		})
 

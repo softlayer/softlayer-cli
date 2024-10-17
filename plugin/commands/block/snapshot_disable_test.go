@@ -30,6 +30,7 @@ var _ = Describe("Snapshot disable", func() {
 		cliCommand = block.NewSnapshotDisableCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 	Describe("Snapshot disable", func() {
 		Context("Snapshot disable without volume id", func() {
@@ -39,14 +40,6 @@ var _ = Describe("Snapshot disable", func() {
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
-		Context("Snapshot disable with wrong volume id", func() {
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
-			})
-		})
-
 		Context("Snapshot disable without -s", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")

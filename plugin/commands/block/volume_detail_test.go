@@ -37,6 +37,14 @@ var _ = Describe("Block Volume-Detail Tests", func() {
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
+		Context("Bad VolumeId", func() {
+			It("error resolving volume ID", func() {
+				fakeHandler.AddApiError("SoftLayer_Account", "getIscsiNetworkStorage", 500, "BAD Volume ID")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
+			})
+		})
 	})
 	Describe("Volume Detail API response tests", func() {
 		Context("Volume detail with correct volume id but server API call fails", func() {

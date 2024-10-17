@@ -1,8 +1,6 @@
 package block
 
 import (
-	"strconv"
-
 	"github.com/spf13/cobra"
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -39,9 +37,9 @@ func NewSnapshotSetNotificationCommand(sl *metadata.SoftlayerStorageCommand) *Sn
 
 func (cmd *SnapshotSetNotificationCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 
 	if cmd.Enable && cmd.Disable {

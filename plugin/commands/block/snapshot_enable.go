@@ -3,7 +3,6 @@ package block
 import (
 	"github.com/spf13/cobra"
 	"slices"
-	"strconv"
 	"strings"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -72,9 +71,9 @@ EXAMPLE:
 
 func (cmd *SnapshotEnableCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 	if cmd.ScheduleType == "" {
 		return slErr.NewInvalidUsageError(T("[-s|--schedule-type] is required, options are: HOURLY, DAILY, WEEKLY."))

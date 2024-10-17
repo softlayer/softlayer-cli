@@ -1,10 +1,8 @@
 package block
 
 import (
-	"strconv"
-	"strings"
-
 	"github.com/spf13/cobra"
+	"strings"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -48,11 +46,12 @@ EXAMPLE:
 
 func (cmd *VolumeCancelCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
-	subs := map[string]interface{}{"ID": volumeID, "VolumeId": volumeID}
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
+	subs := map[string]interface{}{"ID": volumeID, "VolumeId": volumeID}
+
 	if !cmd.Force {
 		confirm, err := cmd.UI.Confirm(T("This will cancel the block volume: {{.ID}} and cannot be undone. Continue?", subs))
 		if err != nil {

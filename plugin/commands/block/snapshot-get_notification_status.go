@@ -41,7 +41,6 @@ func (cmd *SnapshotGetNotificationStatusCommand) Run(args []string) error {
 		return err
 	}
 
-
 	outputFormat := cmd.GetOutputFlag()
 	subs := map[string]interface{}{"ID": volumeID}
 	enabled, err := cmd.StorageManager.GetSnapshotNotificationStatus(volumeID)

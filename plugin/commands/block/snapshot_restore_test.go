@@ -29,6 +29,7 @@ var _ = Describe("Snapshot restore", func() {
 		cliCommand = block.NewSnapshotRestoreCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Snapshot restore", func() {
@@ -44,9 +45,10 @@ var _ = Describe("Snapshot restore", func() {
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires two arguments."))
 			})
 			It("Bad VolumeID", func() {
+				FakeStorageManager.GetVolumeIdReturns(0, errors.New("BAD Volume ID"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "123")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 			It("Bad SnapshotId", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "abc")
@@ -60,9 +62,9 @@ var _ = Describe("Snapshot restore", func() {
 				FakeStorageManager.RestoreFromSnapshotReturns(nil)
 			})
 			It("Happy path", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "456")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Block volume 123 is being restored using snapshot 456."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Block volume 1234 is being restored using snapshot 456."))
 			})
 		})
 
@@ -71,10 +73,10 @@ var _ = Describe("Snapshot restore", func() {
 				FakeStorageManager.RestoreFromSnapshotReturns(errors.New("Internal Server Error"))
 			})
 			It("API Error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "456")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "456")
 				Expect(err).To(HaveOccurred())
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstring("OK"))
-				Expect(err.Error()).To(ContainSubstring("Failed to restore volume 123 from snapshot 456."))
+				Expect(err.Error()).To(ContainSubstring("Failed to restore volume 1234 from snapshot 456."))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})

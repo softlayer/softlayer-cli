@@ -31,6 +31,7 @@ var _ = Describe("block Snapshot Schedule List", func() {
 		cliCommand = block.NewSnapshotScheduleListCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("block Snapshot Schedule List", func() {
@@ -39,6 +40,14 @@ var _ = Describe("block Snapshot Schedule List", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
+			})
+		})
+		Context("Bad Arguments Error", func() {
+			It("return error", func() {
+				FakeStorageManager.GetVolumeIdReturns(0, errors.New("BAD Volume ID"))
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "zzz")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 		})
 		Context("Proper Usage", func() {

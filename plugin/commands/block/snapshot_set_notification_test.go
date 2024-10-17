@@ -29,6 +29,7 @@ var _ = Describe("Volume set snapshot notification status", func() {
 		cliCommand = block.NewSnapshotSetNotificationCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 	Describe("Volume set snapshot notification status", func() {
 		Context("Volume set snapshot notification status without volume id", func() {
@@ -40,15 +41,16 @@ var _ = Describe("Volume set snapshot notification status", func() {
 		})
 		Context("Volume set snapshot notification status with wrong volume id", func() {
 			It("return error", func() {
+				FakeStorageManager.GetVolumeIdReturns(0, errors.New("BAD Volume ID"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 		})
 
 		Context("Volume set snapshot notification status without --enable or --disable", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Either '--enable' or '--disable' is required."))
 			})
@@ -56,7 +58,7 @@ var _ = Describe("Volume set snapshot notification status", func() {
 
 		Context("Volume set snapshot notification status with --enable and --disable", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "--enable", "--disable", "1234567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--enable", "--disable", "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--enable', '--disable' are exclusive"))
 			})
@@ -67,9 +69,9 @@ var _ = Describe("Volume set snapshot notification status", func() {
 				FakeStorageManager.SetSnapshotNotificationReturns(errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "--enable", "1234567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--enable", "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to set the snapshort notification  for volume '1234567'.\n"))
+				Expect(err.Error()).To(ContainSubstring("Failed to set the snapshort notification  for volume '1234'.\n"))
 			})
 		})
 
@@ -78,9 +80,9 @@ var _ = Describe("Volume set snapshot notification status", func() {
 				FakeStorageManager.SetSnapshotNotificationReturns(nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "--enable", "1234567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--enable", "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Snapshots space usage threshold warning notification has been set to 'true' for volume '1234567'."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Snapshots space usage threshold warning notification has been set to 'true' for volume '1234'."))
 			})
 		})
 
@@ -89,9 +91,9 @@ var _ = Describe("Volume set snapshot notification status", func() {
 				FakeStorageManager.SetSnapshotNotificationReturns(nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "--disable", "1234567")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "--disable", "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Snapshots space usage threshold warning notification has been set to 'false' for volume '1234567'."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Snapshots space usage threshold warning notification has been set to 'false' for volume '1234'."))
 			})
 		})
 	})
