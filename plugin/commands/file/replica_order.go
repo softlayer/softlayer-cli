@@ -2,8 +2,6 @@ package file
 
 import (
 	"fmt"
-	"strconv"
-
 	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -53,9 +51,9 @@ EXAMPLE:
 
 func (cmd *ReplicaOrderCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return errors.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 
 	snapshotSchedule := cmd.SnapshotSchedule

@@ -1,8 +1,6 @@
 package block
 
 import (
-	"strconv"
-
 	"github.com/spf13/cobra"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -45,9 +43,9 @@ EXAMPLE:
 
 func (cmd *VolumeSetNoteCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 
 	outputFormat := cmd.GetOutputFlag()

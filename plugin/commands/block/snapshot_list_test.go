@@ -54,6 +54,7 @@ var _ = Describe("Snapshot list", func() {
 		cliCommand = block.NewSnapshotListCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Snapshot list tests", func() {
@@ -62,11 +63,6 @@ var _ = Describe("Snapshot list", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
-			})
-			It("Bad volume id", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 			It("Bad --sortby", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--sortby", "bcd")

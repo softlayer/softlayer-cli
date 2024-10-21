@@ -44,17 +44,18 @@ func NewVolumeLunCommand(sl *metadata.SoftlayerStorageCommand) *VolumeLunCommand
 
 func (cmd *VolumeLunCommand) Run(args []string) error {
 
-	volumeId, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
+
 	lunId, err := strconv.Atoi(args[1])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("LUN ID")
 	}
-	prop, err := cmd.StorageManager.SetLunId(volumeId, lunId)
+	prop, err := cmd.StorageManager.SetLunId(volumeID, lunId)
 
-	subs := map[string]interface{}{"VolumeID": volumeId, "VolumeId": volumeId}
+	subs := map[string]interface{}{"VolumeID": volumeID, "VolumeId": volumeID}
 	if err != nil {
 		return slErr.NewAPIError(T("Failed to set LUN ID for volume {{.VolumeID}}.\n", subs), err.Error(), 2)
 	}
@@ -63,7 +64,7 @@ func (cmd *VolumeLunCommand) Run(args []string) error {
 		if err == nil && newLunId == lunId {
 			cmd.UI.Ok()
 			cmd.UI.Print(T("Block volume {{.VolumeId}} is reporting LUN ID {{.LunID}}.",
-				map[string]interface{}{"VolumeId": volumeId, "LunID": lunId}))
+				map[string]interface{}{"VolumeId": volumeID, "LunID": lunId}))
 			return nil
 		}
 	}

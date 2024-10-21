@@ -29,6 +29,7 @@ var _ = Describe("block Volume Convert", func() {
 		cliCommand = block.NewVolumeConvertCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("block Volume Convert", func() {
@@ -41,9 +42,10 @@ var _ = Describe("block Volume Convert", func() {
 		})
 		Context("Bad VolumeId", func() {
 			It("error resolving volume ID", func() {
+				FakeStorageManager.GetVolumeIdReturns(0, errors.New("BAD Volume ID"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 		})
 		Context("Proper Usage", func() {

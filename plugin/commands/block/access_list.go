@@ -1,10 +1,8 @@
 package block
 
 import (
-	"sort"
-	"strconv"
-
 	"github.com/spf13/cobra"
+	"sort"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -29,9 +27,7 @@ func NewAccessListCommand(sl *metadata.SoftlayerStorageCommand) *AccessListComma
 	cobraCmd := &cobra.Command{
 		Use:   "access-list " + T("IDENTIFIER"),
 		Short: T("List hosts that are authorized to access the volume."),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]
-		
-EXAMPLE:
+		Long: T(`EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id 
    This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
@@ -47,9 +43,9 @@ EXAMPLE:
 
 func (cmd *AccessListCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 
 	sortby := cmd.Sortby

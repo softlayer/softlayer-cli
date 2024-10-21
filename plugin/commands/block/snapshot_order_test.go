@@ -31,6 +31,7 @@ var _ = Describe("Block Snapshot order", func() {
 		cliCommand = block.NewSnapshotOrderCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Snapshot order", func() {
@@ -39,11 +40,6 @@ var _ = Describe("Block Snapshot order", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
-			})
-			It("Bad Volume ID", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "-s=100")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 			It("No --size", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
@@ -85,12 +81,12 @@ var _ = Describe("Block Snapshot order", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
 			})
 			It("Upgrade Order Happy Path", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "4567", "-s", "1000", "-t", "10", "-u", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "1000", "-t", "10", "-u", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
 				storage_type, volumeId, size, tier, iops, upgrade := FakeStorageManager.OrderSnapshotSpaceArgsForCall(0)
 				Expect(storage_type).To(Equal("block"))
-				Expect(volumeId).To(Equal(4567))
+				Expect(volumeId).To(Equal(1234))
 				Expect(size).To(Equal(1000))
 				Expect(tier).To(Equal(10.0))
 				Expect(iops).To(Equal(0))
@@ -128,6 +124,7 @@ var _ = Describe("File Snapshot order", func() {
 		cliCommand = block.NewSnapshotOrderCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Snapshot order", func() {
@@ -160,12 +157,12 @@ var _ = Describe("File Snapshot order", func() {
 				Expect(upgrade).To(BeFalse())
 			})
 			It("Upgrade Order Happy Path", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "4567", "-s", "1000", "-t", "10", "-u", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "1000", "-t", "10", "-u", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
 				storage_type, volumeId, size, tier, iops, upgrade := FakeStorageManager.OrderSnapshotSpaceArgsForCall(0)
 				Expect(storage_type).To(Equal("file"))
-				Expect(volumeId).To(Equal(4567))
+				Expect(volumeId).To(Equal(1234))
 				Expect(size).To(Equal(1000))
 				Expect(tier).To(Equal(10.0))
 				Expect(iops).To(Equal(0))

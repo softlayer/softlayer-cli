@@ -344,10 +344,10 @@
   "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [OPTIONS]\nUsage information of a virtual server.\nExample:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0": {
     "other": "${COMMAND_NAME} sl {{.Command}} usage IDENTIFIER [옵션]\n가상 서버의 사용량 정보입니다.\n예:\n   ${COMMAND_NAME} sl {{.Command}} usage 1234 --start 2006-01-02 --end 2006-01-02 --valid-data cpu0"
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   이 명령은 볼륨(ID 12345678)에 액세스하도록 가상 서버(ID 87654321)에 권한을 부여합니다."
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   This command lists all hosts that are authorized to access volume with ID 12345678 and sorts them by ID.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} access-list VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-list 12345678 --sortby id \n   이 명령은 볼륨(ID 12345678)에 액세스하도록 권한이 부여된 모든 호스트를 나열하고 ID별로 정렬합니다."
   },
   "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'": {
@@ -359,19 +359,19 @@
   "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   이 명령은 볼륨(ID 12345678)에 대한 장애 복구 조작을 수행합니다."
   },
-  "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} replica-failover VOLUME_ID REPLICA_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   이 명령은 복제본 볼륨(ID 87654321)에 대한 볼륨(ID 12345678)의 장애 복구 조작을 수행합니다."
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   This command performs failover operation for volume with ID 12345678 to replica volume with ID 87654321.": {
+    "other": "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failover 12345678 87654321\n   이 명령은 복제본 볼륨(ID 87654321)에 대한 볼륨(ID 12345678)의 장애 복구 조작을 수행합니다."
   },
   "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-locations VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   이 명령은 블록 볼륨(ID 12345678)에 적합한 복제 데이터 센터를 나열합니다."
   },
-  "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   This command orders a replica for volume with ID 12345678, which performs DAILY replication, is located at dal09, tier level is 4, OS type is Linux.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-order VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-order 12345678 -s DAILY -d dal09 --tier 4 --os-type LINUX\n   이 명령은 볼륨(ID 12345678)에 대한 복제본을 주문하고, 일일 복제를 수행하며, dal09에 위치합니다. 계층 레벨은 4이고, OS 유형은 Linux입니다."
   },
-  "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   This command lists existing replicant volumes for block volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-partners VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} replica-partners 12345678\n   이 명령은 블록 볼륨(ID 12345678)에 대한 기존 복제 볼륨을 나열합니다."
   },
-  "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} snapshot-cancel SNAPSHOT_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   이 명령은 확인 요청 없이 스냅샷(ID 12345678)을 즉시 취소합니다."
   },
   "${COMMAND_NAME} sl {{.storageType}} snapshot-create VOLUME_ID [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-create 12345678 --note snapshotforibmcloud\n   This command creates a snapshot for volume with ID 12345678 and with addition note as snapshotforibmcloud.": {

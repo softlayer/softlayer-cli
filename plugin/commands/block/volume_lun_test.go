@@ -30,6 +30,7 @@ var _ = Describe("Volume lun", func() {
 		cliCommand = block.NewVolumeLunCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Volume lun", func() {
@@ -49,9 +50,10 @@ var _ = Describe("Volume lun", func() {
 		})
 		Context("Volume lun with wrong volume id", func() {
 			It("return error", func() {
+				FakeStorageManager.GetVolumeIdReturns(0, errors.New("BAD Volume ID"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc", "123")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 		})
 		Context("Volume lun with wrong lun id", func() {

@@ -31,6 +31,7 @@ var _ = Describe("Replica order", func() {
 		cliCommand = block.NewReplicaOrderCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Replicant order", func() {
@@ -39,13 +40,6 @@ var _ = Describe("Replica order", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
-			})
-		})
-		Context("Replicant order with wrong volume id", func() {
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 		Context("Replicant order without -s", func() {
@@ -112,7 +106,7 @@ var _ = Describe("Replica order", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "DAILY", "-d", "dal09", "-t", "4", "-o", "LINUX", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to order replicant for volume 123.Please verify your options and try again."))
+				Expect(err.Error()).To(ContainSubstring("Failed to order replicant for volume 1234.Please verify your options and try again."))
 			})
 		})
 

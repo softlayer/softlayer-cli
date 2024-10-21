@@ -112,6 +112,7 @@ type StorageManager interface {
 	ListItems(packageId int, categoryCode string, mask string) ([]datatypes.Product_Item, error)
 	GetRegions(packageId int) ([]datatypes.Location_Region, error)
 	GetNetworkMessageDeliveryAccounts(storageId int, mask string) (datatypes.Network_Storage_Hub_Cleversafe_Account, error)
+	GetVolumeId(indentifier string, storageType string) (int, error)
 }
 
 type storageManager struct {
@@ -963,4 +964,33 @@ func (s storageManager) GetEndpoints(storageId int) ([]datatypes.Container_Netwo
 	NetworkStorageHubCleversafeAccountService := services.GetNetworkStorageHubCleversafeAccountService(s.Session)
 
 	return NetworkStorageHubCleversafeAccountService.Id(storageId).GetEndpoints(nil)
+}
+
+// Trys to resolve identifier to a block volume ID
+// if identifier is a int, will return that, otherwise does a API lookup assuming identifier is a volume username
+func (s storageManager) GetVolumeId(identifier string, storageType string) (int, error) {
+	var volumeId int
+	var err error
+	// identifier is a number, which means its already an ID
+	volumeId, err = strconv.Atoi(identifier)
+
+	// If there was an error, identifier is likely a string and username, search the API for it
+	if err != nil {
+		// Maybe this is a volume username
+		volumes, err := s.ListVolumes(storageType, "", identifier, "", "", 0, "mask[id,username]")
+		if err != nil {
+			// API error
+			return 0, err
+		}
+		// If we don't get 1 volume back, something went wrong. Either 0 volumes, or too many and the
+		// user should pick a better identifier
+		if len(volumes) != 1 {
+			subs := map[string]interface{}{"VolumeName": identifier, "VolumeCount": len(volumes)}
+			return 0, errors.New(
+				T("Search for volume {{.VolumeName}} found {{.VolumeCount}} volumes, expected 1.", subs),
+			)
+		}
+		volumeId = *volumes[0].Id
+	}
+	return volumeId, nil
 }

@@ -29,6 +29,7 @@ var _ = Describe("Snapshot enable", func() {
 		cliCommand = block.NewSnapshotEnableCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Snapshot enable", func() {
@@ -37,11 +38,6 @@ var _ = Describe("Snapshot enable", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
-			})
-			It("Bad Volume ID", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "a1234", "-c=100", "-s=INTERVAL")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 			It("Bad Interval", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--schedule-type=FAKE", "-c=100")
@@ -80,9 +76,9 @@ var _ = Describe("Snapshot enable", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring("HOURLY snapshots have been enabled for volume 1234."))
 			})
 			It("Happy Path min Options", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "9999", "-s", "INTERVAL", "-c", "500")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "INTERVAL", "-c", "500")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("INTERVAL snapshots have been enabled for volume 9999."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("INTERVAL snapshots have been enabled for volume 1234."))
 			})
 		})
 

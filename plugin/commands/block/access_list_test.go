@@ -33,6 +33,7 @@ var _ = Describe("Access List Tests", func() {
 		cliCommand = block.NewAccessListCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Access List", func() {
@@ -41,13 +42,6 @@ var _ = Describe("Access List Tests", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
-			})
-		})
-		Context("Access Authorize with wrong volume id", func() {
-			It("error resolving volume ID", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
 			})
 		})
 

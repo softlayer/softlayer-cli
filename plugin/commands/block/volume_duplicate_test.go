@@ -42,6 +42,7 @@ var _ = Describe("Volume duplicate", func() {
 		cliCommand = block.NewVolumeDuplicateCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Volume duplicate", func() {
@@ -54,9 +55,10 @@ var _ = Describe("Volume duplicate", func() {
 		})
 		Context("Bad volume id", func() {
 			It("return error", func() {
+				FakeStorageManager.GetVolumeIdReturns(0, errors.New("BAD Volume ID"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "ZZZ")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Volume ID"))
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 		})
 		Context("Volume duplicate with 0 DuplicateSnapshotSize", func() {

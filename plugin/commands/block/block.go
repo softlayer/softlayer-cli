@@ -12,6 +12,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	StorageCommand := &metadata.SoftlayerStorageCommand{
 		SoftlayerCommand: sl,
 		StorageI18n:      map[string]interface{}{"storageType": "block"},
+		StorageType:      "block",
 	}
 	cobraCmd := &cobra.Command{
 		Use:   "block",

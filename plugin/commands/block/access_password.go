@@ -1,7 +1,6 @@
 package block
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -45,7 +44,6 @@ func NewAccessPasswordCommand(sl *metadata.SoftlayerStorageCommand) *AccessPassw
 
 func (cmd *AccessPasswordCommand) Run(args []string) error {
 
-	fmt.Printf("===AccessPasswordCommand===")
 	hostID, err := strconv.Atoi(args[0])
 	if err != nil {
 		return slErr.NewInvalidSoftlayerIdInputError("allowed access host ID")

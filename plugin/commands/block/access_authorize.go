@@ -1,8 +1,6 @@
 package block
 
 import (
-	"strconv"
-
 	"github.com/spf13/cobra"
 
 	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -32,9 +30,7 @@ func NewAccessAuthorizeCommand(sl *metadata.SoftlayerStorageCommand) *AccessAuth
 	cobraCmd := &cobra.Command{
 		Use:   "access-authorize " + T("IDENTIFIER"),
 		Short: T("Authorize hosts to access a given volume."),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} access-authorize VOLUME_ID [OPTIONS]
-		
-EXAMPLE:
+		Long: T(`EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321
    This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.`, sl.StorageI18n),
 		Args: metadata.OneArgs,
@@ -54,9 +50,9 @@ EXAMPLE:
 
 func (cmd *AccessAuthorizeCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 	IPIds := cmd.Ip_address_id
 	IPs := cmd.Ip_address

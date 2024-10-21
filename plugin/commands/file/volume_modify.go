@@ -2,11 +2,8 @@ package file
 
 import (
 	"fmt"
-	"strconv"
-
 	"github.com/spf13/cobra"
 
-	slErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
@@ -53,9 +50,9 @@ func NewVolumeModifyCommand(sl *metadata.SoftlayerStorageCommand) *VolumeModifyC
 
 func (cmd *VolumeModifyCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 
 	newTier := cmd.NewTier

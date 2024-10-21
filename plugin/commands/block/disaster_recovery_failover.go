@@ -44,9 +44,9 @@ EXAMPLE:
 
 func (cmd *DisasterRecoveryFailoverCommand) Run(args []string) error {
 
-	volumeID, err := strconv.Atoi(args[0])
+	volumeID, err := cmd.StorageManager.GetVolumeId(args[0], cmd.StorageType)
 	if err != nil {
-		return slErr.NewInvalidSoftlayerIdInputError("Volume ID")
+		return err
 	}
 	replicaID, err := strconv.Atoi(args[1])
 	if err != nil {

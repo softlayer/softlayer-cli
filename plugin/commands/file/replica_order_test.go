@@ -31,6 +31,7 @@ var _ = Describe("Replica order", func() {
 		cliCommand = file.NewReplicaOrderCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Replicant order", func() {
@@ -43,14 +44,15 @@ var _ = Describe("Replica order", func() {
 		})
 		Context("Replicant order with wrong volume id", func() {
 			It("return error", func() {
+				FakeStorageManager.GetVolumeIdReturns(0, errors.New("BAD Volume ID"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abc")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Invalid input for 'Volume ID'. It must be a positive integer."))
+				Expect(err.Error()).To(ContainSubstring("BAD Volume ID"))
 			})
 		})
 		Context("Replicant order without -s", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-s|--snapshot-schedule] is required, options are: HOURLY, DAILY, WEEKLY."))
 			})
@@ -58,7 +60,7 @@ var _ = Describe("Replica order", func() {
 
 		Context("Replicant order with wrong -s", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "yearly")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "yearly")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-s|--snapshot-schedule] is required, options are: HOURLY, DAILY, WEEKLY."))
 			})
@@ -66,7 +68,7 @@ var _ = Describe("Replica order", func() {
 
 		Context("Replicant order without -d", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "DAILY")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "DAILY")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-d|--datacenter] is required."))
 			})
@@ -74,7 +76,7 @@ var _ = Describe("Replica order", func() {
 
 		Context("Replicant order with wrong tier", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "DAILY", "-d", "dal09", "-t", "0.3")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "DAILY", "-d", "dal09", "-t", "0.3")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: [-t|--tier] is optional, options are: 0.25,2,4,10."))
 			})
@@ -82,7 +84,7 @@ var _ = Describe("Replica order", func() {
 
 		Context("Replicant order with wrong iops", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "DAILY", "-d", "dal09", "-i", "9")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "DAILY", "-d", "dal09", "-i", "9")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -i|--iops must be between 100 and 6000, inclusive."))
 			})
@@ -90,7 +92,7 @@ var _ = Describe("Replica order", func() {
 
 		Context("Replicant order with wrong iops", func() {
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "DAILY", "-d", "dal09", "-i", "1234")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "DAILY", "-d", "dal09", "-i", "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: -i|--iops must be a multiple of 100."))
 			})
@@ -101,9 +103,9 @@ var _ = Describe("Replica order", func() {
 				FakeStorageManager.OrderReplicantVolumeReturns(datatypes.Container_Product_Order_Receipt{}, errors.New("Internal Server Error"))
 			})
 			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "DAILY", "-d", "dal09", "-t", "4", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "DAILY", "-d", "dal09", "-t", "4", "-f")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to order replicant for volume 123.Please verify your options and try again."))
+				Expect(err.Error()).To(ContainSubstring("Failed to order replicant for volume 1234.Please verify your options and try again."))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
 			})
 		})
@@ -127,12 +129,12 @@ var _ = Describe("Replica order", func() {
 					nil)
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "DAILY", "-d", "dal09", "-t", "4", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "DAILY", "-d", "dal09", "-t", "4", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
 			})
 			It("return no error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "-s", "DAILY", "-d", "dal09", "-i", "3000", "-f")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "DAILY", "-d", "dal09", "-i", "3000", "-f")
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("Order 123456 was placed."))
 			})

@@ -31,6 +31,7 @@ var _ = Describe("Replica partners", func() {
 		cliCommand = block.NewReplicaPartnersCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
 		cliCommand.StorageManager = FakeStorageManager
+		FakeStorageManager.GetVolumeIdReturns(1234, nil)
 	})
 
 	Describe("Replicant partners", func() {
