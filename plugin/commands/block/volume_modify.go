@@ -28,7 +28,9 @@ func NewVolumeModifyCommand(sl *metadata.SoftlayerStorageCommand) *VolumeModifyC
 	cobraCmd := &cobra.Command{
 		Use:   "volume-modify " + T("IDENTIFIER"),
 		Short: T("Modify an existing block storage volume"),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]
+		Long: T(`Valid size and iops options can be found here:
+https://cloud.ibm.com/docs/BlockStorage/index.html#provisioning-considerations
+https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-orderingBlockStorage&interface=cli
 
    EXAMPLE:
 	  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 
@@ -42,7 +44,7 @@ func NewVolumeModifyCommand(sl *metadata.SoftlayerStorageCommand) *VolumeModifyC
 	}
 	cobraCmd.Flags().IntVarP(&thisCmd.NewSize, "new-size", "c", 0, T("New Size of block volume in GB. ***If no size is given, the original size of volume is used.***\n      Potential Sizes: [20, 40, 80, 100, 250, 500, 1000, 2000, 4000, 8000, 12000]\n      Minimum: [the original size of the volume]"))
 	cobraCmd.Flags().IntVarP(&thisCmd.NewIops, "new-iops", "i", 0, T("Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***"))
-	cobraCmd.Flags().Float64VarP(&thisCmd.NewTier, "new-tier", "t", 0, T("Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***"))
+	cobraCmd.Flags().Float64VarP(&thisCmd.NewTier, "new-tier", "t", 0, T("Endurance Storage Tier (IOPS per GB) [only for endurance volumes] ***If no tier is specified, the original tier of the volume will be used.***") + "\n" + T("Tiers: [0.25, 2, 4, 10]"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
 	thisCmd.Command = cobraCmd
 	return thisCmd
