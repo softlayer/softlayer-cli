@@ -413,7 +413,7 @@
   "${COMMAND_NAME} sl {{.storageType}} volume-list [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   This command lists all endurance volumes on current account that are located at dal09, and sorts them by capacity.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} volume-list [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-list -d dal09 -t endurance --sortby capacity_gb\n   이 명령은 dal09에 위치한 현재 계정에서 모든 내구성 볼륨을 나열하고 용량별로 정렬합니다."
   },
-  "Valid size and iops options can be found here:\nhttps://cloud.ibm.com/docs/BlockStorage/index.html#provisioning-considerations\nhttps://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-orderingBlockStorage&interface=cliEXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.": {
+  "Valid size and iops options can be found here:\nhttps://cloud.ibm.com/docs/BlockStorage/index.html#provisioning-considerations\nhttps://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-orderingBlockStorage&interface=cli\nEXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [옵션]\n\n   예:\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n  이 명령은 볼륨 12345678을 수정합니다. 크기는 1000GB이고, IOPS는 4000입니다.\n  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n  이 명령은 볼륨 12345678을 수정합니다. 크기는 500GB이고, 계층 레벨은 GB당 4 IOPS입니다."
   },
   "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.": {
@@ -422,7 +422,7 @@
   "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   이 명령은 스토리지 유형, 볼륨 크기, IOPS, 계층 레벨, 데이터 센터 및 스냅샷 크기를 포함하여 파일 스토리지 볼륨 작성을 위한 모든 옵션을 나열합니다."
   },
-  "${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.": {
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} volume-order [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   이 명령은 성능 볼륨을 주문합니다. 크기는 1000GB이고, IOPS는 4000이고, OS 유형은 LINUX이고, dal09에 위치합니다.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   이 명령은 내구성 볼륨을 주문합니다. 크기는 500GB이고, 계층 레벨은 GB당 4 IOPS이고, OS 유형은 XEN이고, dal09에 위치하고, 추가 스냅샷 공간 크기는 500GB입니다."
   },
   "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.": {
@@ -4235,7 +4235,7 @@
   "List all images on your account": {
     "other": "계정의 모든 이미지 나열"
   },
-  "List all options for ordering a block storage": {
+  "List all options for ordering a block or file storage volume": {
     "other": "블록 스토리지 주문에 대한 모든 옵션 나열"
   },
   "List all options for ordering a file storage": {
