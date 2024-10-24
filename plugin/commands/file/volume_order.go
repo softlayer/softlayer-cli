@@ -38,9 +38,7 @@ func NewVolumeOrderCommand(sl *metadata.SoftlayerStorageCommand) *VolumeOrderCom
 	cobraCmd := &cobra.Command{
 		Use:   "volume-order",
 		Short: T("Order a file storage volume"),
-		Long: T(`${COMMAND_NAME} sl {{.storageType}} volume-order [OPTIONS]
-
-EXAMPLE:
+		Long: T(`EXAMPLE:
    ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09
    This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.
    ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500

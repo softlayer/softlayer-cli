@@ -52,6 +52,7 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(block.NewVolumeRefreshCommand(StorageCommand).Command)
 	cobraCmd.AddCommand(block.NewVolumeConvertCommand(StorageCommand).Command)
 	cobraCmd.AddCommand(block.NewSnapshotOrderCommand(StorageCommand).Command)
+	cobraCmd.AddCommand(block.NewVolumeOptionsCommand(StorageCommand).Command)
 
 	// Unique File Commands, even these can likely be merged in a later version.
 	cobraCmd.AddCommand(NewAccessAuthorizeCommand(StorageCommand).Command)
@@ -65,6 +66,5 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd.AddCommand(NewVolumeListCommand(StorageCommand).Command)
 	cobraCmd.AddCommand(NewVolumeOrderCommand(StorageCommand).Command)
 	cobraCmd.AddCommand(NewVolumeModifyCommand(StorageCommand).Command)
-	cobraCmd.AddCommand(NewVolumeOptionsCommand(StorageCommand).Command)
 	return cobraCmd
 }
