@@ -22,6 +22,17 @@ type FakeDedicatedHostManager struct {
 		result1 []managers.StatusInfo
 		result2 error
 	}
+	DeleteHostStub        func(int) error
+	deleteHostMutex       sync.RWMutex
+	deleteHostArgsForCall []struct {
+		arg1 int
+	}
+	deleteHostReturns struct {
+		result1 error
+	}
+	deleteHostReturnsOnCall map[int]struct {
+		result1 error
+	}
 	GenerateOrderTemplateStub        func(string, string, string, string, string, int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error)
 	generateOrderTemplateMutex       sync.RWMutex
 	generateOrderTemplateArgsForCall []struct {
@@ -219,6 +230,67 @@ func (fake *FakeDedicatedHostManager) CancelGuestsReturnsOnCall(i int, result1 [
 		result1 []managers.StatusInfo
 		result2 error
 	}{result1, result2}
+}
+
+func (fake *FakeDedicatedHostManager) DeleteHost(arg1 int) error {
+	fake.deleteHostMutex.Lock()
+	ret, specificReturn := fake.deleteHostReturnsOnCall[len(fake.deleteHostArgsForCall)]
+	fake.deleteHostArgsForCall = append(fake.deleteHostArgsForCall, struct {
+		arg1 int
+	}{arg1})
+	stub := fake.DeleteHostStub
+	fakeReturns := fake.deleteHostReturns
+	fake.recordInvocation("DeleteHost", []interface{}{arg1})
+	fake.deleteHostMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeDedicatedHostManager) DeleteHostCallCount() int {
+	fake.deleteHostMutex.RLock()
+	defer fake.deleteHostMutex.RUnlock()
+	return len(fake.deleteHostArgsForCall)
+}
+
+func (fake *FakeDedicatedHostManager) DeleteHostCalls(stub func(int) error) {
+	fake.deleteHostMutex.Lock()
+	defer fake.deleteHostMutex.Unlock()
+	fake.DeleteHostStub = stub
+}
+
+func (fake *FakeDedicatedHostManager) DeleteHostArgsForCall(i int) int {
+	fake.deleteHostMutex.RLock()
+	defer fake.deleteHostMutex.RUnlock()
+	argsForCall := fake.deleteHostArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeDedicatedHostManager) DeleteHostReturns(result1 error) {
+	fake.deleteHostMutex.Lock()
+	defer fake.deleteHostMutex.Unlock()
+	fake.DeleteHostStub = nil
+	fake.deleteHostReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeDedicatedHostManager) DeleteHostReturnsOnCall(i int, result1 error) {
+	fake.deleteHostMutex.Lock()
+	defer fake.deleteHostMutex.Unlock()
+	fake.DeleteHostStub = nil
+	if fake.deleteHostReturnsOnCall == nil {
+		fake.deleteHostReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.deleteHostReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeDedicatedHostManager) GenerateOrderTemplate(arg1 string, arg2 string, arg3 string, arg4 string, arg5 string, arg6 int) (datatypes.Container_Product_Order_Virtual_DedicatedHost, error) {
@@ -813,6 +885,8 @@ func (fake *FakeDedicatedHostManager) Invocations() map[string][][]interface{} {
 	defer fake.invocationsMutex.RUnlock()
 	fake.cancelGuestsMutex.RLock()
 	defer fake.cancelGuestsMutex.RUnlock()
+	fake.deleteHostMutex.RLock()
+	defer fake.deleteHostMutex.RUnlock()
 	fake.generateOrderTemplateMutex.RLock()
 	defer fake.generateOrderTemplateMutex.RUnlock()
 	fake.getCreateOptionsMutex.RLock()

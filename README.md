@@ -156,6 +156,25 @@ Expect(slOptions.Filter).To(ContainSubstring(`"id":{"operation":"orderBy","optio
 Check testhelpers/fake_softlayer_session.go for all the fields that get recorded with an API call.
 
 
+Heres a fancy way to test an API call matches a few different properties at the same time:
+
+```go
+// This is where the MatchFields/PointTo come from
+. "github.com/onsi/gomega/gstruct"
+
+It("it returns dedicatedhost verify response", func() {
+    err := dedicatedhostManager.DeleteHost(12345)
+    Expect(err).NotTo(HaveOccurred())
+    apiCalls := fakeHandler.ApiCallLogs
+    Expect(len(apiCalls)).To(Equal(1))
+    Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
+        "Service": Equal("SoftLayer_Virtual_DedicatedHost"),
+        "Method":  Equal("deleteObject"),
+        "Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(12345))})),
+    }))
+})
+
+```
 
 ### Test Fakes
 

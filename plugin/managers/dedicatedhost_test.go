@@ -3,6 +3,7 @@ package managers_test
 import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	. "github.com/onsi/gomega/gstruct"
 	"github.com/softlayer/softlayer-go/session"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/managers"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
@@ -11,12 +12,18 @@ import (
 var _ = Describe("DedicatedhostManager", func() {
 	var (
 		fakeSLSession        *session.Session
+		fakeHandler    		*testhelpers.FakeTransportHandler
 		dedicatedhostManager managers.DedicatedHostManager
 	)
 
 	BeforeEach(func() {
 		fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSLSession)
 		dedicatedhostManager = managers.NewDedicatedhostManager(fakeSLSession)
+	})
+	AfterEach(func() {
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
 	})
 
 	Describe("Genereate a dedicatedhost order template", func() {
@@ -77,6 +84,21 @@ var _ = Describe("DedicatedhostManager", func() {
 				placeOrder, err := dedicatedhostManager.OrderInstance(dedicatedhostTemplate)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(*placeOrder.OrderId).To(Equal(1111111))
+			})
+		})
+	})
+	Describe("Dedicated Host Manager Simple functions", func() {
+		Context("DeleteHost", func() {
+			It("it returns dedicatedhost verify response", func() {
+				err := dedicatedhostManager.DeleteHost(12345)
+				Expect(err).NotTo(HaveOccurred())
+				apiCalls := fakeHandler.ApiCallLogs
+				Expect(len(apiCalls)).To(Equal(1))
+				Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
+					"Service": Equal("SoftLayer_Virtual_DedicatedHost"),
+					"Method":  Equal("deleteObject"),
+					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(12345))})),
+				}))
 			})
 		})
 	})
