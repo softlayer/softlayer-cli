@@ -102,6 +102,7 @@ def runTests() -> None:
     except FileNotFoundError:
         gosec_instal = "curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $GOPATH/bin"
         print(f"[red]gosec not found. Try running:\n{gosec_instal}")
+    print('[turquoise2] go sec OK.')
 
 ### Section for i18n4go stuff ###
 def runI18n4go(path: str) -> None:
