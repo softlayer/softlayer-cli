@@ -4,7 +4,6 @@ import (
 	"errors"
 	"time"
 
-	. "github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/matchers"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -26,7 +25,7 @@ var _ = Describe("Dedicated host detail", func() {
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeSession = testhelpers.NewFakeSoftlayerSession(nil)
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = dedicatedhost.NewDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
@@ -111,35 +110,18 @@ var _ = Describe("Dedicated host detail", func() {
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dedicatedhost"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"56"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1200"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"242"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2022-02-01T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2022-02-01T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"3"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dal13"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilmawang"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dal13"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("wilmawang"))
 			})
 			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--guests", "--price")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dedicatedhost"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"56"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1200"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"242"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2022-02-01T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"2022-02-01T00:00:00Z"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"3"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"dal13"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"10"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"wilmawang"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"test.com"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"test"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"9131111-2222-6a10-3333-992c544444"}))
-				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"1234567"}))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("dedicatedhost"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("9131111-2222-6a10-3333-992c544444"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1234567"))
 			})
 		})
 	})

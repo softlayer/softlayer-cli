@@ -45,6 +45,7 @@ type DedicatedHostManager interface {
 	GetCreateOptions(productPackage datatypes.Product_Package) map[string]map[string]string
 	GetVlansOptions(datacenter string, flavor string, productPackage datatypes.Product_Package) ([]datatypes.Network_Vlan, error)
 	ListDedicatedHost(name, datacenter, owner string, orderId int) ([]datatypes.Virtual_DedicatedHost, error)
+	DeleteHost(identifier int) error
 }
 
 type dedicatedhostManager struct {
@@ -301,4 +302,10 @@ func (d dedicatedhostManager) ListDedicatedHost(name, datacenter, owner string, 
 		}
 	}
 	return resourceList, nil
+}
+
+// Calls https://sldn.softlayer.com/reference/services/SoftLayer_Virtual_DedicatedHost/deleteObject/
+func (d dedicatedhostManager) DeleteHost(identifier int) error {
+	_, err := d.VirtualDedicatedHost.Id(identifier).DeleteObject()
+	return err
 }
