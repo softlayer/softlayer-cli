@@ -435,6 +435,28 @@ T("This is some output for a {{.CMDTYPE}} command", subs)
 
 *NOTICE* goi18n/v2 has some newer features that can make this a bit easier to deal with, but I'm not sure they are currently supported, so procede with caution in you make use of them.
 
+Commands that accept a list of options to display should have those subbed into the string, not hard coded.
+
+BAD:
+```go
+cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "id", T("Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."))
+
+```
+
+GOOD:
+
+```go
+defaultColumns := []string{
+    "id", "name", "type", "private_ip_address", "source_subnet",
+    "host_iqn", "username", "password","allowed_host_id"
+}
+
+default_subs := map[string]interface{}{"COLUMNS": strings.join(defaultColumns, ", ")}
+
+cobraCmd.Flags().StringVar(&thisCmd.Sortby, "sortby", "id",
+    T("Column to sort by. Options are: {{.COLUMNS}}.", default_subs))
+```
+
 ### Useful Scripts
 
 #### `./bin/buildAndDeploy.py i18n`

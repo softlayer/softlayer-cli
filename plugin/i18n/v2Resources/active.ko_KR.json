@@ -1313,7 +1313,7 @@
   "Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times": {
     "other": "표시할 열. 옵션은 id, hostname, domain, primary_ip, backend_ip입니다. 이 옵션은 여러 번 지정할 수 있습니다."
   },
-  "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.": {
+  "Column to display. Options are: {{.COLUMNS}}. This option can be specified multiple times.": {
     "other": "표시할 열. 옵션: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. 이 옵션은 여러 번 지정할 수 있습니다."
   },
   "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times": {
@@ -1346,7 +1346,7 @@
   "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip": {
     "other": "정렬 기준 열. 옵션: id, hostname, domain, primary_ip, backend_ip"
   },
-  "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.": {
+  "Column to sort by. Options are: {{.COLUMNS}}.": {
     "other": "정렬 기준 열. 옵션: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
   },
   "Column to sort by. Options are: id,common_name,days_until_expire,note": {

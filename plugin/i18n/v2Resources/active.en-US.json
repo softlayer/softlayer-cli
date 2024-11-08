@@ -1,4 +1,7 @@
 {
+  "\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 5555 --subnet-id 1111\n   This command adds subnet with id 1111 to the Allowed Host with id 5555. Use 'access-list' to find this id.\n   SoftLayer_Account::iscsiIsolationDisabled must be False for this command to do anything.": {
+    "other": "\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 5555 --subnet-id 1111\n   This command adds subnet with id 1111 to the Allowed Host with id 5555. Use 'access-list' to find this id.\n   SoftLayer_Account::iscsiIsolationDisabled must be False for this command to do anything."
+  },
   "\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678.": {
     "other": "\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-locations 12345678\n   This command lists suitable replication data centers for block volume with ID 12345678."
   },
@@ -395,15 +398,6 @@
   "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} volume-modify VOLUME_ID [OPTIONS]\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB."
   },
-  "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a block storage volume, including storage type, volume size, OS type, IOPS, tier level, datacenter, and snapshot size."
-  },
-  "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} volume-options\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-options\n   This command lists all options for creating a file storage volume, including storage type, volume size, IOPS, tier level, datacenter, and snapshot size."
-  },
-  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.": {
-    "other": "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB."
-  },
   "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\nEXAMPLE:\n\t${COMMAND_NAME} sl {{.storageType}} volume-refresh VOLUME_ID SNAPSHOT_ID\n\tRefresh a duplicate VOLUME_ID with a snapshot from its parent SNAPSHOT_ID."
   },
@@ -599,6 +593,9 @@
   "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier ": {
     "other": "A Network_Vlan.id value of the desired VLAN or A semantic VLAN identifier of the form <data center short name>.<router>.<vlan number>,\neg. dal13.fcr01.1234 - the router name may optionally contain the 'a' or 'b' redundancy qualifier "
   },
+  "A Subnet Id. With this option IDENTIFIER should be an 'allowed_host_id' from the access-list command.": {
+    "other": "A Subnet Id. With this option IDENTIFIER should be an 'allowed_host_id' from the access-list command."
+  },
   "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>": {
     "other": "A Virtual_Guest.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>"
   },
@@ -658,6 +655,9 @@
   },
   "Aborting AAAA record sync, found {{.Num}} AAAA records exists!": {
     "other": "Aborting AAAA record sync, found {{.Num}} AAAA records exists!"
+  },
+  "Access Hosts marked 'IN ACL' belong to a parent Access Host with the same allowed_host_id.": {
+    "other": "Access Hosts marked 'IN ACL' belong to a parent Access Host with the same allowed_host_id."
   },
   "Access Key ID": {
     "other": "Access Key ID"
@@ -881,9 +881,6 @@
   "Authorize hosts to access a given volume.": {
     "other": "Authorize hosts to access a given volume."
   },
-  "Available Snapshot Size (GB)": {
-    "other": "Available Snapshot Size (GB)"
-  },
   "Average": {
     "other": "Average"
   },
@@ -1048,6 +1045,9 @@
   },
   "Cancel a VLAN": {
     "other": "Cancel a VLAN"
+  },
+  "Cancel a dedicated host server immediately.": {
+    "other": "Cancel a dedicated host server immediately."
   },
   "Cancel a global IP": {
     "other": "Cancel a global IP"
@@ -1298,14 +1298,14 @@
   "Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times": {
     "other": "Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times"
   },
-  "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.": {
-    "other": "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times."
-  },
   "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times": {
     "other": "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times"
   },
   "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times": {
     "other": "Column to display. Options are: id,username,datacenter,storage_type,capacity_gb,bytes_used,IOPs,ip_addr,lunId,created_by,active_transactions,rep_partner_count,notes. This option can be specified multiple times"
+  },
+  "Column to display. Options are: {{.COLUMNS}}.": {
+    "other": "Column to display. Options are: {{.COLUMNS}}."
   },
   "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state].": {
     "other": "Column to display. [Options are: guid, cpu, memory, datacenter, primary_ip, backend_ip, created_by, power_state, tags] [default: id,hostname,domain,primary_ip,backend_ip,power_state]."
@@ -1331,9 +1331,6 @@
   "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip": {
     "other": "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip"
   },
-  "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.": {
-    "other": "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
-  },
   "Column to sort by. Options are: id,common_name,days_until_expire,note": {
     "other": "Column to sort by. Options are: id,common_name,days_until_expire,note"
   },
@@ -1357,6 +1354,9 @@
   },
   "Column to sort by. Options are: id,virtualServerId,hostname": {
     "other": "Column to sort by. Options are: id,virtualServerId,hostname"
+  },
+  "Column to sort by. Options are: {{.COLUMNS}}.": {
+    "other": "Column to sort by. Options are: {{.COLUMNS}}."
   },
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
@@ -1640,6 +1640,9 @@
   "Dedicated Host ID to migrate to. Only works on guests that are already on a dedicated host.": {
     "other": "Dedicated Host ID to migrate to. Only works on guests that are already on a dedicated host."
   },
+  "Dedicated Host {{.ID}} was cancelled": {
+    "other": "Dedicated Host {{.ID}} was cancelled"
+  },
   "Dedicated Virtual Host Flavor(s)": {
     "other": "Dedicated Virtual Host Flavor(s)"
   },
@@ -1894,6 +1897,9 @@
   },
   "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation.": {
     "other": "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-cancel 12345678 --immediate -f \n   This command cancels snapshot with ID 12345678 immediately without asking for confirmation."
+  },
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB.": {
+    "other": "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type performance --size 1000 --iops 4000 --os-type LINUX -d dal09\n   This command orders a performance volume with size is 1000GB, IOPS is 4000, OS type is LINUX, located at dal09.\n   ${COMMAND_NAME} sl {{.storageType}} volume-order --storage-type endurance --size 500 --tier 4 --os-type XEN -d dal09 --snapshot-size 500\n   This command orders a endurance volume with size is 500GB, tier level is 4 IOPS per GB, OS type is XEN, located at dal09, and additional snapshot space size is 500GB."
   },
   "EXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13": {
     "other": "EXAMPLE: \n\t${COMMAND_NAME} sl order place CLOUD_SERVER DALLAS13 GUEST_CORES_4 RAM_16_GB REBOOT_REMOTE_CONSOLE 1_GBPS_PUBLIC_PRIVATE_NETWORK_UPLINKS BANDWIDTH_0_GB_2 1_IP_ADDRESS GUEST_DISK_100_GB_SAN OS_UBUNTU_16_04_LTS_XENIAL_XERUS_MINIMAL_64_BIT_FOR_VSI MONITORING_HOST_PING NOTIFICATION_EMAIL_AND_TICKET AUTOMATED_NOTIFICATION UNLIMITED_SSL_VPN_USERS_1_PPTP_VPN_USER_PER_ACCOUNT NESSUS_VULNERABILITY_ASSESSMENT_REPORTING --billing hourly --extras '{\"virtualGuests\": [{\"hostname\": \"test\", \"domain\": \"softlayer.com\"}]}' --complex-type SoftLayer_Container_Product_Order_Virtual_Guest\n\tThis command orders an hourly VSI with 4 CPU, 16 GB RAM, 100 GB SAN disk, Ubuntu 16.04, and 1 Gbps public & private uplink in dal13"
@@ -2599,9 +2605,6 @@
   },
   "Failed to get all datacenters.": {
     "other": "Failed to get all datacenters."
-  },
-  "Failed to get all datacenters.\n": {
-    "other": "Failed to get all datacenters.\n"
   },
   "Failed to get announcement event ID.": {
     "other": "Failed to get announcement event ID."
@@ -3695,6 +3698,9 @@
   "Hardware ID should be a number.": {
     "other": "Hardware ID should be a number."
   },
+  "Hardware Server": {
+    "other": "Hardware Server"
+  },
   "Hardware server template is exported to: {{.Template}}.": {
     "other": "Hardware server template is exported to: {{.Template}}."
   },
@@ -3869,9 +3875,6 @@
   "IOPs": {
     "other": "IOPs"
   },
-  "IOPs limit above 6000 available in select data centers, refer to:http://knowledgelayer.softlayer.com/articles/new-ibm-block-and-file-storage-location-and-features": {
-    "other": "IOPs limit above 6000 available in select data centers, refer to:http://knowledgelayer.softlayer.com/articles/new-ibm-block-and-file-storage-location-and-features"
-  },
   "IP": {
     "other": "IP"
   },
@@ -3923,6 +3926,9 @@
   "If specified, will only show what the quote will order, will NOT place an order [default: False]": {
     "other": "If specified, will only show what the quote will order, will NOT place an order [default: False]"
   },
+  "If there are any guests on this Dedicated Host, this command will fail until those guests are deleted.\nUse 'sl dedicatedhost cancel-guests [IDENTIFIER]' to remove all guests from a host.\nUse 'sl vs delete' to remove a specific guest.": {
+    "other": "If there are any guests on this Dedicated Host, this command will fail until those guests are deleted.\nUse 'sl dedicatedhost cancel-guests [IDENTIFIER]' to remove all guests from a host.\nUse 'sl vs delete' to remove a specific guest."
+  },
   "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type.": {
     "other": "If this option is specified, the public ip will be allocated from a public subnet in this account. Otherwise, it will be allocated form IBM system pool. Only available in PublicToPrivate load balancer type."
   },
@@ -3958,6 +3964,9 @@
   },
   "Import an image from an object storage": {
     "other": "Import an image from an object storage"
+  },
+  "In ACL": {
+    "other": "In ACL"
   },
   "In GB": {
     "other": "In GB"
@@ -4262,9 +4271,6 @@
   "List all options for ordering a block or file storage volume": {
     "other": "List all options for ordering a block or file storage volume"
   },
-  "List all options for ordering a file storage": {
-    "other": "List all options for ordering a file storage"
-  },
   "List all subnets on your account": {
     "other": "List all subnets on your account"
   },
@@ -4445,6 +4451,9 @@
   "Maintance Window": {
     "other": "Maintance Window"
   },
+  "Make sure ISCSI Isolation is enabled for this account.": {
+    "other": "Make sure ISCSI Isolation is enabled for this account."
+  },
   "Manage Classic infrastructure services": {
     "other": "Manage Classic infrastructure services"
   },
@@ -4462,9 +4471,6 @@
   },
   "Max": {
     "other": "Max"
-  },
-  "Max IOPS": {
-    "other": "Max IOPS"
   },
   "Maximum number of connections to allow": {
     "other": "Maximum number of connections to allow"
@@ -4510,9 +4516,6 @@
   },
   "Min": {
     "other": "Min"
-  },
-  "Min IOPS": {
-    "other": "Min IOPS"
   },
   "Minute of the hour when snapshots should be taken, integer between 0 to 59": {
     "other": "Minute of the hour when snapshots should be taken, integer between 0 to 59"
@@ -4708,9 +4711,6 @@
   },
   "Note value": {
     "other": "Note value"
-  },
-  "Note:": {
-    "other": "Note:"
   },
   "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC": {
     "other": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
@@ -5789,6 +5789,9 @@
   "Security group {{.ID}} is updated.": {
     "other": "Security group {{.ID}} is updated."
   },
+  "See Also:": {
+    "other": "See Also:"
+  },
   "See https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-getting-started for sizing options.\n${COMMAND_NAME} sl block volume-options' to get available options.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB.": {
     "other": "See https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-getting-started for sizing options.\n${COMMAND_NAME} sl block volume-options' to get available options.\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} snapshot-order 12345678 -s 1000 -t 4 \n   This command orders snapshot space for volume with ID 12345678, the size is 1000GB, the tier level is 4 IOPS per GB."
   },
@@ -5963,9 +5966,6 @@
   "Size": {
     "other": "Size"
   },
-  "Size (GB)": {
-    "other": "Size (GB)"
-  },
   "Size On Disk": {
     "other": "Size On Disk"
   },
@@ -6106,12 +6106,6 @@
   },
   "Storage": {
     "other": "Storage"
-  },
-  "Storage Size (GB)": {
-    "other": "Storage Size (GB)"
-  },
-  "Storage Type": {
-    "other": "Storage Type"
   },
   "Subject": {
     "other": "Subject"
@@ -6653,6 +6647,9 @@
   "The volume has been cancelled; unable to modify volume.": {
     "other": "The volume has been cancelled; unable to modify volume."
   },
+  "The {{.SL_Object}} {{.SL_ID}} was authorized to access {{.VolumeId}}.": {
+    "other": "The {{.SL_Object}} {{.SL_ID}} was authorized to access {{.VolumeId}}."
+  },
   "There are no replication partners for volume {{.VolumeID}}.\n": {
     "other": "There are no replication partners for volume {{.VolumeID}}.\n"
   },
@@ -7172,8 +7169,8 @@
   "Valid quantities vary by type.\n\t- public IPv4: 4, 8, 16, 32\n\t- private IPv4: 4, 8, 16, 32, 64\n\t- public IPv6: 64\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet create public 16 567\n\tThis command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567.": {
     "other": "Valid quantities vary by type.\n\t- public IPv4: 4, 8, 16, 32\n\t- private IPv4: 4, 8, 16, 32, 64\n\t- public IPv6: 64\n\nEXAMPLE:\n\t${COMMAND_NAME} sl subnet create public 16 567\n\tThis command creates a public subnet with 16 IPv4 addresses and places it on vlan with ID 567."
   },
-  "Valid size and iops options can be found here:\nhttps://cloud.ibm.com/docs/BlockStorage/index.html#provisioning-considerations\nhttps://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-orderingBlockStorage&interface=cli\n\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.": {
-    "other": "Valid size and iops options can be found here:\nhttps://cloud.ibm.com/docs/BlockStorage/index.html#provisioning-considerations\nhttps://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-orderingBlockStorage&interface=cli\n\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB."
+  "Valid size and iops options can be found here:\nhttps://cloud.ibm.com/docs/BlockStorage/index.html#provisioning-considerations\nhttps://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-orderingBlockStorage&interface=cli\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB.": {
+    "other": "Valid size and iops options can be found here:\nhttps://cloud.ibm.com/docs/BlockStorage/index.html#provisioning-considerations\nhttps://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-orderingBlockStorage&interface=cli\n\n   EXAMPLE:\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 1000 --new-iops 4000 \n\t  This command modify a volume 12345678 with size is 1000GB, IOPS is 4000.\n\t  ${COMMAND_NAME} sl {{.storageType}} volume-modify 12345678 --new-size 500 --new-tier 4\n\t  This command modify a volume 12345678 with size is 500GB, tier level is 4 IOPS per GB."
   },
   "Value": {
     "other": "Value"
@@ -7207,6 +7204,9 @@
   },
   "Virtual Guest ID": {
     "other": "Virtual Guest ID"
+  },
+  "Virtual Server": {
+    "other": "Virtual Server"
   },
   "Virtual guest ID": {
     "other": "Virtual guest ID"

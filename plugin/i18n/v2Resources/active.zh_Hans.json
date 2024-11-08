@@ -1313,7 +1313,7 @@
   "Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times": {
     "other": "要显示的列。 选项为：id、hostname、domain、primary_ip 和 backend_ip。 此选项可以多次指定"
   },
-  "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.": {
+  "Column to display. Options are: {{.COLUMNS}}. This option can be specified multiple times.": {
     "other": "要显示的列。 选项包括：id、name、type、private_ip_address、source_subnet、host_iqn、username、password 和  allowed_host_id。 可以多次指定此选项。"
   },
   "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times": {
@@ -1346,7 +1346,7 @@
   "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip": {
     "other": "要作为排序依据的列。 选项为：id、hostname、domain、primary_ip、backend_ip"
   },
-  "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.": {
+  "Column to sort by. Options are: {{.COLUMNS}}.": {
     "other": "要作为排序依据的列。 选项包括：id、name、type、private_ip_address、source_subnet、host_iqn、username、password 和  allowed_host_id。"
   },
   "Column to sort by. Options are: id,common_name,days_until_expire,note": {
