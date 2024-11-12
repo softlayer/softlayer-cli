@@ -621,6 +621,8 @@ Always a good idea to sign commits, even if it takes a bit to setup.
 2. `gpg --full-generate-key` Create a GPG key to sign commits with (use your github email)
 3. `git commit --message="THE MESSAGE"` is your normal commit, but should now be signed! You may be prompted for a password
 4. `git log --show-signature` confirm its signed.
+5. `gpg --output email.pgp --armor --export email@domain.com` will export your PUBLIC key so you can upload it to github.
+
 
 ## Windows setup
 
