@@ -38,84 +38,78 @@ var _ = Describe("Access Revoke", func() {
 	})
 
 	Describe("Access Revoke", func() {
-		Context("Access revoke without volume id", func() {
-			It("return error", func() {
+		Context("Syntax Errors", func() {
+			It("Require One Argument", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
 		})
 
-		Context("Access revoke with correct volume id and virtual server id", func() {
+		Context("Successful Revokations", func() {
 			BeforeEach(func() {
 				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
 			})
-			It("return no error", func() {
+			It("Virtual Server", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--virtual-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for virtual server 5678"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for Virtual Server 5678"))
 			})
-		})
-
-		Context("Access revoke with correct volume id and hardware server id", func() {
-			BeforeEach(func() {
-				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
-			})
-			It("return no error", func() {
+			It("Hardware Server", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--hardware-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for hardware server 5678."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for Hardware Server 5678."))
 			})
-		})
-
-		Context("Access revoke with correct volume id and ip address id", func() {
-			BeforeEach(func() {
-				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
-			})
-			It("return no error", func() {
+			It("Single IP Address ID", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--ip-address-id", "5678")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for IP address 5678."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for IP Address 5678."))
 			})
-		})
-
-		Context("Access revoke with correct volume id and ip address", func() {
-			BeforeEach(func() {
-				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
+			It("Single IP address", func() {
 				fakeNetworkManager.IPLookupReturns(datatypes.Network_Subnet_IpAddress{Id: sl.Int(5678)}, nil)
-			})
-			It("return no error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--ip-address", "1.2.3.4")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for IP address 5678."))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Access to 1234 was revoked for IP Address 5678."))
 			})
 		})
 
-		Context("Access revoke with correct volume id and wrong ip address", func() {
+		Context("Error Handling", func() {
 			BeforeEach(func() {
-				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)
-				fakeNetworkManager.IPLookupReturns(datatypes.Network_Subnet_IpAddress{}, errors.New("Not Found"))
+				FakeStorageManager.DeauthorizeHostToVolumeReturns([]datatypes.Network_Storage_Allowed_Host{}, nil)				
 			})
-			It("return error", func() {
+			It("IP Not Found", func() {
+				fakeNetworkManager.IPLookupReturns(datatypes.Network_Subnet_IpAddress{}, errors.New("Not Found"))
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--ip-address", "1.2.3.4")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("IP address 1.2.3.4 is not found on your account.Please confirm IP and try again."))
+				Expect(err.Error()).To(ContainSubstring("IP address 1.2.3.4 is not found on your account."))
 				Expect(err.Error()).To(ContainSubstring("Not Found"))
 			})
-		})
-
-		Context("Access Authorize with correct volume id but server API call fails", func() {
-			BeforeEach(func() {
+			It("API error", func() {
 				FakeStorageManager.DeauthorizeHostToVolumeReturns(
-					[]datatypes.Network_Storage_Allowed_Host{},
-					errors.New("Internal Server Error"),
+					[]datatypes.Network_Storage_Allowed_Host{}, errors.New("Internal Server Error"),
 				)
-			})
-			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--virtual-id", "5678")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to revoke access to volume 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal Server Error"))
+			})
+			It("Subnet not removed because isci isolation", func() {
+				FakeStorageManager.RemoveSubnetsFromAclReturns([]int{}, nil)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--subnet-id", "5678")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to remove subnet id: 5678"))
+			})
+			It("Subnet not removed because wrong subnet returned", func() {
+				FakeStorageManager.RemoveSubnetsFromAclReturns([]int{999}, nil)
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--subnet-id", "5678")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Failed to remove subnet id: 5678"))
+			})
+			It("Subnet not removed because API error", func() {
+				FakeStorageManager.RemoveSubnetsFromAclReturns([]int{}, errors.New("API ERROR"))
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "--subnet-id", "5678")
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("API ERROR"))
 			})
 		})
 	})

@@ -353,8 +353,8 @@
   "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'": {
     "other": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\nACCESS_ID est l'ID d'hôte autorisé obtenu avec '${COMMAND_NAME} sl {{.storageType}} access-list'"
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} access-revoke ID_VOLUME [OPTIONS]\n\nEXEMPLE :\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   Cette commande révoque l'accès du serveur virtuel dont l'ID est 87654321 au volume dont l'ID est 12345678."
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.": {
+    "other": "EXEMPLE :\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   Cette commande révoque l'accès du serveur virtuel dont l'ID est 87654321 au volume dont l'ID est 12345678."
   },
   "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-failback ID_VOLUME\n\nEXEMPLE :\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   Cette commande effectue une opération de reprise par restauration pour le volume dont l'ID 12345678."

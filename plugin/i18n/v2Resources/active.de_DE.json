@@ -353,8 +353,8 @@
   "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'": {
     "other": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID--password PASSWORD\n \n ACCESS_ID ist die zulässige Host-ID (allowed_host_id) aus '${COMMAND_NAME} sl {{.storageType}} access-list'"
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} access-revoke DATENTRÄGER_ID [OPTIONEN]\n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n Dieser Befehl widerruft den Zugriff des virtuellen Servers mit der ID 87654321 auf den Datenträger mit der ID 12345678."
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.": {
+    "other": "BEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n Dieser Befehl widerruft den Zugriff des virtuellen Servers mit der ID 87654321 auf den Datenträger mit der ID 12345678."
   },
   "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-failback DATENTRÄGER_ID\n \nBEISPIEL:\n ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n Dieser Befehl führt eine Failback-Operation für einen Datenträger mit der ID 12345678 durch."
