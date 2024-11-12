@@ -612,3 +612,21 @@ If we need to update the excluded files (these are saved in the .secrets.baselin
 ```bash
 detect-secrets -v scan --update .secrets.baseline  --exclude-files "plugin/i18n/v1Resources/|plugin/i18n/v2Resources/|(.*test.*)|(vendor)|(go.sum)|bin/"
 ```
+
+
+# Commit Signing
+Always a good idea to sign commits, even if it takes a bit to setup.
+
+1. `git config --global commit.gpgsign true` Enabled signed commits
+2. `gpg --full-generate-key` Create a GPG key to sign commits with (use your github email)
+3. `git commit --message="THE MESSAGE"` is your normal commit, but should now be signed! You may be prompted for a password
+4. `git log --show-signature` confirm its signed.
+
+## Windows setup
+
+In windows GPG pops up an annoying window for password prompting. Following [Using Command-Line Passphrase Input for GPG with Git](https://betakuang.medium.com/using-command-line-passphrase-input-for-gpg-with-git-for-windows-f78ae2c7cd2e) to be prompted on the CLI
+
+```
+$>  cat ~/.gnupg/gpg-agent.conf
+allow-loopback-pinentry
+```
