@@ -353,8 +353,8 @@
   "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'": {
     "other": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\nACCESS_ID 是來自 '${COMMAND_NAME} sl {{.storageType}} access-list' 的 allowed_host_id"
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n 這個指令會撤銷虛擬伺服器（其 ID 為 87654321）對磁區（其 ID 為 12345678）的存取權。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.": {
+    "other": "範例：\n ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n 這個指令會撤銷虛擬伺服器（其 ID 為 87654321）對磁區（其 ID 為 12345678）的存取權。"
   },
   "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n \n範例：\n ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n 這個指令會針對磁區（其 ID 為 12345678）執行失效回復作業。"
@@ -1313,7 +1313,7 @@
   "Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times": {
     "other": "要顯示的直欄。 選項為：id、hostname、domain、primary_ip、backend_ip。 這個選項可以多次指定"
   },
-  "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.": {
+  "Column to display. Options are: {{.COLUMNS}}. This option can be specified multiple times.": {
     "other": "要顯示的直欄。 選項包含：id、name、type、private_ip_address、source_subnet、host_iqn、username、password、allowed_host_id。 此選項可以指定多次。"
   },
   "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times": {
@@ -1346,7 +1346,7 @@
   "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip": {
     "other": "要排序的直欄。 選項包含：id、hostname、domain、primary_ip、backend_ip"
   },
-  "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.": {
+  "Column to sort by. Options are: {{.COLUMNS}}.": {
     "other": "要排序的直欄。 選項包含：id、name、type、private_ip_address、source_subnet、host_iqn、username、password、allowed_host_id。"
   },
   "Column to sort by. Options are: id,common_name,days_until_expire,note": {

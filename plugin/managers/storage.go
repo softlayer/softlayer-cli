@@ -169,10 +169,11 @@ func (s storageManager) GetVolumeSnapshotSchedules(volumeId int) (datatypes.Netw
 // Returns a list of authorized hosts for a specified volume.
 // volumeId: ID of volume
 func (s storageManager) GetVolumeAccessList(volumeId int) (datatypes.Network_Storage, error) {
-	mask := "id,allowedVirtualGuests.allowedHost.credential," +
-		"allowedHardware.allowedHost.credential," +
-		"allowedSubnets.allowedHost.credential," +
-		"allowedIpAddresses.allowedHost.credential"
+	mask := `mask[id,
+allowedVirtualGuests[id,hostname,domain,primaryBackendIpAddress,allowedHost[credential,subnetsInAcl]],
+allowedHardware[id,hostname,domain,primaryBackendIpAddress,allowedHost[credential,subnetsInAcl]],
+allowedSubnets[id,note,networkIdentifier,cidr,endPointIpAddress[ipAddress],allowedHost[credential,subnetsInAcl]],
+allowedIpAddresses[id,note,ipAddress,allowedHost[credential,subnetsInAcl]]]`
 	return s.StorageService.Id(volumeId).Mask(mask).GetObject()
 }
 

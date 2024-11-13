@@ -353,8 +353,8 @@
   "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\t\n\tACCESS_ID is the allowed_host_id from '${COMMAND_NAME} sl {{.storageType}} access-list'": {
     "other": "${COMMAND_NAME} sl {{.storageType}} access-password ACCESS_ID --password PASSWORD\n\nACCESS_ID는 '${COMMAND_NAME} sl {{.storageType}} access-list'의 허용된 호스트 id입니다."
   },
-  "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [OPTIONS]\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.": {
-    "other": "${COMMAND_NAME} sl {{.storageType}} access-revoke VOLUME_ID [옵션]\n\n예:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   이 명령은 볼륨(ID 12345678)에 대한 가상 서버(ID 87654321)의 액세스를 취소합니다."
+  "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   This command revokes access of virtual server with ID 87654321 to volume with ID 12345678.": {
+    "other": "예:\n   ${COMMAND_NAME} sl {{.storageType}} access-revoke 12345678 --virtual-id 87654321\n   이 명령은 볼륨(ID 12345678)에 대한 가상 서버(ID 87654321)의 액세스를 취소합니다."
   },
   "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\t\t\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   This command performs failback operation for volume with ID 12345678.": {
     "other": "${COMMAND_NAME} sl {{.storageType}} replica-failback VOLUME_ID\n\nEXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} replica-failback 12345678\n   이 명령은 볼륨(ID 12345678)에 대한 장애 복구 조작을 수행합니다."
@@ -1313,7 +1313,7 @@
   "Column to display. Options are: id, hostname, domain, primary_ip, backend_ip. This option can be specified multiple times": {
     "other": "표시할 열. 옵션은 id, hostname, domain, primary_ip, backend_ip입니다. 이 옵션은 여러 번 지정할 수 있습니다."
   },
-  "Column to display. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. This option can be specified multiple times.": {
+  "Column to display. Options are: {{.COLUMNS}}. This option can be specified multiple times.": {
     "other": "표시할 열. 옵션: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id. 이 옵션은 여러 번 지정할 수 있습니다."
   },
   "Column to display. Options are: id,hostname,domain,cpu,memory,public_ip,private_ip,datacenter,action,guid,power_state,created_by,tags. This option can be specified multiple times": {
@@ -1346,7 +1346,7 @@
   "Column to sort by. Options are: id, hostname, domain, primary_ip, backend_ip": {
     "other": "정렬 기준 열. 옵션: id, hostname, domain, primary_ip, backend_ip"
   },
-  "Column to sort by. Options are: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id.": {
+  "Column to sort by. Options are: {{.COLUMNS}}.": {
     "other": "정렬 기준 열. 옵션: id, name, type, private_ip_address, source_subnet, host_iqn, username, password, allowed_host_id."
   },
   "Column to sort by. Options are: id,common_name,days_until_expire,note": {

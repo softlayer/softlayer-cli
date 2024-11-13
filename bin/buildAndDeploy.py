@@ -94,7 +94,7 @@ def runTests() -> None:
     except subprocess.CalledProcessError as e:
         print(f"[red]>>> Go Test failed <<<")
         sys.exit(e.returncode)
-    go_sec = ['gosec', '-exclude-dir=fixture', '-exclude-dir=plugin/resources', '-quiet', './...']
+    go_sec = ['gosec', '-exclude-dir=fixture', '-exclude-dir=plugin/resources', '-exclude-generated', './...']
     # Not using the 'real' command because this is more copy/pasteable.
     print('[turquoise2]Running: ' + " ".join(go_sec)) 
     try:
