@@ -94,6 +94,9 @@ def runTests() -> None:
     except subprocess.CalledProcessError as e:
         print(f"[red]>>> Go Test failed <<<")
         sys.exit(e.returncode)
+
+def runGoSec() -> None:
+    """Runs gpsec"""
     go_sec = ['gosec', '-exclude-dir=fixture', '-exclude-dir=plugin/resources', '-exclude-generated', './...']
     # Not using the 'real' command because this is more copy/pasteable.
     print('[turquoise2]Running: ' + " ".join(go_sec)) 
@@ -394,6 +397,12 @@ def test(ctx):
 
 @cli.command()
 @click.pass_context
+def gosec(ctx):
+    """Runs the tests"""
+    runGoSec()
+
+@cli.command()
+@click.pass_context
 def i18n(ctx):
     """Checks and builds the i18n files"""
     runI18n4go(ctx.obj.getdir())
@@ -412,8 +421,3 @@ def docs(ctx, out_path):
 
 if __name__ == '__main__':
     cli()
-    # try:
-    #     cli()
-    # except Exception as e:
-    #     print(f"[red]{e}")
-
