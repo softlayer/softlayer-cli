@@ -86,23 +86,36 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 		if invoiceDetail.Location != nil {
 			location = utils.FormatStringPointer(invoiceDetail.Location.Name)
 		}
+		oneTime, recurring := SumChildItems(invoiceDetail)
 		table.Add(
 			utils.FormatIntPointer(invoiceDetail.Id),
 			Category,
 			utils.ShortenString(Description),
-			fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
-			fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
-			utils.FormatSLTimePointer(invoiceDetail.CreateDate),
+			fmt.Sprintf("%.2f", oneTime),
+			fmt.Sprintf("%.2f", recurring),
+			utils.FormatSLTimePointerCustom(invoiceDetail.CreateDate, "2006-01-02"),
 			location,
 		)
 		if details {
+			// Add in the parent row if we are doing details, so its obvious how the top line item adds up.
+			if len(invoiceDetail.Children) > 0  {
+				table.Add(
+					">>>",
+					Category,
+					utils.ShortenString(Description),
+					fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
+					fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
+					"---",
+					"---",
+				)
+			}
 			for _, child := range invoiceDetail.Children {
 				table.Add(
 					">>>",
 					utils.FormatStringPointer(child.Category.Name),
 					utils.ShortenString(utils.FormatStringPointer(child.Description)),
-					fmt.Sprintf("%.2f", *invoiceDetail.OneTimeAfterTaxAmount),
-					fmt.Sprintf("%.2f", *invoiceDetail.RecurringAfterTaxAmount),
+					fmt.Sprintf("%.2f", *child.OneTimeAfterTaxAmount),
+					fmt.Sprintf("%.2f", *child.RecurringAfterTaxAmount),
 					"---",
 					"---",
 				)
@@ -110,4 +123,17 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 		}
 	}
 	utils.PrintTable(ui, table, outputFormat)
+}
+
+func SumChildItems(item datatypes.Billing_Invoice_Item) (oneTime float64, recurring float64) {
+	oneTime = float64((*item.OneTimeAfterTaxAmount))
+	recurring = float64((*item.RecurringAfterTaxAmount))
+
+	for _, child := range item.Children {
+		oneTime += float64((*child.OneTimeAfterTaxAmount))
+		recurring += float64((*child.RecurringAfterTaxAmount))
+	}
+	return oneTime, recurring
+
+
 }

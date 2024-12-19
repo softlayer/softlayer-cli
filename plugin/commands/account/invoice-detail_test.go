@@ -55,20 +55,24 @@ var _ = Describe("Account list InvoiceDetail", func() {
 			It("return account invoice detail", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Item Id        Category   Description                                                                           Single   Monthly   Create Date            Location"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789      Server     Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...   10.23    20.34     2022-04-04T05:10:20Z   mex01"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789123   server     Dual E5-2690 v3 (12 Cores, 2.60 GHz) (test-vs.support2.com)                           11.23    21.12     2022-04-04T05:10:21Z   ams01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Item Id        Category   Description                                                                           Single   Monthly   Create Date   Location"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789      Server     Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...   22.59    35.26     2022-04-04    mex01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789123   server     Dual E5-2690 v3 (12 Cores, 2.60 GHz) (test-vs.support2.com)                           23.81    36.04     2022-04-04    ams01"))
 			})
 			It("return account invoice detail with additionals details", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--details")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Item Id        Category           Description                                                                           Single   Monthly   Create Date            Location"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789      Server             Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...   10.23    20.34     2022-04-04T05:10:20Z   mex01"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(">>>            Second Processor   Intel Xeon (12 Cores, 2.40 GHz)                                                       10.23    20.34     ---                    ---"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(">>>            Operating System   Virtual (up to 1Gbps)                                                                 10.23    20.34     ---                    ---"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789123   server             Dual E5-2690 v3 (12 Cores, 2.60 GHz) (test-vs.support2.com)                           11.23    21.12     2022-04-04T05:10:21Z   ams01"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(">>>            Second Processor   Intel Xeon (12 Cores, 2.40 GHz)                                                       11.23    21.12     ---                    ---"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(">>>            Operating System   Virtual (up to 1Gbps)                                                                 11.23    21.12     ---                    ---"))
+				Expect(fakeUI.Outputs()).To(Equal(
+`Item Id        Category           Description                                                                           Single   Monthly   Create Date   Location
+123456789      Server             Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...   22.59    35.26     2022-04-04    mex01
+>>>            Server             Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...   10.23    20.34     ---           ---
+>>>            Second Processor   Intel Xeon (12 Cores, 2.40 GHz)                                                       5.24     6.12      ---           ---
+>>>            Operating System   Virtual (up to 1Gbps)                                                                 7.12     8.79      ---           ---
+123456789123   server             Dual E5-2690 v3 (12 Cores, 2.60 GHz) (test-vs.support2.com)                           23.81    36.04     2022-04-04    ams01
+>>>            server             Dual E5-2690 v3 (12 Cores, 2.60 GHz) (test-vs.support2.com)                           11.23    21.12     ---           ---
+>>>            Second Processor   Intel Xeon (12 Cores, 2.40 GHz)                                                       5.35     6.23      ---           ---
+>>>            Operating System   Virtual (up to 1Gbps)                                                                 7.23     8.68      ---           ---
+`))
 			})
 			It("return account invoice detail in format json", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--output", "json")
@@ -76,8 +80,8 @@ var _ = Describe("Account list InvoiceDetail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Item Id": "123456789",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Category": "Server",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Description": "Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Single": "10.23",`))
-				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Monthly": "20.34",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Single": "22.59",`))
+				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Monthly": "35.26",`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`"Location": "mex01"`))
 			})
 		})
@@ -92,8 +96,8 @@ var _ = Describe("Account list InvoiceDetail", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "888")
 				Expect(err).NotTo(HaveOccurred())
 				output := fakeUI.Outputs()
-				Expect(output).To(ContainSubstring("2020-05-04T05:11:25Z   None"))
-				Expect(output).To(ContainSubstring("2020-05-04T05:11:25Z   tok02"))
+				Expect(output).To(ContainSubstring("2020-05-04    None"))
+				Expect(output).To(ContainSubstring("0.00     0.00      2020-05-04    tok02"))
 			})
 		})
 	})
