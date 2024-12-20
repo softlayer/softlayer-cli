@@ -101,6 +101,7 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 			"unknown flag",
 			"unknown command",
 			"unknown shorthand flag",
+			"required flag(s)",
 			T("Incorrect Usage: "),
 			T("Invalid input for")}
 		for _, trigger := range helpTextTriggers {
@@ -116,25 +117,41 @@ func (sl *SoftlayerPlugin) Run(context plugin.PluginContext, args []string) {
 }
 
 // This function helps to translate errors coming from Cobra, the common ones in any case.
+// If you update this, update the version in testhelpers/fake_command_runner.go as well.
+// Or make this a util if we update it a lot
 func TranslateError(errorMessage string) string {
 	if strings.HasPrefix(errorMessage, "unknown command") {
-		r, _ := regexp.Compile(`unknown command "(\w+)"`)
+		// If the 'command' is a number it won't have "" around it, like:
+		r, _ := regexp.Compile(`unknown command "?(\w+)"? `)
 		matches := r.FindStringSubmatch(errorMessage)
-		fmt.Println(matches)
-		subs := map[string]interface{}{"CMD": matches[1]}
+		subs := map[string]interface{}{"CMD": ""}
+		if len(matches) >= 2 {
+			subs["CMD"] = matches[1]
+		} else {
+			subs["CMD"], _ = strings.CutPrefix(errorMessage, "unknown command ")
+		}
+		
 		return T("Unknown Command '{{.CMD}}'",subs)
 	} else if strings.HasPrefix(errorMessage, "unknown flag") {
 		r, _ := regexp.Compile(`unknown flag: (\S+)`)
 		matches := r.FindStringSubmatch(errorMessage)
-		fmt.Println(matches)
 		subs := map[string]interface{}{"CMD": matches[1]}
 		return T("Unknown Flag '{{.CMD}}'", subs)
 	} else if strings.HasPrefix(errorMessage, "unknown shorthand flag") {
 		r, _ := regexp.Compile(`unknown shorthand flag: '(\S+)'`)
 		matches := r.FindStringSubmatch(errorMessage)
-		fmt.Println(matches)
 		subs := map[string]interface{}{"CMD": matches[1]}
 		return T("Unknown Flag '{{.CMD}}'", subs)
+	} else if strings.HasPrefix(errorMessage, "required flag(s)") {
+		r, _ := regexp.Compile(`("[0-9A-Za-z\-]+")`)
+		matches := r.FindAllStringSubmatch(errorMessage, -1)
+		missingFlags := make([]string, len(matches))
+		for i, flag := range matches {
+			this_flag := strings.ReplaceAll(flag[0], `"`, "")
+			subs := map[string]interface{}{"CMD": fmt.Sprintf("--%s", this_flag)}
+			missingFlags[i] = T("Incorrect Usage: '{{.CMD}}' is required", subs)
+		}
+		return strings.Join(missingFlags, "\n")
 	} else {
 		return T(errorMessage)
 	}
