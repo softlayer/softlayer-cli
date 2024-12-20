@@ -251,6 +251,17 @@ func FormatSLTimePointer(value *datatypes.Time) string {
 	return value.UTC().Format(time.RFC3339)
 }
 
+// Date formats are in '2006-01-02 15:04:05' format
+func FormatSLTimePointerCustom(value *datatypes.Time, time_format string) string {
+	if value == nil {
+		return EMPTY_VALUE
+	}
+	if time_format == "" {
+		time_format = time.RFC3339
+	}
+	return value.UTC().Format(time_format)
+}
+
 func Bool2Int(value bool) int {
 	if value {
 		return 1

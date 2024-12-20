@@ -4,6 +4,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	"github.com/onsi/gomega/format"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/metadata"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/testhelpers"
@@ -33,8 +34,11 @@ var availableCommands = []string{
 	"summary",
 }
 
+
 // This test suite exists to make sure commands don't get accidently removed from the actionBindings
 var _ = Describe("Test account.GetCommandActionBindings()", func() {
+	format.TruncatedDiff = false
+	format.UseStringerRepresentation = false
 	fakeUI := terminal.NewFakeUI()
 	fakeSession := testhelpers.NewFakeSoftlayerSession(nil)
 	slMeta := metadata.NewSoftlayerCommand(fakeUI, fakeSession)
