@@ -37,19 +37,19 @@ var _ = Describe("tags set", func() {
 			It("Set command without required --tags option", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--key-name=HARDWARE", "--resource-id=123456")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--tags' is required"))
+				Expect(err.Error()).To(ContainSubstring(`required flag(s) "tags" not set`))
 			})
 
 			It("Set command without required --key-name option", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--tags='tag1,tag2'", "--resource-id=123456")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--key-name' is required"))
+				Expect(err.Error()).To(ContainSubstring(`required flag(s) "key-name" not set`))
 			})
 
 			It("Set command without required --resource-id option", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "--tags='tag1,tag2'", "--key-name=HARDWARE")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: '--resource-id' is required"))
+				Expect(err.Error()).To(ContainSubstring(`required flag(s) "resource-id" not set`))
 			})
 
 			It("Set invalid resource-id option", func() {

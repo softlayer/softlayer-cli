@@ -278,9 +278,6 @@
   "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.": {
     "other": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information."
   },
-  "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n": {
-    "other": "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
-  },
   "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ": {
     "other": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 "
   },
@@ -1885,6 +1882,9 @@
   },
   "Duplicate Volume Properties": {
     "other": "Duplicate Volume Properties"
+  },
+  "EXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n": {
+    "other": "EXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
   "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678.": {
     "other": "EXAMPLE:\n   ${COMMAND_NAME} sl {{.storageType}} access-authorize 12345678 --virtual-id 87654321\n   This command authorizes virtual server with ID 87654321 to access volume with ID 12345678."
@@ -3997,6 +3997,9 @@
   },
   "Incorrect Usage: ": {
     "other": "Incorrect Usage: "
+  },
+  "Incorrect Usage: '{{.CMD}}' is required": {
+    "other": "Incorrect Usage: '{{.CMD}}' is required"
   },
   "Incorrect complex type: {{.Type}}": {
     "other": "Incorrect complex type: {{.Type}}"
@@ -7801,9 +7804,6 @@
   },
   "type": {
     "other": "type"
-  },
-  "unknown command {{.Arg}} for {{.Command}}": {
-    "other": "unknown command {{.Arg}} for {{.Command}}"
   },
   "updated": {
     "other": "updated"

@@ -269,8 +269,8 @@
   "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   This command finds the IP address record with IP address 9.125.235.255 and displays its subnet and device information.": {
     "other": "${COMMAND_NAME} sl subnet lookup IP_ADDRESS [OPTIONS]\n\t\n例:\n   ${COMMAND_NAME} sl subnet lookup 9.125.235.255\n   このコマンドは、IP アドレス 9.125.235.255 の IP アドレス・レコードを検出し、そのサブネットおよびデバイス情報を表示します。"
   },
-  "${COMMAND_NAME} sl tags set [OPTIONS]\n\nEXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n": {
-    "other": "${COMMAND_NAME} sl tags set [OPTIONS]\n\n例:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
+  "EXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n": {
+    "other": "例:\n${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
   },
   "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \nEXAMPLE:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567 ": {
     "other": "${COMMAND_NAME} sl ticket attach TICKETID [OPTIONS]\n  \n例:\n  ${COMMAND_NAME} sl ticket attach 7676767 --hardware 8675654 \n  ${COMMAND_NAME} sl ticket attach 7676767 --virtual 1234567"

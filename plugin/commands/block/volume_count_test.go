@@ -46,7 +46,7 @@ var _ = Describe("Volume cancel", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("unknown command 1234 for volume-count"))
+				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: invalid argument 1234 for volume-count"))
 			})
 		})
 		Context("Volume Count Happy Path", func() {

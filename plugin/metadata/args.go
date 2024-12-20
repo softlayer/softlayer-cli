@@ -16,9 +16,12 @@ func NoArgs(cmd *cobra.Command, args []string) error {
 	if len(args) > 0 {
 		subs := map[string]interface{}{
 			"Arg":     args[0],
-			"Command": cmd.CommandPath(),
+			"Path":    cmd.CommandPath(),
 		}
-		return fmt.Errorf(T("unknown command {{.Arg}} for {{.Command}}", subs))
+		return fmt.Errorf("%s%s",
+			T("Incorrect Usage: "),
+			T("invalid argument {{.Arg}} for {{.Path}}", subs),
+		)
 	}
 	return nil
 }

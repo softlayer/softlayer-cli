@@ -26,9 +26,7 @@ func NewSetCommand(sl *metadata.SoftlayerCommand) (cmd *SetCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "set",
 		Short: T("Set Tags."),
-		Long: T(`${COMMAND_NAME} sl tags set [OPTIONS]
-
-EXAMPLE:
+		Long: T(`EXAMPLE:
 	${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456
 `),
 		Args: metadata.NoArgs,
@@ -40,7 +38,9 @@ EXAMPLE:
 	cobraCmd.Flags().StringVar(&thisCmd.Tags, "tags", "", T("Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"))
 	cobraCmd.Flags().StringVar(&thisCmd.KeyName, "key-name", "", T("Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]"))
 	cobraCmd.Flags().IntVar(&thisCmd.ResourceId, "resource-id", 0, T("ID of the object being tagged  [required]"))
-
+	cobraCmd.MarkFlagRequired("tags") //#nosec G104 -- This is a false positive
+	cobraCmd.MarkFlagRequired("key-name") //#nosec G104 -- This is a false positive
+	cobraCmd.MarkFlagRequired("resource-id") //#nosec G104 -- This is a false positive
 	thisCmd.Command = cobraCmd
 	return thisCmd
 }
@@ -49,17 +49,6 @@ func (cmd *SetCommand) Run(args []string) error {
 	tags := cmd.Tags
 	keyName := cmd.KeyName
 	resourceId := cmd.ResourceId
-
-	if tags == "" {
-		return errors.NewMissingInputError("--tags")
-	}
-	if keyName == "" {
-		return errors.NewMissingInputError("--key-name")
-	}
-	if resourceId == 0 {
-		return errors.NewMissingInputError("--resource-id")
-	}
-
 	response, err := cmd.TagsManager.SetTags(tags, keyName, resourceId)
 	if err != nil {
 		return errors.NewAPIError(T("Failed to set tags."), err.Error(), 2)
