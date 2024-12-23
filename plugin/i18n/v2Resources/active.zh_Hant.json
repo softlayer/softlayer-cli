@@ -1376,8 +1376,8 @@
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "以逗點區隔的標籤清單，以引號括住。 'tag1, tag2'"
   },
-  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]": {
-    "other": "以逗點區隔的標籤清單，以引號括住。 'tag1,tag2' [必要]"
+  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'": {
+    "other": "以逗點區隔的標籤清單，以引號括住。 'tag1,tag2'"
   },
   "Company": {
     "other": "公司"
@@ -3821,8 +3821,8 @@
   "ID of an origin volume snapshot to use for duplication": {
     "other": "要用於複製的原始磁區 Snapshot 的 ID"
   },
-  "ID of the object being tagged  [required]": {
-    "other": "所標記物件的 ID [必要]"
+  "ID of the object being tagged": {
+    "other": "所標記物件的 ID"
   },
   "IDENTIFIER": {
     "other": "IDENTIFIER"
@@ -4097,8 +4097,8 @@
   "Key Name": {
     "other": "索引鍵名稱"
   },
-  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]": {
-    "other": "標籤類型的金鑰名稱，例如 GUEST、HARDWARE。 請參閱 slcli tags taggable 輸出。[必要]"
+  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
+    "other": "標籤類型的金鑰名稱，例如 GUEST、HARDWARE。 請參閱 slcli tags taggable 輸出。"
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "金鑰名稱。只提供於 HEADER 或 COOKIE 類型"
@@ -7295,8 +7295,8 @@
   "[TAG NAME]": {
     "other": "[標籤名稱]"
   },
-  "[required]": {
-    "other": "[必要]"
+  "required": {
+    "other": "必要"
   },
   "accepts at most {{.Limit}} arg(s), received {{.Args}}": {
     "other": "最多接受 {{.Limit}} 個引數，已收到 {{.Args}} 個"

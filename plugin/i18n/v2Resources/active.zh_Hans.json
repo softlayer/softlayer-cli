@@ -1376,8 +1376,8 @@
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "以逗号分隔的标记列表，括在引号中。 'tag1, tag2'"
   },
-  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]": {
-    "other": "以逗号分隔的标记列表，括在引号中。 'tag1,tag2'  [必需]"
+  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'": {
+    "other": "以逗号分隔的标记列表，括在引号中。 'tag1,tag2'"
   },
   "Company": {
     "other": "公司"
@@ -3821,8 +3821,8 @@
   "ID of an origin volume snapshot to use for duplication": {
     "other": "用于复制的源卷快照的标识"
   },
-  "ID of the object being tagged  [required]": {
-    "other": "正在标记的对象的标识 [必需]"
+  "ID of the object being tagged": {
+    "other": "正在标记的对象的标识"
   },
   "IDENTIFIER": {
     "other": "IDENTIFIER"
@@ -4097,8 +4097,8 @@
   "Key Name": {
     "other": "键名"
   },
-  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]": {
-    "other": "标记类型的键名称，例如 GUEST、HARDWARE。 请参阅 slcli 标记可标记输出。[必需]"
+  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
+    "other": "标记类型的键名称，例如 GUEST、HARDWARE。 请参阅 slcli 标记可标记输出。"
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "密钥名称。仅在 HEADER 或 COOKIE 类型中可用"
@@ -7295,8 +7295,8 @@
   "[TAG NAME]": {
     "other": "[标记名称]"
   },
-  "[required]": {
-    "other": "[必需]"
+  "required": {
+    "other": "必需"
   },
   "accepts at most {{.Limit}} arg(s), received {{.Args}}": {
     "other": "最多接受 {{.Limit}} 个参数，已收到 {{.Args}} 个"

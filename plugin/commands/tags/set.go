@@ -35,9 +35,9 @@ func NewSetCommand(sl *metadata.SoftlayerCommand) (cmd *SetCommand) {
 		},
 	}
 
-	cobraCmd.Flags().StringVar(&thisCmd.Tags, "tags", "", T("Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"))
-	cobraCmd.Flags().StringVar(&thisCmd.KeyName, "key-name", "", T("Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]"))
-	cobraCmd.Flags().IntVar(&thisCmd.ResourceId, "resource-id", 0, T("ID of the object being tagged  [required]"))
+	cobraCmd.Flags().StringVar(&thisCmd.Tags, "tags", "", T("Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'"))
+	cobraCmd.Flags().StringVar(&thisCmd.KeyName, "key-name", "", T("Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output."))
+	cobraCmd.Flags().IntVar(&thisCmd.ResourceId, "resource-id", 0, T("ID of the object being tagged"))
 	cobraCmd.MarkFlagRequired("tags") //#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("key-name") //#nosec G104 -- This is a false positive
 	cobraCmd.MarkFlagRequired("resource-id") //#nosec G104 -- This is a false positive

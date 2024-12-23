@@ -1376,8 +1376,8 @@
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "따옴표로 묶인 쉼표로 구분된 태그 목록입니다. 'tag1, tag2'"
   },
-  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]": {
-    "other": "따옴표로 묶인 쉼표로 구분된 태그 목록입니다. 'tag1,tag2' [필수]"
+  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'": {
+    "other": "따옴표로 묶인 쉼표로 구분된 태그 목록입니다. 'tag1,tag2'"
   },
   "Company": {
     "other": "회사"
@@ -3821,8 +3821,8 @@
   "ID of an origin volume snapshot to use for duplication": {
     "other": "복제에 사용할 원본 볼륨 스냅샷의 ID"
   },
-  "ID of the object being tagged  [required]": {
-    "other": "태그 지정되는 오브젝트의 ID입니다. [필수]"
+  "ID of the object being tagged": {
+    "other": "태그 지정되는 오브젝트의 ID입니다."
   },
   "IDENTIFIER": {
     "other": "IDENTIFIER"
@@ -4097,8 +4097,8 @@
   "Key Name": {
     "other": "키 이름"
   },
-  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]": {
-    "other": "태그 유형의 키 이름입니다(예: GUEST, HARDWARE). slcli tags taggable 출력을 참조하십시오. [필수]"
+  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
+    "other": "태그 유형의 키 이름입니다(예: GUEST, HARDWARE). slcli tags taggable 출력을 참조하십시오."
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "키 이름입니다. HEADER 또는 COOKIE 유형에만 사용할 수 있습니다."
@@ -7295,8 +7295,8 @@
   "[TAG NAME]": {
     "other": "[TAG NAME]"
   },
-  "[required]": {
-    "other": "[필수]"
+  "required": {
+    "other": "필수"
   },
   "accepts at most {{.Limit}} arg(s), received {{.Args}}": {
     "other": "대부분의 {{.Limit}} 인수를 허용하고 {{.Args}}을(를) 수신함"

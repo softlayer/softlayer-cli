@@ -1376,8 +1376,8 @@
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "Liste mit durch Kommas getrennten Tags, eingeschlossen in Anführungszeichen. 'tag1, tag2'"
   },
-  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]": {
-    "other": "Liste mit durch Kommas getrennten Tags, eingeschlossen in Anführungszeichen. 'tag1,tag2' [erforderlich]"
+  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'": {
+    "other": "Liste mit durch Kommas getrennten Tags, eingeschlossen in Anführungszeichen. 'tag1,tag2'"
   },
   "Company": {
     "other": "Firma"
@@ -3821,8 +3821,8 @@
   "ID of an origin volume snapshot to use for duplication": {
     "other": "ID eines Ursprungsdatenträgersnapshots zur Verwendung für die Duplizierung"
   },
-  "ID of the object being tagged  [required]": {
-    "other": "ID des Objekts, das mit Tags versehen wird [erforderlich]"
+  "ID of the object being tagged": {
+    "other": "ID des Objekts, das mit Tags versehen wird"
   },
   "IDENTIFIER": {
     "other": "ID"
@@ -4097,8 +4097,8 @@
   "Key Name": {
     "other": "Schlüsselname"
   },
-  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]": {
-    "other": "Schlüsselname eines Tagtyps, z. B. GUEST, HARDWARE. Siehe 'slcli tags taggable'-Ausgabe.  [erforderlich]"
+  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
+    "other": "Schlüsselname eines Tagtyps, z. B. GUEST, HARDWARE. Siehe 'slcli tags taggable'-Ausgabe."
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "Schlüsselname. Nur im Typ HEADER oder COOKIE verfügbar."
@@ -7295,8 +7295,8 @@
   "[TAG NAME]": {
     "other": "[TAGNAME]"
   },
-  "[required]": {
-    "other": "[erforderlich]"
+  "required": {
+    "other": "erforderlich"
   },
   "accepts at most {{.Limit}} arg(s), received {{.Args}}": {
     "other": "akzeptiert höchstens {{.Limit}} Argument(e), empfangen {{.Args}}"

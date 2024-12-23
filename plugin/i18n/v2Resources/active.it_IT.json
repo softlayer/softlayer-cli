@@ -1376,8 +1376,8 @@
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "Elenco separato da virgole di tag, racchiusi tra virgolette. 'tag1, tag2'"
   },
-  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]": {
-    "other": "Elenco separato da virgole di tag, racchiusi tra virgolette. 'tag1,tag2'  [obbligatorio]"
+  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'": {
+    "other": "Elenco separato da virgole di tag, racchiusi tra virgolette. 'tag1,tag2'"
   },
   "Company": {
     "other": "Società"
@@ -3821,8 +3821,8 @@
   "ID of an origin volume snapshot to use for duplication": {
     "other": "ID di un'istantanea del volume di origine da utilizzare per la duplicazione"
   },
-  "ID of the object being tagged  [required]": {
-    "other": "ID dell'oggetto su cui si impostano tag [obbligatorio]"
+  "ID of the object being tagged": {
+    "other": "ID dell'oggetto su cui si impostano tag"
   },
   "IDENTIFIER": {
     "other": "IDENTIFICATIVO"
@@ -4097,8 +4097,8 @@
   "Key Name": {
     "other": "Nome chiave"
   },
-  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]": {
-    "other": "Nome chiave di un tipo di tag, ad es. GUEST, HARDWARE. Vedere l'output di slcli tags taggable. [obbligatorio]"
+  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
+    "other": "Nome chiave di un tipo di tag, ad es. GUEST, HARDWARE. Vedere l'output di slcli tags taggable."
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "Nome chiave. Disponibile solo nel tipo HEADER o COOKIE"
@@ -7295,8 +7295,8 @@
   "[TAG NAME]": {
     "other": "[NOME TAG]"
   },
-  "[required]": {
-    "other": "[obbligatorio]"
+  "required": {
+    "other": "obbligatorio"
   },
   "accepts at most {{.Limit}} arg(s), received {{.Args}}": {
     "other": "accetta al massimo {{.Limit}} arg, ricevuto {{.Args}}"

@@ -55,10 +55,31 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
-var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} {{.Use}}{{else}}{{.Use}}{{end}}` +
-	`{{if .HasLocalFlags}} [` + T("OPTIONS") + `] {{end}}
+var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} {{.Use}}{{else}}{{.Use}}{{end}}` + 
+`{{if .HasLocalFlags}} [` + T("OPTIONS") + `] {{RequiredFlags .LocalFlags}} {{end}}
+
 {{.Long}}`
 
+// Cobra Default Template is: https://github.com/spf13/cobra/blob/v1.8.1/command.go#L546
+
+func RequiredFlags(flags *pflag.FlagSet) string {
+	requiredFlags := ""
+	flags.VisitAll(func(pflag *pflag.Flag) {
+		flagName := pflag.Name
+		if pflag.Shorthand != "" {
+			flagName = pflag.Shorthand + "," + pflag.Name
+		}
+
+		// Check if this flag is Required.
+		// Copied logic from https://github.com/spf13/cobra/blob/v1.8.1/command.go#L1149
+		// There is also an annotation for mutually exclusive we might want to look into.
+		requiredAnnotation, found := pflag.Annotations[cobra.BashCompOneRequiredFlag]
+		if found && requiredAnnotation[0] == "true" {
+			requiredFlags = fmt.Sprintf("%s--%s <%s> ", requiredFlags, flagName, strings.ToUpper(pflag.Value.Type()))
+		} 
+	})
+	return requiredFlags
+}
 func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
 		Name:       metadata.NS_SL_NAME,
@@ -208,6 +229,17 @@ func cobraFlagToPlugin(flagSet *pflag.FlagSet) []plugin.Flag {
 		if reflect.TypeOf(pflag.Value).String() == "*pflag.boolValue" {
 			hasValue = false
 		}
+		// Check if this flag is Required.
+		// Copied logic from https://github.com/spf13/cobra/blob/v1.8.1/command.go#L1149
+		// There is also an annotation for mutually exclusive we might want to look into.
+		requiredAnnotation, found := pflag.Annotations[cobra.BashCompOneRequiredFlag]
+		if found && requiredAnnotation[0] == "true" {
+			// Some flags have [required] hard coded in the description, so skip these
+			if !strings.Contains(flagDesc, T("required")) {
+				flagDesc = fmt.Sprintf("%s [%s]", flagDesc, T("required"))	
+			}
+			
+		} 
 		thisFlag := plugin.Flag{
 			Name:        flagName,
 			Description: flagDesc,
@@ -244,6 +276,7 @@ func defaultIsZeroValue(f *pflag.Flag) bool {
 func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Command {
 	var pluginCommands []plugin.Command
 	// Custom Usage to ibmcloud CLI prints out a nice messages for us
+	cobra.AddTemplateFunc("RequiredFlags", RequiredFlags)
 	topCommand.SetUsageTemplate(USEAGE_TEMPLATE)
 	for _, cliCmd := range topCommand.Commands() {
 		if len(cliCmd.Commands()) > 0 {
@@ -254,8 +287,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 				Name:        cliCmd.Name(),
 				Description: cliCmd.Short,
 				Usage:       cliCmd.UsageString(),
-				// try using the ibm-cloud/ibm-cloud-cli-sdk/plugin/plugin.ConvertCObraFlagsToPluginFlags
-				Flags: cobraFlagToPlugin(cliCmd.Flags()),
+				Flags: 		 cobraFlagToPlugin(cliCmd.Flags()),
 			}
 			pluginCommands = append(pluginCommands, thisCmd)
 		}
