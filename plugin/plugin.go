@@ -6,6 +6,8 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+	"bytes"
+	"text/template"
 
 	trace "github.com/IBM-Cloud/ibm-cloud-cli-sdk/bluemix/trace"
 
@@ -60,8 +62,31 @@ var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} 
 
 {{.Long}}`
 
-// Cobra Default Template is: https://github.com/spf13/cobra/blob/v1.8.1/command.go#L546
+// https://github.ibm.com/ibmcloud-cli/bluemix-cli/blob/master/bluemix/cli/help.go#L68
+// Copied/pasted because I don't want to import the whole bluemix/cli lib just for this
+var BX_TEMPLATE = `{{"NAME:" | T | HeaderColor}}
+  {{.Name}}{{with .Aliases}}{{range .}}, {{.}}{{end}}{{end}} - {{.Short}}
 
+{{"USAGE:" | T | HeaderColor}}
+  {{UsageCommandString . }}{{if .HasAvailableSubCommands}}{{$cmds := .Commands}}{{if eq (len .Groups) 0}}
+{{"Available Commands:" | HeaderColor}}{{range $cmds}}{{if (or .IsAvailableCommand (eq .Name "help"))}}
+  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{else}}{{range $group := .Groups}}
+{{.Title}}{{range $cmds}}{{if (and (eq .GroupID $group.ID) (or .IsAvailableCommand (eq .Name "help")))}}
+  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{end}}{{if not .AllChildCommandsHaveGroup}}
+Additional Commands:{{range $cmds}}{{if (and (eq .GroupID "") (or .IsAvailableCommand (eq .Name "help")))}}
+  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{end}}{{end}}{{end}}{{if .HasAvailableLocalFlags}}
+{{"OPTIONS:" | T | HeaderColor}}
+{{.LocalFlags.FlagUsages | trimTrailingWhitespaces}}{{if .HasAvailableInheritedFlags}}
+{{.InheritedFlags.FlagUsages | trimTrailingWhitespaces}}{{end}}{{end}}
+`
+
+// Adds HeaderColor to string in a template
+func HeaderColor(text string) string {
+	return terminal.HeaderColor(text)
+}
+
+// Cobra Default Template is: https://github.com/spf13/cobra/blob/v1.8.1/command.go#L546
+// Used to mark flags that are required in the Usage String
 func RequiredFlags(flags *pflag.FlagSet) string {
 	requiredFlags := ""
 	flags.VisitAll(func(pflag *pflag.Flag) {
@@ -80,6 +105,20 @@ func RequiredFlags(flags *pflag.FlagSet) string {
 	})
 	return requiredFlags
 }
+
+// Since we overwrite the cobra Usage template, we need to build it manually.
+func UsageCommandString(cmd *cobra.Command) string {
+	var buf bytes.Buffer
+	var templateFuncs = template.FuncMap{
+		"RequiredFlags": RequiredFlags,
+	}
+	usage := template.New("usage")
+	usage.Funcs(templateFuncs)
+	template.Must(usage.Parse(USEAGE_TEMPLATE))
+	usage.Execute(&buf, cmd)
+	return buf.String()
+}
+
 func (sl *SoftlayerPlugin) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
 		Name:       metadata.NS_SL_NAME,
@@ -276,8 +315,7 @@ func defaultIsZeroValue(f *pflag.Flag) bool {
 func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Command {
 	var pluginCommands []plugin.Command
 	// Custom Usage to ibmcloud CLI prints out a nice messages for us
-	cobra.AddTemplateFunc("RequiredFlags", RequiredFlags)
-	topCommand.SetUsageTemplate(USEAGE_TEMPLATE)
+
 	for _, cliCmd := range topCommand.Commands() {
 		if len(cliCmd.Commands()) > 0 {
 			pluginCommands = append(pluginCommands, cobraToCLIMeta(cliCmd, namespace+" "+cliCmd.Use)...)
@@ -286,7 +324,7 @@ func cobraToCLIMeta(topCommand *cobra.Command, namespace string) []plugin.Comman
 				Namespace:   namespace,
 				Name:        cliCmd.Name(),
 				Description: cliCmd.Short,
-				Usage:       cliCmd.UsageString(),
+				Usage:       UsageCommandString(cliCmd),
 				Flags: 		 cobraFlagToPlugin(cliCmd.Flags()),
 			}
 			pluginCommands = append(pluginCommands, thisCmd)
@@ -308,7 +346,12 @@ func GetTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 		SilenceUsage:  true, // Surpresses help text on errors
 		SilenceErrors: true,
 	}
-
+	// This is to mock the `ibmcloud` usage string. Not perfect, but its close to what you can expect
+	cobra.AddTemplateFunc("UsageCommandString", UsageCommandString)
+	cobra.AddTemplateFunc("HeaderColor", HeaderColor)
+	cobra.AddTemplateFunc("T", T)
+	cobraCmd.SetUsageTemplate(BX_TEMPLATE)
+	cobraCmd.SetHelpTemplate(`{{.UsageString}}`)
 	versionCommand := &cobra.Command{
 		Use:   "version",
 		Short: T("Print the version of the sl plugin"),
