@@ -7412,8 +7412,8 @@
   "[TAG NAME]": {
     "other": "[TAG NAME]"
   },
-  "required": {
-    "other": "required"
+  "[required]": {
+    "other": "[required]"
   },
   "accepts at most {{.Limit}} arg(s), received {{.Args}}": {
     "other": "accepts at most {{.Limit}} arg(s), received {{.Args}}"
@@ -7744,6 +7744,9 @@
   },
   "replication": {
     "other": "replication"
+  },
+  "required": {
+    "other": "required"
   },
   "requires at least {{.Limit}} arg(s), only received {{.Args}}": {
     "other": "requires at least {{.Limit}} arg(s), only received {{.Args}}"
