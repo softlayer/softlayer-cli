@@ -576,6 +576,14 @@ ENV Variables that need to be set:
 1. `JENKINS_TOKEN` : Auth token to run Jenkins. Username is hardcoded for me at the moment.
 2. `IBMCLOUD_APIKEY` : API key for using `ibmcloud`. This is how we upload to COS. The COS plugin needs to be installed as well. `ibmcloud plugin install cloud-object-storage`
 
+## Manually
+
+Process is described in more detail on [bluemix-cli-repo](https://github.ibm.com/ibmcloud-cli/bluemix-cli-repo)
+
+1. Create the plugin changes with this [Jenkins Job](https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plugin%20to%20YS1/build). 
+2. That will create a pull request on the [bluemix-cli-repo](https://github.ibm.com/ibmcloud-cli/bluemix-cli-repo/pulls) for a STAGING version
+3. TEST
+4. [Promote from staging to product](https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Promote%20Plugin%20from%20staging%20to%20production/) This will open a pull request that needs to be approved.
 
 # Documentation
 
