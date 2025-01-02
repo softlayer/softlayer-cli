@@ -115,7 +115,10 @@ func UsageCommandString(cmd *cobra.Command) string {
 	usage := template.New("usage")
 	usage.Funcs(templateFuncs)
 	template.Must(usage.Parse(USEAGE_TEMPLATE))
-	usage.Execute(&buf, cmd)
+	err := usage.Execute(&buf, cmd)
+	if err != nil {
+		return err.Error()
+	}
 	return buf.String()
 }
 
