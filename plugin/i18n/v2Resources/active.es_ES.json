@@ -1376,8 +1376,8 @@
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "Lista de etiquetas separadas por comas, entre comillas. 'tag1, tag2'"
   },
-  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]": {
-    "other": "Lista de etiquetas separadas por comas, entre comillas. 'etiqueta1,etiqueta2' [obligatorio]"
+  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'": {
+    "other": "Lista de etiquetas separadas por comas, entre comillas. 'etiqueta1,etiqueta2'"
   },
   "Company": {
     "other": "Empresa"
@@ -3821,8 +3821,8 @@
   "ID of an origin volume snapshot to use for duplication": {
     "other": "ID de la instantánea de volumen origen a utilizar para la duplicación"
   },
-  "ID of the object being tagged  [required]": {
-    "other": "ID del objeto que se está etiquetando [obligatorio]"
+  "ID of the object being tagged": {
+    "other": "ID del objeto que se está etiquetando"
   },
   "IDENTIFIER": {
     "other": "IDENTIFIER"
@@ -4097,8 +4097,8 @@
   "Key Name": {
     "other": "Nombre de clave"
   },
-  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]": {
-    "other": "Nombre de clave de un tipo de etiqueta, por ejemplo, INVITADO, HARDWARE. Consulte la salida de etiquetas de las etiquetas slcli. [obligatorio]"
+  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
+    "other": "Nombre de clave de un tipo de etiqueta, por ejemplo, INVITADO, HARDWARE. Consulte la salida de etiquetas de las etiquetas slcli."
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "Nombre de clave. Solo está disponible en el tipo HEADER o COOKIE"
@@ -7295,8 +7295,8 @@
   "[TAG NAME]": {
     "other": "[TAG NAME]"
   },
-  "[required]": {
-    "other": "[obligatorio]"
+  "required": {
+    "other": "obligatorio"
   },
   "accepts at most {{.Limit}} arg(s), received {{.Args}}": {
     "other": "acepta un máximo de {{.Limit}} argumentos, recibidos {{.Args}}"

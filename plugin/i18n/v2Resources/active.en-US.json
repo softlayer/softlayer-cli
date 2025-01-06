@@ -1364,8 +1364,8 @@
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'"
   },
-  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]": {
-    "other": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]"
+  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'": {
+    "other": "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'"
   },
   "Company": {
     "other": "Company"
@@ -3857,8 +3857,8 @@
   "ID of an origin volume snapshot to use for duplication": {
     "other": "ID of an origin volume snapshot to use for duplication"
   },
-  "ID of the object being tagged  [required]": {
-    "other": "ID of the object being tagged  [required]"
+  "ID of the object being tagged": {
+    "other": "ID of the object being tagged"
   },
   "IDENTIFIER": {
     "other": "IDENTIFIER"
@@ -4145,8 +4145,8 @@
   "Key Name": {
     "other": "Key Name"
   },
-  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]": {
-    "other": "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]"
+  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
+    "other": "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output."
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "Key name. It's only available in HEADER or COOKIE type"
@@ -7744,6 +7744,9 @@
   },
   "replication": {
     "other": "replication"
+  },
+  "required": {
+    "other": "required"
   },
   "requires at least {{.Limit}} arg(s), only received {{.Args}}": {
     "other": "requires at least {{.Limit}} arg(s), only received {{.Args}}"

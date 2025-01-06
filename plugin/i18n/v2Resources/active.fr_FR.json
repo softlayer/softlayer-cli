@@ -1376,8 +1376,8 @@
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "Liste d'étiquettes séparées par une virgule, entre guillemets. 'tag1, tag2'"
   },
-  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]": {
-    "other": "Liste d'étiquettes séparées par une virgule, entre guillemets. 'tag1,tag2'  [requis]"
+  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'": {
+    "other": "Liste d'étiquettes séparées par une virgule, entre guillemets. 'tag1,tag2'"
   },
   "Company": {
     "other": "Société"
@@ -3821,8 +3821,8 @@
   "ID of an origin volume snapshot to use for duplication": {
     "other": "ID d'une image instantanée de volume d'origine à utiliser pour la duplication"
   },
-  "ID of the object being tagged  [required]": {
-    "other": "ID de l'objet à étiqueter [requis]"
+  "ID of the object being tagged": {
+    "other": "ID de l'objet à étiqueter"
   },
   "IDENTIFIER": {
     "other": "IDENTIFICATEUR"
@@ -4097,8 +4097,8 @@
   "Key Name": {
     "other": "Nom de la clé"
   },
-  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]": {
-    "other": "Nom clé d'un type d'étiquette, par exemple GUEST, HARDWARE Voir la sortie slcli tags taggable.  [requis]"
+  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
+    "other": "Nom clé d'un type d'étiquette, par exemple GUEST, HARDWARE Voir la sortie slcli tags taggable."
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "Nom de la clé. Uniquement disponible dans le type HEADER ou COOKIE"
@@ -7295,8 +7295,8 @@
   "[TAG NAME]": {
     "other": "[TAG NAME]"
   },
-  "[required]": {
-    "other": "[obligatoire]"
+  "required": {
+    "other": "obligatoire"
   },
   "accepts at most {{.Limit}} arg(s), received {{.Args}}": {
     "other": "doit recevoir au maximum {{.Limit}} argument(s), en a reçu {{.Args}}"

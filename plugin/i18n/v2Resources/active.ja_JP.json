@@ -1376,8 +1376,8 @@
   "Comma separated list of tags, enclosed in quotes. 'tag1, tag2'": {
     "other": "引用符で囲まれた、タグのコンマ区切りリスト。 'tag1, tag2'"
   },
-  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'  [required]": {
-    "other": "引用符で囲まれた、タグのコンマ区切りリスト。 'tag1,tag2' [必須]"
+  "Comma seperated list of tags, enclosed in quotes. 'tag1,tag2'": {
+    "other": "引用符で囲まれた、タグのコンマ区切りリスト。 'tag1,tag2'"
   },
   "Company": {
     "other": "会社"
@@ -3821,8 +3821,8 @@
   "ID of an origin volume snapshot to use for duplication": {
     "other": "複写用に使用する元のボリュームのスナップショットの ID"
   },
-  "ID of the object being tagged  [required]": {
-    "other": "タグ付けされるオブジェクトの ID [必須]"
+  "ID of the object being tagged": {
+    "other": "タグ付けされるオブジェクトの ID"
   },
   "IDENTIFIER": {
     "other": "IDENTIFIER"
@@ -4097,8 +4097,8 @@
   "Key Name": {
     "other": "キー名"
   },
-  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.  [required]": {
-    "other": "タグ・タイプのキー名 (例: GUEST、HARDWARE)。 slcli タグのタグ付け可能出力を参照してください。[必須]"
+  "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
+    "other": "タグ・タイプのキー名 (例: GUEST、HARDWARE)。 slcli タグのタグ付け可能出力を参照してください。"
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "キー名。 これは、HEADER タイプまたは COOKIE タイプでのみ使用できます"
@@ -7295,8 +7295,8 @@
   "[TAG NAME]": {
     "other": "[タグ名]"
   },
-  "[required]": {
-    "other": "[必須]"
+  "required": {
+    "other": "必須"
   },
   "accepts at most {{.Limit}} arg(s), received {{.Args}}": {
     "other": "最大 {{.Limit}} arg (s), received {{.Args}} を受け入れます。"
