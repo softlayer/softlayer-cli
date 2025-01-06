@@ -7133,6 +7133,9 @@
   "Use `${COMMAND_NAME} sl order lookup <ID>` to find more details about a specific order.": {
     "other": "Use `${COMMAND_NAME} sl order lookup <ID>` to find more details about a specific order."
   },
+  "Use local disk storage.": {
+    "other": "Use local disk storage."
+  },
   "Use the configuration from an existing virtual server": {
     "other": "Use the configuration from an existing virtual server"
   },

@@ -28,6 +28,7 @@ type CreateCommand struct {
 	Dedicated      bool
 	Private        bool
 	San            bool
+	Local          bool
 	Test           bool
 	Transient      bool
 	Force          bool
@@ -91,6 +92,7 @@ EXAMPLE:
 	cobraCmd.Flags().BoolVar(&thisCmd.Dedicated, "dedicated", false, T("Create a dedicated Virtual Server (Private Node)"))
 	cobraCmd.Flags().BoolVar(&thisCmd.Private, "private", false, T("Forces the virtual server to only have access the private network"))
 	cobraCmd.Flags().BoolVar(&thisCmd.San, "san", false, T("Use SAN storage instead of local disk"))
+	cobraCmd.Flags().BoolVar(&thisCmd.Local, "local", false, T("Use local disk storage."))
 	cobraCmd.Flags().BoolVar(&thisCmd.Test, "test", false, T("Do not actually create the virtual server"))
 	cobraCmd.Flags().BoolVar(&thisCmd.Transient, "transient", false, T("Create a transient virtual server"))
 	cobraCmd.Flags().BoolVarP(&thisCmd.Force, "force", "f", false, T("Force operation without confirmation"))
@@ -124,6 +126,7 @@ EXAMPLE:
 	cobraCmd.Flags().StringVarP(&thisCmd.Template, "template", "t", "", T("A template file that defaults the command-line options"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Userdata, "userdata", "u", "", T("User defined metadata string"))
 	cobraCmd.Flags().StringVarP(&thisCmd.Userfile, "userfile", "F", "", T("Read userdata from file"))
+	cobraCmd.MarkFlagsMutuallyExclusive("san", "local")
 	return thisCmd
 }
 
@@ -446,6 +449,8 @@ func (cmd *CreateCommand) verifyParams() (map[string]interface{}, error) {
 
 	if cmd.San {
 		params["san"] = true
+	} else if cmd.Local {
+		params["san"] = false
 	}
 
 	if cmd.PostInstall != "" {
