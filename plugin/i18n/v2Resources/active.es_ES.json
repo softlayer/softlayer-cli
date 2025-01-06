@@ -6,7 +6,7 @@
     "other": "   [valor predeterminado: False]"
   },
   " Capacity keyname (C1_2X2_1_YEAR_TERM for example). [required]": {
-    "other": " Nombre de clave de la capacidad (por ejemplo, C1_2X2_1_YEAR_TERM). "
+    "other": " Nombre de clave de la capacidad (por ejemplo, C1_2X2_1_YEAR_TERM). [obligatorio]"
   },
   " Do not actually create the reserved capacity": {
     "other": " No crear realmente la capacidad reservada"
@@ -603,7 +603,7 @@
     "other": "300, 600, 1800, 3600, 43200 o 86400 segundos."
   },
   "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]": {
-    "other": "Nombre con formato <hostname>.<domain.name.tld> que utilizar. Especifique un fqdn por servidor (se permiten apariciones múltiple) "
+    "other": "Nombre con formato <hostname>.<domain.name.tld> que utilizar. Especifique un fqdn por servidor (se permiten apariciones múltiple) [obligatorio]"
   },
   "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]": {
     "other": "Un certificado DV SAN permite el tráfico HTTPS a través de su dominio personal, pero requiere una validación de dominio para probar la propiedad. Un certificado comodín solo permite el tráfico HTTPS cuando se utiliza el CNAME dado. [Permitido: dvSan, wilcard]"
@@ -918,13 +918,13 @@
     "other": "Protocolo de fondo [valor predeterminado: HTTP]"
   },
   "Backend router ID. [required]": {
-    "other": "ID de direccionador de fondo. "
+    "other": "ID de direccionador de fondo. [obligatorio]"
   },
   "Backend servers IP address. [required]": {
-    "other": "Dirección IP de los servidores de fondo. "
+    "other": "Dirección IP de los servidores de fondo. [obligatorio]"
   },
   "Backend servers port. [required]": {
-    "other": "Puerto de servidores de fondo. "
+    "other": "Puerto de servidores de fondo. [obligatorio]"
   },
   "Backend servers that are part of this pool. Format: BACKEND_IP:PORT. eg. 10.0.0.1:80 (multiple occurrence permitted)": {
     "other": "Servidores de fondo que forman parte de esta agrupación. Formato: BACKEND_IP:PORT. Por ejemplo, 10.0.0.1:80 (se permiten varios)"
@@ -933,7 +933,7 @@
     "other": "BackendRouterId"
   },
   "BackendRouterId, create-options has a list of valid ids to use. [required]": {
-    "other": "BackendRouterId, create-options tiene una lista de ID válidos a utilizar. "
+    "other": "BackendRouterId, create-options tiene una lista de ID válidos a utilizar. [obligatorio]"
   },
   "Balancing Method: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]": {
     "other": "Método de equilibrio: [ROUNDROBIN|LEASTCONNECTION|WEIGHTED_RR]"
@@ -1386,10 +1386,10 @@
     "other": "Comparar tipo"
   },
   "Compare type: EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS. [required]": {
-    "other": "Comparar tipo: EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS. "
+    "other": "Comparar tipo: EQUAL_TO | ENDS_WITH | STARTS_WITH | REGEX | CONTAINS. [obligatorio]"
   },
   "Compared Value [required]": {
-    "other": "Valor comparado "
+    "other": "Valor comparado [obligatorio]"
   },
   "Completed Percentage": {
     "other": "Porcentaje completado"
@@ -1614,19 +1614,19 @@
     "other": "Centro de datos"
   },
   "Datacenter name. It can be found from the keyName in the command '${COMMAND_NAME} sl order package-locations LBAAS' output. [required]": {
-    "other": "Nombre del centro de datos. Se puede encontrar en keyName en la salida '${COMMAND_NAME} sl order package-locations LBAAS' del mandato. "
+    "other": "Nombre del centro de datos. Se puede encontrar en keyName en la salida '${COMMAND_NAME} sl order package-locations LBAAS' del mandato. [obligatorio]"
   },
   "Datacenter short name [required]": {
-    "other": "Nombre abreviado del centro de datos "
+    "other": "Nombre abreviado del centro de datos [obligatorio]"
   },
   "Datacenter shortname  [required]": {
-    "other": "Nombre abreviado del centro de datos "
+    "other": "Nombre abreviado del centro de datos [obligatorio]"
   },
   "Datacenter shortname [required]": {
-    "other": "Nombre abreviado del centro de datos "
+    "other": "Nombre abreviado del centro de datos [obligatorio]"
   },
   "Datacenter shortname[required]": {
-    "other": "Nombre abreviado del centro de datos "
+    "other": "Nombre abreviado del centro de datos [obligatorio]"
   },
   "Datacenter to remove": {
     "other": "Para eliminar el centro de datos"
@@ -1857,10 +1857,10 @@
     "other": "Parte de dominio del FQDN"
   },
   "Domain portion of the FQDN [required]": {
-    "other": "Parte de dominio del FQDN "
+    "other": "Parte de dominio del FQDN [obligatorio]"
   },
   "Domain portion of the FQDN[required]": {
-    "other": "Parte de dominio del FQDN "
+    "other": "Parte de dominio del FQDN [obligatorio]"
   },
   "Domain record not found": {
     "other": "No se ha encontrado el registro de dominio"
@@ -2037,7 +2037,7 @@
     "other": "Fecha final"
   },
   "End Date e.g. 2019-4-2 (yyyy-MM-dd)  [required]": {
-    "other": "Fecha de finalización, por ejemplo, 2019-4-2 (aaaa-MM-dd) "
+    "other": "Fecha de finalización, por ejemplo, 2019-4-2 (aaaa-MM-dd) [obligatorio]"
   },
   "End date for bandwidth reporting": {
     "other": "Fecha de finalización de los informes de ancho de banda"
@@ -3498,7 +3498,7 @@
     "other": "ID de cortafuegos"
   },
   "Firewall type  [required]. Options are: vlan,vs,hardware": {
-    "other": "Tipo de cortafuegos . Las opciones son: vlan,vs,hardware"
+    "other": "Tipo de cortafuegos [obligatorio]. Las opciones son: vlan,vs,hardware"
   },
   "Firewall {{.FirewallID}} was updated.": {
     "other": "El cortafuegos {{.FirewallID}} se ha actualizado."
@@ -3642,7 +3642,7 @@
     "other": "Proporcione una ruta relativa al dominio proporcionado, que puede utilizarse para acceder a este origen. Por ejemplo, 'articles/video' => 'www.example.com/articles/video"
   },
   "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]": {
-    "other": "Proporcione una ruta relativa al dominio proporcionado, que puede utilizarse para acceder a este origen. Por ejemplo, 'articles/video' => 'www.example.com/articles/video "
+    "other": "Proporcione una ruta relativa al dominio proporcionado, que puede utilizarse para acceder a este origen. Por ejemplo, 'articles/video' => 'www.example.com/articles/video [obligatorio]"
   },
   "Grant access from a user to an specific device": {
     "other": "Conceder acceso de un usuario a un dispositivo específico"
@@ -3699,13 +3699,13 @@
     "other": "El servidor hardware: {{.ID}} se ha rearrancado."
   },
   "Hardware size[required]": {
-    "other": "Tamaño de hardware "
+    "other": "Tamaño de hardware [obligatorio]"
   },
   "Header": {
     "other": "Cabecera"
   },
   "Health check UUID to modify [required]": {
-    "other": "UUID de comprobación de estado a modificar "
+    "other": "UUID de comprobación de estado a modificar [obligatorio]"
   },
   "Health check interval between checks": {
     "other": "Intervalo de comprobación de estado entre comprobaciones"
@@ -3753,13 +3753,13 @@
     "other": "Parte de host del FQDN"
   },
   "Host portion of the FQDN [required]": {
-    "other": "Parte de host del FQDN "
+    "other": "Parte de host del FQDN [obligatorio]"
   },
   "Host portion of the FQDN. example: server": {
     "other": "Parte de host del FQDN. ejemplo: servidor"
   },
   "Host portion of the FQDN[required]": {
-    "other": "Parte de host del FQDN "
+    "other": "Parte de host del FQDN [obligatorio]"
   },
   "HostId": {
     "other": "ID de host"
@@ -3807,16 +3807,16 @@
     "other": "ID"
   },
   "ID for the load balancer [required]": {
-    "other": "ID para el equilibrador de carga "
+    "other": "ID para el equilibrador de carga [obligatorio]"
   },
   "ID for the load balancer policy [required]": {
-    "other": "ID para la política del equilibrador de carga "
+    "other": "ID para la política del equilibrador de carga [obligatorio]"
   },
   "ID for the load balancer pool [required]": {
-    "other": "ID para la agrupación del equilibrador de carga "
+    "other": "ID para la agrupación del equilibrador de carga [obligatorio]"
   },
   "ID for the load balancer protocol [required]": {
-    "other": "ID para el protocolo del equilibrador de carga "
+    "other": "ID para el protocolo del equilibrador de carga [obligatorio]"
   },
   "ID of an origin volume snapshot to use for duplication": {
     "other": "ID de la instantánea de volumen origen a utilizar para la duplicación"
@@ -4098,7 +4098,7 @@
     "other": "Nombre de clave"
   },
   "Key name of a tag type e.g. GUEST, HARDWARE. See slcli tags taggable output.": {
-    "other": "Nombre de clave de un tipo de etiqueta, por ejemplo, INVITADO, HARDWARE. Consulte la salida de etiquetas de las etiquetas slcli. "
+    "other": "Nombre de clave de un tipo de etiqueta, por ejemplo, INVITADO, HARDWARE. Consulte la salida de etiquetas de las etiquetas slcli."
   },
   "Key name. It's only available in HEADER or COOKIE type": {
     "other": "Nombre de clave. Solo está disponible en el tipo HEADER o COOKIE"
@@ -4395,7 +4395,7 @@
     "other": "Listar los límites de almacenamiento por centro de datos para esta cuenta."
   },
   "Load balancer type: PublicToPrivate | PrivateToPrivate | PublicToPublic [required]": {
-    "other": "Tipo de equilibrador de carga: PublicToPrivate | PrivateToPrivate | PublicToPublic "
+    "other": "Tipo de equilibrador de carga: PublicToPrivate | PrivateToPrivate | PublicToPublic [obligatorio]"
   },
   "Load balancer {{.LBID}} is cancelled.": {
     "other": "Se ha cancelado el equilibrador de carga {{.LBID}}."
@@ -4446,7 +4446,7 @@
     "other": "Número máximo de conexiones para permitir"
   },
   "Member UUID [required]": {
-    "other": "UUID de miembro "
+    "other": "UUID de miembro [obligatorio]"
   },
   "Member {{.MemberID}} added": {
     "other": "Miembro {{.MemberID}} añadido"
@@ -4470,7 +4470,7 @@
     "other": "Memoria en megabytes"
   },
   "Memory in megabytes [required]": {
-    "other": "Memoria en megabytes "
+    "other": "Memoria en megabytes [obligatorio]"
   },
   "Metadata": {
     "other": "Metadatos"
@@ -4479,7 +4479,7 @@
     "other": "Método"
   },
   "Metric_Data_Type keyName e.g. CPU0, CPU1, MEMORY_USAGE, etc.  [required]": {
-    "other": "Metric_Data_Type keyName, p.ej., CPU0, CPU1, MEMORY_USAGE, etc.  "
+    "other": "Metric_Data_Type keyName, p.ej., CPU0, CPU1, MEMORY_USAGE, etc.  [obligatorio]"
   },
   "Migrate ALL guests that require migration immediately.": {
     "other": "Migrar TODOS los invitados que requieran la migración inmediatamente."
@@ -4536,22 +4536,22 @@
     "other": "Nombre"
   },
   "Name for this L7 pool. [required]": {
-    "other": "Nombre para esta agrupación de L7. "
+    "other": "Nombre para esta agrupación de L7. [obligatorio]"
   },
   "Name for this load balancer [required]": {
-    "other": "Nombre para este equilibrador de carga "
+    "other": "Nombre para este equilibrador de carga [obligatorio]"
   },
   "Name for this new placement group. [required]": {
-    "other": "Nombre para este nuevo grupo de colocación. "
+    "other": "Nombre para este nuevo grupo de colocación. [obligatorio]"
   },
   "Name for your new reserved capacity  [required]": {
-    "other": "Nombre para la nueva capacidad reservada "
+    "other": "Nombre para la nueva capacidad reservada [obligatorio]"
   },
   "Name of the image": {
     "other": "Nombre de la imagen"
   },
   "Name of the image [required]": {
-    "other": "Nombre de la imagen "
+    "other": "Nombre de la imagen [obligatorio]"
   },
   "Name of the load balancer L7 pool": {
     "other": "Nombre de la agrupación L7 del equilibrador de carga"
@@ -4716,16 +4716,16 @@
     "other": "Número de núcleos de CPU"
   },
   "Number of CPU cores [required]": {
-    "other": "Número de núcleos de CPU "
+    "other": "Número de núcleos de CPU [obligatorio]"
   },
   "Number of VSI instances this capacity reservation can support. [required]": {
-    "other": "Número de instancias de VSI que esta reserva de capacidad puede soportar. "
+    "other": "Número de instancias de VSI que esta reserva de capacidad puede soportar. [obligatorio]"
   },
   "Number of seconds to report as one data point. 300, 600, 1800, 3600 (default), 43200 or 86400 seconds": {
     "other": "Número de segundos que se debe informar como un punto de datos. 300, 600, 1800, 3600 (valor predeterminado), 43200 u 86400 segundos"
   },
   "Number of snapshots to retain [required]": {
-    "other": "Número de instantáneas que se deben retener "
+    "other": "Número de instantáneas que se deben retener [obligatorio]"
   },
   "Number of times before marking as DOWN. [1-10]": {
     "other": "Número de veces antes de marcar como DOWN. [1-10]"
@@ -4749,7 +4749,7 @@
     "other": "Código de instalación de sistema operativo. Consejo: puede especificar <OS>_LATEST"
   },
   "OS install code[required]": {
-    "other": "Código de instalación del SO "
+    "other": "Código de instalación del SO [obligatorio]"
   },
   "OS version": {
     "other": "Versión de sistema operativo"
@@ -4803,7 +4803,7 @@
     "other": "El tipo de sistema operativo (por ejemplo, LINUX) del volumen primario para el cual se solicita la réplica [opcional], las opciones son: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN"
   },
   "Operating System [required], options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN": {
-    "other": "Sistema operativo , las opciones son: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN"
+    "other": "Sistema operativo [obligatorio], las opciones son: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN"
   },
   "Operating system": {
     "other": "Sistema operativo"
@@ -5010,7 +5010,7 @@
     "other": "Se ha establecido la contraseña para este usuario. Si no se proporciona una contraseña, se envía al usuario un correo electrónico para que genere una, que caduca en 24 horas. Especifique la opción '-p generate' para que se genere una contraseña. La contraseña debe contener 8 o más caracteres, mayúsculas y minúsculas, un número y un símbolo"
   },
   "Password you want to set, this command will fail if the password is not strong. [required]": {
-    "other": "Contraseña que desea establecer, este mandato fallará si la contraseña no es segura. "
+    "other": "Contraseña que desea establecer, este mandato fallará si la contraseña no es segura. [obligatorio]"
   },
   "Path": {
     "other": "Vía de acceso"
@@ -5178,7 +5178,7 @@
     "other": "Velocidad de puerto"
   },
   "Port speed[required]": {
-    "other": "Velocidad de puerto "
+    "other": "Velocidad de puerto [obligatorio]"
   },
   "Post-install script to download": {
     "other": "Script posterior a la instalación para descargar"
@@ -5271,7 +5271,7 @@
     "other": "IP privada"
   },
   "Private IP of the new member [required]": {
-    "other": "IP privado del nuevo miembro "
+    "other": "IP privado del nuevo miembro [obligatorio]"
   },
   "Private Ip": {
     "other": "IP privada"
@@ -5364,7 +5364,7 @@
     "other": "La velocidad de la interfaz de red pública debe ser: 0, 10, 100, 1000, 10000 (Mbps)."
   },
   "Public notes related to a Storage volume  [required]": {
-    "other": "Notas públicas relacionadas con un volumen de almacenamiento "
+    "other": "Notas públicas relacionadas con un volumen de almacenamiento [obligatorio]"
   },
   "Public port speed, options are: 0,10,100,1000,10000": {
     "other": "Velocidad de puerto público, las opciones son: 0,10,100,1000,10000"
@@ -5475,7 +5475,7 @@
     "other": "ID de dirección IP remota"
   },
   "Remote IP address[required]": {
-    "other": "Dirección IP remota "
+    "other": "Dirección IP remota [obligatorio]"
   },
   "Remote Subnets": {
     "other": "Subredes remotas"
@@ -5643,7 +5643,7 @@
     "other": "La regla se añade al grupo de seguridad {{.GroupID}}."
   },
   "Rule type: HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH. [required]": {
-    "other": "Tipo de regla: HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH. "
+    "other": "Tipo de regla: HOST_NAME | FILE_TYPE | HEADER | COOKIE | PATH. [obligatorio]"
   },
   "Rule {{.RuleId}} in security group {{.GroupID}} is removed.": {
     "other": "La regla {{.RuleId}} del grupo de seguridad {{.GroupID}} se ha eliminado."
@@ -5823,10 +5823,10 @@
     "other": "Nombre abreviado"
   },
   "Short name of the datacenter for the IPSec. For example, dal09[required]": {
-    "other": "Nombre abreviado del centro de datos para IPSec. Por ejemplo, dal09 "
+    "other": "Nombre abreviado del centro de datos para IPSec. Por ejemplo, dal09 [obligatorio]"
   },
   "Short name of the datacenter for the replica. For example, dal09 [required]": {
-    "other": "Nombre abreviado del centro de datos para la réplica. Por ejemplo, dal09 "
+    "other": "Nombre abreviado del centro de datos para la réplica. Por ejemplo, dal09 [obligatorio]"
   },
   "Show L7 pool details": {
     "other": "Mostrar detalles de agrupación de L7"
@@ -5922,10 +5922,10 @@
     "other": "Tamaño del volumen de archivo duplicado en GB, si no se especifica el tamaño se utilizará el del volumen original"
   },
   "Size of snapshot space to create in GB  [required]": {
-    "other": "Tamaño del espacio de instantáneas que se va a crear en GB "
+    "other": "Tamaño del espacio de instantáneas que se va a crear en GB [obligatorio]"
   },
   "Size of storage volume in GB [required]": {
-    "other": "Tamaño del volumen de almacenamiento en GB "
+    "other": "Tamaño del volumen de almacenamiento en GB [obligatorio]"
   },
   "Size of the dedicated host, currently only one size is available: 56_CORES_X_242_RAM_X_1_4_TB": {
     "other": "Tamaño del host dedicado, actualmente solo hay un tamaño disponible: 56_CORES_X_242_RAM_X_1_4_TB"
@@ -5943,10 +5943,10 @@
     "other": "No se ha encontrado la capacidad de instantánea para el volumen primario determinado."
   },
   "Snapshot schedule [required], options are: HOURLY,DAILY,WEEKLY": {
-    "other": "Planificación de instantáneas , las opciones son: HOURLY,DAILY,WEEKLY"
+    "other": "Planificación de instantáneas [obligatorio], las opciones son: HOURLY,DAILY,WEEKLY"
   },
   "Snapshot schedule to use for replication. Options are: HOURLY,DAILY,WEEKLY [required]": {
-    "other": "Planificación de instantánea que se utilizará para la réplica. Las opciones son: HOURLY,DAILY,WEEKLY "
+    "other": "Planificación de instantánea que se utilizará para la réplica. Las opciones son: HOURLY,DAILY,WEEKLY [obligatorio]"
   },
   "Snapshot space not found for original volume, origin snapshot space is needed for duplication": {
     "other": "No se ha encontrado espacio de instantáneas en el volumen original, el espacio de instantáneas original es necesario para la duplicación"
@@ -6006,7 +6006,7 @@
     "other": "Fecha de inicio"
   },
   "Start Date e.g. 2019-3-4 (yyyy-MM-dd)  [required]": {
-    "other": "Fecha de inicio, por ejemplo, 2019-3-4 (aaa-MM-dd) "
+    "other": "Fecha de inicio, por ejemplo, 2019-3-4 (aaa-MM-dd) [obligatorio]"
   },
   "Start date for bandwdith reporting": {
     "other": "Fecha de inicio para informes de ancho de banda"
@@ -6030,7 +6030,7 @@
     "other": "ID de dirección IP estática"
   },
   "Static IP address[required]": {
-    "other": "Dirección IP estática "
+    "other": "Dirección IP estática [obligatorio]"
   },
   "Static Subnets": {
     "other": "Subredes estáticas"
@@ -6066,7 +6066,7 @@
     "other": "Notas sobre la subred"
   },
   "Subnet type to add. Options are: internal,remote,service[required]": {
-    "other": "Tipo de subred que se va a añadir. Las opciones son: internal,remote,service "
+    "other": "Tipo de subred que se va a añadir. Las opciones son: internal,remote,service [obligatorio]"
   },
   "Subnet {{.ID}} was cancelled.": {
     "other": "Se ha cancelado la subred {{.ID}}."
@@ -6255,7 +6255,7 @@
     "other": "El ID del grupo de seguridad remoto a imponer"
   },
   "The ID of the rule to govern this placement group. [required]": {
-    "other": "El ID de la regla para controlar este grupo de colocación. "
+    "other": "El ID de la regla para controlar este grupo de colocación. [obligatorio]"
   },
   "The IDs of the SSH keys to add to the root user (multiple occurrence permitted)": {
     "other": "ID de las claves SSH para añadir al usuario root (se permiten varios)"
@@ -6267,7 +6267,7 @@
     "other": "No se ha encontrado el almacenamiento {{.Storage}}."
   },
   "The VMware License Key. To get the required package you can use the command sl licenses create-options Package. E.g VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2  [required]": {
-    "other": "La clave de licencia de VMware. Para obtener el paquete necesario, puede utilizar el mandato sl licenses create-options Package. Por ejemplo, VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 "
+    "other": "La clave de licencia de VMware. Para obtener el paquete necesario, puede utilizar el mandato sl licenses create-options Package. Por ejemplo, VMWARE_VSAN_ENTERPRISE_TIER_III_65_124_TB_6_X_2 [obligatorio]"
   },
   "The actual SSH key": {
     "other": "La clave SSH real"
@@ -6495,7 +6495,7 @@
     "other": "El nombre de usuario de almacenamiento que se va a añadir al servidor virtual."
   },
   "The subject id to use for the ticket, issue '${COMMAND_NAME} sl ticket subjects' to get the list. [required]": {
-    "other": "El id de asunto que se utilizará para la incidencia; emita '${COMMAND_NAME}sl ticket subjects' para obtener la lista. "
+    "other": "El id de asunto que se utilizará para la incidencia; emita '${COMMAND_NAME}sl ticket subjects' para obtener la lista. [obligatorio]"
   },
   "The subnet type has to be either internal, or remote or service.": {
     "other": "El tipo de subred debe ser internal, remote o service."
@@ -6522,7 +6522,7 @@
     "other": "El id de incidencia debe ser un número positivo distinto de cero."
   },
   "The title of the ticket. [required]": {
-    "other": "El título de la incidencia. "
+    "other": "El título de la incidencia. [obligatorio]"
   },
   "The transaction to clear the route is created, routes will be updated in one or two minutes.": {
     "other": "Se ha creado la transacción para modificar la ruta, las rutas se actualizarán en uno o dos minutos."
@@ -6639,7 +6639,7 @@
     "other": "Este mandato solo mostrará las VLAN que todavía no están en la conexión troncal con este servidor."
   },
   "This is the credential id associated with the volume. [Required]": {
-    "other": "Es el ID de credencial asociado al volumen. "
+    "other": "Es el ID de credencial asociado al volumen. [Obligatorio]"
   },
   "This option is not available.": {
     "other": "Esta opción no está disponible."
@@ -6780,7 +6780,7 @@
     "other": "Para añadir el centro de datos"
   },
   "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]": {
-    "other": "Para direccionar las solicitudes a su sitio web, especifique el nombre de host para su sitio web, por ejemplo, www.example.com o app.example.com. "
+    "other": "Para direccionar las solicitudes a su sitio web, especifique el nombre de host para su sitio web, por ejemplo, www.example.com o app.example.com. [obligatorio]"
   },
   "Toggle the IPMI interface on and off. This command is asynchronous.": {
     "other": "Activar y desactivar la interfaz IPMI. Este mandato es asíncrono."
@@ -6819,7 +6819,7 @@
     "other": "Nombre de tipo"
   },
   "Type of storage volume [required], options are: performance,endurance": {
-    "other": "Tipo de volumen de almacenamiento , las opciones son: performance,endurance"
+    "other": "Tipo de volumen de almacenamiento [obligatorio], las opciones son: performance,endurance"
   },
   "Types": {
     "other": "Tipos"
@@ -6843,22 +6843,22 @@
     "other": "UUID"
   },
   "UUID for the load balancer member [required]": {
-    "other": "UUID para el miembro del equilibrador de carga "
+    "other": "UUID para el miembro del equilibrador de carga [obligatorio]"
   },
   "UUID for the load balancer policy [required]": {
-    "other": "UUID para la política del equilibrador de carga "
+    "other": "UUID para la política del equilibrador de carga [obligatorio]"
   },
   "UUID for the load balancer pool [required]": {
-    "other": "UUID para la agrupación del equilibrador de carga "
+    "other": "UUID para la agrupación del equilibrador de carga [obligatorio]"
   },
   "UUID for the load balancer protocol [required]": {
-    "other": "UUID para el protocolo del equilibrador de carga "
+    "other": "UUID para el protocolo del equilibrador de carga [obligatorio]"
   },
   "UUID for the load balancer rule [required]": {
-    "other": "UUID para la regla del equilibrador de carga "
+    "other": "UUID para la regla del equilibrador de carga [obligatorio]"
   },
   "UUID for the protocol [required]": {
-    "other": "UUID para el protocolo "
+    "other": "UUID para el protocolo [obligatorio]"
   },
   "UUID of the protocol you want to edit.": {
     "other": "UUID del protocolo que desea editar."
@@ -7209,7 +7209,7 @@
     "other": "Su nueva contraseña de VPN [obligatoria]"
   },
   "Your server IP address or hostname. [required]": {
-    "other": "La dirección IP o el nombre de host del servidor. "
+    "other": "La dirección IP o el nombre de host del servidor. [obligatorio]"
   },
   "ZONE": {
     "other": "ZONA"
