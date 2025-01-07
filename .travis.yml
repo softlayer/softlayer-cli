@@ -5,9 +5,10 @@ jobs:
       python: 3.12
       install:
         - echo -e "machine github.ibm.com\n  login $CI_USER_TOKEN" > ~/.netrc
-        - sudo python3 -m pip install -U pip
-        - sudo pip3 install pyOpenSSL --upgrade
-        - sudo pip3 install --upgrade "git+https://github.com/ibm/detect-secrets.git@master#egg=detect-secrets"
+        - python3 -m pip install -U pip
+        - pip3 install importlib_metadata
+        - pip3 install pyOpenSSL --upgrade
+        - pip3 install --upgrade "git+https://github.com/ibm/detect-secrets.git@master#egg=detect-secrets"
       script:
         - detect-secrets scan --update .secrets.baseline
         - detect-secrets audit .secrets.baseline --report --fail-on-unaudited --omit-instructions  
