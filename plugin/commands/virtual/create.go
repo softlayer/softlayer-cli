@@ -73,9 +73,7 @@ func NewCreateCommand(sl *metadata.SoftlayerCommand) (cmd *CreateCommand) {
 	cobraCmd := &cobra.Command{
 		Use:   "create",
 		Short: T("Create virtual server instance"),
-		Long: T(`${COMMAND_NAME} sl vs create [OPTIONS]
-	
-EXAMPLE:
+		Long: T(`EXAMPLE:
    ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413
 	This command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,
 	operation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.
