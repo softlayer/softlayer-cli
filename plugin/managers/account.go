@@ -52,6 +52,10 @@ func NewAccountManager(session *session.Session) *accountManager {
 // the keys of the inner map are: vlan_count, public_ip_count, subnet_count, hardware_count, virtual_guest_count
 // the value of the innter map are the count of those resources
 func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
+	DEFAULT_VLAN_MASK := `mask[
+hardwareCount,subnetCount,totalPrimaryIpAddressCount,virtualGuestCount,
+primaryRouter[id, fullyQualifiedDomainName, datacenter[name]],
+]`
 	datacenters := make(map[string](map[string]int))
 	vlans, err := a.AccountService.Mask(DEFAULT_VLAN_MASK).GetNetworkVlans()
 	if err != nil {
