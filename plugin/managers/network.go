@@ -18,7 +18,6 @@ const (
 	DEFAULT_IP_MASK            = "hardware,virtualGuest,subnet[id,networkIdentifier,cidr,netmask,gateway,subnetType]"
 	DEFAULT_SUBNET_MASK        = "id,datacenter.name,hardware.id,ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests.id"
 	DEFAULT_SUBNET_DETAIL_MASK = "id,broadcastAddress,cidr,datacenter.name,gateway,hardware[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress],ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress]"
-	DEFAULT_VLAN_MASK          = "firewallInterfaces,hardwareCount,primaryRouter[id, fullyQualifiedDomainName, datacenter],subnetCount,billingItem,totalPrimaryIpAddressCount,virtualGuestCount,networkSpace,networkVlanFirewall[id,fullyQualifiedDomainName,primaryIpAddress],attachedNetworkGateway[id,name,networkFirewall],tagReferences[tag[name]]"
 	DEFAULT_VLAN_DETAIL_MASK   = "id,vlanNumber,primaryRouter[datacenterName,fullyQualifiedDomainName],firewallInterfaces," +
 		"subnets[id,networkIdentifier,netmask,gateway,subnetType,usableIpAddressCount]," +
 		"virtualGuests[hostname,domain,primaryIpAddress,primaryBackendIpAddress]," +
@@ -453,6 +452,17 @@ destinationIpAddress[ipAddress,virtualGuest.fullyQualifiedDomainName,hardware.fu
 // name: name of vlan to be filtered
 // orderId: ID of order to be filtered
 func (n networkManager) ListVlans(datacenter string, vlanNum int, name string, orderId int, mask string) ([]datatypes.Network_Vlan, error) {
+	DEFAULT_VLAN_MASK := `mask[
+id,vlanNumber,fullyQualifiedName,name,networkSpace,
+firewallInterfaces,
+hardwareCount,subnetCount,totalPrimaryIpAddressCount,virtualGuestCount,
+primaryRouter[id, fullyQualifiedDomainName, datacenter],
+billingItem,
+networkVlanFirewall[id,fullyQualifiedDomainName,primaryIpAddress],
+attachedNetworkGateway[id,name,networkFirewall],
+tagReferences[tag[name]]
+]`
+
 	filters := filter.New()
 	filters = append(filters, filter.Path("networkVlans.id").OrderBy("ASC"))
 	if datacenter != "" {
