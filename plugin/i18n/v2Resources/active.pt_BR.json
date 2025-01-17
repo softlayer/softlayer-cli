@@ -302,14 +302,14 @@
   "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   This command creates a public vlan located in datacenter dal09 named \"myvlan\".\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   This command creates a vlan on router bcr01a.dal09 named \"myvlan\".": {
     "other": "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\nEXEMPLO:\n ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n Esse comando cria uma VLAN pública localizada no datacenter dal09 denominada \"myvlan\".\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n  Esse comando cria uma VLAN no roteador bcr01a.dal09 denominada \"myvlan\"."
   },
-  "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.": {
-    "other": "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   Esse comando mostra detalhes da VLAN com o ID 12345678 e não lista o servidor virtual ou o servidor de hardware."
+  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.": {
+    "other": "EXEMPLO:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   Esse comando mostra detalhes da VLAN com o ID 12345678 e não lista o servidor virtual ou o servidor de hardware."
   },
   "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   This command updates vlan with ID 12345678 and gives it a new name \"myvlan-rename\".": {
     "other": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXEMPLO:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   Esse comando atualiza a VLAN com o ID 12345678 e fornece a ela um novo nome \"myvlan-rename\"."
   },
-  "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon": {
-    "other": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\nEXEMPLO:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Este comando lista todas as VLANs na conta atual filtradas por data center iguais a dal09 e as classifica por número de VLAN.\n \nNota: no campo Pod, a inclusão de (*) indica encerramento próximo"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon": {
+    "other": "EXEMPLO:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   Este comando lista todas as VLANs na conta atual filtradas por data center iguais a dal09 e as classifica por número de VLAN.\n \nNota: no campo Pod, a inclusão de (*) indica encerramento próximo"
   },
   "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.": {
     "other": "${COMMAND_NAME} sl vs autorizar-storage [OPTIONS] IDENTIFICADOR \n \nEXEMPLO:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n  Autorizar arquivo, bloco e armazenamento portátil a um servidor virtual."

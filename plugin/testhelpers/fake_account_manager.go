@@ -264,18 +264,6 @@ type FakeAccountManager struct {
 		result1 []datatypes.Product_Upgrade_Request
 		result2 error
 	}
-	SummaryByDatacenterStub        func() (map[string]map[string]int, error)
-	summaryByDatacenterMutex       sync.RWMutex
-	summaryByDatacenterArgsForCall []struct {
-	}
-	summaryByDatacenterReturns struct {
-		result1 map[string]map[string]int
-		result2 error
-	}
-	summaryByDatacenterReturnsOnCall map[int]struct {
-		result1 map[string]map[string]int
-		result2 error
-	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -1496,62 +1484,6 @@ func (fake *FakeAccountManager) GetUpgradeRequestsReturnsOnCall(i int, result1 [
 	}{result1, result2}
 }
 
-func (fake *FakeAccountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
-	fake.summaryByDatacenterMutex.Lock()
-	ret, specificReturn := fake.summaryByDatacenterReturnsOnCall[len(fake.summaryByDatacenterArgsForCall)]
-	fake.summaryByDatacenterArgsForCall = append(fake.summaryByDatacenterArgsForCall, struct {
-	}{})
-	stub := fake.SummaryByDatacenterStub
-	fakeReturns := fake.summaryByDatacenterReturns
-	fake.recordInvocation("SummaryByDatacenter", []interface{}{})
-	fake.summaryByDatacenterMutex.Unlock()
-	if stub != nil {
-		return stub()
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fakeReturns.result1, fakeReturns.result2
-}
-
-func (fake *FakeAccountManager) SummaryByDatacenterCallCount() int {
-	fake.summaryByDatacenterMutex.RLock()
-	defer fake.summaryByDatacenterMutex.RUnlock()
-	return len(fake.summaryByDatacenterArgsForCall)
-}
-
-func (fake *FakeAccountManager) SummaryByDatacenterCalls(stub func() (map[string]map[string]int, error)) {
-	fake.summaryByDatacenterMutex.Lock()
-	defer fake.summaryByDatacenterMutex.Unlock()
-	fake.SummaryByDatacenterStub = stub
-}
-
-func (fake *FakeAccountManager) SummaryByDatacenterReturns(result1 map[string]map[string]int, result2 error) {
-	fake.summaryByDatacenterMutex.Lock()
-	defer fake.summaryByDatacenterMutex.Unlock()
-	fake.SummaryByDatacenterStub = nil
-	fake.summaryByDatacenterReturns = struct {
-		result1 map[string]map[string]int
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeAccountManager) SummaryByDatacenterReturnsOnCall(i int, result1 map[string]map[string]int, result2 error) {
-	fake.summaryByDatacenterMutex.Lock()
-	defer fake.summaryByDatacenterMutex.Unlock()
-	fake.SummaryByDatacenterStub = nil
-	if fake.summaryByDatacenterReturnsOnCall == nil {
-		fake.summaryByDatacenterReturnsOnCall = make(map[int]struct {
-			result1 map[string]map[string]int
-			result2 error
-		})
-	}
-	fake.summaryByDatacenterReturnsOnCall[i] = struct {
-		result1 map[string]map[string]int
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -1593,8 +1525,6 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getSummaryMutex.RUnlock()
 	fake.getUpgradeRequestsMutex.RLock()
 	defer fake.getUpgradeRequestsMutex.RUnlock()
-	fake.summaryByDatacenterMutex.RLock()
-	defer fake.summaryByDatacenterMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

@@ -7,26 +7,14 @@
         "id": 2206583,
         "modifyDate": "2024-03-19T00:18:53-06:00",
         "networkSpace": "PUBLIC",
-        "primaryRouter": {
-            "datacenter": {
-                "id": 1854895,
-                "locationStatus": {
-                    "id": 2,
-                    "status": "Active"
-                },
-                "longName": "Dallas 13",
-                "name": "dal13",
-                "statusId": 2
-            },
-            "fullyQualifiedDomainName": "fcr01a.dal13.softlayer.com",
-            "id": 1076163
-        },
+        "datacenter": {"name": "dal13"},
         "primarySubnetId": 1602653,
         "subnetCount": 6,
         "tagReferences": [],
         "totalPrimaryIpAddressCount": 13,
         "virtualGuestCount": 10,
-        "vlanNumber": 1362
+        "vlanNumber": 1362,
+        "podName": "dal13.pod12"
     },
     {
         "accountId": 1013059,
@@ -34,15 +22,13 @@
         "hardwareCount": 0,
         "id": 2934960,
         "modifyDate": "2020-08-21T13:10:43-06:00",
-        "primaryRouter": {
-            "fullyQualifiedDomainName": "xcr04.dal03.softlayer.com",
-            "id": 1475295
-        },
+        "datacenter": {"id": 1234},
         "primarySubnetId": null,
         "subnetCount": 0,
         "tagReferences": [],
         "totalPrimaryIpAddressCount": 0,
         "virtualGuestCount": 0,
-        "vlanNumber": 3087
+        "vlanNumber": 3087,
+        "podName": "dal00.pod12"
     }
 ]

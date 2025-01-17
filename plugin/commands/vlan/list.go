@@ -34,9 +34,7 @@ func NewListCommand(sl *metadata.SoftlayerCommand) *ListCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "list",
 		Short: T("List all the VLANs on your account"),
-		Long: T(`${COMMAND_NAME} sl vlan list [OPTIONS]
-	
-EXAMPLE:
+		Long: T(`EXAMPLE:
    ${COMMAND_NAME} sl vlan list -d dal09 --sortby number
    This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.
  
@@ -71,21 +69,41 @@ func (cmd *ListCommand) Run(args []string) error {
 
 	sortby := cmd.Sortby
 	if sortby == "id" || sortby == "ID" {
-		sort.Sort(utils.VlanById(vlans))
+		sort.Slice(vlans, func(i, j int) bool {
+			return *vlans[i].Id < *vlans[j].Id
+		})
 	} else if sortby == "number" {
-		sort.Sort(utils.VlanByNumber(vlans))
+		sort.Slice(vlans, func(i, j int) bool {
+			return *vlans[i].VlanNumber < *vlans[j].VlanNumber
+		})
 	} else if sortby == "name" {
-		sort.Sort(utils.VlanByName(vlans))
+		sort.Slice(vlans, func(i, j int) bool {
+			return *vlans[i].VlanNumber < *vlans[j].VlanNumber
+		})
 	} else if sortby == "firewall" {
-		sort.Sort(utils.VlanByFirewall(vlans))
+		sort.Slice(vlans, func(i, j int) bool {
+			return len(vlans[i].FirewallInterfaces) < len(vlans[j].FirewallInterfaces)
+		})
 	} else if sortby == "datacenter" {
-		sort.Sort(utils.VlanByDatacenter(vlans))
+		sort.Slice(vlans, func(i, j int) bool {
+			if vlans[i].Datacenter != nil && vlans[i].Datacenter.Name != nil &&
+				vlans[j].Datacenter != nil && vlans[j].Datacenter.Name != nil {
+				return *vlans[i].Datacenter.Name < *vlans[j].Datacenter.Name
+			}
+			return false
+		})
 	} else if sortby == "hardware" {
-		sort.Sort(utils.VlanByHardwareCount(vlans))
+		sort.Slice(vlans, func(i, j int) bool {
+			return *vlans[i].HardwareCount < *vlans[j].HardwareCount
+		})
 	} else if sortby == "virtual_servers" {
-		sort.Sort(utils.VlanByVirtualServerCount(vlans))
+		sort.Slice(vlans, func(i, j int) bool {
+			return *vlans[i].VirtualGuestCount < *vlans[j].VirtualGuestCount
+		})
 	} else if sortby == "public_ips" {
-		sort.Sort(utils.VlanByPublicIPCount(vlans))
+		sort.Slice(vlans, func(i, j int) bool {
+			return *vlans[i].TotalPrimaryIpAddressCount < *vlans[j].TotalPrimaryIpAddressCount
+		})
 	} else if sortby == "" {
 		//do nothing
 	} else {
@@ -107,8 +125,8 @@ func (cmd *ListCommand) Run(args []string) error {
 			premium = T("No")
 		}
 		datacenterName := ""
-		if vlan.PrimaryRouter != nil && vlan.PrimaryRouter.Datacenter != nil && vlan.PrimaryRouter.Datacenter.Name != nil {
-			datacenterName = utils.FormatStringPointer(vlan.PrimaryRouter.Datacenter.Name)
+		if vlan.Datacenter != nil && vlan.Datacenter.Name != nil {
+			datacenterName = utils.FormatStringPointer(vlan.Datacenter.Name)
 		}
 		table.Add(
 			utils.FormatIntPointer(vlan.Id),
@@ -142,7 +160,7 @@ func getFirewallGateway(vlan datatypes.Network_Vlan) string {
 
 func getPodWithClosedAnnouncement(vlan datatypes.Network_Vlan, pods []datatypes.Network_Pod) string {
 	for _, pod := range pods {
-		if *pod.BackendRouterId == *vlan.PrimaryRouter.Id || *pod.FrontendRouterId == *vlan.PrimaryRouter.Id {
+		if *pod.Name == *vlan.PodName {
 			namePod := cases.Title(language.Und).String(strings.Split(utils.FormatStringPointer(pod.Name), ".")[1])
 			if utils.WordInList(pod.Capabilities, "CLOSURE_ANNOUNCED") {
 				return namePod + "*"

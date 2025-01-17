@@ -302,14 +302,14 @@
   "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   This command creates a public vlan located in datacenter dal09 named \"myvlan\".\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   This command creates a vlan on router bcr01a.dal09 named \"myvlan\".": {
     "other": "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\n例:\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   このコマンドは、データ・センター dal09 に置かれていて名前が「myvlan」のパブリック vlan を作成します。\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   このコマンドは、ルーター bcr01a.dal09 に置かれていて名前が「myvlan」の vlan を作成します。"
   },
-  "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.": {
-    "other": "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   このコマンドは、ID 12345678 の vlan の詳細を表示し、Virtual Server およびハードウェア・サーバーはリストしません。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.": {
+    "other": "例:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   このコマンドは、ID 12345678 の vlan の詳細を表示し、Virtual Server およびハードウェア・サーバーはリストしません。"
   },
   "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   This command updates vlan with ID 12345678 and gives it a new name \"myvlan-rename\".": {
     "other": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\n例:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   このコマンドは、ID 12345678 の vlan を更新し、新しい名前「myvlan-rename」を付けます。"
   },
-  "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon": {
-    "other": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウントのすべての VLAN を dal09 に等しいデータ・センターでフィルタリングしてリストし、それらを VLAN 番号でソートします。\n \n注: フィールド Pod で (*) が追加されている場合は、間もなくクローズされることを示しています。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon": {
+    "other": "例:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n このコマンドは、現在のアカウントのすべての VLAN を dal09 に等しいデータ・センターでフィルタリングしてリストし、それらを VLAN 番号でソートします。\n \n注: フィールド Pod で (*) が追加されている場合は、間もなくクローズされることを示しています。"
   },
   "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.": {
     "other": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER \n \n 例: \n ${COMMAND_NAME} sl vs authorize-storage -- username-storage SL01SL30-37 1234567\n ファイル、ブロック、およびポータブル・ストレージを仮想サーバーに許可します。"
