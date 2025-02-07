@@ -308,14 +308,8 @@
   "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   This command creates a public vlan located in datacenter dal09 named \"myvlan\".\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   This command creates a vlan on router bcr01a.dal09 named \"myvlan\".": {
     "other": "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   This command creates a public vlan located in datacenter dal09 named \"myvlan\".\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   This command creates a vlan on router bcr01a.dal09 named \"myvlan\"."
   },
-  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.": {
-    "other": "EXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server."
-  },
   "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   This command updates vlan with ID 12345678 and gives it a new name \"myvlan-rename\".": {
     "other": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   This command updates vlan with ID 12345678 and gives it a new name \"myvlan-rename\"."
-  },
-  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon": {
-    "other": "EXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon"
   },
   "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.": {
     "other": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server."
@@ -1882,6 +1876,12 @@
   },
   "EXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n": {
     "other": "EXAMPLE:\n\t${COMMAND_NAME} sl tags set --tags 'tag1,tag2' --key-name HARDWARE --resource-id 123456\n"
+  },
+  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.": {
+    "other": "EXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server."
+  },
+  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon": {
+    "other": "EXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon"
   },
   "EXAMPLE:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\tThis command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,\n\toperation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\tThis command tests whether the order is valid with above options before the order is actually placed.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\tThis command exports above options to a file: myvsi.txt under user home directory for later use.": {
     "other": "EXAMPLE:\n   ${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413\n\tThis command orders a virtual server instance with hostname is myvsi, domain is ibm.com, 4 cpu cores, 4096M memory, located at datacenter: dal10,\n\toperation system is UBUNTU 16 64 bits, 2 disks, one is 100G, the other is 1000G, and placed at public vlan with ID 413.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --test\n\tThis command tests whether the order is valid with above options before the order is actually placed.\n\t${COMMAND_NAME} sl vs create -H myvsi -D ibm.com -c 4 -m 4096 -d dal10 -o UBUNTU_16_64 --disk 100 --disk 1000 --vlan-public 413 --export ~/myvsi.txt\n\tThis command exports above options to a file: myvsi.txt under user home directory for later use."
@@ -4730,8 +4730,8 @@
   "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC": {
     "other": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
   },
-  "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.": {
-    "other": "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps."
+  "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.": {
+    "other": "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required."
   },
   "Notes": {
     "other": "Notes"
@@ -6280,6 +6280,9 @@
   },
   "Test order": {
     "other": "Test order"
+  },
+  "The -c and -m options are for dedicated VSI upgrade, most VSIs will need to upgrade with --flavor.\nSee '${COMMAND_NAME} sl vs options' for flavor keyNames to use.": {
+    "other": "The -c and -m options are for dedicated VSI upgrade, most VSIs will need to upgrade with --flavor.\nSee '${COMMAND_NAME} sl vs options' for flavor keyNames to use."
   },
   "The ID of one IP address to authorize": {
     "other": "The ID of one IP address to authorize"

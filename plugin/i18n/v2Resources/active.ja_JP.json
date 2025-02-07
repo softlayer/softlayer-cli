@@ -4691,8 +4691,8 @@
   "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC": {
     "other": "注: 6,000 を超える IOPS は、https://cloud.ibm.com/docs/BlockStorage? topic=BlockStorage-selectDC でのみ使用可能です。"
   },
-  "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.": {
-    "other": "注: この仮想サーバーは、アップグレード注文が placed.\nThe インスタンスは、アップグレード・トランザクションが完了するまで停止されます。 ただし、ネットワークの場合、リブートは行われません。required.\n\nEXAMPLE:\n ${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n このコマンドは、ID 12345678 の仮想サーバー・インスタンスをアップグレードし、CPU コアの数を 8、メモリーを 8192M、ネットワーク・ポート速度を 1000 Mbps に設定します。"
+  "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.": {
+    "other": "注: この仮想サーバーは、アップグレード注文が placed.\nThe インスタンスは、アップグレード・トランザクションが完了するまで停止されます。 ただし、ネットワークの場合、リブートは行われません。required."
   },
   "Notes": {
     "other": "メモ"

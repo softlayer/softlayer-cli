@@ -4691,8 +4691,8 @@
   "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC": {
     "other": "注：高于 6,000 的 IOPS 仅在以下位置可用：https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
   },
-  "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.": {
-    "other": "注：下达升级订单后，将重新启动该虚拟服务器。\n将暂停该实例，直到升级事务完成为止。 但是对于网络，不需要重新引导。\n\n示例：\n${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n 此命令将升级标识为 12345678 的虚拟服务器实例，并将 CPU 核心数设置为 8，将内存设置为 8192M，将网络端口速度设置为 1000 Mbps。"
+  "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.": {
+    "other": "注：下达升级订单后，将重新启动该虚拟服务器。\n将暂停该实例，直到升级事务完成为止。 但是对于网络，不需要重新引导"
   },
   "Notes": {
     "other": "注释"
