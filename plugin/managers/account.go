@@ -13,7 +13,6 @@ import (
 
 //counterfeiter:generate -o ../testhelpers/ . AccountManager
 type AccountManager interface {
-	SummaryByDatacenter() (map[string]map[string]int, error)
 	GetBandwidthPools() ([]datatypes.Network_Bandwidth_Version1_Allotment, error)
 	GetBandwidthPoolServers(identifier int) (uint, error)
 	GetBillingItems(objectMask string, objectFilter string) ([]datatypes.Billing_Item, error)
@@ -45,44 +44,6 @@ func NewAccountManager(session *session.Session) *accountManager {
 		AccountService: services.GetAccountService(session),
 		Session:        session,
 	}
-}
-
-// Summary of the networks on the account, grouped by data center.
-// returns a map, the key of the map is datacenter name, the value of the map is another map
-// the keys of the inner map are: vlan_count, public_ip_count, subnet_count, hardware_count, virtual_guest_count
-// the value of the innter map are the count of those resources
-func (a accountManager) SummaryByDatacenter() (map[string]map[string]int, error) {
-	DEFAULT_VLAN_MASK := `mask[
-hardwareCount,subnetCount,totalPrimaryIpAddressCount,virtualGuestCount,
-primaryRouter[id, fullyQualifiedDomainName, datacenter[name]],
-]`
-	datacenters := make(map[string](map[string]int))
-	vlans, err := a.AccountService.Mask(DEFAULT_VLAN_MASK).GetNetworkVlans()
-	if err != nil {
-		return datacenters, err
-	}
-	for _, vlan := range vlans {
-		if vlan.PrimaryRouter != nil && vlan.PrimaryRouter.Datacenter != nil && vlan.PrimaryRouter.Datacenter.Name != nil {
-			name := *vlan.PrimaryRouter.Datacenter.Name
-			if datacenters[name] == nil {
-				datacenters[name] = make(map[string]int)
-			}
-			datacenters[name]["vlan_count"]++
-			if vlan.TotalPrimaryIpAddressCount != nil {
-				datacenters[name]["public_ip_count"] += int(*vlan.TotalPrimaryIpAddressCount) // #nosec G115 -- Should never be > 2^32
-			}
-			if vlan.SubnetCount != nil {
-				datacenters[name]["subnet_count"] += int(*vlan.SubnetCount) // #nosec G115 -- Should never be > 2^32
-			}
-			if vlan.HardwareCount != nil {
-				datacenters[name]["hardware_count"] += int(*vlan.HardwareCount) // #nosec G115 -- Should never be > 2^32
-			}
-			if vlan.VirtualGuestCount != nil {
-				datacenters[name]["virtual_guest_count"] += int(*vlan.VirtualGuestCount) // #nosec G115 -- Should never be > 2^32
-			}
-		}
-	}
-	return datacenters, nil
 }
 
 // https://sldn.softlayer.com/reference/services/SoftLayer_Account/getBandwidthAllotments/

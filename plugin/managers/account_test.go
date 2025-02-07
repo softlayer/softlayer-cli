@@ -19,15 +19,6 @@ var _ = Describe("AccountManager", func() {
 		accountManager = managers.NewAccountManager(fakeSLSession)
 	})
 
-	Describe("SummaryByDatacenter", func() {
-		Context("SummaryByDatacenter", func() {
-			It("Returns no errors", func() {
-				summary, err := accountManager.SummaryByDatacenter()
-				Expect(err).ToNot(HaveOccurred())
-				Expect(summary["dal05"]["vlan_count"]).To(Equal(18))
-			})
-		})
-	})
 	Describe("GetBandwidthPools()", func() {
 		Context("API call is made", func() {
 			It("Returns no errors", func() {

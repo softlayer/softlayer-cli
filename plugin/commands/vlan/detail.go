@@ -29,9 +29,7 @@ func NewDetailCommand(sl *metadata.SoftlayerCommand) *DetailCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "detail " + T("IDENTIFIER"),
 		Short: T("Get details about a VLAN"),
-		Long: T(`${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]
-
-EXAMPLE:
+		Long: T(`EXAMPLE:
    ${COMMAND_NAME} sl vlan detail 12345678	--no-vs --no-hardware
    This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.`),
 		Args: metadata.OneArgs,
@@ -66,8 +64,10 @@ func (cmd *DetailCommand) Run(args []string) error {
 	table := cmd.UI.Table([]string{T("Name"), T("Value")})
 	table.Add(T("id"), utils.FormatIntPointer(vlan.Id))
 	table.Add(T("number"), utils.FormatIntPointer(vlan.VlanNumber))
+	if vlan.Datacenter != nil {
+		table.Add(T("datacenter"), utils.FormatStringPointer(vlan.Datacenter.Name))
+	}
 	if vlan.PrimaryRouter != nil {
-		table.Add(T("datacenter"), utils.FormatStringPointer(vlan.PrimaryRouter.DatacenterName))
 		table.Add(T("primary_router"), utils.FormatStringPointer(vlan.PrimaryRouter.FullyQualifiedDomainName))
 	}
 	firewall := T("Yes")

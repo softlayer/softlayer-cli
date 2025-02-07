@@ -302,14 +302,14 @@
   "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   This command creates a public vlan located in datacenter dal09 named \"myvlan\".\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   This command creates a vlan on router bcr01a.dal09 named \"myvlan\".": {
     "other": "${COMMAND_NAME} sl vlan create [OPTIONS]\n\t\n範例：\n   ${COMMAND_NAME} sl vlan create -t public -d dal09 -n myvlan\n   這個指令會建立公用 VLAN，位於資料中心 dal09 且名稱為 \"myvlan\"。\n   ${COMMAND_NAME} sl vlan create -r bcr01a.dal09 -n myvlan\n   這個指令會在路由器 bcr01a.dal09 上建立名稱為 \"myvlan\" 的 VLAN。"
   },
-  "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.": {
-    "other": "${COMMAND_NAME} sl vlan detail IDENTIFIER [OPTIONS]\n\n範例：\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   這個指令會顯示 VLAN（其 ID 為 12345678）的詳細資料，而不會列出虛擬伺服器或硬體伺服器。"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   This command shows details of vlan with ID 12345678, and not list virtual server or hardware server.": {
+    "other": "範例：\n   ${COMMAND_NAME} sl vlan detail 12345678\t--no-vs --no-hardware\n   這個指令會顯示 VLAN（其 ID 為 12345678）的詳細資料，而不會列出虛擬伺服器或硬體伺服器。"
   },
   "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   This command updates vlan with ID 12345678 and gives it a new name \"myvlan-rename\".": {
     "other": "${COMMAND_NAME} sl vlan edit IDENTIFIER [OPTIONS]\n\t\n範例：\n   ${COMMAND_NAME} sl vlan edit 12345678 -n myvlan-rename\n   這個指令會更新 VLAN（其 ID 為 12345678），並為其指定新名稱 \"myvlan-rename\"。"
   },
-  "${COMMAND_NAME} sl vlan list [OPTIONS]\n\t\nEXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon": {
-    "other": "${COMMAND_NAME} sl vlan list [OPTIONS]\n\n 範例：\n ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n此指令會列出現行帳戶上的所有 vlan，依 datacenter 等於 dal09 過濾並按 vlan 號碼排序。\n \n附註：在欄位 Pod 中，如果新增 (*)，則指出即將關閉"
+  "EXAMPLE:\n   ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n   This commands lists all vlans on current account filtering by datacenter equals to dal09, and sort them by vlan number.\n \nNote: In field Pod, if add (*) indicated that closed soon": {
+    "other": "範例：\n ${COMMAND_NAME} sl vlan list -d dal09 --sortby number\n此指令會列出現行帳戶上的所有 vlan，依 datacenter 等於 dal09 過濾並按 vlan 號碼排序。\n \n附註：在欄位 Pod 中，如果新增 (*)，則指出即將關閉"
   },
   "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\nEXAMPLE:\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   Authorize File, Block and Portable Storage to a Virtual Server.": {
     "other": "${COMMAND_NAME} sl vs authorize-storage [OPTIONS] IDENTIFIER\n\n範例：\n   ${COMMAND_NAME} sl vs authorize-storage --username-storage SL01SL30-37 1234567\n   將檔案、區塊及可攜式儲存體授權至虛擬伺服器。"

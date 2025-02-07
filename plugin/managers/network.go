@@ -17,12 +17,7 @@ import (
 const (
 	DEFAULT_IP_MASK            = "hardware,virtualGuest,subnet[id,networkIdentifier,cidr,netmask,gateway,subnetType]"
 	DEFAULT_SUBNET_MASK        = "id,datacenter.name,hardware.id,ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests.id"
-	DEFAULT_SUBNET_DETAIL_MASK = "id,broadcastAddress,cidr,datacenter.name,gateway,hardware[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress],ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress]"
-	DEFAULT_VLAN_DETAIL_MASK   = "id,vlanNumber,primaryRouter[datacenterName,fullyQualifiedDomainName],firewallInterfaces," +
-		"subnets[id,networkIdentifier,netmask,gateway,subnetType,usableIpAddressCount]," +
-		"virtualGuests[hostname,domain,primaryIpAddress,primaryBackendIpAddress]," +
-		"hardware[hostname,domain,primaryIpAddress,primaryBackendIpAddress]," +
-		"networkComponentTrunks[networkComponent[downlinkComponent[hardware[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress]]]]"
+	DEFAULT_SUBNET_DETAIL_MASK = "id,broadcastAddress,cidr,datacenter.name,gateway,hardware[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress],ipAddresses.id,networkIdentifier,networkVlan[id,networkSpace],subnetType,virtualGuests[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress]"	
 	DEFAULT_SECURITYGROUP_MASK = "id,name,description,rules[id,remoteIp,remoteGroupId,direction,ethertype,portRangeMin,portRangeMax,protocol]," +
 		"networkComponentBindings[networkComponent[id,port,guest[id,hostname,primaryBackendIpAddress,primaryIpAddress]]]"
 )
@@ -361,8 +356,21 @@ func (n networkManager) GetSubnet(subnetId int, mask string) (datatypes.Network_
 // vlanId: ID of vlan
 // mask: mask of properties
 func (n networkManager) GetVlan(vlanId int, mask string) (datatypes.Network_Vlan, error) {
+	default_mask := `mask[
+id, vlanNumber, datacenter[name], firewallInterfaces, primaryRouter[fullyQualifiedDomainName],
+subnets[id, networkIdentifier, netmask, gateway, subnetType, usableIpAddressCount],
+virtualGuests[hostname, domain, primaryIpAddress, primaryBackendIpAddress],
+hardware[hostname, domain, primaryIpAddress, primaryBackendIpAddress],
+networkComponentTrunks[
+	networkComponent[
+		downlinkComponent[
+			hardware[id,hostname,domain,primaryIpAddress,primaryBackendIpAddress]
+		]
+	]
+]
+]`
 	if mask == "" {
-		mask = DEFAULT_VLAN_DETAIL_MASK
+		mask = default_mask
 	}
 	return n.VlanService.Id(vlanId).Mask(mask).GetObject()
 }
@@ -453,20 +461,17 @@ destinationIpAddress[ipAddress,virtualGuest.fullyQualifiedDomainName,hardware.fu
 // orderId: ID of order to be filtered
 func (n networkManager) ListVlans(datacenter string, vlanNum int, name string, orderId int, mask string) ([]datatypes.Network_Vlan, error) {
 	DEFAULT_VLAN_MASK := `mask[
-id,vlanNumber,fullyQualifiedName,name,networkSpace,
-firewallInterfaces,
+id, vlanNumber, fullyQualifiedName, name, networkSpace, datacenter[name], podName,
+firewallInterfaces, billingItem, tagReferences[tag[name]],
 hardwareCount,subnetCount,totalPrimaryIpAddressCount,virtualGuestCount,
-primaryRouter[id, fullyQualifiedDomainName, datacenter],
-billingItem,
 networkVlanFirewall[id,fullyQualifiedDomainName,primaryIpAddress],
-attachedNetworkGateway[id,name,networkFirewall],
-tagReferences[tag[name]]
+attachedNetworkGateway[id,name,networkFirewall]
 ]`
 
 	filters := filter.New()
 	filters = append(filters, filter.Path("networkVlans.id").OrderBy("ASC"))
 	if datacenter != "" {
-		filters = append(filters, filter.Path("networkVlans.primaryRouter.datacenter.name").Eq(datacenter))
+		filters = append(filters, filter.Path("networkVlans.datacenter.name").Eq(datacenter))
 	}
 	if vlanNum != 0 {
 		filters = append(filters, filter.Path("networkVlans.vlanNumber").Eq(strconv.Itoa(vlanNum)))
@@ -780,7 +785,7 @@ func (n networkManager) GetPods(mask string) ([]datatypes.Network_Pod, error) {
 	filters = append(filters, filter.Path("networkVlans.id").OrderBy("ASC"))
 
 	if mask == "" {
-		mask = "mask[name, datacenterLongName, frontendRouterId, capabilities, datacenterId, backendRouterId,backendRouterName, frontendRouterName]"
+		mask = "mask[name, datacenterLongName, capabilities, datacenterId]"
 	}
 	NetworkPodService := services.GetNetworkPodService(n.Session)
 	return NetworkPodService.Mask(mask).Filter(filters.Build()).GetAllObjects()

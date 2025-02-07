@@ -51,7 +51,7 @@ var _ = Describe("NetworkManager", func() {
 					//Expect(*vlan.Name).ShouldNot(BeNil()) //some vlan has no name
 					Expect(*vlan.VlanNumber).ShouldNot(BeNil())
 					Expect(*vlan.NetworkSpace).Should(Or(Equal("PUBLIC"), Equal("PRIVATE")))
-					Expect(*vlan.PrimaryRouter.Datacenter.Name).ShouldNot(BeNil())
+					Expect(*vlan.Datacenter.Name).ShouldNot(BeNil())
 				}
 			})
 		})
