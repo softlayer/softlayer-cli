@@ -344,11 +344,9 @@ func NewActionNameCommand(sl *metadata.SoftlayerCommand) *ActionNameCommand {
         Use: "command-name",
         Short: T("A description of the command"),
         Long: T(`This is an optional field, you can remove it if the command is simple.
-Otherwise create a nice long description of how to use this command. Its good to add some examples.
-
-EXAMPLE:
-    ${COMMAND_NAME} sl newcommand command-name --someFlag test --soomethingElse
-    This sets a flag and does something else.`)
+Otherwise create a nice long description of how to use this command. Its good to add some examples.`),
+        Example: fmt.Sprintf(`${COMMAND_NAME} sl newcommand command-name --someFlag test --soomethingElse
+    %s`, T(`This sets a flag and does something else.`)),
         Args: metadata.NoArgs,
         RunE: func(cmd *cobra.Command, args []string) error {
             return thisCmd.Run(args)
@@ -543,6 +541,23 @@ It("return error", func() {
     Expect(err.Error()).To(ContainSubstring("Failed to show hardware."))
 })
 ```
+
+## Adding Examples
+
+Use the CobraCLI Example property when possible. `vs upgrade` for an example:
+
+```go
+    cobraCmd := &cobra.Command{
+        Use:   "upgrade " + T("IDENTIFIER"),
+        Short: T("Upgrade a virtual server instance"),
+        Long: T(`Note: This virtual server will be rebooted once the upgrade order is placed.
+The instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.`) + `
+` + T(`The -c and -m options are for dedicated VSI upgrade, most VSIs will need to upgrade with --flavor.
+See '${COMMAND_NAME} sl vs options' for flavor keyNames to use.`),
+        Example: `${COMMAND_NAME} sl vs upgrade 12345678 --flavor B1_8X32X25`,
+```
+
+This helps make the strings a bit easier to translate.
 
 
 # Plugin Support / Release Process
