@@ -57,10 +57,14 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/vlan"
 )
 
-var USEAGE_TEMPLATE = `${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} {{.Use}}{{else}}{{.Use}}{{end}}` + 
-`{{if .HasLocalFlags}} [` + T("OPTIONS") + `] {{RequiredFlags .LocalFlags}} {{end}}
+var USEAGE_TEMPLATE = fmt.Sprintf(`${COMMAND_NAME} {{if .HasParent}}{{.Parent.CommandPath}} {{.Use}}{{else}}{{.Use}}{{end}}` + 
+`{{if .HasLocalFlags}} [%s] {{RequiredFlags .LocalFlags}} {{end}}
 
-{{.Long}}`
+{{.Long}}
+{{if .Example}}
+{{"Example" | T | HeaderColor }}:
+	{{ .Example }}
+{{end}}`, T("OPTIONS"))
 
 // https://github.ibm.com/ibmcloud-cli/bluemix-cli/blob/master/bluemix/cli/help.go#L68
 // Copied/pasted because I don't want to import the whole bluemix/cli lib just for this
@@ -111,6 +115,8 @@ func UsageCommandString(cmd *cobra.Command) string {
 	var buf bytes.Buffer
 	var templateFuncs = template.FuncMap{
 		"RequiredFlags": RequiredFlags,
+		"HeaderColor": HeaderColor,
+		"T": T,
 	}
 	usage := template.New("usage")
 	usage.Funcs(templateFuncs)

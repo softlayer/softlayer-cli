@@ -19,7 +19,6 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd := &cobra.Command{
 		Use:   "vs",
 		Short: T("Classic infrastructure Virtual Servers"),
-		Long:  "${COMMAND_NAME} sl vs",
 		RunE:  nil,
 	}
 	cobraCmd.AddCommand(NewAuthorizeStorageCommand(sl).Command)

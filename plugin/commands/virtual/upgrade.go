@@ -36,11 +36,10 @@ func NewUpgradeCommand(sl *metadata.SoftlayerCommand) (cmd *UpgradeCommand) {
 		Use:   "upgrade " + T("IDENTIFIER"),
 		Short: T("Upgrade a virtual server instance"),
 		Long: T(`Note: This virtual server will be rebooted once the upgrade order is placed.
-The instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.
-
-EXAMPLE:
-	${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000
-	This commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.`),
+The instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.`) + `
+` + T(`The -c and -m options are for dedicated VSI upgrade, most VSIs will need to upgrade with --flavor.
+See '${COMMAND_NAME} sl vs options' for flavor keyNames to use.`),
+		Example: `${COMMAND_NAME} sl vs upgrade 12345678 --flavor B1_8X32X25`,
 		Args: metadata.OneArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)

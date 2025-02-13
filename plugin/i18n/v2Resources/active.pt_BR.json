@@ -4691,8 +4691,8 @@
   "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC": {
     "other": "Nota: IOPS acima de 6.000 disponível somente em: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
   },
-  "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.\n\nEXAMPLE:\n\t${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n\tThis commands upgrades virtual server instance with ID 12345678 and set number of CPU cores to 8, memory to 8192M, network port speed to 1000 Mbps.": {
-    "other": "Nota: este servidor virtual será reinicializado quando a ordem de upgrade for estabelecida.\n A instância permanecerá suspensa até que a transação de upgrade seja concluída. No entanto, para a rede, nenhuma reinicialização será necessária.\n\n EXEMPLO:\n${COMMAND_NAME} sl vs upgrade 12345678 -c 8 -m 8192 --network 1000\n     Esse comando atualiza a instância de servidor virtual com ID 12345678 e configura o número de núcleos de CPU para 8, memória para 8192M, velocidade da porta de rede para 1000 Mbps."
+  "Note: This virtual server will be rebooted once the upgrade order is placed.\nThe instance is halted until the upgrade transaction is completed. However for Network, no reboot is required.": {
+    "other": "Nota: este servidor virtual será reinicializado quando a ordem de upgrade for estabelecida.\n A instância permanecerá suspensa até que a transação de upgrade seja concluída. No entanto, para a rede, nenhuma reinicialização será necessária."
   },
   "Notes": {
     "other": "Notas"
