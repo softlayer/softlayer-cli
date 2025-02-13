@@ -4421,6 +4421,9 @@
   "List {{.storageType}} storage snapshots": {
     "other": "List {{.storageType}} storage snapshots"
   },
+  "Lists 100 invoices, ordered by latest create date, including invoices in the CLOSED status.": {
+    "other": "Lists 100 invoices, ordered by latest create date, including invoices in the CLOSED status."
+  },
   "Lists Email Delivery Service.": {
     "other": "Lists Email Delivery Service."
   },
@@ -4430,8 +4433,14 @@
   "Lists account orders.": {
     "other": "Lists account orders."
   },
+  "Lists all open and closed invoices on the account.": {
+    "other": "Lists all open and closed invoices on the account."
+  },
   "Lists billing items with some other useful information.": {
     "other": "Lists billing items with some other useful information."
+  },
+  "Lists the most recent invoices in the OPEN status.": {
+    "other": "Lists the most recent invoices in the OPEN status."
   },
   "Lists the prices for each item in this preset": {
     "other": "Lists the prices for each item in this preset"

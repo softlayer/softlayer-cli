@@ -1,6 +1,7 @@
 package account
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
@@ -27,6 +28,14 @@ func NewInvoicesCommand(sl *metadata.SoftlayerCommand) *InvoicesCommand {
 	cobraCmd := &cobra.Command{
 		Use:   "invoices",
 		Short: T("List invoices."),
+		Long: T("Lists the most recent invoices in the OPEN status."),
+		Example: fmt.Sprintf(`${COMMAND_NAME} sl account invoices --all
+%s
+
+	${COMMAND_NAME} sl account invoices --limit 100 --closed
+%s`,
+	T(`Lists all open and closed invoices on the account.`),
+	T(`Lists 100 invoices, ordered by latest create date, including invoices in the CLOSED status.`)),
 		Args:  metadata.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return thisCmd.Run(args)
