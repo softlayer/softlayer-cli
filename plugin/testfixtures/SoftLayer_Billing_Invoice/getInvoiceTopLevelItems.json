@@ -70,5 +70,58 @@
         "location": {
             "name": "ams01"
         }
+    },
+    {
+        "category": {
+            "name": "Endurance"
+        },
+        "categoryCode": "storage_service_enterprise",
+        "children": [
+            {
+                "category": {
+                    "name": "Block Storage"
+                },
+                "description": "Block Storage",
+                "id": 1531470258,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Storage Tier Level"
+                },
+                "description": "0.25 IOPS per GB",
+                "id": 1531470268,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Storage Space"
+                },
+                "description": "20 GB Storage Space",
+                "id": 1531470274,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            },
+            {
+                "category": {
+                    "name": "Storage Snapshot Space"
+                },
+                "description": "10 GB Storage Space (Snapshot Space)",
+                "id": 1531470282,
+                "oneTimeAfterTaxAmount": "0",
+                "recurringAfterTaxAmount": "0"
+            }
+        ],
+        "createDate": "2020-05-03T23:11:25-06:00",
+        "description": "Endurance Storage",
+        "id": 1531470246,
+        "location": {
+            "name": "ams01"
+        },
+        "oneTimeAfterTaxAmount": "0",
+        "recurringAfterTaxAmount": "0",
+        "notes": "SL-1234566789"
     }
 ]

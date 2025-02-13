@@ -1,6 +1,8 @@
 package account_test
 
 import (
+	"strings"
+	"fmt"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -55,25 +57,24 @@ var _ = Describe("Account list InvoiceDetail", func() {
 			It("return account invoice detail", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(ContainSubstring("Item Id        Category   Description                                                                           Single   Monthly   Create Date   Location"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789      Server     Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...   22.59    35.26     2022-04-04    mex01"))
-				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789123   server     Dual E5-2690 v3 (12 Cores, 2.60 GHz) (test-vs.support2.com)                           23.81    36.04     2022-04-04    ams01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Item Id        Category    Description                                                                           Single   Monthly   Create Date   Location"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789      Server      Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...   22.59    35.26     2022-04-04    mex01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("123456789123   server      Dual E5-2690 v3 (12 Cores, 2.60 GHz) (test-vs.support2.com)                           23.81    36.04     2022-04-04    ams01"))
+				Expect(fakeUI.Outputs()).To(ContainSubstring("1531470246     Endurance   Endurance Storage (SL-1234566789)                                                     0.00     0.00      2020-05-04    ams01"))
 			})
 			It("return account invoice detail with additionals details", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--details")
 				Expect(err).NotTo(HaveOccurred())
-				Expect(fakeUI.Outputs()).To(Equal(
-`Item Id        Category           Description                                                                           Single   Monthly   Create Date   Location
-123456789      Server             Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...   22.59    35.26     2022-04-04    mex01
->>>            Server             Dual Intel Xeon Silver 4210 (20 Cores, 2.20 GHz) (test-gpu.softlayer-community-f...   10.23    20.34     ---           ---
->>>            Second Processor   Intel Xeon (12 Cores, 2.40 GHz)                                                       5.24     6.12      ---           ---
->>>            Operating System   Virtual (up to 1Gbps)                                                                 7.12     8.79      ---           ---
-123456789123   server             Dual E5-2690 v3 (12 Cores, 2.60 GHz) (test-vs.support2.com)                           23.81    36.04     2022-04-04    ams01
->>>            server             Dual E5-2690 v3 (12 Cores, 2.60 GHz) (test-vs.support2.com)                           11.23    21.12     ---           ---
->>>            Second Processor   Intel Xeon (12 Cores, 2.40 GHz)                                                       5.35     6.23      ---           ---
->>>            Operating System   Virtual (up to 1Gbps)                                                                 7.23     8.68      ---           ---
-`))
-			})
+				// Unsure if removing whitespace from the output makes it easier or harder to test. Looks ugly here, but
+				// at least it won't break if formatting slightly changes.
+				output := strings.Split(strings.ReplaceAll(fakeUI.Outputs(), " ", ""), "\n")
+				fmt.Printf(fakeUI.Outputs())
+				Expect(output[1]).To(Equal(`123456789ServerDualIntelXeonSilver4210(20Cores,2.20GHz)(test-gpu.softlayer-community-f...22.5935.262022-04-04mex01`))
+				Expect(output[2]).To(Equal(`>>>ServerDualIntelXeonSilver4210(20Cores,2.20GHz)(test-gpu.softlayer-community-f...10.2320.34------`))
+				Expect(output[3]).To(Equal(`>>>SecondProcessorIntelXeon(12Cores,2.40GHz)5.246.12------`))
+				// https://github.ibm.com/SoftLayer/softlayer-cli/issues/904
+				Expect(output[9]).To(Equal(`1531470246EnduranceEnduranceStorage(SL-1234566789)0.000.002020-05-04ams01`))
+ 			})
 			It("return account invoice detail in format json", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "123", "--output", "json")
 				Expect(err).NotTo(HaveOccurred())

@@ -52,7 +52,7 @@ func (cmd *InvoiceDetailCommand) Run(args []string) error {
 
 	mask := `mask[id, description, hostName, domainName, oneTimeAfterTaxAmount, recurringAfterTaxAmount, ` +
 		`createDate,categoryCode,category[name],location[name],children[id, category[name], description, ` +
-		`oneTimeAfterTaxAmount, recurringAfterTaxAmount]]`
+		`oneTimeAfterTaxAmount, recurringAfterTaxAmount], notes]`
 	invoice, err := cmd.AccountManager.GetInvoiceDetail(invoiceID, mask)
 	if err != nil {
 		subs := map[string]interface{}{"invoiceID": invoiceID}
@@ -79,8 +79,11 @@ func PrintInvoiceDetail(invoiceID int, invoice []datatypes.Billing_Invoice_Item,
 		}
 		fqdn := fmt.Sprintf("%s.%s", utils.FormatStringPointerName(invoiceDetail.HostName), utils.FormatStringPointerName(invoiceDetail.DomainName))
 		Description := utils.FormatStringPointer(invoiceDetail.Description)
+		Notes := utils.FormatStringPointer(invoiceDetail.Notes)
 		if fqdn != "." {
 			Description = fmt.Sprintf("%s (%s)", Description, fqdn)
+		} else if Notes != "-" {
+			Description = fmt.Sprintf("%s (%s)", Description, Notes)
 		}
 		location := "None"
 		if invoiceDetail.Location != nil {
