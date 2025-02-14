@@ -44,33 +44,6 @@
   "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests.": {
     "other": "${COMMAND_NAME} sl call-api SERVICE METHOD [OPTIONS]\n\nEXAMPLE: \n\t${COMMAND_NAME} sl call-api SoftLayer_Network_Storage editObject --init 57328245 --parameters '[{\"notes\":\"Testing.\"}]'\n\tThis command edit a volume notes.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_User_Customer getObject --init 7051629 --mask \"id,firstName,lastName\"\n\tThis command show a user detail.\n\t\n\t${COMMAND_NAME} sl call-api SoftLayer_Account getVirtualGuests --filter '{\"virtualGuests\":{\"hostname\":{\"operation\":\"cli-test\"}}}'\n\tThis command list virtual guests."
   },
-  "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80": {
-    "other": "${COMMAND_NAME} sl cdn create\nExample:\n${COMMAND_NAME} sl cdn create --hostname www.example.com --origin 123.45.67.8 --http 80"
-  },
-  "${COMMAND_NAME} sl cdn delete": {
-    "other": "${COMMAND_NAME} sl cdn delete"
-  },
-  "${COMMAND_NAME} sl cdn detail": {
-    "other": "${COMMAND_NAME} sl cdn detail"
-  },
-  "${COMMAND_NAME} sl cdn edit": {
-    "other": "${COMMAND_NAME} sl cdn edit"
-  },
-  "${COMMAND_NAME} sl cdn list": {
-    "other": "${COMMAND_NAME} sl cdn list"
-  },
-  "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80": {
-    "other": "${COMMAND_NAME} sl cdn origin-add\nExample:\n${COMMAND_NAME} sl cdn origin-add --origin 123.123.123.123 --path /example/videos --http 80"
-  },
-  "${COMMAND_NAME} sl cdn origin-list": {
-    "other": "${COMMAND_NAME} sl cdn origin-list"
-  },
-  "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\"": {
-    "other": "${COMMAND_NAME} sl cdn origin-remove\nExample:\n${COMMAND_NAME} sl cdn origin-remove 123456789 \"/path/*\""
-  },
-  "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\"": {
-    "other": "${COMMAND_NAME} sl cdn purge\nExample:\n${COMMAND_NAME} sl cdn purge 9779455 /article/file.txt\""
-  },
   "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\"": {
     "other": "${COMMAND_NAME} sl dedicatedhost create-options [OPTIONS]\n\nEXAMPLE:\n   ${COMMAND_NAME} sl dedicatedhost create-options\n\n   To get the list of available private vlans use this command: ${COMMAND_NAME} sl dedicatedhost create-options --datacenter dal05 --flavor 56_CORES_X_242_RAM_X_1_4_TB\""
   },
@@ -410,23 +383,11 @@
   "--billing can only be either hourly or monthly.": {
     "other": "--billing can only be either hourly or monthly."
   },
-  "--bucket-name can not be empty": {
-    "other": "--bucket-name can not be empty"
-  },
-  "--cache-key": {
-    "other": "--cache-key"
-  },
   "--column {{.Column}} is not supported.": {
     "other": "--column {{.Column}} is not supported."
   },
   "--note": {
     "other": "--note"
-  },
-  "--optimize": {
-    "other": "--optimize"
-  },
-  "--origintype": {
-    "other": "--origintype"
   },
   "--resize-disk requires capacity and disk number values separated by one comma.": {
     "other": "--resize-disk requires capacity and disk number values separated by one comma."
@@ -571,9 +532,6 @@
   },
   "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]": {
     "other": "<hostname>.<domain.name.tld> formatted name to use. Specify one fqdn per server (multiple occurrence permitted)  [required]"
-  },
-  "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]": {
-    "other": "A DV SAN Certificate allows HTTPS traffic over your personal domain, but it requires a domain validation to prove ownership. A wildcard certificate allows HTTPS traffic only when using the CNAME given. [Permit: dvSan, wilcard]"
   },
   "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>": {
     "other": "A Hardware_Server.id or UUID value of the desired server. A value corresponding to a unique\nfully-qualified domain name in the format 'hostname<domain>' where < and > are literal, e.g. myhost<mydomain.com>"
@@ -779,9 +737,6 @@
   "Advanced configuration flag": {
     "other": "Advanced configuration flag"
   },
-  "Akamai CNAME": {
-    "other": "Akamai CNAME"
-  },
   "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.": {
     "other": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials."
   },
@@ -929,9 +884,6 @@
   "Bandwidth report for every pool/server.": {
     "other": "Bandwidth report for every pool/server."
   },
-  "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum.": {
-    "other": "Bandwidth, Hits, Ratio counted over history number of days ago. 89 is the maximum."
-  },
   "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template": {
     "other": "Base user to use as a template for creating this user. The default is to use the user that is running this command. Information provided in --template supersedes this template"
   },
@@ -971,23 +923,11 @@
   "Block volume {{.VolumeId}} is reporting LUN ID {{.LunID}}.": {
     "other": "Block volume {{.VolumeId}} is reporting LUN ID {{.LunID}}."
   },
-  "Bucket Name": {
-    "other": "Bucket Name"
-  },
-  "Bucket name": {
-    "other": "Bucket name"
-  },
-  "Bucket name.": {
-    "other": "Bucket name."
-  },
   "Buffer file could not be closed: {{.Error}}.\n": {
     "other": "Buffer file could not be closed: {{.Error}}.\n"
   },
   "Buffer file could not be created: {{.Error}}.\n": {
     "other": "Buffer file could not be created: {{.Error}}.\n"
-  },
-  "CDN Unique ID": {
-    "other": "CDN Unique ID"
   },
   "CIDR": {
     "other": "CIDR"
@@ -1009,18 +949,6 @@
   },
   "CRN of the root key in your KMS instance": {
     "other": "CRN of the root key in your KMS instance"
-  },
-  "Cache Key Rule": {
-    "other": "Cache Key Rule"
-  },
-  "Cache key optimization": {
-    "other": "Cache key optimization"
-  },
-  "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description.": {
-    "other": "Cache key optimization. These are the valid options to choose: 'include-all', 'ignore-all', 'include-specified', 'ignore-specified'. If you select 'include-specified' or 'ignore-specified' please add to option cache-description."
-  },
-  "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'.": {
-    "other": "Cache query rules with the following formats: 'include-all', 'ignore-all', 'include: <query-names>', 'ignore: <query-names>'. example <query-names> = 'uuid=1234567 issue=important'."
   },
   "Call arbitrary API endpoints": {
     "other": "Call arbitrary API endpoints"
@@ -1157,14 +1085,8 @@
   "CategoryCode": {
     "other": "CategoryCode"
   },
-  "Cdn with uniqueId: {{.ID}} was deleted.": {
-    "other": "Cdn with uniqueId: {{.ID}} was deleted."
-  },
   "Certificate Signing Request file": {
     "other": "Certificate Signing Request file"
-  },
-  "Certificate Type": {
-    "other": "Certificate Type"
   },
   "Certificate file": {
     "other": "Certificate file"
@@ -1279,9 +1201,6 @@
   },
   "Closed:": {
     "other": "Closed:"
-  },
-  "Cname": {
-    "other": "Cname"
   },
   "Code": {
     "other": "Code"
@@ -1475,9 +1394,6 @@
   "Create a host for dedicated virtual servers": {
     "other": "Create a host for dedicated virtual servers"
   },
-  "Create a new CDN domain mapping": {
-    "other": "Create a new CDN domain mapping"
-  },
   "Create a new VLAN": {
     "other": "Create a new VLAN"
   },
@@ -1511,9 +1427,6 @@
   "Create a zone": {
     "other": "Create a zone"
   },
-  "Create an origin path for an existing CDN mapping.": {
-    "other": "Create an origin path for an existing CDN mapping."
-  },
   "Create an user's API authentication key": {
     "other": "Create an user's API authentication key"
   },
@@ -1546,12 +1459,6 @@
   },
   "Creates a new mapping between incoming traffic to the loadbalancer and the backend servers.\nUse '{COMMAND_NAME}  sl security cert-list' to get IDs for the --ssl-id option.\nSee: https://cloud.ibm.com/docs/loadbalancer-service?topic=loadbalancer-service-about-ibm-cloud-load-balancer for more details\n\nExample:\n\t${COMMAND_NAME} sl loadbal protocol-add --id 1115129 --front-port 443 --front-protocol HTTPS --back-port 80 --back-protocol HTTP --ssl-id 335659 --client-timeout 60 --connections 100\n\tCreates a new protocol on Load Balancer 1115129 that terminates SSL on port 443, mapping to a backend port 80 HTTP. Using SSL cert 335659\n": {
     "other": "Creates a new mapping between incoming traffic to the loadbalancer and the backend servers.\nUse '{COMMAND_NAME}  sl security cert-list' to get IDs for the --ssl-id option.\nSee: https://cloud.ibm.com/docs/loadbalancer-service?topic=loadbalancer-service-about-ibm-cloud-load-balancer for more details\n\nExample:\n\t${COMMAND_NAME} sl loadbal protocol-add --id 1115129 --front-port 443 --front-protocol HTTPS --back-port 80 --back-protocol HTTP --ssl-id 335659 --client-timeout 60 --connections 100\n\tCreates a new protocol on Load Balancer 1115129 that terminates SSL on port 443, mapping to a backend port 80 HTTP. Using SSL cert 335659\n"
-  },
-  "Creates a purge record and also initiates the purge call.": {
-    "other": "Creates a purge record and also initiates the purge call."
-  },
-  "Creates a purge record and also initiates the purge call. For more information see the following documentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content": {
-    "other": "Creates a purge record and also initiates the purge call. For more information see the following documentation: https://cloud.ibm.com/docs/infrastructure/CDN?topic=CDN-manage-your-cdn#purging-cached-content"
   },
   "Creates a user": {
     "other": "Creates a user"
@@ -1652,9 +1559,6 @@
   "Default Hourly Price Per Instance": {
     "other": "Default Hourly Price Per Instance"
   },
-  "Delete a CDN domain mapping.": {
-    "other": "Delete a CDN domain mapping."
-  },
   "Delete a L7 policy": {
     "other": "Delete a L7 policy"
   },
@@ -1700,6 +1604,9 @@
   "Department": {
     "other": "Department"
   },
+  "Deprecated": {
+    "other": "Deprecated"
+  },
   "Description": {
     "other": "Description"
   },
@@ -1708,9 +1615,6 @@
   },
   "Detach devices from a ticket": {
     "other": "Detach devices from a ticket"
-  },
-  "Detail a CDN Account.": {
-    "other": "Detail a CDN Account."
   },
   "Detail information about a firewall": {
     "other": "Detail information about a firewall"
@@ -1928,9 +1832,6 @@
   "Edit SSL certificate": {
     "other": "Edit SSL certificate"
   },
-  "Edit a CDN Account.": {
-    "other": "Edit a CDN Account."
-  },
   "Edit a L7 policy": {
     "other": "Edit a L7 policy"
   },
@@ -2024,12 +1925,6 @@
   "Enable or Disable specific permissions": {
     "other": "Enable or Disable specific permissions"
   },
-  "Enable or disable compression of JPEG images for requests over certain network conditions.": {
-    "other": "Enable or disable compression of JPEG images for requests over certain network conditions."
-  },
-  "Enable or disable the embedded object prefetching feature.": {
-    "other": "Enable or disable the embedded object prefetching feature."
-  },
   "Enable or disable user vpn subnets manual config.": {
     "other": "Enable or disable user vpn subnets manual config."
   },
@@ -2095,9 +1990,6 @@
   },
   "Endurance Tier Per IOPS": {
     "other": "Endurance Tier Per IOPS"
-  },
-  "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you.": {
-    "other": "Enter a globally unique subdomain. The full URL becomes the CNAME we use to configure your DNS. If no value is entered, we will generate a CNAME for you."
   },
   "Error marshalling resource": {
     "other": "Error marshalling resource"
@@ -2309,12 +2201,6 @@
   "Failed to create User Customer Notification with user ID: {{.userID}}.": {
     "other": "Failed to create User Customer Notification with user ID: {{.userID}}."
   },
-  "Failed to create a CDN.": {
-    "other": "Failed to create a CDN."
-  },
-  "Failed to create a Origin.": {
-    "other": "Failed to create a Origin."
-  },
   "Failed to create credential. ": {
     "other": "Failed to create credential. "
   },
@@ -2402,9 +2288,6 @@
   "Failed to delete load balancer member {{.Member}}: {{.Error}}.\n": {
     "other": "Failed to delete load balancer member {{.Member}}: {{.Error}}.\n"
   },
-  "Failed to delete origin.": {
-    "other": "Failed to delete origin."
-  },
   "Failed to delete protocol {{.ProtocolID}}: {{.Error}}.\n": {
     "other": "Failed to delete protocol {{.ProtocolID}}: {{.Error}}.\n"
   },
@@ -2426,9 +2309,6 @@
   "Failed to delete zone: {{.Zone}}.\n": {
     "other": "Failed to delete zone: {{.Zone}}.\n"
   },
-  "Failed to deleted a CDN.": {
-    "other": "Failed to deleted a CDN."
-  },
   "Failed to deny share image: {{.ImageId}} with account {{.AccountId}}.": {
     "other": "Failed to deny share image: {{.ImageId}} with account {{.AccountId}}."
   },
@@ -2437,9 +2317,6 @@
   },
   "Failed to dump content for zone: {{.Zone}}.\n": {
     "other": "Failed to dump content for zone: {{.Zone}}.\n"
-  },
-  "Failed to edit CDN. ": {
-    "other": "Failed to edit CDN. "
   },
   "Failed to edit SSH key: {{.ID}}.\n": {
     "other": "Failed to edit SSH key: {{.ID}}.\n"
@@ -2500,15 +2377,6 @@
   },
   "Failed to get Bandwidth Pool.": {
     "other": "Failed to get Bandwidth Pool."
-  },
-  "Failed to get CDN Detail. ": {
-    "other": "Failed to get CDN Detail. "
-  },
-  "Failed to get CDN List. ": {
-    "other": "Failed to get CDN List. "
-  },
-  "Failed to get CDN Metrics. ": {
-    "other": "Failed to get CDN Metrics. "
   },
   "Failed to get Cloud Object Storages.\n": {
     "other": "Failed to get Cloud Object Storages.\n"
@@ -2755,9 +2623,6 @@
   },
   "Failed to get orders.": {
     "other": "Failed to get orders."
-  },
-  "Failed to get origins list for CDN: {{.cdnId}}.": {
-    "other": "Failed to get origins list for CDN: {{.cdnId}}."
   },
   "Failed to get package for {{.Type}} firewall.\n": {
     "other": "Failed to get package for {{.Type}} firewall.\n"
@@ -3071,9 +2936,6 @@
   "Failed to power on virtual server instance: {{.VsID}}.\n": {
     "other": "Failed to power on virtual server instance: {{.VsID}}.\n"
   },
-  "Failed to purge.": {
-    "other": "Failed to purge."
-  },
   "Failed to read SSH key from file: {{.File}}.\n": {
     "other": "Failed to read SSH key from file: {{.File}}.\n"
   },
@@ -3361,9 +3223,6 @@
   },
   "Features": {
     "other": "Features"
-  },
-  "File Extension": {
-    "other": "File Extension"
   },
   "File volume {{.ID}} has been marked for immediate snapshot cancellation.": {
     "other": "File volume {{.ID}} has been marked for immediate snapshot cancellation."
@@ -3671,12 +3530,6 @@
   "Gets detailed information about a billing item.": {
     "other": "Gets detailed information about a billing item."
   },
-  "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video": {
-    "other": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video"
-  },
-  "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]": {
-    "other": "Give a path relative to the domain provided, which can be used to reach this Origin. For example, 'articles/video' => 'www.example.com/articles/video [required]"
-  },
   "Grant access from a user to an specific device": {
     "other": "Grant access from a user to an specific device"
   },
@@ -3694,12 +3547,6 @@
   },
   "HARDWARE": {
     "other": "HARDWARE"
-  },
-  "HTTP port.": {
-    "other": "HTTP port."
-  },
-  "HTTPS port.": {
-    "other": "HTTPS port."
   },
   "Hardware": {
     "other": "Hardware"
@@ -3737,9 +3584,6 @@
   "Hardware size[required]": {
     "other": "Hardware size[required]"
   },
-  "Header": {
-    "other": "Header"
-  },
   "Health check UUID to modify [required]": {
     "other": "Health check UUID to modify [required]"
   },
@@ -3770,17 +3614,11 @@
   "High available firewall option": {
     "other": "High available firewall option"
   },
-  "Hit Radio": {
-    "other": "Hit Radio"
-  },
   "Host ID": {
     "other": "Host ID"
   },
   "Host Id to provision a Dedicated Virtual Server onto": {
     "other": "Host Id to provision a Dedicated Virtual Server onto"
-  },
-  "Host header.": {
-    "other": "Host header."
   },
   "Host order options for a given dedicated host.": {
     "other": "Host order options for a given dedicated host."
@@ -3817,27 +3655,6 @@
   },
   "How many results to get in one api call.": {
     "other": "How many results to get in one api call."
-  },
-  "Http Port": {
-    "other": "Http Port"
-  },
-  "Http port": {
-    "other": "Http port"
-  },
-  "Http port. [http or https is required]": {
-    "other": "Http port. [http or https is required]"
-  },
-  "Https Port": {
-    "other": "Https Port"
-  },
-  "Https port": {
-    "other": "Https port"
-  },
-  "Https port. [http or https is required]": {
-    "other": "Https port. [http or https is required]"
-  },
-  "IBM CNAME": {
-    "other": "IBM CNAME"
   },
   "ID": {
     "other": "ID"
@@ -3982,9 +3799,6 @@
   },
   "In GB": {
     "other": "In GB"
-  },
-  "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description.": {
-    "other": "In cache option, if you select 'include-specified' or 'ignore-specified', please add a description too using this option e.g --cache include-specified --cache-description description."
   },
   "Inbound Usage": {
     "other": "Inbound Usage"
@@ -4265,9 +4079,6 @@
   "List active load balancers": {
     "other": "List active load balancers"
   },
-  "List all CDN accounts.": {
-    "other": "List all CDN accounts."
-  },
   "List all active quotes on an account": {
     "other": "List all active quotes on an account"
   },
@@ -4378,9 +4189,6 @@
   },
   "List options for order a load balancer": {
     "other": "List options for order a load balancer"
-  },
-  "List origin path for an existing CDN mapping.": {
-    "other": "List origin path for an existing CDN mapping."
   },
   "List package items that are used for ordering": {
     "other": "List package items that are used for ordering"
@@ -4862,20 +4670,8 @@
   "Operating system": {
     "other": "Operating system"
   },
-  "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration.": {
-    "other": "Optimize for, 'General web delivery', 'Large file optimization', 'Video on demand optimization', the Dynamic content acceleration option is not added because this has a special configuration."
-  },
   "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private].": {
     "other": "Option [--flavor] is exclusive with [--cpu], [--memory] and [--private]."
-  },
-  "Option cache just accept: ": {
-    "other": "Option cache just accept: "
-  },
-  "Option performance-configuration just accept: ": {
-    "other": "Option performance-configuration just accept: "
-  },
-  "Option respect-headers just accept '0' or '1'": {
-    "other": "Option respect-headers just accept '0' or '1'"
   },
   "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly": {
     "other": "Optional parameter for Billing rate (default to monthly) Choices: hourly or monthly"
@@ -4964,24 +4760,6 @@
   "Ordering package is not found": {
     "other": "Ordering package is not found"
   },
-  "Origin": {
-    "other": "Origin"
-  },
-  "Origin Host": {
-    "other": "Origin Host"
-  },
-  "Origin Type": {
-    "other": "Origin Type"
-  },
-  "Origin server address": {
-    "other": "Origin server address"
-  },
-  "Origin server address.": {
-    "other": "Origin server address."
-  },
-  "Origin type": {
-    "other": "Origin type"
-  },
   "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)": {
     "other": "Origin volume does not have a valid storage type (with an appropriate keyName to indicate the volume is a PERFORMANCE or ENDURANCE volume)"
   },
@@ -5020,9 +4798,6 @@
   },
   "PACKAGE_KEYNAME": {
     "other": "PACKAGE_KEYNAME"
-  },
-  "PATH": {
-    "other": "PATH"
   },
   "PLACEMENTGROUP_ID": {
     "other": "PLACEMENTGROUP_ID"
@@ -5066,9 +4841,6 @@
   "Password you want to set, this command will fail if the password is not strong. [required]": {
     "other": "Password you want to set, this command will fail if the password is not strong. [required]"
   },
-  "Path": {
-    "other": "Path"
-  },
   "Pause an active virtual server instance": {
     "other": "Pause an active virtual server instance"
   },
@@ -5090,9 +4862,6 @@
   "Perform a soft shutdown": {
     "other": "Perform a soft shutdown"
   },
-  "Performance Configuration": {
-    "other": "Performance Configuration"
-  },
   "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***": {
     "other": "Performance Storage IOPS, between 100 and 6000 in multiples of 100 [only for performance volumes] ***If no IOPS value is specified, the original IOPS value of the volume will be used.***"
   },
@@ -5104,9 +4873,6 @@
   },
   "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]": {
     "other": "Performance Storage IOPs, between 100 and 6000 in multiples of 100 [required for storage-type performance]"
-  },
-  "Performance configuration. [Permit: web, video, file, dynamic]": {
-    "other": "Performance configuration. [Permit: web, video, file, dynamic]"
   },
   "Permanently removes an SSH key": {
     "other": "Permanently removes an SSH key"
@@ -5390,9 +5156,6 @@
   "Protocol {{.ProtocolID}} removed": {
     "other": "Protocol {{.ProtocolID}} removed"
   },
-  "Provider": {
-    "other": "Provider"
-  },
   "Provides some details related to order owner, date order, cost information, initial invoice.": {
     "other": "Provides some details related to order owner, date order, cost information, initial invoice."
   },
@@ -5600,9 +5363,6 @@
   "Removes an empty tag from your account.": {
     "other": "Removes an empty tag from your account."
   },
-  "Removes an origin path for an existing CDN mapping.": {
-    "other": "Removes an origin path for an existing CDN mapping."
-  },
   "Removes the routing for a specified subnet, turning it into an unrouted portable subnet.": {
     "other": "Removes the routing for a specified subnet, turning it into an unrouted portable subnet."
   },
@@ -5644,12 +5404,6 @@
   },
   "Resource record {{.ID}} was removed.": {
     "other": "Resource record {{.ID}} was removed."
-  },
-  "Respect Headers": {
-    "other": "Respect Headers"
-  },
-  "Respect headers. The value 1 is On and 0 is Off.": {
-    "other": "Respect headers. The value 1 is On and 0 is Off."
   },
   "Restore {{.storageType}} volume using a given snapshot": {
     "other": "Restore {{.storageType}} volume using a given snapshot"
@@ -5782,9 +5536,6 @@
   },
   "Save a quote": {
     "other": "Save a quote"
-  },
-  "Saved": {
-    "other": "Saved"
   },
   "Schedule": {
     "other": "Schedule"
@@ -6073,9 +5824,6 @@
   },
   "Specify output format, only JSON is supported now.": {
     "other": "Specify output format, only JSON is supported now."
-  },
-  "Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions.": {
-    "other": "Specify the file extensions that can be stored on the CDN service, separated by commas. For example, 'jpg, pdf, jpeg, png' is a valid list. Leave the flag empty to allow all extensions."
   },
   "Specify the mode to boot the OS in. Supported modes are HVM and PV.": {
     "other": "Specify the mode to boot the OS in. Supported modes are HVM and PV."
@@ -6386,9 +6134,6 @@
   "The earliest date we want to search for event logs [YYYY-MM-DD].": {
     "other": "The earliest date we want to search for event logs [YYYY-MM-DD]."
   },
-  "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname.": {
-    "other": "The edge server uses the host header in the HTTP header to communicate with the Origin host. It defaults to Hostname."
-  },
   "The endpoint that the script will be downloaded.": {
     "other": "The endpoint that the script will be downloaded."
   },
@@ -6503,23 +6248,11 @@
   "The order {{.OrderID}} was placed.": {
     "other": "The order {{.OrderID}} was placed."
   },
-  "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint": {
-    "other": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint"
-  },
-  "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint.": {
-    "other": "The origin type. [Permit: server, storage] Note: If OriginType is storage then OriginHost is take as Endpoint."
-  },
-  "The origin {{.Id}} with path {{.Path}} was deleted.": {
-    "other": "The origin {{.Id}} with path {{.Path}} was deleted."
-  },
   "The original volume has been cancelled, unable to order duplicate volume": {
     "other": "The original volume has been cancelled, unable to order duplicate volume"
   },
   "The password part of the username/password pair.": {
     "other": "The password part of the username/password pair."
-  },
-  "The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html": {
-    "other": "The path that Akamai edge servers periodically fetch the test object from. example = /detection-test-object.html"
   },
   "The port has to be a positive integer.": {
     "other": "The port has to be a positive integer."
@@ -6878,20 +6611,11 @@
   "To add Datacenter": {
     "other": "To add Datacenter"
   },
-  "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]": {
-    "other": "To route requests to your website, enter the hostname for your website, for example, www.example.com or app.example.com. [required]"
-  },
   "Toggle the IPMI interface on and off. This command is asynchronous.": {
     "other": "Toggle the IPMI interface on and off. This command is asynchronous."
   },
   "Total": {
     "other": "Total"
-  },
-  "Total bandwidth": {
-    "other": "Total bandwidth"
-  },
-  "Total hits": {
-    "other": "Total hits"
   },
   "Total monthly cost": {
     "other": "Total monthly cost"
@@ -7049,12 +6773,6 @@
   "Unassign a global IP from a target router or device": {
     "other": "Unassign a global IP from a target router or device"
   },
-  "Unique Id": {
-    "other": "Unique Id"
-  },
-  "Unique id": {
-    "other": "Unique id"
-  },
   "Unknown Command '{{.CMD}}'": {
     "other": "Unknown Command '{{.CMD}}'"
   },
@@ -7208,12 +6926,6 @@
   "Value of option '--sticky' should be cookie or source-ip": {
     "other": "Value of option '--sticky' should be cookie or source-ip"
   },
-  "Vendor": {
-    "other": "Vendor"
-  },
-  "Vendor Name": {
-    "other": "Vendor Name"
-  },
   "Version": {
     "other": "Version"
   },
@@ -7346,9 +7058,6 @@
   "Your new VPN password [required]": {
     "other": "Your new VPN password [required]"
   },
-  "Your server IP address or hostname. [required]": {
-    "other": "Your server IP address or hostname. [required]"
-  },
   "ZONE": {
     "other": "ZONE"
   },
@@ -7477,12 +7186,6 @@
   },
   "broadcast": {
     "other": "broadcast"
-  },
-  "cache-description is only used with the cache option": {
-    "other": "cache-description is only used with the cache option"
-  },
-  "cache-description option must be used ": {
-    "other": "cache-description option must be used "
   },
   "capacity": {
     "other": "capacity"
@@ -7627,9 +7330,6 @@
   },
   "hour": {
     "other": "hour"
-  },
-  "http or https": {
-    "other": "http or https"
   },
   "id": {
     "other": "id"
