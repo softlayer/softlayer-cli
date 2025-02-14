@@ -184,7 +184,7 @@ func (a accountManager) GetInvoices(limit int, closed bool, getAll bool) ([]data
 	mask := "mask[invoiceTotalAmount, itemCount]"
 	filters := filter.New()
 	filters = append(filters, filter.Path("invoices.id").OrderBy("DESC"))
-	if !closed {
+	if !closed || !getAll {
 		filters = append(filters, filter.Path("invoices.statusCode").Eq("OPEN"))
 	}
 	resourceList := []datatypes.Billing_Invoice{}
