@@ -11,18 +11,11 @@ import (
 func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	cobraCmd := &cobra.Command{
 		Use:   "cdn",
-		Short: T("Classic infrastructure CDN commands"),
+		Short: T("Classic infrastructure CDN commands") + " " + T("Deprecated"),
 		RunE:  nil,
+		Deprecated: "https://cloud.ibm.com/docs/CDN?topic=CDN-cdn-deprecation",
 	}
-	cobraCmd.AddCommand(NewListCommand(sl).Command)
-	cobraCmd.AddCommand(NewDeleteCommand(sl).Command)
-	cobraCmd.AddCommand(NewOriginRemoveCommand(sl).Command)
-	cobraCmd.AddCommand(NewDetailCommand(sl).Command)
-	cobraCmd.AddCommand(NewEditCommand(sl).Command)
-	cobraCmd.AddCommand(NewOriginListCommand(sl).Command)
-	cobraCmd.AddCommand(NewCreateCommand(sl).Command)
-	cobraCmd.AddCommand(NewPurgeCommand(sl).Command)
-	cobraCmd.AddCommand(NewOriginAddCommand(sl).Command)
+
 	return cobraCmd
 }
 
@@ -30,6 +23,6 @@ func CdnNamespace() plugin.Namespace {
 	return plugin.Namespace{
 		ParentName:  "sl",
 		Name:        "cdn",
-		Description: T("Classic infrastructure CDN commands"),
+		Description: T("Classic infrastructure CDN commands" + " " + T("Deprecated")),
 	}
 }
