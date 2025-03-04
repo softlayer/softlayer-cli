@@ -224,6 +224,20 @@ type FakeAccountManager struct {
 		result1 datatypes.Billing_Item
 		result2 error
 	}
+	GetItemDetailFromInvoiceItemStub        func(int, string) (datatypes.Billing_Item, error)
+	getItemDetailFromInvoiceItemMutex       sync.RWMutex
+	getItemDetailFromInvoiceItemArgsForCall []struct {
+		arg1 int
+		arg2 string
+	}
+	getItemDetailFromInvoiceItemReturns struct {
+		result1 datatypes.Billing_Item
+		result2 error
+	}
+	getItemDetailFromInvoiceItemReturnsOnCall map[int]struct {
+		result1 datatypes.Billing_Item
+		result2 error
+	}
 	GetPostProvisioningHooksStub        func(string) ([]datatypes.Provisioning_Hook, error)
 	getPostProvisioningHooksMutex       sync.RWMutex
 	getPostProvisioningHooksArgsForCall []struct {
@@ -1291,6 +1305,71 @@ func (fake *FakeAccountManager) GetItemDetailReturnsOnCall(i int, result1 dataty
 	}{result1, result2}
 }
 
+func (fake *FakeAccountManager) GetItemDetailFromInvoiceItem(arg1 int, arg2 string) (datatypes.Billing_Item, error) {
+	fake.getItemDetailFromInvoiceItemMutex.Lock()
+	ret, specificReturn := fake.getItemDetailFromInvoiceItemReturnsOnCall[len(fake.getItemDetailFromInvoiceItemArgsForCall)]
+	fake.getItemDetailFromInvoiceItemArgsForCall = append(fake.getItemDetailFromInvoiceItemArgsForCall, struct {
+		arg1 int
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.GetItemDetailFromInvoiceItemStub
+	fakeReturns := fake.getItemDetailFromInvoiceItemReturns
+	fake.recordInvocation("GetItemDetailFromInvoiceItem", []interface{}{arg1, arg2})
+	fake.getItemDetailFromInvoiceItemMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeAccountManager) GetItemDetailFromInvoiceItemCallCount() int {
+	fake.getItemDetailFromInvoiceItemMutex.RLock()
+	defer fake.getItemDetailFromInvoiceItemMutex.RUnlock()
+	return len(fake.getItemDetailFromInvoiceItemArgsForCall)
+}
+
+func (fake *FakeAccountManager) GetItemDetailFromInvoiceItemCalls(stub func(int, string) (datatypes.Billing_Item, error)) {
+	fake.getItemDetailFromInvoiceItemMutex.Lock()
+	defer fake.getItemDetailFromInvoiceItemMutex.Unlock()
+	fake.GetItemDetailFromInvoiceItemStub = stub
+}
+
+func (fake *FakeAccountManager) GetItemDetailFromInvoiceItemArgsForCall(i int) (int, string) {
+	fake.getItemDetailFromInvoiceItemMutex.RLock()
+	defer fake.getItemDetailFromInvoiceItemMutex.RUnlock()
+	argsForCall := fake.getItemDetailFromInvoiceItemArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeAccountManager) GetItemDetailFromInvoiceItemReturns(result1 datatypes.Billing_Item, result2 error) {
+	fake.getItemDetailFromInvoiceItemMutex.Lock()
+	defer fake.getItemDetailFromInvoiceItemMutex.Unlock()
+	fake.GetItemDetailFromInvoiceItemStub = nil
+	fake.getItemDetailFromInvoiceItemReturns = struct {
+		result1 datatypes.Billing_Item
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAccountManager) GetItemDetailFromInvoiceItemReturnsOnCall(i int, result1 datatypes.Billing_Item, result2 error) {
+	fake.getItemDetailFromInvoiceItemMutex.Lock()
+	defer fake.getItemDetailFromInvoiceItemMutex.Unlock()
+	fake.GetItemDetailFromInvoiceItemStub = nil
+	if fake.getItemDetailFromInvoiceItemReturnsOnCall == nil {
+		fake.getItemDetailFromInvoiceItemReturnsOnCall = make(map[int]struct {
+			result1 datatypes.Billing_Item
+			result2 error
+		})
+	}
+	fake.getItemDetailFromInvoiceItemReturnsOnCall[i] = struct {
+		result1 datatypes.Billing_Item
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeAccountManager) GetPostProvisioningHooks(arg1 string) ([]datatypes.Provisioning_Hook, error) {
 	fake.getPostProvisioningHooksMutex.Lock()
 	ret, specificReturn := fake.getPostProvisioningHooksReturnsOnCall[len(fake.getPostProvisioningHooksArgsForCall)]
@@ -1519,6 +1598,8 @@ func (fake *FakeAccountManager) Invocations() map[string][][]interface{} {
 	defer fake.getInvoicesMutex.RUnlock()
 	fake.getItemDetailMutex.RLock()
 	defer fake.getItemDetailMutex.RUnlock()
+	fake.getItemDetailFromInvoiceItemMutex.RLock()
+	defer fake.getItemDetailFromInvoiceItemMutex.RUnlock()
 	fake.getPostProvisioningHooksMutex.RLock()
 	defer fake.getPostProvisioningHooksMutex.RUnlock()
 	fake.getSummaryMutex.RLock()

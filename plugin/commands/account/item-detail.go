@@ -48,11 +48,20 @@ func (cmd *ItemDetailCommand) Run(args []string) error {
 
 	outputFormat := cmd.GetOutputFlag()
 
-	mask := "mask[orderItem[id,order[id,userRecord[id,email,displayName,userStatus]]],nextInvoiceTotalRecurringAmount,location, hourlyFlag, children]"
+	mask := `mask[
+orderItem[id,order[id,userRecord[id,email,displayName,userStatus]]],
+nextInvoiceTotalRecurringAmount,location, hourlyFlag, children
+]`
+	// The ID entered is from 'account billing-items'
 	item, err := cmd.AccountManager.GetItemDetail(itemID, mask)
 	if err != nil {
-		subs := map[string]interface{}{"itemID": itemID}
-		return slErr.NewAPIError(T("Failed to get the item {{.itemID}}. ", subs), err.Error(), 2)
+		// ID entered might be from 'account invoice-detail <ID>'
+		item, err = cmd.AccountManager.GetItemDetailFromInvoiceItem(itemID, mask)
+		if err != nil {
+			subs := map[string]interface{}{"itemID": itemID}
+			return slErr.NewAPIError(T("Failed to get the item {{.itemID}}. ", subs), err.Error(), 2)
+		}
+
 	}
 	PrintItemDetail(itemID, item, cmd.UI, outputFormat)
 	return nil

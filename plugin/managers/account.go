@@ -23,6 +23,7 @@ type AccountManager interface {
 	GetInvoices(limit int, closed bool, getAll bool) ([]datatypes.Billing_Invoice, error)
 	CancelItem(identifier int) error
 	GetItemDetail(identifier int, mask string) (datatypes.Billing_Item, error)
+	GetItemDetailFromInvoiceItem(identifier int, mask string) (datatypes.Billing_Item, error)
 	GetActiveVirtualLicenses(mask string) ([]datatypes.Software_VirtualLicense, error)
 	GetActiveAccountLicenses(mask string) ([]datatypes.Software_AccountLicense, error)
 	GetAccountAllBillingOrders(mask string, limit int) ([]datatypes.Billing_Order, error)
@@ -184,7 +185,10 @@ func (a accountManager) GetInvoices(limit int, closed bool, getAll bool) ([]data
 	mask := "mask[invoiceTotalAmount, itemCount]"
 	filters := filter.New()
 	filters = append(filters, filter.Path("invoices.id").OrderBy("DESC"))
-	if !closed || !getAll {
+	if getAll { // If they want all invoice, included Closed status
+		closed = true
+	}
+	if !closed {
 		filters = append(filters, filter.Path("invoices.statusCode").Eq("OPEN"))
 	}
 	resourceList := []datatypes.Billing_Invoice{}
@@ -237,6 +241,15 @@ https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Item/getObject/
 func (a accountManager) GetItemDetail(identifier int, mask string) (datatypes.Billing_Item, error) {
 	BillingItemService := services.GetBillingItemService(a.Session)
 	return BillingItemService.Mask(mask).Id(identifier).GetObject()
+}
+
+/*
+Gets the detail of a item from an invoice item
+https://sldn.softlayer.com/reference/services/SoftLayer_Billing_Invoice_Item/getBillingItem/
+*/
+func (a accountManager) GetItemDetailFromInvoiceItem(identifier int, mask string) (datatypes.Billing_Item, error) {
+	BillingItemService := services.GetBillingInvoiceItemService(a.Session)
+	return BillingItemService.Mask(mask).Id(identifier).GetBillingItem()
 }
 
 /*
