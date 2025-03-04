@@ -17,7 +17,7 @@ jobs:
       install:
         # Required to install detect-secrets
         - echo -e "machine github.ibm.com\n  login $CI_USER_TOKEN" > ~/.netrc
-        - curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh -d| sh -s -- -b $GOPATH/bin
+        - curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -d -b $GOPATH/bin
       before_script:
         - go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")
         - go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")
