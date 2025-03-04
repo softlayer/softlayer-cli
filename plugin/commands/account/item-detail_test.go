@@ -4,6 +4,7 @@ import (
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	. "github.com/onsi/gomega/gstruct"
 	"github.com/softlayer/softlayer-go/session"
 
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/account"
@@ -17,13 +18,19 @@ var _ = Describe("Account list ItemDetail", func() {
 		cliCommand  *account.ItemDetailCommand
 		fakeSession *session.Session
 		slCommand   *metadata.SoftlayerCommand
+		fakeHandler *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
 		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeHandler = testhelpers.GetSessionHandler(fakeSession)
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = account.NewItemDetailCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
+	})
+	AfterEach(func() {
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
 	})
 
 	Describe("Account item detail", func() {
@@ -80,6 +87,26 @@ var _ = Describe("Account list ItemDetail", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`{`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`}`))
 				Expect(fakeUI.Outputs()).To(ContainSubstring(`]`))
+			})
+			It("Test Fallback to GetItemDetailFromInvoiceItem", func() {
+				fakeHandler.AddApiError("SoftLayer_Billing_Item", "getObject", 404, "NOT FOUND")
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "999")
+				Expect(err).NotTo(HaveOccurred())
+				output := fakeUI.Outputs()
+				apiCalls := fakeHandler.ApiCallLogs
+				Expect(len(apiCalls)).To(Equal(2))
+				Expect(output).To(ContainSubstring("gw.ibm.me"))
+				Expect(output).To(ContainSubstring("Dual Intel Xeon Gold 5218 (32 Cores, 2.30 GHz)"))
+				Expect(apiCalls[0]).To(MatchFields(IgnoreExtras, Fields{
+					"Service": Equal("SoftLayer_Billing_Item"),
+					"Method":  Equal("getObject"),
+					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(999))})),
+				}))
+				Expect(apiCalls[1]).To(MatchFields(IgnoreExtras, Fields{
+					"Service": Equal("SoftLayer_Billing_Invoice_Item"),
+					"Method":  Equal("getBillingItem"),
+					"Options": PointTo(MatchFields(IgnoreExtras, Fields{"Id": PointTo(Equal(999))})),
+				}))
 			})
 		})
 	})
