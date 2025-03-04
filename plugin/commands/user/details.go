@@ -78,7 +78,11 @@ func (cmd *DetailsCommand) Run(args []string) error {
 	logins := cmd.Logins
 	events := cmd.Events
 
-	object_mask := "userStatus[name],parent[id,username],apiAuthenticationKeys[authenticationKey],sslVpnAllowedFlag"
+	object_mask := `mask[
+firstName, lastName, email, openIdConnectUserName, address1, address2, city, state, country, postalCode,
+companyName, createDate, officePhone, id, username, parent, successfulLogins,
+userStatus[name],parent[id,username],apiAuthenticationKeys[authenticationKey],sslVpnAllowedFlag
+]`
 	user, err := cmd.UserManager.GetUser(id, object_mask)
 	userInfo.User = user
 	if err != nil {
