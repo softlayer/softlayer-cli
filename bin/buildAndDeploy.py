@@ -211,7 +211,7 @@ class Builder(object):
         os.environ["IBMCLOUD_TRACE"] = "false"
         if not apikey:
             raise Exception("IBMCLOUD_APIKEY needs to be set to the proper API key first.")
-        login_cmd = ["ibmcloud", "login", f"--apikey={apikey}"]
+        login_cmd = ["ibmcloud", "login", f"--apikey={apikey}", "-r=us-east"]
         print(f"[yellow]Running: ibmcloud login --apikey $IBMCLOUD_APIKEY")
         subprocess.run(login_cmd)
         files = glob.glob(os.path.join(self.cwd, 'out', f"sl-{self.version}-*"))
