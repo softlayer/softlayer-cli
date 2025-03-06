@@ -118,22 +118,24 @@ func (cmd *ListCommand) Run(args []string) error {
 	table := cmd.UI.Table(headers)
 
 	for _, vlan := range vlans {
-		var premium string
+		premium := T("No")
 		if vlan.BillingItem != nil {
 			premium = T("Yes")
-		} else {
-			premium = T("No")
 		}
 		datacenterName := ""
 		if vlan.Datacenter != nil && vlan.Datacenter.Name != nil {
 			datacenterName = utils.FormatStringPointer(vlan.Datacenter.Name)
+		}
+		networkSpace := "Direct Link"
+		if vlan.NetworkSpace != nil {
+			networkSpace = cases.Title(language.Und).String(utils.FormatStringPointer(vlan.NetworkSpace))
 		}
 		table.Add(
 			utils.FormatIntPointer(vlan.Id),
 			utils.FormatIntPointer(vlan.VlanNumber),
 			utils.FormatStringPointer(vlan.FullyQualifiedName),
 			utils.FormatStringPointer(vlan.Name),
-			cases.Title(language.Und).String(utils.FormatStringPointer(vlan.NetworkSpace)),
+			networkSpace,
 			datacenterName,
 			getPodWithClosedAnnouncement(vlan, pods),
 			getFirewallGateway(vlan),
