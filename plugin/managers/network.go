@@ -462,10 +462,10 @@ destinationIpAddress[ipAddress,virtualGuest.fullyQualifiedDomainName,hardware.fu
 func (n networkManager) ListVlans(datacenter string, vlanNum int, name string, orderId int, mask string) ([]datatypes.Network_Vlan, error) {
 	DEFAULT_VLAN_MASK := `mask[
 id, vlanNumber, fullyQualifiedName, name, networkSpace, datacenter[name], podName,
-firewallInterfaces, billingItem, tagReferences[tag[name]],
+firewallInterfaces, billingItem[id], tagReferences[tag[name]],
 hardwareCount,subnetCount,totalPrimaryIpAddressCount,virtualGuestCount,
 networkVlanFirewall[id,fullyQualifiedDomainName,primaryIpAddress],
-attachedNetworkGateway[id,name,networkFirewall]
+attachedNetworkGateway[id,name]
 ]`
 
 	filters := filter.New()
