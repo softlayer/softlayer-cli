@@ -1,7 +1,7 @@
 package cdn
 
 import (
-	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/plugin"
+
 	"github.com/spf13/cobra"
 
 	. "github.ibm.com/SoftLayer/softlayer-cli/plugin/i18n"
@@ -17,12 +17,4 @@ func SetupCobraCommands(sl *metadata.SoftlayerCommand) *cobra.Command {
 	}
 
 	return cobraCmd
-}
-
-func CdnNamespace() plugin.Namespace {
-	return plugin.Namespace{
-		ParentName:  "sl",
-		Name:        "cdn",
-		Description: T("Classic infrastructure CDN commands" + " " + T("Deprecated")),
-	}
 }
