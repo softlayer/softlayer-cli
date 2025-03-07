@@ -231,7 +231,6 @@ func Namespaces() []plugin.Namespace {
 		metadata.SoftlayerNamespace(),
 		block.BlockNamespace(),
 		file.FileNamespace(),
-		cdn.CdnNamespace(),
 		dns.DnsNamespace(),
 		eventlog.EventLogNamespace(),
 		firewall.FirewallNamespace(),
