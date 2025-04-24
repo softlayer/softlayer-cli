@@ -24,6 +24,7 @@ test:
     export GOPATH=$HOME/go
     export PATH=$PATH:$GOPATH/bin
     curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -d -b $GOPATH/bin
+    go version
     # Actual Tests
     go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")
     go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")
