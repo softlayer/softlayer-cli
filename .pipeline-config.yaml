@@ -4,7 +4,7 @@ setup:
   skip: true
 
 test:
-  abort_on_failure: false
+  abort_on_failure: true
   image: icr.io/continuous-delivery/pipeline/pipeline-base-ubi9:latest
   script: |
     #!/usr/bin/env bash
@@ -26,9 +26,7 @@ test:
     curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -d -b $GOPATH/bin
     go version
     # Actual Tests
-    go vet $(go list ./... | grep -v "fixtures" | grep -v "vendor")
-    go test $(go list ./... | grep -v "fixtures" | grep -v "vendor")
-    gosec -exclude-dir=fixture -exclude-dir=plugin/resources -quiet ./...
+    "./bin/gotest.sh"
 
 # See .cra/cveignore file for skipped checks.
 compliance-checks:
