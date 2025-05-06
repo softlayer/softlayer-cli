@@ -1,0 +1,12 @@
+{
+    "service": "iaas-all",
+    "production_code": "yes",
+    "production_branches": "master",
+    "security_sensitive": "no",
+    "ip_sensitive": "no",
+    "allow_cloud_readers": "yes",
+    "public_override":
+    {
+      "other": "Open Source SDK Library for building the sl ibmcloud plugin"
+    }
+}

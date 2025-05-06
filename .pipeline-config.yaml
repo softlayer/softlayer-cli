@@ -1,0 +1,44 @@
+version: '1'
+# 'ibmcloud cr images --restrict continuous-delivery' for image options
+setup:
+  skip: true
+
+test:
+  abort_on_failure: true
+  image: icr.io/continuous-delivery/pipeline/pipeline-base-ubi9:latest
+  script: |
+    #!/usr/bin/env bash
+
+    if [[ "$PIPELINE_DEBUG" == 1 ]]; then
+      trap env EXIT
+      env
+      set -x
+    fi
+
+    cd "$WORKSPACE/$(load_repo app-repo path)"
+
+    dnf update 
+    wget -q https://go.dev/dl/go1.23.6.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.23.6.linux-amd64.tar.gz
+    export PATH=$PATH:/usr/local/go/bin
+    export GOPATH=$HOME/go
+    export PATH=$PATH:$GOPATH/bin
+    curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -d -b $GOPATH/bin
+    go version
+    # Actual Tests
+    "./bin/gotest.sh"
+
+# See .cra/cveignore file for skipped checks.
+compliance-checks:
+  image: icr.io/continuous-delivery/pipeline/pipeline-base-ubi9:latest
+  dind: true
+  abort_on_failure: false
+  image_pull_policy: IfNotPresent
+  skip: false
+  runAfter: null
+  script: |
+    #!/bin/sh
+    yum update -yq && yum install -yq python3-pip
+    python3 --version
+
+    "/opt/commons/compliance-checks/run.sh"

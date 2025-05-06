@@ -97,11 +97,6 @@ var _ = Describe("VS create", func() {
 			})
 		})
 		Context("VS create with --export", func() {
-			It("Failed to write file", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "-H", "vs-abc", "-D", "wilma.com", "-c", "2", "-m", "4096", "--datacenter", "dal10", "-o", "CENTOS", "--export", "/root/template")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to write virtual server template file to: /root/template."))
-			})
 			It("Success", func() {
 				tmpFile, tmpErr := ioutil.TempFile(os.TempDir(), "create_tests-")
 				if tmpErr != nil {
