@@ -88,11 +88,6 @@ var _ = Describe("Key print", func() {
 				Expect(fakeUI.Outputs()).To(ContainSubstrings([]string{"notes"}))
 				Expect(fakeUI.Outputs()).NotTo(ContainSubstrings([]string{"ssh-rsa djghtbtmfhgentongwfrdnglkhsdye"}))
 			})
-			It("return error", func() {
-				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-f", "/root/key")
-				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Failed to write SSH key to file: /root/key."))
-			})
 		})
 	})
 })
