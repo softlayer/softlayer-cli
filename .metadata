@@ -1,7 +1,7 @@
 {
     "service": "iaas-all",
     "production_code": "yes",
-    "production_branches": "master",
+    "production_branches": ["master"],
     "security_sensitive": "no",
     "ip_sensitive": "no",
     "allow_cloud_readers": "yes",
