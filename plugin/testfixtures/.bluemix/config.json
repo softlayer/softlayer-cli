@@ -48,14 +48,25 @@
   "LastSessionUpdateTime": 0,
   "Trace": "",
   "ColorEnabled": "",
+  "AlphaCommandsEnabled": "",
   "HTTPTimeout": 0,
   "TypeOfSSO": "",
+  "FallbackAccount": {
+    "GUID": "",
+    "Name": "",
+    "Owner": ""
+  },
+  "FallbackIAMTokens": {
+    "IAMToken": "",
+    "IAMRefreshToken": ""
+  },
+  "AssumedTrustedProfileId": "",
   "CLIInfoEndpoint": "",
   "CheckCLIVersionDisabled": false,
   "UsageStatsDisabled": false,
   "UsageStatsEnabled": false,
   "UsageStatsEnabledLastUpdate": "0001-01-01T00:00:00Z",
-  "SDKVersion": "1.4.0",
+  "SDKVersion": "1.7.2",
   "UpdateCheckInterval": 0,
   "UpdateRetryCheckInterval": 0,
   "UpdateNotificationInterval": 0,
