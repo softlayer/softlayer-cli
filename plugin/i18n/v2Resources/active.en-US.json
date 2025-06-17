@@ -3944,6 +3944,9 @@
   "Item {{.Item}} does not exist for package {{.Package}}": {
     "other": "Item {{.Item}} does not exist for package {{.Package}}"
   },
+  "Item {{.Item}} does not exist for package {{.Package}} with category {{.Category}}": {
+    "other": "Item {{.Item}} does not exist for package {{.Package}} with category {{.Category}}"
+  },
   "Item: {{.itemID}} was cancelled.": {
     "other": "Item: {{.itemID}} was cancelled."
   },
