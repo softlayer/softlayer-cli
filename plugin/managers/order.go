@@ -332,7 +332,8 @@ func (i orderManager) GetPriceIdList(packageKeyname string, itemKeynames []strin
 		return nil, err
 	}
 	var prices []int
-	categoryDict := map[string]int{"gpu0": -1, "pcie_slot0": -1}
+	// start at -1 so we can increment before we use it. 0 is a valid value here
+	categoryDict := map[string]int{"gpu0": -1, "pcie_slot0": -1, "disk_controller": -1}
 
 	for _, itemKeyname := range itemKeynames {
 		var newItems []datatypes.Product_Item
@@ -355,10 +356,10 @@ func (i orderManager) GetPriceIdList(packageKeyname string, itemKeynames []strin
 			itemCategory = *matchingItem.ItemCategory.CategoryCode
 		}
 
+		// Normal items
 		if _, ok := categoryDict[itemCategory]; !ok {
 			for _, p := range matchingItem.Prices {
-				if ((p.LocationGroupId != nil && *p.LocationGroupId == 0) ||
-					p.LocationGroupId == nil) && p.Id != nil {
+				if isDefaultPrice(p) {
 
 					capacityMin := -1
 					capacityMax := -1
@@ -386,19 +387,23 @@ func (i orderManager) GetPriceIdList(packageKeyname string, itemKeynames []strin
 					}
 				}
 			}
+		// Items in categoryDict need special handling if there are more than 1
 		} else {
-			var PriceIdList []int
-			categoryDict[itemCategory] += 1
-			categoryCode := itemCategory[:len(itemCategory)-1] + strconv.Itoa(categoryDict[itemCategory])
-			for _, p := range matchingItem.Prices {
-				if p.LocationGroupId != nil && *p.LocationGroupId == 0 &&
-					len(p.Categories) > 0 && p.Categories[0].CategoryCode != nil &&
-					*p.Categories[0].CategoryCode == categoryCode {
 
-					PriceIdList = append(PriceIdList, *p.Id)
+			categoryDict[itemCategory] += 1
+			categoryCode := getSpecialCategory(categoryDict[itemCategory], itemCategory)
+			for _, p := range matchingItem.Prices {
+				if isDefaultPrice(p) && len(p.Categories) > 0 && p.Categories[0].CategoryCode != nil &&
+					*p.Categories[0].CategoryCode == categoryCode {
+					priceId = *p.Id
 				}
 			}
-			priceId = PriceIdList[0]
+			if priceId == 0 {
+				subs := map[string]interface{}{"Item": itemKeyname, "Package": packageKeyname, "Category": categoryCode}
+				return nil, errors.New(
+					T("Item {{.Item}} does not exist for package {{.Package}} with category {{.Category}}", subs))
+			}
+
 		}
 		prices = append(prices, priceId)
 	}
@@ -490,4 +495,29 @@ func (i orderManager) GetAllCancelation(mask string) ([]datatypes.Billing_Item_C
 // Delete the quote of an order.
 func (i orderManager) DeleteQuote(quoteId int) (datatypes.Billing_Order_Quote, error) {
 	return i.BillingOrderQuoteService.Id(quoteId).DeleteQuote()
+}
+
+func getSpecialCategory(index int, base string) string {
+	// Special case because its disk_controller and disk_controller1
+	// unlike gpu0/pci0 -> gpu1/pci1
+	if base == "disk_controller" {
+		if index == 0 {
+			return base
+		} else {
+			return fmt.Sprintf("%s1", base)
+		}
+	}
+	categoryCode := base[:len(base)-1] + strconv.Itoa(index)
+	return categoryCode
+}
+
+func isDefaultPrice(price datatypes.Product_Item_Price) bool {
+	if price.LocationGroupId != nil && *price.LocationGroupId > 0 {
+		return false
+	} else {
+		if price.Id != nil  {
+			return true
+		}
+	}
+	return false
 }

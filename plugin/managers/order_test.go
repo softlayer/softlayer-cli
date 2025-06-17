@@ -222,8 +222,7 @@ var _ = Describe("Order", func() {
 	})
 	Describe("GetPriceIdList", func() {
 		Items := []string{
-			"PRIVATE_NETWORK_VLAN",
-			"DOMAIN_INFO_1_YEAR",
+			"PRIVATE_NETWORK_VLAN", "DOMAIN_INFO_1_YEAR",
 		}
 		BeforeEach(func() {
 			fakeSLSession = testhelpers.NewFakeSoftlayerSession(nil)
@@ -248,6 +247,37 @@ var _ = Describe("Order", func() {
 				Items[1] = "FAKE"
 				_, err := OrderManager.GetPriceIdList("Test", Items, 25)
 				Expect(err).To(HaveOccurred())
+			})
+		})
+		Context("NVMe Selection", func() {
+			BeforeEach(func() {
+				handler := testhelpers.GetSessionHandler(fakeSLSession)
+				handler.SetFileNames([]string{"getItems-3137"})
+			})
+			It("Select NVMe Prices", func() {
+				Items := []string{
+					"DISK_CONTROLLER_RAID", "DISK_CONTROLLER_RAID_1_MIRRORED_NMVE_M_2",
+				}
+				prices, err := OrderManager.GetPriceIdList("Test", Items, 0)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(len(prices)).To(Equal(2))
+				Expect(prices[0]).To(Equal(22484))  // DISK_CONTROLLER_RAID
+				Expect(prices[1]).To(Equal(306531)) // DISK_CONTROLLER_RAID_1_MIRRORED_NMVE_M_2
+			})
+			It("Select nonraid Prices", func() {
+				Items := []string{"DISK_CONTROLLER_NONRAID"}
+				prices, err := OrderManager.GetPriceIdList("Test", Items, 0)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(len(prices)).To(Equal(1))
+				Expect(prices[0]).To(Equal(876))  // DISK_CONTROLLER_NONRAID
+			})
+			It("Select NVMe Prices Failure", func() {
+				Items := []string{
+					"DISK_CONTROLLER_RAID_1_MIRRORED_NMVE_M_2", "DISK_CONTROLLER_RAID",
+				}
+				_, err := OrderManager.GetPriceIdList("Test", Items, 0)
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("Item DISK_CONTROLLER_RAID does not exist for package Test with category disk_controller1"))
 			})
 		})
 	})
