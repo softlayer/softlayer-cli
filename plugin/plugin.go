@@ -36,7 +36,6 @@ import (
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/globalip"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/hardware"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/image"
-	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/ipsec"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/licenses"
 	"github.ibm.com/SoftLayer/softlayer-cli/plugin/commands/loadbal"
 
@@ -238,7 +237,6 @@ func Namespaces() []plugin.Namespace {
 		globalip.GlobalIpNamespace(),
 		hardware.HardwareNamespace(),
 		image.ImageNamespace(),
-		ipsec.IpsecNamespace(),
 		licenses.LicensesNamespace(),
 		loadbal.LoadbalNamespace(),
 		nas.NasNetworkStorageNamespace(),
@@ -381,7 +379,6 @@ func GetTopCobraCommand(ui terminal.UI, session *session.Session) *cobra.Command
 	cobraCmd.AddCommand(email.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(image.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(hardware.SetupCobraCommands(slCommand))
-	cobraCmd.AddCommand(ipsec.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(reports.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(eventlog.SetupCobraCommands(slCommand))
 	cobraCmd.AddCommand(user.SetupCobraCommands(slCommand))

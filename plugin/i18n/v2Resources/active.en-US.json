@@ -95,30 +95,6 @@
   "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance.": {
     "other": "${COMMAND_NAME} sl image import NAME URI API_KEY [--note NOTE] [--os-code OS_CODE] [--root-key-crn ROOT_KEY_CRN] [--wrapper-dek WRAPPER_DEK] [--cloud-init] [--byol] [--is-encrypted]\n  NAME: The image name\n  URI: The URI for an object storage object (.vhd/.iso file) of the format: cos://<regionName>/<bucketName>/<objectPath>\n  API_KEY: The IBM Cloud API Key with access to IBM Cloud Object Storage instance."
   },
-  "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  Request configuration of a tunnel context.\n\n  This action will update the advancedConfigurationFlag on the context\n  instance and further modifications against the context will be prevented\n  until all changes can be propagated to network devices.": {
-    "other": "${COMMAND_NAME} sl ipsec config CONTEXT_ID [OPTIONS]\n\n  Request configuration of a tunnel context.\n\n  This action will update the advancedConfigurationFlag on the context\n  instance and further modifications against the context will be prevented\n  until all changes can be propagated to network devices."
-  },
-  "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  List IPSEC VPN tunnel context details.\n\n  Additional resources can be joined using multiple instances of the include\n  option, for which the following choices are available.\n\n  at: address translations\n  is: internal subnets\n  rs: remote subnets\n  sr: statically routed subnets\n  ss: service subnets": {
-    "other": "${COMMAND_NAME} sl ipsec detail CONTEXT_ID [OPTIONS]\n\n  List IPSEC VPN tunnel context details.\n\n  Additional resources can be joined using multiple instances of the include\n  option, for which the following choices are available.\n\n  at: address translations\n  is: internal subnets\n  rs: remote subnets\n  sr: statically routed subnets\n  ss: service subnets"
-  },
-  "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  Add a subnet to an IPSEC tunnel context.\n\n  A subnet id may be specified to link to the existing tunnel context.\n\n  Otherwise, a network identifier in CIDR notation should be specified,\n  indicating that a subnet resource should first be created before\n  associating it with the tunnel context. Note that this is only supported\n  for remote subnets, which are also deleted upon failure to attach to a\n  context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.": {
-    "other": "${COMMAND_NAME} sl ipsec subnet-add CONTEXT_ID [OPTIONS] \n\n  Add a subnet to an IPSEC tunnel context.\n\n  A subnet id may be specified to link to the existing tunnel context.\n\n  Otherwise, a network identifier in CIDR notation should be specified,\n  indicating that a subnet resource should first be created before\n  associating it with the tunnel context. Note that this is only supported\n  for remote subnets, which are also deleted upon failure to attach to a\n  context.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
-  },
-  "${COMMAND_NAME} sl ipsec subnet-remove CONTEXT_ID SUBNET_ID SUBNET_TYPE \n\n  Remove a subnet from an IPSEC tunnel context.\n\n  The subnet id to remove must be specified.\n\n  Remote subnets are deleted upon removal from a tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.": {
-    "other": "${COMMAND_NAME} sl ipsec subnet-remove CONTEXT_ID SUBNET_ID SUBNET_TYPE \n\n  Remove a subnet from an IPSEC tunnel context.\n\n  The subnet id to remove must be specified.\n\n  Remote subnets are deleted upon removal from a tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
-  },
-  "${COMMAND_NAME} sl ipsec translation-add CONTEXT_ID [OPTIONS]\n\n  Add an address translation to an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.": {
-    "other": "${COMMAND_NAME} sl ipsec translation-add CONTEXT_ID [OPTIONS]\n\n  Add an address translation to an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
-  },
-  "${COMMAND_NAME} sl ipsec translation-remove CONTEXT_ID TRANSLATION_ID \n\n  Remove a translation entry from an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.": {
-    "other": "${COMMAND_NAME} sl ipsec translation-remove CONTEXT_ID TRANSLATION_ID \n\n  Remove a translation entry from an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
-  },
-  "${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [OPTIONS]\n\n  Update an address translation for an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices.": {
-    "other": "${COMMAND_NAME} sl ipsec translation-update CONTEXT_ID TRANSLATION_ID [OPTIONS]\n\n  Update an address translation for an IPSEC tunnel context.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
-  },
-  "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices.": {
-    "other": "${COMMAND_NAME} sl ipsec update CONTEXT_ID [OPTIONS]\n\n  Update tunnel context properties.\n\n  Updates are made atomically, so either all are accepted or none are.\n\n  Key life values must be in the range 120-172800.\n\n  Phase 2 perfect forward secrecy must be in the range 0-1.\n\n  A separate configuration request should be made to realize changes on\n  network devices."
-  },
   "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)": {
     "other": "${COMMAND_NAME} sl loadbal l7member-del (--pool-uuid L7POOL_UUID) (--member-uuid L7MEMBER_UUID)"
   },
@@ -410,17 +386,11 @@
   "-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS": {
     "other": "-a, --action should be REJECT | REDIRECT_POOL | REDIRECT_URL | REDIRECT_HTTPS"
   },
-  "-a|--phase1-auth must be either MD5 or SHA1 or SHA256.": {
-    "other": "-a|--phase1-auth must be either MD5 or SHA1 or SHA256."
-  },
   "-b|--billing can only be either hourly or monthly.\nRun '{{.CommandName}} sl file volume-options' to check available options.": {
     "other": "-b|--billing can only be either hourly or monthly.\nRun '{{.CommandName}} sl file volume-options' to check available options."
   },
   "-b|--billing has to be either hourly or monthly.": {
     "other": "-b|--billing has to be either hourly or monthly."
-  },
-  "-c|--phase1-crypto must be either DES or 3DES or AES128 or AES192 or AES256.": {
-    "other": "-c|--phase1-crypto must be either DES or 3DES or AES128 or AES192 or AES256."
   },
   "-d|--datacenter is required.\nRun '{{.CommandName}} sl block volume-options' to check available options.": {
     "other": "-d|--datacenter is required.\nRun '{{.CommandName}} sl block volume-options' to check available options."
@@ -431,14 +401,8 @@
   "-d|--direction has to be either egress or ingress.": {
     "other": "-d|--direction has to be either egress or ingress."
   },
-  "-d|--phase1-dh must be either 0 or 1 or 2 or 5.": {
-    "other": "-d|--phase1-dh must be either 0 or 1 or 2 or 5."
-  },
   "-e|--ether-type has to be either IPv4 or IPv6.": {
     "other": "-e|--ether-type has to be either IPv4 or IPv6."
-  },
-  "-e|--phase2-dh must be either 0 or 1 or 2 or 5.": {
-    "other": "-e|--phase2-dh must be either 0 or 1 or 2 or 5."
   },
   "-e|--tier can only be specified with endurance volume.": {
     "other": "-e|--tier can only be specified with endurance volume."
@@ -448,9 +412,6 @@
   },
   "-e|--tier is required with endurance volume in IOPS/GB, options are: 0.25, 2, 4, 10.\nRun '{{.CommandName}} sl file volume-options' to check available options.": {
     "other": "-e|--tier is required with endurance volume in IOPS/GB, options are: 0.25, 2, 4, 10.\nRun '{{.CommandName}} sl file volume-options' to check available options."
-  },
-  "-f|--phase2-forward-secrecy must be either 0 or 1.": {
-    "other": "-f|--phase2-forward-secrecy must be either 0 or 1."
   },
   "-i|--interface must be either public or private": {
     "other": "-i|--interface must be either public or private"
@@ -482,9 +443,6 @@
   "-k, --key is only available in HEADER or COOKIE type.": {
     "other": "-k, --key is only available in HEADER or COOKIE type."
   },
-  "-l|--phase2-key-ttl must be in range 120-172800.": {
-    "other": "-l|--phase2-key-ttl must be in range 120-172800."
-  },
   "-o|--os-type is optional, options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN.": {
     "other": "-o|--os-type is optional, options are: HYPER_V,LINUX,VMWARE,WINDOWS_2008,WINDOWS_GPT,WINDOWS,XEN."
   },
@@ -512,20 +470,11 @@
   "-s|--size is required, must be a positive integer.\nRun '{{.CommandName}} sl file volume-options' to check available options.": {
     "other": "-s|--size is required, must be a positive integer.\nRun '{{.CommandName}} sl file volume-options' to check available options."
   },
-  "-t|--phase1-key-ttl must be in range 120-172800.": {
-    "other": "-t|--phase1-key-ttl must be in range 120-172800."
-  },
   "-t|--storage-type is required, must be either performance or endurance.\nRun '{{.CommandName}} sl block volume-options' to check available options.": {
     "other": "-t|--storage-type is required, must be either performance or endurance.\nRun '{{.CommandName}} sl block volume-options' to check available options."
   },
   "-t|--storage-type is required, must be either performance or endurance.\nRun '{{.CommandName}} sl file volume-options' to check available options.": {
     "other": "-t|--storage-type is required, must be either performance or endurance.\nRun '{{.CommandName}} sl file volume-options' to check available options."
-  },
-  "-u|--phase2-auth must be either MD5 or SHA1 or SHA256.": {
-    "other": "-u|--phase2-auth must be either MD5 or SHA1 or SHA256."
-  },
-  "-y|--phase2-crypto must be either DES or 3DES or AES128 or AES192 or AES256.": {
-    "other": "-y|--phase2-crypto must be either DES or 3DES or AES128 or AES192 or AES256."
   },
   "300, 600, 1800, 3600, 43200 or 86400 seconds.": {
     "other": "300, 600, 1800, 3600, 43200 or 86400 seconds."
@@ -692,14 +641,8 @@
   "Add a security group rule to a security group": {
     "other": "Add a security group rule to a security group"
   },
-  "Add a subnet to an IPSec tunnel context": {
-    "other": "Add a subnet to an IPSec tunnel context"
-  },
   "Add access to subnet.": {
     "other": "Add access to subnet."
-  },
-  "Add an address translation to an IPSec tunnel": {
-    "other": "Add an address translation to an IPSec tunnel"
   },
   "Add and upload SSL certificate details": {
     "other": "Add and upload SSL certificate details"
@@ -716,26 +659,17 @@
   "Add/Remove datacenter of an image.": {
     "other": "Add/Remove datacenter of an image."
   },
-  "Added {{.Type}} subnet #{{.ID}} to IPSec {{.ContextID}}.": {
-    "other": "Added {{.Type}} subnet #{{.ID}} to IPSec {{.ContextID}}."
-  },
   "Additional notes": {
     "other": "Additional notes"
   },
   "Address": {
     "other": "Address"
   },
-  "Address Translations": {
-    "other": "Address Translations"
-  },
   "Adds an attachment to an existing ticket": {
     "other": "Adds an attachment to an existing ticket"
   },
   "Adds an update to an existing ticket": {
     "other": "Adds an update to an existing ticket"
-  },
-  "Advanced configuration flag": {
-    "other": "Advanced configuration flag"
   },
   "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials.": {
     "other": "All multi vlan rules must be managed through the FortiGate dashboard using the provided credentials."
@@ -932,9 +866,6 @@
   "CIDR": {
     "other": "CIDR"
   },
-  "CONTEXT_ID": {
-    "other": "CONTEXT_ID"
-  },
   "CPU": {
     "other": "CPU"
   },
@@ -961,9 +892,6 @@
   },
   "Can't get router ID with hostname {{.HostName}}": {
     "other": "Can't get router ID with hostname {{.HostName}}"
-  },
-  "Cancel a IPSec VPN tunnel context": {
-    "other": "Cancel a IPSec VPN tunnel context"
   },
   "Cancel a VLAN": {
     "other": "Cancel a VLAN"
@@ -1003,9 +931,6 @@
   },
   "Cancel immediately instead of on the billing anniversary": {
     "other": "Cancel immediately instead of on the billing anniversary"
-  },
-  "Cancel the IPSec immediately instead of on the billing anniversary": {
-    "other": "Cancel the IPSec immediately instead of on the billing anniversary"
   },
   "Cancel the block storage volume immediately instead of on the billing anniversary": {
     "other": "Cancel the block storage volume immediately instead of on the billing anniversary"
@@ -1148,9 +1073,6 @@
   "Classic infrastructure Global IP addresses": {
     "other": "Classic infrastructure Global IP addresses"
   },
-  "Classic infrastructure IPSEC VPN": {
-    "other": "Classic infrastructure IPSEC VPN"
-  },
   "Classic infrastructure Licenses": {
     "other": "Classic infrastructure Licenses"
   },
@@ -1291,9 +1213,6 @@
   },
   "Completed Percentage": {
     "other": "Completed Percentage"
-  },
-  "Configuration request received for IPSec {{.ContextID}}.": {
-    "other": "Configuration request received for IPSec {{.ContextID}}."
   },
   "Convert a dependent duplicate volume to an independent volume.": {
     "other": "Convert a dependent duplicate volume to an independent volume."
@@ -1451,12 +1370,6 @@
   "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.": {
     "other": "Created resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}."
   },
-  "Created subnet {{.ID}}/{{.CIDR}} #{{.Identifier}}.": {
-    "other": "Created subnet {{.ID}}/{{.CIDR}} #{{.Identifier}}."
-  },
-  "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}.": {
-    "other": "Created translation from {{.StaticIP}} to {{.RemoteIP}} #{{.ID}}."
-  },
   "Creates a new mapping between incoming traffic to the loadbalancer and the backend servers.\nUse '{COMMAND_NAME}  sl security cert-list' to get IDs for the --ssl-id option.\nSee: https://cloud.ibm.com/docs/loadbalancer-service?topic=loadbalancer-service-about-ibm-cloud-load-balancer for more details\n\nExample:\n\t${COMMAND_NAME} sl loadbal protocol-add --id 1115129 --front-port 443 --front-protocol HTTPS --back-port 80 --back-protocol HTTP --ssl-id 335659 --client-timeout 60 --connections 100\n\tCreates a new protocol on Load Balancer 1115129 that terminates SSL on port 443, mapping to a backend port 80 HTTP. Using SSL cert 335659\n": {
     "other": "Creates a new mapping between incoming traffic to the loadbalancer and the backend servers.\nUse '{COMMAND_NAME}  sl security cert-list' to get IDs for the --ssl-id option.\nSee: https://cloud.ibm.com/docs/loadbalancer-service?topic=loadbalancer-service-about-ibm-cloud-load-balancer for more details\n\nExample:\n\t${COMMAND_NAME} sl loadbal protocol-add --id 1115129 --front-port 443 --front-protocol HTTPS --back-port 80 --back-protocol HTTP --ssl-id 335659 --client-timeout 60 --connections 100\n\tCreates a new protocol on Load Balancer 1115129 that terminates SSL on port 443, mapping to a backend port 80 HTTP. Using SSL cert 335659\n"
   },
@@ -1480,9 +1393,6 @@
   },
   "Current Usage": {
     "other": "Current Usage"
-  },
-  "Customer Peer IP Address": {
-    "other": "Customer Peer IP Address"
   },
   "DATA": {
     "other": "DATA"
@@ -1898,9 +1808,6 @@
   "Either -n, --name or -d, --description is required to edit security group.": {
     "other": "Either -n, --name or -d, --description is required to edit security group."
   },
-  "Either -s|--subnet-id or -n|--network must be provided.": {
-    "other": "Either -s|--subnet-id or -n|--network must be provided."
-  },
   "Email": {
     "other": "Email"
   },
@@ -2114,9 +2021,6 @@
   "Failed to add user.\n": {
     "other": "Failed to add user.\n"
   },
-  "Failed to add {{.Type}} subnet #{{.ID}} to IPSec {{.ContextID}}.\n": {
-    "other": "Failed to add {{.Type}} subnet #{{.ID}} to IPSec {{.ContextID}}.\n"
-  },
   "Failed to assign global IP {{.IpID}} to target {{.Target}}.\n": {
     "other": "Failed to assign global IP {{.IpID}} to target {{.Target}}.\n"
   },
@@ -2137,9 +2041,6 @@
   },
   "Failed to authorize storage to the virtual server instance: {{.Storage}}.\n{{.Error}}": {
     "other": "Failed to authorize storage to the virtual server instance: {{.Storage}}.\n{{.Error}}"
-  },
-  "Failed to cancel IPSec {{.ContextID}}.\n": {
-    "other": "Failed to cancel IPSec {{.ContextID}}.\n"
   },
   "Failed to cancel VLAN {{.ID}}.\n": {
     "other": "Failed to cancel VLAN {{.ID}}.\n"
@@ -2225,14 +2126,8 @@
   "Failed to create security group with name {{.Name}}.\n": {
     "other": "Failed to create security group with name {{.Name}}.\n"
   },
-  "Failed to create subnet with {{.ID}}.\n": {
-    "other": "Failed to create subnet with {{.ID}}.\n"
-  },
   "Failed to create the license.": {
     "other": "Failed to create the license."
-  },
-  "Failed to create translation for IPSec with ID {{.ID}}.\n": {
-    "other": "Failed to create translation for IPSec with ID {{.ID}}.\n"
   },
   "Failed to create user vpn override.": {
     "other": "Failed to create user vpn override."
@@ -2348,9 +2243,6 @@
   "Failed to enable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n": {
     "other": "Failed to enable {{.ScheduleType}} snapshot for volume {{.VolumeID}}.\n"
   },
-  "Failed to enqueue configuration request for IPSec {{.ContextID}}.\n": {
-    "other": "Failed to enqueue configuration request for IPSec {{.ContextID}}.\n"
-  },
   "Failed to find ID for domain: {{.Domain}} on your account.": {
     "other": "Failed to find ID for domain: {{.Domain}} on your account."
   },
@@ -2365,9 +2257,6 @@
   },
   "Failed to find price for this type of vlan.": {
     "other": "Failed to find price for this type of vlan."
-  },
-  "Failed to find product package for this IPSEC.": {
-    "other": "Failed to find product package for this IPSEC."
   },
   "Failed to find product package for this firewall.": {
     "other": "Failed to find product package for this firewall."
@@ -2389,12 +2278,6 @@
   },
   "Failed to get Event Logs.\n": {
     "other": "Failed to get Event Logs.\n"
-  },
-  "Failed to get IPSec on your account.": {
-    "other": "Failed to get IPSec on your account."
-  },
-  "Failed to get IPSec with ID {{.ID}}.\n": {
-    "other": "Failed to get IPSec with ID {{.ID}}.\n"
   },
   "Failed to get Image.\n": {
     "other": "Failed to get Image.\n"
@@ -2720,9 +2603,6 @@
   "Failed to get the vlans available for datacener: {{.DATACENTER}} and flavor: {{.FLAVOR}}.": {
     "other": "Failed to get the vlans available for datacener: {{.DATACENTER}} and flavor: {{.FLAVOR}}."
   },
-  "Failed to get translation with ID {{.TransID}} from IPSec {{.ID}}.": {
-    "other": "Failed to get translation with ID {{.TransID}} from IPSec {{.ID}}."
-  },
   "Failed to get unplanned event ID.": {
     "other": "Failed to get unplanned event ID."
   },
@@ -2876,9 +2756,6 @@
   "Failed to open editor for vlan rules: {{.FirewallID}}.\n": {
     "other": "Failed to open editor for vlan rules: {{.FirewallID}}.\n"
   },
-  "Failed to order IPSec.Please try again later.\n": {
-    "other": "Failed to order IPSec.Please try again later.\n"
-  },
   "Failed to order Quote.\n": {
     "other": "Failed to order Quote.\n"
   },
@@ -3002,14 +2879,8 @@
   "Failed to remove subnets.": {
     "other": "Failed to remove subnets."
   },
-  "Failed to remove translation with ID {{.TransID}} from IPSec {{.ID}}.": {
-    "other": "Failed to remove translation with ID {{.TransID}} from IPSec {{.ID}}."
-  },
   "Failed to remove user's API authentication key": {
     "other": "Failed to remove user's API authentication key"
-  },
-  "Failed to remove {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.\n": {
-    "other": "Failed to remove {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.\n"
   },
   "Failed to rescue hardware server: {{.ID}}.\n": {
     "other": "Failed to rescue hardware server: {{.ID}}.\n"
@@ -3092,9 +2963,6 @@
   "Failed to unmarshal template file: {{.File}}.\n": {
     "other": "Failed to unmarshal template file: {{.File}}.\n"
   },
-  "Failed to update IPSec {{.ContextID}}.\n": {
-    "other": "Failed to update IPSec {{.ContextID}}.\n"
-  },
   "Failed to update VPN user.": {
     "other": "Failed to update VPN user."
   },
@@ -3154,9 +3022,6 @@
   },
   "Failed to update the user data of virtual server instance: {{.VsId}}.\n": {
     "other": "Failed to update the user data of virtual server instance: {{.VsId}}.\n"
-  },
-  "Failed to update translation with ID {{.TransID}} in IPSec {{.ID}}.": {
-    "other": "Failed to update translation with ID {{.TransID}} in IPSec {{.ID}}."
   },
   "Failed to update user vpn password.": {
     "other": "Failed to update user vpn password."
@@ -3235,9 +3100,6 @@
   },
   "File volume {{.VolumeId}} has been marked for immediate cancellation.": {
     "other": "File volume {{.VolumeId}} has been marked for immediate cancellation."
-  },
-  "Filter by ID of the order that purchased the IPSec": {
-    "other": "Filter by ID of the order that purchased the IPSec"
   },
   "Filter by ID of the order that purchased the VLAN": {
     "other": "Filter by ID of the order that purchased the VLAN"
@@ -3433,12 +3295,6 @@
   },
   "FortiGate username": {
     "other": "FortiGate username"
-  },
-  "Friendly name": {
-    "other": "Friendly name"
-  },
-  "FriendlyName": {
-    "other": "FriendlyName"
   },
   "Frontend port": {
     "other": "Frontend port"
@@ -3731,9 +3587,6 @@
   "IPMI_username": {
     "other": "IPMI_username"
   },
-  "IPSec {{.ContextID}} is cancelled.": {
-    "other": "IPSec {{.ContextID}} is cancelled."
-  },
   "IPs": {
     "other": "IPs"
   },
@@ -3803,9 +3656,6 @@
   "Inbound Usage": {
     "other": "Inbound Usage"
   },
-  "Include extra resources. Options are: at,is,rs,sr,ss": {
-    "other": "Include extra resources. Options are: at,is,rs,sr,ss"
-  },
   "Include invoices with a CLOSED status.": {
     "other": "Include invoices with a CLOSED status."
   },
@@ -3838,15 +3688,6 @@
   },
   "Intermediate Certificate file": {
     "other": "Intermediate Certificate file"
-  },
-  "Internal Peer IP Address": {
-    "other": "Internal Peer IP Address"
-  },
-  "Internal Subnets": {
-    "other": "Internal Subnets"
-  },
-  "Internal peer IP address": {
-    "other": "Internal peer IP address"
   },
   "Internet side port": {
     "other": "Internet side port"
@@ -4045,12 +3886,6 @@
   },
   "List Dedicated Host Guests.": {
     "other": "List Dedicated Host Guests."
-  },
-  "List IPSec VPN tunnel context details": {
-    "other": "List IPSec VPN tunnel context details"
-  },
-  "List IPSec VPN tunnel contexts": {
-    "other": "List IPSec VPN tunnel contexts"
   },
   "List L7 policies": {
     "other": "List L7 policies"
@@ -4436,9 +4271,6 @@
   "Network component {{.ComponentID}} is removed from security group {{.GroupID}}.": {
     "other": "Network component {{.ComponentID}} is removed from security group {{.GroupID}}."
   },
-  "Network identifier": {
-    "other": "Network identifier"
-  },
   "Network port speed in Mbps": {
     "other": "Network port speed in Mbps"
   },
@@ -4459,9 +4291,6 @@
   },
   "No IP V6 address associated with virtual server instance: {{.VsId}}.": {
     "other": "No IP V6 address associated with virtual server instance: {{.VsId}}."
-  },
-  "No IPSec was found.": {
-    "other": "No IPSec was found."
   },
   "No available router was found.": {
     "other": "No available router was found."
@@ -4543,9 +4372,6 @@
   },
   "Note": {
     "other": "Note"
-  },
-  "Note value": {
-    "other": "Note value"
   },
   "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC": {
     "other": "Note: IOPS above 6,000 available only in: https://cloud.ibm.com/docs/BlockStorage?topic=BlockStorage-selectDC"
@@ -4705,9 +4531,6 @@
   },
   "Order Total Amount": {
     "other": "Order Total Amount"
-  },
-  "Order a IPSec VPN tunnel": {
-    "other": "Order a IPSec VPN tunnel"
   },
   "Order a block storage replica volume": {
     "other": "Order a block storage replica volume"
@@ -4889,60 +4712,6 @@
   "Permissions updated successfully": {
     "other": "Permissions updated successfully"
   },
-  "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5": {
-    "other": "Phase 1 Diffie-Hellman group. Options are: 0,1,2,5"
-  },
-  "Phase 1 authentication": {
-    "other": "Phase 1 authentication"
-  },
-  "Phase 1 authentication. Options are: MD5,SHA1,SHA256": {
-    "other": "Phase 1 authentication. Options are: MD5,SHA1,SHA256"
-  },
-  "Phase 1 diffie hellman group": {
-    "other": "Phase 1 diffie hellman group"
-  },
-  "Phase 1 encryption": {
-    "other": "Phase 1 encryption"
-  },
-  "Phase 1 encryption. Options are: DES,3DES,AES128,AES192,AES256": {
-    "other": "Phase 1 encryption. Options are: DES,3DES,AES128,AES192,AES256"
-  },
-  "Phase 1 key life": {
-    "other": "Phase 1 key life"
-  },
-  "Phase 1 key life. Range is 120-172800": {
-    "other": "Phase 1 key life. Range is 120-172800"
-  },
-  "Phase 2 Diffie-Hellman group. Options are: 0,1,2,5": {
-    "other": "Phase 2 Diffie-Hellman group. Options are: 0,1,2,5"
-  },
-  "Phase 2 authentication": {
-    "other": "Phase 2 authentication"
-  },
-  "Phase 2 authentication. Options are: MD5,SHA1,SHA256": {
-    "other": "Phase 2 authentication. Options are: MD5,SHA1,SHA256"
-  },
-  "Phase 2 diffie hellman group": {
-    "other": "Phase 2 diffie hellman group"
-  },
-  "Phase 2 encryption": {
-    "other": "Phase 2 encryption"
-  },
-  "Phase 2 encryption. Options are: DES,3DES,AES128,AES192,AES256": {
-    "other": "Phase 2 encryption. Options are: DES,3DES,AES128,AES192,AES256"
-  },
-  "Phase 2 key life": {
-    "other": "Phase 2 key life"
-  },
-  "Phase 2 key life. Range is 120-172800": {
-    "other": "Phase 2 key life. Range is 120-172800"
-  },
-  "Phase 2 perfect forward secrecy": {
-    "other": "Phase 2 perfect forward secrecy"
-  },
-  "Phase 2 perfect forward secrecy. Range is 0-1": {
-    "other": "Phase 2 perfect forward secrecy. Range is 0-1"
-  },
   "Phone Number": {
     "other": "Phone Number"
   },
@@ -5035,9 +4804,6 @@
   },
   "Preset {{.Preset}} does not exist in package {{.Package}}": {
     "other": "Preset {{.Preset}} does not exist in package {{.Package}}"
-  },
-  "Preshared key": {
-    "other": "Preshared key"
   },
   "Price ID not found": {
     "other": "Price ID not found"
@@ -5300,21 +5066,6 @@
   "Remote IP": {
     "other": "Remote IP"
   },
-  "Remote IP address": {
-    "other": "Remote IP address"
-  },
-  "Remote IP address ID": {
-    "other": "Remote IP address ID"
-  },
-  "Remote IP address[required]": {
-    "other": "Remote IP address[required]"
-  },
-  "Remote Subnets": {
-    "other": "Remote Subnets"
-  },
-  "Remote peer IP address": {
-    "other": "Remote peer IP address"
-  },
   "Remove SSL certificate": {
     "other": "Remove SSL certificate"
   },
@@ -5326,12 +5077,6 @@
   },
   "Remove a rule from a security group": {
     "other": "Remove a rule from a security group"
-  },
-  "Remove a subnet from an IPSEC tunnel context": {
-    "other": "Remove a subnet from an IPSEC tunnel context"
-  },
-  "Remove a translation entry from an IPSec": {
-    "other": "Remove a translation entry from an IPSec"
   },
   "Remove a user VS notification entry.": {
     "other": "Remove a user VS notification entry."
@@ -5353,12 +5098,6 @@
   },
   "Remove resource record from a zone": {
     "other": "Remove resource record from a zone"
-  },
-  "Removed translation with ID {{.TransID}} from IPSec {{.ID}}.": {
-    "other": "Removed translation with ID {{.TransID}} from IPSec {{.ID}}."
-  },
-  "Removed {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}.": {
-    "other": "Removed {{.Type}} subnet #{{.ID}} from IPSec {{.ContextID}}."
   },
   "Removes all empty tags.": {
     "other": "Removes all empty tags."
@@ -5386,9 +5125,6 @@
   },
   "Reports which resources are still active in Datacenters that are scheduled to be closed.": {
     "other": "Reports which resources are still active in Datacenters that are scheduled to be closed."
-  },
-  "Request configuration of a tunnel context": {
-    "other": "Request configuration of a tunnel context"
   },
   "Requested by": {
     "other": "Requested by"
@@ -5528,9 +5264,6 @@
   "SUBNET_ID": {
     "other": "SUBNET_ID"
   },
-  "SUBNET_TYPE": {
-    "other": "SUBNET_TYPE"
-  },
   "Sales": {
     "other": "Sales"
   },
@@ -5603,9 +5336,6 @@
   "Servers": {
     "other": "Servers"
   },
-  "Service Subnets": {
-    "other": "Service Subnets"
-  },
   "Session Stickiness": {
     "other": "Session Stickiness"
   },
@@ -5656,9 +5386,6 @@
   },
   "Short Name": {
     "other": "Short Name"
-  },
-  "Short name of the datacenter for the IPSec. For example, dal09[required]": {
-    "other": "Short name of the datacenter for the IPSec. For example, dal09[required]"
   },
   "Short name of the datacenter for the replica. For example, dal09 [required]": {
     "other": "Short name of the datacenter for the replica. For example, dal09 [required]"
@@ -5792,12 +5519,6 @@
   "Snapshots space usage threshold warning notification has been set to '{{.ENABLE}}' for volume '{{.ID}}'.": {
     "other": "Snapshots space usage threshold warning notification has been set to '{{.ENABLE}}' for volume '{{.ID}}'."
   },
-  "SoftLayer_Exception_ObjectNotFound: Unable to find object with id {{.ContextID}}": {
-    "other": "SoftLayer_Exception_ObjectNotFound: Unable to find object with id {{.ContextID}}"
-  },
-  "SoftLayer_Exception_ObjectNotFound: Unable to find object with id {{.TranslationID}}": {
-    "other": "SoftLayer_Exception_ObjectNotFound: Unable to find object with id {{.TranslationID}}"
-  },
   "Software": {
     "other": "Software"
   },
@@ -5861,18 +5582,6 @@
   "State": {
     "other": "State"
   },
-  "Static IP address": {
-    "other": "Static IP address"
-  },
-  "Static IP address ID": {
-    "other": "Static IP address ID"
-  },
-  "Static IP address[required]": {
-    "other": "Static IP address[required]"
-  },
-  "Static Subnets": {
-    "other": "Static Subnets"
-  },
   "Status": {
     "other": "Status"
   },
@@ -5888,17 +5597,8 @@
   "Subnet": {
     "other": "Subnet"
   },
-  "Subnet identifier to add, required": {
-    "other": "Subnet identifier to add, required"
-  },
-  "Subnet network identifier to create": {
-    "other": "Subnet network identifier to create"
-  },
   "Subnet notes": {
     "other": "Subnet notes"
-  },
-  "Subnet type to add. Options are: internal,remote,service[required]": {
-    "other": "Subnet type to add. Options are: internal,remote,service[required]"
   },
   "Subnet {{.ID}} was cancelled.": {
     "other": "Subnet {{.ID}} was cancelled."
@@ -5995,9 +5695,6 @@
   },
   "TICKETID": {
     "other": "TICKETID"
-  },
-  "TRANSLATION_ID": {
-    "other": "TRANSLATION_ID"
   },
   "TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200": {
     "other": "TTL(Time-To-Live) in seconds, such as: 86400. The default is: 7200"
@@ -6326,9 +6023,6 @@
   "The subject id to use for the ticket, issue '${COMMAND_NAME} sl ticket subjects' to get the list. [required]": {
     "other": "The subject id to use for the ticket, issue '${COMMAND_NAME} sl ticket subjects' to get the list. [required]"
   },
-  "The subnet type has to be either internal, or remote or service.": {
-    "other": "The subnet type has to be either internal, or remote or service."
-  },
   "The subnet {{.Subnet}} was authorized to access {{.VolumeId}}.": {
     "other": "The subnet {{.Subnet}} was authorized to access {{.VolumeId}}."
   },
@@ -6487,9 +6181,6 @@
   },
   "This will cancel the IP address: {{.ID}} and cannot be undone. Continue?": {
     "other": "This will cancel the IP address: {{.ID}} and cannot be undone. Continue?"
-  },
-  "This will cancel the IPSec: {{.ContextID}} and cannot be undone. Continue?": {
-    "other": "This will cancel the IPSec: {{.ContextID}} and cannot be undone. Continue?"
   },
   "This will cancel the VLAN: {{.ID}} and cannot be undone. Continue?": {
     "other": "This will cancel the VLAN: {{.ID}} and cannot be undone. Continue?"
@@ -6689,9 +6380,6 @@
   "UUID of the protocol you want to edit.": {
     "other": "UUID of the protocol you want to edit."
   },
-  "Unable to create {{.Type}} subnet.": {
-    "other": "Unable to create {{.Type}} subnet."
-  },
   "Unable to find VLAN with ID {{.ID}}.\n": {
     "other": "Unable to find VLAN with ID {{.ID}}.\n"
   },
@@ -6800,9 +6488,6 @@
   "Update RAID firmware": {
     "other": "Update RAID firmware"
   },
-  "Update an address translation for an IPSec": {
-    "other": "Update an address translation for an IPSec"
-  },
   "Update could not be added: {{.Error}}\n": {
     "other": "Update could not be added: {{.Error}}\n"
   },
@@ -6818,17 +6503,8 @@
   "Update server firmware. By default will update all available server components.": {
     "other": "Update server firmware. By default will update all available server components."
   },
-  "Update tunnel context properties": {
-    "other": "Update tunnel context properties"
-  },
-  "Updated IPSec {{.ContextID}}.": {
-    "other": "Updated IPSec {{.ContextID}}."
-  },
   "Updated resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}.": {
     "other": "Updated resource record under zone {{.Zone}}: ID={{.ID}}, type={{.RecordType}}, record={{.Host}}, data={{.Data}}, ttl={{.Ttl}}."
-  },
-  "Updated translation with ID {{.TransID}} in IPSec {{.ID}}.": {
-    "other": "Updated translation with ID {{.TransID}} in IPSec {{.ID}}."
   },
   "Updates": {
     "other": "Updates"
@@ -7051,9 +6727,6 @@
   },
   "You may run '{{.CommandName}} sl file volume-list --order {{.OrderID}}' to find this file volume after it is ready.": {
     "other": "You may run '{{.CommandName}} sl file volume-list --order {{.OrderID}}' to find this file volume after it is ready."
-  },
-  "You may run '{{.CommandName}} sl ipsec list --order {{.OrderID}}' to find this IPSec VPN after it is ready.": {
-    "other": "You may run '{{.CommandName}} sl ipsec list --order {{.OrderID}}' to find this IPSec VPN after it is ready."
   },
   "You may run '{{.CommandName}} sl vs host-list --order {{.OrderID}}' to find this dedicated host after it is ready.": {
     "other": "You may run '{{.CommandName}} sl vs host-list --order {{.OrderID}}' to find this dedicated host after it is ready."
