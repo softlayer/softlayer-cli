@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/softlayer/softlayer-go/datatypes"
 	bmxErr "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 	slErrors "github.ibm.com/SoftLayer/softlayer-cli/plugin/errors"
 
@@ -29,6 +28,7 @@ func NewInterfaceAddCommand(sl *metadata.SoftlayerCommand) (cmd *InterfaceAddCom
 	thisCmd := &InterfaceAddCommand{
 		SoftlayerCommand: sl,
 		NetworkManager:   managers.NewNetworkManager(sl.Session),
+		VSManager:		  managers.NewVirtualServerManager(sl.Session),
 	}
 
 	cobraCmd := &cobra.Command{
@@ -90,26 +90,27 @@ func ValidateArgs(networkComponent int, serverId int, serverInterface string) er
 
 func GetComponentId(vsManager managers.VirtualServerManager, networkComponent int, serverId int, serverInterface string) (int, error) {
 	useServer := networkComponent == 0 && (serverId != 0 && serverInterface != "")
+
 	if useServer {
-		vs, err := vsManager.GetInstance(serverId, "networkComponents[id,port]")
+		vs, err := vsManager.GetInstance(serverId, "primaryBackendNetworkComponent[id,port], primaryNetworkComponent[id,port]")
 		if err != nil {
 			return 0, err
 		}
-		port := 0
+
 		if strings.ToLower(serverInterface) == "public" {
-			port = 1
-		}
-		var component []datatypes.Virtual_Guest_Network_Component
-		for _, c := range vs.NetworkComponents {
-			if c.Port != nil && *c.Port == port {
-				component = append(component, c)
+			if vs.PrimaryNetworkComponent != nil && vs.PrimaryNetworkComponent.Id != nil {
+				return *vs.PrimaryNetworkComponent.Id, nil
+			}
+		} else {
+			if vs.PrimaryBackendNetworkComponent != nil && vs.PrimaryBackendNetworkComponent.Id != nil {
+				return *vs.PrimaryBackendNetworkComponent.Id, nil			
 			}
 		}
-		if len(component) != 1 {
-			return 0, errors.New(T("Instance {{.ServerID}} has {{.Count}} {{.Interface}} interface.",
-				map[string]interface{}{"ServerID": serverId, "Interface": serverInterface, "Count": len(component)}))
-		}
-		return *component[0].Id, nil
+
+		return 0, errors.New(
+			T("Instance {{.ServerID}} has {{.Count}} {{.Interface}} interface.",
+			map[string]interface{}{"ServerID": serverId, "Interface": serverInterface, "Count": 0}))
+
 	}
 	return networkComponent, nil
 }

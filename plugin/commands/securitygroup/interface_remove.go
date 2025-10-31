@@ -25,6 +25,7 @@ func NewInterfaceRemoveCommand(sl *metadata.SoftlayerCommand) (cmd *InterfaceRem
 	thisCmd := &InterfaceRemoveCommand{
 		SoftlayerCommand: sl,
 		NetworkManager:   managers.NewNetworkManager(sl.Session),
+		VSManager:		  managers.NewVirtualServerManager(sl.Session),
 	}
 
 	cobraCmd := &cobra.Command{
