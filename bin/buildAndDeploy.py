@@ -342,7 +342,7 @@ curl -X POST https://wcp-cloud-foundry-jenkins.swg-devops.com/job/Publish%20Plug
 
         docsCmd = f"./docBuilder -o {out_path}/_include-segments -v"
         print(f"[turquoise2] Building documentation: {docsCmd}")
-        subprocess.run(docsCmd)
+        subprocess.run(docsCmd, shell=True)
 
 @click.group()
 @click.pass_context
