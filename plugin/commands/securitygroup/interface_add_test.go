@@ -112,50 +112,31 @@ var _ = Describe("Securitygroup interface add", func() {
 			BeforeEach(func() {
 				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{
 					Id: sl.Int(4321),
-					NetworkComponents: []datatypes.Virtual_Guest_Network_Component{
-						datatypes.Virtual_Guest_Network_Component{
-							Id:   sl.Int(4567),
-							Port: sl.Int(1),
-						},
-						datatypes.Virtual_Guest_Network_Component{
-							Id:   sl.Int(4569),
-							Port: sl.Int(1),
-						},
-						datatypes.Virtual_Guest_Network_Component{
-							Id:   sl.Int(4568),
-							Port: sl.Int(0),
-						},
-						datatypes.Virtual_Guest_Network_Component{
-							Id:   sl.Int(4566),
-							Port: sl.Int(0),
-						},
-					},
+					NetworkComponents: []datatypes.Virtual_Guest_Network_Component{},
 				}, nil)
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "public")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Instance 4321 has 2 public interface."))
+				Expect(err.Error()).To(ContainSubstring("Instance 4321 has 0 public interface."))
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234", "-s", "4321", "-i", "private")
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("Instance 4321 has 2 private interface."))
+				Expect(err.Error()).To(ContainSubstring("Instance 4321 has 0 private interface."))
 			})
 		})
 		Context("interface add with serverID but attach API call fails", func() {
 			BeforeEach(func() {
 				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{
 					Id: sl.Int(4321),
-					NetworkComponents: []datatypes.Virtual_Guest_Network_Component{
-						datatypes.Virtual_Guest_Network_Component{
-							Id:   sl.Int(4567),
-							Port: sl.Int(1),
-						},
-						datatypes.Virtual_Guest_Network_Component{
-							Id:   sl.Int(4568),
-							Port: sl.Int(0),
-						},
+					PrimaryNetworkComponent: &datatypes.Virtual_Guest_Network_Component{
+						Id:   sl.Int(4567),
+						Port: sl.Int(1),
+					},
+					PrimaryBackendNetworkComponent: &datatypes.Virtual_Guest_Network_Component{
+						Id:   sl.Int(4568),
+						Port: sl.Int(0),
 					},
 				}, nil)
 				fakeNetworkManager.AttachSecurityGroupComponentReturns(errors.New("Internal server error"))
@@ -177,15 +158,13 @@ var _ = Describe("Securitygroup interface add", func() {
 			BeforeEach(func() {
 				fakeVSManager.GetInstanceReturns(datatypes.Virtual_Guest{
 					Id: sl.Int(4321),
-					NetworkComponents: []datatypes.Virtual_Guest_Network_Component{
-						datatypes.Virtual_Guest_Network_Component{
-							Id:   sl.Int(4567),
-							Port: sl.Int(1),
-						},
-						datatypes.Virtual_Guest_Network_Component{
-							Id:   sl.Int(4568),
-							Port: sl.Int(0),
-						},
+					PrimaryNetworkComponent: &datatypes.Virtual_Guest_Network_Component{
+						Id:   sl.Int(4567),
+						Port: sl.Int(1),
+					},
+					PrimaryBackendNetworkComponent: &datatypes.Virtual_Guest_Network_Component{
+						Id:   sl.Int(4568),
+						Port: sl.Int(0),
 					},
 				}, nil)
 				fakeNetworkManager.AttachSecurityGroupComponentReturns(nil)
