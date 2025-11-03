@@ -85,12 +85,16 @@ func (cmd *StorageCommand) Run(args []string) error {
 
 	tableIscsi := cmd.UI.Table([]string{T("\nLUN name"), T("capacity"), T("Target address"), T("Location"), T("Notes")})
 	for _, iscsi := range iscsiStorageData {
+		notes := ""
+		if iscsi.Notes != nil {
+			notes = *iscsi.Notes
+		}
 		tableIscsi.Add(
 			*iscsi.Username,
 			utils.FormatIntPointer(iscsi.CapacityGb),
 			*iscsi.ServiceResourceBackendIpAddress,
 			*iscsi.AllowedVirtualGuests[0].Datacenter.LongName,
-			*iscsi.Notes)
+			notes)
 	}
 	utils.PrintTable(cmd.UI, tableIscsi, outputFormat)
 
@@ -107,12 +111,16 @@ func (cmd *StorageCommand) Run(args []string) error {
 	cmd.UI.Print("\nFile Storage Details")
 	tableNas := cmd.UI.Table([]string{T("Volume name"), T("capacity"), T("Hostname"), T("Location"), T("Notes")})
 	for _, nas := range nasStorageData {
+		notes := ""
+		if nas.Notes != nil {
+			notes = *nas.Notes
+		}
 		tableNas.Add(
 			*nas.Username,
 			utils.FormatIntPointer(nas.CapacityGb),
 			*nas.ServiceResourceBackendIpAddress,
 			*nas.AllowedVirtualGuests[0].Datacenter.LongName,
-			*nas.Notes)
+			notes)
 	}
 	utils.PrintTable(cmd.UI, tableNas, outputFormat)
 
